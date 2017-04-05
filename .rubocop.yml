@@ -1,0 +1,52 @@
+AllCops:
+  TargetRubyVersion: 2.4.1
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'tmp/**/*'
+    - vendor/**/*
+    - Rakefile
+    - config/boot.rb
+  DisplayCopNames: true
+
+Rails:
+  Enabled: true
+
+Style/Alias:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+Style/LineEndConcatenation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Style/AsciiComments:
+  Enabled: false
+Metrics/LineLength:
+  Max: 90
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*'
+Metrics/AbcSize:
+  Exclude:
+    - 'db/migrate/*'
+
+Style/AlignHash:
+  EnforcedLastArgumentHashStyle: ignore_implicit
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Style/WordArray:
+  Enabled: false
+Rails/HasAndBelongsToMany:
+  Enabled: false
