@@ -4,7 +4,40 @@
 // Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
 //
 
-@import 'bootstrap_custom_variables'; // overwrite default variables
+@import 'bootstrap_custom_variables';
+
+
+$font-size-base:             12px;
+$line-height-base:           1.4;
+$grid-gutter-width:          20px;
+$navbar-height:              40px;
+
+$screen-xs:                  1px;
+$screen-xs-min:              $screen-xs;
+$screen-phone:               $screen-xs-min;
+
+$screen-sm:                  2px;
+$screen-sm-min:              $screen-sm;
+$screen-tablet:              $screen-sm-min;
+
+$screen-md:                  3px;
+$screen-md-min:              $screen-md;
+$screen-desktop:             $screen-md-min;
+
+$screen-lg:                  9999px;
+$screen-lg-min:              $screen-lg;
+$screen-lg-desktop:          $screen-lg-min;
+
+$navbar-default-border: #fff;
+$navbar-default-bg: #fff;
+$grid-float-breakpoint: 1px;
+
+$header-height: 70px;
+$footer-height: 30px;
+$sidebar-width: 220px;
+
+
+
 // Core variables and mixins
 // @import 'bootstrap/variables';
 @import 'bootstrap/mixins';
