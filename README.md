@@ -6,6 +6,11 @@ Ruby version: 2.4.1
 
 - Postgresql
 
+## Developper Dependencies
+
+- [overcommit](https://github.com/brigade/overcommit)
+- [rubocop](https://github.com/bbatsov/rubocop)
+
 
 ## LICENSE
 

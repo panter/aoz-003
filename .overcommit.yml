@@ -1,0 +1,42 @@
+CommitMsg:
+  HardTabs:
+    enabled: true
+
+PreCommit:
+  CoffeeLint:
+    enabled: false
+    problem_on_unmodified_line: warn
+
+  HamlLint:
+    enabled: true
+    problem_on_unmodified_line: warn
+
+  SlimLint:
+    enabled: true
+    problem_on_unmodified_line: warn
+    command: ['bundle', 'exec', 'slim-lint', 'app/views/']
+
+  HardTabs:
+    enabled: true
+    problem_on_unmodified_line: warn
+
+  LocalPathsInGemfile:
+    enabled: true
+    problem_on_unmodified_line: warn
+
+  RailsSchemaUpToDate:
+    enabled: true
+    problem_on_unmodified_line: warn
+
+  RuboCop:
+    enabled: true
+    problem_on_unmodified_line: warn
+    command: ['bundle', 'exec', 'rubocop', '-c', './.rubocop.yml']
+
+  ScssLint:
+    enabled: true
+    problem_on_unmodified_line: warn
+
+  YamlSyntax:
+    enabled: true
+    problem_on_unmodified_line: warn
