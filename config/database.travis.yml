@@ -1,16 +1,18 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: courseselect_development
+  database: aoz-github_development
 
 test:
   <<: *default
-  database: courseselect_test
+  database: aoz-github_test
 
 production:
   <<: *default
-  database: courseselect_developement
+  database: aoz-github_production
+  username: aoz-github
+  password: <%= ENV['AOZ-GITHUB_DATABASE_PASSWORD'] %>
