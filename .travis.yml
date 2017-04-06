@@ -6,6 +6,10 @@ rvm:
 cache:
   - bundler
 
+env:
+  - LC_ALL="en_US.UTF-8"
+  - RAILS_ENV=test
+  - DB=pgsql
 
 services:
   - postgresql
@@ -14,6 +18,8 @@ addons:
   postgresql: "9.6"
 
 before_script:
+  - rm /var/run/postgresql/.s.PGSQL.*
+  - service postgresql restart
   - psql -c 'create database aoz-github_test;' -U postgres
 
 script:
