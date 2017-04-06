@@ -12,6 +12,12 @@ env:
 services:
   - postgresql
 
+before_script:
+  - sh -c "psql -c 'DROP DATABASE IF EXISTS aoz-github_test;' -U postgres"
+  - sh -c "psql -c 'DROP DATABASE IF EXISTS aoz-github_test_tmp;' -U postgres"
+  - sh -c "psql -c 'CREATE DATABASE aoz-github_test;' -U postgres"
+  - sh -c "psql -c 'CREATE DATABASE aoz-github_test_tmp;' -U postgres"
+
 script:
   - bundle exec rails db:migrate
   - bundle exec rails db:test:prepare
