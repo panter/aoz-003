@@ -16,9 +16,8 @@ addons:
   - postgresql: "9.6"
 
 before_install:
-  - sudo apt-get update
-  - sudo /etc/init.d/postgresql stop
-  - sudo /etc/init.d/postgresql start 9.6
+  - service postgresql stop
+  - service postgresql start
 
 before_script:
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS aoz-github_test;' -U postgres; fi"
