@@ -1,13 +1,15 @@
-$custom-red: #a51a0f;
 
 $font-size-base: 12px;
 $line-height-base: 1.4;
+
 $grid-gutter-width: 20px;
+
 $navbar-height: 40px;
-
-$navbar-default-border: #fff;
-$navbar-default-bg: #fff;
-
 $header-height: 70px;
 $footer-height: 30px;
 $sidebar-width: 220px;
+
+$custom-red: #a51a0f;
+$white: #fff;
+$navbar-default-border: $white;
+$navbar-default-bg: $white;
