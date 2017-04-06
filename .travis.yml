@@ -6,19 +6,10 @@ rvm:
 cache:
   - bundler
 
-env:
-  - DB=postgres
-
 services:
   - postgresql
 
-before_script:
-  - sh -c "psql -c 'DROP DATABASE IF EXISTS aoz_003_test;' -U postgres"
-  - sh -c "psql -c 'DROP DATABASE IF EXISTS aoz_003_test_tmp;' -U postgres"
-  - sh -c "psql -c 'CREATE DATABASE aoz_003_test;' -U postgres"
-  - sh -c "psql -c 'CREATE DATABASE aoz_003_test_tmp;' -U postgres"
-
 script:
-  - bundle exec rails db:migrate
-  - bundle exec rails db:test:prepare
+  - bundle exec rails db:create
+  - bundle exec rails db:setup
   - bundle exec rails test
