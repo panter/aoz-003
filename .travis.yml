@@ -3,9 +3,6 @@ language: ruby
 rvm:
   - 2.4.1
 
-env:
-  - RAILS_ENV=test
-
 cache:
   - bundler
 
@@ -20,6 +17,7 @@ before_script:
   - psql -c 'create database aoz-github_test;' -U postgres
 
 script:
-  - bundle exec rails db:migrate --trace
+  - bundle exec rails db:setup
+  - bundle exec rails db:migrate
   - bundle exec rails db:test:prepare
   - bundle exec rails test
