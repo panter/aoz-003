@@ -48,6 +48,8 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    airbrussh (1.1.2)
+      sshkit (>= 1.6.1, != 1.7.0)
     arel (8.0.0)
     ast (2.3.0)
     autoprefixer-rails (6.7.7.1)
@@ -67,6 +69,25 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.3)
     byebug (9.0.6)
+    capistrano (3.7.2)
+      airbrussh (>= 1.0.0)
+      capistrano-harrow
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 1.9.0)
+    capistrano-bundler (1.2.0)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2)
+    capistrano-harrow (0.5.3)
+    capistrano-rails (1.2.2)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
+    capistrano-rbenv (2.1.0)
+      capistrano (~> 3.1)
+      sshkit (~> 1.3)
+    capistrano-rbenv-install (1.2.0)
+      capistrano (>= 3.0)
+      capistrano-rbenv (>= 2.0)
     childprocess (0.6.3)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.1)
@@ -85,6 +106,10 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    dotenv (2.2.0)
+    dotenv-rails (2.2.0)
+      dotenv (= 2.2.0)
+      railties (>= 3.2, < 5.1)
     erubi (1.6.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -96,6 +121,7 @@ GEM
     ffi (1.9.18)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    highline (1.7.8)
     i18n (0.8.1)
     iniparse (1.4.2)
     jbuilder (2.6.3)
@@ -105,6 +131,8 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    kgio (2.11.0)
+    libv8 (3.16.14.17)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -120,6 +148,9 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (4.0.1)
     nio4r (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
@@ -127,6 +158,16 @@ GEM
     overcommit (0.39.0)
       childprocess (~> 0.6.1)
       iniparse (~> 1.4)
+    panter-rails-deploy (1.3.4)
+      capistrano (~> 3.5)
+      capistrano-bundler
+      capistrano-rails
+      capistrano-rbenv
+      capistrano-rbenv-install
+      dotenv-rails
+      highline
+      therubyracer
+      unicorn-rails
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.20.0)
@@ -170,10 +211,12 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.1)
+    raindrops (0.17.0)
     rake (12.0.0)
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
+    ref (2.0.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rubocop (0.48.1)
@@ -205,7 +248,13 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sshkit (1.12.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     temple (0.7.7)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
@@ -217,6 +266,12 @@ GEM
     uglifier (3.1.13)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.1.3)
+    unicorn (5.2.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
+    unicorn-rails (2.2.1)
+      rack
+      unicorn
     warden (1.2.7)
       rack (>= 1.0)
     websocket-driver (0.6.5)
@@ -237,6 +292,7 @@ DEPENDENCIES
   jquery-rails
   listen
   overcommit
+  panter-rails-deploy
   pg
   pry-byebug
   pry-rails

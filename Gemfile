@@ -20,6 +20,7 @@ gem 'simple_form'
 gem 'slim-rails'
 gem 'turbolinks'
 gem 'uglifier'
+gem 'panter-rails-deploy'
 
 group :development, :test do
   gem 'better_errors'
