@@ -12,9 +12,6 @@ nav.navbar.navbar-top
         = image_tag 'AOZ_Logo.svg', text: 'AOZ Logo'
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav
-        li.active
-          a href='#' Home
-        li
-          a href='#about'  About
-        li
-          a href='#contact'  Contact
+        - if current_user.present?
+          li
+            = link_to 'Logout', destroy_user_session_path, method: :delete
