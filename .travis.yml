@@ -1,0 +1,13 @@
+language: ruby
+
+cache:
+  - bundler
+
+services:
+  - postgresql
+
+script:
+  - bundle exec rails db:drop
+  - bundle exec rails db:create
+  - bundle exec rails db:setup
+  - bundle exec rails test

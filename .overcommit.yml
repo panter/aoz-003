@@ -1,4 +1,6 @@
 CommitMsg:
+  CapitalizedSubject:
+    enabled: false
   HardTabs:
     enabled: true
 
