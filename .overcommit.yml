@@ -11,11 +11,6 @@ PreCommit:
     enabled: true
     problem_on_unmodified_line: warn
 
-  SlimLint:
-    enabled: false
-    problem_on_unmodified_line: warn
-    command: ['bundle', 'exec', 'slim-lint', 'app/views/']
-
   HardTabs:
     enabled: true
     problem_on_unmodified_line: warn
