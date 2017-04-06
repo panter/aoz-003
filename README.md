@@ -1,4 +1,4 @@
-# AOZ Voluntar Platform
+# AOZ Voluntaries Platform
 
 Ruby version: 2.4.1
 
@@ -6,7 +6,7 @@ Ruby version: 2.4.1
 
 - Postgresql
 
-## Developper Dependencies
+## Developer Dependencies
 
 - [overcommit](https://github.com/brigade/overcommit)
 - [rubocop](https://github.com/bbatsov/rubocop)
