@@ -1,0 +1,27 @@
+language: ruby
+
+env:
+  - DB=pgsql
+
+rvm:
+  - 2.4.1
+
+cache: bundler
+
+sudo: false
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+
+
+script:
+  - RAILS_ENV=test bundle exec rails db:migrate --trace
+  - bundle exec rails db:test:prepare
+  - bundle exec rails test
+
+before_script:
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database courseselect_test;' -U postgres
