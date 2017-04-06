@@ -6,21 +6,27 @@ rvm:
 cache:
   - bundler
 
-env: LC_ALL="en_US.UTF-8"
+env:
+  - DB=postgres
 
 services:
   - postgresql
 
 addons:
-  postgresql: "9.6"
+  - postgresql: "9.6"
+
+before_install:
+  - sudo apt-get update
+  - sudo /etc/init.d/postgresql stop
+  - sudo /etc/init.d/postgresql start 9.6
 
 before_script:
-  - rm /var/run/postgresql/.s.PGSQL.*
-  - service postgresql restart
-  - psql -c 'create database aoz-github_test;' -U postgres
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS aoz-github_test;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS aoz-github_test_tmp;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE aoz-github_test;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE aoz-github_test_tmp;' -U postgres; fi"
 
 script:
-  - bundle exec rails db:setup
   - bundle exec rails db:migrate
   - bundle exec rails db:test:prepare
   - bundle exec rails test
