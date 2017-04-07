@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable,
-    :trackable, :validatable
+    :trackable, :validatable, :confirmable
 
   validates :role, inclusion: { in: ['superadmin'] }
 
@@ -13,5 +13,9 @@ class User < ApplicationRecord
       user.send_reset_password_instructions
       puts "Mail sent to #{ user.email }"
     end
+  end
+
+  def password_required?
+    super if confirmed?
   end
 end
