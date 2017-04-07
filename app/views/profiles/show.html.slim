@@ -1,0 +1,30 @@
+p#notice = notice
+
+p
+  strong First name:
+  = @profile.first_name
+p
+  strong Last name:
+  = @profile.last_name
+p
+  strong Phone:
+  = @profile.phone
+p
+  strong Picture:
+  = @profile.picture
+p
+  strong Address:
+  = @profile.address
+p
+  strong Profession:
+  = @profile.profession
+
+h2 Days available
+ul.list-inline
+  - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |d|
+    - if @profile[d.to_s]
+      li #{d.to_s.titlecase}
+
+
+p= link_to 'Edit Profile', edit_profile_path(@profile)
+p= link_to 'Change Password', edit_user_password_path(current_user)

@@ -1,0 +1,18 @@
+= simple_form_for(@profile) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :user_id, as: :hidden
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :phone
+    = f.input :picture
+    = f.input :address, as: :text
+    = f.input :profession
+    h2 Arbeitstage
+    ul.list-inline
+      - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |d|
+        li= f.input d, as: :boolean
+
+  .form-actions
+    = f.button :submit
