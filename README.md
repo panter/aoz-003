@@ -22,6 +22,13 @@ Ruby version: 2.4.1
 *Debian (and similars):* 'apt-get install phantomjs'
 *Download and install manually*: http://phantomjs.org/download.html
 
+## Setup Superadmin
+
+Generate first superadmin with rails task
+```bash
+$ rails setup:superadmin email=email@test.com
+```
+
 ## LICENSE
 
 All the sources created are made available under the terms
