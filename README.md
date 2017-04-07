@@ -23,8 +23,17 @@ Generate first superadmin with rails task
 $ rails setup:superadmin email=email@test.com
 ```
 
+## Create User
+
+Create user in console
+```bash
+$ User.create(email: 'asdf1@asdf.com', password: 'asdfasdf', role: 'superadmin')
+```
+
+
+
 ## LICENSE
 
-All the sources created are made available under the terms 
-of the GNU Affero General Public License (GNU AGPLv3). 
+All the sources created are made available under the terms
+of the GNU Affero General Public License (GNU AGPLv3).
 See the GNU-AGPL-3.0.txt file for more details.
