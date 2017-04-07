@@ -36,8 +36,6 @@ Create user in console
 $ User.create(email: 'asdf1@asdf.com', password: 'asdfasdf', role: 'superadmin')
 ```
 
-
-
 ## LICENSE
 
 All the sources created are made available under the terms
