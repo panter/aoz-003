@@ -4,4 +4,9 @@ FactoryGirl.define do
     password 'asdfasdf'
     role 'superadmin'
   end
+  factory :profileless, class: User do
+    email 'newuser@example.com'
+    password 'asdfasdf'
+    role 'superadmin'
+  end
 end
