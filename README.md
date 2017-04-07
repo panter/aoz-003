@@ -16,6 +16,13 @@ Ruby version: 2.4.1
 - [rubocop](https://github.com/bbatsov/rubocop)
 
 
+## Setup Superadmin
+
+Generate first superadmin with rails task
+```bash
+$ rails setup:superadmin email=email@test.com
+```
+
 ## LICENSE
 
 All the sources created are made available under the terms 
