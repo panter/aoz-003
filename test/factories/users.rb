@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :user do
-    # tbd
+    email 'superadmin@example.com'
+    password 'asdfasdf'
+    role 'superadmin'
   end
 end
