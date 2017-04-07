@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class SessionsTest < ApplicationSystemTestCase
   setup do
-    create :user
+    create :profile
   end
 
   test 'redirects to login page if not authenticated' do
