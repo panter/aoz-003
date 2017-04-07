@@ -25,6 +25,7 @@ gem 'panter-rails-deploy'
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_callers'
+  gem 'capybara'
   gem 'factory_girl_rails'
   gem 'listen'
   gem 'overcommit', require: false
@@ -32,6 +33,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop', require: false
+  gem 'selenium-webdriver'
 end
 
 group :development do

@@ -242,7 +242,12 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
+    rubyzip (1.2.1)
     sass (3.4.23)
+    selenium-webdriver (3.3.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     simple_form (3.4.0)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
@@ -289,6 +294,7 @@ GEM
       unicorn
     warden (1.2.7)
       rack (>= 1.0)
+    websocket (1.2.4)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -302,6 +308,7 @@ DEPENDENCIES
   better_errors
   binding_of_callers
   bootstrap-sass
+  capybara
   coffee-rails
   devise
   factory_girl_rails
@@ -319,6 +326,7 @@ DEPENDENCIES
   rails (~> 5.1.0.rc1)
   rubocop
   sass-rails!
+  selenium-webdriver
   simple_form
   slim-rails
   spring
