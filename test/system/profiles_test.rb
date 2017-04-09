@@ -7,7 +7,8 @@ class ProfilesTest < ApplicationSystemTestCase
 
   test 'when first login displays profile form' do
     visit new_user_session_path
-    fill_in 'Email', with: 'newuser@example.com'
+    user = User.last
+    fill_in 'Email', with: user.email
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
 
@@ -20,26 +21,20 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_field? 'Picture'
     assert page.has_field? 'Address'
     assert page.has_field? 'Profession'
-
-    assert page.has_text? 'Arbeitstage'
-  end
-
-  test 'when first login create profile works' do
-    visit new_user_session_path
-    fill_in 'Email', with: 'newuser@example.com'
-    fill_in 'Password', with: 'asdfasdf'
-    click_button 'Log in'
-
-    assert page.has_current_path? new_profile_path
+    assert page.has_field? 'Monday'
+    assert page.has_field? 'Tuesday'
+    assert page.has_field? 'Wednesday'
+    assert page.has_field? 'Thursday'
+    assert page.has_field? 'Friday'
 
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
     click_button 'Create Profile'
 
-    newuser = User.last
-    assert newuser.profile.present?
-    assert_equal newuser.profile.first_name, 'Hans'
-    assert_equal newuser.profile.last_name, 'Muster'
+    assert page.has_current_path? profile_path(user.profile.id)
+    assert page.has_text? 'Hans'
+    assert page.has_text? 'Muster'
+    assert page.has_text? 'Profile was successfully created.'
   end
 
   test 'when profile created it can be displayed' do
