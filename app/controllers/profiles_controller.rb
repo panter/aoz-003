@@ -11,23 +11,16 @@ class ProfilesController < ApplicationController
 
   def create
     @profile = Profile.new(profile_params)
-
     respond_to do |format|
-      if @profile.save
-        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
-      else
-        format.html { render :new }
-      end
+      return format.html { render :new } unless @profile.save
+      format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
     end
   end
 
   def update
     respond_to do |format|
-      if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+      return format.html { render :edit } unless @profile.update(profile_params)
+      format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
     end
   end
 

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :authenticate_user!
 
   def edit
@@ -8,11 +7,9 @@ class UsersController < ApplicationController
 
   def update_password
     @user = User.find(current_user.id)
-    pw_update_result = @user.update_with_password(user_params)
     respond_to do |format|
-      return render :edit unless pw_update_result
+      return render :edit unless @user.update_with_password(user_params)
       @user.send_password_change_notification
-      # Sign in the user by passing validation in case their password changed
       bypass_sign_in @user, scope: :user
       format.html { redirect_to @user.profile }
     end
@@ -33,18 +30,15 @@ class UsersController < ApplicationController
         format.html { render :edit_email }
       end
     end
-
   end
-
 
   private
 
-    def user_params
-      # NOTE: Using `strong_parameters` gem
-      params.require(:user).permit(:password, :password_confirmation, :current_password)
-    end
+  def user_params
+    params.require(:user).permit(:password, :password_confirmation, :current_password)
+  end
 
-    def email_params
-      params.require(:user).permit(:email)
-    end
+  def email_params
+    params.require(:user).permit(:email)
+  end
 end
