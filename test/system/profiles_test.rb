@@ -2,6 +2,8 @@ require 'application_system_test_case'
 
 class ProfilesTest < ApplicationSystemTestCase
   def setup
+
+    create :profile
     create :profileless
   end
 
@@ -50,6 +52,48 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_text? 'First name'
 
     assert page.has_text? 'Last name'
-    assert page.has_text? 'Days available'
+    assert page.has_text? 'Working days'
+  end
+
+  test 'user can change the password from profile page' do
+    user = User.find_by email: 'superadmin@example.com'
+    login_as user, scope: :user
+    visit profile_path(user.profile.id)
+
+    assert page.has_link? 'Change your password'
+    click_link 'Change your password'
+
+    assert page.has_field? 'Current password'
+    assert page.has_field? 'New password'
+    assert page.has_field? 'Confirm your new password'
+    assert page.has_button? 'Change password'
+    assert page.has_button? 'Cancel'
+
+    fill_in 'Current password', with: 'asdfasdf'
+    fill_in 'New password', with: 'abcdefghijk'
+    fill_in 'Confirm your new password', with: 'abcdefghijk'
+    click_button 'Change password'
+
+    user = User.find_by email: 'superadmin@example.com'
+    assert user.valid_password? 'abcdefghijk'
+  end
+
+  test 'user can change the email' do
+    user = User.find_by email: 'superadmin@example.com'
+    login_as user, scope: :user
+    visit profile_path(user.profile.id)
+
+    assert page.has_link? 'Change your email'
+    click_link 'Change your email'
+
+    assert page.has_field? 'New email'
+    assert page.has_button? 'Change email'
+    assert page.has_button? 'Cancel'
+
+    fill_in 'New email', with: 'superadmin@example.ch'
+    click_button 'Change email'
+
+    changed = User.find_by email: 'superadmin@example.ch'
+    assert_equal changed.id, user.id
   end
 end
