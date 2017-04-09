@@ -1,25 +1,31 @@
-p#notice = notice
+h1 My Profile
 
-p
-  strong First name:
-  = @profile.first_name
-p
-  strong Last name:
-  = @profile.last_name
-p
-  strong Phone:
-  = @profile.phone
-p
-  strong Picture:
-  = @profile.picture
-p
-  strong Address:
-  = @profile.address
-p
-  strong Profession:
-  = @profile.profession
+h2 Information
 
-h2 Days available
+table.table.table-condensed
+  tr
+    td First name
+    td= @profile.first_name
+  tr
+    td Last name
+    td= @profile.last_name
+  tr
+    td Email
+    td= current_user.email
+  tr
+    td Phone:
+    td= @profile.phone
+  tr
+    td Picture:
+    td= @profile.picture
+  tr
+    td Address:
+    td= @profile.address
+  tr
+    td Profession:
+    td= @profile.profession
+
+h2 Working days
 ul.list-inline
   - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |d|
     - if @profile[d.to_s]
@@ -27,4 +33,5 @@ ul.list-inline
 
 
 p= link_to 'Edit Profile', edit_profile_path(@profile)
-p= link_to 'Change Password', edit_user_password_path(current_user)
+p= link_to "Change your password", edit_user_path
+p= link_to "Change your email", edit_email_user_path
