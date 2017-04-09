@@ -1,0 +1,12 @@
+h1 Edit Email
+
+= simple_form_for(@user, url: { action: 'update_email' }) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :email, label: "New email", required: true, autofocus: true
+
+  .form-actions
+    p= f.button :submit, value: 'Change email', class: 'btn btn-primary'
+  p
+    button.btn.btn-default= link_to 'Cancel', profile_path(current_user)

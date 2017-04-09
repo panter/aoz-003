@@ -2,6 +2,5 @@ h1 Editing profile
 
 == render 'form'
 
-= link_to 'Show', @profile
-'  |
-= link_to 'Back', profiles_path
+p
+  button.btn.btn-default= link_to 'Cancel', profile_path(current_user)
