@@ -19,7 +19,6 @@ class SuperadminTest < ActiveSupport::TestCase
     ENV['email'] = 'superadmin@aoz.com'
     ENV['role'] = 'superadmin'
     Rake::Task['setup:superadmin'].invoke
-
     assert_equal User.count, 1
   end
 
