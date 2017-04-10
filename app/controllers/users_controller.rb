@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(secure_params)
-    if @user.save!
+    if @user.save
       flash[:notice] = 'User saved.'
       render 'new'
     else
@@ -16,12 +16,10 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    authorize User
   end
 
   def show
     @user = User.find(params[:id])
-    authorize @user
   end
 
   def update

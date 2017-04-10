@@ -15,3 +15,5 @@ nav.navbar.navbar-top
         - if current_user.present?
           li
             = link_to 'Logout', destroy_user_session_path, method: :delete
+            = link_to 'Create superadmin', new_user_url
+            = link_to 'Show users', users_url
