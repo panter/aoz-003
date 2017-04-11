@@ -15,4 +15,5 @@ class User < ApplicationRecord
       puts "Mail sent to #{ user.email }"
     end
   end
+
 end
