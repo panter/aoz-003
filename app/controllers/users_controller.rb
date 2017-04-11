@@ -1,16 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update]
 
-  def create
-    @user = User.new(secure_params)
-    if @user.save!
-      flash[:notice] = 'User saved.'
-      render 'new'
-    else
-      render 'new'
-    end
-  end
-
   def index
     @users = User.all
   end

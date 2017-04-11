@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   SUPERADMIN = 'superadmin'.freeze
 
+  validates :role, inclusion: { in: ['superadmin'] }
+
   validates :role, inclusion: { in: [SUPERADMIN] }
 
   def self.create_user_and_send_password_reset(email:)
