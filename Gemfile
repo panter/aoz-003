@@ -23,14 +23,19 @@ gem 'uglifier'
 gem 'panter-rails-deploy'
 
 group :development, :test do
+  gem 'erb2haml'
+  gem 'haml2slim'
   gem 'better_errors'
   gem 'binding_of_callers'
+  gem 'capybara'
   gem 'factory_girl_rails'
   gem 'listen'
   gem 'overcommit', require: false
+  gem 'poltergeist'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop', require: false
+  gem 'selenium-webdriver'
 end
 
 group :development do

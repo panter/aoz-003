@@ -1,5 +1,5 @@
 nav.navbar.navbar-top
-  .container
+  .container-fluid
     .navbar-header
       button.navbar-toggle.collapsed aria-controls='navbar'
         | aria-expanded='false' data-target='#navbar'
@@ -12,9 +12,9 @@ nav.navbar.navbar-top
         = image_tag 'AOZ_Logo.svg', text: 'AOZ Logo'
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav
-        li.active
-          a href='#' Home
-        li
-          a href='#about'  About
-        li
-          a href='#contact'  Contact
+        - if current_user.present?
+          - if current_user.profile.present?
+            li
+              = link_to "#{current_user.profile.first_name} #{current_user.profile.last_name}", current_user.profile
+          li
+            = link_to 'Logout', destroy_user_session_path, method: :delete
