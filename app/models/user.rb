@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :clients
 
   validates :role, inclusion: { in: ['superadmin'] }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   def self.create_user_and_send_password_reset email:
     user = User.new(

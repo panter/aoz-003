@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(secure_params)
-    if @user.save!
+    if @user.save
       @user.confirm
       @user.send_reset_password_instructions
       flash[:notice] = "Invitation sent to #{@user.email}"
@@ -24,26 +24,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
-
-  def update
-    @user = User.find(params[:id])
-    if @user == current_user
-      if @user.update_attributes(secure_params)
-        redirect_to users_path, :notice => "User updated."
-      else
-        redirect_to users_path, :alert => "Unable to update user."
-      end
-    else
-      redirect_to root_url
-    end
-  end
-
   private
 
   def secure_params
-    params.require(:user).permit(:id, :email, :role)
+    params.require(:user).permit(:id, :email, :password, :password_confirmation, :role)
   end
 end
