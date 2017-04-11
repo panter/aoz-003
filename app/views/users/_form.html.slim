@@ -9,7 +9,7 @@
       .form-inputs
         = f.input :email, required: true, autofocus: true
         = f.input :role, required: true,
-          collection: ["superadmin"], include_blank: true,
+          collection: ['superadmin'], include_blank: true,
           :input_html => {:class => 'dropdown'}
 
       .form-actions
