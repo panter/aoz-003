@@ -6,8 +6,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(secure_params)
-    if @user.save
-      flash[:notice] = 'User saved.'
+    if @user.save!
+      @user.confirm
+      @user.send_reset_password_instructions
+      flash[:notice] = "Invitation sent to #{@user.email}"
       render 'new'
     else
       render 'new'
@@ -22,9 +24,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def update
     @user = User.find(params[:id])
-    authorize @user
     if @user.update_attributes(secure_params)
       redirect_to users_path, :notice => "User updated."
     else
@@ -35,6 +40,6 @@ class UsersController < ApplicationController
   private
 
   def secure_params
-    params.require(:user).permit(:id, :email, :password, :password_confirmation, :role)
+    params.require(:user).permit(:id, :email, :role)
   end
 end
