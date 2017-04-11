@@ -14,10 +14,16 @@ Ruby version: 2.4.1
 
 - [overcommit](https://github.com/brigade/overcommit)
 - [rubocop](https://github.com/bbatsov/rubocop)
+- [PhantomJS](http://phantomjs.org/download.html)
 
+### Install PhantomJS
+
+*MacOS with Homebrew*: `brew install phantomjs`
+*Debian (and similars):* 'apt-get install phantomjs'
+*Download and install manually*: http://phantomjs.org/download.html
 
 ## LICENSE
 
-All the sources created are made available under the terms 
-of the GNU Affero General Public License (GNU AGPLv3). 
+All the sources created are made available under the terms
+of the GNU Affero General Public License (GNU AGPLv3).
 See the GNU-AGPL-3.0.txt file for more details.
