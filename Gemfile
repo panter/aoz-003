@@ -23,6 +23,8 @@ gem 'uglifier'
 gem 'panter-rails-deploy'
 
 group :development, :test do
+  gem 'erb2haml'
+  gem 'haml2slim'
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'capybara'
