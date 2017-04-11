@@ -30,10 +30,14 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(secure_params)
-      redirect_to users_path, :notice => "User updated."
+    if @user == current_user
+      if @user.update_attributes(secure_params)
+        redirect_to users_path, :notice => "User updated."
+      else
+        redirect_to users_path, :alert => "Unable to update user."
+      end
     else
-      redirect_to users_path, :alert => "Unable to update user."
+      redirect_to root_url
     end
   end
 
