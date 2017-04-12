@@ -8,6 +8,7 @@ end
 gem 'rails', '~> 5.1.0.rc1'
 
 gem 'bootstrap-sass'
+gem 'cocoon'
 gem 'coffee-rails'
 gem 'devise'
 gem 'jbuilder'
