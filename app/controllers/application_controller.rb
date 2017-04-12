@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(current_user)
     return new_profile_path if current_user.profile.blank?
-    root_path
+    current_user.profile
   end
 
   def logged_in; end
