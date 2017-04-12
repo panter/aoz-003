@@ -3,9 +3,7 @@ require 'test_helper'
 class SuperadminCanCreateSuperadminTest < ActionDispatch::IntegrationTest
   def setup
     @user = create :user
-    @user.confirm
     login_as(@user)
-    get new_user_path
   end
 
   test 'invalid superadmin information' do

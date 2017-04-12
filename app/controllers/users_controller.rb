@@ -5,9 +5,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(secure_params)
+    @user = User.new(secure_params.merge(password: Devise.friendly_token))
     if @user.save
-      @user.confirm
       @user.send_reset_password_instructions
       flash[:notice] = "Invitation sent to #{@user.email}"
     end
