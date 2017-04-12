@@ -11,7 +11,6 @@ class ProfilesController < ApplicationController
 
   def create
     @profile = Profile.new(profile_params)
-
     respond_to do |format|
       return format.html { render :new } unless @profile.save
       format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
