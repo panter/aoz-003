@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update]
+  before_action :set_current_user, only: [:show, :edit, :update]
 
   def index
     @users = User.all
@@ -11,8 +11,10 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit; end
+
   def create
-    @user = User.new(user_params.merge(password: Devise.friendly_token))
+    @user = User.new user_params.merge(password: Devise.friendly_token)
     respond_to do |format|
       if @user.save
         @user.send_reset_password_instructions
@@ -23,10 +25,22 @@ class UsersController < ApplicationController
     end
   end
 
+  # only used to update the current user
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        bypass_sign_in @user
+        format.html { redirect_to @user, notice: 'Profile was successfully updated.' }
+      else
+        format.html { render :edit }
+      end
+    end
+  end
+
   private
 
-  def set_user
-    @user = User.find(params[:id])
+  def set_current_user
+    @user = current_user
   end
 
   def user_params
