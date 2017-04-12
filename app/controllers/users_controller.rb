@@ -4,9 +4,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(secure_params)
+    @user = User.new(
+      email: create_params[:email],
+      role: create_params[:role],
+      password: Devise.friendly_token
+    )
     if @user.save
-      @user.confirm
       @user.send_reset_password_instructions
       flash[:notice] = "Invitation sent to #{@user.email}"
     end
@@ -46,6 +49,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def create_params
+    params.require(:user).permit(:email, :role, :password)
+  end
 
   def email_params
     params.require(:user).permit(:email)
