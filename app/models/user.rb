@@ -3,6 +3,8 @@ class User < ApplicationRecord
     :trackable, :validatable
   has_many :clients
 
+  has_one :profile
+
   validates :role, inclusion: { in: ['superadmin'] }
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
@@ -16,5 +18,4 @@ class User < ApplicationRecord
       puts "Mail sent to #{ user.email }"
     end
   end
-
 end
