@@ -5,8 +5,10 @@
         = f.error_notification
   .row
     .col-xs-12
-      = f.input :email
-      = f.input :role, collection: [User::SUPERADMIN], input_html: { class: 'dropdown' }
+    - if user == current_user
+      = f.input :password
+    - if current_user.role == User::SUPERADMIN
+      = f.input :role, collection: User::role_collection
   .row
     .col-xs-12
       = f.button :submit, 'Create User', class: 'btn btn-default'
