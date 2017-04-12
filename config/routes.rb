@@ -1,13 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users, :profiles
-  resources :users, except: %i[destroy show] do
-    collection do
-      get 'edit_password'
-      get 'edit_email'
-      patch 'update_password'
-      patch 'update_email'
-    end
-  end
+  devise_for :users
+  resources :users, except: :destroy
 
   resources :profiles, except: %i[destroy index]
 

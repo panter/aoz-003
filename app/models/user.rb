@@ -18,4 +18,8 @@ class User < ApplicationRecord
       puts "Mail sent to #{user.email}"
     end
   end
+
+  def self.role_collection
+    [SUPERADMIN]
+  end
 end

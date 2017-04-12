@@ -27,11 +27,10 @@ table.table.table-condensed
 
 h2 Working days
 ul.list-inline
-  - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |d|
-    - if @profile[d.to_s]
-      li #{d.to_s.titlecase}
+  - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
+    - if @profile[day.to_s]
+      li #{day.to_s.titlecase}
 
 
 p= link_to 'Edit Profile', edit_profile_path(@profile)
-p= link_to 'Change your password', edit_password_users_path(current_user.id)
-p= link_to 'Change your email', edit_email_users_path(current_user.id)
+p= link_to 'Change your login', edit_user_path(current_user.id)
