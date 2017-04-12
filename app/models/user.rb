@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable,
-    :trackable, :validatable, :confirmable
+    :trackable, :validatable
 
   validates :role, inclusion: { in: ['superadmin'] }
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :password, presence: true
 
   def self.create_user_and_send_password_reset email:
     user = User.new(
@@ -15,9 +15,4 @@ class User < ApplicationRecord
       puts "Mail sent to #{ user.email }"
     end
   end
-
-  def password_required?
-    super if confirmed?
-  end
-
 end
