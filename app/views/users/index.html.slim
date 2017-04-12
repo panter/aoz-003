@@ -1,4 +1,13 @@
-ol
-  = @users.each do |user|
-    li
-      = link_to user.email, user
+.row
+  h2 All users
+  div
+    table
+      tr
+        th email
+        th role
+      - @users.each do |user|
+        tr
+          td
+            = link_to user.email, user
+          td
+            = user.role

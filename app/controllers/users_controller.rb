@@ -10,10 +10,8 @@ class UsersController < ApplicationController
       @user.confirm
       @user.send_reset_password_instructions
       flash[:notice] = "Invitation sent to #{@user.email}"
-      render 'new'
-    else
-      render 'new'
     end
+    render 'new'
   end
 
   def index
