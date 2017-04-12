@@ -1,3 +1,6 @@
+// Sprockets has troubles loading default vars, copy from boostrap/variables
+$padding-large-horizontal:  16px;
+
 .row {
   margin-bottom: $padding-large-horizontal;
 }
