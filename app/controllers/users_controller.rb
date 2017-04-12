@@ -18,12 +18,12 @@ class UsersController < ApplicationController
   end
 
   def update_password
-    @user = User.find(current_user.id)
-    return render :edit unless @user.update_with_password(password_params)
+    return render :edit unless current_user.update_with_password(password_params)
     respond_to do |format|
-      @user.send_password_change_notification
-      bypass_sign_in @user, scope: :user
-      format.html { redirect_to @user.profile }
+      current_user.send_password_change_notification
+      flash[:notice] = "Password change email has been sent to #{current_user.email}"
+      bypass_sign_in current_user, scope: :user
+      format.html { redirect_to current_user.profile }
     end
   end
 
@@ -32,12 +32,12 @@ class UsersController < ApplicationController
   end
 
   def update_email
-    @user = User.find(current_user.id)
-    return render :edit_email unless @user.update(email_params)
+    return render :edit_email unless current_user.update(email_params)
     respond_to do |format|
-      @user.send_email_changed_notification
-      bypass_sign_in @user, scope: :user
-      format.html { redirect_to @user.profile }
+      current_user.send_email_changed_notification
+      flash[:notice] = "Email changed email has been sent to #{current_user.email}"
+      bypass_sign_in current_user, scope: :user
+      format.html { redirect_to current_user.profile }
     end
   end
 
