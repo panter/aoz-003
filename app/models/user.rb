@@ -4,9 +4,9 @@ class User < ApplicationRecord
   has_many :clients
   has_one :profile
 
-  validates :role, inclusion: { in: ['superadmin'] }
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  SUPERADMIN = 'superadmin'.freeze
 
+  validates :role, inclusion: { in: ['superadmin'] }
   def self.create_user_and_send_password_reset email:
     user = User.new(
       email: email, password: Devise.friendly_token, role: 'superadmin'
@@ -16,5 +16,8 @@ class User < ApplicationRecord
       user.send_reset_password_instructions
       puts "Mail sent to #{ user.email }"
     end
+  end
+  def self.role_collection
+    [SUPERADMIN]
   end
 end

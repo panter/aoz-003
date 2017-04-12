@@ -6,7 +6,7 @@ class CreateProfiles < ActiveRecord::Migration[5.1]
       t.string :last_name
       t.string :phone
       t.string :picture
-      t.string :address
+      t.text :address
       t.string :profession
       t.boolean :monday
       t.boolean :tuesday
