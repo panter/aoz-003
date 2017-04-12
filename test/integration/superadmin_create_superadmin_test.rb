@@ -4,11 +4,11 @@ class SuperadminCanCreateSuperadminTest < ActionDispatch::IntegrationTest
   def setup
     @user = create :user
     @user.confirm
+    login_as(@user)
+    get new_user_path
   end
 
   test 'invalid superadmin information' do
-    login_as(@user)
-    get new_user_path
     assert_no_difference 'User.count' do
       post users_path, params: { user: { email:  '',
                                          role:   '' } }
@@ -17,8 +17,6 @@ class SuperadminCanCreateSuperadminTest < ActionDispatch::IntegrationTest
   end
 
   test 'invalid user role' do
-    login_as(@user)
-    get new_user_path
     assert_no_difference 'User.count' do
       post users_path, params: { user: { email: 'superadmin@integration.ch',
                                          role:  '' } }
@@ -27,8 +25,6 @@ class SuperadminCanCreateSuperadminTest < ActionDispatch::IntegrationTest
   end
 
   test 'valid superadmin registration' do
-    login_as(@user)
-    get new_user_path
     assert_difference 'User.count', 1 do
       post users_path, params: { user: { email: 'superadmin@integration.ch',
                                          role:  'superadmin' } }
