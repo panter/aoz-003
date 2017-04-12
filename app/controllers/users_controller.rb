@@ -5,15 +5,13 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(
-      email: create_params[:email],
-      role: create_params[:role],
+      email: secure_params[:email],
+      role: secure_params[:role],
       password: Devise.friendly_token
     )
-    if @user.save
-      @user.send_reset_password_instructions
-      flash[:notice] = "Invitation sent to #{@user.email}"
-    end
-    render 'new'
+    return render :new unless @user.save
+    @user.send_reset_password_instructions
+    flash[:notice] = "Invitation sent to #{@user.email}"
   end
 
   def edit_password
