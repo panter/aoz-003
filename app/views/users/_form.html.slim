@@ -8,9 +8,7 @@
 
       .form-inputs
         = f.input :email, required: true, autofocus: true
-        = f.input :role, required: true,
-          collection: ['superadmin'], include_blank: true,
-          :input_html => {:class => 'dropdown'}
+        = f.input :role, required: true, collection: ['superadmin'], include_blank: true, :input_html => {:class => 'dropdown'}
 
       .form-actions
         = f.button :submit, 'Create new user', class: 'btn btn-default'
