@@ -15,6 +15,42 @@ ActiveRecord::Schema.define(version: 20170419120951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "clients", force: :cascade do |t|
+    t.string "firstname"
+    t.string "lastname"
+    t.date "dob"
+    t.string "nationality"
+    t.string "permit"
+    t.string "gender"
+    t.string "street"
+    t.integer "zip"
+    t.string "city"
+    t.string "phone"
+    t.string "email"
+    t.text "goals"
+    t.text "education"
+    t.text "hobbies"
+    t.text "interests"
+    t.string "state", default: "registered"
+    t.text "comments"
+    t.text "c_authority"
+    t.text "i_authority"
+    t.boolean "availability", default: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_clients_on_user_id"
+  end
+
+  create_table "language_skills", force: :cascade do |t|
+    t.bigint "client_id"
+    t.string "language"
+    t.string "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_language_skills_on_client_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.bigint "user_id"
     t.string "first_name"
@@ -34,6 +70,17 @@ ActiveRecord::Schema.define(version: 20170419120951) do
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "relatives", force: :cascade do |t|
+    t.bigint "client_id"
+    t.string "firstname"
+    t.string "lastname"
+    t.date "dob"
+    t.string "relation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_relatives_on_client_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -61,5 +108,8 @@ ActiveRecord::Schema.define(version: 20170419120951) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "clients", "users"
+  add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
+  add_foreign_key "relatives", "clients"
 end
