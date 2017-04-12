@@ -26,6 +26,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'capybara'
+  gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'listen'
   gem 'overcommit', require: false
