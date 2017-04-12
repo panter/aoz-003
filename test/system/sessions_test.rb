@@ -22,7 +22,7 @@ class SessionsTest < ApplicationSystemTestCase
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
 
-    assert page.has_current_path? profile_path(@superadmin.profile.id)
+    assert page.has_current_path? user_path(@superadmin)
     assert page.has_text? 'Signed in successfully.'
     assert page.has_link? 'Logout'
   end
