@@ -2,7 +2,11 @@ require 'test_helper'
 
 class ClientsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @client = clients(:one)
+    @client = build :client
+  end
+
+  test 'valid factory' do
+    assert @client.valid?
   end
 
   test "should get index" do
@@ -17,7 +21,7 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create client" do
     assert_difference('Client.count') do
-      post clients_url, params: { client: { description: @client.description, name: @client.name } }
+      post clients_url, params: { client: { firstname: @client.firstname, lastname: @client.lastname } }
     end
 
     assert_redirected_to client_url(Client.last)
@@ -34,7 +38,7 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update client" do
-    patch client_url(@client), params: { client: { description: @client.description, name: @client.name } }
+    patch client_url(@client), params: { client: { firstname: @client.firstname } }
     assert_redirected_to client_url(@client)
   end
 
