@@ -2,8 +2,8 @@ require 'application_system_test_case'
 
 class ProfilesTest < ApplicationSystemTestCase
   def setup
-    create :profile unless User.find_by email: 'superadmin@example.com'
-    @superadmin = User.find_by email: 'superadmin@example.com'
+    @superadmin = create :user
+    create :profile, user: @superadmin
     @noprofile = create :user_noprofile
   end
 
