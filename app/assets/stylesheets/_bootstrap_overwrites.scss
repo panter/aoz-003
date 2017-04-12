@@ -12,3 +12,11 @@ $custom-red: #a51a0f;
 $white: #fff;
 $navbar-default-border: $white;
 $navbar-default-bg: $white;
+
+td {
+  padding: 0 20px 5px 0;
+}
+
+.nav li {
+  display: flex;
+}
