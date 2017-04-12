@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :client do
-    name "MyString"
-    description "MyText"
+    firstname "asdfasdf"
+    lastname "asdfasdf"
   end
 end

@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class ClientTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should contain the firstname" do
+    should validate_presence_of(:firstname)
+  end
+
+  test "should contain the lastname" do
+    should validate_presence_of(:lastname)
+  end
 end
