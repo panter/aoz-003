@@ -30,6 +30,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'listen'
   gem 'overcommit', require: false
+  gem 'poltergeist'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop', require: false
