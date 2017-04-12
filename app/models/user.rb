@@ -2,9 +2,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
-  SUPERADMIN = 'superadmin'.freeze
+  has_one :profile
 
-  validates :role, inclusion: { in: ['superadmin'] }
+  SUPERADMIN = 'superadmin'.freeze
 
   validates :role, inclusion: { in: [SUPERADMIN] }
 
