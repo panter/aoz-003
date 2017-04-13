@@ -4,6 +4,41 @@
   .form-inputs
     = f.input :firstname
     = f.input :lastname
+    = f.input :dob, as: :date, start_year: Date.today.year - 90,
+                               end_year: Date.today.year - 12,
+                               order: [:day, :month, :year],
+                               label: 'Date of birth'
+    = f.input :nationality, as: :country
+    = f.input :gender, :collection => gender_collection, as: :radio_buttons
+    = f.input :permit, :collection => permit_collection, as: :radio_buttons
+    p
+      strong Contact Information
+    = f.input :street, label: 'Street and house number'
+    = f.input :zip
+    = f.input :city
+    = f.input :email
+    = f.input :phone
+    p
+      strong Language Skills
+    #languages
+      = f.simple_fields_for :language_skills do |language|
+        = render 'language_skill_fields', f: language
+      .links
+        = link_to_add_association 'Add language', f, :language_skills
+    p
+      strong Family members
+    #relatives
+      = f.simple_fields_for :relatives do |relative|
+        = render 'relative_fields', f: relative
+      .links
+        = link_to_add_association 'Add family member', f, :relatives
+    = f.input :goals, as: :text
+    = f.input :education, as: :text
+    = f.input :hobbies, as: :text
+    = f.input :interests, as: :text
+    = f.input :state, :collection => state_collection
+    = f.input :comments, as: :text
+    = f.input :availability, as: :boolean, checked_value: true, unchecked_value: false
 
   .form-actions
     = f.button :submit

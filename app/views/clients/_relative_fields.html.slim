@@ -1,0 +1,9 @@
+.nested-fields
+  = f.input :firstname
+  = f.input :lastname
+  = f.input :dob, as: :date, start_year: Date.today.year - 90,
+                             end_year: Date.today.year,
+                             order: [:day, :month, :year],
+                             label: 'Date of birth'
+  = f.input :relation
+  = link_to_remove_association "remove relative", f
