@@ -18,6 +18,7 @@
     = f.input :city
     = f.input :email
     = f.input :phone
+
     p
       strong Language Skills
     #languages
@@ -25,6 +26,7 @@
         = render 'language_skill_fields', f: language
       .links
         = link_to_add_association 'Add language', f, :language_skills
+        
     p
       strong Family members
     #relatives

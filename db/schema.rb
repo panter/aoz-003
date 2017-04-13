@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170419120951) do
     t.string "permit"
     t.string "gender"
     t.string "street"
-    t.integer "zip"
+    t.string "zip"
     t.string "city"
     t.string "phone"
     t.string "email"
