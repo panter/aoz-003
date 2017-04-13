@@ -32,12 +32,17 @@
         = render 'relative_fields', f: relative
       .links
         = link_to_add_association 'Add family member', f, :relatives
+
+    p
+      strong Personal Background
     = f.input :goals, as: :text
     = f.input :education, as: :text
     = f.input :hobbies, as: :text
     = f.input :interests, as: :text
     = f.input :state, :collection => state_collection
     = f.input :comments, as: :text
+    = f.input :c_authority, as: :text, label: 'Competent authority'
+    = f.input :i_authority, as: :text, label: 'Involved authorities'
     = f.input :availability, as: :boolean, checked_value: true, unchecked_value: false
 
   .form-actions
