@@ -1,0 +1,7 @@
+- if @client.relatives.any?
+  - @client.relatives.each do |rel|
+    li
+      = rel.firstname
+      = rel.lastname
+      = rel.dob
+      = rel.relation

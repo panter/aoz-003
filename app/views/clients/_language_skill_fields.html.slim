@@ -1,0 +1,4 @@
+.nested-fields
+  = f.input :language, :collection => languages
+  = f.input :level, :collection => language_level_collection
+  = link_to_remove_association "remove language", f
