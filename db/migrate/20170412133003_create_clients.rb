@@ -8,7 +8,7 @@ class CreateClients < ActiveRecord::Migration[5.1]
       t.string :permit
       t.string :gender
       t.string :street
-      t.integer :zip
+      t.string :zip
       t.string :city
       t.string :phone
       t.string :email
