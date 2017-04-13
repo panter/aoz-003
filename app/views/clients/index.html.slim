@@ -5,8 +5,8 @@ table
     tr
       th Firstname
       th Lastname
-      th
-      th
+      th Date of birth
+      th Nationality
       th
 
   tbody
@@ -14,6 +14,8 @@ table
       tr
         td = client.firstname
         td = client.lastname
+        td = client.dob
+        td = client.nationality
         td = link_to 'Show', client
         td = link_to 'Edit', edit_client_path(client)
         td = link_to 'Destroy', client, data: { confirm: 'Are you sure?' }, method: :delete

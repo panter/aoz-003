@@ -7,6 +7,72 @@ p
   strong Lastname:
   = @client.lastname
 
+p
+  strong Date of birth:
+  = @client.dob
+
+p
+  strong Nationality:
+  = @client.nationality
+
+
+  p
+  strong Residence Permit:
+  = @client.permit
+p
+  strong Gender:
+  = @client.gender
+
+p
+  strong Contact Information:
+  = @client.street
+  = @client.zip
+  = @client.city
+  = @client.phone
+  = @client.email
+
+p
+  strong Language Skills:
+  = render 'language_skill_show'
+
+p
+  strong Family Members:
+  = render 'relatives_show'
+
+p
+  strong Goals:
+  = @client.goals
+
+p
+  strong Education:
+  = @client.education
+
+p
+  strong Hobbies:
+  = @client.hobbies
+
+p
+  strong Interests:
+  = @client.interests
+
+p
+  strong State:
+  = @client.state
+
+p
+  strong Comments:
+  = @client.comments
+
+p
+  strong Availability:
+  = @client.availability
+
+
+
+
+
+
+
 = link_to 'Edit', edit_client_path(@client)
 '  |
 = link_to 'Back', clients_path
