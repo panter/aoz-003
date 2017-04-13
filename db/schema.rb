@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(version: 20170419120951) do
     t.text "c_authority"
     t.text "i_authority"
     t.boolean "availability", default: false
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
