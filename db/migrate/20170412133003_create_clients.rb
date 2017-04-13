@@ -21,7 +21,6 @@ class CreateClients < ActiveRecord::Migration[5.1]
       t.text :c_authority
       t.text :i_authority
       t.boolean :availability, default: false
-      t.belongs_to :user, foreign_key: true
       t.timestamps
     end
   end
