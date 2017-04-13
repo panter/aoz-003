@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
   resources :clients
+  devise_for :users
 
   root 'application#logged_in'
 end

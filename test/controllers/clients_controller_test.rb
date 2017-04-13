@@ -2,7 +2,9 @@ require 'test_helper'
 
 class ClientsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @client = build :client
+    @user = create(:user)
+    @client = create(:client, user: @user)
+    login_as(@user)
   end
 
   test 'valid factory' do
@@ -21,7 +23,7 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create client" do
     assert_difference('Client.count') do
-      post clients_url, params: { client: { firstname: @client.firstname, lastname: @client.lastname } }
+      post clients_url, params: { client: { firstname: @client.firstname, lastname: @client.lastname, user: @user } }
     end
 
     assert_redirected_to client_url(Client.last)
