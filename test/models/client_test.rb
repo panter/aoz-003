@@ -1,11 +1,14 @@
 require 'test_helper'
 
 class ClientTest < ActiveSupport::TestCase
-  test "should contain the firstname" do
-    should validate_presence_of(:firstname)
+  context "associations" do
+    should have_many(:language_skills)
+    should have_many(:relatives)
+    should belong_to(:user)
   end
 
-  test "should contain the lastname" do
+  context "validations" do
+    should validate_presence_of(:firstname)
     should validate_presence_of(:lastname)
   end
 end

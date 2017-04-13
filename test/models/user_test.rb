@@ -33,4 +33,8 @@ class UserTest < ActiveSupport::TestCase
       end
     end
   end
+
+  context "associations" do
+    should have_many(:clients)
+  end
 end
