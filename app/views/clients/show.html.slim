@@ -64,6 +64,18 @@ p
   = @client.comments
 
 p
+  strong Competent authority:
+  = @client.c_authority
+
+p
+  strong Involved authorities:
+  = @client.i_authority
+
+p
+  strong Registered by:
+  = @client.user.email
+
+p
   strong Availability:
   = @client.availability
 
