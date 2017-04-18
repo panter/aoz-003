@@ -2,20 +2,22 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clients = Client.all
+    @clients = policy_scope(Client)
   end
 
   def show; end
 
   def new
-    @client = Client.new(user: current_user)
-    @client.schedules << Schedule.build
+    @client = Client.new
+    authorize @client
   end
 
   def edit; end
 
   def create
     @client = Client.new(client_params)
+    authorize @client
+    @client.user = current_user
     respond_to do |format|
       if @client.save
         format.html { redirect_to @client, notice: 'Client was successfully created.' }
@@ -26,6 +28,7 @@ class ClientsController < ApplicationController
   end
 
   def update
+    authorize @client
     respond_to do |format|
       if @client.update(client_params)
         format.html { redirect_to @client, notice: 'Client was successfully updated.' }
@@ -44,6 +47,7 @@ class ClientsController < ApplicationController
 
   private
 
+  # Use callbacks to share common setup or constraints between actions.
   def set_client
     @client = Client.find(params[:id])
   end
