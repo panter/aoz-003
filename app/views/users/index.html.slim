@@ -1,13 +1,17 @@
 .row
-  h2 All users
-  div
-    table
-      tr
-        th email
-        th role
-      - @users.each do |user|
+  .col-xs-12
+    h1 Users
+
+.row
+  .col-xs-12
+    table.table.table-striped
+      thead
         tr
-          td
-            = link_to user.email, user
-          td
-            = user.role
+          th Email
+          th Role
+      tbody
+        = render @users
+
+.row
+  .col-xs-12
+    = link_to 'Create User', new_user_path, class: 'btn btn-success'
