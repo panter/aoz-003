@@ -1,9 +1,11 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
   def setup
     @user = build :user
+    @superadmin = create :superadmin
+    @admin = create :admin
+    @social_worker = create :social_worker
   end
 
   test 'valid factory' do
@@ -44,18 +46,15 @@ class UserTest < ActiveSupport::TestCase
 
   test '#create_user_and_send_password_reset \
     with new email creates new superadmin' do
-    out, err = capture_io do
-      assert_difference 'User.count', 1 do
-        User.create_user_and_send_password_reset email: 'superadmin@example.com',
-          role: User::SUPERADMIN
-      end
+
+    assert_difference 'User.count', 1 do
+      User.create_user_and_send_password_reset(
+        email: 'superadmin@example.com', role: 'superadmin'
+      )
     end
 
-    assert_equal out, "Mail sent to superadmin@example.com\n"
+    user = User.find_by email: 'superadmin@example.com'
 
-    user = User.first
-
-    assert_equal user.email, 'superadmin@example.com'
     assert_equal user.role, 'superadmin'
   end
 
@@ -71,7 +70,34 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  context "associations" do
+  test '@superadmin.superadmin? returns true if user is superadmin' do
+    assert @superadmin.superadmin?
+  end
+
+  test '@superadmin.admin?, .social_worker? returns false' do
+    refute @superadmin.admin?
+    refute @superadmin.social_worker?
+  end
+
+  test '@admin.admin? returns true if user is admin' do
+    assert @superadmin.superadmin?
+  end
+
+  test '@admin.superadmin?, .social_worker? returns false' do
+    refute @admin.superadmin?
+    refute @admin.social_worker?
+  end
+
+  test '@social_worker.social_worker? returns true if user is of role socialworker' do
+    assert @social_worker.social_worker?
+  end
+
+  test '@social_worker.superadmin?, .admin? returns false' do
+    refute @social_worker.superadmin?
+    refute @social_worker.admin?
+  end
+
+  context 'associations' do
     should have_many(:clients)
   end
 end

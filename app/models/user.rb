@@ -35,7 +35,6 @@ class User < ApplicationRecord
 
     if user.save!
       user.send_reset_password_instructions
-      logger.info "Mail sent to #{user.email}"
     end
   end
 
