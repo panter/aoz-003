@@ -2,7 +2,7 @@ AllCops:
   TargetRubyVersion: 2.4.1
   Exclude:
     - 'db/schema.rb'
-    - db/migrate/*
+    - 'db/migrate/*'
     - 'bin/*'
     - 'tmp/**/*'
     - vendor/**/*
