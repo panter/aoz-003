@@ -1,6 +1,27 @@
-// Sprockets has troubles loading default vars, copy from boostrap/variables
-$padding-large-horizontal:  16px;
+@import 'bootstrap_overwrites';
+@import 'bootstrap/variables';
+
+.navbar-toggle {
+  border-color: $black;
+}
+
+.icon-bar {
+  background-color: $black;
+}
 
 .row {
   margin-bottom: $padding-large-horizontal;
+}
+
+.brand-image {
+  height: 100%;
+}
+
+.container-main {
+  // Footer won't flow over content
+  margin-bottom: 70px;
+}
+
+.footer {
+  background-color: $white;
 }
