@@ -1,4 +1,4 @@
 Rails.application.config.generators do |g|
   g.assets false
-  g.helpers false
+  g.helper false
 end
