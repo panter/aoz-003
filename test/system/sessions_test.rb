@@ -23,7 +23,7 @@ class SessionsTest < ApplicationSystemTestCase
 
     assert page.has_current_path? root_path
     assert page.has_text? 'Signed in successfully.'
-    assert page.has_link? 'Logout'
+    assert page.has_link? 'superadmin@example.com'
   end
 
   test 'sign out current user' do
@@ -31,6 +31,7 @@ class SessionsTest < ApplicationSystemTestCase
     login_as user, scope: :user
     visit root_path
 
+    click_link 'superadmin@example.com'
     assert page.has_link? 'Logout'
     click_link 'Logout'
 
