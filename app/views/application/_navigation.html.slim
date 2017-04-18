@@ -15,8 +15,9 @@ nav.navbar.navbar-top
         - if user_signed_in?
           li
             = link_to 'Logout', destroy_user_session_path, method: :delete
-          li
-            = link_to 'Create superadmin', new_user_url
+          - if current_user.role == User::SUPERADMIN
+            li
+              = link_to 'Create superadmin', new_user_url
           li
             = link_to 'Show users', users_url
           li
