@@ -46,7 +46,10 @@ class UserTest < ActiveSupport::TestCase
     with new email creates new superadmin' do
     out, err = capture_io do
       assert_difference 'User.count', 1 do
-        User.create_user_and_send_password_reset email: 'superadmin@example.com'
+        User.create_user_and_send_password_reset do
+          email 'superadmin@example.com'
+          role User::SUPERADMIN
+        end
       end
     end
 
@@ -60,11 +63,14 @@ class UserTest < ActiveSupport::TestCase
 
   test '#create_user_and_send_password_reset \
     with taken email does not create superadmin' do
-    create :user, email: 'superadmin@example.com'
+    create :user
 
     capture_io do
       assert_raises(ActiveRecord::RecordInvalid) do
-        User.create_user_and_send_password_reset email: 'superadmin@example.com'
+        User.create_user_and_send_password_reset do
+          email 'superadmin@example.com'
+          role User::SUPERADMIN
+        end
       end
     end
   end
