@@ -1,13 +1,18 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update]
 
-  def show; end
+  def show
+    authorize @profile
+  end
 
   def new
     @profile = Profile.new(user_id: current_user.id)
+    authorize @profile
   end
 
-  def edit; end
+  def edit
+    authorize @profile
+  end
 
   def create
     @profile = Profile.new(profile_params)
@@ -18,6 +23,7 @@ class ProfilesController < ApplicationController
         format.html { render :new }
       end
     end
+    authorize @profile
   end
 
   def update
@@ -28,6 +34,7 @@ class ProfilesController < ApplicationController
         format.html { render :edit } unless @profile.update(profile_params)
       end
     end
+    authorize @profile
   end
 
   private
