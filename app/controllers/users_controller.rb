@@ -1,29 +1,35 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :update]
+
+  def index
+    @users = User.all
+  end
+
+  def show; end
 
   def new
     @user = User.new
   end
 
   def create
-    @user = User.new(secure_params.merge(password: Devise.friendly_token))
-    if @user.save
-      @user.send_reset_password_instructions
-      flash[:notice] = "Invitation sent to #{@user.email}"
+    @user = User.new(user_params.merge(password: Devise.friendly_token))
+    respond_to do |format|
+      if @user.save
+        @user.send_reset_password_instructions
+        format.html { redirect_to users_path, notice: "Invitation sent to #{@user.email}" }
+      else
+        format.html { render :new }
+      end
     end
-    render 'new'
-  end
-
-  def index
-    @users = User.all
-  end
-
-  def show
-    @user = User.find(params[:id])
   end
 
   private
 
-  def secure_params
-    params.require(:user).permit(:id, :email, :password, :password_confirmation, :role)
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :role)
   end
 end
