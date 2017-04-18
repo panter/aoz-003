@@ -4,12 +4,17 @@ class User < ApplicationRecord
   has_many :clients
   has_one :profile
 
+  # Roles definition
   SUPERADMIN = 'superadmin'.freeze
+  ADMIN = 'admin'.freeze
+  SOCIAL_WORKER = 'social_worker'.freeze
+  ROLES = [SUPERADMIN, ADMIN, SOCIAL_WORKER].freeze
 
-  validates :role, inclusion: { in: ['superadmin'] }
-  def self.create_user_and_send_password_reset email:
+  validates :role, inclusion: { in: ROLES }
+
+  def self.create_user_and_send_password_reset(email:, role:)
     user = User.new(
-      email: email, password: Devise.friendly_token, role: 'superadmin'
+      email: email, password: Devise.friendly_token, role: role
     )
 
     if user.save!
@@ -18,6 +23,6 @@ class User < ApplicationRecord
     end
   end
   def self.role_collection
-    [SUPERADMIN]
+    ROLES
   end
 end
