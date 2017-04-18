@@ -14,12 +14,12 @@ class SuperadminTest < ActiveSupport::TestCase
   end
 
   test "generate superadmin with email param" do
-    assert_equal User.count, 0
+    user_count = User.count
 
     ENV['email'] = 'superadmin@aoz.com'
     Rake::Task['setup:superadmin'].invoke
 
-    assert_equal User.count, 1
+    assert_equal User.count, user_count + 1
   end
 
   def silenced

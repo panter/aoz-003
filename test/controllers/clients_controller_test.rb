@@ -11,44 +11,44 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
     assert @client.valid?
   end
 
-  test "should get index" do
-    get clients_url
+  test 'should get index' do
+    get clients_path
     assert_response :success
   end
 
-  test "should get new" do
-    get new_client_url
+  test 'should get new' do
+    get new_client_path
     assert_response :success
   end
 
-  test "should create client" do
+  test 'should create client' do
     assert_difference('Client.count') do
-      post clients_url, params: { client: { firstname: @client.firstname, lastname: @client.lastname, user: @user } }
+      post clients_path, params: {
+        client: {
+          firstname: @client.firstname,
+          lastname: @client.lastname,
+          user: @user
+        }
+      }
     end
 
-    assert_redirected_to client_url(Client.last)
+    assert_redirected_to client_path(Client.last)
   end
 
-  test "should show client" do
-    get client_url(@client)
+  test 'should show client' do
+    get client_path(@client)
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_client_url(@client)
+  test 'should get edit' do
+    get edit_client_path(@client)
     assert_response :success
   end
 
-  test "should update client" do
-    patch client_url(@client), params: { client: { firstname: @client.firstname } }
-    assert_redirected_to client_url(@client)
-  end
-
-  test "should destroy client" do
-    assert_difference('Client.count', -1) do
-      delete client_url(@client)
-    end
-
-    assert_redirected_to clients_url
+  test 'should update client' do
+    patch client_path(@client), params: {
+      client: { firstname: @client.firstname }
+    }
+    assert_redirected_to client_path(@client)
   end
 end
