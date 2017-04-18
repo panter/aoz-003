@@ -1,17 +1,24 @@
 = simple_form_for(profile) do |f|
-  = f.error_notification
+  - if f.error_notification.present?
+    .row
+      .col-xs-12
+        = f.error_notification
+  .row
+    .col-xs-12
+      = f.input :user_id, as: :hidden
+      = f.input :first_name
+      = f.input :last_name
+      = f.input :phone
+      = f.input :picture
+      = f.input :address
+      = f.input :profession
 
-  .form-inputs
-    = f.input :user_id, as: :hidden
-    = f.input :first_name
-    = f.input :last_name
-    = f.input :phone
-    = f.input :picture
-    = f.input :address
-    = f.input :profession
-    h2 Arbeitstage
-    ul.list-inline
-      - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
-        li= f.input day, as: :boolean
-  .form-actions
-    = f.button :submit, class: 'btn btn-primary'
+  .row
+    .col-xs-12
+      h2 Arbeitstage
+      ul.list-inline
+        - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
+          li= f.input day, as: :boolean
+  .row
+    .col-xs-12
+      = f.button :submit, class: 'btn btn-default'
