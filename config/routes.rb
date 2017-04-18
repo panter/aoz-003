@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :clients
+  resources :clients, except: :destroy
   devise_for :users
   resources :users, except: :destroy
   resources :profiles, except: %i[destroy index]
