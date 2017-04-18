@@ -1,17 +1,24 @@
 class UsersController < ApplicationController
   before_action :set_current_user, only: [:show, :edit, :update]
+  after_action :verify_authorized
 
   def index
     @users = User.all
+    authorize User
   end
 
-  def show; end
+  def show
+    authorize @user
+  end
 
   def new
     @user = User.new
+    authorize @user
   end
 
-  def edit; end
+  def edit
+    authorize @user
+  end
 
   def create
     @user = User.new user_params.merge(password: Devise.friendly_token)
@@ -23,6 +30,7 @@ class UsersController < ApplicationController
         format.html { render :new }
       end
     end
+    authorize @user
   end
 
   # only used to update the current user
@@ -35,6 +43,7 @@ class UsersController < ApplicationController
         format.html { render :edit }
       end
     end
+    authorize @user
   end
 
   private
