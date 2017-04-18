@@ -11,3 +11,4 @@ before_script:
 
 script:
   - bundle exec rails test
+  - bundle exec rails test:system
