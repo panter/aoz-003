@@ -17,7 +17,7 @@ table.table.table-condensed
     td= @profile.phone
   tr
     td Picture:
-    td= @profile.picture
+    td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
   tr
     td Address:
     td= @profile.address

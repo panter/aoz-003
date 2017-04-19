@@ -39,7 +39,7 @@ class ProfilesController < ApplicationController
   def profile_params
     params.require(:profile).permit(
       :user_id, :first_name, :last_name, :phone, :picture, :address, :profession, :monday,
-      :tuesday, :wednesday, :thursday, :friday
+      :tuesday, :wednesday, :thursday, :friday, :avatar
     )
   end
 end

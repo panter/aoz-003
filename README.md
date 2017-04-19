@@ -9,6 +9,7 @@ Ruby version: 2.4.1
 ## Dependencies
 
 - Postgresql
+- [ImageMagick](http://www.imagemagick.org/) (for [paperclip](https://github.com/thoughtbot/paperclip))
 
 ## Developer Dependencies
 
