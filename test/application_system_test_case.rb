@@ -1,12 +1,27 @@
 require 'test_helper'
 require 'capybara/poltergeist'
 
+DIMENSIONS = [1400, 1400].freeze
+
 Capybara.register_driver :poltergeist_debug do |app|
-  Capybara::Poltergeist::Driver.new app, inspector: true
+  Capybara::Poltergeist::Driver.new(
+    app,
+    inspector: true,
+    screen_size: DIMENSIONS,
+    window_size: DIMENSIONS
+  )
 end
 
-def driven_by_default(driver = :poltergeist, using: nil, screen_size: [1400, 1400])
-  driven_by driver, using: using, screen_size: screen_size
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(
+    app,
+    screen_size: DIMENSIONS,
+    window_size: DIMENSIONS
+  )
+end
+
+def driven_by_default(driver = :poltergeist, using: nil)
+  driven_by driver, using: using, screen_size: DIMENSIONS
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
