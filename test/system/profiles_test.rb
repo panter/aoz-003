@@ -5,6 +5,8 @@ class ProfilesTest < ApplicationSystemTestCase
     @superadmin = create :user
     create :profile, user: @superadmin
     @noprofile = create :user_noprofile
+    @admin = create :admin
+    @social_worker = create :social_worker
   end
 
   test 'when first login displays profile form' do
@@ -72,5 +74,14 @@ class ProfilesTest < ApplicationSystemTestCase
     user = User.find @superadmin.id
     assert user.valid_password? 'abcdefghijk'
     assert_equal user.email, 'new@email.com'
+  end
+
+  test 'user cannot edit other users profile' do
+    login_as @social_worker, scope: :user
+    visit profile_path(@social_worker.profile.id)
+    click_link 'Edit Profile'
+    assert page.has_text? 'Editing profile'
+    visit edit_profile_path(@superadmin.profile.id)
+    assert_raises Pundit::NotAuthorizedError
   end
 end
