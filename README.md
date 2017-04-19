@@ -14,7 +14,13 @@ Ruby version: 2.4.1
 
 - [overcommit](https://github.com/brigade/overcommit)
 - [rubocop](https://github.com/bbatsov/rubocop)
+- [PhantomJS](http://phantomjs.org/download.html)
 
+### Install PhantomJS
+
+*MacOS with Homebrew*: `brew install phantomjs`
+*Debian (and similars):* 'apt-get install phantomjs'
+*Download and install manually*: http://phantomjs.org/download.html
 
 ## Setup Superadmin
 
@@ -29,8 +35,6 @@ Create user in console
 ```bash
 $ User.create(email: 'asdf1@asdf.com', password: 'asdfasdf', role: 'superadmin')
 ```
-
-
 
 ## LICENSE
 

@@ -1,0 +1,13 @@
+= simple_form_for(user) do |f|
+
+  = f.error_notification
+
+  .form-inputs
+    = f.input :email, required: true, autofocus: true
+    - if user == current_user
+      = f.input :password
+    - if current_user.role == User::SUPERADMIN
+      = f.input :role, required: true, collection: User::role_collection, include_blank: true, input_html: { class: 'dropdown' }
+
+  .form-actions
+    = f.button :submit, class: 'btn btn-default'

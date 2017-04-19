@@ -12,6 +12,16 @@ nav.navbar.navbar-top
         = image_tag 'AOZ_Logo.svg', text: 'AOZ Logo'
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav
-        - if current_user.present?
+        - if user_signed_in?
           li
             = link_to 'Logout', destroy_user_session_path, method: :delete
+          - if current_user.superadmin?
+            li
+              = link_to 'Create superadmin', new_user_url
+          - if current_user.admin_superadmin?
+            li
+              = link_to 'Show users', users_path
+          li
+            = link_to 'Clients', clients_path
+          li
+            = link_to "#{current_user.profile.first_name} #{current_user.profile.last_name}", current_user.profile if current_user.profile.present?
