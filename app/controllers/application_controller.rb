@@ -10,6 +10,4 @@ class ApplicationController < ActionController::Base
       root_path
     end
   end
-
-  def logged_in; end
 end
