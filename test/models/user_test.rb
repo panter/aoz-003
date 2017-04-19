@@ -24,11 +24,11 @@ class UserTest < ActiveSupport::TestCase
 
   test '#create_user_and_send_password_reset \
     with taken email does not create superadmin' do
-    create :user, email: 'superadmin@example.com'
+    subject_user = create :user
 
     capture_io do
       assert_raises(ActiveRecord::RecordInvalid) do
-        User.create_user_and_send_password_reset email: 'superadmin@example.com'
+        User.create_user_and_send_password_reset email: subject_user.email
       end
     end
   end

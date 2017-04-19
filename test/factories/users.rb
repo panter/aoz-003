@@ -1,13 +1,11 @@
 FactoryGirl.define do
   factory :user do
-    email 'superadmin@example.com'
+    sequence :email { |n| "superadmin#{n}@example.com" }
     password 'asdfasdf'
     role 'superadmin'
   end
 
-  factory :user_noprofile, class: User do
-    email 'noprofile@example.com'
-    password 'asdfasdf'
-    role 'superadmin'
+  factory :user_with_profile, parent: :user do
+    profile { |user| user.association(:profile) }
   end
 end
