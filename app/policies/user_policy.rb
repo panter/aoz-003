@@ -14,6 +14,18 @@ class UserPolicy < ApplicationPolicy
     @current_user.superadmin? || @current_user == @user
   end
 
+  def new?
+    @current_user.admin_superadmin?
+  end
+
+  def edit?
+    @current_user.superadmin? || @current_user == @user
+  end
+
+  def create?
+    @current_user.admin_superadmin?
+  end
+
   def update?
     @current_user.superadmin? || @current_user == @user
   end
