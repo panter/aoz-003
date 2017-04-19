@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     if current_user.profile.blank?
       new_profile_path
     else
-      current_user
+      root_path
     end
   end
 

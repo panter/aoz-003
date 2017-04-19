@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users, except: :destroy
 
-  resources :profiles, except: %i[destroy index]
+  resources :profiles, except: [:destroy, :index]
 
-  root 'application#logged_in'
+  root 'users#show'
 end
