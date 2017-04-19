@@ -1,4 +1,9 @@
-p
-  = @user.email
-p
-  = @user.role
+.row
+  .col-md-4
+    strong Email
+  .col-md-8 = @user.email
+
+.row
+  .col-md-4
+    strong Role
+  .col-md-8 = @user.role
