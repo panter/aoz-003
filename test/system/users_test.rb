@@ -12,46 +12,48 @@ class UsersTest < ApplicationSystemTestCase
   test 'invalid superadmin information' do
     fill_in 'Email', with: ''
     select '', from: 'Role'
-    click_button 'Create User'
 
-    assert page.has_text? 'Please review the problems below:'
-    assert page.has_text? "can't be blank"
-    assert page.has_text? 'is not included in the list'
-
-    assert_equal User.last, @user
+    assert_no_difference 'User.count' do
+      click_button 'Create User'
+      assert page.has_text? 'Please review the problems below:'
+      assert page.has_text? "can't be blank"
+      assert page.has_text? 'is not included in the list'
+    end
   end
 
   test 'invalid user role' do
     fill_in 'Email', with: 'superadmin@test.ch'
     select '', from: 'Role'
-    click_button 'Create User'
 
-    assert page.has_text? 'Please review the problems below:'
-    assert page.has_text? 'is not included in the list'
-
-    assert_equal User.last, @user
+    assert_no_difference 'User.count' do
+      click_button 'Create User'
+      assert page.has_text? 'Please review the problems below:'
+      assert page.has_text? 'is not included in the list'
+    end
   end
 
   test 'taken user email' do
     fill_in 'Email', with: 'superadmin@example.com'
     select 'superadmin', from: 'Role'
-    click_button 'Create User'
 
-    assert page.has_text? 'Please review the problems below:'
-    assert page.has_text? 'has already been taken'
-
-    assert_equal User.last, @user
+    assert_no_difference 'User.count' do
+      click_button 'Create User'
+      assert page.has_text? 'Please review the problems below:'
+      assert page.has_text? 'has already been taken'
+    end
   end
 
   test 'valid superadmin registration' do
     fill_in 'Email', with: 'superadmin@test.ch'
     select 'superadmin', from: 'Role'
-    click_button 'Create User'
-    assert page.has_text? 'Invitation sent to superadmin@test.ch'
+
+    assert_difference 'User.count', 1 do
+      click_button 'Create User'
+      assert page.has_text? 'Invitation sent to superadmin@test.ch'
+    end
+
     click_link 'superadmin@example.com', match: :first
     click_link 'Logout'
-
-    assert_equal User.last.email, 'superadmin@test.ch'
 
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last
