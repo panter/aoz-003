@@ -52,21 +52,13 @@ class UsersTest < ApplicationSystemTestCase
       assert page.has_text? 'Invitation sent to superadmin@test.ch'
     end
 
-    click_link 'superadmin@example.com', match: :first
+    within('nav') do
+      click_link 'superadmin@example.com'
+    end
     click_link 'Logout'
 
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last
-    path_regex = %r{(?:"https?\://.*?)(/.*?)(?:")}
     assert_equal 'superadmin@test.ch', email['to'].to_s
-    path = email.body.match(path_regex)[1]
-    visit path
-
-    fill_in 'New password', with: 'newpass'
-    fill_in 'Confirm new password', with: 'newpass'
-    click_button 'Change my password'
-
-    assert page.has_text? 'Your password has been changed successfully.'
-    assert page.has_link? 'superadmin@test.ch'
   end
 end
