@@ -316,6 +316,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
   better_errors
   binding_of_callers
   bootstrap-sass
