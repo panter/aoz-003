@@ -15,3 +15,48 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Change your login"
+msgstr "Ihre Login ändern"
+
+msgid "Edit profile"
+msgstr "Profil bearbeiten"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "First name"
+msgstr "Vorname"
+
+msgid "Last name"
+msgstr "Nachname"
+
+msgid "Logout"
+msgstr "Abmelden"
+
+msgid "My profile"
+msgstr "Mein Profil"
+
+msgid "New profile"
+msgstr "Neues Profil"
+
+msgid "Phone"
+msgstr "Telefonnumer"
+
+msgid "Picture"
+msgstr "Bild"
+
+msgid "Profession"
+msgstr "Beruf"
+
+msgid "Show profile"
+msgstr "Profil anzeigen"
+
+msgid "Users"
+msgstr "Nutzer"
+
+msgid "Working days"
+msgstr "Arbeitstage"

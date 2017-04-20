@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 12:20+0200\n"
-"PO-Revision-Date: 2017-04-20 12:20+0200\n"
+"POT-Creation-Date: 2017-04-20 14:24+0200\n"
+"PO-Revision-Date: 2017-04-20 14:24+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,3 +17,48 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Address"
+msgstr ""
+
+msgid "Change your login"
+msgstr ""
+
+msgid "Edit profile"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "My profile"
+msgstr ""
+
+msgid "New profile"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Picture"
+msgstr ""
+
+msgid "Profession"
+msgstr ""
+
+msgid "Show profile"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Working days"
+msgstr ""
