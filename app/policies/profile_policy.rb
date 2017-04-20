@@ -6,20 +6,8 @@ class ProfilePolicy < ApplicationPolicy
     @profile = profile
   end
 
-  def update?
-    @profile.user_id == @user.id
-  end
-
   def show?
     @user.admin_or_superadmin? || @profile.user_id == @user.id
-  end
-
-  def create?
-    @profile.user_id == @user.id
-  end
-
-  def edit?
-    @profile.user_id == @user.id
   end
 
   def new?
@@ -27,6 +15,14 @@ class ProfilePolicy < ApplicationPolicy
   end
 
   def edit?
+    @profile.user_id == @user.id
+  end
+
+  def create?
+    @profile.user_id == @user.id
+  end
+
+  def update?
     @profile.user_id == @user.id
   end
 end
