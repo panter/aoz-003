@@ -4,7 +4,7 @@ class UsersTest < ApplicationSystemTestCase
   setup do
     @emails = ActionMailer::Base.deliveries
     @emails.clear
-    @user = create :user
+    @user = create :user, email: 'superadmin@example.com'
     login_as @user
     visit new_user_path
   end
