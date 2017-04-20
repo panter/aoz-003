@@ -49,6 +49,10 @@ Style/SymbolArray:
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+  AllowInnerSlashes: true
+
 Style/WordArray:
   Enabled: false
 Rails/HasAndBelongsToMany:
