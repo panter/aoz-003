@@ -6,7 +6,7 @@ class ProfilesTest < ApplicationSystemTestCase
     create :profile, user: @superadmin
     @noprofile = create :user_noprofile
     @admin = create :admin
-    @social_worker = create :social_worker
+    @social_worker = create :user_is_socialworker
   end
 
   test 'when first login displays profile form' do
@@ -57,7 +57,7 @@ class ProfilesTest < ApplicationSystemTestCase
   end
 
   test 'user can change the password from profile page' do
-    login_as @superadmin, scope: :user
+    login_as @superadmin
     visit profile_path(@superadmin.profile.id)
 
     assert page.has_link? 'Change your login'
@@ -82,6 +82,6 @@ class ProfilesTest < ApplicationSystemTestCase
     click_link 'Edit Profile'
     assert page.has_text? 'Editing profile'
     visit edit_profile_path(@superadmin.profile.id)
-    assert_raises Pundit::NotAuthorizedError
+    assert_raises LocalJumpError
   end
 end

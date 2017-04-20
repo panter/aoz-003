@@ -5,7 +5,15 @@ FactoryGirl.define do
     role 'superadmin'
   end
 
-  factory :superadmin, class: User do
+  factory :user_is_socialworker, parent: :user do
+    role 'social_worker'
+    profile { |profile| profile.association(:profile) }
+    clients do |t|
+      1.step(10).to_a.map { |n| t.association(:client) }
+    end
+  end
+
+  factory :superadmin, parent: :user do
     email 'supersuperadmin@example.com'
     password 'asdfasdf'
     role 'superadmin'
