@@ -14,7 +14,7 @@ class UsersTest < ApplicationSystemTestCase
     select '', from: 'Role'
 
     assert_no_difference 'User.count' do
-      click_button 'Create User'
+      click_button 'Create user'
       assert page.has_text? 'Please review the problems below:'
       assert page.has_text? "can't be blank"
       assert page.has_text? 'is not included in the list'
@@ -26,7 +26,7 @@ class UsersTest < ApplicationSystemTestCase
     select '', from: 'Role'
 
     assert_no_difference 'User.count' do
-      click_button 'Create User'
+      click_button 'Create user'
       assert page.has_text? 'Please review the problems below:'
       assert page.has_text? 'is not included in the list'
     end
@@ -37,7 +37,7 @@ class UsersTest < ApplicationSystemTestCase
     select 'superadmin', from: 'Role'
 
     assert_no_difference 'User.count' do
-      click_button 'Create User'
+      click_button 'Create user'
       assert page.has_text? 'Please review the problems below:'
       assert page.has_text? 'has already been taken'
     end
@@ -48,7 +48,7 @@ class UsersTest < ApplicationSystemTestCase
     select 'superadmin', from: 'Role'
 
     assert_difference 'User.count', 1 do
-      click_button 'Create User'
+      click_button 'Create user'
       assert page.has_text? 'Invitation sent to superadmin@test.ch'
     end
 

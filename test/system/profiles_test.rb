@@ -72,7 +72,7 @@ class ProfilesTest < ApplicationSystemTestCase
 
     fill_in 'Password', with: 'abcdefghijk'
     fill_in 'Email', with: 'new@email.com'
-    click_button 'Update User'
+    click_button 'Update user'
 
     user = User.find @user_with_profile.id
     assert user.valid_password? 'abcdefghijk'

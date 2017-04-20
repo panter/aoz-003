@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "\"Invitation sent to #{@user.email}\""
-msgstr ""
+msgstr "Einladung wurde an #{@user.email} geschickt"
 
 msgid "Address"
 msgstr "Adresse"
@@ -27,6 +27,10 @@ msgstr "Ihre Login ändern"
 
 msgid "Close"
 msgstr "Schliessen"
+
+#, fuzzy
+msgid "Create Profile"
+msgstr "Profil erstellen"
 
 msgid "Create user"
 msgstr "Nutzer erstellen"
@@ -138,6 +142,14 @@ msgid "Show profile"
 msgstr "Profil anzeigen"
 
 #, fuzzy
+msgid "Update Profile"
+msgstr "Profil aktualisieren"
+
+#, fuzzy
+msgid "Update uogin"
+msgstr "Nutzer aktualisieren"
+
+#, fuzzy
 msgid "User"
 msgstr "Nutzer"
 
@@ -199,3 +211,7 @@ msgstr "Freiwillige Plattform"
 
 msgid "Working days"
 msgstr "Arbeitstage"
+
+#, fuzzy
+#~ msgid "Update user"
+#~ msgstr "Nutzer aktualisieren"
