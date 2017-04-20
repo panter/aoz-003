@@ -2,15 +2,15 @@ require 'application_system_test_case'
 
 class ProfilesTest < ApplicationSystemTestCase
   def setup
-    @superadmin = create :user_with_profile
-    @noprofile = create :user
+    @user_with_profile = create :user_with_profile
+    @user_without_profile = create :user
   end
 
   test 'when first login displays profile form' do
     visit new_user_session_path
-    fill_in 'Email', with: @noprofile.email
+    fill_in 'Email', with: @user_without_profile.email
     fill_in 'Password', with: 'asdfasdf'
-    click_on 'Log in'
+    click_button 'Log in'
 
     assert page.has_current_path? new_profile_path
     assert page.has_text? 'New profile'
@@ -29,9 +29,9 @@ class ProfilesTest < ApplicationSystemTestCase
 
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
-    click_on 'Create Profile'
+    click_button 'Create Profile'
 
-    assert page.has_current_path? profile_path(@noprofile.profile.id)
+    assert page.has_current_path? profile_path(@user_without_profile.profile.id)
     assert page.has_text? 'Hans'
     assert page.has_text? 'Muster'
     assert page.has_text? 'Profile was successfully created.'
@@ -39,33 +39,32 @@ class ProfilesTest < ApplicationSystemTestCase
 
   test 'when profile created it can be displayed' do
     visit new_user_session_path
-    fill_in 'Email', with: @noprofile.email
+    fill_in 'Email', with: @user_without_profile.email
     fill_in 'Password', with: 'asdfasdf'
-    click_on 'Log in'
+    click_button 'Log in'
 
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
-    click_on 'Create Profile'
+    click_button 'Create Profile'
 
-    click_on 'Toggle navigation' if page.has_button? 'Toggle navigation'
+    assert page.has_link? @user_without_profile.email
 
-    assert page.has_link? @noprofile.email
+    click_link @user_without_profile.email
 
-    click_link @noprofile.email
     assert page.has_link? 'Show profile'
 
-    click_on 'Show profile'
+    click_link 'Show profile'
 
     assert page.has_text? 'My Profile'
-    assert page.has_text? @noprofile.profile.first_name
-    assert page.has_text? @noprofile.profile.last_name
+    assert page.has_text? @user_without_profile.profile.first_name
+    assert page.has_text? @user_without_profile.profile.last_name
   end
 
   test 'user can change the password from profile page' do
-    login_as @superadmin, scope: :user
-    visit profile_path(@superadmin.profile.id)
+    login_as @user_with_profile
+    visit profile_path(@user_with_profile.profile.id)
 
-    click_on 'Change your login'
+    click_link 'Change your login'
 
     assert page.has_field? 'Password'
     assert page.has_field? 'Email'
@@ -73,9 +72,9 @@ class ProfilesTest < ApplicationSystemTestCase
 
     fill_in 'Password', with: 'abcdefghijk'
     fill_in 'Email', with: 'new@email.com'
-    click_on 'Update User'
+    click_button 'Update User'
 
-    user = User.find @superadmin.id
+    user = User.find @user_with_profile.id
     assert user.valid_password? 'abcdefghijk'
     assert_equal user.email, 'new@email.com'
   end
