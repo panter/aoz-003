@@ -2,7 +2,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
-  has_one :profile
+  has_one :profile, dependent: :destroy
 
   SUPERADMIN = 'superadmin'.freeze
 
