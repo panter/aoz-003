@@ -16,47 +16,186 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "Address"
+msgid "\"Invitation sent to #{@user.email}\""
 msgstr ""
+
+msgid "Address"
+msgstr "Adresse"
 
 msgid "Change your login"
-msgstr ""
+msgstr "Ihre Login ändern"
+
+msgid "Close"
+msgstr "Schliessen"
+
+msgid "Create user"
+msgstr "Nutzer erstellen"
+
+msgid "Edit login"
+msgstr "Login bearbeiten"
 
 msgid "Edit profile"
-msgstr ""
+msgstr "Profil bearbeiten"
 
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 msgid "First name"
-msgstr ""
+msgstr "Vorname"
+
+msgid "Forgot your password?"
+msgstr "Passwort vergessen?"
 
 msgid "Last name"
-msgstr ""
+msgstr "Nachname"
+
+msgid "Log in"
+msgstr "Anmelden"
 
 msgid "Logout"
-msgstr ""
+msgstr "Abmelden"
 
 msgid "My profile"
-msgstr ""
+msgstr "Mein Profil"
 
 msgid "New profile"
-msgstr ""
+msgstr "Neues Profil"
 
 msgid "Phone"
-msgstr ""
+msgstr "Telefonnumer"
 
 msgid "Picture"
-msgstr ""
+msgstr "Bild"
 
 msgid "Profession"
+msgstr "Beruf"
+
+msgid "Profile"
+msgstr "Profil"
+
+#, fuzzy
+msgid "Profile was successfully created."
+msgstr "Profil wurde erfolgreich erstellt."
+
+#, fuzzy
+msgid "Profile was successfully updated."
+msgstr "Profil wurde erfolgreich aktualisiert."
+
+#, fuzzy
+msgid "Profile|Address"
+msgstr "Adresse"
+
+msgid "Profile|Avatar content type"
 msgstr ""
+
+msgid "Profile|Avatar file name"
+msgstr ""
+
+msgid "Profile|Avatar file size"
+msgstr ""
+
+msgid "Profile|Avatar updated at"
+msgstr ""
+
+#, fuzzy
+msgid "Profile|First name"
+msgstr "Vorname"
+
+msgid "Profile|Friday"
+msgstr "Freitag"
+
+#, fuzzy
+msgid "Profile|Last name"
+msgstr "Nachname"
+
+msgid "Profile|Monday"
+msgstr "Montag"
+
+#, fuzzy
+msgid "Profile|Phone"
+msgstr "Telefonnumer"
+
+#, fuzzy
+msgid "Profile|Profession"
+msgstr "Beruf"
+
+msgid "Profile|Thursday"
+msgstr "Donnerstag"
+
+msgid "Profile|Tuesday"
+msgstr "Dienstag"
+
+msgid "Profile|Wednesday"
+msgstr "Mittwoch"
+
+msgid "Role"
+msgstr "Rolle"
+
+msgid "Send me reset password instructions"
+msgstr "Schicken Sie mir Passwortrücksetzung Instruktionen"
 
 msgid "Show profile"
-msgstr ""
+msgstr "Profil anzeigen"
+
+#, fuzzy
+msgid "User"
+msgstr "Nutzer"
 
 msgid "Users"
+msgstr "Nutzer"
+
+msgid "User|Current sign in at"
 msgstr ""
 
-msgid "Working days"
+msgid "User|Current sign in ip"
 msgstr ""
+
+#, fuzzy
+msgid "User|Email"
+msgstr "E-mail"
+
+msgid "User|Encrypted password"
+msgstr ""
+
+msgid "User|Invitation accepted at"
+msgstr ""
+
+msgid "User|Invitation created at"
+msgstr ""
+
+msgid "User|Invitation limit"
+msgstr ""
+
+msgid "User|Invitation sent at"
+msgstr ""
+
+msgid "User|Invitation token"
+msgstr ""
+
+msgid "User|Last sign in at"
+msgstr ""
+
+msgid "User|Last sign in ip"
+msgstr ""
+
+msgid "User|Remember created at"
+msgstr ""
+
+msgid "User|Reset password sent at"
+msgstr ""
+
+msgid "User|Reset password token"
+msgstr ""
+
+#, fuzzy
+msgid "User|Role"
+msgstr "Rolle"
+
+msgid "User|Sign in count"
+msgstr ""
+
+msgid "Voluntaries Platform"
+msgstr "Freiwillige Plattform"
+
+msgid "Working days"
+msgstr "Arbeitstage"
