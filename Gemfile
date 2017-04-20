@@ -11,6 +11,7 @@ gem 'autoprefixer-rails'
 gem 'bootstrap-sass'
 gem 'coffee-rails'
 gem 'devise'
+gem 'gettext_i18n_rails'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'panter-rails-deploy'
@@ -40,5 +41,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'gettext', require: false
+  gem 'ruby_parser', require: false
   gem 'spring'
 end
