@@ -11,7 +11,7 @@ class ProfilePolicy < ApplicationPolicy
   end
 
   def show?
-    @user.admin_superadmin? || @profile.user_id == @user.id
+    @user.admin_or_superadmin? || @profile.user_id == @user.id
   end
 
   def create?
