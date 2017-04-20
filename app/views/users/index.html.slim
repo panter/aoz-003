@@ -1,17 +1,17 @@
 .row
   .col-xs-12
-    h1 Users
+    h1 =_('Users')
 
 .row
   .col-xs-12
     table.table.table-striped
       thead
         tr
-          th Email
-          th Role
+          th =_('Email')
+          th =_('Role')
       tbody
         = render @users
 
 .row
   .col-xs-12
-    = link_to 'Create User', new_user_path, class: 'btn btn-success'
+    = link_to _('Create user'), new_user_path, class: 'btn btn-success'

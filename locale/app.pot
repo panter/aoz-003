@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 14:24+0200\n"
-"PO-Revision-Date: 2017-04-20 14:24+0200\n"
+"POT-Creation-Date: 2017-04-20 16:14+0200\n"
+"PO-Revision-Date: 2017-04-20 16:14+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,10 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+msgid "\"Invitation sent to #{@user.email}\""
+msgstr ""
+
 msgid "Address"
 msgstr ""
 
 msgid "Change your login"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Create user"
+msgstr ""
+
+msgid "Edit login"
 msgstr ""
 
 msgid "Edit profile"
@@ -33,7 +45,13 @@ msgstr ""
 msgid "First name"
 msgstr ""
 
+msgid "Forgot your password?"
+msgstr ""
+
 msgid "Last name"
+msgstr ""
+
+msgid "Log in"
 msgstr ""
 
 msgid "Logout"
@@ -54,10 +72,121 @@ msgstr ""
 msgid "Profession"
 msgstr ""
 
+msgid "Profile"
+msgstr ""
+
+msgid "Profile was successfully created."
+msgstr ""
+
+msgid "Profile was successfully updated."
+msgstr ""
+
+msgid "Profile|Address"
+msgstr ""
+
+msgid "Profile|Avatar content type"
+msgstr ""
+
+msgid "Profile|Avatar file name"
+msgstr ""
+
+msgid "Profile|Avatar file size"
+msgstr ""
+
+msgid "Profile|Avatar updated at"
+msgstr ""
+
+msgid "Profile|First name"
+msgstr ""
+
+msgid "Profile|Friday"
+msgstr ""
+
+msgid "Profile|Last name"
+msgstr ""
+
+msgid "Profile|Monday"
+msgstr ""
+
+msgid "Profile|Phone"
+msgstr ""
+
+msgid "Profile|Profession"
+msgstr ""
+
+msgid "Profile|Thursday"
+msgstr ""
+
+msgid "Profile|Tuesday"
+msgstr ""
+
+msgid "Profile|Wednesday"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Send me reset password instructions"
+msgstr ""
+
 msgid "Show profile"
 msgstr ""
 
+msgid "User"
+msgstr ""
+
 msgid "Users"
+msgstr ""
+
+msgid "User|Current sign in at"
+msgstr ""
+
+msgid "User|Current sign in ip"
+msgstr ""
+
+msgid "User|Email"
+msgstr ""
+
+msgid "User|Encrypted password"
+msgstr ""
+
+msgid "User|Invitation accepted at"
+msgstr ""
+
+msgid "User|Invitation created at"
+msgstr ""
+
+msgid "User|Invitation limit"
+msgstr ""
+
+msgid "User|Invitation sent at"
+msgstr ""
+
+msgid "User|Invitation token"
+msgstr ""
+
+msgid "User|Last sign in at"
+msgstr ""
+
+msgid "User|Last sign in ip"
+msgstr ""
+
+msgid "User|Remember created at"
+msgstr ""
+
+msgid "User|Reset password sent at"
+msgstr ""
+
+msgid "User|Reset password token"
+msgstr ""
+
+msgid "User|Role"
+msgstr ""
+
+msgid "User|Sign in count"
+msgstr ""
+
+msgid "Voluntaries Platform"
 msgstr ""
 
 msgid "Working days"

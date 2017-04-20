@@ -15,7 +15,7 @@
 
   .row
     .col-xs-12
-      h2 Arbeitstage
+      h2 =_('Working days')
       ul.list-inline
         - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
           li= f.input day, as: :boolean
