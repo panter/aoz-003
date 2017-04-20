@@ -28,6 +28,10 @@ msgstr "Ihre Login ändern"
 msgid "Close"
 msgstr "Schliessen"
 
+#, fuzzy
+msgid "Create Profile"
+msgstr "Profil erstellen"
+
 msgid "Create user"
 msgstr "Nutzer erstellen"
 
@@ -136,6 +140,14 @@ msgstr "Schicken Sie mir Passwortrücksetzung Instruktionen"
 
 msgid "Show profile"
 msgstr "Profil anzeigen"
+
+#, fuzzy
+msgid "Update Profile"
+msgstr "Profil aktualisieren"
+
+#, fuzzy
+msgid "Update user"
+msgstr "Nutzer aktualisieren"
 
 #, fuzzy
 msgid "User"
