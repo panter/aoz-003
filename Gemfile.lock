@@ -135,8 +135,26 @@ GEM
     ffi (1.9.18)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    haml (4.0.7)
+      tilt
+    has_scope (0.7.0)
+      actionpack (>= 4.1, < 5.1)
+      activesupport (>= 4.1, < 5.1)
+    has_vcards (1.1.1)
+      haml
+      i18n_rails_helpers
+      inherited_resources
+      rails (> 3.2.0)
+      simple_form
     highline (1.7.8)
     i18n (0.8.1)
+    i18n_rails_helpers (2.0.1)
+      rails (> 3.0.0)
+    inherited_resources (1.7.1)
+      actionpack (>= 3.2, < 5.1)
+      has_scope (~> 0.6)
+      railties (>= 3.2, < 5.1)
+      responders
     iniparse (1.4.2)
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
@@ -325,6 +343,7 @@ DEPENDENCIES
   database_cleaner
   devise
   factory_girl_rails
+  has_vcards
   jbuilder
   jquery-rails
   listen
