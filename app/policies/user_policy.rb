@@ -7,7 +7,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    @current_user.admin_superadmin?
+    @current_user.admin_or_superadmin?
   end
 
   def show?
@@ -15,7 +15,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def new?
-    @current_user.admin_superadmin?
+    @current_user.admin_or_superadmin?
   end
 
   def edit?
@@ -23,7 +23,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    @current_user.admin_superadmin?
+    @current_user.admin_or_superadmin?
   end
 
   def update?

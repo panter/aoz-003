@@ -18,7 +18,7 @@ nav.navbar.navbar-top
           - if current_user.superadmin?
             li
               = link_to 'Create superadmin', new_user_url
-          - if current_user.admin_superadmin?
+          - if current_user.admin_or_superadmin?
             li
               = link_to 'Show users', users_path
           li

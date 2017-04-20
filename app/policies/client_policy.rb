@@ -29,10 +29,10 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin_superadmin? || user.social_worker?
+    user.admin_or_superadmin? || user.social_worker?
   end
 
   def new?
-    user.admin_superadmin? || user.social_worker?
+    user.admin_or_superadmin? || user.social_worker?
   end
 end
