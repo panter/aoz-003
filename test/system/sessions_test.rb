@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class SessionsTest < ApplicationSystemTestCase
   setup do
-    @superadmin = create :user_with_profile
+    @user = create :user
   end
 
   test 'redirects to login page if not authenticated' do
@@ -17,27 +17,20 @@ class SessionsTest < ApplicationSystemTestCase
 
     assert page.has_field? 'Email'
 
-    fill_in 'Email', with: @superadmin.email
+    fill_in 'Email', with: @user.email
     fill_in 'Password', with: 'asdfasdf'
-    click_on 'Log in'
-    assert page.has_current_path? root_path
+    click_button 'Log in'
+
     assert page.has_text? 'Signed in successfully.'
-
-    click_on 'Toggle navigation' if page.has_button? 'Toggle navigation'
-
-    assert page.has_link? @superadmin.email
+    assert page.has_link? @user.email
   end
 
   test 'sign out current user' do
-    login_as @superadmin, scope: :user
+    login_as @user
     visit root_path
-
-    # trigger hamburger on mobile views
-    click_on 'Toggle navigation' if page.has_button? 'Toggle navigation'
-
-    click_on @superadmin.email
+    click_link @user.email
     assert page.has_link? 'Logout'
-    click_on 'Logout'
+    click_link 'Logout'
 
     assert page.has_current_path? new_user_session_path
     assert page.has_text? 'You need to sign in or sign up before continuing.'
