@@ -57,7 +57,6 @@ class ProfilesTest < ApplicationSystemTestCase
     click_on 'Show profile'
 
     assert page.has_text? 'My Profile'
-    assert page.has_text? 'Information'
     assert page.has_text? @noprofile.profile.first_name
     assert page.has_text? @noprofile.profile.last_name
   end
