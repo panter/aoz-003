@@ -5,14 +5,18 @@ class ClientsController < ApplicationController
     @clients = policy_scope(Client)
   end
 
-  def show; end
+  def show
+    authorize @client
+  end
 
   def new
     @client = Client.new
     authorize @client
   end
 
-  def edit; end
+  def edit
+    authorize @client
+  end
 
   def create
     @client = Client.new(client_params)
