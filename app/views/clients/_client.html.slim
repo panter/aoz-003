@@ -1,0 +1,12 @@
+tr
+  td = client.firstname
+  td = client.lastname
+  td = client.dob
+  td = client.nationality
+  td = client.gender
+  td = client.permit
+  td = client.email
+  td = client.user.email
+  td = link_to 'Show', client
+  td = link_to 'Edit', edit_client_path(client)
+  td = link_to 'Destroy', client, data: { confirm: 'Are you sure?' }, method: :delete

@@ -1,4 +1,8 @@
 .nested-fields
-  = f.input :language, :collection => languages
-  = f.input :level, :collection => language_level_collection
-  = link_to_remove_association "remove language", f
+  .row
+    .col-xs-12.col-md-5
+      = f.input :language, :collection => languages
+    .col-xs-12.col-md-5
+      = f.input :level, :collection => language_level_collection
+    .col-xs-12.col-md-2
+      = link_to_remove_association "remove language", f, class: 'btn btn-danger'

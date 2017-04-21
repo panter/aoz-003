@@ -1,51 +1,104 @@
 = simple_form_for(@client) do |f|
-  = f.error_notification
+  - if f.error_notification.present?
+    .row
+      .col-xs-12
+        = f.error_notification
+  = f.input :user_id, as: :hidden
+  .row
+    .col-xs-12
+      .row
+        .col-xs-12.col-md-6
+          = f.input :firstname
+        .col-xs-12.col-md-6
+          = f.input :lastname
+      .row
+        .col-xs-12.col-md-6
+          = f.input :dob, as: :date, start_year: Date.today.year - 90,
+                                 end_year: Date.today.year,
+                                 order: [:day, :month, :year],
+                                 label: 'Date of birth'
+        .col-xs-12.col-md-6
+          = f.input :gender,
+                    :collection => gender_collection,
+                    as: :radio_buttons,
+                    wrapper: :vertical_radio_and_checkboxes
+      .row
+        .col-xs-12.col-md-6
+          = f.input :nationality, as: :country
+        .col-xs-12.col-md-6
+          = f.input :permit,
+                    :collection => permit_collection,
+                    as: :radio_buttons,
+                    wrapper: :vertical_radio_and_checkboxes
+      .row
+        .col-xs-12
+          h3 Contact Information
+      .row
+        .col-xs-12
+          = f.input :street, label: 'Street and house number'
+      .row
+        .col-xs-6
+          = f.input :zip
+        .col-xs-6
+          = f.input :city
+      = f.input :email
+      = f.input :phone
 
-  .form-inputs
-    = f.input :firstname
-    = f.input :lastname
-    = f.input :dob, as: :date, start_year: Date.today.year - 90,
-                               end_year: Date.today.year - 12,
-                               order: [:day, :month, :year],
-                               label: 'Date of birth'
-    = f.input :nationality, as: :country
-    = f.input :gender, :collection => gender_collection, as: :radio_buttons
-    = f.input :permit, :collection => permit_collection, as: :radio_buttons
-    p
-      strong Contact Information
-    = f.input :street, label: 'Street and house number'
-    = f.input :zip
-    = f.input :city
-    = f.input :email
-    = f.input :phone
+      .row
+        .col-xs-12
+          h3 Language Skills
+          #languages
+            = f.simple_fields_for :language_skills do |language|
+              = render 'language_skill_fields', f: language
+            .links
+              = link_to_add_association 'Add language', f, :language_skills, class: 'btn btn-success'
 
-    p
-      strong Language Skills
-    #languages
-      = f.simple_fields_for :language_skills do |language|
-        = render 'language_skill_fields', f: language
-      .links
-        = link_to_add_association 'Add language', f, :language_skills
+      .row
+        .col-xs-12
+          h3 Family members
+          #relatives
+            = f.simple_fields_for :relatives do |relative|
+              = render 'relative_fields', f: relative
+            .links
+              = link_to_add_association 'Add family member', f, :relatives, class: 'btn btn-success'
+
+      .row
+        .col-xs-12
+          h3 Personal Background
+          = f.input :goals, as: :text
+          = f.input :education, as: :text
+          = f.input :hobbies, as: :text
+          = f.input :interests, as: :text
+          = f.input :state, :collection => state_collection
+          = f.input :comments, as: :text
+          = f.input :c_authority, as: :text, label: 'Competent authority'
+          = f.input :i_authority, as: :text, label: 'Involved authorities'
         
-    p
-      strong Family members
-    #relatives
-      = f.simple_fields_for :relatives do |relative|
-        = render 'relative_fields', f: relative
-      .links
-        = link_to_add_association 'Add family member', f, :relatives
+      .row
+        .col-xs-12
+          h3 Schedule
+          .row
+            .col-xs-12
+              table.table.table-striped
+                thead
+                  tr
+                    th
+                      | Time
+                    - Schedule.days.each do |day|
+                      th.days
+                        = day
+                tbody
+                  - @client.schedules.group_by(&:time).each do |time, schedules|
+                    tr
+                      td
+                        = time
+                      = f.simple_fields_for :schedules, schedules do |schedule|
+                        td
+                          = schedule.input :day, as: :hidden
+                          = schedule.input :time, as: :hidden
+                          = schedule.input :available, as: :boolean
 
-    p
-      strong Personal Background
-    = f.input :goals, as: :text
-    = f.input :education, as: :text
-    = f.input :hobbies, as: :text
-    = f.input :interests, as: :text
-    = f.input :state, :collection => state_collection
-    = f.input :comments, as: :text
-    = f.input :c_authority, as: :text, label: 'Competent authority'
-    = f.input :i_authority, as: :text, label: 'Involved authorities'
-    = f.input :availability, as: :boolean, checked_value: true, unchecked_value: false
 
-  .form-actions
-    = f.button :submit
+  .row
+    .col-xs-12
+      = f.button :submit, 'Create Client', class: 'btn btn-success'

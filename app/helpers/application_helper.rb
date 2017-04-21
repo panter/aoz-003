@@ -17,4 +17,6 @@ module ApplicationHelper
     { 'registered' => 'registered', 'reserved' => 'reserved',
       'active' => 'active', 'finished' => 'finished', 'rejected' => 'rejected'}
   end
+
+
 end

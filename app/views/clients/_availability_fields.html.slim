@@ -1,0 +1,20 @@
+.nested-fields
+  .row
+    .col-xs-12
+      table.table.table-striped
+        thead
+          tr
+            th
+              | Time
+            - Availability.days.each do |day|
+              th.days
+                = day
+        tbody
+          - availabilities.group_by(&:time).each do |time, availability|
+            tr
+              td
+                = time
+              - availability.each do |a|
+                td
+                  = a.day
+                  = a.time
