@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-21 11:52+0200\n"
-"PO-Revision-Date: 2017-04-21 11:52+0200\n"
+"POT-Creation-Date: 2017-04-21 13:54+0200\n"
+"PO-Revision-Date: 2017-04-21 13:54+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -22,6 +22,9 @@ msgid "\"Invitation sent to #{@user.email}\""
 msgstr ""
 
 msgid "Address"
+msgstr ""
+
+msgid "Change my password"
 msgstr ""
 
 msgid "Change your login"
@@ -49,6 +52,12 @@ msgid "First name"
 msgstr ""
 
 msgid "Forgot your password?"
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+msgid "If you didn't request this, please ignore this email"
 msgstr ""
 
 msgid "Last name"
@@ -138,6 +147,9 @@ msgstr ""
 msgid "Show profile"
 msgstr ""
 
+msgid "Someone has requested a link to change your password. You can do this through the link below."
+msgstr ""
+
 msgid "Update Profile"
 msgstr ""
 
@@ -201,5 +213,17 @@ msgstr ""
 msgid "Voluntaries Platform"
 msgstr ""
 
+msgid "We're contacting you to notify you that your email has been changed to"
+msgstr ""
+
+msgid "We're contacting you to notify you that your email is being changed to"
+msgstr ""
+
+msgid "We're contacting you to notify you that your password has been changed."
+msgstr ""
+
 msgid "Working days"
+msgstr ""
+
+msgid "Your password won't change until you access the link above and create a new one."
 msgstr ""
