@@ -16,6 +16,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+msgid "Accept invitation"
+msgstr "Die Einladung akzeptieren"
+
 msgid "Address"
 msgstr "Adresse"
 
@@ -54,6 +57,9 @@ msgstr "Hallo %{email}!"
 
 msgid "If you didn't request this, please ignore this email"
 msgstr "Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese E-Mail"
+
+msgid "If you don't want to accept the invitation, please ignore this email."
+msgstr ""
 
 msgid "Invitation sent to %{email}"
 msgstr "Einladung wurde an %{email} geschickt"
@@ -145,6 +151,9 @@ msgstr "Schicken Sie mir Passwortrücksetzung Instruktionen"
 msgid "Show profile"
 msgstr "Profil anzeigen"
 
+msgid "Someone has invited you to Volunteers Platform. You can accept it through the link below."
+msgstr "Jemand hat dich zur Freiwillige-Plattform eingeladen. Sie können sie über den Link unten akzeptieren."
+
 msgid "Someone has requested a link to change your password. You can do this through the link below."
 msgstr "Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Sie können dies über den Link unten tun."
 
@@ -222,6 +231,9 @@ msgstr "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihr P
 
 msgid "Working days"
 msgstr "Arbeitstage"
+
+msgid "Your account won't be created until you access the link above and set your password."
+msgstr "Ihr Konto wird erst dann erstellt, wenn Sie auf den obigen Link zugreifen und Ihr Passwort festlegen."
 
 msgid "Your password won't change until you access the link above and create a new one."
 msgstr "Ihr Passwort wird sich nicht ändern, bis Sie auf den Link oben zugreifen und ein neues erstellen."
