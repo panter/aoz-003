@@ -28,7 +28,9 @@ class SessionsTest < ApplicationSystemTestCase
   test 'sign out current user' do
     login_as @user
     visit root_path
-    click_link @user.email
+    within 'nav' do
+      click_link @user.email
+    end
     assert page.has_link? 'Logout'
     click_link 'Logout'
 
