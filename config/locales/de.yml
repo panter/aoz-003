@@ -7,6 +7,7 @@ de:
             email:
               blank: "kann nicht leer sein"
               taken: "ist schon vergeben"
+              invalid: "ist ungültig"
             role:
               inclusion: "ist nicht in der Liste enthalten"
             password:
