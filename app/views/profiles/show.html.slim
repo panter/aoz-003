@@ -28,7 +28,7 @@
     h2 =_('Working days')
     ul.list-inline
       - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
-        - if @profile[day.to_s]
+        - if @profile[day]
           li #{day.to_s.titlecase}
 
     p= link_to _('Edit profile'), edit_profile_path(@profile)
