@@ -55,7 +55,7 @@ class ProfilesTest < ApplicationSystemTestCase
 
     click_link 'Show profile'
 
-    assert page.has_text? 'My Profile'
+    assert page.has_text? 'My profile'
     assert page.has_text? @user_without_profile.profile.first_name
     assert page.has_text? @user_without_profile.profile.last_name
   end
@@ -72,7 +72,7 @@ class ProfilesTest < ApplicationSystemTestCase
 
     fill_in 'Password', with: 'abcdefghijk'
     fill_in 'Email', with: 'new@email.com'
-    click_button 'Update User'
+    click_button 'Update user'
 
     user = User.find @user_with_profile.id
     assert user.valid_password? 'abcdefghijk'

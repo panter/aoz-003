@@ -1,5 +1,5 @@
 - if notice.present? || alert.present?
   .alert.alert-warning.alert-dismissible role='alert'
-    button.close aria-label='Close' data-dismiss='alert' type='button'
+    button.close aria-label=_('Close') data-dismiss='alert' type='button'
       span aria-hidden='true'  &times;
     = notice || alert

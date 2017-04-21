@@ -1,0 +1,241 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: app 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-21 16:37+0200\n"
+"PO-Revision-Date: 2017-04-21 16:37+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Accept invitation"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Change my password"
+msgstr ""
+
+msgid "Change your login"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Create Profile"
+msgstr ""
+
+msgid "Create user"
+msgstr ""
+
+msgid "Edit login"
+msgstr ""
+
+msgid "Edit profile"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
+msgid "Hello %{email}!"
+msgstr ""
+
+msgid "If you didn't request this, please ignore this email"
+msgstr ""
+
+msgid "If you don't want to accept the invitation, please ignore this email."
+msgstr ""
+
+msgid "Invitation sent to %{email}"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "My profile"
+msgstr ""
+
+msgid "New profile"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Picture"
+msgstr ""
+
+msgid "Profession"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Profile was successfully created."
+msgstr ""
+
+msgid "Profile was successfully updated."
+msgstr ""
+
+msgid "Profile|Address"
+msgstr ""
+
+msgid "Profile|Avatar content type"
+msgstr ""
+
+msgid "Profile|Avatar file name"
+msgstr ""
+
+msgid "Profile|Avatar file size"
+msgstr ""
+
+msgid "Profile|Avatar updated at"
+msgstr ""
+
+msgid "Profile|First name"
+msgstr ""
+
+msgid "Profile|Friday"
+msgstr ""
+
+msgid "Profile|Last name"
+msgstr ""
+
+msgid "Profile|Monday"
+msgstr ""
+
+msgid "Profile|Phone"
+msgstr ""
+
+msgid "Profile|Profession"
+msgstr ""
+
+msgid "Profile|Thursday"
+msgstr ""
+
+msgid "Profile|Tuesday"
+msgstr ""
+
+msgid "Profile|Wednesday"
+msgstr ""
+
+msgid "Remember me"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Send me reset password instructions"
+msgstr ""
+
+msgid "Show profile"
+msgstr ""
+
+msgid "Someone has invited you to Volunteers Platform. You can accept it through the link below."
+msgstr ""
+
+msgid "Someone has requested a link to change your password. You can do this through the link below."
+msgstr ""
+
+msgid "Update Profile"
+msgstr ""
+
+msgid "Update user"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "User|Current sign in at"
+msgstr ""
+
+msgid "User|Current sign in ip"
+msgstr ""
+
+msgid "User|Email"
+msgstr ""
+
+msgid "User|Encrypted password"
+msgstr ""
+
+msgid "User|Invitation accepted at"
+msgstr ""
+
+msgid "User|Invitation created at"
+msgstr ""
+
+msgid "User|Invitation limit"
+msgstr ""
+
+msgid "User|Invitation sent at"
+msgstr ""
+
+msgid "User|Invitation token"
+msgstr ""
+
+msgid "User|Last sign in at"
+msgstr ""
+
+msgid "User|Last sign in ip"
+msgstr ""
+
+msgid "User|Remember created at"
+msgstr ""
+
+msgid "User|Reset password sent at"
+msgstr ""
+
+msgid "User|Reset password token"
+msgstr ""
+
+msgid "User|Role"
+msgstr ""
+
+msgid "User|Sign in count"
+msgstr ""
+
+msgid "Voluntaries Platform"
+msgstr ""
+
+msgid "We're contacting you to notify you that your email has been changed to"
+msgstr ""
+
+msgid "We're contacting you to notify you that your email is being changed to"
+msgstr ""
+
+msgid "We're contacting you to notify you that your password has been changed."
+msgstr ""
+
+msgid "Working days"
+msgstr ""
+
+msgid "Your account won't be created until you access the link above and set your password."
+msgstr ""
+
+msgid "Your password won't change until you access the link above and create a new one."
+msgstr ""
