@@ -16,10 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#, fuzzy
-msgid "\"Invitation sent to #{@user.email}\""
-msgstr "Einladung wurde an #{@user.email} geschickt"
-
 msgid "Address"
 msgstr "Adresse"
 
@@ -53,11 +49,14 @@ msgstr "Vorname"
 msgid "Forgot your password?"
 msgstr "Passwort vergessen?"
 
-msgid "Hello"
-msgstr "Hallo"
+msgid "Hello %{email}!"
+msgstr "Hallo %{email}!"
 
 msgid "If you didn't request this, please ignore this email"
 msgstr "Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese E-Mail"
+
+msgid "Invitation sent to %{email}"
+msgstr "Einladung wurde an %{email} geschickt"
 
 msgid "Last name"
 msgstr "Nachname"
