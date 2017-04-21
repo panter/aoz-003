@@ -7,3 +7,6 @@ de:
       mark: '*'
     error_notification:
       default_message: "Bitte überprüfen Sie die folgenden Probleme:"
+    labels:
+      defaults:
+        password: 'Passwort'

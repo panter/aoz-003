@@ -28,7 +28,6 @@ msgstr "Ihre Login ändern"
 msgid "Close"
 msgstr "Schliessen"
 
-#, fuzzy
 msgid "Create Profile"
 msgstr "Profil erstellen"
 
@@ -77,15 +76,12 @@ msgstr "Beruf"
 msgid "Profile"
 msgstr "Profil"
 
-#, fuzzy
 msgid "Profile was successfully created."
 msgstr "Profil wurde erfolgreich erstellt."
 
-#, fuzzy
 msgid "Profile was successfully updated."
 msgstr "Profil wurde erfolgreich aktualisiert."
 
-#, fuzzy
 msgid "Profile|Address"
 msgstr "Adresse"
 
@@ -101,25 +97,21 @@ msgstr ""
 msgid "Profile|Avatar updated at"
 msgstr ""
 
-#, fuzzy
 msgid "Profile|First name"
 msgstr "Vorname"
 
 msgid "Profile|Friday"
 msgstr "Freitag"
 
-#, fuzzy
 msgid "Profile|Last name"
 msgstr "Nachname"
 
 msgid "Profile|Monday"
 msgstr "Montag"
 
-#, fuzzy
 msgid "Profile|Phone"
 msgstr "Telefonnumer"
 
-#, fuzzy
 msgid "Profile|Profession"
 msgstr "Beruf"
 
@@ -132,6 +124,9 @@ msgstr "Dienstag"
 msgid "Profile|Wednesday"
 msgstr "Mittwoch"
 
+msgid "Remember me"
+msgstr "Angemeldet bleiben"
+
 msgid "Role"
 msgstr "Rolle"
 
@@ -141,15 +136,12 @@ msgstr "Schicken Sie mir Passwortrücksetzung Instruktionen"
 msgid "Show profile"
 msgstr "Profil anzeigen"
 
-#, fuzzy
 msgid "Update Profile"
 msgstr "Profil aktualisieren"
 
-#, fuzzy
-msgid "Update uogin"
+msgid "Update user"
 msgstr "Nutzer aktualisieren"
 
-#, fuzzy
 msgid "User"
 msgstr "Nutzer"
 
@@ -162,7 +154,6 @@ msgstr ""
 msgid "User|Current sign in ip"
 msgstr ""
 
-#, fuzzy
 msgid "User|Email"
 msgstr "E-mail"
 
@@ -199,7 +190,6 @@ msgstr ""
 msgid "User|Reset password token"
 msgstr ""
 
-#, fuzzy
 msgid "User|Role"
 msgstr "Rolle"
 
@@ -211,7 +201,3 @@ msgstr "Freiwillige Plattform"
 
 msgid "Working days"
 msgstr "Arbeitstage"
-
-#, fuzzy
-#~ msgid "Update user"
-#~ msgstr "Nutzer aktualisieren"
