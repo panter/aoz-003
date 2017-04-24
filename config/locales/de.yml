@@ -1,0 +1,23 @@
+de:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "kann nicht leer sein"
+              taken: "ist schon vergeben"
+              invalid: "ist ungültig"
+            role:
+              inclusion: "ist nicht in der Liste enthalten"
+            password:
+              blank: "kann nicht leer sein"
+              too_short: "zu kurz (Minimum ist 6 Zeichen)"
+        profile:
+          attributes:
+            first_name:
+              blank: "kann nicht leer sein"
+            last_name:
+              blank: "kann nicht leer sein"
+            avatar_content_type:
+              invalid: "ist ungültig"
