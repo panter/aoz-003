@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 16:49+0200\n"
-"PO-Revision-Date: 2017-04-24 16:49+0200\n"
+"POT-Creation-Date: 2017-04-24 22:35+0200\n"
+"PO-Revision-Date: 2017-04-24 22:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -21,7 +21,34 @@ msgstr ""
 msgid "Accept invitation"
 msgstr ""
 
+msgid "Address"
+msgstr ""
+
 msgid "Change my password"
+msgstr ""
+
+msgid "Change your login"
+msgstr ""
+
+msgid "Create Profile"
+msgstr ""
+
+msgid "Create User"
+msgstr ""
+
+msgid "Edit Profile"
+msgstr ""
+
+msgid "Edit login"
+msgstr ""
+
+msgid "Edit profile"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "First name"
 msgstr ""
 
 msgid "Forgot your password?"
@@ -39,10 +66,28 @@ msgstr ""
 msgid "Invitation sent to %{email}"
 msgstr ""
 
+msgid "Last name"
+msgstr ""
+
 msgid "Log in"
 msgstr ""
 
 msgid "Logout"
+msgstr ""
+
+msgid "My Profile"
+msgstr ""
+
+msgid "New profile"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Picture"
+msgstr ""
+
+msgid "Profession"
 msgstr ""
 
 msgid "Profile was successfully created."
@@ -52,6 +97,9 @@ msgid "Profile was successfully updated."
 msgstr ""
 
 msgid "Remember me"
+msgstr ""
+
+msgid "Role"
 msgstr ""
 
 msgid "Send me reset password instructions"
@@ -72,7 +120,16 @@ msgstr ""
 msgid "Someone has requested a link to change your password. You can do this through the link below."
 msgstr ""
 
+msgid "Update Profile"
+msgstr ""
+
+msgid "Update User"
+msgstr ""
+
 msgid "Users"
+msgstr ""
+
+msgid "Voluntaries Platform"
 msgstr ""
 
 msgid "We are contacting you to notify you that your email has been changed."
@@ -82,6 +139,9 @@ msgid "We are contacting you to notify you that your email is being changed to %
 msgstr ""
 
 msgid "We are contacting you to notify you that your password has been changed."
+msgstr ""
+
+msgid "Working days"
 msgstr ""
 
 msgid "You can accept it through the link below:"

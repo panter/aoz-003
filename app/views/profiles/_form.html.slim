@@ -15,10 +15,11 @@
 
   .row
     .col-xs-12
-      h2 Arbeitstage
+      h2 =_('Working days')
       ul.list-inline
         - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
           li= f.input day, as: :boolean
   .row
     .col-xs-12
-      = f.button :submit, class: 'btn btn-default'
+      = f.button :submit, ( f.object.new_record? ? _('Create Profile') : _('Update Profile')),
+        class: 'btn btn-default'

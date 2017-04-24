@@ -13,4 +13,5 @@
 
   .row
     .col-xs-12
-      = f.button :submit, class: 'btn btn-default'
+    = f.button :submit, ( f.object.new_record? ? _('Create User') : _('Update User')),
+    class: 'btn btn-default'
