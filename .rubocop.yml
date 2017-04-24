@@ -28,6 +28,9 @@ Style/MultilineOperationIndentation:
 
 Style/AsciiComments:
   Enabled: false
+Style/LeadingCommentSpace:
+  Exclude:
+    - 'locale/model_attributes.rb'
 Metrics/LineLength:
   Max: 100
 Metrics/MethodLength:
