@@ -17,81 +17,132 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Accept invitation"
-msgstr ""
+msgstr "Die Einladung akzeptieren"
 
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 msgid "Change my password"
-msgstr ""
+msgstr "Ihr Passwort ändern"
 
 msgid "Change your login"
-msgstr ""
+msgstr "Ihre Login ändern"
 
 msgid "Create Profile"
-msgstr ""
+msgstr "Profil erstellen"
 
 msgid "Create User"
-msgstr ""
+msgstr "Nutzer erstellen"
 
 msgid "Edit Profile"
-msgstr ""
+msgstr "Profil bearbeiten"
 
 msgid "Edit login"
-msgstr ""
+msgstr "Login bearbeiten"
 
 msgid "Edit profile"
-msgstr ""
+msgstr "Profil bearbeiten"
 
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 msgid "First name"
-msgstr ""
+msgstr "Vorname"
 
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Passwort vergessen?"
 
 msgid "Hello %{email}!"
-msgstr ""
+msgstr "Hallo %{email}"
 
 msgid "If you didn't request this, please ignore this email."
-msgstr ""
+msgstr "\"Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese E-Mail."
 
 msgid "If you don't want to accept the invitation, please ignore this email."
-msgstr ""
+msgstr "Wenn Sie die Einladung nicht akzeptieren möchten, ignorieren Sie bitte diese E-Mail."
 
 msgid "Invitation sent to %{email}"
-msgstr ""
+msgstr "Einladung wurde an %{email} geschickt."
 
 msgid "Last name"
-msgstr ""
+msgstr "Nachname"
 
 msgid "Log in"
-msgstr ""
+msgstr "Anmelden"
 
 msgid "Logout"
-msgstr ""
+msgstr "Abmelden"
 
 msgid "My Profile"
-msgstr ""
+msgstr "Mein Profil"
 
 msgid "New profile"
-msgstr ""
+msgstr "Neues Profil"
 
 msgid "Phone"
-msgstr ""
+msgstr "Telefonnummer"
 
 msgid "Picture"
-msgstr ""
+msgstr "Bild"
 
 msgid "Profession"
-msgstr ""
+msgstr "Beruf"
+
+#, fuzzy
+msgid "Profile"
+msgstr "Mein Profil"
 
 msgid "Profile was successfully created."
-msgstr ""
+msgstr "Profil wurde erfolgreich erstellt."
 
 msgid "Profile was successfully updated."
+msgstr "Profil wurde erfolgreich aktualisiert."
+
+#, fuzzy
+msgid "Profile|Address"
+msgstr "Adresse"
+
+msgid "Profile|Avatar content type"
+msgstr ""
+
+msgid "Profile|Avatar file name"
+msgstr ""
+
+msgid "Profile|Avatar file size"
+msgstr ""
+
+msgid "Profile|Avatar updated at"
+msgstr ""
+
+#, fuzzy
+msgid "Profile|First name"
+msgstr "Vorname"
+
+msgid "Profile|Friday"
+msgstr ""
+
+#, fuzzy
+msgid "Profile|Last name"
+msgstr "Nachname"
+
+msgid "Profile|Monday"
+msgstr ""
+
+#, fuzzy
+msgid "Profile|Phone"
+msgstr "Telefonnummer"
+
+#, fuzzy
+msgid "Profile|Profession"
+msgstr "Beruf"
+
+msgid "Profile|Thursday"
+msgstr ""
+
+msgid "Profile|Tuesday"
+msgstr ""
+
+msgid "Profile|Wednesday"
 msgstr ""
 
 msgid "Remember me"
@@ -124,7 +175,59 @@ msgstr ""
 msgid "Update User"
 msgstr ""
 
+msgid "User"
+msgstr ""
+
 msgid "Users"
+msgstr ""
+
+msgid "User|Current sign in at"
+msgstr ""
+
+msgid "User|Current sign in ip"
+msgstr ""
+
+#, fuzzy
+msgid "User|Email"
+msgstr "E-mail"
+
+msgid "User|Encrypted password"
+msgstr ""
+
+msgid "User|Invitation accepted at"
+msgstr ""
+
+msgid "User|Invitation created at"
+msgstr ""
+
+msgid "User|Invitation limit"
+msgstr ""
+
+msgid "User|Invitation sent at"
+msgstr ""
+
+msgid "User|Invitation token"
+msgstr ""
+
+msgid "User|Last sign in at"
+msgstr ""
+
+msgid "User|Last sign in ip"
+msgstr ""
+
+msgid "User|Remember created at"
+msgstr ""
+
+msgid "User|Reset password sent at"
+msgstr ""
+
+msgid "User|Reset password token"
+msgstr ""
+
+msgid "User|Role"
+msgstr ""
+
+msgid "User|Sign in count"
 msgstr ""
 
 msgid "Voluntaries Platform"
