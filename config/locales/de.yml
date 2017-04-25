@@ -1,4 +1,12 @@
 de:
+  weekdays:
+    monday: "Montag"
+    tuesday: "Dienstag"
+    wednesday: "Mittwoch"
+    thursday: "Donnerstag"
+    friday: "Freitag"
+    saturday: "Samstag"
+    sonntag: "Sunday"
   activerecord:
     errors:
       models:

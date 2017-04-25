@@ -29,7 +29,7 @@
     ul.list-inline
       - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
         - if @profile[day.to_s]
-          li #{day.to_s.titlecase}
+          li= t("weekdays.#{day.to_s}")
 
     p= link_to _('Edit Profile'), edit_profile_path(@profile)
     p= link_to _('Change your login'), edit_user_path(current_user.id)
