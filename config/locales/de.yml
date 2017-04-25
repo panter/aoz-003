@@ -6,7 +6,7 @@ de:
     thursday: "Donnerstag"
     friday: "Freitag"
     saturday: "Samstag"
-    sonntag: "Sunday"
+    sunday: "Sonntag"
   activerecord:
     errors:
       models:
