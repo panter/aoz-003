@@ -21,6 +21,8 @@ de:
             password:
               blank: "kann nicht leer sein"
               too_short: "zu kurz (Minimum ist 6 Zeichen)"
+            password_confirmation:
+              confirmation: "Die eingegebenen Passwörter stimmen nicht überein"
         profile:
           attributes:
             first_name:
