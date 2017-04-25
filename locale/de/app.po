@@ -23,10 +23,10 @@ msgid "Address"
 msgstr "Adresse"
 
 msgid "Change my password"
-msgstr "Ihr Passwort ändern"
+msgstr "Ihr Passwort aendern"
 
 msgid "Change your login"
-msgstr "Ihre Login ändern"
+msgstr "Ihre Login aendern"
 
 msgid "Create Profile"
 msgstr "Profil erstellen"
@@ -59,7 +59,7 @@ msgid "If you didn't request this, please ignore this email."
 msgstr "Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese E-Mail."
 
 msgid "If you don't want to accept the invitation, please ignore this email."
-msgstr "Wenn Sie die Einladung nicht akzeptieren möchten, ignorieren Sie bitte diese E-Mail."
+msgstr "Wenn Sie die Einladung nicht akzeptieren moechten, ignorieren Sie bitte diese E-Mail."
 
 msgid "Invitation sent to %{email}"
 msgstr "Einladung wurde an %{email} geschickt."
@@ -146,7 +146,7 @@ msgid "Role"
 msgstr "Rolle"
 
 msgid "Send me reset password instructions"
-msgstr "Schicken Sie mir Passwortrücksetzung Instruktionen"
+msgstr "Schicken Sie mir Passwortruecksetzung Instruktionen"
 
 msgid "Set my password"
 msgstr "Lege mein Passwort fest"
@@ -161,7 +161,7 @@ msgid "Someone has invited you to %{url}"
 msgstr "Jemand hat dich zur %{url} eingeladen."
 
 msgid "Someone has requested a link to change your password. You can do this through the link below."
-msgstr "Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Sie können dies über den Link unten tun."
+msgstr "Jemand hat einen Link angefordert, um Ihr Passwort zu aendern. Sie koennen dies ueber den Link unten tun."
 
 msgid "Update Profile"
 msgstr "Profil aktualisieren"
@@ -227,22 +227,22 @@ msgid "Voluntaries Platform"
 msgstr "Freiwillige Plattform"
 
 msgid "We are contacting you to notify you that your email has been changed."
-msgstr "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihre E-Mail geändert wurde."
+msgstr "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihre E-Mail geaendert wurde."
 
 msgid "We are contacting you to notify you that your email is being changed to %{email}."
-msgstr "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihre E-Mail geändert wird. Ihre neue E-Mail-Adresse ist %{email}."
+msgstr "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihre E-Mail geaendert wird. Ihre neue E-Mail-Adresse ist %{email}."
 
 msgid "We are contacting you to notify you that your password has been changed."
-msgstr "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihr Passwort geändert wurde."
+msgstr "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihr Passwort geaendert wurde."
 
 msgid "Working days"
 msgstr "Arbeitstage"
 
 msgid "You can accept it through the link below:"
-msgstr "Sie können sie über den Link unten akzeptieren:"
+msgstr "Sie koennen sie ueber den Link unten akzeptieren:"
 
 msgid "Your account won't be created until you access the link above and set your password."
 msgstr "Ihr Konto wird erst dann erstellt, wenn Sie auf den obigen Link zugreifen und Ihr Passwort festlegen."
 
 msgid "Your password won't change until you access the link above and create a new one."
-msgstr "Ihr Passwort wird sich nicht ändern, bis Sie auf den Link oben zugreifen und ein neues erstellen."
+msgstr "Ihr Passwort wird sich nicht aendern, bis Sie auf den Link oben zugreifen und ein neues erstellen."
