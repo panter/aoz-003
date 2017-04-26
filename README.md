@@ -36,12 +36,12 @@ $ User.create(email: 'asdf1@asdf.com', password: 'asdfasdf', role: 'superadmin')
 use some `_('translations')`
 run:
 ```bash
-$ rake gettext:find
-$ rake gettext:store_model_attributes
-
-so as GetText to find all translations used
-to parse db columns that can be translated (optional)
-translate messages `'locale/de/app.po'`
+$ rake gettext:find [1]
+$ rake gettext:store_model_attributes [2]
+```
+so as GetText to find all translations used [1]
+and to parse db columns that can be translated (optional) [2].
+Translate messages at `'locale/de/app.po'`.
 
 More info: https://github.com/grosser/gettext_i18n_rails
 
