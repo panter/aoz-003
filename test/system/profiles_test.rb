@@ -2,8 +2,9 @@ require 'application_system_test_case'
 
 class ProfilesTest < ApplicationSystemTestCase
   def setup
-    @user_with_profile = create :user_with_profile
+    @user = create :user, :with_profile
     @user_without_profile = create :user
+    @social_worker = create :user, :with_profile, role: 'social_worker'
   end
 
   test 'when first login displays profile form' do
@@ -65,8 +66,8 @@ class ProfilesTest < ApplicationSystemTestCase
   end
 
   test 'user can change the password from profile page' do
-    login_as @user_with_profile
-    visit profile_path(@user_with_profile.profile.id)
+    login_as @user
+    visit profile_path(@user.profile.id)
 
     click_link 'Edit login'
 
@@ -78,7 +79,7 @@ class ProfilesTest < ApplicationSystemTestCase
     fill_in 'Email', with: 'new@email.com'
     click_button 'Update login'
 
-    user = User.find @user_with_profile.id
+    user = User.find @user.id
     assert user.valid_password? 'abcdefghijk'
     assert_equal user.email, 'new@email.com'
   end
@@ -90,5 +91,14 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_link? 'Create profile'
     click_link 'Create profile'
     assert page.has_text? 'New Profile'
+  end
+
+  test 'user cannot edit other users profile' do
+    login_as @social_worker, scope: :user
+    visit profile_path(@social_worker.profile.id)
+    click_link 'Edit Profile'
+    assert page.has_text? 'Editing profile'
+    visit edit_profile_path(@user.profile.id)
+    assert_raises LocalJumpError
   end
 end
