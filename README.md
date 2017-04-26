@@ -40,6 +40,7 @@ $ rake gettext:find [1]
 $ rake gettext:store_model_attributes [2]
 ```
 so as GetText to find all translations used [1]
+
 and to parse db columns that can be translated (optional) [2].
 Translate messages at `'locale/de/app.po'`.
 
