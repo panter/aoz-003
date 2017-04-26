@@ -1,32 +1,23 @@
-h1 Listing clients
+.row
+  .col-xs-12
+    h1 Listing clients
 
-table
-  thead
-    tr
-      th Firstname
-      th Lastname
-      th Date of birth
-      th Nationality
-      th Gender
-      th Recidence Permit
-      th Email
-      th Registered by
-
-  tbody
-    - @clients.each do |client|
+.row
+  .col-xs-12
+  table.table.table-striped
+    thead
       tr
-        td = client.firstname
-        td = client.lastname
-        td = client.dob
-        td = client.nationality
-        td = client.gender
-        td = client.permit
-        td = client.email
-        td = client.user.email
-        td = link_to 'Show', client
-        td = link_to 'Edit', edit_client_path(client)
-        td = link_to 'Destroy', client, data: { confirm: 'Are you sure?' }, method: :delete
+        th Firstname
+        th Lastname
+        th Date of birth
+        th Nationality
+        th Gender
+        th Recidence Permit
+        th Email
+        th Registered by
 
-br
-
-= link_to 'New Client', new_client_path
+    tbody
+      = render @clients
+.row
+  .col-xs-12
+    = link_to 'New Client', new_client_path, class: 'btn btn-success'
