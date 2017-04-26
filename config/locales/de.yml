@@ -1,0 +1,43 @@
+de:
+  activerecord:
+    models:
+      profile: Profil
+      user: Nutzer
+    attributes:
+      user:
+        email: E-mail
+        role: Rolle
+      profile:
+        first_name: Vorname
+        last_name: Nachname
+        phone: Telefonnummer
+        avatar: Bild
+        address: Adresse
+        profession: Betrieb
+        monday: Montag
+        tuesday: Dienstag
+        wednesday: Mittwoch
+        thursday: Donnerstag
+        friday: Freitag
+  helpers:
+    submit:
+      create: '%{model} erfassen'
+      update: '%{model} aktualisieren'
+      user:
+        update: Login aktualisieren
+  navigation:
+    create_user: Nutzer erfassen
+    edit_login: Login bearbeiten
+    edit_profile: Profil bearbeiten
+    logout: Abmelden
+    show_profile: Profil anzeigen
+    users: Nutzer
+  titles:
+    voluntary_platform: Freiwillige Platform
+    working_days: Arbeitstage
+  weekdays:
+    monday: Montag
+    tuesday: Dienstag
+    wednesday: Mittwoch
+    thursday: Donnerstag
+    friday: Freitag

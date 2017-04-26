@@ -13,10 +13,9 @@ nav.navbar.navbar-top
       #navbar.collapse.navbar-collapse
         ul.nav.navbar-nav
             li
-              = link_to 'Users', users_path
-            li              
+              = link_to t('navigation.users'), users_path
+            li
               = link_to 'Clients', clients_path
-
         ul.nav.navbar-nav.navbar-right
           li.dropdown
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
@@ -27,6 +26,6 @@ nav.navbar.navbar-top
                 - if current_user.profile.blank?
                   = link_to 'Create profile', new_profile_path
                 - else
-                  = link_to 'Show profile', current_user.profile
+                  = link_to t('navigation.show_profile'), current_user.profile
               li
-                = link_to 'Logout', destroy_user_session_path, method: :delete
+                = link_to t('navigation.logout'), destroy_user_session_path, method: :delete
