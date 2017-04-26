@@ -1,35 +1,35 @@
 .row
   .col-xs-12
-    h1 My Profile
+    h1= _('My Profile')
 
     table.table.table-condensed
       tr
-        td First name
+        td= _('First name')
         td= @profile.first_name
       tr
-        td Last name
+        td= _('Last name')
         td= @profile.last_name
       tr
-        td Email
+        td= _('Email')
         td= current_user.email
       tr
-        td Phone:
+        td= _('Phone')
         td= @profile.phone
       tr
-        td Picture:
+        td= _('Picture')
         td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
       tr
-        td Address:
+        td= _('Address')
         td= @profile.address
       tr
-        td Profession:
+        td= _('Profession')
         td= @profile.profession
 
-    h2 Working days
+    h2= _('Working days')
     ul.list-inline
       - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
         - if @profile[day.to_s]
-          li #{day.to_s.titlecase}
+          li= t("weekdays.#{day.to_s}")
 
-    p= link_to 'Edit Profile', edit_profile_path(@profile)
-    p= link_to 'Change your login', edit_user_path(current_user.id)
+    p= link_to _('Edit Profile'), edit_profile_path(@profile)
+    p= link_to _('Change your login'), edit_user_path(current_user.id)

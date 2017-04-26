@@ -1,0 +1,13 @@
+de:
+  simple_form:
+    "yes": 'Ja'
+    "no": 'Nein'
+    required:
+      text: 'notwendig'
+      mark: '*'
+    error_notification:
+      default_message: "Bitte überprüfen Sie die folgenden Probleme:"
+    labels:
+      defaults:
+        password: 'Passwort'
+        password_confirmation: 'Passwort bestätigen'

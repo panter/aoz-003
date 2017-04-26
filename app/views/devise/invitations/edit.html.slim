@@ -1,7 +1,6 @@
 .row
   .col-xs-12
-    h2
-      = t "devise.invitations.edit.header"
+    h2 =_('Set your password')
 
 = simple_form_for resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put } do |f|
   - if f.error_notification.present?
@@ -18,4 +17,4 @@
 
   .row
     .col-xs-12
-      = f.button :submit, t("devise.invitations.edit.submit_button")
+      = f.button :submit, _('Set my password')
