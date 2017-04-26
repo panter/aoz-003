@@ -1,79 +1,131 @@
-p
-  strong Firstname:
-  = @client.firstname
-p
-  strong Lastname:
-  = @client.lastname
+.row
+  .col-xs-12
+    h1
+      = @client.firstname
+      | ,  
+      = @client.lastname
+.row
+  .col-xs-12
+    h3 Personal Information
+.row
+  .col-md-2
+    strong Date of birth
+  .col-md-10 = @client.dob
 
-p
-  strong Date of birth:
-  = @client.dob
+.row
+  .col-md-2
+    strong Nationality
+  .col-md-10 = @client.nationality
 
-p
-  strong Nationality:
-  = @client.nationality
+.row
+  .col-md-2
+    strong Residence Permit
+  .col-md-10 = @client.permit
 
-p
-  strong Residence Permit:
-  = @client.permit
-p
-  strong Gender:
-  = @client.gender
+.row
+  .col-md-2
+    strong Gender
+  .col-md-10 = @client.gender
 
-p
-  strong Contact Information:
-  = @client.street
-  = @client.zip
-  = @client.city
-  = @client.phone
-  = @client.email
+.row
+  .col-xs-12
+    h3 Contact Information
+.row
+  .col-md-2
+    strong Street
+  .col-md-10 = @client.street
 
-p
-  strong Language Skills:
-  = render 'language_skill_show'
+.row
+  .col-md-2
+    strong Zip
+  .col-md-10 = @client.zip
 
-p
-  strong Family Members:
-  = render 'relatives_show'
+.row
+  .col-md-2
+    strong City
+  .col-md-10 = @client.city
 
-p
-  strong Goals:
-  = @client.goals
+.row
+  .col-md-2
+    strong Phone
+  .col-md-10 = @client.phone
 
-p
-  strong Education:
-  = @client.education
+.row
+  .col-md-2
+    strong Email
+  .col-md-10 = @client.email
 
-p
-  strong Hobbies:
-  = @client.hobbies
+.row
+  .col-xs-12
+    h3 Language Skills
+.row
+  .col-md-2
+    strong Language Skills
+  .col-md-10 = render 'language_skill_show'
 
-p
-  strong Interests:
-  = @client.interests
+.row
+  .col-xs-12
+    h3 Family Members
+.row
+  .col-md-2
+    strong Family Members
+  .col-md-10 = render 'relatives_show'
 
-p
-  strong State:
-  = @client.state
+.row
+  .col-md-2
+    strong Goals:
+  .col-md-10 = @client.goals
 
-p
-  strong Comments:
-  = @client.comments
+.row
+  .col-xs-12
+    h3 Personal Background
 
-p
-  strong Competent authority:
-  = @client.c_authority
+.row
+  .col-md-2
+    strong Education
+  .col-md-10 = @client.education
 
-p
-  strong Involved authorities:
-  = @client.i_authority
+.row
+  .col-md-2
+    strong Hobbies
+  .col-md-10 = @client.hobbies
 
-p
-  strong Registered by:
-  = @client.user.email
+.row
+  .col-md-2
+    strong Interests
+  .col-md-10 = @client.interests
 
-p
-  strong Schedule:
+.row
+  .col-xs-12
+    h3 Other
+.row
+  .col-md-2
+    strong State
+  .col-md-10 = @client.state
+
+.row
+  .col-md-2
+    strong Competent authority:
+  .col-md-10 = @client.c_authority
+
+.row
+  .col-md-2
+    strong Involved authorities:
+  .col-md-10 = @client.i_authority
+
+.row
+  .col-md-2
+    strong Registered by
+  .col-md-10 = @client.user.email
+
+.row
+  .col-md-2
+    strong Comments
+  .col-md-10 = @client.comments
+
+.row
+  .col-xs-12
+    h3 Schedule
 .row
   .col-xs-12
     table.table.table-striped
