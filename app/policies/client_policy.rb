@@ -16,8 +16,13 @@ class ClientPolicy < ApplicationPolicy
     end
   end
 
+  def initialize(user, client)
+    @user = user
+    @client = client
+  end
+
   def show?
-    user.superadmin? || scope.user_id == user.id
+    user.admin_or_superadmin? || @client.user_id == user.id
   end
 
   def new?
@@ -25,7 +30,7 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.superadmin? || scope.user_id == user.id
+    user.superadmin? || @client.user_id == user.id
   end
 
   def create?
@@ -33,6 +38,10 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def update?
-    user.superadmin? || scope.user_id == user.id
+    user.superadmin? || @client.user_id == user.id
+  end
+
+  def destroy?
+    user.admin_or_superadmin?
   end
 end
