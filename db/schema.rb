@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419120951) do
+ActiveRecord::Schema.define(version: 20170421104115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20170419120951) do
     t.text "comments"
     t.text "c_authority"
     t.text "i_authority"
-    t.boolean "availability", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -83,6 +82,16 @@ ActiveRecord::Schema.define(version: 20170419120951) do
     t.index ["client_id"], name: "index_relatives_on_client_id"
   end
 
+  create_table "schedules", force: :cascade do |t|
+    t.bigint "client_id"
+    t.string "day"
+    t.string "time"
+    t.boolean "available", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_schedules_on_client_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -112,4 +121,5 @@ ActiveRecord::Schema.define(version: 20170419120951) do
   add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
   add_foreign_key "relatives", "clients"
+  add_foreign_key "schedules", "clients"
 end
