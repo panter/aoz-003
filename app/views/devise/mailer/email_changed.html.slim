@@ -1,7 +1,10 @@
-p =format(_('Hello %{email}!'), email: @email)
+p
+  = format(_('Hello %{email}!'), email: @email)
 
 - if @resource.try(:unconfirmed_email?)
-  p =format(_('We are contacting you to notify you that your email is being changed to %{email}.'),
-     email: @resource.unconfirmed_email)
+  p
+    = format(_('We are contacting you to notify you that your email is being changed to %{email}.'),
+      email: @resource.unconfirmed_email)
 - else
-  p =_('We are contacting you to notify you that your email has been changed.')
+  p
+    = _('We are contacting you to notify you that your email has been changed.')

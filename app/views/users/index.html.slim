@@ -1,14 +1,14 @@
 .row
   .col-xs-12
-    h1 =_('Users')
+    h1= _('Users')
 
 .row
   .col-xs-12
     table.table.table-striped
       thead
         tr
-          th =_('Email')
-          th =_('Role')
+          th= _('Email')
+          th= _('Role')
       tbody
         = render @users
 

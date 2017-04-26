@@ -1,11 +1,17 @@
-p =format(_('Hello %{email}!'), email: @resource.email)
+p
+  = format(_('Hello %{email}!'), email: @resource.email)
 
-p =format(_('Someone has invited you to %{url}'), url: root_url)
+p
+  = format(_('Someone has invited you to %{url}'), url: root_url)
 
-p =_('You can accept it through the link below:')
+p
+  = _('You can accept it through the link below:')
 
-p = link_to _('Accept invitation'), accept_invitation_url(@resource, invitation_token: @token)
+p
+  = link_to _('Accept invitation'), accept_invitation_url(@resource, invitation_token: @token)
 
-p =_("If you don't want to accept the invitation, please ignore this email.")
+p
+  = _("If you don't want to accept the invitation, please ignore this email.")
 
-p =_("Your account won't be created until you access the link above and set your password.")
+p
+  = _("Your account won't be created until you access the link above and set your password.")

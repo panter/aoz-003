@@ -1,31 +1,31 @@
 .row
   .col-xs-12
-    h1 =_('My Profile')
+    h1= _('My Profile')
 
     table.table.table-condensed
       tr
-        td =_('First name')
+        td= _('First name')
         td= @profile.first_name
       tr
-        td =_('Last name')
+        td= _('Last name')
         td= @profile.last_name
       tr
-        td =_('Email')
+        td= _('Email')
         td= current_user.email
       tr
-        td =_('Phone')
+        td= _('Phone')
         td= @profile.phone
       tr
-        td =_('Picture')
+        td= _('Picture')
         td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
       tr
-        td =_('Address')
+        td= _('Address')
         td= @profile.address
       tr
-        td =_('Profession')
+        td= _('Profession')
         td= @profile.profession
 
-    h2 =_('Working days')
+    h2= _('Working days')
     ul.list-inline
       - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
         - if @profile[day.to_s]
