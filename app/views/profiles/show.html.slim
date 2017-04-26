@@ -2,7 +2,7 @@
   .col-xs-12
     h1
       = @profile.first_name
-      | ,  
+      | ,
       = @profile.last_name
 .row
   .col-xs-12
@@ -10,31 +10,30 @@
       table.table.table-no-border-top
         tbody
           tr
-            td width='200'
-              | Email
+            td= t_attr(:email)
             td= current_user.email
           tr
-            td Phone:
+            td= t_attr(:phone)
             td= @profile.phone
           tr
-            td Picture:
+            td= t_attr(:avatar)
             td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
           tr
-            td Address:
+            td= t_attr(:address)
             td= @profile.address
           tr
-            td Profession:
+            td= t_attr(:profession)
             td= @profile.profession
 
 .row
   .col-xs-12
-    h3 Working days
+    h3= t('titles.working_days')
     table.table.table-striped
       thead
         tr
           - week.each do |day|
             th.text-center
-              = day
+              = t("weekdays.#{day.to_s}")
       tbody
         tr
           - week.each do |day|
@@ -44,5 +43,5 @@
               - else
                 i.glyphicon.glyphicon-remove.text-danger
 
-    p= link_to 'Edit Profile', edit_profile_path(@profile), class: 'btn btn-default'
-    p= link_to 'Change your login', edit_user_path(current_user.id), class: 'btn btn-default'
+    p= link_to t('navigation.edit_profile'), edit_profile_path(@profile), class: 'btn btn-default'
+    p= link_to t('navigation.edit_login'), edit_user_path(current_user.id), class: 'btn btn-default'

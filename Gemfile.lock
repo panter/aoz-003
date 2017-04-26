@@ -152,6 +152,8 @@ GEM
     highline (1.7.8)
     i18n (0.8.1)
     i18n_data (0.7.0)
+    i18n_rails_helpers (2.0.1)
+      rails (> 3.0.0)
     iniparse (1.4.2)
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
@@ -359,6 +361,7 @@ DEPENDENCIES
   devise_invitable
   factory_girl_rails
   i18n_data
+  i18n_rails_helpers
   jbuilder
   jquery-rails
   listen
