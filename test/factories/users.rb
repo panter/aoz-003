@@ -1,39 +1,16 @@
 FactoryGirl.define do
   factory :user do
-    email 'superadmin@example.com'
+    sequence :email { |n| "superadmin#{n}@example.com" }
     password 'asdfasdf'
     role 'superadmin'
-  end
-
-  factory :user_is_socialworker, parent: :user do
-    role 'social_worker'
-    profile { |profile| profile.association(:profile) }
-    clients do |t|
-      1.step(10).to_a.map { |n| t.association(:client) }
+    trait :with_profile do
+      profile { |u| u.association(:profile, first_name: :role) }
     end
-  end
-
-  factory :superadmin, parent: :user do
-    email 'supersuperadmin@example.com'
-    password 'asdfasdf'
-    role 'superadmin'
-  end
-
-  factory :user_noprofile, class: User do
-    email 'noprofile@example.com'
-    password 'asdfasdf'
-    role 'superadmin'
-  end
-
-  factory :social_worker, class: User do
-    email 'socialworker@example.com'
-    password 'asdfasdf'
-    role 'social_worker'
-  end
-
-  factory :admin, class: User do
-    email 'admin@example.com'
-    password 'asdfasdf'
-    role 'admin'
+    trait :with_clients do
+      client_amt = 5
+      clients do |client|
+        1.step(client_amt).to_a.map { |n| client.association(:client) }
+      end
+    end
   end
 end

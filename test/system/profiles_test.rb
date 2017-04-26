@@ -2,16 +2,14 @@ require 'application_system_test_case'
 
 class ProfilesTest < ApplicationSystemTestCase
   def setup
-    @superadmin = create :user
-    create :profile, user: @superadmin
-    @noprofile = create :user_noprofile
-    @admin = create :admin
-    @social_worker = create :user_is_socialworker
+    @user = create :user, :with_profile
+    @user_without_profile = create :user
+    @social_worker = create :user, :with_profile, role: 'social_worker'
   end
 
   test 'when first login displays profile form' do
     visit new_user_session_path
-    fill_in 'Email', with: @noprofile.email
+    fill_in 'Email', with: @user_without_profile.email
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
 
@@ -34,7 +32,7 @@ class ProfilesTest < ApplicationSystemTestCase
     fill_in 'Last name', with: 'Muster'
     click_button 'Create Profile'
 
-    assert page.has_current_path? profile_path(@noprofile.profile.id)
+    assert page.has_current_path? profile_path(@user_without_profile.profile.id)
     assert page.has_text? 'Hans'
     assert page.has_text? 'Muster'
     assert page.has_text? 'Profile was successfully created.'
@@ -42,7 +40,7 @@ class ProfilesTest < ApplicationSystemTestCase
 
   test 'when profile created it can be displayed' do
     visit new_user_session_path
-    fill_in 'Email', with: @noprofile.email
+    fill_in 'Email', with: @user_without_profile.email
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
     fill_in 'First name', with: 'Hans'
@@ -57,8 +55,8 @@ class ProfilesTest < ApplicationSystemTestCase
   end
 
   test 'user can change the password from profile page' do
-    login_as @superadmin
-    visit profile_path(@superadmin.profile.id)
+    login_as @user
+    visit profile_path(@user.profile.id)
 
     assert page.has_link? 'Change your login'
     click_link 'Change your login'
@@ -71,7 +69,7 @@ class ProfilesTest < ApplicationSystemTestCase
     fill_in 'Email', with: 'new@email.com'
     click_button 'Update User'
 
-    user = User.find @superadmin.id
+    user = User.find @user.id
     assert user.valid_password? 'abcdefghijk'
     assert_equal user.email, 'new@email.com'
   end
@@ -81,7 +79,7 @@ class ProfilesTest < ApplicationSystemTestCase
     visit profile_path(@social_worker.profile.id)
     click_link 'Edit Profile'
     assert page.has_text? 'Editing profile'
-    visit edit_profile_path(@superadmin.profile.id)
+    visit edit_profile_path(@user.profile.id)
     assert_raises LocalJumpError
   end
 end

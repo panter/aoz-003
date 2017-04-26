@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class SocialworkerTest < ApplicationSystemTestCase
   def setup
-    @socialworker = create :user_is_socialworker
+    @socialworker = create :user, :with_profile, :with_clients, role: 'social_worker'
   end
 
   test 'when logged in socialworker cannot see create superadmin link' do
@@ -38,8 +38,8 @@ class SocialworkerTest < ApplicationSystemTestCase
   test 'can only see her own clients' do
     login_as @socialworker
     visit clients_path
-    other_socialworker = create :user_is_socialworker
-    Client.where.not(user: other_socialworker) do |client|
+    other_socialworker = create :user, :with_profile, :with_clients, role: 'social_worker'
+    Client.where(user: other_socialworker) do |client|
       assert_not page.has_text? client.firstname
       assert_not page.has_text? client.lastname
       assert_not page.has_link? href: client_path(client.id)
