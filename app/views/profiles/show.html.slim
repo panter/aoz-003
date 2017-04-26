@@ -31,5 +31,5 @@
         - if @profile[day.to_s]
           li #{day.to_s.titlecase}
 
-    p= link_to 'Edit Profile', edit_profile_path(@profile)
-    p= link_to 'Change your login', edit_user_path(current_user.id)
+    p= link_to 'Edit Profile', edit_profile_path(@profile), class: 'btn btn-default'
+    p= link_to 'Change your login', edit_user_path(current_user.id), class: 'btn btn-default'
