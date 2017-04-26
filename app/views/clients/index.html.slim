@@ -15,9 +15,11 @@
         th Recidence Permit
         th Email
         th Registered by
+        th
+        th
 
     tbody
-      = render @clients
+        = render @clients
 .row
   .col-xs-12
     = link_to 'New Client', new_client_path, class: 'btn btn-success'
