@@ -75,8 +75,29 @@ p
   = @client.user.email
 
 p
-  strong Availability:
-  = @client.availability
+  strong Schedule:
+.row
+  .col-xs-12
+    table.table.table-striped
+      thead
+        tr
+          th
+            | Time
+          - Schedule.days.each do |day|
+            th.days
+              = day
+      tbody
+        - @client.schedules.group_by(&:time).each do |time, schedules|
+          tr
+            td
+              = time
+            - @client.schedules.each do |schedule|
+              tr
+                td
+                  = schedule.day
+                  = schedule.time
+                  = schedule.available
+
 
 = link_to 'Edit', edit_client_path(@client)
 '  |
