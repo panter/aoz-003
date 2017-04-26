@@ -46,4 +46,16 @@ class SocialworkerTest < ApplicationSystemTestCase
       assert_not page.has_link? href: edit_client_path(client.id)
     end
   end
+
+  test 'socialworkers has no client destroy link' do
+    login_as @socialworker
+    visit clients_path
+    Client.where(user: @socialworker) do |client|
+      assert_not page.has_link? 'Destroy', href: client_path(client)
+    end
+  end
+
+  test 'socialworker cannot destroy client' do
+    login_as @social_worker
+  end
 end
