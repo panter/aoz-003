@@ -92,12 +92,13 @@ p
             td
               = time
             - @client.schedules.each do |schedule|
-              tr
-                td
-                  = schedule.day
-                  = schedule.time
-                  = schedule.available
-
+              td
+                = schedule.day
+                br
+                = schedule.time
+                br
+                = schedule.available
+                br
 
 = link_to 'Edit', edit_client_path(@client)
 '  |
