@@ -15,15 +15,13 @@ class UserTest < ActiveSupport::TestCase
 
   test '#create_user_and_send_password_reset \
     with new email creates new superadmin' do
-    out, _err = capture_io do
-      assert_difference 'User.count', 1 do
-        User.create_user_and_send_password_reset email: 'superadmin@example.com'
-      end
+
+    assert_difference 'User.count', 1 do
+      User.create_user_and_send_password_reset email: 'superadmin@example.com',
+        role: 'superadmin'
     end
 
-    assert_equal out, "Mail sent to superadmin@example.com\n"
-
-    user = User.first
+    user = User.find_by email: 'superadmin@example.com'
 
     assert_equal user.email, 'superadmin@example.com'
     assert_equal user.role, 'superadmin'

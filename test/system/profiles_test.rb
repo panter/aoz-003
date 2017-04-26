@@ -97,7 +97,7 @@ class ProfilesTest < ApplicationSystemTestCase
     login_as @social_worker, scope: :user
     visit profile_path(@social_worker.profile.id)
     click_link 'Edit Profile'
-    assert page.has_text? 'Editing profile'
+    assert page.has_text? 'Edit profile'
     visit edit_profile_path(@user.profile.id)
     assert_raises LocalJumpError
   end

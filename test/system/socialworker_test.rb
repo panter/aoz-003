@@ -20,7 +20,7 @@ class SocialworkerTest < ApplicationSystemTestCase
 
   test 'has a navbar link to clients page' do
     login_as @socialworker
-    visit root_path
+    visit user_path(@socialworker.id)
     assert page.has_link? 'Clients'
   end
 
