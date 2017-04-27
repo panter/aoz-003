@@ -8,7 +8,7 @@ class ProfilesTest < ApplicationSystemTestCase
 
   test 'when first login displays profile form' do
     visit new_user_session_path
-    fill_in 'E-mail', with: @user_without_profile.email
+    fill_in 'Email', with: @user_without_profile.email
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
 
@@ -44,23 +44,23 @@ class ProfilesTest < ApplicationSystemTestCase
 
   test 'when profile created it can be displayed' do
     visit new_user_session_path
-    fill_in 'E-mail', with: @user_without_profile.email
+    fill_in 'Email', with: @user_without_profile.email
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
 
-    fill_in 'Vorname', with: 'Hans'
-    fill_in 'Nachname', with: 'Muster'
-    click_button 'Profil erfassen'
+    fill_in 'First name', with: 'Hans'
+    fill_in 'Last name', with: 'Muster'
+    click_button 'Create Profile'
 
     assert page.has_link? @user_without_profile.email
 
     click_link @user_without_profile.email
 
-    assert page.has_link? 'Profil anzeigen'
+    assert page.has_link? 'Show profile'
 
-    click_link 'Profil anzeigen'
+    click_link 'Show profile'
 
-    assert page.has_text? 'Mein Profil'
+    assert page.has_text? 'My profile'
     assert page.has_text? @user_without_profile.profile.first_name
     assert page.has_text? @user_without_profile.profile.last_name
   end
@@ -69,15 +69,15 @@ class ProfilesTest < ApplicationSystemTestCase
     login_as @user_with_profile
     visit profile_path(@user_with_profile.profile.id)
 
-    click_link 'Login bearbeiten'
+    click_link 'Edit login'
 
     assert page.has_field? 'Password'
-    assert page.has_field? 'E-mail'
-    assert page.has_field? 'Rolle'
+    assert page.has_field? 'Email'
+    assert page.has_field? 'Role'
 
     fill_in 'Password', with: 'abcdefghijk'
-    fill_in 'E-mail', with: 'new@email.com'
-    click_button 'Login aktualisieren'
+    fill_in 'Email', with: 'new@email.com'
+    click_button 'Update login'
 
     user = User.find @user_with_profile.id
     assert user.valid_password? 'abcdefghijk'

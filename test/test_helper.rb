@@ -10,6 +10,7 @@ class ActiveSupport::TestCase
 
   def before_setup
     super
+    I18n.default_locale = :en
     DatabaseCleaner.start
   end
 
