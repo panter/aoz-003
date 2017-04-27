@@ -40,8 +40,10 @@
             td.text-center
               - if @profile.read_attribute(day)
                 i.glyphicon.glyphicon-ok.text-success
+                span.sr-only Works on #{day.to_s}s
               - else
                 i.glyphicon.glyphicon-remove.text-danger
+                span.sr-only Doesn't work on #{day.to_s}s
 .row
   .col-xs-12
     p= link_to t('edit_profile'), edit_profile_path(@profile), class: 'btn btn-default'
