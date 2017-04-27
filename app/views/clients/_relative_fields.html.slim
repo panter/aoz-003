@@ -1,15 +1,14 @@
 .nested-fields
 .row
   .col-xs-12.col-md-6
-    = f.input :firstname, label: 'First Name'
+    = f.input :first_name
   .col-xs-12.col-md-6
-    = f.input :lastname, label: 'Last Name'
+    = f.input :last_name
 .row
   .col-xs-12.col-md-6
-    = f.input :dob, as: :date, start_year: Date.today.year - 90,
+    = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
     end_year: Date.today.year,
-    order: [:day, :month, :year],
-    label: 'Date of birth'
+    order: [:day, :month, :year]
   .col-xs-12.col-md-6
     = f.input :relation
 = link_to_remove_association 'remove relative', f, class: 'btn btn-danger'

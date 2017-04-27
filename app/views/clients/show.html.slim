@@ -1,9 +1,9 @@
 .row
   .col-xs-12
     h1
-      = @client.firstname
+      = @client.first_name
       | ,  
-      = @client.lastname
+      = @client.last_name
 .row
   .col-xs-12
     .table-responsive
@@ -13,7 +13,7 @@
             td width='200'
               | Date of birth
             td
-              = @client.dob
+              = @client.date_of_birth
           tr
             td
               | Nationality
@@ -91,12 +91,12 @@
           tr
             td
               | Competent authority
-            td = @client.c_authority
+            td = @client.competent_authority
 
           tr
             td
               | Involved authorities
-            td = @client.i_authority
+            td = @client.involved_authority
 
           tr
             td

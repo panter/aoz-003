@@ -10,5 +10,5 @@ class Client < ApplicationRecord
   has_many :schedules, dependent: :destroy
   accepts_nested_attributes_for :schedules
 
-  validates :firstname, :lastname, presence: true
+  validates :first_name, :last_name, presence: true
 end

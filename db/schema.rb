@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421104115) do
+ActiveRecord::Schema.define(version: 20170427122336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string "firstname"
-    t.string "lastname"
-    t.date "dob"
+    t.string "first_name"
+    t.string "last_name"
+    t.date "date_of_birth"
     t.string "nationality"
     t.string "permit"
     t.string "gender"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20170421104115) do
     t.text "interests"
     t.string "state", default: "registered"
     t.text "comments"
-    t.text "c_authority"
-    t.text "i_authority"
+    t.text "competent_authority"
+    t.text "involved_authority"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -73,9 +73,9 @@ ActiveRecord::Schema.define(version: 20170421104115) do
 
   create_table "relatives", force: :cascade do |t|
     t.bigint "client_id"
-    t.string "firstname"
-    t.string "lastname"
-    t.date "dob"
+    t.string "first_name"
+    t.string "last_name"
+    t.date "date_of_birth"
     t.string "relation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

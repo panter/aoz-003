@@ -50,14 +50,14 @@ class ClientsController < ApplicationController
 
   def client_params
     params.require(:client).permit(
-      :id, :firstname, :lastname, :dob, :nationality, :permit, :gender,
+      :id, :first_name, :last_name, :date_of_birth, :nationality, :permit, :gender,
       :street, :zip, :city, :phone, :email, :goals, :education, :hobbies,
-      :interests, :state, :comments, :c_authority, :i_authority, :user_id,
+      :interests, :state, :comments, :competent_authority, :involved_authority, :user_id,
       language_skills_attributes: [
         :id, :language, :level, :_destroy
       ],
       relatives_attributes: [
-        :id, :firstname, :lastname, :dob, :relation, :_destroy
+        :id, :first_name, :last_name, :date_of_birth, :relation, :_destroy
       ],
       schedules_attributes: [
         :id, :day, :time, :available
