@@ -6,8 +6,8 @@
   .row
     .col-xs-12
       = f.input :user_id, as: :hidden
-      = f.input :first_name
-      = f.input :last_name
+      = f.input :first_name, label: 'First Name'
+      = f.input :last_name, label: 'Last Name'
       = f.input :phone
       = f.input :avatar, as: :file
       = f.input :address
@@ -15,10 +15,19 @@
 
   .row
     .col-xs-12
-      h2 Arbeitstage
-      ul.list-inline
-        - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
-          li= f.input day, as: :boolean
+      h3 Working Days
+      table.table.table-striped
+        thead
+          tr
+            - week.each do |day|
+              th.text-center
+                = day
+        tbody
+          tr
+            - week.each do |day|
+              td.text-center
+                = f.input day, as: :boolean, label: false
+
   .row
     .col-xs-12
       = f.button :submit, class: 'btn btn-success'
