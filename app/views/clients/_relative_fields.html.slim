@@ -1,9 +1,9 @@
 .nested-fields
 .row
   .col-xs-12.col-md-6
-    = f.input :firstname
+    = f.input :firstname, label: 'First Name'
   .col-xs-12.col-md-6
-    = f.input :lastname
+    = f.input :lastname, label: 'Last Name'
 .row
   .col-xs-12.col-md-6
     = f.input :dob, as: :date, start_year: Date.today.year - 90,

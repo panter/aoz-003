@@ -6,122 +6,107 @@
       = @client.lastname
 .row
   .col-xs-12
-    h3 Personal Information
-.row
-  .col-md-2
-    strong Date of birth
-  .col-md-10 = @client.dob
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td width='200'
+              | Date of birth
+            td
+              = @client.dob
+          tr
+            td
+              | Nationality
+            td
+              = @client.nationality
+          tr
+            td
+              | Residence Permit
+            td
+              = @client.permit
+          tr
+            td
+              | Gender
+            td = @client.gender
+          tr
+            td
+              | Street
+            td = @client.street
 
-.row
-  .col-md-2
-    strong Nationality
-  .col-md-10 = @client.nationality
+          tr
+            td
+              | Zip
+            td = @client.zip
 
-.row
-  .col-md-2
-    strong Residence Permit
-  .col-md-10 = @client.permit
+          tr
+            td
+              | City
+            td = @client.city
 
-.row
-  .col-md-2
-    strong Gender
-  .col-md-10 = @client.gender
+          tr
+            td
+              | Phone
+            td = @client.phone
 
-.row
-  .col-xs-12
-    h3 Contact Information
-.row
-  .col-md-2
-    strong Street
-  .col-md-10 = @client.street
+          tr
+            td
+              | Email
+            td = @client.email
 
-.row
-  .col-md-2
-    strong Zip
-  .col-md-10 = @client.zip
+          tr
+            td
+              | Language Skills
+            td = render 'language_skill_show'
 
-.row
-  .col-md-2
-    strong City
-  .col-md-10 = @client.city
+          tr
+            td
+              | Family Members
+            td = render 'relatives_show'
 
-.row
-  .col-md-2
-    strong Phone
-  .col-md-10 = @client.phone
+          tr
+            td
+              | Goals
+            td = @client.goals
 
-.row
-  .col-md-2
-    strong Email
-  .col-md-10 = @client.email
+          tr
+            td
+              | Education
+            td = @client.education
 
-.row
-  .col-xs-12
-    h3 Language Skills
-.row
-  .col-md-2
-    strong Language Skills
-  .col-md-10 = render 'language_skill_show'
+          tr
+            td
+              | Hobbies
+            td = @client.hobbies
 
-.row
-  .col-xs-12
-    h3 Family Members
-.row
-  .col-md-2
-    strong Family Members
-  .col-md-10 = render 'relatives_show'
+          tr
+            td
+              | Interests
+            td = @client.interests
 
-.row
-  .col-md-2
-    strong Goals:
-  .col-md-10 = @client.goals
+          tr
+            td
+              | State
+            td = @client.state
 
-.row
-  .col-xs-12
-    h3 Personal Background
+          tr
+            td
+              | Competent authority
+            td = @client.c_authority
 
-.row
-  .col-md-2
-    strong Education
-  .col-md-10 = @client.education
+          tr
+            td
+              | Involved authorities
+            td = @client.i_authority
 
-.row
-  .col-md-2
-    strong Hobbies
-  .col-md-10 = @client.hobbies
+          tr
+            td
+              | Registered by
+            td = @client.user.email
 
-.row
-  .col-md-2
-    strong Interests
-  .col-md-10 = @client.interests
-
-.row
-  .col-xs-12
-    h3 Other
-.row
-  .col-md-2
-    strong State
-  .col-md-10 = @client.state
-
-.row
-  .col-md-2
-    strong Competent authority:
-  .col-md-10 = @client.c_authority
-
-.row
-  .col-md-2
-    strong Involved authorities:
-  .col-md-10 = @client.i_authority
-
-.row
-  .col-md-2
-    strong Registered by
-  .col-md-10 = @client.user.email
-
-.row
-  .col-md-2
-    strong Comments
-  .col-md-10 = @client.comments
+          tr
+            td
+              |  Comments
+            td = @client.comments
 
 .row
   .col-xs-12
