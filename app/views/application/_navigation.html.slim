@@ -21,6 +21,9 @@ nav.navbar.navbar-top
               span.caret
             ul.dropdown-menu
               li
-                = link_to 'Show profile', current_user.profile
+                - if current_user.profile.blank?
+                  = link_to 'Show profile', new_profile_path
+                - else
+                  = link_to 'Show profile', current_user.profile
               li
                 = link_to 'Logout', destroy_user_session_path, method: :delete
