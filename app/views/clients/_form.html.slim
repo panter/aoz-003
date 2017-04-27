@@ -8,15 +8,15 @@
     .col-xs-12
       .row
         .col-xs-12.col-md-6
-          = f.input :firstname, label: 'First Name'
+          = f.input :first_name
         .col-xs-12.col-md-6
-          = f.input :lastname, label: 'Last Name'
+          = f.input :last_name
       .row
         .col-xs-12.col-md-6
-          = f.input :dob, as: :date, start_year: Date.today.year - 90,
+          = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
                                  end_year: Date.today.year,
-                                 order: [:day, :month, :year],
-                                 label: 'Date of birth'
+                                 order: [:day, :month, :year]
+
         .col-xs-12.col-md-6
           = f.input :gender,
                     :collection => gender_collection,
@@ -35,7 +35,7 @@
           h3 Contact Information
       .row
         .col-xs-12
-          = f.input :street, label: 'Street'
+          = f.input :street
       .row
         .col-xs-6
           = f.input :zip
@@ -65,14 +65,14 @@
       .row
         .col-xs-12
           h3 Personal Background
-          = f.input :goals, as: :text
-          = f.input :education, as: :text
-          = f.input :hobbies, as: :text
-          = f.input :interests, as: :text
+          = f.input :goals
+          = f.input :education
+          = f.input :hobbies
+          = f.input :interests
           = f.input :state, :collection => state_collection
-          = f.input :comments, as: :text
-          = f.input :c_authority, as: :text, label: 'Competent authority'
-          = f.input :i_authority, as: :text, label: 'Involved authorities'
+          = f.input :comments
+          = f.input :competent_authority
+          = f.input :involved_authority
         
       .row
         .col-xs-12
