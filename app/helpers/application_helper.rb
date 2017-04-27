@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def daynames(whole_week = false)
+    if whole_week
+      [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
+    else
+      [:monday, :tuesday, :wednesday, :thursday, :friday]
+    end
+  end
+
   def permit_collection
     { 'L' => 'L', 'B' => 'B' }
   end
