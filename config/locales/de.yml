@@ -1,5 +1,28 @@
 de:
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: darf nicht leer sein
+              taken: ist schon vergeben
+              invalid: ist ungültig
+            role:
+              inclusion: ist nicht in der Liste enthalten
+            password:
+              blank: darf nicht leer sein
+              too_short: zu kurz (min. 6 Zeichen)
+            password_confirmation:
+              confirmation: Die eingegebenen Passwörter stimmen nicht überein
+        profile:
+          attributes:
+            first_name:
+              blank: darf nicht leer sein
+            last_name:
+              blank: darf nicht leer sein
+            avatar_content_type:
+              invalid: ist ungültig
     models:
       profile: Profil
       user: Benutzer
@@ -32,6 +55,18 @@ de:
     logout: Abmelden
     show_profile: Profil anzeigen
     users: Benutzer
+  simple_form:
+    "yes": 'Ja'
+    "no": 'Nein'
+    required:
+      text: notwendig
+      mark: '*'
+    error_notification:
+      default_message: 'Bitte überprüfen Sie die folgenden Probleme:'
+    labels:
+      defaults:
+        password: Passwort
+        password_confirmation: Passwort bestätigen
   titles:
     show_profile: Mein Profil
     voluntary_platform: Freiwilligen Platform
