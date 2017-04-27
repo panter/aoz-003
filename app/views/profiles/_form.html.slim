@@ -21,7 +21,7 @@
           tr
             - week.each do |day|
               th.text-center
-                = day
+                = day.to_s.capitalize
         tbody
           tr
             - week.each do |day|
