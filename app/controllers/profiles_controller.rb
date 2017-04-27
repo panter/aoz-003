@@ -13,7 +13,7 @@ class ProfilesController < ApplicationController
     @profile = Profile.new(profile_params)
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
+        format.html { redirect_to @profile, notice: t('notice.profile_created') }
       else
         format.html { render :new }
       end
@@ -23,7 +23,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
+        format.html { redirect_to @profile, notice: t('notice.profile_updated') }
       else
         format.html { render :edit } unless @profile.update(profile_params)
       end

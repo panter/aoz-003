@@ -137,6 +137,10 @@ de:
     logout: Abmelden
     show_profile: Profil anzeigen
     users: Benutzer
+  notice:
+    invite_sent: 'Einladung wurde an %{email} verschickt.'
+    profile_created: Profil wurde erfolgreich erstellt.
+    profile_updated: Profil wurde erfolgreich aktualisiert.
   simple_form:
     "yes": 'Ja'
     "no": 'Nein'
