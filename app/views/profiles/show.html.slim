@@ -1,35 +1,48 @@
 .row
   .col-xs-12
-    h1 My Profile
+    h1
+      = @profile.first_name
+      | ,  
+      = @profile.last_name
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td width='200'
+              | Email
+            td= current_user.email
+          tr
+            td Phone:
+            td= @profile.phone
+          tr
+            td Picture:
+            td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
+          tr
+            td Address:
+            td= @profile.address
+          tr
+            td Profession:
+            td= @profile.profession
 
-    table.table.table-condensed
-      tr
-        td First name
-        td= @profile.first_name
-      tr
-        td Last name
-        td= @profile.last_name
-      tr
-        td Email
-        td= current_user.email
-      tr
-        td Phone:
-        td= @profile.phone
-      tr
-        td Picture:
-        td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
-      tr
-        td Address:
-        td= @profile.address
-      tr
-        td Profession:
-        td= @profile.profession
-
-    h2 Working days
-    ul.list-inline
-      - [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
-        - if @profile[day.to_s]
-          li #{day.to_s.titlecase}
+.row
+  .col-xs-12
+    h3 Working days
+    table.table.table-striped
+      thead
+        tr
+          - week.each do |day|
+            th.text-center
+              = day
+      tbody
+        tr
+          - week.each do |day|
+            td.text-center
+              - if @profile.read_attribute(day)
+                i.glyphicon.glyphicon-ok.text-success
+              - else
+                i.glyphicon.glyphicon-remove.text-danger
 
     p= link_to 'Edit Profile', edit_profile_path(@profile), class: 'btn btn-default'
     p= link_to 'Change your login', edit_user_path(current_user.id), class: 'btn btn-default'
