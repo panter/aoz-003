@@ -1,4 +1,9 @@
 en:
+  actions:
+    change_password: Change my password
+    login: Log in
+    password_reset_instructions: Send me password reset instructions
+    remember_me: Remember me
   activerecord:
     models:
       user: User
@@ -12,6 +17,8 @@ en:
     create_user: Create user
     edit_login: Edit login
     edit_profile: Edit profile
+    forgot_password: Forgot your password?
+    login: Log in
     logout: Logout
     show_profile: Show profile
     users: Users
@@ -20,8 +27,11 @@ en:
     profile_created: Profile was successfully created.
     profile_updated: Profile was successfully updated.
   titles:
-    user_index: Users
+    change_password: Change your password
+    forgot_password: Forgot your password?
+    login: Log in
     show_profile: My profile
+    user_index: Users
     working_days: Working days
     voluntary_platform: Voluntaries Platform
   weekdays:
