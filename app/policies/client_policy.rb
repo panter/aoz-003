@@ -26,7 +26,7 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin_or_superadmin? || user.social_worker?
+    user.staff?
   end
 
   def edit?
@@ -34,7 +34,7 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin_or_superadmin? || user.social_worker?
+    user.staff?
   end
 
   def update?

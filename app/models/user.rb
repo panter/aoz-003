@@ -27,6 +27,10 @@ class User < ApplicationRecord
     role == User::SOCIAL_WORKER
   end
 
+  def staff?
+    admin_or_superadmin? || social_worker?
+  end
+
   validates :role, inclusion: { in: ROLES }
 
   def self.create_user_and_send_password_reset(email:, role:)
