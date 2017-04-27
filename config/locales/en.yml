@@ -6,7 +6,7 @@ en:
   helpers:
     submit:
       user:
-        create: Create user
+        create: Create User
         update: Update login
   navigation:
     create_user: Create user
