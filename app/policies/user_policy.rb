@@ -23,7 +23,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    @current_user.admin_or_superadmin?
+    @current_user.superadmin?
   end
 
   def update?
