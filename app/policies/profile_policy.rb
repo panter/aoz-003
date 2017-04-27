@@ -15,14 +15,14 @@ class ProfilePolicy < ApplicationPolicy
   end
 
   def edit?
-    @profile.user_id == @user.id
+    @user.superadmin? || @profile.user_id == @user.id
   end
 
   def create?
-    @profile.user_id == @user.id
+    @user.superadmin? || @profile.user_id == @user.id
   end
 
   def update?
-    @profile.user_id == @user.id
+    @user.superadmin? || @profile.user_id == @user.id
   end
 end
