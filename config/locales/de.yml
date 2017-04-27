@@ -42,6 +42,88 @@ de:
         wednesday: Mittwoch
         thursday: Donnerstag
         friday: Freitag
+  devise:
+    confirmations:
+      confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
+      send_instructions: Sie erhalten in wenigen Minuten eine E-Mail, mit der Sie Ihre Registrierung bestätigen können.
+      send_paranoid_instructions: Falls Ihre E-Mail-Adresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine E-Mail mit der Sie Ihre Registrierung bestätigen können.
+    invitations:
+      send_instructions: 'Sie haben eine Einladung in Ihrem E-Mail-Postfach: %{email}'
+      invitation_token_invalid: Der Einladungs-Schlüssel ist nicht gültig!
+      updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
+      no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
+      invitation_removed: Deine Einladung wurde gelöscht.
+      new:
+        header: Einladung schicken
+        submit_button: Einladung schicken
+      edit:
+        header: Setzen Sie ein Passwort
+        submit_button: Passwort setzen
+    failure:
+      already_authenticated: Sie sind bereits angemeldet.
+      inactive: Ihr Account ist nicht aktiv.
+      invalid: Ungültige Anmeldedaten.
+      failure:
+      invited: Sie haben eine ausstehende Einladung, akzeptieren sie, um die Erstellung Ihres Kontos zu beenden.
+      locked: Ihr Account ist gesperrt.
+      last_attempt: Sie haben noch einen Versuch, bevor Ihr Konto gesperrt ist.
+      not_found_in_database: E-Mail-Adresse oder Passwort ungültig.
+      timeout: Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.
+      unauthenticated: Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.
+      unconfirmed: Sie müssen Ihren Account bestätigen, bevor Sie fortfahren können.
+    mailer:
+      confirmation_instructions:
+        subject: Anleitung zur Bestätigung Ihres Accounts
+      invitation_instructions:
+        subject: Einladung
+        hello: 'Hallo %{email}!'
+        someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie koennen die Einladung mit dem Link unten annehmen:'
+        accept: Einladung annehmen
+        accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
+        ignore: 'Wenn Sie die Einladung nicht annehmen moechten, ignorieren Sie bitte diese E-Mail einfach.<br />\nEs wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.'
+      reset_password_instructions:
+        subject: Anleitung um Ihr Passwort zurückzusetzen
+      unlock_instructions:
+        subject: Anleitung um Ihren Account freizuschalten
+      email_changed:
+        subject: E-Mail wurde geändert
+      password_change:
+        subject: Passwort wurde geändert
+    omniauth_callbacks:
+      failure: "Sie konnten nicht mit Ihrem %{kind}-Account angemeldet werden, weil \'%{reason}\'."
+      success: Sie haben sich erfolgreich mit Ihrem %{kind}-Account angemeldet.'
+    passwords:
+      no_token: Sie können diese Seite nur von dem Link aus einer E-Mail zum Passwort-Zurücksetzen aufrufen. Wenn Sie einen solchen Link aufgerufen haben, stellen Sie bitte sicher, dass Sie die vollständige Adresse aufrufen.
+      send_instructions: Sie erhalten in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie Ihr Passwort zurücksetzen können.
+      send_paranoid_instructions: Falls Ihre E-Mail-Adresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie Ihr Passwort zurücksetzen können.
+      updated: Ihr Passwort wurde geändert. Sie sind jetzt angemeldet.
+      updated_not_active: Ihr Passwort wurde geändert.
+    registrations:
+      destroyed: Ihr Account wurde gelöscht.
+      signed_up: Sie haben sich erfolgreich registriert.
+      signed_up_but_inactive: Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account inaktiv ist.
+      signed_up_but_locked: Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account gesperrt ist.
+      signed_up_but_unconfirmed: Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account noch nicht bestätigt ist. Sie erhalten in Kürze eine E-Mail mit der Anleitung, wie Sie Ihren Account freischalten können.
+      update_needs_confirmation: Ihre Daten wurden aktualisiert, aber Sie müssen Ihre neue E-Mail-Adresse bestätigen. Sie erhalten in wenigen Minuten eine E-Mail, mit der Sie die Änderung Ihrer E-Mail-Adresse abschliessen können.
+      updated: Ihre Daten wurden aktualisiert.
+    sessions:
+      signed_in: Erfolgreich angemeldet.
+      signed_out: Erfolgreich abgemeldet.
+      already_signed_out: Erfolgreich abgemeldet.
+    unlocks:
+      send_instructions: Sie erhalten in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie Ihren Account entsperren können.
+      send_paranoid_instructions: Falls Ihre E-Mail-Adresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie Ihren Account entsperren können.
+      unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
+  errors:
+    messages:
+      already_confirmed: wurde bereits bestätigt
+      confirmation_period_expired: 'muss innerhalb %{period} bestätigt werden, bitte fordern Sie einen neuen Link an'
+      expired: ist abgelaufen, bitte neu anfordern
+      not_found: nicht gefunden
+      not_locked: ist nicht gesperrt
+      not_saved:
+        one: 'Konnte %{resource} nicht speichern: ein Fehler.'
+        other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   helpers:
     submit:
       create: '%{model} erfassen'
@@ -67,9 +149,15 @@ de:
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
+  time:
+    formats:
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%d. %B %Y %H:%M"
   titles:
-    user_index: Benutzer
     show_profile: Mein Profil
+    user_index: Benutzer
     voluntary_platform: Freiwilligen Platform
     working_days: Arbeitstage
   weekdays:
