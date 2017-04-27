@@ -13,22 +13,32 @@ class ProfilePolicyTest < ActiveSupport::TestCase
       first_name: 'fn',
       last_name: 'ln'
     }
-    assert permit(@user_without_profile, Profile.new(profile_params), :new)
+    assert_permit @user_without_profile, Profile.new(profile_params), 'create?', 'new?'
   end
 
   test 'Update: user can update own profile' do
-    assert permit(@user_social_worker, @user_social_worker.profile, :update)
+    assert_permit @user_social_worker, @user_social_worker.profile, 'update?', 'edit?'
   end
 
   test 'Update: user can not update others profile' do
-    assert_not permit(@user_social_worker, @user_superadmin.profile, :update)
+    refute_permit @user_social_worker, @user_superadmin.profile, 'update?', 'edit?'
   end
 
   test 'Update: superadmin can update others profile' do
-    assert permit(@user_superadmin, @user_social_worker.profile, :update)
+    assert_permit @user_superadmin, @user_social_worker.profile, 'update?', 'edit?'
   end
 
   test 'Destroy: profiles can not be destroyed' do
-    assert_not permit(@user_superadmin, @user_superadmin.profile, :destroy)
+    refute_permit @user_superadmin, @user_superadmin.profile, 'destroy?'
+  end
+
+  test 'Show: social_worker can only show his own profile' do
+    refute_permit @user_social_worker, @user_superadmin.profile, 'show?'
+  end
+
+  test 'Show: superadmin can show all profiles' do
+    Profile.all.each do |profile|
+      assert_permit @user_superadmin, profile, 'show?'
+    end
   end
 end
