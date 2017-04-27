@@ -5,21 +5,19 @@ class ClientsController < ApplicationController
     @clients = Client.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @client = Client.new(user: current_user)
     @client.schedules << Schedule.build
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @client = Client.new(client_params)
     respond_to do |format|
-      if @client.save!
+      if @client.save
         format.html { redirect_to @client, notice: 'Client was successfully created.' }
       else
         format.html { render :new }
@@ -32,7 +30,7 @@ class ClientsController < ApplicationController
       if @client.update(client_params)
         format.html { redirect_to @client, notice: 'Client was successfully updated.' }
       else
-        format.html { render :edit } unless @client.update(profile_params)
+        format.html { render :edit }
       end
     end
   end
