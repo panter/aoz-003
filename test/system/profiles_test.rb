@@ -16,8 +16,8 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_current_path? new_profile_path
     assert page.has_text? 'New Profile'
 
-    assert page.has_field? 'First name'
-    assert page.has_field? 'Last name'
+    assert page.has_field? 'First Name'
+    assert page.has_field? 'Last Name'
     assert page.has_field? 'Phone'
     assert page.has_field? 'Avatar'
     assert page.has_field? 'Address'
@@ -30,8 +30,8 @@ class ProfilesTest < ApplicationSystemTestCase
 
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
-
     page.check(name: 'profile[monday]')
+
     click_button 'Create Profile'
 
     assert page.has_current_path? profile_path(@user_without_profile.profile.id)
