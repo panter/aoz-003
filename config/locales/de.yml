@@ -2,10 +2,10 @@ de:
   activerecord:
     models:
       profile: Profil
-      user: Nutzer
+      user: Benutzer
     attributes:
       user:
-        email: E-mail
+        email: Email
         role: Rolle
       profile:
         first_name: Vorname
@@ -13,7 +13,7 @@ de:
         phone: Telefonnummer
         avatar: Bild
         address: Adresse
-        profession: Betrieb
+        profession: Beruf
         monday: Montag
         tuesday: Dienstag
         wednesday: Mittwoch
@@ -26,15 +26,15 @@ de:
       user:
         update: Login aktualisieren
   navigation:
-    create_user: Nutzer erfassen
+    create_user: Benutzer erfassen
     edit_login: Login bearbeiten
     edit_profile: Profil bearbeiten
     logout: Abmelden
     show_profile: Profil anzeigen
-    users: Nutzer
+    users: Benutzer
   titles:
     show_profile: Mein Profil
-    voluntary_platform: Freiwillige Platform
+    voluntary_platform: Freiwilligen Platform
     working_days: Arbeitstage
   weekdays:
     monday: Montag
