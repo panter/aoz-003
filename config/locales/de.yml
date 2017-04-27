@@ -1,4 +1,9 @@
 de:
+  actions:
+    change_password: Ihr Passwort ändern
+    login: Anmelden
+    password_reset_instructions: Schicken Sie mir Passwortruecksetzung Instruktionen
+    remember_me: Angemeldet bleiben
   activerecord:
     errors:
       models:
@@ -140,6 +145,8 @@ de:
     create_user: Benutzer erfassen
     edit_login: Login bearbeiten
     edit_profile: Profil bearbeiten
+    forgot_password: Passwort vergessen?
+    login: Anmelden
     logout: Abmelden
     show_profile: Profil anzeigen
     users: Benutzer
@@ -166,6 +173,9 @@ de:
           invitation_instructions:
             accept_until_format: "%d. %B %Y %H:%M"
   titles:
+    change_password: Ihr Passwort ändern
+    forgot_password: Passwort vergessen?
+    login: Anmelden
     show_profile: Mein Profil
     user_index: Benutzer
     voluntary_platform: Freiwilligen Platform
