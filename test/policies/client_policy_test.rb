@@ -7,34 +7,44 @@ class ClientPolicyTest < ActiveSupport::TestCase
   end
 
   test 'Create: superadmin can create' do
-    assert permit(@user_superadmin, Client.new, :new)
+    assert_permit @user_superadmin, Client, 'new?', 'create?'
   end
 
   test 'Create: social_worker can create' do
-    assert permit(@user_social_worker, Client.new, :new)
+    assert_permit @user_social_worker, Client, 'new?', 'create?'
   end
 
   test 'Destroy: superadmin can destroy' do
-    assert permit(@user_superadmin, Client.first, :destroy)
+    assert_permit @user_superadmin, Client.first, 'destroy?'
   end
 
   test 'Destroy: social_worker can not destroy' do
-    assert_not permit(@user_social_worker, Client.first, :destroy)
+    refute_permit @user_social_worker, Client.first, 'destroy?'
   end
 
   test 'Update: superadmin can update her client' do
-    assert permit(@user_superadmin, @user_superadmin.clients.first, :update)
+    assert_permit @user_superadmin, @user_superadmin.clients.first, 'update?', 'edit?'
   end
 
   test 'Update: superadmin can update others client' do
-    assert permit(@user_superadmin, @user_social_worker.clients.first, :update)
+    assert_permit @user_superadmin, @user_social_worker.clients.first, 'update?', 'edit?'
   end
 
   test 'Update: social_worker can update her client' do
-    assert permit(@user_social_worker, @user_social_worker.clients.first, :update)
+    assert_permit @user_social_worker, @user_social_worker.clients.first, 'update?', 'edit?'
   end
 
   test 'Update: social_worker can not update others client' do
-    assert_not permit(@user_social_worker, @user_superadmin.clients.first, :update)
+    refute_permit @user_social_worker, @user_superadmin.clients.first, 'update?', 'edit?'
+  end
+
+  test 'Show: social_worker can not see others clients' do
+    refute_permit @user_social_worker, @user_superadmin.clients.first, 'show?'
+  end
+
+  test 'Show: superadmin can see all clients' do
+    Client.all.each do |client|
+      assert_permit @user_superadmin, client, 'show?'
+    end
   end
 end
