@@ -50,6 +50,24 @@ ActiveRecord::Schema.define(version: 20170421070309) do
     t.index ["client_id"], name: "index_language_skills_on_client_id"
   end
 
+  create_table "departements", force: :cascade do |t|
+    t.string "name"
+    t.string "street"
+    t.string "zip"
+    t.string "place"
+    t.string "phone"
+    t.string "email"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_departements_on_user_id"
+  end
+
+  create_table "departements_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "departement_id", null: false
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.bigint "user_id"
     t.string "first_name"
@@ -119,6 +137,7 @@ ActiveRecord::Schema.define(version: 20170421070309) do
 
   add_foreign_key "clients", "users"
   add_foreign_key "language_skills", "clients"
+  add_foreign_key "departements", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "relatives", "clients"
   add_foreign_key "schedules", "clients"

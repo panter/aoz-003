@@ -1,0 +1,19 @@
+= simple_form_for(@departement) do |f|
+  - if f.error_notification.present?
+    .row
+      .col-xs-12
+        = f.error_notification
+
+  .row
+    .col-xs-12
+      = f.input :name
+      = f.input :street
+      = f.input :zip
+      = f.input :place
+      = f.input :phone
+      = f.input :email
+      = f.association :user
+
+  .row
+    .col-xs-12
+      = f.button :submit, class: 'btn btn-success'

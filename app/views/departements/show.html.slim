@@ -1,0 +1,20 @@
+.row
+  .col-xs-12
+    h1 Department: #{@departement.name}
+.row
+  .col-xs-12
+    h2 Address
+.row
+  .col-xs-12
+    p= @departement.street
+    p #{@departement.zip} #{@departement.place}
+.row
+  .col-xs-12
+    p Phone: #{@departement.phone}
+    p Email: #{@departement.email}
+.row
+  .col-xs-12
+    h2 Users
+    p User: #{@departement.user}
+
+= link_to 'Edit', edit_departement_path(@departement)
