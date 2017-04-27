@@ -1,8 +1,7 @@
 # AOZ Voluntary Platform
 
-master: [![Build Status](https://travis-ci.org/panter/aoz-003.svg?branch=master)](https://travis-ci.org/panter/aoz-003)
-develop: [![Build Status](https://travis-ci.org/panter/aoz-003.svg?branch=develop)](https://travis-ci.org/panter/aoz-003)
-
+[master](https://github.com/panter/aoz-003/tree/master): [![Build Status](https://travis-ci.org/panter/aoz-003.svg?branch=master)](https://travis-ci.org/panter/aoz-003) |
+[develop](https://github.com/panter/aoz-003): [![Build Status](https://travis-ci.org/panter/aoz-003.svg?branch=develop)](https://travis-ci.org/panter/aoz-003)
 
 Ruby version: 2.4.1
 
@@ -16,22 +15,19 @@ Ruby version: 2.4.1
 - [overcommit](https://github.com/brigade/overcommit)
 - [rubocop](https://github.com/bbatsov/rubocop)
 
+## User seeds for development
 
-## Setup Superadmin
+Use `rails db:seed` to get these users:
 
-Generate first superadmin with rails task
-```bash
-$ rails setup:superadmin email=email@test.com
-```
-
-## Create User
-
-Create user in console
-```bash
-$ User.create(email: 'asdf1@asdf.com', password: 'asdfasdf', role: 'superadmin')
-```
-
-
+- superadmin
+  - email: superadmin@example.com
+  - password: asdfasdf
+- admin
+  - email: admin@example.com
+  - password: asdfasdf
+- social_worker
+  - email: social_worker@example.com
+  - password: asdfasdf
 
 ## LICENSE
 
