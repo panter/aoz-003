@@ -78,4 +78,13 @@ class ProfilesTest < ApplicationSystemTestCase
     assert user.valid_password? 'abcdefghijk'
     assert_equal user.email, 'new@email.com'
   end
+
+  test 'profileless user gets new profile link on show profile' do
+    login_as @user_without_profile
+    visit user_path(@user_without_profile)
+    click_link @user_without_profile.email
+    assert page.has_link? 'Create profile'
+    click_link 'Create profile'
+    assert page.has_text? 'New profile'
+  end
 end
