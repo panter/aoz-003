@@ -8,9 +8,9 @@
     .col-xs-12
       .row
         .col-xs-12.col-md-6
-          = f.input :firstname
+          = f.input :firstname, label: 'First Name'
         .col-xs-12.col-md-6
-          = f.input :lastname
+          = f.input :lastname, label: 'Last Name'
       .row
         .col-xs-12.col-md-6
           = f.input :dob, as: :date, start_year: Date.today.year - 90,
@@ -35,7 +35,7 @@
           h3 Contact Information
       .row
         .col-xs-12
-          = f.input :street, label: 'Street and house number'
+          = f.input :street, label: 'Street'
       .row
         .col-xs-6
           = f.input :zip

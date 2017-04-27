@@ -12,6 +12,10 @@ body {
   flex: 1 0 auto;
 }
 
+.table-no-border-top > tbody > tr:first-child > td {
+    border-top-width: 0;
+}
+
 .navbar-toggle {
   border-color: $black;
 }
