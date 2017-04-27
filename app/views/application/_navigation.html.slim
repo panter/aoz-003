@@ -22,7 +22,7 @@ nav.navbar.navbar-top
             ul.dropdown-menu
               li
                 - if current_user.profile.blank?
-                  = link_to 'Show profile', new_profile_path
+                  = link_to 'Create profile', new_profile_path
                 - else
                   = link_to 'Show profile', current_user.profile
               li
