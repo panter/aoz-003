@@ -72,23 +72,29 @@ de:
       unauthenticated: Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.
       unconfirmed: Sie müssen Ihren Account bestätigen, bevor Sie fortfahren können.
     mailer:
+      hello: 'Hallo %{email}!'
       confirmation_instructions:
-        subject: Anleitung zur Bestätigung Ihres Accounts
+        subject: Anleitung zur Bestaetigung Ihres Accounts
       invitation_instructions:
         subject: Einladung
-        hello: 'Hallo %{email}!'
         someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie koennen die Einladung mit dem Link unten annehmen:'
         accept: Einladung annehmen
-        accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
+        accept_until: 'Diese Einladung ist gueltig bis zum %{due_date}.'
         ignore: 'Wenn Sie die Einladung nicht annehmen moechten, ignorieren Sie bitte diese E-Mail einfach.<br />\nEs wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.'
       reset_password_instructions:
-        subject: Anleitung um Ihr Passwort zurückzusetzen
+        subject: Anleitung um Ihr Passwort zurueckzusetzen
+        someone_requested: Jemand hat einen Link angefordert, um Ihr Passwort zu aendern. Sie koennen dies ueber den Link unten tun.
+        accept: Ihr Passwort aendern
+        ignore: Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese E-Mail. Ihr Passwort wird sich nicht aendern, bis Sie auf den Link oben zugreifen und ein neues erstellen.
       unlock_instructions:
         subject: Anleitung um Ihren Account freizuschalten
       email_changed:
-        subject: E-Mail wurde geändert
+        subject: E-Mail wurde geaendert
+        email_being_changed_to: "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihre E-Mail geaendert wird. Ihre neue E-Mail-Adresse ist %{email}."
+        email_has_changed: "Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihre E-Mail geaendert wurde. Ihre neue E-Mail-Adresse ist %{email}."
       password_change:
-        subject: Passwort wurde geändert
+        subject: Passwort wurde geaendert
+        password_has_changed: Wir melden uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihr Passwort geaendert wurde.
     omniauth_callbacks:
       failure: "Sie konnten nicht mit Ihrem %{kind}-Account angemeldet werden, weil \'%{reason}\'."
       success: Sie haben sich erfolgreich mit Ihrem %{kind}-Account angemeldet.'
