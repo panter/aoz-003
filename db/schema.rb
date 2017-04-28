@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20170421070309) do
   create_table "departements_users", id: false, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "departement_id", null: false
+    t.index ["departement_id", "user_id"], name: "index_departements_users_on_departement_id_and_user_id"
+    t.index ["user_id", "departement_id"], name: "index_departements_users_on_user_id_and_departement_id"
   end
 
   create_table "profiles", force: :cascade do |t|
