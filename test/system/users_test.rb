@@ -48,6 +48,7 @@ class UsersTest < ApplicationSystemTestCase
       assert page.has_text? 'has already been taken'
     end
   end
+
   test 'valid superadmin registration' do
     fill_in 'Email', with: 'superadmin@test.ch'
     select 'superadmin', from: 'Role'
@@ -59,11 +60,6 @@ class UsersTest < ApplicationSystemTestCase
       assert page.has_text? 'Invitation sent to superadmin@test.ch'
       # assert page.has_text? 'Invitation sent to superadmin@test.ch'
     end
-
-    within('nav') do
-      click_link 'superadmin@example.com'
-    end
-    click_link 'Logout'
 
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last

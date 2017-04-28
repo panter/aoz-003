@@ -1,9 +1,4 @@
 en:
-  actions:
-    change_password: Change my password
-    login: Log in
-    password_reset_instructions: Send me password reset instructions
-    remember_me: Remember me
   activerecord:
     models:
       user: User
@@ -13,30 +8,28 @@ en:
       user:
         create: Create User
         update: Update login
-  navigation:
-    create_user: Create user
-    edit_login: Edit login
-    edit_profile: Edit profile
-    forgot_password: Forgot your password?
-    login: Log in
-    logout: Logout
-    show_profile: Show profile
-    users: Users
-  notice:
-    invite_sent: 'Invitation sent to %{email}'
-    profile_created: Profile was successfully created.
-    profile_updated: Profile was successfully updated.
-  titles:
-    change_password: Change your password
-    forgot_password: Forgot your password?
-    login: Log in
-    show_profile: My profile
-    user_index: Users
-    working_days: Working days
-    voluntary_platform: Voluntaries Platform
   weekdays:
     monday: Monday
     tuesday: Tuesday
     wednesday: Wednesday
     thursday: Thursday
     friday: Friday
+  change_my_password: Change my password
+  change_password: Change your password
+  create_user: Create user
+  edit_login: Edit login
+  edit_profile: Edit profile
+  forgot_password: Forgot your password?
+  login: Log in
+  logout: Logout
+  invite_sent: 'Invitation sent to %{email}'
+  password_reset_instructions: Send me password reset instructions
+  profile_created: Profile was successfully created.
+  profile_updated: Profile was successfully updated.
+  remember_me: Remember me
+  show_profile: Show profile
+  show_my_profile: My profile
+  users: Users
+  user_index: Users
+  working_days: Working days
+  voluntary_platform: Voluntaries Platform

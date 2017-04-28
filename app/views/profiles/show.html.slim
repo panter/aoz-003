@@ -27,7 +27,7 @@
 
 .row
   .col-xs-12
-    h3= t('titles.working_days')
+    h3= t('working_days')
     table.table.table-striped
       thead
         tr
@@ -43,5 +43,5 @@
               - else
                 i.glyphicon.glyphicon-remove.text-danger
 
-    p= link_to t('navigation.edit_profile'), edit_profile_path(@profile), class: 'btn btn-default'
-    p= link_to t('navigation.edit_login'), edit_user_path(current_user.id), class: 'btn btn-default'
+    p= link_to t('edit_profile'), edit_profile_path(@profile), class: 'btn btn-default'
+    p= link_to t('edit_login'), edit_user_path(current_user.id), class: 'btn btn-default'

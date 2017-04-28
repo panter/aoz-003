@@ -1,10 +1,10 @@
 p
-  = t("devise.mailer.hello", email: @email)
+  = t('devise.mailer.hello', email: @email)
 
 - if @resource.try(:unconfirmed_email?)
   p
-    = t("devise.mailer.email_changed.email_being_changed_to", email: @resource.unconfirmed_email)
+    = t('devise.mailer.email_changed.email_being_changed_to', email: @resource.unconfirmed_email)
 - else
 
   p
-    = t("devise.mailer.email_changed.email_has_changed", email: @resource.email)
+    = t('devise.mailer.email_changed.email_has_changed', email: @resource.email)
