@@ -33,4 +33,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   else
     driven_by_default
   end
+
+  def select_date(selects, *values)
+    selects[0].select values[0]
+    selects[1].select values[1]
+    selects[2].select values[2]
+  end
 end

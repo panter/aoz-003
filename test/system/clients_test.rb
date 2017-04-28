@@ -11,9 +11,9 @@ class ClientsTest < ApplicationSystemTestCase
 
     fill_in 'First name', with: 'asdf'
     fill_in 'Last name', with: 'asdf'
-    select('1', :from => 'client_date_of_birth_3i')
-    select('January', :from => 'client_date_of_birth_2i')
-    select('2000', :from => 'client_date_of_birth_1i')
+    within '.client_date_of_birth' do
+      select_date all('select'), '10', 'November', '1995'
+    end
     page.choose('client_gender_f')
     select('Aruba', :from => 'Nationality')
     page.choose('client_permit_b')
@@ -26,11 +26,11 @@ class ClientsTest < ApplicationSystemTestCase
     select('Akan', :from => 'Language')
     select('fluent', :from => 'Level')
     click_on('Add family member')
-    fill_in 'First_name', with: 'asdf'
-    fill_in 'Last_name', with: 'asdf'
-    select('2', :from => 'date_of_birth_3i')
-    select('February', :from => 'date_of_birth_2i')
-    select('2001', :from => 'date_of_birth_1i')
+    within '#relatives' do
+      fill_in 'First name', with: 'asdf'
+      fill_in 'Last name', with: 'asdf'
+      select_date page.all('select'), '10', 'February', '2001'
+    end
     fill_in 'Relation', with: 'Onkel'
     fill_in 'Goals', with: 'asdfasdf'
     fill_in 'Education', with: 'asdfasdf'
@@ -39,7 +39,7 @@ class ClientsTest < ApplicationSystemTestCase
     select('active', :from => 'State')
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
-    fill_in 'Involved authorities', with: 'asdfasdf'
+    fill_in 'Involved authority', with: 'asdfasdf'
     page.check('client_schedules_attributes_17_available')
 
     click_button 'Create Client'
