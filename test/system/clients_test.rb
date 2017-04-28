@@ -45,4 +45,16 @@ class ClientsTest < ApplicationSystemTestCase
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
   end
+
+  test 'if required fields are left blank' do
+    visit new_client_path
+    click_button 'Create Client'
+    assert page.has_text? 'Please review the problems below:'
+    within '.client_first_name' do
+      assert page.has_text? "can't be blank"
+    end
+    within '.client_last_name' do
+      assert page.has_text? "can't be blank"
+    end
+  end
 end
