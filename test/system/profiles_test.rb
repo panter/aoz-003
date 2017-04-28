@@ -21,11 +21,6 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_field? 'Avatar'
     assert page.has_field? 'Address'
     assert page.has_field? 'Profession'
-    assert page.has_field? 'Monday'
-    assert page.has_field? 'Tuesday'
-    assert page.has_field? 'Wednesday'
-    assert page.has_field? 'Thursday'
-    assert page.has_field? 'Friday'
 
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
@@ -55,7 +50,7 @@ class ProfilesTest < ApplicationSystemTestCase
 
     click_link 'Show profile'
 
-    assert page.has_text? 'My Profile'
+    assert page.has_text? 'Hans, Muster'
     assert page.has_text? @user_without_profile.profile.first_name
     assert page.has_text? @user_without_profile.profile.last_name
   end
