@@ -70,7 +70,8 @@
           = f.input :hobbies
           = f.input :interests
           = f.input :state, :collection => state_collection
-          = f.input :comments
+          - if current_user.superadmin?
+            = f.input :comments
           = f.input :competent_authority
           = f.input :involved_authority
         
