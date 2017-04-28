@@ -28,8 +28,8 @@ class SocialworkerTest < ApplicationSystemTestCase
     login_as @socialworker
     visit clients_path
     @socialworker.clients.each do |client|
-      assert page.has_text? client.firstname
-      assert page.has_text? client.lastname
+      assert page.has_text? client.first_name
+      assert page.has_text? client.last_name
       assert page.has_link? href: client_path(client.id)
       assert page.has_link? href: edit_client_path(client.id)
     end
@@ -40,8 +40,8 @@ class SocialworkerTest < ApplicationSystemTestCase
     visit clients_path
     other_socialworker = create :user, :with_profile, :with_clients, role: 'social_worker'
     Client.where(user: other_socialworker) do |client|
-      assert_not page.has_text? client.firstname
-      assert_not page.has_text? client.lastname
+      assert_not page.has_text? client.first_name
+      assert_not page.has_text? client.last_name
       assert_not page.has_link? href: client_path(client.id)
       assert_not page.has_link? href: edit_client_path(client.id)
     end
