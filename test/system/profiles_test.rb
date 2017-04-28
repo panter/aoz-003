@@ -90,6 +90,6 @@ class ProfilesTest < ApplicationSystemTestCase
     click_link @user_without_profile.email
     assert page.has_link? 'Create profile'
     click_link 'Create profile'
-    assert page.has_text? 'New profile'
+    assert page.has_text? 'New Profile'
   end
 end
