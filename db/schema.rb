@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20170421070309) do
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "first_name"
     t.string "last_name"
     t.date "date_of_birth"
