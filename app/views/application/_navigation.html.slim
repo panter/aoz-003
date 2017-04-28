@@ -24,7 +24,7 @@ nav.navbar.navbar-top
             ul.dropdown-menu
               li
                 - if current_user.profile.blank?
-                  = link_to 'Create profile', new_profile_path
+                  = link_to t('create_profile'), new_profile_path
                 - else
                   = link_to t('show_profile'), current_user.profile
               li
