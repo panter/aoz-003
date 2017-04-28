@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class LanguageSkillTest < ActiveSupport::TestCase
+class ScheduleTest < ActiveSupport::TestCase
   context 'associations' do
     should belong_to(:client)
   end
