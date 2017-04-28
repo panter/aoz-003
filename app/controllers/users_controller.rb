@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params.merge(password: Devise.friendly_token)
     respond_to do |format|
-      if @user.save
+      if @user.save!
         @user.invite!
         format.html { redirect_to users_path, notice: t('invite_sent', email: @user.email) }
       else
