@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :relative do
-    client nil
+    client
+    first_name 'bogus'
+    last_name 'ipsum'
   end
 end
