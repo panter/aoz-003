@@ -1,14 +1,16 @@
 language: ruby
-
 cache: bundler
-
 services: postgresql
-
 before_script:
-  - bundle exec rails db:drop
-  - bundle exec rails db:create
-  - bundle exec rails db:schema:load
-
+- bundle exec rails db:drop
+- bundle exec rails db:create
+- bundle exec rails db:schema:load
 script:
-  - bundle exec rails test
-  - bundle exec rails test:system
+- bundle exec rails test
+- bundle exec rails test:system
+env:
+  global:
+    secure: JJRcaAz6YS69OdG9vWjSvtiROOaXcnQj0XTk1tXNDUjrPeS2CuRYPSMn6KQJBmMdy5gqLYsdZVFtL7wPGAXNnTheQq7pgPfsB1vcaWhMCTJfeJFI50eIf0nBBp3WFlmx4qG4TWAq3pNSXf+HP8sEpri/T3dsmiEfKN/wEv9D4O6fWofBrh7HJV3O4lpnL/hM0izq3MpzkX9gBifWiVT8VQQ0VXjPG6sR1x5k7XfrqWTJ2PGGrqGgo90sZ29RiJC0sDjH9Kh5brYu9oqMykk40Z+NxkSHZh6xDew8bBn1QTsD7Cje0AjgLabS4wB4YOC9syJ/I47IrL/snZIfDN57mfpH165tasO4nlr4mUG0f1FcRkmR2opORl0wR2zUpu5OCMw5qgqo2PdE+shnlN92hO/xNSqFodwDstwoM2P2Uz942vHdWq55y/ahKZ7I46NLN5/IGeYqFvFYaIEiMvxNdhnNL7onO0Loq4ZnsWz8+7V+dpACZAK/XWmQ6XLm43Khbre4bdkp/HHfytbRTruioRMkHQFDEsNxPs7otxfTSI4i7F9yUXYXEwBmUj+vvqdKAPS2cvpBTwQNTqfzdHocCJrY1hNSaTTvkixgjZmzpUIIcKlP84X7+ko6M/4Q0tHYEBEiaMbkxEFJpo+267CB5eAdBtC0BFDQ1LEJVuFt4wY=
+after_success:
+  - 'openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa'
+  - "[[ $TRAVIS_BRANCH = 'develop' ]] && bundle exec cap deploy"
