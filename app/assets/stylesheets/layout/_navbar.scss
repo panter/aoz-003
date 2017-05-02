@@ -1,0 +1,16 @@
+.navbar-top {
+  .navbar-toggle {
+    border-color: $black;
+  }
+  .icon-bar {
+    background-color: $black;
+  }
+  .navbar-brand {
+    height: $navbar-height - $padding-xs-vertical * 2;
+    padding: $padding-xs-vertical $padding-xs-horizontal;
+
+    .brand-image {
+      height: 100%;
+    }
+  }
+}
