@@ -46,13 +46,13 @@ de:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
       send_instructions: Sie erhalten in wenigen Minuten ein Email, mit dem Sie Ihre Registrierung bestätigen können.
-      send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Sie Ihre Registrierung bestätigen können.
+      send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert, erhalten Sie in wenigen Minuten eine Email, mit der Sie Ihre Registrierung bestätigen können.
     invitations:
       send_instructions: 'Sie haben eine Einladung in Ihrem Email Postfach: %{email}'
       invitation_token_invalid: Der Einladungs-Schlüssel ist nicht gültig!
       updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
       no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
-      invitation_removed: Deine Einladung wurde gelöscht.
+      invitation_removed: Ihre Einladung wurde gelöscht.
       new:
         header: Einladung schicken
         submit_button: Einladung schicken
@@ -89,11 +89,11 @@ de:
         subject: Anleitung um Ihren Account freizuschalten
       email_changed:
         subject: Email wurde geändert
-        email_being_changed_to: "Wir setzen uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihre Email geändert wird. Ihre neue Mailadresse ist %{email}."
-        email_has_changed: "Wir setzen uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihre Email geändert wurde. Ihre neue Mailadresse ist %{email}."
+        email_being_changed_to: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wird. Die neue Mailadresse ist: %{email}'
+        email_has_changed: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wurde. Die eingetragene Mailadresse ist: %{email}'
       password_change:
         subject: Passwort wurde geändert
-        password_has_changed: Wir setzen uns mit Ihnen in Verbindung, um Ihnen mitzuteilen, dass Ihr Passwort geändert wurde.
+        password_has_changed: Wir möchten Ihnen mitteilen, dass Ihr Passwort geändert wurde.
     omniauth_callbacks:
       failure: "Sie konnten nicht mit Ihrem %{kind}-Account angemeldet werden, weil \'%{reason}\'."
       success: Sie haben sich erfolgreich mit Ihrem %{kind}-Account angemeldet.'
