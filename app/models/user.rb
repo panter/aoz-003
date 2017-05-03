@@ -34,13 +34,10 @@ class User < ApplicationRecord
   validates :role, inclusion: { in: ROLES }
 
   def self.create_user_and_send_password_reset(email:, role:)
-    user = User.new(
+    new_user = User.new(
       email: email, password: Devise.friendly_token, role: role
     )
-
-    if user.save!
-      user.send_reset_password_instructions
-    end
+    new_user.save! && new_user.send_reset_password_instructions
   end
 
   def self.role_collection

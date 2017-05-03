@@ -28,8 +28,8 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_field? name: 'profile[thursday]'
     assert page.has_field? name: 'profile[friday]'
 
-    fill_in 'First name', with: 'Hans'
-    fill_in 'Last name', with: 'Muster'
+    fill_in 'First Name', with: 'Hans'
+    fill_in 'Last Name', with: 'Muster'
     page.check(name: 'profile[monday]')
 
     click_button 'Create Profile'
@@ -49,8 +49,8 @@ class ProfilesTest < ApplicationSystemTestCase
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
 
-    fill_in 'First name', with: 'Hans'
-    fill_in 'Last name', with: 'Muster'
+    fill_in 'First Name', with: 'Hans'
+    fill_in 'Last Name', with: 'Muster'
     click_button 'Create Profile'
 
     assert page.has_link? @user_without_profile.email
@@ -96,7 +96,7 @@ class ProfilesTest < ApplicationSystemTestCase
   test 'user cannot edit other users profile' do
     login_as @social_worker, scope: :user
     visit profile_path(@social_worker.profile.id)
-    click_link 'Edit Profile'
+    click_link 'Edit profile'
     assert page.has_text? 'Edit profile'
     visit edit_profile_path(@user.profile.id)
     assert_raises LocalJumpError
