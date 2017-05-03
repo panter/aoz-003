@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def home; end
+
   private
 
   def user_not_authorized

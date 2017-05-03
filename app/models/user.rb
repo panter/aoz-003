@@ -9,7 +9,8 @@ class User < ApplicationRecord
   SUPERADMIN = 'superadmin'.freeze
   ADMIN = 'admin'.freeze
   SOCIAL_WORKER = 'social_worker'.freeze
-  ROLES = [SUPERADMIN, ADMIN, SOCIAL_WORKER].freeze
+  DEPARTMENT_MANAGER = 'department_manager'.freeze
+  ROLES = [SUPERADMIN, ADMIN, SOCIAL_WORKER, DEPARTMENT_MANAGER].freeze
 
   def superadmin?
     role == User::SUPERADMIN
