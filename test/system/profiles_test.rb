@@ -13,7 +13,7 @@ class ProfilesTest < ApplicationSystemTestCase
     click_button 'Log in'
 
     assert page.has_current_path? new_profile_path
-    assert page.has_text? 'New profile'
+    assert page.has_text? 'New Profile'
 
     assert page.has_field? 'First name'
     assert page.has_field? 'Last name'
@@ -60,7 +60,6 @@ class ProfilesTest < ApplicationSystemTestCase
 
     click_link 'Show profile'
 
-    assert page.has_text? 'My profile'
     assert page.has_text? @user_without_profile.profile.first_name
     assert page.has_text? @user_without_profile.profile.last_name
   end
