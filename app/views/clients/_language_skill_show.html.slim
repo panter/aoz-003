@@ -1,5 +1,6 @@
 - if @client.language_skills.any?
   - @client.language_skills.each do |lang|
     li
-      = lang.language
+      = lang.language_name
+      = ', '
       = lang.level

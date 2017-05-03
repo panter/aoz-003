@@ -1,4 +1,4 @@
-require "application_system_test_case"
+require 'application_system_test_case'
 
 class ClientsTest < ApplicationSystemTestCase
   setup do
@@ -14,8 +14,8 @@ class ClientsTest < ApplicationSystemTestCase
     within '.client_date_of_birth' do
       select_date all('select'), '10', 'November', '1995'
     end
-    page.choose('client_gender_f')
-    select('Aruba', :from => 'Nationality')
+    page.choose('client_gender_female')
+    select('Aruba', from: 'Nationality')
     page.choose('client_permit_b')
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
@@ -23,8 +23,8 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Email', with: 'gurke@gurkenmail.ch'
     fill_in 'Phone', with: '0123456789'
     click_on('Add language')
-    select('Akan', :from => 'Language')
-    select('fluent', :from => 'Level')
+    select('Akan', from: 'Language')
+    select('Fluent', from: 'Level')
     click_on('Add family member')
     within '#relatives' do
       fill_in 'First name', with: 'asdf'
@@ -36,7 +36,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Education', with: 'asdfasdf'
     fill_in 'Hobbies', with: 'asdfasdf'
     fill_in 'Interests', with: 'asdfasdf'
-    select('active', :from => 'State')
+    select('Active', from: 'State')
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
     fill_in 'Involved authority', with: 'asdfasdf'
