@@ -1,21 +1,20 @@
 module ApplicationHelper
-
   def permit_collection
-    { 'L' => 'l', 'B' => 'b' }
+    { 'L' => 'L', 'B' => 'B' }
   end
 
   def gender_collection
-    { 'female' => 'f', 'male' => 'm' }
+    { 'Female' => 'Female', 'Male' => 'Male' }
   end
 
   def language_level_collection
-    { 'native speaker' => 'native', 'fluent' => 'fluent', 'good' => 'good',
-      'basic' => 'basic' }
+    { 'Native speaker' => 'Native speaker', 'Fluent' => 'Fluent', 'Good' => 'Good',
+      'Basic' => 'Basic' }
   end
 
   def state_collection
-    { 'registered' => 'registered', 'reserved' => 'reserved',
-      'active' => 'active', 'finished' => 'finished', 'rejected' => 'rejected'}
+    { 'Registered' => 'Registered', 'Reserved' => 'Reserved',
+      'Active' => 'Active', 'Finished' => 'Finished', 'Rejected' => 'Rejected' }
   end
 
   def week
