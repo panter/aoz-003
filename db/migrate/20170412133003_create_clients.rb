@@ -1,9 +1,9 @@
 class CreateClients < ActiveRecord::Migration[5.1]
   def change
     create_table :clients do |t|
-      t.string :firstname
-      t.string :lastname
-      t.date :dob
+      t.string :first_name
+      t.string :last_name
+      t.date :date_of_birth
       t.string :nationality
       t.string :permit
       t.string :gender
@@ -18,9 +18,9 @@ class CreateClients < ActiveRecord::Migration[5.1]
       t.text :interests
       t.string :state, default: 'registered'
       t.text :comments
-      t.text :c_authority
-      t.text :i_authority
-      t.boolean :availability, default: false
+      t.text :competent_authority
+      t.text :involved_authority
+      t.references :user, foreign_key: true
       t.timestamps
     end
   end
