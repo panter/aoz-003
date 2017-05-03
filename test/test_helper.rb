@@ -21,7 +21,7 @@ class ActiveSupport::TestCase
   def permit(current_user, record, action)
     self.class.to_s.gsub(/Test/, '')
         .constantize.new(current_user, record)
-        .public_send("#{action}?")
+        .public_send(action)
   end
 
   def forbid(current_user, record, action)

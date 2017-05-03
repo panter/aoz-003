@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SuperadminCanCreateSuperadminTest < ActionDispatch::IntegrationTest
   def setup
-    @user = build :user
+    @user = create :user, :with_profile
   end
 
   test 'invalid superadmin information' do
@@ -23,12 +23,12 @@ class SuperadminCanCreateSuperadminTest < ActionDispatch::IntegrationTest
     end
   end
 
-  # test 'valid superadmin registration' do
-  #  login_as(@user)
-  #  get new_user_path
-  #  assert_difference 'User.count', 1 do
-  #    post users_path, params: { user: { email: 'superadmin@abc.ch',
-  #                                       role:  'superadmin' } }
-  #  end
-  # end
+  test 'valid superadmin registration' do
+    login_as(@user)
+    get new_user_path
+    assert_difference 'User.count', 1 do
+      post users_path, params: { user: { email: 'superadmin@abc.ch',
+                                         role:  'superadmin' } }
+    end
+  end
 end

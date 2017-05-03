@@ -58,7 +58,6 @@ class UsersTest < ApplicationSystemTestCase
         click_button 'Create User'
       end
       assert page.has_text? 'Invitation sent to superadmin@test.ch'
-      # assert page.has_text? 'Invitation sent to superadmin@test.ch'
     end
 
     assert_equal 1, ActionMailer::Base.deliveries.size

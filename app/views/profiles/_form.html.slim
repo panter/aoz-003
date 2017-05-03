@@ -6,8 +6,8 @@
   .row
     .col-xs-12
       = f.input :user_id, as: :hidden
-      = f.input :first_name, label: 'First Name'
-      = f.input :last_name, label: 'Last Name'
+      = f.input :first_name
+      = f.input :last_name
       = f.input :phone
       = f.input :avatar, as: :file
       = f.input :address
@@ -21,7 +21,7 @@
           tr
             - week.each do |day|
               th.text-center
-                = day.to_s.capitalize
+                = day.capitalize
         tbody
           tr
             - week.each do |day|
