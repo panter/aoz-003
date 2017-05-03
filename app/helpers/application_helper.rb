@@ -28,8 +28,4 @@ module ApplicationHelper
   def week
     [:monday, :tuesday, :wednesday, :thursday, :friday]
   end
-
-  def week
-    [:monday, :tuesday, :wednesday, :thursday, :friday]
-  end
 end
