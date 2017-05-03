@@ -21,11 +21,11 @@ User.all.each do |user|
   end
 
   Client.find_or_create_by!(
-    firstname: "#{user.profile.first_name}'s Client",
+    first_name: "#{user.profile.first_name}'s Client",
     user: user
   ) do |client|
-    client.firstname = "#{user.profile.first_name}'s Client"
-    client.lastname = 'a lastname'
+    client.first_name = "#{user.profile.first_name}'s Client"
+    client.last_name = 'a lastname'
     client.user = user
   end
 end
