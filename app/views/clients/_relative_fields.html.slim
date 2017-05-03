@@ -11,5 +11,6 @@
     order: [:day, :month, :year]
   .col-xs-12.col-md-6
     = f.input :relation
-= link_to_remove_association 'remove relative', f, class: 'btn btn-danger'
-p
+.row
+  .col-xs-12.col-md-12
+    p= link_to_remove_association 'remove relative', f, class: 'btn btn-danger'

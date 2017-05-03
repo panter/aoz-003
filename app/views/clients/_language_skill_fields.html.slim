@@ -4,5 +4,6 @@
       = f.input :language, :collection => languages
     .col-xs-12.col-md-6
       = f.input :level, :collection => language_level_collection
-  = link_to_remove_association "remove language", f, class: 'btn btn-danger'
-  p
+  .row
+    .col-xs-12.col-md-12
+      p= link_to_remove_association 'remove language', f, class: 'btn btn-danger'
