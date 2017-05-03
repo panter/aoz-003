@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   resources :clients
   resources :profiles, except: [:destroy, :index]
 
-  root 'clients#index'
+  root 'application#home'
 end
