@@ -9,8 +9,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'valid factory' do
-    user = build :user
-    assert user.valid?
+    assert @user.valid?
   end
 
   test '#create_user_and_send_password_reset \

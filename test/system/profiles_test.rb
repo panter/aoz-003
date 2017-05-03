@@ -16,8 +16,8 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_current_path? new_profile_path
     assert page.has_text? 'New Profile'
 
-    assert page.has_field? 'First Name'
-    assert page.has_field? 'Last Name'
+    assert page.has_field? 'First name'
+    assert page.has_field? 'Last name'
     assert page.has_field? 'Phone'
     assert page.has_field? 'Avatar'
     assert page.has_field? 'Address'
@@ -28,8 +28,8 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_field? name: 'profile[thursday]'
     assert page.has_field? name: 'profile[friday]'
 
-    fill_in 'First Name', with: 'Hans'
-    fill_in 'Last Name', with: 'Muster'
+    fill_in 'First name', with: 'Hans'
+    fill_in 'Last name', with: 'Muster'
     page.check(name: 'profile[monday]')
 
     click_button 'Create Profile'
@@ -49,8 +49,8 @@ class ProfilesTest < ApplicationSystemTestCase
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
 
-    fill_in 'First Name', with: 'Hans'
-    fill_in 'Last Name', with: 'Muster'
+    fill_in 'First name', with: 'Hans'
+    fill_in 'Last name', with: 'Muster'
     click_button 'Create Profile'
 
     assert page.has_link? @user_without_profile.email
