@@ -94,11 +94,8 @@ class ProfilesTest < ApplicationSystemTestCase
   end
 
   test 'user cannot edit other users profile' do
-    login_as @social_worker, scope: :user
-    visit profile_path(@social_worker.profile.id)
-    click_link 'Edit profile'
-    assert page.has_text? 'Edit profile'
+    login_as @social_worker
     visit edit_profile_path(@user.profile.id)
-    assert_raises LocalJumpError
+    assert page.has_text? 'You are not authorized to perform this action.'
   end
 end
