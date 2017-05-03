@@ -13,6 +13,11 @@ User.find_or_create_by!(email: 'admin@example.com') do |user|
   user.role = 'admin'
 end
 
+User.find_or_create_by!(email: 'department_manager@example.com') do |user|
+  user.password = 'asdfasdf'
+  user.role = 'department_manager'
+end
+
 User.all.each do |user|
   Profile.find_or_create_by!(user: user) do |profile|
     profile.first_name = user.role
