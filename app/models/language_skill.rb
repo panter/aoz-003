@@ -3,6 +3,6 @@ class LanguageSkill < ApplicationRecord
 
   def language_name
     return '' if language.blank?
-    I18nData.languages[language]
+    I18nData.languages(I18n.locale)[language]
   end
 end
