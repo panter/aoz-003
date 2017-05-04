@@ -96,7 +96,7 @@ de:
         password_has_changed: Wir möchten Ihnen mitteilen, dass Ihr Passwort geändert wurde.
     omniauth_callbacks:
       failure: "Sie konnten nicht mit Ihrem %{kind}-Account angemeldet werden, weil '%{reason}'."
-      success: Sie haben sich erfolgreich mit Ihrem %{kind}-Account angemeldet.'
+      success: Sie haben sich erfolgreich mit Ihrem %{kind}-Account angemeldet.
     passwords:
       no_token: Sie können diese Seite nur von dem Link aus einer Email zum Passwort-Zurücksetzen aufrufen. Wenn Sie einen solchen Link aufgerufen haben, stellen Sie bitte sicher, dass Sie die vollständige Adresse aufrufen.
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihr Passwort zurücksetzen können.
