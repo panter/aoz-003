@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421070309) do
+ActiveRecord::Schema.define(version: 20170427142319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,15 +41,6 @@ ActiveRecord::Schema.define(version: 20170421070309) do
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
-  create_table "language_skills", force: :cascade do |t|
-    t.bigint "client_id"
-    t.string "language"
-    t.string "level"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_language_skills_on_client_id"
-  end
-
   create_table "departements", force: :cascade do |t|
     t.string "name"
     t.string "street"
@@ -68,6 +59,15 @@ ActiveRecord::Schema.define(version: 20170421070309) do
     t.bigint "departement_id", null: false
     t.index ["departement_id", "user_id"], name: "index_departements_users_on_departement_id_and_user_id"
     t.index ["user_id", "departement_id"], name: "index_departements_users_on_user_id_and_departement_id"
+  end
+
+  create_table "language_skills", force: :cascade do |t|
+    t.bigint "client_id"
+    t.string "language"
+    t.string "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_language_skills_on_client_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -138,8 +138,8 @@ ActiveRecord::Schema.define(version: 20170421070309) do
   end
 
   add_foreign_key "clients", "users"
-  add_foreign_key "language_skills", "clients"
   add_foreign_key "departements", "users"
+  add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
   add_foreign_key "relatives", "clients"
   add_foreign_key "schedules", "clients"
