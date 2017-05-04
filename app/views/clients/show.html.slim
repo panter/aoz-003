@@ -20,7 +20,7 @@
             td= @client.permit
           tr
             td= t_attr(:gender)
-            td= @client.gender
+            td= t("gender.#{@client.gender}")
           tr
             td= t_attr(:street)
             td= @client.street
@@ -68,7 +68,7 @@
 
           tr
             td= t_attr(:state)
-            td= @client.state
+            td= t("state.#{@client.state}")
 
           tr
             td= t_attr(:competent_authority)
