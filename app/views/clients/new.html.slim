@@ -1,6 +1,6 @@
 .row
   .col-xs-12
-    h1 New client
+    h1= t_title(:new)
 
 .row
   .col-xs-12
@@ -8,4 +8,4 @@
 
 .row
   .col-xs-12
-    p= link_to 'Back', clients_path, class: 'btn btn-default'
+    p= link_to t('back'), clients_path, class: 'btn btn-default'

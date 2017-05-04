@@ -32,7 +32,7 @@
                     wrapper: :vertical_radio_and_checkboxes
       .row
         .col-xs-12
-          h3 Contact Information
+          h3= t('contact_info')
       .row
         .col-xs-12
           = f.input :street
@@ -46,25 +46,25 @@
 
       .row
         .col-xs-12
-          h3 Language Skills
+          h3= t('language_skills')
           #languages
             = f.simple_fields_for :language_skills do |language|
               = render 'language_skill_fields', f: language
             .links
-              = link_to_add_association 'Add language', f, :language_skills, class: 'btn btn-success'
+              = link_to_add_association t('add_language'), f, :language_skills, class: 'btn btn-success'
 
       .row
         .col-xs-12
-          h3 Family members
+          h3= t('relatives')
           #relatives
             = f.simple_fields_for :relatives do |relative|
               = render 'relative_fields', f: relative
             .links
-              = link_to_add_association 'Add family member', f, :relatives, class: 'btn btn-success'
+              = link_to_add_association t('add_relative'), f, :relatives, class: 'btn btn-success'
 
       .row
         .col-xs-12
-          h3 Personal Background
+          h3= t('personal_background')
           = f.input :goals
           = f.input :education
           = f.input :hobbies
@@ -76,17 +76,15 @@
           = f.input :involved_authority
       .row
         .col-xs-12
-          h3 Schedule
+          h3= t('schedule')
           .row
             .col-xs-12
               table.table.table-striped
                 thead
                   tr
-                    th
-                      | Time
+                    th= t('time')
                     - Schedule.days.each do |day|
-                      th.days
-                        = day
+                      th.days= t("weekdays.#{day.to_s}")
                 tbody
                   - @client.schedules.group_by(&:time).each do |time, schedules|
                     tr

@@ -10,118 +10,96 @@
       table.table.table-no-border-top
         tbody
           tr
-            td width='200'
-              | Date of birth
-            td
-              = @client.date_of_birth
+            td width='200'= t_attr(:date_of_birth)
+            td= @client.date_of_birth
           tr
-            td
-              | Nationality
-            td
-              = @client.nationality_name
+            td= t_attr(:nationality)
+            td= @client.nationality_name
           tr
-            td
-              | Residence Permit
-            td
-              = @client.permit
+            td= t_attr(:permit)
+            td= @client.permit
           tr
-            td
-              | Gender
-            td = @client.gender
+            td= t_attr(:gender)
+            td= @client.gender
           tr
-            td
-              | Street
-            td = @client.street
+            td= t_attr(:street)
+            td= @client.street
 
           tr
-            td
-              | Zip
-            td = @client.zip
+            td= t_attr(:zip)
+            td= @client.zip
 
           tr
-            td
-              | City
-            td = @client.city
+            td= t_attr(:city)
+            td= @client.city
 
           tr
-            td
-              | Phone
-            td = @client.phone
+            td= t_attr(:phone)
+            td= @client.phone
 
           tr
             td
               | Email
-            td = @client.email
+            td= @client.email
 
           tr
-            td
-              | Language Skills
-            td = render 'language_skill_show'
+            td= t('language_skills')
+            td= render 'language_skill_show'
 
           tr
-            td
-              | Family Members
-            td = render 'relatives_show'
+            td= t('relatives')
+            td= render 'relatives_show'
 
           tr
-            td
-              | Goals
-            td = @client.goals
+            td= t_attr(:goals)
+            td= @client.goals
 
           tr
-            td
-              | Education
-            td = @client.education
+            td= t_attr(:education)
+            td= @client.education
 
           tr
-            td
-              | Hobbies
-            td = @client.hobbies
+            td= t_attr(:hobbies)
+            td= @client.hobbies
 
           tr
-            td
-              | Interests
-            td = @client.interests
+            td= t_attr(:interests)
+            td= @client.interests
 
           tr
-            td
-              | State
-            td = @client.state
+            td= t_attr(:state)
+            td= @client.state
 
           tr
-            td
-              | Competent authority
-            td = @client.competent_authority
+            td= t_attr(:competent_authority)
+            td= @client.competent_authority
 
           tr
-            td
-              | Involved authorities
-            td = @client.involved_authority
+            td= t_attr(:involved_authority)
+            td= @client.involved_authority
 
           tr
-            td
-              | Registered by
-            td = @client.user.email
+            td= t('registered_by')
+            td= @client.user.email
 
           tr
             td
               - if current_user.superadmin?
-                |  Comments
-            td = @client.comments
+                = t_attr(:comments)
+            td= @client.comments
 
 .row
   .col-xs-12
-    h3 Schedule
+    h3= t('schedule')
 .row
   .col-xs-12
     table.table.table-striped
       thead
         tr
-          th
-            | Time
+          th= t('time')
           - Schedule.days.each do |day|
             th.text-center
-              = day
+              = t("weekdays.#{day.to_s}")
       tbody
         - @client.schedules.group_by(&:time).each do |time, schedules|
           tr
@@ -136,6 +114,6 @@
 
 .row
   .col-xs-12
-    = link_to 'Edit', edit_client_path(@client)
+    = link_to t_action(:edit), edit_client_path(@client)
     '  |
-    = link_to 'Back', clients_path
+    = link_to t('back'), clients_path
