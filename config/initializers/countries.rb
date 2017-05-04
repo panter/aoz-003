@@ -8,3 +8,7 @@ ISO3166::Data.register(
 )
 
 ISO3166::Country.new('XK').name == 'Kosovo'
+
+ISO3166.configure do |config|
+  config.locales = [:en, :de]
+end
