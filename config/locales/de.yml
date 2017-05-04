@@ -24,6 +24,7 @@ de:
             avatar_content_type:
               invalid: ist ungültig
     models:
+      client: Klient
       profile: Profil
       user: Benutzer
     attributes:
@@ -40,12 +41,12 @@ de:
         phone: Telefonnummer
         goals: Ziele
         education: Ausbildung
-        hobbies: hobbies
+        hobbies: Hobbies
         interests: Interessen
         state: Status
         comments: Bemerkungen
-        competent_authority: Zuständige Freiwillige
-        involved_authority: Zuständige Freiwillige
+        competent_authority: Anmeldende Stelle
+        involved_authority: Involvierte Stelle
       language_skill:
         language: Sprache
         level: Niveau
@@ -191,9 +192,16 @@ de:
     wednesday: Mittwoch
     thursday: Donnerstag
     friday: Freitag
+    saturday: Samstag
+    sunday: Sonntag
+  add_language: Sprache hinzufügen
+  add_relative: Verwandte hinzufügen
+  are_you_sure: Sind Sie sicher?
+  back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   clients: Klienten
+  contact_info: Kontakt Informationen
   create_client: Klient erfassen
   create_user: Benutzer erfassen
   create_profile: Profil erfassen
@@ -201,14 +209,22 @@ de:
   edit_profile: Profil bearbeiten
   forgot_password: Passwort vergessen?
   invite_sent: 'Einladung wurde an %{email} verschickt.'
+  language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
   password_reset_instructions: Schicken Sie mir Passwortrücksetzung Instruktionen
+  personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
+  registered_by: 'Zuständige/r Sozialberater/in'
+  relatives: Verwandte
   remember_me: Angemeldet bleiben
+  remove_language: Sprache entfernen
+  remove_relative: Verwandte entfernen
+  schedule: Zeitplan
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
+  time: Zeit
   users: Benutzer
   voluntary_platform: Freiwilligen Platform
   working_days: Arbeitstage
