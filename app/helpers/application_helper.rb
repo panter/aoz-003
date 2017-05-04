@@ -12,17 +12,20 @@ module ApplicationHelper
   end
 
   def gender_collection
-    { 'Female' => 'Female', 'Male' => 'Male' }
+    { t('gender.female') => 'Female', t('gender.male') => 'Male' }
   end
 
   def language_level_collection
-    { 'Native speaker' => 'Native speaker', 'Fluent' => 'Fluent', 'Good' => 'Good',
-      'Basic' => 'Basic' }
+    { t('language_level.native_speaker') => 'Native speaker',
+      t('language_level.fluent') => 'Fluent',
+      t('language_level.good') => 'Good',
+      t('language_level.basic') => 'Basic' }
   end
 
   def state_collection
-    { 'Registered' => 'Registered', 'Reserved' => 'Reserved',
-      'Active' => 'Active', 'Finished' => 'Finished', 'Rejected' => 'Rejected' }
+    { t('state.registered') => 'Registered', t('state.reserved') => 'Reserved',
+      t('state.active') => 'Active', t('state.finished') => 'Finished',
+      t('state.rejected') => 'Rejected' }
   end
 
   def week
