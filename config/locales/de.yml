@@ -74,6 +74,21 @@ de:
         wednesday: Mittwoch
         thursday: Donnerstag
         friday: Freitag
+  date:
+    month_names:
+      -
+      - Januar
+      - Februar
+      - März
+      - April
+      - Mai
+      - Juni
+      - Juli
+      - August
+      - September
+      - Oktober
+      - November
+      - Dezember
   devise:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
