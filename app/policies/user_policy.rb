@@ -7,7 +7,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    @current_user.staff?
+    @current_user.superadmin?
   end
 
   def show?
