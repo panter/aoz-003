@@ -116,6 +116,10 @@ en:
     wednesday: Wednesday
     thursday: Thursday
     friday: Friday
+    saturday: Saturday
+    sunday: Sunday
+  add_language: Add language
+  add_relative: Add family member
   change_my_password: Change my password
   change_password: Change your password
   clients: Clients
@@ -131,6 +135,8 @@ en:
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
   remember_me: Remember me
+  remove_language: Remove language
+  remove_relative: Remove family member
   show_profile: Show profile
   show_my_profile: My profile
   users: Users
