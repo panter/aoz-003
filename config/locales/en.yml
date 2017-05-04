@@ -110,6 +110,13 @@ en:
         mailer:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
+  gender:
+    female: Female
+    male: Male
+  role:
+    superadmin: superadmin
+    admin: admin
+    social_worker: social_worker
   weekdays:
     monday: Monday
     tuesday: Tuesday
@@ -123,6 +130,7 @@ en:
   change_my_password: Change my password
   change_password: Change your password
   clients: Clients
+  client_created: Client was successfully created.
   create_user: Create user
   create_profile: Create profile
   edit_login: Edit login
