@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   after_action :verify_authorized
+  before_action :superadmin?, only: [:new, :index]
 
   def index
     @users = User.all
@@ -49,7 +50,15 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = if current_user.role == User::SUPERADMIN
+              User.find(params[:id])
+            else
+              current_user
+            end
+  end
+
+  def superadmin?
+    redirect_to(current_user) unless current_user.role == User::SUPERADMIN
   end
 
   def user_params

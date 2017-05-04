@@ -40,7 +40,11 @@ class ProfilesController < ApplicationController
   private
 
   def set_profile
-    @profile = Profile.find(params[:id])
+    @profile = if current_user.role == User::SUPERADMIN
+                 Profile.find(params[:id])
+               else
+                 Profile.find_by(user_id: current_user.id)
+               end
   end
 
   def profile_params

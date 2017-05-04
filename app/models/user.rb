@@ -6,10 +6,13 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
 
   # Roles definition
-  SUPERADMIN = 'superadmin'.freeze
   ADMIN = 'admin'.freeze
+  DEPARTMENT_MANAGER = 'department_manager'.freeze
   SOCIAL_WORKER = 'social_worker'.freeze
-  ROLES = [SUPERADMIN, ADMIN, SOCIAL_WORKER].freeze
+  SUPERADMIN = 'superadmin'.freeze
+  ROLE_COLLECTION = [ADMIN, DEPARTMENT_MANAGER, SOCIAL_WORKER, SUPERADMIN].freeze
+
+  validates :role, inclusion: { in: ROLE_COLLECTION }, presence: true
 
   def superadmin?
     role == User::SUPERADMIN
@@ -31,8 +34,6 @@ class User < ApplicationRecord
     admin_or_superadmin? || social_worker?
   end
 
-  validates :role, inclusion: { in: ROLES }
-
   def self.create_user_and_send_password_reset(email:, role:)
     new_user = User.new(
       email: email, password: Devise.friendly_token, role: role
@@ -41,6 +42,6 @@ class User < ApplicationRecord
   end
 
   def self.role_collection
-    ROLES
+    ROLE_COLLECTION
   end
 end

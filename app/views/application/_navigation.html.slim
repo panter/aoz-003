@@ -11,7 +11,9 @@ nav.navbar.navbar-top
           = image_tag 'AOZ_Logo.svg', alt: 'AOZ Logo', class: 'brand-image'
 
       #navbar.collapse.navbar-collapse
-        ul.nav.navbar-nav
+        - if current_user.role == User::SUPERADMIN
+
+          ul.nav.navbar-nav
             li
               = link_to t('users'), users_path
             li
