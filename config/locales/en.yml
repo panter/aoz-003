@@ -118,6 +118,7 @@ en:
     friday: Friday
   change_my_password: Change my password
   change_password: Change your password
+  clients: Clients
   create_user: Create user
   create_profile: Create profile
   edit_login: Edit login
@@ -133,6 +134,5 @@ en:
   show_profile: Show profile
   show_my_profile: My profile
   users: Users
-  user_index: Users
   working_days: Working days
   voluntary_platform: Voluntaries Platform

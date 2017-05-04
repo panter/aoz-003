@@ -27,6 +27,37 @@ de:
       profile: Profil
       user: Benutzer
     attributes:
+      client:
+        first_name: Vorname
+        last_name: Nachname
+        date_of_birth: Geburtsdatum
+        nationality: Nationalität
+        permit: Bewilligung
+        gender: Geschlecht
+        street: Strasse
+        zip: Postleitzahl
+        city: Stadt
+        phone: Telefonnummer
+        goals: Ziele
+        education: Ausbildung
+        hobbies: hobbies
+        interests: Interessen
+        state: Status
+        comments: Bemerkungen
+        competent_authority: Zuständige Freiwillige
+        involved_authority: Zuständige Freiwillige
+      language_skill:
+        language: Sprache
+        level: Niveau
+      relative:
+        first_name: Vorname
+        last_name: Nachname
+        date_of_birth: Geburtsdatum
+        relation: Verwandtschaftsbeziehung
+      schedule:
+        day: Tag
+        time: Zeit
+        available: Verfügbar
       user:
         email: Email
         role: Rolle
@@ -162,6 +193,8 @@ de:
     friday: Freitag
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
+  clients: Klienten
+  create_client: Klient erfassen
   create_user: Benutzer erfassen
   create_profile: Profil erfassen
   edit_login: Login bearbeiten
@@ -177,6 +210,5 @@ de:
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   users: Benutzer
-  user_index: Benutzer
   voluntary_platform: Freiwilligen Platform
   working_days: Arbeitstage
