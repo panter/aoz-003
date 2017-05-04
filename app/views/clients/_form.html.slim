@@ -69,7 +69,7 @@
           = f.input :education
           = f.input :hobbies
           = f.input :interests
-          = f.input :state, :collection => state_collection
+          = f.input :state, :collection => state_collection, include_blank: false
           - if current_user.superadmin?
             = f.input :comments
           = f.input :competent_authority
