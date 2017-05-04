@@ -186,6 +186,20 @@ de:
         mailer:
           invitation_instructions:
             accept_until_format: "%d. %B %Y %H:%M"
+  gender:
+    female: Weiblich
+    male: Männlich
+  language_level:
+    native_speaker: Muttersprachler
+    fluent: Fließend
+    good: Gut
+    basic: Elementar
+  state:
+    registered: Registriert
+    reserved: Reserviert
+    active: Aktiv
+    finished: Abgeschlossen
+    rejected: Abgelehnt
   weekdays:
     monday: Montag
     tuesday: Dienstag
