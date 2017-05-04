@@ -25,7 +25,7 @@ class ClientsController < ApplicationController
     authorize @client
     respond_to do |format|
       if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
+        format.html { redirect_to @client, notice: t('client_created') }
       else
         format.html { render :new }
       end
@@ -36,7 +36,7 @@ class ClientsController < ApplicationController
     authorize @client
     respond_to do |format|
       if @client.update(client_params)
-        format.html { redirect_to @client, notice: 'Client was successfully updated.' }
+        format.html { redirect_to @client, notice: t('client_updated') }
       else
         format.html { render :edit }
       end
@@ -47,7 +47,7 @@ class ClientsController < ApplicationController
     authorize @client
     @client.destroy
     respond_to do |format|
-      format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
+      format.html { redirect_to clients_url, notice: t('client_destroyed') }
     end
   end
 

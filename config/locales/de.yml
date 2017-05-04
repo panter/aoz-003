@@ -215,6 +215,9 @@ de:
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
+  client_created: Klient wurde erfolgreich erstellt.
+  client_updated: Klient wurde erfolgreich aktualisiert.
+  client_destroyed: Klient wurde erfolgreich gelöscht.
   clients: Klienten
   contact_info: Kontakt Informationen
   create_client: Klient erfassen
