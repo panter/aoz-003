@@ -194,6 +194,11 @@ de:
     fluent: Fließend
     good: Gut
     basic: Elementar
+  role:
+    superadmin: Superadmin
+    admin: Admin
+    social_worker: Sozialarbeiter
+    department_manager: Standortverantwortlich
   state:
     registered: Registriert
     reserved: Reserviert
