@@ -9,7 +9,7 @@
       - if current_user == user
         = f.input :password
       - if current_user.role == User::SUPERADMIN
-        = f.input :role, collection: User.role_collection
+        = f.input :role, :collection => role_collection
 
   .row
     .col-xs-12

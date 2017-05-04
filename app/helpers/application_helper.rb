@@ -28,6 +28,12 @@ module ApplicationHelper
       t('state.rejected') => 'rejected' }
   end
 
+  def role_collection
+    { t('role.superadmin') => 'superadmin',
+      t('role.admin') => 'admin',
+      t('role.social_worker') => 'social_worker' }
+  end
+
   def week
     [:monday, :tuesday, :wednesday, :thursday, :friday]
   end
