@@ -1,9 +1,9 @@
 ISO3166::Data.register(
-  alpha2: "XK",
+  alpha2: 'XK',
   name: 'Kosovo',
   translations: {
-    'en' => "Kosovo",
-    'de' => "Kosovo"
+    'en' => 'Kosovo',
+    'de' => 'Kosovo'
   }
 )
 
