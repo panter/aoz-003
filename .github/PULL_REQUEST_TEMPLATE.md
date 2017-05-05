@@ -1,16 +1,14 @@
-## Story
-Link to trello story
+[Link to story in trello](#)
 
-## Informations
+- [ ] Story under test
+- [ ] Mobile works
+- [ ] Seeds created
+- [ ] Translated
 
-## Goals
-- [ ] Story is tested
-- [ ] Acceptance criterias are met
-- [ ] Code is reviewed
-- [ ] Travis is green
-- [ ] Story is on resolved in trello
-- [ ] Readme is updated if needed
-- [ ] Styled with Bootstrap v3
-- [ ] Mobile view is usable
-- [ ] Seeds are available
-- [ ] German translations available
+Review by Team
+- [ ] Reviewed by tnt
+- [ ] Reviewed by cla
+- [ ] Reviewed by vok
+
+Review by Coach
+- [ ] Reviewed by sta
