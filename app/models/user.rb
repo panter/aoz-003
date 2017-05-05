@@ -1,9 +1,10 @@
 class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
-  has_many :clients
 
+  has_many :clients
   has_one :profile, dependent: :destroy
+  has_and_belongs_to_many :departement
 
   # Roles definition
   SUPERADMIN = 'superadmin'.freeze

@@ -1,0 +1,25 @@
+.row
+  .col-xs-12
+    h1= t('departement.index.title')
+
+.row
+  .col-xs-12
+    table.table.table-striped
+      thead
+        tr
+          th= t_attr(:name)
+          th
+          th
+          th
+
+      tbody
+        - @departements.each do |departement|
+          tr
+            td = departement.name
+            td = link_to t('departement.index.show'), departement
+            td = link_to t('departement.index.edit'), edit_departement_path(departement)
+            td = link_to t('departement.index.destroy'), departement, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to t('departement.index.new'), new_departement_path
