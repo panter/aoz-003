@@ -118,8 +118,8 @@ en:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
   gender:
-    female: Female
-    male: Male
+    female: female
+    male: male
   language_level:
     native_speaker: Native speaker
     fluent: Fluent
@@ -129,6 +129,10 @@ en:
     superadmin: superadmin
     admin: admin
     social_worker: social_worker
+  times:
+    morning: morning
+    afternoon: afternoon
+    evening: evening
   weekdays:
     monday: Monday
     tuesday: Tuesday
@@ -146,6 +150,8 @@ en:
   contact_info: Contact information
   clients: Clients
   client_created: Client was successfully created.
+  client_updated: Client was successfully updated.
+  client_destroyed: Client was successfully deleted.
   create_client: Create client
   create_user: Create user
   create_profile: Create profile

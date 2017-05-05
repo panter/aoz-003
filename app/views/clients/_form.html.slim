@@ -85,12 +85,12 @@
                   tr
                     th= t('when')
                     - Schedule.days.each do |day|
-                      th.days= t("weekdays.#{day.to_s}")
+                      th.days= t("weekdays.#{day}")
                 tbody
                   - @client.schedules.group_by(&:time).each do |time, schedules|
                     tr
                       td
-                        = time
+                        = t("times.#{time}")
                       = f.simple_fields_for :schedules, schedules do |schedule|
                         td
                           = schedule.input :day, as: :hidden
