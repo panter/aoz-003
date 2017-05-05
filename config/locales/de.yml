@@ -254,7 +254,7 @@ de:
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
-  password_reset_instructions: Schicken Sie mir Passwortrücksetzung Instruktionen
+  password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
@@ -268,5 +268,5 @@ de:
   show_profile: Profil anzeigen
   when: Zeit
   users: Benutzer
-  voluntary_platform: Freiwilligen Platform
+  voluntary_platform: Freiwilligen Plattform
   working_days: Arbeitstage
