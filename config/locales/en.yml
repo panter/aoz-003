@@ -129,6 +129,7 @@ en:
     superadmin: superadmin
     admin: admin
     social_worker: social_worker
+    department_manager: department_manager
   times:
     morning: morning
     afternoon: afternoon
@@ -144,6 +145,7 @@ en:
   add_language: Add language
   add_relative: Add family member
   are_you_sure: Are you sure?
+  are_you_sure_invitation: Are you sure you want to send an invitation?
   back: Back
   change_my_password: Change my password
   change_password: Change your password
