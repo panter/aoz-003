@@ -1,28 +1,45 @@
+---
 de:
   activerecord:
+    attributes:
+      profile:
+        address: Adresse
+        avatar: Bild
+        first_name: Vorname
+        friday: Freitag
+        last_name: Nachname
+        monday: Montag
+        phone: Telefonnummer
+        profession: Beruf
+        thursday: Donnerstag
+        tuesday: Dienstag
+        wednesday: Mittwoch
+      user:
+        email: Email
+        role: Rolle
     errors:
       models:
+        profile:
+          attributes:
+            avatar_content_type:
+              invalid: ist ungültig
+            first_name:
+              blank: darf nicht leer sein
+            last_name:
+              blank: darf nicht leer sein
         user:
           attributes:
             email:
               blank: darf nicht leer sein
-              taken: ist schon vergeben
               invalid: ist ungültig
-            role:
-              inclusion: ist nicht in der Liste enthalten
+              taken: ist schon vergeben
             password:
               blank: darf nicht leer sein
               too_short: zu kurz (min. 6 Zeichen)
             password_confirmation:
               confirmation: Die eingegebenen Passwörter stimmen nicht überein
-        profile:
-          attributes:
-            first_name:
-              blank: darf nicht leer sein
-            last_name:
-              blank: darf nicht leer sein
-            avatar_content_type:
-              invalid: ist ungültig
+            role:
+              inclusion: ist nicht in der Liste enthalten
     models:
       client: Klient
       profile: Profil
@@ -89,60 +106,85 @@ de:
       - Oktober
       - November
       - Dezember
+  change_my_password: Ihr Passwort ändern
+  change_password: Ihr Passwort ändern
+  create_profile: Profil erfassen
+  create_user: Benutzer erfassen
+  departement:
+    create:
+      back: Zurück
+      notice: Der Standort wurde erfolgreich erstellt
+    destroy:
+      notice: Der Standort wurde erfolgreich gelöscht.
+    index:
+      destroy: Destroy
+      edit: Bearbeiten
+      new: New departement
+      show: Show
+      title: Standorte
+    show:
+      back: Zurück
+      edit: Bearbeiten
+    update:
+      back: Back
+      notice: Der Standort wurde erfolgreich geändert.
+      show: Show
+      title: Edit departement
   devise:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
       send_instructions: Sie erhalten in wenigen Minuten ein Email, mit dem Sie Ihre Registrierung bestätigen können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert, erhalten Sie in wenigen Minuten eine Email, mit der Sie Ihre Registrierung bestätigen können.
-    invitations:
-      send_instructions: 'Sie haben eine Einladung in Ihrem Email Postfach: %{email}'
-      invitation_token_invalid: Der Einladungs-Schlüssel ist nicht gültig!
-      updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
-      no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
-      invitation_removed: Ihre Einladung wurde gelöscht.
-      new:
-        header: Einladung schicken
-        submit_button: Einladung schicken
-      edit:
-        header: Setzen Sie ein Passwort
-        submit_button: Passwort setzen
     failure:
       already_authenticated: Sie sind bereits angemeldet.
       inactive: Ihr Account ist nicht aktiv.
       invalid: Ungültige Anmeldedaten.
       invited: Sie haben eine ausstehende Einladung, akzeptieren Sie, um die Erstellung Ihres Kontos zu beenden.
-      locked: Ihr Account ist gesperrt.
       last_attempt: Sie haben noch einen Versuch, bevor Ihr Konto gesperrt ist.
+      locked: Ihr Account ist gesperrt.
       not_found_in_database: Mailadresse oder Passwort ungültig.
       timeout: Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.
       unauthenticated: Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.
       unconfirmed: Sie müssen Ihren Account bestätigen, bevor Sie fortfahren können.
+    invitations:
+      edit:
+        header: Setzen Sie ein Passwort
+        submit_button: Passwort setzen
+      invitation_removed: Ihre Einladung wurde gelöscht.
+      invitation_token_invalid: Der Einladungs-Schlüssel ist nicht gültig!
+      new:
+        header: Einladung schicken
+        submit_button: Einladung schicken
+      no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
+      send_instructions: 'Sie haben eine Einladung in Ihrem Email Postfach: %{email}'
+      updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
+      updated_not_active: Ihr Passwort wurde erfolgreich geändert.
     mailer:
-      hello: 'Hallo %{email}!'
       confirmation_instructions:
         subject: Anleitung zur Bestätigung Ihres Accounts
-      invitation_instructions:
-        subject: Einladung
-        someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie können die Einladung mit dem Link unten annehmen:'
-        accept: Einladung annehmen
-        accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
-        ignore: 'Wenn Sie die Einladung nicht annehmen möchten, ignorieren Sie bitte diese Email einfach.<br />\nEs wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.'
-      reset_password_instructions:
-        subject: Anleitung um Ihr Passwort zurückzusetzen
-        someone_requested: Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Sie können dies über den Link unten tun.
-        accept: Ihr Passwort ändern
-        ignore: Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese Email. Ihr Passwort wird sich nicht ändern, bis Sie auf den Link oben zugreifen und ein neues erstellen.
-      unlock_instructions:
-        subject: Anleitung um Ihren Account freizuschalten
       email_changed:
-        subject: Email wurde geändert
         email_being_changed_to: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wird. Die neue Mailadresse ist: %{email}'
         email_has_changed: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wurde. Die eingetragene Mailadresse ist: %{email}'
+        subject: Email wurde geändert
+      hello: Hallo %{email}!
+      invitation_instructions:
+        accept: Einladung annehmen
+        accept_until: Diese Einladung ist gültig bis zum %{due_date}.
+        ignore: Wenn Sie die Einladung nicht annehmen möchten, ignorieren Sie bitte diese Email einfach.<br />\nEs wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.
+        someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie können die Einladung mit dem Link unten annehmen:'
+        subject: Einladung
       password_change:
-        subject: Passwort wurde geändert
         password_has_changed: Wir möchten Ihnen mitteilen, dass Ihr Passwort geändert wurde.
+        subject: Passwort wurde geändert
+      reset_password_instructions:
+        accept: Ihr Passwort ändern
+        ignore: Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese Email. Ihr Passwort wird sich nicht ändern, bis Sie auf den Link oben zugreifen und ein neues erstellen.
+        someone_requested: Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Sie können dies über den Link unten tun.
+        subject: Anleitung um Ihr Passwort zurückzusetzen
+      unlock_instructions:
+        subject: Anleitung um Ihren Account freizuschalten
     omniauth_callbacks:
-      failure: "Sie konnten nicht mit Ihrem %{kind}-Account angemeldet werden, weil '%{reason}'."
+      failure: Sie konnten nicht mit Ihrem %{kind}-Account angemeldet werden, weil '%{reason}'.
       success: Sie haben sich erfolgreich mit Ihrem %{kind}-Account angemeldet.
     passwords:
       no_token: Sie können diese Seite nur von dem Link aus einer Email zum Passwort-Zurücksetzen aufrufen. Wenn Sie einen solchen Link aufgerufen haben, stellen Sie bitte sicher, dass Sie die vollständige Adresse aufrufen.
@@ -159,30 +201,41 @@ de:
       update_needs_confirmation: Ihre Daten wurden aktualisiert, aber Sie müssen Ihre neue Mailadresse bestätigen. Sie erhalten in wenigen Minuten eine Email, mit der Sie die Änderung Ihrer Mailadresse abschliessen können.
       updated: Ihre Daten wurden aktualisiert.
     sessions:
+      already_signed_out: Erfolgreich abgemeldet.
       signed_in: Erfolgreich angemeldet.
       signed_out: Erfolgreich abgemeldet.
-      already_signed_out: Erfolgreich abgemeldet.
     unlocks:
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
+  edit_login: Login bearbeiten
+  edit_profile: Profil bearbeiten
   errors:
     messages:
-      blank: darf nicht leer sein
       already_confirmed: wurde bereits bestätigt
-      confirmation_period_expired: 'muss innerhalb %{period} bestätigt werden, bitte fordern Sie einen neuen Link an'
+      blank: darf nicht leer sein
+      confirmation_period_expired: muss innerhalb %{period} bestätigt werden, bitte fordern Sie einen neuen Link an
       expired: ist abgelaufen, bitte neu anfordern
       not_found: nicht gefunden
       not_locked: ist nicht gesperrt
       not_saved:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
+  forgot_password: Passwort vergessen?
   helpers:
     submit:
-      create: '%{model} erfassen'
-      update: '%{model} aktualisieren'
       user:
-        update: Login aktualisieren
+        create: Benutzer erstellen
+        update: Update login
+  invite_sent: Einladung wurde an %{email} verschickt.
+  login: Anmelden
+  logout: Abmelden
+  password_reset_instructions: Schicken Sie mir Passwortrücksetzung Instruktionen
+  profile_created: Profil wurde erfolgreich erstellt.
+  profile_updated: Profil wurde erfolgreich aktualisiert.
+  remember_me: Angemeldet bleiben
+  show_my_profile: Mein Profil
+  show_profile: Profil anzeigen
   simple_form:
     options:
       client:
@@ -266,8 +319,13 @@ de:
     morning: Morgen
     afternoon: Nachmittag
     evening: Abend
+  user_index: Benutzer
+  users: Benutzer
+  voluntary_platform: Freiwilligen Platform
   weekdays:
+    friday: Freitag
     monday: Montag
+    thursday: Donnerstag
     tuesday: Dienstag
     wednesday: Mittwoch
     thursday: Donnerstag
