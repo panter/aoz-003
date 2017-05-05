@@ -6,6 +6,7 @@ class UserTest < ActiveSupport::TestCase
     @user_as_superadmin = create :user, :with_profile, role: 'superadmin'
     @admin = create :user, :with_profile, role: 'admin'
     @user_as_social_worker = create :user, :with_profile, role: 'social_worker'
+    @user_as_department_manager = create :user, :with_profile, role: 'department_manager'
   end
 
   test 'valid factory' do
@@ -63,6 +64,11 @@ class UserTest < ActiveSupport::TestCase
   test '@user_as_social_worker.superadmin?, .admin? returns false' do
     refute @user_as_social_worker.superadmin?
     refute @user_as_social_worker.admin?
+  end
+
+  test '@user_as_department_manager.superadmin? .social_worker? returns false' do
+    refute @user_as_department_manager.superadmin?
+    refute @user_as_department_manager.social_worker?
   end
 
   context 'associations' do
