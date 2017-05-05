@@ -99,12 +99,12 @@
           th= t('when')
           - Schedule.days.each do |day|
             th.text-center
-              = t("weekdays.#{day.to_s}")
+              = t("weekdays.#{day}")
       tbody
         - @client.schedules.group_by(&:time).each do |time, schedules|
           tr
             td
-              = time
+              = t("times.#{time}")
             - schedules.each do |schedule|
               td.text-center
                 - if schedule.available

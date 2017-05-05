@@ -45,8 +45,8 @@ de:
         interests: Interessen
         state: Status
         comments: Bemerkungen
-        competent_authority: Anmeldende Stelle
-        involved_authority: Involvierte Stelle
+        competent_authority: Involvierte Stelle
+        involved_authority: Fallführende Stelle
       language_skill:
         language: Sprache
         level: Niveau
@@ -220,6 +220,10 @@ de:
     active: Aktiv
     finished: Abgeschlossen
     rejected: Abgelehnt
+  times:
+    morning: Morgen
+    afternoon: Nachmittag
+    evening: Abend
   weekdays:
     monday: Montag
     tuesday: Dienstag
