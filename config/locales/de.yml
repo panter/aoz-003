@@ -206,14 +206,14 @@ de:
     male: Männlich
   language_level:
     native_speaker: Muttersprachler
-    fluent: Fließend
+    fluent: Fliessend
     good: Gut
-    basic: Elementar
+    basic: Grundlagen
   role:
     superadmin: Superadmin
     admin: Admin
-    social_worker: Sozialarbeiter
-    department_manager: Standortverantwortlich
+    social_worker: SozialarbeiterIn
+    department_manager: 'Standortverantwortliche/er'
   state:
     registered: Registriert
     reserved: Reserviert
@@ -239,12 +239,12 @@ de:
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
-  client_created: Klient wurde erfolgreich erstellt.
-  client_updated: Klient wurde erfolgreich aktualisiert.
-  client_destroyed: Klient wurde erfolgreich gelöscht.
+  client_created: KlientIn wurde erfolgreich erstellt.
+  client_updated: KlientIn wurde erfolgreich aktualisiert.
+  client_destroyed: KlientIn wurde erfolgreich gelöscht.
   clients: Klienten
   contact_info: Kontakt Informationen
-  create_client: Klient erfassen
+  create_client: KlientIn erfassen
   create_user: Benutzer erfassen
   create_profile: Profil erfassen
   edit_login: Login bearbeiten
@@ -258,7 +258,7 @@ de:
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
-  registered_by: 'Zuständige/r Sozialberater/in'
+  registered_by: 'SozialberaterIn'
   relatives: Verwandte
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
