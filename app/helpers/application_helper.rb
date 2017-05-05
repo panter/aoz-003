@@ -31,7 +31,8 @@ module ApplicationHelper
   def role_collection
     { t('role.superadmin') => 'superadmin',
       t('role.admin') => 'admin',
-      t('role.social_worker') => 'social_worker' }
+      t('role.social_worker') => 'social_worker',
+      t('role.department_manager') => 'department_manager' }
   end
 
   def week
