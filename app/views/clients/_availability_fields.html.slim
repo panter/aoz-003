@@ -7,6 +7,7 @@
             th= t('time')
             - Availability.days.each do |day|
               th.days= t("weekdays.#{day.to_s}")
+                =day
         tbody
           - availabilities.group_by(&:time).each do |time, availability|
             tr
