@@ -162,7 +162,7 @@ en:
   login: Log in
   logout: Logout
   invite_sent: 'Invitation sent to %{email}'
-  password_reset_instructions: Send me password reset instructions
+  password_reset_instructions: I want to reset my password
   personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
