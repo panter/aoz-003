@@ -1,6 +1,7 @@
 en:
   activerecord:
     models:
+      client: Client
       user: User
       profile: Profile
   devise:
@@ -104,6 +105,12 @@ en:
       mark: '*'
     error_notification:
       default_message: 'Please review the problems below:'
+  state:
+    registered: Registered
+    reserved: Reserved
+    active: Active
+    finished: Finished
+    rejected: Rejected
   time:
     formats:
       devise:
@@ -113,6 +120,11 @@ en:
   gender:
     female: Female
     male: Male
+  language_level:
+    native_speaker: Native speaker
+    fluent: Fluent
+    good: Good
+    basic: Basic
   role:
     superadmin: superadmin
     admin: admin
@@ -127,26 +139,36 @@ en:
     sunday: Sunday
   add_language: Add language
   add_relative: Add family member
+  are_you_sure: Are you sure?
+  back: Back
   change_my_password: Change my password
   change_password: Change your password
+  contact_info: Contact information
   clients: Clients
   client_created: Client was successfully created.
+  create_client: Create client
   create_user: Create user
   create_profile: Create profile
   edit_login: Edit login
   edit_profile: Edit profile
   forgot_password: Forgot your password?
+  language_skills: Language skills
   login: Log in
   logout: Logout
   invite_sent: 'Invitation sent to %{email}'
   password_reset_instructions: Send me password reset instructions
+  personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
+  registered_by: Responsible Volunteer
+  relatives: Family members
   remember_me: Remember me
   remove_language: Remove language
   remove_relative: Remove family member
+  schedule: Schedule
   show_profile: Show profile
   show_my_profile: My profile
   users: Users
-  working_days: Working days
   voluntary_platform: Voluntaries Platform
+  when: Time
+  working_days: Working days
