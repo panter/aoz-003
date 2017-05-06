@@ -2,6 +2,27 @@
 en:
   are_you_sure: Are you sure?
   back: Back
+  client:
+    add_language: Add language
+    add_relative: Add family member
+    contact_info: Contact information
+    create: Create client
+    created: Client was successfully created.
+    destroyed: Client was successfully deleted.
+    language_level:
+      basic: Basic
+      fluent: Fluent
+      good: Good
+      native_speaker: Native speaker
+    language_skills: Language skills
+    personal_background: Personal background
+    registered_by: Responsible Volunteer
+    relatives: Family members
+    remove_language: Remove language
+    remove_relative: Remove family member
+    schedule: Schedule
+    title: Clients
+    updated: Client was successfully updated.
   date:
     month_names:
     - nil
@@ -56,41 +77,17 @@ en:
       user:
         create: Create User
         update: Update login
-
-  client:
-    contact_info: Contact information
-    title: Clients
-    schedule: Schedule
-    add_language: Add language
-    add_relative: Add family member
-    remove_language: Remove language
-    created: Client was successfully created.
-    destroyed: Client was successfully deleted.
-    remove_relative: Remove family member
-    create: Create client
-    language_skills: Language skills
-    registered_by: Responsible Volunteer
-    updated: Client was successfully updated.
-    relatives: Family members
-    personal_background: Personal background
-    language_level:
-      basic: Basic
-      fluent: Fluent
-      good: Good
-      native_speaker: Native speaker
-
   navigation:
     toggle_text: Toggle navigation
-
   profile:
-    edit_login: Edit login
-    working_days: Working days
-    edit: Edit profile
     create: Create profile
     created: Profile was successfully created.
-    updated: Profile was successfully updated.
-    show_my_profile: My profile
+    edit: Edit profile
+    edit_login: Edit login
     show: Show profile
+    show_my_profile: My profile
+    updated: Profile was successfully updated.
+    working_days: Working days
   state:
     active: Active
     finished: Finished
@@ -119,23 +116,23 @@ en:
   user:
     change_my_password: Change my password
     change_password: Change your password
-    password_reset_instructions: I want to reset my password
-    role:
-      admin: admin
-      department_manager: departement manager
-      social_worker: social worker
-      superadmin: superadmin
-    invite_sent: Invitation sent to %{email}
-    forgot_password: Forgot your password?
-    remember_me: Remember me
-    login: Log in
-    logout: Logout
-    title: Users
     create:
       action: Create user
       confirm: Are you sure you want to send an invitation email?
     edit:
       title: Edit login
+    forgot_password: Forgot your password?
+    invite_sent: Invitation sent to %{email}
+    login: Log in
+    logout: Logout
+    password_reset_instructions: I want to reset my password
+    remember_me: Remember me
+    role:
+      admin: admin
+      department_manager: departement manager
+      social_worker: social worker
+      superadmin: superadmin
+    title: Users
   voluntary_platform: Voluntaries Platform
   weekdays:
     friday: Friday

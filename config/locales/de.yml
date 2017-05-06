@@ -1,9 +1,28 @@
 ---
 de:
-  voluntary_platform: Freiwilligen Plattform
   are_you_sure: Sind Sie sicher?
   back: Zurück
-  when: Zeit
+  client:
+    add_language: Sprache hinzufügen
+    add_relative: Verwandte hinzufügen
+    contact_info: Kontakt Informationen
+    create: KlientIn erfassen
+    created: KlientIn wurde erfolgreich erstellt.
+    destroyed: KlientIn wurde erfolgreich gelöscht.
+    language_level:
+      basic: Grundlagen
+      fluent: Fliessend
+      good: Gut
+      native_speaker: Muttersprachler
+    language_skills: Sprachkenntnisse
+    personal_background: Persönlicher Hintergrund
+    registered_by: SozialberaterIn
+    relatives: Verwandte
+    remove_language: Sprache entfernen
+    remove_relative: Verwandte entfernen
+    schedule: Zeitplan
+    title: Klienten
+    updated: KlientIn wurde erfolgreich aktualisiert.
   date:
     month_names:
     -
@@ -19,35 +38,6 @@ de:
     - Oktober
     - November
     - Dezember
-  weekdays:
-    friday: Freitag
-    monday: Montag
-    saturday: Samstag
-    sunday: Sonntag
-    thursday: Donnerstag
-    tuesday: Dienstag
-    wednesday: Mittwoch
-  client:
-    title: Klienten
-    schedule: Zeitplan
-    add_language: Sprache hinzufügen
-    add_relative: Verwandte hinzufügen
-    remove_language: Sprache entfernen
-    remove_relative: Verwandte entfernen
-    relatives: Verwandte
-    created: KlientIn wurde erfolgreich erstellt.
-    destroyed: KlientIn wurde erfolgreich gelöscht.
-    updated: KlientIn wurde erfolgreich aktualisiert.
-    language_skills: Sprachkenntnisse
-    registered_by: SozialberaterIn
-    create: KlientIn erfassen
-    personal_background: Persönlicher Hintergrund
-    contact_info: Kontakt Informationen
-    language_level:
-      basic: Grundlagen
-      fluent: Fliessend
-      good: Gut
-      native_speaker: Muttersprachler
   departement:
     create:
       back: Zurück
@@ -68,15 +58,6 @@ de:
       notice: Der Standort wurde erfolgreich geändert.
       show: Anzeigen
       title: Standort bearbeiten
-  profile:
-    show_my_profile: Mein Profil
-    show: Profil anzeigen
-    created: Profil wurde erfolgreich erstellt.
-    updated: Profil wurde erfolgreich aktualisiert.
-    create: Profil erfassen
-    working_days: Arbeitstage
-    edit: Profil bearbeiten
-    edit_login: Login bearbeiten
   errors:
     messages:
       already_confirmed: wurde bereits bestätigt
@@ -98,6 +79,15 @@ de:
         update: Update login
   navigation:
     toggle_text: Navigationsmenu aktivieren
+  profile:
+    create: Profil erfassen
+    created: Profil wurde erfolgreich erstellt.
+    edit: Profil bearbeiten
+    edit_login: Login bearbeiten
+    show: Profil anzeigen
+    show_my_profile: Mein Profil
+    updated: Profil wurde erfolgreich aktualisiert.
+    working_days: Arbeitstage
   state:
     active: Aktiv
     finished: Abgeschlossen
@@ -126,17 +116,22 @@ de:
   user:
     change_my_password: Ihr Passwort ändern
     change_password: Ihr Passwort ändern
+    create:
+      action: Benutzer erfassen
+      confirm: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+    edit:
+      title: Login bearbeiten
+    forgot_password: Passwort vergessen?
+    invite_sent: Einladung wurde an %{email} verschickt.
+    login: Anmelden
+    logout: Abmelden
     password_reset_instructions: Ich möchte mein Passwort zurücksetzen
+    remember_me: Angemeldet bleiben
     role:
       admin: Admin
       department_manager: Standortverantwortliche/er
       social_worker: SozialarbeiterIn
       superadmin: Superadmin
-    invite_sent: Einladung wurde an %{email} verschickt.
-    forgot_password: Passwort vergessen?
-    remember_me: Angemeldet bleiben
-    login: Anmelden
-    logout: Abmelden
     title: Benutzer
     create:
       action: Benutzer erfassen
