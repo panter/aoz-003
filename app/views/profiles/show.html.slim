@@ -27,7 +27,7 @@
 
 .row
   .col-xs-12
-    h3= t('working_days')
+    h3= t('profile.working_days')
     table.table.table-striped
       thead
         tr
@@ -46,5 +46,5 @@
                 span.sr-only Doesn't work on #{day.to_s}s
 .row
   .col-xs-12
-    p= link_to t('edit_profile'), edit_profile_path(@profile), class: 'btn btn-default'
-    p= link_to t('edit_login'), edit_user_path(current_user.id), class: 'btn btn-default'
+    p= link_to t('profile.edit'), edit_profile_path(@profile), class: 'btn btn-default'
+    p= link_to t('profile.edit_login'), edit_user_path(current_user.id), class: 'btn btn-default'

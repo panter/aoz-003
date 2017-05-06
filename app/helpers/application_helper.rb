@@ -16,10 +16,10 @@ module ApplicationHelper
   end
 
   def language_level_collection
-    { t('language_level.native_speaker') => 'native_speaker',
-      t('language_level.fluent') => 'fluent',
-      t('language_level.good') => 'good',
-      t('language_level.basic') => 'basic' }
+    { t('client.language_level.native_speaker') => 'native_speaker',
+      t('client.language_level.fluent') => 'fluent',
+      t('client.language_level.good') => 'good',
+      t('client.language_level.basic') => 'basic' }
   end
 
   def state_collection
@@ -29,9 +29,9 @@ module ApplicationHelper
   end
 
   def role_collection
-    { t('role.superadmin') => 'superadmin',
-      t('role.admin') => 'admin',
-      t('role.social_worker') => 'social_worker' }
+    { t('user.role.superadmin') => 'superadmin',
+      t('user.role.admin') => 'admin',
+      t('user.role.social_worker') => 'social_worker' }
   end
 
   def week
