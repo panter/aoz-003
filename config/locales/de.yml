@@ -113,23 +113,23 @@ de:
   departement:
     create:
       back: Zurück
-      notice: Der Standort wurde erfolgreich erstellt
+      notice: Der Standort wurde erfolgreich erstellt.
     destroy:
       notice: Der Standort wurde erfolgreich gelöscht.
     index:
-      destroy: Destroy
+      destroy: Löschen
       edit: Bearbeiten
-      new: New departement
-      show: Show
+      new: Neuer Standort
+      show: Anzeigen
       title: Standorte
     show:
       back: Zurück
       edit: Bearbeiten
     update:
-      back: Back
+      back: Zurück
       notice: Der Standort wurde erfolgreich geändert.
-      show: Show
-      title: Edit departement
+      show: Anzeigen
+      title: Standort bearbeiten
   devise:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
