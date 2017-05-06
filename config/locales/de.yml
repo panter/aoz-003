@@ -193,8 +193,8 @@ de:
             good: Gut
             basic: Grundlagen
         gender:
-          f: Weiblich
-          m: Mänlich
+          female: Weiblich
+          male: Mänlich
         state:
           registered: Registriert
           reserved: Reserviert
