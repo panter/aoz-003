@@ -1,5 +1,151 @@
 ---
 en:
+  are_you_sure: Are you sure?
+  back: Back
+  date:
+    month_names:
+    - nil
+    - Yanuary
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+  departement:
+    create:
+      back: Back
+      notice: The departement was sucessfully created.
+    destroy:
+      notice: The departement was sucessfully deleted.
+    index:
+      destroy: Destroy
+      edit: Edit
+      new: New departement
+      show: Show
+      title: Departements
+    show:
+      back: Back
+      edit: Edit
+    update:
+      back: Back
+      notice: The departement was sucessfully updated.
+      show: Show
+      title: Edit departement
+  errors:
+    messages:
+      already_confirmed: was already confirmed, please try signing in
+      blank: can't be blank
+      confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
+      expired: has expired, please request a new one
+      not_found: not found
+      not_locked: was not locked
+      not_saved:
+        one: '1 error prohibited this %{resource} from being saved:'
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+  gender:
+    female: female
+    male: male
+  helpers:
+    submit:
+      user:
+        create: Create User
+        update: Update login
+
+  client:
+    contact_info: Contact information
+    title: Clients
+    schedule: Schedule
+    add_language: Add language
+    add_relative: Add family member
+    remove_language: Remove language
+    created: Client was successfully created.
+    destroyed: Client was successfully deleted.
+    remove_relative: Remove family member
+    create: Create client
+    language_skills: Language skills
+    registered_by: Responsible Volunteer
+    updated: Client was successfully updated.
+    relatives: Family members
+    personal_background: Personal background
+    language_level:
+      basic: Basic
+      fluent: Fluent
+      good: Good
+      native_speaker: Native speaker
+
+  navigation:
+    toggle_text: Toggle navigation
+
+  profile:
+    edit_login: Edit login
+    working_days: Working days
+    edit: Edit profile
+    create: Create profile
+    created: Profile was successfully created.
+    updated: Profile was successfully updated.
+    show_my_profile: My profile
+    show: Show profile
+  state:
+    active: Active
+    finished: Finished
+    labels:
+      defaults:
+        password: Password
+        password_confirmation: Password confirmation
+    'no': 'No'
+    registered: Registered
+    rejected: Rejected
+    required:
+      mark: "*"
+      text: required
+    reserved: Reserved
+    'yes': 'Yes'
+  time:
+    formats:
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%B %d, %Y %I:%M %p"
+  times:
+    afternoon: afternoon
+    evening: evening
+    morning: morning
+  user:
+    change_my_password: Change my password
+    change_password: Change your password
+    password_reset_instructions: I want to reset my password
+    role:
+      admin: admin
+      department_manager: departement manager
+      social_worker: social worker
+      superadmin: superadmin
+    invite_sent: Invitation sent to %{email}
+    forgot_password: Forgot your password?
+    remember_me: Remember me
+    login: Log in
+    logout: Logout
+    title: Users
+    create:
+      action: Create user
+      confirm: Are you sure you want to send an invitation email?
+    edit:
+      title: Edit login
+  voluntary_platform: Voluntaries Platform
+  weekdays:
+    friday: Friday
+    monday: Monday
+    saturday: Saturday
+    sunday: Sunday
+    thursday: Thursday
+    tuesday: Tuesday
+    wednesday: Wednesday
+  when: Time
   activerecord:
     attributes:
       client:
@@ -75,55 +221,6 @@ en:
       client: Client
       profile: Profile
       user: User
-  add_language: Add language
-  add_relative: Add family member
-  are_you_sure: Are you sure?
-  are_you_sure_invitation: Are you sure you want to send an invitation email?
-  back: Back
-  change_my_password: Change my password
-  change_password: Change your password
-  client_created: Client was successfully created.
-  client_destroyed: Client was successfully deleted.
-  client_updated: Client was successfully updated.
-  clients: Clients
-  contact_info: Contact information
-  create_client: Create client
-  create_profile: Create profile
-  date:
-    month_names:
-    - nil
-    - Yanuary
-    - February
-    - March
-    - April
-    - May
-    - June
-    - July
-    - August
-    - September
-    - October
-    - November
-    - December
-  departement:
-    create:
-      back: Back
-      notice: The departement was sucessfully created.
-    destroy:
-      notice: The departement was sucessfully deleted.
-    index:
-      destroy: Destroy
-      edit: Edit
-      new: New departement
-      show: Show
-      title: Departements
-    show:
-      back: Back
-      edit: Edit
-    update:
-      back: Back
-      notice: The departement was sucessfully updated.
-      show: Show
-      title: Edit departement
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
@@ -204,56 +301,6 @@ en:
       send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
       send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
       unlocked: Your account has been unlocked successfully. Please sign in to continue.
-  edit_login: Edit login
-  edit_profile: Edit profile
-  errors:
-    messages:
-      already_confirmed: was already confirmed, please try signing in
-      blank: can't be blank
-      confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
-      expired: has expired, please request a new one
-      not_found: not found
-      not_locked: was not locked
-      not_saved:
-        one: '1 error prohibited this %{resource} from being saved:'
-        other: "%{count} errors prohibited this %{resource} from being saved:"
-  forgot_password: Forgot your password?
-  gender:
-    female: female
-    male: male
-  helpers:
-    submit:
-      user:
-        create: Create User
-        update: Update login
-  invite_sent: Invitation sent to %{email}
-  language_level:
-    basic: Basic
-    fluent: Fluent
-    good: Good
-    native_speaker: Native speaker
-  language_skills: Language skills
-  login: Log in
-  logout: Logout
-  navigation:
-    toggle_text: Toggle navigation
-  password_reset_instructions: I want to reset my password
-  personal_background: Personal background
-  profile_created: Profile was successfully created.
-  profile_updated: Profile was successfully updated.
-  registered_by: Responsible Volunteer
-  relatives: Family members
-  remember_me: Remember me
-  remove_language: Remove language
-  remove_relative: Remove family member
-  role:
-    admin: admin
-    department_manager: departement manager
-    social_worker: social worker
-    superadmin: superadmin
-  schedule: Schedule
-  show_my_profile: My profile
-  show_profile: Show profile
   simple_form:
     placeholders:
       user:

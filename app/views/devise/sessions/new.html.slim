@@ -1,15 +1,15 @@
 .row
   .col-xs-12.col-md-offset-3.col-md-6
-    h2= t('login')
+    h2= t('user.login')
 
     = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
       .form-inputs
         = f.input :email, required: false, autofocus: true
         = f.input :password, required: false
-        = f.input :remember_me, label: t('remember_me'), as: :boolean if devise_mapping.rememberable?
+        = f.input :remember_me, label: t('user.remember_me'), as: :boolean if devise_mapping.rememberable?
 
       .form-actions
-        = f.button :submit, t('login')
+        = f.button :submit, t('user.login')
 .row
   .col-xs-12.col-md-offset-3.col-md-6
-    = link_to t('forgot_password'), new_password_path(resource_name)
+    = link_to t('user.forgot_password'), new_password_path(resource_name)
