@@ -184,6 +184,29 @@ de:
       user:
         update: Login aktualisieren
   simple_form:
+    options:
+      client:
+        language_skills:
+          level:
+            native_speaker: Muttersprachler
+            fluent: Fliessend
+            good: Gut
+            basic: Grundlagen
+        gender:
+          f: Weiblich
+          m: Mänlich
+        state:
+          registered: Registriert
+          reserved: Reserviert
+          active: Aktiv
+          finished: Abgeschlossen
+          rejected: Abgelehnt
+      user:
+        role:
+          superadmin: 'Superadmin'
+          social_worker: 'Sozialarbeiter'
+          admin: 'Administrator'
+          department_manager: 'Standort Leiter'
     "yes": 'Ja'
     "no": 'Nein'
     required:
@@ -192,9 +215,28 @@ de:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
     labels:
+      user:
+        role: Rolle
+        email: Email
+        password: Passwort
+        edit:
+          role: Rolle ändern
+          email: Email ändern
+          password: Passwort ändern
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
+    placeholders:
+      user:
+        email: Mailadresse
+      profile:
+        first_name: Vorname
+        last_name: Nachname
+        profession: Beruf
+        address: Strasse
+      client:
+        first_name: Vorname
+        last_name: Nachname
   time:
     formats:
       devise:

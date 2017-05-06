@@ -1,41 +1,25 @@
 module ApplicationHelper
-  def daynames(whole_week = false)
-    if whole_week
+  def permit_collection
+    [:L, :B]
+  end
+
+  def gender_collection
+    [:female, :male]
+  end
+
+  def language_level_collection
+    [:native_speaker, :fluent, :good, :basic]
+  end
+
+  def state_collection
+    [:registered, :reserved, :active, :finished, :rejected]
+  end
+
+  def week(with_weekend = false)
+    if with_weekend
       [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
     else
       [:monday, :tuesday, :wednesday, :thursday, :friday]
     end
-  end
-
-  def permit_collection
-    { 'L' => 'L', 'B' => 'B' }
-  end
-
-  def gender_collection
-    { t('gender.female') => 'female', t('gender.male') => 'male' }
-  end
-
-  def language_level_collection
-    { t('language_level.native_speaker') => 'native_speaker',
-      t('language_level.fluent') => 'fluent',
-      t('language_level.good') => 'good',
-      t('language_level.basic') => 'basic' }
-  end
-
-  def state_collection
-    { t('state.registered') => 'registered', t('state.reserved') => 'reserved',
-      t('state.active') => 'active', t('state.finished') => 'finished',
-      t('state.rejected') => 'rejected' }
-  end
-
-  def role_collection
-    { t('role.superadmin') => 'superadmin',
-      t('role.admin') => 'admin',
-      t('role.social_worker') => 'social_worker',
-      t('role.department_manager') => 'department_manager' }
-  end
-
-  def week
-    [:monday, :tuesday, :wednesday, :thursday, :friday]
   end
 end
