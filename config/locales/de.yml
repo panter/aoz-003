@@ -2,6 +2,28 @@
 de:
   activerecord:
     attributes:
+      client:
+        city: Stadt
+        comments: Bemerkungen
+        competent_authority: Involvierte Stelle
+        date_of_birth: Geburtsdatum
+        education: Ausbildung
+        first_name: Vorname
+        gender: Geschlecht
+        goals: Ziele
+        hobbies: Hobbies
+        interests: Interessen
+        involved_authority: Fallführende Stelle
+        last_name: Nachname
+        nationality: Nationalität
+        permit: Bewilligung
+        phone: Telefonnummer
+        state: Status
+        street: Strasse
+        zip: Postleitzahl
+      language_skill:
+        language: Sprache
+        level: Niveau
       profile:
         address: Adresse
         avatar: Bild
@@ -14,6 +36,15 @@ de:
         thursday: Donnerstag
         tuesday: Dienstag
         wednesday: Mittwoch
+      relative:
+        date_of_birth: Geburtsdatum
+        first_name: Vorname
+        last_name: Nachname
+        relation: Verwandtschaftsbeziehung
+      schedule:
+        available: Verfügbar
+        day: Tag
+        time: Zeit
       user:
         email: Email
         role: Rolle
@@ -44,72 +75,35 @@ de:
       client: Klient
       profile: Profil
       user: Benutzer
-    attributes:
-      client:
-        first_name: Vorname
-        last_name: Nachname
-        date_of_birth: Geburtsdatum
-        nationality: Nationalität
-        permit: Bewilligung
-        gender: Geschlecht
-        street: Strasse
-        zip: Postleitzahl
-        city: Stadt
-        phone: Telefonnummer
-        goals: Ziele
-        education: Ausbildung
-        hobbies: Hobbies
-        interests: Interessen
-        state: Status
-        comments: Bemerkungen
-        competent_authority: Involvierte Stelle
-        involved_authority: Fallführende Stelle
-      language_skill:
-        language: Sprache
-        level: Niveau
-      relative:
-        first_name: Vorname
-        last_name: Nachname
-        date_of_birth: Geburtsdatum
-        relation: Verwandtschaftsbeziehung
-      schedule:
-        day: Tag
-        time: Zeit
-        available: Verfügbar
-      user:
-        email: Email
-        role: Rolle
-      profile:
-        first_name: Vorname
-        last_name: Nachname
-        phone: Telefonnummer
-        avatar: Bild
-        address: Adresse
-        profession: Beruf
-        monday: Montag
-        tuesday: Dienstag
-        wednesday: Mittwoch
-        thursday: Donnerstag
-        friday: Freitag
-  date:
-    month_names:
-      -
-      - Januar
-      - Februar
-      - März
-      - April
-      - Mai
-      - Juni
-      - Juli
-      - August
-      - September
-      - Oktober
-      - November
-      - Dezember
+  add_language: Sprache hinzufügen
+  add_relative: Verwandte hinzufügen
+  are_you_sure: Sind Sie sicher?
+  are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+  back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
+  client_created: KlientIn wurde erfolgreich erstellt.
+  client_destroyed: KlientIn wurde erfolgreich gelöscht.
+  client_updated: KlientIn wurde erfolgreich aktualisiert.
+  clients: Klienten
+  contact_info: Kontakt Informationen
+  create_client: KlientIn erfassen
   create_profile: Profil erfassen
-  create_user: Benutzer erfassen
+  date:
+    month_names:
+    -
+    - Januar
+    - Februar
+    - März
+    - April
+    - Mai
+    - Juni
+    - Juli
+    - August
+    - September
+    - Oktober
+    - November
+    - Dezember
   departement:
     create:
       back: Zurück
@@ -222,18 +216,40 @@ de:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   forgot_password: Passwort vergessen?
+  gender:
+    female: Weiblich
+    male: Männlich
   helpers:
     submit:
       user:
         create: Benutzer erstellen
         update: Update login
   invite_sent: Einladung wurde an %{email} verschickt.
+  language_level:
+    basic: Grundlagen
+    fluent: Fliessend
+    good: Gut
+    native_speaker: Muttersprachler
+  language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
-  password_reset_instructions: Schicken Sie mir Passwortrücksetzung Instruktionen
+  navigation:
+    toggle_text: Navigationsmenu aktivieren
+  password_reset_instructions: Ich möchte mein Passwort zurücksetzen
+  personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
+  registered_by: SozialberaterIn
+  relatives: Verwandte
   remember_me: Angemeldet bleiben
+  remove_language: Sprache entfernen
+  remove_relative: Verwandte entfernen
+  role:
+    admin: Admin
+    department_manager: Standortverantwortliche/er
+    social_worker: SozialarbeiterIn
+    superadmin: Superadmin
+  schedule: Zeitplan
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   simple_form:
@@ -296,77 +312,27 @@ de:
         mailer:
           invitation_instructions:
             accept_until_format: "%d. %B %Y %H:%M"
-  gender:
-    female: Weiblich
-    male: Männlich
-  language_level:
-    native_speaker: Muttersprachler
-    fluent: Fliessend
-    good: Gut
-    basic: Grundlagen
-  role:
-    superadmin: Superadmin
-    admin: Admin
-    social_worker: SozialarbeiterIn
-    department_manager: 'Standortverantwortliche/er'
-  state:
-    registered: Registriert
-    reserved: Reserviert
-    active: Aktiv
-    finished: Abgeschlossen
-    rejected: Abgelehnt
   times:
-    morning: Morgen
     afternoon: Nachmittag
     evening: Abend
-  user_index: Benutzer
+    morning: Morgen
+  user:
+    create:
+      action: Benutzer erfassen
+      confirm: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+    edit:
+      title: Login bearbeiten
+    index:
+      title: Benutzer
   users: Benutzer
-  voluntary_platform: Freiwilligen Platform
+  voluntary_platform: Freiwilligen Plattform
   weekdays:
     friday: Freitag
     monday: Montag
+    saturday: Samstag
+    sunday: Sonntag
     thursday: Donnerstag
     tuesday: Dienstag
     wednesday: Mittwoch
-    thursday: Donnerstag
-    friday: Freitag
-    saturday: Samstag
-    sunday: Sonntag
-  add_language: Sprache hinzufügen
-  add_relative: Verwandte hinzufügen
-  are_you_sure: Sind Sie sicher?
-  are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
-  back: Zurück
-  change_my_password: Ihr Passwort ändern
-  change_password: Ihr Passwort ändern
-  client_created: KlientIn wurde erfolgreich erstellt.
-  client_updated: KlientIn wurde erfolgreich aktualisiert.
-  client_destroyed: KlientIn wurde erfolgreich gelöscht.
-  clients: Klienten
-  contact_info: Kontakt Informationen
-  create_client: KlientIn erfassen
-  create_user: Benutzer erfassen
-  create_profile: Profil erfassen
-  edit_login: Login bearbeiten
-  edit_profile: Profil bearbeiten
-  forgot_password: Passwort vergessen?
-  invite_sent: 'Einladung wurde an %{email} verschickt.'
-  language_skills: Sprachkenntnisse
-  login: Anmelden
-  logout: Abmelden
-  password_reset_instructions: Ich möchte mein Passwort zurücksetzen
-  personal_background: Persönlicher Hintergrund
-  profile_created: Profil wurde erfolgreich erstellt.
-  profile_updated: Profil wurde erfolgreich aktualisiert.
-  registered_by: 'SozialberaterIn'
-  relatives: Verwandte
-  remember_me: Angemeldet bleiben
-  remove_language: Sprache entfernen
-  remove_relative: Verwandte entfernen
-  schedule: Zeitplan
-  show_my_profile: Mein Profil
-  show_profile: Profil anzeigen
   when: Zeit
-  users: Benutzer
-  voluntary_platform: Freiwilligen Plattform
   working_days: Arbeitstage

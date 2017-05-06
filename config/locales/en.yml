@@ -2,6 +2,28 @@
 en:
   activerecord:
     attributes:
+      client:
+        city: City
+        comments: Comments
+        competent_authority: Competent authority
+        date_of_birth: Date of birth
+        education: Education
+        first_name: First name
+        gender: Gender
+        goals: Goals
+        hobbies: Hobbies
+        interests: Interests
+        involved_authority: Involved authority
+        last_name: Last name
+        nationality: Nationality
+        permit: Permit
+        phone: Phone
+        state: State
+        street: Street
+        zip: Zip
+      language_skill:
+        language: Language
+        level: Level
       profile:
         address: Address
         avatar: Avatar
@@ -14,6 +36,15 @@ en:
         thursday: Thursday
         tuesday: Tuesday
         wednesday: Wednesday
+      relative:
+        date_of_birth: Date of birth
+        first_name: First name
+        last_name: Last name
+        relation: Relation
+      schedule:
+        available: Available
+        day: Day
+        time: Time
       user:
         email: Email
         role: Role
@@ -42,13 +73,37 @@ en:
               inclusion: is not included in the list
     models:
       client: Client
-      user: User
       profile: Profile
       user: User
+  add_language: Add language
+  add_relative: Add family member
+  are_you_sure: Are you sure?
+  are_you_sure_invitation: Are you sure you want to send an invitation email?
+  back: Back
   change_my_password: Change my password
   change_password: Change your password
+  client_created: Client was successfully created.
+  client_destroyed: Client was successfully deleted.
+  client_updated: Client was successfully updated.
+  clients: Clients
+  contact_info: Contact information
+  create_client: Create client
   create_profile: Create profile
-  create_user: Create user
+  date:
+    month_names:
+    - nil
+    - Yanuary
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
   departement:
     create:
       back: Back
@@ -163,18 +218,40 @@ en:
         one: '1 error prohibited this %{resource} from being saved:'
         other: "%{count} errors prohibited this %{resource} from being saved:"
   forgot_password: Forgot your password?
+  gender:
+    female: female
+    male: male
   helpers:
     submit:
       user:
         create: Create User
         update: Update login
   invite_sent: Invitation sent to %{email}
+  language_level:
+    basic: Basic
+    fluent: Fluent
+    good: Good
+    native_speaker: Native speaker
+  language_skills: Language skills
   login: Log in
   logout: Logout
-  password_reset_instructions: Send me password reset instructions
+  navigation:
+    toggle_text: Toggle navigation
+  password_reset_instructions: I want to reset my password
+  personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
+  registered_by: Responsible Volunteer
+  relatives: Family members
   remember_me: Remember me
+  remove_language: Remove language
+  remove_relative: Remove family member
+  role:
+    admin: admin
+    department_manager: departement manager
+    social_worker: social worker
+    superadmin: superadmin
+  schedule: Schedule
   show_my_profile: My profile
   show_profile: Show profile
   simple_form:
@@ -227,12 +304,6 @@ en:
       mark: '*'
     error_notification:
       default_message: 'Please review the problems below:'
-  state:
-    registered: Registered
-    reserved: Reserved
-    active: Active
-    finished: Finished
-    rejected: Rejected
     labels:
       defaults:
         password: Password
@@ -242,35 +313,38 @@ en:
       mark: "*"
       text: required
     'yes': 'Yes'
+  state:
+    active: Active
+    finished: Finished
+    labels:
+      defaults:
+        password: Password
+        password_confirmation: Password confirmation
+    'no': 'No'
+    registered: Registered
+    rejected: Rejected
+    required:
+      mark: "*"
+      text: required
+    reserved: Reserved
+    'yes': 'Yes'
   time:
     formats:
       devise:
         mailer:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
-  gender:
-    female: female
-    male: male
-  language_level:
-    native_speaker: Native speaker
-    fluent: Fluent
-    good: Good
-    basic: Basic
-  role:
-    superadmin: superadmin
-    admin: admin
-    social_worker: social_worker
-    department_manager: department_manager
   times:
-    morning: morning
     afternoon: afternoon
     evening: evening
-  user_index: Users
+    morning: morning
   users: Users
   voluntary_platform: Voluntaries Platform
   weekdays:
     friday: Friday
     monday: Monday
+    saturday: Saturday
+    sunday: Sunday
     thursday: Thursday
     tuesday: Tuesday
     wednesday: Wednesday

@@ -18,7 +18,7 @@
             td = departement.name
             td = link_to t('departement.index.show'), departement
             td = link_to t('departement.index.edit'), edit_departement_path(departement)
-            td = link_to t('departement.index.destroy'), departement, data: { confirm: 'Are you sure?' }, method: :delete
+            td = link_to t('departement.index.destroy'), departement, data: { confirm: t('departement.index.confirm.Are you sure?') }, method: :delete
 
 br
 
