@@ -38,7 +38,7 @@ class UsersTest < ApplicationSystemTestCase
 
   test 'taken user email' do
     fill_in 'Email', with: 'superadmin@example.com'
-    select 'superadmin', from: 'Role'
+    select 'Superadmin', from: 'Role'
 
     assert_no_difference 'User.count' do
       accept_prompt do
@@ -51,7 +51,7 @@ class UsersTest < ApplicationSystemTestCase
 
   test 'valid superadmin registration' do
     fill_in 'Email', with: 'superadmin@test.ch'
-    select 'superadmin', from: 'Role'
+    select 'Superadmin', from: 'Role'
 
     assert_difference 'User.count', 1 do
       accept_prompt do

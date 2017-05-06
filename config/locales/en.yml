@@ -98,6 +98,48 @@ en:
         create: Create User
         update: Update login
   simple_form:
+    placeholders:
+      user:
+        email: The Email address
+      profile:
+        first_name: Your first name
+        last_name: Your last name
+        profession: Profession
+        address: Street
+      client:
+        first_name: First name
+        last_name: Last name
+    labels:
+      user:
+        email: Email
+        password: Password
+        role: Role
+      defaults:
+        password: Passwort
+        password_confirmation: Passwort bestätigen
+    options:
+      client:
+        language_skills:
+          level:
+            native_speaker: Native speaker
+            fluent: Fluent
+            good: Good
+            basic: Basic
+        gender:
+          female: Female
+          male: Male
+        state:
+          registered: Registered
+          reserved: Reserved
+          active: Active
+          finished: Finished
+          rejected: Rejected
+      user:
+        role:
+          superadmin: 'Superadmin'
+          social_worker: 'Social worker'
+          admin: 'Administrator'
+          department_manager: 'Departement manager'
     "yes": 'Yes'
     "no": 'No'
     required:
