@@ -1,0 +1,80 @@
+---
+en:
+  activerecord:
+    attributes:
+      client:
+        city: City
+        comments: Comments
+        competent_authority: Competent authority
+        date_of_birth: Date of birth
+        education: Education
+        first_name: First name
+        gender: Gender
+        goals: Goals
+        hobbies: Hobbies
+        interests: Interests
+        involved_authority: Involved authority
+        last_name: Last name
+        nationality: Nationality
+        permit: Permit
+        phone: Phone
+        state: State
+        street: Street
+        zip: Zip
+      language_skill:
+        language: Language
+        level: Level
+      profile:
+        address: Address
+        avatar: Avatar
+        first_name: First name
+        friday: Friday
+        last_name: Last name
+        monday: Monday
+        phone: Phone
+        profession: Profession
+        thursday: Thursday
+        tuesday: Tuesday
+        wednesday: Wednesday
+      relative:
+        date_of_birth: Date of birth
+        first_name: First name
+        last_name: Last name
+        relation: Relation
+      schedule:
+        available: Available
+        day: Day
+        time: Time
+      user:
+        email: Email
+        role: Role
+      departement:
+        name: Name
+    errors:
+      models:
+        profile:
+          attributes:
+            avatar_content_type:
+              invalid: invalid
+            first_name:
+              blank: can't be blank
+            last_name:
+              blank: can't be blank
+        user:
+          attributes:
+            email:
+              blank: can't be blank
+              invalid: invalid
+              taken: has already been taken
+            password:
+              blank: can't be blank
+              too_short: too short (min. 6 characters)
+            password_confirmation:
+              confirmation: The passwords do not match
+            role:
+              inclusion: is not included in the list
+    models:
+      client: Client
+      profile: Profile
+      user: User
+      departement: Departement
