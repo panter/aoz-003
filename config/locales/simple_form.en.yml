@@ -5,9 +5,51 @@ en:
       default_message: 'Please review the problems below:'
     labels:
       defaults:
+        password: Passwort
+        password_confirmation: Passwort bestätigen
+      user:
+        edit:
+          email: Email
+          password: Password
+          role: Role
+        email: Email
         password: Password
-        password_confirmation: Password confirmation
+        role: Role
     'no': 'No'
+    options:
+      client:
+        gender:
+          female: Female
+          male: Male
+        language_skills:
+          level:
+            basic: Basic
+            fluent: Fluent
+            good: Good
+            native_speaker: Native speaker
+        state:
+          active: Active
+          finished: Finished
+          registered: Registered
+          rejected: Rejected
+          reserved: Reserved
+      user:
+        role:
+          admin: Administrator
+          department_manager: Departement manager
+          social_worker: Social worker
+          superadmin: Superadmin
+    placeholders:
+      client:
+        first_name: First name
+        last_name: Last name
+      profile:
+        address: Street
+        first_name: Your first name
+        last_name: Your last name
+        profession: Profession
+      user:
+        email: The Email address
     required:
       mark: "*"
       text: required

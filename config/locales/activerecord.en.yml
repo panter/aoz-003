@@ -21,6 +21,8 @@ en:
         state: State
         street: Street
         zip: Zip
+      departement:
+        name: Name
       language_skill:
         language: Language
         level: Level
@@ -48,8 +50,6 @@ en:
       user:
         email: Email
         role: Role
-      departement:
-        name: Name
     errors:
       models:
         profile:
@@ -75,6 +75,6 @@ en:
               inclusion: is not included in the list
     models:
       client: Client
+      departement: Departement
       profile: Profile
       user: User
-      departement: Departement

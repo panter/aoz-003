@@ -50,6 +50,6 @@ class User < ApplicationRecord
   end
 
   def self.role_collection
-    ROLES
+    ROLES.map(&:to_sym)
   end
 end
