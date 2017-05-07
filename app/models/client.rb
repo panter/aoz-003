@@ -32,6 +32,6 @@ class Client < ApplicationRecord
   end
 
   def self.permit_collection
-    PERMITS
+    PERMITS.map(&:to_sym)
   end
 end

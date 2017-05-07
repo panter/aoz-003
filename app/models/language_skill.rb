@@ -3,8 +3,6 @@ class LanguageSkill < ApplicationRecord
 
   LEVELS = ['native_speaker', 'fluent', 'good', 'basic'].freeze
 
-  validates :level, inclusion: { in: LEVELS }
-  validates :language, inclusion: { in: I18nData.languages.keys }
 
   def language_name
     return '' if language.blank?

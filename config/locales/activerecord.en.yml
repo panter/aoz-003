@@ -72,6 +72,17 @@ en:
         social_worker: social worker
         superadmin: superadmin
     errors:
+      messages:
+        record_invalid: Invalid record!
+        already_confirmed: was already confirmed, please try signing in
+        blank: can't be blank
+        confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
+        expired: has expired, please request a new one
+        not_found: not found
+        not_locked: was not locked
+        not_saved:
+          one: '1 error prohibited this %{resource} from being saved:'
+          other: "%{count} errors prohibited this %{resource} from being saved:"
       models:
         client:
           attributes:

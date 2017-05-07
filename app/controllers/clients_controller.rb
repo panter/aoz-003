@@ -22,7 +22,6 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
     @client.user = current_user
-    authorize @client
     respond_to do |format|
       if @client.save
         format.html { redirect_to @client, notice: t('.success') }
@@ -30,25 +29,26 @@ class ClientsController < ApplicationController
         format.html { render :new }
       end
     end
+    authorize @client
   end
 
   def update
-    authorize @client
     respond_to do |format|
-      if @client.update_attributes(permitted_attributes(@client))
+      if @client.update(client_params)
         format.html { redirect_to @client, notice: t('.success') }
       else
         format.html { render :edit }
       end
     end
+    authorize @client
   end
 
   def destroy
-    authorize @client
     @client.destroy
     respond_to do |format|
       format.html { redirect_to clients_url, notice: t('.success') }
     end
+    authorize @client
   end
 
   private

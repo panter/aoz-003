@@ -48,7 +48,7 @@
       .row
         .col-xs-12
           h3= t_model(LanguageSkill)
-          #languages
+          #language_skills
             = f.simple_fields_for :language_skills do |language|
               = render 'language_skill_fields', f: language
             .links

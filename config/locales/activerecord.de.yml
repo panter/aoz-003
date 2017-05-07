@@ -77,6 +77,17 @@ de:
       departement:
         name: Name
     errors:
+      messages:
+        record_invalid: Ungültiger eintrag.
+        already_confirmed: wurde bereits bestätigt
+        blank: darf nicht leer sein
+        confirmation_period_expired: muss innerhalb %{period} bestätigt werden, bitte fordern Sie einen neuen Link an
+        expired: ist abgelaufen, bitte neu anfordern
+        not_found: nicht gefunden
+        not_locked: ist nicht gesperrt
+        not_saved:
+          one: 'Konnte %{resource} nicht speichern: ein Fehler.'
+          other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
       models:
         departement:
           attributes:
