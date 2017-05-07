@@ -11,4 +11,4 @@ tr
   td = link_to t_action(:edit), edit_client_path(client)
   td
     - if current_user.admin_or_superadmin?
-      = link_to t_action(:destroy), client, data: { confirm: t('.are_you_sure')}, method: :delete
+      = link_to t_action(:destroy), client, data: { confirm: t('clients.are_you_sure')}, method: :delete

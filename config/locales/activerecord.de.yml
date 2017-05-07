@@ -55,6 +55,7 @@ de:
         thursday: Donnerstag
         tuesday: Dienstag
         wednesday: Mittwoch
+        working_days: Arbeitstage
       relative:
         date_of_birth: Geburtsdatum
         first_name: Vorname
@@ -68,6 +69,11 @@ de:
         email: Email
         role: Rolle
         password: Passwort
+      user/role:
+        admin: Admin
+        department_manager: Standortverantwortliche/er
+        social_worker: SozialarbeiterIn
+        superadmin: Superadmin
       departement:
         name: Name
     errors:

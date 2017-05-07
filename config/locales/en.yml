@@ -108,17 +108,16 @@ en:
     index:
     show:
       action: Show profile
+      edit: Edit profile
+      edit_login: Edit login
     new:
     create:
       action: Create profile
       success: Profile was successfully created.
     update:
       success: Profile was successfully updated.
-    edit: Edit profile
-    edit_login: Edit login
     show_my_profile: My profile
     updated: Profile was successfully updated.
-    working_days: Working days
   state:
     active: Active
     finished: Finished

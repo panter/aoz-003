@@ -51,6 +51,7 @@ en:
         thursday: Thursday
         tuesday: Tuesday
         wednesday: Wednesday
+        working_days: Working days
       relative:
         date_of_birth: Date of birth
         first_name: First name
@@ -64,6 +65,12 @@ en:
         email: Email
         role: Role
         password: Password
+      user/role:
+        role:
+        admin: admin
+        department_manager: departement manager
+        social_worker: social worker
+        superadmin: superadmin
     errors:
       models:
         client:

@@ -99,6 +99,8 @@ de:
       action: Profil bearbeiten
     show:
       action: Profil anzeigen
+      edit: Profil bearbeiten
+      edit_login: Login bearbeiten
     new:
     create:
       action: Profil erfassen
@@ -106,11 +108,8 @@ de:
     update:
       success: Profil wurde erfolgreich aktualisiert.
     created: Profil wurde erfolgreich erstellt.
-    edit: Profil bearbeiten
-    edit_login: Login bearbeiten
     show_my_profile: Mein Profil
     updated: Profil wurde erfolgreich aktualisiert.
-    working_days: Arbeitstage
   state:
     active: Aktiv
     finished: Abgeschlossen
@@ -162,7 +161,6 @@ de:
       social_worker: SozialarbeiterIn
       superadmin: Superadmin
     title: Benutzer
-  sessions:
     password_reset_instructions: Ich möchte mein Passwort zurücksetzen
     forgot_password: Passwort vergessen?
     remember_me: Angemeldet bleiben
