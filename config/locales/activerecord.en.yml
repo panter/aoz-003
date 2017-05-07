@@ -12,6 +12,8 @@ en:
         gender: Gender
         goals: Goals
         hobbies: Hobbies
+        relatives: Family members
+        language_skills: Language skills
         interests: Interests
         involved_authority: Involved authority
         last_name: Last name
@@ -21,6 +23,17 @@ en:
         state: State
         street: Street
         zip: Zip
+        registered_by: Responsible Volunteer
+        when: Time
+        email: Email address
+      client/gender:
+        female: Female
+        male: Male
+      client/level:
+        basic: Basic
+        fluent: Fluent
+        good: Good
+        native_speaker: Native speaker
       departement:
         name: Name
       language_skill:
@@ -50,8 +63,19 @@ en:
       user:
         email: Email
         role: Role
+        password: Password
     errors:
       models:
+        client:
+          attributes:
+            first_name:
+              blank: can't be blank
+            last_name:
+              blank: can't be blank
+        departement:
+          attributes:
+            name:
+              blank: can't be blank
         profile:
           attributes:
             avatar_content_type:
@@ -76,5 +100,8 @@ en:
     models:
       client: Client
       departement: Departement
+      language_skill: Language skill
       profile: Profile
+      relative: Relative
+      schedule: Schedule
       user: User

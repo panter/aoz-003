@@ -1,4 +1,8 @@
 .row
+  .col-md-12
+    h1= t_model
+
+.row
   .col-md-4
     strong= t_attr(:email)
   .col-md-8 = @user.email
@@ -6,4 +10,4 @@
 .row
   .col-md-4
     strong= t_attr(:role)
-  .col-md-8 = t("user.role.#{@user.role}")
+  .col-md-8 = t_c("role.#{@user.role}")

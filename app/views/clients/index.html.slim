@@ -1,6 +1,6 @@
 .row
   .col-xs-12
-    h1= t('client.title')
+    h1= t :clients, count: 2
 
 .row
   .col-xs-12
@@ -13,8 +13,8 @@
         th= t_attr(:nationality)
         th= t_attr(:gender)
         th= t_attr(:permit)
-        th Email
-        th= t('client.registered_by')
+        th= t_attr(:email)
+        th= t_attr('registered_by')
         th
         th
         th
@@ -23,4 +23,4 @@
         = render @clients
 .row
   .col-xs-12
-    = link_to t('client.create'), new_client_path, class: 'btn btn-success'
+    = link_to t_title(:new), new_client_path, class: 'btn btn-success'

@@ -1,49 +1,64 @@
 ---
 en:
-  are_you_sure: Are you sure?
-  back: Back
-  client:
-    add_language: Add language
-    add_relative: Add family member
-    contact_info: Contact information
-    create: Create client
+  user_not_authorized: 'You are not authorized to perform this action.'
+  clients:
+    one: Client
+    other: Clients
+    index:
+      title: Clients
+    show:
+      title: Client
+      action: Edit client
+      back: Back
+    form:
+      add_language: Add language
+      add_relative: Add family member
+      contact_info: Contact information
+    language_skill_fields:
+      remove_language: Remove language
+    relative_fields:
+      remove_relative: Remove family member
+    new:
+    edit:
+    create:
+      action: Create client
+      success: Client was successfully created.
+    update:
+      success: Client was successfully updated.
+    destroy:
+      success: Client was successfully deleted.
+    are_you_sure: Are you sure?
+    back: Back
     created: Client was successfully created.
     destroyed: Client was successfully deleted.
+    language_skill_show:
+      basic: Basic
+      fluent: Fluent
+      good: Good
+      native_speaker: Native speaker
     language_level:
       basic: Basic
       fluent: Fluent
       good: Good
       native_speaker: Native speaker
-    language_skills: Language skills
     personal_background: Personal background
-    registered_by: Responsible Volunteer
-    relatives: Family members
-    remove_language: Remove language
-    remove_relative: Remove family member
-    schedule: Schedule
-    title: Clients
-    updated: Client was successfully updated.
+    when: Time
   date:
     month_names:
-    - nil
-    - Yanuary
-    - February
-    - March
-    - April
-    - May
-    - June
-    - July
-    - August
-    - September
-    - October
-    - November
-    - December
-  departement:
-    create:
-      back: Back
-      notice: The departement was sucessfully created.
-    destroy:
-      notice: The departement was sucessfully deleted.
+      -
+      - Yanuary
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+  departements:
     index:
       destroy: Destroy
       edit: Edit
@@ -53,11 +68,19 @@ en:
     show:
       back: Back
       edit: Edit
+    new:
+    edit:
+    create:
+      action: Create Departement
+      back: Back
+      success: The departement was sucessfully created.
     update:
       back: Back
-      notice: The departement was sucessfully updated.
+      success: The departement was sucessfully updated.
       show: Show
       title: Edit departement
+    destroy:
+      success: The departement was sucessfully deleted.
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -74,17 +97,25 @@ en:
     male: male
   helpers:
     submit:
+      create: 'Create %{model}'
+      update: 'Update %{model}'
       user:
         create: Create User
         update: Update login
   navigation:
     toggle_text: Toggle navigation
-  profile:
-    create: Create profile
-    created: Profile was successfully created.
+  profiles:
+    index:
+    show:
+      action: Show profile
+    new:
+    create:
+      action: Create profile
+      success: Profile was successfully created.
+    update:
+      success: Profile was successfully updated.
     edit: Edit profile
     edit_login: Edit login
-    show: Show profile
     show_my_profile: My profile
     updated: Profile was successfully updated.
     working_days: Working days
@@ -113,26 +144,34 @@ en:
     afternoon: afternoon
     evening: evening
     morning: morning
-  user:
-    change_my_password: Change my password
-    change_password: Change your password
+  users:
+    index:
+      title: Users
+    show:
+    new:
     create:
       action: Create user
       confirm: Are you sure you want to send an invitation email?
+      success: Invitation sent to %{email}
+    update:
+      success:
     edit:
       title: Edit login
-    forgot_password: Forgot your password?
     invite_sent: Invitation sent to %{email}
     login: Log in
     logout: Logout
-    password_reset_instructions: I want to reset my password
-    remember_me: Remember me
     role:
       admin: admin
       department_manager: departement manager
       social_worker: social worker
       superadmin: superadmin
     title: Users
+  sessions:
+    change_my_password: Change my password
+    change_password: Change your password
+    forgot_password: Forgot your password?
+    password_reset_instructions: I want to reset my password
+    remember_me: Remember me
   voluntary_platform: Voluntaries Platform
   weekdays:
     friday: Friday
@@ -142,4 +181,9 @@ en:
     thursday: Thursday
     tuesday: Tuesday
     wednesday: Wednesday
-  when: Time
+  pundit:
+    default: 'You cannot perform this action.'
+    client_policy:
+      destroy?: 'You cannot destroy this client!'
+    user_policy:
+      destroy?: You cannot destroy this user!

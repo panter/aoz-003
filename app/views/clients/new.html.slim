@@ -1,11 +1,9 @@
 .row
   .col-xs-12
-    h1= t_title(:new)
+    h1= t_title
+
+= render 'form'
 
 .row
   .col-xs-12
-    p= render 'form'
-
-.row
-  .col-xs-12
-    p= link_to t('back'), clients_path, class: 'btn btn-default'
+    p= link_to t_action('back'), clients_path, class: 'btn btn-default'

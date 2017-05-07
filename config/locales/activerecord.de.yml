@@ -2,6 +2,20 @@
 de:
   activerecord:
     attributes:
+      client/gender:
+        female: Weiblich
+        male: Mänlich
+      client/level:
+        basic: Grundlagen
+        fluent: Fliessend
+        good: Gut
+        native_speaker: Muttersprachler
+      client/state:
+        active: Aktiv
+        finished: Abgeschlossen
+        registered: Registriert
+        rejected: Abgelehnt
+        reserved: Reserviert
       client:
         city: Stadt
         comments: Bemerkungen
@@ -10,6 +24,8 @@ de:
         education: Ausbildung
         first_name: Vorname
         gender: Geschlecht
+        relatives: Verwante
+        language_skills: Sprachkenntnisse
         goals: Ziele
         hobbies: Hobbies
         interests: Interessen
@@ -19,8 +35,11 @@ de:
         permit: Bewilligung
         phone: Telefonnummer
         state: Status
+        email: Mailadresse
         street: Strasse
         zip: Postleitzahl
+        registered_by: SozialberaterIn
+        when: Zeit
       language_skill:
         language: Sprache
         level: Niveau
@@ -48,10 +67,22 @@ de:
       user:
         email: Email
         role: Rolle
+        password: Passwort
       departement:
         name: Name
     errors:
       models:
+        departement:
+          attributes:
+            name:
+              blank: darf nicht leer sein
+        client:
+          updated:
+          attributes:
+            first_name:
+              blank: darf nicht leer sein
+            last_name:
+              blank: darf nicht leer sein
         profile:
           attributes:
             avatar_content_type:
@@ -78,3 +109,6 @@ de:
       profile: Profil
       user: Benutzer
       departement: Standort
+      relative: Verwante/er
+      language_skill: Sprachkenntnisse
+      schedule: Zeitplan

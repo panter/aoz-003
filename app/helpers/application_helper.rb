@@ -22,4 +22,12 @@ module ApplicationHelper
       [:monday, :tuesday, :wednesday, :thursday, :friday]
     end
   end
+
+  def t_c(key_name)
+    t("#{@_controller.controller_name}.#{key_name}")
+  end
+
+  def t_ca(key_name)
+    t("#{@_controller.controller_name}.#{action_name}.#{key_name}")
+  end
 end

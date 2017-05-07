@@ -1,43 +1,55 @@
+---
 de:
-  are_you_sure: Sind Sie sicher?
-  back: Zurück
-  client:
-    add_language: Sprache hinzufügen
-    add_relative: Verwandte hinzufügen
-    contact_info: Kontakt Informationen
-    create: KlientIn erfassen
-    created: KlientIn wurde erfolgreich erstellt.
-    destroyed: KlientIn wurde erfolgreich gelöscht.
-    language_level:
-      basic: Grundlagen
-      fluent: Fliessend
-      good: Gut
-      native_speaker: Muttersprachler
-    language_skills: Sprachkenntnisse
-    personal_background: Persönlicher Hintergrund
-    registered_by: SozialberaterIn
-    relatives: Verwandte
-    remove_language: Sprache entfernen
-    remove_relative: Verwandte entfernen
-    schedule: Zeitplan
-    title: Klienten
-    updated: KlientIn wurde erfolgreich aktualisiert.
+  user_not_authorized: 'Sie haben nicht die Berechtigung dies auszuführen.'
+  clients:
+    one: Klient
+    other: Klienten
+    index:
+      title: Klienten
+    show:
+      title: Klient
+      action: Klient bearbeiten
+      back: Zurück
+    form:
+      add_language: Sprache hinzufügen
+      add_relative: Verwandte hinzufügen
+      contact_info: Kontakt Informationen
+    language_skill_fields:
+      remove_language: Sprache entfernen
+    relative_fields:
+      remove_relative: Verwandte entfernen
+    create:
+      action: KlientIn erfassen
+      success: KlientIn wurde erfolgreich erstellt.
+    edit:
+    update:
+      success: KlientIn wurde erfolgreich aktualisiert.
+    destroy:
+      success: KlientIn wurde erfolgreich gelöscht.
+    crud:
+      update:
+    back: Zurück
+    are_you_sure: Sind Sie sicher?
   date:
     month_names:
-    -
-    - Januar
-    - Februar
-    - März
-    - April
-    - Mai
-    - Juni
-    - Juli
-    - August
-    - September
-    - Oktober
-    - November
-    - Dezember
-  departement:
+      -
+      - Januar
+      - Februar
+      - März
+      - April
+      - Mai
+      - Juni
+      - Juli
+      - August
+      - September
+      - Oktober
+      - November
+      - Dezember
+    formats:
+      default: "%d.%m.%Y"
+      long: "%e. %B %Y"
+      short: "%e. %b"
+  departements:
     create:
       back: Zurück
       notice: Der Standort wurde erfolgreich erstellt.
@@ -72,18 +84,30 @@ de:
     female: Weiblich
     male: Männlich
   helpers:
+    confirm:
+      destroy: 'Sind Sie sicher?'
     submit:
+      create: '%{model} erstellen'
+      update: '%{model} speichern'
       user:
         create: Benutzer erstellen
         update: Update login
   navigation:
     toggle_text: Navigationsmenu aktivieren
-  profile:
-    create: Profil erfassen
+  profiles:
+    index:
+      action: Profil bearbeiten
+    show:
+      action: Profil anzeigen
+    new:
+    create:
+      action: Profil erfassen
+      success: Profil wurde erfolgreich erstellt.
+    update:
+      success: Profil wurde erfolgreich aktualisiert.
     created: Profil wurde erfolgreich erstellt.
     edit: Profil bearbeiten
     edit_login: Login bearbeiten
-    show: Profil anzeigen
     show_my_profile: Mein Profil
     updated: Profil wurde erfolgreich aktualisiert.
     working_days: Arbeitstage
@@ -94,7 +118,6 @@ de:
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
-    'no': Nein
     registered: Registriert
     rejected: Abgelehnt
     required:
@@ -102,8 +125,10 @@ de:
       text: notwendig
     reserved: Reserviert
     'yes': Ja
+    'no': Nein
   time:
     formats:
+      default:
       devise:
         mailer:
           invitation_instructions:
@@ -112,26 +137,35 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
-  user:
-    change_my_password: Ihr Passwort ändern
-    change_password: Ihr Passwort ändern
+  users:
+    index:
+      title: Benutzer
+    show:
+    new:
+      action: Benutzer erstellen
+    edit:
+      title: Login bearbeiten
     create:
       action: Benutzer erfassen
       confirm: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
-    edit:
-      title: Login bearbeiten
-    forgot_password: Passwort vergessen?
+      success: Einladung wurde an %{email} verschickt.
+    update:
+      success: Login erfolgreich geändert.
+    change_my_password: Ihr Passwort ändern
+    change_password: Ihr Passwort ändern
     invite_sent: Einladung wurde an %{email} verschickt.
     login: Anmelden
     logout: Abmelden
-    password_reset_instructions: Ich möchte mein Passwort zurücksetzen
-    remember_me: Angemeldet bleiben
     role:
       admin: Admin
       department_manager: Standortverantwortliche/er
       social_worker: SozialarbeiterIn
       superadmin: Superadmin
     title: Benutzer
+  sessions:
+    password_reset_instructions: Ich möchte mein Passwort zurücksetzen
+    forgot_password: Passwort vergessen?
+    remember_me: Angemeldet bleiben
   voluntary_platform: Freiwilligen Plattform
   weekdays:
     friday: Freitag
@@ -141,4 +175,9 @@ de:
     thursday: Donnerstag
     tuesday: Dienstag
     wednesday: Mittwoch
-  when: Zeit
+  pundit:
+    default: 'Sie können dies nicht ausführen.'
+    client_policy:
+      destroy?: 'Sie können diesen Klienten nicht löschen!'
+    user_policy:
+      destroy?: 'Sie können diesen Benutzer nicht löschen!'

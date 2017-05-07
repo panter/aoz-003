@@ -18,17 +18,18 @@ de:
           active: Aktiv
           finished: Abgeschlossen
           rejected: Abgelehnt
+        relative:
+          date_of_birth: Geburtsdatum
+          first_name: Vorname
+          last_name: Nachname
+          relation: Verwandtschaftsbeziehung
       user:
         role:
           superadmin: 'Superadmin'
           social_worker: 'Sozialarbeiter'
           admin: 'Administrator'
           department_manager: 'Standort Leiter'
-    "yes": 'Ja'
-    "no": 'Nein'
-    required:
-      text: notwendig
-      mark: '*'
+      are_you_sure: Sind sie sicher?
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
     labels:
@@ -43,6 +44,9 @@ de:
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
+      profile:
+        first_name: Vorname
+        last_name: Nachname
     placeholders:
       user:
         email: Mailadresse
@@ -54,3 +58,10 @@ de:
       client:
         first_name: Vorname
         last_name: Nachname
+        zip: PLZ
+        email: Mailadresse
+    "yes": 'Ja'
+    "no": 'Nein'
+    required:
+      text: notwendig
+      mark: '*'
