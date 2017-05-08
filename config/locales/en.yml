@@ -156,21 +156,13 @@ en:
       success:
     edit:
       title: Edit login
-    invite_sent: Invitation sent to %{email}
-    login: Log in
-    logout: Logout
     role:
       admin: admin
       department_manager: department manager
       social_worker: social worker
       superadmin: superadmin
     title: Users
-  sessions:
-    change_my_password: Change my password
-    change_password: Change your password
-    forgot_password: Forgot your password?
-    password_reset_instructions: I want to reset my password
-    remember_me: Remember me
+  remember_me: Remember me
   voluntary_platform: Voluntaries Platform
   weekdays:
     friday: Friday
@@ -186,3 +178,10 @@ en:
       destroy?: 'You cannot destroy this client!'
     user_policy:
       destroy?: You cannot destroy this user!
+  change_my_password: Change my password
+  change_password: Change your password
+  forgot_password: Forgot your password?
+  password_reset_instructions: I want to reset my password
+  invite_sent: Invitation sent to %{email}
+  login: Log in
+  logout: Logout

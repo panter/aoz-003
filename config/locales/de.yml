@@ -110,6 +110,7 @@ de:
     created: Profil wurde erfolgreich erstellt.
     show_my_profile: Mein Profil
     updated: Profil wurde erfolgreich aktualisiert.
+  remember_me: Remember me
   state:
     active: Aktiv
     finished: Abgeschlossen
@@ -150,20 +151,12 @@ de:
       success: Einladung wurde an %{email} verschickt.
     update:
       success: Login erfolgreich geändert.
-    change_my_password: Ihr Passwort ändern
-    change_password: Ihr Passwort ändern
-    invite_sent: Einladung wurde an %{email} verschickt.
-    login: Anmelden
-    logout: Abmelden
     role:
       admin: Admin
       department_manager: Standortverantwortliche/er
       social_worker: SozialarbeiterIn
       superadmin: Superadmin
     title: Benutzer
-    password_reset_instructions: Ich möchte mein Passwort zurücksetzen
-    forgot_password: Passwort vergessen?
-    remember_me: Angemeldet bleiben
   voluntary_platform: Freiwilligen Plattform
   weekdays:
     friday: Freitag
@@ -179,3 +172,11 @@ de:
       destroy?: 'Sie können diesen Klienten nicht löschen!'
     user_policy:
       destroy?: 'Sie können diesen Benutzer nicht löschen!'
+  password_reset_instructions: Ich möchte mein Passwort zurücksetzen
+  change_my_password: Ihr Passwort ändern
+  change_password: Ihr Passwort ändern
+  invite_sent: Einladung wurde an %{email} verschickt.
+  forgot_password: Passwort vergessen?
+  login: Anmelden
+  logout: Abmelden
+  remember_me: Angemeldet bleiben
