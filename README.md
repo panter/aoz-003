@@ -28,6 +28,9 @@ Use `rails db:seed` to get these users:
 - social_worker
   - email: social_worker@example.com
   - password: asdfasdf
+- department_manager
+  - email: department_manager@example.com
+  - password: asdfasdf
 
 ## LICENSE
 
