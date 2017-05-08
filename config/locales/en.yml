@@ -175,9 +175,9 @@ en:
   pundit:
     default: 'You cannot perform this action.'
     client_policy:
-      destroy?: 'You cannot destroy this client!'
+      destroy?: 'You cannot delete this client!'
     user_policy:
-      destroy?: You cannot destroy this user!
+      destroy?: You cannot delete this user!
   change_my_password: Change my password
   change_password: Change your password
   forgot_password: Forgot your password?
