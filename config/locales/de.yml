@@ -49,7 +49,7 @@ de:
       default: "%d.%m.%Y"
       long: "%e. %B %Y"
       short: "%e. %b"
-  departements:
+  departments:
     create:
       back: Zurück
       notice: Der Standort wurde erfolgreich erstellt.

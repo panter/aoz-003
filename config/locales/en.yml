@@ -58,29 +58,29 @@ en:
       - October
       - November
       - December
-  departements:
+  departments:
     index:
       destroy: Destroy
       edit: Edit
-      new: New departement
+      new: New department
       show: Show
-      title: Departements
+      title: Departments
     show:
       back: Back
       edit: Edit
     new:
     edit:
     create:
-      action: Create Departement
+      action: Create Department
       back: Back
-      success: The departement was sucessfully created.
+      success: The department was sucessfully created.
     update:
       back: Back
-      success: The departement was sucessfully updated.
+      success: The department was sucessfully updated.
       show: Show
-      title: Edit departement
+      title: Edit department
     destroy:
-      success: The departement was sucessfully deleted.
+      success: The department was sucessfully deleted.
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -161,7 +161,7 @@ en:
     logout: Logout
     role:
       admin: admin
-      department_manager: departement manager
+      department_manager: department manager
       social_worker: social worker
       superadmin: superadmin
     title: Users

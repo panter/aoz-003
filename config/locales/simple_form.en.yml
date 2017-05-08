@@ -40,7 +40,7 @@ en:
       user:
         role:
           admin: Administrator
-          department_manager: Departement manager
+          department_manager: Department manager
           social_worker: Social worker
           superadmin: Superadmin
     placeholders:

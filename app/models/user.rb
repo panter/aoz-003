@@ -21,7 +21,7 @@ class User < ApplicationRecord
   end
 
   def department_manager?
-    role == User::DEPARTEMENT_MANAGER
+    role == User::DEPARTMENT_MANAGER
   end
 
   def admin_or_superadmin?

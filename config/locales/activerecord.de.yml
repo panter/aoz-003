@@ -74,7 +74,7 @@ de:
         department_manager: Standortverantwortliche/er
         social_worker: SozialarbeiterIn
         superadmin: Superadmin
-      departement:
+      department:
         name: Name
     errors:
       messages:
@@ -89,7 +89,7 @@ de:
           one: 'Konnte %{resource} nicht speichern: ein Fehler.'
           other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
       models:
-        departement:
+        department:
           attributes:
             name:
               blank: darf nicht leer sein
@@ -125,7 +125,7 @@ de:
       client: Klient
       profile: Profil
       user: Benutzer
-      departement: Standort
+      department: Standort
       relative: Verwante/er
       language_skill: Sprachkenntnisse
       schedule: Zeitplan

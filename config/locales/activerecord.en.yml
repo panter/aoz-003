@@ -34,7 +34,7 @@ en:
         fluent: Fluent
         good: Good
         native_speaker: Native speaker
-      departement:
+      department:
         name: Name
       language_skill:
         language: Language
@@ -68,7 +68,7 @@ en:
       user/role:
         role:
         admin: admin
-        department_manager: departement manager
+        department_manager: department manager
         social_worker: social worker
         superadmin: superadmin
     errors:
@@ -90,7 +90,7 @@ en:
               blank: can't be blank
             last_name:
               blank: can't be blank
-        departement:
+        department:
           attributes:
             name:
               blank: can't be blank
@@ -117,7 +117,7 @@ en:
               inclusion: is not included in the list
     models:
       client: Client
-      departement: Departement
+      department: Department
       language_skill: Language skill
       profile: Profile
       relative: Relative
