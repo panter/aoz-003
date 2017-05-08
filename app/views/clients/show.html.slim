@@ -8,7 +8,7 @@
         tbody
           tr
             td= t_attr(:date_of_birth)
-            td= l(@client.date_of_birth)
+            td= l(@client.date_of_birth) if @client.date_of_birth
           tr
             td= t_attr(:nationality)
             td= @client.nationality_name
