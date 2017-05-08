@@ -55,7 +55,7 @@ en:
         last_name: Your last name
         profession: Profession
       user:
-        email: The Email address
+        email: Email address
     required:
       mark: "*"
       text: required
