@@ -1,9 +1,9 @@
 tr
   td = client.first_name
   td = client.last_name
-  td = client.date_of_birth
+  td = l(client.date_of_birth) if client.date_of_birth
   td = client.nationality_name
-  td = t("gender.#{client.gender}") unless client.gender.blank?
+  td = t_attr("gender.#{client.gender}") unless client.gender.blank?
   td = client.permit
   td = client.email
   td = client.user.email
@@ -11,4 +11,4 @@ tr
   td = link_to t_action(:edit), edit_client_path(client)
   td
     - if current_user.admin_or_superadmin?
-      = link_to t_action(:destroy), client, data: { confirm: t('are_you_sure')}, method: :delete
+      = link_to t_action(:destroy), client, data: { confirm: t('clients.are_you_sure')}, method: :delete

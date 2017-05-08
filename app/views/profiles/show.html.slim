@@ -1,9 +1,6 @@
 .row
   .col-xs-12
-    h1
-      = @profile.first_name
-      | ,
-      = @profile.last_name
+    h1 #{@profile.first_name} #{@profile.last_name}
 .row
   .col-xs-12
     .table-responsive
@@ -27,7 +24,7 @@
 
 .row
   .col-xs-12
-    h3= t('working_days')
+    h3= t_attr(:working_days)
     table.table.table-striped
       thead
         tr
@@ -40,11 +37,11 @@
             td.text-center
               - if @profile.read_attribute(day)
                 i.glyphicon.glyphicon-ok.text-success
-                span.sr-only Works on #{day.to_s}s
+                span.sr-only Works on #{day}s
               - else
                 i.glyphicon.glyphicon-remove.text-danger
-                span.sr-only Doesn't work on #{day.to_s}s
+                span.sr-only Doesn't work on #{day}s
 .row
   .col-xs-12
-    p= link_to t('edit_profile'), edit_profile_path(@profile), class: 'btn btn-default'
-    p= link_to t('edit_login'), edit_user_path(current_user.id), class: 'btn btn-default'
+    p= link_to t('.edit'), edit_profile_path(@profile), class: 'btn btn-default'
+    p= link_to t('.edit_login'), edit_user_path(current_user.id), class: 'btn btn-default'

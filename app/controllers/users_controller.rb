@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         @user.invite!
-        format.html { redirect_to users_path, notice: t('invite_sent', email: @user.email) }
+        format.html { redirect_to users_path, notice: t('.success', email: @user.email) }
       else
         format.html { render :new }
       end
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         bypass_sign_in @user
-        format.html { redirect_to @user, notice: t('profile_updated') }
+        format.html { redirect_to @user, notice: t('.success') }
       else
         format.html { render :edit }
       end

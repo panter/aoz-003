@@ -1,0 +1,67 @@
+---
+de:
+  simple_form:
+    options:
+      client:
+        language_skills:
+          level:
+            native_speaker: Muttersprachler
+            fluent: Fliessend
+            good: Gut
+            basic: Grundlagen
+        gender:
+          female: Weiblich
+          male: Mänlich
+        state:
+          registered: Registriert
+          reserved: Reserviert
+          active: Aktiv
+          finished: Abgeschlossen
+          rejected: Abgelehnt
+        relative:
+          date_of_birth: Geburtsdatum
+          first_name: Vorname
+          last_name: Nachname
+          relation: Verwandtschaftsbeziehung
+      user:
+        role:
+          superadmin: 'Superadmin'
+          social_worker: 'Sozialarbeiter'
+          admin: 'Administrator'
+          department_manager: 'Standort Leiter'
+      are_you_sure: Sind sie sicher?
+    error_notification:
+      default_message: 'Bitte überprüfen Sie folgende Probleme:'
+    labels:
+      user:
+        role: Rolle
+        email: Email
+        password: Passwort
+        edit:
+          role: Rolle ändern
+          email: Email ändern
+          password: Passwort ändern
+      defaults:
+        password: Passwort
+        password_confirmation: Passwort bestätigen
+      profile:
+        first_name: Vorname
+        last_name: Nachname
+    placeholders:
+      user:
+        email: Mailadresse
+      profile:
+        first_name: Vorname
+        last_name: Nachname
+        profession: Beruf
+        address: Strasse
+      client:
+        first_name: Vorname
+        last_name: Nachname
+        zip: PLZ
+        email: Mailadresse
+    "yes": 'Ja'
+    "no": 'Nein'
+    required:
+      text: notwendig
+      mark: '*'

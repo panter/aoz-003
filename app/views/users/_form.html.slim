@@ -8,8 +8,8 @@
       = f.input :email
       - if current_user == user
         = f.input :password
-      - if current_user.role == User::SUPERADMIN
-        = f.input :role, :collection => role_collection
+      - if current_user.superadmin?
+        = f.input :role, collection: User.role_collection
 
   .row
     .col-xs-12
@@ -17,4 +17,4 @@
         = f.button :submit, class: 'btn btn-default'
       - else
         = f.button :submit, class: 'btn btn-default',
-          data: { confirm: t('are_you_sure_invitation') }
+          data: { confirm: t('users.create.confirm') }

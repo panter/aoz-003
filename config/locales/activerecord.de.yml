@@ -1,0 +1,131 @@
+---
+de:
+  activerecord:
+    attributes:
+      client/gender:
+        female: Weiblich
+        male: Mänlich
+      client/level:
+        basic: Grundlagen
+        fluent: Fliessend
+        good: Gut
+        native_speaker: Muttersprachler
+      client/state:
+        active: Aktiv
+        finished: Abgeschlossen
+        registered: Registriert
+        rejected: Abgelehnt
+        reserved: Reserviert
+      client:
+        city: Stadt
+        comments: Bemerkungen
+        competent_authority: Involvierte Stelle
+        date_of_birth: Geburtsdatum
+        education: Ausbildung
+        first_name: Vorname
+        gender: Geschlecht
+        relatives: Verwante
+        language_skills: Sprachkenntnisse
+        goals: Ziele
+        hobbies: Hobbies
+        interests: Interessen
+        involved_authority: Fallführende Stelle
+        last_name: Nachname
+        nationality: Nationalität
+        permit: Bewilligung
+        phone: Telefonnummer
+        state: Status
+        email: Mailadresse
+        street: Strasse
+        zip: Postleitzahl
+        registered_by: SozialberaterIn
+        when: Zeit
+      language_skill:
+        language: Sprache
+        level: Niveau
+      profile:
+        address: Adresse
+        avatar: Bild
+        first_name: Vorname
+        friday: Freitag
+        last_name: Nachname
+        monday: Montag
+        phone: Telefonnummer
+        profession: Beruf
+        thursday: Donnerstag
+        tuesday: Dienstag
+        wednesday: Mittwoch
+        working_days: Arbeitstage
+      relative:
+        date_of_birth: Geburtsdatum
+        first_name: Vorname
+        last_name: Nachname
+        relation: Verwandtschaftsbeziehung
+      schedule:
+        available: Verfügbar
+        day: Tag
+        time: Zeit
+      user:
+        email: Email
+        role: Rolle
+        password: Passwort
+      user/role:
+        admin: Admin
+        department_manager: Standortverantwortliche/er
+        social_worker: SozialarbeiterIn
+        superadmin: Superadmin
+      department:
+        name: Name
+    errors:
+      messages:
+        record_invalid: Ungültiger eintrag.
+        already_confirmed: wurde bereits bestätigt
+        blank: darf nicht leer sein
+        confirmation_period_expired: muss innerhalb %{period} bestätigt werden, bitte fordern Sie einen neuen Link an
+        expired: ist abgelaufen, bitte neu anfordern
+        not_found: nicht gefunden
+        not_locked: ist nicht gesperrt
+        not_saved:
+          one: 'Konnte %{resource} nicht speichern: ein Fehler.'
+          other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
+      models:
+        department:
+          attributes:
+            name:
+              blank: darf nicht leer sein
+        client:
+          updated:
+          attributes:
+            first_name:
+              blank: darf nicht leer sein
+            last_name:
+              blank: darf nicht leer sein
+        profile:
+          attributes:
+            avatar_content_type:
+              invalid: ist ungültig
+            first_name:
+              blank: darf nicht leer sein
+            last_name:
+              blank: darf nicht leer sein
+        user:
+          attributes:
+            email:
+              blank: darf nicht leer sein
+              invalid: ist ungültig
+              taken: ist schon vergeben
+            password:
+              blank: darf nicht leer sein
+              too_short: zu kurz (min. 6 Zeichen)
+            password_confirmation:
+              confirmation: Die eingegebenen Passwörter stimmen nicht überein
+            role:
+              inclusion: ist nicht in der Liste enthalten
+    models:
+      client: Klient
+      profile: Profil
+      user: Benutzer
+      department: Standort
+      relative: Verwante/er
+      language_skill: Sprachkenntnisse
+      schedule: Zeitplan

@@ -1,0 +1,80 @@
+---
+de:
+  devise:
+    confirmations:
+      confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
+      send_instructions: Sie erhalten in wenigen Minuten ein Email, mit dem Sie Ihre Registrierung bestätigen können.
+      send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert, erhalten Sie in wenigen Minuten eine Email, mit der Sie Ihre Registrierung bestätigen können.
+    failure:
+      already_authenticated: Sie sind bereits angemeldet.
+      inactive: Ihr Account ist nicht aktiv.
+      invalid: Ungültige Anmeldedaten.
+      invited: Sie haben eine ausstehende Einladung, akzeptieren Sie, um die Erstellung Ihres Kontos zu beenden.
+      last_attempt: Sie haben noch einen Versuch, bevor Ihr Konto gesperrt ist.
+      locked: Ihr Account ist gesperrt.
+      not_found_in_database: Mailadresse oder Passwort ungültig.
+      timeout: Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.
+      unauthenticated: Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.
+      unconfirmed: Sie müssen Ihren Account bestätigen, bevor Sie fortfahren können.
+    invitations:
+      edit:
+        header: Setzen Sie ein Passwort
+        submit_button: Passwort setzen
+      invitation_removed: Ihre Einladung wurde gelöscht.
+      invitation_token_invalid: Der Einladungs-Schlüssel ist nicht gültig!
+      new:
+        header: Einladung schicken
+        submit_button: Einladung schicken
+      no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
+      send_instructions: 'Sie haben eine Einladung in Ihrem Email Postfach: %{email}'
+      updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
+      updated_not_active: Ihr Passwort wurde erfolgreich geändert.
+    mailer:
+      confirmation_instructions:
+        subject: Anleitung zur Bestätigung Ihres Accounts
+      email_changed:
+        email_being_changed_to: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wird. Die neue Mailadresse ist: %{email}'
+        email_has_changed: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wurde. Die eingetragene Mailadresse ist: %{email}'
+        subject: Email wurde geändert
+      hello: Hallo %{email}!
+      invitation_instructions:
+        accept: Einladung annehmen
+        accept_until: Diese Einladung ist gültig bis zum %{due_date}.
+        ignore: Wenn Sie die Einladung nicht annehmen möchten, ignorieren Sie bitte diese Email einfach.<br />\nEs wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.
+        someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie können die Einladung mit dem Link unten annehmen:'
+        subject: Einladung
+      password_change:
+        password_has_changed: Wir möchten Ihnen mitteilen, dass Ihr Passwort geändert wurde.
+        subject: Passwort wurde geändert
+      reset_password_instructions:
+        accept: Ihr Passwort ändern
+        ignore: Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese Email. Ihr Passwort wird sich nicht ändern, bis Sie auf den Link oben zugreifen und ein neues erstellen.
+        someone_requested: Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Sie können dies über den Link unten tun.
+        subject: Anleitung um Ihr Passwort zurückzusetzen
+      unlock_instructions:
+        subject: Anleitung um Ihren Account freizuschalten
+    omniauth_callbacks:
+      failure: Sie konnten nicht mit Ihrem %{kind}-Account angemeldet werden, weil '%{reason}'.
+      success: Sie haben sich erfolgreich mit Ihrem %{kind}-Account angemeldet.
+    passwords:
+      no_token: Sie können diese Seite nur von dem Link aus einer Email zum Passwort-Zurücksetzen aufrufen. Wenn Sie einen solchen Link aufgerufen haben, stellen Sie bitte sicher, dass Sie die vollständige Adresse aufrufen.
+      send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihr Passwort zurücksetzen können.
+      send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihr Passwort zurücksetzen können.
+      updated: Ihr Passwort wurde geändert. Sie sind jetzt angemeldet.
+      updated_not_active: Ihr Passwort wurde geändert.
+    registrations:
+      destroyed: Ihr Account wurde gelöscht.
+      signed_up: Sie haben sich erfolgreich registriert.
+      signed_up_but_inactive: Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account inaktiv ist.
+      signed_up_but_locked: Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account gesperrt ist.
+      signed_up_but_unconfirmed: Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account noch nicht bestätigt ist. Sie erhalten in Kürze eine Email mit der Anleitung, wie Sie Ihren Account freischalten können.
+      update_needs_confirmation: Ihre Daten wurden aktualisiert, aber Sie müssen Ihre neue Mailadresse bestätigen. Sie erhalten in wenigen Minuten eine Email, mit der Sie die Änderung Ihrer Mailadresse abschliessen können.
+      updated: Ihre Daten wurden aktualisiert.
+    sessions:
+      already_signed_out: Erfolgreich abgemeldet.
+      signed_in: Erfolgreich angemeldet.
+      signed_out: Erfolgreich abgemeldet.
+    unlocks:
+      send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
+      send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
+      unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.

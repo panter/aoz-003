@@ -1,0 +1,125 @@
+---
+en:
+  activerecord:
+    attributes:
+      client:
+        city: City
+        comments: Comments
+        competent_authority: Competent authority
+        date_of_birth: Date of birth
+        education: Education
+        first_name: First name
+        gender: Gender
+        goals: Goals
+        hobbies: Hobbies
+        relatives: Family members
+        language_skills: Language skills
+        interests: Interests
+        involved_authority: Involved authority
+        last_name: Last name
+        nationality: Nationality
+        permit: Permit
+        phone: Phone
+        state: State
+        street: Street
+        zip: Zip
+        registered_by: Responsible Volunteer
+        when: Time
+        email: Email address
+      client/gender:
+        female: Female
+        male: Male
+      client/level:
+        basic: Basic
+        fluent: Fluent
+        good: Good
+        native_speaker: Native speaker
+      department:
+        name: Name
+      language_skill:
+        language: Language
+        level: Level
+      profile:
+        address: Address
+        avatar: Avatar
+        first_name: First name
+        friday: Friday
+        last_name: Last name
+        monday: Monday
+        phone: Phone
+        profession: Profession
+        thursday: Thursday
+        tuesday: Tuesday
+        wednesday: Wednesday
+        working_days: Working days
+      relative:
+        date_of_birth: Date of birth
+        first_name: First name
+        last_name: Last name
+        relation: Relation
+      schedule:
+        available: Available
+        day: Day
+        time: Time
+      user:
+        email: Email
+        role: Role
+        password: Password
+      user/role:
+        role:
+        admin: admin
+        department_manager: department manager
+        social_worker: social worker
+        superadmin: superadmin
+    errors:
+      messages:
+        record_invalid: Invalid record!
+        already_confirmed: was already confirmed, please try signing in
+        blank: can't be blank
+        confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
+        expired: has expired, please request a new one
+        not_found: not found
+        not_locked: was not locked
+        not_saved:
+          one: '1 error prohibited this %{resource} from being saved:'
+          other: "%{count} errors prohibited this %{resource} from being saved:"
+      models:
+        client:
+          attributes:
+            first_name:
+              blank: can't be blank
+            last_name:
+              blank: can't be blank
+        department:
+          attributes:
+            name:
+              blank: can't be blank
+        profile:
+          attributes:
+            avatar_content_type:
+              invalid: invalid
+            first_name:
+              blank: can't be blank
+            last_name:
+              blank: can't be blank
+        user:
+          attributes:
+            email:
+              blank: can't be blank
+              invalid: invalid
+              taken: has already been taken
+            password:
+              blank: can't be blank
+              too_short: too short (min. 6 characters)
+            password_confirmation:
+              confirmation: The passwords do not match
+            role:
+              inclusion: is not included in the list
+    models:
+      client: Client
+      department: Department
+      language_skill: Language skill
+      profile: Profile
+      relative: Relative
+      schedule: Schedule
+      user: User

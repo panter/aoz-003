@@ -1,6 +1,5 @@
 - if @client.language_skills.any?
-  - @client.language_skills.each do |lang|
-    li
-      = lang.language_name
-      = ' '
-      = t("language_level.#{lang.level}")
+  dl.dl-horizontal
+    - @client.language_skills.each do |lang|
+      dt= lang.language_name
+      dd= t_attr("level.#{lang.level}")

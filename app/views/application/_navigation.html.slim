@@ -3,7 +3,7 @@ nav.navbar.navbar-top
     .container
       .navbar-header
         button.navbar-toggle.collapsed aria-controls='navbar' aria-expanded='false' data-target='#navbar' data-toggle='collapse' type='button'
-          span.sr-only Toggle navigation
+          span.sr-only= t('navigation.toggle_text')
           span.icon-bar
           span.icon-bar
           span.icon-bar
@@ -13,9 +13,9 @@ nav.navbar.navbar-top
       #navbar.collapse.navbar-collapse
         ul.nav.navbar-nav
           - if current_user.superadmin?
-            li= link_to t('users'), users_path
-          li= link_to t('clients'), clients_path
-
+            li= link_to t_title('index', User), users_path
+          - if current_user.staff?
+            li= link_to t_title('index', Client), clients_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
@@ -24,8 +24,8 @@ nav.navbar.navbar-top
             ul.dropdown-menu
               li
                 - if current_user.profile.blank?
-                  = link_to t('create_profile'), new_profile_path
+                  = link_to t('profiles.create.action'), new_profile_path
                 - else
-                  = link_to t('show_profile'), current_user.profile
+                  = link_to t('profiles.show.action'), current_user.profile
               li
                 = link_to t('logout'), destroy_user_session_path, method: :delete

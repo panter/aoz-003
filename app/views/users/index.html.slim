@@ -1,6 +1,6 @@
 .row
   .col-xs-12
-    h1= t('users')
+    h1= t_title
 
 .row
   .col-xs-12
@@ -14,4 +14,4 @@
 
 .row
   .col-xs-12
-    = link_to t('create_user'), new_user_path, class: 'btn btn-success'
+    = link_to t_crud(:create), new_user_path, class: 'btn btn-success'

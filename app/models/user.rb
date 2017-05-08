@@ -9,7 +9,8 @@ class User < ApplicationRecord
   SUPERADMIN = 'superadmin'.freeze
   ADMIN = 'admin'.freeze
   SOCIAL_WORKER = 'social_worker'.freeze
-  ROLES = [SUPERADMIN, ADMIN, SOCIAL_WORKER].freeze
+  DEPARTMENT_MANAGER = 'department_manager'.freeze
+  ROLES = [SUPERADMIN, ADMIN, SOCIAL_WORKER, DEPARTMENT_MANAGER].freeze
 
   def superadmin?
     role == User::SUPERADMIN
@@ -19,8 +20,16 @@ class User < ApplicationRecord
     role == User::ADMIN
   end
 
+  def department_manager?
+    role == User::DEPARTMENT_MANAGER
+  end
+
   def admin_or_superadmin?
-    role == User::ADMIN || role == User::SUPERADMIN
+    admin? || superadmin?
+  end
+
+  def superadmin_or_depmanager?
+    superadmin? || department_manager?
   end
 
   def social_worker?
@@ -41,6 +50,6 @@ class User < ApplicationRecord
   end
 
   def self.role_collection
-    ROLES
+    ROLES.map(&:to_sym)
   end
 end
