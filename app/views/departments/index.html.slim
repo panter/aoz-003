@@ -1,0 +1,36 @@
+.row
+  .col-xs-12
+    h1 Listing departments
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        thead
+          tr
+            th Name
+            th Street
+            th Zip
+            th Place
+            th Phone
+            th Email
+            th User
+            th
+            th
+            th
+
+        tbody
+          - @departments.each do |department|
+            tr
+              td = department.name
+              td = department.street
+              td = department.zip
+              td = department.place
+              td = department.phone
+              td = department.email
+              td = department.user
+              td = link_to 'Show', department
+              td = link_to 'Edit', edit_department_path(department)
+              td = link_to 'Destroy', department, data: { confirm: 'Are you sure?' }, method: :delete
+.row
+  .col-xs-12
+    = link_to 'New Department', new_department_path

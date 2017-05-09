@@ -1,6 +1,6 @@
-class CreateDepartements < ActiveRecord::Migration[5.1]
+class CreateDepartments < ActiveRecord::Migration[5.1]
   def change
-    create_table :departements do |t|
+    create_table :departments do |t|
       t.string :name
       t.string :street
       t.string :zip

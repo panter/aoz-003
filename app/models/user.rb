@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :clients
 
   has_one :profile, dependent: :destroy
-  has_and_belongs_to_many :departement
+  has_and_belongs_to_many :department
 
   # Roles definition
   SUPERADMIN = 'superadmin'.freeze
@@ -33,7 +33,7 @@ class User < ApplicationRecord
     admin? || superadmin?
   end
 
-  def superadmin_or_departement_manager?
+  def superadmin_or_department_manager?
     superadmin? || department_manager?
   end
 
