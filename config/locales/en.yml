@@ -38,26 +38,26 @@ en:
     - October
     - November
     - December
-  departement:
+  department:
     create:
       back: Back
-      notice: The departement was sucessfully created.
+      notice: The department was sucessfully created.
     destroy:
-      notice: The departement was sucessfully deleted.
+      notice: The department was sucessfully deleted.
     index:
       destroy: Destroy
       edit: Edit
-      new: New departement
+      new: New department
       show: Show
-      title: Departements
+      title: Departments
     show:
       back: Back
       edit: Edit
     update:
       back: Back
-      notice: The departement was sucessfully updated.
+      notice: The department was sucessfully updated.
       show: Show
-      title: Edit departement
+      title: Edit department
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -129,7 +129,7 @@ en:
     remember_me: Remember me
     role:
       admin: admin
-      department_manager: departement manager
+      department_manager: department manager
       social_worker: social worker
       superadmin: superadmin
     title: Users

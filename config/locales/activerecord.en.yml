@@ -48,7 +48,7 @@ en:
       user:
         email: Email
         role: Role
-      departement:
+      department:
         name: Name
     errors:
       models:
@@ -77,4 +77,4 @@ en:
       client: Client
       profile: Profile
       user: User
-      departement: Departement
+      department: Department

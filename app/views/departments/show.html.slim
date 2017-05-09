@@ -1,0 +1,8 @@
+.row
+  .col-xs-12
+    h1= @department.name
+.row
+  .col-xs-12
+    = link_to t('department.show.edit'), edit_department_path(@department)
+    '  |
+    = link_to t('department.show.back'), departments_path

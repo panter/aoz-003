@@ -1,2 +1,0 @@
-class DepartementPolicy < ApplicationPolicy
-end

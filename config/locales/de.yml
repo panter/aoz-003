@@ -38,7 +38,7 @@ de:
     - Oktober
     - November
     - Dezember
-  departement:
+  department:
     create:
       back: Zurück
       notice: Der Standort wurde erfolgreich erstellt.

@@ -1,0 +1,10 @@
+.row
+  .col-xs-12
+    h1 #{t('department.edit.title.Editing department')}
+
+== render 'form'
+
+= link_to t('department.update.show'), @department
+'  |
+= link_to t('department.update.back'), departments_path
+

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :departements
+  resources :departments
   devise_for :users
 
   resources :users, except: :destroy
