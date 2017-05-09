@@ -10,11 +10,4 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     visit edit_user_path(@department_manager)
     assert_not page.has_field? 'role'
   end
-
-  test 'does not have navbar links to users and clients' do
-    login_as @department_manager
-    visit user_path(@department_manager.id)
-    assert_not page.has_link? 'Users'
-    assert_not page.has_link? 'Clients'
-  end
 end
