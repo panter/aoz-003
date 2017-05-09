@@ -9,16 +9,26 @@
   .row
     .col-xs-12
       = f.association :user, as: :check_boxes
-  .row
-    .col-xs-12
-      = f.simple_fields_for :vcard do |vcard|
-        .row
-          .col-md-6= vcard.input :full_name, required: true, autofocus: true
-          .row
-            .col-md-6= vcard.input :family_name
-            .col-md-6= vcard.input :given_name
-          .row
-            .col-md-6= vcard.input :additional_name
+
+  = f.simple_fields_for :vcard do |vcard|
+    .row
+      .col-xs-12
+        h3= t_attr(:address)
+    = vcard.fields_for :address do |address|
+      .row
+        .col-xs-12= address.input :street_address
+        .col-xs-12= address.input :extended_address
+        .col-xs-12= address.input :post_office_box
+        .col-xs-4= address.input :postal_code
+        .col-xs-8= address.input :locality
+    = vcard.fields_for :phone_number do |phone_number|
+      .row
+        .col-xs-12
+          h3= t_attr(:contact_data)
+      .row
+        .col-xs-8= phone_number.input :number
+        .col-xs-4= phone_number.input :phone_number_type
+
 
   .row
     .col-xs-12
