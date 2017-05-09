@@ -1,9 +1,6 @@
 .row
   .col-xs-12
-    h1
-      = @profile.first_name
-      | ,
-      = @profile.last_name
+    h1 #{@profile.first_name} #{@profile.last_name}
 .row
   .col-xs-12
     .table-responsive

@@ -114,6 +114,5 @@
 
 .row
   .col-xs-12
-    = link_to t_action(:edit), edit_client_path(@client)
-    '  |
-    = link_to t('back'), clients_path
+    p= link_to t_action(:edit), edit_client_path(@client), class: 'btn btn-default'
+    p= link_to t('back'), clients_path, class: 'btn btn-default'

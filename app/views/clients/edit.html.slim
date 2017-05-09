@@ -4,6 +4,7 @@
 
 == render 'form'
 
-= link_to t_action(:show), @client
-'  |
-= link_to t('back'), clients_path
+.row
+  .col-xs-12
+    p= link_to t_action(:show), @client, class: 'btn btn-default'
+    p= link_to t('back'), clients_path, class: 'btn btn-default'
