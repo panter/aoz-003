@@ -9,9 +9,12 @@ class DepartmentsController < ApplicationController
 
   def new
     @department = Department.new
+    authorize @department
   end
 
-  def edit; end
+  def edit
+    authorize @department
+  end
 
   def create
     @department = Department.new(department_params)
@@ -24,6 +27,7 @@ class DepartmentsController < ApplicationController
         format.html { render :new }
       end
     end
+    authorize @department
   end
 
   def update
@@ -36,6 +40,7 @@ class DepartmentsController < ApplicationController
         format.html { render :edit }
       end
     end
+    authorize @department
   end
 
   def destroy
@@ -45,6 +50,7 @@ class DepartmentsController < ApplicationController
         redirect_to departments_url, notice:  t('department_destroyed')
       end
     end
+    authorize @department
   end
 
   private
