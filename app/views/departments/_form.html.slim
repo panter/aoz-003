@@ -9,6 +9,16 @@
   .row
     .col-xs-12
       = f.association :user, as: :check_boxes
+  .row
+    .col-xs-12
+      = f.simple_fields_for :vcard do |vcard|
+        .row
+          .col-md-6= vcard.input :full_name, required: true, autofocus: true
+          .row
+            .col-md-6= vcard.input :family_name
+            .col-md-6= vcard.input :given_name
+          .row
+            .col-md-6= vcard.input :additional_name
 
   .row
     .col-xs-12
