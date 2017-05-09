@@ -15,11 +15,10 @@ class DepartmentsController < ApplicationController
 
   def create
     @department = Department.new(department_params)
-
     respond_to do |format|
       if @department.save
         format.html do
-          redirect_to @department, notice: t('department.create.notice')
+          redirect_to @department, notice: t('department_created')
         end
       else
         format.html { render :new }
@@ -31,7 +30,7 @@ class DepartmentsController < ApplicationController
     respond_to do |format|
       if @department.update(department_params)
         format.html do
-          redirect_to @department, notice: t('department.update.notice')
+          redirect_to @department, notice: t('updated', model: t('department_updated')
         end
       else
         format.html { render :edit }
@@ -43,7 +42,7 @@ class DepartmentsController < ApplicationController
     @department.destroy
     respond_to do |format|
       format.html do
-        redirect_to departments_url, notice: t('department.destroy.notice')
+        redirect_to departments_url, notice:  t('department_destroyed')
       end
     end
   end

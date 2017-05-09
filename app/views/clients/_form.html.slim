@@ -33,7 +33,7 @@
                     wrapper: :vertical_radio_and_checkboxes
       .row
         .col-xs-12
-          h3= t('client.contact_info')
+          h3= t('contact_info')
       .row
         .col-xs-12
           = f.input :street
@@ -47,25 +47,25 @@
 
       .row
         .col-xs-12
-          h3= t('client.language_skills')
+          h3= t('language_skills')
           #languages
             = f.simple_fields_for :language_skills do |language|
               = render 'language_skill_fields', f: language
             .links
-              = link_to_add_association t('client.add_language'), f, :language_skills, class: 'btn btn-success'
+              = link_to_add_association t('add_language'), f, :language_skills, class: 'btn btn-success'
 
       .row
         .col-xs-12
-          h3= t('client.relatives')
+          h3= t('relatives')
           #relatives
             = f.simple_fields_for :relatives do |relative|
               = render 'relative_fields', f: relative
             .links
-              = link_to_add_association t('client.add_relative'), f, :relatives, class: 'btn btn-success'
+              = link_to_add_association t('add_relative'), f, :relatives, class: 'btn btn-success'
 
       .row
         .col-xs-12
-          h3= t('client.personal_background')
+          h3= t('personal_background')
           = f.input :goals
           = f.input :education
           = f.input :hobbies
@@ -77,7 +77,7 @@
           = f.input :involved_authority
       .row
         .col-xs-12
-          h3= t('client.schedule')
+          h3= t('schedule')
           .row
             .col-xs-12
               table.table.table-striped
