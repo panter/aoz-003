@@ -1,8 +1,15 @@
 = simple_form_for(@department) do |f|
-  = f.error_notification
+  - if f.error_notification.present?
+    .row
+      .col-xs-12
+        = f.error_notification
+  .row
+    .col-xs-12
+      = f.input :name
+  .row
+    .col-xs-12
+      = f.association :user, as: :check_boxes
 
-  .form-inputs
-    = f.input :name
-
-  .form-actions
-    = f.button :submit
+  .row
+    .col-xs-12
+      = f.button :submit
