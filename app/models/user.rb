@@ -21,12 +21,20 @@ class User < ApplicationRecord
     role == User::ADMIN
   end
 
-  def admin_or_superadmin?
-    role == User::ADMIN || role == User::SUPERADMIN
-  end
-
   def social_worker?
     role == User::SOCIAL_WORKER
+  end
+
+  def department_manager?
+    role == User::DEPARTMENT_MANAGER
+  end
+
+  def superadmin_or_department_manager?
+    superadmin? || department_manager?
+  end
+
+  def admin_or_superadmin?
+    admin? || superadmin?
   end
 
   def staff?
