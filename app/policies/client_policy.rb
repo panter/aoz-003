@@ -21,6 +21,10 @@ class ClientPolicy < ApplicationPolicy
     @client = client
   end
 
+  def index?
+    user.superadmin? || user.social_worker?
+  end
+
   def show?
     user.admin_or_superadmin? || @client.user_id == user.id
   end
