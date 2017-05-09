@@ -1,10 +1,11 @@
 .row
   .col-xs-12
-    h1 #{t('department.edit.title.Editing department')}
+    h1= t_title(:edit)
 
 == render 'form'
 
-= link_to t('department.update.show'), @department
-'  |
-= link_to t('department.update.back'), departments_path
+.row
+  .col-xs-12
+    p= link_to t_action(:show), @department, class: 'btn btn-default'
+    p= link_to t('back'), departments_path, class: 'btn btn-default'
 

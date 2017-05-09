@@ -1,6 +1,6 @@
 .row
   .col-xs-12
-    h1= t('department.index.title')
+    h1= t_title(:index)
 
 .row
   .col-xs-12
@@ -16,10 +16,10 @@
         - @departments.each do |department|
           tr
             td = department.name
-            td = link_to t('department.index.show'), department
-            td = link_to t('department.index.edit'), edit_department_path(department)
-            td = link_to t('department.index.destroy'), department, data: { confirm: t('department.index.confirm.Are you sure?') }, method: :delete
+            td = link_to t_action(:show), department
+            td = link_to t_action(:edit), edit_department_path(department)
+            td = link_to t_action(:destroy), department, data: { confirm: t('department_confirm_destroy') }, method: :delete
 
-br
-
-= link_to t('department.index.new'), new_department_path
+.row
+  .col-xs-12
+    = link_to t_action(:create), new_department_path

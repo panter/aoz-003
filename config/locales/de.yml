@@ -28,6 +28,8 @@ de:
       profile: Profil
       user: Benutzer
     attributes:
+      department:
+        department_manager: Standort Betreuer
       client:
         first_name: Vorname
         last_name: Nachname
@@ -310,3 +312,5 @@ de:
   department_destroyed: 'Der Standort wurde erfolgreich gelöscht.'
   department_created: 'Der Standort wurde erfolgreich erstellt.'
   department_updated: 'Der Standort wurde erfolgreich geändert.'
+  department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
+  departments: Standorte

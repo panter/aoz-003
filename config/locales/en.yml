@@ -226,3 +226,5 @@ en:
   department_destroyed: 'Departement was successfully deleted.'
   department_created: 'Departement was successfully created.'
   department_updated: 'Departement was successfully updated.'
+  department_confirm_destroy: Are you sure you want to delete the departement?
+  departments: Departements

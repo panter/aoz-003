@@ -1,5 +1,9 @@
-h1= t('department.new.title.New department')
+.row
+  .col-xs-12
+    h1= t_title(:new)
 
 == render 'form'
 
-= link_to t('department.create.back'), departments_path
+.row
+  .col-xs-12
+    = link_to t('back'), departments_path

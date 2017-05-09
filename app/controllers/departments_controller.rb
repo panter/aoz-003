@@ -30,7 +30,7 @@ class DepartmentsController < ApplicationController
     respond_to do |format|
       if @department.update(department_params)
         format.html do
-          redirect_to @department, notice: t('updated', model: t('department_updated')
+          redirect_to @department, notice: t('department_updated')
         end
       else
         format.html { render :edit }

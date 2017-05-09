@@ -1,8 +1,10 @@
 .row
   .col-xs-12
-    h1= @department.name
+    h1= t_title(:show)
 .row
   .col-xs-12
-    = link_to t('department.show.edit'), edit_department_path(@department)
-    '  |
-    = link_to t('department.show.back'), departments_path
+    p= @department.name
+.row
+  .col-xs-12
+    p= link_to t_action(:edit), edit_department_path(@department), class: 'btn btn-default'
+    p= link_to t_action(:index), departments_path, class: 'btn btn-default'
