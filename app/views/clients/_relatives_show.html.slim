@@ -1,10 +1,7 @@
 - if @client.relatives.any?
-  - @client.relatives.each do |rel|
-    li
-      = rel.first_name
-      = ' '
-      = rel.last_name
-      = ' '
-      = rel.date_of_birth
-      = ' '
-      = rel.relation
+  dl.dl-horizontal
+    - @client.relatives.each do |rel|
+      dt #{rel.first_name} #{rel.last_name}
+      dd
+        = l(rel.date_of_birth) if rel.date_of_birth
+        , #{rel.relation}
