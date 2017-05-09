@@ -14,7 +14,8 @@ nav.navbar.navbar-top
         ul.nav.navbar-nav
           - if current_user.superadmin?
             li= link_to t('users'), users_path
-          - if current_user.superadmin? || current_user.social_worker?
+            li= link_to t('departments'), departments_path
+          - if current_user.staff?
             li= link_to t('clients'), clients_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown

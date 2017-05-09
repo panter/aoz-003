@@ -1,9 +1,10 @@
 class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
-  has_many :clients
 
+  has_many :clients
   has_one :profile, dependent: :destroy
+  has_and_belongs_to_many :department
 
   # Roles definition
   SUPERADMIN = 'superadmin'.freeze
@@ -20,12 +21,20 @@ class User < ApplicationRecord
     role == User::ADMIN
   end
 
-  def admin_or_superadmin?
-    role == User::ADMIN || role == User::SUPERADMIN
-  end
-
   def social_worker?
     role == User::SOCIAL_WORKER
+  end
+
+  def department_manager?
+    role == User::DEPARTMENT_MANAGER
+  end
+
+  def superadmin_or_department_manager?
+    superadmin? || department_manager?
+  end
+
+  def admin_or_superadmin?
+    admin? || superadmin?
   end
 
   def staff?

@@ -1,0 +1,80 @@
+---
+de:
+  activerecord:
+    attributes:
+      client:
+        city: Stadt
+        comments: Bemerkungen
+        competent_authority: Involvierte Stelle
+        date_of_birth: Geburtsdatum
+        education: Ausbildung
+        first_name: Vorname
+        gender: Geschlecht
+        goals: Ziele
+        hobbies: Hobbies
+        interests: Interessen
+        involved_authority: Fallführende Stelle
+        last_name: Nachname
+        nationality: Nationalität
+        permit: Bewilligung
+        phone: Telefonnummer
+        state: Status
+        street: Strasse
+        zip: Postleitzahl
+      language_skill:
+        language: Sprache
+        level: Niveau
+      profile:
+        address: Adresse
+        avatar: Bild
+        first_name: Vorname
+        friday: Freitag
+        last_name: Nachname
+        monday: Montag
+        phone: Telefonnummer
+        profession: Beruf
+        thursday: Donnerstag
+        tuesday: Dienstag
+        wednesday: Mittwoch
+      relative:
+        date_of_birth: Geburtsdatum
+        first_name: Vorname
+        last_name: Nachname
+        relation: Verwandtschaftsbeziehung
+      schedule:
+        available: Verfügbar
+        day: Tag
+        time: Zeit
+      user:
+        email: Email
+        role: Rolle
+      department:
+        name: Name
+    errors:
+      models:
+        profile:
+          attributes:
+            avatar_content_type:
+              invalid: ist ungültig
+            first_name:
+              blank: darf nicht leer sein
+            last_name:
+              blank: darf nicht leer sein
+        user:
+          attributes:
+            email:
+              blank: darf nicht leer sein
+              invalid: ist ungültig
+              taken: ist schon vergeben
+            password:
+              blank: darf nicht leer sein
+              too_short: zu kurz (min. 6 Zeichen)
+            password_confirmation:
+              confirmation: Die eingegebenen Passwörter stimmen nicht überein
+            role:
+              inclusion: ist nicht in der Liste enthalten
+    models:
+      client: Klient
+      profile: Profil
+      user: Benutzer
+      department: Standort

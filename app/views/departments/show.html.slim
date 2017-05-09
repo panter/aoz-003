@@ -1,0 +1,10 @@
+.row
+  .col-xs-12
+    h1= t_title(:show)
+.row
+  .col-xs-12
+    p= @department.name
+.row
+  .col-xs-12
+    p= link_to t_action(:edit), edit_department_path(@department), class: 'btn btn-default'
+    p= link_to t_action(:index), departments_path, class: 'btn btn-default'

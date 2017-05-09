@@ -94,9 +94,9 @@ en:
         other: '%{count} errors prohibited this %{resource} from being saved:'
   helpers:
     submit:
-      user:
-        create: Create User
-        update: Update login
+      create: 'Create %{model}'
+      update: 'Update %{model}'
+      destroy: 'Delete %{model}'
   simple_form:
     placeholders:
       user:
@@ -222,3 +222,9 @@ en:
   voluntary_platform: Voluntaries Platform
   when: Time
   working_days: Working days
+  toggle_navigation: Toggle navigation menu
+  department_destroyed: 'Departement was successfully deleted.'
+  department_created: 'Departement was successfully created.'
+  department_updated: 'Departement was successfully updated.'
+  department_confirm_destroy: Are you sure you want to delete the departement?
+  departments: Departements

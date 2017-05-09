@@ -28,6 +28,8 @@ de:
       profile: Profil
       user: Benutzer
     attributes:
+      department:
+        department_manager: Standort Betreuer
       client:
         first_name: Vorname
         last_name: Nachname
@@ -74,21 +76,20 @@ de:
         wednesday: Mittwoch
         thursday: Donnerstag
         friday: Freitag
-  date:
-    month_names:
-      -
-      - Januar
-      - Februar
-      - März
-      - April
-      - Mai
-      - Juni
-      - Juli
-      - August
-      - September
-      - Oktober
-      - November
-      - Dezember
+  month_names:
+    -
+    - Januar
+    - Februar
+    - März
+    - April
+    - Mai
+    - Juni
+    - Juli
+    - August
+    - September
+    - Oktober
+    - November
+    - Dezember
   devise:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
@@ -181,8 +182,7 @@ de:
     submit:
       create: '%{model} erfassen'
       update: '%{model} aktualisieren'
-      user:
-        update: Login aktualisieren
+      destroy: '%{model} löschen'
   simple_form:
     options:
       client:
@@ -219,10 +219,6 @@ de:
         role: Rolle
         email: Email
         password: Passwort
-        edit:
-          role: Rolle ändern
-          email: Email ändern
-          password: Passwort ändern
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
@@ -312,3 +308,9 @@ de:
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
   working_days: Arbeitstage
+  toggle_navigation: Navigations menu aktivieren
+  department_destroyed: 'Der Standort wurde erfolgreich gelöscht.'
+  department_created: 'Der Standort wurde erfolgreich erstellt.'
+  department_updated: 'Der Standort wurde erfolgreich geändert.'
+  department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
+  departments: Standorte

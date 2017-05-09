@@ -1,4 +1,17 @@
 GIT
+  remote: https://github.com/huerlisi/has_vcards.git
+  revision: ec00534676deb9801725264d5a196f46f3616673
+  branch: fixes/drop_alias_method_chain
+  specs:
+    has_vcards (1.1.2)
+      haml
+      i18n_rails_helpers
+      inherited_resources
+      mime-types
+      rails (> 3.2.0)
+      simple_form
+
+GIT
   remote: https://github.com/rails/sass-rails.git
   revision: dfbcc6a53653d8908007e26324a0f299f026ec4f
   specs:
@@ -149,11 +162,21 @@ GEM
     ffi (1.9.18)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    haml (4.0.7)
+      tilt
+    has_scope (0.7.1)
+      actionpack (>= 4.1, < 5.2)
+      activesupport (>= 4.1, < 5.2)
     highline (1.7.8)
     i18n (0.8.1)
     i18n_data (0.7.0)
     i18n_rails_helpers (2.0.1)
       rails (> 3.0.0)
+    inherited_resources (1.7.2)
+      actionpack (>= 3.2, < 5.2.x)
+      has_scope (~> 0.6)
+      railties (>= 3.2, < 5.2.x)
+      responders
     iniparse (1.4.2)
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
@@ -360,6 +383,7 @@ DEPENDENCIES
   devise
   devise_invitable
   factory_girl_rails
+  has_vcards!
   i18n_data
   i18n_rails_helpers
   jbuilder

@@ -1,6 +1,11 @@
-User.find_or_create_by!(email: 'superadmin@example.com') do |user|
+superadmin = User.find_or_create_by!(email: 'superadmin@example.com') do |user|
   user.password = 'asdfasdf'
   user.role = 'superadmin'
+end
+
+Department.create! do |d|
+  d.name = 'n'
+  d.user.push superadmin
 end
 
 User.find_or_create_by!(email: 'social_worker@example.com') do |user|
@@ -31,6 +36,6 @@ User.all.each do |user|
   ) do |client|
     client.first_name = "#{user.profile.first_name}'s Client"
     client.last_name = 'a lastname'
-    client.user = user
+    client.user user
   end
 end

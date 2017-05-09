@@ -1,0 +1,14 @@
+---
+en:
+  simple_form:
+    error_notification:
+      default_message: 'Please review the problems below:'
+    labels:
+      defaults:
+        password: Password
+        password_confirmation: Password confirmation
+    'no': 'No'
+    required:
+      mark: "*"
+      text: required
+    'yes': 'Yes'
