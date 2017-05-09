@@ -12,9 +12,9 @@ nav.navbar.navbar-top
 
       #navbar.collapse.navbar-collapse
         ul.nav.navbar-nav
-          - if current_user.superadmin?
+          - if policy(User).index?
             li= link_to t('users'), users_path
-          - if current_user.superadmin? || current_user.social_worker?
+          - if policy(Client).index?
             li= link_to t('clients'), clients_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown

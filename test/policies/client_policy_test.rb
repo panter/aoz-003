@@ -68,8 +68,4 @@ class ClientPolicyTest < ActiveSupport::TestCase
   test 'Index: department manager cannot index clients' do
     refute_permit @user_as_department_manager, Client.first, 'index?'
   end
-
-  test 'Index: social worker cannot index clients' do
-    refute_permit @user_as_social_worker, Client.first, 'index?'
-  end
 end
