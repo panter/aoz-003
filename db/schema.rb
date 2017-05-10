@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421070309) do
+ActiveRecord::Schema.define(version: 20170510150439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,10 +35,30 @@ ActiveRecord::Schema.define(version: 20170421070309) do
     t.text "comments"
     t.text "competent_authority"
     t.text "involved_authority"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_clients_on_user_id"
+  end
+
+  create_table "departements", force: :cascade do |t|
+    t.string "name"
+    t.string "street"
+    t.string "zip"
+    t.string "place"
+    t.string "phone"
+    t.string "email"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_clients_on_user_id"
+    t.index ["user_id"], name: "index_departements_on_user_id"
+  end
+
+  create_table "departements_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "departement_id", null: false
+    t.index ["departement_id", "user_id"], name: "index_departements_users_on_departement_id_and_user_id"
+    t.index ["user_id", "departement_id"], name: "index_departements_users_on_user_id_and_departement_id"
   end
 
   create_table "language_skills", force: :cascade do |t|
@@ -112,12 +132,15 @@ ActiveRecord::Schema.define(version: 20170421070309) do
     t.datetime "invitation_accepted_at"
     t.integer "invitation_limit"
     t.integer "invited_by_id"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "clients", "users"
+  add_foreign_key "departements", "users"
   add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
   add_foreign_key "relatives", "clients"
