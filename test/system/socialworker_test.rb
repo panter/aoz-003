@@ -5,11 +5,11 @@ class SocialworkerTest < ApplicationSystemTestCase
     @socialworker = create :user, :with_profile, :with_clients, role: 'social_worker'
   end
 
-  test 'when logged in socialworker cannot see create superadmin link' do
+  test 'when logged in socialworker cannot see create user link' do
     login_as @socialworker
     visit root_path
 
-    assert_not page.has_link? 'Create superadmin'
+    assert_not page.has_link? 'Create user'
   end
 
   test 'when updates user login, cannot see role field' do
