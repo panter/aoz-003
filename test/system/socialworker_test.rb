@@ -7,7 +7,9 @@ class SocialworkerTest < ApplicationSystemTestCase
   end
 
   test 'when logged in socialworker cannot see create user link' do
+    login_as @socialworker
     visit root_path
+
     assert_not page.has_link? 'Create user'
   end
 
