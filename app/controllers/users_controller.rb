@@ -46,6 +46,14 @@ class UsersController < ApplicationController
     authorize @user
   end
 
+  def destroy
+    authorize @user
+    @user.destroy
+    respond_to do |format|
+      format.html { redirect_to users_url, notice: t('user_destroyed') }
+    end
+  end
+
   private
 
   def set_user

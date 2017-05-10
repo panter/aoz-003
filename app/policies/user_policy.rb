@@ -29,4 +29,8 @@ class UserPolicy < ApplicationPolicy
   def update?
     @current_user.superadmin? || @current_user == @user
   end
+
+  def destroy?
+    @current_user.admin_or_superadmin?
+  end
 end
