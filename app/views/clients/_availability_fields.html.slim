@@ -4,7 +4,7 @@
       table.table.table-striped
         thead
           tr
-            th= t('time')
+            th= t('when')
             - Availability.days.each do |day|
               th.days= t("weekdays.#{day.to_s}")
         tbody
