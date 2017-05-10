@@ -128,10 +128,10 @@ en:
           rejected: Rejected
       user:
         role:
-          superadmin: 'Superadmin'
-          social_worker: 'Social worker'
-          admin: 'Administrator'
-          department_manager: 'Department manager'
+          superadmin: Superadmin
+          social_worker: Social worker
+          admin: Administrator
+          department_manager: Department manager
     "yes": 'Yes'
     "no": 'No'
     required:
