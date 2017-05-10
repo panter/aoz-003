@@ -130,8 +130,7 @@ en:
         role:
           superadmin: 'Superadmin'
           social_worker: 'Social worker'
-          admin: 'Administrator'
-          department_manager: 'Department manager'
+          department_manager: 'Departement manager'
     "yes": 'Yes'
     "no": 'No'
     required:
@@ -161,9 +160,8 @@ en:
     basic: Basic
   role:
     superadmin: superadmin
-    admin: admin
-    social_worker: social worker
-    department_manager: department manager
+    social_worker: social_worker
+    department_manager: department_manager
   times:
     morning: morning
     afternoon: afternoon

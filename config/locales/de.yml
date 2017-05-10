@@ -206,9 +206,9 @@ de:
           rejected: Abgelehnt
       user:
         role:
-          superadmin: Superadmin
-          social_worker: Sozialarbeiter
-          department_manager: Standort Leiter
+          superadmin: 'Superadmin'
+          social_worker: 'Sozialarbeiter'
+          department_manager: 'Standort Leiter'
     "yes": 'Ja'
     "no": 'Nein'
     required:
