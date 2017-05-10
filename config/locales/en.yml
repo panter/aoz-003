@@ -100,7 +100,7 @@ en:
   simple_form:
     placeholders:
       user:
-        email: The Email address
+        email: Email address
       profile:
         first_name: Your first name
         last_name: Your last name
