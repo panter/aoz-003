@@ -109,14 +109,6 @@ en:
       client:
         first_name: First name
         last_name: Last name
-    labels:
-      user:
-        email: Email
-        password: Password
-        role: Role
-      defaults:
-        password: Passwort
-        password_confirmation: Passwort bestätigen
     options:
       client:
         language_skills:
