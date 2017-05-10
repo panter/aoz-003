@@ -198,6 +198,7 @@ en:
   login: Log in
   logout: Logout
   invite_sent: 'Invitation sent to %{email}'
+  not_authorized: You are not authorized to perform this action.
   password_reset_instructions: I want to reset my password
   personal_background: Personal background
   profile_created: Profile was successfully created.
