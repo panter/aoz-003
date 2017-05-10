@@ -84,7 +84,7 @@
 
           tr
             td
-              - if current_user.superadmin?
+              - if policy(Client).destroy?
                 = t_attr(:comments)
             td= @client.comments
 
