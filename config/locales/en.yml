@@ -131,7 +131,7 @@ en:
           superadmin: 'Superadmin'
           social_worker: 'Social worker'
           admin: 'Administrator'
-          department_manager: 'Departement manager'
+          department_manager: 'Department manager'
     "yes": 'Yes'
     "no": 'No'
     required:
