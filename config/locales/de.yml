@@ -299,6 +299,7 @@ de:
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
+  not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
