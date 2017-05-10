@@ -312,5 +312,6 @@ de:
   show_profile: Profil anzeigen
   when: Zeit
   users: Benutzer
+  user_destroyed: Benutzer wurde erfolgreich gelöscht.
   voluntary_platform: Freiwilligen Plattform
   working_days: Arbeitstage

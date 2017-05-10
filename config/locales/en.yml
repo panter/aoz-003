@@ -210,6 +210,7 @@ en:
   show_profile: Show profile
   show_my_profile: My profile
   users: Users
+  user_destroyed: User was successfully deleted.
   voluntary_platform: Voluntaries Platform
   when: Time
   working_days: Working days
