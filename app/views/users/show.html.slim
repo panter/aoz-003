@@ -7,3 +7,6 @@
   .col-md-4
     strong= t_attr(:role)
   .col-md-8 = t("role.#{@user.role}")
+
+- if policy(@user).destroy?
+  = link_to t_action(:destroy), @user, data: { confirm: t('are_you_sure')}, method: :delete, class: 'btn btn-danger'
