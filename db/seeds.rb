@@ -8,11 +8,6 @@ User.find_or_create_by!(email: 'social_worker@example.com') do |user|
   user.role = 'social_worker'
 end
 
-User.find_or_create_by!(email: 'admin@example.com') do |user|
-  user.password = 'asdfasdf'
-  user.role = 'admin'
-end
-
 User.find_or_create_by!(email: 'department_manager@example.com') do |user|
   user.password = 'asdfasdf'
   user.role = 'department_manager'

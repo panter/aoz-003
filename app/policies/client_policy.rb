@@ -26,11 +26,11 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin_or_superadmin? || @client.user_id == user.id
+    user.superadmin? || @client.user_id == user.id
   end
 
   def new?
-    user.staff?
+    user.superadmin? || user.social_worker?
   end
 
   def edit?
@@ -38,7 +38,7 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def create?
-    user.staff?
+    user.superadmin? || user.social_worker?
   end
 
   def update?
@@ -46,6 +46,6 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin_or_superadmin?
+    user.superadmin?
   end
 end

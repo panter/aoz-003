@@ -208,7 +208,6 @@ de:
         role:
           superadmin: 'Superadmin'
           social_worker: 'Sozialarbeiter'
-          admin: 'Administrator'
           department_manager: 'Standort Leiter'
     "yes": 'Ja'
     "no": 'Nein'
@@ -256,7 +255,6 @@ de:
     basic: Grundlagen
   role:
     superadmin: Superadmin
-    admin: Admin
     social_worker: SozialarbeiterIn
     department_manager: 'Standortverantwortliche/er'
   state:
