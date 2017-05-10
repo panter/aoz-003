@@ -22,9 +22,6 @@ Use `rails db:seed` to get these users:
 - superadmin
   - email: superadmin@example.com
   - password: asdfasdf
-- admin
-  - email: admin@example.com
-  - password: asdfasdf
 - social_worker
   - email: social_worker@example.com
   - password: asdfasdf

@@ -4,7 +4,6 @@ class UserTest < ActiveSupport::TestCase
   def setup
     @user = build :user
     @user_as_superadmin = create :user, :with_profile, role: 'superadmin'
-    @admin = create :user, :with_profile, role: 'admin'
     @user_as_social_worker = create :user, :with_profile, role: 'social_worker'
     @user_as_department_manager = create :user, :with_profile, role: 'department_manager'
   end
@@ -43,27 +42,16 @@ class UserTest < ActiveSupport::TestCase
     assert @user_as_superadmin.superadmin?
   end
 
-  test '@user_as_superadmin.admin?, .social_worker? returns false' do
-    refute @user_as_superadmin.admin?
+  test '@user_as_superadmin.social_worker? returns false' do
     refute @user_as_superadmin.social_worker?
-  end
-
-  test '@admin.admin? returns true if user is admin' do
-    assert @user_as_superadmin.superadmin?
-  end
-
-  test '@admin.superadmin?, .social_worker? returns false' do
-    refute @admin.superadmin?
-    refute @admin.social_worker?
   end
 
   test '@user_as_social_worker.social_worker? returns true if user is of role socialworker' do
     assert @user_as_social_worker.social_worker?
   end
 
-  test '@user_as_social_worker.superadmin?, .admin? returns false' do
+  test '@user_as_social_worker.superadmin? returns false' do
     refute @user_as_social_worker.superadmin?
-    refute @user_as_social_worker.admin?
   end
 
   test '@user_as_department_manager.superadmin? .social_worker? returns false' do
