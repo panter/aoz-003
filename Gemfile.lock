@@ -209,6 +209,8 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    paranoia (2.3.1)
+      activerecord (>= 4.0, < 5.2)
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.20.0)
@@ -368,6 +370,7 @@ DEPENDENCIES
   overcommit
   panter-rails-deploy
   paperclip
+  paranoia (~> 2.2)
   pg
   poltergeist
   pry-byebug
