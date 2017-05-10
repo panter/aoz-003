@@ -162,8 +162,8 @@ en:
   role:
     superadmin: superadmin
     admin: admin
-    social_worker: social_worker
-    department_manager: department_manager
+    social_worker: social worker
+    department_manager: department manager
   times:
     morning: morning
     afternoon: afternoon
