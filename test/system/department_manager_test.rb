@@ -8,7 +8,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
   test 'when updates user login, cannot see role field' do
     login_as @department_manager
     visit edit_user_path(@department_manager)
-    assert_not page.has_field? 'role'
+    assert_not page.has_field? 'Role'
   end
 
   test 'does not have navbar links to users and clients' do

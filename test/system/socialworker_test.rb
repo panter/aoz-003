@@ -15,7 +15,7 @@ class SocialworkerTest < ApplicationSystemTestCase
   test 'when updates user login, cannot see role field' do
     login_as @socialworker
     visit edit_user_path(@socialworker)
-    assert_not page.has_field? 'role'
+    assert_not page.has_field? 'Role'
   end
 
   test 'has a navbar link to clients page' do
