@@ -7,9 +7,7 @@ class SocialworkerTest < ApplicationSystemTestCase
   end
 
   test 'when logged in socialworker cannot see create user link' do
-    login_as @socialworker
     visit root_path
-
     assert_not page.has_link? 'Create user'
   end
 
@@ -38,7 +36,7 @@ class SocialworkerTest < ApplicationSystemTestCase
     end
   end
 
-  test 'cannot see comment field in client creation or show' do
+  test 'cannot see comment field' do
     visit new_client_path
     assert_not page.has_field? 'Comments'
     visit client_path(@socialworker.clients.first)
@@ -56,7 +54,7 @@ class SocialworkerTest < ApplicationSystemTestCase
     end
   end
 
-  test 'socialworker has no client destroy link' do
+  test 'socialworkers has no client destroy link' do
     visit clients_path
     assert_not page.has_link? 'Delete'
   end
