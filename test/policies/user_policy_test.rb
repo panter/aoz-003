@@ -8,14 +8,21 @@ class UserPolicyTest < ActiveSupport::TestCase
     @user_as_department_manager = create :user, :with_profile, role: 'department_manager'
   end
 
-  test 'Destroy: superadmin can destroy other users' do
-    assert_permit @user_as_superadmin, @user_as_other_superadmin, 'destroy?'
+  test 'Destroy: superadmin can delete other user' do
     assert_permit @user_as_superadmin, @user_as_social_worker, 'destroy?'
     assert_permit @user_as_superadmin, @user_as_department_manager, 'destroy?'
+    assert_permit @user_as_other_superadmin, @user_as_social_worker, 'destroy?'
+    assert_permit @user_as_other_superadmin, @user_as_department_manager, 'destroy?'
   end
 
-  test 'Destroy: superadmin cannot destroy itself' do
+  test 'Destroy: superadmin cannot delete other superadmin' do
+    refute_permit @user_as_superadmin, @user_as_other_superadmin, 'destroy?'
+    refute_permit @user_as_other_superadmin, @user_as_superadmin, 'destroy?'
+  end
+
+  test 'Destroy: superadmin cannot delete itself' do
     refute_permit @user_as_superadmin, @user_as_superadmin, 'destroy?'
+    refute_permit @user_as_other_superadmin, @user_as_other_superadmin, 'destroy?'
   end
 
   test 'New: superadmin can create user' do
