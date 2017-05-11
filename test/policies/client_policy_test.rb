@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ClientPolicyTest < ActiveSupport::TestCase
   def setup
-    @user_as_superadmin = create :user, :with_clients, role: 'superadmin'
+    @user_as_superadmin = create :user, :with_clients
     @user_as_social_worker = create :user, :with_clients, role: 'social_worker'
     @user_as_department_manager = create :user, role: 'department_manager'
   end
