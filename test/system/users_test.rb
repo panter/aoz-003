@@ -65,7 +65,7 @@ class UsersTest < ApplicationSystemTestCase
     assert_equal 'superadmin@test.ch', email['to'].to_s
   end
 
-  test 'superadmins have no destroy link' do
+  test "superadmins can't destroy superadmin" do
     visit users_path
 
     @social_worker = create :user, role: 'social_worker'
