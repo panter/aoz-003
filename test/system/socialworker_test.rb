@@ -36,7 +36,7 @@ class SocialworkerTest < ApplicationSystemTestCase
     end
   end
 
-  test 'cannot see comment field' do
+  test 'cannot see comment field in client creation or show' do
     visit new_client_path
     assert_not page.has_field? 'Comments'
     visit client_path(@socialworker.clients.first)
