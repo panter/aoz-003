@@ -3,7 +3,7 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   def setup
     @user = build :user
-    @user_as_superadmin = create :user, :with_profile, role: 'superadmin'
+    @user_as_superadmin = create :user, :with_profile
     @user_as_social_worker = create :user, :with_profile, role: 'social_worker'
     @user_as_department_manager = create :user, :with_profile, role: 'department_manager'
   end

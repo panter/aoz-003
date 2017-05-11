@@ -82,11 +82,10 @@
             td= t('registered_by')
             td= @client.user.email
 
-          tr
-            td
-              - if policy(Client).destroy?
-                = t_attr(:comments)
-            td= @client.comments
+          - if policy(Client).destroy?
+            tr
+              td= t_attr(:comments)
+              td= @client.comments
 
 .row
   .col-xs-12
