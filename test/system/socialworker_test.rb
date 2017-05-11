@@ -54,7 +54,7 @@ class SocialworkerTest < ApplicationSystemTestCase
     end
   end
 
-  test 'socialworkers has no client destroy link' do
+  test 'socialworker has no client destroy link' do
     visit clients_path
     assert_not page.has_link? 'Delete'
   end
