@@ -129,6 +129,45 @@ ActiveRecord::Schema.define(version: 20170511135554) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "volunteers", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.date "date_of_birth"
+    t.string "gender"
+    t.text "address"
+    t.string "nationality"
+    t.string "dual_nationality"
+    t.string "email"
+    t.string "phone"
+    t.string "profession"
+    t.text "education"
+    t.text "motivation"
+    t.boolean "experience"
+    t.text "expectations"
+    t.text "strengths"
+    t.text "skills"
+    t.text "interests"
+    t.string "state", default: "interested/registered"
+    t.string "duration"
+    t.boolean "man"
+    t.boolean "woman"
+    t.boolean "family"
+    t.boolean "kid"
+    t.boolean "sport"
+    t.boolean "creative"
+    t.boolean "music"
+    t.boolean "culture"
+    t.boolean "training"
+    t.boolean "german_course"
+    t.boolean "adults"
+    t.boolean "teenagers"
+    t.boolean "children"
+    t.boolean "city"
+    t.string "region"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "clients", "users"
   add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
