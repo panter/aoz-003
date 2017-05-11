@@ -31,6 +31,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    @current_user.admin_or_superadmin? && @current_user != @user
+    @current_user.superadmin? && !@user.superadmin?
   end
 end
