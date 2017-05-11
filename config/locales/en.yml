@@ -128,9 +128,9 @@ en:
           rejected: Rejected
       user:
         role:
-          superadmin: 'Superadmin'
-          social_worker: 'Social worker'
-          department_manager: 'Departement manager'
+          superadmin: Superadmin
+          social_worker: Social worker
+          department_manager: Department manager
     "yes": 'Yes'
     "no": 'No'
     required:
@@ -160,8 +160,8 @@ en:
     basic: Basic
   role:
     superadmin: superadmin
-    social_worker: social_worker
-    department_manager: department_manager
+    social_worker: social worker
+    department_manager: department manager
   times:
     morning: morning
     afternoon: afternoon
