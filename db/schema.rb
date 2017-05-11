@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421070309) do
+ActiveRecord::Schema.define(version: 20170427142319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,26 @@ ActiveRecord::Schema.define(version: 20170421070309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_clients_on_user_id"
+  end
+
+  create_table "departments", force: :cascade do |t|
+    t.string "name"
+    t.string "street"
+    t.string "zip"
+    t.string "place"
+    t.string "phone"
+    t.string "email"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_departments_on_user_id"
+  end
+
+  create_table "departments_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "department_id", null: false
+    t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
+    t.index ["user_id", "department_id"], name: "index_departments_users_on_user_id_and_department_id"
   end
 
   create_table "language_skills", force: :cascade do |t|
@@ -118,6 +138,7 @@ ActiveRecord::Schema.define(version: 20170421070309) do
   end
 
   add_foreign_key "clients", "users"
+  add_foreign_key "departments", "users"
   add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
   add_foreign_key "relatives", "clients"

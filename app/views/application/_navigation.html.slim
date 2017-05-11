@@ -12,9 +12,11 @@ nav.navbar.navbar-top
 
       #navbar.collapse.navbar-collapse
         ul.nav.navbar-nav
+          li= link_to 'Clients', clients_path
           - if current_user.superadmin?
             li= link_to t('users'), users_path
-          - if current_user.superadmin? || current_user.social_worker?
+            li= link_to 'Departments', departments_path
+          - if current_user.staff?
             li= link_to t('clients'), clients_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown
@@ -27,5 +29,4 @@ nav.navbar.navbar-top
                   = link_to t('create_profile'), new_profile_path
                 - else
                   = link_to t('show_profile'), current_user.profile
-              li
-                = link_to t('logout'), destroy_user_session_path, method: :delete
+              li= link_to t('logout'), destroy_user_session_path, method: :delete
