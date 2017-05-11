@@ -100,9 +100,6 @@ de:
         adults: Erwachsene
         teenagers: Jugendliche
         children: Kinder
-        city: Stadt
-        region: Region
-        canton: Kanton
   date:
     formats:
       default:
@@ -310,8 +307,10 @@ de:
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   back: Zurück
+  canton: Kanton
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
+  city: Stadt
   client_created: KlientIn wurde erfolgreich erstellt.
   client_updated: KlientIn wurde erfolgreich aktualisiert.
   client_destroyed: KlientIn wurde erfolgreich gelöscht.
@@ -328,17 +327,20 @@ de:
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
+  long: Längerfristige (min 6 Mt.)
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
+  region: Region
   registered_by: 'SozialberaterIn'
   relatives: Verwandte
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   schedule: Zeitplan
+  short: Kurzfristig
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   single_accompaniment: Einzelbegleitung
