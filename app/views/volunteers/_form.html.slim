@@ -1,0 +1,105 @@
+= simple_form_for(@volunteer) do |f|
+  - if f.error_notification.present?
+    .row
+      .col-xs-12
+        = f.error_notification
+
+  .row
+    .col-xs-12.col-md-6
+        = f.input :first_name
+
+    .col-xs-12.col-md-6
+        = f.input :last_name
+
+  .row
+    .col-xs-12.col-md-6
+      = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
+        end_year: Date.today.year, order: [:day, :month, :year], include_blank: true
+
+    .col-xs-12.col-md-6
+      = f.input :gender, collection: gender_collection, as: :radio_buttons
+
+  .row
+    .col-xs-12.col-md-6
+      = f.input :nationality, collection: countries
+    .col-xs-12.col-md-6
+      = f.input :dual_nationality, collection: countries
+
+  .row
+    .col-xs-12
+      = f.input :address
+
+    .col-xs-12.col-md-6
+      = f.input :email
+
+    .col-xs-12.col-md-6
+      = f.input :phone
+
+  .row
+    .col-xs-12
+      = f.input :profession
+      = f.input :education
+      = f.input :motivation
+      = f.input :experience
+      = f.input :expectations
+      = f.input :strengths
+      = f.input :skills
+      = f.input :interests
+
+  .row
+    .col-xs-12
+      = f.input :state
+
+  .row
+    .col-xs-12
+      = f.input :duration, collection: ['short', 'long'], as: :radio_buttons 
+
+  .row
+    .col-xs-12.col-md-1
+      = f.input :man
+
+    .col-xs-12.col-md-1
+      = f.input :woman
+
+    .col-xs-12.col-md-1
+      = f.input :family
+
+    .col-xs-12.col-md-1
+      = f.input :kid
+
+  .row
+    .col-xs-12.col-md-1
+      = f.input :sport
+
+    .col-xs-12.col-md-1
+      = f.input :creative
+
+    .col-xs-12.col-md-1
+      = f.input :music
+
+    .col-xs-12.col-md-1
+      = f.input :culture
+
+    .col-xs-12.col-md-1
+      = f.input :training
+
+    .col-xs-12.col-md-1
+      = f.input :german_course
+
+  .row
+    .col-xs-12.col-md-1
+      = f.input :adults
+
+    .col-xs-12.col-md-1
+      = f.input :teenagers
+
+    .col-xs-12.col-md-1
+      = f.input :children
+
+  .row
+    .col-xs-12
+      = f.input :region, collection: ['city', 'region', 'canton'], as: :radio_buttons
+
+  .row
+    .col-xs-12
+      = f.button :submit, class: 'btn btn-success'
