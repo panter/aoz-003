@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20170510150439) do
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
-  create_table "departements", force: :cascade do |t|
+  create_table "departments", force: :cascade do |t|
     t.string "name"
     t.string "street"
     t.string "zip"
@@ -51,14 +51,14 @@ ActiveRecord::Schema.define(version: 20170510150439) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_departements_on_user_id"
+    t.index ["user_id"], name: "index_departments_on_user_id"
   end
 
-  create_table "departements_users", id: false, force: :cascade do |t|
+  create_table "departments_users", id: false, force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "departement_id", null: false
-    t.index ["departement_id", "user_id"], name: "index_departements_users_on_departement_id_and_user_id"
-    t.index ["user_id", "departement_id"], name: "index_departements_users_on_user_id_and_departement_id"
+    t.bigint "department_id", null: false
+    t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
+    t.index ["user_id", "department_id"], name: "index_departments_users_on_user_id_and_department_id"
   end
 
   create_table "language_skills", force: :cascade do |t|
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20170510150439) do
   end
 
   add_foreign_key "clients", "users"
-  add_foreign_key "departements", "users"
+  add_foreign_key "departments", "users"
   add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
   add_foreign_key "relatives", "clients"
