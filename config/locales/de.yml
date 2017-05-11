@@ -279,6 +279,7 @@ de:
   add_relative: Verwandte hinzufügen
   are_you_sure: Sind Sie sicher?
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
