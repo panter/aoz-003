@@ -74,6 +74,35 @@ de:
         wednesday: Mittwoch
         thursday: Donnerstag
         friday: Freitag
+      volunteer:
+        first_name: Vorname
+        last_name: Nachname
+        date_of_birth: Geburtsdatum
+        gender: Geschlecht
+        address: Adresse
+        nationality: Nationalität
+        dual_nationality: Doppelte Nationalität
+        phone: Telefonnummer
+        profession: Beruf
+        education: Ausbildung
+        state: Status
+        duration: Dauer
+        man: Mann
+        woman: Frau
+        family: Familie
+        kid: Kinder
+        sport: Sport
+        creative: Kreativ
+        music: Musik
+        culture: Kultur
+        training: Bildung
+        german_course: Deutsch-Kurs
+        adults: Erwachsene
+        teenagers: Jugendliche
+        children: Kinder
+        city: Stadt
+        region: Region
+        canton: Kanton
   date:
     formats:
       default:
@@ -256,7 +285,7 @@ de:
   role:
     superadmin: Superadmin
     social_worker: SozialarbeiterIn
-    department_manager: 'Standortverantwortliche/er'
+    department_manager: Standortverantwortliche/er
   state:
     registered: Registriert
     reserved: Reserviert
@@ -294,6 +323,7 @@ de:
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
   forgot_password: Passwort vergessen?
+  group_accompaniment: Gruppenangebot
   invite_sent: 'Einladung wurde an %{email} verschickt.'
   language_skills: Sprachkenntnisse
   login: Anmelden
@@ -311,8 +341,17 @@ de:
   schedule: Zeitplan
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
-  when: Zeit
+  single_accompaniment: Einzelbegleitung
+  target_groups: Zielgruppe
   users: Benutzer
   user_destroyed: Benutzer wurde erfolgreich gelöscht.
   voluntary_platform: Freiwilligen Plattform
+  when: Zeit
   working_days: Arbeitstage
+  your_expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
+  your_experience: Haben Sie bereits Erfahrung mit FW-Arbeit?
+  your_interests: Welches sind Ihre wichtigsten Freizeitinteressen?
+  your_motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
+  your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
+  your_skills: Berufliche Kompetenzen, die Sie einbringen könnten?
+  your_strengths: Wo sehen Sie Ihre Stärken? (soziale Kompetenzen, die Sie in FW-Arbeit einbringen könnten)
