@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  acts_as_paranoid
-
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
   has_many :clients
