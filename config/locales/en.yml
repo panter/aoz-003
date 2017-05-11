@@ -130,7 +130,6 @@ en:
         role:
           superadmin: Superadmin
           social_worker: Social worker
-          admin: Administrator
           department_manager: Department manager
     "yes": 'Yes'
     "no": 'No'
