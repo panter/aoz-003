@@ -62,4 +62,18 @@ class UserTest < ActiveSupport::TestCase
   context 'associations' do
     should have_many(:clients)
   end
+
+  test 'record still exists after deletion' do
+    User.last.destroy
+    assert_equal 7, User.count
+    assert_equal 8, User.with_deleted.count
+    assert_equal 1, User.only_deleted.count
+    assert_equal 8, User.unscoped.count
+
+    User.destroy_all
+    assert_equal 0, User.count
+    assert_equal 8, User.with_deleted.count
+    assert_equal 8, User.only_deleted.count
+    assert_equal 8, User.unscoped.count
+  end
 end
