@@ -193,6 +193,7 @@ en:
   edit_login: Edit login
   edit_profile: Edit profile
   forgot_password: Forgot your password?
+  group_accompaniment: Group accompaniment
   language_skills: Language skills
   login: Log in
   logout: Logout
@@ -210,8 +211,17 @@ en:
   schedule: Schedule
   show_profile: Show profile
   show_my_profile: My profile
+  single_accompaniment: Single accompaniment
+  target_groups: Target groups
   users: Users
   user_destroyed: '%{email} was successfully deleted.'
   voluntary_platform: Voluntaries Platform
   when: Time
   working_days: Working days
+  your_expectations: What do you expect from a person who would accompany you / your volunteer work?
+  your_experience: Do you already have experience with voluntary work?
+  your_interests: What are your most important leisure interests?
+  your_motivation: What is your motivation to volunteer with migrants?
+  your_region: In which region can you imagine your employment?
+  your_skills: Professional skills that you could bring?
+  your_strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
