@@ -1,5 +1,6 @@
 tr
+  td= link_to user.email, user
+  td= t("role.#{user.role}")
   td
-    = link_to user.email, user
-  td
-    = t("role.#{user.role}")
+    - if policy(user).destroy?
+      = link_to t_action(:destroy), user, data: { confirm: t('are_you_sure')}, method: :delete
