@@ -13,14 +13,4 @@ class VolunteerTest < ActiveSupport::TestCase
     volunteer = Volunteer.new
     refute volunteer.valid?
   end
-
-  test 'record still exists after deletion' do
-    volunteer = create :volunteer
-
-    assert_difference 'Volunteer.count', -1 do
-      volunteer.destroy
-    end
-
-    assert Volunteer.unscoped.find(volunteer.id)
-  end
 end
