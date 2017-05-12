@@ -14,7 +14,7 @@
             td= l(@client.date_of_birth) if @client.date_of_birth
           tr
             td= t_attr(:nationality)
-            td= @client.nationality_name
+            td= nationality_name(@client.nationality)
           tr
             td= t_attr(:permit)
             td= @client.permit

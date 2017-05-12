@@ -55,9 +55,9 @@ class VolunteersController < ApplicationController
 
   def volunteer_params
     params.require(:volunteer).permit(:first_name, :last_name, :date_of_birth, :gender,
-      :address, :nationality, :dual_nationality, :email, :phone, :profession, :education,
-      :motivation, :experience, :expectations, :strengths, :skills, :interests, :state,
+      :street, :zip, :city, :nationality, :additional_nationality, :email, :phone, :profession,
+      :education, :motivation, :experience, :expectations, :strengths, :skills, :interests, :state,
       :duration, :man, :woman, :family, :kid, :sport, :creative, :music, :culture, :training,
-      :german_course, :adults, :teenagers, :children, :city, :region, :canton)
+      :german_course, :adults, :teenagers, :children, :region)
   end
 end

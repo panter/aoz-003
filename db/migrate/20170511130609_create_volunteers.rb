@@ -9,7 +9,7 @@ class CreateVolunteers < ActiveRecord::Migration[5.1]
       t.string :zip
       t.string :city
       t.string :nationality
-      t.string :dual_nationality
+      t.string :additional_nationality
       t.string :email
       t.string :phone
       t.string :profession
