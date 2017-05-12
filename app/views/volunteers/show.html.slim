@@ -17,10 +17,10 @@
             td= t("gender.#{@volunteer.gender}") unless @volunteer.gender.blank?
           tr
             td= t_attr(:nationality)
-            td= @volunteer.nationality_name
+            td= nationality_name(@volunteer.nationality)
           tr
             td= t_attr(:dual_nationality)
-            td= @volunteer.dual_nationality
+            td= nationality_name(@volunteer.dual_nationality)
           tr
             td= t_attr(:street)
             td= @volunteer.street
