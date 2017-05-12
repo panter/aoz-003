@@ -76,12 +76,12 @@
     table.table.table-striped
       thead
         tr
-          - single_accompaniment.each do |single|
+          - Volunteer.single_accompaniment.each do |single|
             th.text-center
               = t("accompaniment.#{single}")
       tbody
         tr
-          - single_accompaniment.each do |single|
+          - Volunteer.single_accompaniment.each do |single|
             td.text-center
               - if @volunteer.read_attribute(single)
                 i.glyphicon.glyphicon-ok.text-success
@@ -94,12 +94,12 @@
       table.table.table-striped
         thead
           tr
-            - group_accompaniment.each do |group|
+            - Volunteer.group_accompaniment.each do |group|
               th.text-center
                 = t("accompaniment.#{group}")
         tbody
           tr
-            - group_accompaniment.each do |group|
+            - Volunteer.group_accompaniment.each do |group|
               td.text-center
                 - if @volunteer.read_attribute(group)
                   i.glyphicon.glyphicon-ok.text-success
