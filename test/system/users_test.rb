@@ -4,7 +4,7 @@ class UsersTest < ApplicationSystemTestCase
   setup do
     @emails = ActionMailer::Base.deliveries
     @emails.clear
-    @user = create :user, email: 'superadmin@example.com', role: 'superadmin'
+    @user = create :user, email: 'superadmin@example.com'
     login_as @user
     visit new_user_path
   end
@@ -65,11 +65,17 @@ class UsersTest < ApplicationSystemTestCase
     assert_equal 'superadmin@test.ch', email['to'].to_s
   end
 
-  test "superadmins can't destroy superadmin" do
+  test 'superadmin can destroy social worker' do
+    create :user, role: 'social_worker'
     visit users_path
 
-    @social_worker = create :user, role: 'social_worker'
-    @department_manager = create :user, role: 'department_manager'
+    assert page.has_link? 'Delete'
+  end
+
+  test "superadmin can't destroy superadmin" do
+    create :user, role: 'superadmin'
+    visit users_path
+
     assert_not page.has_link? 'Delete'
   end
 end
