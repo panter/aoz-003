@@ -23,6 +23,12 @@ de:
               blank: darf nicht leer sein
             avatar_content_type:
               invalid: ist ungültig
+        volunteer:
+          attributes:
+            avatar_content_type:
+              invalid: ist ungültig
+            avatar:
+              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
     models:
       client: Klient
       profile: Profil
@@ -80,6 +86,7 @@ de:
         last_name: Nachname
         date_of_birth: Geburtsdatum
         gender: Geschlecht
+        avatar: Bild
         street: Strasse
         zip: Postleitzahl
         city: Stadt
