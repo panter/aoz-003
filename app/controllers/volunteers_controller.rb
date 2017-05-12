@@ -15,14 +15,11 @@ class VolunteersController < ApplicationController
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
-
     respond_to do |format|
       if @volunteer.save
         format.html { redirect_to @volunteer, notice: t('volunteer_created') }
-        format.json { render :show, status: :created, location: @volunteer }
       else
         format.html { render :new }
-        format.json { render json: @volunteer.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -31,10 +28,8 @@ class VolunteersController < ApplicationController
     respond_to do |format|
       if @volunteer.update(volunteer_params)
         format.html { redirect_to @volunteer, notice: t('volunteer_updated') }
-        format.json { render :show, status: :ok, location: @volunteer }
       else
         format.html { render :edit }
-        format.json { render json: @volunteer.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,7 +38,6 @@ class VolunteersController < ApplicationController
     @volunteer.destroy
     respond_to do |format|
       format.html { redirect_to volunteers_url, t('volunteer_destroyed', email: @volunteer.email) }
-      format.json { head :no_content }
     end
   end
 
