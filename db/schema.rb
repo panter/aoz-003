@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510150439) do
+ActiveRecord::Schema.define(version: 20170511135554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 20170510150439) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
@@ -47,7 +49,9 @@ ActiveRecord::Schema.define(version: 20170510150439) do
     t.string "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["client_id"], name: "index_language_skills_on_client_id"
+    t.index ["deleted_at"], name: "index_language_skills_on_deleted_at"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -68,6 +72,8 @@ ActiveRecord::Schema.define(version: 20170510150439) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_profiles_on_deleted_at"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
@@ -79,7 +85,9 @@ ActiveRecord::Schema.define(version: 20170510150439) do
     t.string "relation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["client_id"], name: "index_relatives_on_client_id"
+    t.index ["deleted_at"], name: "index_relatives_on_deleted_at"
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -89,7 +97,9 @@ ActiveRecord::Schema.define(version: 20170510150439) do
     t.boolean "available", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["client_id"], name: "index_schedules_on_client_id"
+    t.index ["deleted_at"], name: "index_schedules_on_deleted_at"
   end
 
   create_table "users", force: :cascade do |t|
