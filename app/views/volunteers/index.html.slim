@@ -1,0 +1,23 @@
+h1 Listing volunteers
+
+table
+  thead
+    tr
+      th First name
+      th Last name
+      th
+      th
+      th
+
+  tbody
+    - @volunteers.each do |volunteer|
+      tr
+        td = volunteer.first_name
+        td = volunteer.last_name
+        td = link_to 'Show', volunteer
+        td = link_to 'Edit', edit_volunteer_path(volunteer)
+        td = link_to 'Destroy', volunteer, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Volunteer', new_volunteer_path

@@ -1,0 +1,88 @@
+= simple_form_for(@volunteer) do |f|
+  - if f.error_notification.present?
+    .row
+      .col-xs-12
+        = f.error_notification
+
+  .row
+    .col-xs-12
+      .row
+        .col-xs-12.col-md-6
+          = f.input :first_name
+
+        .col-xs-12.col-md-6
+          = f.input :last_name
+
+  .row
+    .col-xs-12.col-md-6
+      = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
+                end_year: Date.today.year,
+                order: [:day, :month, :year],
+                include_blank: true
+
+  .row
+    .col-xs-12
+      = f.input :street
+
+  .row
+    .col-xs-6
+      = f.input :zip
+
+    .col-xs-6
+      = f.input :city
+
+  .row
+    .col-xs-12
+      = f.input :email
+
+    .col-xs-12
+      = f.input :phone
+
+  .row
+    .col-xs-12
+      = f.input :nationality, collection: countries
+
+  .row
+    .col-xs-12
+      = f.input :profession
+      = f.input :education
+      = f.input :skills
+      = f.input :motivation
+      = f.input :experience
+      = f.input :strengths
+      = f.input :expectations
+      = f.input :interests
+
+  .row
+    .col-xs-12
+      = f.input :expenses
+
+    .col-xs-12
+      = f.input :state
+
+  .row
+    .col-xs-12
+      = f.input :man
+      = f.input :woman
+      = f.input :family
+      = f.input :kid
+      = f.input :group_course
+      = f.input :other_support
+
+  .row
+    .col-xs-12
+      = f.input :duration
+      = f.input :one_time_support
+      = f.input :short_term_support
+      = f.input :group
+      = f.input :course
+
+  .row
+    .col-xs-12
+      = f.input :support_city
+      = f.input :region
+      = f.input :canton
+
+  .row
+    .col-xs-12
+      = f.button :submit, class: 'btn btn-success'

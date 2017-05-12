@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421070309) do
+ActiveRecord::Schema.define(version: 20170511110947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,44 @@ ActiveRecord::Schema.define(version: 20170421070309) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "volunteers", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.date "date_of_birth"
+    t.string "street"
+    t.string "zip"
+    t.string "city"
+    t.string "email"
+    t.string "phone"
+    t.string "nationality"
+    t.string "profession"
+    t.text "education"
+    t.text "skills"
+    t.text "motivation"
+    t.boolean "experience"
+    t.text "strengths"
+    t.text "expectations"
+    t.text "interests"
+    t.boolean "expenses"
+    t.string "state", default: "interested/registered"
+    t.boolean "man"
+    t.boolean "woman"
+    t.boolean "family"
+    t.boolean "kid"
+    t.boolean "group_course"
+    t.text "other_support"
+    t.string "duration"
+    t.boolean "one_time_support"
+    t.boolean "short_term_support"
+    t.boolean "group"
+    t.boolean "course"
+    t.boolean "support_city"
+    t.boolean "region"
+    t.boolean "canton"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "clients", "users"
