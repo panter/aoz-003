@@ -64,16 +64,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'record still exists after deletion' do
-    User.last.destroy
-    assert_equal 7, User.count
-    assert_equal 8, User.with_deleted.count
-    assert_equal 1, User.only_deleted.count
-    assert_equal 8, User.unscoped.count
+    user = create :user, :with_profile, role: 'admin'
 
-    User.destroy_all
-    assert_equal 0, User.count
-    assert_equal 8, User.with_deleted.count
-    assert_equal 8, User.only_deleted.count
-    assert_equal 8, User.unscoped.count
+    assert_difference 'User.count', -1 do
+      user.destroy
+    end
+
+    assert User.unscoped.find(user.id)
   end
 end
