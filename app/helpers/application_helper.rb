@@ -29,23 +29,6 @@ module ApplicationHelper
     c.translations[I18n.locale.to_s] || c.name
   end
 
-  # volunteer collections and helpers
-  def duration_collection
-    [:short, :long]
-  end
-
-  def region_collection
-    [:city, :region, :canton]
-  end
-
-  def single_accompaniment
-    [:man, :woman, :family, :kid]
-  end
-
-  def group_accompaniment
-    [:sport, :creative, :music, :culture, :training, :german_course]
-  end
-
   def human_boolean(boolean)
     boolean ? t('simple_form.yes') : t('simple_form.no')
   end

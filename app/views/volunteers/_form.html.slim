@@ -58,7 +58,7 @@
 
   .row
     .col-xs-12
-      = f.input :duration, collection: duration_collection, as: :radio_buttons
+      = f.input :duration, collection: Volunteer.duration_collection, as: :radio_buttons
 
   .row
     h3= t('single_accompaniment')
@@ -108,7 +108,7 @@
   .row
     h3= t('your_region')
     .col-xs-12
-      = f.input :region, collection: region_collection, as: :radio_buttons, label: false
+      = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
 
   .row
     .col-xs-12
