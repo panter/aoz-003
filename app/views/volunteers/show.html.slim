@@ -70,41 +70,41 @@
             td= t_attr(:region)
             td= t("region.#{@volunteer.region}") unless @volunteer.region.blank?
 
-  .row
-    .col-xs-12
-      h3= t('single_accompaniment')
-      table.table.table-striped
-        thead
-          tr
-            - Volunteer.single_accompaniment.each do |single|
-              th.text-center
-                = t("accompaniment.#{single}")
-        tbody
-          tr
-            - Volunteer.single_accompaniment.each do |single|
-              td.text-center
-                - if @volunteer.read_attribute(single)
-                  i.glyphicon.glyphicon-ok.text-success
-                - else
-                  i.glyphicon.glyphicon-remove.text-danger
+.row
+  .col-xs-12
+    h3= t('single_accompaniment')
+    table.table.table-striped
+      thead
+        tr
+          - Volunteer.single_accompaniment.each do |single|
+            th.text-center
+              = t("accompaniment.#{single}")
+      tbody
+        tr
+          - Volunteer.single_accompaniment.each do |single|
+            td.text-center
+              - if @volunteer.read_attribute(single)
+                i.glyphicon.glyphicon-ok.text-success
+              - else
+                i.glyphicon.glyphicon-remove.text-danger
 
-  .row
-    .col-xs-12
-      h3= t('group_accompaniment')
-      table.table.table-striped
-        thead
-          tr
-            - Volunteer.group_accompaniment.each do |group|
-              th.text-center
-                = t("accompaniment.#{group}")
-        tbody
-          tr
-            - Volunteer.group_accompaniment.each do |group|
-              td.text-center
-                - if @volunteer.read_attribute(group)
-                  i.glyphicon.glyphicon-ok.text-success
-                - else
-                  i.glyphicon.glyphicon-remove.text-danger
+.row
+  .col-xs-12
+    h3= t('group_accompaniment')
+    table.table.table-striped
+      thead
+        tr
+          - Volunteer.group_accompaniment.each do |group|
+            th.text-center
+              = t("accompaniment.#{group}")
+      tbody
+        tr
+          - Volunteer.group_accompaniment.each do |group|
+            td.text-center
+              - if @volunteer.read_attribute(group)
+                i.glyphicon.glyphicon-ok.text-success
+              - else
+                i.glyphicon.glyphicon-remove.text-danger
 
 .row
   .col-xs-12
