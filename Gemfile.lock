@@ -370,7 +370,7 @@ DEPENDENCIES
   overcommit
   panter-rails-deploy
   paperclip
-  paranoia (~> 2.2)
+  paranoia
   pg
   poltergeist
   pry-byebug
