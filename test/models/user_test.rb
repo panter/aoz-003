@@ -3,9 +3,9 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   def setup
     @user = build :user
-    @user_as_superadmin = create :user, :with_profile
-    @user_as_social_worker = create :user, :with_profile, role: 'social_worker'
-    @user_as_department_manager = create :user, :with_profile, role: 'department_manager'
+    @superadmin = create :user, :with_profile, role: 'superadmin'
+    @social_worker = create :user, :with_profile, role: 'social_worker'
+    @department_manager = create :user, :with_profile, role: 'department_manager'
   end
 
   test 'valid factory' do
@@ -38,25 +38,25 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test '@user_as_superadmin.superadmin? returns true if user is superadmin' do
-    assert @user_as_superadmin.superadmin?
+  test '@superadmin.superadmin? returns true if user is superadmin' do
+    assert @superadmin.superadmin?
   end
 
-  test '@user_as_superadmin.social_worker? returns false' do
-    refute @user_as_superadmin.social_worker?
+  test '@superadmin.social_worker? returns false' do
+    refute @superadmin.social_worker?
   end
 
-  test '@user_as_social_worker.social_worker? returns true if user is of role socialworker' do
-    assert @user_as_social_worker.social_worker?
+  test '@social_worker.social_worker? returns true if user is of role socialworker' do
+    assert @social_worker.social_worker?
   end
 
-  test '@user_as_social_worker.superadmin? returns false' do
-    refute @user_as_social_worker.superadmin?
+  test '@social_worker.superadmin? returns false' do
+    refute @social_worker.superadmin?
   end
 
-  test '@user_as_department_manager.superadmin? .social_worker? returns false' do
-    refute @user_as_department_manager.superadmin?
-    refute @user_as_department_manager.social_worker?
+  test '@department_manager.superadmin? .social_worker? returns false' do
+    refute @department_manager.superadmin?
+    refute @department_manager.social_worker?
   end
 
   test 'record still exists after deletion' do

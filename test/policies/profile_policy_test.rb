@@ -2,9 +2,9 @@ require 'test_helper'
 
 class ProfilePolicyTest < ActiveSupport::TestCase
   def setup
-    @user_as_superadmin = create :user, :with_clients, :with_profile
-    @user_as_social_worker = create :user, :with_clients, :with_profile, role: 'social_worker'
-    @user_as_department_manager = create :user, :with_profile, role: 'department_manager'
+    @superadmin = create :user, :with_clients, :with_profile, role: 'superadmin'
+    @social_worker = create :user, :with_clients, :with_profile, role: 'social_worker'
+    @department_manager = create :user, :with_profile, role: 'department_manager'
     @user_without_profile = create :user
   end
 
@@ -18,39 +18,39 @@ class ProfilePolicyTest < ActiveSupport::TestCase
   end
 
   test 'Update: user can update own profile' do
-    assert_permit @user_as_social_worker, @user_as_social_worker.profile, 'update?', 'edit?'
-    assert_permit @user_as_department_manager, @user_as_department_manager.profile, 'update?'
-    assert_permit @user_as_department_manager, @user_as_department_manager.profile, 'edit?'
-    assert_permit @user_as_superadmin, @user_as_superadmin.profile, 'update?', 'edit?'
+    assert_permit @social_worker, @social_worker.profile, 'update?', 'edit?'
+    assert_permit @department_manager, @department_manager.profile, 'update?'
+    assert_permit @department_manager, @department_manager.profile, 'edit?'
+    assert_permit @superadmin, @superadmin.profile, 'update?', 'edit?'
   end
 
   test 'Update: simple user cannot update others profile' do
-    refute_permit @user_as_social_worker, @user_as_superadmin.profile, 'update?', 'edit?'
-    refute_permit @user_as_department_manager, @user_as_superadmin.profile, 'update?', 'edit?'
+    refute_permit @social_worker, @superadmin.profile, 'update?', 'edit?'
+    refute_permit @department_manager, @superadmin.profile, 'update?', 'edit?'
   end
 
   test 'Update: superadmin can update others profile' do
-    assert_permit @user_as_superadmin, @user_as_social_worker.profile, 'update?', 'edit?'
-    assert_permit @user_as_superadmin, @user_as_department_manager.profile, 'update?', 'edit?'
+    assert_permit @superadmin, @social_worker.profile, 'update?', 'edit?'
+    assert_permit @superadmin, @department_manager.profile, 'update?', 'edit?'
   end
 
   test 'Destroy: profiles can not be destroyed' do
-    refute_permit @user_as_superadmin, @user_as_superadmin.profile, 'destroy?'
-    refute_permit @user_as_superadmin, @user_as_social_worker.profile, 'destroy?'
-    refute_permit @user_as_superadmin, @user_as_department_manager.profile, 'destroy?'
+    refute_permit @superadmin, @superadmin.profile, 'destroy?'
+    refute_permit @superadmin, @social_worker.profile, 'destroy?'
+    refute_permit @superadmin, @department_manager.profile, 'destroy?'
   end
 
   test 'Show: social_worker can only show her own profile' do
-    refute_permit @user_as_social_worker, @user_as_superadmin.profile, 'show?'
+    refute_permit @social_worker, @superadmin.profile, 'show?'
   end
 
   test 'Show: department manager can only her own profile' do
-    refute_permit @user_as_department_manager, @user_as_superadmin.profile, 'show?'
+    refute_permit @department_manager, @superadmin.profile, 'show?'
   end
 
   test 'Show: superadmin can show all profiles' do
     Profile.all.each do |profile|
-      assert_permit @user_as_superadmin, profile, 'show?'
+      assert_permit @superadmin, profile, 'show?'
     end
   end
 end
