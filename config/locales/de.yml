@@ -374,7 +374,10 @@ de:
   single_accompaniment: Einzelbegleitung
   target_groups: Zielgruppe
   users: Benutzer
-  user_destroyed: Benutzer wurde erfolgreich gelöscht.
+  user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
+  volunteer_created: Freiwillige wurde erfolgreich erstellt.
+  volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
+  volunteer_destroyed: 'Freiwillige %{email} wurde erfolgreich gelöscht.'
   volunteers: Freiwillige
   voluntary_platform: Freiwilligen Plattform
   when: Zeit

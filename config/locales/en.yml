@@ -245,7 +245,10 @@ en:
   single_accompaniment: Single accompaniment
   target_groups: Target groups
   users: Users
-  user_destroyed: '%{email} was successfully deleted.'
+  user_destroyed: 'User %{email} was successfully deleted.'
+  volunteer_created: 'Volunteer was successfully created.'
+  volunteer_updated: 'Volunteer was successfully updated.'
+  volunteer_destroyed: 'Volunteer %{email} was successfully deleted.'
   volunteers: volunteers
   voluntary_platform: Voluntaries Platform
   when: Time
