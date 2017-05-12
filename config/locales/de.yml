@@ -84,7 +84,7 @@ de:
         zip: Postleitzahl
         city: Stadt
         nationality: Nationalität
-        dual_nationality: Doppelte Nationalität
+        additional_nationality: Zusätzliche Nationalität
         phone: Telefonnummer
         profession: Beruf
         education: Ausbildung
