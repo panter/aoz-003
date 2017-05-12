@@ -23,7 +23,13 @@ module ApplicationHelper
     end
   end
 
-  # volunteer collections
+  def nationality_name(nationality)
+    return '' if nationality.blank?
+    c = ISO3166::Country[nationality]
+    c.translations[I18n.locale.to_s] || c.name
+  end
+
+  # volunteer collections and helpers
   def duration_collection
     [:short, :long]
   end
@@ -40,9 +46,7 @@ module ApplicationHelper
     [:sport, :creative, :music, :culture, :training, :german_course]
   end
 
-  def nationality_name(nationality)
-    return '' if nationality.blank?
-    c = ISO3166::Country[nationality]
-    c.translations[I18n.locale.to_s] || c.name
+  def human_boolean(boolean)
+    boolean ? t('simple_form.yes') : t('simple_form.no')
   end
 end
