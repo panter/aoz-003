@@ -20,6 +20,10 @@
       = f.input :gender, collection: gender_collection, as: :radio_buttons
 
   .row
+    .col-xs-12
+      = f.input :avatar, as: :file
+
+  .row
     .col-xs-12.col-md-6
       = f.input :nationality, as: :country
     .col-xs-12.col-md-6
