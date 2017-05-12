@@ -64,7 +64,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'record still exists after deletion' do
-    user = create :user, :with_profile, role: 'admin'
+    user = create :user, :with_profile, role: 'social_worker'
 
     assert_difference 'User.count', -1 do
       user.destroy
