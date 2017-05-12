@@ -5,6 +5,9 @@ en:
       user: User
       profile: Profile
       volunteer: Volunteer
+    attributes:
+      volunteer:
+        duration: Duration of the accompaniment
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
@@ -135,7 +138,7 @@ en:
       volunteer:
         gender:
           female: Female
-          male: Man
+          male: Male
         region:
           city: City
           region: Region
