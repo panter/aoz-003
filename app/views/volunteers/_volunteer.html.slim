@@ -1,0 +1,6 @@
+tr
+  td = volunteer.first_name
+  td = volunteer.last_name
+  td = link_to t_action(:show), volunteer
+  td = link_to t_action(:edit), edit_volunteer_path(volunteer)
+  td = link_to t_action(:destroy), volunteer, data: { confirm: t('are_you_sure')}, method: :delete

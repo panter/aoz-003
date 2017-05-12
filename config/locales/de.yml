@@ -27,6 +27,7 @@ de:
       client: Klient
       profile: Profil
       user: Benutzer
+      volunteer: Freiwillige
     attributes:
       client:
         first_name: Vorname
@@ -79,7 +80,9 @@ de:
         last_name: Nachname
         date_of_birth: Geburtsdatum
         gender: Geschlecht
-        address: Adresse
+        street: Strasse
+        zip: Postleitzahl
+        city: Stadt
         nationality: Nationalität
         dual_nationality: Doppelte Nationalität
         phone: Telefonnummer
@@ -232,9 +235,20 @@ de:
           rejected: Abgelehnt
       user:
         role:
-          superadmin: 'Superadmin'
-          social_worker: 'Sozialarbeiter'
-          department_manager: 'Standort Leiter'
+          superadmin: Superadmin
+          social_worker: Sozialarbeiter
+          department_manager: Standort Leiter
+      volunteer:
+        gender:
+          female: Weiblich
+          male: Mänlich
+        region:
+          city: Stadt
+          region: Region
+          canton: Kanton
+        duration:
+          short: Kurzfristig
+          long: Längerfristige (min 6 Mt.)
     "yes": 'Ja'
     "no": 'Nein'
     required:
@@ -301,24 +315,41 @@ de:
     friday: Freitag
     saturday: Samstag
     sunday: Sonntag
+  accompaniment:
+    man: Mann
+    woman: Frau
+    family: Familie
+    kid: Kind
+    sport: Sport
+    creative: Kreativ
+    music: Musik
+    culture: Kultur
+    training: Bildung
+    german_course: Deutsch-Kurs
+  region:
+    city: Stadt
+    region: Region
+    canton: Kanton
+  duration:
+    short: Kurzfristig
+    long: Längerfristige (min 6 Mt.)
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   are_you_sure: Sind Sie sicher?
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   back: Zurück
-  canton: Kanton
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
-  city: Stadt
   client_created: KlientIn wurde erfolgreich erstellt.
   client_updated: KlientIn wurde erfolgreich aktualisiert.
   client_destroyed: KlientIn wurde erfolgreich gelöscht.
   clients: Klienten
   contact_info: Kontakt Informationen
   create_client: KlientIn erfassen
-  create_user: Benutzer erfassen
   create_profile: Profil erfassen
+  create_user: Benutzer erfassen
+  create_volunteer: Freiwillige erfassen
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
   forgot_password: Passwort vergessen?
@@ -327,26 +358,24 @@ de:
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
-  long: Längerfristige (min 6 Mt.)
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
-  region: Region
   registered_by: 'SozialberaterIn'
   relatives: Verwandte
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   schedule: Zeitplan
-  short: Kurzfristig
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   single_accompaniment: Einzelbegleitung
   target_groups: Zielgruppe
   users: Benutzer
   user_destroyed: Benutzer wurde erfolgreich gelöscht.
+  volunteers: Freiwillige
   voluntary_platform: Freiwilligen Plattform
   when: Zeit
   working_days: Arbeitstage

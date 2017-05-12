@@ -27,7 +27,13 @@
 
   .row
     .col-xs-12
-      = f.input :address
+      = f.input :street
+
+    .col-xs-6
+      = f.input :zip
+
+    .col-xs-6
+      = f.input :city
 
     .col-xs-12.col-md-6
       = f.input :email
@@ -52,7 +58,7 @@
 
   .row
     .col-xs-12
-      = f.input :duration, collection: [t('short'), t('long')], as: :radio_buttons
+      = f.input :duration, collection: duration_collection, as: :radio_buttons
 
   .row
     h3= t('single_accompaniment')
@@ -102,7 +108,7 @@
   .row
     h3= t('your_region')
     .col-xs-12
-      = f.input :region, collection: [t('city'), t('region'), t('canton')], as: :radio_buttons, label: false
+      = f.input :region, collection: region_collection, as: :radio_buttons, label: false
 
   .row
     .col-xs-12

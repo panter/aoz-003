@@ -134,7 +134,9 @@ ActiveRecord::Schema.define(version: 20170511135554) do
     t.string "last_name"
     t.date "date_of_birth"
     t.string "gender"
-    t.text "address"
+    t.string "street"
+    t.string "zip"
+    t.string "city"
     t.string "nationality"
     t.string "dual_nationality"
     t.string "email"
@@ -162,7 +164,6 @@ ActiveRecord::Schema.define(version: 20170511135554) do
     t.boolean "adults"
     t.boolean "teenagers"
     t.boolean "children"
-    t.boolean "city"
     t.string "region"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
