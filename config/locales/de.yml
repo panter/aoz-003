@@ -88,8 +88,13 @@ de:
         phone: Telefonnummer
         profession: Beruf
         education: Ausbildung
+        experience: Erfahrung
+        expectations: Erwartungen
+        strengths: Stärken
+        skills: Kompetenzen
+        interests: Interessen
         state: Status
-        duration: Dauer
+        duration: Dauer der Begleitung
         man: Mann
         woman: Frau
         family: Familie
@@ -248,7 +253,7 @@ de:
           canton: Kanton
         duration:
           short: Kurzfristig
-          long: Längerfristige (min 6 Mt.)
+          long: Längerfristig (min 6 Mt.)
     "yes": 'Ja'
     "no": 'Nein'
     required:
@@ -332,7 +337,7 @@ de:
     canton: Kanton
   duration:
     short: Kurzfristig
-    long: Längerfristige (min 6 Mt.)
+    long: Längerfristig (min 6 Mt.)
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   are_you_sure: Sind Sie sicher?
