@@ -57,4 +57,12 @@ class ClientsTest < ApplicationSystemTestCase
       assert page.has_text? "can't be blank"
     end
   end
+
+  test 'superadmin can delete client' do
+    create :client
+    visit clients_path
+    click_link 'Delete'
+
+    assert page.has_text? 'Client was successfully deleted.'
+  end
 end
