@@ -377,7 +377,7 @@ de:
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   volunteer_created: Freiwillige wurde erfolgreich erstellt.
   volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
-  volunteer_destroyed: 'Freiwillige %{email} wurde erfolgreich gelöscht.'
+  volunteer_destroyed: 'Freiwillige wurde erfolgreich gelöscht.'
   volunteers: Freiwillige
   voluntary_platform: Freiwilligen Plattform
   when: Zeit

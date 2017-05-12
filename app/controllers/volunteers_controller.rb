@@ -37,7 +37,7 @@ class VolunteersController < ApplicationController
   def destroy
     @volunteer.destroy
     respond_to do |format|
-      format.html { redirect_to volunteers_url, t('volunteer_destroyed', email: @volunteer.email) }
+      format.html { redirect_to volunteers_url, notice: t('volunteer_destroyed') }
     end
   end
 
