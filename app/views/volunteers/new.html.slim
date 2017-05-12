@@ -1,5 +1,11 @@
-h1 New volunteer
+.row
+  .col-xs-12
+    h1= t_title(:new)
 
-== render 'form'
+.row
+  .col-xs-12
+    p= render 'form'
 
-= link_to 'Back', volunteers_path
+.row
+  .col-xs-12
+    p= link_to t('back'), volunteers_path, class: 'btn btn-default'

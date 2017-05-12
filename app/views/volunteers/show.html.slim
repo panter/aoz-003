@@ -1,12 +1,112 @@
-p#notice = notice
+.row
+  .col-xs-12
+    h1
+      = @volunteer.first_name
+      | ,
+      = @volunteer.last_name
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td= t_attr(:date_of_birth)
+            td= l(@volunteer.date_of_birth) if @volunteer.date_of_birth
+          tr
+            td= t_attr(:gender)
+            td= t("gender.#{@volunteer.gender}") unless @volunteer.gender.blank?
+          tr
+            td= t_attr(:nationality)
+            td= @volunteer.nationality_name
+          tr
+            td= t_attr(:dual_nationality)
+            td= @volunteer.dual_nationality
+          tr
+            td= t_attr(:street)
+            td= @volunteer.street
+          tr
+            td= t_attr(:zip)
+            td= @volunteer.zip
+          tr
+            td= t_attr(:city)
+            td= @volunteer.city
+          tr
+            td= 'Email'
+            td= @volunteer.email
+          tr
+            td= t_attr(:phone)
+            td= @volunteer.phone
+          tr
+            td= t_attr(:profession)
+            td= @volunteer.profession
+          tr
+            td= t_attr(:education)
+            td= @volunteer.education
+          tr
+            td= t_attr(:motivation)
+            td= @volunteer.motivation
+          tr
+            td= t_attr(:experience)
+            td= @volunteer.experience
+          tr
+            td= t_attr(:expectations)
+            td= @volunteer.expectations
+          tr
+            td= t_attr(:strengths)
+            td= @volunteer.strengths
+          tr
+            td= t_attr(:skills)
+            td= @volunteer.skills
+          tr
+            td= t_attr(:interests)
+            td= @volunteer.interests
+          tr
+            td= t_attr(:state)
+            td= @volunteer.state
+          tr
+            td= t_attr(:duration)
+            td= t("duration.#{@volunteer.duration}") unless @volunteer.duration.blank?
+          tr
+            td= t_attr(:region)
+            td= t("region.#{@volunteer.region}") unless @volunteer.region.blank?
 
-p
-  strong First name:
-  = @volunteer.first_name
-p
-  strong Last name:
-  = @volunteer.last_name
+.row
+  .col-xs-12
+    h3= t('single_accompaniment')
+    table.table.table-striped
+      thead
+        tr
+          - single_accompaniment.each do |single|
+            th.text-center
+              = t("accompaniment.#{single}")
+      tbody
+        tr
+          - single_accompaniment.each do |single|
+            td.text-center
+              - if @volunteer.read_attribute(single)
+                i.glyphicon.glyphicon-ok.text-success
+              - else
+                i.glyphicon.glyphicon-remove.text-danger
 
-= link_to 'Edit', edit_volunteer_path(@volunteer)
-'  |
-= link_to 'Back', volunteers_path
+  .row
+    .col-xs-12
+      h3= t('group_accompaniment')
+      table.table.table-striped
+        thead
+          tr
+            - group_accompaniment.each do |group|
+              th.text-center
+                = t("accompaniment.#{group}")
+        tbody
+          tr
+            - group_accompaniment.each do |group|
+              td.text-center
+                - if @volunteer.read_attribute(group)
+                  i.glyphicon.glyphicon-ok.text-success
+                - else
+                  i.glyphicon.glyphicon-remove.text-danger
+
+.row
+  .col-xs-12
+    p= link_to t_action(:edit), edit_volunteer_path(@volunteer), class: 'btn btn-default'
+    p= link_to t('back'), volunteers_path, class: 'btn btn-default'

@@ -1,8 +1,10 @@
-h1 Editing volunteer
+.row
+  .col-xs-12
+    h1= t_title(:edit)
 
 == render 'form'
 
-= link_to 'Show', @volunteer
-'  |
-= link_to 'Back', volunteers_path
-
+.row
+  .col-xs-12
+    p= link_to t_action(:show), @volunteer, class: 'btn btn-default'
+    p= link_to t('back'), volunteers_path, class: 'btn btn-default'

@@ -1,23 +1,21 @@
-h1 Listing volunteers
+.row
+  .col-xs-12
+    h1= t('volunteers')
 
-table
-  thead
-    tr
-      th First name
-      th Last name
-      th
-      th
-      th
-
-  tbody
-    - @volunteers.each do |volunteer|
+.row
+  .col-xs-12
+  table.table.table-striped
+    thead
       tr
-        td = volunteer.first_name
-        td = volunteer.last_name
-        td = link_to 'Show', volunteer
-        td = link_to 'Edit', edit_volunteer_path(volunteer)
-        td = link_to 'Destroy', volunteer, data: { confirm: 'Are you sure?' }, method: :delete
+        th= t_attr(:first_name)
+        th= t_attr(:last_name)
+        th
+        th
+        th
 
-br
+    tbody
+      = render @volunteers
 
-= link_to 'New Volunteer', new_volunteer_path
+.row
+  .col-xs-12
+    = link_to t('create_volunteer'), new_volunteer_path, class: 'btn btn-success'

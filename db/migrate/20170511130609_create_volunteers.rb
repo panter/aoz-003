@@ -5,7 +5,9 @@ class CreateVolunteers < ActiveRecord::Migration[5.1]
       t.string :last_name
       t.date :date_of_birth
       t.string :gender
-      t.text :address
+      t.string :street
+      t.string :zip
+      t.string :city
       t.string :nationality
       t.string :dual_nationality
       t.string :email
@@ -33,7 +35,6 @@ class CreateVolunteers < ActiveRecord::Migration[5.1]
       t.boolean :adults
       t.boolean :teenagers
       t.boolean :children
-      t.boolean :city
       t.string :region
       t.timestamps
     end

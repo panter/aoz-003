@@ -22,4 +22,21 @@ module ApplicationHelper
       [:monday, :tuesday, :wednesday, :thursday, :friday]
     end
   end
+
+  # volunteer collections
+  def duration_collection
+    [:short, :long]
+  end
+
+  def region_collection
+    [:city, :region, :canton]
+  end
+
+  def single_accompaniment
+    [:man, :woman, :family, :kid]
+  end
+
+  def group_accompaniment
+    [:sport, :creative, :music, :culture, :training, :german_course]
+  end
 end

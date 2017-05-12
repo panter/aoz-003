@@ -4,6 +4,7 @@ en:
       client: Client
       user: User
       profile: Profile
+      volunteer: Volunteer
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
@@ -128,9 +129,20 @@ en:
           rejected: Rejected
       user:
         role:
-          superadmin: 'Superadmin'
-          social_worker: 'Social worker'
-          department_manager: 'Departement manager'
+          superadmin: Superadmin
+          social_worker: Social worker
+          department_manager: Department manager
+      volunteer:
+        gender:
+          female: Female
+          male: Man
+        region:
+          city: City
+          region: Region
+          canton: Canton
+        duration:
+          short: Short term
+          long: Long term (min 6 months)
     "yes": 'Yes'
     "no": 'No'
     required:
@@ -174,24 +186,41 @@ en:
     friday: Friday
     saturday: Saturday
     sunday: Sunday
+  accompaniment:
+    man: Man
+    woman: Woman
+    family: Family
+    kid: Kid
+    sport: Sport
+    creative: Creative
+    music: Music
+    culture: Culture
+    training: Education
+    german_course: German course
+  region:
+    city: City
+    region: Region
+    canton: Canton
+  duration:
+    short: Short term
+    long: Long term (min 6 months)
   add_language: Add language
   add_relative: Add family member
   are_you_sure: Are you sure?
   are_you_sure_invitation: Are you sure you want to send an invitation?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   back: Back
-  canton: Canton
   change_my_password: Change my password
   change_password: Change your password
-  city: City
   contact_info: Contact information
   clients: Clients
   client_created: Client was successfully created.
   client_updated: Client was successfully updated.
   client_destroyed: Client was successfully deleted.
   create_client: Create client
-  create_user: Create user
   create_profile: Create profile
+  create_user: Create user
+  create_volunteer: Create Volunteer
   edit_login: Edit login
   edit_profile: Edit profile
   forgot_password: Forgot your password?
@@ -200,26 +229,24 @@ en:
   language_skills: Language skills
   login: Log in
   logout: Logout
-  long: Long term (min 6 months)
   not_authorized: You are not authorized to perform this action.
   password_reset_instructions: I want to reset my password
   personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
-  region: Region
   registered_by: Responsible Volunteer
   relatives: Family members
   remember_me: Remember me
   remove_language: Remove language
   remove_relative: Remove family member
   schedule: Schedule
-  short: Short term
   show_profile: Show profile
   show_my_profile: My profile
   single_accompaniment: Single accompaniment
   target_groups: Target groups
   users: Users
   user_destroyed: '%{email} was successfully deleted.'
+  volunteers: volunteers
   voluntary_platform: Voluntaries Platform
   when: Time
   working_days: Working days
