@@ -50,7 +50,7 @@
             td= @volunteer.motivation
           tr
             td= t_attr(:experience)
-            td= human_boolean(@volunteer.experience)
+            td= Volunteer.human_boolean(@volunteer.experience)
           tr
             td= t_attr(:expectations)
             td= @volunteer.expectations

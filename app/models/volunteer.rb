@@ -24,4 +24,8 @@ class Volunteer < ApplicationRecord
   def self.group_accompaniment
     [:sport, :creative, :music, :culture, :training, :german_course]
   end
+
+  def self.human_boolean(boolean)
+    boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
+  end
 end
