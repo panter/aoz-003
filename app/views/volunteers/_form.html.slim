@@ -14,7 +14,7 @@
   .row
     .col-xs-12.col-md-6
       = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
-        end_year: Date.today.year, order: [:day, :month, :year], include_blank: true
+        end_year: Date.today.year, include_blank: true
 
     .col-xs-12.col-md-6
       = f.input :gender, collection: gender_collection, as: :radio_buttons
