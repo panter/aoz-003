@@ -2,7 +2,7 @@ tr
   td = volunteer.first_name
   td = volunteer.last_name
   td = volunteer.date_of_birth
-  td = nationality_name(volunteer.nationality)
+  td = country(volunteer.nationality)
   td = t("gender.#{volunteer.gender}") unless volunteer.gender.blank?
   td = volunteer.email
   td = link_to t_action(:show), volunteer
