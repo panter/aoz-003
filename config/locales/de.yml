@@ -119,6 +119,10 @@ de:
     formats:
       default:
         "%d. %B %Y"
+    order:
+      - :day
+      - :month
+      - :year
     month_names:
       -
       - Januar

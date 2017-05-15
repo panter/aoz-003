@@ -8,6 +8,14 @@ en:
     attributes:
       volunteer:
         duration: Duration of the accompaniment
+  date:
+    formats:
+      default:
+        "%d %B %Y"
+    order:
+      - :day
+      - :month
+      - :year
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
