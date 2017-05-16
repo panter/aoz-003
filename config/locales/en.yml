@@ -6,10 +6,22 @@ en:
       profile: Profile
       department: Department
       contact: Contact
+      contact_phone: Phone number
+      contact_email: Email address
       volunteer: Volunteer
     attributes:
       volunteer:
         duration: Duration of the accompaniment
+      contact:
+        city: City
+        postal_code: Postal Code
+        extended: Extended address
+      contact_email:
+        body: Email address
+        label: Type
+      contact_phone:
+        body: Phone number
+        label: Type
   date:
     formats:
       default:
@@ -273,3 +285,4 @@ en:
   your_region: In which region can you imagine your employment?
   your_skills: Professional skills that you could bring?
   your_strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
+  department_created: Department was successfully created.
