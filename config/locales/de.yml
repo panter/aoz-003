@@ -1,3 +1,4 @@
+---
 de:
   activerecord:
     errors:
@@ -285,15 +286,6 @@ de:
         create: Benutzer erstellen
         update: Update login
   simple_form:
-    labels:
-      defaults:
-        password: Passwort
-        password_confirmation: Passwort bestätigen
-      department:
-        contact:
-          label: Art
-          name: Standortname
-        user: Assozierte Benutzer
     options:
       client:
         language_skills:
@@ -340,13 +332,18 @@ de:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
     labels:
+      defaults:
+        password: Passwort
+        password_confirmation: Passwort bestätigen
+      department:
+        contact:
+          label: Art
+          name: Standortname
+        user: Assozierte Benutzer
       user:
         role: Rolle
         email: Email
         password: Passwort
-      defaults:
-        password: Passwort
-        password_confirmation: Passwort bestätigen
     placeholders:
   time:
     formats:
