@@ -1,6 +1,38 @@
 ---
 en:
   activerecord:
+    attributes:
+      volunteer:
+        duration: Duration of the accompaniment
+        user: :activerecord.models.user
+      contact:
+        city: City
+        contact_emails: Contact emails
+        contact_phones: Contact phones
+        extended: Extended address
+        name: Name
+        postal_code: Postal Code
+        street: Street
+      contact_email:
+        body: Email address
+        label: Type
+      contact_phone:
+        body: Phone number
+        label: Type
+      department:
+        contact: :activerecord.models.contact
+        user: :activerecord.models.user
+      profile:
+        user: :activerecord.models.user
+      relative:
+        client: :activerecord.models.client
+      schedule:
+        client: :activerecord.models.client
+      user:
+        clients: Clients
+        department: Department
+        email: Email
+        profile: :activerecord.models.profile
     models:
       client: Client
       contact: Contact
@@ -13,38 +45,6 @@ en:
       schedule: Schedule
       user: User
       volunteer: Volunteer
-    attributes:
-      volunteer:
-        duration: Duration of the accompaniment
-        user: :activerecord.models.user
-      contact:
-        name: Name
-        city: City
-        contact_emails: Contact emails
-        contact_phones: Contact phones
-        postal_code: Postal Code
-        extended: Extended address
-        street: Street
-      contact_email:
-        body: Email address
-        label: Type
-      contact_phone:
-        body: Phone number
-        label: Type
-      profile:
-        user: :activerecord.models.user
-      department:
-        contact: :activerecord.models.contact
-        user: :activerecord.models.user
-      relative:
-        client: :activerecord.models.client
-      schedule:
-        client: :activerecord.models.client
-      user:
-        clients: Clients
-        department: Department
-        email: Email
-        profile: :activerecord.models.profile
   date:
     formats:
       default:
@@ -53,6 +53,23 @@ en:
       - :day
       - :month
       - :year
+  add_language: Add language
+  add_relative: Add family member
+  are_you_sure: Are you sure?
+  are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
+  are_you_sure_invitation: Are you sure you want to send an invitation?
+  back: Back
+  change_my_password: Change my password
+  change_password: Change your password
+  client_created: Client was successfully created.
+  client_destroyed: Client was successfully deleted.
+  client_updated: Client was successfully updated.
+  clients: Clients
+  contact_info: Contact information
+  create_client: Create client
+  create_profile: Create profile
+  create_user: Create user
+  department_created: Department was successfully created.
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
@@ -63,49 +80,49 @@ en:
       inactive: Your account is not activated yet.
       invalid: 'Invalid %{authentication_keys} or password.'
       invited: You have a pending invitation, accept it to finish creating your account.
-      locked: Your account is locked.
       last_attempt: You have one more attempt before your account is locked.
+      locked: Your account is locked.
       not_found_in_database: 'Invalid %{authentication_keys} or password.'
       timeout: Your session expired. Please sign in again to continue.
       unauthenticated: You need to sign in or sign up before continuing.
       unconfirmed: You have to confirm your email address before continuing.
     invitations:
-      send_instructions: 'An invitation email has been sent to %{email}.'
-      invitation_token_invalid: The invitation token provided is not valid!
-      updated: Your password was set successfully. You are now signed in.
-      updated_not_active: Your password was set successfully.
-      no_invitations_remaining: No invitations remaining
-      invitation_removed: Your invitation was removed.
-      new:
-        header: Send invitation
-        submit_button: Send an invitation
       edit:
         header: Set your password
         submit_button: Set my password
+      invitation_removed: Your invitation was removed.
+      invitation_token_invalid: The invitation token provided is not valid!
+      new:
+        header: Send invitation
+        submit_button: Send an invitation
+      no_invitations_remaining: No invitations remaining
+      send_instructions: 'An invitation email has been sent to %{email}.'
+      updated: Your password was set successfully. You are now signed in.
+      updated_not_active: Your password was set successfully.
     mailer:
-      hello: 'Hello %{email}!'
       confirmation_instructions:
         subject: Confirmation instructions
+      email_changed:
+        email_being_changed_to: "We're contacting you to notify you that your email is being changed to %{email}."
+        email_has_changed: "We're contacting you to notify you that your email has been changed to %{email}."
+        subject: Email Changed
+      hello: 'Hello %{email}!'
       invitation_instructions:
-        subject: Invitation instructions
-        someone_invited_you: 'Someone has invited you to %{url}, you can accept it through the link below.'
         accept: Accept invitation
         accept_until: 'This invitation will be due in %{due_date}.'
         ignore: "If you don't want to accept the invitation, please ignore this email.<br />\nYour account won't be created until you access the link above and set your password."
+        someone_invited_you: 'Someone has invited you to %{url}, you can accept it through the link below.'
+        subject: Invitation instructions
+      password_change:
+        password_has_changed: "We're contacting you to notify you that your password has been changed."
+        subject: Password Changed
       reset_password_instructions:
-        subject: Reset password instructions
-        someone_requested: Someone has requested a link to change your password. You can do this through the link below.
         accept: Change my password
         ignore: "If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one."
+        someone_requested: Someone has requested a link to change your password. You can do this through the link below.
+        subject: Reset password instructions
       unlock_instructions:
         subject: Unlock instructions
-      email_changed:
-        subject: Email Changed
-        email_being_changed_to: "We're contacting you to notify you that your email is being changed to %{email}."
-        email_has_changed: "We're contacting you to notify you that your email has been changed to %{email}."
-      password_change:
-        subject: Password Changed
-        password_has_changed: "We're contacting you to notify you that your password has been changed."
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: Successfully authenticated from %{kind} account.
@@ -124,13 +141,15 @@ en:
       update_needs_confirmation: You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirm link to confirm your new email address.
       updated: Your account has been updated successfully.
     sessions:
+      already_signed_out: Signed out successfully.
       signed_in: Signed in successfully.
       signed_out: Signed out successfully.
-      already_signed_out: Signed out successfully.
     unlocks:
       send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
       send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
       unlocked: Your account has been unlocked successfully. Please sign in to continue.
+  edit_login: Edit login
+  edit_profile: Edit profile
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -141,6 +160,10 @@ en:
       not_saved:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
+  forgot_password: Forgot your password?
+  gender:
+    female: female
+    male: male
   helpers:
     submit:
       create: 'Create %{model}'
@@ -151,35 +174,53 @@ en:
       user:
         create: Create User
         update: Update login
+  invite_sent: 'Invitation sent to %{email}'
+  language_level:
+    basic: Basic
+    fluent: Fluent
+    good: Good
+    native_speaker: Native speaker
+  language_skills: Language skills
+  login: Log in
+  logout: Logout
+  not_authorized: You are not authorized to perform this action.
+  password_reset_instructions: I want to reset my password
+  personal_background: Personal background
+  profile_created: Profile was successfully created.
+  profile_updated: Profile was successfully updated.
+  registered_by: Responsible Volunteer
+  relatives: Family members
+  remember_me: Remember me
+  remove_language: Remove language
+  remove_relative: Remove family member
+  role:
+    department_manager: department_manager
+    social_worker: social_worker
+    superadmin: superadmin
+  schedule: Schedule
+  show_my_profile: My profile
+  show_profile: Show profile
   simple_form:
-    placeholders:
-      user:
-        email: Email address
-      profile:
-        first_name: Your first name
-        last_name: Your last name
-        profession: Profession
-        address: Street
-      client:
-        first_name: First name
-        last_name: Last name
+    error_notification:
+      default_message: 'Please review the problems below:'
+    "no": 'No'
     options:
       client:
-        language_skills:
-          level:
-            native_speaker: Native speaker
-            fluent: Fluent
-            good: Good
-            basic: Basic
         gender:
           female: Female
           male: Male
+        language_skills:
+          level:
+            basic: Basic
+            fluent: Fluent
+            good: Good
+            native_speaker: Native speaker
         state:
-          registered: Registered
-          reserved: Reserved
           active: Active
           finished: Finished
+          registered: Registered
           rejected: Rejected
+          reserved: Reserved
       user:
         role:
           superadmin: Superadmin
@@ -199,16 +240,15 @@ en:
     "yes": 'Yes'
     "no": 'No'
     required:
-      text: 'required'
       mark: '*'
-    error_notification:
-      default_message: 'Please review the problems below:'
+      text: 'required'
+    "yes": 'Yes'
   state:
-    registered: Registered
-    reserved: Reserved
     active: Active
     finished: Finished
+    registered: Registered
     rejected: Rejected
+    reserved: Reserved
   time:
     formats:
       devise:
@@ -216,8 +256,8 @@ en:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
   gender:
-    female: female
-    male: male
+    female: Female
+    male: Male
   language_level:
     native_speaker: Native speaker
     fluent: Fluent
@@ -228,15 +268,15 @@ en:
     social_worker: social worker
     department_manager: department manager
   times:
-    morning: morning
     afternoon: afternoon
     evening: evening
+    morning: morning
+  user_destroyed: '%{email} was successfully deleted.'
+  users: Users
+  voluntary_platform: Voluntaries Platform
   weekdays:
-    monday: Monday
-    tuesday: Tuesday
-    wednesday: Wednesday
-    thursday: Thursday
     friday: Friday
+    monday: Monday
     saturday: Saturday
     sunday: Sunday
   accompaniment:
@@ -314,3 +354,8 @@ en:
   your_skills: Professional skills that you could bring?
   your_strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
   department_created: Department was successfully created.
+    thursday: Thursday
+    tuesday: Tuesday
+    wednesday: Wednesday
+  when: Time
+  working_days: Working days
