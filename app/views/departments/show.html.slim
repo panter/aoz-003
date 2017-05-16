@@ -12,18 +12,22 @@
           tr
             td= t_attr(:extended, Contact)
             td= @department.contact.extended
-        td
+        tr
           td= t_attr(:city, Contact)
           td #{@department.contact.postal_code} #{@department.contact.city}
 
         - @department.contact.contact_emails.each do |email|
           tr
-            td #{t_attr(:body, ContactEmail)}#{' / ' + email.label if email.label.present?}
+            td
+              = t_attr(:body, ContactEmail)
+              = " / #{email.label}" if email.label.present?
             td= mail_to email.body
 
         - @department.contact.contact_phones.each do |phone|
           tr
-            td #{t_attr(:body, ContactPhone)}#{' / ' + phone.label if phone.label.present?}
+            td
+              = t_attr(:body, ContactPhone)
+              = " / #{phone.label}" if phone.label.present?
             td= phone.body
 
 - if @department.user.any?

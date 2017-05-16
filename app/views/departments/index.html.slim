@@ -20,7 +20,7 @@
             td= department.contact.postal_code
             td= link_to t_action(:show), department
             td= link_to t_action(:edit), edit_department_path(department)
-            td= link_to t_action(:destroy), department, data: { confirm: t('department_confirm_destroy') }, method: :delete
+            td= link_to t_action(:destroy), department, data: { confirm: t_confirm_delete(department) }, method: :delete
 
 .row
   .col-xs-12
