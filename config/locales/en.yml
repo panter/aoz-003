@@ -2,26 +2,48 @@ en:
   activerecord:
     models:
       client: Client
-      user: User
-      profile: Profile
-      department: Department
       contact: Contact
-      contact_phone: Phone number
       contact_email: Email address
+      contact_phone: Phone number
+      department: Department
+      language_skill: Language skill
+      profile: Profile
+      relative: Relative
+      schedule: Schedule
+      user: User
       volunteer: Volunteer
     attributes:
       volunteer:
         duration: Duration of the accompaniment
+        user: :activerecord.models.user
       contact:
+        name: Name
         city: City
+        contact_emails: Contact emails
+        contact_phones: Contact phones
         postal_code: Postal Code
         extended: Extended address
+        street: Street
       contact_email:
         body: Email address
         label: Type
       contact_phone:
         body: Phone number
         label: Type
+      profile:
+        user: :activerecord.models.user
+      department:
+        contact: :activerecord.models.contact
+        user: :activerecord.models.user
+      relative:
+        client: :activerecord.models.client
+      schedule:
+        client: :activerecord.models.client
+      user:
+        clients: Clients
+        department: Department
+        email: Email
+        profile: :activerecord.models.profile
   date:
     formats:
       default:
@@ -120,6 +142,11 @@ en:
         other: '%{count} errors prohibited this %{resource} from being saved:'
   helpers:
     submit:
+      create: 'Create %{model}'
+      destroy: 'Delete %{model}'
+      read: 'Show %{model}'
+      show: 'Show %{model}'
+      update: 'Update %{model}'
       user:
         create: Create User
         update: Update login

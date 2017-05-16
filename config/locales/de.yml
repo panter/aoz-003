@@ -31,55 +31,73 @@ de:
               spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
     attributes:
       client:
-        first_name: Vorname
-        last_name: Nachname
-        date_of_birth: Geburtsdatum
-        nationality: Nationalität
-        permit: Bewilligung
-        gender: Geschlecht
-        street: Strasse
-        zip: Postleitzahl
         city: Stadt
-        phone: Telefonnummer
-        goals: Ziele
-        education: Ausbildung
-        hobbies: Hobbies
-        interests: Interessen
-        state: Status
         comments: Bemerkungen
         competent_authority: Involvierte Stelle
+        date_of_birth: Geburtsdatum
+        deleted_at: Gelöscht
+        education: Ausbildung
+        email: Email
+        first_name: Vorname
+        gender: Geschlecht
+        goals: Ziele
+        hobbies: Hobbies
+        interests: Interessen
         involved_authority: Fallführende Stelle
+        language_skills: Sprachkenntnisse
+        last_name: Nachname
+        nationality: Nationalität
+        permit: Bewilligung
+        phone: Telefonnummer
+        relatives: Verwandte
+        schedules: Fahrpläne
+        state: Status
+        street: Strasse
+        user: :activerecord.models.user
+        zip: Postleitzahl
       contact:
         city: Ort
+        contact_emails: Mailadressen
+        contact_phones: Telefonnummern
+        extended: Adresszusatz
+        name: Name
         postal_code: Postleitzahl
         street: Strasse
-        extended: Adresszusatz
       contact_email:
         body: Email
+        contact: :activerecord.models.contact
         label: Art
       contact_phone:
         body: Telefonnummer
+        contact: :activerecord.models.contact
         label: Art
       department:
         associated_users: Assozierte Benutzer
-        contact: Kontakt
+        contact: :activerecord.models.contact
         department_manager: Standort Betreuer
         city: Ort
         name: Standort Name
+        user: :activerecord.models.user
       language_skill:
+        client: :activerecord.models.client
         language: Sprache
         level: Niveau
       relative:
+        client: :activerecord.models.client
+        date_of_birth: Geburtsdatum
         first_name: Vorname
         last_name: Nachname
-        date_of_birth: Geburtsdatum
         relation: Verwandtschaftsbeziehung
       schedule:
+        available: Verfügbar
+        client: :activerecord.models.client
         day: Tag
         time: Zeit
-        available: Verfügbar
       user:
+        clients: Kunden
+        department: :activerecord.models.department
         email: Email
+        profile: :activerecord.models.profile
         role: Rolle
       profile:
         first_name: Vorname
@@ -92,6 +110,7 @@ de:
         tuesday: Dienstag
         wednesday: Mittwoch
         thursday: Donnerstag
+        user: :activerecord.models.user
         friday: Freitag
       volunteer:
         first_name: Vorname
@@ -135,7 +154,6 @@ de:
       contact_phone: Telefonnummer
       department: Standort
       language_skill: Sprachkompetenz
-      point_of_contact: Kontaktmöglichkeit
       profile: Profil
       relative: Verwante/r
       schedule: Zeitplan
