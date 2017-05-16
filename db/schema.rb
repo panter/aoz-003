@@ -56,34 +56,16 @@ ActiveRecord::Schema.define(version: 20170512150541) do
   end
 
   create_table "contacts", force: :cascade do |t|
-    t.date "birthday"
-    t.string "gender"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "organisation"
-    t.string "kind"
-    t.string "org_role"
-    t.string "title"
-    t.string "url"
-    t.string "birthplace"
-    t.text "expertise"
-    t.text "hobby"
-    t.text "interest"
+    t.string "name"
     t.string "street"
-    t.string "address"
-    t.string "post_office_box"
-    t.string "extended_address"
-    t.string "locality"
+    t.string "extended"
     t.string "postal_code"
+    t.string "city"
     t.string "contactable_type"
     t.bigint "contactable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.string "avatar_file_name"
-    t.string "avatar_content_type"
-    t.integer "avatar_file_size"
-    t.datetime "avatar_updated_at"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
     t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
   end
