@@ -4,6 +4,8 @@ class Department < ApplicationRecord
 
   has_and_belongs_to_many :user
 
+  validates :contact, presence: true
+
   def to_s
     contact.name
   end
