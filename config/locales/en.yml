@@ -4,6 +4,8 @@ en:
       client: Client
       user: User
       profile: Profile
+      department: Department
+      contact: Contact
       volunteer: Volunteer
     attributes:
       volunteer:

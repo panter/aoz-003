@@ -1,0 +1,42 @@
+.row
+  .col-xs-12
+    h1= @department.contact.name
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tr
+          td= t_attr(:street, Contact)
+          td= @department.contact.street
+        - if @department.contact.extended_address.present?
+          tr
+            td= t_attr(:extended, Contact)
+            td= @department.contact.extended_address
+        td
+          td= t_attr(:city, Contact)
+          td #{@department.contact.postal_code} #{@department.contact.city}
+
+        - @department.contact.contact_emails.each do |email|
+          tr
+            td #{t_attr(:body, ContactEmail)}#{' / ' + email.label if email.label.present?}
+            td= mail_to email.body
+
+        - @department.contact.contact_phones.each do |phone|
+          tr
+            td #{t_attr(:body, ContactPhone)}#{' / ' + phone.label if phone.label.present?}
+            td= phone.body
+
+- if @department.user.any?
+  .row
+    .col-xs-12
+      h2= t_attr(:associated_users)
+  .row
+    .col-xs-12
+      ul
+        - @department.user.each do |user|
+          li= user.to_s
+
+.row
+  .col-xs-12
+    p= link_to t_action(:edit), edit_department_path(@department), class: 'btn btn-default'
+    p= link_to t(:back), departments_path, class: 'btn btn-default'

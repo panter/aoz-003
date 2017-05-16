@@ -43,6 +43,64 @@ ActiveRecord::Schema.define(version: 20170512150541) do
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
+  create_table "contact_points", force: :cascade do |t|
+    t.bigint "contact_id"
+    t.string "body"
+    t.string "label"
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["contact_id"], name: "index_contact_points_on_contact_id"
+    t.index ["deleted_at"], name: "index_contact_points_on_deleted_at"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.date "birthday"
+    t.string "gender"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "organisation"
+    t.string "kind"
+    t.string "org_role"
+    t.string "title"
+    t.string "url"
+    t.string "birthplace"
+    t.text "expertise"
+    t.text "hobby"
+    t.text "interest"
+    t.string "street"
+    t.string "address"
+    t.string "post_office_box"
+    t.string "extended_address"
+    t.string "locality"
+    t.string "postal_code"
+    t.string "contactable_type"
+    t.bigint "contactable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
+    t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
+  end
+
+  create_table "departments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_departments_on_deleted_at"
+  end
+
+  create_table "departments_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "department_id", null: false
+    t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
+  end
+
   create_table "language_skills", force: :cascade do |t|
     t.bigint "client_id"
     t.string "language"
@@ -176,6 +234,7 @@ ActiveRecord::Schema.define(version: 20170512150541) do
   end
 
   add_foreign_key "clients", "users"
+  add_foreign_key "contact_points", "contacts"
   add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
   add_foreign_key "relatives", "clients"

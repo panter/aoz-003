@@ -29,11 +29,6 @@ de:
               invalid: ist ungültig
             avatar:
               spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
-    models:
-      client: Klient
-      profile: Profil
-      user: Benutzer
-      volunteer: Freiwillige
     attributes:
       client:
         first_name: Vorname
@@ -54,6 +49,23 @@ de:
         comments: Bemerkungen
         competent_authority: Involvierte Stelle
         involved_authority: Fallführende Stelle
+      contact:
+        city: Ort
+        postal_code: Postleitzahl
+        street: Strasse
+        extended: Adresszusatz
+      contact_email:
+        body: Email
+        label: Art
+      contact_phone:
+        body: Telefonnummer
+        label: Art
+      department:
+        associated_users: Assozierte Benutzer
+        contact: Kontakt
+        department_manager: Standort Betreuer
+        city: Ort
+        name: Standort Name
       language_skill:
         language: Sprache
         level: Niveau
@@ -116,6 +128,19 @@ de:
         adults: Erwachsene
         teenagers: Jugendliche
         children: Kinder
+    models:
+      client: Klient
+      contact: Kontakt
+      contact_email: Mailadresse
+      contact_phone: Telefonnummer
+      department: Standort
+      language_skill: Sprachkompetenz
+      point_of_contact: Kontaktmöglichkeit
+      profile: Profil
+      relative: Verwante/r
+      schedule: Zeitplan
+      user: Benutzer
+      volunteer: Freiwillige
   date:
     formats:
       default:
@@ -138,6 +163,11 @@ de:
       - Oktober
       - November
       - Dezember
+  department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
+  department_created: 'Der Standort wurde erfolgreich erstellt.'
+  department_destroyed: 'Der Standort wurde erfolgreich gelöscht.'
+  department_updated: 'Der Standort wurde erfolgreich geändert.'
+  departments: Standorte
   devise:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
@@ -229,10 +259,23 @@ de:
   helpers:
     submit:
       create: '%{model} erfassen'
+      destroy: '%{model} löschen'
+      read: '%{model} anzeigen'
+      show: '%{model} anzeigen'
       update: '%{model} aktualisieren'
       user:
-        update: Login aktualisieren
+        create: Benutzer erstellen
+        update: Update login
   simple_form:
+    labels:
+      defaults:
+        password: Passwort
+        password_confirmation: Passwort bestätigen
+      department:
+        contact:
+          label: Art
+          name: Standortname
+        user: Assozierte Benutzer
     options:
       client:
         language_skills:
@@ -244,6 +287,11 @@ de:
         gender:
           female: Weiblich
           male: Mänlich
+        point_of_contact:
+          label:
+            email: Mailadresse
+            fax: Faxnummer
+            phone: Telefonnummer
         state:
           registered: Registriert
           reserved: Reserviert
@@ -278,24 +326,10 @@ de:
         role: Rolle
         email: Email
         password: Passwort
-        edit:
-          role: Rolle ändern
-          email: Email ändern
-          password: Passwort ändern
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
     placeholders:
-      user:
-        email: Mailadresse
-      profile:
-        first_name: Vorname
-        last_name: Nachname
-        profession: Beruf
-        address: Strasse
-      client:
-        first_name: Vorname
-        last_name: Nachname
   time:
     formats:
       devise:
