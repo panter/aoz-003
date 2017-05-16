@@ -46,6 +46,9 @@ class VolunteersController < ApplicationController
       :street, :zip, :city, :nationality, :additional_nationality, :email, :phone, :profession,
       :education, :motivation, :experience, :expectations, :strengths, :skills, :interests, :state,
       :duration, :man, :woman, :family, :kid, :sport, :creative, :music, :culture, :training,
-      :german_course, :adults, :teenagers, :children, :region)
+      :german_course, :adults, :teenagers, :children, :region,
+      language_skills_attributes: [
+        :id, :language, :level, :_destroy
+      ])
   end
 end

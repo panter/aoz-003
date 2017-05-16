@@ -404,6 +404,12 @@ de:
         gender:
           female: Weiblich
           male: Mänlich
+        language_skills:
+          level:
+            native_speaker: Muttersprachler
+            fluent: Fliessend
+            good: Gut
+            basic: Grundlagen
         region:
           canton: Kanton
           city: Stadt

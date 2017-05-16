@@ -21,6 +21,9 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'City', with: 'Zürich'
     fill_in 'Email', with: 'gurke@gurkenmail.ch'
     fill_in 'Phone', with: '0123456789'
+    click_on('Add language')
+    select('Greek', from: 'Language')
+    select('Native speaker', from: 'Level')
     fill_in 'Profession', with: 'Developer'
     fill_in 'Education', with: 'CEID'
     fill_in 'What is your motivation to volunteer with migrants?', with: 'asfd'
