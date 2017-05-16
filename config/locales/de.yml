@@ -1,35 +1,6 @@
 ---
 de:
   activerecord:
-    errors:
-      models:
-        user:
-          attributes:
-            email:
-              blank: darf nicht leer sein
-              taken: ist schon vergeben
-              invalid: ist ungültig
-            role:
-              inclusion: ist nicht in der Liste enthalten
-            password:
-              blank: darf nicht leer sein
-              too_short: zu kurz (min. 6 Zeichen)
-            password_confirmation:
-              confirmation: Die eingegebenen Passwörter stimmen nicht überein
-        profile:
-          attributes:
-            first_name:
-              blank: darf nicht leer sein
-            last_name:
-              blank: darf nicht leer sein
-            avatar_content_type:
-              invalid: ist ungültig
-        volunteer:
-          attributes:
-            avatar_content_type:
-              invalid: ist ungültig
-            avatar:
-              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
     attributes:
       client:
         city: Stadt
@@ -74,9 +45,9 @@ de:
         label: Art
       department:
         associated_users: Assozierte Benutzer
+        city: Ort
         contact: :activerecord.models.contact
         department_manager: Standort Betreuer
-        city: Ort
         name: Standort Name
         user: :activerecord.models.user
       language_skill:
@@ -98,21 +69,20 @@ de:
         clients: Kunden
         department: :activerecord.models.department
         email: Email
-        profile: :activerecord.models.profile
         role: Rolle
       profile:
-        first_name: Vorname
-        last_name: Nachname
-        phone: Telefonnummer
-        avatar: Bild
         address: Adresse
-        profession: Beruf
-        monday: Montag
-        tuesday: Dienstag
-        wednesday: Mittwoch
-        thursday: Donnerstag
-        user: :activerecord.models.user
+        avatar: Bild
+        first_name: Vorname
         friday: Freitag
+        last_name: Nachname
+        monday: Montag
+        phone: Telefonnummer
+        profession: Beruf
+        thursday: Donnerstag
+        tuesday: Dienstag
+        user: :activerecord.models.user
+        wednesday: Mittwoch
       volunteer:
         first_name: Vorname
         last_name: Nachname
@@ -148,6 +118,36 @@ de:
         adults: Erwachsene
         teenagers: Jugendliche
         children: Kinder
+=======
+    errors:
+      models:
+        profile:
+          attributes:
+            avatar_content_type:
+              invalid: ist ungültig
+            first_name:
+              blank: darf nicht leer sein
+            last_name:
+              blank: darf nicht leer sein
+        user:
+          attributes:
+            email:
+              blank: darf nicht leer sein
+              invalid: ist ungültig
+              taken: ist schon vergeben
+            password:
+              blank: darf nicht leer sein
+              too_short: zu kurz (min. 6 Zeichen)
+            password_confirmation:
+              confirmation: Die eingegebenen Passwörter stimmen nicht überein
+            role:
+              inclusion: ist nicht in der Liste enthalten
+        volunteer:
+          attributes:
+            avatar_content_type:
+              invalid: ist ungültig
+            avatar:
+              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
     models:
       client: Klient
       contact: Kontakt
@@ -160,6 +160,22 @@ de:
       schedule: Zeitplan
       user: Benutzer
       volunteer: Freiwillige
+  add_language: Sprache hinzufügen
+  add_relative: Verwandte hinzufügen
+  are_you_sure: Sind Sie sicher?
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
+  are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+  back: Zurück
+  change_my_password: Ihr Passwort ändern
+  change_password: Ihr Passwort ändern
+  client_created: KlientIn wurde erfolgreich erstellt.
+  client_destroyed: KlientIn wurde erfolgreich gelöscht.
+  client_updated: KlientIn wurde erfolgreich aktualisiert.
+  clients: Klienten
+  contact_info: Kontakt Informationen
+  create_client: KlientIn erfassen
+  create_profile: Profil erfassen
+  create_user: Benutzer erfassen
   date:
     formats:
       default:
@@ -192,53 +208,53 @@ de:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
       send_instructions: Sie erhalten in wenigen Minuten ein Email, mit dem Sie Ihre Registrierung bestätigen können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert, erhalten Sie in wenigen Minuten eine Email, mit der Sie Ihre Registrierung bestätigen können.
-    invitations:
-      send_instructions: 'Sie haben eine Einladung in Ihrem Email Postfach: %{email}'
-      invitation_token_invalid: Der Einladungs-Schlüssel ist nicht gültig!
-      updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
-      no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
-      invitation_removed: Ihre Einladung wurde gelöscht.
-      new:
-        header: Einladung schicken
-        submit_button: Einladung schicken
-      edit:
-        header: Setzen Sie ein Passwort
-        submit_button: Passwort setzen
     failure:
       already_authenticated: Sie sind bereits angemeldet.
       inactive: Ihr Account ist nicht aktiv.
       invalid: Ungültige Anmeldedaten.
       invited: Sie haben eine ausstehende Einladung, akzeptieren Sie, um die Erstellung Ihres Kontos zu beenden.
-      locked: Ihr Account ist gesperrt.
       last_attempt: Sie haben noch einen Versuch, bevor Ihr Konto gesperrt ist.
+      locked: Ihr Account ist gesperrt.
       not_found_in_database: Mailadresse oder Passwort ungültig.
       timeout: Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.
       unauthenticated: Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.
       unconfirmed: Sie müssen Ihren Account bestätigen, bevor Sie fortfahren können.
+    invitations:
+      edit:
+        header: Setzen Sie ein Passwort
+        submit_button: Passwort setzen
+      invitation_removed: Ihre Einladung wurde gelöscht.
+      invitation_token_invalid: Der Einladungs-Schlüssel ist nicht gültig!
+      new:
+        header: Einladung schicken
+        submit_button: Einladung schicken
+      no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
+      send_instructions: 'Sie haben eine Einladung in Ihrem Email Postfach: %{email}'
+      updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
     mailer:
-      hello: 'Hallo %{email}!'
       confirmation_instructions:
         subject: Anleitung zur Bestätigung Ihres Accounts
+      email_changed:
+        email_being_changed_to: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wird. Die neue Mailadresse ist: %{email}'
+        email_has_changed: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wurde. Die eingetragene Mailadresse ist: %{email}'
+        subject: Email wurde geändert
+      hello: 'Hallo %{email}!'
       invitation_instructions:
-        subject: Einladung
-        someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie können die Einladung mit dem Link unten annehmen:'
         accept: Einladung annehmen
         accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
         ignore: 'Wenn Sie die Einladung nicht annehmen möchten, ignorieren Sie bitte diese Email einfach.<br />\nEs wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.'
+        someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie können die Einladung mit dem Link unten annehmen:'
+        subject: Einladung
+      password_change:
+        password_has_changed: Wir möchten Ihnen mitteilen, dass Ihr Passwort geändert wurde.
+        subject: Passwort wurde geändert
       reset_password_instructions:
-        subject: Anleitung um Ihr Passwort zurückzusetzen
-        someone_requested: Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Sie können dies über den Link unten tun.
         accept: Ihr Passwort ändern
         ignore: Wenn Sie dies nicht verlangen, ignorieren Sie bitte diese Email. Ihr Passwort wird sich nicht ändern, bis Sie auf den Link oben zugreifen und ein neues erstellen.
+        someone_requested: Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Sie können dies über den Link unten tun.
+        subject: Anleitung um Ihr Passwort zurückzusetzen
       unlock_instructions:
         subject: Anleitung um Ihren Account freizuschalten
-      email_changed:
-        subject: Email wurde geändert
-        email_being_changed_to: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wird. Die neue Mailadresse ist: %{email}'
-        email_has_changed: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wurde. Die eingetragene Mailadresse ist: %{email}'
-      password_change:
-        subject: Passwort wurde geändert
-        password_has_changed: Wir möchten Ihnen mitteilen, dass Ihr Passwort geändert wurde.
     omniauth_callbacks:
       failure: "Sie konnten nicht mit Ihrem %{kind}-Account angemeldet werden, weil '%{reason}'."
       success: Sie haben sich erfolgreich mit Ihrem %{kind}-Account angemeldet.
@@ -257,17 +273,19 @@ de:
       update_needs_confirmation: Ihre Daten wurden aktualisiert, aber Sie müssen Ihre neue Mailadresse bestätigen. Sie erhalten in wenigen Minuten eine Email, mit der Sie die Änderung Ihrer Mailadresse abschliessen können.
       updated: Ihre Daten wurden aktualisiert.
     sessions:
+      already_signed_out: Erfolgreich abgemeldet.
       signed_in: Erfolgreich angemeldet.
       signed_out: Erfolgreich abgemeldet.
-      already_signed_out: Erfolgreich abgemeldet.
     unlocks:
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
+  edit_login: Login bearbeiten
+  edit_profile: Profil bearbeiten
   errors:
     messages:
-      blank: darf nicht leer sein
       already_confirmed: wurde bereits bestätigt
+      blank: darf nicht leer sein
       confirmation_period_expired: 'muss innerhalb %{period} bestätigt werden, bitte fordern Sie einen neuen Link an'
       expired: ist abgelaufen, bitte neu anfordern
       not_found: nicht gefunden
@@ -275,6 +293,10 @@ de:
       not_saved:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
+  forgot_password: Passwort vergessen?
+  gender:
+    female: Weiblich
+    male: Männlich
   helpers:
     submit:
       create: '%{model} erfassen'
@@ -285,29 +307,71 @@ de:
       user:
         create: Benutzer erstellen
         update: Update login
+  invite_sent: 'Einladung wurde an %{email} verschickt.'
+  language_level:
+    basic: Grundlagen
+    fluent: Fliessend
+    good: Gut
+    native_speaker: Muttersprachler
+  language_skills: Sprachkenntnisse
+  login: Anmelden
+  logout: Abmelden
+  not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
+  password_reset_instructions: Ich möchte mein Passwort zurücksetzen
+  personal_background: Persönlicher Hintergrund
+  profile_created: Profil wurde erfolgreich erstellt.
+  profile_updated: Profil wurde erfolgreich aktualisiert.
+  registered_by: 'SozialberaterIn'
+  relatives: Verwandte
+  remember_me: Angemeldet bleiben
+  remove_language: Sprache entfernen
+  remove_relative: Verwandte entfernen
+  role:
+    department_manager: 'Standortverantwortliche/er'
+    social_worker: SozialarbeiterIn
+    superadmin: Superadmin
+  schedule: Zeitplan
+  show_my_profile: Mein Profil
+  show_profile: Profil anzeigen
   simple_form:
+    error_notification:
+      default_message: 'Bitte überprüfen Sie folgende Probleme:'
+    labels:
+      defaults:
+        password: Passwort
+        password_confirmation: Passwort bestätigen
+      department:
+        contact:
+          label: Art
+          name: Standortname
+        user: Assozierte Benutzer
+      user:
+        email: Email
+        password: Passwort
+        role: Rolle
+    "no": 'Nein'
     options:
       client:
-        language_skills:
-          level:
-            native_speaker: Muttersprachler
-            fluent: Fliessend
-            good: Gut
-            basic: Grundlagen
         gender:
           female: Weiblich
           male: Mänlich
+        language_skills:
+          level:
+            basic: Grundlagen
+            fluent: Fliessend
+            good: Gut
+            native_speaker: Muttersprachler
         point_of_contact:
           label:
             email: Mailadresse
             fax: Faxnummer
             phone: Telefonnummer
         state:
-          registered: Registriert
-          reserved: Reserviert
           active: Aktiv
           finished: Abgeschlossen
+          registered: Registriert
           rejected: Abgelehnt
+          reserved: Reserviert
       user:
         role:
           superadmin: Superadmin
@@ -327,58 +391,31 @@ de:
     "yes": 'Ja'
     "no": 'Nein'
     required:
-      text: notwendig
       mark: '*'
-    error_notification:
-      default_message: 'Bitte überprüfen Sie folgende Probleme:'
-    labels:
-      defaults:
-        password: Passwort
-        password_confirmation: Passwort bestätigen
-      department:
-        contact:
-          label: Art
-          name: Standortname
-        user: Assozierte Benutzer
-      user:
-        role: Rolle
-        email: Email
-        password: Passwort
-    placeholders:
+      text: notwendig
+    "yes": 'Ja'
+  state:
+    active: Aktiv
+    finished: Abgeschlossen
+    registered: Registriert
+    rejected: Abgelehnt
+    reserved: Reserviert
   time:
     formats:
       devise:
         mailer:
           invitation_instructions:
             accept_until_format: "%d. %B %Y %H:%M"
-  gender:
-    female: Weiblich
-    male: Männlich
-  language_level:
-    native_speaker: Muttersprachler
-    fluent: Fliessend
-    good: Gut
-    basic: Grundlagen
-  role:
-    superadmin: Superadmin
-    social_worker: SozialarbeiterIn
-    department_manager: Standortverantwortliche/er
-  state:
-    registered: Registriert
-    reserved: Reserviert
-    active: Aktiv
-    finished: Abgeschlossen
-    rejected: Abgelehnt
   times:
-    morning: Morgen
     afternoon: Nachmittag
     evening: Abend
+    morning: Morgen
+  user_destroyed: Benutzer wurde erfolgreich gelöscht.
+  users: Benutzer
+  voluntary_platform: Freiwilligen Plattform
   weekdays:
-    monday: Montag
-    tuesday: Dienstag
-    wednesday: Mittwoch
-    thursday: Donnerstag
     friday: Freitag
+    monday: Montag
     saturday: Samstag
     sunday: Sonntag
   accompaniment:
