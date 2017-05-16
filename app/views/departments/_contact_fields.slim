@@ -27,7 +27,7 @@
         = f.simple_fields_for :contact_emails do |e|
           = render 'contact_email_fields', f: e
         .links
-          = link_to_add_association t_title(:add, ContactEmail), f, :contact_emails, class: 'btn btn-success'
+          = link_to_add_association t_title(:create, ContactEmail), f, :contact_emails, class: 'btn btn-success'
   .row
     .col-xs-12
       #phones

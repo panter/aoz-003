@@ -8,10 +8,10 @@
         tr
           td= t_attr(:street, Contact)
           td= @department.contact.street
-        - if @department.contact.extended_address.present?
+        - if @department.contact.extended.present?
           tr
             td= t_attr(:extended, Contact)
-            td= @department.contact.extended_address
+            td= @department.contact.extended
         td
           td= t_attr(:city, Contact)
           td #{@department.contact.postal_code} #{@department.contact.city}

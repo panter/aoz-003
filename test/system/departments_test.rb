@@ -24,7 +24,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     login_as @user
     visit departments_path
     Department.all.each do |d|
-      assert page.has_text? d.contact.org_role
+      assert page.has_text? d.contact.name
       assert page.has_link? 'Show', href: department_path(d.id)
       assert page.has_link? 'Edit', href: edit_department_path(d.id)
       assert page.has_link? 'Delete', href: department_path(d.id)
@@ -34,7 +34,7 @@ class DepartmentsTest < ApplicationSystemTestCase
   test 'superadmin can create department' do
     login_as @user
     visit departments_path
-    click_link 'New department'
+    click_link 'New Department'
 
     assert page.has_select? 'User'
     within '.department_user' do
@@ -43,10 +43,10 @@ class DepartmentsTest < ApplicationSystemTestCase
       end
     end
 
-    fill_in 'Department name', with: 'Bogus Hog Department'
+    fill_in 'Name', with: 'Bogus Hog Department'
     fill_in 'Street', with: 'bogus street 999'
     fill_in 'Extended address', with: 'bogus ext. addr.'
-    fill_in 'Postal code', with: '9999'
+    fill_in 'Postal Code', with: '9999'
     fill_in 'City', with: 'bogus town'
     click_button 'Create Department'
 
@@ -65,8 +65,8 @@ class DepartmentsTest < ApplicationSystemTestCase
       assert page.has_text? user.email
     end
 
-    assert page.has_link? 'Edit department'
-    assert page.has_link? 'Department index'
+    assert page.has_link? 'Edit'
+    assert page.has_link? 'Back'
   end
 
   test 'superadmin can update a department with additional email and fax number' do
@@ -75,7 +75,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     click_link 'Edit', href: edit_department_path(Department.first.id)
     within '#emails' do
       within '.links' do
-        click_link 'New email address'
+        click_link 'New Email address'
       end
       within find_all('.nested-email-fields').last do
         fill_in 'Email address', with: 'hocusbocus@nowhere.com'
@@ -83,11 +83,11 @@ class DepartmentsTest < ApplicationSystemTestCase
     end
     click_button 'Update Department'
     assert page.has_link? 'hocusbocus@nowhere.com'
-    click_link 'Edit department'
+    click_link 'Edit'
 
     within '#phones' do
       within '.links' do
-        click_link 'New phone number'
+        click_link 'New Phone number'
       end
       within find_all('.nested-phone-fields').last do
         assert page.has_field? 'Phone number'
@@ -108,20 +108,20 @@ class DepartmentsTest < ApplicationSystemTestCase
     click_link 'Show', href: department_path(department.id)
     assert page.has_link? delete_email
     assert page.has_text? delete_phone
-    click_link 'Edit department'
+    click_link 'Edit'
     within '#emails' do
       within find_all('.nested-email-fields').last do
         assert page.has_field? 'Email address', with: delete_email
-        click_link 'Delete email address'
+        click_link 'Delete Email address'
       end
     end
     click_button 'Update Department'
     refute page.has_link? delete_email
-    click_link 'Edit department'
+    click_link 'Edit'
     within '#phones' do
       within find_all('.nested-phone-fields').last do
         assert page.has_field? 'Phone number', with: delete_phone
-        click_link 'Delete phone number'
+        click_link 'Delete Phone number'
       end
     end
     click_button 'Update Department'
