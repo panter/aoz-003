@@ -70,6 +70,7 @@ en:
   create_profile: Create profile
   create_user: Create user
   department_created: Department was successfully created.
+  departments: Departments
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
