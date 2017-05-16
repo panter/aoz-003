@@ -260,7 +260,7 @@ en:
   volunteer_created: 'Volunteer was successfully created.'
   volunteer_updated: 'Volunteer was successfully updated.'
   volunteer_destroyed: 'Volunteer was successfully deleted.'
-  volunteers: volunteers
+  volunteers: Volunteers
   voluntary_platform: Voluntaries Platform
   when: Time
   working_days: Working days
