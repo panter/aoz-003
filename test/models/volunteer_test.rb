@@ -2,7 +2,7 @@ require 'test_helper'
 
 class VolunteerTest < ActiveSupport::TestCase
   def setup
-    @volunteer = build :volunteer
+    @volunteer = create :volunteer, :with_language_skills
   end
 
   test 'valid factory' do

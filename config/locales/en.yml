@@ -251,6 +251,12 @@ en:
         gender:
           female: Female
           male: Male
+        language_skills:
+          level:
+            native_speaker: Native speaker
+            fluent: Fluent
+            good: Good
+            basic: Basic
         region:
           canton: Canton
           city: City

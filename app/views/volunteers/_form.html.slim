@@ -47,6 +47,15 @@
 
   .row
     .col-xs-12
+      h3= t('language_skills')
+      #languages
+        = f.simple_fields_for :language_skills do |language|
+          = render 'language_skill_fields', f: language, speaker: @volunteer
+        .links
+          = link_to_add_association t('add_language'), f, :language_skills, class: 'btn btn-success'
+
+  .row
+    .col-xs-12
       = f.input :profession
       = f.input :education
       = f.input :motivation, label: t('your_motivation')

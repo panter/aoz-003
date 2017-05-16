@@ -38,6 +38,9 @@
             td= t_attr(:phone)
             td= @volunteer.phone
           tr
+            td= t('language_skills')
+            td= render 'language_skill_show', speaker: @volunteer
+          tr
             td= t_attr(:profession)
             td= @volunteer.profession
           tr
