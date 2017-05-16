@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512150541) do
+ActiveRecord::Schema.define(version: 20170516204542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,14 +44,15 @@ ActiveRecord::Schema.define(version: 20170512150541) do
   end
 
   create_table "language_skills", force: :cascade do |t|
-    t.bigint "client_id"
+    t.bigint "languageable_id"
     t.string "language"
     t.string "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["client_id"], name: "index_language_skills_on_client_id"
+    t.string "languageable_type"
     t.index ["deleted_at"], name: "index_language_skills_on_deleted_at"
+    t.index ["languageable_id"], name: "index_language_skills_on_languageable_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -176,7 +177,6 @@ ActiveRecord::Schema.define(version: 20170512150541) do
   end
 
   add_foreign_key "clients", "users"
-  add_foreign_key "language_skills", "clients"
   add_foreign_key "profiles", "users"
   add_foreign_key "relatives", "clients"
   add_foreign_key "schedules", "clients"

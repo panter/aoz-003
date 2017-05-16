@@ -1,5 +1,5 @@
 class LanguageSkill < ApplicationRecord
-  belongs_to :client
+  belongs_to :languageable, polymorphic: true, optional: true
 
   def language_name
     return '' if language.blank?
