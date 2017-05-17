@@ -23,6 +23,8 @@ de:
               blank: darf nicht leer sein
             avatar_content_type:
               invalid: ist ungültig
+            avatar:
+              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
         volunteer:
           attributes:
             avatar_content_type:
