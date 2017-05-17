@@ -1,6 +1,6 @@
-- if @client.relatives.any?
+- if relative.relatives.any?
   dl.dl-horizontal
-    - @client.relatives.each do |rel|
+    - relative.relatives.each do |rel|
       dt #{rel.first_name} #{rel.last_name}
       dd
         = l(rel.date_of_birth) if rel.date_of_birth

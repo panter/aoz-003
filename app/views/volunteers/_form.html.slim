@@ -56,6 +56,15 @@
 
   .row
     .col-xs-12
+      h3= t('relatives')
+      #relatives
+        = f.simple_fields_for :relatives do |relative|
+          = render 'relative_fields', f: relative, relative: @volunteer
+        .links
+          = link_to_add_association t('add_relative'), f, :relatives, class: 'btn btn-success'
+
+  .row
+    .col-xs-12
       = f.input :profession
       = f.input :education
       = f.input :motivation, label: t('your_motivation')
