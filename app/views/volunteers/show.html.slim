@@ -1,9 +1,7 @@
 .row
   .col-xs-12
-    h1
-      = @volunteer.first_name
-      | ,
-      = @volunteer.last_name
+    h1= Volunteer.full_name(@volunteer)
+
 .row
   .col-xs-12
     .table-responsive
