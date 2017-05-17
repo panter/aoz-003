@@ -24,6 +24,12 @@ class VolunteersTest < ApplicationSystemTestCase
     click_on('Add language')
     select('Greek', from: 'Language')
     select('Native speaker', from: 'Level')
+    click_on('Add family member')
+    within '#relatives' do
+      fill_in 'First name', with: 'asdf'
+      fill_in 'Last name', with: 'asdf'
+      select_date page.all('select'), '7', 'May', '1992'
+    end
     fill_in 'Profession', with: 'Developer'
     fill_in 'Education', with: 'CEID'
     fill_in 'What is your motivation to volunteer with migrants?', with: 'asfd'

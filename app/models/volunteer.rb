@@ -4,6 +4,9 @@ class Volunteer < ApplicationRecord
   has_many :language_skills, as: :languageable, dependent: :destroy
   accepts_nested_attributes_for :language_skills, allow_destroy: true
 
+  has_many :relatives, as: :relativeable, dependent: :destroy
+  accepts_nested_attributes_for :relatives, allow_destroy: true
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   validates :first_name, :last_name, :email, presence: true
