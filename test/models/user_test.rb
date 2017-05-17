@@ -59,10 +59,6 @@ class UserTest < ActiveSupport::TestCase
     refute @user_as_department_manager.social_worker?
   end
 
-  context 'associations' do
-    should have_many(:clients)
-  end
-
   test 'record still exists after deletion' do
     user = create :user, :with_profile, role: 'social_worker'
 
