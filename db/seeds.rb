@@ -35,3 +35,9 @@ Volunteer.create(
   last_name: 'Volunteer',
   email: 'volunteer@aoz.ch'
 )
+if Department.count < 1
+  Department.new(
+    contact: Contact.new(name: 'Bogus Department'),
+    user: [User.all.sample]
+  ).save
+end
