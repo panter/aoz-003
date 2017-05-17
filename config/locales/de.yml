@@ -41,6 +41,7 @@ de:
         date_of_birth: Geburtsdatum
         nationality: Nationalität
         permit: Bewilligung
+        email: Email
         gender: Geschlecht
         street: Strasse
         zip: Postleitzahl
