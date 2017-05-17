@@ -16,7 +16,7 @@ nav.navbar.navbar-top
             li= link_to t('users'), users_path
           - if policy(Client).index?
             li= link_to t('clients'), clients_path
-            li= link_to t('volunteers'), volunteers_path
+          li= link_to t('volunteers'), volunteers_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
