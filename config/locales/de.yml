@@ -86,6 +86,7 @@ de:
         last_name: Nachname
         date_of_birth: Geburtsdatum
         gender: Geschlecht
+        email: Email
         avatar: Bild
         street: Strasse
         zip: Postleitzahl
