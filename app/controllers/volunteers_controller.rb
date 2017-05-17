@@ -49,6 +49,9 @@ class VolunteersController < ApplicationController
       :german_course, :adults, :teenagers, :children, :region,
       language_skills_attributes: [
         :id, :language, :level, :_destroy
+      ],
+      relatives_attributes: [
+        :id, :first_name, :last_name, :date_of_birth, :relation, :_destroy
       ])
   end
 end

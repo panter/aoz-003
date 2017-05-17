@@ -59,7 +59,7 @@
           h3= t('relatives')
           #relatives
             = f.simple_fields_for :relatives do |relative|
-              = render 'relative_fields', f: relative
+              = render 'relative_fields', f: relative, relative: @client
             .links
               = link_to_add_association t('add_relative'), f, :relatives, class: 'btn btn-success'
 
