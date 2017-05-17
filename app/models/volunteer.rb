@@ -7,6 +7,9 @@ class Volunteer < ApplicationRecord
   has_many :relatives, as: :relativeable, dependent: :destroy
   accepts_nested_attributes_for :relatives, allow_destroy: true
 
+  has_many :schedules, as: :scheduleable, dependent: :destroy
+  accepts_nested_attributes_for :schedules
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   validates :first_name, :last_name, :email, presence: true
