@@ -30,9 +30,13 @@ Style/AsciiComments:
   Enabled: false
 Metrics/LineLength:
   Max: 100
+Metrics/ClassLength:
+  Exclude:
+    - 'test/*'
 Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
+    - 'test/*'
 Metrics/AbcSize:
   Exclude:
     - 'db/migrate/*'
