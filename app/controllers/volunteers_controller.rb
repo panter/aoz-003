@@ -15,30 +15,24 @@ class VolunteersController < ApplicationController
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
-    respond_to do |format|
-      if @volunteer.save
-        format.html { redirect_to @volunteer, notice: t('volunteer_created') }
-      else
-        format.html { render :new }
-      end
+    if @volunteer.save
+      redirect_to @volunteer, notice: t('volunteer_created')
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @volunteer.update(volunteer_params)
-        format.html { redirect_to @volunteer, notice: t('volunteer_updated') }
-      else
-        format.html { render :edit }
-      end
+    if @volunteer.update(volunteer_params)
+      redirect_to @volunteer, notice: t('volunteer_updated')
+    else
+      render :edit
     end
   end
 
   def destroy
     @volunteer.destroy
-    respond_to do |format|
-      format.html { redirect_to volunteers_url, notice: t('volunteer_destroyed') }
-    end
+    redirect_to volunteers_url, notice: t('volunteer_destroyed')
   end
 
   private
