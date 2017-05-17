@@ -29,3 +29,9 @@ User.all.each do |user|
     client.user = user
   end
 end
+
+Volunteer.create(
+  first_name: 'First',
+  last_name: 'Volunteer',
+  email: 'volunteer@aoz.ch'
+)
