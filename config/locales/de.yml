@@ -33,7 +33,7 @@ de:
         contact_phones: Telefonnummern
         extended: Adresszusatz
         name: Name
-        postal_code: Postleitzahl
+        postal_code: PLZ
         street: Strasse
       contact_email:
         body: Email
@@ -48,7 +48,7 @@ de:
         city: Ort
         contact: :activerecord.models.contact
         department_manager: Standort Betreuer
-        name: Standort Name
+        name: Name
         user: :activerecord.models.user
       language_skill:
         client: :activerecord.models.client
