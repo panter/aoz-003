@@ -35,36 +35,30 @@ class DepartmentsTest < ApplicationSystemTestCase
     login_as @user
     visit departments_path
     click_link 'New Department'
-
     assert page.has_select? 'User'
     within '.department_user' do
       User.department_assocable.each do |u|
         select u.email
       end
     end
-
     fill_in 'Name', with: 'Bogus Hog Department'
     fill_in 'Street', with: 'bogus street 999'
     fill_in 'Extended address', with: 'bogus ext. addr.'
-    fill_in 'Postal Code', with: '9999'
+    fill_in 'Zip', with: '9999'
     fill_in 'City', with: 'bogus town'
     click_button 'Create Department'
-
     assert page.has_text? 'Department was successfully created.'
     assert page.has_text? 'Bogus Hog Department'
     assert page.has_text? 'Street'
     assert page.has_text? 'Extended address'
     assert page.has_text? 'City'
-
     assert page.has_text? 'bogus street 999'
     assert page.has_text? 'bogus ext. addr.'
     assert page.has_text? '9999'
     assert page.has_text? 'bogus town'
-
     User.department_assocable.each do |user|
       assert page.has_text? user.email
     end
-
     assert page.has_link? 'Edit'
     assert page.has_link? 'Back'
   end
@@ -94,7 +88,6 @@ class DepartmentsTest < ApplicationSystemTestCase
         fill_in 'Phone number', with: '88888 88 88 88'
       end
     end
-
     click_button 'Update Department'
     assert page.has_text? '88888 88 88 88'
   end
