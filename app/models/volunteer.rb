@@ -28,4 +28,8 @@ class Volunteer < ApplicationRecord
   def self.human_boolean(boolean)
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
   end
+
+  def self.full_name(volunteer)
+    "#{volunteer.first_name}, #{volunteer.last_name}"
+  end
 end
