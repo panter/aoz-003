@@ -9,6 +9,7 @@ class VolunteersController < ApplicationController
 
   def new
     @volunteer = Volunteer.new
+    @volunteer.schedules << Schedule.build
   end
 
   def edit; end
@@ -52,6 +53,9 @@ class VolunteersController < ApplicationController
       ],
       relatives_attributes: [
         :id, :first_name, :last_name, :date_of_birth, :relation, :_destroy
+      ],
+      schedules_attributes: [
+        :id, :day, :time, :available
       ])
   end
 end
