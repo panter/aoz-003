@@ -14,11 +14,7 @@ FactoryGirl.define do
     end
     trait :with_departments do
       department do
-        [
-          FactoryGirl.create(:department),
-          FactoryGirl.create(:department),
-          FactoryGirl.create(:department)
-        ]
+        Array.new(3).map { |_n| create(:department) }
       end
     end
   end
