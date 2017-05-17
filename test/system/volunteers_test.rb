@@ -43,6 +43,7 @@ class VolunteersTest < ApplicationSystemTestCase
     page.check('volunteer_training')
     page.check('volunteer_adults')
     page.choose('volunteer_region_canton')
+    page.check('volunteer_schedules_attributes_17_available')
 
     click_button 'Create Volunteer'
     assert page.has_text? 'Volunteer was successfully created.'
