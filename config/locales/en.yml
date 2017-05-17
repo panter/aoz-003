@@ -11,7 +11,7 @@ en:
         contact_phones: Contact phones
         extended: Extended address
         name: Name
-        postal_code: Postal Code
+        postal_code: Zip
         street: Street
       contact_email:
         body: Email address

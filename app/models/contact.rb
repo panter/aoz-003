@@ -8,6 +8,10 @@ class Contact < ApplicationRecord
   has_many :contact_phones
   accepts_nested_attributes_for :contact_phones, allow_destroy: true
 
+  def to_s
+    name
+  end
+
   def of_department?
     contactable_type == 'Department'
   end
