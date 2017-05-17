@@ -25,12 +25,10 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: t('profile_updated') }
-      else
-        format.html { render :edit } unless @profile.update(profile_params)
-      end
+    if @profile.update(profile_params)
+      redirect_to @profile, notice: t('profile_updated')
+    else
+      render :edit unless @profile.update(profile_params)
     end
     authorize @profile
   end
