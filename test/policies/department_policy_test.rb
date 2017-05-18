@@ -16,9 +16,25 @@ class DepartmentPolicyTest < ActiveSupport::TestCase
     assert_permit @superadmin, Department.new(department_params), 'create?', 'new?'
   end
 
-  test 'only superadmin can access departments' do
-    assert_permit @superadmin, @department, 'index?', 'show?', 'edit?', 'update?', 'destroy?'
-    refute_permit @social_worker, @department, 'index?', 'show?', 'edit?', 'update?', 'destroy?'
-    refute_permit @department_manager, @department, 'index?', 'edit?', 'update?', 'destroy?'
+  test 'department access rights for superadmin, socialworker and department_manager' do
+    assert_permit(
+      @superadmin, @department,
+      'index?', 'show?', 'new?', 'edit?', 'create?', 'update?', 'destroy?'
+    )
+    refute_permit(
+      @social_worker, @department,
+      'index?', 'show?', 'new?', 'edit?', 'create?', 'update?', 'destroy?'
+    )
+  end
+
+  test 'departmentmanager can edit and show the associeted department' do
+    refute_permit(
+      @department_manager, @department,
+      'index?', 'show?', 'new?', 'edit?', 'create?', 'update?', 'destroy?'
+    )
+    assert_permit(
+      @department_manager, @department_manager.department.first,
+      'show?', 'edit?', 'update?'
+    )
   end
 end
