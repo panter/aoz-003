@@ -15,7 +15,6 @@
         .col-xs-12.col-md-6
           = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
                                  end_year: Date.today.year,
-                                 order: [:day, :month, :year],
                                  include_blank: true
 
         .col-xs-12.col-md-6
@@ -25,7 +24,7 @@
                     wrapper: :vertical_radio_and_checkboxes
       .row
         .col-xs-12.col-md-6
-          = f.input :nationality, collection: countries
+          = f.input :nationality, as: :country
         .col-xs-12.col-md-6
           = f.input :permit,
                     collection: permit_collection,

@@ -22,26 +22,22 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params.merge(password: Devise.friendly_token)
-    respond_to do |format|
-      if @user.save
-        @user.invite!
-        format.html { redirect_to users_path, notice: t('invite_sent', email: @user.email) }
-      else
-        format.html { render :new }
-      end
+    if @user.save
+      @user.invite!
+      redirect_to users_path, notice: t('invite_sent', email: @user.email)
+    else
+      render :new
     end
     authorize @user
   end
 
   # only used to update the current user
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        bypass_sign_in @user
-        format.html { redirect_to @user, notice: t('profile_updated') }
-      else
-        format.html { render :edit }
-      end
+    if @user.update(user_params)
+      bypass_sign_in @user
+      redirect_to @user, notice: t('profile_updated')
+    else
+      render :edit
     end
     authorize @user
   end
@@ -49,9 +45,7 @@ class UsersController < ApplicationController
   def destroy
     authorize @user
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: t('user_destroyed', email: @user.email) }
-    end
+    redirect_to users_url, notice: t('user_destroyed', email: @user.email)
   end
 
   private
