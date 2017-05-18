@@ -30,14 +30,13 @@ User.all.each do |user|
   end
 end
 
-Volunteer.create(
-  first_name: 'First',
-  last_name: 'Volunteer',
-  email: 'volunteer@aoz.ch'
-)
 if Department.count < 1
   Department.new(
     contact: Contact.new(name: 'Bogus Department'),
     user: [User.all.sample]
   ).save
+
+Volunteer.find_or_create_by!(first_name: 'First', last_name: 'Volunteer',
+  email: 'volunteer@example.com') do |volunteer|
+  volunteer.schedules << Schedule.build
 end
