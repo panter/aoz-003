@@ -6,10 +6,10 @@ FactoryGirl.define do
     city 'Zürich'
     postal_code '8047'
     contact_emails do |e|
-      Array.new(3).map { |_n| e.association(:contact_email) }
+      Array.new(3).map { e.association(:contact_email) }
     end
     contact_phones do |p|
-      Array.new(3).map { |_n| p.association(:contact_phone) }
+      Array.new(3).map { p.association(:contact_phone) }
     end
   end
 end
