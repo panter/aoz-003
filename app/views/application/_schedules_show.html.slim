@@ -1,0 +1,23 @@
+.row
+  .col-xs-12
+    h3= t('schedule')
+.row
+  .col-xs-12
+    table.table.table-striped
+      thead
+        tr
+          th= t('when')
+          - Schedule.days.each do |day|
+            th.text-center
+              = t("weekdays.#{day}")
+      tbody
+        - participant.schedules.group_by(&:time).each do |time, schedules|
+          tr
+            td
+              = t("times.#{time}")
+            - schedules.each do |schedule|
+              td.text-center
+                - if schedule.available
+                  i.glyphicon.glyphicon-ok.text-success
+                - else
+                  i.glyphicon.glyphicon-remove.text-danger
