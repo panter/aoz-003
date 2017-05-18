@@ -6,13 +6,13 @@ FactoryGirl.define do
 
     trait :with_relatives do
       relatives do |relative|
-        1.step(2).to_a.map { |_n| relative.association(:relative) }
+        Array.new(2) { relative.association(:relative) }
       end
     end
 
     trait :with_language_skills do
       language_skills do |language_skill|
-        1.step(2).to_a.map { |_n| language_skill.association(:language_skill) }
+        Array.new(2) { language_skill.association(:language_skill) }
       end
     end
   end
