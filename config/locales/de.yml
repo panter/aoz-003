@@ -176,6 +176,9 @@ de:
   create_client: KlientIn erfassen
   create_profile: Profil erfassen
   create_user: Benutzer erfassen
+  crud:
+    title:
+      add: '%{model} hinzufügen'
   date:
     formats:
       default:

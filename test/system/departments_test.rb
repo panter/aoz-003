@@ -81,7 +81,7 @@ class DepartmentsTest < ApplicationSystemTestCase
 
     within '#phones' do
       within '.links' do
-        click_link 'New Phone number'
+        click_link 'Add Phone number'
       end
       within find_all('.nested-fields').last do
         assert page.has_field? 'Phone number'
