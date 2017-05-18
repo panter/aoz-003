@@ -6,7 +6,7 @@ class ContactEmailTest < ActiveSupport::TestCase
   end
 
   test 'contact email validates presence of body' do
-    refute @contact_email .valid?
+    refute @contact_email.valid?
     @contact_email.body = 'asdfasdfasdf'
     refute @contact_email.valid?
     @contact_email.body = 'someone@anywhere.com'

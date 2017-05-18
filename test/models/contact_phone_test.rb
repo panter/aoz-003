@@ -6,7 +6,7 @@ class ContactPhoneTest < ActiveSupport::TestCase
   end
 
   test 'contact email validates presence of body' do
-    refute @contact_phone .valid?
+    refute @contact_phone.valid?
     @contact_phone.body = 'asdfasdfasdf'
     refute @contact_phone.valid?
     @contact_phone.body = '+41 44 78 22 20'

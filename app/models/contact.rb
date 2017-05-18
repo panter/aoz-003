@@ -1,7 +1,7 @@
 class Contact < ApplicationRecord
   belongs_to :contactable, polymorphic: true, optional: true
 
-  validates :name, presence: true, if: :of_department?
+  validates :name, presence: true, if: :department?
 
   has_many :contact_emails
   accepts_nested_attributes_for :contact_emails, allow_destroy: true
@@ -12,7 +12,7 @@ class Contact < ApplicationRecord
     name
   end
 
-  def of_department?
+  def department?
     contactable_type == 'Department'
   end
 end
