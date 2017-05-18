@@ -25,7 +25,7 @@ de:
         schedules: Fahrpläne
         state: Status
         street: Strasse
-        user: :activerecord.models.user
+        user: User
         zip: Postleitzahl
       contact:
         city: Ort
@@ -37,38 +37,33 @@ de:
         street: Strasse
       contact_email:
         body: Email
-        contact: :activerecord.models.contact
         label: Art
       contact_phone:
         body: Telefonnummer
-        contact: :activerecord.models.contact
         label: Art
       department:
         associated_users: Assozierte Benutzer
         city: Ort
-        contact: :activerecord.models.contact
         department_manager: Standort Betreuer
         name: Name
-        user: :activerecord.models.user
+        user: User
       language_skill:
-        client: :activerecord.models.client
         language: Sprache
         level: Niveau
       relative:
-        client: :activerecord.models.client
         date_of_birth: Geburtsdatum
         first_name: Vorname
         last_name: Nachname
         relation: Verwandtschaftsbeziehung
       schedule:
         available: Verfügbar
-        client: :activerecord.models.client
         day: Tag
         time: Zeit
       user:
         clients: Kunden
-        department: :activerecord.models.department
+        department: Standort
         email: Email
+        profile: Profil
         role: Rolle
       profile:
         address: Adresse
@@ -202,9 +197,9 @@ de:
       - November
       - Dezember
   department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
-  department_created: 'Der Standort wurde erfolgreich erstellt.'
-  department_destroyed: 'Der Standort wurde erfolgreich gelöscht.'
-  department_updated: 'Der Standort wurde erfolgreich geändert.'
+  department_created: Der Standort wurde erfolgreich erstellt.
+  department_destroyed: Der Standort wurde erfolgreich gelöscht.
+  department_updated: Der Standort wurde erfolgreich geändert.
   departments: Standorte
   devise:
     confirmations:
@@ -324,13 +319,13 @@ de:
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
-  registered_by: 'SozialberaterIn'
+  registered_by: SozialberaterIn
   relatives: Verwandte
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   role:
-    department_manager: 'Standortverantwortliche/er'
+    department_manager: Standortverantwortliche/er
     social_worker: SozialarbeiterIn
     superadmin: Superadmin
   schedule: Zeitplan
