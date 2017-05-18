@@ -1,0 +1,7 @@
+.section
+  .row
+    .col-xs-12.centered.columns.text-center
+      h1= t('thank_you')
+
+      p= t('application_submitted', email: Volunteer.last.email)
+      p= t('get_back')
