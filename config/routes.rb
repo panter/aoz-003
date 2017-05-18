@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  resources :volunteers
+  resources :volunteer_applications, only: [:new, :create] do
+    get :thanks, on: :collection
+  end
 
   devise_for :users
 
-  resources :departments
+  resources :volunteers
   resources :users
   resources :clients
   resources :departments
