@@ -69,6 +69,9 @@ en:
   create_client: Create client
   create_profile: Create profile
   create_user: Create user
+  crud:
+    title:
+      add: 'Add %{model}'
   department_created: Department was successfully created.
   departments: Departments
   devise:

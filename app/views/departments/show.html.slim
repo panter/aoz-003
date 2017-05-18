@@ -42,5 +42,7 @@
 
 .row
   .col-xs-12
-    p= link_to t_action(:edit), edit_department_path(@department), class: 'btn btn-default'
-    p= link_to t(:back), departments_path, class: 'btn btn-default'
+    = link_to t_action(:edit), edit_department_path(@department), class: 'btn btn-default'
+.row
+  .col-xs-12
+    = link_to t(:back), departments_path, class: 'btn btn-default'

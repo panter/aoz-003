@@ -1,5 +1,3 @@
-= f.hidden_field :contactable_id
-= f.hidden_field :contactable_type
 .row
   .col-xs-12.col-md-6= f.input :name
 
@@ -26,11 +24,11 @@
       = f.simple_fields_for :contact_emails do |e|
         = render 'contact_email_fields', f: e
       .links
-        = link_to_add_association t_title(:create, ContactEmail), f, :contact_emails, class: 'btn btn-success'
+        = link_to_add_association t_title(:add, ContactEmail), f, :contact_emails, class: 'btn btn-xs btn-default'
 .row
   .col-xs-12
     #phones
       = f.simple_fields_for :contact_phones do |e|
         = render 'contact_phone_fields', f: e
       .links
-        = link_to_add_association t_title(:create, ContactPhone), f, :contact_phones, class: 'btn btn-success'
+        = link_to_add_association t_title(:add, ContactPhone), f, :contact_phones, class: 'btn btn-xs btn-default'
