@@ -2,28 +2,28 @@ require 'application_system_test_case'
 
 class DepartmentsTest < ApplicationSystemTestCase
   def setup
-    @user = create :user, :with_profile, :with_clients,
+    @superadmin = create :user, :with_profile, :with_clients,
       :with_departments, role: 'superadmin'
-    @user_as_social_worker = create :user, :with_profile, :with_clients,
+    @social_worker = create :user, :with_profile, :with_clients,
       :with_departments, role: 'social_worker'
   end
 
-  test 'superadmin should see departmens link in navigation' do
-    login_as @user
+  test 'superadmin should see departments link in navigation' do
+    login_as @superadmin
     visit root_path
     assert page.has_link? 'Departments'
   end
 
-  test 'other users should not see departmens link in navigation' do
-    login_as @user_as_social_worker
+  test 'other users should not see departments link in navigation' do
+    login_as @social_worker
     visit root_path
     refute page.has_link? 'Departments'
   end
 
-  test 'superadmin can see all departments in departmens_path' do
-    login_as @user
+  test 'superadmin can see all departments in departments_path' do
+    login_as @superadmin
     visit departments_path
-    Department.all.each do |d|
+    Department.all.sample do |d|
       assert page.has_text? d.contact.name
       assert page.has_link? 'Show', href: department_path(d.id)
       assert page.has_link? 'Edit', href: edit_department_path(d.id)
@@ -32,7 +32,7 @@ class DepartmentsTest < ApplicationSystemTestCase
   end
 
   test 'superadmin can create department' do
-    login_as @user
+    login_as @superadmin
     visit departments_path
     click_link 'New Department'
     assert page.has_select? 'User'
@@ -64,7 +64,7 @@ class DepartmentsTest < ApplicationSystemTestCase
   end
 
   test 'superadmin can update a department with additional email and fax number' do
-    login_as @user
+    login_as @superadmin
     visit departments_path
     click_link 'Edit', href: edit_department_path(Department.first.id)
     within '#emails' do
@@ -96,7 +96,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     department = Department.first
     delete_email = department.contact.contact_emails.last.body
     delete_phone = department.contact.contact_phones.last.body
-    login_as @user
+    login_as @superadmin
     visit departments_path
     click_link 'Show', href: department_path(department.id)
     assert page.has_link? delete_email
