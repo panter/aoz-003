@@ -69,9 +69,9 @@ class DepartmentsTest < ApplicationSystemTestCase
     click_link 'Edit', href: edit_department_path(Department.first.id)
     within '#emails' do
       within '.links' do
-        click_link 'New Email address'
+        click_link 'Add Email address'
       end
-      within find_all('.nested-email-fields').last do
+      within find_all('.nested-fields').last do
         fill_in 'Email address', with: 'hocusbocus@nowhere.com'
       end
     end
@@ -83,7 +83,7 @@ class DepartmentsTest < ApplicationSystemTestCase
       within '.links' do
         click_link 'New Phone number'
       end
-      within find_all('.nested-phone-fields').last do
+      within find_all('.nested-fields').last do
         assert page.has_field? 'Phone number'
         fill_in 'Phone number', with: '88888 88 88 88'
       end
@@ -103,7 +103,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     assert page.has_text? delete_phone
     click_link 'Edit'
     within '#emails' do
-      within find_all('.nested-email-fields').last do
+      within find_all('.nested-fields').last do
         assert page.has_field? 'Email address', with: delete_email
         click_link 'Delete Email address'
       end
@@ -112,7 +112,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     refute page.has_link? delete_email
     click_link 'Edit'
     within '#phones' do
-      within find_all('.nested-phone-fields').last do
+      within find_all('.nested-fields').last do
         assert page.has_field? 'Phone number', with: delete_phone
         click_link 'Delete Phone number'
       end

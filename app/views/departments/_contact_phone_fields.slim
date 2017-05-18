@@ -1,4 +1,4 @@
-.nested-phone-fields
+.nested-fields
   .row
     .col-xs-12.col-md-8
       = f.input :body, as: :tel
@@ -7,4 +7,4 @@
       = f.input :label, collection: ContactPhone.label_collection, include_blank: true
 
     .col-xs-12.col-md-12
-      = link_to_remove_association t_title(:destroy, ContactPhone), f, { wrapper_class: 'nested-phone-fields', class: 'btn btn-danger' }
+      = link_to_remove_association t_title(:destroy, ContactPhone), f, class: 'btn btn-xs btn-danger'

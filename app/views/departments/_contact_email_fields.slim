@@ -1,4 +1,4 @@
-.nested-email-fields
+.nested-fields
   .row
     .col-xs-12.col-md-8
       = f.input :body, as: :email
@@ -7,4 +7,4 @@
       = f.input :label, collection: ContactEmail.label_collection, include_blank: true
 
     .col-xs-12.col-md-12
-      = link_to_remove_association t_title(:destroy, ContactEmail), f, { wrapper_class: 'nested-email-fields', class: 'btn btn-danger' }
+      = link_to_remove_association t_title(:destroy, ContactEmail), f, class: 'btn btn-xs btn-danger'
