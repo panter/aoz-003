@@ -22,38 +22,26 @@ class DepartmentsController < ApplicationController
   def create
     @department = Department.new(department_params)
     authorize @department
-    respond_to do |format|
-      if @department.save
-        format.html do
-          redirect_to @department, notice: t('department_created')
-        end
-      else
-        format.html { render :new }
-      end
+    if @department.save
+      redirect_to @department, notice: t('department_created')
+    else
+      render :new
     end
   end
 
   def update
     authorize @department
-    respond_to do |format|
-      if @department.update(department_params)
-        format.html do
-          redirect_to @department, notice: t('department_updated')
-        end
-      else
-        format.html { render :edit }
-      end
+    if @department.update(department_params)
+      redirect_to @department, notice: t('department_updated')
+    else
+      render :edit
     end
   end
 
   def destroy
     authorize @department
     @department.destroy
-    respond_to do |format|
-      format.html do
-        redirect_to departments_url, notice: t('department_destroyed')
-      end
-    end
+    redirect_to departments_url, notice: t('department_destroyed')
   end
 
   private
