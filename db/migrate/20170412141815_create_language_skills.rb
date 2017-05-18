@@ -1,7 +1,7 @@
 class CreateLanguageSkills < ActiveRecord::Migration[5.1]
   def change
     create_table :language_skills do |t|
-      t.references :client
+      t.references :client, foreign_key: true
       t.string :language
       t.string :level
 
