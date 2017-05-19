@@ -78,6 +78,7 @@ class DepartmentsTest < ApplicationSystemTestCase
       end
     end
     click_button 'Update Department'
+    assert page.has_text? 'Department was successfully updated.'
     assert page.has_link? 'hocusbocus@nowhere.com'
     click_link 'Edit'
 
@@ -91,6 +92,7 @@ class DepartmentsTest < ApplicationSystemTestCase
       end
     end
     click_button 'Update Department'
+    assert page.has_text? 'Department was successfully updated.'
     assert page.has_text? '88888 88 88 88'
   end
 
@@ -111,6 +113,7 @@ class DepartmentsTest < ApplicationSystemTestCase
       end
     end
     click_button 'Update Department'
+    assert page.has_text? 'Department was successfully updated.'
     refute page.has_link? delete_email
     click_link 'Edit'
     within '#phones' do
@@ -120,6 +123,7 @@ class DepartmentsTest < ApplicationSystemTestCase
       end
     end
     click_button 'Update Department'
+    assert page.has_text? 'Department was successfully updated.'
     refute page.has_text? delete_phone
   end
 

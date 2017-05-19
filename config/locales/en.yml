@@ -77,6 +77,7 @@ en:
       - :month
       - :year
   department_created: Department was successfully created.
+  department_updated: Department was successfully updated.
   departments: Departments
   devise:
     confirmations:
