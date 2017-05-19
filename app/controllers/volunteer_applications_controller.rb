@@ -7,8 +7,8 @@ class VolunteerApplicationsController < ApplicationController
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
-    if @volunteer.save!
-      redirect_to action: :thanks
+    if @volunteer.save
+      redirect_to thanks_volunteer_applications_url
     else
       render :new
     end
