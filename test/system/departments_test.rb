@@ -159,4 +159,14 @@ class DepartmentsTest < ApplicationSystemTestCase
     assert page.has_link? 'changed@email.com'
     assert page.has_text? '++888 88 88 9999 888'
   end
+
+  test 'After logging in as Department Manager he should see his department' do
+    login_as @department_manager
+    visit root_path
+    her_department = @department_manager.department.first
+    assert page.has_text? her_department.contact.name
+    if her_department.contact.street.present?
+      assert page.has_text? her_department.contact.street
+    end
+  end
 end
