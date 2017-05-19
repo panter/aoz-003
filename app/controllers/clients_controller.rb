@@ -1,4 +1,6 @@
 class ClientsController < ApplicationController
+  include NestedAttributes
+
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -59,19 +61,11 @@ class ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(
-      :id, :first_name, :last_name, :date_of_birth, :nationality, :permit, :gender,
-      :street, :zip, :city, :phone, :email, :goals, :education, :hobbies,
+    params.require(:client).permit(:id, :first_name, :last_name, :date_of_birth, :nationality,
+      :permit, :gender, :street, :zip, :city, :phone, :email, :goals, :education, :hobbies,
       :interests, :state, :comments, :competent_authority, :involved_authority, :user_id,
-      language_skills_attributes: [
-        :id, :language, :level, :_destroy
-      ],
-      relatives_attributes: [
-        :id, :first_name, :last_name, :date_of_birth, :relation, :_destroy
-      ],
-      schedules_attributes: [
-        :id, :day, :time, :available
-      ]
-    )
+      language_skills_attributes: language_skills_attributes,
+      relatives_attributes: relatives_attributes,
+      schedules_attributes: schedules_attributes)
   end
 end

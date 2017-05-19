@@ -1,4 +1,5 @@
 class VolunteersController < ApplicationController
+  include NestedAttributes
   before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -48,14 +49,8 @@ class VolunteersController < ApplicationController
       :education, :motivation, :experience, :expectations, :strengths, :skills, :interests, :state,
       :duration, :man, :woman, :family, :kid, :sport, :creative, :music, :culture, :training,
       :german_course, :adults, :teenagers, :children, :region,
-      language_skills_attributes: [
-        :id, :language, :level, :_destroy
-      ],
-      relatives_attributes: [
-        :id, :first_name, :last_name, :date_of_birth, :relation, :_destroy
-      ],
-      schedules_attributes: [
-        :id, :day, :time, :available
-      ])
+      language_skills_attributes: language_skills_attributes,
+      relatives_attributes: relatives_attributes,
+      schedules_attributes: schedules_attributes)
   end
 end
