@@ -32,6 +32,10 @@ class User < ApplicationRecord
     superadmin? || department_manager?
   end
 
+  def department?
+    department_manager? && department.first.present?
+  end
+
   def self.create_user_and_send_password_reset(email:, role:)
     new_user = User.new(
       email: email, password: Devise.friendly_token, role: role

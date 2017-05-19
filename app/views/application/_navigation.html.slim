@@ -19,6 +19,8 @@ nav.navbar.navbar-top
           li= link_to t('volunteers'), volunteers_path
           - if policy(Department).index?
             li= link_to t('departments'), departments_path
+          - if current_user.department?
+            li= link_to t_model(Department), department_path(current_user.department.first.id)
         ul.nav.navbar-nav.navbar-right
           li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
