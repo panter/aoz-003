@@ -60,7 +60,7 @@
 
   .row
     .col-xs-12
-      = f.input :state
+      = f.input :state, collection: Volunteer.state_collection
 
 - if policy(Volunteer).destroy?
   .row
