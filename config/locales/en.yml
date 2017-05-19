@@ -1,16 +1,5 @@
 ---
 en:
-  accompaniment:
-    creative: Creative
-    culture: Culture
-    family: Family
-    german_course: German course
-    kid: Kid
-    man: Man
-    music: Music
-    sport: Sport
-    training: Education
-    woman: Woman
   activerecord:
     attributes:
       client:
@@ -34,9 +23,11 @@ en:
         department: Department
         email: Email
       volunteer:
+        full_name: Name
         duration: Duration of the accompaniment
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
+        single_accompaniment: Single accompaniment
     models:
       client: Client
       contact: Contact
@@ -67,7 +58,6 @@ en:
   create_client: Create client
   create_profile: Create profile
   create_user: Create user
-  create_volunteer: Create Volunteer
   crud:
     title:
       add: 'Add %{model}'
@@ -233,6 +223,15 @@ en:
   simple_form:
     error_notification:
       default_message: 'Please review the problems below:'
+    labels:
+      volunteer:
+        expectations: What do you expect from a person who would accompany you / your volunteer work?
+        experience: Do you already have experience with voluntary work?
+        interests: What are your most important leisure interests?
+        motivation: What is your motivation to volunteer with migrants?
+        region: In which region can you imagine your employment?
+        skills: Professional skills that you could bring?
+        strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
     "no": 'No'
     options:
       client:
@@ -278,16 +277,16 @@ en:
           other: Other
           us: by us before / after conversation
         state:
-          accepted: Accepted
-          inactive: Inactive
-          interested: Interested
-          rejected: Rejected
+          active: active / participating
+          finished: resigned
+          registered: intrested / registered
+          rejected: rejected
+          reserved: contacted / invited to meeting
     placeholders:
     required:
       mark: '*'
       text: 'required'
     "yes": 'Yes'
-  single_accompaniment: Single accompaniment
   state:
     accepted: Accepted
     active: Active
@@ -314,9 +313,9 @@ en:
   users: Users
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Application
-  volunteer_created: 'Volunteer was successfully created.'
-  volunteer_destroyed: 'Volunteer was successfully deleted.'
-  volunteer_updated: 'Volunteer was successfully updated.'
+  volunteer_created: Volunteer was successfully created.
+  volunteer_destroyed: Volunteer was successfully deleted.
+  volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to apply as a volunteer?
   weekdays:
@@ -330,9 +329,4 @@ en:
   when: Time
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
-  your_experience: Do you already have experience with voluntary work?
-  your_interests: What are your most important leisure interests?
-  your_motivation: What is your motivation to volunteer with migrants?
   your_region: In which region can you imagine your employment?
-  your_skills: Professional skills that you could bring?
-  your_strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)

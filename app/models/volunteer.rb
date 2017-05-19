@@ -64,4 +64,8 @@ class Volunteer < ApplicationRecord
   def self.rejection_collection
     [:us, :her, :other]
   end
+
+  def to_s
+    full_name
+  end
 end
