@@ -67,6 +67,10 @@ class DepartmentPolicy < ApplicationPolicy
     @user.superadmin?
   end
 
+  def manager_with_department?
+    @user.department_manager? && @user.department?
+  end
+
   def update?
     @user.superadmin? || @department.user.include?(@user)
   end
