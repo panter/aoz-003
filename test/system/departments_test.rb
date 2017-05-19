@@ -143,8 +143,6 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Extended address', with: 'Extended address changed'
     fill_in 'Zip', with: 'Zip changed'
     fill_in 'City', with: 'City changed'
-    within '#phones' do
-    end
     within '#emails' do
       within find_all('.nested-fields').first do
         fill_in 'Email address', with: 'changed@email.com'
