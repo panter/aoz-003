@@ -7,11 +7,11 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def after_sign_in_path_for(current_user)
-    if current_user.profile.blank?
-      new_profile_path
-    else
-      root_path
+    return new_profile_path if current_user.profile.blank?
+    if current_user.department?
+      return department_path(current_user.department.first.id)
     end
+    root_path
   end
 
   def home; end
