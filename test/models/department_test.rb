@@ -7,7 +7,5 @@ class DepartmentTest < ActiveSupport::TestCase
 
   test 'department is valid' do
     assert @department.valid?
-    @department.contact.name = ''
-    refute @department.valid?
   end
 end
