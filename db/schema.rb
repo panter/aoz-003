@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518130017) do
+ActiveRecord::Schema.define(version: 20170519123207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20170518130017) do
     t.datetime "deleted_at"
     t.string "languageable_type"
     t.index ["deleted_at"], name: "index_language_skills_on_deleted_at"
-    t.index ["languageable_id"], name: "index_language_skills_on_languageable_id"
+    t.index ["languageable_type", "languageable_id"], name: "index_language_skills_on_languageable_type_and_languageable_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(version: 20170518130017) do
     t.datetime "deleted_at"
     t.string "relativeable_type"
     t.index ["deleted_at"], name: "index_relatives_on_deleted_at"
-    t.index ["relativeable_id"], name: "index_relatives_on_relativeable_id"
+    t.index ["relativeable_type", "relativeable_id"], name: "index_relatives_on_relativeable_type_and_relativeable_id"
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 20170518130017) do
     t.datetime "deleted_at"
     t.string "scheduleable_type"
     t.index ["deleted_at"], name: "index_schedules_on_deleted_at"
-    t.index ["scheduleable_id"], name: "index_schedules_on_scheduleable_id"
+    t.index ["scheduleable_type", "scheduleable_id"], name: "index_schedules_on_scheduleable_type_and_scheduleable_id"
   end
 
   create_table "users", force: :cascade do |t|
