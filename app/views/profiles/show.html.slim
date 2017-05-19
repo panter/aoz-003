@@ -8,7 +8,7 @@
         tbody
           tr
             td= t_attr(:email)
-            td= current_user.email
+            td= mail_to current_user.email
           tr
             td= t_attr(:phone)
             td= @profile.phone
