@@ -1,9 +1,10 @@
-td= t('relatives')
-td
-  - if relative.relatives.any?
-    dl.dl-horizontal
-      - relative.relatives.each do |rel|
-        dt #{rel.first_name} #{rel.last_name}
-        dd
-          = l(rel.date_of_birth) if rel.date_of_birth
-          |, #{rel.relation}
+tr
+  td= t('relatives')
+  td
+    - if relative.relatives.any?
+      dl.dl-horizontal
+        - relative.relatives.each do |rel|
+          dt #{rel.first_name} #{rel.last_name}
+          dd
+            = l(rel.date_of_birth) if rel.date_of_birth
+            |, #{rel.relation}

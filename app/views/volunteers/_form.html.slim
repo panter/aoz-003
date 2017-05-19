@@ -45,11 +45,9 @@
     .col-xs-12.col-md-6
       = f.input :phone
 
-  .row
-    = render 'language_skills/form', f: f, speaker: @volunteer
+  = render 'language_skills/form', f: f, speaker: @volunteer
 
-  .row
-    = render 'relatives/form', f: f, relative: @volunteer
+  = render 'relatives/form', f: f, relative: @volunteer
 
   .row
     .col-xs-12

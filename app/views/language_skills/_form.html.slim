@@ -1,7 +1,8 @@
-.col-xs-12
-  h3= t('language_skills')
-  #languages
-    = f.simple_fields_for :language_skills do |language|
-      = render 'language_skills/fields', f: language, speaker: speaker
-    .links
-      = link_to_add_polymorphic_association t('add_language'), f, :language_skills, class: 'btn btn-success'
+.row
+  .col-xs-12
+    h3= t('language_skills')
+    #languages
+      = f.simple_fields_for :language_skills do |language|
+        = render 'language_skills/fields', f: language, speaker: speaker
+      .links
+        = link_to_add_polymorphic_association t('add_language'), f, :language_skills, class: 'btn btn-success'

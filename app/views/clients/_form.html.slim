@@ -45,11 +45,9 @@
       = f.input :email
       = f.input :phone
 
-      .row
-        = render 'language_skills/form', f: f, speaker: @client
+      = render 'language_skills/form', f: f, speaker: @client
 
-      .row
-        = render 'relatives/form', f: f, relative: @client
+      = render 'relatives/form', f: f, relative: @client
 
       .row
         .col-xs-12
