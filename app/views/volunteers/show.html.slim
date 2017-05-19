@@ -37,8 +37,10 @@
           tr
             td= t_attr(:phone)
             td= @volunteer.phone
-          tr= render 'language_skills/show', speaker: @volunteer
-          tr= render 'relatives/show', relative: @volunteer
+
+          = render 'language_skills/show', speaker: @volunteer
+          = render 'relatives/show', relative: @volunteer
+
           tr
             td= t_attr(:profession)
             td= @volunteer.profession
