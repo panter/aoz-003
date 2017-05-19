@@ -1,6 +1,7 @@
 class Volunteer < ApplicationRecord
   include AssociatableFields
   include FullName
+  include GenderCollection
   include StateCollection
 
   acts_as_paranoid
