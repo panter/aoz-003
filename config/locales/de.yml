@@ -1,5 +1,16 @@
 ---
 de:
+  accompaniment:
+    creative: Kreativ
+    culture: Kultur
+    family: Familie
+    german_course: Deutsch-Kurs
+    kid: Kind
+    man: Mann
+    music: Musik
+    sport: Sport
+    training: Bildung
+    woman: Frau
   activerecord:
     attributes:
       client:
@@ -50,6 +61,18 @@ de:
       language_skill:
         language: Sprache
         level: Niveau
+      profile:
+        address: Adresse
+        avatar: Bild
+        first_name: Vorname
+        friday: Freitag
+        last_name: Nachname
+        monday: Montag
+        phone: Telefonnummer
+        profession: Beruf
+        thursday: Donnerstag
+        tuesday: Dienstag
+        wednesday: Mittwoch
       relative:
         date_of_birth: Geburtsdatum
         first_name: Vorname
@@ -65,55 +88,41 @@ de:
         email: Email
         profile: Profil
         role: Rolle
-      profile:
-        address: Adresse
-        avatar: Bild
-        first_name: Vorname
-        friday: Freitag
-        last_name: Nachname
-        monday: Montag
-        phone: Telefonnummer
-        profession: Beruf
-        thursday: Donnerstag
-        tuesday: Dienstag
-        user: :activerecord.models.user
-        wednesday: Mittwoch
       volunteer:
-        first_name: Vorname
-        last_name: Nachname
-        date_of_birth: Geburtsdatum
-        gender: Geschlecht
-        email: Email
-        avatar: Bild
-        street: Strasse
-        zip: Postleitzahl
-        city: Stadt
-        nationality: Nationalität
         additional_nationality: Zusätzliche Nationalität
+        adults: Erwachsene
+        avatar: Bild
+        children: Kinder
+        city: Stadt
+        creative: Kreativ
+        culture: Kultur
+        date_of_birth: Geburtsdatum
+        duration: Dauer der Begleitung
+        education: Ausbildung
+        email: Email
+        expectations: Erwartungen
+        experience: Erfahrung
+        family: Familie
+        first_name: Vorname
+        gender: Geschlecht
+        german_course: Deutsch-Kurs
+        interests: Interessen
+        kid: Kinder
+        last_name: Nachname
+        man: Mann
+        music: Musik
+        nationality: Nationalität
         phone: Telefonnummer
         profession: Beruf
-        education: Ausbildung
-        experience: Erfahrung
-        expectations: Erwartungen
-        strengths: Stärken
         skills: Kompetenzen
-        interests: Interessen
-        state: Status
-        duration: Dauer der Begleitung
-        man: Mann
-        woman: Frau
-        family: Familie
-        kid: Kinder
         sport: Sport
-        creative: Kreativ
-        music: Musik
-        culture: Kultur
-        training: Bildung
-        german_course: Deutsch-Kurs
-        adults: Erwachsene
+        state: Status
+        street: Strasse
+        strengths: Stärken
         teenagers: Jugendliche
-        children: Kinder
-=======
+        training: Bildung
+        woman: Frau
+        zip: Postleitzahl
     errors:
       models:
         profile:
@@ -139,10 +148,10 @@ de:
               inclusion: ist nicht in der Liste enthalten
         volunteer:
           attributes:
-            avatar_content_type:
-              invalid: ist ungültig
             avatar:
               spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
+            avatar_content_type:
+              invalid: ist ungültig
     models:
       client: Klient
       contact: Kontakt
@@ -171,6 +180,7 @@ de:
   create_client: KlientIn erfassen
   create_profile: Profil erfassen
   create_user: Benutzer erfassen
+  create_volunteer: Freiwillige erfassen
   crud:
     title:
       add: '%{model} hinzufügen'
@@ -178,10 +188,6 @@ de:
     formats:
       default:
         "%d. %B %Y"
-    order:
-      - :day
-      - :month
-      - :year
     month_names:
       -
       - Januar
@@ -196,6 +202,10 @@ de:
       - Oktober
       - November
       - Dezember
+    order:
+      - :day
+      - :month
+      - :year
   department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
   department_created: Der Standort wurde erfolgreich erstellt.
   department_destroyed: Der Standort wurde erfolgreich gelöscht.
@@ -278,6 +288,9 @@ de:
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
+  duration:
+    long: Längerfristig (min 6 Mt.)
+    short: Kurzfristig
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
   errors:
@@ -295,6 +308,7 @@ de:
   gender:
     female: Weiblich
     male: Männlich
+  group_accompaniment: Gruppenangebot
   helpers:
     submit:
       create: '%{model} erfassen'
@@ -304,7 +318,7 @@ de:
       update: '%{model} aktualisieren'
       user:
         create: Benutzer erstellen
-        update: Update login
+        update: Login aktualisieren
   invite_sent: 'Einladung wurde an %{email} verschickt.'
   language_level:
     basic: Grundlagen
@@ -319,6 +333,10 @@ de:
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
+  region:
+    canton: Kanton
+    city: Stadt
+    region: Region
   registered_by: SozialberaterIn
   relatives: Verwandte
   remember_me: Angemeldet bleiben
@@ -344,6 +362,10 @@ de:
           name: Standortname
         user: Assozierte Benutzer
       user:
+        edit:
+          email: Email ändern
+          password: Passwort ändern
+          role: Rolle ändern
         email: Email
         password: Passwort
         role: Rolle
@@ -372,32 +394,33 @@ de:
           reserved: Reserviert
       user:
         role:
+          department_manager: Standort Verantwortliche/r
+          social_worker: SozialarbeiterIn
           superadmin: Superadmin
-          social_worker: Sozialarbeiter
-          department_manager: Standort Leiter
       volunteer:
+        duration:
+          long: Längerfristig (min 6 Mt.)
+          short: Kurzfristig
         gender:
           female: Weiblich
           male: Mänlich
         region:
+          canton: Kanton
           city: Stadt
           region: Region
-          canton: Kanton
-        duration:
-          short: Kurzfristig
-          long: Längerfristig (min 6 Mt.)
-    "yes": 'Ja'
-    "no": 'Nein'
+    placeholders:
     required:
       mark: '*'
       text: notwendig
     "yes": 'Ja'
+  single_accompaniment: Einzelbegleitung
   state:
     active: Aktiv
     finished: Abgeschlossen
     registered: Registriert
     rejected: Abgelehnt
     reserved: Reserviert
+  target_groups: Zielgruppe
   time:
     formats:
       devise:
@@ -408,79 +431,21 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
-  user_destroyed: Benutzer wurde erfolgreich gelöscht.
+  user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
+  volunteer_created: Freiwillige wurde erfolgreich erstellt.
+  volunteer_destroyed: 'Freiwillige wurde erfolgreich gelöscht.'
+  volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
+  volunteers: Freiwillige
   weekdays:
     friday: Freitag
     monday: Montag
     saturday: Samstag
     sunday: Sonntag
-  accompaniment:
-    man: Mann
-    woman: Frau
-    family: Familie
-    kid: Kind
-    sport: Sport
-    creative: Kreativ
-    music: Musik
-    culture: Kultur
-    training: Bildung
-    german_course: Deutsch-Kurs
-  region:
-    city: Stadt
-    region: Region
-    canton: Kanton
-  duration:
-    short: Kurzfristig
-    long: Längerfristig (min 6 Mt.)
-  add_language: Sprache hinzufügen
-  add_relative: Verwandte hinzufügen
-  are_you_sure: Sind Sie sicher?
-  are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
-  are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
-  back: Zurück
-  change_my_password: Ihr Passwort ändern
-  change_password: Ihr Passwort ändern
-  client_created: KlientIn wurde erfolgreich erstellt.
-  client_updated: KlientIn wurde erfolgreich aktualisiert.
-  client_destroyed: KlientIn wurde erfolgreich gelöscht.
-  clients: Klienten
-  contact_info: Kontakt Informationen
-  create_client: KlientIn erfassen
-  create_profile: Profil erfassen
-  create_user: Benutzer erfassen
-  create_volunteer: Freiwillige erfassen
-  edit_login: Login bearbeiten
-  edit_profile: Profil bearbeiten
-  forgot_password: Passwort vergessen?
-  group_accompaniment: Gruppenangebot
-  invite_sent: 'Einladung wurde an %{email} verschickt.'
-  language_skills: Sprachkenntnisse
-  login: Anmelden
-  logout: Abmelden
-  not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
-  password_reset_instructions: Ich möchte mein Passwort zurücksetzen
-  personal_background: Persönlicher Hintergrund
-  profile_created: Profil wurde erfolgreich erstellt.
-  profile_updated: Profil wurde erfolgreich aktualisiert.
-  registered_by: 'SozialberaterIn'
-  relatives: Verwandte
-  remember_me: Angemeldet bleiben
-  remove_language: Sprache entfernen
-  remove_relative: Verwandte entfernen
-  schedule: Zeitplan
-  show_my_profile: Mein Profil
-  show_profile: Profil anzeigen
-  single_accompaniment: Einzelbegleitung
-  target_groups: Zielgruppe
-  users: Benutzer
-  user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
-  volunteer_created: Freiwillige wurde erfolgreich erstellt.
-  volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
-  volunteer_destroyed: 'Freiwillige wurde erfolgreich gelöscht.'
-  volunteers: Freiwillige
-  voluntary_platform: Freiwilligen Plattform
+    thursday: Donnerstag
+    tuesday: Dienstag
+    wednesday: Mittwoch
   when: Zeit
   working_days: Arbeitstage
   your_expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?

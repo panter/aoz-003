@@ -1,10 +1,18 @@
 ---
 en:
+  accompaniment:
+    creative: Creative
+    culture: Culture
+    family: Family
+    german_course: German course
+    kid: Kid
+    man: Man
+    music: Music
+    sport: Sport
+    training: Education
+    woman: Woman
   activerecord:
     attributes:
-      volunteer:
-        duration: Duration of the accompaniment
-        user: :activerecord.models.user
       client:
         user: User
       contact:
@@ -25,6 +33,8 @@ en:
         clients: Clients
         department: Department
         email: Email
+      volunteer:
+        duration: Duration of the accompaniment
     models:
       client: Client
       contact: Contact
@@ -37,14 +47,6 @@ en:
       schedule: Schedule
       user: User
       volunteer: Volunteer
-  date:
-    formats:
-      default:
-        "%d %B %Y"
-    order:
-      - :day
-      - :month
-      - :year
   add_language: Add language
   add_relative: Add family member
   are_you_sure: Are you sure?
@@ -61,9 +63,18 @@ en:
   create_client: Create client
   create_profile: Create profile
   create_user: Create user
+  create_volunteer: Create Volunteer
   crud:
     title:
       add: 'Add %{model}'
+  date:
+    formats:
+      default:
+        "%d %B %Y"
+    order:
+      - :day
+      - :month
+      - :year
   department_created: Department was successfully created.
   departments: Departments
   devise:
@@ -144,6 +155,9 @@ en:
       send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
       send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
       unlocked: Your account has been unlocked successfully. Please sign in to continue.
+  duration:
+    long: Long term (min 6 months)
+    short: Short term
   edit_login: Edit login
   edit_profile: Edit profile
   errors:
@@ -160,6 +174,7 @@ en:
   gender:
     female: female
     male: male
+  group_accompaniment: Group accompaniment
   helpers:
     submit:
       create: 'Create %{model}'
@@ -181,12 +196,16 @@ en:
   logout: Logout
   messages:
     confirm_delete: "Really delete %{model} %{record}?"
-    select_prompt:  "Select %{model}"
+    select_prompt: "Select %{model}"
   not_authorized: You are not authorized to perform this action.
   password_reset_instructions: I want to reset my password
   personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
+  region:
+    canton: Canton
+    city: City
+    region: Region
   registered_by: Responsible Volunteer
   relatives: Family members
   remember_me: Remember me
@@ -222,127 +241,58 @@ en:
           reserved: Reserved
       user:
         role:
-          superadmin: Superadmin
+          department_manager: Departement manager
           social_worker: Social worker
-          department_manager: Department manager
+          superadmin: Superadmin
       volunteer:
+        duration:
+          long: Long term (min 6 months)
+          short: Short term
         gender:
           female: Female
           male: Male
         region:
+          canton: Canton
           city: City
           region: Region
-          canton: Canton
-        duration:
-          short: Short term
-          long: Long term (min 6 months)
-    "yes": 'Yes'
-    "no": 'No'
+    placeholders:
     required:
       mark: '*'
       text: 'required'
     "yes": 'Yes'
+  single_accompaniment: Single accompaniment
   state:
     active: Active
     finished: Finished
     registered: Registered
     rejected: Rejected
     reserved: Reserved
+  target_groups: Target groups
   time:
     formats:
       devise:
         mailer:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
-  gender:
-    female: Female
-    male: Male
-  language_level:
-    native_speaker: Native speaker
-    fluent: Fluent
-    good: Good
-    basic: Basic
-  role:
-    superadmin: superadmin
-    social_worker: social worker
-    department_manager: department manager
   times:
     afternoon: afternoon
     evening: evening
     morning: morning
-  user_destroyed: '%{email} was successfully deleted.'
+  user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
   voluntary_platform: Voluntaries Platform
+  volunteer_created: 'Volunteer was successfully created.'
+  volunteer_destroyed: 'Volunteer was successfully deleted.'
+  volunteer_updated: 'Volunteer was successfully updated.'
+  volunteers: Volunteers
   weekdays:
     friday: Friday
     monday: Monday
     saturday: Saturday
     sunday: Sunday
-  accompaniment:
-    man: Man
-    woman: Woman
-    family: Family
-    kid: Kid
-    sport: Sport
-    creative: Creative
-    music: Music
-    culture: Culture
-    training: Education
-    german_course: German course
-  region:
-    city: City
-    region: Region
-    canton: Canton
-  duration:
-    short: Short term
-    long: Long term (min 6 months)
-  add_language: Add language
-  add_relative: Add family member
-  are_you_sure: Are you sure?
-  are_you_sure_invitation: Are you sure you want to send an invitation?
-  are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
-  back: Back
-  change_my_password: Change my password
-  change_password: Change your password
-  contact_info: Contact information
-  clients: Clients
-  client_created: Client was successfully created.
-  client_updated: Client was successfully updated.
-  client_destroyed: Client was successfully deleted.
-  create_client: Create client
-  create_profile: Create profile
-  create_user: Create user
-  create_volunteer: Create Volunteer
-  edit_login: Edit login
-  edit_profile: Edit profile
-  forgot_password: Forgot your password?
-  group_accompaniment: Group accompaniment
-  invite_sent: 'Invitation sent to %{email}'
-  language_skills: Language skills
-  login: Log in
-  logout: Logout
-  not_authorized: You are not authorized to perform this action.
-  password_reset_instructions: I want to reset my password
-  personal_background: Personal background
-  profile_created: Profile was successfully created.
-  profile_updated: Profile was successfully updated.
-  registered_by: Responsible Volunteer
-  relatives: Family members
-  remember_me: Remember me
-  remove_language: Remove language
-  remove_relative: Remove family member
-  schedule: Schedule
-  show_profile: Show profile
-  show_my_profile: My profile
-  single_accompaniment: Single accompaniment
-  target_groups: Target groups
-  users: Users
-  user_destroyed: 'User %{email} was successfully deleted.'
-  volunteer_created: 'Volunteer was successfully created.'
-  volunteer_updated: 'Volunteer was successfully updated.'
-  volunteer_destroyed: 'Volunteer was successfully deleted.'
-  volunteers: Volunteers
-  voluntary_platform: Voluntaries Platform
+    thursday: Thursday
+    tuesday: Tuesday
+    wednesday: Wednesday
   when: Time
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
@@ -352,9 +302,3 @@ en:
   your_region: In which region can you imagine your employment?
   your_skills: Professional skills that you could bring?
   your_strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
-  department_created: Department was successfully created.
-    thursday: Thursday
-    tuesday: Tuesday
-    wednesday: Wednesday
-  when: Time
-  working_days: Working days
