@@ -11,6 +11,7 @@ class Volunteer < ApplicationRecord
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   validates :first_name, :last_name, :email, presence: true
+  validates :email, uniqueness: true
 
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/
