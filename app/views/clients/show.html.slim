@@ -39,7 +39,7 @@
 
           tr
             td= t_attr(:email)
-            td= @client.email
+            td= mail_to @client.email
 
           = render 'language_skills/show', speaker: @client
 
@@ -75,7 +75,7 @@
 
           tr
             td= t('registered_by')
-            td= @client.user.email
+            td= mail_to @client.user.email
 
           - if policy(Client).destroy?
             tr

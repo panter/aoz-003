@@ -1,7 +1,7 @@
 .row
   .col-md-4
     strong= t_attr(:email)
-  .col-md-8 = @user.email
+  .col-md-8 = mail_to @user.email
 
 .row
   .col-md-4

@@ -5,8 +5,8 @@ tr
   td = country(client.nationality)
   td = t("gender.#{client.gender}") unless client.gender.blank?
   td = client.permit
-  td = client.email
-  td = client.user.email
+  td = mail_to client.email
+  td = mail_to client.user.email
   td = link_to t_action(:show), client
   td = link_to t_action(:edit), edit_client_path(client)
   td
