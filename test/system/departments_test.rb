@@ -126,7 +126,8 @@ class DepartmentsTest < ApplicationSystemTestCase
   test 'As Department Manager there is a link in the Navbar to his department' do
     login_as @department_manager
     visit profile_path(@department_manager.profile.id)
-    assert page.has_link? @department_manager.department.first.contact.name
+    assert page.has_link? 'Department',
+      href: department_path(@department_manager.department.first.id)
   end
 
   test "Department Managers can update their department's fields" do
@@ -161,12 +162,13 @@ class DepartmentsTest < ApplicationSystemTestCase
   end
 
   test 'After logging in as Department Manager he should see his department' do
-    login_as @department_manager
-    visit root_path
-    her_department = @department_manager.department.first
-    assert page.has_text? her_department.contact.name
-    if her_department.contact.street.present?
-      assert page.has_text? her_department.contact.street
+    visit new_user_session_path
+    fill_in 'Email', with: @department_manager.email
+    fill_in 'Password', with: 'asdfasdf'
+    click_button 'Log in'
+    assert page.has_text? @department_manager.department.first.contact.name
+    if @department_manager.department.first.contact.street.present?
+      assert page.has_text? @department_manager.department.first.contact.street
     end
   end
 end
