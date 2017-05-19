@@ -46,22 +46,10 @@
       = f.input :phone
 
       .row
-        .col-xs-12
-          h3= t('language_skills')
-          #languages
-            = f.simple_fields_for :language_skills do |language|
-              = render 'language_skill_fields', f: language, speaker: @client
-            .links
-              = link_to_add_association t('add_language'), f, :language_skills, class: 'btn btn-success'
+        = render 'language_skills/form', f: f, speaker: @client
 
       .row
-        .col-xs-12
-          h3= t('relatives')
-          #relatives
-            = f.simple_fields_for :relatives do |relative|
-              = render 'relative_fields', f: relative, relative: @client
-            .links
-              = link_to_add_association t('add_relative'), f, :relatives, class: 'btn btn-success'
+        = render 'relatives/form', f: f, relative: @client
 
       .row
         .col-xs-12

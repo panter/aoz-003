@@ -42,13 +42,9 @@
               | Email
             td= @client.email
 
-          tr
-            td= t('language_skills')
-            td= render 'language_skills/show', speaker: @client
+          tr= render 'language_skills/show', speaker: @client
 
-          tr
-            td= t('relatives')
-            td= render 'relatives/show', relative: @client
+          tr= render 'relatives/show', relative: @client
 
           tr
             td= t_attr(:goals)
