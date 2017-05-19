@@ -1,16 +1,5 @@
 ---
 de:
-  accompaniment:
-    creative: Kreativ
-    culture: Kultur
-    family: Familie
-    german_course: Deutsch-Kurs
-    kid: Kind
-    man: Mann
-    music: Musik
-    sport: Sport
-    training: Bildung
-    woman: Frau
   activerecord:
     attributes:
       client:
@@ -104,8 +93,10 @@ de:
         experience: Erfahrung
         family: Familie
         first_name: Vorname
+        full_name: Name
         gender: Geschlecht
         german_course: Deutsch-Kurs
+        group_accompaniment: Gruppenangebot
         interests: Interessen
         kid: Kinder
         last_name: Nachname
@@ -116,6 +107,7 @@ de:
         profession: Beruf
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
+        single_accompaniment: Einzelbegleitung
         skills: Kompetenzen
         sport: Sport
         state: Status
@@ -169,8 +161,8 @@ de:
       relative: Verwante/r
       schedule: Zeitplan
       user: Benutzer
-      volunteer: Freiwillige
       volunteer_application: Freiwilligen Bewerbung
+      volunteer: Freiwillige
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
@@ -188,7 +180,6 @@ de:
   create_client: KlientIn erfassen
   create_profile: Profil erfassen
   create_user: Benutzer erfassen
-  create_volunteer: Freiwillige erfassen
   crud:
     title:
       add: '%{model} hinzufügen'
@@ -376,13 +367,17 @@ de:
           name: Standortname
         user: Assozierte Benutzer
       user:
-        edit:
-          email: Email ändern
-          password: Passwort ändern
-          role: Rolle ändern
         email: Email
         password: Passwort
         role: Rolle
+      volunteer:
+        expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
+        experience: Haben Sie bereits Erfahrung mit FW-Arbeit?
+        interests: Welches sind Ihre wichtigsten Freizeitinteressen?
+        motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
+        region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
+        skills: Berufliche Kompetenzen, die Sie einbringen könnten?
+        strengths: Wo sehen Sie Ihre Stärken? (soziale Kompetenzen, die Sie in FW-Arbeit einbringen könnten)
     "no": 'Nein'
     options:
       client:
@@ -433,16 +428,16 @@ de:
           other: Anderer Grund
           us: durch uns vor / nach Gespräch
         state:
-          accepted: Akzeptiert
-          inactive: Inaktiv
-          interested: Interessiert
-          rejected: Abgelehnt
+          active: aktiv / im Einsatz
+          finished: ausgetreten
+          registered: interessiert / angemeldet
+          rejected: Absage
+          reserved: kontaktiert / für Gespräch eingeladen
     placeholders:
     required:
       mark: '*'
       text: notwendig
     "yes": 'Ja'
-  single_accompaniment: Einzelbegleitung
   state:
     accepted: Akzeptiert
     active: Aktiv
@@ -470,7 +465,7 @@ de:
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwillige/n Bewerbung
   volunteer_created: Freiwillige wurde erfolgreich erstellt.
-  volunteer_destroyed: 'Freiwillige wurde erfolgreich gelöscht.'
+  volunteer_destroyed: Freiwillige wurde erfolgreich gelöscht.
   volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
@@ -484,10 +479,4 @@ de:
     wednesday: Mittwoch
   when: Zeit
   working_days: Arbeitstage
-  your_expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
-  your_experience: Haben Sie bereits Erfahrung mit FW-Arbeit?
-  your_interests: Welches sind Ihre wichtigsten Freizeitinteressen?
-  your_motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
-  your_skills: Berufliche Kompetenzen, die Sie einbringen könnten?
-  your_strengths: Wo sehen Sie Ihre Stärken? (soziale Kompetenzen, die Sie in FW-Arbeit einbringen könnten)

@@ -1,21 +1,18 @@
-.row
-  .col-xs-12
-    h3= t('schedule')
-.row
-  .col-xs-12
-    table.table.table-striped
-      thead
+h3= t_model(Schedule)
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th= t('when')
+        - Schedule.days.each do |day|
+          th.days= t("weekdays.#{day}")
+    tbody
+      - participant.schedules.group_by(&:time).each do |time, schedules|
         tr
-          th= t('when')
-          - Schedule.days.each do |day|
-            th.days= t("weekdays.#{day}")
-      tbody
-        - participant.schedules.group_by(&:time).each do |time, schedules|
-          tr
+          td
+            = t("times.#{time}")
+          = f.simple_fields_for :schedules, schedules do |schedule|
             td
-              = t("times.#{time}")
-            = f.simple_fields_for :schedules, schedules do |schedule|
-              td
-                = schedule.input :day, as: :hidden
-                = schedule.input :time, as: :hidden
-                = schedule.input :available, as: :boolean, label: false
+              = schedule.input :day, as: :hidden
+              = schedule.input :time, as: :hidden
+              = schedule.input :available, as: :boolean, label: false

@@ -7,21 +7,25 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          tr
-            td= t_attr(:date_of_birth)
-            td= l(@volunteer.date_of_birth) if @volunteer.date_of_birth
-          tr
-            td= t_attr(:gender)
-            td= t("gender.#{@volunteer.gender}") unless @volunteer.gender.blank?
-          tr
-            td= t_attr(:avatar)
-            td= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?
+          - if @volunteer.date_of_birth.present?
+            tr
+              td= t_attr(:date_of_birth)
+              td= l(@volunteer.date_of_birth)
+          - if @volunteer.gender.present?
+            tr
+              td= t_attr(:gender)
+              td= t("gender.#{@volunteer.gender}")
+          - if @volunteer.avatar.present?
+            tr
+              td= t_attr(:avatar)
+              td= image_tag @volunteer.avatar.url(:thumb)
           tr
             td= t_attr(:nationality)
             td= country(@volunteer.nationality)
-          tr
-            td= t_attr(:additional_nationality)
-            td= country(@volunteer.additional_nationality)
+          - @volunteer.additional_nationality.present?
+            tr
+              td= t_attr(:additional_nationality)
+              td= country(@volunteer.additional_nationality)
           tr
             td= t_attr(:street)
             td= @volunteer.street
@@ -33,7 +37,7 @@
             td= @volunteer.city
           tr
             td= t_attr(:email)
-            td= mail_to @volunteer.email
+            td= mail_to @volunteer.email if @volunteer.email.present?
           tr
             td= t_attr(:phone)
             td= @volunteer.phone
@@ -68,7 +72,7 @@
           - if policy(Volunteer).destroy?
             tr
               td= t_attr(:state)
-              td= t("state.#{@volunteer.state}")
+              td= t("simple_form.options.volunteer.state.#{@volunteer.state}")
             - if @volunteer.rejected?
               tr
                 td= t_attr(:rejection_type)
@@ -85,13 +89,12 @@
 
 .row
   .col-xs-12
-    h3= t('single_accompaniment')
+    h3= t_attr(:single_accompaniment)
     table.table.table-striped
       thead
         tr
           - Volunteer.single_accompaniment.each do |single|
-            th.text-center
-              = t("accompaniment.#{single}")
+            th.text-center= t_attr(single)
       tbody
         tr
           - Volunteer.single_accompaniment.each do |single|
@@ -103,13 +106,13 @@
 
 .row
   .col-xs-12
-    h3= t('group_accompaniment')
+    h3= t_attr(:group_accompaniment)
     table.table.table-striped
       thead
         tr
           - Volunteer.group_accompaniment.each do |group|
             th.text-center
-              = t("accompaniment.#{group}")
+              = t_attr(group)
       tbody
         tr
           - Volunteer.group_accompaniment.each do |group|
