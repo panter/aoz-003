@@ -20,7 +20,8 @@ class DepartmentsController < ApplicationController
   end
 
   def create
-    @department = Department.new(department_params)
+    @department = Department.new
+    @department.update_attributes(permitted_attributes(@department))
     authorize @department
     if @department.save
       redirect_to @department, notice: t('department_created')
@@ -31,7 +32,7 @@ class DepartmentsController < ApplicationController
 
   def update
     authorize @department
-    if @department.update(department_params)
+    if @department.update_attributes(permitted_attributes(@department))
       redirect_to @department, notice: t('department_updated')
     else
       render :edit
@@ -50,24 +51,7 @@ class DepartmentsController < ApplicationController
     @department = Department.find(params[:id])
   end
 
-  def phone_attrs
-    [:id, :body, :label, :_destroy, :type, :contacts_id]
-  end
-
-  def email_attrs
-    [:id, :body, :label, :_destroy, :type, :contacts_id]
-  end
-
-  def contact_attrs
-    [
-      :id, :name, :_destroy, :contactable_id, :contactable_type, :street,
-      :extended, :city, :postal_code,
-      contact_emails_attributes: email_attrs,
-      contact_phones_attributes: phone_attrs
-    ]
-  end
-
   def department_params
-    params.require(:department).permit(user_ids: [], contact_attributes: contact_attrs)
+    params.require(:department).permit(policy(@department).permitted_attributes)
   end
 end
