@@ -2,13 +2,10 @@ require 'test_helper'
 
 class DepartmentTest < ActiveSupport::TestCase
   def setup
-    @department = Department.new
+    @department = create :department
   end
 
-  test 'department is saveable with user relation' do
-    refute @department.valid?
-    @department.contact = build :contact
+  test 'department is valid' do
     assert @department.valid?
-    assert @department.save!
   end
 end

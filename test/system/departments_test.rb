@@ -6,6 +6,8 @@ class DepartmentsTest < ApplicationSystemTestCase
       :with_departments, role: 'superadmin'
     @social_worker = create :user, :with_profile, :with_clients,
       :with_departments, role: 'social_worker'
+    @department_manager = create :user, :with_profile, :with_departments,
+      role: 'department_manager'
   end
 
   test 'superadmin should see departments link in navigation' do
@@ -119,5 +121,42 @@ class DepartmentsTest < ApplicationSystemTestCase
     end
     click_button 'Update Department'
     refute page.has_text? delete_phone
+  end
+
+  test 'As Department Manager there is a link in the Navbar to his department' do
+    login_as @department_manager
+    visit profile_path(@department_manager.profile.id)
+    assert page.has_link? @department_manager.department.first.contact.name
+  end
+
+  test "Department Managers can update their department's fields" do
+    login_as @department_manager
+    visit edit_department_path(@department_manager.department.first.id)
+    refute page.has_select? 'User'
+    fill_in 'Name', with: 'Name changed'
+    fill_in 'Street', with: 'Street changed'
+    fill_in 'Extended address', with: 'Extended address changed'
+    fill_in 'Zip', with: 'Zip changed'
+    fill_in 'City', with: 'City changed'
+    within '#phones' do
+    end
+    within '#emails' do
+      within find_all('.nested-fields').first do
+        fill_in 'Email address', with: 'changed@email.com'
+      end
+    end
+    within '#phones' do
+      within find_all('.nested-fields').first do
+        fill_in 'Phone number', with: '++888 88 88 9999 888'
+      end
+    end
+    click_button 'Update Department'
+    assert page.has_text? 'Name changed'
+    assert page.has_text? 'Street changed'
+    assert page.has_text? 'Extended address changed'
+    assert page.has_text? 'Zip changed'
+    assert page.has_text? 'City changed'
+    assert page.has_link? 'changed@email.com'
+    assert page.has_text? '++888 88 88 9999 888'
   end
 end
