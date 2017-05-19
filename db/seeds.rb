@@ -27,6 +27,7 @@ User.all.each do |user|
     client.first_name = "#{user.profile.first_name}'s Client"
     client.last_name = 'a lastname'
     client.user = user
+    client.schedules << Schedule.build
   end
 end
 
