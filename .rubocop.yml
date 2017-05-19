@@ -41,6 +41,10 @@ Metrics/AbcSize:
   Exclude:
     - 'db/migrate/*'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'test/system/*'
+
 Style/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
 
