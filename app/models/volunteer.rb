@@ -1,5 +1,5 @@
 class Volunteer < ApplicationRecord
-  include Reusable
+  include AssociatableFields
 
   acts_as_paranoid
 

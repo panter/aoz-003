@@ -1,5 +1,5 @@
 class Client < ApplicationRecord
-  include Reusable
+  include AssociatableFields
 
   belongs_to :user
 
