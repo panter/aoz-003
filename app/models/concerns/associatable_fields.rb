@@ -1,4 +1,4 @@
-module Reusable
+module AssociatableFields
   extend ActiveSupport::Concern
 
   included do

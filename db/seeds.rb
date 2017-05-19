@@ -35,6 +35,7 @@ if Department.count < 1
     contact: Contact.new(name: 'Bogus Department'),
     user: [User.all.sample]
   ).save
+end
 
 Volunteer.find_or_create_by!(first_name: 'First', last_name: 'Volunteer',
   email: 'volunteer@example.com') do |volunteer|
