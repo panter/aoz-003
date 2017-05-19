@@ -25,32 +25,26 @@ class ClientsController < ApplicationController
     @client = Client.new(client_params)
     @client.user = current_user
     authorize @client
-    respond_to do |format|
-      if @client.save
-        format.html { redirect_to @client, notice: t('client_created') }
-      else
-        format.html { render :new }
-      end
+    if @client.save
+      redirect_to @client, notice: t('client_created')
+    else
+      render :new
     end
   end
 
   def update
     authorize @client
-    respond_to do |format|
-      if @client.update(client_params)
-        format.html { redirect_to @client, notice: t('client_updated') }
-      else
-        format.html { render :edit }
-      end
+    if @client.update(client_params)
+      redirect_to @client, notice: t('client_updated')
+    else
+      render :edit
     end
   end
 
   def destroy
     authorize @client
     @client.destroy
-    respond_to do |format|
-      format.html { redirect_to clients_url, notice: t('client_destroyed') }
-    end
+    redirect_to clients_url, notice: t('client_destroyed')
   end
 
   private
