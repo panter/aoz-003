@@ -146,6 +146,10 @@ de:
               confirmation: Die eingegebenen Passwörter stimmen nicht überein
             role:
               inclusion: ist nicht in der Liste enthalten
+        profile:
+          attributes:
+            avatar:
+              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
         volunteer:
           attributes:
             avatar:
