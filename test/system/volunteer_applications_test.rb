@@ -17,7 +17,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     click_link 'Do you want to apply as a volunteer?'
 
     assert page.has_current_path? new_volunteer_application_path
-    assert page.has_text? 'Volunteer application'
+    assert page.has_text? 'Volunteer Application'
     fill_in 'First name', with: 'Volunteer'
     fill_in 'Last name', with: 'Application'
     within '.volunteer_date_of_birth' do
