@@ -33,7 +33,7 @@ class User < ApplicationRecord
   end
 
   def department?
-    department_manager? && department.first.present?
+    department.first.present?
   end
 
   def self.create_user_and_send_password_reset(email:, role:)

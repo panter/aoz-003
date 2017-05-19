@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(current_user)
     return new_profile_path if current_user.profile.blank?
-    if current_user.department?
+    if policy(Department).manager_with_department?
       return department_path(current_user.department.first.id)
     end
     root_path
