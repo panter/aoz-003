@@ -1,4 +1,3 @@
----
 de:
   accompaniment:
     creative: Kreativ
@@ -168,11 +167,13 @@ de:
       schedule: Zeitplan
       user: Benutzer
       volunteer: Freiwillige
+      volunteer_application: Freiwilligen Bewerbung
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
@@ -312,6 +313,7 @@ de:
   gender:
     female: Weiblich
     male: Männlich
+  get_back: Wir werden uns bald bei Ihnen melden.
   group_accompaniment: Gruppenangebot
   helpers:
     submit:
@@ -430,6 +432,7 @@ de:
     registered: Registriert
     rejected: Abgelehnt
     reserved: Reserviert
+  submit_application: Bewerbung abschicken
   target_groups: Zielgruppe
   time:
     formats:
@@ -441,6 +444,7 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
+  thank_you: Vielen Dank🎉
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
@@ -448,6 +452,7 @@ de:
   volunteer_destroyed: 'Freiwillige wurde erfolgreich gelöscht.'
   volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
+  volunteer_application: Freiwillige/n Bewerbung
   weekdays:
     friday: Freitag
     monday: Montag
@@ -456,6 +461,7 @@ de:
     thursday: Donnerstag
     tuesday: Dienstag
     wednesday: Mittwoch
+  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   when: Zeit
   working_days: Arbeitstage
   your_expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
