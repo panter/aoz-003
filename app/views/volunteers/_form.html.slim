@@ -118,7 +118,7 @@
     .col-xs-12
       = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
 
-  = render 'schedules/fields', f: f, participant: @volunteer
+  = render 'schedules/form', f: f, participant: @volunteer
 
   .row
     .col-xs-12
