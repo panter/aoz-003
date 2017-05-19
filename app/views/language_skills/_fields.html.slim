@@ -3,7 +3,7 @@
     .col-xs-12.col-md-6
       = f.input :language, collection: languages
     .col-xs-12.col-md-6
-      = f.input :level, collection: language_level_collection
+      = f.input :level, collection: LanguageSkill.language_level_collection
   .row
     .col-xs-12.col-md-12
       = link_to_remove_association t('remove_language'), f, class: 'btn btn-danger'
