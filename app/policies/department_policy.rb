@@ -20,6 +20,29 @@ class DepartmentPolicy < ApplicationPolicy
     @department = department
   end
 
+  def permitted_attributes
+    return [user_ids: [], contact_attributes: contact_attrs] if @user.superadmin?
+    return [contact_attributes: contact_attrs] if @user.department_manager?
+    []
+  end
+
+  def phone_attrs
+    [:id, :body, :label, :_destroy, :type, :contacts_id]
+  end
+
+  def email_attrs
+    [:id, :body, :label, :_destroy, :type, :contacts_id]
+  end
+
+  def contact_attrs
+    [
+      :id, :name, :_destroy, :contactable_id, :contactable_type, :street,
+      :extended, :city, :postal_code,
+      contact_emails_attributes: email_attrs,
+      contact_phones_attributes: phone_attrs
+    ]
+  end
+
   def index?
     @user.superadmin?
   end
@@ -37,6 +60,10 @@ class DepartmentPolicy < ApplicationPolicy
   end
 
   def create?
+    @user.superadmin?
+  end
+
+  def associate_user?
     @user.superadmin?
   end
 
