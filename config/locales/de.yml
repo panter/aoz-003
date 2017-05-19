@@ -132,6 +132,8 @@ de:
               blank: darf nicht leer sein
             last_name:
               blank: darf nicht leer sein
+            avatar:
+              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
         user:
           attributes:
             email:
@@ -171,6 +173,7 @@ de:
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
@@ -448,6 +451,7 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
+  thank_you: Vielen Dank
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
@@ -457,6 +461,7 @@ de:
   volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
+  volunteer_application: Freiwillige/n Bewerbung
   weekdays:
     friday: Freitag
     monday: Montag
@@ -465,6 +470,7 @@ de:
     thursday: Donnerstag
     tuesday: Dienstag
     wednesday: Mittwoch
+  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   when: Zeit
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
