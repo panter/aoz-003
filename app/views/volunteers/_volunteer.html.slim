@@ -1,8 +1,8 @@
 tr
   td = volunteer.full_name
-  td = volunteer.date_of_birth
+  td = l(volunteer.date_of_birth) if volunteer.date_of_birth.present?
   td = country(volunteer.nationality)
-  td = volunteer.created_at
+  td = l(volunteer.created_at)
   td = t("gender.#{volunteer.gender}") unless volunteer.gender.blank?
   td = t("simple_form.options.volunteer.state.#{volunteer.state}")
   td = link_to t_action(:show), volunteer

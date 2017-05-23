@@ -1,15 +1,19 @@
 .row
   .col-xs-12
     h1= t('volunteers')
-
+.row
+  = search_form_for @q, builder: SimpleForm::FormBuilder do |f|
+    .col-xs-6.col-md-3
+      = f.input :state_cont, collection: Volunteer.state_collection,
+        include_blank: true, html: {class: 'input-group input-group-sm' }, input_html: { onchange: 'this.form.submit();', class: 'input-group input-group-xs' }
 .row
   .col-xs-12
   table.table.table-striped
     thead
       tr
-        th= t_attr(:full_name)
+        th= sort_link @q, :full_name
         th= sort_link @q, :date_of_birth
-        th= t_attr(:nationality)
+        th= sort_link @q, :nationality
         th= sort_link @q, :created_at
         th= sort_link @q, :gender
         th= sort_link @q, :state

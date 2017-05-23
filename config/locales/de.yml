@@ -117,6 +117,7 @@ de:
         training: Bildung
         woman: Frau
         zip: Postleitzahl
+        created_at: Erstellt am
     errors:
       models:
         profile:
@@ -378,6 +379,8 @@ de:
         region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Wo sehen Sie Ihre Stärken? (soziale Kompetenzen, die Sie in FW-Arbeit einbringen könnten)
+      q:
+        state_cont: Status
     "no": 'Nein'
     options:
       client:
@@ -433,6 +436,13 @@ de:
           registered: interessiert / angemeldet
           rejected: Absage
           reserved: kontaktiert / für Gespräch eingeladen
+      q:
+        state_cont:
+          active: aktiv / im Einsatz
+          finished: ausgetreten
+          registered: interessiert / angemeldet
+          rejected: Absage
+          reserved: kontaktiert / für Gespräch eingeladen
     placeholders:
     required:
       mark: '*'
@@ -452,6 +462,8 @@ de:
   thank_you: "Vielen Dank \U0001F389"
   time:
     formats:
+      default:
+        "%d. %B %Y %H:%M"
       devise:
         mailer:
           invitation_instructions:

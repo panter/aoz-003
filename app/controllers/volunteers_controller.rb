@@ -4,8 +4,9 @@ class VolunteersController < ApplicationController
   before_action :set_state, only: [:update]
 
   def index
-    @q = Volunteer.ransack(params[:q])
-    @volunteers = @q.result(distinct: true)
+    ransack_params = params[:q] || {}
+    @q = Volunteer.ransack(ransack_params)
+    @volunteers = @q.result
   end
 
   def show; end
@@ -61,7 +62,7 @@ class VolunteersController < ApplicationController
   end
 
   def filter_params
-    params.require(:volunteer).permit(:q)
+    params.require(:volunteer).permit(:commit, q: [:gender, :state])
   end
 
   def volunteer_params
