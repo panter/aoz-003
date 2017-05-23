@@ -4,8 +4,8 @@ class VolunteersController < ApplicationController
   before_action :set_state, only: [:update]
 
   def index
-    @volunteers = Volunteer.all
-    authorize Volunteer
+    @q = Volunteer.ransack(params[:q])
+    @volunteers = @q.result(distinct: true)
   end
 
   def show; end
@@ -58,6 +58,10 @@ class VolunteersController < ApplicationController
   def set_volunteer
     @volunteer = Volunteer.find(params[:id])
     authorize @volunteer
+  end
+
+  def filter_params
+    params.require(:volunteer).permit(:q)
   end
 
   def volunteer_params
