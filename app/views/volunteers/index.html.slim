@@ -8,10 +8,11 @@
     thead
       tr
         th= t_attr(:full_name)
-        th= t_attr(:date_of_birth)
+        th= sort_link @q, :date_of_birth
         th= t_attr(:nationality)
-        th= t_attr(:gender)
-        th= t_attr(:state)
+        th= sort_link @q, :created_at
+        th= sort_link @q, :gender
+        th= sort_link @q, :state
         th colspan='3'
 
     tbody
