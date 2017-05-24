@@ -1,7 +1,10 @@
 ruby:
   scope = {scope: [:simple_form, :options, :volunteer, :state]}
   size ||= 'xs'
+  descriptive ||= false
+  state_filter = @q.base.conditions.first.values.first.value if @q.base.conditions.first
   label = "#{t_attr(:state)} "
+  label += ": #{t(state_filter, scope)} " if descriptive && state_filter.present?
 .btn-group
   button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:state)}" aria-haspopup='true' aria-expanded='false' class="btn-#{size}"
     = label
