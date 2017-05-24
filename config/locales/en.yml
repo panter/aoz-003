@@ -44,6 +44,7 @@ en:
   add_language: Add language
   add_relative: Add family member
   application_submitted: 'Your application with the email %{email} has been successfully sent.'
+  all: all
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
