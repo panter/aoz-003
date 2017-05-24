@@ -52,15 +52,12 @@ class ProfilesTest < ApplicationSystemTestCase
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
     click_button 'Create Profile'
-
-    assert page.has_link? @user_without_profile.email
-
-    click_link @user_without_profile.email
-
-    assert page.has_link? 'Show profile'
-
-    click_link 'Show profile'
-
+    within '#menu' do
+      assert page.has_link? @user_without_profile.email
+      click_link @user_without_profile.email
+      assert page.has_link? 'Show profile'
+      click_link 'Show profile'
+    end
     assert page.has_text? @user_without_profile.profile.first_name
     assert page.has_text? @user_without_profile.profile.last_name
   end
@@ -87,9 +84,11 @@ class ProfilesTest < ApplicationSystemTestCase
   test 'profileless user gets new profile link on show profile' do
     login_as @user_without_profile
     visit user_path(@user_without_profile)
-    click_link @user_without_profile.email
-    assert page.has_link? 'Create profile'
-    click_link 'Create profile'
+    within '#menu' do
+      click_link @user_without_profile.email
+      assert page.has_link? 'Create profile'
+      click_link 'Create profile'
+    end
     assert page.has_text? 'New Profile'
   end
 

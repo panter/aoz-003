@@ -1,4 +1,5 @@
 class Profile < ApplicationRecord
+  include FullName
   belongs_to :user
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
