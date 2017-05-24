@@ -386,7 +386,7 @@ de:
       client:
         gender:
           female: Weiblich
-          male: Mänlich
+          male: Männlich
         language_skills:
           level:
             basic: Grundlagen
