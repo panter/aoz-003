@@ -1,5 +1,6 @@
 class VolunteerApplicationsController < ApplicationController
   include NestedAttributes
+  include VolunteerAttributes
   skip_before_action :authenticate_user!
 
   def new

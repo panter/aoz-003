@@ -1,5 +1,6 @@
 class VolunteersController < ApplicationController
   include NestedAttributes
+  include VolunteerAttributes
   before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
   before_action :set_state, only: [:update]
 
