@@ -19,9 +19,10 @@
             tr
               td= t_attr(:avatar)
               td= image_tag @volunteer.avatar.url(:thumb)
-          tr
-            td= t_attr(:nationality)
-            td= country(@volunteer.nationality)
+          - if @volunteer.nationality.present?
+            tr
+              td= t_attr(:nationality)
+              td= country(@volunteer.nationality)
           - @volunteer.additional_nationality.present?
             tr
               td= t_attr(:additional_nationality)
