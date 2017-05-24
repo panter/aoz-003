@@ -62,14 +62,7 @@ en:
   crud:
     title:
       add: 'Add %{model}'
-  datetime:
-    formats:
-      default:
-        '%s %B %Y'
   date:
-    formats:
-      default:
-        "%d %B %Y"
     order:
       - :day
       - :month

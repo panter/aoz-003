@@ -186,23 +186,6 @@ de:
     title:
       add: '%{model} hinzufügen'
   date:
-    formats:
-      default:
-        "%d. %B %Y"
-    month_names:
-      -
-      - Januar
-      - Februar
-      - März
-      - April
-      - Mai
-      - Juni
-      - Juli
-      - August
-      - September
-      - Oktober
-      - November
-      - Dezember
     order:
       - :day
       - :month
@@ -437,13 +420,6 @@ de:
           registered: interessiert / angemeldet
           rejected: Absage
           reserved: kontaktiert / für Gespräch eingeladen
-      q:
-        state_cont:
-          active: aktiv / im Einsatz
-          finished: ausgetreten
-          registered: interessiert / angemeldet
-          rejected: Absage
-          reserved: kontaktiert / für Gespräch eingeladen
     placeholders:
     required:
       mark: '*'
@@ -463,8 +439,6 @@ de:
   thank_you: "Vielen Dank \U0001F389"
   time:
     formats:
-      default:
-        "%d. %B %Y %H:%M"
       devise:
         mailer:
           invitation_instructions:
