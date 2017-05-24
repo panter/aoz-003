@@ -1,125 +1,117 @@
-= simple_form_for(@volunteer) do |f|
-  - if f.error_notification.present?
-    .row
-      .col-xs-12
-        = f.error_notification
-
-  .row
-    .col-xs-12.col-md-6
-        = f.input :first_name
-
-    .col-xs-12.col-md-6
-        = f.input :last_name
-
-  .row
-    .col-xs-12.col-md-6
-      = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
-        end_year: Date.today.year, include_blank: true
-
-    .col-xs-12.col-md-6
-      = f.input :gender, collection: gender_collection, as: :radio_buttons
-
-  .row
+.row
     .col-xs-12
-      = f.input :avatar, as: :file
+      = f.error_notification
 
-  .row
-    .col-xs-12.col-md-6
-      = f.input :nationality, as: :country
-    .col-xs-12.col-md-6
-      = f.input :additional_nationality, as: :country
+.row
+  .col-xs-12.col-md-6
+      = f.input :first_name
 
-  .row
-    .col-xs-12
-      = f.input :street
+  .col-xs-12.col-md-6
+      = f.input :last_name
 
-    .col-xs-6
-      = f.input :zip
+.row
+  .col-xs-12.col-md-6
+    = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
+      end_year: Date.today.year, include_blank: true
 
-    .col-xs-6
-      = f.input :city
+  .col-xs-12.col-md-6
+    = f.input :gender, collection: gender_collection, as: :radio_buttons
 
-    .col-xs-12.col-md-6
-      = f.input :email
+.row
+  .col-xs-12
+    = f.input :avatar, as: :file
 
-    .col-xs-12.col-md-6
-      = f.input :phone
+.row
+  .col-xs-12.col-md-6
+    = f.input :nationality, as: :country
+  .col-xs-12.col-md-6
+    = f.input :additional_nationality, as: :country
 
-  = render 'language_skills/form', f: f, speaker: @volunteer
+.row
+  .col-xs-12
+    = f.input :street
 
-  = render 'relatives/form', f: f, relative: @volunteer
+  .col-xs-6
+    = f.input :zip
 
-  .row
-    .col-xs-12
-      = f.input :profession
-      = f.input :education
-      = f.input :motivation, label: t('your_motivation')
-      = f.input :experience, label: t('your_experience')
-      = f.input :expectations, label: t('your_expectations')
-      = f.input :strengths, label: t('your_strengths')
-      = f.input :skills, label: t('your_skills')
-      = f.input :interests, label: t('your_interests')
+  .col-xs-6
+    = f.input :city
 
-  .row
-    .col-xs-12
-      = f.input :state
+  .col-xs-12.col-md-6
+    = f.input :email
 
-  .row
-    .col-xs-12
-      = f.input :duration, collection: Volunteer.duration_collection, as: :radio_buttons
+  .col-xs-12.col-md-6
+    = f.input :phone
 
-  .row
-    h3= t('single_accompaniment')
-    .col-xs-12.col-md-1
-      = f.input :man
+= render 'language_skills/form', f: f, speaker: @volunteer
 
-    .col-xs-12.col-md-1
-      = f.input :woman
+= render 'relatives/form', f: f, relative: @volunteer
 
-    .col-xs-12.col-md-1
-      = f.input :family
+.row
+  .col-xs-12
+    = f.input :profession
+    = f.input :education
+    = f.input :motivation, label: t('your_motivation')
+    = f.input :experience, label: t('your_experience')
+    = f.input :expectations, label: t('your_expectations')
+    = f.input :strengths, label: t('your_strengths')
+    = f.input :skills, label: t('your_skills')
+    = f.input :interests, label: t('your_interests')
 
-    .col-xs-12.col-md-1
-      = f.input :kid
+.row
+  .col-xs-12
+    = f.input :state, as: :hidden
 
-  .row
-    h3= t('group_accompaniment')
-    .col-xs-12.col-md-1
-      = f.input :sport
+.row
+  .col-xs-12
+    = f.input :duration, collection: Volunteer.duration_collection, as: :radio_buttons
 
-    .col-xs-12.col-md-1
-      = f.input :creative
+.row
+  h3= t('single_accompaniment')
+  .col-xs-12.col-md-1
+    = f.input :man
 
-    .col-xs-12.col-md-1
-      = f.input :music
+  .col-xs-12.col-md-1
+    = f.input :woman
 
-    .col-xs-12.col-md-1
-      = f.input :culture
+  .col-xs-12.col-md-1
+    = f.input :family
 
-    .col-xs-12.col-md-1
-      = f.input :training
+  .col-xs-12.col-md-1
+    = f.input :kid
 
-    .col-xs-12.col-md-1
-      = f.input :german_course
+.row
+  h3= t('group_accompaniment')
+  .col-xs-12.col-md-1
+    = f.input :sport
 
-  .row
-    h3= t('target_groups')
-    .col-xs-12.col-md-1
-      = f.input :adults
+  .col-xs-12.col-md-1
+    = f.input :creative
 
-    .col-xs-12.col-md-1
-      = f.input :teenagers
+  .col-xs-12.col-md-1
+    = f.input :music
 
-    .col-xs-12.col-md-1
-      = f.input :children
+  .col-xs-12.col-md-1
+    = f.input :culture
 
-  .row
-    h3= t('your_region')
-    .col-xs-12
-      = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
+  .col-xs-12.col-md-1
+    = f.input :training
 
-  = render 'schedules/form', f: f, participant: @volunteer
+  .col-xs-12.col-md-1
+    = f.input :german_course
 
-  .row
-    .col-xs-12
-      = f.button :submit, class: 'btn btn-success'
+.row
+  h3= t('target_groups')
+  .col-xs-12.col-md-1
+    = f.input :adults
+
+  .col-xs-12.col-md-1
+    = f.input :teenagers
+
+  .col-xs-12.col-md-1
+    = f.input :children
+
+.row
+  h3= t('your_region')
+  .col-xs-12
+    = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
