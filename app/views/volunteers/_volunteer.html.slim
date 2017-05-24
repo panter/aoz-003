@@ -1,7 +1,7 @@
 tr
   td = volunteer.full_name
   td = l(volunteer.date_of_birth) if volunteer.date_of_birth.present?
-  td = country(volunteer.nationality)
+  td = country(volunteer.nationality) if volunteer.nationality.present?
   td = l(volunteer.created_at)
   td = t("gender.#{volunteer.gender}") unless volunteer.gender.blank?
   td = t("simple_form.options.volunteer.state.#{volunteer.state}")
