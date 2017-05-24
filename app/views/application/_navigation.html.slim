@@ -20,7 +20,7 @@ nav.navbar.navbar-top
           - if policy(Department).index?
             li= link_to t('departments'), departments_path
         ul.nav.navbar-nav.navbar-right
-          li.dropdown
+          li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
               = current_user.email
               span.caret

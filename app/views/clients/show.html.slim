@@ -1,9 +1,7 @@
 .row
   .col-xs-12
-    h1
-      = @client.first_name
-      | ,
-      = @client.last_name
+    h1= @client.full_name
+
 .row
   .col-xs-12
     .table-responsive

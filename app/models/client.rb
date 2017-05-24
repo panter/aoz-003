@@ -1,5 +1,6 @@
 class Client < ApplicationRecord
   include AssociatableFields
+  include FullName
 
   belongs_to :user
 
