@@ -21,26 +21,9 @@ class DepartmentPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    return [user_ids: [], contact_attributes: contact_attrs] if @user.superadmin?
-    return [contact_attributes: contact_attrs] if @user.department_manager?
+    return contact_attrs.push(user_ids: []) if @user.superadmin?
+    return contact_attrs if @user.department_manager?
     []
-  end
-
-  def phone_attrs
-    [:id, :body, :label, :_destroy, :type, :contacts_id]
-  end
-
-  def email_attrs
-    [:id, :body, :label, :_destroy, :type, :contacts_id]
-  end
-
-  def contact_attrs
-    [
-      :id, :name, :_destroy, :contactable_id, :contactable_type, :street,
-      :extended, :city, :postal_code,
-      contact_emails_attributes: email_attrs,
-      contact_phones_attributes: phone_attrs
-    ]
   end
 
   def index?
@@ -77,5 +60,22 @@ class DepartmentPolicy < ApplicationPolicy
 
   def destroy?
     @user.superadmin?
+  end
+
+  private
+
+  def contact_point_attrs
+    [:id, :body, :label, :_destroy, :type, :contacts_id]
+  end
+
+  def contact_attrs
+    [
+      contact_attributes: [
+        :id, :name, :_destroy, :contactable_id, :contactable_type, :street,
+        :extended, :city, :postal_code,
+        contact_emails_attributes: contact_point_attrs,
+        contact_phones_attributes: contact_point_attrs
+      ]
+    ]
   end
 end
