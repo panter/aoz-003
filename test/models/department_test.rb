@@ -2,7 +2,7 @@ require 'test_helper'
 
 class DepartmentTest < ActiveSupport::TestCase
   def setup
-    @department = create :department
+    @department = build :department
   end
 
   test 'department is valid' do
