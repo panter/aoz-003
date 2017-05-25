@@ -8,7 +8,7 @@
   table.table.table-striped
     thead
       tr
-        th= sort_link @q, :full_name
+        th= sort_link @q, :first_name, t_attr(:full_name)
         th= sort_link @q, :date_of_birth
         th= sort_link @q, :nationality
         th= sort_link @q, :created_at
