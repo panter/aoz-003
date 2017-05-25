@@ -439,6 +439,7 @@ de:
   thank_you: "Vielen Dank \U0001F389"
   time:
     formats:
+      default: "%a, %d.%m.%y %H:%M"
       devise:
         mailer:
           invitation_instructions:

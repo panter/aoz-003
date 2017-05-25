@@ -299,6 +299,7 @@ en:
   thank_you: "Thank you \U0001F389"
   time:
     formats:
+      default: "%a, %d.%m.%y %H:%M"
       devise:
         mailer:
           invitation_instructions:
