@@ -78,6 +78,7 @@ en:
       - :year
   department_created: Department was successfully created.
   department_updated: Department was successfully updated.
+  department_destroyed: Department was successfully deleted.
   departments: Departments
   devise:
     confirmations:
