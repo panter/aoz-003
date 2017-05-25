@@ -46,7 +46,7 @@ class DepartmentPolicy < ApplicationPolicy
     @user.superadmin?
   end
 
-  def associate_user?
+  def can_associate_user?
     @user.superadmin?
   end
 

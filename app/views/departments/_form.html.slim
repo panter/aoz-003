@@ -3,7 +3,7 @@
     .row
       .col-xs-12
         = f.error_notification
-  - if policy(Department).associate_user?
+  - if policy(Department).can_associate_user?
     .row
       .col-xs-12
         = f.association :user, as: :select, collection: User.department_assocable
