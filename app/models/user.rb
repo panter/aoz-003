@@ -32,7 +32,7 @@ class User < ApplicationRecord
     superadmin? || department_manager?
   end
 
-  def department?
+  def with_department?
     department.first.present?
   end
 

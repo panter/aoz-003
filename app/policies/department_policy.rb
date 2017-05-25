@@ -51,7 +51,7 @@ class DepartmentPolicy < ApplicationPolicy
   end
 
   def manager_with_department?
-    @user.department_manager? && @user.department?
+    @user.department_manager? && @user.with_department?
   end
 
   def update?
