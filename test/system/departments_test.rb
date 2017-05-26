@@ -101,24 +101,22 @@ class DepartmentsTest < ApplicationSystemTestCase
     delete_email = department.contact.contact_emails.last.body
     delete_phone = department.contact.contact_phones.last.body
     login_as @superadmin
-    visit departments_path
-    click_link 'Show', href: department_path(department.id)
-    assert page.has_link? delete_email
-    assert page.has_text? delete_phone
-    click_link 'Edit'
-    within '#emails' do
-      within find_all('.nested-fields').last do
-        assert page.has_field? 'Email address', with: delete_email
+    visit edit_department_path(department.id)
+    assert page.has_field? 'Email address', with: delete_email
+    find('#emails').find_all('.nested-fields').each do |e|
+      next unless e.find('input').value == delete_email
+      within e do
         click_link 'Delete Email address'
       end
     end
     click_button 'Update Department'
     assert page.has_text? 'Department was successfully updated.'
     refute page.has_link? delete_email
-    click_link 'Edit'
-    within '#phones' do
-      within find_all('.nested-fields').last do
-        assert page.has_field? 'Phone number', with: delete_phone
+    visit edit_department_path(department.id)
+    assert page.has_field? 'Phone number', with: delete_phone
+    find('#phones').find_all('.nested-fields').each do |e|
+      next unless e.find('input').value == delete_phone
+      within e do
         click_link 'Delete Phone number'
       end
     end
