@@ -27,6 +27,10 @@ class Volunteer < ApplicationRecord
     state == Volunteer::INTERESTED
   end
 
+  def rejected?
+    state == Volunteer::REJECTED
+  end
+
   def self.duration_collection
     [:short, :long]
   end
@@ -53,5 +57,9 @@ class Volunteer < ApplicationRecord
     else
       STATES_FOR_REVIEWED.map(&:to_sym)
     end
+  end
+
+  def self.rejection_collection
+    [:us, :her, :other]
   end
 end

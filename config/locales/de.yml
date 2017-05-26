@@ -114,6 +114,8 @@ de:
         nationality: Nationalität
         phone: Telefonnummer
         profession: Beruf
+        rejection_text: Erläuterung zur Ablehnung
+        rejection_type: Grund für die Ablehnung
         skills: Kompetenzen
         sport: Sport
         state: Status
@@ -338,6 +340,10 @@ de:
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
+  rejection_type:
+    her: von Freiwillige vor / nach Erstgespräch
+    other: Anderer Grund
+    us: durch uns vor / nach Gespräch
   region:
     canton: Kanton
     city: Stadt
@@ -420,6 +426,10 @@ de:
           canton: Kanton
           city: Stadt
           region: Region
+        rejection_type:
+          her: von Freiwillige vor / nach Erstgespräch
+          other: Anderer Grund
+          us: durch uns vor / nach Gespräch
         state:
           accepted: Akzeptiert
           inactive: Inaktiv
