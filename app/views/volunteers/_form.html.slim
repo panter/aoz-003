@@ -61,7 +61,7 @@
 - if current_user.present? && current_user.superadmin?
   .row
     .col-xs-12
-      = f.input :state, collection: Volunteer.state_collection
+      = f.input :state, collection: Volunteer.state_collection(@volunteer)
 
 .row
   .col-xs-12
