@@ -420,6 +420,11 @@ de:
           canton: Kanton
           city: Stadt
           region: Region
+        state:
+          accepted: Akzeptiert
+          inactive: Inaktiv
+          interested: Interessiert
+          rejected: Abgelehnt
     placeholders:
     required:
       mark: '*'
@@ -427,8 +432,11 @@ de:
     "yes": 'Ja'
   single_accompaniment: Einzelbegleitung
   state:
+    accepted: Akzeptiert
     active: Aktiv
     finished: Abgeschlossen
+    inactive: Inaktiv
+    interested: Interessiert
     registered: Registriert
     rejected: Abgelehnt
     reserved: Reserviert

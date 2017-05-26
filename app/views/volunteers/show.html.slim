@@ -67,7 +67,7 @@
             td= @volunteer.interests
           tr
             td= t_attr(:state)
-            td= @volunteer.state
+            td= t("state.#{@volunteer.state}")
           tr
             td= t_attr(:duration)
             td= t("duration.#{@volunteer.duration}") unless @volunteer.duration.blank?
