@@ -58,7 +58,7 @@
     = f.input :skills, label: t('your_skills')
     = f.input :interests, label: t('your_interests')
 
-- if !current_user.nil? && current_user.superadmin?
+- if current_user.present? && current_user.superadmin?
   .row
     .col-xs-12
       = f.input :state, collection: Volunteer.state_collection
