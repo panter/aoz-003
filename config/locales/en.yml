@@ -34,6 +34,8 @@ en:
         email: Email
       volunteer:
         duration: Duration of the accompaniment
+        rejection_text: Explanation for rejection
+        rejection_type: Reason for rejection
     models:
       client: Client
       contact: Contact
@@ -209,6 +211,10 @@ en:
     city: City
     region: Region
   registered_by: Responsible Volunteer
+  rejection_type:
+    her: by volunteer before / after the first call
+    other: Other
+    us: by us before / after conversation
   relatives: Family members
   remember_me: Remember me
   remove_language: Remove language
@@ -264,6 +270,10 @@ en:
           canton: Canton
           city: City
           region: Region
+        rejection_type:
+          her: by volunteer before / after the first call
+          other: Other
+          us: by us before / after conversation
         state:
           accepted: Accepted
           inactive: Inactive
