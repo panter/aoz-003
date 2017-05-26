@@ -31,7 +31,7 @@ class DepartmentPolicy < ApplicationPolicy
   end
 
   def show?
-    superadmin_or_users_department?
+    superadmin_or_the_departments_manager?
   end
 
   def new?
@@ -39,7 +39,7 @@ class DepartmentPolicy < ApplicationPolicy
   end
 
   def edit?
-    superadmin_or_users_department?
+    superadmin_or_the_departments_manager?
   end
 
   def create?
@@ -55,7 +55,7 @@ class DepartmentPolicy < ApplicationPolicy
   end
 
   def update?
-    superadmin_or_users_department?
+    superadmin_or_the_departments_manager?
   end
 
   def destroy?
@@ -64,7 +64,7 @@ class DepartmentPolicy < ApplicationPolicy
 
   private
 
-  def superadmin_or_users_department?
+  def superadmin_or_the_departments_manager?
     @user.superadmin? || @department.user.include?(@user)
   end
 
