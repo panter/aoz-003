@@ -1,44 +1,127 @@
-User.find_or_create_by!(email: 'superadmin@example.com') do |user|
-  user.password = 'asdfasdf'
-  user.role = 'superadmin'
+
+Faker::Config.locale = 'de'
+
+def random_relation
+  [
+    'brother', 'sister', 'mother', 'father', 'foster-mother',
+    'foster-father', 'friend', 'neighbour', 'cousin', 'uncle', 'aunt',
+    'son', 'doughter', 'newphew', 'niece'
+  ].sample
 end
 
-User.find_or_create_by!(email: 'social_worker@example.com') do |user|
-  user.password = 'asdfasdf'
-  user.role = 'social_worker'
-end
-
-User.find_or_create_by!(email: 'department_manager@example.com') do |user|
-  user.password = 'asdfasdf'
-  user.role = 'department_manager'
-end
-
-User.all.each do |user|
-  Profile.find_or_create_by!(user: user) do |profile|
-    profile.first_name = user.role
-    profile.last_name = user.role
-    profile.user = user
+def make_relatives
+  Array.new(2).map do
+    Relative.new do |relative|
+      relative.first_name = Faker::Name.first_name
+      relative.last_name = Faker::Name.last_name
+      relative.relation = random_relation
+      relative.date_of_birth = Faker::Date.birthday(18, 65)
+    end
   end
+end
 
-  Client.find_or_create_by!(
-    first_name: "#{user.profile.first_name}'s Client",
-    user: user
-  ) do |client|
-    client.first_name = "#{user.profile.first_name}'s Client"
-    client.last_name = 'a lastname'
-    client.user = user
-    client.schedules << Schedule.build
+def make_lang_skills
+  Array.new(3).map do
+    LanguageSkill.new do |l|
+      l.language = I18nData.languages.to_a.sample[0]
+      l.level = LanguageSkill.language_level_collection.sample
+    end
   end
+end
+
+def make_schedule
+  Schedule.build.each do |day|
+    day.each do |time|
+      time.available = [true, false].sample
+    end
+  end
+end
+
+User.role_collection.each do |role|
+  User.find_or_create_by!(email: "#{role}@example.com") do |user|
+    user.password = 'asdfasdf'
+    user.role = role
+    user.profile = Profile.new do |profile|
+      profile.first_name = Faker::Name.first_name
+      profile.last_name = Faker::Name.last_name
+      profile.phone = Faker::PhoneNumber.phone_number
+      profile.address = Faker::Address.street_address
+      profile.profession = Faker::Company.profession
+      [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
+        profile[day] = [true, false].sample
+      end
+    end
+  end
+end
+
+User.where(role: ['superadmin', 'social_worker']).each do |user|
+  next if user.clients.count > 1
+  user.clients = Array.new(4).map do
+    Client.new do |client|
+      client.first_name = Faker::Name.first_name
+      client.last_name = Faker::Name.last_name
+      client.date_of_birth = Faker::Date.birthday(18, 65)
+      client.gender = ['male', 'female'].sample
+      client.nationality = ISO3166::Country.codes.sample
+      client.email = Faker::Internet.unique.email
+      client.relatives = make_relatives
+      client.language_skills = make_lang_skills
+      client.schedules << make_schedule
+    end
+  end
+  user.save
 end
 
 if Department.count < 1
-  Department.new(
-    contact: Contact.new(name: 'Bogus Department'),
-    user: [User.all.sample]
-  ).save
+  department = Department.new do |d|
+    d.contact = Contact.new do |c|
+      c.name = 'Bogus Department'
+      c.street = Faker::Address.street_address
+      c.postal_code = Faker::Address.zip_code
+      c.city = Faker::Address.city
+      c.contact_emails = Array.new(3).map do
+        ContactEmail.new do |email|
+          email.body = Faker::Internet.email
+          email.label = ContactEmail.label_collection.sample
+        end
+      end
+      c.contact_phones = Array.new(3).map do
+        ContactPhone.new do |phone|
+          phone.body = Faker::PhoneNumber.phone_number
+          phone.label = ContactPhone.label_collection.sample
+        end
+      end
+    end
+    d.user.push User.find_by(role: 'department_manager')
+  end
+  department.save!
 end
 
-Volunteer.find_or_create_by!(first_name: 'First', last_name: 'Volunteer',
-  email: 'volunteer@example.com') do |volunteer|
-  volunteer.schedules << Schedule.build
+Volunteer.state_collection.each do |state|
+  Volunteer.find_or_create_by!(email: "volunteer_#{state}@example.com", state: state) do |v|
+    v.first_name = Faker::Name.first_name
+    v.last_name = Faker::Name.last_name
+    v.date_of_birth = Faker::Date.birthday(18, 75)
+    v.zip = Faker::Address.zip_code
+    v.city = Faker::Address.city
+    v.street = Faker::Address.street_address
+    v.email = Faker::Internet.email
+    v.phone = Faker::PhoneNumber.phone_number
+    v.profession = Faker::Company.profession
+    v.gender = ['male', 'female'].sample
+    [:experience, :man, :woman, :family, :kid, :sport, :creative, :music,
+     :culture, :training, :german_course, :adults, :teenagers, :children].each do |bool_attr|
+      v[bool_attr] = [true, false].sample
+    end
+    [:nationality, :additional_nationality].each { |n| v[n] = ISO3166::Country.codes.sample }
+    v.education = "#{Faker::Educator.secondary_school}, #{Faker::Educator.university}"
+    [:motivation, :expectations, :strengths, :interests].each do |attribute|
+      v[attribute] = Faker::Lorem.sentence(rand(2..5))
+    end
+    v.skills = "#{Faker::Job.key_skill}, #{Faker::Job.key_skill}, #{Faker::Job.key_skill}"
+    v.duration = ['long', 'short'].sample
+    v.region = ['city', 'region', 'canton'].sample
+    v.language_skills = make_lang_skills
+    v.schedules << make_schedule
+  end
 end

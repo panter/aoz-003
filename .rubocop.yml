@@ -37,9 +37,13 @@ Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
     - 'test/*'
+    - 'db/seeds.rb'
 Metrics/AbcSize:
   Exclude:
     - 'db/migrate/*'
+Metrics/BlockLength:
+  Exclude:
+    - 'db/seeds.rb'
 
 Metrics/BlockLength:
   Exclude:

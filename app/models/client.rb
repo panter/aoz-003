@@ -1,6 +1,7 @@
 class Client < ApplicationRecord
   include AssociatableFields
   include FullName
+  include StateCollection
 
   belongs_to :user
 

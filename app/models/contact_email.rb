@@ -1,6 +1,6 @@
 class ContactEmail < ContactPoint
   validates :body, format: {
-    with: /\A[\w]+@[\w]{2,}\.[\w]{2,}\z/,
+    with: Devise.email_regexp,
     message: 'Not an email address.'
   }
 
