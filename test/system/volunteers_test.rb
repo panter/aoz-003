@@ -4,6 +4,9 @@ class VolunteersTest < ApplicationSystemTestCase
   setup do
     @user = create :user, :with_profile, email: 'superadmin@example.com'
     login_as @user
+    [:registered, :reserved, :active, :finished, :rejected].each do |s|
+      create :volunteer, state: s.to_s
+    end
   end
 
   test 'new volunteer form' do
@@ -86,5 +89,36 @@ class VolunteersTest < ApplicationSystemTestCase
     visit volunteer_path(volunteer)
     assert page.has_content? 'Reason for rejection'
     assert page.has_content? 'Explanation for rejection'
+  end
+
+  test 'if visit index, default filter is state: registered' do
+    visit volunteers_path
+    assert page.has_text? 'intrested / registered'
+  end
+
+  test 'change filter to other options' do
+    visit volunteers_path
+    within find_all('.btn-group').first do
+      click_button 'State : intrested'
+      click_link 'resigned'
+    end
+    within 'tbody' do
+      assert page.has_text? 'resigned'
+    end
+  end
+
+  test 'thead state filter dropdown can switch to all' do
+    visit volunteers_path
+    within find_all('thead').first do
+      click_button 'State'
+      click_link 'all'
+    end
+    within 'tbody' do
+      assert page.has_text? 'resigned'
+      assert page.has_text? 'intrested / registered'
+      assert page.has_text? 'contacted / invited to meeting'
+      assert page.has_text? 'active / participating'
+      assert page.has_text? 'rejected'
+    end
   end
 end
