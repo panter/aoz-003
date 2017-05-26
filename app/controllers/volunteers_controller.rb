@@ -1,6 +1,7 @@
 class VolunteersController < ApplicationController
   include NestedAttributes
   before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
+  before_action :set_state, only: [:set_volunteer, :update]
 
   def index
     @volunteers = Volunteer.all
@@ -26,7 +27,15 @@ class VolunteersController < ApplicationController
 
   def update
     if @volunteer.update(volunteer_params)
-      redirect_to @volunteer, notice: t('volunteer_updated')
+      if @state == 'interested/registered' && @volunteer.state == 'active'
+        new_user = User.new(email: @volunteer.email,
+          password: Devise.friendly_token, role: 'volunteer')
+        new_user.save!
+        new_user.invite!
+        redirect_to volunteers_path, notice: t('invite_sent', email: new_user.email)
+      else
+        redirect_to @volunteer, notice: t('volunteer_updated')
+      end
     else
       render :edit
     end
@@ -41,6 +50,10 @@ class VolunteersController < ApplicationController
 
   def set_volunteer
     @volunteer = Volunteer.find(params[:id])
+  end
+
+  def set_state
+    @state = @volunteer.state
   end
 
   def volunteer_params

@@ -78,4 +78,17 @@ class UsersTest < ApplicationSystemTestCase
 
     assert_not page.has_link? 'Delete'
   end
+
+  test 'accepted volunteer becomes a user' do
+    volunteer = create :volunteer
+    visit edit_volunteer_path(volunteer.id)
+    fill_in 'State', with: 'active'
+    assert_difference 'User.count', 1 do
+      click_button 'Update Volunteer'
+      assert page.has_text? 'Invitation sent to volunteer@example.com'
+    end
+    assert_equal 1, ActionMailer::Base.deliveries.size
+    email = ActionMailer::Base.deliveries.last
+    assert_equal 'volunteer@example.com', email['to'].to_s
+  end
 end
