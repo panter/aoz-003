@@ -4,10 +4,10 @@
 
 .row
   .col-xs-12
-  = simple_form_for(@volunteer) do |f|
-    = render 'volunteers/form', f: f
-    = render 'schedules/form', f: f, participant: @volunteer
-    = f.button :submit, class: 'btn btn-success'
+    = simple_form_for(@volunteer) do |f|
+      = render 'volunteers/form', f: f
+      = render 'schedules/form', f: f, participant: @volunteer
+      = f.button :submit, class: 'btn btn-success'
 
 .row
   .col-xs-12
