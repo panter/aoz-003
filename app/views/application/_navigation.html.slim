@@ -16,7 +16,8 @@ nav.navbar.navbar-top
             li= link_to t('users'), users_path
           - if policy(Client).index?
             li= link_to t('clients'), clients_path
-          li= link_to t('volunteers'), volunteers_path
+          - if policy(Volunteer).index?
+            li= link_to t('volunteers'), volunteers_path
           - if policy(Department).index?
             li= link_to t('departments'), departments_path
         ul.nav.navbar-nav.navbar-right
