@@ -2,50 +2,43 @@
   .col-xs-12
     h1= @volunteer.full_name
 
-.row
-  .col-xs-12
     .table-responsive
       table.table.table-no-border-top
         tbody
-          - if @volunteer.date_of_birth.present?
-            tr
-              td= t_attr(:date_of_birth)
-              td= l(@volunteer.date_of_birth)
-          - if @volunteer.gender.present?
-            tr
-              td= t_attr(:gender)
-              td= t("gender.#{@volunteer.gender}")
-          - if @volunteer.avatar.present?
-            tr
-              td= t_attr(:avatar)
-              td= image_tag @volunteer.avatar.url(:thumb)
-          - if @volunteer.nationality.present?
-            tr
-              td= t_attr(:nationality)
-              td= country(@volunteer.nationality)
-          - @volunteer.additional_nationality.present?
-            tr
-              td= t_attr(:additional_nationality)
-              td= country(@volunteer.additional_nationality)
           tr
-            td= t_attr(:street)
-            td= @volunteer.street
+            td= t_attr(:date_of_birth)
+            td= l(@volunteer.date_of_birth) if @volunteer.date_of_birth.present?
           tr
-            td= t_attr(:zip)
-            td= @volunteer.zip
+            td= t_attr(:gender)
+            td= t("gender.#{@volunteer.gender}") if @volunteer.gender.present?
           tr
-            td= t_attr(:city)
-            td= @volunteer.city
+            td= t_attr(:avatar)
+            td= image_tag(@volunteer.avatar.url(:thumb)) if @volunteer.avatar.present?
+          tr
+            td= t_attr(:nationality)
+            td= country(@volunteer.nationality) if @volunteer.nationality.present?
+          tr
+            td= t_attr(:additional_nationality)
+            td= country(@volunteer.additional_nationality) if @volunteer.additional_nationality.present?
+            tr
+              td= t_attr(:street)
+              td= @volunteer.street
+            tr
+              td= t_attr(:zip)
+              td= @volunteer.zip
+            tr
+              td= t_attr(:city)
+              td= @volunteer.city
           tr
             td= t_attr(:email)
-            td= mail_to @volunteer.email if @volunteer.email.present?
+            td= mail_to(@volunteer.email) if @volunteer.email.present?
           tr
             td= t_attr(:phone)
             td= @volunteer.phone
-
-          = render 'language_skills/show', speaker: @volunteer
-          = render 'relatives/show', relative: @volunteer
-
+          - if @volunteer.language_skills.any?
+            = render 'language_skills/show', speaker: @volunteer
+          - if @volunteer.relatives.any?
+            = render 'relatives/show', relative: @volunteer
           tr
             td= t_attr(:profession)
             td= @volunteer.profession
