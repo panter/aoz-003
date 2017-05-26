@@ -1,0 +1,28 @@
+class VolunteerPolicy < ApplicationPolicy
+  attr_reader :user
+
+  def initialize(user, volunteer)
+    @user = user
+    @volunteer = volunteer
+  end
+
+  def index?
+    user.superadmin?
+  end
+
+  def show?
+    user.superadmin?
+  end
+
+  def edit?
+    user.superadmin?
+  end
+
+  def update?
+    user.superadmin?
+  end
+
+  def destroy?
+    user.superadmin?
+  end
+end
