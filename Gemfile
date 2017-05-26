@@ -40,6 +40,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'listen'
   gem 'overcommit', require: false
+  gem 'policy-assertions'
   gem 'poltergeist'
   gem 'pry-byebug'
   gem 'pry-rails'
