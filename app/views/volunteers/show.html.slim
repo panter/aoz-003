@@ -72,7 +72,7 @@
             - if @volunteer.rejected?
               tr
                 td= t_attr(:rejection_type)
-                td= t("rejection_type.#{@volunteer.rejection_type}")
+                td= t("rejection_type.#{@volunteer.rejection_type}") unless @volunteer.rejection_type.blank?
               tr
                 td= t_attr(:rejection_text)
                 td= @volunteer.rejection_text
