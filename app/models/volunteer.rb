@@ -19,8 +19,8 @@ class Volunteer < ApplicationRecord
   ACCEPTED = 'accepted'.freeze
   REJECTED = 'rejected'.freeze
   INACTIVE = 'inactive'.freeze
-  STATES_FOR_ACCEPTED = [ACCEPTED, REJECTED, INACTIVE].freeze
-  STATES = STATES_FOR_ACCEPTED + [INTERESTED]
+  STATES_FOR_REVIEWED = [ACCEPTED, REJECTED, INACTIVE].freeze
+  STATES = STATES_FOR_REVIEWED + [INTERESTED]
 
   def interested?
     state == Volunteer::INTERESTED
@@ -50,7 +50,7 @@ class Volunteer < ApplicationRecord
     if volunteer.interested?
       STATES.map(&:to_sym)
     else
-      STATES_FOR_ACCEPTED.map(&:to_sym)
+      STATES_FOR_REVIEWED.map(&:to_sym)
     end
   end
 end
