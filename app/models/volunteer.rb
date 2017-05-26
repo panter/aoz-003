@@ -15,6 +15,18 @@ class Volunteer < ApplicationRecord
     content_type: /\Aimage\/.*\z/
   }
 
+  # Volunteer state definition
+  INTERESTED = 'interested'.freeze
+  ACCEPTED = 'accepted'.freeze
+  REJECTED = 'rejected'.freeze
+  INACTIVE = 'inactive'.freeze
+  STATES_FOR_ACCEPTED = [ACCEPTED, REJECTED, INACTIVE].freeze
+  STATES = STATES_FOR_ACCEPTED + [INTERESTED]
+
+  def interested?
+    state == Volunteer::INTERESTED
+  end
+
   def self.duration_collection
     [:short, :long]
   end
@@ -35,7 +47,11 @@ class Volunteer < ApplicationRecord
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
   end
 
-  def self.state_collection
-    [:interested, :accepted, :rejected, :inactive]
+  def self.state_collection(volunteer)
+    if volunteer.interested?
+      STATES.map(&:to_sym)
+    else
+      STATES_FOR_ACCEPTED.map(&:to_sym)
+    end
   end
 end
