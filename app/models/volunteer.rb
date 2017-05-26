@@ -4,6 +4,8 @@ class Volunteer < ApplicationRecord
 
   acts_as_paranoid
 
+  belongs_to :user, optional: true
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   validates :first_name, :last_name, :email, presence: true

@@ -247,7 +247,6 @@ en:
           department_manager: Departement manager
           social_worker: Social worker
           superadmin: Superadmin
-          #volunteer: Volunteer
       volunteer:
         duration:
           long: Long term (min 6 months)

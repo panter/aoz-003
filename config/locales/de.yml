@@ -404,7 +404,6 @@ de:
           department_manager: Standort Verantwortliche/r
           social_worker: SozialarbeiterIn
           superadmin: Superadmin
-          #volunteer: Freiwillige
       volunteer:
         duration:
           long: Längerfristig (min 6 Mt.)

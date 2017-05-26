@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :clients
   has_one :profile, dependent: :destroy
+  has_one :volunteer, dependent: :destroy
   has_and_belongs_to_many :department
 
   # Roles definition
