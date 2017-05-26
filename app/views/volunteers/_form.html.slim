@@ -61,7 +61,7 @@
 - if !current_user.nil? && current_user.superadmin?
   .row
     .col-xs-12
-      = f.input :state
+      = f.input :state, collection: Volunteer.state_collection
 
 .row
   .col-xs-12

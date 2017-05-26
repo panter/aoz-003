@@ -267,6 +267,11 @@ en:
           canton: Canton
           city: City
           region: Region
+        state:
+          accepted: Accepted
+          inactive: Inactive
+          interested: Interested
+          rejected: Rejected
     placeholders:
     required:
       mark: '*'
@@ -274,8 +279,11 @@ en:
     "yes": 'Yes'
   single_accompaniment: Single accompaniment
   state:
+    accepted: Accepted
     active: Active
     finished: Finished
+    inactive: Inactive
+    interested: Interested
     registered: Registered
     rejected: Rejected
     reserved: Reserved

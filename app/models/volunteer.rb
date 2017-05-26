@@ -34,4 +34,8 @@ class Volunteer < ApplicationRecord
   def self.human_boolean(boolean)
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
   end
+
+  def self.state_collection
+    [:interested, :accepted, :rejected, :inactive]
+  end
 end

@@ -27,7 +27,7 @@ class VolunteersController < ApplicationController
 
   def update
     if @volunteer.update(volunteer_params)
-      if @state == 'interested/registered' && @volunteer.state == 'active'
+      if @state == 'interested' && @volunteer.state == 'active'
         new_user = User.new(email: @volunteer.email,
           password: Devise.friendly_token, role: 'volunteer')
         new_user.save!
