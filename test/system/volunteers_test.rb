@@ -109,8 +109,8 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'thead state filter dropdown can switch to all' do
     visit volunteers_path
-    within find_all('thead').first do
-      click_button 'State'
+    within find_all('.btn-group').first do
+      click_button 'State : intrested'
       click_link 'all'
     end
     within 'tbody' do
