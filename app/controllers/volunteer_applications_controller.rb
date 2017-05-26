@@ -4,6 +4,7 @@ class VolunteerApplicationsController < ApplicationController
 
   def new
     @volunteer = Volunteer.new
+    @volunteer.schedules << Schedule.build
   end
 
   def create
