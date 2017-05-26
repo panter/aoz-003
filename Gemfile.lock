@@ -214,6 +214,9 @@ GEM
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.20.0)
+    policy-assertions (0.0.3)
+      activesupport (>= 3.0.0)
+      pundit (>= 1.0.0)
     poltergeist (1.14.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -366,6 +369,7 @@ DEPENDENCIES
   paperclip
   paranoia
   pg
+  policy-assertions
   poltergeist
   pry-byebug
   pry-rails
@@ -382,4 +386,4 @@ DEPENDENCIES
   uglifier
 
 BUNDLED WITH
-   1.14.6
+   1.15.0

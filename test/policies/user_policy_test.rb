@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UserPolicyTest < ActiveSupport::TestCase
+class UserPolicyTest < PolicyAssertions::Test
   def setup
     @superadmin = create :user, :with_clients, :with_profile, role: 'superadmin'
     @other_superadmin = create :user, :with_profile, role: 'superadmin'
