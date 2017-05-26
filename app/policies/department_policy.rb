@@ -21,8 +21,8 @@ class DepartmentPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    return contact_attrs.push(user_ids: []) if @user.superadmin?
-    return contact_attrs if @user.department_manager?
+    return department_attributes.push(user_ids: []) if @user.superadmin?
+    return department_attributes if @user.department_manager?
     []
   end
 
@@ -72,7 +72,7 @@ class DepartmentPolicy < ApplicationPolicy
     [:id, :body, :label, :_destroy, :type, :contacts_id]
   end
 
-  def contact_attrs
+  def department_attributes
     [
       contact_attributes: [
         :id, :name, :_destroy, :contactable_id, :contactable_type, :street,
