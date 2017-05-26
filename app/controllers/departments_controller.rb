@@ -5,9 +5,7 @@ class DepartmentsController < ApplicationController
     @departments = policy_scope(Department)
   end
 
-  def show
-    authorize @department
-  end
+  def show; end
 
   def new
     @department = Department.new
@@ -15,9 +13,7 @@ class DepartmentsController < ApplicationController
     authorize @department
   end
 
-  def edit
-    authorize @department
-  end
+  def edit; end
 
   def create
     @department = Department.new
@@ -31,7 +27,6 @@ class DepartmentsController < ApplicationController
   end
 
   def update
-    authorize @department
     if @department.update_attributes(permitted_attributes(@department))
       redirect_to @department, notice: t('department_updated')
     else
@@ -40,7 +35,6 @@ class DepartmentsController < ApplicationController
   end
 
   def destroy
-    authorize @department
     @department.destroy
     redirect_to departments_url, notice: t('department_destroyed')
   end
@@ -49,9 +43,6 @@ class DepartmentsController < ApplicationController
 
   def set_department
     @department = Department.find(params[:id])
-  end
-
-  def department_params
-    params.require(:department).permit(policy(@department).permitted_attributes)
+    authorize @department
   end
 end
