@@ -10,7 +10,9 @@ class User < ApplicationRecord
   SUPERADMIN = 'superadmin'.freeze
   SOCIAL_WORKER = 'social_worker'.freeze
   DEPARTMENT_MANAGER = 'department_manager'.freeze
-  ROLES = [SUPERADMIN, SOCIAL_WORKER, DEPARTMENT_MANAGER].freeze
+  VOLUNTEER = 'volunteer'.freeze
+  ROLES = [SUPERADMIN, SOCIAL_WORKER, DEPARTMENT_MANAGER, VOLUNTEER].freeze
+  ROLES_FORM = [SUPERADMIN, SOCIAL_WORKER, DEPARTMENT_MANAGER].freeze
 
   validates :role, inclusion: { in: ROLES }
 
@@ -44,6 +46,6 @@ class User < ApplicationRecord
   end
 
   def self.role_collection
-    ROLES.map(&:to_sym)
+    ROLES_FORM.map(&:to_sym)
   end
 end

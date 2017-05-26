@@ -217,6 +217,7 @@ en:
     department_manager: Department manager
     social_worker: Social worker
     superadmin: Superadmin
+    volunteer: Volunteer
   schedule: Schedule
   show_my_profile: My profile
   show_profile: Show profile
@@ -246,6 +247,7 @@ en:
           department_manager: Departement manager
           social_worker: Social worker
           superadmin: Superadmin
+          #volunteer: Volunteer
       volunteer:
         duration:
           long: Long term (min 6 months)

@@ -58,9 +58,10 @@
     = f.input :skills, label: t('your_skills')
     = f.input :interests, label: t('your_interests')
 
-.row
-  .col-xs-12
-    = f.input :state, as: :hidden
+- if !current_user.nil? && current_user.superadmin?
+  .row
+    .col-xs-12
+      = f.input :state
 
 .row
   .col-xs-12
