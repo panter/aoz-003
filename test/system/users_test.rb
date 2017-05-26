@@ -82,7 +82,7 @@ class UsersTest < ApplicationSystemTestCase
   test 'accepted volunteer becomes a user' do
     volunteer = create :volunteer
     visit edit_volunteer_path(volunteer.id)
-    fill_in 'State', with: 'active'
+    select('Accepted', from: 'State')
     assert_difference 'User.count', 1 do
       click_button 'Update Volunteer'
       assert page.has_text? 'Invitation sent to volunteer@example.com'
