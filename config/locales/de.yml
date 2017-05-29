@@ -131,6 +131,8 @@ de:
           attributes:
             avatar:
               spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
+        profile:
+          attributes:
             avatar_content_type:
               invalid: ist ungültig
             first_name:
