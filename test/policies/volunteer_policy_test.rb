@@ -7,8 +7,8 @@ class VolunteerPolicyTest < ActiveSupport::TestCase
     @department_manager = create :user, role: 'department_manager'
   end
 
-  test 'No user can create volunteer' do
-    refute_permit @superadmin, Volunteer, 'new?', 'create?'
+  test 'Create: only superadmin can create volunteer' do
+    assert_permit @superadmin, Volunteer, 'new?', 'create?'
     refute_permit @social_worker, Volunteer, 'new?', 'create?'
     refute_permit @department_manager, Volunteer, 'new?', 'create?'
   end
