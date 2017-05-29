@@ -6,6 +6,14 @@ class VolunteerPolicy < ApplicationPolicy
     @volunteer = volunteer
   end
 
+  def new?
+    user.superadmin?
+  end
+
+  def create?
+    user.superadmin?
+  end
+
   def index?
     user.superadmin?
   end
