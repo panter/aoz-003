@@ -63,4 +63,23 @@ class VolunteersTest < ApplicationSystemTestCase
       assert page.has_text? "can't be blank"
     end
   end
+
+  test 'rejection fields are shown only when the volunteer is rejected' do
+    volunteer = create :volunteer
+    visit volunteer_path(volunteer)
+    assert_not page.has_content? 'Reason for rejection'
+    assert_not page.has_content? 'Explanation for rejection'
+
+    visit edit_volunteer_path(volunteer)
+    assert_not page.has_content? 'Reason for rejection'
+    assert_not page.has_field? 'Explanation for rejection'
+    select('Rejected', from: 'State')
+    assert page.has_content? 'Reason for rejection'
+    assert page.has_field? 'Explanation for rejection'
+    click_button 'Update Volunteer'
+
+    visit volunteer_path(volunteer)
+    assert page.has_content? 'Reason for rejection'
+    assert page.has_content? 'Explanation for rejection'
+  end
 end
