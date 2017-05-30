@@ -65,13 +65,18 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'rejection fields are shown only when the volunteer is rejected' do
+    visit new_volunteer_path
+    refute page.has_text? 'Reason for rejection'
+    refute page.has_field? 'Explanation for rejection'
+
     volunteer = create :volunteer
+
     visit volunteer_path(volunteer)
-    refute page.has_content? 'Reason for rejection'
-    refute page.has_content? 'Explanation for rejection'
+    refute page.has_text? 'Reason for rejection'
+    refute page.has_text? 'Explanation for rejection'
 
     visit edit_volunteer_path(volunteer)
-    refute page.has_content? 'Reason for rejection'
+    refute page.has_text? 'Reason for rejection'
     refute page.has_field? 'Explanation for rejection'
     select('Rejected', from: 'State')
     assert page.has_content? 'Reason for rejection'
