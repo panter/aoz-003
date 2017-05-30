@@ -1,5 +1,5 @@
 class VolunteerPolicy < ApplicationPolicy
-  attr_reader :user
+  attr_reader :user, :volunteer
 
   def initialize(user, volunteer)
     @user = user

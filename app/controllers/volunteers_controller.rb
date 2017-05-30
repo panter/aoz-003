@@ -5,19 +5,26 @@ class VolunteersController < ApplicationController
 
   def index
     @volunteers = Volunteer.all
+    authorize Volunteer
   end
 
-  def show; end
+  def show
+    authorize @volunteer
+  end
 
   def new
     @volunteer = Volunteer.new
     @volunteer.schedules << Schedule.build
+    authorize @volunteer
   end
 
-  def edit; end
+  def edit
+    authorize @volunteer
+  end
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
+    authorize @volunteer
     if @volunteer.save
       redirect_to @volunteer, notice: t('volunteer_created')
     else
@@ -26,6 +33,7 @@ class VolunteersController < ApplicationController
   end
 
   def update
+    authorize @volunteer
     if @volunteer.update(volunteer_params)
       if @state == Volunteer::INTERESTED && @volunteer.state == Volunteer::ACCEPTED
         new_user = User.new(email: @volunteer.email,
@@ -42,6 +50,7 @@ class VolunteersController < ApplicationController
   end
 
   def destroy
+    authorize @volunteer
     @volunteer.destroy
     redirect_to volunteers_url, notice: t('volunteer_destroyed')
   end
