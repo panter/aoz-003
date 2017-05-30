@@ -1,8 +1,10 @@
 $(function() {
-  show_rejection();
-
-  $('#volunteer_state').change(function(){
+  $( document ).on('turbolinks:render, turbolinks:load', function() {
     show_rejection();
+
+    $('#volunteer_state').on('change', function(){
+      show_rejection();
+    });
   });
 });
 
