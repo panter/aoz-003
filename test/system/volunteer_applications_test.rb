@@ -68,6 +68,6 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
 
   test 'state field not visible in the application form' do
     visit new_volunteer_application_path
-    assert_not page.has_field? 'State'
+    assert_not page.has_text? 'State'
   end
 end
