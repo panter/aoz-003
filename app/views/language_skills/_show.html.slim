@@ -4,5 +4,6 @@ tr
     - if speaker.language_skills.any?
       dl.dl-horizontal
         - speaker.language_skills.each do |lang|
-          dt= lang.language_name
-          dd= t("language_level.#{lang.level}")
+          - unless lang.language_name.blank?
+            dt= lang.language_name
+            dd= t("language_level.#{lang.level}") unless lang.level.blank?
