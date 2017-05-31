@@ -45,13 +45,10 @@ Metrics/BlockLength:
   Exclude:
     - 'db/seeds.rb'
 
-<<<<<<< HEAD
 Metrics/BlockLength:
   Exclude:
     - 'test/system/*'
 
-=======
->>>>>>> putting things for params back in order
 Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
 
