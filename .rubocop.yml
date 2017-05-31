@@ -23,7 +23,7 @@ Style/LineEndConcatenation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Layout/MultilineOperationIndentation:
+Style/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 Style/AsciiComments:
@@ -58,7 +58,7 @@ Style/ClassAndModuleChildren:
 Style/SymbolArray:
   EnforcedStyle: brackets
 
-Layout/AlignParameters:
+Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
 Style/RegexpLiteral:
