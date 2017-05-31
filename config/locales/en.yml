@@ -1,3 +1,4 @@
+---
 en:
   accompaniment:
     creative: Creative
@@ -278,7 +279,7 @@ en:
     rejected: Rejected
     reserved: Reserved
   submit_application: Submit application
-  thank_you: Thank you🎉
+  thank_you: "Thank you \U0001F389"
   target_groups: Target groups
   time:
     formats:
