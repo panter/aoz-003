@@ -23,10 +23,10 @@ en:
         department: Department
         email: Email
       volunteer:
-        full_name: Name
         duration: Duration of the accompaniment
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
+        full_name: Name
         single_accompaniment: Single accompaniment
     models:
       client: Client
@@ -43,12 +43,12 @@ en:
       volunteer_application: Volunteer Application
   add_language: Add language
   add_relative: Add family member
-  application_submitted: 'Your application with the email %{email} has been successfully sent.'
   all: all
+  application_submitted: 'Your application with the email %{email} has been successfully sent.'
+  application_submitted: 'Your application with the email %{email} has been successfully sent.'
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
-  application_submitted: 'Your application with the email %{email} has been successfully sent.'
   back: Back
   change_my_password: Change my password
   change_password: Change your password
@@ -296,7 +296,6 @@ en:
     rejected: Rejected
     reserved: Reserved
   submit_application: Submit application
-  thank_you: "Thank you \U0001F389"
   target_groups: Target groups
   thank_you: "Thank you \U0001F389"
   time:
@@ -314,12 +313,13 @@ en:
   users: Users
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Application
+  volunteer_application: Volunteer Application
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to apply as a volunteer?
-  volunteer_application: Volunteer Application
+  wanna_apply: Do you want to apply as a volunteer?
   weekdays:
     friday: Friday
     monday: Monday
@@ -328,7 +328,6 @@ en:
     thursday: Thursday
     tuesday: Tuesday
     wednesday: Wednesday
-  wanna_apply: Do you want to apply as a volunteer?
   when: Time
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
