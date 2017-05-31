@@ -4,6 +4,6 @@ class Client < ApplicationRecord
   include StateCollection
 
   belongs_to :user
-
-  validates :first_name, :last_name, presence: true
+  has_one :contact, as: :contactable
+  accepts_nested_attributes_for :contact
 end
