@@ -110,8 +110,8 @@
   .col-xs-12.col-md-1
     = f.input :german_course
 
+h3= t('target_groups')
 .row
-  h3= t('target_groups')
   .col-xs-12.col-md-1
     = f.input :adults
 
@@ -121,13 +121,9 @@
   .col-xs-12.col-md-1
     = f.input :children
 
+h3= t('your_region')
 .row
-  h3= t('your_region')
   .col-xs-12
     = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
 
 = render 'schedules/form', f: f, participant: f.object
-
-.row
-  .col-xs-12
-    = f.button :submit, class: 'btn btn-success'

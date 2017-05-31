@@ -1,13 +1,10 @@
-.row
-  .col-xs-12
-    h1= t_title(:edit)
+h1= t_title(:edit)
 
-.row
-  .col-xs-12
-    = simple_form_for(@volunteer) do |f|
-      = render 'volunteers/form', f: f, volunteer: @volunteer
-      = render 'schedules/form', f: f, participant: @volunteer
-      = f.button :submit, class: 'btn btn-success'
+= simple_form_for(@volunteer) do |f|
+  = render 'volunteers/form', f: f, volunteer: @volunteer
+  = render 'schedules/form', f: f, participant: @volunteer
+  = f.button :submit, class: 'btn btn-success'
+
 .row
   .col-xs-12
     = link_to t_action(:show), @volunteer, class: 'btn btn-default'
