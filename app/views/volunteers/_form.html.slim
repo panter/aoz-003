@@ -76,8 +76,8 @@
   .col-xs-12
     = f.input :duration, collection: Volunteer.duration_collection, as: :radio_buttons
 
+h3= t_attr(:single_accompaniment, Volunteer)
 .row
-  h3= t_attr(:single_accompaniment)
   .col-xs-12.col-md-1
     = f.input :man
 
@@ -90,8 +90,8 @@
   .col-xs-12.col-md-1
     = f.input :kid
 
+h3= t_attr(:group_accompaniment, Volunteer)
 .row
-  h3= t_attr(:group_accompaniment)
   .col-xs-12.col-md-1
     = f.input :sport
 
