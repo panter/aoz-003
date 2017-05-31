@@ -38,6 +38,7 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'i18n_yaml_sorter'
   gem 'listen'
   gem 'overcommit', require: false
   gem 'policy-assertions'
