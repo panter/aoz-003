@@ -5,7 +5,7 @@ tr
       dl.dl-horizontal
         - relative.relatives.each do |rel|
           dt= rel.full_name
-          - if rel.full_name.present?
+          -unless rel.full_name.blank?
             dd
               = l(rel.date_of_birth) if rel.date_of_birth
               |, #{rel.relation}
