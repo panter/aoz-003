@@ -1,3 +1,4 @@
+---
 de:
   accompaniment:
     creative: Kreativ
@@ -126,6 +127,8 @@ de:
       models:
         profile:
           attributes:
+            avatar:
+              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
             avatar_content_type:
               invalid: ist ungültig
             first_name:
@@ -145,10 +148,6 @@ de:
               confirmation: Die eingegebenen Passwörter stimmen nicht überein
             role:
               inclusion: ist nicht in der Liste enthalten
-        profile:
-          attributes:
-            avatar:
-              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
         volunteer:
           attributes:
             avatar:
@@ -444,7 +443,7 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
-  thank_you: Vielen Dank🎉
+  thank_you: "Vielen Dank \U0001F389"
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
