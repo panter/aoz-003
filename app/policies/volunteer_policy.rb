@@ -33,4 +33,8 @@ class VolunteerPolicy < ApplicationPolicy
   def destroy?
     user && user.superadmin?
   end
+
+  def access_state?
+    @user && (@user.superadmin? || @user.department_manager?)
+  end
 end
