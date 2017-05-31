@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class VolunteerPolicyTest < ActiveSupport::TestCase
+class VolunteerPolicyTest < PolicyAssertions::Test
   def setup
     @superadmin = create :user, role: 'superadmin'
     @social_worker = create :user, role: 'social_worker'
