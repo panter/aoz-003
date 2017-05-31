@@ -1,6 +1,7 @@
-.row
-  .col-xs-12
-    = f.error_notification
+- if f.error_notification.present?
+  .row
+    .col-xs-12
+      = f.error_notification
 
 .row
   .col-xs-12.col-md-6
@@ -14,8 +15,8 @@
     = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
       end_year: Date.today.year, include_blank: true
 
-    .col-xs-12.col-md-6
-      = f.input :gender, collection: Volunteer.gender_collection, as: :radio_buttons
+  .col-xs-12.col-md-6
+    = f.input :gender, collection: Volunteer.gender_collection, as: :radio_buttons
 
 .row
   .col-xs-12
@@ -43,9 +44,9 @@
   .col-xs-12.col-md-6
     = f.input :phone
 
-= render 'language_skills/form', f: f, speaker: @volunteer
+= render 'language_skills/form', f: f, speaker: f.object
 
-= render 'relatives/form', f: f, relative: @volunteer
+= render 'relatives/form', f: f, relative: f.object
 
 .row
   .col-xs-12
@@ -76,7 +77,7 @@
     = f.input :duration, collection: Volunteer.duration_collection, as: :radio_buttons
 
 .row
-  h3= t('single_accompaniment')
+  h3= t_attr(:single_accompaniment)
   .col-xs-12.col-md-1
     = f.input :man
 
@@ -124,3 +125,9 @@
   h3= t('your_region')
   .col-xs-12
     = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
+
+= render 'schedules/form', f: f, participant: f.object
+
+.row
+  .col-xs-12
+    = f.button :submit, class: 'btn btn-success'
