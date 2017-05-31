@@ -169,10 +169,10 @@ de:
       volunteer_application: Freiwilligen Bewerbung
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
+  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
-  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
@@ -411,10 +411,10 @@ de:
           male: Mänlich
         language_skills:
           level:
-            native_speaker: Muttersprachler
+            basic: Grundlagen
             fluent: Fliessend
             good: Gut
-            basic: Grundlagen
+            native_speaker: Muttersprachler
         region:
           canton: Kanton
           city: Stadt
@@ -433,6 +433,7 @@ de:
     reserved: Reserviert
   submit_application: Bewerbung abschicken
   target_groups: Zielgruppe
+  thank_you: "Vielen Dank \U0001F389"
   time:
     formats:
       devise:
@@ -443,15 +444,15 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
-  thank_you: "Vielen Dank \U0001F389"
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
+  volunteer_application: Freiwillige/n Bewerbung
   volunteer_created: Freiwillige wurde erfolgreich erstellt.
   volunteer_destroyed: 'Freiwillige wurde erfolgreich gelöscht.'
   volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
-  volunteer_application: Freiwillige/n Bewerbung
+  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   weekdays:
     friday: Freitag
     monday: Montag
@@ -460,7 +461,6 @@ de:
     thursday: Donnerstag
     tuesday: Dienstag
     wednesday: Mittwoch
-  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   when: Zeit
   working_days: Arbeitstage
   your_expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?

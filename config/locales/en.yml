@@ -50,10 +50,10 @@ en:
       volunteer_application: Volunteer Application
   add_language: Add language
   add_relative: Add family member
+  application_submitted: 'Your application with the email %{email} has been successfully sent.'
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
-  application_submitted: 'Your application with the email %{email} has been successfully sent.'
   back: Back
   change_my_password: Change my password
   change_password: Change your password
@@ -78,8 +78,8 @@ en:
       - :month
       - :year
   department_created: Department was successfully created.
-  department_updated: Department was successfully updated.
   department_destroyed: Department was successfully deleted.
+  department_updated: Department was successfully updated.
   departments: Departments
   devise:
     confirmations:
@@ -258,10 +258,10 @@ en:
           male: Male
         language_skills:
           level:
-            native_speaker: Native speaker
+            basic: Basic
             fluent: Fluent
             good: Good
-            basic: Basic
+            native_speaker: Native speaker
         region:
           canton: Canton
           city: City
@@ -279,8 +279,8 @@ en:
     rejected: Rejected
     reserved: Reserved
   submit_application: Submit application
-  thank_you: "Thank you \U0001F389"
   target_groups: Target groups
+  thank_you: "Thank you \U0001F389"
   time:
     formats:
       devise:
@@ -294,11 +294,12 @@ en:
   user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
   voluntary_platform: Voluntaries Platform
+  volunteer_application: Volunteer Application
   volunteer_created: 'Volunteer was successfully created.'
   volunteer_destroyed: 'Volunteer was successfully deleted.'
   volunteer_updated: 'Volunteer was successfully updated.'
   volunteers: Volunteers
-  volunteer_application: Volunteer Application
+  wanna_apply: Do you want to apply as a volunteer?
   weekdays:
     friday: Friday
     monday: Monday
@@ -307,7 +308,6 @@ en:
     thursday: Thursday
     tuesday: Tuesday
     wednesday: Wednesday
-  wanna_apply: Do you want to apply as a volunteer?
   when: Time
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
