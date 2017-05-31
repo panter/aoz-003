@@ -29,6 +29,14 @@ Use `rails db:seed` to get these users:
   - email: department_manager@example.com
   - password: asdfasdf
 
+## Sort locale yaml files
+
+Run this task, in order to sort the locale files alphabetically.
+
+```shell
+rails i18n:sort
+```
+
 ## LICENSE
 
 All the sources created are made available under the terms

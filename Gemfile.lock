@@ -152,6 +152,7 @@ GEM
     i18n_data (0.7.0)
     i18n_rails_helpers (2.0.1)
       rails (> 3.0.0)
+    i18n_yaml_sorter (0.2.0)
     iniparse (1.4.2)
     jbuilder (2.6.4)
       activesupport (>= 3.0.0)
@@ -362,6 +363,7 @@ DEPENDENCIES
   factory_girl_rails
   i18n_data
   i18n_rails_helpers
+  i18n_yaml_sorter
   jbuilder
   jquery-rails
   listen
