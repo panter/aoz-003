@@ -83,6 +83,7 @@ de:
         avatar: Bild
         children: Kinder
         city: Stadt
+        created_at: Erstellt am
         creative: Kreativ
         culture: Kultur
         date_of_birth: Geburtsdatum
@@ -117,7 +118,6 @@ de:
         training: Bildung
         woman: Frau
         zip: Postleitzahl
-        created_at: Erstellt am
     errors:
       models:
         profile:
@@ -126,14 +126,14 @@ de:
               spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
         profile:
           attributes:
+            avatar:
+              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
             avatar_content_type:
               invalid: ist ungültig
             first_name:
               blank: darf nicht leer sein
             last_name:
               blank: darf nicht leer sein
-            avatar:
-              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
         user:
           attributes:
             email:
@@ -164,16 +164,16 @@ de:
       relative: Verwante/r
       schedule: Zeitplan
       user: Benutzer
-      volunteer_application: Freiwilligen Bewerbung
       volunteer: Freiwillige
+      volunteer_application: Freiwilligen Bewerbung
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
-  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   all: alle
+  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
+  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
-  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
@@ -354,6 +354,8 @@ de:
           label: Art
           name: Standortname
         user: Assozierte Benutzer
+      q:
+        state_cont: Status
       user:
         email: Email
         password: Passwort
@@ -366,8 +368,6 @@ de:
         region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Wo sehen Sie Ihre Stärken? (soziale Kompetenzen, die Sie in FW-Arbeit einbringen könnten)
-      q:
-        state_cont: Status
     "no": 'Nein'
     options:
       client:
@@ -440,6 +440,7 @@ de:
   submit_application: Bewerbung abschicken
   target_groups: Zielgruppe
   thank_you: "Vielen Dank \U0001F389"
+  thank_you: Vielen Dank
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
@@ -451,17 +452,17 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
-  thank_you: Vielen Dank
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
+  volunteer_application: Freiwillige/n Bewerbung
   volunteer_application: Freiwillige/n Bewerbung
   volunteer_created: Freiwillige wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige wurde erfolgreich gelöscht.
   volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
-  volunteer_application: Freiwillige/n Bewerbung
+  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   weekdays:
     friday: Freitag
     monday: Montag
@@ -470,7 +471,6 @@ de:
     thursday: Donnerstag
     tuesday: Dienstag
     wednesday: Mittwoch
-  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   when: Zeit
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
