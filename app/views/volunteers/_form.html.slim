@@ -47,20 +47,20 @@
 
 = render 'relatives/form', f: f, relative: @volunteer
 
-  .row
-    .col-xs-12
-      = f.input :profession
-      = f.input :education
-      = f.input :motivation
-      = f.input :experience
-      = f.input :expectations
-      = f.input :strengths
-      = f.input :skills
-      = f.input :interests
+.row
+  .col-xs-12
+    = f.input :profession
+    = f.input :education
+    = f.input :motivation
+    = f.input :experience
+    = f.input :expectations
+    = f.input :strengths
+    = f.input :skills
+    = f.input :interests
 
-  .row
-    .col-xs-12
-      = f.input :state, collection: Volunteer.state_collection
+.row
+  .col-xs-12
+    = f.input :state, collection: Volunteer.state_collection
 
 - if policy(Volunteer).destroy?
   .row

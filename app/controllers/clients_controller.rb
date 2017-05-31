@@ -49,11 +49,11 @@ class ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:id, :first_name, :last_name, :date_of_birth, :nationality,
+    params.require(:client).permit(
+      :id, :first_name, :last_name, :date_of_birth, :nationality,
       :permit, :gender, :street, :zip, :city, :phone, :email, :goals, :education, :hobbies,
       :interests, :state, :comments, :competent_authority, :involved_authority, :user_id,
-      language_skills_attributes: language_skills_attributes,
-      relatives_attributes: relatives_attributes,
-      schedules_attributes: schedules_attributes)
+      language_skills_attributes, relatives_attributes, schedules_attributes
+    )
   end
 end
