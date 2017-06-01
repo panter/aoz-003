@@ -58,7 +58,7 @@
     = f.input :skills, label: t('your_skills')
     = f.input :interests, label: t('your_interests')
 
-- if current_user.present? && policy(Volunteer).destroy?
+- if policy(Volunteer).destroy?
   .row
     .col-xs-12
       = f.input :state, collection: Volunteer.state_collection(@volunteer)
