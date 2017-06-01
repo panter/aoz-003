@@ -7,9 +7,7 @@ class ClientsController < ApplicationController
     @clients = policy_scope(Client)
   end
 
-  def show
-    authorize @client
-  end
+  def show; end
 
   def new
     @client = Client.new(user: current_user)
@@ -17,9 +15,7 @@ class ClientsController < ApplicationController
     authorize @client
   end
 
-  def edit
-    authorize @client
-  end
+  def edit; end
 
   def create
     @client = Client.new(client_params)
@@ -33,7 +29,6 @@ class ClientsController < ApplicationController
   end
 
   def update
-    authorize @client
     if @client.update(client_params)
       redirect_to @client, notice: t('client_updated')
     else
@@ -42,16 +37,15 @@ class ClientsController < ApplicationController
   end
 
   def destroy
-    authorize @client
     @client.destroy
     redirect_to clients_url, notice: t('client_destroyed')
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_client
     @client = Client.find(params[:id])
+    authorize @client
   end
 
   def client_params
