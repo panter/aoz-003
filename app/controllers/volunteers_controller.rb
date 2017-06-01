@@ -8,9 +8,7 @@ class VolunteersController < ApplicationController
     authorize Volunteer
   end
 
-  def show
-    authorize @volunteer
-  end
+  def show; end
 
   def new
     @volunteer = Volunteer.new
@@ -18,9 +16,7 @@ class VolunteersController < ApplicationController
     authorize @volunteer
   end
 
-  def edit
-    authorize @volunteer
-  end
+  def edit; end
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
@@ -33,7 +29,6 @@ class VolunteersController < ApplicationController
   end
 
   def update
-    authorize @volunteer
     if @volunteer.update(volunteer_params)
       if @state == Volunteer::INTERESTED && @volunteer.state == Volunteer::ACCEPTED
         new_user = User.new(email: @volunteer.email,
@@ -50,7 +45,6 @@ class VolunteersController < ApplicationController
   end
 
   def destroy
-    authorize @volunteer
     @volunteer.destroy
     redirect_to volunteers_url, notice: t('volunteer_destroyed')
   end
@@ -63,6 +57,7 @@ class VolunteersController < ApplicationController
 
   def set_volunteer
     @volunteer = Volunteer.find(params[:id])
+    authorize @volunteer
   end
 
   def volunteer_params
