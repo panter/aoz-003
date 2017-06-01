@@ -1,9 +1,6 @@
-.row
-  .col-xs-12
-    h1= t('clients')
+h1= t('clients')
 
-.row
-  .col-xs-12
+.table-responsive
   table.table.table-striped
     thead
       tr
@@ -18,7 +15,8 @@
         th colspan='3'
 
     tbody
-        = render @clients
+      = render @clients
+
 .row
   .col-xs-12
-    = link_to t('create_client'), new_client_path, class: 'btn btn-success'
+    = link_to t_title(:create), new_client_path, class: 'btn btn-success'

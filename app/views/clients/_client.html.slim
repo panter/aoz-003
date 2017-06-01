@@ -1,14 +1,13 @@
 tr
-  td = client.first_name
-  td = client.last_name
-  td = client.date_of_birth
-  td = country(client.nationality)
-  td = t("gender.#{client.gender}") unless client.gender.blank?
-  td = client.permit
-  td = mail_to client.email
-  td = mail_to client.user.email
-  td = link_to t_action(:show), client
-  td = link_to t_action(:edit), edit_client_path(client)
+  td= t_attr(:first_name)
+  td= t_attr(:last_name)
+  td= t_attr(:date_of_birth)
+  td= t_attr(:nationality)
+  td= t_attr(:gender)
+  td= client.permit
+  td= mail_to client.user.email
+  td= link_to t_action(:show), client
+  td= link_to t_action(:edit), edit_client_path(client)
   td
     - if policy(Client).destroy?
-      = link_to t_action(:destroy), client, data: { confirm: t('are_you_sure')}, method: :delete
+      = link_to t_action(:destroy), client, data: { confirm: 'delete?' }, method: :delete

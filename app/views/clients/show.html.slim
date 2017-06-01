@@ -1,86 +1,34 @@
-.row
-  .col-xs-12
-    h1= @client.full_name
+h1= t_title(:show)
 
-.row
-  .col-xs-12
-    .table-responsive
-      table.table.table-no-border-top
-        tbody
-          tr
-            td= t_attr(:date_of_birth)
-            td= l(@client.date_of_birth) if @client.date_of_birth
-          tr
-            td= t_attr(:nationality)
-            td= country(@client.nationality)
-          tr
-            td= t_attr(:permit)
-            td= @client.permit
-          tr
-            td= t_attr(:gender)
-            td= t("gender.#{@client.gender}") unless @client.gender.blank?
-          tr
-            td= t_attr(:street)
-            td= @client.street
+h2 Person
 
-          tr
-            td= t_attr(:zip)
-            td= @client.zip
+= render 'people/show', person: @client.person
 
-          tr
-            td= t_attr(:city)
-            td= @client.city
+h2 Management
+.tabul
+  .tab-row
+    p= t_attr(:permit)
+    p= @client.permit
+  .tab-row
+    p= t_attr(:goals)
+    p= @client.goals
+  .tab-row
+    p= t_attr(:state)
+    p= t("state.#{@client.state}")
+  .tab-row
+    p= t_attr(:competent_authority)
+    p= @client.competent_authority
+  .tab-row
+    p= t_attr(:involved_authority)
+    p= @client.involved_authority
+  .tab-row
+    p= t('registered_by')
+    p= mail_to @client.user.email
 
-          tr
-            td= t_attr(:phone)
-            td= @client.phone
-
-          tr
-            td= t_attr(:email)
-            td= mail_to @client.email
-
-          = render 'language_skills/show', speaker: @client
-
-          = render 'relatives/show', relative: @client
-
-          tr
-            td= t_attr(:goals)
-            td= @client.goals
-
-          tr
-            td= t_attr(:education)
-            td= @client.education
-
-          tr
-            td= t_attr(:hobbies)
-            td= @client.hobbies
-
-          tr
-            td= t_attr(:interests)
-            td= @client.interests
-
-          tr
-            td= t_attr(:state)
-            td= t("state.#{@client.state}")
-
-          tr
-            td= t_attr(:competent_authority)
-            td= @client.competent_authority
-
-          tr
-            td= t_attr(:involved_authority)
-            td= @client.involved_authority
-
-          tr
-            td= t('registered_by')
-            td= mail_to @client.user.email
-
-          - if policy(Client).destroy?
-            tr
-              td= t_attr(:comments)
-              td= @client.comments
-
-= render 'schedules/show', participant: @client
+  - if policy(Client).destroy?
+    .tab-row
+      p= t_attr(:comments)
+      p= @client.comments
 
 .row
   .col-xs-12

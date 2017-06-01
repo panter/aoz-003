@@ -1,67 +1,26 @@
 = simple_form_for(@client) do |f|
-  - if f.error_notification.present?
-    .row
-      .col-xs-12
-        = f.error_notification
+  = render 'application/error_notification', f: f
   = f.input :user_id, as: :hidden
+
+  = f.simple_fields_for :person do |person|
+    = render 'people/form', f: person, subject: @client
+  .row
+    .col-xs-12.col-md-6
+      = f.input :permit, as: :radio_buttons,
+                        collection: Client.permit_collection,
+                        wrapper: :vertical_radio_and_checkboxes
+
+  h3= t('personal_background')
+
+  h3 Client Management
   .row
     .col-xs-12
-      .row
-        .col-xs-12.col-md-6
-          = f.input :first_name
-        .col-xs-12.col-md-6
-          = f.input :last_name
-      .row
-        .col-xs-12.col-md-6
-          = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
-                                 end_year: Date.today.year,
-                                 include_blank: true
-
-        .col-xs-12.col-md-6
-          = f.input :gender,
-                    collection: gender_collection,
-                    as: :radio_buttons,
-                    wrapper: :vertical_radio_and_checkboxes
-      .row
-        .col-xs-12.col-md-6
-          = f.input :nationality, as: :country
-        .col-xs-12.col-md-6
-          = f.input :permit,
-                    collection: permit_collection,
-                    as: :radio_buttons,
-                    wrapper: :vertical_radio_and_checkboxes
-      .row
-        .col-xs-12
-          h3= t('contact_info')
-      .row
-        .col-xs-12
-          = f.input :street
-      .row
-        .col-xs-6
-          = f.input :zip
-        .col-xs-6
-          = f.input :city
-      = f.input :email
-      = f.input :phone
-
-      = render 'language_skills/form', f: f, speaker: @client
-
-      = render 'relatives/form', f: f, relative: @client
-
-      .row
-        .col-xs-12
-          h3= t('personal_background')
-          = f.input :goals
-          = f.input :education
-          = f.input :hobbies
-          = f.input :interests
-          = f.input :state, collection: state_collection, include_blank: false
-          - if policy(Client).destroy?
-            = f.input :comments
-          = f.input :competent_authority
-          = f.input :involved_authority
-
-    = render 'schedules/form', f: f, participant: @client
+      = f.input :goals
+      = f.input :state, collection: state_collection, include_blank: false
+      - if policy(Client).destroy?
+        = f.input :comments
+      = f.input :competent_authority
+      = f.input :involved_authority
 
   .row
     .col-xs-12

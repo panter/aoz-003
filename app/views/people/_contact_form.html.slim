@@ -1,0 +1,21 @@
+h3 Address
+.row
+  .col-xs-12= f.input :street
+  .col-xs-6.col-md-3= f.input :postal_code
+  .col-xs-6.col-md-9= f.input :city
+
+.row
+  .col-xs-12
+    #emails
+      = f.simple_fields_for :contact_emails do |emails|
+        - binding.pry
+        = render 'people/contact_email_fields', f: emails
+      .links
+        = link_to_add_association t_title(:add, ContactEmail), f, :contact_emails, class: 'btn btn-xs btn-default'
+/ .row
+/   .col-xs-12
+/     #phones
+/       = f.simple_fields_for :contact_phones do |phones|
+/         = render 'people/contact_phone_fields', f: phones
+/       .links
+/         = link_to_add_association t_title(:add, ContactPhone), f, :contact_phones, class: 'btn btn-xs btn-default'

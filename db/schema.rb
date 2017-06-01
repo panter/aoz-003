@@ -10,27 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519123207) do
+ActiveRecord::Schema.define(version: 20170601101842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.date "date_of_birth"
-    t.string "nationality"
     t.string "permit"
-    t.string "gender"
-    t.string "street"
-    t.string "zip"
-    t.string "city"
-    t.string "phone"
-    t.string "email"
     t.text "goals"
-    t.text "education"
-    t.text "hobbies"
-    t.text "interests"
     t.string "state", default: "registered"
     t.text "comments"
     t.text "competent_authority"
@@ -84,65 +71,85 @@ ActiveRecord::Schema.define(version: 20170519123207) do
   end
 
   create_table "language_skills", force: :cascade do |t|
-    t.bigint "languageable_id"
     t.string "language"
     t.string "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.string "languageable_type"
+    t.bigint "people_id"
     t.index ["deleted_at"], name: "index_language_skills_on_deleted_at"
-    t.index ["languageable_type", "languageable_id"], name: "index_language_skills_on_languageable_type_and_languageable_id"
+    t.index ["people_id"], name: "index_language_skills_on_people_id"
   end
 
-  create_table "profiles", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "phone"
-    t.text "address"
-    t.string "profession"
-    t.boolean "monday"
-    t.boolean "tuesday"
-    t.boolean "wednesday"
-    t.boolean "thursday"
-    t.boolean "friday"
+  create_table "nationalities", force: :cascade do |t|
+    t.string "nation"
+    t.bigint "people_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_nationalities_on_deleted_at"
+    t.index ["people_id"], name: "index_nationalities_on_people_id"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "middle_name"
+    t.string "title"
+    t.string "gender"
+    t.date "date_of_birth"
+    t.text "education"
+    t.text "hobbies"
+    t.text "interests"
+    t.string "profession"
+    t.string "personable_type"
+    t.bigint "personable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.index ["deleted_at"], name: "index_people_on_deleted_at"
+    t.index ["personable_type", "personable_id"], name: "index_people_on_personable_type_and_personable_id"
+  end
+
+  create_table "people_relatives", id: false, force: :cascade do |t|
+    t.bigint "relative_id", null: false
+    t.bigint "person_id", null: false
+    t.index ["person_id", "relative_id"], name: "index_people_relatives_on_person_id_and_relative_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_profiles_on_deleted_at"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "relatives", force: :cascade do |t|
-    t.bigint "relativeable_id"
-    t.string "first_name"
-    t.string "last_name"
-    t.date "date_of_birth"
     t.string "relation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.string "relativeable_type"
+    t.bigint "people_id"
     t.index ["deleted_at"], name: "index_relatives_on_deleted_at"
-    t.index ["relativeable_type", "relativeable_id"], name: "index_relatives_on_relativeable_type_and_relativeable_id"
+    t.index ["people_id"], name: "index_relatives_on_people_id"
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.bigint "scheduleable_id"
     t.string "day"
     t.string "time"
     t.boolean "available", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.string "scheduleable_type"
+    t.bigint "people_id"
     t.index ["deleted_at"], name: "index_schedules_on_deleted_at"
-    t.index ["scheduleable_type", "scheduleable_id"], name: "index_schedules_on_scheduleable_type_and_scheduleable_id"
+    t.index ["people_id"], name: "index_schedules_on_people_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -173,25 +180,11 @@ ActiveRecord::Schema.define(version: 20170519123207) do
   end
 
   create_table "volunteers", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.date "date_of_birth"
-    t.string "gender"
-    t.string "street"
-    t.string "zip"
-    t.string "city"
-    t.string "nationality"
-    t.string "additional_nationality"
-    t.string "email"
-    t.string "phone"
-    t.string "profession"
-    t.text "education"
     t.text "motivation"
     t.boolean "experience"
     t.text "expectations"
     t.text "strengths"
     t.text "skills"
-    t.text "interests"
     t.string "state", default: "interested/registered"
     t.string "duration"
     t.boolean "man"
@@ -211,10 +204,6 @@ ActiveRecord::Schema.define(version: 20170519123207) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.string "avatar_file_name"
-    t.string "avatar_content_type"
-    t.integer "avatar_file_size"
-    t.datetime "avatar_updated_at"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
   end
 

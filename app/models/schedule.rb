@@ -1,5 +1,5 @@
 class Schedule < ApplicationRecord
-  belongs_to :scheduleable, polymorphic: true, optional: true
+  belongs_to :person, optional: true
 
   attr_accessor :select
 
