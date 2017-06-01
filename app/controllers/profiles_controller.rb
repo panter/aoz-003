@@ -1,18 +1,14 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update]
 
-  def show
-    authorize @profile
-  end
+  def show; end
 
   def new
     @profile = Profile.new(user_id: current_user.id)
     authorize @profile
   end
 
-  def edit
-    authorize @profile
-  end
+  def edit; end
 
   def create
     @profile = Profile.new(profile_params)
@@ -30,13 +26,13 @@ class ProfilesController < ApplicationController
     else
       render :edit unless @profile.update(profile_params)
     end
-    authorize @profile
   end
 
   private
 
   def set_profile
     @profile = Profile.find(params[:id])
+    authorize @profile
   end
 
   def profile_params

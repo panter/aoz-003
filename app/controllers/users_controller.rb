@@ -7,18 +7,14 @@ class UsersController < ApplicationController
     authorize User
   end
 
-  def show
-    authorize @user
-  end
+  def show; end
 
   def new
     @user = User.new
     authorize @user
   end
 
-  def edit
-    authorize @user
-  end
+  def edit; end
 
   def create
     @user = User.new user_params.merge(password: Devise.friendly_token)
@@ -39,11 +35,9 @@ class UsersController < ApplicationController
     else
       render :edit
     end
-    authorize @user
   end
 
   def destroy
-    authorize @user
     @user.destroy
     redirect_to users_url, notice: t('user_destroyed', email: @user.email)
   end
@@ -52,6 +46,7 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+    authorize @user
   end
 
   def user_params
