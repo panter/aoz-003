@@ -31,6 +31,6 @@ class VolunteerPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.superadmin?
+    user && user.superadmin?
   end
 end
