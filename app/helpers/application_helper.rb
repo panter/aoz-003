@@ -1,12 +1,4 @@
 module ApplicationHelper
-  def permit_collection
-    [:L, :B]
-  end
-
-  def gender_collection
-    [:female, :male]
-  end
-
   def language_level_collection
     [:native_speaker, :fluent, :good, :basic]
   end

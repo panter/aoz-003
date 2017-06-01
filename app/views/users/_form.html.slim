@@ -1,8 +1,5 @@
 = simple_form_for(user) do |f|
-  - if f.error_notification.present?
-    .row
-      .col-xs-12
-        = f.error_notification
+  = render 'application/error_notification', f: f
   .row
     .col-xs-12
       = f.input :email

@@ -1,0 +1,17 @@
+.row
+  .col-xs-12= f.input :first_name
+  .col-xs-12= f.input :last_name
+  .col-xs-12.col-md-6
+    = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
+      end_year: Date.today.year, include_blank: true
+  .col-xs-12.col-md-6
+    = f.input :gender, collection: Person.gender_collection, as: :radio_buttons
+
+= f.simple_fields_for :contacts do |c|
+  = render 'people/contact_form', f: c
+
+.row
+  .col-xs-12
+    = f.input :avatar, as: :file, wrapper: :vertical_file_input
+
+

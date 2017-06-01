@@ -3,7 +3,10 @@ class User < ApplicationRecord
     :trackable, :validatable
 
   has_many :clients
-  has_one :profile, dependent: :destroy
+
+  has_one :person, as: :personable
+  accepts_nested_attributes_for :person
+
   has_and_belongs_to_many :department
 
   # Roles definition

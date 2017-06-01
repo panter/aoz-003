@@ -1,0 +1,25 @@
+h3= t('contact_info')
+.row
+  .col-xs-12.col-md-6
+    = f.input :first_name
+  .col-xs-12.col-md-6
+    = f.input :last_name
+  .col-xs-12
+    = f.input :street
+  .col-xs-6.col-md-3
+    = f.input :postal_code
+  .col-xs-6.col-md-9
+    = f.input :city
+.row
+  .col-xs-12.col-md-6
+    = f.input :gender, collection: Client.gender_collection,
+                      as: :radio_buttons,
+                      wrapper: :vertical_radio_and_checkboxes
+  .col-xs-12.col-md-6
+    = f.input :date_of_birth, as: :date, include_blank: true,
+                            start_year: Date.today.year - 90,
+                            end_year: Date.today.year
+
+
+
+

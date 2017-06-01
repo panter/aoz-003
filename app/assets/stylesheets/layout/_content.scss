@@ -1,3 +1,29 @@
 .row {
   margin-bottom: $padding-large-horizontal;
 }
+
+.tabul {
+  margin: 25px 0 $padding-large-horizontal;
+  .tab-row {
+    @extend .row;
+    margin-top: $padding-large-horizontal / 2;
+    padding-bottom: $padding-large-horizontal / 2;
+    border-bottom: solid rgba(0, 0, 0, 0.1) 1px;
+    &:last-child {
+      border-bottom: none;
+    }
+    p:first-child {
+      @extend .col-xs-4;
+      @extend .col-md-2;
+      @extend .text-muted;
+      &:after {
+        padding-left: 2px;
+        content: ':';
+      }
+    }
+    p:nth-child(2) {
+      @extend .col-xs-8;
+      @extend .col-md-10;
+    }
+  }
+}

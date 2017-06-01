@@ -1,17 +1,11 @@
 class Volunteer < ApplicationRecord
-  include AssociatableFields
   include FullName
   include StateCollection
 
   acts_as_paranoid
 
-  has_attached_file :avatar, styles: { thumb: '100x100#' }
-
-  validates :first_name, :last_name, :email, presence: true
-
-  validates_attachment :avatar, content_type: {
-    content_type: /\Aimage\/.*\z/
-  }
+  has_one :person, as: :personable
+  accepts_nested_attributes_for :person
 
   def self.duration_collection
     [:short, :long]

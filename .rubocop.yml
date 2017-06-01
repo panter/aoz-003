@@ -23,9 +23,6 @@ Style/LineEndConcatenation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Style/MultilineOperationIndentation:
-  EnforcedStyle: indented
-
 Style/AsciiComments:
   Enabled: false
 Metrics/LineLength:
@@ -49,17 +46,20 @@ Metrics/BlockLength:
   Exclude:
     - 'test/system/*'
 
-Style/AlignHash:
+Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
 
 Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-Style/AlignParameters:
-  EnforcedStyle: with_fixed_indentation
 
 Style/RegexpLiteral:
   EnforcedStyle: slashes
