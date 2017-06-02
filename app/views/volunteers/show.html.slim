@@ -1,4 +1,72 @@
-h1= @volunteer.full_name
+.row
+  .col-xs-12
+    h1= @volunteer.contact.full_name
+
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td= t_attr(:date_of_birth)
+            td= l(@volunteer.date_of_birth) if @volunteer.date_of_birth
+          tr
+            td= t_attr(:gender)
+            td= t("gender.#{@volunteer.gender}") unless @volunteer.gender.blank?
+          tr
+            td= t_attr(:avatar)
+            td= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?
+          tr
+            td= t_attr(:nationality)
+            td= country(@volunteer.nationality)
+          tr
+            td= t_attr(:additional_nationality)
+            td= country(@volunteer.additional_nationality)
+
+          = render 'language_skills/show', speaker: @volunteer
+          = render 'relatives/show', relative: @volunteer
+
+          tr
+            td= t_attr(:profession)
+            td= @volunteer.profession
+          tr
+            td= t_attr(:education)
+            td= @volunteer.education
+          tr
+            td= t_attr(:motivation)
+            td= @volunteer.motivation
+          tr
+            td= t_attr(:experience)
+            td= Volunteer.human_boolean(@volunteer.experience)
+          tr
+            td= t_attr(:expectations)
+            td= @volunteer.expectations
+          tr
+            td= t_attr(:strengths)
+            td= @volunteer.strengths
+          tr
+            td= t_attr(:skills)
+            td= @volunteer.skills
+          tr
+            td= t_attr(:interests)
+            td= @volunteer.interests
+          - if policy(Volunteer).destroy?
+            tr
+              td= t_attr(:state)
+              td= t("state.#{@volunteer.state}")
+            - if @volunteer.rejected?
+              tr
+                td= t_attr(:rejection_type)
+                td= t("rejection_type.#{@volunteer.rejection_type}") unless @volunteer.rejection_type.blank?
+              tr
+                td= t_attr(:rejection_text)
+                td= @volunteer.rejection_text
+          tr
+            td= t_attr(:duration)
+            td= t("duration.#{@volunteer.duration}") unless @volunteer.duration.blank?
+          tr
+            td= t_attr(:region)
+            td= t("region.#{@volunteer.region}") unless @volunteer.region.blank?
 
 .table-responsive
   table.table.table-no-border-top

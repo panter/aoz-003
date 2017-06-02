@@ -1,10 +1,14 @@
 tr
-  td = volunteer.full_name
-  td = l(volunteer.date_of_birth) if volunteer.date_of_birth.present?
+  td = volunteer.contact.first_name
+  td = volunteer.contact.last_name
+  td = volunteer.date_of_birth if volunteer.date_of_birth.present?
   td = country(volunteer.nationality) if volunteer.nationality.present?
   td = l(volunteer.created_at)
   td = t("gender.#{volunteer.gender}") unless volunteer.gender.blank?
   td = t("state.#{volunteer.state}", scope: [:simple_form, :options, :volunteer])
+  td
+    - if volunteer.contact.contact_emails.any?
+      = link_to volunteer.contact.contact_emails.first.body
   td = link_to t_action(:show), volunteer
   td = link_to t_action(:edit), edit_volunteer_path(volunteer)
   td = link_to t_action(:destroy), volunteer, data: { confirm: t_confirm_delete(volunteer) }, method: :delete

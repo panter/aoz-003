@@ -3,6 +3,9 @@ class Volunteer < ApplicationRecord
   include FullName
   include GenderCollection
 
+  has_one :contact, as: :contactable
+  accepts_nested_attributes_for :contact
+
   acts_as_paranoid
 
   before_save :default_state
@@ -22,7 +25,7 @@ class Volunteer < ApplicationRecord
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/
   }
-  validates :first_name, :last_name, :email, presence: true
+
   validates :email, uniqueness: true
 
   def self.state_collection

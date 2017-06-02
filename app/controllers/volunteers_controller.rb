@@ -13,6 +13,7 @@ class VolunteersController < ApplicationController
   def new
     @volunteer = Volunteer.new
     @volunteer.schedules << Schedule.build
+    @volunteer.build_contact
     authorize @volunteer
   end
 
@@ -43,7 +44,8 @@ class VolunteersController < ApplicationController
   private
 
   def invite_volunteer_user
-    new_user = User.new(email: @volunteer.email, password: Devise.friendly_token, role: 'volunteer')
+    new_user = User.new(email: @volunteer.contact.contact_emails.first.body,
+      password: Devise.friendly_token, role: 'volunteer')
     new_user.save
     @volunteer.user = new_user
     new_user.invite!
@@ -58,7 +60,16 @@ class VolunteersController < ApplicationController
   def volunteer_params
     params.require(:volunteer).permit(
       volunteer_attributes,
-      language_skills_attributes, relatives_attributes, schedules_attributes
+      language_skills_attributes, relatives_attributes, schedules_attributes,
+      contact_attributes: [
+        :id, :first_name, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
+        :extended, :city, :postal_code,
+        contact_emails_attributes: contact_point_attrs,
+        contact_phones_attributes: contact_point_attrs]
     )
+  end
+
+  def contact_point_attrs
+    [:id, :body, :label, :_destroy, :type, :contacts_id]
   end
 end
