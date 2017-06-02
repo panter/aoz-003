@@ -1,6 +1,9 @@
 .row
   .col-xs-12
-    h1= @profile.full_name
+    h1= @profile.contact.full_name
+
+
+= render 'contacts/show', entity: @profile
 
 .row
   .col-xs-12
@@ -8,17 +11,8 @@
       table.table.table-no-border-top
         tbody
           tr
-            td= t_attr(:email)
-            td= mail_to current_user.email
-          tr
-            td= t_attr(:phone)
-            td= @profile.phone
-          tr
             td= t_attr(:avatar)
             td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
-          tr
-            td= t_attr(:address)
-            td= @profile.address
           tr
             td= t_attr(:profession)
             td= @profile.profession

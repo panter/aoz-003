@@ -1,16 +1,19 @@
-= simple_form_for(profile) do |f|
+= simple_form_for(@profile) do |f|
   - if f.error_notification.present?
     .row
       .col-xs-12
         = f.error_notification
+  = f.input :user_id, as: :hidden
   .row
     .col-xs-12
-      = f.input :user_id, as: :hidden
-      = f.input :first_name
-      = f.input :last_name
-      = f.input :phone
       = f.input :avatar, as: :file
-      = f.input :address
+  .row
+    .col-xs-12
+      .row
+        .col-xs-12.col-md-6
+          = f.simple_fields_for :contact do |c|
+            = render 'contacts/fields', f: c
+
       = f.input :profession
 
   .row
