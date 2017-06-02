@@ -1,5 +1,8 @@
 .row
-  .col-xs-12.col-md-6= f.input :last_name
+
+  - if defined? @client
+    .col-xs-12.col-md-6= f.input :first_name
+  .col-xs-12.col-md-6= f.input :last_name, label: defined?(@client) ? t('.last_name') : t('.name')
 
 .row
   .col-xs-12

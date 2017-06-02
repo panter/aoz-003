@@ -16,17 +16,10 @@ ActiveRecord::Schema.define(version: 20170609102507) do
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
     t.date "date_of_birth"
     t.string "nationality"
     t.string "permit"
     t.string "gender"
-    t.string "street"
-    t.string "zip"
-    t.string "city"
-    t.string "phone"
-    t.string "email"
     t.text "goals"
     t.text "education"
     t.text "hobbies"
