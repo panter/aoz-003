@@ -183,6 +183,10 @@ de:
   client_updated: KlientIn wurde erfolgreich aktualisiert.
   clients: Klienten
   contact_info: Kontakt Informationen
+  contacts:
+    fields:
+      last_name: Nachname
+      name: Name
   create_client: KlientIn erfassen
   create_profile: Profil erfassen
   create_user: Benutzer erfassen

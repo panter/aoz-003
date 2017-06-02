@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :contact do
-    sequence :last_name { |n| "Test name #{n}" }
+    sequence :first_name { |n| "first name #{n}" }
+    sequence :last_name { |n| "last name #{n}" }
     street 'Strassenstr. 223'
     extended 'asdfadsf'
     city 'Zürich'

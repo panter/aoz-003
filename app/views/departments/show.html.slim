@@ -1,34 +1,8 @@
 .row
   .col-xs-12
     h1= @department.contact.last_name
-.row
-  .col-xs-12
-    .table-responsive
-      table.table.table-no-border-top
-        tr
-          td= t_attr(:street, Contact)
-          td= @department.contact.street
-        - if @department.contact.extended.present?
-          tr
-            td= t_attr(:extended, Contact)
-            td= @department.contact.extended
-        tr
-          td= t_attr(:city, Contact)
-          td #{@department.contact.postal_code} #{@department.contact.city}
 
-        - @department.contact.contact_emails.each do |email|
-          tr
-            td
-              = t_attr(:body, ContactEmail)
-              = " / #{email.label}" if email.label.present?
-            td= mail_to email.body
-
-        - @department.contact.contact_phones.each do |phone|
-          tr
-            td
-              = t_attr(:body, ContactPhone)
-              = " / #{phone.label}" if phone.label.present?
-            td= phone.body
+= render 'contacts/show', entity: @department
 
 - if @department.user.any?
   .row

@@ -1,6 +1,8 @@
 .row
   .col-xs-12
-    h1= @client.full_name
+    h1= @client.contact.full_name
+
+= render 'contacts/show', entity: @client
 
 .row
   .col-xs-12
@@ -19,25 +21,6 @@
           tr
             td= t_attr(:gender)
             td= t("gender.#{@client.gender}") unless @client.gender.blank?
-          tr
-            td= t_attr(:street)
-            td= @client.street
-
-          tr
-            td= t_attr(:zip)
-            td= @client.zip
-
-          tr
-            td= t_attr(:city)
-            td= @client.city
-
-          tr
-            td= t_attr(:phone)
-            td= @client.phone
-
-          tr
-            td= t_attr(:email)
-            td= mail_to @client.email
 
           = render 'language_skills/show', speaker: @client
 
