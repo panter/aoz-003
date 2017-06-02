@@ -50,21 +50,30 @@ def make_schedule
 end
 
 User.role_collection.each do |role|
-  User.find_or_create_by!(email: "#{role}@example.com") do |user|
+  User.new do |user|
+    user.email =  "#{role}@example.com"
     user.password = 'asdfasdf'
     user.role = role
     user.profile = Profile.new do |profile|
-      profile.first_name = Faker::Name.first_name
-      profile.last_name = Faker::Name.last_name
-      profile.phone = Faker::PhoneNumber.phone_number
-      profile.address = Faker::Address.street_address
+     profile.build_contact(
+       first_name: Faker::Name.first_name,
+       last_name: Faker::Name.last_name,
+       postal_code: Faker::Address.zip_code,
+       city: Faker::Address.city,
+       street: Faker::Address.street_address
+      )
+      profile.contact.contact_phones.build(
+        body: Faker::PhoneNumber.phone_number
+      )
       profile.profession = Faker::Company.profession
       [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
         profile[day] = [true, false].sample
       end
     end
+    user.save!
   end
 end
+
 
 User.where(role: ['superadmin', 'social_worker']).each do |user|
   next if user.clients.count > 1
