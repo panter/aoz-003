@@ -51,12 +51,12 @@ class Volunteer < ApplicationRecord
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
   end
 
-  def self.state_collection(volunteer)
-    if volunteer.interested?
-      STATES.map(&:to_sym)
-    else
-      STATES_FOR_REVIEWED.map(&:to_sym)
-    end
+  def self.state_collection
+    STATES.map(&:to_sym)
+  end
+
+  def self.state_collection_for_reviewed
+    STATES_FOR_REVIEWED.map(&:to_sym)
   end
 
   def self.rejection_collection

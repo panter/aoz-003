@@ -97,7 +97,7 @@ if Department.count < 1
   department.save!
 end
 
-Volunteer.state_collection.each do |state|
+Volunteer.state_collection_for_reviewed.each do |state|
   Volunteer.find_or_create_by!(email: "volunteer_#{state}@example.com", state: state) do |v|
     v.first_name = Faker::Name.first_name
     v.last_name = Faker::Name.last_name

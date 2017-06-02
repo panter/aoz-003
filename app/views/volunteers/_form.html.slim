@@ -61,7 +61,7 @@
 - if policy(Volunteer).destroy?
   .row
     .col-xs-12
-      = f.input :state, collection: Volunteer.state_collection(@volunteer)
+      = f.input :state, collection: Volunteer.state_collection_for_reviewed
     .col-xs-12
       = f.input :rejection_type, collection: Volunteer.rejection_collection, as: :radio_buttons 
     .col-xs-12
