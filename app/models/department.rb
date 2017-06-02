@@ -7,6 +7,6 @@ class Department < ApplicationRecord
   validates :contact, presence: true
 
   def to_s
-    contact.name
+    contact.last_name
   end
 end

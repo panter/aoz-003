@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(version: 20170609102507) do
   end
 
   create_table "contacts", force: :cascade do |t|
-    t.string "name"
     t.string "street"
     t.string "extended"
     t.string "postal_code"
@@ -66,6 +65,8 @@ ActiveRecord::Schema.define(version: 20170609102507) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.string "first_name"
+    t.string "last_name"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
     t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
   end
