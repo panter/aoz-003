@@ -32,7 +32,7 @@ de:
         contact_emails: Mailadressen
         contact_phones: Telefonnummern
         extended: Adresszusatz
-        name: Name
+        last_name: Name
         postal_code: PLZ
         street: Strasse
       contact_email:
