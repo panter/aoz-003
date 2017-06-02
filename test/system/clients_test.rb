@@ -20,8 +20,13 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
-    fill_in 'Email', with: 'gurke@gurkenmail.ch'
-    fill_in 'Phone', with: '0123456789'
+
+    click_link 'Add Email address'
+    fill_in 'Email address', with: 'gurke@gurkenmail.com'
+
+    click_link 'Add Phone number'
+    fill_in 'Phone number', with: '0123456789'
+
     click_on('Add language')
     select('Akan', from: 'Language')
     select('Fluent', from: 'Level')
@@ -44,18 +49,6 @@ class ClientsTest < ApplicationSystemTestCase
 
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
-  end
-
-  test 'if required fields are left blank' do
-    visit new_client_path
-    click_button 'Create Client'
-    assert page.has_text? 'Please review the problems below:'
-    within '.client_first_name' do
-      assert page.has_text? "can't be blank"
-    end
-    within '.client_last_name' do
-      assert page.has_text? "can't be blank"
-    end
   end
 
   test 'superadmin can delete client' do
