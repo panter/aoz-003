@@ -22,8 +22,10 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
-    fill_in 'Email', with: 'gurke@gurkenmail.ch'
-    fill_in 'Phone', with: '0123456789'
+    click_link 'Add Email address'
+    fill_in 'Email address', with: 'gurke@gurkenmail.com'
+    click_link 'Add Phone number'
+    fill_in 'Phone number', with: '0123456789'
     click_on('Add language')
     select('Greek', from: 'Language')
     select('Native speaker', from: 'Level')
@@ -50,21 +52,6 @@ class VolunteersTest < ApplicationSystemTestCase
 
     click_button 'Create Volunteer'
     assert page.has_text? 'Volunteer was successfully created.'
-  end
-
-  test 'if required fields are left blank' do
-    visit new_volunteer_path
-    click_button 'Create Volunteer'
-    assert page.has_text? 'Please review the problems below:'
-    within '.volunteer_first_name' do
-      assert page.has_text? "can't be blank"
-    end
-    within '.volunteer_last_name' do
-      assert page.has_text? "can't be blank"
-    end
-    within '.volunteer_email' do
-      assert page.has_text? "can't be blank"
-    end
   end
 
   test 'rejection fields are shown only when the volunteer is rejected' do
