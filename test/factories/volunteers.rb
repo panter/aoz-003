@@ -1,11 +1,10 @@
 FactoryGirl.define do
   factory :volunteer do
-    sequence :first_name { |n| "First#{n}" }
-    sequence :last_name { |n| "Volunteer#{n}" }
-    sequence :email { |n| "volunteer#{n}@example.com" }
+    contact do |c|
+      c.association(:contact)
+    end
     state 'registered'
-    sequence :gender { [:male, :female].sample }
-    sequence :nationality { ISO3166::Country.codes.sample }
+
     trait :with_relatives do
       relatives do |relative|
         Array.new(2) { relative.association(:relative) }
