@@ -93,7 +93,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     end
     click_button 'Update Department'
     assert page.has_text? 'Department was successfully updated.'
-    assert page.has_text? '88888 88 88 88'
+    assert page.has_text? '88888888888'
   end
 
   test 'superadmin can remove phone and email from department' do
