@@ -10,6 +10,7 @@
         .col-xs-12.col-md-6
           = f.simple_fields_for :contact do |c|
             = render 'contacts/fields', f: c
+
       .row
         .col-xs-12.col-md-6
           = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,

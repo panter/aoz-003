@@ -3,8 +3,7 @@ module NestedAttributes
 
   included do
     def volunteer_attributes
-      [:first_name, :last_name, :date_of_birth, :gender, :avatar, :street,
-       :zip, :city, :nationality, :additional_nationality, :email, :phone,
+      [:date_of_birth, :gender, :avatar, :nationality, :additional_nationality,
        :profession, :education, :motivation, :experience, :expectations,
        :strengths, :skills, :interests, :state, :rejection_type, :rejection_text,
        :duration, :man, :woman, :family, :kid, :sport, :creative, :music, :culture,
