@@ -5,7 +5,9 @@ FactoryGirl.define do
     role 'superadmin'
 
     trait :with_profile do
-      profile { |u| u.association(:profile, first_name: :role) }
+      contact do |c|
+        c.association(:contact)
+      end
     end
 
     trait :with_clients do
