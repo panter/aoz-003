@@ -43,8 +43,7 @@ en:
       volunteer_application: Volunteer Application
   add_language: Add language
   add_relative: Add family member
-  all: all
-  application_submitted: 'Your application with the email %{email} has been successfully sent.'
+  application_submitted: 'Your application has been successfully sent.'
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
