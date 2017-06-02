@@ -12,6 +12,7 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new(user: current_user)
     @client.schedules << Schedule.build
+    @client.build_contact
     authorize @client
   end
 
@@ -49,11 +50,19 @@ class ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(
-      :id, :first_name, :last_name, :date_of_birth, :nationality,
-      :permit, :gender, :street, :zip, :city, :phone, :email, :goals, :education, :hobbies,
+    params.require(:client).permit(:date_of_birth, :nationality,
+      :permit, :gender, :goals, :education, :hobbies,
       :interests, :state, :comments, :competent_authority, :involved_authority, :user_id,
-      language_skills_attributes, relatives_attributes, schedules_attributes
-    )
+      language_skills_attributes, relatives_attributes, schedules_attributes,
+      contact_attributes: [
+        :id, :first_name, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
+        :extended, :city, :postal_code,
+        contact_emails_attributes: contact_point_attrs,
+        contact_phones_attributes: contact_point_attrs]
+      )
+  end
+
+  def contact_point_attrs
+    [:id, :body, :label, :_destroy, :type, :contacts_id]
   end
 end

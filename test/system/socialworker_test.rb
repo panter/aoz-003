@@ -30,8 +30,8 @@ class SocialworkerTest < ApplicationSystemTestCase
   test 'can see his clients' do
     visit clients_path
     @socialworker.clients.each do |client|
-      assert page.has_text? client.first_name
-      assert page.has_text? client.last_name
+      assert page.has_text? client.contact.first_name
+      assert page.has_text? client.contact.last_name
       assert page.has_link? href: client_path(client.id)
       assert page.has_link? href: edit_client_path(client.id)
     end

@@ -12,6 +12,10 @@ class Contact < ApplicationRecord
     last_name
   end
 
+  def full_name
+    "#{try(:first_name)} #{last_name}"
+  end
+
   def department?
     contactable_type == 'Department'
   end
