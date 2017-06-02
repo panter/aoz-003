@@ -9,7 +9,7 @@
         = f.association :user, as: :select, collection: User.department_assocable
 
   = f.simple_fields_for :contact do |c|
-    = render 'contact_fields', f: c
+    = render 'contacts/fields', f: c
 
   .row
     .col-xs-12
