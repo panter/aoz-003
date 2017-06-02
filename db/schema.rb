@@ -91,10 +91,6 @@ ActiveRecord::Schema.define(version: 20170609102507) do
 
   create_table "profiles", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "phone"
-    t.text "address"
     t.string "profession"
     t.boolean "monday"
     t.boolean "tuesday"
@@ -167,17 +163,10 @@ ActiveRecord::Schema.define(version: 20170609102507) do
   end
 
   create_table "volunteers", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
     t.date "date_of_birth"
     t.string "gender"
-    t.string "street"
-    t.string "zip"
-    t.string "city"
     t.string "nationality"
     t.string "additional_nationality"
-    t.string "email"
-    t.string "phone"
     t.string "profession"
     t.text "education"
     t.text "motivation"
@@ -212,9 +201,7 @@ ActiveRecord::Schema.define(version: 20170609102507) do
     t.bigint "user_id"
     t.string "rejection_type"
     t.text "rejection_text"
-    t.boolean "active"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
-    t.index ["email"], name: "index_volunteers_on_email", unique: true, where: "active"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 

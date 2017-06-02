@@ -5,6 +5,7 @@ class ProfilesController < ApplicationController
 
   def new
     @profile = Profile.new(user_id: current_user.id)
+    @profile.build_contact
     authorize @profile
   end
 
@@ -37,8 +38,17 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :user_id, :first_name, :last_name, :phone, :picture, :address, :profession, :monday,
-      :tuesday, :wednesday, :thursday, :friday, :avatar
-    )
+      :user_id, :picture, :profession, :monday,
+      :tuesday, :wednesday, :thursday, :friday, :avatar,
+      contact_attributes: [
+        :id, :first_name, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
+        :extended, :city, :postal_code,
+        contact_emails_attributes: contact_point_attrs,
+        contact_phones_attributes: contact_point_attrs]
+      )
+  end
+
+  def contact_point_attrs
+    [:id, :body, :label, :_destroy, :type, :contacts_id]
   end
 end
