@@ -1,6 +1,6 @@
 .row
   .col-xs-12
-    h1= @volunteer.full_name
+    h1= @volunteer.contact.full_name
 
 .row
   .col-xs-12
@@ -22,21 +22,6 @@
           tr
             td= t_attr(:additional_nationality)
             td= country(@volunteer.additional_nationality)
-          tr
-            td= t_attr(:street)
-            td= @volunteer.street
-          tr
-            td= t_attr(:zip)
-            td= @volunteer.zip
-          tr
-            td= t_attr(:city)
-            td= @volunteer.city
-          tr
-            td= t_attr(:email)
-            td= mail_to @volunteer.email
-          tr
-            td= t_attr(:phone)
-            td= @volunteer.phone
 
           = render 'language_skills/show', speaker: @volunteer
           = render 'relatives/show', relative: @volunteer
