@@ -75,7 +75,7 @@ end
 if Department.count < 1
   department = Department.new do |d|
     d.contact = Contact.new do |c|
-      c.name = 'Bogus Department'
+      c.last_name = 'Bogus Department'
       c.street = Faker::Address.street_address
       c.postal_code = Faker::Address.zip_code
       c.city = Faker::Address.city
