@@ -26,7 +26,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit departments_path
     Department.all.sample do |d|
-      assert page.has_text? d.contact.name
+      assert page.has_text? d.contact.last_name
       assert page.has_link? 'Show', href: department_path(d.id)
       assert page.has_link? 'Edit', href: edit_department_path(d.id)
       assert page.has_link? 'Delete', href: department_path(d.id)
@@ -166,7 +166,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Email', with: @department_manager.email
     fill_in 'Password', with: 'asdfasdf'
     click_button 'Log in'
-    assert page.has_text? @department_manager.department.first.contact.name
+    assert page.has_text? @department_manager.department.first.contact.last_name
     if @department_manager.department.first.contact.street.present?
       assert page.has_text? @department_manager.department.first.contact.street
     end

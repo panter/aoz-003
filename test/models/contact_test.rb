@@ -8,7 +8,7 @@ class ContactTest < ActiveSupport::TestCase
   test 'contact validates name presence if contactable Department' do
     @contact.contactable_type = 'Department'
     refute @contact.valid?
-    @contact.name = 'Name'
+    @contact.last_name = 'Name'
     assert @contact.valid?
     assert @contact.save!
   end
