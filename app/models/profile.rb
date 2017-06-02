@@ -1,6 +1,4 @@
 class Profile < ApplicationRecord
-  include FullName
-
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
 
