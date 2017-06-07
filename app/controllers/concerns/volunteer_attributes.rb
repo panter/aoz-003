@@ -9,7 +9,7 @@ module VolunteerAttributes
         :profession, :education, :motivation, :experience, :expectations,
         :strengths, :skills, :interests, :state, :duration, :man, :woman,
         :family, :kid, :sport, :creative, :music, :culture, :training,
-        :german_course, :adults, :teenagers, :children, :region
+        :german_course, :adults, :teenagers, :children, :region, :state
       ]
     end
   end

@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence :first_name { |n| "First#{n}" }
     sequence :last_name { |n| "Volunteer#{n}" }
     sequence :email { |n| "volunteer#{n}@example.com" }
-    state :state
+    state 'registered'
     sequence :gender { [:male, :female].sample }
     sequence :nationality { ISO3166::Country.codes.sample }
     trait :with_relatives do

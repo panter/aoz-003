@@ -59,15 +59,10 @@
     = f.input :skills
     = f.input :interests
 
-- if policy(Volunteer).access_state?
-  .row
-    .col-xs-12
-      = f.input :state, collection: Volunteer.state_collection
-
 - if policy(Volunteer).destroy?
   .row
     .col-xs-12
-      = f.input :state, collection: Volunteer.state_collection_for_reviewed
+      = f.input :state, collection: Volunteer.state_collection, default: :registered
     .col-xs-12
       = f.input :rejection_type, collection: Volunteer.rejection_collection, as: :radio_buttons
     .col-xs-12
