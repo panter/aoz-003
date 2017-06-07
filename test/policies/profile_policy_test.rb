@@ -10,11 +10,11 @@ class ProfilePolicyTest < PolicyAssertions::Test
 
   test 'New: user can create his profile' do
     profile_params = {
-      contact: Contact.new(
+      contact_attributes: {
         first_name: 'fn',
         last_name: 'ln'
-      ),
-      user: [@user_without_profile]
+      },
+      user: @user_without_profile
     }
     assert_permit @user_without_profile, Profile.new(profile_params), 'create?', 'new?'
   end

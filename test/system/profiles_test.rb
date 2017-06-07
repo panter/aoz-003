@@ -18,9 +18,10 @@ class ProfilesTest < ApplicationSystemTestCase
 
     assert page.has_field? 'First name'
     assert page.has_field? 'Last name'
-    assert page.has_field? 'Phone'
     assert page.has_field? 'Avatar'
-    assert page.has_field? 'Address'
+    assert page.has_field? 'Street'
+    assert page.has_field? 'Zip'
+    assert page.has_field? 'City'
     assert page.has_field? 'Profession'
     assert page.has_field? name: 'profile[monday]'
     assert page.has_field? name: 'profile[tuesday]'
@@ -58,8 +59,8 @@ class ProfilesTest < ApplicationSystemTestCase
       assert page.has_link? 'Show profile'
       click_link 'Show profile'
     end
-    assert page.has_text? @user_without_profile.profile.first_name
-    assert page.has_text? @user_without_profile.profile.last_name
+    assert page.has_text? @user_without_profile.profile.contact.first_name
+    assert page.has_text? @user_without_profile.profile.contact.last_name
   end
 
   test 'user can change the password from profile page' do
