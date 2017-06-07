@@ -24,9 +24,9 @@ en:
         email: Email
       volunteer:
         duration: Duration of the accompaniment
+        full_name: Name
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
-        full_name: Name
         single_accompaniment: Single accompaniment
     models:
       client: Client
