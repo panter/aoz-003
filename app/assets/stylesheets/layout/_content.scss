@@ -2,3 +2,8 @@
 .simple_form {
   margin-bottom: $padding-large-horizontal;
 }
+
+.dl-horizontal dt {
+    text-align: left;
+    font-weight: normal;
+}
