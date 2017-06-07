@@ -5,7 +5,7 @@ class VolunteersController < ApplicationController
   before_action :set_state, only: [:update]
 
   def index
-    @q = Volunteer.ransack(params[:q] || { state_cont: 'registered' })
+    @q = Volunteer.ransack(params[:q])
     @volunteers = @q.result
   end
 
