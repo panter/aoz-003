@@ -124,10 +124,6 @@ de:
           attributes:
             avatar:
               spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
-        profile:
-          attributes:
-            avatar:
-              spoofed_media_type: Die Inhalte entsprechen nicht ihrer Deklaration
             avatar_content_type:
               invalid: ist ungültig
             first_name:
@@ -169,7 +165,6 @@ de:
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   all: alle
-  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
@@ -419,11 +414,11 @@ de:
           us: durch uns vor / nach Gespräch
         state:
           active: aktiv / im Einsatz
+          all: Alle
           finished: ausgetreten
           registered: interessiert / angemeldet
           rejected: Absage
           reserved: kontaktiert / für Gespräch eingeladen
-          all: Alle
     placeholders:
     required:
       mark: '*'
@@ -441,7 +436,6 @@ de:
   submit_application: Bewerbung abschicken
   target_groups: Zielgruppe
   thank_you: "Vielen Dank \U0001F389"
-  thank_you: Vielen Dank
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
@@ -457,12 +451,10 @@ de:
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwillige/n Bewerbung
-  volunteer_application: Freiwillige/n Bewerbung
   volunteer_created: Freiwillige wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige wurde erfolgreich gelöscht.
   volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
-  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   weekdays:
     friday: Freitag

@@ -45,7 +45,6 @@ en:
   add_relative: Add family member
   all: all
   application_submitted: 'Your application with the email %{email} has been successfully sent.'
-  application_submitted: 'Your application with the email %{email} has been successfully sent.'
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
@@ -277,11 +276,11 @@ en:
           us: by us before / after conversation
         state:
           active: active / participating
+          all: All
           finished: resigned
           registered: intrested / registered
           rejected: rejected
           reserved: contacted / invited to meeting
-          all: All
     placeholders:
     required:
       mark: '*'
@@ -314,12 +313,10 @@ en:
   users: Users
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Application
-  volunteer_application: Volunteer Application
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
-  wanna_apply: Do you want to apply as a volunteer?
   wanna_apply: Do you want to apply as a volunteer?
   weekdays:
     friday: Friday
