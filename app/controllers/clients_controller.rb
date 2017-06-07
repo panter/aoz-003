@@ -54,10 +54,10 @@ class ClientsController < ApplicationController
     params.require(:client).permit(:date_of_birth, :nationality,
       :permit, :gender, :goals, :education, :hobbies,
       :interests, :state, :comments, :competent_authority, :involved_authority, :user_id,
+      contact_attributes,
       language_skills_attributes: language_skills_attributes,
       relatives_attributes: relatives_attributes,
-      schedules_attributes: schedules_attributes,
-      contact_attributes: contact_attributes
+      schedules_attributes: schedules_attributes
       )
   end
 end
