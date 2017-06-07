@@ -1,10 +1,10 @@
 tr
   td= t_attr(:street, Contact)
   td= entity.contact.street
-    - if entity.contact.extended.present?
-      tr
-        td= t_attr(:extended, Contact)
-        td= entity.contact.extended
+  - if entity.contact.extended.present?
+    tr
+      td= t_attr(:extended, Contact)
+      td= entity.contact.extended
 tr
   td= t_attr(:city, Contact)
   td #{entity.contact.postal_code} #{entity.contact.city}
