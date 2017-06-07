@@ -8,25 +8,25 @@
   = f.simple_fields_for :contact do |c|
     = render 'contacts/fields', f: c
 
-      .row
-        .col-xs-12.col-md-6
-          = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
-                                 end_year: Date.today.year,
-                                 include_blank: true
+  .row
+    .col-xs-12.col-md-6
+      = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
+                             end_year: Date.today.year,
+                             include_blank: true
 
-        .col-xs-12.col-md-6
-          = f.input :gender,
-                    collection: Client.gender_collection,
-                    as: :radio_buttons,
-                    wrapper: :vertical_radio_and_checkboxes
-      .row
-        .col-xs-12.col-md-6
-          = f.input :nationality, as: :country
-        .col-xs-12.col-md-6
-          = f.input :permit,
-                    collection: permit_collection,
-                    as: :radio_buttons,
-                    wrapper: :vertical_radio_and_checkboxes
+    .col-xs-12.col-md-6
+      = f.input :gender,
+                collection: gender_collection,
+                as: :radio_buttons,
+                wrapper: :vertical_radio_and_checkboxes
+  .row
+    .col-xs-12.col-md-6
+      = f.input :nationality, as: :country
+    .col-xs-12.col-md-6
+      = f.input :permit,
+                collection: permit_collection,
+                as: :radio_buttons,
+                wrapper: :vertical_radio_and_checkboxes
 
       = render 'language_skills/form', f: f, speaker: @client
 
