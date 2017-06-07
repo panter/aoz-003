@@ -2,7 +2,12 @@
   .col-xs-12
     h1= @department.contact.last_name
 
-= render 'contacts/show', entity: @department
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          = render 'contacts/show', entity: @department
 
 - if @department.user.any?
   .row

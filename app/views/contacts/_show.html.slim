@@ -1,28 +1,24 @@
-.row
-  .col-xs-12
-    .table-responsive
-      table.table.table-no-border-top
-        tr
-          td= t_attr(:street, Contact)
-          td= entity.contact.street
-        - if entity.contact.extended.present?
-          tr
-            td= t_attr(:extended, Contact)
-            td= entity.contact.extended
-        tr
-          td= t_attr(:city, Contact)
-          td #{entity.contact.postal_code} #{entity.contact.city}
+tr
+  td= t_attr(:street, Contact)
+  td= entity.contact.street
+    - if entity.contact.extended.present?
+      tr
+        td= t_attr(:extended, Contact)
+        td= entity.contact.extended
+tr
+  td= t_attr(:city, Contact)
+  td #{entity.contact.postal_code} #{entity.contact.city}
 
-        - entity.contact.contact_emails.each do |email|
-          tr
-            td
-              = t_attr(:body, ContactEmail)
-              = " / #{email.label}" if email.label.present?
-            td= mail_to email.body
+- entity.contact.contact_emails.each do |email|
+  tr
+    td
+      = t_attr(:body, ContactEmail)
+      = " / #{email.label}" if email.label.present?
+    td= mail_to email.body
 
-        - entity.contact.contact_phones.each do |phone|
-          tr
-            td
-              = t_attr(:body, ContactPhone)
-              = " / #{phone.label}" if phone.label.present?
-            td= phone.body
+- entity.contact.contact_phones.each do |phone|
+  tr
+    td
+      = t_attr(:body, ContactPhone)
+      = " / #{phone.label}" if phone.label.present?
+    td= phone.body
