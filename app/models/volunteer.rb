@@ -3,13 +3,14 @@ class Volunteer < ApplicationRecord
   include FullName
   include StateCollection
 
+  has_one :contact, as: :contactable
+  accepts_nested_attributes_for :contact
+
   acts_as_paranoid
 
   belongs_to :user, optional: true
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
-
-  validates :first_name, :last_name, :email, presence: true
 
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/
