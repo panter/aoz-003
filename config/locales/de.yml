@@ -340,15 +340,15 @@ de:
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
-  rejection_type:
-    her: von Freiwillige vor / nach Erstgespräch
-    other: Anderer Grund
-    us: durch uns vor / nach Gespräch
   region:
     canton: Kanton
     city: Stadt
     region: Region
   registered_by: SozialberaterIn
+  rejection_type:
+    her: von Freiwillige vor / nach Erstgespräch
+    other: Anderer Grund
+    us: durch uns vor / nach Gespräch
   relatives: Verwandte
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
