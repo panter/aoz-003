@@ -7,6 +7,7 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
+          = render 'contacts/show', entity: @volunteer
           tr
             td= t_attr(:date_of_birth)
             td= l(@volunteer.date_of_birth) if @volunteer.date_of_birth

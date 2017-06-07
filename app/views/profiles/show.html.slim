@@ -2,14 +2,12 @@
   .col-xs-12
     h1= @profile.contact.full_name
 
-
-= render 'contacts/show', entity: @profile
-
 .row
   .col-xs-12
     .table-responsive
       table.table.table-no-border-top
         tbody
+          = render 'contacts/show', entity: @profile
           tr
             td= t_attr(:avatar)
             td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
