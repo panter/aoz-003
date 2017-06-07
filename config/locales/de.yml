@@ -43,7 +43,7 @@ de:
         contact_emails: Mailadressen
         contact_phones: Telefonnummern
         extended: Adresszusatz
-        name: Name
+        last_name: Name
         postal_code: PLZ
         street: Strasse
       contact_email:
@@ -171,7 +171,7 @@ de:
       volunteer_application: Freiwilligen Bewerbung
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
-  application_submitted: 'Ihre Bewerbung mit der Email %{email} wurde erfolgreich abgeschickt.'
+  application_submitted: 'Ihre Bewerbung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
@@ -183,6 +183,10 @@ de:
   client_updated: KlientIn wurde erfolgreich aktualisiert.
   clients: Klienten
   contact_info: Kontakt Informationen
+  contacts:
+    fields:
+      last_name: Nachname
+      name: Name
   create_client: KlientIn erfassen
   create_profile: Profil erfassen
   create_user: Benutzer erfassen

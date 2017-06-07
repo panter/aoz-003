@@ -1,5 +1,7 @@
 class VolunteersController < ApplicationController
   include NestedAttributes
+  include ContactAttributes
+
   before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
   before_action :set_state, only: [:update]
 
@@ -13,6 +15,7 @@ class VolunteersController < ApplicationController
   def new
     @volunteer = Volunteer.new
     @volunteer.schedules << Schedule.build
+    @volunteer.build_contact
     authorize @volunteer
   end
 
@@ -31,7 +34,7 @@ class VolunteersController < ApplicationController
   def update
     if @volunteer.update(volunteer_params)
       if @state == Volunteer::INTERESTED && @volunteer.state == Volunteer::ACCEPTED
-        new_user = User.new(email: @volunteer.email,
+        new_user = User.new(email: @volunteer.contact.contact_emails.first.body,
           password: Devise.friendly_token, role: 'volunteer')
         new_user.save
         new_user.invite!
@@ -62,9 +65,10 @@ class VolunteersController < ApplicationController
 
   def volunteer_params
     params.require(:volunteer).permit(
-          volunteer_attributes,
+          volunteer_attributes, contact_attributes,
           language_skills_attributes: language_skills_attributes,
           relatives_attributes: relatives_attributes,
-          schedules_attributes: schedules_attributes)
+          schedules_attributes: schedules_attributes
+          )
   end
 end

@@ -1,10 +1,13 @@
 class VolunteerApplicationsController < ApplicationController
   include NestedAttributes
+  include ContactAttributes
+
   skip_before_action :authenticate_user!
 
   def new
     @volunteer = Volunteer.new
     @volunteer.schedules << Schedule.build
+    @volunteer.build_contact
   end
 
   def create
@@ -22,9 +25,10 @@ class VolunteerApplicationsController < ApplicationController
 
   def volunteer_params
     params.require(:volunteer).permit(
-          volunteer_attributes,
+          volunteer_attributes, contact_attributes,
           language_skills_attributes: language_skills_attributes,
           relatives_attributes: relatives_attributes,
-          schedules_attributes: schedules_attributes)
+          schedules_attributes: schedules_attributes
+          )
   end
 end

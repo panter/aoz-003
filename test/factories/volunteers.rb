@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :volunteer do
-    first_name 'Volunteer'
-    last_name 'Volunteer'
-    email 'volunteer@example.com'
+    contact do |c|
+      c.association(:contact)
+    end
 
     trait :with_relatives do
       relatives do |relative|

@@ -8,9 +8,4 @@ class VolunteerTest < ActiveSupport::TestCase
   test 'valid factory' do
     assert @volunteer.valid?
   end
-
-  test 'voluntary with no required attributes is invalid' do
-    volunteer = Volunteer.new
-    refute volunteer.valid?
-  end
 end

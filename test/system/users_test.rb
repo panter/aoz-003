@@ -81,14 +81,17 @@ class UsersTest < ApplicationSystemTestCase
 
   test 'accepted volunteer becomes a user' do
     volunteer = create :volunteer
+
     visit edit_volunteer_path(volunteer.id)
     select('Accepted', from: 'State')
     assert_difference 'User.count', 1 do
       click_button 'Update Volunteer'
-      assert page.has_text? 'Invitation sent to volunteer@example.com'
+      assert page.has_text? "Invitation sent to #{volunteer.contact.contact_emails.first.body}"
     end
+
+    volunteer.contact.contact_emails.first.body
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last
-    assert_equal 'volunteer@example.com', email['to'].to_s
+    assert_equal volunteer.contact.contact_emails.first.body, email['to'].to_s
   end
 end

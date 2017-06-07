@@ -1,10 +1,13 @@
 class ProfilesController < ApplicationController
+  include ContactAttributes
+
   before_action :set_profile, only: [:show, :edit, :update]
 
   def show; end
 
   def new
     @profile = Profile.new(user_id: current_user.id)
+    @profile.build_contact
     authorize @profile
   end
 
@@ -37,8 +40,9 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :user_id, :first_name, :last_name, :phone, :picture, :address, :profession, :monday,
-      :tuesday, :wednesday, :thursday, :friday, :avatar
-    )
+      :user_id, :picture, :profession, :monday,
+      :tuesday, :wednesday, :thursday, :friday, :avatar,
+      contact_attributes
+      )
   end
 end

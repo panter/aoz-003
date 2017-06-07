@@ -1,10 +1,12 @@
 tr
-  td = volunteer.first_name
-  td = volunteer.last_name
+  td = volunteer.contact.first_name
+  td = volunteer.contact.last_name
   td = volunteer.date_of_birth
   td = country(volunteer.nationality)
   td = t("gender.#{volunteer.gender}") unless volunteer.gender.blank?
-  td = mail_to volunteer.email
+  td
+    - if volunteer.contact.contact_emails.any?
+      = mail_to volunteer.contact.contact_emails.first.body
   td = link_to t_action(:show), volunteer
   td = link_to t_action(:edit), edit_volunteer_path(volunteer)
   td = link_to t_action(:destroy), volunteer, data: { confirm: t('are_you_sure')}, method: :delete

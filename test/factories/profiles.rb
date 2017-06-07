@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :profile do
     user
-    first_name 'Jane'
-    last_name 'Doe'
-    phone '+41 44 291 22 22'
+    contact do |c|
+      c.association(:contact)
+    end
     monday true
     tuesday true
     wednesday false
