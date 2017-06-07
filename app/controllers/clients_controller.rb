@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
   include NestedAttributes
+  include ContactAttributes
 
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
@@ -50,19 +51,9 @@ class ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:date_of_birth, :nationality,
-      :permit, :gender, :goals, :education, :hobbies,
-      :interests, :state, :comments, :competent_authority, :involved_authority, :user_id,
+    params.require(:client).permit(
       language_skills_attributes, relatives_attributes, schedules_attributes,
-      contact_attributes: [
-        :id, :first_name, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
-        :extended, :city, :postal_code,
-        contact_emails_attributes: contact_point_attrs,
-        contact_phones_attributes: contact_point_attrs]
+      contact_attributes: contact_attributes
       )
-  end
-
-  def contact_point_attrs
-    [:id, :body, :label, :_destroy, :type, :contacts_id]
   end
 end

@@ -1,4 +1,6 @@
 class ProfilesController < ApplicationController
+  include ContactAttributes
+
   before_action :set_profile, only: [:show, :edit, :update]
 
   def show; end
@@ -40,15 +42,7 @@ class ProfilesController < ApplicationController
     params.require(:profile).permit(
       :user_id, :picture, :profession, :monday,
       :tuesday, :wednesday, :thursday, :friday, :avatar,
-      contact_attributes: [
-        :id, :first_name, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
-        :extended, :city, :postal_code,
-        contact_emails_attributes: contact_point_attrs,
-        contact_phones_attributes: contact_point_attrs]
+      contact_attributes: contact_attributes
       )
-  end
-
-  def contact_point_attrs
-    [:id, :body, :label, :_destroy, :type, :contacts_id]
   end
 end

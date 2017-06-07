@@ -1,6 +1,7 @@
 class VolunteerApplicationsController < ApplicationController
   include NestedAttributes
   include VolunteerAttributes
+  include ContactAttributes
   skip_before_action :authenticate_user!
 
   def new
@@ -26,15 +27,7 @@ class VolunteerApplicationsController < ApplicationController
   def volunteer_params
     params.require(:volunteer).permit(
       volunteer_attributes, language_skills_attributes, relatives_attributes, schedules_attributes,
-      contact_attributes: [
-        :id, :first_name, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
-        :extended, :city, :postal_code,
-        contact_emails_attributes: contact_point_attrs,
-        contact_phones_attributes: contact_point_attrs]
-    )
-  end
-
-  def contact_point_attrs
-    [:id, :body, :label, :_destroy, :type, :contacts_id]
+      contact_attributes: contact_attributes
+      )
   end
 end
