@@ -400,7 +400,7 @@ DEPENDENCIES
   puma
   pundit
   rails (~> 5.1.0.rc1)
-  rails-i18n (~> 5.0.0)
+  rails-i18n
   ransack!
   rubocop
   sass-rails!
@@ -412,4 +412,4 @@ DEPENDENCIES
   uglifier
 
 BUNDLED WITH
-   1.15.0
+   1.15.1
