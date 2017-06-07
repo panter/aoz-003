@@ -423,6 +423,7 @@ de:
           registered: interessiert / angemeldet
           rejected: Absage
           reserved: kontaktiert / für Gespräch eingeladen
+          all: Alle
     placeholders:
     required:
       mark: '*'

@@ -1,16 +1,11 @@
-ruby:
-  scope = {scope: [:simple_form, :options, :volunteer, :state]}
-  size ||= 'xs'
-  descriptive ||= false
-  state_filter = @q.base.conditions.first.values.first.value if @q.base.conditions.first
-  label = "#{t_attr(:state)} "
-  label += ": #{t(state_filter, scope)} " if descriptive && state_filter.present?
+- state_filter = request.GET[:q] && request.GET[:q][:state_cont].present? ? request.GET[:q][:state_cont] : 'all'
 .btn-group
-  button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:state)}" aria-haspopup='true' aria-expanded='false' class="btn-#{size}"
-    = label
+  button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:state)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
+    = "#{t_attr(:state)} : "
+    = t(state_filter, scope: [:simple_form, :options, :volunteer, :state]) + ' '
     span.caret aria-hidden='true'
   ul.dropdown-menu
     li
       = link_to t('all'), "#{volunteers_path}?q[state_cont]="
     - Volunteer.state_collection.each do |s|
-      li= link_to t(s.to_s, scope), "#{volunteers_path}?q[state_cont]=#{s}"
+      li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :state]), "#{volunteers_path}?q[state_cont]=#{s}"
