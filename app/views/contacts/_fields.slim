@@ -1,5 +1,4 @@
 .row
-
   - unless defined? @department
     .col-xs-12.col-md-6= f.input :first_name
   .col-xs-12.col-md-6= f.input :last_name, label: !defined?(@department) ? t('.last_name') : t('.name')

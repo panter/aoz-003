@@ -4,12 +4,9 @@
       .col-xs-12
         = f.error_notification
   = f.input :user_id, as: :hidden
-  .row
-    .col-xs-12
-      .row
-        .col-xs-12.col-md-6
-          = f.simple_fields_for :contact do |c|
-            = render 'contacts/fields', f: c
+
+  = f.simple_fields_for :contact do |c|
+    = render 'contacts/fields', f: c
 
       .row
         .col-xs-12.col-md-6
@@ -35,18 +32,18 @@
 
       = render 'relatives/form', f: f, relative: @client
 
-      .row
-        .col-xs-12
-          h3= t('personal_background')
-          = f.input :goals
-          = f.input :education
-          = f.input :hobbies
-          = f.input :interests
-          = f.input :state, collection: Client.state_collection, include_blank: false
-          - if policy(Client).destroy?
-            = f.input :comments
-          = f.input :competent_authority
-          = f.input :involved_authority
+    .row
+      .col-xs-12
+        h3= t('personal_background')
+        = f.input :goals
+        = f.input :education
+        = f.input :hobbies
+        = f.input :interests
+        = f.input :state, collection: state_collection, include_blank: false
+        - if policy(Client).destroy?
+          = f.input :comments
+        = f.input :competent_authority
+        = f.input :involved_authority
 
     = render 'schedules/form', f: f, participant: @client
 
