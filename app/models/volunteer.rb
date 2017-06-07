@@ -2,35 +2,47 @@ class Volunteer < ApplicationRecord
   include AssociatableFields
   include FullName
   include GenderCollection
-  include StateCollection
 
   acts_as_paranoid
 
-  belongs_to :user, optional: true
+  before_save :default_state
 
-  has_attached_file :avatar, styles: { thumb: '100x100#' }
-
-  validates :first_name, :last_name, :email, presence: true
-  validates :email, uniqueness: true
-
-  validates_attachment :avatar, content_type: {
-    content_type: /\Aimage\/.*\z/
-  }
-
-  # Volunteer state definition
-  INTERESTED = 'interested'.freeze
+  REGISTERED = 'registered'.freeze
   ACCEPTED = 'accepted'.freeze
   REJECTED = 'rejected'.freeze
   INACTIVE = 'inactive'.freeze
-  STATES_FOR_REVIEWED = [ACCEPTED, REJECTED, INACTIVE].freeze
-  STATES = STATES_FOR_REVIEWED + [INTERESTED]
+  RESIGNED = 'resigned'.freeze
+  STATES_FOR_REVIEWED = [ACCEPTED, REJECTED, INACTIVE, RESIGNED].freeze
+  STATES = [REGISTERED] + STATES_FOR_REVIEWED
 
-  def interested?
-    state == Volunteer::INTERESTED
+  belongs_to :user, optional: true
+  has_attached_file :avatar, styles: { thumb: '100x100#' }
+
+  validates :state, inclusion: { in: STATES }
+  validates_attachment :avatar, content_type: {
+    content_type: /\Aimage\/.*\z/
+  }
+  validates :first_name, :last_name, :email, presence: true
+  validates :email, uniqueness: true
+
+  def self.state_collection
+    STATES.map(&:to_sym)
+  end
+
+  def self.state_collection_for_reviewed
+    STATES_FOR_REVIEWED.map(&:to_sym)
+  end
+
+  def registered?
+    state == REGISTERED
+  end
+
+  def accepted?
+    state == ACCEPTED
   end
 
   def rejected?
-    state == Volunteer::REJECTED
+    state == REJECTED
   end
 
   def self.duration_collection
@@ -53,19 +65,17 @@ class Volunteer < ApplicationRecord
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
   end
 
-  def self.state_collection
-    STATES.map(&:to_sym)
-  end
-
-  def self.state_collection_for_reviewed
-    STATES_FOR_REVIEWED.map(&:to_sym)
-  end
-
   def self.rejection_collection
     [:us, :her, :other]
   end
 
   def to_s
     full_name
+  end
+
+  private
+
+  def default_state
+    self.state ||= REGISTERED
   end
 end

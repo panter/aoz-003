@@ -165,7 +165,7 @@ en:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
   forgot_password: Forgot your password?
-  gender:
+  gender: &id-genders
     female: female
     male: male
   get_back: We will soon get back to you.
@@ -181,7 +181,7 @@ en:
         create: Create User
         update: Update login
   invite_sent: 'Invitation sent to %{email}'
-  language_level:
+  language_level: &id-lang-levels
     basic: Basic
     fluent: Fluent
     good: Good
@@ -197,12 +197,12 @@ en:
   personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
-  region:
+  region: &id-regions
     canton: Canton
     city: City
     region: Region
   registered_by: Responsible Volunteer
-  rejection_type:
+  rejection_type: &id-rejection-types
     her: by volunteer before / after the first call
     other: Other
     us: by us before / after conversation
@@ -210,7 +210,7 @@ en:
   remember_me: Remember me
   remove_language: Remove language
   remove_relative: Remove family member
-  role:
+  role: &id-roles
     department_manager: Department manager
     social_worker: Social worker
     superadmin: Superadmin
@@ -233,68 +233,40 @@ en:
     "no": 'No'
     options:
       client:
-        gender:
-          female: Female
-          male: Male
+        gender: *id-genders
         language_skills:
-          level:
-            basic: Basic
-            fluent: Fluent
-            good: Good
-            native_speaker: Native speaker
-        state:
+          level: *id-lang-levels
+        state: &id-states
+          accepted: Accepted
           active: Active
+          all: All
           finished: Finished
+          inactive: Inactive
+          interested: Interested
           registered: Registered
           rejected: Rejected
           reserved: Reserved
+          resigned: Resigned
       user:
-        role:
-          department_manager: Departement manager
-          social_worker: Social worker
-          superadmin: Superadmin
+        role: *id-roles
       volunteer:
         duration:
           long: Long term (min 6 months)
           short: Short term
-        gender:
-          female: Female
-          male: Male
+        gender: *id-genders
         language_skills:
-          level:
-            basic: Basic
-            fluent: Fluent
-            good: Good
-            native_speaker: Native speaker
-        region:
-          canton: Canton
-          city: City
-          region: Region
-        rejection_type:
-          her: by volunteer before / after the first call
-          other: Other
-          us: by us before / after conversation
+          level: *id-lang-levels
+        region: *id-regions
+        rejection_type: *id-rejection-types
         state:
-          active: active / participating
-          all: All
-          finished: resigned
-          registered: intrested / registered
-          rejected: rejected
-          reserved: contacted / invited to meeting
+          <<: *id-states
+          registered: Interested
     placeholders:
     required:
       mark: '*'
       text: 'required'
     "yes": 'Yes'
-  state:
-    accepted: Accepted
-    active: Active
-    finished: Finished
-    inactive: Inactive
-    interested: Interested
-    registered: Registered
-    rejected: Rejected
-    reserved: Reserved
+  state: *id-states
   submit_application: Submit application
   target_groups: Target groups
   thank_you: "Thank you \U0001F389"

@@ -270,7 +270,7 @@ de:
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
-  duration:
+  duration: &id-durations
     long: Längerfristig (min 6 Mt.)
     short: Kurzfristig
   edit_login: Login bearbeiten
@@ -287,7 +287,7 @@ de:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   forgot_password: Passwort vergessen?
-  gender:
+  gender: &id-genders
     female: Weiblich
     male: Männlich
   get_back: Wir werden uns bald bei Ihnen melden.
@@ -303,7 +303,7 @@ de:
         create: Benutzer erstellen
         update: Login aktualisieren
   invite_sent: 'Einladung wurde an %{email} verschickt.'
-  language_level:
+  language_level: &id-lang-levels
     basic: Grundlagen
     fluent: Fliessend
     good: Gut
@@ -316,12 +316,12 @@ de:
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
-  region:
+  region: &id-regions
     canton: Kanton
     city: Stadt
     region: Region
   registered_by: SozialberaterIn
-  rejection_type:
+  rejection_type: &id-rejection-types
     her: von Freiwillige vor / nach Erstgespräch
     other: Anderer Grund
     us: durch uns vor / nach Gespräch
@@ -329,7 +329,7 @@ de:
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
-  role:
+  role: &id-roles
     department_manager: Standortverantwortliche/er
     social_worker: SozialarbeiterIn
     superadmin: Superadmin
@@ -366,73 +366,43 @@ de:
     "no": 'Nein'
     options:
       client:
-        gender:
-          female: Weiblich
-          male: Männlich
+        gender: *id-genders
         language_skills:
-          level:
-            basic: Grundlagen
-            fluent: Fliessend
-            good: Gut
-            native_speaker: Muttersprachler
+          level: *id-lang-levels
         point_of_contact:
           label:
             email: Mailadresse
             fax: Faxnummer
             phone: Telefonnummer
-        state:
+        state: &id-states
+          accepted: Akzeptiert
           active: Aktiv
+          all: Alle
           finished: Abgeschlossen
+          inactive: Inaktiv
+          interested: Interessiert
           registered: Registriert
           rejected: Abgelehnt
           reserved: Reserviert
+          resigned: Abgemeldet
       user:
-        role:
-          department_manager: Standort Verantwortliche/r
-          social_worker: SozialarbeiterIn
-          superadmin: Superadmin
+        role: *id-roles
       volunteer:
-        duration:
-          long: Längerfristig (min 6 Mt.)
-          short: Kurzfristig
-        gender:
-          female: Weiblich
-          male: Mänlich
+        duration: *id-durations
+        gender: *id-genders
         language_skills:
-          level:
-            basic: Grundlagen
-            fluent: Fliessend
-            good: Gut
-            native_speaker: Muttersprachler
-        region:
-          canton: Kanton
-          city: Stadt
-          region: Region
-        rejection_type:
-          her: von Freiwillige vor / nach Erstgespräch
-          other: Anderer Grund
-          us: durch uns vor / nach Gespräch
+          level: *id-lang-levels
+        region: *id-regions
+        rejection_type: *id-rejection-types
         state:
-          active: aktiv / im Einsatz
-          all: Alle
-          finished: ausgetreten
-          registered: interessiert / angemeldet
-          rejected: Absage
-          reserved: kontaktiert / für Gespräch eingeladen
+          <<: *id-states
+          registered: Interessiert
     placeholders:
     required:
       mark: '*'
       text: notwendig
     "yes": 'Ja'
-  state:
-    accepted: Akzeptiert
-    active: Aktiv
-    finished: Abgeschlossen
-    inactive: Inaktiv
-    interested: Interessiert
-    registered: Registriert
-    rejected: Abgelehnt
-    reserved: Reserviert
+  state: *id-states
   submit_application: Bewerbung abschicken
   target_groups: Zielgruppe
   thank_you: "Vielen Dank \U0001F389"

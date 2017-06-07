@@ -4,7 +4,7 @@ tr
   td = country(volunteer.nationality) if volunteer.nationality.present?
   td = l(volunteer.created_at)
   td = t("gender.#{volunteer.gender}") unless volunteer.gender.blank?
-  td = t("simple_form.options.volunteer.state.#{volunteer.state}")
+  td = t("state.#{volunteer.state}", scope: [:simple_form, :options, :volunteer])
   td = link_to t_action(:show), volunteer
   td = link_to t_action(:edit), edit_volunteer_path(volunteer)
   td = link_to t_action(:destroy), volunteer, data: { confirm: t_confirm_delete(volunteer) }, method: :delete

@@ -4,7 +4,7 @@ class VolunteersTest < ApplicationSystemTestCase
   setup do
     @user = create :user, :with_profile, email: 'superadmin@example.com'
     login_as @user
-    [:registered, :reserved, :active, :finished, :rejected].each do |s|
+    Volunteer.state_collection.each do |s|
       create :volunteer, state: s.to_s
     end
   end
@@ -37,8 +37,8 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'Education', with: 'CEID'
     fill_in 'What is your motivation to volunteer with migrants?', with: 'asfd'
     page.check('volunteer_experience')
-    fill_in 'What do you expect from a person who would accompany you / your volunteer work?', with: 'asdf'
-    fill_in 'Where do you see your strengths? (Social competencies that you could contribute to voluntary work)', with: 'asdf'
+    fill_in 'What do you expect from a person who would accompany you', with: 'asdf'
+    fill_in 'Where do you see your strengths?', with: 'asdf'
     fill_in 'Professional skills that you could bring?', with: 'asdf'
     fill_in 'What are your most important leisure interests?', with: 'asdf'
     page.choose('volunteer_duration_short')
@@ -91,34 +91,26 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_content? 'Explanation for rejection'
   end
 
-  test 'if visit index, default filter is state: registered' do
-    visit volunteers_path
-    assert page.has_text? 'intrested / registered'
-  end
-
   test 'change filter to other options' do
+    create :volunteer, state: 'resigned'
     visit volunteers_path
     within find_all('.btn-group').first do
-      click_button 'State : intrested'
-      click_link 'resigned'
+      click_button 'State : All'
+      click_link 'Resigned'
     end
     within 'tbody' do
-      assert page.has_text? 'resigned'
+      assert page.has_text? 'Resigned'
     end
   end
 
   test 'thead state filter dropdown can switch to all' do
     visit volunteers_path
-    within find_all('.btn-group').first do
-      click_button 'State : intrested'
-      click_link 'all'
-    end
     within 'tbody' do
-      assert page.has_text? 'resigned'
-      assert page.has_text? 'intrested / registered'
-      assert page.has_text? 'contacted / invited to meeting'
-      assert page.has_text? 'active / participating'
-      assert page.has_text? 'rejected'
+      assert page.has_text? 'Interested'
+      assert page.has_text? 'Accepted'
+      assert page.has_text? 'Rejected'
+      assert page.has_text? 'Inactive'
+      assert page.has_text? 'Resigned'
     end
   end
 end

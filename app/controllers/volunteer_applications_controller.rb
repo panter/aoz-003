@@ -9,6 +9,7 @@ class VolunteerApplicationsController < ApplicationController
   end
 
   def create
+    volunteer_params[:state] = 'registered'
     @volunteer = Volunteer.new(volunteer_params)
     if @volunteer.save
       redirect_to thanks_volunteer_applications_url
