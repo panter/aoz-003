@@ -72,7 +72,7 @@ de:
         day: Tag
         time: Zeit
       user:
-        clients: Kunden
+        clients: Klienten
         department: Standort
         email: Email
         profile: Profil
@@ -150,17 +150,17 @@ de:
             avatar_content_type:
               invalid: ist ungültig
     models:
-      client: Klient
+      client: Klient/in
       contact: Kontakt
       contact_email: Mailadresse
       contact_phone: Telefonnummer
       department: Standort
       language_skill: Sprachkompetenz
       profile: Profil
-      relative: Verwante/r
+      relative: Verwante
       schedule: Zeitplan
-      user: Benutzer
-      volunteer: Freiwillige
+      user: Benutzer/in
+      volunteer: Freiwillige/r
       volunteer_application: Freiwilligen Bewerbung
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
@@ -172,14 +172,14 @@ de:
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
-  client_created: KlientIn wurde erfolgreich erstellt.
-  client_destroyed: KlientIn wurde erfolgreich gelöscht.
-  client_updated: KlientIn wurde erfolgreich aktualisiert.
+  client_created: Klient/in wurde erfolgreich erstellt.
+  client_destroyed: Klient/in wurde erfolgreich gelöscht.
+  client_updated: Klient/in wurde erfolgreich aktualisiert.
   clients: Klienten
   contact_info: Kontakt Informationen
-  create_client: KlientIn erfassen
+  create_client: Klient/in erfassen
   create_profile: Profil erfassen
-  create_user: Benutzer erfassen
+  create_user: Benutzer/in erfassen
   crud:
     title:
       add: '%{model} hinzufügen'
@@ -300,14 +300,14 @@ de:
       show: '%{model} anzeigen'
       update: '%{model} aktualisieren'
       user:
-        create: Benutzer erstellen
+        create: Benutzer/in erstellen
         update: Login aktualisieren
   invite_sent: 'Einladung wurde an %{email} verschickt.'
   language_level: &id-lang-levels
     basic: Grundlagen
     fluent: Fliessend
     good: Gut
-    native_speaker: Muttersprachler
+    native_speaker: Muttersprachler/in
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
@@ -320,9 +320,9 @@ de:
     canton: Kanton
     city: Stadt
     region: Region
-  registered_by: SozialberaterIn
+  registered_by: Sozialberater/in
   rejection_type: &id-rejection-types
-    her: von Freiwillige vor / nach Erstgespräch
+    her: von Freiwillige/r vor / nach Erstgespräch
     other: Anderer Grund
     us: durch uns vor / nach Gespräch
   relatives: Verwandte
@@ -330,10 +330,10 @@ de:
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   role: &id-roles
-    department_manager: Standortverantwortliche/er
-    social_worker: SozialarbeiterIn
+    department_manager: Standortverantwortliche/r
+    social_worker: Sozialarbeiter/in
     superadmin: Superadmin
-    volunteer: Freiwillige
+    volunteer: Freiwillige/r
   schedule: Zeitplan
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
@@ -348,7 +348,7 @@ de:
         contact:
           label: Art
           name: Standortname
-        user: Assozierte Benutzer
+        user: Assozierte/r Benutzer/in
       q:
         state_cont: Status
       user:
@@ -359,7 +359,7 @@ de:
         expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
         experience: Haben Sie bereits Erfahrung mit FW-Arbeit?
         interests: Welches sind Ihre wichtigsten Freizeitinteressen?
-        motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
+        motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migranten/innen zu leisten?
         region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Wo sehen Sie Ihre Stärken? (soziale Kompetenzen, die Sie in FW-Arbeit einbringen könnten)
@@ -420,12 +420,12 @@ de:
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
-  volunteer_application: Freiwillige/n Bewerbung
-  volunteer_created: Freiwillige wurde erfolgreich erstellt.
-  volunteer_destroyed: Freiwillige wurde erfolgreich gelöscht.
-  volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
+  volunteer_application: Freiwilligen Bewerbung
+  volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
+  volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
+  volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
-  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
+  wanna_apply: Möchten Sie sich als Freiwillige/r bewerben?
   weekdays:
     friday: Freitag
     monday: Montag
