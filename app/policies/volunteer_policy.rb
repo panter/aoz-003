@@ -19,15 +19,15 @@ class VolunteerPolicy < ApplicationPolicy
   end
 
   def show?
-    user.superadmin?
+    user.superadmin? || (user.volunteer? && user.volunteer.id == volunteer.id)
   end
 
   def edit?
-    user.superadmin?
+    user.superadmin? || (user.volunteer? && user.volunteer.id == volunteer.id)
   end
 
   def update?
-    user.superadmin?
+    user.superadmin? || (user.volunteer? && user.volunteer.id == volunteer.id)
   end
 
   def destroy?

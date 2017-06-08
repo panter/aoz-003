@@ -45,6 +45,7 @@ class VolunteersController < ApplicationController
   def invite_volunteer_user
     new_user = User.new(email: @volunteer.email, password: Devise.friendly_token, role: 'volunteer')
     new_user.save
+    @volunteer.user = new_user
     new_user.invite!
     redirect_to volunteers_path, notice: t('invite_sent', email: new_user.email)
   end
