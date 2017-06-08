@@ -20,15 +20,19 @@ class User < ApplicationRecord
   scope :department_assocable, (-> { where(role: [SUPERADMIN, DEPARTMENT_MANAGER]) })
 
   def superadmin?
-    role == User::SUPERADMIN
+    role == SUPERADMIN
   end
 
   def social_worker?
-    role == User::SOCIAL_WORKER
+    role == SOCIAL_WORKER
   end
 
   def department_manager?
-    role == User::DEPARTMENT_MANAGER
+    role == DEPARTMENT_MANAGER
+  end
+
+  def volunteer?
+    role == VOLUNTEER
   end
 
   def superadmin_or_department_manager?

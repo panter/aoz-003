@@ -28,10 +28,11 @@ nav.navbar.navbar-top
               = current_user.email
               span.caret
             ul.dropdown-menu
-              li
-                - if current_user.profile.blank?
-                  = link_to t('create_profile'), new_profile_path
-                - else
-                  = link_to t('show_profile'), current_user.profile
+              - unless current_user.volunteer?
+                li
+                  - if current_user.profile.blank?
+                    = link_to t('create_profile'), new_profile_path
+                  - else
+                    = link_to t('show_profile'), current_user.profile
               li
                 = link_to t('logout'), destroy_user_session_path, method: :delete
