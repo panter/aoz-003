@@ -1,6 +1,5 @@
 tr
-  td = volunteer.contact.first_name
-  td = volunteer.contact.last_name
+  td = volunteer.contact.full_name
   td = volunteer.date_of_birth if volunteer.date_of_birth.present?
   td = country(volunteer.nationality) if volunteer.nationality.present?
   td = l(volunteer.created_at)
