@@ -87,21 +87,6 @@
       tr
         td= t_attr(:additional_nationality)
         td= country(@volunteer.additional_nationality) if @volunteer.additional_nationality.present?
-        tr
-          td= t_attr(:street)
-          td= @volunteer.street
-        tr
-          td= t_attr(:zip)
-          td= @volunteer.zip
-        tr
-          td= t_attr(:city)
-          td= @volunteer.city
-      tr
-        td= t_attr(:email)
-        td= mail_to(@volunteer.email) if @volunteer.email.present?
-      tr
-        td= t_attr(:phone)
-        td= @volunteer.phone
       - if @volunteer.language_skills.any?
         = render 'language_skills/show', speaker: @volunteer
       - if @volunteer.relatives.any?
