@@ -25,8 +25,6 @@ class Volunteer < ApplicationRecord
     content_type: /\Aimage\/.*\z/
   }
 
-  validates :email, uniqueness: true
-
   def self.state_collection
     STATES.map(&:to_sym)
   end

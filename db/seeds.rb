@@ -50,8 +50,7 @@ def make_schedule
 end
 
 User.role_collection.each do |role|
-  User.new do |user|
-    user.email =  "#{role}@example.com"
+  User.find_or_create_by(email: "#{role}@example.com") do |user|
     user.password = 'asdfasdf'
     user.role = role
     user.profile = Profile.new do |profile|
@@ -70,7 +69,6 @@ User.role_collection.each do |role|
         profile[day] = [true, false].sample
       end
     end
-    user.save!
   end
 end
 
