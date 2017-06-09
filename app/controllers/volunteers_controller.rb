@@ -60,9 +60,8 @@ class VolunteersController < ApplicationController
 
   def volunteer_params
     params.require(:volunteer).permit(
-      volunteer_attributes,
-      language_skills_attributes, relatives_attributes, schedules_attributes,
-      contact_attributes
+      volunteer_attributes, language_skills_attributes,
+      relatives_attributes, schedules_attributes
     )
   end
 end
