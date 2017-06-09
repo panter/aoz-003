@@ -28,24 +28,24 @@
                 as: :radio_buttons,
                 wrapper: :vertical_radio_and_checkboxes
 
-      = render 'language_skills/form', f: f, speaker: @client
+  = render 'language_skills/form', f: f, speaker: @client
 
-      = render 'relatives/form', f: f, relative: @client
+  = render 'relatives/form', f: f, relative: @client
 
-    .row
-      .col-xs-12
-        h3= t('personal_background')
-        = f.input :goals
-        = f.input :education
-        = f.input :hobbies
-        = f.input :interests
-        = f.input :state, collection: Client.state_collection, include_blank: false
-        - if policy(Client).destroy?
-          = f.input :comments
-        = f.input :competent_authority
-        = f.input :involved_authority
+  .row
+    .col-xs-12
+      h3= t('personal_background')
+      = f.input :goals
+      = f.input :education
+      = f.input :hobbies
+      = f.input :interests
+      = f.input :state, collection: Client.state_collection, include_blank: false
+      - if policy(Client).destroy?
+        = f.input :comments
+      = f.input :competent_authority
+      = f.input :involved_authority
 
-    = render 'schedules/form', f: f, participant: @client
+  = render 'schedules/form', f: f, participant: @client
 
   .row
     .col-xs-12
