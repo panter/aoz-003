@@ -101,4 +101,4 @@ h3= t('your_region')
   .col-xs-12
     = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
 
-= render 'schedules/form', f: f, participant: f.object
+= render 'schedules/form', f: f, participant: @volunteer
