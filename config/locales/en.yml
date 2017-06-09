@@ -9,7 +9,7 @@ en:
         contact_emails: Contact emails
         contact_phones: Contact phones
         extended: Extended address
-        name: Name
+        last_name: Name
         postal_code: Zip
         street: Street
       contact_email:
@@ -56,6 +56,10 @@ en:
   client_updated: Client was successfully updated.
   clients: Clients
   contact_info: Contact information
+  contacts:
+    fields:
+      last_name: Last name
+      name: Name
   create_client: Create client
   create_profile: Create profile
   create_user: Create user

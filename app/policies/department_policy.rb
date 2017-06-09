@@ -75,7 +75,7 @@ class DepartmentPolicy < ApplicationPolicy
   def department_attributes
     [
       contact_attributes: [
-        :id, :name, :_destroy, :contactable_id, :contactable_type, :street,
+        :id, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
         :extended, :city, :postal_code,
         contact_emails_attributes: contact_point_attrs,
         contact_phones_attributes: contact_point_attrs

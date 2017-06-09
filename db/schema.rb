@@ -16,17 +16,10 @@ ActiveRecord::Schema.define(version: 20170608102534) do
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
     t.date "date_of_birth"
     t.string "nationality"
     t.string "permit"
     t.string "gender"
-    t.string "street"
-    t.string "zip"
-    t.string "city"
-    t.string "phone"
-    t.string "email"
     t.text "goals"
     t.text "education"
     t.text "hobbies"
@@ -56,7 +49,6 @@ ActiveRecord::Schema.define(version: 20170608102534) do
   end
 
   create_table "contacts", force: :cascade do |t|
-    t.string "name"
     t.string "street"
     t.string "extended"
     t.string "postal_code"
@@ -66,6 +58,8 @@ ActiveRecord::Schema.define(version: 20170608102534) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.string "first_name"
+    t.string "last_name"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
     t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
   end

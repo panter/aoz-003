@@ -1,5 +1,6 @@
 class Client < ApplicationRecord
   include AssociatableFields
+
   include FullName
   include GenderCollection
 
@@ -12,7 +13,9 @@ class Client < ApplicationRecord
 
   belongs_to :user
 
-  validates :first_name, :last_name, presence: true
+  has_one :contact, as: :contactable
+  accepts_nested_attributes_for :contact
+
   validates :state, inclusion: { in: STATES }
 
   def self.state_collection

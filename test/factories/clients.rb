@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :client do
     user
-    sequence :first_name { |n| "first_name#{n}" }
-    sequence :last_name { |n| "last_name#{n}" }
+    contact do |c|
+      c.association(:contact)
+    end
 
     trait :with_relatives do
       relatives do |relative|

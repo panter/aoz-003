@@ -32,7 +32,7 @@ de:
         contact_emails: Mailadressen
         contact_phones: Telefonnummern
         extended: Adresszusatz
-        name: Name
+        last_name: Name
         postal_code: PLZ
         street: Strasse
       contact_email:
@@ -177,6 +177,10 @@ de:
   client_updated: KlientIn wurde erfolgreich aktualisiert.
   clients: Klienten
   contact_info: Kontakt Informationen
+  contacts:
+    fields:
+      last_name: Nachname
+      name: Name
   create_client: KlientIn erfassen
   create_profile: Profil erfassen
   create_user: Benutzer erfassen

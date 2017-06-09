@@ -19,7 +19,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
           User.where(role: 'department_manager').last.id,
           ''
         ],
-        contact_attributes: { name: 'asdf' }
+        contact_attributes: { last_name: 'asdf' }
       },
       commit: 'Create Department'
     }
@@ -38,13 +38,13 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
           @department_manager.id,
           ''
         ],
-        contact_attributes: { name: 'Another name' }
+        contact_attributes: { last_name: 'Another name' }
       },
       commit: 'Update Department'
     }
     put department_path(department.id), params: params
     department_updated = Department.find department.id
-    assert department_updated.contact.name == 'Another name'
+    assert department_updated.contact.last_name == 'Another name'
     assert department_updated.user_ids.include? @department_manager.id
   end
 
@@ -58,13 +58,13 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
           @department_manager.id,
           ''
         ],
-        contact_attributes: { name: 'new name' }
+        contact_attributes: { last_name: 'new name' }
       },
       commit: 'Update Department'
     }
     put department_path(department.id), params: params
     department_updated = Department.find department.id
-    assert department_updated.contact.name == 'new name'
+    assert department_updated.contact.last_name == 'new name'
     refute department_updated.user_ids.include? @superadmin.id
   end
 end

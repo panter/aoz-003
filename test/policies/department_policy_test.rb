@@ -9,7 +9,7 @@ class DepartmentPolicyTest < PolicyAssertions::Test
 
   test 'only superadmin can create department' do
     department_params = {
-      contact: Contact.new(name: 'department'),
+      contact: Contact.new(last_name: 'department'),
       user: [@social_worker]
     }
     assert_permit @superadmin, Department.new(department_params), 'create?', 'new?'
