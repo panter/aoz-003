@@ -1,7 +1,9 @@
 .row
-  - unless defined? @department
+  - if controller_name == 'departments'
+    .col-xs-12.col-md-6= f.input :last_name, label: t('.name')
+  - else
     .col-xs-12.col-md-6= f.input :first_name
-  .col-xs-12.col-md-6= f.input :last_name, label: !defined?(@department) ? t('.last_name') : t('.name')
+    .col-xs-12.col-md-6= f.input :last_name, label: t('.last_name')
 
 .row
   .col-xs-12
