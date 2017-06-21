@@ -13,7 +13,9 @@
             td= l(@client.date_of_birth) if @client.date_of_birth
           tr
             td= t_attr(:gender)
-            td= t("gender.#{@client.gender}") unless @client.gender.blank?
+            td
+              - if @client.gender.present?
+                = t("gender.#{@client.gender}")
           tr
             td= t_attr(:nationality)
             td= country(@client.nationality)
