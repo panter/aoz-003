@@ -33,8 +33,11 @@ class VolunteersController < ApplicationController
   def update
     state_was_registered = @volunteer.registered?
     return render :edit unless @volunteer.update(volunteer_params)
-    return invite_volunteer_user if state_was_registered && @volunteer.accepted?
-    redirect_to @volunteer, notice: t('volunteer_updated')
+    if state_was_registered && @volunteer.accepted? && invite_volunteer_user
+      redirect_to volunteers_path, notice: t('invite_sent', email: new_user.email)
+    else
+      redirect_to @volunteer, notice: t('volunteer_updated')
+    end
   end
 
   def destroy
@@ -49,8 +52,7 @@ class VolunteersController < ApplicationController
       email: @volunteer.email, password: Devise.friendly_token,
       role: 'volunteer', volunteer: @volunteer
     )
-    return unless new_user.save && new_user.invite!
-    redirect_to volunteers_path, notice: t('invite_sent', email: new_user.email)
+    new_user.save && new_user.invite!
   end
 
   def set_volunteer
