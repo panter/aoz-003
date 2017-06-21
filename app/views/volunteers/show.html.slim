@@ -58,16 +58,16 @@
             - if @volunteer.rejected?
               tr
                 td= t_attr(:rejection_type)
-                td= t("rejection_type.#{@volunteer.rejection_type}") unless @volunteer.rejection_type.blank?
+                td= t("rejection_type.#{@volunteer.rejection_type}") if @volunteer.rejection_type.present?
               tr
                 td= t_attr(:rejection_text)
                 td= @volunteer.rejection_text
           tr
             td= t_attr(:duration)
-            td= t("duration.#{@volunteer.duration}") unless @volunteer.duration.blank?
+            td= t("duration.#{@volunteer.duration}") if @volunteer.duration.present?
           tr
             td= t_attr(:region)
-            td= t("region.#{@volunteer.region}") unless @volunteer.region.blank?
+            td= t("region.#{@volunteer.region}") if @volunteer.region.present?
 
 .table-responsive
   table.table.table-no-border-top
