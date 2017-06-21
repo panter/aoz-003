@@ -70,9 +70,9 @@ class Volunteer < ApplicationRecord
   end
 
   def generate_state_checkers
-    STATES.each do |r|
-      self.class.send(:define_method, "#{r}?".to_sym) do
-        state == r
+    STATES.each do |s|
+      self.class.send(:define_method, "#{s}?".to_sym) do
+        state == s
       end
     end
   end
