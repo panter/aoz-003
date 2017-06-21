@@ -7,7 +7,7 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          = render 'contacts/show', entity: @department
+          = render 'contacts/show', contact: @department.contact
 
 - if @department.user.any?
   .row

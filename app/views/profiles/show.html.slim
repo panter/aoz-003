@@ -7,7 +7,7 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          = render 'contacts/show', entity: @profile
+          = render 'contacts/show', contact: @profile.contact
           tr
             td= t_attr(:avatar)
             td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
