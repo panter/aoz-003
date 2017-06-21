@@ -34,7 +34,7 @@ class VolunteersController < ApplicationController
     state_was_registered = @volunteer.registered?
     return render :edit unless @volunteer.update(volunteer_params)
     if state_was_registered && @volunteer.accepted? && invite_volunteer_user
-      redirect_to volunteers_path, notice: t('invite_sent', email: new_user.email)
+      redirect_to volunteers_path, notice: t('invite_sent', email: @volunteer.email)
     else
       redirect_to @volunteer, notice: t('volunteer_updated')
     end
