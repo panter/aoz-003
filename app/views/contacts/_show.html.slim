@@ -1,22 +1,22 @@
 tr
   td= t_attr(:street, Contact)
-  td= entity.contact.street
-  - if entity.contact.extended.present?
+  td= contact.street
+  - if contact.extended.present?
     tr
       td= t_attr(:extended, Contact)
-      td= entity.contact.extended
+      td= contact.extended
 tr
   td= t_attr(:city, Contact)
-  td #{entity.contact.postal_code} #{entity.contact.city}
+  td #{contact.postal_code} #{contact.city}
 
-- entity.contact.contact_emails.each do |email|
+- contact.contact_emails.each do |email|
   tr
     td
       = t_attr(:body, ContactEmail)
       = " / #{email.label}" if email.label.present?
     td= mail_to email.body
 
-- entity.contact.contact_phones.each do |phone|
+- contact.contact_phones.each do |phone|
   tr
     td
       = t_attr(:body, ContactPhone)
