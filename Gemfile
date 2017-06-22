@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.0.rc1'
+gem 'rails', '~> 5.1'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass'
@@ -29,7 +29,7 @@ gem 'puma'
 gem 'pundit'
 gem 'rails-i18n'
 gem 'ransack', github: 'activerecord-hackery/ransack'
-gem 'sass-rails', github: 'rails/sass-rails'
+gem 'sass-rails'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'turbolinks'
