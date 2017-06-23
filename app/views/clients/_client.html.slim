@@ -1,8 +1,10 @@
 tr
-  td = client.contact.first_name
-  td = client.contact.last_name
+  td = client.contact.full_name
   td = client.date_of_birth
+  td = client.contact.postal_code
+  td = client.relatives.first.full_name
   td = country(client.nationality)
+  td =
   td = t("gender.#{client.gender}") unless client.gender.blank?
   td = client.permit
   td
