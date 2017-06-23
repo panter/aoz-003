@@ -171,6 +171,7 @@ en:
       not_saved:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
+  entry_year: Entry year
   forgot_password: Forgot your password?
   gender: &id-genders
     female: female
