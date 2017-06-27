@@ -1,8 +1,5 @@
 = simple_form_for(@department) do |f|
-  - if f.error_notification.present?
-    .row
-      .col-xs-12
-        = f.error_notification
+  = simple_error_notice f
   - if policy(Department).can_associate_user?
     .row
       .col-xs-12
