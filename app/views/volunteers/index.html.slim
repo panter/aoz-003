@@ -19,6 +19,4 @@
     tbody
       = render @volunteers
 
-.row
-  .col-xs-12
-    = link_to t_title(:create), new_volunteer_path, class: 'btn btn-success'
+= form_navigation_btn :new
