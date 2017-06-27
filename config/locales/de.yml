@@ -118,6 +118,7 @@ de:
         teenagers: Jugendliche
         training: Bildung
         woman: Frau
+        working_percent: Stellenprozent
         zip: Postleitzahl
     errors:
       models:
