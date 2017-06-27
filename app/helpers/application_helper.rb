@@ -41,4 +41,15 @@ module ApplicationHelper
     target[:id] = params[:id] unless action == :index
     single_col_xs button_link(text, target, button_type)
   end
+
+  def conditional_field(f, property, enabler, value = nil)
+    input_html = { class: 'conditional-field', data: {
+      model: model_name_from_record_or_class(f.object).element,
+      subject: enabler.to_s
+    } }
+    input_html[:data][:value] = value if value
+    f.input property, class: 'conditional-field', input_html: input_html, label_html: {
+      class: 'conditional-field'
+    }
+  end
 end

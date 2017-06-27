@@ -107,6 +107,8 @@ de:
         nationality: Nationalität
         phone: Telefonnummer
         profession: Beruf
+        region: Region
+        region_specific: Gemeinde
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
         single_accompaniment: Einzelbegleitung
@@ -117,6 +119,7 @@ de:
         strengths: Stärken
         teenagers: Jugendliche
         training: Bildung
+        volunteer_experience_desc: Erläuterung der Erfahrungen mit FW-Arbeit
         woman: Frau
         working_percent: Stellenprozent
         zip: Postleitzahl

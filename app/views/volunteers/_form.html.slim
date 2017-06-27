@@ -34,6 +34,8 @@
     = f.input :education
     = f.input :motivation
     = f.input :experience
+    = conditional_field f, :volunteer_experience_desc, :experience
+
     = f.input :expectations
     = f.input :strengths
     = f.input :skills
@@ -99,7 +101,9 @@ h3= t('target_groups')
 
 h3= t('your_region')
 .row
-  .col-xs-12
+  .col-xs-4.col-md-2
     = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
+  .col-xs-8.col-md-10
+    = conditional_field f, :region_specific, :region, :region
 
 = render 'schedules/form', f: f, participant: @volunteer

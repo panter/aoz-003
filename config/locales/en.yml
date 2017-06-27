@@ -25,6 +25,7 @@ en:
       volunteer:
         duration: Duration of the accompaniment
         full_name: Name
+        region_specific: City
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
         single_accompaniment: Single accompaniment
@@ -42,6 +43,7 @@ en:
       user: User
       volunteer: Volunteer
       volunteer_application: Volunteer Application
+      volunteer_experience_desc: Description of voluntary experience
   add_language: Add language
   add_relative: Add family member
   all: All
