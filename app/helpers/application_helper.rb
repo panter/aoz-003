@@ -23,6 +23,10 @@ module ApplicationHelper
     single_col_xs f.error_notification if f.error_notification.present?
   end
 
+  def button_link(text, target, type = 'default')
+    link_to text, target, class: "btn btn-#{type}"
+  end
+
   def link_to_add_polymorphic_association(*args)
     name, f, association, html_options = *args
     html_options[:partial] = "#{association}/fields"
@@ -35,10 +39,6 @@ module ApplicationHelper
     target = { controller: controller_name, action: action }
     button_type = action == :new ? 'success' : 'default'
     target[:id] = params[:id] unless action == :index
-    content_tag :div, class: 'row' do
-      content_tag :div, class: 'col-xs-12' do
-        link_to text, target, class: "btn btn-#{button_type}"
-      end
-    end
+    single_col_xs button_link(text, target, button_type)
   end
 end
