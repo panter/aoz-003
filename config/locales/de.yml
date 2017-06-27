@@ -1,6 +1,5 @@
 ---
 de:
-  all: Alle
   activerecord:
     attributes:
       client:
@@ -33,6 +32,7 @@ de:
         contact_emails: Mailadressen
         contact_phones: Telefonnummern
         extended: Adresszusatz
+        first_name: Vorname
         last_name: Name
         postal_code: PLZ
         street: Strasse
@@ -165,6 +165,7 @@ de:
       volunteer_application: Freiwilligen Bewerbung
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
+  all: Alle
   application_submitted: 'Ihre Bewerbung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
