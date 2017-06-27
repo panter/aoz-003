@@ -28,6 +28,7 @@ en:
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
         single_accompaniment: Single accompaniment
+        working_percent: Employment rate (in Percent)
     models:
       client: Client
       contact: Contact
