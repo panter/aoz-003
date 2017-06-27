@@ -8,6 +8,4 @@
     strong= t_attr(:role)
   .col-md-8 = t("role.#{@user.role}")
 
-.row
-  .col-xs-12
-    = link_to t('back'), users_path, class: 'btn btn-default'
+= form_navigation_btn :back

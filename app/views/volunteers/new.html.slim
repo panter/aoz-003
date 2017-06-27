@@ -4,6 +4,4 @@ h1= t_title(:new)
   = render 'volunteers/form', f: f
   = f.button :submit, class: 'btn btn-success'
 
-.row
-  .col-xs-12
-    = link_to t('back'), volunteers_path, class: 'btn btn-default'
+= form_navigation_btn :back

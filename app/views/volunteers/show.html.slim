@@ -104,10 +104,5 @@ h3= t_attr(:group_accompaniment)
 
 = render 'schedules/show', participant: @volunteer
 
-.row
-  .col-xs-12
-    = link_to t_action(:edit), edit_volunteer_path(@volunteer), class: 'btn btn-default'
-
-.row
-  .col-xs-12
-    = link_to t('back'), volunteers_path, class: 'btn btn-default'
+= form_navigation_btn :edit
+= form_navigation_btn :back

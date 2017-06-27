@@ -28,4 +28,17 @@ module ApplicationHelper
     html_options[:partial] = "#{association}/fields"
     link_to_add_association(name, f, association, html_options)
   end
+
+  def form_navigation_btn(action)
+    text = action == :back ? t('back') : t_title(action)
+    action = :index if action == :back
+    target = { controller: controller_name, action: action }
+    button_type = action == :new ? 'success' : 'default'
+    target[:id] = params[:id] unless action == :index
+    content_tag :div, class: 'row' do
+      content_tag :div, class: 'col-xs-12' do
+        link_to text, target, class: "btn btn-#{button_type}"
+      end
+    end
+  end
 end

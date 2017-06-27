@@ -13,6 +13,4 @@
       tbody
         = render @users
 
-.row
-  .col-xs-12
-    = link_to t('create_user'), new_user_path, class: 'btn btn-success'
+= form_navigation_btn :new

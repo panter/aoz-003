@@ -19,6 +19,5 @@
 
     tbody
         = render @clients
-.row
-  .col-xs-12
-    = link_to t('create_client'), new_client_path, class: 'btn btn-success'
+
+= form_navigation_btn :new
