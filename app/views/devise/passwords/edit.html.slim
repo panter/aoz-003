@@ -1,11 +1,7 @@
 h2= t('change_password')
 
 = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  - if f.error_notification.present?
-    .row
-      .col-xs-12
-        = f.error_notification
-
+  = simple_error_notice f
   .row
     .col-xs-12
       = f.hidden_field :reset_password_token

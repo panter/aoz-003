@@ -1,8 +1,7 @@
 h2= t('forgot_password')
 
 = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  = f.error_notification
-
+  = simple_error_notice f
   .form-inputs
     = f.input :email, required: true, autofocus: true
 

@@ -4,11 +4,7 @@
       = t 'devise.invitations.edit.header'
 
 = simple_form_for resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put } do |f|
-  - if f.error_notification.present?
-    .row
-      .col-xs-12
-        = f.error_notification
-
+  = simple_error_notice f
   .row
     .col-xs-12
       = f.hidden_field :invitation_token
