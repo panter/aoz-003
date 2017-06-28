@@ -1,6 +1,6 @@
 module ApplicationHelper
   def permit_collection
-    [:L, :B]
+    [:N, :F, :B-FL, :B, :C]
   end
 
   def week(with_weekend = false)
