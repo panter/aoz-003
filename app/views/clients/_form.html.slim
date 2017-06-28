@@ -34,7 +34,6 @@
       h3= t('personal_background')
       = f.input :goals
       = f.input :education
-      = f.input :hobbies
       = f.input :interests
       = f.input :state, collection: Client.state_collection, include_blank: false
       - if policy(Client).destroy?
