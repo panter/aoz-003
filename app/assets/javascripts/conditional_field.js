@@ -58,14 +58,12 @@ $(function () {
         subject = _ref4.subject,
         model = _ref4.model;
 
-
     getFormGroupInputs({ subject: subject, model: model }).each(function(key, input) {
       if (input.checked) {
         showFieldWithLabel(field);
       }
       $(input).bind('change', function (_ref5) {
         var checked = _ref5.target.checked;
-
         if (checked) {
           showFieldWithLabel(field);
         } else {
