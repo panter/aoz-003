@@ -154,5 +154,5 @@ Volunteer.state_collection_for_reviewed.each do |state|
     volunteer.region = ['city', 'region', 'canton'].sample
     volunteer.language_skills = make_lang_skills
     volunteer.schedules << make_schedule
-  end
+  end.save
 end

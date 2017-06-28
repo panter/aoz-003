@@ -44,6 +44,7 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'Professional skills that you could bring?', with: 'asdf'
     fill_in 'What are your most important leisure interests?', with: 'asdf'
     page.choose('volunteer_duration_short')
+    page.check('volunteer_culture')
     page.check('volunteer_family')
     page.check('volunteer_training')
     page.check('volunteer_adults')
