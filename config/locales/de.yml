@@ -360,6 +360,7 @@ de:
     superadmin: Superadmin
     volunteer: Freiwillige
   schedule: Zeitplan
+  schedule_description: Wann sind Sie verfügbar?
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   simple_form:
