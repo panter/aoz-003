@@ -39,7 +39,6 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Relation', with: 'Onkel'
     fill_in 'Goals', with: 'asdfasdf'
     fill_in 'Education', with: 'asdfasdf'
-    fill_in 'Hobbies', with: 'asdfasdf'
     fill_in 'Interests', with: 'asdfasdf'
     select('Active', from: 'State')
     fill_in 'Comments', with: 'asdfasdf'

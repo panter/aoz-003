@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20170628085858) do
     t.string "gender"
     t.text "goals"
     t.text "education"
-    t.text "hobbies"
     t.text "interests"
     t.string "state", default: "registered"
     t.text "comments"
