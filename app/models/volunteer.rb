@@ -4,6 +4,7 @@ class Volunteer < ApplicationRecord
 
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
+  has_one :first_language
 
   acts_as_paranoid
 
