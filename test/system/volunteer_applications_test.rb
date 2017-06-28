@@ -41,6 +41,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     fill_in 'What are your most important leisure interests?', with: 'asdf'
     page.choose('volunteer_duration_short')
     page.choose('volunteer_region_region')
+    page.check('volunteer_culture')
     page.check('volunteer_training')
     page.check('volunteer_family')
     page.check('volunteer_training')
