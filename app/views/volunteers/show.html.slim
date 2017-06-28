@@ -25,7 +25,6 @@
             td= country(@volunteer.additional_nationality)
 
           = render 'language_skills/show', speaker: @volunteer
-          = render 'relatives/show', relative: @volunteer
 
           tr
             td= t_attr(:profession)
@@ -45,9 +44,6 @@
           tr
             td= t_attr(:strengths)
             td= @volunteer.strengths
-          tr
-            td= t_attr(:skills)
-            td= @volunteer.skills
           tr
             td= t_attr(:interests)
             td= @volunteer.interests
@@ -106,3 +102,4 @@ h3= t_attr(:group_accompaniment)
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
+

@@ -1,3 +1,12 @@
+- if policy(Volunteer).destroy?
+  .row
+    .col-xs-12
+      = f.input :state, collection: Volunteer.state_collection, default: :registered
+    .col-xs-12
+      = f.input :rejection_type, collection: Volunteer.rejection_collection, as: :radio_buttons
+    .col-xs-12
+      = f.input :rejection_text
+
 = simple_error_notice f
 
 = f.simple_fields_for :contact do |c|
@@ -23,8 +32,6 @@
 
 = render 'language_skills/form', f: f, speaker: @volunteer
 
-= render 'relatives/form', f: f, relative: f.object
-
 .row
   .col-xs-8
     = f.input :profession
@@ -32,72 +39,38 @@
     = f.input :working_percent
   .col-xs-12
     = f.input :education
+  .col-xs-12
     = f.input :motivation
+  .col-xs-12
     = f.input :experience
+  .col-xs-12
     = conditional_field f, :volunteer_experience_desc, :experience
 
-    = f.input :expectations
-    = f.input :strengths
-    = f.input :skills
-    = f.input :interests
-
-- if policy(Volunteer).destroy?
-  .row
-    .col-xs-12
-      = f.input :state, collection: Volunteer.state_collection, default: :registered
-    .col-xs-12
-      = f.input :rejection_type, collection: Volunteer.rejection_collection, as: :radio_buttons
-    .col-xs-12
-      = f.input :rejection_text
-
+h3 Welche Art von Einsatz können Sie sich vorstellen?
 .row
   .col-xs-12
     = f.input :duration, collection: Volunteer.duration_collection, as: :radio_buttons
 
 h3= t_attr(:single_accompaniment, Volunteer)
 .row
-  .col-xs-12.col-md-1
-    = f.input :man
+  - Volunteer.single_accompaniment.each do |single_accompaniment|
+    .col-xs-12.col-md-3
+      = f.input single_accompaniment
 
-  .col-xs-12.col-md-1
-    = f.input :woman
-
-  .col-xs-12.col-md-1
-    = f.input :family
-
-  .col-xs-12.col-md-1
-    = f.input :kid
-
-h3= t_attr(:group_accompaniment, Volunteer)
 .row
-  .col-xs-12.col-md-1
-    = f.input :sport
+  .col-xs-12.col-md-6
+    h3= t_attr(:group_accompaniment, Volunteer)
+    .row
+      - Volunteer.group_accompaniment.each do |group_accompaniment|
+        .col-xs-12.col-md-3
+          = f.input group_accompaniment
 
-  .col-xs-12.col-md-1
-    = f.input :creative
-
-  .col-xs-12.col-md-1
-    = f.input :music
-
-  .col-xs-12.col-md-1
-    = f.input :culture
-
-  .col-xs-12.col-md-1
-    = f.input :training
-
-  .col-xs-12.col-md-1
-    = f.input :german_course
-
-h3= t('target_groups')
-.row
-  .col-xs-12.col-md-1
-    = f.input :adults
-
-  .col-xs-12.col-md-1
-    = f.input :teenagers
-
-  .col-xs-12.col-md-1
-    = f.input :children
+  .col-xs-12.col-md-6
+    h3= t('target_groups')
+    .row
+      - Volunteer.target_group.each do |group|
+        .col-xs-12.col-md-3
+          = multi_conditional_field(f, group, Volunteer.group_accompaniment)
 
 h3= t('your_region')
 .row
@@ -105,5 +78,13 @@ h3= t('your_region')
     = f.input :region, collection: Volunteer.region_collection, as: :radio_buttons, label: false
   .col-xs-8.col-md-10
     = conditional_field f, :region_specific, :region, :region
+.row
+  .col-xs-12
+    = f.input :expectations
+  .col-xs-12
+    = f.input :strengths
+  .col-xs-12
+    = f.input :interests
 
+h3 Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
 = render 'schedules/form', f: f, participant: @volunteer

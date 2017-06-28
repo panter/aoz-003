@@ -36,6 +36,7 @@ de:
         last_name: Name
         postal_code: PLZ
         street: Strasse
+        title: Anrede
       contact_email:
         body: Email
         label: Art
@@ -82,6 +83,7 @@ de:
         additional_nationality: Zusätzliche Nationalität
         adults: Erwachsene
         avatar: Bild
+        birth_year: Jahrgang
         children: Kinder
         city: Stadt
         created_at: Erstellt am
@@ -94,13 +96,15 @@ de:
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
+        first_language: Muttersprache
         first_name: Vorname
         full_name: Name
         gender: Geschlecht
         german_course: Deutsch-Kurs
-        group_accompaniment: Gruppenangebot
+        group_accompaniment: Gruppenangebot (meist in Asylzentren)
         interests: Interessen
         kid: Kinder
+        languages: Sprachen
         last_name: Nachname
         man: Mann
         music: Musik
@@ -111,7 +115,7 @@ de:
         region_specific: Gemeinde
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
-        single_accompaniment: Einzelbegleitung
+        single_accompaniment: Einzelbegleitung (Unterstützung in Alltagsfragen, Deutsch Üben, Hausaufgaben u.ä., mind. 6 Mt.)
         skills: Kompetenzen
         sport: Sport
         state: Status
@@ -367,11 +371,11 @@ de:
       volunteer:
         expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
         experience: Haben Sie bereits Erfahrung mit FW-Arbeit?
-        interests: Welches sind Ihre wichtigsten Freizeitinteressen?
+        interests: Welche sind Ihre wichtigsten Freizeitinteressen?
         motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
         region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
-        strengths: Wo sehen Sie Ihre Stärken? (soziale Kompetenzen, die Sie in FW-Arbeit einbringen könnten)
+        strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
     "no": 'Nein'
     options:
       client:

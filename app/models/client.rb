@@ -1,5 +1,6 @@
 class Client < ApplicationRecord
   include AssociatableFields
+  include AssociateRelatives
   include GenderCollection
 
   REGISTERED = 'registered'.freeze

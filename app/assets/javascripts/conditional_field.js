@@ -1,30 +1,63 @@
 $(() => {
-  const getFieldsLabel = (field) => ($('label[for="'+field.id+'"]'));
-  const getFormGroupInputs = (data) => (
-    $('.form-group.' + data.model + '_' + data.subject + ' input')
+  const getFieldsLabel = ({id}) => ($('label[for="'+id+'"]'));
+
+  const showFieldWithLabel = (field) => {
+    $(field).show();
+    getFieldsLabel(field).show();
+  }
+
+  const hideFieldWithLabel = (field) => {
+    $(field).hide();
+    getFieldsLabel(field).hide();
+  }
+
+  const getFormGroupInputs = ({subject, model}) => (
+    $('.form-group.' + model + '_' + subject + ' input[type="checkbox"],.form-group.' + model + '_' + subject + ' input[type="radio"]')
   );
-  const showForCheckbox = ({field, data}) => {
-    getFormGroupInputs(data).bind('change', ({target}) => {
-      if(target.checked) {
-        $(field).show();
-        getFieldsLabel(field).show();
+
+  const getInputCollection = ({model, subject}) => (
+    subject.map((formGroup) => (
+      getFormGroupInputs({model, subject: formGroup})[0]
+    ))
+  );
+
+  const reduceInputCollectionChecked = (inputs) => (
+    inputs.reduce((first, second) => (
+      ( ((typeof first === 'boolean') ? first : first.checked) || second.checked )
+    ))
+  );
+
+  const handleInputGroupChange = ({inputs, field}) => {
+    inputs.forEach((input) => {
+      $(input).bind('change', () => {
+        if(reduceInputCollectionChecked(inputs)) {
+          showFieldWithLabel(field);
+        } else {
+          hideFieldWithLabel(field);
+        }
+      });
+    });
+  }
+
+  const showForCheckbox = ({field, subject, model}) => {
+    getFormGroupInputs({subject, model}).bind('change', ({target: {checked}}) => {
+      if(checked) {
+        showFieldWithLabel(field)
       } else {
-        $(field).hide();
-        getFieldsLabel(field).hide();
+        hideFieldWithLabel(field)
       }
     });
   }
-  const showForRadio = ({field, data}) => {
-    $('#' + data.model + '_' + data.subject + '_' + data.value).bind('change', ({target}) => {
+
+  const showForRadio = ({field, subject, model, value}) => {
+    $('#' + model + '_' + subject + '_' + value).bind('change', ({target}) => {
       if(target.checked) {
-        $(field).show();
-        getFieldsLabel(field).show();
+        showFieldWithLabel(field);
         $(target).off('change');
-        getFormGroupInputs(data).bind('change', ({rem_target}) => {
-          $(field).hide();
-          getFieldsLabel(field).hide();
+        getFormGroupInputs({subject, model}).bind('change', ({rem_target}) => {
+          hideFieldWithLabel(field);
           $(rem_target).off('change');
-          showForRadio({field, data});
+          showForRadio({field, data: {subject, model, value}});
         });
       }
     });
@@ -36,6 +69,12 @@ $(() => {
       return showForRadio({field, data});
     }
     showForCheckbox({field, data});
+  });
+
+  $('input.conditional-group[type="checkbox"]').each((key, field) => {
+    const {value, model, subject} = $(field).data();
+    const inputs = getInputCollection({model, subject});
+    handleInputGroupChange({inputs, field});
   });
 });
 

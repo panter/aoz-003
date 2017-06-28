@@ -42,14 +42,33 @@ module ApplicationHelper
     single_col_xs button_link(text, target, button_type)
   end
 
-  def conditional_field(f, property, enabler, value = nil)
-    input_html = { class: 'conditional-field', data: {
+  def single_col_xs(inside, cols = 12)
+    content_tag :div, class: 'row' do
+      content_tag :div, class: "col-xs-#{cols}" do
+        inside
+      end
+    end
+  end
+
+  def input_html(f, enabler, value, type = 'field')
+    { class: "conditional-#{type}", data: {
       model: model_name_from_record_or_class(f.object).element,
-      subject: enabler.to_s
+      subject: enabler,
+      value: value
     } }
-    input_html[:data][:value] = value if value
-    f.input property, class: 'conditional-field', input_html: input_html, label_html: {
-      class: 'conditional-field'
-    }
+  end
+
+  def conditional_field(f, property, enabler, value = '')
+    f.input property, class: 'conditional-field', input_html: input_html(f, enabler, value),
+      label_html: {
+        class: 'conditional-field'
+      }
+  end
+
+  def multi_conditional_field(f, property, enablers)
+    f.input property, input_html: input_html(f, enablers, '', 'group'),
+      class: 'conditional-group conditional-group-' +
+        model_name_from_record_or_class(f.object).element,
+      label_html: { class: 'conditional-group' }
   end
 end

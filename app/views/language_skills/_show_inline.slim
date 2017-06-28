@@ -1,0 +1,5 @@
+- if language_skills.any?
+  ul
+    - language_skills.each do |lang|
+      - if lang.language_name.present?
+        li= lang.language_name
