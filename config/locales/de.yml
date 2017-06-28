@@ -341,6 +341,17 @@ de:
     other: Anderer Grund
     us: durch uns vor / nach Gespräch
   relatives: Verwandte
+  relation:
+    wife: (Ehe-)Partnerin
+    husband: (Ehe-)Partner
+    mother: Mutter
+    father: Vater
+    daughter: Tochter
+    son: Sohn
+    sister: Schwester
+    brother: Bruder
+    aunt: Tante
+    uncle: Onkel
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen

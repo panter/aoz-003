@@ -215,6 +215,17 @@ en:
     other: Other
     us: by us before / after conversation
   relatives: Family members
+  relation:
+    wife: Wife/Partner
+    husband: Husband/Partner
+    mother: Mother
+    father: Father
+    daughter: Daughter
+    son: Son
+    sister: Sister
+    brother: Brother
+    aunt: Aunt
+    uncle: Uncle
   remember_me: Remember me
   remove_language: Remove language
   remove_relative: Remove family member
