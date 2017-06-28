@@ -235,6 +235,7 @@ en:
     superadmin: Superadmin
     volunteer: Volunteer
   schedule: Schedule
+  schedule_description: When are you available?
   show_my_profile: My profile
   show_profile: Show profile
   simple_form:
