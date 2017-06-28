@@ -5,14 +5,14 @@ de:
       client:
         city: Stadt
         comments: Bemerkungen
-        competent_authority: Involvierte Stelle
+        competent_authority: Zusätzlich involvierte Stelle
         date_of_birth: Geburtsdatum
         deleted_at: Gelöscht
-        education: Ausbildung
+        education: Beruf oder Ausbildung im Herkunftsland
         email: Email
         first_name: Vorname
         gender: Geschlecht
-        goals: Ziele
+        goals: Inhalte der Begleitung
         hobbies: Hobbies
         interests: Interessen
         involved_authority: Fallführende Stelle
@@ -340,7 +340,7 @@ de:
     her: von Freiwillige vor / nach Erstgespräch
     other: Anderer Grund
     us: durch uns vor / nach Gespräch
-  relatives: Verwandte
+  relatives: Familienangehörige im Haushalt
   relation:
     wife: (Ehe-)Partnerin
     husband: (Ehe-)Partner
