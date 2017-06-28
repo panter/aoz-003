@@ -38,9 +38,9 @@
       = f.input :state, collection: Client.state_collection, include_blank: false
       - if policy(Client).destroy?
         = f.input :comments
-      = f.input :competent_authority
       = f.input :involved_authority
-  h3= t_model(Schedule)
+      = f.input :competent_authority
+
   = render 'schedules/form', f: f, participant: @client
 
   .row
