@@ -34,7 +34,7 @@ class VolunteersController < ApplicationController
     state_was_registered = @volunteer.registered?
     return render :edit unless @volunteer.update(volunteer_params)
     if state_was_registered && @volunteer.accepted? && invite_volunteer_user
-      redirect_to volunteers_path, notice: t('invite_sent', email: @volunteer.email)
+      redirect_to volunteers_path, notice: t('invite_sent', email: @volunteer.contact.contact_emails.first.body)
     else
       redirect_to @volunteer, notice: t('volunteer_updated')
     end
@@ -49,7 +49,7 @@ class VolunteersController < ApplicationController
 
   def invite_volunteer_user
     new_user = User.new(
-      email: @volunteer.email, password: Devise.friendly_token,
+      email: @volunteer.contact.contact_emails.first.body, password: Devise.friendly_token,
       role: 'volunteer', volunteer: @volunteer
     )
     new_user.save && new_user.invite!
