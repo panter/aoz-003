@@ -40,6 +40,9 @@ $(function () {
         field = _ref3.field;
 
     inputs.forEach(function (input) {
+      if (reduceInputCollectionChecked(inputs)) {
+        showFieldWithLabel(field);
+      }
       $(input).bind('change', function () {
         if (reduceInputCollectionChecked(inputs)) {
           showFieldWithLabel(field);
@@ -55,15 +58,20 @@ $(function () {
         subject = _ref4.subject,
         model = _ref4.model;
 
-    console.log(getFormGroupInputs({ subject: subject, model: model }));
-    getFormGroupInputs({ subject: subject, model: model }).bind('change', function (_ref5) {
-      var checked = _ref5.target.checked;
 
-      if (checked) {
+    getFormGroupInputs({ subject: subject, model: model }).each(function(key, input) {
+      if (input.checked) {
         showFieldWithLabel(field);
-      } else {
-        hideFieldWithLabel(field);
       }
+      $(input).bind('change', function (_ref5) {
+        var checked = _ref5.target.checked;
+
+        if (checked) {
+          showFieldWithLabel(field);
+        } else {
+          hideFieldWithLabel(field);
+        }
+      });
     });
   };
 
@@ -73,20 +81,25 @@ $(function () {
         model = _ref6.model,
         value = _ref6.value;
 
-    $('#' + model + '_' + subject + '_' + value).bind('change', function (_ref7) {
-      var target = _ref7.target;
-
-      if (target.checked) {
+    $('#' + model + '_' + subject + '_' + value).each(function(key, input) {
+      if(input.checked) {
         showFieldWithLabel(field);
-        $(target).off('change');
-        getFormGroupInputs({ subject: subject, model: model }).bind('change', function (_ref8) {
-          var rem_target = _ref8.rem_target;
-
-          hideFieldWithLabel(field);
-          $(rem_target).off('change');
-          showForRadio({ field: field, data: { subject: subject, model: model, value: value } });
-        });
       }
+      $(input).bind('change', function (_ref7) {
+        var target = _ref7.target;
+
+        if (target.checked) {
+          showFieldWithLabel(field);
+          $(target).off('change');
+          getFormGroupInputs({ subject: subject, model: model }).bind('change', function (_ref8) {
+            var rem_target = _ref8.rem_target;
+
+            hideFieldWithLabel(field);
+            $(rem_target).off('change');
+            showForRadio({ field: field, data: { subject: subject, model: model, value: value } });
+          });
+        }
+      });
     });
   };
 
