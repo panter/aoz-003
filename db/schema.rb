@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 20170609102511) do
     t.bigint "user_id"
     t.string "rejection_type"
     t.text "rejection_text"
+    t.boolean "active"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
