@@ -1,0 +1,2 @@
+class FirstLanguage < LanguageSkill
+end
