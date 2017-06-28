@@ -41,7 +41,7 @@
         = f.input :comments
       = f.input :competent_authority
       = f.input :involved_authority
-
+  h3= t_model(Schedule)
   = render 'schedules/form', f: f, participant: @client
 
   .row

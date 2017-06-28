@@ -125,11 +125,12 @@ end
 Volunteer.state_collection_for_reviewed.each do |state|
   Volunteer.new do |volunteer|
     volunteer.build_contact(
-     first_name: Faker::Name.first_name,
-     last_name: Faker::Name.last_name,
-     postal_code: Faker::Address.zip_code,
-     city: Faker::Address.city,
-     street: Faker::Address.street_address
+      title: Faker::Name.title,
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      postal_code: Faker::Address.zip_code,
+      city: Faker::Address.city,
+      street: Faker::Address.street_address
     )
     volunteer.contact.contact_emails.build(
       body: Faker::Internet.unique.email
@@ -140,6 +141,7 @@ Volunteer.state_collection_for_reviewed.each do |state|
     volunteer.date_of_birth = Faker::Date.birthday(18, 75)
     volunteer.profession = Faker::Company.profession
     volunteer.gender = ['male', 'female'].sample
+    volunteer.working_percent = "#{rand(2..10).to_s}0"
     [:experience, :man, :woman, :family, :kid, :sport, :creative, :music,
      :culture, :training, :german_course, :adults, :teenagers, :children].each do |bool_attr|
       volunteer[bool_attr] = [true, false].sample
@@ -154,5 +156,5 @@ Volunteer.state_collection_for_reviewed.each do |state|
     volunteer.region = ['city', 'region', 'canton'].sample
     volunteer.language_skills = make_lang_skills
     volunteer.schedules << make_schedule
-  end.save
+  end.save!
 end

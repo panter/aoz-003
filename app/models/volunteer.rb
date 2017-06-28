@@ -69,6 +69,10 @@ class Volunteer < ApplicationRecord
     [:us, :her, :other]
   end
 
+  def self.target_group
+    [:adults, :teenagers, :children]
+  end
+
   private
 
   def default_state
