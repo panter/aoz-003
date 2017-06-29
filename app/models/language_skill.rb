@@ -9,4 +9,8 @@ class LanguageSkill < ApplicationRecord
     return '' if language.blank?
     I18nData.languages(I18n.locale)[language]
   end
+
+  def full_language_skills
+    [language_name, level].reject(&:blank?).join(', ')
+  end
 end
