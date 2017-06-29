@@ -43,6 +43,8 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     page.choose('volunteer_region_region')
     page.check('volunteer_culture')
     page.check('volunteer_training')
+    page.check('volunteer_german_course')
+    page.check('volunteer_adults')
     page.choose('volunteer_region_canton')
 
     click_button 'Submit application'

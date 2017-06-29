@@ -3,7 +3,7 @@ tr
   td = volunteer.contact.full_name
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
-  td = volunteer.contact.contact_emails.first.body
+  td = volunteer.contact.contact_emails.first.body if volunteer.contact.contact_emails.any?
   td = volunteer.date_of_birth.year if volunteer.date_of_birth.present?
   td = volunteer.language_skills.first.language_name if volunteer.language_skills.any?
   td = render 'language_skills/show_inline', language_skills: volunteer.language_skills
