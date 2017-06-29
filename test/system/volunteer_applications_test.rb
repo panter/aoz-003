@@ -58,4 +58,13 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     visit new_volunteer_application_path
     assert_not page.has_text? 'State'
   end
+
+  test 'hidden conditional field is shown on checkbox checked' do
+    visit new_volunteer_application_path
+    refute page.has_field? 'Volunteer experience desc'
+    page.check('volunteer_experience')
+    assert page.has_field? 'Volunteer experience desc'
+    page.uncheck('volunteer_experience')
+    refute page.has_field? 'Volunteer experience desc'
+  end
 end

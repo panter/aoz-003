@@ -45,6 +45,62 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_text? 'Volunteer was successfully created.'
   end
 
+  test 'hidden conditional field is shown on checkbox checked' do
+    visit new_volunteer_path
+    page.check('volunteer_experience')
+    assert page.has_field? 'Volunteer experience desc'
+    page.uncheck('volunteer_experience')
+    refute page.has_field? 'Volunteer experience desc'
+  end
+
+  test 'hidden conditional field is shown if edited volunteer checkbox is checked' do
+    volunteer = create :volunteer, experience: true
+    visit edit_volunteer_path(volunteer)
+    assert page.has_field? 'Volunteer experience desc'
+  end
+
+  test 'conditional field for radio button is shown on radio chosen' do
+    visit new_volunteer_path
+    refute page.has_field? 'volunteer_region_specific'
+    page.choose('volunteer_region_city')
+    refute page.has_field? 'volunteer_region_specific'
+    page.choose('volunteer_region_region')
+    assert page.has_field? 'volunteer_region_specific'
+    page.choose('volunteer_region_canton')
+    refute page.has_field? 'volunteer_region_specific'
+  end
+
+  test 'hidden conditional field is shown if edited volunteer radio is chosen' do
+    volunteer = create :volunteer, region: 'region'
+    visit edit_volunteer_path(volunteer)
+    assert page.has_field? 'volunteer_region_specific'
+  end
+
+  test 'hidden group of conditional field is shown if one of other group checked' do
+    visit new_volunteer_path
+    refute page.has_field? 'volunteer_adults'
+    refute page.has_field? 'volunteer_teenagers'
+    refute page.has_text? 'Target groups'
+    page.check('volunteer_german_course')
+    assert page.has_field? 'volunteer_adults'
+    assert page.has_field? 'volunteer_teenagers'
+    assert page.has_text? 'Target groups'
+    page.check('volunteer_training')
+    assert page.has_field? 'volunteer_adults'
+    page.uncheck('volunteer_german_course')
+    assert page.has_field? 'volunteer_adults'
+    page.uncheck('volunteer_training')
+    refute page.has_field? 'volunteer_adults'
+    refute page.has_field? 'volunteer_teenagers'
+    refute page.has_text? 'Target groups'
+  end
+
+  test 'hidden group of conditional field is shown if field of edited volunteer is true' do
+    volunteer = create :volunteer, training: true
+    visit edit_volunteer_path(volunteer)
+    assert page.has_field? 'volunteer_adults'
+  end
+
   test 'rejection fields are shown only when the volunteer is rejected' do
     visit new_volunteer_path
     refute page.has_text? 'Reason for rejection'
