@@ -4,6 +4,7 @@ tr
     - if client.gender_request.present? && client.age_request.present?
       dl.dl-horizontal
         dt= t_attr(:gender_request)
-        dt= t_attr(:age_request)
         dd= client.gender_request
+
+        dt= t_attr(:age_request)
         dd= client.age_request
