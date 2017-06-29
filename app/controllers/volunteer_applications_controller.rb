@@ -1,7 +1,7 @@
 class VolunteerApplicationsController < ApplicationController
   include NestedAttributes
-  include VolunteerAttributes
   include ContactAttributes
+  include VolunteerAttributes
   skip_before_action :authenticate_user!
 
   def new
@@ -11,7 +11,6 @@ class VolunteerApplicationsController < ApplicationController
   end
 
   def create
-    volunteer_params[:state] = 'registered'
     @volunteer = Volunteer.new(volunteer_params)
     if @volunteer.save
       redirect_to thanks_volunteer_applications_url
@@ -25,9 +24,6 @@ class VolunteerApplicationsController < ApplicationController
   private
 
   def volunteer_params
-    params.require(:volunteer).permit(
-      volunteer_attributes, language_skills_attributes, schedules_attributes,
-      contact_attributes
-      )
+    params.require(:volunteer).permit(volunteer_attributes)
   end
 end

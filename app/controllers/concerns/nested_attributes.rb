@@ -2,14 +2,6 @@ module NestedAttributes
   extend ActiveSupport::Concern
 
   included do
-    def volunteer_attributes
-      [:date_of_birth, :gender, :avatar, :nationality, :additional_nationality,
-       :profession, :education, :motivation, :experience, :expectations,
-       :strengths, :skills, :interests, :state, :rejection_type, :rejection_text,
-       :duration, :man, :woman, :family, :kid, :sport, :creative, :music, :culture,
-       :training, :german_course, :adults, :teenagers, :children, :region]
-    end
-
     def language_skills_attributes
       {
         language_skills_attributes: [:id, :language, :level, :_destroy]
