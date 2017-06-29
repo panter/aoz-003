@@ -30,10 +30,6 @@
   .col-xs-12.col-md-6
     = f.input :additional_nationality, as: :country
 
-  = f.simple_fields_for :first_language do |language|
-    .col-xs-12.col-md-6
-      = language.input :language, collection: languages, label: t_attr(:first_language, Volunteer)
-
 = render 'language_skills/form', f: f, speaker: @volunteer
 
 .row
