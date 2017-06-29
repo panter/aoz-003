@@ -19,10 +19,15 @@ class Volunteer < ApplicationRecord
 
   REGISTERED = 'registered'.freeze
   ACCEPTED = 'accepted'.freeze
+  CONTACTED = 'contacted'.freeze
+  ACTIVE = 'active'.freeze
+  ACTIVE_FURTHER = 'active_further'.freeze
   REJECTED = 'rejected'.freeze
   INACTIVE = 'inactive'.freeze
   RESIGNED = 'resigned'.freeze
-  STATES_FOR_REVIEWED = [ACCEPTED, REJECTED, INACTIVE, RESIGNED].freeze
+  STATES_FOR_REVIEWED = [
+    CONTACTED, ACTIVE, ACCEPTED, ACTIVE_FURTHER, REJECTED, RESIGNED, INACTIVE
+  ].freeze
   STATES = [REGISTERED] + STATES_FOR_REVIEWED
 
   validates :contact, presence: true

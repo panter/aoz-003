@@ -267,6 +267,10 @@ en:
         state:
           <<: *id-states
           registered: Interested
+          contacted: Contacted
+          active_further: Active and interested in further engagements
+          resigned: Terminated
+          inactive: Looking for new engagement
     placeholders:
     required:
       mark: '*'
