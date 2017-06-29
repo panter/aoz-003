@@ -9,13 +9,13 @@
     thead
       tr
         th= sort_link @q, :contact_title
-        th= sort_link @q, :first_name, t_attr(:full_name)
+        th= sort_link @q, :first_name, t_attr(:full_name, Volunteer)
         th= sort_link @q, :city
         th= sort_link @q, :contact_postal_code
         th= sort_link @q, :contact_contact_emails_body
-        th= sort_link @q, :date_of_birth, t_attr(:birth_year)
-        th= sort_link @q, :language_skills_language, t_attr(:first_language)
-        th= t_attr(:languages)
+        th= sort_link @q, :date_of_birth, t_attr(:birth_year, Volunteer)
+        th= sort_link @q, :language_skills_language, t_attr(:first_language, Volunteer)
+        th= t_attr(:languages, Volunteer)
         th= sort_link @q, :education
         th= sort_link @q, :profession
         th= sort_link @q, :working_percent
