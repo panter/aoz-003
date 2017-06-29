@@ -19,6 +19,10 @@ tr
   td
     - if volunteer.contact.contact_emails.any?
       = link_to volunteer.contact.contact_emails.first.body
+    - if volunteer.registrar.present?
+      = volunteer.registrar.full_name
+    - else
+      = 'Selbstanmelder'
   td = link_to t_action(:show), volunteer
   td = link_to t_action(:edit), edit_volunteer_path(volunteer)
   td = link_to t_action(:destroy), volunteer, data: { confirm: t_confirm_delete(volunteer) }, method: :delete

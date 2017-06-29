@@ -24,6 +24,7 @@ class VolunteersController < ApplicationController
     @volunteer = Volunteer.new(volunteer_params)
     @volunteer.schedules << Schedule.build
     @volunteer.build_contact
+    @volunteer.registrar = current_user
     authorize @volunteer
     if @volunteer.save
       redirect_to @volunteer, notice: t('volunteer_created')

@@ -127,6 +127,7 @@ de:
         woman: Frau
         working_percent: Stellenprozent
         zip: Postleitzahl
+        registrar: Registrator
     errors:
       models:
         profile:

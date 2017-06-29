@@ -1,6 +1,7 @@
 class Volunteer < ApplicationRecord
   include AssociatableFields
   include GenderCollection
+  include FullName
 
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
@@ -19,6 +20,9 @@ class Volunteer < ApplicationRecord
   STATES = [REGISTERED] + STATES_FOR_REVIEWED
 
   belongs_to :user, optional: true
+  belongs_to :registrar, optional: true,
+    class_name: 'User', foreign_key: 'registrar_id'
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   validates :state, inclusion: { in: STATES }

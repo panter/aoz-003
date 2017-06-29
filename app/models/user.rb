@@ -54,6 +54,10 @@ class User < ApplicationRecord
     email
   end
 
+  def full_name
+    "#{profile.contact.first_name} #{profile.contact.last_name}"
+  end
+
   def self.role_collection
     ROLES_FOR_USER_CREATE.map(&:to_sym)
   end
