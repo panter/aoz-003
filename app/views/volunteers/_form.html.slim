@@ -65,12 +65,12 @@ h3= t_attr(:single_accompaniment, Volunteer)
         .col-xs-12.col-md-3
           = f.input group_accompaniment
 
-  .col-xs-12.col-md-6
+.row
+  .col-xs-12
     h3= t('target_groups')
-    .row
-      - Volunteer.target_group.each do |group|
-        .col-xs-12.col-md-3
-          = multi_conditional_field(f, group, Volunteer.group_accompaniment)
+  .col-xs-12
+    - Volunteer.target_group.each do |group|
+      = multi_conditional_field(f, group, Volunteer.group_accompaniment)
 
 h3= t('your_region')
 .row
