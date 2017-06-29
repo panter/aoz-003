@@ -52,6 +52,7 @@ class ClientsController < ApplicationController
 
   def client_params
     params.require(:client).permit(
+      :entry_year, :gender_request, :age_request, :other_request,
       language_skills_attributes, relatives_attributes, schedules_attributes,
       contact_attributes
       )

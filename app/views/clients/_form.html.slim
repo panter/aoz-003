@@ -33,6 +33,15 @@
     .col-xs-12
       h3= t('personal_background')
       = f.input :goals
+      h3= t('volunteer_request')
+      = f.input :gender_request,
+                collection: Client.gender_request_collection,
+                as: :radio_buttons,
+                wrapper: :vertical_radio_and_checkboxes
+      = f.input :age_request,
+                collection: Client.age_request_collection,
+                as: :radio_buttons,
+                wrapper: :vertical_radio_and_checkboxes
       = f.input :education
       = f.input :interests
       = f.input :state, collection: Client.state_collection, include_blank: false
