@@ -2,14 +2,20 @@ class Volunteer < ApplicationRecord
   include AssociatableFields
   include GenderCollection
   include FullName
+  acts_as_paranoid
+  before_save :default_state
 
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
+
   has_one :first_language
 
-  acts_as_paranoid
+  belongs_to :user, optional: true
 
-  before_save :default_state
+  belongs_to :registrar, optional: true,
+    class_name: 'User', foreign_key: 'registrar_id'
+
+  has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   REGISTERED = 'registered'.freeze
   ACCEPTED = 'accepted'.freeze
@@ -19,12 +25,7 @@ class Volunteer < ApplicationRecord
   STATES_FOR_REVIEWED = [ACCEPTED, REJECTED, INACTIVE, RESIGNED].freeze
   STATES = [REGISTERED] + STATES_FOR_REVIEWED
 
-  belongs_to :user, optional: true
-  belongs_to :registrar, optional: true,
-    class_name: 'User', foreign_key: 'registrar_id'
-
-  has_attached_file :avatar, styles: { thumb: '100x100#' }
-
+  validates :contact, presence: true
   validates :state, inclusion: { in: STATES }
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/

@@ -21,8 +21,6 @@ class VolunteersController < ApplicationController
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
-    @volunteer.schedules << Schedule.build
-    @volunteer.build_contact
     @volunteer.registrar = current_user
     authorize @volunteer
     if @volunteer.save
@@ -36,7 +34,8 @@ class VolunteersController < ApplicationController
     state_was_registered = @volunteer.registered?
     return render :edit unless @volunteer.update(volunteer_params)
     if state_was_registered && @volunteer.accepted? && invite_volunteer_user
-      redirect_to volunteers_path, notice: t('invite_sent', email: @volunteer.contact.contact_emails.first.body)
+      redirect_to volunteers_path,
+        notice: t('invite_sent', email: @volunteer.contact.contact_emails.first.body)
     else
       redirect_to @volunteer, notice: t('volunteer_updated')
     end
