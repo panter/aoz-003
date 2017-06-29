@@ -1,7 +1,6 @@
 class VolunteersController < ApplicationController
   include NestedAttributes
   include VolunteerAttributes
-  include ContactAttributes
   before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -64,9 +63,6 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    params.require(:volunteer).permit(
-      volunteer_attributes, language_skills_attributes, schedules_attributes,
-      contact_attributes
-    )
+    params.require(:volunteer).permit(volunteer_attributes)
   end
 end
