@@ -3,6 +3,7 @@ class Client < ApplicationRecord
   include AssociateRelatives
   include GenderCollection
   include RequestCollection
+  include YearCollection
 
   REGISTERED = 'registered'.freeze
   RESERVED = 'reserved'.freeze
