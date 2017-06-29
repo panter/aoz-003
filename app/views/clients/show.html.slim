@@ -31,6 +31,8 @@
             td= t_attr(:goals)
             td= @client.goals
 
+          = render 'request', client: @client
+
           tr
             td= t_attr(:education)
             td= @client.education

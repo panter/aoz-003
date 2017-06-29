@@ -46,7 +46,12 @@ en:
       volunteer_experience_desc: Description of voluntary experience
   add_language: Add language
   add_relative: Add family member
-  all: All
+  age_request: Volunteer's age
+  age_request: &id-age_requests
+    age_no_matter: doesn't matter
+    20-35: 20 - 35
+    36-50: 36 - 50
+    '51': older than 51
   application_submitted: 'Your application has been successfully sent.'
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
@@ -176,6 +181,10 @@ en:
   gender: &id-genders
     female: female
     male: male
+  gender_request: &id-gender_requests
+    same: gender same
+    no_matter: gender doesn't matter
+  gender_request: Volunteer's gender
   get_back: We will soon get back to you.
   group_accompaniment: Group accompaniment
   helpers:
@@ -252,7 +261,9 @@ en:
     "no": 'No'
     options:
       client:
+        age_request: *id-age_requests
         gender: *id-genders
+        gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
         state: &id-states
@@ -310,6 +321,7 @@ en:
   volunteer_application: Volunteer Application
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
+  volunteer_request: Request for volunteers
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to apply as a volunteer?
