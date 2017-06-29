@@ -1,16 +1,21 @@
 tr
-  td = client.contact.full_name
-  td = client.date_of_birth
-  td = client.contact.postal_code
-  td = client.relatives.first.full_name
-  td = country(client.nationality)
-  td =
   td = t("gender.#{client.gender}") unless client.gender.blank?
-  td = client.permit
+  td = client.contact.full_name
+  td = client.contact.full_adress
+  td = client.date_of_birth.year if client.date_of_birth
   td
-    - if client.contact.try(:contact_emails).try(:any?)
-      = mail_to client.contact.contact_emails.first.body
-  td = mail_to(client.user.email) if client.user.email.present?
+    - client.relatives.each do |rel|
+      = rel.to_s
+      br
+  td = country(client.nationality)
+  td
+    - client.language_skills.each do |lang|
+      = lang.full_language_skills
+      br
+
+  td = client.goals
+  td = client.competent_authority
+  td = client.created_at.strftime("%d-%m-%Y")
   td = link_to t_action(:show), client
   td = link_to t_action(:edit), edit_client_path(client)
   td
