@@ -5,6 +5,7 @@ class AddMissingFieldsToVolunteers < ActiveRecord::Migration[5.1]
       t.text :volunteer_experience_desc
       t.string :region_specific
       t.remove :skills
+      t.bigint :registrar_id
     end
 
     change_table :contacts do |t|
