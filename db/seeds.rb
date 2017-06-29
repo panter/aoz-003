@@ -151,7 +151,7 @@ Volunteer.state_collection_for_reviewed.each do |state|
     [:motivation, :expectations, :strengths, :interests].each do |attribute|
       volunteer[attribute] = Faker::Lorem.sentence(rand(2..5))
     end
-    volunteer.skills = "#{Faker::Job.key_skill}, #{Faker::Job.key_skill}, #{Faker::Job.key_skill}"
+    volunteer.strengths = "#{Faker::Job.key_skill}, #{Faker::Job.key_skill}, #{Faker::Job.key_skill}"
     volunteer.duration = ['long', 'short'].sample
     volunteer.region = ['city', 'region', 'canton'].sample
     volunteer.language_skills = make_lang_skills

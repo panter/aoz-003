@@ -12,13 +12,8 @@ tr
   td #{volunteer.working_percent}%
   td = volunteer.expectations
   td = volunteer.interests
-  td = country(volunteer.nationality) if volunteer.nationality.present?
-  td = l(volunteer.created_at)
-  td = t("gender.#{volunteer.gender}") unless volunteer.gender.blank?
   td = t("state.#{volunteer.state}", scope: [:simple_form, :options, :volunteer])
   td
-    - if volunteer.contact.contact_emails.any?
-      = link_to volunteer.contact.contact_emails.first.body
     - if volunteer.registrar.present?
       = volunteer.registrar.full_name
     - else
