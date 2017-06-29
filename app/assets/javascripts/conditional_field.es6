@@ -1,6 +1,6 @@
 $(function() {
   $(document).on('turbolinks:render, turbolinks:load', function() {
-    const getFieldsLabel = (field) => ($('label[for="'+field.id+'"]'));
+    const getFieldsLabel = (field) => ($(`label[for="${field.id}"]`));
 
     const showFieldWithLabel = (field) => {
       $(field).show();
@@ -13,7 +13,7 @@ $(function() {
     }
 
     const getFormGroupInputs = ({subject, model}) => (
-      $('.form-group.' + model + '_' + subject + ' input[type="checkbox"],.form-group.' + model + '_' + subject + ' input[type="radio"]')
+      $(`.form-group.${model}_${subject} input[type="checkbox"],.form-group.${model}_${subject} input[type="radio"]`)
     );
 
     const getInputCollection = ({model, subject}) => (
