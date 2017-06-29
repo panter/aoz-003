@@ -29,15 +29,20 @@ $(function() {
     );
 
     const handleInputGroupChange = ({inputs, field}) => {
+      const parentRowNode = $(field).parents('.row')[0];
+      $(parentRowNode).hide();
       inputs.forEach((input) => {
         if(input.checked) {
           showFieldWithLabel(field);
+          $(parentRowNode).show();
         }
         $(input).bind('change', () => {
           if(reduceInputCollectionChecked(inputs)) {
             showFieldWithLabel(field);
+            $(parentRowNode).show();
           } else {
             hideFieldWithLabel(field);
+            $(parentRowNode).hide();
           }
         });
       });
