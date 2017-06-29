@@ -32,6 +32,7 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'sprockets-es6'
 gem 'turbolinks'
 gem 'uglifier'
 
