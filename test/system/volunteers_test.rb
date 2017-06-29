@@ -74,10 +74,10 @@ class VolunteersTest < ApplicationSystemTestCase
     visit volunteers_path
     within find_all('.btn-group').first do
       click_button 'State : All'
-      click_link 'Resigned'
+      click_link 'Terminated'
     end
     within 'tbody' do
-      assert page.has_text? 'Resigned'
+      assert page.has_text? 'Terminated'
     end
   end
 
@@ -85,10 +85,13 @@ class VolunteersTest < ApplicationSystemTestCase
     visit volunteers_path
     within 'tbody' do
       assert page.has_text? 'Interested'
+      assert page.has_text? 'Contacted'
+      assert page.has_text? 'Active'
       assert page.has_text? 'Accepted'
+      assert page.has_text? 'Active and interested in further engagements'
       assert page.has_text? 'Rejected'
-      assert page.has_text? 'Inactive'
-      assert page.has_text? 'Resigned'
+      assert page.has_text? 'Terminated'
+      assert page.has_text? 'Looking for new engagement'
     end
   end
 

@@ -54,12 +54,12 @@ User.role_collection.each do |role|
     user.password = 'asdfasdf'
     user.role = role
     user.profile = Profile.new do |profile|
-     profile.build_contact(
-       first_name: Faker::Name.first_name,
-       last_name: Faker::Name.last_name,
-       postal_code: Faker::Address.zip_code,
-       city: Faker::Address.city,
-       street: Faker::Address.street_address
+      profile.build_contact(
+        first_name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
+        postal_code: Faker::Address.zip_code,
+        city: Faker::Address.city,
+        street: Faker::Address.street_address
       )
       profile.contact.contact_phones.build(
         body: Faker::PhoneNumber.phone_number
@@ -72,14 +72,13 @@ User.role_collection.each do |role|
   end
 end
 
-
 User.where(role: ['superadmin', 'social_worker']).each do |user|
   next if user.clients.count > 1
   user.clients = Array.new(4).map do
     Client.new do |client|
       client.build_contact(
-       first_name: Faker::Name.first_name,
-       last_name: Faker::Name.last_name
+        first_name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name
       )
 
       client.contact.contact_emails.build(
@@ -122,8 +121,9 @@ if Department.count < 1
   department.save!
 end
 
-Volunteer.state_collection_for_reviewed.each do |state|
+Volunteer.state_collection.each do |state|
   Volunteer.new do |volunteer|
+    volunteer.state = state.to_s
     volunteer.build_contact(
       title: Faker::Name.title,
       first_name: Faker::Name.first_name,
@@ -141,7 +141,7 @@ Volunteer.state_collection_for_reviewed.each do |state|
     volunteer.date_of_birth = Faker::Date.birthday(18, 75)
     volunteer.profession = Faker::Company.profession
     volunteer.gender = ['male', 'female'].sample
-    volunteer.working_percent = "#{rand(2..10).to_s}0"
+    volunteer.working_percent = "#{rand(2..10)}0"
     [:experience, :man, :woman, :family, :kid, :sport, :creative, :music,
      :culture, :training, :german_course, :adults, :teenagers, :children].each do |bool_attr|
       volunteer[bool_attr] = [true, false].sample

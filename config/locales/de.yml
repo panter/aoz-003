@@ -411,6 +411,10 @@ de:
         state:
           <<: *id-states
           registered: Interessiert
+          contacted: Kontaktiert
+          active_further: Aktiv, an weiteren Einsätzen interessiert
+          resigned: Beendet
+          inactive: Sucht neuen Einsatz
     placeholders:
     required:
       mark: '*'
