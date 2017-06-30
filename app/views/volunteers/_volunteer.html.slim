@@ -17,7 +17,7 @@ tr
     - if volunteer.registrar.present?
       = volunteer.registrar.full_name
     - else
-      = 'Selbstanmelder'
+      = t('volunteer_self_applicant')
   td = link_to t_action(:show), volunteer
   td = link_to t_action(:edit), edit_volunteer_path(volunteer)
   td = link_to t_action(:destroy), volunteer, data: { confirm: t_confirm_delete(volunteer) }, method: :delete

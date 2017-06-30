@@ -455,3 +455,6 @@ de:
   when: Zeit
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  volunteer_self_applicant: Selbstanmelder
+  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
