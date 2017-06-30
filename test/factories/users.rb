@@ -5,7 +5,7 @@ FactoryGirl.define do
     role 'superadmin'
 
     trait :with_profile do
-      profile { |u| u.association(:profile) }
+      association :profile
     end
 
     trait :with_clients do
@@ -17,7 +17,7 @@ FactoryGirl.define do
 
     trait :with_departments do
       department do
-        Array.new(3).map { |_n| create(:department) }
+        Array.new(1).map { |_n| create(:department) }
       end
     end
   end
