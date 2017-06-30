@@ -15,6 +15,7 @@ class ActiveSupport::TestCase
   end
 
   def after_teardown
+    User.all.destroy_all # dirty temporary fix for not propper cleanup
     DatabaseCleaner.clean
     super
   end
