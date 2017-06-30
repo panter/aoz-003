@@ -1,8 +1,6 @@
 FactoryGirl.define do
   factory :volunteer do
-    contact do |c|
-      c.association(:contact)
-    end
+    association :contact
     state 'registered'
 
     sequence :date_of_birth { Time.zone.now.to_date - rand(5000..20_000) }

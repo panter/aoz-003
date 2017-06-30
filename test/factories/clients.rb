@@ -1,9 +1,7 @@
 FactoryGirl.define do
   factory :client do
     user
-    contact do |c|
-      c.association(:contact)
-    end
+    association :contact
 
     trait :with_relatives do
       relatives do |relative|
