@@ -19,6 +19,7 @@ table
         td = link_to 'Show', assignment
         td = link_to 'Edit', edit_assignment_path(assignment)
         td = link_to 'Destroy', assignment, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Download', assignment.agreement.url
 
 br
 
