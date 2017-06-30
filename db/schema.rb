@@ -15,6 +15,20 @@ ActiveRecord::Schema.define(version: 20170704093044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "client_id"
+    t.bigint "volunteer_id"
+    t.string "agreement_file_name"
+    t.string "agreement_content_type"
+    t.integer "agreement_file_size"
+    t.datetime "agreement_updated_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_assignments_on_client_id"
+    t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
+  end
+
   create_table "clients", force: :cascade do |t|
     t.date "date_of_birth"
     t.string "nationality"
@@ -228,6 +242,8 @@ ActiveRecord::Schema.define(version: 20170704093044) do
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 
+  add_foreign_key "assignments", "clients"
+  add_foreign_key "assignments", "volunteers"
   add_foreign_key "clients", "users"
   add_foreign_key "contact_points", "contacts"
   add_foreign_key "profiles", "users"

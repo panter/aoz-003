@@ -28,6 +28,12 @@ class Volunteer < ApplicationRecord
   ].freeze
   STATES = [REGISTERED] + STATES_FOR_REVIEWED
 
+  has_one :assignment
+  has_one :client, through: :assignments
+
+  belongs_to :user, optional: true
+  has_attached_file :avatar, styles: { thumb: '100x100#' }
+
   validates :contact, presence: true
   validates :state, inclusion: { in: STATES }
   validates_attachment :avatar, content_type: {
@@ -80,6 +86,10 @@ class Volunteer < ApplicationRecord
 
   def self.target_group
     [:adults, :teenagers, :children]
+  end
+
+  def to_s
+    "#{contact.first_name} #{contact.last_name}"
   end
 
   private

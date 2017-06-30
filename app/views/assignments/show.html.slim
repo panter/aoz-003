@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Client:
+  = @assignment.client
+p
+  strong Volunteer:
+  = @assignment.volunteer
+p
+  strong Agreement:
+  = @assignment.agreement
+
+= link_to 'Edit', edit_assignment_path(@assignment)
+'  |
+= link_to 'Back', assignments_path

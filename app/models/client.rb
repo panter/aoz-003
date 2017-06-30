@@ -12,6 +12,9 @@ class Client < ApplicationRecord
 
   belongs_to :user
 
+  has_one :assignment
+  has_one :volunteer, through: :assignments
+
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
 
@@ -26,6 +29,10 @@ class Client < ApplicationRecord
 
   def self.age_request_collection
     [:age_no_matter, :age_young, :age_middle, :age_old]
+  end
+
+  def to_s
+    "#{contact.first_name} #{contact.last_name}"
   end
 
   def self.state_collection
