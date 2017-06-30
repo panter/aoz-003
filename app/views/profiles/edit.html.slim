@@ -4,4 +4,6 @@
 
 == render 'form'
 
-= form_navigation_btn :back
+.row
+  .col-xs-12
+    = button_link t('back'), profiles_path(params[:id])
