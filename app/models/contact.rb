@@ -14,7 +14,7 @@ class Contact < ApplicationRecord
   end
 
   def full_name
-    "#{try(:first_name)} #{try(:last_name)}"
+    "#{try(:first_name)} #{last_name}"
   end
 
   def department?

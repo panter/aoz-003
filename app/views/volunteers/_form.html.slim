@@ -1,4 +1,4 @@
-- if policy(Volunteer).destroy?
+- if policy(Volunteer).can_edit_state?
   .row
     .col-xs-12
       = f.input :state, collection: Volunteer.state_collection, default: :registered

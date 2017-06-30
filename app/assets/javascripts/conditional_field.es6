@@ -1,6 +1,6 @@
-$(function() {
-  $(document).on('turbolinks:render, turbolinks:load', function() {
-    const getFieldsLabel = (field) => ($(`label[for="${field.id}"]`));
+$(() => {
+  $(document).on('turbolinks:render, turbolinks:load', () => {
+    const getFieldsLabel = ({id}) => ($(`label[for="${id}"]`));
 
     const showFieldWithLabel = (field) => {
       $(field).show();
@@ -64,7 +64,7 @@ $(function() {
     }
 
     const showForRadio = ({field, subject, model, value}) => {
-      $('#' + model + '_' + subject + '_' + value).each((key, input) => {
+      $('#' + [model, subject, value].join('_')).each((key, input) => {
         if(input.checked) {
           showFieldWithLabel(field);
         }
