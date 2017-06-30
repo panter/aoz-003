@@ -8,6 +8,8 @@ class DepartmentsTest < ApplicationSystemTestCase
       :with_departments, role: 'social_worker'
     @department_manager = create :user, :with_profile, :with_departments,
       role: 'department_manager'
+    # dirty fix for not properly working factorys or DatabaseCleaner
+    User.where.not(id: [@superadmin.id, @social_worker.id, @department_manager.id]).destroy_all
   end
 
   test 'superadmin should see departments link in navigation' do
