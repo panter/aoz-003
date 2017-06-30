@@ -350,7 +350,7 @@ de:
     other: Anderer Grund
     us: durch uns vor / nach Gespräch
   relatives: Familienangehörige im Haushalt
-  relation:
+  relation: &id-relations
     wife: (Ehe-)Partnerin
     husband: (Ehe-)Partner
     mother: Mutter
@@ -407,6 +407,8 @@ de:
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
+        relatives:
+          relation: *id-relations
         point_of_contact:
           label:
             email: Mailadresse
