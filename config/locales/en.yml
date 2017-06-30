@@ -225,7 +225,7 @@ en:
     other: Other
     us: by us before / after conversation
   relatives: Family members
-  relation:
+  relation: &id-relations
     wife: Wife/Partner
     husband: Husband/Partner
     mother: Mother
@@ -267,6 +267,8 @@ en:
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
+        relatives:
+          relation: *id-relations
         state: &id-states
           accepted: Accepted
           active: Active
