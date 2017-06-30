@@ -156,5 +156,3 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_field? 'Employment rate'
   end
 end
-
-🎂 HAPPY BIRTHDAY ANDI 🎂
