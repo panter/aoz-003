@@ -4,6 +4,7 @@ class AddColumnsToClients < ActiveRecord::Migration[5.1]
     add_column :clients, :gender_request, :string
     add_column :clients, :age_request, :string
     add_column :clients, :other_request, :string
+    add_column :clients, :actual_activities, :text
 
     remove_column :clients, :hobbies, :text
   end

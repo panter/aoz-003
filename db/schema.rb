@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20170628085858) do
     t.string "gender_request"
     t.string "age_request"
     t.string "other_request"
+    t.text "actual_activities"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
