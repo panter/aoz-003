@@ -46,7 +46,7 @@
   .col-xs-12
     = conditional_field f, :volunteer_experience_desc, :experience
 
-h3 Welche Art von Einsatz können Sie sich vorstellen?
+h3= t('volunteer_engagement_type_will')
 .row
   .col-xs-12
     = f.input :duration, collection: Volunteer.duration_collection, as: :radio_buttons
@@ -84,5 +84,5 @@ h3= t('your_region')
   .col-xs-12
     = f.input :interests
 
-h3 Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+h3= t('volunteer_availability')
 = render 'schedules/form', f: f, participant: @volunteer
