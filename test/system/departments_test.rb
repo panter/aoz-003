@@ -36,14 +36,12 @@ class DepartmentsTest < ApplicationSystemTestCase
   end
 
   test 'superadmin can create department' do
+    assocable_users = User.department_assocable
     login_as @superadmin
     visit departments_path
     click_link 'New Department'
-    assert page.has_select? 'User'
-    within '.department_user' do
-      User.department_assocable.each do |u|
-        select u.email
-      end
+    assocable_users.each do |u|
+      check u.to_label
     end
     fill_in 'Name', with: 'Bogus Hog Department'
     fill_in 'Street', with: 'bogus street 999'
@@ -60,8 +58,8 @@ class DepartmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'bogus ext. addr.'
     assert page.has_text? '9999'
     assert page.has_text? 'bogus town'
-    User.department_assocable.each do |user|
-      assert page.has_text? user.email
+    assocable_users.each do |user|
+      assert page.has_link? user.to_label
     end
     assert page.has_link? 'Edit'
     assert page.has_link? 'Back'
@@ -70,7 +68,7 @@ class DepartmentsTest < ApplicationSystemTestCase
   test 'superadmin can update a department with additional email and fax number' do
     login_as @superadmin
     visit departments_path
-    click_link 'Edit', href: edit_department_path(Department.first.id)
+    click_link 'Edit', href: edit_department_path(@superadmin.department.first.id)
     within '#emails' do
       within '.links' do
         click_link 'Add Email address'
@@ -99,7 +97,7 @@ class DepartmentsTest < ApplicationSystemTestCase
   end
 
   test 'superadmin can remove phone and email from department' do
-    department = Department.first
+    department = @superadmin.department.first
     delete_email = department.contact.contact_emails.last.body
     delete_phone = department.contact.contact_phones.last.body
     login_as @superadmin
