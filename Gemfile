@@ -35,6 +35,8 @@ gem 'slim-rails'
 gem 'sprockets-es6'
 gem 'turbolinks'
 gem 'uglifier'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   gem 'better_errors'
