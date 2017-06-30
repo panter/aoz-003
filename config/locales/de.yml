@@ -335,6 +335,7 @@ de:
   login: Anmelden
   logout: Abmelden
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
+  other_request: Sonstige Anforderungen an den Freiwilligen
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.

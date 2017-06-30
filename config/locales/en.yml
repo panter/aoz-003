@@ -210,6 +210,7 @@ en:
     confirm_delete: "Really delete %{model} %{record}?"
     select_prompt: "Select %{model}"
   not_authorized: You are not authorized to perform this action.
+  other_request: Other requests for volunteers
   password_reset_instructions: I want to reset my password
   personal_background: Personal background
   profile_created: Profile was successfully created.

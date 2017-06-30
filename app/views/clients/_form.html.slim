@@ -43,7 +43,9 @@
                 collection: Client.age_request_collection,
                 as: :radio_buttons,
                 wrapper: :vertical_radio_and_checkboxes
+      = f.input :other_request
       = f.input :education
+      = f.input :actual_activities
       = f.input :interests
       = f.input :state, collection: Client.state_collection, include_blank: false
       - if policy(Client).destroy?
