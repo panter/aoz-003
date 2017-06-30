@@ -12,7 +12,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'First name', with: 'asdf'
     fill_in 'Last name', with: 'asdf'
     within '.client_date_of_birth' do
-      select_date all('select'), '10', 'November', '1995'
+      select('1995', from: 'Date of birth')
     end
     page.choose('client_gender_female')
     select('Aruba', from: 'Nationality')
@@ -34,11 +34,15 @@ class ClientsTest < ApplicationSystemTestCase
     within '#relatives' do
       fill_in 'First name', with: 'asdf'
       fill_in 'Last name', with: 'asdf'
-      select_date page.all('select'), '10', 'February', '2001'
+      select('2001', from: 'Date of birth')
+      select('Uncle', from: 'Relation')
     end
-    fill_in 'Relation', with: 'Onkel'
     fill_in 'Goals', with: 'asdfasdf'
+    page.choose('client_gender_request_same')
+    page.choose('client_age_request_36-50')
+    fill_in 'Other request', with: 'asdfasdf'
     fill_in 'Education', with: 'asdfasdf'
+    fill_in 'Actual activities', with: 'asdfasdf'
     fill_in 'Interests', with: 'asdfasdf'
     select('Active', from: 'State')
     fill_in 'Comments', with: 'asdfasdf'
