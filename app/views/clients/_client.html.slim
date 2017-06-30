@@ -4,13 +4,13 @@ tr
   td = client.contact.full_adress
   td = client.date_of_birth.year if client.date_of_birth
   td
-    - client.relatives.each do |rel|
-      = rel.to_s
+    - client.relatives.each do |relative|
+      = relative.to_s
       br
   td = country(client.nationality)
   td
-    - client.language_skills.each do |lang|
-      = lang.full_language_skills
+    - client.language_skills.each do |language|
+      = language.full_language_skills
       br
 
   td = client.goals
