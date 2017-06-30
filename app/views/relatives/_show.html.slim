@@ -3,9 +3,9 @@ tr
   td
     - if relative.relatives.any?
       dl.dl-horizontal
-        - relative.relatives.each do |rel|
-          dt= rel.full_name
-          - if rel.full_name.present?
+        - relative.relatives.each do |relative|
+          dt= relative.full_name
+          - if relative.full_name.present?
             dd
-              = rel.date_of_birth.year if rel.date_of_birth
-              |, #{rel.relation}
+              = relative.date_of_birth.try(:year)
+              |, #{relative.relation}
