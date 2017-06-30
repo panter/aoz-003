@@ -54,6 +54,10 @@ class User < ApplicationRecord
     email
   end
 
+  def to_label
+    "#{full_name} #{email}"
+  end
+
   def full_name
     "#{profile.contact.first_name} #{profile.contact.last_name}"
   end
