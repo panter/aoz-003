@@ -11,14 +11,6 @@ module ApplicationHelper
     end
   end
 
-  def single_col_xs(inside, cols = 12)
-    content_tag :div, class: 'row' do
-      content_tag :div, class: "col-xs-#{cols}" do
-        inside
-      end
-    end
-  end
-
   def simple_error_notice(f)
     single_col_xs f.error_notification if f.error_notification.present?
   end
