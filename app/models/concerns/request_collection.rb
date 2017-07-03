@@ -7,7 +7,7 @@ module RequestCollection
     end
 
     def self.age_request_collection
-      [:age_no_matter, :'20-35', :'36-50', :'51']
+      [:age_no_matter, :age_young, :age_middle, :age_old]
     end
   end
 end
