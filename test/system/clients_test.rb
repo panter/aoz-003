@@ -39,7 +39,7 @@ class ClientsTest < ApplicationSystemTestCase
     end
     fill_in 'Goals', with: 'asdfasdf'
     page.choose('client_gender_request_same')
-    page.choose('client_age_request_36-50')
+    page.choose('client_age_request_age_middle')
     fill_in 'Other request', with: 'asdfasdf'
     fill_in 'Education', with: 'asdfasdf'
     fill_in 'Actual activities', with: 'asdfasdf'

@@ -177,9 +177,9 @@ de:
   add_relative: Verwandte hinzufügen
   age_request: &id-age_requests
     age_no_matter: egal
-    20-35: 20 - 35
-    36-50: 36 - 50
-    '51': älter als 51
+    age_young: 20 - 35
+    age_middle: 36 - 50
+    age_old: älter als 51
   application_submitted: 'Ihre Bewerbung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'

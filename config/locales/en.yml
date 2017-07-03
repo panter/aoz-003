@@ -49,9 +49,9 @@ en:
   age_request: Volunteer's age
   age_request: &id-age_requests
     age_no_matter: doesn't matter
-    20-35: 20 - 35
-    36-50: 36 - 50
-    '51': older than 51
+    age_young: 20 - 35
+    age_middle: 36 - 50
+    age_old: older than 51
   application_submitted: 'Your application has been successfully sent.'
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
