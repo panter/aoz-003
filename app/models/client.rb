@@ -32,8 +32,7 @@ class Client < ApplicationRecord
   end
 
   def self.without_assignments
-    # TODO: think about optimizing without subquery
-    Client.where.not(id: Assignment.select(:client_id))
+    Client.includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
   end
 
   def to_s
