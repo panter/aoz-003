@@ -5,4 +5,6 @@
 = render 'columns', clients: @clients
 
 = form_navigation_btn :new
-= button_link t('without_assignment'), clients_need_accompanying_url
+
+- if policy(Client).destroy?
+  = button_link t('without_assignment'), clients_need_accompanying_url
