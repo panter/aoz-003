@@ -362,7 +362,7 @@ de:
     canton: Kanton
     city: Stadt
     region: Region
-  registered_by: Sozialberater/in
+  registered_by: Registriert durch
   rejection_type: &id-rejection-types
     her: von Freiwillige/r vor / nach Erstgespräch
     other: Anderer Grund
