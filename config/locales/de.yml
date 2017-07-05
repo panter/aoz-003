@@ -4,7 +4,7 @@ de:
   activerecord:
     attributes:
       client:
-        adress: Adresse
+        address: Adresse
         age_request: Alter Freiwillige
         city: Stadt
         comments: Bemerkungen

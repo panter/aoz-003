@@ -1,7 +1,7 @@
 tr
   td = t("gender.#{client.gender}") unless client.gender.blank?
   td = client.contact.full_name
-  td = client.contact.full_adress
+  td = client.contact.full_address
   td = client.date_of_birth.year if client.date_of_birth
   td
     - client.relatives.each do |relative|
