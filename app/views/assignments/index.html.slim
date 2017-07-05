@@ -1,28 +1,18 @@
 .row
   .col-xs-12
     h1= t('assignments')
-    
-table
-  thead
-    tr
-      th Client
-      th Volunteer
-      th Agreement
-      th
-      th
-      th
 
-  tbody
-    - @assignments.each do |assignment|
+.row
+  .col-xs-12
+  table.table.table-striped
+    thead
       tr
-        td = assignment.client
-        td = assignment.volunteer
-        td = assignment.agreement
-        td = link_to 'Show', assignment
-        td = link_to 'Edit', edit_assignment_path(assignment)
-        td = link_to 'Destroy', assignment, data: { confirm: 'Are you sure?' }, method: :delete
-        td = link_to 'Download', assignment.agreement.url
+        th= t_model(Client)
+        th= t_model(Volunteer)
+        th= t_attr(:agreement)
+        th colspan='3'
 
-br
+    tbody
+        = render @assignments
 
-= link_to 'New Assignment', new_assignment_path
+= form_navigation_btn :new

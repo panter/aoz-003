@@ -2,6 +2,8 @@
 de:
   activerecord:
     attributes:
+      assignment:
+        agreement: Zustimmung
       client:
         address: Adresse
         age_request: Alter Freiwillige/r
@@ -176,6 +178,7 @@ de:
             avatar_content_type:
               invalid: ist ungültig
     models:
+      assignment: Begleitung
       client: Klient/in
       contact: Kontakt
       contact_email: Mailadresse
@@ -310,6 +313,7 @@ de:
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
+  download: Herunterladen
   duration: &id-durations
     long: Längerfristig (min 6 Mt.)
     short: Kurzfristig
