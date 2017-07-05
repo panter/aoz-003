@@ -48,4 +48,8 @@ class ClientPolicy < ApplicationPolicy
   def destroy?
     user.superadmin?
   end
+
+  def without_assignments?
+    user.superadmin?
+  end
 end
