@@ -46,6 +46,7 @@ class ClientsController < ApplicationController
 
   def without_assignments
     @without_assignments = Client.without_assignments
+    authorize @without_assignments
   end
 
   private
