@@ -2,6 +2,6 @@ FactoryGirl.define do
   factory :assignment do
     client
     volunteer
-    agreement ""
+    agreement ''
   end
 end
