@@ -225,7 +225,7 @@ en:
     canton: Canton
     city: City
     region: Region
-  registered_by: Responsible Volunteer
+  registered_by: Registered by
   rejection_type: &id-rejection-types
     her: by volunteer before / after the first call
     other: Other
