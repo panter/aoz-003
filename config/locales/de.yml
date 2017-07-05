@@ -1,17 +1,21 @@
 ---
 de:
+  all: Alle
   activerecord:
     attributes:
       client:
+        adress: Adresse
         age_request: Alter Freiwillige
         city: Stadt
         comments: Bemerkungen
         competent_authority: Zusätzlich involvierte Stelle
         date_of_birth: Geburtsdatum
+        date_of_year: Geburtsjahr
         deleted_at: Gelöscht
         education: Beruf oder Ausbildung im Herkunftsland
         email: Email
         first_name: Vorname
+        full_name: Name
         gender: Geschlecht
         gender_request: Geschlecht Freiwillige
         goals: Inhalte der Begleitung
