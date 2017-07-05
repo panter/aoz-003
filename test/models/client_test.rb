@@ -13,4 +13,16 @@ class ClientTest < ActiveSupport::TestCase
     client = Client.new
     refute client.valid?
   end
+
+  test 'clients without assignments' do
+    result = Client.without_assignments
+    assert_equal [@client], result.to_a
+  end
+
+  test 'a client with an assignment should not show up in without assignment' do
+    @volunteer = create :volunteer
+    @client.create_assignment!(volunteer: @volunteer)
+    result = Client.without_assignments
+    assert_equal [], result.to_a
+  end
 end
