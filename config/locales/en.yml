@@ -63,6 +63,7 @@ en:
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
+  assignments: Assignments
   back: Back
   change_my_password: Change my password
   change_password: Change your password
