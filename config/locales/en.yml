@@ -178,6 +178,7 @@ en:
         other: '%{count} errors prohibited this %{resource} from being saved:'
   entry_year: Entry year
   forgot_password: Forgot your password?
+  full_language_collection: &id-lang-levels
   gender: &id-genders
     female: female
     male: male
