@@ -17,7 +17,7 @@ class Contact < ApplicationRecord
     "#{try(:first_name)} #{last_name}"
   end
 
-  def full_adress
+  def full_address
     [street, extended, postal_code, city].reject(&:blank?).join(', ')
   end
 
