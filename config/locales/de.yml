@@ -513,5 +513,6 @@ de:
     tuesday: Dienstag
     wednesday: Mittwoch
   when: Zeit
+  without_assignment: Ohne Begleitung
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?

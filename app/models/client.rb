@@ -31,6 +31,11 @@ class Client < ApplicationRecord
     [:age_no_matter, :age_young, :age_middle, :age_old]
   end
 
+  def self.without_assignments
+    # TODO: think about optimizing without subquery
+    Client.where.not(id: Assignment.select(:client_id))
+  end
+
   def to_s
     "#{contact.first_name} #{contact.last_name}"
   end

@@ -3,6 +3,7 @@ class AssignmentsController < ApplicationController
 
   def index
     @assignments = Assignment.all
+    @without_assignments = Client.without_assignments
   end
 
   def show; end
