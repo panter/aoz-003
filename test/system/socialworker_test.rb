@@ -59,4 +59,9 @@ class SocialworkerTest < ApplicationSystemTestCase
     visit clients_path
     assert_not page.has_link? 'Delete'
   end
+
+  test 'socialworker has no without assignment link' do
+    visit clients_path
+    assert_not page.has_link? 'Without Assignment'
+  end
 end
