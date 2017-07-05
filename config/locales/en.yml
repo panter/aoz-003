@@ -46,14 +46,14 @@ en:
       volunteer_experience_desc: Description of voluntary experience
   add_language: Add language
   add_relative: Add family member
-  age_request: Volunteer's age
   age_request: &id-age_requests
-    age_no_matter: doesn't matter
-    age_young: 20 - 35
     age_middle: 36 - 50
+    age_no_matter: "doesn't matter"
     age_old: older than 51
+    age_young: 20 - 35
   all: All
-  application_submitted: 'Your application has been successfully sent.'
+  age_request: "Volunteer's age"
+  application_submitted: Your application has been successfully sent.
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
@@ -165,6 +165,7 @@ en:
     short: Short term
   edit_login: Edit login
   edit_profile: Edit profile
+  entry_year: Entry year
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -175,15 +176,14 @@ en:
       not_saved:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
-  entry_year: Entry year
   forgot_password: Forgot your password?
   full_language_collection: &id-lang-levels
   gender: &id-genders
     female: female
     male: male
-  gender_request: &id-gender_requests
-    same: gender same
+  gender_requests: &id-gender_requests
     no_matter: gender doesn't matter
+    same: gender same
   gender_request: Volunteer's gender
   get_back: We will soon get back to you.
   group_accompaniment: Group accompaniment
@@ -222,18 +222,18 @@ en:
     her: by volunteer before / after the first call
     other: Other
     us: by us before / after conversation
-  relatives: Family members
   relation: &id-relations
-    wife: Wife/Partner
+    aunt: Aunt
+    brother: Brother
+    daughter: Daughter
+    father: Father
     husband: Husband/Partner
     mother: Mother
-    father: Father
-    daughter: Daughter
-    son: Son
     sister: Sister
-    brother: Brother
-    aunt: Aunt
+    son: Son
     uncle: Uncle
+    wife: Wife/Partner
+  relatives: Family members
   remember_me: Remember me
   remove_language: Remove language
   remove_relative: Remove family member
@@ -291,11 +291,11 @@ en:
         rejection_type: *id-rejection-types
         state:
           <<: *id-states
-          registered: Interested
-          contacted: Contacted
           active_further: Active and interested in further engagements
-          resigned: Terminated
+          contacted: Contacted
           inactive: Looking for new engagement
+          registered: Interested
+          resigned: Terminated
     placeholders:
     required:
       mark: '*'
@@ -321,6 +321,12 @@ en:
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Application
   volunteer_request: Request for volunteers
+  volunteer_availability: What times are you available for voluntary engagement?
+  volunteer_created: Volunteer was successfully created.
+  volunteer_destroyed: Volunteer was successfully deleted.
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  volunteer_self_applicant: Self-applicant
+  volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to apply as a volunteer?
   weekdays:
@@ -335,6 +341,3 @@ en:
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
   your_region: In which region can you imagine your employment?
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
-  volunteer_self_applicant: Self-applicant
-  volunteer_availability: What times are you available for voluntary engagement?

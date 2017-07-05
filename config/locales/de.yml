@@ -1,6 +1,5 @@
 ---
 de:
-  all: Alle
   activerecord:
     attributes:
       client:
@@ -118,6 +117,7 @@ de:
         profession: Beruf
         region: Region
         region_specific: Gemeinde
+        registrar: Registrator
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
         single_accompaniment: Einzelbegleitung (Unterstützung in Alltagsfragen, Deutsch Üben, Hausaufgaben u.ä., mind. 6 Mt.)
@@ -132,7 +132,6 @@ de:
         woman: Frau
         working_percent: Stellenprozent
         zip: Postleitzahl
-        registrar: Registrator
     errors:
       models:
         profile:
@@ -180,10 +179,11 @@ de:
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   age_request: &id-age_requests
-    age_no_matter: egal
-    age_young: 20 - 35
     age_middle: 36 - 50
+    age_no_matter: egal
     age_old: älter als 51
+    age_young: 20 - 35
+  all: Alle
   application_submitted: 'Ihre Bewerbung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
@@ -296,6 +296,7 @@ de:
     short: Kurzfristig
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
+  entry_year: Einreisejahr
   errors:
     messages:
       already_confirmed: wurde bereits bestätigt
@@ -307,14 +308,13 @@ de:
       not_saved:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
-  entry_year: Einreisejahr
   forgot_password: Passwort vergessen?
   gender: &id-genders
     female: Weiblich
     male: Männlich
   gender_request: &id-gender_requests
-    same: Geschlecht gleich
     no_matter: Geschlecht egal
+    same: Geschlecht gleich
   get_back: Wir werden uns bald bei Ihnen melden.
   group_accompaniment: Gruppenangebot
   helpers:
@@ -349,18 +349,18 @@ de:
     her: von Freiwillige vor / nach Erstgespräch
     other: Anderer Grund
     us: durch uns vor / nach Gespräch
-  relatives: Familienangehörige im Haushalt
   relation: &id-relations
-    wife: (Ehe-)Partnerin
+    aunt: Tante
+    brother: Bruder
+    daughter: Tochter
+    father: Vater
     husband: (Ehe-)Partner
     mother: Mutter
-    father: Vater
-    daughter: Tochter
-    son: Sohn
     sister: Schwester
-    brother: Bruder
-    aunt: Tante
+    son: Sohn
     uncle: Onkel
+    wife: (Ehe-)Partnerin
+  relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
@@ -407,13 +407,13 @@ de:
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
-        relatives:
-          relation: *id-relations
         point_of_contact:
           label:
             email: Mailadresse
             fax: Faxnummer
             phone: Telefonnummer
+        relatives:
+          relation: *id-relations
         state: &id-states
           accepted: Akzeptiert
           active: Aktiv
@@ -436,11 +436,11 @@ de:
         rejection_type: *id-rejection-types
         state:
           <<: *id-states
-          registered: Interessiert
-          contacted: Kontaktiert
           active_further: Aktiv, an weiteren Einsätzen interessiert
-          resigned: Beendet
+          contacted: Kontaktiert
           inactive: Sucht neuen Einsatz
+          registered: Interessiert
+          resigned: Beendet
     placeholders:
     required:
       mark: '*'
@@ -466,6 +466,12 @@ de:
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwillige/n Bewerbung
   volunteer_request: Anforderungen an den Freiwilligen
+  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+  volunteer_created: Freiwillige wurde erfolgreich erstellt.
+  volunteer_destroyed: Freiwillige wurde erfolgreich gelöscht.
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  volunteer_self_applicant: Selbstanmelder
+  volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   weekdays:
@@ -479,6 +485,3 @@ de:
   when: Zeit
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
-  volunteer_self_applicant: Selbstanmelder
-  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
