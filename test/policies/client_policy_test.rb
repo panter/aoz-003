@@ -68,4 +68,16 @@ class ClientPolicyTest < PolicyAssertions::Test
   test 'Index: department manager cannot index clients' do
     refute_permit @department_manager, Client.first, 'index?'
   end
+
+  test 'Without assignments: superadmin can see clients without_assignments' do
+    assert_permit @superadmin, Client.first, 'without_assignments?'
+  end
+
+  test 'Without assignments: social worker cannot see clients without assignments' do
+    refute_permit @social_worker, Client.first, 'without_assignments?'
+  end
+
+  test 'Without assignments: department manager cannot see clients without assignments' do
+    refute_permit @department_manager, Client.first, 'without_assignments?'
+  end
 end
