@@ -2,24 +2,7 @@
   .col-xs-12
     h1= t('clients')
 
-.row
-  .col-xs-12
-  table.table.table-striped
-    thead
-      tr
-        th= t_attr(:gender)
-        th= t_attr(:full_name)
-        th= t_attr(:address)
-        th= t_attr(:date_of_year)
-        th= t_attr(:relatives)
-        th= t_attr(:nationality)
-        th= t_attr(:language_skills)
-        th= t_attr(:goals)
-        th= t_attr(:competent_authority)
-        th= t_attr(:created_at)
-        th colspan='3'
-
-    tbody
-        = render @clients
+= render 'columns', clients: @clients
 
 = form_navigation_btn :new
+= button_link t('without_assignment'), clients_need_accompanying_url

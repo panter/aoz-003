@@ -44,6 +44,10 @@ class ClientsController < ApplicationController
     redirect_to clients_url, make_notice
   end
 
+  def without_assignments
+    @without_assignments = Client.without_assignments
+  end
+
   private
 
   def set_client

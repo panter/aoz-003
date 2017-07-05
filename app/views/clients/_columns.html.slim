@@ -1,0 +1,19 @@
+.row
+  .col-xs-12
+  table.table.table-striped
+    thead
+      tr
+        th= t_attr(:gender)
+        th= t_attr(:full_name)
+        th= t_attr(:adress)
+        th= t_attr(:date_of_year)
+        th= t_attr(:relatives)
+        th= t_attr(:nationality)
+        th= t_attr(:language_skills)
+        th= t_attr(:goals)
+        th= t_attr(:competent_authority)
+        th= t_attr(:created_at)
+        th colspan='3'
+
+    tbody
+        = render clients

@@ -15,19 +15,4 @@
     tbody
         = render @assignments
 
-.row
-  .col-xs-12
-    h1= t('without_assignment')
-
-.row
-  .col-xs-12
-  table.table.table-striped
-    thead
-      tr
-        th= t_model(Client)
-        th
-
-    tbody
-        = render @without_assignments
-
 = form_navigation_btn :new

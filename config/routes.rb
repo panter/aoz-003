@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/clients/need_accompanying', to: 'clients#without_assignments'
+
   resources :assignments
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
