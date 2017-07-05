@@ -52,6 +52,7 @@ en:
     age_young: 20 - 35
     age_middle: 36 - 50
     age_old: older than 51
+  all: All
   application_submitted: 'Your application has been successfully sent.'
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
