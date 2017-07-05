@@ -3,9 +3,8 @@ Faker::Config.locale = 'de'
 
 def random_relation
   [
-    'brother', 'sister', 'mother', 'father', 'foster-mother',
-    'foster-father', 'friend', 'neighbour', 'cousin', 'uncle', 'aunt',
-    'son', 'doughter', 'newphew', 'niece'
+    'wife', 'husband', 'mother', 'father', 'daughter',
+    'son', 'sister', 'brother', 'aunt', 'uncle'
   ].sample
 end
 
