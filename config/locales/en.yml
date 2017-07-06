@@ -73,6 +73,10 @@ en:
   create_profile: Create profile
   create_user: Create user
   crud:
+    c_action:
+      create: '%{model} wurde erfolgreich erstellt.'
+      update: '%{model} wurde erfolgreich geändert.'
+      destroy: '%{model} wurde erfolgreich gelöscht.'
     title:
       add: 'Add %{model}'
   date:

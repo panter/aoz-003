@@ -204,6 +204,10 @@ de:
   create_profile: Profil erfassen
   create_user: Benutzer erfassen
   crud:
+    c_action:
+      create: '%{model} wurde erfolgreich erstellt.'
+      update: '%{model} wurde erfolgreich geändert.'
+      destroy: '%{model} wurde erfolgreich gelöscht.'
     title:
       add: '%{model} hinzufügen'
   date:
