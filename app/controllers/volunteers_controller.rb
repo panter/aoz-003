@@ -2,6 +2,8 @@ class VolunteersController < ApplicationController
   include NestedAttributes
   include ContactAttributes
   include VolunteerAttributes
+  include MakeNotice
+
   before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -25,7 +27,7 @@ class VolunteersController < ApplicationController
     @volunteer.registrar = current_user
     authorize @volunteer
     if @volunteer.save
-      redirect_to @volunteer, notice: t('volunteer_created')
+      redirect_to @volunteer, make_notice
     else
       render :new
     end
@@ -38,13 +40,13 @@ class VolunteersController < ApplicationController
       redirect_to volunteers_path,
         notice: t('invite_sent', email: @volunteer.contact.contact_emails.first.body)
     else
-      redirect_to @volunteer, notice: t('volunteer_updated')
+      redirect_to @volunteer, make_notice
     end
   end
 
   def destroy
     @volunteer.destroy
-    redirect_to volunteers_url, notice: t('volunteer_destroyed')
+    redirect_to volunteers_url, make_notice
   end
 
   private

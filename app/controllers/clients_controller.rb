@@ -1,6 +1,7 @@
 class ClientsController < ApplicationController
   include NestedAttributes
   include ContactAttributes
+  include MakeNotice
 
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
@@ -24,7 +25,7 @@ class ClientsController < ApplicationController
     @client.user = current_user
     authorize @client
     if @client.save
-      redirect_to @client, notice: t('client_created')
+      redirect_to @client, make_notice
     else
       render :new
     end
@@ -32,7 +33,7 @@ class ClientsController < ApplicationController
 
   def update
     if @client.update(client_params)
-      redirect_to @client, notice: t('client_updated')
+      redirect_to @client, make_notice
     else
       render :edit
     end
@@ -40,7 +41,7 @@ class ClientsController < ApplicationController
 
   def destroy
     @client.destroy
-    redirect_to clients_url, notice: t('client_destroyed')
+    redirect_to clients_url, make_notice
   end
 
   private

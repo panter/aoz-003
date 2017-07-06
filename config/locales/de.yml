@@ -191,9 +191,6 @@ de:
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
-  client_created: KlientIn wurde erfolgreich erstellt.
-  client_destroyed: KlientIn wurde erfolgreich gelöscht.
-  client_updated: KlientIn wurde erfolgreich aktualisiert.
   clients: Klienten
   contact_info: Kontakt Informationen
   contacts:
@@ -216,9 +213,6 @@ de:
       - :month
       - :year
   department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
-  department_created: Der Standort wurde erfolgreich erstellt.
-  department_destroyed: Der Standort wurde erfolgreich gelöscht.
-  department_updated: Der Standort wurde erfolgreich geändert.
   departments: Standorte
   devise:
     confirmations:
@@ -346,8 +340,6 @@ de:
   other_request: Sonstige Anforderungen an den Freiwilligen
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
-  profile_created: Profil wurde erfolgreich erstellt.
-  profile_updated: Profil wurde erfolgreich aktualisiert.
   region: &id-regions
     canton: Kanton
     city: Stadt
@@ -473,10 +465,7 @@ de:
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwillige/n Bewerbung
-  volunteer_created: Freiwillige wurde erfolgreich erstellt.
-  volunteer_destroyed: Freiwillige wurde erfolgreich gelöscht.
   volunteer_request: Anforderungen an den Freiwilligen
-  volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
   weekdays:
