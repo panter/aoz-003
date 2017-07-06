@@ -28,6 +28,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
+    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     click_link 'Add Email address'
     fill_in 'Email address', with: 'gurke@gurkenmail.com'
     click_link 'Add Phone number'

@@ -6,4 +6,4 @@
 
 .row
   .col-xs-12
-    = button_link t('back'), profiles_path(params[:id])
+    = link_to t('back'), profile_path(params[:id]), class: 'btn btn-default'

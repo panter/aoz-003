@@ -64,6 +64,9 @@
           tr
             td= t_attr(:region)
             td= t("region.#{@volunteer.region}") if @volunteer.region.present?
+          tr
+            td= t_attr(:region_specific)
+            td= @volunteer.region_specific
 
 h3= t_attr(:single_accompaniment)
 .table-responsive

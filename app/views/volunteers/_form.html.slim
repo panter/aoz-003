@@ -1,4 +1,6 @@
-- if policy(Volunteer).can_edit_state?
+= simple_error_notice f
+
+- if policy(Volunteer).supervisor_privileges?
   .row
     .col-xs-12
       = f.input :state, collection: Volunteer.state_collection, default: :registered
@@ -6,8 +8,6 @@
       = f.input :rejection_type, collection: Volunteer.rejection_collection, as: :radio_buttons
     .col-xs-12
       = f.input :rejection_text
-
-= simple_error_notice f
 
 = f.simple_fields_for :contact do |c|
   = render 'contacts/fields', f: c

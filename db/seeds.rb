@@ -8,18 +8,6 @@ def random_relation
   ].sample
 end
 
-def make_person_data(subject)
-  subject.first_name = Faker::Name.first_name
-  subject.last_name = Faker::Name.last_name
-  subject.date_of_birth = Faker::Date.birthday(18, 75)
-  subject.zip = Faker::Address.zip_code
-  subject.city = Faker::Address.city
-  subject.street = Faker::Address.street_address
-  subject.email = Faker::Internet.email
-  subject.phone = Faker::PhoneNumber.phone_number
-  subject.gender = ['male', 'female'].sample
-end
-
 def make_relatives
   Array.new(2).map do
     Relative.new do |relative|
@@ -58,7 +46,9 @@ User.role_collection.each do |role|
         last_name: Faker::Name.last_name,
         postal_code: Faker::Address.zip_code,
         city: Faker::Address.city,
-        street: Faker::Address.street_address
+        street: Faker::Address.street_address,
+        primary_email: Faker::Internet.email,
+        primary_phone: Faker::PhoneNumber.phone_number
       )
       profile.contact.contact_phones.build(
         body: Faker::PhoneNumber.phone_number
@@ -77,7 +67,9 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
     Client.new do |client|
       client.build_contact(
         first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name
+        last_name: Faker::Name.last_name,
+        primary_email: Faker::Internet.email,
+        primary_phone: Faker::PhoneNumber.phone_number
       )
 
       client.contact.contact_emails.build(
@@ -102,6 +94,8 @@ if Department.count < 1
       c.street = Faker::Address.street_address
       c.postal_code = Faker::Address.zip_code
       c.city = Faker::Address.city
+      c.primary_email = Faker::Internet.email
+      c.primary_phone = Faker::PhoneNumber.phone_number
       c.contact_emails = Array.new(3).map do
         ContactEmail.new do |email|
           email.body = Faker::Internet.email
@@ -129,7 +123,9 @@ Volunteer.state_collection.each do |state|
       last_name: Faker::Name.last_name,
       postal_code: Faker::Address.zip_code,
       city: Faker::Address.city,
-      street: Faker::Address.street_address
+      street: Faker::Address.street_address,
+      primary_email: Faker::Internet.email,
+      primary_phone: Faker::PhoneNumber.phone_number
     )
     volunteer.contact.contact_emails.build(
       body: Faker::Internet.unique.email

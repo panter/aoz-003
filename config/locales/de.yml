@@ -39,6 +39,8 @@ de:
         first_name: Vorname
         last_name: Name
         postal_code: PLZ
+        primary_email: Primäre Mailadresse
+        primary_phone: Primäre Telefonnummer
         street: Strasse
         title: Anrede
       contact_email:
