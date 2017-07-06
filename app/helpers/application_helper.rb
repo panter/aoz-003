@@ -25,18 +25,24 @@ module ApplicationHelper
     link_to_add_association(name, f, association, html_options)
   end
 
-  def form_navigation_btn(action)
+  def form_navigation_btn(action, cols: 12, with_row: nil, md_cols: nil)
     text = action == :back ? t('back') : t_title(action)
     action = :index if action == :back
     target = { controller: controller_name, action: action }
     button_type = action == :new ? 'success' : 'default'
     target[:id] = params[:id] unless action == :index
-    single_col_xs button_link(text, target, button_type)
+    if with_row
+      button_link text, target, button_type
+    else
+      single_col_xs button_link(text, target, button_type), cols: cols, md_cols: md_cols
+    end
   end
 
-  def single_col_xs(inside, cols = 12)
+  def single_col_xs(inside, cols: 12, md_cols: nil)
+    col_class = "col-xs-#{cols}"
+    col_class += " col-md-#{md_cols}" if md_cols
     content_tag :div, class: 'row' do
-      content_tag :div, class: "col-xs-#{cols}" do
+      content_tag :div, class: col_class do
         inside
       end
     end

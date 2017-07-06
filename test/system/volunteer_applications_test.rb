@@ -3,6 +3,7 @@ require 'application_system_test_case'
 class VolunteerApplicationsTest < ApplicationSystemTestCase
   setup do
     @user = create :user
+    create :volunteer_email
   end
 
   test 'login page show link for volunteer application' do
@@ -49,6 +50,9 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     page.choose('volunteer_region_canton')
 
     click_button 'Submit application'
+
+    assert_equal 1, ActionMailer::Base.deliveries.size
+
     assert page.has_current_path? thanks_volunteer_applications_path
     assert page.has_text? 'Thank you'
     assert page.has_text? 'Your application has been successfully sent.'

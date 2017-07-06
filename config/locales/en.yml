@@ -30,6 +30,8 @@ en:
         rejection_type: Reason for rejection
         single_accompaniment: Single accompaniment
         working_percent: Employment rate (in Percent)
+      volunteer_email:
+        user: Created by
     models:
       client: Client
       contact: Contact
@@ -43,10 +45,11 @@ en:
       user: User
       volunteer: Volunteer
       volunteer_application: Volunteer Application
+      volunteer_email: Confirmation email
       volunteer_experience_desc: Description of voluntary experience
   add_language: Add language
   add_relative: Add family member
-  age_request: &id-age_requests
+  age_requests: &id-age_requests
     age_middle: 36 - 50
     age_no_matter: "doesn't matter"
     age_old: older than 51
@@ -76,6 +79,7 @@ en:
       destroy: '%{model} was successfully deleted.'
     title:
       add: 'Add %{model}'
+    updated: '%{model} successfully updated.'
   date:
     order:
       - :day
@@ -166,6 +170,7 @@ en:
   edit_login: Edit login
   edit_profile: Edit profile
   entry_year: Entry year
+  engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -324,7 +329,12 @@ en:
   volunteer_availability: What times are you available for voluntary engagement?
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
+  volunteer_emails: Volunteer emails
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  volunteer_mailer:
+    welcome_email:
+      submitted: Data submitted with the application
+      subject: Volunteer application confirmation
   volunteer_self_applicant: Self-applicant
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers

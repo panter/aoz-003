@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :users, :clients, :departments, :volunteers
+  resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
 
   root 'application#home'

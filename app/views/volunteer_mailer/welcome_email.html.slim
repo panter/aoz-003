@@ -1,0 +1,117 @@
+- margin_r = 'margin-right: 5px;'
+h1= @volunteer_email.title
+p= @volunteer_email.body
+
+h2 t('.submitted')
+
+h3
+  = "#{@volunteer.contact.title} " if @volunteer.contact.title.present?
+  = "#{@volunteer.contact.first_name} #{@volunteer.contact.last_name}"
+
+h4 Addresse
+p
+  = @volunteer.contact.street
+  br= "#{@volunteer.contact.postal_code} #{@volunteer.contact.city}"
+
+h4= "#{t_attr(:primary_email, Contact)}: "
+p= @volunteer.contact.primary_email
+
+- if @volunteer.contact.contact_emails.any?
+  h4 Zusätzliche Mailadressen
+  - @volunteer.contact.contact_emails.each do |email|
+    p
+      strong
+        = t_attr(:body, ContactEmail)
+        = " / #{email.label}" if email.label.present?
+        = ": "
+      = mail_to email.body
+
+- if @volunteer.contact.primary_phone.present?
+  h4= "#{t_attr(:primary_phone, Contact)}: "
+  p= @volunteer.contact.primary_phone
+
+- if @volunteer.contact.contact_phones.any?
+  h4 Zusätzliche Telefonnummern
+  - @volunteer.contact.contact_phones.each do |phone|
+    p
+      strong
+        = t_attr(:body, ContactPhone)
+        = " / #{phone.label}" if phone.label.present?
+        = ": "
+      = phone.body
+
+h4= "#{t_attr(:date_of_birth, Volunteer)}: "
+p= l(@volunteer.date_of_birth) if @volunteer.date_of_birth
+
+
+h4= "#{t_attr(:gender, Volunteer)}: "
+p= t("gender.#{@volunteer.gender}") if @volunteer.gender.present?
+
+h4= "#{t_attr(:avatar, Volunteer)}: "
+p= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?
+
+h4= "#{t_attr(:nationality, Volunteer)}: "
+p= country(@volunteer.nationality)
+
+- if @volunteer.additional_nationality.present?
+  h4= "#{t_attr(:additional_nationality, Volunteer)}: "
+  p= country(@volunteer.additional_nationality)
+
+- if @volunteer.language_skills.any?
+  h4= "#{t('language_skills')}: "
+  - @volunteer.language_skills.each do |lang|
+    - if lang.language_name.present?
+      p
+        = lang.language_name
+        = " - #{t("language_level.#{lang.level}")}" if lang.level.present?
+
+h4= "#{t_attr(:profession, Volunteer)}: "
+p= @volunteer.profession
+
+h4= "#{t_attr(:education, Volunteer)}: "
+p= @volunteer.education
+
+h4= "#{t_attr(:motivation, Volunteer)}: "
+p= @volunteer.motivation
+
+h4= "#{t(:experience, scope: [:simple_form, :labels, :volunteer])}: "
+p= Volunteer.human_boolean(@volunteer.experience)
+
+h4= "#{t_attr(:expectations, Volunteer)}: "
+p= @volunteer.expectations
+
+h4= "#{t_attr(:strengths, Volunteer)}: "
+p= @volunteer.strengths
+
+h4= "#{t_attr(:interests, Volunteer)}: "
+p= @volunteer.interests
+
+h4= "#{t_attr(:duration, Volunteer)}: "
+p= t("duration.#{@volunteer.duration}") if @volunteer.duration.present?
+
+
+h4= t_attr(:single_accompaniment, Volunteer)
+tables
+  tr
+    - Volunteer.single_accompaniment.each do |single|
+      td
+        - if @volunteer.read_attribute(single)
+          span style="#{margin_r}"
+            = t_attr(single, Volunteer)
+
+h4= t_attr(:group_accompaniment, Volunteer)
+table
+  tr
+    - Volunteer.group_accompaniment.each do |group|
+      td
+        - if @volunteer.read_attribute(group)
+          span style="#{margin_r}"
+            = t_attr(group, Volunteer)
+
+- if @volunteer.region.present?
+  h4= "#{t_attr(:region, Volunteer)}: "
+  p= t("region.#{@volunteer.region}")
+  - if @volunteer.region_specific.present?
+    p
+      strong= "#{t_attr(:region_specific, Volunteer)}: "
+      = @volunteer.region_specific

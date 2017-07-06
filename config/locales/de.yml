@@ -134,6 +134,12 @@ de:
         woman: Frau
         working_percent: Stellenprozent
         zip: Postleitzahl
+      volunteer_email:
+        active: Aktiv
+        body: Textkörper
+        subject: Betreff
+        title: Überschrift
+        user: Ersteller
     errors:
       models:
         profile:
@@ -178,6 +184,7 @@ de:
       user: Benutzer
       volunteer: Freiwillige
       volunteer_application: Freiwilligen Bewerbung
+      volunteer_email: Bestätigungsmail
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   age_request: &id-age_requests
@@ -209,6 +216,7 @@ de:
       destroy: '%{model} wurde erfolgreich gelöscht.'
     title:
       add: '%{model} hinzufügen'
+    updated: '%{model} wurde erfolgreich geändert.'
   date:
     order:
       - :day
@@ -467,11 +475,17 @@ de:
   users: Benutzer
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwillige/n Bewerbung
-  volunteer_request: Anforderungen an den Freiwilligen
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige wurde erfolgreich gelöscht.
+  volunteer_request: Anforderungen an den Freiwilligen
+  volunteer_emails: Bestätigunngs-Mails
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  volunteer_mailer:
+    welcome_email:
+      submitted: Die Angaben der Anmeldung
+      lead: Dies ist die Bestätigung für das Freiwilligen Email
+      subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
   volunteers: Freiwillige

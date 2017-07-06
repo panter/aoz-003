@@ -153,3 +153,17 @@ Volunteer.state_collection.each do |state|
     volunteer.schedules << make_schedule
   end.save!
 end
+
+if VolunteerEmail.count < 1
+  5.times do
+    VolunteerEmail.new do |ve|
+      ve.subject = Faker::Lorem.sentence
+      ve.title = Faker::Lorem.sentence
+      ve.body = Array.new(5).map do
+        Faker::ChuckNorris.fact
+      end.join(' ')
+      ve.active = true
+      ve.user = User.first
+    end.save
+  end
+end
