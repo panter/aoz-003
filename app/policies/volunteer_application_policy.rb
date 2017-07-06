@@ -5,8 +5,4 @@ class VolunteerApplicationPolicy < ApplicationPolicy
     @user = user
     @volunteer = volunteer
   end
-
-  def access_state?
-    @user && (@user.superadmin? || @user.department_manager?)
-  end
 end

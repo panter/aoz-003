@@ -2,9 +2,10 @@
   .col-xs-12
     h1= t('volunteers')
 .row
-  .col-xs-12= render 'state_select'
-.row
-  .col-xs-12
+  .col-xs-6.col-md-4= form_navigation_btn :new, with_row: false
+  .col-xs-6.col-md-4.text-center= link_to t('volunteer_emails'), volunteer_emails_path, class: 'btn btn-default'
+  .col-xs-6.col-md-4.text-right= render 'state_select'
+.table-responsive
   table.table.table-striped
     thead
       tr
