@@ -68,6 +68,7 @@
           td= @client.comments
 
 = render 'schedules/show', participant: @client
+= render 'versions_index', client: @client
 
 = form_navigation_btn :edit
 = form_navigation_btn :back

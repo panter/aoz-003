@@ -73,4 +73,13 @@ module ApplicationHelper
   def confirm_deleting(record)
     { method: :delete, data: { confirm: t_confirm_delete(record) } }
   end
+
+  def find_version_author_email(version)
+    if version.terminator.present?
+      user = User.find(version.terminator)
+      user.email
+    else
+      ''
+    end
+  end
 end
