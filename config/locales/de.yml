@@ -4,7 +4,7 @@ de:
     attributes:
       client:
         address: Adresse
-        age_request: Alter Freiwillige
+        age_request: Alter Freiwillige/r
         city: Stadt
         comments: Bemerkungen
         competent_authority: Zusätzlich involvierte Stelle
@@ -16,7 +16,7 @@ de:
         first_name: Vorname
         full_name: Name
         gender: Geschlecht
-        gender_request: Geschlecht Freiwillige
+        gender_request: Geschlecht Freiwillige/r
         goals: Inhalte der Begleitung
         interests: Interessen
         involved_authority: Fallführende Stelle
@@ -25,7 +25,7 @@ de:
         nationality: Nationalität
         permit: Bewilligung
         phone: Telefonnummer
-        relatives: Verwandte
+        relatives: Verwandte/r
         schedules: Fahrpläne
         state: Status
         street: Strasse
@@ -80,7 +80,7 @@ de:
         day: Tag
         time: Zeit
       user:
-        clients: Kunden
+        clients: Kunden/innen
         department: Standort
         email: Email
         profile: Profil
@@ -143,6 +143,7 @@ de:
         subject: Betreff
         title: Überschrift
         user: Ersteller
+        registrar: Registrator/in
     errors:
       models:
         profile:
@@ -175,7 +176,7 @@ de:
             avatar_content_type:
               invalid: ist ungültig
     models:
-      client: Klient
+      client: Klient/in
       contact: Kontakt
       contact_email: Mailadresse
       contact_phone: Telefonnummer
@@ -184,8 +185,8 @@ de:
       profile: Profil
       relative: Verwante/r
       schedule: Zeitplan
-      user: Benutzer
-      volunteer: Freiwillige
+      user: Benutzer/in
+      volunteer: Freiwillige/r
       volunteer_application: Freiwilligen Bewerbung
       volunteer_email: Bestätigungsmail
   add_language: Sprache hinzufügen
@@ -203,15 +204,18 @@ de:
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
-  clients: Klienten
+  client_created: Klient/in wurde erfolgreich erstellt.
+  client_destroyed: Klient/in wurde erfolgreich gelöscht.
+  client_updated: Klient/in wurde erfolgreich aktualisiert.
+  clients: Klienten/innen
   contact_info: Kontakt Informationen
   contacts:
     fields:
       last_name: Nachname
       name: Name
-  create_client: KlientIn erfassen
+  create_client: Klient/in erfassen
   create_profile: Profil erfassen
-  create_user: Benutzer erfassen
+  create_user: Benutzer/in erfassen
   crud:
     c_action:
       create: '%{model} wurde erfolgreich erstellt.'
@@ -338,28 +342,28 @@ de:
       show: '%{model} anzeigen'
       update: '%{model} aktualisieren'
       user:
-        create: Benutzer erstellen
+        create: Benutzer/in erstellen
         update: Login aktualisieren
   invite_sent: 'Einladung wurde an %{email} verschickt.'
   language_level: &id-lang-levels
     basic: Grundlagen
     fluent: Fliessend
     good: Gut
-    native_speaker: Muttersprachler
+    native_speaker: Muttersprachler/in
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
-  other_request: Sonstige Anforderungen an den Freiwilligen
+  other_request: Sonstige Anforderungen an den/die Freiwillige/n
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
   region: &id-regions
     canton: Kanton
     city: Stadt
     region: Region
-  registered_by: SozialberaterIn
+  registered_by: Sozialberater/in
   rejection_type: &id-rejection-types
-    her: von Freiwillige vor / nach Erstgespräch
+    her: von Freiwillige/r vor / nach Erstgespräch
     other: Anderer Grund
     us: durch uns vor / nach Gespräch
   relation: &id-relations
@@ -376,12 +380,12 @@ de:
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
-  remove_relative: Verwandte entfernen
+  remove_relative: Verwandte/n entfernen
   role: &id-roles
     department_manager: Standortverantwortliche/er
-    social_worker: SozialarbeiterIn
+    social_worker: Sozialarbeiter/in
     superadmin: Superadmin
-    volunteer: Freiwillige
+    volunteer: Freiwillige/r
   schedule: Zeitplan
   schedule_description: Wann sind Sie verfügbar?
   show_my_profile: Mein Profil
@@ -397,7 +401,7 @@ de:
         contact:
           label: Art
           name: Standortname
-        user: Assozierte Benutzer
+        user: Assozierte Benutzer/in
       q:
         state_cont: Status
       user:
@@ -475,13 +479,9 @@ de:
     evening: Abend
     morning: Morgen
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
-  users: Benutzer
+  users: Benutzer/in
   voluntary_platform: Freiwilligen Plattform
-  volunteer_application: Freiwillige/n Bewerbung
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
-  volunteer_created: Freiwillige wurde erfolgreich erstellt.
-  volunteer_destroyed: Freiwillige wurde erfolgreich gelöscht.
-  volunteer_request: Anforderungen an den Freiwilligen
   volunteer_emails: Bestätigungs-Mails
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
@@ -491,9 +491,13 @@ de:
       lead: Dies ist die Bestätigung für das Freiwilligen Email
       subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ
   volunteer_self_applicant: Selbstanmelder
-  volunteer_updated: Freiwillige wurde erfolgreich aktualisiert.
+  volunteer_application: Freiwilligen Bewerbung
+  volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
+  volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
+  volunteer_request: Anforderungen an die/den Freiwillige/n
+  volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
-  wanna_apply: Möchten Sie sich als Freiwillige/n bewerben?
+  wanna_apply: Möchten Sie sich als Freiwillige/r bewerben?
   weekdays:
     friday: Freitag
     monday: Montag
