@@ -87,9 +87,9 @@ class UsersTest < ApplicationSystemTestCase
     assert_difference 'User.count', 1 do
       click_button 'Update Volunteer'
     end
-    assert page.has_text? "Invitation sent to #{volunteer.contact.contact_emails.first.body}"
+    assert page.has_text? "Invitation sent to #{volunteer.contact.primary_email}"
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last
-    assert_equal volunteer.contact.contact_emails.first.body, email['to'].to_s
+    assert_equal volunteer.contact.primary_email, email['to'].to_s
   end
 end

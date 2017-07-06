@@ -3,14 +3,11 @@ Rails.application.routes.draw do
     get :thanks, on: :collection
   end
 
+  # Authenticated routes start here
   devise_for :users
 
-  resources :volunteers
-  resources :users
-  resources :clients
-  resources :departments
+  resources :users, :clients, :departments, :volunteers
   resources :profiles, except: [:destroy, :index]
-  resources :users
 
   root 'application#home'
 end

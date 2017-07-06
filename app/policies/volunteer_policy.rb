@@ -34,7 +34,7 @@ class VolunteerPolicy < ApplicationPolicy
     user && user.superadmin?
   end
 
-  def can_edit_state?
+  def supervisor_privileges?
     user && user.superadmin?
   end
 
