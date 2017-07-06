@@ -245,6 +245,7 @@ en:
   other_request: Other requests for volunteers
   password_reset_instructions: I want to reset my password
   personal_background: Personal background
+  previous_versions: Previous Versions
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
   region: &id-regions
