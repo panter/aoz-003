@@ -63,4 +63,13 @@ module ApplicationHelper
         model_name_from_record_or_class(f.object).element,
       label_html: { class: 'conditional-group' }
   end
+
+  def find_version_author_email(version)
+    if version.terminator.present?
+      user = User.find(version.terminator)
+      user.email
+    else
+      ''
+    end
+  end
 end
