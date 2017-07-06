@@ -1,24 +1,19 @@
-.row
+row
   .col-xs-12
-    h3= t('previous_versions')
+    h3= t('versions')
 
-.row
-  .col-xs-12
   table.table.table-striped
     thead
       tr
-        th= 'index'
-        th= t_attr(:created_at)
-        th= 'author'
-        th= 'event'
+        th= t('timepoint')
+        th= t('changed_by')
+        th= t('event')
         th colspan='2'
 
     tbody
       - client.versions.reverse.each do |version|
         tr
-          td = client.version
           td = version.created_at
           td = find_version_author_email(version)
-          td = version.event.humanize
-          td = link_to 'diff'
-          td = link_to 'rollback'
+          td = t("version.#{version.event}", scope: [:paper_trail])
+          td = link_to t_action(:show)
