@@ -60,9 +60,6 @@ en:
   back: Back
   change_my_password: Change my password
   change_password: Change your password
-  client_created: Client was successfully created.
-  client_destroyed: Client was successfully deleted.
-  client_updated: Client was successfully updated.
   clients: Clients
   contact_info: Contact information
   contacts:
@@ -74,9 +71,9 @@ en:
   create_user: Create user
   crud:
     c_action:
-      create: '%{model} wurde erfolgreich erstellt.'
-      update: '%{model} wurde erfolgreich geändert.'
-      destroy: '%{model} wurde erfolgreich gelöscht.'
+      create: '%{model} was successfully created.'
+      update: '%{model} was successfully updated.'
+      destroy: '%{model} was successfully deleted.'
     title:
       add: 'Add %{model}'
   date:
@@ -84,9 +81,6 @@ en:
       - :day
       - :month
       - :year
-  department_created: Department was successfully created.
-  department_destroyed: Department was successfully deleted.
-  department_updated: Department was successfully updated.
   departments: Departments
   devise:
     confirmations:
@@ -219,8 +213,6 @@ en:
   other_request: Other requests for volunteers
   password_reset_instructions: I want to reset my password
   personal_background: Personal background
-  profile_created: Profile was successfully created.
-  profile_updated: Profile was successfully updated.
   region: &id-regions
     canton: Canton
     city: City
@@ -328,10 +320,7 @@ en:
   users: Users
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Application
-  volunteer_created: Volunteer was successfully created.
-  volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_request: Request for volunteers
-  volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to apply as a volunteer?
   weekdays:

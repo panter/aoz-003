@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   include ContactAttributes
+  include MakeNotice
 
   before_action :set_profile, only: [:show, :edit, :update]
 
@@ -16,7 +17,7 @@ class ProfilesController < ApplicationController
   def create
     @profile = Profile.new(profile_params)
     if @profile.save
-      redirect_to @profile, notice: t('profile_created')
+      redirect_to @profile, make_notice
     else
       render :new
     end
@@ -25,7 +26,7 @@ class ProfilesController < ApplicationController
 
   def update
     if @profile.update(profile_params)
-      redirect_to @profile, notice: t('profile_updated')
+      redirect_to @profile, make_notice
     else
       render :edit unless @profile.update(profile_params)
     end
