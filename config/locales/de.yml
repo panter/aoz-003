@@ -212,6 +212,7 @@ de:
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
   assignments: Begleitungen
   available_volunteers: Verfügbare Freiwillige
+  changed_by: Geändert durch
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
@@ -374,7 +375,6 @@ de:
   other_request: Sonstige Anforderungen an den/die Freiwillige/n
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
-  previous_versions: Vorherige Versionen
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
   region: &id-regions
@@ -499,6 +499,7 @@ de:
         mailer:
           invitation_instructions:
             accept_until_format: "%d. %B %Y %H:%M"
+  timepoint: Zeitpunkt
   times:
     afternoon: Nachmittag
     evening: Abend
@@ -565,3 +566,13 @@ de:
     city_date: Ort, Datum
     for_aoc: Fur die AOZ
     zurich: Zürich
+  versions: Verlauf
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  volunteer_self_applicant: Selbstanmelder
+  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+  event: Ereignis
+  paper_trail:
+    version:
+      update: Bearbeiten
+      create: Erstellen
+      destroy: Löschen

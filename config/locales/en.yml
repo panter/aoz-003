@@ -80,6 +80,7 @@ en:
   are_you_sure_invitation: Are you sure you want to send an invitation?
   assignments: Assignments
   available_volunteers: Available volunteers
+  changed_by: Changed by
   back: Back
   change_my_password: Change my password
   change_password: Change your password
@@ -244,7 +245,6 @@ en:
   other_request: Other requests for volunteers
   password_reset_instructions: I want to reset my password
   personal_background: Personal background
-  previous_versions: Previous Versions
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
   region: &id-regions
@@ -350,6 +350,7 @@ en:
         mailer:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
+  timepoint: Timepoint
   times:
     afternoon: afternoon
     evening: evening
@@ -416,3 +417,13 @@ en:
     city_date: Ort, Datum
     for_aoc: Fur die AOZ
     zurich: Zürich
+  versions: History
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  volunteer_self_applicant: Self-applicant
+  volunteer_availability: What times are you available for voluntary engagement?
+  event: Event
+  paper_trail:
+    version:
+      update: Update
+      create: Create
+      destroy: Destroy
