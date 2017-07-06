@@ -1,4 +1,6 @@
 class Volunteer < ApplicationRecord
+  after_find :generate_state_checkers
+  after_initialize :generate_state_checkers
   include AssociatableFields
   include GenderCollection
   include FullName
@@ -42,18 +44,6 @@ class Volunteer < ApplicationRecord
     STATES_FOR_REVIEWED.map(&:to_sym)
   end
 
-  def registered?
-    state == REGISTERED
-  end
-
-  def accepted?
-    state == ACCEPTED
-  end
-
-  def rejected?
-    state == REJECTED
-  end
-
   def self.duration_collection
     [:short, :long]
   end
@@ -86,5 +76,13 @@ class Volunteer < ApplicationRecord
 
   def default_state
     self.state ||= REGISTERED
+  end
+
+  def generate_state_checkers
+    STATES.each do |s|
+      self.class.send(:define_method, "#{s}?".to_sym) do
+        state == s
+      end
+    end
   end
 end

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  after_find :generate_role_checkers
+  after_initialize :generate_role_checkers
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
@@ -18,22 +20,6 @@ class User < ApplicationRecord
   validates :role, inclusion: { in: ROLES }
 
   scope :department_assocable, (-> { where(role: [SUPERADMIN, DEPARTMENT_MANAGER]) })
-
-  def superadmin?
-    role == SUPERADMIN
-  end
-
-  def social_worker?
-    role == SOCIAL_WORKER
-  end
-
-  def department_manager?
-    role == DEPARTMENT_MANAGER
-  end
-
-  def volunteer?
-    role == VOLUNTEER
-  end
 
   def superadmin_or_department_manager?
     superadmin? || department_manager?
@@ -64,5 +50,15 @@ class User < ApplicationRecord
 
   def self.role_collection
     ROLES_FOR_USER_CREATE.map(&:to_sym)
+  end
+
+  private
+
+  def generate_role_checkers
+    ROLES.each do |r|
+      self.class.send(:define_method, "#{r}?".to_sym) do
+        role == r
+      end
+    end
   end
 end
