@@ -1,5 +1,6 @@
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
+  include MakeNotice
 
   def index
     @departments = policy_scope(Department)
@@ -20,7 +21,7 @@ class DepartmentsController < ApplicationController
     @department.update_attributes(permitted_attributes(@department))
     authorize @department
     if @department.save
-      redirect_to @department, notice: t('department_created')
+      redirect_to @department, make_notice
     else
       render :new
     end
@@ -28,7 +29,7 @@ class DepartmentsController < ApplicationController
 
   def update
     if @department.update_attributes(permitted_attributes(@department))
-      redirect_to @department, notice: t('department_updated')
+      redirect_to @department, make_notice
     else
       render :edit
     end
@@ -36,7 +37,7 @@ class DepartmentsController < ApplicationController
 
   def destroy
     @department.destroy
-    redirect_to departments_url, notice: t('department_destroyed')
+    redirect_to departments_url, make_notice
   end
 
   private
