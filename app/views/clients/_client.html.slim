@@ -16,8 +16,11 @@ tr
   td = client.goals
   td = client.competent_authority
   td = client.created_at.strftime("%d-%m-%Y")
-  td = link_to t_action(:show), client
-  td = link_to t_action(:edit), edit_client_path(client)
-  td
-    - if policy(Client).destroy?
-      = link_to t_action(:destroy), client, data: { confirm: t('are_you_sure')}, method: :delete
+  - if params[:action] == 'index'
+    td = link_to t_action(:show), client
+    td = link_to t_action(:edit), edit_client_path(client)
+    td
+      - if policy(Client).destroy?
+        = link_to t_action(:destroy), client, data: { confirm: t('are_you_sure')}, method: :delete
+  - else
+    td = button_link t('find_volunteer'), client
