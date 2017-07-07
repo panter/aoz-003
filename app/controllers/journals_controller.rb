@@ -1,4 +1,6 @@
 class JournalsController < ApplicationController
+  include MakeNotice
+
   before_action :set_journal, only: [:show, :edit, :update, :destroy]
   before_action :set_journaled
 
@@ -19,7 +21,7 @@ class JournalsController < ApplicationController
     @journal = Journal.new(journal_params.merge(journal_relations))
     authorize(@journal)
     if @journal.save
-      redirect_to @journaled
+      redirect_to @journaled, make_notice
     else
       render :new
     end
@@ -27,7 +29,7 @@ class JournalsController < ApplicationController
 
   def update
     if @journal.update(journal_params)
-      redirect_to @journaled
+      redirect_to @journaled, make_notice
     else
       render :edit
     end
@@ -35,7 +37,7 @@ class JournalsController < ApplicationController
 
   def destroy
     @journal.destroy
-    redirect_to @journaled
+    redirect_to @journaled, make_notice
   end
 
   def journal_relations
