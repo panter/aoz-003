@@ -8,6 +8,9 @@ class Volunteer < ApplicationRecord
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
 
+  has_many :journal, as: :journalable
+  accepts_nested_attributes_for :journal
+
   belongs_to :user, optional: true
 
   belongs_to :registrar, optional: true,

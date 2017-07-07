@@ -90,10 +90,10 @@ de:
         profile: Profil
         role: Rolle
       volunteer: &id-volunteer_attributes
-        address: Adresse
         additional_email_addresses: Zusätzliche Mailadressen
-        additional_phone_numbers: Zusätzliche Telefonnummern
         additional_nationality: Zusätzliche Nationalität
+        additional_phone_numbers: Zusätzliche Telefonnummern
+        address: Adresse
         adults: Erwachsene
         avatar: Bild
         birth_year: Jahrgang
@@ -144,10 +144,10 @@ de:
       volunteer_email:
         active: Aktiv
         body: Textkörper
+        registrar: Registrator/in
         subject: Betreff
         title: Überschrift
         user: Ersteller
-        registrar: Registrator/in
     errors:
       models:
         profile:
@@ -194,6 +194,7 @@ de:
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Bewerbung
       volunteer_email: Bestätigungsmail
+  add_entry: Eintrag Hinzufügen
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   age_request: &id-age_requests
@@ -215,7 +216,6 @@ de:
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
   clients: Klienten/innen
-  profile_updated: Der Login wurde erfolgreich geändert.
   contact_info: Kontakt Informationen
   contacts:
     fields:
@@ -227,8 +227,8 @@ de:
   crud:
     c_action:
       create: '%{model} wurde erfolgreich erstellt.'
-      update: '%{model} wurde erfolgreich geändert.'
       destroy: '%{model} wurde erfolgreich gelöscht.'
+      update: '%{model} wurde erfolgreich geändert.'
     title:
       add: '%{model} hinzufügen'
     updated: '%{model} wurde erfolgreich geändert.'
@@ -369,6 +369,7 @@ de:
   other_request: Sonstige Anforderungen an den/die Freiwillige/n
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   personal_background: Persönlicher Hintergrund
+  profile_updated: Der Login wurde erfolgreich geändert.
   region: &id-regions
     canton: Kanton
     city: Stadt
@@ -498,20 +499,20 @@ de:
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer/in
   voluntary_platform: Freiwilligen Plattform
+  volunteer_application: Freiwilligen Bewerbung
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+  volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
+  volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails: Bestätigungs-Mails
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
       <<: *id-volunteer_attributes
-      submitted: Die Angaben der Anmeldung
       lead: Dies ist die Bestätigung für das Freiwilligen Email
       subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ
-  volunteer_self_applicant: Selbstanmelder
-  volunteer_application: Freiwilligen Bewerbung
-  volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
-  volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
+      submitted: Die Angaben der Anmeldung
   volunteer_request: Anforderungen an die/den Freiwillige/n
+  volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r bewerben?

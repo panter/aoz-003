@@ -23,11 +23,11 @@ en:
         department: Department
         email: Email
       volunteer: &id-volunteer_attributes
-        address: Address
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
         creative: Creative
         culture: Culture
+        address: Address
         duration: Duration of the accompaniment
         family: Family
         full_name: Name
@@ -63,13 +63,13 @@ en:
       volunteer_experience_desc: Description of voluntary experience
   add_language: Add language
   add_relative: Add family member
+  age_request: "Volunteer's age"
   age_requests: &id-age_requests
     age_middle: 36 - 50
     age_no_matter: "doesn't matter"
     age_old: older than 51
     age_young: 20 - 35
   all: All
-  age_request: "Volunteer's age"
   application_submitted: Your application has been successfully sent.
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
@@ -91,8 +91,8 @@ en:
   crud:
     c_action:
       create: '%{model} was successfully created.'
-      update: '%{model} was successfully updated.'
       destroy: '%{model} was successfully deleted.'
+      update: '%{model} was successfully updated.'
     title:
       add: 'Add %{model}'
     updated: '%{model} successfully updated.'
@@ -186,8 +186,8 @@ en:
     short: Short term
   edit_login: Edit login
   edit_profile: Edit profile
-  entry_year: Entry year
   engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  entry_year: Entry year
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -205,10 +205,10 @@ en:
   gender: &id-genders
     female: female
     male: male
+  gender_request: Volunteer's gender
   gender_requests: &id-gender_requests
     no_matter: gender doesn't matter
     same: gender same
-  gender_request: Volunteer's gender
   get_back: We will soon get back to you.
   group_accompaniment: Group accompaniment
   helpers:
@@ -349,7 +349,6 @@ en:
   users: Users
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Application
-  volunteer_request: Request for volunteers
   volunteer_availability: What times are you available for voluntary engagement?
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
@@ -358,8 +357,9 @@ en:
   volunteer_mailer:
     welcome_email:
       <<: *id-volunteer_attributes
-      submitted: Data submitted with the application
       subject: Volunteer application confirmation
+      submitted: Data submitted with the application
+  volunteer_request: Request for volunteers
   volunteer_self_applicant: Self-applicant
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
