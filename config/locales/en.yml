@@ -307,9 +307,12 @@ en:
         role: *id-roles
       volunteer:
         duration:
+          all: All
           long: Long term (min 6 months)
           short: Short term
-        gender: *id-genders
+        gender:
+          <<: *id-genders
+          all: All
         language_skills:
           level: *id-lang-levels
         region: *id-regions
