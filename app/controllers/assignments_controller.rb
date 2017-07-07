@@ -43,7 +43,8 @@ class AssignmentsController < ApplicationController
 
   def find_volunteer
     @client = Client.find(params[:client_id])
-    @without_clients = Volunteer.without_clients
+    @q = Volunteer.without_clients.ransack(params[:q])
+    @without_clients = @q.result
     authorize Assignment
   end
 
