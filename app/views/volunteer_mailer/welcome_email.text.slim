@@ -12,7 +12,7 @@
 = "#{t_attr(:first_name, Contact)}:#{t3}#{@volunteer.contact.first_name}\r\n"
 = "#{t_attr(:last_name, Contact)}:#{t4}#{@volunteer.contact.last_name}\r\n"
 
-= "#{rn2}#{t_attr(:address, Contact)}#{rn2}"
+= "#{rn2}#{t('.address')}#{rn2}"
 - if @volunteer.contact.street.present?
   = "#{@volunteer.contact.street}\r\n"
 
@@ -21,7 +21,7 @@
 
 = "\r\n#{t_attr(:primary_email, Contact)}:\t\t#{@volunteer.contact.primary_email}\r\n"
 - if @volunteer.contact.contact_emails.any?
-  = "\r\nZusätzliche Mailadressen:\r\n"
+  = "\r\n#{t('.additional_email_addresses')}:\r\n"
   - @volunteer.contact.contact_emails.each do |email|
     = t_attr(:body, ContactEmail)
     = " / #{email.label}" if email.label.present?
@@ -31,7 +31,7 @@
   = "#{rn2}#{t_attr(:primary_phone, Contact)}:\t\t#{@volunteer.contact.primary_phone}\r\n"
 
 - if @volunteer.contact.contact_phones.any?
-  = "#{rn2}Zusätzliche Telefonnummern\r\n"
+  = "#{rn2}#{t('.additional_phone_numbers')}\r\n"
   - @volunteer.contact.contact_phones.each do |phone|
     = t_attr(:body, ContactPhone)
     = " / #{phone.label}" if phone.label.present?

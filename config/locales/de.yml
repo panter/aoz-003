@@ -85,7 +85,10 @@ de:
         email: Email
         profile: Profil
         role: Rolle
-      volunteer:
+      volunteer: &id-volunteer_attributes
+        address: Adresse
+        additional_email_addresses: Zusätzliche Mailadressen
+        additional_phone_numbers: Zusätzliche Telefonnummern
         additional_nationality: Zusätzliche Nationalität
         adults: Erwachsene
         avatar: Bild
@@ -483,6 +486,7 @@ de:
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
+      <<: *id-volunteer_attributes
       submitted: Die Angaben der Anmeldung
       lead: Dies ist die Bestätigung für das Freiwilligen Email
       subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ

@@ -8,7 +8,7 @@ h3
   = "#{@volunteer.contact.title} " if @volunteer.contact.title.present?
   = "#{@volunteer.contact.first_name} #{@volunteer.contact.last_name}"
 
-h4 Addresse
+h4= t(".address")
 p
   = @volunteer.contact.street
   br= "#{@volunteer.contact.postal_code} #{@volunteer.contact.city}"
@@ -17,7 +17,7 @@ h4= "#{t_attr(:primary_email, Contact)}: "
 p= @volunteer.contact.primary_email
 
 - if @volunteer.contact.contact_emails.any?
-  h4 Zusätzliche Mailadressen
+  h4= t('.additional_email_addresses')
   - @volunteer.contact.contact_emails.each do |email|
     p
       strong
@@ -31,7 +31,7 @@ p= @volunteer.contact.primary_email
   p= @volunteer.contact.primary_phone
 
 - if @volunteer.contact.contact_phones.any?
-  h4 Zusätzliche Telefonnummern
+  h4= t('.additional_phone_numbers')
   - @volunteer.contact.contact_phones.each do |phone|
     p
       strong

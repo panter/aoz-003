@@ -22,7 +22,10 @@ en:
         clients: Clients
         department: Department
         email: Email
-      volunteer:
+      volunteer: &id-volunteer_attributes
+        address: Address
+        additional_email_addresses: Additional email addresses
+        additional_phone_numbers: Additional phone numbers
         duration: Duration of the accompaniment
         full_name: Name
         region_specific: City
@@ -333,6 +336,7 @@ en:
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
+      <<: *id-volunteer_attributes
       submitted: Data submitted with the application
       subject: Volunteer application confirmation
   volunteer_self_applicant: Self-applicant
