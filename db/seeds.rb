@@ -75,7 +75,18 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
       client.contact.contact_emails.build(
         body: Faker::Internet.unique.email
       )
-
+      client.journals = [
+        Journal.new(
+          subject: Faker::Lorem.sentence(rand(2..5)),
+          body: Faker::Lorem.sentence(rand(2..5)),
+          user: user
+        ),
+        Journal.new(
+          subject: Faker::Lorem.sentence(rand(2..5)),
+          body: Faker::Lorem.sentence(rand(2..5)),
+          user: user
+        )
+      ]
       client.date_of_birth = Faker::Date.birthday(18, 65)
       client.gender = ['male', 'female'].sample
       client.nationality = ISO3166::Country.codes.sample
@@ -133,6 +144,18 @@ Volunteer.state_collection.each do |state|
     volunteer.contact.contact_phones.build(
       body: Faker::PhoneNumber.phone_number
     )
+    volunteer.journals = [
+      Journal.new(
+        subject: Faker::Lorem.sentence(rand(2..5)),
+        body: Faker::Lorem.sentence(rand(2..5)),
+        user: User.first
+      ),
+      Journal.new(
+        subject: Faker::Lorem.sentence(rand(2..5)),
+        body: Faker::Lorem.sentence(rand(2..5)),
+        user: User.first
+      )
+    ]
     volunteer.date_of_birth = Faker::Date.birthday(18, 75)
     volunteer.profession = Faker::Company.profession
     volunteer.gender = ['male', 'female'].sample
