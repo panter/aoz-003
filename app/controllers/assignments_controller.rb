@@ -22,6 +22,10 @@ class AssignmentsController < ApplicationController
     @assignment.to_pdf
     authorize @assignment
     if @assignment.save
+      @assignment.client.state = 'reserved'
+      @assignment.client.save
+      @assignment.volunteer.state = 'active'
+      @assignment.volunteer.save
       redirect_to assignments_url, make_notice
     else
       render :new
