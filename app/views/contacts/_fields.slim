@@ -21,7 +21,7 @@
 
   .col-xs-8
     = f.input :city
-  - unless f.object.dosnt_need_primary_email?
+  - if f.object.needs_primary_email?
     .col-xs-12
       = f.input :primary_email, required: true
     .col-xs-12
