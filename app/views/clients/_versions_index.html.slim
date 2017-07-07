@@ -1,19 +1,15 @@
-row
-  .col-xs-12
-    h3= t('versions')
+h3= t('versions')
 
-  table.table.table-striped
-    thead
+table.table.table-striped
+  thead
+    tr
+      th= t('timepoint')
+      th= t('changed_by')
+      th= t('event')
+
+  tbody
+    - client.versions.reverse.each do |version|
       tr
-        th= t('timepoint')
-        th= t('changed_by')
-        th= t('event')
-        th colspan='2'
-
-    tbody
-      - client.versions.reverse.each do |version|
-        tr
-          td = version.created_at
-          td = find_version_author_email(version)
-          td = t("version.#{version.event}", scope: [:paper_trail])
-          td = link_to t_action(:show)
+        td = version.created_at.localtime.strftime("%e-%m-%Y %H:%M:%S")
+        td = find_version_author_email(version)
+        td = t("version.#{version.event}", scope: [:paper_trail])
