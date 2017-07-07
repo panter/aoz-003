@@ -1,7 +1,7 @@
 tr
   td = assignment.client
   td = assignment.volunteer
-  td = assignment.agreement
+  td = link_to assignment.agreement, assignment.agreement.url
   td = link_to t_action(:show), assignment
   td = link_to t_action(:edit), edit_assignment_path(assignment)
   td = link_to t_action(:destroy), assignment, data: { confirm: t('are_you_sure') }, method: :delete

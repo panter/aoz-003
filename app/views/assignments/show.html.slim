@@ -1,9 +1,18 @@
-p
-  strong Client:
-  = @assignment.client
-p
-  strong Volunteer:
-  = @assignment.volunteer
-p
-  strong Agreement:
-  = @assignment.agreement
+.row
+  .col-xs-12
+    h1= t_title(:show)
+
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td= t_attr(:client)
+            td= @assignment.client
+          tr
+            td= t_attr(:volunteer)
+            td= @assignment.volunteer
+          tr
+            td= t_attr(:agreement)
+            td= link_to @assignment.agreement, @assignment.agreement.url
