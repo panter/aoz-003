@@ -17,3 +17,5 @@
 //= require cocoon
 //= require_tree .
 //= require selectize
+//= require selectize_custom
+
