@@ -7,8 +7,6 @@
     span.caret aria-hidden='true'
   ul.dropdown-menu
     li
-      /= link_to t('all'), "#{clients_find_volunteer_path}?client_id=#{client}&q[gender_cont]="
       = link_to t('all'), "#{request.original_url}&q[gender_cont]="
     - Volunteer.gender_collection.each do |s|
-      /li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :gender]), "#{clients_find_volunteer_path}?client_id=#{client}&q[gender_cont]=#{s}"
       li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :gender]), "#{request.original_url}&q[gender_cont]=#{s}"
