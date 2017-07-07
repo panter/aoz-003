@@ -10,7 +10,7 @@ class Contact < ApplicationRecord
   validates :last_name, presence: true
   validates :first_name, presence: true, unless: :department?
 
-  validates :primary_email, presence: true, unless: :dosnt_need_primary_email?
+  validates :primary_email, presence: true, if: :needs_primary_email?
 
   def to_s
     last_name
@@ -24,8 +24,8 @@ class Contact < ApplicationRecord
     [street, extended, postal_code, city].reject(&:blank?).join(', ')
   end
 
-  def dosnt_need_primary_email?
-    ['Department', 'Profile'].include? contactable_type
+  def needs_primary_email?
+    ['Client', 'Volunteer'].include? contactable_type
   end
 
   def department?
