@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   # Authenticated routes start here
   devise_for :users
 
-  resources :users, :clients, :departments, :volunteers
+  resources :users
+  resources :clients
+  resources :departments
+  resources :volunteers
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
 
