@@ -38,6 +38,10 @@ class VolunteerPolicy < ApplicationPolicy
     user && user.superadmin?
   end
 
+  def supervisor?
+    user.superadmin?
+  end
+
   private
 
   def volunteers_owns_profile

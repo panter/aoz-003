@@ -2,8 +2,8 @@
   .col-xs-12
     h1= @volunteer.contact.full_name
 
-- if policy(Volunteer).supervisor_privileges?
-  = render 'journals/list_block', journal_records: @volunteer.journal
+- if policy(Volunteer).supervisor?
+  = render 'journals/journal_block', journaled_for: @volunteer
 
 .table-responsive
   table.table.table-no-border-top

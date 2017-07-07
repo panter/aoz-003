@@ -69,4 +69,8 @@ module ApplicationHelper
         model_name_from_record_or_class(f.object).element,
       label_html: { class: 'conditional-group' }
   end
+
+  def confirm_deleting(record)
+    { method: :delete, data: { confirm: t_confirm_delete(record) } }
+  end
 end

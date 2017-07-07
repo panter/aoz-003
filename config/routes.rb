@@ -12,9 +12,12 @@ Rails.application.routes.draw do
   resources :clients do
     get :need_accompanying, on: :collection
     get :find_volunteer, on: :member, to: 'assignments#find_volunteer'
+    resources :journals
   end
   resources :departments
-  resources :volunteers
+  resources :volunteers do
+    resources :journals
+  end
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
 

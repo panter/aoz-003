@@ -21,8 +21,8 @@ class Client < ApplicationRecord
   has_many :relatives, as: :relativeable, dependent: :destroy
   accepts_nested_attributes_for :relatives, allow_destroy: true
 
-  has_many :journal, as: :journalable
-  accepts_nested_attributes_for :journal
+  has_many :journals, as: :journalable, dependent: :destroy
+  accepts_nested_attributes_for :journals, allow_destroy: true
 
   validates :state, inclusion: { in: STATES }
 

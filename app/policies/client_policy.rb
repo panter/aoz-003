@@ -52,4 +52,8 @@ class ClientPolicy < ApplicationPolicy
   def need_accompanying?
     user.superadmin?
   end
+
+  def supervisor?
+    user.superadmin?
+  end
 end
