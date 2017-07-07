@@ -1,9 +1,0 @@
-.row
-  .col-xs-12
-  tr
-    td = version.index
-    td = version.created_at.strftime("%d-%m-%Y")
-    td = find_version_author_name(version)
-    td = version.event.humanize
-    td = link_to 'diff'
-    td = link_to 'rollback'
