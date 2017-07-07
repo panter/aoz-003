@@ -186,7 +186,7 @@ de:
       relative: Verwante/r
       schedule: Zeitplan
       user: Benutzer/in
-      volunteer: Freiwillige/r
+      volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Bewerbung
       volunteer_email: Bestätigungsmail
   add_language: Sprache hinzufügen
@@ -208,6 +208,7 @@ de:
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
   clients: Klienten/innen
+  profile_updated: Der Login wurde erfolgreich geändert.
   contact_info: Kontakt Informationen
   contacts:
     fields:

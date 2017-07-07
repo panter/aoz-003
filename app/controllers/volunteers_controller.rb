@@ -27,7 +27,7 @@ class VolunteersController < ApplicationController
     @volunteer.registrar = current_user
     authorize @volunteer
     if @volunteer.save
-      redirect_to @volunteer, make_notice
+      redirect_to @volunteer, notice: t('volunteer_created')
     else
       render :new
     end
@@ -40,13 +40,13 @@ class VolunteersController < ApplicationController
       redirect_to volunteers_path,
         notice: t('invite_sent', email: @volunteer.contact.primary_email)
     else
-      redirect_to @volunteer, make_notice
+      redirect_to @volunteer, notice: t('volunteer_updated')
     end
   end
 
   def destroy
     @volunteer.destroy
-    redirect_to volunteers_url, make_notice
+    redirect_to volunteers_url, notice: t('volunteer_destroyed')
   end
 
   private
