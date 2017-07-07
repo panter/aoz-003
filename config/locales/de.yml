@@ -205,6 +205,7 @@ de:
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
   assignments: Begleitungen
+  available_volunteers: Verfügbare Freiwillige
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
@@ -388,7 +389,8 @@ de:
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
-  remove_relative: Verwandte/n entfernen
+  remove_relative: Verwandte entfernen
+  reserve: Reservieren
   role: &id-roles
     department_manager: Standortverantwortliche/er
     social_worker: Sozialarbeiter/in

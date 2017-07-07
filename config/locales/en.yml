@@ -26,12 +26,22 @@ en:
         address: Address
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
+        creative: Creative
+        culture: Culture
         duration: Duration of the accompaniment
+        family: Family
         full_name: Name
+        german_course: German course
+        kid: Kid
+        man: Man
+        music: Music
         region_specific: City
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
         single_accompaniment: Single accompaniment
+        sport: Sport
+        training: Training
+        woman: Woman
         working_percent: Employment rate (in Percent)
       volunteer_email:
         user: Created by
@@ -65,6 +75,7 @@ en:
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
   assignments: Assignments
+  available_volunteers: Available volunteers
   back: Back
   change_my_password: Change my password
   change_password: Change your password
@@ -247,6 +258,7 @@ en:
     uncle: Uncle
     wife: Wife/Partner
   relatives: Family members
+  reserve: Reserve
   remember_me: Remember me
   remove_language: Remove language
   remove_relative: Remove family member
