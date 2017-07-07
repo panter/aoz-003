@@ -1,0 +1,54 @@
+.row
+  .col-xs-12
+    h1= @client.contact.full_name
+
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          = render 'contacts/show', contact: @client.contact
+          tr
+            td= t_attr(:nationality, Client)
+            td= country(@client.nationality)
+          tr
+            td= t_attr(:permit, Client)
+            td= @client.permit
+
+          = render 'language_skills/show', speaker: @client
+
+          tr
+            td= t_attr(:goals, Client)
+            td= @client.goals
+
+          - if policy(Client).destroy?
+            tr
+              td= t_attr(:comments, Client)
+              td= @client.comments
+
+.row
+  .col-xs-12
+    h1= t('available_volunteers')
+
+.row
+  .col-xs-12
+  table.table.table-striped
+    thead
+      tr
+        th= t_attr(:full_name, Volunteer)
+        th= t_attr(:gender, Volunteer)
+        th= t_attr(:nationality, Volunteer)
+        th= t_attr(:additional_nationality, Volunteer)
+        th= t_attr(:city, Volunteer)
+        th= t_attr(:zip, Volunteer)
+        th= t_attr(:languages, Volunteer)
+        th= t_attr(:motivation, Volunteer)
+        th= t_attr(:experience, Volunteer)
+        th= t_attr(:duration, Volunteer)
+        th= t_attr(:single_accompaniment, Volunteer)
+        th= t_attr(:group_accompaniment, Volunteer)
+        th
+
+    tbody
+      - @without_clients.each do |volunteer|
+        = render partial: 'without_client', object: volunteer

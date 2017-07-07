@@ -92,6 +92,10 @@ class Volunteer < ApplicationRecord
     "#{contact.first_name} #{contact.last_name}"
   end
 
+  def self.without_clients
+    Volunteer.includes(:assignment).where(assignments: { volunteer_id: nil })
+  end
+
   private
 
   def default_state

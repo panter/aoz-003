@@ -37,6 +37,11 @@ class AssignmentsController < ApplicationController
     redirect_to assignments_url, notice: 'Assignment was successfully destroyed.'
   end
 
+  def find_volunteer
+    @client = Client.find(params[:client_id])
+    @without_clients = Volunteer.without_clients
+  end
+
   private
 
   def set_assignment
