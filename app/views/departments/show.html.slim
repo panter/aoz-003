@@ -17,7 +17,7 @@
     .col-xs-12
       ul
         - @department.user.each do |user|
-          li= link_to user.to_label, profile_path(user)
+          li= link_to user.to_label, profile_path(user.profile)
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
