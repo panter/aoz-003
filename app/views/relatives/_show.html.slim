@@ -8,6 +8,6 @@ tr
           - if relative.full_name.present?
             dd
               = relative.date_of_birth.try(:year)
-              - if relative.relation.present?
+              / - if relative.relative_relations.present?
               |,
-              = t("relation.#{relative.relation}")
+              / = t("relative_relations.#{relative.relative_relations}")
