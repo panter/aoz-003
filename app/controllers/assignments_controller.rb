@@ -1,14 +1,18 @@
 class AssignmentsController < ApplicationController
+  include MakeNotice
+
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   def index
     @assignments = Assignment.all
+    authorize Assignment
   end
 
   def show; end
 
   def new
     @assignment = Assignment.new
+    authorize @assignment
   end
 
   def edit; end
@@ -16,9 +20,9 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params)
     @assignment.to_pdf
-
+    authorize @assignment
     if @assignment.save
-      redirect_to(assignments_url, notice: 'Assignment was successfully created.')
+      redirect_to assignments_url, make_notice
     else
       render :new
     end
@@ -26,7 +30,7 @@ class AssignmentsController < ApplicationController
 
   def update
     if @assignment.update(assignment_params)
-      redirect_to assignments_url, notice: 'Assignment was successfully updated.'
+      redirect_to assignments_url, make_notice
     else
       render :edit
     end
@@ -34,18 +38,20 @@ class AssignmentsController < ApplicationController
 
   def destroy
     @assignment.destroy
-    redirect_to assignments_url, notice: 'Assignment was successfully destroyed.'
+    redirect_to assignments_url, make_notice
   end
 
   def find_volunteer
     @client = Client.find(params[:client_id])
     @without_clients = Volunteer.without_clients
+    authorize Assignment
   end
 
   private
 
   def set_assignment
     @assignment = Assignment.find(params[:id])
+    authorize @assignment
   end
 
   def assignment_params

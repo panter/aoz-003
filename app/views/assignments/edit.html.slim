@@ -1,8 +1,7 @@
-h1 Editing assignment
+.row
+  .col-xs-12
+    h1= t_title(:edit)
 
 == render 'form'
 
-= link_to 'Show', @assignment
-'  |
-= link_to 'Back', assignments_path
-
+= form_navigation_btn :back

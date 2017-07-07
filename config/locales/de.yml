@@ -4,6 +4,8 @@ de:
     attributes:
       assignment:
         agreement: Zustimmung
+        client: KlientIn
+        volunteer: Freiwillige
       client:
         address: Adresse
         age_request: Alter Freiwillige/r

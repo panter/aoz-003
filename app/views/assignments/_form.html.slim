@@ -1,9 +1,14 @@
 = simple_form_for(@assignment) do |f|
   = simple_error_notice f
 
-  .form-inputs
-    = f.association :client
-    = f.association :volunteer
+  .row
+    .col-xs-12
+      = f.association :client
 
-  .form-actions
-    = f.button :submit
+  .row
+    .col-xs-12
+      = f.association :volunteer
+
+  .row
+    .col-xs-12
+      = f.button :submit

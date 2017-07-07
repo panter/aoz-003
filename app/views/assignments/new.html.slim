@@ -1,5 +1,7 @@
-h1 New assignment
+.row
+  .col-xs-12
+    h1= t_title(:new)
 
 == render 'form'
 
-= link_to 'Back', assignments_path
+= form_navigation_btn :back
