@@ -457,8 +457,12 @@ de:
       user:
         role: *id-roles
       volunteer:
-        duration: *id-durations
-        gender: *id-genders
+        duration:
+          <<: *id-durations
+          all: Alle
+        gender:
+          <<: *id-genders
+          all: Alle
         language_skills:
           level: *id-lang-levels
         region: *id-regions
