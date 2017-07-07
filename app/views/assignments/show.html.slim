@@ -1,6 +1,6 @@
 .row
   .col-xs-12
-    h1= t_title(:show)
+    h1= t_title(:show, Assignment)
 
 .row
   .col-xs-12
@@ -8,11 +8,11 @@
       table.table.table-no-border-top
         tbody
           tr
-            td= t_attr(:client)
+            td= t_attr(:client, Assignment)
             td= @assignment.client
           tr
-            td= t_attr(:volunteer)
+            td= t_attr(:volunteer, Assignment)
             td= @assignment.volunteer
           tr
-            td= t_attr(:agreement)
+            td= t_attr(:agreement, Assignment)
             td= link_to @assignment.agreement, @assignment.agreement.url
