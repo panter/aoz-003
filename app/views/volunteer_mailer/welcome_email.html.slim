@@ -2,7 +2,7 @@
 h1= @volunteer_email.title
 p= @volunteer_email.body
 
-h2 t('.submitted')
+h2= t('.submitted')
 
 h3
   = "#{@volunteer.contact.title} " if @volunteer.contact.title.present?
