@@ -2,69 +2,70 @@
   .col-xs-12
     h1= @client.contact.full_name
 
-.row
-  .col-xs-12
-    .table-responsive
-      table.table.table-no-border-top
-        tbody
-          = render 'contacts/show', contact: @client.contact
-          tr
-            td= t_attr(:date_of_birth)
-            td= @client.date_of_birth.try(:year)
-          tr
-            td= t_attr(:gender)
-            td
-              - if @client.gender.present?
-                = t("gender.#{@client.gender}")
-          tr
-            td= t_attr(:nationality)
-            td= country(@client.nationality)
-          tr
-            td= t_attr(:permit)
-            td= @client.permit
+- if policy(Client).supervisor?
+  = render 'journals/journal_block', journaled_for: @client
 
-          = render 'language_skills/show', speaker: @client
+.table-responsive
+  table.table.table-no-border-top
+    tbody
+      = render 'contacts/show', contact: @client.contact
+      tr
+        td= t_attr(:date_of_birth)
+        td= @client.date_of_birth.try(:year)
+      tr
+        td= t_attr(:gender)
+        td
+          - if @client.gender.present?
+            = t("gender.#{@client.gender}")
+      tr
+        td= t_attr(:nationality)
+        td= country(@client.nationality)
+      tr
+        td= t_attr(:permit)
+        td= @client.permit
 
-          = render 'relatives/show', relative: @client
+      = render 'language_skills/show', speaker: @client
 
-          tr
-            td= t_attr(:goals)
-            td= @client.goals
+      = render 'relatives/show', relative: @client
 
-          = render 'request', client: @client
+      tr
+        td= t_attr(:goals)
+        td= @client.goals
 
-          tr
-            td= t_attr(:education)
-            td= @client.education
+      = render 'request', client: @client
 
-          tr
-            td= t_attr(:actual_activities)
-            td= @client.actual_activities
+      tr
+        td= t_attr(:education)
+        td= @client.education
 
-          tr
-            td= t_attr(:interests)
-            td= @client.interests
+      tr
+        td= t_attr(:actual_activities)
+        td= @client.actual_activities
 
-          tr
-            td= t_attr(:state)
-            td= t("state.#{@client.state}")
+      tr
+        td= t_attr(:interests)
+        td= @client.interests
 
-          tr
-            td= t_attr(:involved_authority)
-            td= @client.involved_authority
+      tr
+        td= t_attr(:state)
+        td= t("state.#{@client.state}")
 
-          tr
-            td= t_attr(:competent_authority)
-            td= @client.competent_authority
+      tr
+        td= t_attr(:involved_authority)
+        td= @client.involved_authority
 
-          tr
-            td= t('registered_by')
-            td= mail_to @client.user.email
+      tr
+        td= t_attr(:competent_authority)
+        td= @client.competent_authority
 
-          - if policy(Client).destroy?
-            tr
-              td= t_attr(:comments)
-              td= @client.comments
+      tr
+        td= t('registered_by')
+        td= mail_to @client.user.email
+
+      - if policy(Client).destroy?
+        tr
+          td= t_attr(:comments)
+          td= @client.comments
 
 = render 'schedules/show', participant: @client
 

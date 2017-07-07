@@ -1,5 +1,6 @@
 ---
 en:
+  add_entry: Add entry
   activerecord:
     attributes:
       client:
@@ -12,6 +13,8 @@ en:
         last_name: Name
         postal_code: Zip
         street: Street
+      journal:
+        entry: Entry
       contact_email:
         body: Email address
         label: Type
@@ -57,6 +60,7 @@ en:
       relative: Relative
       schedule: Schedule
       user: User
+      journal: Journal
       volunteer: Volunteer
       volunteer_application: Volunteer Application
       volunteer_email: Confirmation email
@@ -89,6 +93,8 @@ en:
   create_profile: Create profile
   create_user: Create user
   crud:
+    action:
+      destroy: Delete
     c_action:
       create: '%{model} was successfully created.'
       destroy: '%{model} was successfully deleted.'
@@ -376,6 +382,7 @@ en:
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
   your_region: In which region can you imagine your employment?
+  add_journal_entry: Write a journal entry
   pdf_header:
     title: Fachstelle Freiwilligenarbeit
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch

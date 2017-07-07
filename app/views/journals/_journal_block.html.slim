@@ -1,0 +1,33 @@
+.row
+  .col-xs-12
+    button.btn.btn-primary(data-toggle='collapse' data-target='#journalBlock' type='button'  aria-expanded='false' aria-controls='journalBlock')
+      = 'Journal'
+
+#journalBlock.collapse
+  .row
+    .col-xs-12
+      = link_to t('add_journal_entry'), { controller: 'journals', action: 'new', "#{controller_name.singularize}_id": journaled_for.id }, class: 'btn btn-success'
+
+  - if journaled_for.journals.any?
+    .table-responsive
+      table.table
+        thead
+          tr
+            th Datum
+            th Titel
+            th Text
+            th Author
+            th colspan=3
+        tbody
+          - journaled_for.journals.each do |record|
+            tr
+              td= l(record.created_at)
+              td= record.subject
+              td= record.body.truncate(40) if record.body
+              td= link_to record.user.to_label, record.user.profile
+              td= link_to t_action(:show), client_journal_path(journaled_for, record)
+              td= link_to t_action(:edit), edit_client_journal_path(journaled_for, record)
+              td= link_to t_action(:destroy), client_journal_path(journaled_for, record), confirm_deleting(record)
+  hr
+
+

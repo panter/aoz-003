@@ -53,6 +53,8 @@ de:
       contact_phone:
         body: Telefonnummer
         label: Art
+      journal:
+        entry: Eintrag
       department:
         associated_users: Assozierte Benutzer
         city: Ort
@@ -191,6 +193,7 @@ de:
       relative: Verwante/r
       schedule: Zeitplan
       user: Benutzer/in
+      journal: Journal
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Bewerbung
       volunteer_email: Bestätigungsmail
@@ -225,6 +228,8 @@ de:
   create_profile: Profil erfassen
   create_user: Benutzer/in erfassen
   crud:
+    action:
+      destroy: Löschen
     c_action:
       create: '%{model} wurde erfolgreich erstellt.'
       destroy: '%{model} wurde erfolgreich gelöscht.'
@@ -527,6 +532,7 @@ de:
   when: Zeit
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
+  add_journal_entry: Journal Eintrag verfassen
   pdf_header:
     title: Fachstelle Freiwilligenarbeit
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
