@@ -1,17 +1,19 @@
-# Pull Request
-
-## [Link to story in trello](#)
+# [Story in Trello](#)
 
 ## Done?
 
-- [ ] Acceptance criterias are met
-- [ ] Code quality checks are green
-- [ ] Readme updated if needed
-- [ ] Story under test
-- [ ] Mobile works
-- [ ] Seeds created
-- [ ] Translated
-- [ ] Code is reviewed
+### Done for approval?
 
-- [ ] Deployed to staging after mergeing
-- [ ] Tested manually on staging
+* [ ] Acceptance criteria are met
+* [ ] Code quality checks are green
+* [ ] Readme updated if needed
+* [ ] Story under test
+* [ ] Mobile works
+* [ ] Seeds created
+* [ ] Translated
+* [ ] Code is reviewed
+
+### Done after the merge?
+
+* [ ] Deployed to staging after the merge
+* [ ] Tested manually on staging
