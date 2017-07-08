@@ -2,7 +2,6 @@ class Client < ApplicationRecord
   include AssociatableFields
   include AssociateRelatives
   include GenderCollection
-  include RequestCollection
   include YearCollection
 
   REGISTERED = 'registered'.freeze
@@ -18,6 +17,14 @@ class Client < ApplicationRecord
   accepts_nested_attributes_for :contact
 
   validates :state, inclusion: { in: STATES }
+
+  def self.gender_request_collection
+    [:same, :no_matter]
+  end
+
+  def self.age_request_collection
+    [:age_no_matter, :age_young, :age_middle, :age_old]
+  end
 
   def self.state_collection
     STATES.map(&:to_sym)
