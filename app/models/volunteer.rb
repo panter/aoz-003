@@ -1,5 +1,5 @@
 class Volunteer < ApplicationRecord
-  include AssociatableFields
+  include LanguageAndScheduleReferences
   include GenderCollection
   include FullName
   acts_as_paranoid

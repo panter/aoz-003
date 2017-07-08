@@ -1,4 +1,4 @@
-module AssociatableFields
+module LanguageAndScheduleReferences
   extend ActiveSupport::Concern
 
   included do
