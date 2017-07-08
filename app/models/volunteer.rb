@@ -1,7 +1,7 @@
 class Volunteer < ApplicationRecord
   include AssociatableFields
   include GenderCollection
-  include FullName
+
   acts_as_paranoid
   before_save :default_state
 
