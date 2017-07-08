@@ -1,6 +1,9 @@
 class Volunteer < ApplicationRecord
   include LanguageAndScheduleReferences
   include GenderCollection
+  include FullName
+  include BuildContactRelation
+  include BuildSchedulesRelation
 
   acts_as_paranoid
   before_save :default_state

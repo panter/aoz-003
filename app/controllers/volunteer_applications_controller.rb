@@ -7,8 +7,6 @@ class VolunteerApplicationsController < ApplicationController
 
   def new
     @volunteer = Volunteer.new
-    @volunteer.schedules << Schedule.build
-    @volunteer.build_contact
   end
 
   def create
