@@ -1,6 +1,5 @@
 class Client < ApplicationRecord
-  include AssociatableFields
-  include AssociateRelatives
+  include LanguageAndScheduleReferences
   include GenderCollection
   include YearCollection
 
@@ -15,6 +14,9 @@ class Client < ApplicationRecord
 
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
+
+  has_many :relatives, as: :relativeable, dependent: :destroy
+  accepts_nested_attributes_for :relatives, allow_destroy: true
 
   validates :state, inclusion: { in: STATES }
 
