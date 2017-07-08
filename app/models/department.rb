@@ -1,4 +1,6 @@
 class Department < ApplicationRecord
+  include BuildContactRelation
+
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
 

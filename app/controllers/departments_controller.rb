@@ -10,7 +10,6 @@ class DepartmentsController < ApplicationController
 
   def new
     @department = Department.new
-    @department.build_contact
     authorize @department
   end
 

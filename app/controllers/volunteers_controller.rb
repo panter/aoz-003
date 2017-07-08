@@ -15,8 +15,6 @@ class VolunteersController < ApplicationController
 
   def new
     @volunteer = Volunteer.new
-    @volunteer.schedules << Schedule.build
-    @volunteer.build_contact
     authorize @volunteer
   end
 

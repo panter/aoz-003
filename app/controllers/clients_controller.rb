@@ -13,8 +13,6 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new(user: current_user)
-    @client.schedules << Schedule.build
-    @client.build_contact
     authorize @client
   end
 
@@ -63,6 +61,6 @@ class ClientsController < ApplicationController
       :state, :comments, :involved_authority, :competent_authority, :actual_activities,
       language_skills_attributes, relatives_attributes, schedules_attributes,
       contact_attributes
-      )
+    )
   end
 end

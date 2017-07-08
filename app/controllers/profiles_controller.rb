@@ -8,7 +8,6 @@ class ProfilesController < ApplicationController
 
   def new
     @profile = Profile.new(user_id: current_user.id)
-    @profile.build_contact
     authorize @profile
   end
 
@@ -44,6 +43,6 @@ class ProfilesController < ApplicationController
       :user_id, :picture, :profession, :monday,
       :tuesday, :wednesday, :thursday, :friday, :avatar,
       contact_attributes
-      )
+    )
   end
 end
