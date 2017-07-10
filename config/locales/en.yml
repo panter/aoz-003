@@ -376,3 +376,33 @@ en:
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
   your_region: In which region can you imagine your employment?
+  pdf_header:
+    title: Fachstelle Freiwilligenarbeit
+    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
+    contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
+  assignment_pdf:
+    title: Vereinbarung zwischen AOZ und Freiwilligen
+    volunteer_title: Freiwillige Person
+    client_title: Verantwortliche Person in der AOZ
+    mobile: Handy
+    position: Funktion
+    location: Einsatzort
+    location_description: Beschreibung des Einsatzes
+    day_time: Tag / Zeit
+    frequency: Frequenz
+    start: Einsatzbeginn
+    trial_time: 4 Wochen Probezeit bis
+    agreement_disclamer: Die Einsatzdauer beträgt mindestens 6 Monate. Entscheiden sich Freiwillige, ihre Tätigkeit aufzugeben, so teilen sie dies der verantwortlichen Person vor Ort spätestens vier Wochen vor Einsatzende mit.
+    agreement_text:
+      list1:
+        title: Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ
+        item1: Verhaltenskodex für Freiwillige
+        item2: Rechte und Pflichten für Freiwillige
+        item3: AOZ Leitlinien Praktische Integrationsarbeit 2011
+      list2:
+        title: Allenfalls auch
+        item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
+        item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
+    city_date: Ort, Datum
+    for_aoc: Fur die AOZ
+    zurich: Zürich

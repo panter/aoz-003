@@ -1,0 +1,29 @@
+.pdf-logo-image {
+  height: 30px;
+  width: 75px;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.pdf-header {
+  font-size: $font-size-small;
+}
+
+.col-input {
+  border-bottom: 1px solid $gray-light;
+  height: $line-height-computed;
+}
+
+.row-box {
+  border: 1px solid $black;
+  padding-top: $padding-large-horizontal;
+  margin-bottom: 0;
+}
+
+.row-bottom {
+  padding-top: $padding-large-horizontal;
+  margin-bottom: 0;
+}
