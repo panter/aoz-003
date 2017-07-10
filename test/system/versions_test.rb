@@ -4,7 +4,7 @@ class VersionsTest < ApplicationSystemTestCase
   setup do
     with_versioning do
     @user = create :user, email: 'superadmin@example.com'
-    @client = create :user, id: 20
+    @client = create :user
     @client.reload
     login_as @user
     end
@@ -16,6 +16,7 @@ class VersionsTest < ApplicationSystemTestCase
       visit new_client_path
       fill_in 'First name', with: 'asdf'
       fill_in 'Last name', with: 'asdf'
+      fill_in 'Primary email', with: 'client@gurkenmail.com'
       click_button 'Create Client'
 
       assert page.has_text? 'Client was successfully created.'
@@ -32,6 +33,7 @@ class VersionsTest < ApplicationSystemTestCase
       visit new_client_path
       fill_in 'First name', with: 'asdf'
       fill_in 'Last name', with: 'asdf'
+      fill_in 'Primary email', with: 'client@gurkenmail.com'
       click_button 'Create Client'
 
       click_link 'Edit Client'
