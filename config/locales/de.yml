@@ -364,6 +364,7 @@ de:
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
+  need_accompanying: Ohne Begleitung
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   other_request: Sonstige Anforderungen an den/die Freiwillige/n
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
@@ -523,6 +524,5 @@ de:
     tuesday: Dienstag
     wednesday: Mittwoch
   when: Zeit
-  without_assignment: Ohne Begleitung
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?

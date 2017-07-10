@@ -69,15 +69,15 @@ class ClientPolicyTest < PolicyAssertions::Test
     refute_permit @department_manager, Client.first, 'index?'
   end
 
-  test 'Without assignments: superadmin can see clients without_assignments' do
-    assert_permit @superadmin, Client.first, 'without_assignments?'
+  test 'Need accompanying: superadmin can see clients need accompanying' do
+    assert_permit @superadmin, Client.first, 'need_accompanying?'
   end
 
-  test 'Without assignments: social worker cannot see clients without assignments' do
-    refute_permit @social_worker, Client.first, 'without_assignments?'
+  test 'Need accompanying: social worker cannot see clients need accompanying' do
+    refute_permit @social_worker, Client.first, 'need_accompanying?'
   end
 
-  test 'Without assignments: department manager cannot see clients without assignments' do
-    refute_permit @department_manager, Client.first, 'without_assignments?'
+  test 'Need accompanying: department manager cannot see clients need accompanying' do
+    refute_permit @department_manager, Client.first, 'need_accompanying?'
   end
 end

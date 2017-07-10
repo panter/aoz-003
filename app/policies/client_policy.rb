@@ -49,7 +49,7 @@ class ClientPolicy < ApplicationPolicy
     user.superadmin?
   end
 
-  def without_assignments?
+  def need_accompanying?
     user.superadmin?
   end
 end
