@@ -1,8 +1,7 @@
 tr
   td = link_to assignment.client, assignment.client
   td = link_to assignment.volunteer, assignment.volunteer
-  td = link_to assignment.agreement, assignment.agreement.url
   td = link_to t_action(:show), assignment
   td = link_to t_action(:edit), edit_assignment_path(assignment)
   td = link_to t_action(:destroy), assignment, data: { confirm: t('are_you_sure') }, method: :delete
-  td = link_to t('download'), assignment.agreement.url
+  td = link_to t('download'), assignment_path(assignment, format: :pdf)
