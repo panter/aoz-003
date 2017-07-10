@@ -3,11 +3,11 @@
 
   .row
     .col-xs-12
-      = f.association :client, selected: params[:client_id] || @assignment.client.id, include_blank: true
+      = f.association :client, include_blank: true, selected: params[:client_id] || (@assignment.client.id if @assignment.client.present?)
 
   .row
     .col-xs-12
-      = f.association :volunteer, selected: params[:volunteer_id] || @assignment.volunteer.id, include_blank: true
+      = f.association :volunteer, include_blank: true, selected: params[:volunteer_id] || (@assignment.volunteer.id if @assignment.volunteer.present?)
 
   .row
     .col-xs-12
