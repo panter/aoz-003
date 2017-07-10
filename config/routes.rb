@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/clients/need_accompanying', to: 'clients#without_assignments'
+  get '/clients/need_accompanying'
   get '/clients/find_volunteer', to: 'assignments#find_volunteer'
 
   resources :assignments

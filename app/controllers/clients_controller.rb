@@ -44,9 +44,9 @@ class ClientsController < ApplicationController
     redirect_to clients_url, make_notice
   end
 
-  def without_assignments
-    @without_assignments = Client.without_assignments
-    authorize @without_assignments
+  def need_accompanying
+    @need_accompanying = Client.need_accompanying
+    authorize @need_accompanying
   end
 
   private

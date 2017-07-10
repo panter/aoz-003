@@ -10,7 +10,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'assign unassigned client' do
-    click_link 'Without Assignment'
+    click_link 'Need accompanying'
     click_link 'Find volunteer'
     click_link 'Reserve'
     click_button 'Create Assignment'

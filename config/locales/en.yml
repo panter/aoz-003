@@ -233,6 +233,7 @@ en:
   messages:
     confirm_delete: "Really delete %{model} %{record}?"
     select_prompt: "Select %{model}"
+  need_accompanying: Need accompanying
   not_authorized: You are not authorized to perform this action.
   other_request: Other requests for volunteers
   password_reset_instructions: I want to reset my password
@@ -372,7 +373,6 @@ en:
     tuesday: Tuesday
     wednesday: Wednesday
   when: Time
-  without_assignment: Without Assignment
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
   your_region: In which region can you imagine your employment?

@@ -31,7 +31,7 @@ class Client < ApplicationRecord
     [:age_no_matter, :age_young, :age_middle, :age_old]
   end
 
-  def self.without_assignments
+  def self.need_accompanying
     Client.includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
   end
 
