@@ -40,6 +40,8 @@ class JournalsController < ApplicationController
     redirect_to @journaled, make_notice
   end
 
+  private
+
   def journal_relations
     {
       journalable_type: @journaled.class.model_name.name,
@@ -47,8 +49,6 @@ class JournalsController < ApplicationController
       user_id: current_user.id
     }
   end
-
-  private
 
   def set_journal
     @journal = Journal.find(params[:id])
@@ -62,7 +62,7 @@ class JournalsController < ApplicationController
 
   def journal_params
     params.require(:journal).permit(
-      :subject, :user_id, :body, :client_id, :volunteer_id, :client_id
+      :subject, :user_id, :body, :client_id, :volunteer_id
     )
   end
 end
