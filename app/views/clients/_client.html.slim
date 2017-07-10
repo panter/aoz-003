@@ -23,4 +23,4 @@ tr
       - if policy(Client).destroy?
         = link_to t_action(:destroy), client, data: { confirm: t('are_you_sure')}, method: :delete
   - else
-    td = button_link t('find_volunteer'), clients_find_volunteer_path(client_id: client)
+    td = button_link t('find_volunteer'), find_volunteer_client_path(id: client)

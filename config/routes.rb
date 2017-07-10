@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get '/clients/need_accompanying'
-  get '/clients/find_volunteer', to: 'assignments#find_volunteer'
 
   resources :assignments
   resources :volunteer_applications, only: [:new, :create] do
@@ -11,7 +9,10 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :users
-  resources :clients
+  resources :clients do
+    get :need_accompanying, on: :collection
+    get :find_volunteer, on: :member, to: 'assignments#find_volunteer'
+  end
   resources :departments
   resources :volunteers
   resources :volunteer_emails
