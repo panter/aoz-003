@@ -8,7 +8,15 @@ class AssignmentsController < ApplicationController
     authorize Assignment
   end
 
-  def show; end
+  def show
+    @assignment = Assignment.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "assignment_#{@assignment.id}", template: 'assignments/show.html.slim', layout: 'pdf.pdf'
+      end
+    end
+  end
 
   def new
     @assignment = Assignment.new
@@ -19,7 +27,6 @@ class AssignmentsController < ApplicationController
 
   def create
     @assignment = Assignment.new(assignment_params)
-    @assignment.to_pdf
     authorize @assignment
     if @assignment.save
       @assignment.client.state = Client::RESERVED
@@ -54,7 +61,7 @@ class AssignmentsController < ApplicationController
   end
 
   def find_volunteer
-    @client = Client.find(params[:client_id])
+    @client = Client.find(params[:id])
     @q = Volunteer.without_clients.ransack(params[:q])
     @without_clients = @q.result
     authorize Assignment
