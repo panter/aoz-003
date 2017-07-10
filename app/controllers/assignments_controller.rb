@@ -22,9 +22,9 @@ class AssignmentsController < ApplicationController
     @assignment.to_pdf
     authorize @assignment
     if @assignment.save
-      @assignment.client.state = 'reserved'
+      @assignment.client.state = Client::RESERVED
       @assignment.client.save
-      @assignment.volunteer.state = 'active'
+      @assignment.volunteer.state = Volunteer::ACTIVE
       @assignment.volunteer.save
       redirect_to assignments_url, make_notice
     else
@@ -41,7 +41,15 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
+    client = @assignment.client
+    volunteer = @assignment.volunteer
     @assignment.destroy
+    client.state = Client::REGISTERED
+    client.save
+    if Volunteer.without_clients.include?(volunteer)
+      volunteer.state = Volunteer::ACCEPTED
+      volunteer.save
+    end
     redirect_to assignments_url, make_notice
   end
 
