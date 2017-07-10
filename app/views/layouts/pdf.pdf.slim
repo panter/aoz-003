@@ -3,5 +3,16 @@ html
   head
     = wicked_pdf_stylesheet_link_tag 'application'
   body
+    .row.pdf-header
+      .col-xs-3
+        .pdf-logo-image
+          = wicked_pdf_image_tag 'AOZ_Logo.svg'
+      .col-xs-4
+        b= t('pdf_header.title').html_safe
+      .col-xs-2
+        = t('pdf_header.address').html_safe
+      .col-xs-3
+        = t('pdf_header.contact').html_safe
+
     .container
       = yield

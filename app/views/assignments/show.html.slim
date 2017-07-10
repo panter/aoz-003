@@ -1,18 +1,169 @@
 .row
-  .col-xs-12
-    h1= t_title(:show, Assignment)
+  .col-xs-11.col-xs-offset-1
+    h3= t('assignment_pdf.title')
 
 .row
-  .col-xs-12
-    .table-responsive
-      table.table.table-no-border-top
-        tbody
-          tr
-            td= t_attr(:client, Assignment)
-            td= @assignment.client
-          tr
-            td= t_attr(:volunteer, Assignment)
-            td= @assignment.volunteer
-          tr
-            td= t_attr(:agreement, Assignment)
-            td= link_to @assignment.agreement, @assignment.agreement.url
+  .col-xs-11.col-xs-offset-1
+    h4= t('assignment_pdf.volunteer_title')
+
+.row
+  .col-xs-11.col-xs-offset-1
+    .row
+      .col-xs-6
+        .row
+          .col-xs-5
+            = t_attr(:last_name, Contact)
+          .col-xs-7.col-input
+            = @assignment.volunteer.contact.last_name
+        .row
+          .col-xs-5
+            = t_attr(:street, Contact)
+          .col-xs-7.col-input
+            = @assignment.volunteer.contact.street
+        .row
+          .col-xs-5
+            = t_attr(:primary_phone, Contact)
+          .col-xs-7.col-input
+            = @assignment.volunteer.contact.primary_phone
+        .row
+          .col-xs-5
+            = t_attr(:date_of_birth, Volunteer)
+          .col-xs-7.col-input
+            = @assignment.volunteer.date_of_birth
+      .col-xs-6
+        .row
+          .col-xs-5
+            = t_attr(:first_name, Contact)
+          .col-xs-7.col-input
+            = @assignment.volunteer.contact.first_name
+        .row
+          .col-xs-5
+            = "#{t_attr(:postal_code, Contact)} / #{t_attr(:city, Contact)}"
+          .col-xs-7.col-input
+            = "#{@assignment.volunteer.contact.postal_code} #{@assignment.volunteer.contact.city}"
+        .row
+          .col-xs-5
+            = t_attr(:primary_email, Contact)
+          .col-xs-7.col-input
+            = @assignment.volunteer.contact.primary_email
+        .row
+          .col-xs-5
+            = t_attr(:nationality, Volunteer)
+          .col-xs-7.col-input
+            = @assignment.volunteer.nationality
+
+    .row.row-box
+      .col-xs-12
+        .row
+          .col-xs-4
+            = t('assignment_pdf.location')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.location_description')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.day_time')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.frequency')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.start')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.trial_time')
+          .col-xs-8.col-input
+        .row
+          .col-xs-12
+            = t('assignment_pdf.agreement_disclamer')
+
+.row
+  .col-xs-11.col-xs-offset-1
+    h4= t('assignment_pdf.client_title')
+
+.row
+  .col-xs-11.col-xs-offset-1
+    .row
+      .col-xs-6
+        .row
+          .col-xs-5
+            = t_attr(:last_name, Contact)
+          .col-xs-7.col-input
+            = @assignment.client.contact.last_name
+        .row
+          .col-xs-5
+            = t_attr(:street, Contact)
+          .col-xs-7.col-input
+            = @assignment.client.contact.street
+        .row
+          .col-xs-5
+            = t('assignment_pdf.position')
+          .col-xs-7.col-input
+        .row
+          .col-xs-5
+            = t_attr(:primary_email, Contact)
+          .col-xs-7.col-input
+            = @assignment.client.contact.primary_email
+      .col-xs-6
+        .row
+          .col-xs-5
+            = t_attr(:first_name, Contact)
+          .col-xs-7.col-input
+            = @assignment.client.contact.first_name
+        .row
+          .col-xs-5
+            = "#{t_attr(:postal_code, Contact)} / #{t_attr(:city, Contact)}"
+          .col-xs-7.col-input
+            = "#{@assignment.client.contact.postal_code} #{@assignment.client.contact.city}"
+        .row
+          .col-xs-5
+            = t_attr(:primary_phone, Contact)
+          .col-xs-7.col-input
+            = @assignment.client.contact.primary_phone
+        .row
+          .col-xs-5
+            = t('assignment_pdf.mobile')
+          .col-xs-7.col-input
+
+    .row.row-box
+      .col-xs-12
+        p= t('assignment_pdf.agreement_text.list1.title')
+        ul
+          li= t('assignment_pdf.agreement_text.list1.item1')
+
+          li= t('assignment_pdf.agreement_text.list1.item2')
+
+          li= t('assignment_pdf.agreement_text.list1.item3')
+
+        p= t('assignment_pdf.agreement_text.list1.title')
+        ul
+          li= t('assignment_pdf.agreement_text.list1.item1')
+
+          li= t('assignment_pdf.agreement_text.list1.item2')
+
+    .row.row-bottom
+      .col-xs-6
+        .row
+          .col-xs-5
+            = t('assignment_pdf.city_date')
+          .col-xs-7.col-input
+            = "#{t('assignment_pdf.zurich')}, #{l @assignment.created_at.to_date}"
+        .row
+          .col-xs-5
+            = t('assignment_pdf.for_aoc')
+          .col-xs-7.col-input
+      .col-xs-6
+        .row
+          .col-xs-5
+            = t('assignment_pdf.city_date')
+          .col-xs-7.col-input
+        .row
+          .col-xs-5
+            = t_attr(:volunteer, Assignment)
+          .col-xs-7.col-input
+
