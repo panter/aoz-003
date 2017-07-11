@@ -10,8 +10,8 @@
     thead
       tr
         th= sort_link @q, :contact_title
-        th= sort_link @q, :first_name, t_attr(:full_name, Volunteer)
-        th= sort_link @q, :city
+        th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
+        th= sort_link @q, :contact_city
         th= sort_link @q, :contact_postal_code
         th= sort_link @q, :contact_contact_emails_body
         th= sort_link @q, :date_of_birth, t_attr(:birth_year, Volunteer)
