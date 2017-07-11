@@ -1,5 +1,8 @@
 - gender_filter = request.GET[:q] && request.GET[:q][:gender_cont].present? ? request.GET[:q][:gender_cont] : 'all'
 - client = client
+- url = request.original_url
+- female = 'q[gender_cont]=female'
+- male = 'q[gender_cont]=male'
 .btn-group
   button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:gender)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
     = "#{t_attr(:gender, Volunteer)} : "
@@ -7,12 +10,20 @@
     span.caret aria-hidden='true'
   ul.dropdown-menu
     li
-      - if request.original_url.include?('cont')
-        = link_to t('all'), "#{request.original_url}&q[gender_cont]="
+      - if url.include?('cont')
+        - if url.include?(female) || url.include?(male)
+          - url.gsub! female, ''
+          - url.gsub! male, ''
+          - url.gsub! '&&', ''
+        = link_to t('all'), "#{url}&q[gender_cont]="
       - else
-        = link_to t('all'), "#{request.original_url}?q[gender_cont]="
+        = link_to t('all'), "#{url}?q[gender_cont]="
     - Volunteer.gender_collection.each do |s|
-      - if request.original_url.include?('cont')
-        li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :gender]), "#{request.original_url}&q[gender_cont]=#{s}"
+      - if url.include?('cont')
+        - if url.include?(female) || url.include?(male)
+          - url.gsub! female, ''
+          - url.gsub! male, ''
+          - url.gsub! '&&', ''
+        li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :gender]), "#{url}&q[gender_cont]=#{s}"
       - else
-        li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :gender]), "#{request.original_url}?q[gender_cont]=#{s}"
+        li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :gender]), "#{url}?q[gender_cont]=#{s}"
