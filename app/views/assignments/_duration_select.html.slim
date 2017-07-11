@@ -1,8 +1,4 @@
-- duration_filter = request.GET[:q] && request.GET[:q][:duration_cont].present? ? request.GET[:q][:duration_cont] : 'all'
-- client = client
-- url = request.original_url
-- long = 'q[duration_cont]=long'
-- short = 'q[duration_cont]=short'
+- duration_filter = params[:q] && params[:q][:duration_cont].present? ? params[:q][:duration_cont] : 'all'
 .btn-group
   button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:duration)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
     = "#{t_attr(:duration, Volunteer)} : "
@@ -10,20 +6,6 @@
     span.caret aria-hidden='true'
   ul.dropdown-menu
     li
-      - if url.include?('cont')
-        - if url.include?(long) || url.include?(short)
-          - url.gsub! long, ''
-          - url.gsub! short, ''
-          - url.gsub! '&&', ''
-        = link_to t('all'), "#{url}&q[duration_cont]="
-      - else
-        = link_to t('all'), "#{url}?q[duration_cont]="
+      = link_to t('all'), params.permit!.to_h.deep_merge(q: {duration_cont: ''})
     - Volunteer.duration_collection.each do |s|
-      - if request.original_url.include?('cont')
-        - if url.include?(long) || url.include?(short)
-          - url.gsub! long, ''
-          - url.gsub! short, ''
-          - url.gsub! '&&', ''
-        li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :duration]), "#{url}&q[duration_cont]=#{s}"
-      - else
-        li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :duration]), "#{url}?q[duration_cont]=#{s}"
+      li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :duration]), params.permit!.to_h.deep_merge(q: {duration_cont: s})

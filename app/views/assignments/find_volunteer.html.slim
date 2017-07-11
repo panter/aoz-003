@@ -30,9 +30,9 @@
   .col-xs-12
     h1= t('available_volunteers')
 
-.row
-  .col-xs-12.col-md-6= render partial: 'gender_select', locals: {client: @client.id}
-  .col-xs-12.col-md-6= render partial: 'duration_select', locals: {client: @client.id}
+.filters
+  = render partial: 'gender_select', locals: {client: @client.id}
+  = render partial: 'duration_select', locals: {client: @client.id}
 
 .row
   .col-xs-12
@@ -41,8 +41,8 @@
       tr
         th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
         th= sort_link @q, :gender, t_attr(:gender, Volunteer)
-        th= t_attr(:nationality, Volunteer)
-        th= t_attr(:additional_nationality, Volunteer)
+        th= sort_link @q, :nationality_long, t_attr(:nationality, Volunteer)
+        th= sort_link @q, :adittional_nationality_long, t_attr(:additional_nationality, Volunteer)
         th= sort_link @q, :contact_city, t_attr(:city, Volunteer)
         th= sort_link @q, :contact_postal_code, t_attr(:zip, Volunteer)
         th= t_attr(:languages, Volunteer)
