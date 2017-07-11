@@ -99,6 +99,14 @@ class Volunteer < ApplicationRecord
     Volunteer.includes(:assignment).where(assignments: { volunteer_id: nil })
   end
 
+  def nationality_long
+    ApplicationController.helpers.country nationality
+  end
+
+  def adittional_nationality_long
+    ApplicationController.helpers.country additional_nationality
+  end
+
   private
 
   def default_state
