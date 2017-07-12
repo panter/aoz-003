@@ -5,6 +5,7 @@ de:
       assignment:
         agreement: Zustimmung
         client: KlientIn
+        state: Status
         volunteer: Freiwillige
       client:
         actual_activities: Aktuelle Tätigkeiten
@@ -443,6 +444,10 @@ de:
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
     "no": 'Nein'
     options:
+      assignment:
+        state:
+          active: Aktiv
+          suggested: Vorgeschlagen
       client:
         age_request: *id-age_requests
         gender: *id-genders

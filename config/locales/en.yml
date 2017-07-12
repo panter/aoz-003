@@ -294,6 +294,10 @@ en:
         strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
     "no": 'No'
     options:
+      assignment:
+        state:
+          active: Active
+          suggested: Suggested
       client:
         age_request: *id-age_requests
         gender: *id-genders
