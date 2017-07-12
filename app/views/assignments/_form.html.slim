@@ -11,4 +11,8 @@
 
   .row
     .col-xs-12
+      = f.input :state, collection: Assignment.state_collection, default: :suggested
+
+  .row
+    .col-xs-12
       = f.button :submit
