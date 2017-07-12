@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
   resources :departments
   resources :volunteers do
+    get :without_clients, on: :collection
     resources :journals
   end
   resources :volunteer_emails

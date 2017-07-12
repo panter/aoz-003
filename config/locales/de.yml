@@ -543,6 +543,7 @@ de:
     tuesday: Dienstag
     wednesday: Mittwoch
   when: Zeit
+  without_clients: Ohne Klienten
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
   add_journal_entry: Journal Eintrag verfassen
