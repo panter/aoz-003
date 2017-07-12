@@ -7,11 +7,13 @@ de:
         client: KlientIn
         volunteer: Freiwillige
       client:
+        actual_activities: Aktuelle Tätigkeiten
         address: Adresse
         age_request: Alter Freiwillige/r
         city: Stadt
         comments: Bemerkungen
         competent_authority: Zusätzlich involvierte Stelle
+        created_at: Erstellt am
         date_of_birth: Geburtsdatum
         date_of_year: Geburtsjahr
         deleted_at: Gelöscht
@@ -27,6 +29,7 @@ de:
         language_skills: Sprachkenntnisse
         last_name: Nachname
         nationality: Nationalität
+        other_request: Andere Anforderungen
         permit: Bewilligung
         phone: Telefonnummer
         relatives: Verwandte/r
@@ -36,6 +39,7 @@ de:
         user: User
         zip: Postleitzahl
       contact:
+        address: Adresse
         city: Ort
         contact_emails: Mailadressen
         contact_phones: Telefonnummern
