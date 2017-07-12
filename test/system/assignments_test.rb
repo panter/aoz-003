@@ -9,6 +9,22 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit clients_path
   end
 
+  test 'new assignment form with preselected fields' do
+    visit new_assignment_path
+    within '.assignment_client' do
+      select(@client.contact.full_name, from: 'Client')
+    end
+    within '.assignment_volunteer' do
+      select(@volunteer.contact.full_name, from: 'Volunteer')
+    end
+    click_button 'Create Assignment'
+    assert page.has_text? 'Assignment was successfully created.'
+    within '.table-striped' do
+      assert page.has_text? 'Suggested'
+      assert page.has_link? 'superadmin@example.com'
+    end
+  end
+
   test 'assign unassigned client' do
     click_link 'Need accompanying'
     click_link 'Find volunteer'
