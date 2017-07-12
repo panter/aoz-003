@@ -16,4 +16,7 @@
         th colspan='4'
 
     tbody
+      - if params[:action] == 'find_client'
+        = render clients, volunteer: volunteer
+      - else
         = render clients
