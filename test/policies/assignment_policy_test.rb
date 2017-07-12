@@ -81,4 +81,16 @@ class AssignmentPolicyTest < PolicyAssertions::Test
   test 'Find volunteer: department_manager cannot find a volunteer for client' do
     refute_permit @department_manager, Assignment.first, 'find_volunteer?'
   end
+
+  test 'Find client: superadmin can find a client for volunteer' do
+    assert_permit @superadmin, Assignment.first, 'find_client?'
+  end
+
+  test 'Find client: social worker cannot find a client for volunteer' do
+    refute_permit @social_worker, Assignment.first, 'find_client?'
+  end
+
+  test 'Find client: department_manager cannot find a client for volunteer' do
+    refute_permit @department_manager, Assignment.first, 'find_client?'
+  end
 end

@@ -226,6 +226,7 @@ de:
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
   clients: Klienten/innen
+  clients_need_accompanying: Klienten ohne Begleitung
   contact_info: Kontakt Informationen
   contacts:
     fields:
@@ -347,6 +348,7 @@ de:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   entry_year: Einreisejahr
+  find_client: KlientIn finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
   gender: &id-genders
@@ -498,7 +500,13 @@ de:
       mark: '*'
       text: notwendig
     "yes": 'Ja'
-  state: *id-states
+  state:
+    <<: *id-states
+    active_further: Aktiv, an weiteren Einsätzen interessiert
+    contacted: Kontaktiert
+    inactive: Sucht neuen Einsatz
+    registered: Interessiert
+    resigned: Beendet
   submit_application: Bewerbung abschicken
   target_groups: Zielgruppe
   thank_you: "Vielen Dank \U0001F389"

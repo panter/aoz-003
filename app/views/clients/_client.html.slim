@@ -23,5 +23,7 @@ tr
     td
       - if policy(Client).destroy?
         = link_to t_action(:destroy), client, confirm_deleting(client)
+  - elsif params[:action] == 'find_client'
+    td = button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: volunteer)
   - else
     td = button_link t('find_volunteer'), find_volunteer_client_path(id: client)

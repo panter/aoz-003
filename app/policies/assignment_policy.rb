@@ -37,4 +37,8 @@ class AssignmentPolicy < ApplicationPolicy
   def find_volunteer?
     user.superadmin?
   end
+
+  def find_client?
+    user.superadmin?
+  end
 end
