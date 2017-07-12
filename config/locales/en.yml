@@ -4,6 +4,8 @@ en:
   activerecord:
     attributes:
       client:
+        age_request: Volunteer's age
+        gender_request: Volunteer's gender
         user: User
       contact:
         city: City
@@ -67,8 +69,7 @@ en:
       volunteer_experience_desc: Description of voluntary experience
   add_language: Add language
   add_relative: Add family member
-  age_request: "Volunteer's age"
-  age_requests: &id-age_requests
+  age_request: &id-age_requests
     age_middle: 36 - 50
     age_no_matter: "doesn't matter"
     age_old: older than 51
@@ -214,8 +215,7 @@ en:
   gender: &id-genders
     female: female
     male: male
-  gender_request: Volunteer's gender
-  gender_requests: &id-gender_requests
+  gender_request: &id-gender_requests
     no_matter: gender doesn't matter
     same: gender same
   get_back: We will soon get back to you.
