@@ -42,6 +42,10 @@ class VolunteerPolicy < ApplicationPolicy
     user.superadmin?
   end
 
+  def without_clients?
+    user.superadmin?
+  end
+
   private
 
   def volunteers_owns_profile

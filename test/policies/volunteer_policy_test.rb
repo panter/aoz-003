@@ -30,4 +30,16 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     refute_permit @department_manager, Volunteer, 'index?'
     refute_permit @social_worker, Volunteer, 'index?'
   end
+
+  test 'Without clients: superadmin can see volunteers without clients' do
+    assert_permit @superadmin, Volunteer, 'without_clients?'
+  end
+
+  test 'Without clients: social worker cannot see volunteers without clients' do
+    refute_permit @social_worker, Volunteer, 'without_clients?'
+  end
+
+  test 'Without clients: department manager cannot see volunteers without clients' do
+    refute_permit @department_manager, Volunteer, 'without_clients?'
+  end
 end
