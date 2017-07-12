@@ -3,16 +3,19 @@
   table.table.table-striped
     thead
       tr
-        th= t_attr(:gender)
-        th= t_attr(:full_name)
-        th= t_attr(:address)
-        th= t_attr(:date_of_year)
-        th= t_attr(:relatives)
-        th= t_attr(:nationality)
-        th= t_attr(:language_skills)
-        th= t_attr(:goals)
-        th= t_attr(:competent_authority)
-        th= t_attr(:created_at)
+        th= t_attr(:gender, Client)
+        th= t_attr(:full_name, Client)
+        th= t_attr(:address, Client)
+        th= t_attr(:date_of_year, Client)
+        th= t_attr(:relatives, Client)
+        th= t_attr(:nationality, Client)
+        th= t_attr(:language_skills, Client)
+        th= t_attr(:goals, Client)
+        th= t_attr(:competent_authority, Client)
+        th= t_attr(:created_at, Client)
+        - if params[:action] == 'find_client'
+          th= t_attr(:gender_request, Client)
+          th= t_attr(:age_request, Client)
         th colspan='4'
 
     tbody

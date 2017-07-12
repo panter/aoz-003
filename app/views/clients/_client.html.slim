@@ -16,6 +16,9 @@ tr
   td = client.goals
   td = client.competent_authority
   td = client.created_at.strftime("%d-%m-%Y")
+  - if params[:action] == 'find_client'
+    td = t("gender_request.#{client.gender_request}") unless client.gender_request.blank?
+    td = t("age_request.#{client.age_request}") unless client.age_request.blank?
   - if params[:action] == 'index'
     td = link_to t_action(:show), client
     td = link_to t_model(Journal), { controller: 'journals', action: 'index', client_id: client.id }
