@@ -5,6 +5,7 @@ de:
       assignment:
         agreement: Zustimmung
         client: KlientIn
+        created_by: Verantwortlich
         state: Status
         volunteer: Freiwillige
       client:

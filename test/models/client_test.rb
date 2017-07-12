@@ -21,7 +21,8 @@ class ClientTest < ActiveSupport::TestCase
 
   test 'a client with an assignment should not show up in without assignment' do
     @volunteer = create :volunteer
-    @client.create_assignment!(volunteer: @volunteer)
+    @user = create :user
+    @client.create_assignment!(volunteer: @volunteer, user: @user)
     result = Client.need_accompanying
     assert_equal [], result.to_a
   end

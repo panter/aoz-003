@@ -1,5 +1,6 @@
 = simple_form_for(@assignment) do |f|
   = simple_error_notice f
+  = f.input :user_id, as: :hidden
 
   .row
     .col-xs-12
