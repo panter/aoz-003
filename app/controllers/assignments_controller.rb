@@ -68,6 +68,12 @@ class AssignmentsController < ApplicationController
     authorize Assignment
   end
 
+  def find_client
+    @volunteer = Volunteer.find(params[:id])
+    @need_accompanying = Client.need_accompanying
+    authorize Assignment
+  end
+
   private
 
   def set_assignment

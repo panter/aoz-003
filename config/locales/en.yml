@@ -85,6 +85,7 @@ en:
   change_my_password: Change my password
   change_password: Change your password
   clients: Clients
+  clients_need_accompanying: Clients who need accompanying
   contact_info: Contact information
   contacts:
     fields:
@@ -206,6 +207,7 @@ en:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
   entry_year: Entry year
+  find_client: Find client
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
   full_language_collection: &id-lang-levels
