@@ -18,4 +18,17 @@ class VolunteerTest < ActiveSupport::TestCase
     new_volunteer = Volunteer.new
     assert new_volunteer.contact.present?
   end
+
+  test 'volunteers without clients' do
+    result = Volunteer.without_clients
+    assert_equal [@volunteer], result.to_a
+  end
+
+  test 'a volunteer with an assignment should not show up in without assignment' do
+    @client = create :client
+    @volunteer.create_assignment!(client: @client)
+    result = Volunteer.without_clients
+    assert_equal [], result.to_a
+>>>>>>> without clients equivalent of need accompanying
+  end
 end

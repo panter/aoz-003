@@ -47,6 +47,11 @@ class VolunteersController < ApplicationController
     redirect_to volunteers_url, notice: t('volunteer_destroyed')
   end
 
+  def without_clients
+    @q = Volunteer.without_clients.ransack(params[:q])
+    @without_clients = @q.result
+  end
+
   private
 
   def invite_volunteer_user
