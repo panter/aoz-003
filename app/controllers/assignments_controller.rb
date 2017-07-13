@@ -27,7 +27,7 @@ class AssignmentsController < ApplicationController
 
   def create
     @assignment = Assignment.new(assignment_params)
-    @assignment.user = current_user
+    @assignment.creator = current_user
     authorize @assignment
     if @assignment.save
       @assignment.client.state = Client::RESERVED
