@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   has_many :clients
   has_many :journals
-  has_many :assignments
+  has_many :assignments, inverse_of: 'creator'
   has_one :profile, dependent: :destroy
   has_one :volunteer, dependent: :destroy
   has_and_belongs_to_many :department

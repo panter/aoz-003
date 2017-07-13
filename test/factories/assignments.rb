@@ -2,6 +2,6 @@ FactoryGirl.define do
   factory :assignment do
     client
     volunteer
-    user
+    creator
   end
 end
