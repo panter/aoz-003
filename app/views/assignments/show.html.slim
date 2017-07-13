@@ -22,14 +22,14 @@
             = @assignment.volunteer.contact.street
         .row
           .col-xs-5
-            = t_attr(:primary_phone, Contact)
+            = t('assignment_pdf.telephone')
           .col-xs-7.col-input
             = @assignment.volunteer.contact.primary_phone
         .row
           .col-xs-5
-            = t_attr(:date_of_birth, Volunteer)
+            = t('assignment_pdf.email')
           .col-xs-7.col-input
-            = @assignment.volunteer.date_of_birth
+            = @assignment.volunteer.contact.primary_email
       .col-xs-6
         .row
           .col-xs-5
@@ -43,44 +43,14 @@
             = "#{@assignment.volunteer.contact.postal_code} #{@assignment.volunteer.contact.city}"
         .row
           .col-xs-5
-            = t_attr(:primary_email, Contact)
+            = t('assignment_pdf.mobile')
           .col-xs-7.col-input
-            = @assignment.volunteer.contact.primary_email
+            = @assignment.volunteer.contact.contact_phones.first.body
         .row
           .col-xs-5
-            = t_attr(:nationality, Volunteer)
+            = t_attr(:date_of_birth, Volunteer)
           .col-xs-7.col-input
-            = @assignment.volunteer.nationality
-
-    .row.row-box
-      .col-xs-12
-        .row
-          .col-xs-4
-            = t('assignment_pdf.location')
-          .col-xs-8.col-input
-        .row
-          .col-xs-4
-            = t('assignment_pdf.location_description')
-          .col-xs-8.col-input
-        .row
-          .col-xs-4
-            = t('assignment_pdf.day_time')
-          .col-xs-8.col-input
-        .row
-          .col-xs-4
-            = t('assignment_pdf.frequency')
-          .col-xs-8.col-input
-        .row
-          .col-xs-4
-            = t('assignment_pdf.start')
-          .col-xs-8.col-input
-        .row
-          .col-xs-4
-            = t('assignment_pdf.trial_time')
-          .col-xs-8.col-input
-        .row
-          .col-xs-12
-            = t('assignment_pdf.agreement_disclamer')
+            = @assignment.volunteer.date_of_birth
 
 .row
   .col-xs-11.col-xs-offset-1
@@ -102,13 +72,19 @@
             = @assignment.client.contact.street
         .row
           .col-xs-5
-            = t('assignment_pdf.position')
+            = t('assignment_pdf.telephone')
           .col-xs-7.col-input
+            = @assignment.client.contact.primary_phone
         .row
           .col-xs-5
-            = t_attr(:primary_email, Contact)
+            = t('assignment_pdf.email')
           .col-xs-7.col-input
             = @assignment.client.contact.primary_email
+        .row
+          .col-xs-5
+            = t_attr(:date_of_birth, Client)
+          .col-xs-7.col-input
+            = @assignment.client.date_of_birth
       .col-xs-6
         .row
           .col-xs-5
@@ -122,13 +98,87 @@
             = "#{@assignment.client.contact.postal_code} #{@assignment.client.contact.city}"
         .row
           .col-xs-5
-            = t_attr(:primary_phone, Contact)
+            = t('assignment_pdf.telephone_2')
           .col-xs-7.col-input
-            = @assignment.client.contact.primary_phone
+            = @assignment.volunteer.contact.contact_phones.first.body
         .row
           .col-xs-5
-            = t('assignment_pdf.mobile')
+            = "#{t_attr(:nationality, Client)}, #{t_attr(:state, Client)}"
           .col-xs-7.col-input
+            = "#{country(@assignment.client.nationality)}, #{@assignment.client.state}"
+        .row
+          .col-xs-5
+            = t_attr(:languages, Volunteer)
+          .col-xs-7.col-input
+            - @assignment.client.language_skills.each do |language|
+              = language.full_language_skills
+              br
+
+    .row.row-box
+      .col-xs-12
+        .row
+          .col-xs-4
+            = t('assignment_pdf.what')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.how_often')
+          .col-xs-8.col-input
+            = t('assignment_pdf.weekly')
+        .row
+          .col-xs-4
+            = t('assignment_pdf.first_time')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.trial_time')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.duration')
+          .col-xs-8.col-input
+        .row
+          .col-xs-4
+            = t('assignment_pdf.special')
+          .col-xs-8.col-input
+
+.row
+  .col-xs-11.col-xs-offset-1
+    h4= t('assignment_pdf.creator_title')
+
+.row
+  .col-xs-11.col-xs-offset-1
+    .row
+      .col-xs-6
+        .row
+          .col-xs-5
+            = t_attr(:last_name, Contact)
+          .col-xs-7.col-input
+            = @assignment.creator.profile.contact.last_name
+        .row
+          .col-xs-5
+            = t('assignment_pdf.function')
+          .col-xs-7.col-input
+        .row
+          .col-xs-5
+            = t('assignment_pdf.email')
+          .col-xs-7.col-input
+            = @assignment.creator.profile.contact.primary_email
+      .col-xs-6
+        .row
+          .col-xs-5
+            = t_attr(:first_name, Contact)
+          .col-xs-7.col-input
+            = @assignment.creator.profile.contact.first_name
+        .row
+          .col-xs-5
+            = t('assignment_pdf.organization')
+          .col-xs-7.col-input
+        .row
+          .col-xs-5
+            = t('assignment_pdf.telephone')
+          .col-xs-7.col-input
+            = @assignment.creator.profile.contact.primary_phone
 
     .row.row-box
       .col-xs-12
@@ -140,30 +190,31 @@
 
           li= t('assignment_pdf.agreement_text.list1.item3')
 
-        p= t('assignment_pdf.agreement_text.list1.title')
+        p= t('assignment_pdf.agreement_text.list2.title')
         ul
-          li= t('assignment_pdf.agreement_text.list1.item1')
+          li= t('assignment_pdf.agreement_text.list2.item1')
 
-          li= t('assignment_pdf.agreement_text.list1.item2')
+          li= t('assignment_pdf.agreement_text.list2.item2')
 
     .row.row-bottom
-      .col-xs-6
-        .row
-          .col-xs-5
-            = t('assignment_pdf.city_date')
-          .col-xs-7.col-input
-            = "#{t('assignment_pdf.zurich')}, #{l @assignment.created_at.to_date}"
-        .row
-          .col-xs-5
+      .row
+        .col-xs-5
+          = t('assignment_pdf.city_date')
+        .col-xs-7.col-input
+          = "#{t('assignment_pdf.zurich')}, #{l @assignment.created_at.to_date}"
+      .row
+        .col-xs-4
+          .row
             = t('assignment_pdf.for_aoc')
-          .col-xs-7.col-input
-      .col-xs-6
-        .row
-          .col-xs-5
-            = t('assignment_pdf.city_date')
-          .col-xs-7.col-input
-        .row
-          .col-xs-5
-            = t_attr(:volunteer, Assignment)
-          .col-xs-7.col-input
-
+          .row
+            .col-xs-4.col-input
+        .col-xs-4
+          .row
+            = t('assignment_pdf.client_title')
+          .row
+            .col-xs-4.col-input
+        .col-xs-4
+          .row
+            = t('assignment_pdf.volunteer_title')
+          .row
+            .col-xs-4.col-input
