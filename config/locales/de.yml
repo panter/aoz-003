@@ -4,7 +4,7 @@ de:
     attributes:
       assignment:
         agreement: Zustimmung
-        client: KlientIn
+        client: Klient/in
         created_by: Verantwortliche/r
         state: Status
         volunteer: Freiwillige
@@ -348,7 +348,7 @@ de:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   entry_year: Einreisejahr
-  find_client: KlientIn finden
+  find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
   gender: &id-genders
