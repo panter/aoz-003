@@ -551,21 +551,28 @@ de:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
   assignment_pdf:
-    title: Vereinbarung zwischen AOZ und Freiwilligen
+    title: Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten
     volunteer_title: Freiwillige Person
-    client_title: Verantwortliche Person in der AOZ
+    client_title: Begleitete Person
+    creator_title: Anmeldende Stelle
     mobile: Handy
-    position: Funktion
-    location: Einsatzort
-    location_description: Beschreibung des Einsatzes
-    day_time: Tag / Zeit
-    frequency: Frequenz
+    telephone: Telefon
+    telephone_2: Telefon 2
+    email: E-mail
+    organization: Organization
+    function: Funktion
+    what: Was?
+    how_often: Wie oft?
+    first_time: '1.Treffen: Wann, wo?'
+    weekly: 1x pro Woche
+    duration: Treffen mindestens 6 Monate bis
+    special: Besondere Abmachungen
     start: Einsatzbeginn
     trial_time: 4 Wochen Probezeit bis
     agreement_disclamer: Die Einsatzdauer beträgt mindestens 6 Monate. Entscheiden sich Freiwillige, ihre Tätigkeit aufzugeben, so teilen sie dies der verantwortlichen Person vor Ort spätestens vier Wochen vor Einsatzende mit.
     agreement_text:
       list1:
-        title: Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ
+        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
         item1: Verhaltenskodex für Freiwillige
         item2: Rechte und Pflichten für Freiwillige
         item3: AOZ Leitlinien Praktische Integrationsarbeit 2011
