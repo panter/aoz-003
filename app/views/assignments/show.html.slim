@@ -202,19 +202,19 @@
           = t('assignment_pdf.city_date')
         .col-xs-7.col-input
           = "#{t('assignment_pdf.zurich')}, #{l @assignment.created_at.to_date}"
-      .row
-        .col-xs-4
-          .row
-            = t('assignment_pdf.for_aoc')
-          .row
-            .col-xs-4.col-input
-        .col-xs-4
-          .row
-            = t('assignment_pdf.client_title')
-          .row
-            .col-xs-4.col-input
-        .col-xs-4
-          .row
-            = t('assignment_pdf.volunteer_title')
-          .row
-            .col-xs-4.col-input
+    .row
+      .col-xs-4
+        .row
+          = t('assignment_pdf.for_aoc')
+        .row
+          .col-xs-8.col-input
+      .col-xs-4
+        .row
+          = t('assignment_pdf.client_title')
+        .row
+          .col-xs-8.col-input
+      .col-xs-4
+        .row
+          = t('assignment_pdf.volunteer_title')
+        .row
+          .col-xs-8.col-input
