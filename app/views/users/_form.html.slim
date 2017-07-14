@@ -8,6 +8,10 @@
       - if policy(User).create?
         = f.input :role, collection: User.role_collection
 
+  = simple_fields_for :contact do |ff|
+    = ff.input :first_name
+    = ff.input :last_name
+
   .row
     .col-xs-12
       - if current_user == user
