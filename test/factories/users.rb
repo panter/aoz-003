@@ -20,5 +20,12 @@ FactoryGirl.define do
         Array.new(1).map { |_n| create(:department) }
       end
     end
+
+    # after(:create) do |user, profile|
+    #   user.profile
+    #   user.reload
+    #   # u.profile = create(:profile, user: u)
+    #   # u.profile.contact = create(:contact, contactable: u)
+    # end
   end
 end
