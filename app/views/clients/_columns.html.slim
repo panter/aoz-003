@@ -14,12 +14,15 @@
         th= t_attr(:competent_authority, Client)
         th= t_attr(:created_at, Client)
         - if params[:action] == 'find_client'
-          th= t_attr(:gender_request, Client)
-          th= t_attr(:age_request, Client)
+          th= sort_link @q, :gender_request, t_attr(:gender_request, Client)
+          th= sort_link @q, :age_request, t_attr(:age_request, Client)
         th colspan='4'
 
     tbody
       - if params[:action] == 'find_client'
+        .filters
+          = render 'gender_request_select'
+          = render 'age_request_select'
         = render clients, volunteer: volunteer
       - else
         = render clients

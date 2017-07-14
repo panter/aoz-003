@@ -352,6 +352,7 @@ de:
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
   gender: &id-genders
+    all: Alle
     female: Weiblich
     male: Männlich
   gender_request: &id-gender_requests
