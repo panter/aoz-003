@@ -6,6 +6,6 @@
     span.caret aria-hidden='true'
   ul.dropdown-menu
     li
-      = link_to t('all'), params.permit!.to_h.deep_merge(q: {gender_cont: ''})
+      = link_to t('all'), params.permit!.to_h.deep_merge(q: {gender_matches: ''})
     - Volunteer.gender_collection.each do |s|
-      li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :gender]), params.permit!.to_h.deep_merge(q: {gender_cont: s})
+      li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :gender]), params.permit!.to_h.deep_merge(q: {gender_matches: s})
