@@ -22,10 +22,7 @@ ActiveRecord::Schema.define(version: 20170713134956) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "state"
-<<<<<<< 3f296be6c64cb829ec62f76379ac64ef941d387c
     t.bigint "creator_id"
-=======
->>>>>>> add state to assignments
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
