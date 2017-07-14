@@ -51,11 +51,11 @@ h4= "#{t_attr(:avatar, Volunteer)}: "
 p= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?
 
 h4= "#{t_attr(:nationality, Volunteer)}: "
-p= country(@volunteer.nationality)
+p= nationality_name(@volunteer.nationality)
 
 - if @volunteer.additional_nationality.present?
   h4= "#{t_attr(:additional_nationality, Volunteer)}: "
-  p= country(@volunteer.additional_nationality)
+  p= nationality_name(@volunteer.additional_nationality)
 
 - if @volunteer.language_skills.any?
   h4= "#{t('language_skills')}: "

@@ -10,7 +10,7 @@
           = render 'contacts/show', contact: @client.contact
           tr
             td= t_attr(:nationality, Client)
-            td= country(@client.nationality)
+            td= nationality_name(@client.nationality)
           tr
             td= t_attr(:permit, Client)
             td= @client.permit
@@ -41,8 +41,8 @@
       tr
         th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
         th= sort_link @q, :gender, t_attr(:gender, Volunteer)
-        th= sort_link @q, :nationality_long, t_attr(:nationality, Volunteer)
-        th= sort_link @q, :adittional_nationality_long, t_attr(:additional_nationality, Volunteer)
+        th= sort_link @q, :nationality, t_attr(:nationality, Volunteer)
+        th= sort_link @q, :adittional_nationality, t_attr(:additional_nationality, Volunteer)
         th= sort_link @q, :contact_city, t_attr(:city, Volunteer)
         th= sort_link @q, :contact_postal_code, t_attr(:zip, Volunteer)
         th= t_attr(:languages, Volunteer)

@@ -19,7 +19,7 @@
             = t("gender.#{@client.gender}")
       tr
         td= t_attr(:nationality)
-        td= country(@client.nationality)
+        td= nationality_name(@client.nationality)
       tr
         td= t_attr(:permit)
         td= @client.permit

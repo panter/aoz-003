@@ -7,7 +7,7 @@ tr
     - client.relatives.each do |relative|
       = relative.to_s
       br
-  td = country(client.nationality)
+  td = nationality_name(client.nationality)
   td
     - client.language_skills.each do |language|
       = language.full_language_skills
