@@ -50,11 +50,11 @@
 
 - if @volunteer.nationality.present?
   = "#{rn2}#{t_attr(:nationality, Volunteer)}:#{t3}"
-  = country(@volunteer.nationality)
+  = nationality_name(@volunteer.nationality)
 
 - if @volunteer.additional_nationality.present?
   = "#{rn2}#{t_attr(:additional_nationality, Volunteer)}:\t"
-  = country(@volunteer.additional_nationality)
+  = nationality_name(@volunteer.additional_nationality)
 
 - if @volunteer.language_skills.any?
   = "#{rn2}#{t('language_skills')}:  "

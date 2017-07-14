@@ -20,10 +20,10 @@
         td= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?
       tr
         td= t_attr(:nationality)
-        td= country(@volunteer.nationality)
+        td= nationality_name(@volunteer.nationality)
       tr
         td= t_attr(:additional_nationality)
-        td= country(@volunteer.additional_nationality)
+        td= nationality_name(@volunteer.additional_nationality)
 
       = render 'language_skills/show', speaker: @volunteer
 
@@ -106,4 +106,3 @@ h3= t_attr(:group_accompaniment)
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
-

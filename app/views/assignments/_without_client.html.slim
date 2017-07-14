@@ -1,8 +1,8 @@
 tr
   td= without_client.contact.full_name
   td= t("gender.#{without_client.gender}") if without_client.gender.present?
-  td= country(without_client.nationality)
-  td= country(without_client.additional_nationality)
+  td= nationality_name(without_client.nationality)
+  td= nationality_name(without_client.additional_nationality)
   td= without_client.contact.city
   td= without_client.contact.postal_code
   td
