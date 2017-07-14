@@ -1,0 +1,12 @@
+- gender_request_filter = params[:q] && params[:q][:gender_request_cont].present? ? params[:q][:gender_request_cont] : 'no_matter'
+.btn-group
+  button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:gender_request)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
+    = "#{t_attr(:gender_request, Client)} : "
+    = t(gender_request_filter, scope: [:simple_form, :options, :client, :gender_request]) + ' '
+    span.caret aria-hidden='true'
+  ul.dropdown-menu
+    - Client.gender_request_collection.each do |s|
+      - if s.to_s == 'no_matter'
+        li = link_to t(s.to_s, scope: [:simple_form, :options, :client, :gender_request]), params.permit!.to_h.deep_merge(q: {gender_request_cont: ''})
+      - else
+        li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :gender_request]), params.permit!.to_h.deep_merge(q: {gender_request_cont: s})
