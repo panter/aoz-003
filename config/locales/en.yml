@@ -413,6 +413,15 @@ en:
     duration: Treffen mindestens 6 Monate bis
     special: Besondere Abmachungen
     trial_time: 4 Wochen Probezeit bis
+    last_name: Name
+    first_name: Vorname
+    street: Strasse
+    city: Ort
+    postal_code: PLZ
+    date_of_birth: Geburtsdatum
+    nationality: Nationalität
+    state: Status
+    languages: Sprachen
     agreement_text:
       list1:
         title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
