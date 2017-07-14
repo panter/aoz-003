@@ -1,7 +1,7 @@
 class Profile < ApplicationRecord
   include BuildContactRelation
 
-  has_one :contact, as: :contactable
+  has_one :contact, as: :contactable, required: true, autosave: true
   accepts_nested_attributes_for :contact
 
   belongs_to :user

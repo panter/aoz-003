@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include ContactAttributes
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   after_action :verify_authorized
 
@@ -11,6 +12,8 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @user.build_profile
+    @user.profile.build_contact
     authorize @user
   end
 
@@ -18,6 +21,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params.merge(password: Devise.friendly_token)
+    # this needs to be done to ensure department handling dont fail
+    @user.build_profile
+    @user.profile.build_contact(contact_params)
+    @user.profile.contact.primary_email = @user.email
+
     if @user.save
       @user.invite!
       redirect_to users_path, notice: t('invite_sent', email: @user.email)
@@ -51,5 +59,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password, :role)
+  end
+
+  def contact_params
+    params.require(:contact).permit(contact_attributes[:contact_attributes])
   end
 end
