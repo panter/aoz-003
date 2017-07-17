@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(current_user)
     return volunteer_path(current_user.volunteer.id) if current_user.volunteer?
-    return new_profile_path if current_user.profile.blank?
+    return new_profile_path if current_user.profile.contact.first_name.blank?
     if policy(Department).manager_with_department?
       return department_path(current_user.department.first.id)
     end
