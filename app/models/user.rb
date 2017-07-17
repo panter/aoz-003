@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  after_initialize :build_profile_relation
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
@@ -10,6 +9,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :profile
   has_one :volunteer, dependent: :destroy
   has_and_belongs_to_many :department
+
+  before_validation :assign_primary_email, if: :profile
 
   # Roles definition
   SUPERADMIN = 'superadmin'.freeze
@@ -49,11 +50,15 @@ class User < ApplicationRecord
 
   def self.create_user_and_send_password_reset(email:, role:)
     new_user = User.new(
-      email: email, password: Devise.friendly_token, role: role
+      email: email, password: Devise.friendly_token, role: role,
+      profile_attributes: {
+        contact_attributes: {
+          first_name: 'firstname',
+          last_name: 'lastname',
+        }
+      }
     )
-    new_user.profile.contact.first_name = 'new firstname'
-    new_user.profile.contact.first_name = 'lastname'
-    new_user.profile.contact.primary_email = email
+
     new_user.save! && new_user.send_reset_password_instructions
   end
 
@@ -81,7 +86,9 @@ class User < ApplicationRecord
     ROLES_FOR_USER_CREATE.map(&:to_sym)
   end
 
-  def build_profile_relation
-    build_profile unless profile
+  protected
+
+  def assign_primary_email
+    profile.contact.primary_email = email
   end
 end

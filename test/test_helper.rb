@@ -10,12 +10,15 @@ class ActiveSupport::TestCase
   DatabaseCleaner.strategy = :transaction
 
   def before_setup
+    # FIXME: make sure all users are deleted, sometimes records stick around
+    # when tests are aborted
+    User.with_deleted.map(&:really_destroy!)
+
     super
     DatabaseCleaner.start
   end
 
   def after_teardown
-    User.all.destroy_all # dirty temporary fix for not propper cleanup
     DatabaseCleaner.clean
     super
   end

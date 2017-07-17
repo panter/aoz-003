@@ -8,9 +8,11 @@ FactoryGirl.define do
     sequence :primary_email { |n| "primary_#{n}@example.com" }
     sequence :primary_phone { |n| "+99 99 999 999#{n}" }
     postal_code '8047'
+
     contact_emails do |e|
       Array.new(2).map { e.association(:contact_email) }
     end
+
     contact_phones do |p|
       Array.new(2).map { p.association(:contact_phone) }
     end

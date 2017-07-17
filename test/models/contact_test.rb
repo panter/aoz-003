@@ -5,11 +5,17 @@ class ContactTest < ActiveSupport::TestCase
     @contact = Contact.new
   end
 
-  test 'contact validates name presence if contactable Department' do
-    @contact.contactable_type = 'Department'
+  test 'requires only first name for profiles' do
+    @contact.contactable_type = 'Profile'
+
     refute @contact.valid?
-    @contact.last_name = 'Name'
-    assert @contact.valid?
-    assert @contact.save!
+    assert_equal @contact.errors.keys, [:first_name]
+  end
+
+  test 'requires only last name for departments' do
+    @contact.contactable_type = 'Department'
+
+    refute @contact.valid?
+    assert_equal @contact.errors.keys, [:last_name]
   end
 end

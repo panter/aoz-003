@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = build :user
+    @user = create :user
     @superadmin = create :user, role: 'superadmin'
     @social_worker = create :user, role: 'social_worker'
     @department_manager = create :user, role: 'department_manager'
@@ -67,5 +67,13 @@ class UserTest < ActiveSupport::TestCase
     end
 
     assert User.unscoped.find(user.id)
+  end
+
+  test 'automatically builds profile relation' do
+    assert_instance_of Profile, @user.profile
+  end
+
+  test 'automatically assigns primary email on contact' do
+    assert_equal @user.profile.contact.primary_email, @user.email
   end
 end

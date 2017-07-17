@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class ProfilesTest < ApplicationSystemTestCase
   def setup
     @user = create :user
-    @user_without_profile = create :user
+    @user_without_profile = create :user, :without_profile
     @social_worker = create :user, role: 'social_worker'
   end
 
@@ -34,6 +34,7 @@ class ProfilesTest < ApplicationSystemTestCase
     page.check(name: 'profile[monday]')
 
     click_button 'Create Profile'
+    @user_without_profile.reload
 
     assert page.has_current_path? profile_path(@user_without_profile.profile.id)
     assert page.has_text? 'Hans'
@@ -52,7 +53,10 @@ class ProfilesTest < ApplicationSystemTestCase
 
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
+
     click_button 'Create Profile'
+    @user_without_profile.reload
+
     within '#menu' do
       assert page.has_link? @user_without_profile.email
       click_link @user_without_profile.email
