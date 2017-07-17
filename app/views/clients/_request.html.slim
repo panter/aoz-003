@@ -1,10 +1,11 @@
 tr
   td= t('volunteer_request')
   td
-    - if client.gender_request.present? && client.age_request.present?
-      dl.dl-horizontal
+    dl.dl-horizontal
+      - if client.gender_request.present?
         dt= t_attr(:gender_request)
         dd= t("gender_request.#{client.gender_request}")
 
+      - if client.age_request.present?
         dt= t_attr(:age_request)
         dd= t("age_request.#{client.age_request}")

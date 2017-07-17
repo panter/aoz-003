@@ -38,7 +38,7 @@ class ClientsTest < ApplicationSystemTestCase
     end
     fill_in 'Goals', with: 'asdfasdf'
     page.choose('client_gender_request_same')
-    page.choose('client_age_request_age_middle')
+    select('36 - 50', from: "Volunteer's age")
     fill_in 'Other request', with: 'asdfasdf'
     fill_in 'Education', with: 'asdfasdf'
     fill_in 'Actual activities', with: 'asdfasdf'
@@ -51,6 +51,18 @@ class ClientsTest < ApplicationSystemTestCase
 
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
+  end
+
+  test 'new client form with preselected fields' do
+    visit new_client_path
+    fill_in 'First name', with: 'Client'
+    fill_in 'Last name', with: "doesn't matter"
+    fill_in 'Primary email', with: 'client@aoz.com'
+    click_button 'Create Client'
+    assert page.has_text? 'Client was successfully created.'
+    within '.table-no-border-top' do
+      assert page.has_text? "age doesn't matter"
+    end
   end
 
   test 'superadmin can delete client' do
