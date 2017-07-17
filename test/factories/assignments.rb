@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :assignment do
-    association :client, strategy: :create
-    association :volunteer, strategy: :create
-    association :creator, strategy: :create
+    client
+    volunteer
+
+    association :creator, factory: :user
   end
 end
