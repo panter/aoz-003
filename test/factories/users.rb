@@ -4,10 +4,6 @@ FactoryGirl.define do
     password 'asdfasdf'
     role 'superadmin'
 
-    trait :with_profile do
-      association :profile
-    end
-
     trait :with_clients do
       client_amt = 5
       clients do |client|
@@ -20,12 +16,6 @@ FactoryGirl.define do
         Array.new(1).map { |_n| create(:department) }
       end
     end
-
-    # after(:create) do |user, profile|
-    #   user.profile
-    #   user.reload
-    #   # u.profile = create(:profile, user: u)
-    #   # u.profile.contact = create(:contact, contactable: u)
-    # end
+    association :profile, strategy: :build
   end
 end

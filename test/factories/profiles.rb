@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :profile do
-    user
-    association :contact
+    association :contact, strategy: :build
     monday true
     tuesday true
     wednesday false

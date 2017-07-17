@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :volunteer do
-    association :contact
+    association :contact, strategy: :build
     state 'registered'
     sequence :date_of_birth { Time.zone.now.to_date - rand(5000..20_000) }
     trait :with_language_skills do
