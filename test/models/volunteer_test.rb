@@ -8,4 +8,14 @@ class VolunteerTest < ActiveSupport::TestCase
   test 'valid factory' do
     assert @volunteer.valid?
   end
+
+  test 'schedules build correctly automaticly' do
+    new_volunteer = Volunteer.new
+    assert_equal new_volunteer.schedules.size, 21
+  end
+
+  test 'contact relation is build automaticly' do
+    new_volunteer = Volunteer.new
+    assert new_volunteer.contact.present?
+  end
 end
