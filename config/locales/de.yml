@@ -357,6 +357,7 @@ de:
     female: Weiblich
     male: Männlich
   gender_request: &id-gender_requests
+    all: Alle
     no_matter: Geschlecht egal
     same: Geschlecht gleich
   get_back: Wir werden uns bald bei Ihnen melden.

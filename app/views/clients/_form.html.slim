@@ -35,10 +35,7 @@
       h3= t('personal_background')
       = f.input :goals
       h3= t('volunteer_request')
-      = f.input :gender_request,
-                collection: Client.gender_request_collection,
-                as: :radio_buttons,
-                wrapper: :vertical_radio_and_checkboxes
+      = f.input :gender_request, collection: Client.gender_request_collection, default: :no_matter
       = f.input :age_request, collection: Client.age_request_collection, default: :age_no_matter
       = f.input :other_request
       = f.input :education

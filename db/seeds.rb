@@ -12,6 +12,10 @@ def random_age_request
   Client.age_request_collection.sample
 end
 
+def random_gender_request
+  Client.gender_request_collection.sample
+end
+
 def make_relatives
   Array.new(2).map do
     Relative.new do |relative|
@@ -97,6 +101,7 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
       client.relatives = make_relatives
       client.language_skills = make_lang_skills
       client.age_request = random_age_request
+      client.gender_request = random_gender_request
       client.schedules << make_schedule
     end
   end
