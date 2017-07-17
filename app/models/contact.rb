@@ -7,8 +7,8 @@ class Contact < ApplicationRecord
   has_many :contact_phones
   accepts_nested_attributes_for :contact_phones, allow_destroy: true
 
-  validates :last_name, presence: true
-  validates :first_name, presence: true, unless: :department?
+  validates :last_name, presence: true, unless: :profile?
+  validates :first_name, presence: true, unless: :doesnt_require_fn?
 
   validates :primary_email, presence: true, if: :needs_primary_email?
 
@@ -26,6 +26,14 @@ class Contact < ApplicationRecord
 
   def needs_primary_email?
     ['Client', 'Volunteer'].include? contactable_type
+  end
+
+  def doesnt_require_fn?
+    department? || profile?
+  end
+
+  def profile?
+    contactable_type == 'Profile'
   end
 
   def department?

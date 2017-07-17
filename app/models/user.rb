@@ -1,11 +1,13 @@
 class User < ApplicationRecord
+  after_initialize :build_profile_relation
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
   has_many :clients
   has_many :journals
   has_many :assignments, inverse_of: 'creator'
-  has_one :profile, dependent: :destroy, required: true, autosave: true
+  has_one :profile, dependent: :destroy
+  accepts_nested_attributes_for :profile
   has_one :volunteer, dependent: :destroy
   has_and_belongs_to_many :department
 
@@ -49,6 +51,9 @@ class User < ApplicationRecord
     new_user = User.new(
       email: email, password: Devise.friendly_token, role: role
     )
+    new_user.profile.contact.first_name = 'new firstname'
+    new_user.profile.contact.first_name = 'lastname'
+    new_user.profile.contact.primary_email = email
     new_user.save! && new_user.send_reset_password_instructions
   end
 
@@ -74,5 +79,9 @@ class User < ApplicationRecord
 
   def self.role_collection
     ROLES_FOR_USER_CREATE.map(&:to_sym)
+  end
+
+  def build_profile_relation
+    build_profile unless profile
   end
 end
