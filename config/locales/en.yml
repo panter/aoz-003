@@ -70,8 +70,9 @@ en:
   add_language: Add language
   add_relative: Add family member
   age_request: &id-age_requests
+    all: All
     age_middle: 36 - 50
-    age_no_matter: "doesn't matter"
+    age_no_matter: "age doesn't matter"
     age_old: older than 51
     age_young: 20 - 35
   all: All
@@ -319,6 +320,11 @@ en:
           rejected: Rejected
           reserved: Reserved
           resigned: Resigned
+          active_further: Active and interested in further engagements
+          contacted: Contacted
+          inactive: Looking for new engagement
+          registered: Interested
+          resigned: Terminated
       user:
         role: *id-roles
       volunteer:
@@ -335,11 +341,6 @@ en:
         rejection_type: *id-rejection-types
         state:
           <<: *id-states
-          active_further: Active and interested in further engagements
-          contacted: Contacted
-          inactive: Looking for new engagement
-          registered: Interested
-          resigned: Terminated
     placeholders:
     required:
       mark: '*'
