@@ -57,11 +57,19 @@ class User < ApplicationRecord
   end
 
   def to_label
-    "#{full_name} #{email}"
+    if profile && profile.contact
+      "#{full_name} #{email}"
+    else
+      email
+    end
   end
 
   def full_name
-    "#{profile.contact.first_name} #{profile.contact.last_name}"
+    if profile && profile.contact
+      "#{profile.contact.first_name} #{profile.contact.last_name}"
+    else
+      email
+    end
   end
 
   def self.role_collection
