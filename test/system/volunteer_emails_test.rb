@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class VolunteerEmailsTest < ApplicationSystemTestCase
   def setup
-    @user = create :user, :with_profile
+    @user = create :user
     @other_volunteer_email = create :volunteer_email, user: @user
     @volunteer_email = create :volunteer_email, active: true, user: @user
   end

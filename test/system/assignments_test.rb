@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class AssignmentsTest < ApplicationSystemTestCase
   setup do
-    @user = create :user, :with_profile, email: 'superadmin@example.com'
+    @user = create :user, email: 'superadmin@example.com'
     login_as @user
     @client = create :client
     @volunteer = create :volunteer

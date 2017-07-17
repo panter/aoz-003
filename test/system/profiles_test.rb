@@ -2,9 +2,9 @@ require 'application_system_test_case'
 
 class ProfilesTest < ApplicationSystemTestCase
   def setup
-    @user = create :user, :with_profile
+    @user = create :user
     @user_without_profile = create :user
-    @social_worker = create :user, :with_profile, role: 'social_worker'
+    @social_worker = create :user, role: 'social_worker'
   end
 
   test 'when first login displays profile form' do

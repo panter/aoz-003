@@ -2,11 +2,11 @@ require 'application_system_test_case'
 
 class DepartmentsTest < ApplicationSystemTestCase
   def setup
-    @superadmin = create :user, :with_profile, :with_clients,
+    @superadmin = create :user, :with_clients,
       :with_departments, role: 'superadmin'
-    @social_worker = create :user, :with_profile, :with_clients,
+    @social_worker = create :user, :with_clients,
       :with_departments, role: 'social_worker'
-    @department_manager = create :user, :with_profile, :with_departments,
+    @department_manager = create :user, :with_departments,
       role: 'department_manager'
     # dirty fix for not properly working factorys or DatabaseCleaner
     User.where.not(id: [@superadmin.id, @social_worker.id, @department_manager.id]).destroy_all

@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class VolunteersTest < ApplicationSystemTestCase
   setup do
-    @user = create :user, :with_profile, email: 'superadmin@example.com'
+    @user = create :user, email: 'superadmin@example.com'
     login_as @user
     Volunteer.state_collection.each do |s|
       create :volunteer, state: s.to_s

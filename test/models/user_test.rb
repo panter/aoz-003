@@ -3,9 +3,9 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   def setup
     @user = build :user
-    @superadmin = create :user, :with_profile, role: 'superadmin'
-    @social_worker = create :user, :with_profile, role: 'social_worker'
-    @department_manager = create :user, :with_profile, role: 'department_manager'
+    @superadmin = create :user, role: 'superadmin'
+    @social_worker = create :user, role: 'social_worker'
+    @department_manager = create :user, role: 'department_manager'
   end
 
   test 'valid factory' do
@@ -60,7 +60,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'record still exists after deletion' do
-    user = create :user, :with_profile, role: 'social_worker'
+    user = create :user, role: 'social_worker'
 
     assert_difference 'User.count', -1 do
       user.destroy

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SuperadminCanCreateSuperadminTest < ActionDispatch::IntegrationTest
   def setup
-    @user = create :user, :with_profile
+    @user = create :user
   end
 
   test 'invalid superadmin information' do
