@@ -44,6 +44,20 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_text? 'Volunteer was successfully created.'
   end
 
+  test 'show volunteer custom nationality (nationality_name test)' do
+    visit new_volunteer_path
+    fill_in 'First name', with: 'Volunteer'
+    fill_in 'Last name', with: 'Volunteer'
+    select('Kosovo', from: 'Nationality')
+    fill_in 'Primary email', with: 'volunteer@kosovo.com'
+
+    click_button 'Create Volunteer'
+
+    within '.table-no-border-top' do
+      assert page.has_text? 'Kosovo'
+    end
+  end
+
   test 'hidden conditional field is shown on checkbox checked' do
     visit new_volunteer_path
     page.check('volunteer_experience')
