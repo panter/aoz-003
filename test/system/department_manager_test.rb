@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class DepartmentManagerTest < ApplicationSystemTestCase
   def setup
-    @department_manager = create :user, :with_profile, role: 'department_manager'
+    @department_manager = create :user, role: 'department_manager'
   end
 
   test 'when updates user login, cannot see role field' do

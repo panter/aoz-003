@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class JournalsTest < ApplicationSystemTestCase
   def setup
-    @user = create :user, :with_profile
+    @user = create :user
     @volunteer = create :volunteer, journals: [FactoryGirl.create(:journal, user: @user)]
     @client = create :client, journals: [FactoryGirl.create(:journal, user: @user)]
     @journal_volunteer = @volunteer.journals.first

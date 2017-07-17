@@ -2,10 +2,10 @@ require 'test_helper'
 
 class UserPolicyTest < PolicyAssertions::Test
   def setup
-    @superadmin = create :user, :with_clients, :with_profile, role: 'superadmin'
-    @other_superadmin = create :user, :with_profile, role: 'superadmin'
-    @social_worker = create :user, :with_clients, :with_profile, role: 'social_worker'
-    @department_manager = create :user, :with_profile, role: 'department_manager'
+    @superadmin = create :user, :with_clients, role: 'superadmin'
+    @other_superadmin = create :user, role: 'superadmin'
+    @social_worker = create :user, :with_clients, role: 'social_worker'
+    @department_manager = create :user, role: 'department_manager'
   end
 
   test 'Destroy: superadmin can delete other user' do

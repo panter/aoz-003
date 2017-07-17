@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class SocialworkerTest < ApplicationSystemTestCase
   def setup
-    @socialworker = create :user, :with_profile, :with_clients, role: 'social_worker'
+    @socialworker = create :user, :with_clients, role: 'social_worker'
     login_as @socialworker
   end
 
@@ -46,7 +46,7 @@ class SocialworkerTest < ApplicationSystemTestCase
 
   test 'can only see her own clients' do
     visit clients_path
-    other_socialworker = create :user, :with_profile, :with_clients, role: 'social_worker'
+    other_socialworker = create :user, :with_clients, role: 'social_worker'
     Client.where(user: other_socialworker) do |client|
       assert_not page.has_text? client.first_name
       assert_not page.has_text? client.last_name
