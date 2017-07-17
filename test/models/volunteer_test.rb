@@ -30,6 +30,5 @@ class VolunteerTest < ActiveSupport::TestCase
     @volunteer.create_assignment!(client: @client, creator: @user)
     result = Volunteer.without_clients
     assert_equal [], result.to_a
->>>>>>> without clients equivalent of need accompanying
   end
 end

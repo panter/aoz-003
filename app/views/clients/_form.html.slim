@@ -39,10 +39,7 @@
                 collection: Client.gender_request_collection,
                 as: :radio_buttons,
                 wrapper: :vertical_radio_and_checkboxes
-      = f.input :age_request,
-                collection: Client.age_request_collection,
-                as: :radio_buttons,
-                wrapper: :vertical_radio_and_checkboxes
+      = f.input :age_request, collection: Client.age_request_collection, default: :age_no_matter
       = f.input :other_request
       = f.input :education
       = f.input :actual_activities

@@ -1,12 +1,11 @@
-- age_request_filter = params[:q] && params[:q][:age_request_cont].present? ? params[:q][:age_request_cont] : 'age_no_matter'
+- age_request_filter = params[:q] && params[:q][:age_request_cont].present? ? params[:q][:age_request_cont] : 'all'
 .btn-group
   button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:age_request)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
     = "#{t_attr(:age_request, Client)} : "
     = t(age_request_filter, scope: [:simple_form, :options, :client, :age_request]) + ' '
     span.caret aria-hidden='true'
   ul.dropdown-menu
+    li
+      = link_to t('all'), params.permit!.to_h.deep_merge(q: {age_request_cont: ''})
     - Client.age_request_collection.each do |s|
-      - if s.to_s == 'age_no_matter'
-        li = link_to t(s.to_s, scope: [:simple_form, :options, :client, :age_request]), params.permit!.to_h.deep_merge(q: {age_request_cont: ''})
-      - else
-        li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :age_request]), params.permit!.to_h.deep_merge(q: {age_request_cont: s})
+      li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :age_request]), params.permit!.to_h.deep_merge(q: {age_request_cont: s})
