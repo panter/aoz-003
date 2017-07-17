@@ -1,7 +1,6 @@
 class Volunteer < ApplicationRecord
   include LanguageAndScheduleReferences
   include GenderCollection
-  include FullName
   include BuildContactRelation
   include BuildSchedulesRelation
 
