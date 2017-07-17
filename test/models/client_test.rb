@@ -26,4 +26,14 @@ class ClientTest < ActiveSupport::TestCase
     result = Client.need_accompanying
     assert_equal [], result.to_a
   end
+
+  test 'schedules build correctly automaticly' do
+    new_client = Client.new
+    assert_equal new_client.schedules.size, 21
+  end
+
+  test 'contact relation is build automaticly' do
+    new_client = Client.new
+    assert new_client.contact.present?
+  end
 end
