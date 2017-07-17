@@ -29,7 +29,7 @@ class Client < ApplicationRecord
   validates :state, inclusion: { in: STATES }
 
   def self.gender_request_collection
-    [:same, :no_matter]
+    [:no_matter, :same]
   end
 
   def self.age_request_collection

@@ -37,7 +37,7 @@ class ClientsTest < ApplicationSystemTestCase
       select('Uncle', from: 'Relation')
     end
     fill_in 'Goals', with: 'asdfasdf'
-    page.choose('client_gender_request_same')
+    select('gender same', from: "Volunteer's gender")
     select('36 - 50', from: "Volunteer's age")
     fill_in 'Other request', with: 'asdfasdf'
     fill_in 'Education', with: 'asdfasdf'
@@ -62,6 +62,7 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? 'Client was successfully created.'
     within '.table-no-border-top' do
       assert page.has_text? "age doesn't matter"
+      assert page.has_text? "gender doesn't matter"
     end
   end
 
