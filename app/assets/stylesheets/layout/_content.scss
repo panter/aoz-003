@@ -13,3 +13,22 @@
     margin-right:  $padding-large-horizontal;
   }
 }
+
+.selectized-field {
+  visibility: hidden;
+}
+
+.selectize-control {
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.selectize-input {
+  height: 3rem;
+}
+
+.selectize-dropdown {
+  height: initial;
+}
