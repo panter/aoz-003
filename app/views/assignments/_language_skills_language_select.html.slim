@@ -1,0 +1,11 @@
+- language_skills_language_filter = params[:q] && params[:q][:language_skills_language_cont].present? ? params[:q][:language_skills_language_cont] : t('all')
+.btn-group
+  button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:language_skills)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
+    = "#{t_attr(:language_skills, Client)} : "
+    = language_skills_language_filter + ' '
+    span.caret aria-hidden='true'
+  ul.dropdown-menu
+    li
+      = link_to t('all'), params.permit!.to_h.deep_merge(q: {language_skills_language_cont: ''})
+    - I18nData.languages(I18n.locale).each do |s|
+      li= link_to s[1], params.permit!.to_h.deep_merge(q: {language_skills_language_cont: s[0]})
