@@ -18,7 +18,7 @@ tr
       = volunteer.registrar.full_name
     - else
       = t('volunteer_self_applicant')
-  - if params[:action] == 'index'
+  - if action_name == 'index'
     td = link_to t_action(:show), volunteer
     td = link_to t_model(Journal), { controller: 'journals', action: 'index', volunteer_id: volunteer.id }
     td = link_to t_action(:edit), edit_volunteer_path(volunteer)
