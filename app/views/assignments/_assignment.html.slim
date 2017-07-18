@@ -3,7 +3,5 @@ tr
   td = link_to assignment.volunteer, assignment.volunteer
   td = t("state.#{assignment.state}", scope: [:simple_form, :options, :assignment]) if assignment.state.present?
   td = link_to assignment.creator, assignment.creator if assignment.creator.present?
-  td = link_to t_action(:show), assignment
-  td = link_to t_action(:edit), edit_assignment_path(assignment)
-  td = link_to t_action(:destroy), assignment, data: { confirm: t('are_you_sure') }, method: :delete
+  = render 'index_actions', subject: assignment
   td = link_to t('download'), assignment_path(assignment, format: :pdf)

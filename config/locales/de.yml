@@ -239,6 +239,7 @@ de:
   crud:
     action:
       destroy: Löschen
+      print: Drucken
     c_action:
       create: '%{model} wurde erfolgreich erstellt.'
       destroy: '%{model} wurde erfolgreich gelöscht.'
