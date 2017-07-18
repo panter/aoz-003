@@ -89,8 +89,8 @@ module ApplicationHelper
     c.translations[I18n.locale.to_s] || c.name
   end
 
-  def request_filter(query)
-    params[:q] && params[:q][query].present? ? params[:q][query] : 'all'
+  def request_filter(query, all)
+    params[:q] && params[:q][query].present? ? params[:q][query] : all
   end
 
   def request_params_filter(query)
