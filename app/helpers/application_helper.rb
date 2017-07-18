@@ -51,7 +51,7 @@ module ApplicationHelper
   def input_html(f, enabler, value, type = 'field')
     { class: "conditional-#{type}", data: {
       model: model_name_from_record_or_class(f.object).element,
-      subject: enabler,
+      attribute: enabler,
       value: value
     } }
   end
