@@ -19,9 +19,7 @@ tr
     - else
       = t('volunteer_self_applicant')
   - if action_name == 'index'
-    td = link_to t_action(:show), volunteer
-    td = link_to t_model(Journal), { controller: 'journals', action: 'index', volunteer_id: volunteer.id }
-    td = link_to t_action(:edit), edit_volunteer_path(volunteer)
-    td = link_to t_action(:destroy), volunteer, confirm_deleting(volunteer)
+    = render 'index_actions', subject: volunteer
   - else
     td = button_link t('find_client'), find_client_volunteer_path(id: volunteer)
+

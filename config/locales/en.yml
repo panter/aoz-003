@@ -99,6 +99,7 @@ en:
   crud:
     action:
       destroy: Delete
+      print: Print
     c_action:
       create: '%{model} was successfully created.'
       destroy: '%{model} was successfully deleted.'

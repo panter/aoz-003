@@ -10,7 +10,7 @@
           th= t_attr(:last_name)
           th= t_attr(:street, Contact)
           th= t_attr(:postal_code, Contact)
-          th colspan='3'
+          th colspan='4'
 
       tbody
         - @departments.each do |d|
@@ -18,8 +18,6 @@
             td= d.contact.last_name
             td= d.contact.street
             td= d.contact.postal_code
-            td= link_to t_action(:show), d
-            td= link_to t_action(:edit), edit_department_path(d)
-            td= link_to t_action(:destroy), d, data: { confirm: t_confirm_delete(d) }, method: :delete
+            = render 'index_actions', subject: d
 
 = form_navigation_btn :new

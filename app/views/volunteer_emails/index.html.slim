@@ -8,15 +8,13 @@ h1= t('volunteer_emails')
       th= t_attr(:subject)
       th= t_attr(:title)
       th= t_attr(:body)
-      th colspan='3'
+      th colspan='4'
     tbody
       - @volunteer_emails.each do |volunteer_email|
         tr class=(volunteer_email.active ? 'bg-success': '') title=(volunteer_email.active ? 'Aktiv': '')
           td= volunteer_email.subject
           td= volunteer_email.title
           td= truncate(volunteer_email.body, length: 40, omission: ' ……')
-          td= link_to t_action(:show), volunteer_email
-          td= link_to t_action(:edit), edit_volunteer_email_path(volunteer_email)
-          td= link_to t_action(:destroy), volunteer_email, data: { confirm: t_confirm_delete(volunteer_email) }, method: :delete
+          = render 'index_actions', subject: volunteer_email
 
 = form_navigation_btn :new
