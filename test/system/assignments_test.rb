@@ -37,18 +37,4 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer)
     assert page.has_text? 'Active'
   end
-
-  test 'assign unassigned client (volunteer side)' do
-    visit volunteers_path
-    click_link 'Without clients'
-    click_link 'Find client'
-    click_link 'Reserve'
-    click_button 'Create Assignment'
-    assert page.has_text? @client.contact.full_name
-    assert page.has_text? @volunteer.contact.full_name
-    visit client_path(@client)
-    assert page.has_text? 'Reserved'
-    visit volunteer_path(@volunteer)
-    assert page.has_text? 'Active'
-  end
 end
