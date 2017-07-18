@@ -54,7 +54,7 @@ class User < ApplicationRecord
       profile_attributes: {
         contact_attributes: {
           first_name: 'firstname',
-          last_name: 'lastname',
+          last_name: 'lastname'
         }
       }
     )
