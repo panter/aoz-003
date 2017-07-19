@@ -2,7 +2,7 @@ require 'test_helper'
 
 class VolunteerTest < ActiveSupport::TestCase
   def setup
-    @volunteer = create :volunteer, :with_language_skills, state: Volunteer::ACCEPTED
+    @volunteer = create :volunteer
   end
 
   test 'valid factory' do
@@ -19,18 +19,16 @@ class VolunteerTest < ActiveSupport::TestCase
     assert new_volunteer.contact.present?
   end
 
-  test 'volunteers seeking_clients' do
+  test 'only accepted, active further and inactive volunteers should show up for assignment' do
+    @accepted = create :volunteer, state: Volunteer::ACCEPTED
+    @active_further = create :volunteer, state: Volunteer::ACTIVE_FURTHER
+    @inactive = create :volunteer, state: Volunteer::INACTIVE
+    @registered = create :volunteer, state: Volunteer::REGISTERED
+    @contacted = create :volunteer, state: Volunteer::CONTACTED
+    @active = create :volunteer, state: Volunteer::ACTIVE
+    @rejected = create :volunteer, state: Volunteer::REJECTED
+    @resigned = create :volunteer, state: Volunteer::RESIGNED
     result = Volunteer.seeking_clients
-    assert_equal [@volunteer], result.to_a
-  end
-
-  test 'a volunteer with an assignment should not show up in without assignment' do
-    @client = create :client
-    @user = create :user
-    @volunteer.assignments.create(client: @client, creator: @user)
-    @volunteer.state = Volunteer::ACTIVE
-    @volunteer.save
-    result = Volunteer.seeking_clients
-    assert_equal [], result.to_a
+    assert_equal [@inactive, @active_further, @accepted], result.to_a
   end
 end
