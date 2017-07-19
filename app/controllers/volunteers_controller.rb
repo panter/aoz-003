@@ -47,9 +47,9 @@ class VolunteersController < ApplicationController
     redirect_to volunteers_url, notice: t('volunteer_destroyed')
   end
 
-  def without_clients
-    @q = Volunteer.without_clients.ransack(params[:q])
-    @without_clients = @q.result
+  def seeking_clients
+    @q = Volunteer.seeking_clients.ransack(params[:q])
+    @seeking_clients = @q.result
   end
 
   private

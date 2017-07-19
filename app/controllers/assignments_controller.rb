@@ -54,7 +54,7 @@ class AssignmentsController < ApplicationController
     @assignment.destroy
     client.state = Client::REGISTERED
     client.save
-    if Volunteer.without_clients.include?(volunteer)
+    if Volunteer.seeking_clients.include?(volunteer)
       volunteer.state = Volunteer::ACCEPTED
       volunteer.save
     end
@@ -63,8 +63,8 @@ class AssignmentsController < ApplicationController
 
   def find_volunteer
     @client = Client.find(params[:id])
-    @q = Volunteer.without_clients.ransack(params[:q])
-    @without_clients = @q.result
+    @q = Volunteer.seeking_clients.ransack(params[:q])
+    @seeking_clients = @q.result
     authorize Assignment
   end
 
