@@ -15,4 +15,5 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require cocoon
+//= require selectize
 //= require_tree .
