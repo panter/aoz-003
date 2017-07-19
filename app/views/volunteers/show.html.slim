@@ -109,5 +109,11 @@ h3= t_attr(:group_accompaniment)
 
 = render 'schedules/show', participant: @volunteer
 
+- if @volunteer.assignments.any?
+  .row
+    .col-xs-12
+      h3= t('assignments')
+  = render 'assignments/assignments_block', assignments: @volunteer.assignments
+
 = form_navigation_btn :edit
 = form_navigation_btn :back
