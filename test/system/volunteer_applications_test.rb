@@ -10,15 +10,15 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     visit root_path
 
     assert page.has_current_path? new_user_session_path
-    assert page.has_link? 'Do you want to apply as a volunteer?'
+    assert page.has_link? 'Do you want to register as a volunteer?'
   end
 
   test 'new volunteer application' do
     visit root_path
-    click_link 'Do you want to apply as a volunteer?'
+    click_link 'Do you want to register as a volunteer?'
 
     assert page.has_current_path? new_volunteer_application_path
-    assert page.has_text? 'Volunteer Application'
+    assert page.has_text? 'Volunteer Registration'
     fill_in 'First name', with: 'Volunteer'
     fill_in 'Last name', with: 'Application'
     within '.volunteer_date_of_birth' do
@@ -49,13 +49,13 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     page.check('volunteer_adults')
     page.choose('volunteer_region_canton')
 
-    click_button 'Submit application'
+    click_button 'Submit registration'
 
     assert_equal 1, ActionMailer::Base.deliveries.size
 
     assert page.has_current_path? thanks_volunteer_applications_path
     assert page.has_text? 'Thank you'
-    assert page.has_text? 'Your application has been successfully sent.'
+    assert page.has_text? 'Your registration has been successfully sent.'
     assert page.has_text? 'We will soon get back to you.'
   end
 

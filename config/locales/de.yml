@@ -201,7 +201,7 @@ de:
       schedule: Zeitplan
       user: Benutzer/in
       volunteer: Freiwillige/n
-      volunteer_application: Freiwilligen Bewerbung
+      volunteer_application: Freiwilligen Anmeldung
       volunteer_email: Bestätigungsmail
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journal Eintrag verfassen
@@ -214,7 +214,7 @@ de:
     age_young: 20 - 35
     all: Alle
   all: Alle
-  application_submitted: 'Ihre Bewerbung wurde erfolgreich abgeschickt.'
+  application_submitted: 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
@@ -563,7 +563,7 @@ de:
     inactive: Sucht neuen Einsatz
     registered: Interessiert
     resigned: Beendet
-  submit_application: Bewerbung abschicken
+  submit_application: Anmeldung abschicken
   target_groups: Zielgruppe
   thank_you: "Vielen Dank \U0001F389"
   time:
@@ -582,7 +582,7 @@ de:
   users: Benutzer/in
   versions: Verlauf
   voluntary_platform: Freiwilligen Plattform
-  volunteer_application: Freiwilligen Bewerbung
+  volunteer_application: Freiwilligen Anmeldung
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
@@ -598,7 +598,7 @@ de:
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
-  wanna_apply: Möchten Sie sich als Freiwillige/r bewerben?
+  wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   when: Zeit
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
