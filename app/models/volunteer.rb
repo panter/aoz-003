@@ -97,8 +97,8 @@ class Volunteer < ApplicationRecord
     "#{contact.first_name} #{contact.last_name}"
   end
 
-  def self.without_clients
-    Volunteer.includes(:assignments).where(assignments: { volunteer_id: nil })
+  def self.seeking_clients
+    Volunteer.where(state: [Volunteer::ACCEPTED, Volunteer::ACTIVE_FURTHER, Volunteer::INACTIVE])
   end
 
   private

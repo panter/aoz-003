@@ -2,9 +2,10 @@
   .col-xs-12
     h1= @volunteer.contact.full_name
 
-.row
-  .col-xs-12
-    = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
+- if Volunteer.seeking_clients.include?(@volunteer)
+  .row
+    .col-xs-12
+      = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
 
 - if policy(Volunteer).supervisor?
   = render 'journals/journal_block', journaled_for: @volunteer

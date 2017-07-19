@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
   resources :departments
   resources :volunteers do
-    get :without_clients, on: :collection
+    get :seeking_clients, on: :collection
     get :find_client, on: :member, to: 'assignments#find_client'
     resources :journals
   end

@@ -42,7 +42,7 @@ class VolunteerPolicy < ApplicationPolicy
     user.superadmin?
   end
 
-  def without_clients?
+  def seeking_clients?
     user.superadmin?
   end
 

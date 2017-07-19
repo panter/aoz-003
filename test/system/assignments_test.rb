@@ -5,7 +5,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     @user = create :user, email: 'superadmin@example.com'
     login_as @user
     @client = create :client
-    @volunteer = create :volunteer
+    @volunteer = create :volunteer, state: Volunteer::ACTIVE_FURTHER
   end
 
   test 'new assignment form with preselected fields' do
@@ -41,10 +41,10 @@ class AssignmentsTest < ApplicationSystemTestCase
   test 'assign unassigned client (volunteer side)' do
     # FIXME: If we follow the same logic with the previous test
     # visit volunteers_path
-    # click_link 'Without clients'
+    # click_link 'Looking for clients'
     # the test fails to find the 'Find client' link
-    # as it doesn't actually click the 'Without clients link'
-    visit without_clients_volunteers_path
+    # as it doesn't actually click the 'Looking for clients link'
+    visit seeking_clients_volunteers_path
     click_link 'Find client'
     click_link 'Reserve'
     click_button 'Create Assignment'
