@@ -1,6 +1,7 @@
 tr
   td = volunteer.contact.title
-  td = volunteer.contact.full_name
+  - if action_name == 'index'
+    td = volunteer.contact.full_name
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
   td = volunteer.contact.contact_emails.first.body if volunteer.contact.contact_emails.any?
@@ -20,6 +21,5 @@ tr
       = t('volunteer_self_applicant')
   - if action_name == 'index'
     = render 'index_actions', subject: volunteer
-  - else
+  - elsif action_name == 'seeking_clients'
     td = button_link t('find_client'), find_client_volunteer_path(id: volunteer)
-

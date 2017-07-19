@@ -3,7 +3,8 @@
     thead
       tr
         th= sort_link @q, :contact_title
-        th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
+        - if action_name == 'index'
+          th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
         th= sort_link @q, :contact_city
         th= sort_link @q, :contact_postal_code
         th= sort_link @q, :contact_contact_emails_body
