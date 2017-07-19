@@ -148,37 +148,38 @@
 
 .row
   .col-xs-11.col-xs-offset-1
-    .row
-      .col-xs-6
-        .row
-          .col-xs-5
-            = t('assignment_pdf.last_name')
-          .col-xs-7.col-input
-            = @assignment.creator.profile.contact.last_name
-        .row
-          .col-xs-5
-            = t('assignment_pdf.function')
-          .col-xs-7.col-input
-        .row
-          .col-xs-5
-            = t('assignment_pdf.email')
-          .col-xs-7.col-input
-            = @assignment.creator.profile.contact.primary_email
-      .col-xs-6
-        .row
-          .col-xs-5
-            = t('assignment_pdf.first_name')
-          .col-xs-7.col-input
-            = @assignment.creator.profile.contact.first_name
-        .row
-          .col-xs-5
-            = t('assignment_pdf.organization')
-          .col-xs-7.col-input
-        .row
-          .col-xs-5
-            = t('assignment_pdf.telephone')
-          .col-xs-7.col-input
-            = @assignment.creator.profile.contact.primary_phone
+    - if @assignment.creator.profile.present?
+      .row
+        .col-xs-6
+          .row
+            .col-xs-5
+              = t('assignment_pdf.last_name')
+            .col-xs-7.col-input
+              = @assignment.creator.profile.contact.last_name
+          .row
+            .col-xs-5
+              = t('assignment_pdf.function')
+            .col-xs-7.col-input
+          .row
+            .col-xs-5
+              = t('assignment_pdf.email')
+            .col-xs-7.col-input
+              = @assignment.creator.profile.contact.primary_email
+        .col-xs-6
+          .row
+            .col-xs-5
+              = t('assignment_pdf.first_name')
+            .col-xs-7.col-input
+              = @assignment.creator.profile.contact.first_name
+          .row
+            .col-xs-5
+              = t('assignment_pdf.organization')
+            .col-xs-7.col-input
+          .row
+            .col-xs-5
+              = t('assignment_pdf.telephone')
+            .col-xs-7.col-input
+              = @assignment.creator.profile.contact.primary_phone
 
     .row.row-box
       .col-xs-12
