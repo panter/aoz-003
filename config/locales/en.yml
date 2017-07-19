@@ -80,6 +80,7 @@ en:
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
+  assignment_exists: Assignment already exists
   assignments: Assignments
   available_volunteers: Available volunteers
   changed_by: Changed by

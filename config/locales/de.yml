@@ -217,6 +217,7 @@ de:
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+  assignment_exists: Die Begleitung existiert bereits.
   assignments: Begleitungen
   available_volunteers: Verfügbare Freiwillige
   changed_by: Geändert durch
