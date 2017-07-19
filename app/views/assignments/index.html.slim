@@ -2,18 +2,6 @@
   .col-xs-12
     h1= t('assignments')
 
-.row
-  .col-xs-12
-  table.table.table-striped
-    thead
-      tr
-        th= t_model(Client)
-        th= t_model(Volunteer)
-        th= t_attr(:state)
-        th= t_attr(:created_by)
-        th colspan='5'
-
-    tbody
-        = render @assignments
+= render 'assignments_block', assignments: @assignments
 
 = form_navigation_btn :new

@@ -1,0 +1,14 @@
+.row
+  .col-xs-12
+  table.table.table-striped
+    thead
+      tr
+        th= t_model(Client)
+        - if action_name == 'index'
+          th= t_model(Volunteer)
+        th= t_attr(:state)
+        th= t_attr(:created_by)
+        th colspan='5'
+
+    tbody
+        = render assignments
