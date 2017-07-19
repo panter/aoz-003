@@ -33,8 +33,8 @@ class Volunteer < ApplicationRecord
   ].freeze
   STATES = [REGISTERED] + STATES_FOR_REVIEWED
 
-  has_one :assignment
-  has_one :client, through: :assignments
+  has_many :assignments
+  has_many :clients, through: :assignments
 
   belongs_to :user, optional: true
   has_attached_file :avatar, styles: { thumb: '100x100#' }
