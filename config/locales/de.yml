@@ -72,7 +72,7 @@ de:
         level: Niveau
       profile:
         address: Adresse
-        avatar: Bild
+        avatar: Foto
         first_name: Vorname
         friday: Freitag
         last_name: Nachname
@@ -103,7 +103,7 @@ de:
         additional_phone_numbers: Zusätzliche Telefonnummern
         address: Adresse
         adults: Erwachsene
-        avatar: Bild
+        avatar: Foto
         birth_year: Jahrgang
         children: Kinder
         city: Stadt
