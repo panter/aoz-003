@@ -5,28 +5,11 @@
   .col-xs-6.col-md-4= form_navigation_btn :new, with_row: false
   .col-xs-6.col-md-4.text-center= link_to t('volunteer_emails'), volunteer_emails_path, class: 'btn btn-default'
   .col-xs-6.col-md-4.text-right= render 'state_select'
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        th= sort_link @q, :contact_title
-        th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
-        th= sort_link @q, :contact_city
-        th= sort_link @q, :contact_postal_code
-        th= sort_link @q, :contact_contact_emails_body
-        th= sort_link @q, :date_of_birth, t_attr(:birth_year, Volunteer)
-        th= sort_link @q, :language_skills_language, t_attr(:first_language, Volunteer)
-        th= t_attr(:languages, Volunteer)
-        th= sort_link @q, :education
-        th= sort_link @q, :profession
-        th= sort_link @q, :working_percent
-        th= sort_link @q, :expectations
-        th= sort_link @q, :interests
-        th= sort_link @q, :state
-        th colspan='5'
 
 = render 'columns', volunteers: @volunteers
 
-= form_navigation_btn :new
-- if policy(Volunteer).destroy?
-  = button_link t('without_clients'), without_clients_volunteers_url
+.row
+  = form_navigation_btn :new, with_row: false, with_col: true, cols: 4
+  - if policy(Volunteer).destroy?
+    .col-xs-4
+      = button_link t('without_clients'), without_clients_volunteers_url

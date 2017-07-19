@@ -19,9 +19,10 @@ tr
   - if action_name == 'find_client'
     td = t("gender_request.#{client.gender_request}") unless client.gender_request.blank?
     td = t("age_request.#{client.age_request}") unless client.age_request.blank?
-  - if params[:action] == 'index'
+  - if action_name == 'index'
     = render 'index_actions', subject: client
-  - elsif action_name == 'find_client'
+  - if action_name == 'find_client'
     td= button_link t_action(:show), client
-    td = button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: volunteer)
-
+    td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: volunteer)
+  - else
+    td= button_link t('find_volunteer'), find_volunteer_client_path(id: client)
