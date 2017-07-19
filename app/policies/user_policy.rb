@@ -33,4 +33,8 @@ class UserPolicy < ApplicationPolicy
   def destroy?
     @current_user.superadmin? && !@user.superadmin?
   end
+
+  def reset_password?
+    @current_user.superadmin? && @current_user != @user
+  end
 end
