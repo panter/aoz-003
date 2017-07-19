@@ -1,4 +1,4 @@
-require "application_system_test_case"
+require 'application_system_test_case'
 
 class AssignmentsTest < ApplicationSystemTestCase
   setup do
@@ -54,5 +54,16 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'Reserved'
     visit volunteer_path(@volunteer)
     assert page.has_text? 'Active'
+  end
+
+  test 'no duplicate assignments' do
+    create :assignment, client: @client, volunteer: @volunteer, creator: @user
+    assert_no_difference 'Assignment.count' do
+      visit new_assignment_path
+      select(@client.contact.full_name, from: 'Client')
+      select(@volunteer.contact.full_name, from: 'Volunteer')
+      click_button 'Create Assignment'
+      assert page.has_text? 'Assignment already exists.'
+    end
   end
 end
