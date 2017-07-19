@@ -16,7 +16,7 @@
         th= sort_link @q, :expectations
         th= sort_link @q, :interests
         th= sort_link @q, :state
-        th colspan='4'
+        th colspan=(action_name == 'index' ? '5' : '2')
 
     tbody
       = render volunteers

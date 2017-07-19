@@ -19,7 +19,7 @@
         - if action_name == 'find_client'
           th= sort_link @q, :gender_request, t_attr(:gender_request, Client)
           th= sort_link @q, :age_request, t_attr(:age_request, Client)
-        th colspan='5'
+        th colspan=(action_name == 'index' ? '5' : '2')
 
     tbody
       - if action_name == 'find_client'
