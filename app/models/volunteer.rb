@@ -98,7 +98,7 @@ class Volunteer < ApplicationRecord
   end
 
   def self.without_clients
-    Volunteer.includes(:assignment).where(assignments: { volunteer_id: nil })
+    Volunteer.includes(:assignments).where(assignments: { volunteer_id: nil })
   end
 
   private
