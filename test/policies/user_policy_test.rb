@@ -79,8 +79,4 @@ class UserPolicyTest < PolicyAssertions::Test
     refute_permit @social_worker, @department_manager, 'index?'
     refute_permit @social_worker, @superadmin, 'index?'
   end
-
-  test 'superadmin can edit other superadmins email and password' do
-    assert_permit @superadmin, @social_worker, 'reset_password?'
-  end
 end
