@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 
   def handle_update(user_params)
     if user_params[:password].blank?
-      @user.update_without_password(user_params.slice(:email, :role))
+      @user.update_without_password(user_params)
     else
       @user.update(user_params)
     end
