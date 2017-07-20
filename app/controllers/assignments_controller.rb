@@ -54,7 +54,7 @@ class AssignmentsController < ApplicationController
     @assignment.destroy
     client.state = Client::REGISTERED
     client.save
-    if Volunteer.seeking_clients.include?(volunteer)
+    unless volunteer.assignments.any?
       volunteer.state = Volunteer::ACCEPTED
       volunteer.save
     end
