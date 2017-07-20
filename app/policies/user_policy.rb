@@ -35,6 +35,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def reset_password?
-    @current_user.superadmin? && @current_user != @user
+    @current_user.superadmin? || @current_user == @user
   end
 end
