@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   # only used to update the current user
   def update
-    if @user.update(user_params)
+    if handle_update(user_params)
       bypass_sign_in @user
       redirect_to @user, notice: t('profile_updated')
     else
@@ -45,6 +45,14 @@ class UsersController < ApplicationController
 
   private
 
+  def handle_update(user_params)
+    if user_params[:password].blank?
+      @user.update_without_password(user_params.slice(:email, :role))
+    else
+      @user.update(user_params)
+    end
+  end
+
   def set_user
     @user = User.find(params[:id])
     authorize @user
@@ -56,5 +64,4 @@ class UsersController < ApplicationController
         contact_attributes: contact_attributes[:contact_attributes]
       ])
   end
-
 end
