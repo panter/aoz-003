@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   # only used to update the current user
   def update
     if handle_update(user_params)
-      bypass_sign_in @user
+      bypass_sign_in @user if @user == current_user
       redirect_to @user, notice: t('profile_updated')
     else
       render :edit
