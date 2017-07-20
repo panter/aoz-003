@@ -13,4 +13,17 @@ class AssignmentTest < ActiveSupport::TestCase
     assignment = Assignment.new
     refute assignment.valid?
   end
+
+  test 'no duplicate assignment' do
+    user = create :user
+    volunteer = create :volunteer
+    client = create :client
+    assignment = create :assignment, client: client, volunteer: volunteer, creator: user
+
+    assignment_dup = assignment.dup
+    assignment_dup.save
+
+    refute assignment_dup.persisted?
+    assert assignment_dup.errors[:client_id].include?('Assignment already exists.')
+  end
 end
