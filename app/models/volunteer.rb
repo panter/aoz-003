@@ -31,6 +31,7 @@ class Volunteer < ApplicationRecord
   STATES_FOR_REVIEWED = [
     CONTACTED, ACTIVE, ACCEPTED, ACTIVE_FURTHER, REJECTED, RESIGNED, INACTIVE
   ].freeze
+  SEEKING_CLIENTS = [ACCEPTED, ACTIVE_FURTHER, INACTIVE].freeze
   STATES = [REGISTERED] + STATES_FOR_REVIEWED
 
   has_many :assignments
@@ -98,7 +99,11 @@ class Volunteer < ApplicationRecord
   end
 
   def self.seeking_clients
-    Volunteer.where(state: [Volunteer::ACCEPTED, Volunteer::ACTIVE_FURTHER, Volunteer::INACTIVE])
+    Volunteer.where(state: SEEKING_CLIENTS)
+  end
+
+  def seeking_clients?
+    SEEKING_CLIENTS.include?(state)
   end
 
   private

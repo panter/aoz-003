@@ -48,7 +48,7 @@ class VolunteersController < ApplicationController
   end
 
   def seeking_clients
-    @q = Volunteer.seeking_clients.ransack(params[:q])
+    @q = Volunteer.where(state: Volunteer::SEEKING_CLIENTS).ransack(params[:q])
     @seeking_clients = @q.result
   end
 
