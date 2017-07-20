@@ -29,7 +29,7 @@ class Contact < ApplicationRecord
   end
 
   def validate_first_name?
-    contactable_type != 'Department' && contactable_type != 'Profile'
+    !department? && !profile?
   end
 
   def validate_last_name?

@@ -3,7 +3,7 @@
   .row
     .col-xs-12
       = f.input :email
-      - if current_user == user || policy(User).reset_password?
+      - if policy(user).reset_password?
         = f.input :password
 
       - if policy(User).create?
