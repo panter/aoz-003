@@ -66,4 +66,23 @@ class AssignmentsTest < ApplicationSystemTestCase
       assert page.has_text? 'Assignment already exists.'
     end
   end
+
+  test 'creating a pdf with a user that has no profile will not crash' do
+    user = create :user, profile: nil
+    refute user.profile.present?
+
+    login_as user
+    visit new_assignment_path
+    within '.assignment_client' do
+      select(@client.contact.full_name, from: 'Client')
+    end
+    within '.assignment_volunteer' do
+      select(@volunteer.contact.full_name, from: 'Volunteer')
+    end
+    click_button 'Create Assignment'
+    within '.table-striped' do
+      click_link 'Show'
+    end
+    assert page.has_text? @client.contact.full_name
+  end
 end
