@@ -55,4 +55,4 @@
 
     tbody
       - @seeking_clients.each do |volunteer|
-        = render partial: 'without_client', object: volunteer, locals: {client: @client.id}
+        = render partial: 'seeking_client', object: volunteer, locals: {client: @client.id}
