@@ -10,8 +10,8 @@
     tbody
       = render 'contacts/show', contact: @client.contact
       tr
-        td= t_attr(:date_of_birth)
-        td= @client.date_of_birth.try(:year)
+        td= t_attr(:birth_year)
+        td= @client.birth_year.try(:year)
       tr
         td= t_attr(:gender)
         td

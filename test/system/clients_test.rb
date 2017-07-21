@@ -11,8 +11,8 @@ class ClientsTest < ApplicationSystemTestCase
 
     fill_in 'First name', with: 'asdf'
     fill_in 'Last name', with: 'asdf'
-    within '.client_date_of_birth' do
-      select('1995', from: 'Date of birth')
+    within '.client_birth_year' do
+      select('1995', from: 'Birth year')
     end
     page.choose('client_gender_female')
     select('Aruba', from: 'Nationality')
@@ -33,7 +33,7 @@ class ClientsTest < ApplicationSystemTestCase
     within '#relatives' do
       fill_in 'First name', with: 'asdf'
       fill_in 'Last name', with: 'asdf'
-      select('2001', from: 'Date of birth')
+      select('2001', from: 'Birth year')
       select('Uncle', from: 'Relation')
     end
     fill_in 'Goals', with: 'asdfasdf'

@@ -40,8 +40,8 @@ p= @volunteer.contact.primary_email
         = ": "
       = phone.body
 
-h4= "#{t_attr(:date_of_birth, Volunteer)}: "
-p= l(@volunteer.date_of_birth) if @volunteer.date_of_birth
+h4= "#{t_attr(:birth_year, Volunteer)}: "
+p= l(@volunteer.birth_year) if @volunteer.birth_year
 
 
 h4= "#{t_attr(:gender, Volunteer)}: "

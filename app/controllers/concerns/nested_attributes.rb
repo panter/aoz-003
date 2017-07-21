@@ -10,7 +10,7 @@ module NestedAttributes
 
     def relatives_attributes
       {
-        relatives_attributes: [:id, :first_name, :last_name, :date_of_birth, :relation, :_destroy]
+        relatives_attributes: [:id, :first_name, :last_name, :birth_year, :relation, :_destroy]
       }
     end
 

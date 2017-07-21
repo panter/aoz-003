@@ -22,7 +22,7 @@ def make_relatives
       relative.first_name = Faker::Name.first_name
       relative.last_name = Faker::Name.last_name
       relative.relation = random_relation
-      relative.date_of_birth = Faker::Date.birthday(18, 65)
+      relative.birth_year = Faker::Date.birthday(18, 65)
     end
   end
 end
@@ -87,7 +87,7 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
           user: user
         )
       ]
-      client.date_of_birth = Faker::Date.birthday(18, 65)
+      client.birth_year = Faker::Date.birthday(18, 65)
       client.gender = ['male', 'female'].sample
       client.nationality = ISO3166::Country.codes.sample
       client.relatives = make_relatives
@@ -157,7 +157,7 @@ Volunteer.state_collection.each do |state|
         user: User.first
       )
     ]
-    volunteer.date_of_birth = Faker::Date.birthday(18, 75)
+    volunteer.birth_year = Faker::Date.birthday(18, 75)
     volunteer.profession = Faker::Company.profession
     volunteer.gender = ['male', 'female'].sample
     volunteer.working_percent = "#{rand(2..10)}0"
