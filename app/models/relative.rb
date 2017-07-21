@@ -5,7 +5,7 @@ class Relative < ApplicationRecord
 
   def to_s
     relation_human = relation ? I18n.t(relation, scope: [:relation]) : ''
-    [full_name, date_of_birth.try(:year), relation_human].reject(&:blank?).join(', ')
+    [full_name, birth_year.try(:year), relation_human].reject(&:blank?).join(', ')
   end
 
   def full_name

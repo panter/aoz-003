@@ -37,8 +37,8 @@
     = " / #{phone.label}" if phone.label.present?
     = ": #{phone.body}\r\n"
 
-- if @volunteer.date_of_birth.present?
-  = "#{rn2}#{t_attr(:date_of_birth, Volunteer)}:#{t3}#{l(@volunteer.date_of_birth)}\r\n"
+- if @volunteer.birth_year.present?
+  = "#{rn2}#{t_attr(:birth_year, Volunteer)}:#{t3}#{l(@volunteer.birth_year)}\r\n"
 
 - if @volunteer.gender.present?
   = "\r\n#{t_attr(:gender, Volunteer)}:#{t3}"

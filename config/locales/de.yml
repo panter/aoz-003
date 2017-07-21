@@ -16,7 +16,7 @@ de:
         comments: Bemerkungen
         competent_authority: Zusätzlich involvierte Stelle
         created_at: Erstellt am
-        date_of_birth: Geburtsdatum
+        birth_year: Jahrgang
         date_of_year: Geburtsjahr
         deleted_at: Gelöscht
         education: Beruf oder Ausbildung im Herkunftsland
@@ -83,7 +83,7 @@ de:
         tuesday: Dienstag
         wednesday: Mittwoch
       relative:
-        date_of_birth: Geburtsdatum
+        birth_year: Jahrgang
         first_name: Vorname
         last_name: Nachname
         relation: Verwandtschaftsbeziehung
@@ -110,7 +110,6 @@ de:
         created_at: Erstellt am
         creative: Kreativ
         culture: Kultur
-        date_of_birth: Geburtsdatum
         duration: Dauer der Begleitung
         education: Ausbildung
         email: Email

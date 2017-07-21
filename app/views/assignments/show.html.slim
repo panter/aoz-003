@@ -48,9 +48,9 @@
             = @assignment.volunteer.contact.contact_phones.first.body unless @assignment.volunteer.contact.contact_phones.first.nil?
         .row
           .col-xs-5
-            = t('assignment_pdf.date_of_birth')
+            = t('assignment_pdf.birth_year')
           .col-xs-7.col-input
-            = @assignment.volunteer.date_of_birth
+            = @assignment.volunteer.birth_year
 
 .row
   .col-xs-11.col-xs-offset-1
@@ -82,9 +82,9 @@
             = @assignment.client.contact.primary_email
         .row
           .col-xs-5
-            = t('assignment_pdf.date_of_birth')
+            = t('assignment_pdf.birth_year')
           .col-xs-7.col-input
-            = @assignment.client.date_of_birth
+            = @assignment.client.birth_year
       .col-xs-6
         .row
           .col-xs-5
