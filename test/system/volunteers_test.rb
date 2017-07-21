@@ -14,8 +14,8 @@ class VolunteersTest < ApplicationSystemTestCase
 
     fill_in 'First name', with: 'Volunteer'
     fill_in 'Last name', with: 'aoz'
-    within '.volunteer_date_of_birth' do
-      select_date all('select'), '28', 'May', '1988'
+    within '.volunteer_birth_year' do
+      select('1988', from: 'Birth year')
     end
     page.choose('volunteer_gender_female')
     select('Syrian Arab Republic', from: 'Nationality')
