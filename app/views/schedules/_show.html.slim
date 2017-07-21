@@ -7,9 +7,9 @@ p= t('schedule_description')
     thead
       tr
         th= t('when')
-        - Schedule.days.each do |day|
+        - I18n.t('date.day_names').rotate(1).each do |day|
           th.text-center
-            = t("weekdays.#{day}")
+            = day
     tbody
       - participant.schedules.group_by(&:time).each do |time, schedules|
         tr

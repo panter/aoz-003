@@ -3,14 +3,6 @@ module ApplicationHelper
     [:N, :F, :'B-FL', :B, :C]
   end
 
-  def week(with_weekend = false)
-    if with_weekend
-      [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
-    else
-      [:monday, :tuesday, :wednesday, :thursday, :friday]
-    end
-  end
-
   def simple_error_notice(f)
     boostrap_row(f.error_notification) if f.error_notification.present?
   end
