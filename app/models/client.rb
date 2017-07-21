@@ -3,7 +3,6 @@ class Client < ApplicationRecord
   include GenderCollection
   include YearCollection
   include BuildContactRelation
-  include BuildSchedulesRelation
 
   REGISTERED = 'registered'.freeze
   RESERVED = 'reserved'.freeze

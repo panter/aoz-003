@@ -15,6 +15,7 @@ class VolunteersController < ApplicationController
 
   def new
     @volunteer = Volunteer.new
+    @volunteer.build_schedules
     authorize @volunteer
   end
 
