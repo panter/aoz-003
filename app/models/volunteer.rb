@@ -2,6 +2,7 @@ class Volunteer < ApplicationRecord
   include LanguageAndScheduleReferences
   include GenderCollection
   include BuildContactRelation
+  include YearCollection
 
   acts_as_paranoid
   before_save :default_state

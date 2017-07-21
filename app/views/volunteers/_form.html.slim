@@ -14,8 +14,10 @@
 
 .row
   .col-xs-12.col-md-6
-    = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
-      end_year: Date.today.year, include_blank: true
+    = f.input :birth_year,
+              as: :select,
+              collection: Client.year_collection,
+              include_blank: true
 
   .col-xs-12.col-md-6
     = f.input :gender, collection: Volunteer.gender_collection, as: :radio_buttons

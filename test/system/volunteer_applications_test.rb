@@ -21,8 +21,8 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     assert page.has_text? 'Volunteer Registration'
     fill_in 'First name', with: 'Volunteer'
     fill_in 'Last name', with: 'Application'
-    within '.volunteer_date_of_birth' do
-      select_date all('select'), '13', 'February', '1980'
+    within '.volunteer_birth_year' do
+      select('1980', from: 'Birth year')
     end
     page.choose('volunteer_gender_female')
     select('Syrian Arab Republic', from: 'Nationality')
