@@ -48,6 +48,7 @@ class Volunteer < ApplicationRecord
   def self.state_collection
     STATES.map(&:to_sym)
   end
+  scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
 
   def self.state_collection_for_reviewed
     STATES_FOR_REVIEWED.map(&:to_sym)
@@ -95,10 +96,6 @@ class Volunteer < ApplicationRecord
 
   def to_s
     "#{contact.first_name} #{contact.last_name}"
-  end
-
-  def self.seeking_clients
-    Volunteer.where(state: SEEKING_CLIENTS)
   end
 
   def seeking_clients?
