@@ -58,20 +58,6 @@ class VolunteersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'hidden conditional field is shown on checkbox checked' do
-    visit new_volunteer_path
-    page.check('volunteer_experience')
-    assert page.has_field? 'Volunteer experience desc'
-    page.uncheck('volunteer_experience')
-    refute page.has_field? 'Volunteer experience desc'
-  end
-
-  test 'hidden conditional field is shown if edited volunteer checkbox is checked' do
-    volunteer = create :volunteer, experience: true
-    visit edit_volunteer_path(volunteer)
-    assert page.has_field? 'Volunteer experience desc'
-  end
-
   test 'conditional field for radio button is shown on radio chosen' do
     visit new_volunteer_path
     refute page.has_field? 'volunteer_region_specific'
