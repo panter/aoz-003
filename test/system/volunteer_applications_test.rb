@@ -38,6 +38,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     fill_in 'Education', with: 'Gurke'
     fill_in 'What is your motivation to volunteer with migrants?', with: 'asfd'
     page.check('volunteer_experience')
+    fill_in 'If you have any experiences with voluntary work, please describe any further here.', with: 'sdfsdfsdf'
     fill_in 'What do you expect from a person who would accompany you / your volunteer work?', with: 'asdf'
     fill_in 'Where do you see your strengths? (Social competencies that you could contribute to voluntary work)', with: 'asdf'
     fill_in 'What are your most important leisure interests?', with: 'asdf'
@@ -62,14 +63,5 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
   test 'state field not visible in the application form' do
     visit new_volunteer_application_path
     assert_not page.has_text? 'State'
-  end
-
-  test 'hidden conditional field is shown on checkbox checked' do
-    visit new_volunteer_application_path
-    refute page.has_field? 'Volunteer experience desc'
-    page.check('volunteer_experience')
-    assert page.has_field? 'Volunteer experience desc'
-    page.uncheck('volunteer_experience')
-    refute page.has_field? 'Volunteer experience desc'
   end
 end

@@ -144,7 +144,7 @@ de:
         strengths: Stärken
         teenagers: Jugendliche
         training: Bildung
-        volunteer_experience_desc: Erläuterung der Erfahrungen mit FW-Arbeit
+        volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         woman: Frau
         working_percent: Stellenprozent
         zip: Postleitzahl
@@ -494,7 +494,7 @@ de:
         role: Rolle
       volunteer:
         expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
-        experience: Haben Sie bereits Erfahrung mit FW-Arbeit?
+        experience: Bitte ankreuzen falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben.
         interests: Welche sind Ihre wichtigsten Freizeitinteressen?
         motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
         region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
