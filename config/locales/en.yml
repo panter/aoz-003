@@ -1,6 +1,5 @@
 ---
 en:
-  add_entry: Add entry
   activerecord:
     attributes:
       client:
@@ -15,14 +14,14 @@ en:
         last_name: Name
         postal_code: Zip
         street: Street
-      journal:
-        entry: Entry
       contact_email:
         body: Email address
         label: Type
       contact_phone:
         body: Phone number
         label: Type
+      journal:
+        entry: Entry
       user:
         clients: Clients
         department: Department
@@ -30,9 +29,9 @@ en:
       volunteer: &id-volunteer_attributes
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
+        address: Address
         creative: Creative
         culture: Culture
-        address: Address
         duration: Duration of the accompaniment
         family: Family
         full_name: Name
@@ -57,36 +56,78 @@ en:
       contact_email: Email address
       contact_phone: Phone number
       department: Department
+      journal: Journal
       language_skill: Language skill
       profile: Profile
       relative: Relative
       schedule: Schedule
       user: User
-      journal: Journal
       volunteer: Volunteer
       volunteer_application: Volunteer Application
       volunteer_email: Confirmation email
       volunteer_experience_desc: Description of voluntary experience
+  add_entry: Add entry
+  add_journal_entry: Write a journal entry
   add_language: Add language
   add_relative: Add family member
   age_request: &id-age_requests
-    all: All
     age_middle: 36 - 50
     age_no_matter: "age doesn't matter"
     age_old: older than 51
     age_young: 20 - 35
+    all: All
   all: All
   application_submitted: Your application has been successfully sent.
   are_you_sure: Are you sure?
   are_you_sure_delete_user: 'Are you sure you want to delete %{email}?'
   are_you_sure_invitation: Are you sure you want to send an invitation?
   assignment_exists: Assignment already exists.
+  assignment_pdf:
+    agreement_text:
+      list1:
+        item1: Verhaltenskodex für Freiwillige
+        item2: Rechte und Pflichten für Freiwillige
+        item3: AOZ Leitlinien Praktische Integrationsarbeit 2011
+        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
+      list2:
+        item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
+        item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
+        title: Allenfalls auch
+    city: Ort
+    city_date: Ort, Datum
+    client_title: Begleitete Person
+    creator_title: Anmeldende Stelle
+    date_of_birth: Geburtsdatum
+    duration: Treffen mindestens 6 Monate bis
+    email: E-mail
+    first_name: Vorname
+    first_time: '1.Treffen: Wann, wo?'
+    for_aoc: Fur die AOZ
+    function: Funktion
+    how_often: Wie oft?
+    languages: Sprachen
+    last_name: Name
+    mobile: Handy
+    nationality: Nationalität
+    organization: Organization
+    postal_code: PLZ
+    special: Besondere Abmachungen
+    state: Status
+    street: Strasse
+    telephone: Telefon
+    telephone_2: Telefon 2
+    title: Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten
+    trial_time: 4 Wochen Probezeit bis
+    volunteer_title: Freiwillige Person
+    weekly: 1x pro Woche
+    what: Was?
+    zurich: Zürich
   assignments: Assignments
   available_volunteers: Available volunteers
-  changed_by: Changed by
   back: Back
   change_my_password: Change my password
   change_password: Change your password
+  changed_by: Changed by
   clients: Clients
   clients_need_accompanying: Clients who need accompanying
   contact_info: Contact information
@@ -200,6 +241,7 @@ en:
   edit_profile: Edit profile
   engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   entry_year: Entry year
+  entry_year: Entry year
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -210,7 +252,7 @@ en:
       not_saved:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
-  entry_year: Entry year
+  event: Event
   find_client: Find client
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
@@ -249,7 +291,16 @@ en:
   need_accompanying: Need accompanying
   not_authorized: You are not authorized to perform this action.
   other_request: Other requests for volunteers
+  paper_trail:
+    version:
+      create: Create
+      destroy: Destroy
+      update: Update
   password_reset_instructions: I want to reset my password
+  pdf_header:
+    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
+    contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
+    title: Fachstelle Freiwilligenarbeit
   personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
@@ -274,10 +325,10 @@ en:
     uncle: Uncle
     wife: Wife/Partner
   relatives: Family members
-  reserve: Reserve
   remember_me: Remember me
   remove_language: Remove language
   remove_relative: Remove family member
+  reserve: Reserve
   role: &id-roles
     department_manager: Department manager
     social_worker: Social worker
@@ -285,6 +336,7 @@ en:
     volunteer: Volunteer
   schedule: Schedule
   schedule_description: When are you available?
+  seeking_clients: Looking for clients
   show_my_profile: My profile
   show_profile: Show profile
   simple_form:
@@ -315,18 +367,18 @@ en:
         state: &id-states
           accepted: Accepted
           active: Active
+          active_further: Active and interested in further engagements
           all: All
+          contacted: Contacted
           finished: Finished
           inactive: Inactive
+          inactive: Looking for new engagement
           interested: Interested
+          registered: Interested
           registered: Registered
           rejected: Rejected
           reserved: Reserved
           resigned: Resigned
-          active_further: Active and interested in further engagements
-          contacted: Contacted
-          inactive: Looking for new engagement
-          registered: Interested
           resigned: Terminated
       user:
         role: *id-roles
@@ -368,12 +420,15 @@ en:
     morning: morning
   user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
+  versions: History
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Application
+  volunteer_availability: What times are you available for voluntary engagement?
   volunteer_availability: What times are you available for voluntary engagement?
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_emails: Volunteer emails
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
@@ -382,66 +437,11 @@ en:
       submitted: Data submitted with the application
   volunteer_request: Request for volunteers
   volunteer_self_applicant: Self-applicant
+  volunteer_self_applicant: Self-applicant
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to apply as a volunteer?
   when: Time
-  seeking_clients: Looking for clients
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
   your_region: In which region can you imagine your employment?
-  add_journal_entry: Write a journal entry
-  pdf_header:
-    title: Fachstelle Freiwilligenarbeit
-    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
-    contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
-  assignment_pdf:
-    title: Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten
-    volunteer_title: Freiwillige Person
-    client_title: Begleitete Person
-    creator_title: Anmeldende Stelle
-    mobile: Handy
-    telephone: Telefon
-    telephone_2: Telefon 2
-    email: E-mail
-    organization: Organization
-    function: Funktion
-    what: Was?
-    how_often: Wie oft?
-    first_time: '1.Treffen: Wann, wo?'
-    weekly: 1x pro Woche
-    duration: Treffen mindestens 6 Monate bis
-    special: Besondere Abmachungen
-    trial_time: 4 Wochen Probezeit bis
-    last_name: Name
-    first_name: Vorname
-    street: Strasse
-    city: Ort
-    postal_code: PLZ
-    date_of_birth: Geburtsdatum
-    nationality: Nationalität
-    state: Status
-    languages: Sprachen
-    agreement_text:
-      list1:
-        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-        item1: Verhaltenskodex für Freiwillige
-        item2: Rechte und Pflichten für Freiwillige
-        item3: AOZ Leitlinien Praktische Integrationsarbeit 2011
-      list2:
-        title: Allenfalls auch
-        item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
-        item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
-    city_date: Ort, Datum
-    for_aoc: Fur die AOZ
-    zurich: Zürich
-  versions: History
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
-  volunteer_self_applicant: Self-applicant
-  volunteer_availability: What times are you available for voluntary engagement?
-  event: Event
-  paper_trail:
-    version:
-      update: Update
-      create: Create
-      destroy: Destroy
