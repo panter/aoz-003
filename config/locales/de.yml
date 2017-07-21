@@ -59,14 +59,14 @@ de:
       contact_phone:
         body: Telefonnummer
         label: Art
-      journal:
-        entry: Eintrag
       department:
         associated_users: Assozierte Benutzer
         city: Ort
         department_manager: Standort Betreuer
         name: Name
         user: User
+      journal:
+        entry: Eintrag
       language_skill:
         language: Sprache
         level: Niveau
@@ -194,16 +194,17 @@ de:
       contact_email: Mailadresse
       contact_phone: Telefonnummer
       department: Standort
+      journal: Journal
       language_skill: Sprachkompetenz
       profile: Profil
       relative: Verwante/r
       schedule: Zeitplan
       user: Benutzer/in
-      journal: Journal
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Bewerbung
       volunteer_email: Bestätigungsmail
   add_entry: Eintrag Hinzufügen
+  add_journal_entry: Journal Eintrag verfassen
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   age_request: &id-age_requests
@@ -218,12 +219,52 @@ de:
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
   assignment_exists: Die Begleitung existiert bereits.
+  assignment_pdf:
+    agreement_text:
+      list1:
+        item1: Verhaltenskodex für Freiwillige
+        item2: Rechte und Pflichten für Freiwillige
+        item3: AOZ Leitlinien Praktische Integrationsarbeit 2011
+        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
+      list2:
+        item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
+        item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
+        title: Allenfalls auch
+    city: Ort
+    city_date: Ort, Datum
+    client_title: Begleitete Person
+    creator_title: Anmeldende Stelle
+    date_of_birth: Geburtsdatum
+    duration: Treffen mindestens 6 Monate bis
+    email: E-mail
+    first_name: Vorname
+    first_time: '1.Treffen: Wann, wo?'
+    for_aoc: Fur die AOZ
+    function: Funktion
+    how_often: Wie oft?
+    languages: Sprachen
+    last_name: Name
+    mobile: Handy
+    nationality: Nationalität
+    organization: Organization
+    postal_code: PLZ
+    special: Besondere Abmachungen
+    state: Status
+    street: Strasse
+    telephone: Telefon
+    telephone_2: Telefon 2
+    title: Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten
+    trial_time: 4 Wochen Probezeit bis
+    volunteer_title: Freiwillige Person
+    weekly: 1x pro Woche
+    what: Was?
+    zurich: Zürich
   assignments: Begleitungen
   available_volunteers: Verfügbare Freiwillige
-  changed_by: Geändert durch
   back: Zurück
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
+  changed_by: Geändert durch
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
@@ -339,6 +380,7 @@ de:
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
   entry_year: Einreisejahr
+  entry_year: Einreisejahr
   errors:
     messages:
       already_confirmed: wurde bereits bestätigt
@@ -350,7 +392,7 @@ de:
       not_saved:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
-  entry_year: Einreisejahr
+  event: Ereignis
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
@@ -386,7 +428,16 @@ de:
   need_accompanying: Ohne Begleitung
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   other_request: Sonstige Anforderungen an den/die Freiwillige/n
+  paper_trail:
+    version:
+      create: Erstellen
+      destroy: Löschen
+      update: Bearbeiten
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
+  pdf_header:
+    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
+    contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
+    title: Fachstelle Freiwilligenarbeit
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
@@ -422,6 +473,7 @@ de:
     volunteer: Freiwillige/r
   schedule: Zeitplan
   schedule_description: Wann sind Sie verfügbar?
+  seeking_clients: Klienten suchen
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   simple_form:
@@ -529,12 +581,15 @@ de:
     morning: Morgen
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer/in
+  versions: Verlauf
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Bewerbung
+  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails: Bestätigungs-Mails
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
@@ -544,65 +599,10 @@ de:
       submitted: Die Angaben der Anmeldung
   volunteer_request: Anforderungen an die/den Freiwillige/n
   volunteer_self_applicant: Selbstanmelder
+  volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r bewerben?
   when: Zeit
-  seeking_clients: Klienten suchen
   working_days: Arbeitstage
   your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
-  add_journal_entry: Journal Eintrag verfassen
-  pdf_header:
-    title: Fachstelle Freiwilligenarbeit
-    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
-    contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
-  assignment_pdf:
-    title: Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten
-    volunteer_title: Freiwillige Person
-    client_title: Begleitete Person
-    creator_title: Anmeldende Stelle
-    mobile: Handy
-    telephone: Telefon
-    telephone_2: Telefon 2
-    email: E-mail
-    organization: Organization
-    function: Funktion
-    what: Was?
-    how_often: Wie oft?
-    first_time: '1.Treffen: Wann, wo?'
-    weekly: 1x pro Woche
-    duration: Treffen mindestens 6 Monate bis
-    special: Besondere Abmachungen
-    trial_time: 4 Wochen Probezeit bis
-    last_name: Name
-    first_name: Vorname
-    street: Strasse
-    city: Ort
-    postal_code: PLZ
-    date_of_birth: Geburtsdatum
-    nationality: Nationalität
-    state: Status
-    languages: Sprachen
-    agreement_text:
-      list1:
-        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-        item1: Verhaltenskodex für Freiwillige
-        item2: Rechte und Pflichten für Freiwillige
-        item3: AOZ Leitlinien Praktische Integrationsarbeit 2011
-      list2:
-        title: Allenfalls auch
-        item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
-        item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
-    city_date: Ort, Datum
-    for_aoc: Fur die AOZ
-    zurich: Zürich
-  versions: Verlauf
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
-  volunteer_self_applicant: Selbstanmelder
-  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
-  event: Ereignis
-  paper_trail:
-    version:
-      update: Bearbeiten
-      create: Erstellen
-      destroy: Löschen
