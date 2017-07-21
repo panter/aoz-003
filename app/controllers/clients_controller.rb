@@ -13,6 +13,7 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new(user: current_user)
+    @client.build_schedules
     authorize @client
   end
 

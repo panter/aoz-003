@@ -3,18 +3,17 @@ class Schedule < ApplicationRecord
 
   attr_accessor :select
 
-  def self.days
-    [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
-  end
-
-  def self.times
-    [:morning, :afternoon, :evening]
-  end
+  DAYS = [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].freeze
+  TIMES = ['morning', 'afternoon', 'evening'].freeze
+  CORRECT_SIZE = 7 * TIMES.size
 
   def self.build
-    days.map do |day|
-      times.map do |time|
-        Schedule.new(day: day.to_s, time: time.to_s)
+    DAYS.map do |day|
+      TIMES.map do |time|
+        Schedule.new(
+          day: day,
+          time: time
+        )
       end
     end
   end
