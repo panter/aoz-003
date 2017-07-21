@@ -380,7 +380,6 @@ de:
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
   entry_year: Einreisejahr
-  entry_year: Einreisejahr
   errors:
     messages:
       already_confirmed: wurde bereits bestätigt
@@ -585,11 +584,9 @@ de:
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Bewerbung
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
-  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails: Bestätigungs-Mails
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
@@ -598,7 +595,6 @@ de:
       subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ
       submitted: Die Angaben der Anmeldung
   volunteer_request: Anforderungen an die/den Freiwillige/n
-  volunteer_self_applicant: Selbstanmelder
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
