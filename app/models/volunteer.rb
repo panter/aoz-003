@@ -45,13 +45,10 @@ class Volunteer < ApplicationRecord
     content_type: /\Aimage\/.*\z/
   }
 
-  def self.state_collection
-    STATES.map(&:to_sym)
-  end
   scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
 
-  def self.state_collection_for_reviewed
-    STATES_FOR_REVIEWED.map(&:to_sym)
+  def seeking_clients?
+    SEEKING_CLIENTS.include?(state)
   end
 
   def registered?
@@ -86,6 +83,14 @@ class Volunteer < ApplicationRecord
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
   end
 
+  def self.state_collection
+    STATES.map(&:to_sym)
+  end
+
+  def self.state_collection_for_reviewed
+    STATES_FOR_REVIEWED.map(&:to_sym)
+  end
+
   def self.rejection_collection
     [:us, :her, :other]
   end
@@ -96,10 +101,6 @@ class Volunteer < ApplicationRecord
 
   def to_s
     "#{contact.first_name} #{contact.last_name}"
-  end
-
-  def seeking_clients?
-    SEEKING_CLIENTS.include?(state)
   end
 
   private

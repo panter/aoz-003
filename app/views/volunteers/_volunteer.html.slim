@@ -13,7 +13,7 @@ tr
   td #{volunteer.working_percent}%
   td = volunteer.expectations
   td = volunteer.interests
-  td = t("state.#{volunteer.state}", scope: [:simple_form, :options, :volunteer])
+  td = t("simple_form.options.volunteer.state.#{volunteer.state}")
   td
     - if volunteer.registrar.present?
       = volunteer.registrar.full_name

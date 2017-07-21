@@ -344,6 +344,7 @@ en:
         rejection_type: *id-rejection-types
         state:
           <<: *id-states
+          registered: Interested
     placeholders:
     required:
       mark: '*'
