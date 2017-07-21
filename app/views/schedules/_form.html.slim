@@ -7,8 +7,8 @@
         thead
           tr
             th= t('when')
-            - Schedule.days.each do |day|
-              th.days= t("weekdays.#{day}")
+            - I18n.t('date.day_names').rotate(1).each do |day|
+              th.days= day
         tbody
           - participant.schedules.group_by(&:time).each do |time, schedules|
             tr

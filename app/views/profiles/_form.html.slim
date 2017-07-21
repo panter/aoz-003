@@ -16,12 +16,12 @@
       table.table.table-striped
         thead
           tr
-            - week.each do |day|
+            - t('date.day_names').slice(1..5).each do |day_name|
               th.text-center
-                = t("weekdays.#{day}")
+                = day_name
         tbody
           tr
-            - week.each do |day|
+            - Schedule::DAYS.slice(0..4).each do |day|
               td.text-center
                 = f.label day, class: 'sr-only'
                 = f.input day, as: :boolean, label: false

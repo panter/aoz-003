@@ -384,14 +384,6 @@ en:
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to apply as a volunteer?
-  weekdays:
-    friday: Friday
-    monday: Monday
-    saturday: Saturday
-    sunday: Sunday
-    thursday: Thursday
-    tuesday: Tuesday
-    wednesday: Wednesday
   when: Time
   seeking_clients: Looking for clients
   working_days: Working days
