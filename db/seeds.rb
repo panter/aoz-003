@@ -36,14 +36,6 @@ def make_lang_skills
   end
 end
 
-def make_schedule
-  Schedule.build.each do |day|
-    day.each do |time|
-      time.available = [true, false].sample
-    end
-  end
-end
-
 User.role_collection.each do |role|
   User.find_or_create_by(email: "#{role}@example.com") do |user|
     user.password = 'asdfasdf'
@@ -102,7 +94,6 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
       client.language_skills = make_lang_skills
       client.age_request = random_age_request
       client.gender_request = random_gender_request
-      client.schedules << make_schedule
     end
   end
   user.save
@@ -136,7 +127,7 @@ if Department.count < 1
 end
 
 Volunteer.state_collection.each do |state|
-  Volunteer.new do |volunteer|
+  vol = Volunteer.new do |volunteer|
     volunteer.state = state.to_s
     volunteer.build_contact(
       title: Faker::Name.title,
@@ -183,8 +174,8 @@ Volunteer.state_collection.each do |state|
     volunteer.duration = ['long', 'short'].sample
     volunteer.region = ['city', 'region', 'canton'].sample
     volunteer.language_skills = make_lang_skills
-    volunteer.schedules << make_schedule
-  end.save!
+  end
+  vol.save!
 end
 
 if VolunteerEmail.count < 1
@@ -199,4 +190,9 @@ if VolunteerEmail.count < 1
       ve.user = User.first
     end.save
   end
+end
+
+Schedule.all.each do |s|
+  s.available = [true, false].sample
+  s.save!
 end
