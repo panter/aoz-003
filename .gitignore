@@ -21,3 +21,5 @@
 public/system
 *.mdb
 *.accdb
+*.laccdb
+*.vbs
