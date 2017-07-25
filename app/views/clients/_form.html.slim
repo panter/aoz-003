@@ -1,6 +1,10 @@
 = simple_form_for(@client) do |f|
   = simple_error_notice f
   = f.input :user_id, as: :hidden
+  = f.input :salutation,
+              as: :select,
+              collection: Volunteer.salutation_collection,
+              include_blank: true
 
   = f.simple_fields_for :contact do |c|
     = render 'contacts/fields', f: c
@@ -11,12 +15,6 @@
                 as: :select,
                 collection: Client.year_collection,
                 include_blank: true
-
-    .col-xs-12.col-md-6
-      = f.input :salutation,
-                collection: Client.salutation_collection,
-                as: :radio_buttons,
-                wrapper: :vertical_radio_and_checkboxes
   .row
     .col-xs-12.col-md-6
       = f.input :nationality, as: :country
