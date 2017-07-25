@@ -4,7 +4,7 @@ module VolunteerAttributes
   included do
     def volunteer_attributes
       [
-        :birth_year, :gender, :avatar, :nationality, :additional_nationality,
+        :birth_year, :salutation, :avatar, :nationality, :additional_nationality,
         :profession, :education, :motivation, :experience, :expectations,
         :strengths, :skills, :interests, :state, :duration, :man, :woman,
         :family, :kid, :sport, :creative, :music, :culture, :training,

@@ -24,7 +24,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     within '.volunteer_birth_year' do
       select('1980', from: 'Birth year')
     end
-    page.choose('volunteer_gender_female')
+    select('Mrs.', from: 'Salutation')
     select('Syrian Arab Republic', from: 'Nationality')
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
