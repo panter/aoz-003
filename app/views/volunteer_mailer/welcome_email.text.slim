@@ -40,9 +40,9 @@
 - if @volunteer.birth_year.present?
   = "#{rn2}#{t_attr(:birth_year, Volunteer)}:#{t3}#{l(@volunteer.birth_year)}\r\n"
 
-- if @volunteer.gender.present?
-  = "\r\n#{t_attr(:gender, Volunteer)}:#{t3}"
-  = t("gender.#{@volunteer.gender}") if @volunteer.gender.present?
+- if @volunteer.salutation.present?
+  = "\r\n#{t_attr(:salutation, Volunteer)}:#{t3}"
+  = t("salutation.#{@volunteer.salutation}") if @volunteer.salutation.present?
 
 - if @volunteer.avatar.present?
   = "#{rn2}#{t_attr(:avatar, Volunteer)}:\t\t"

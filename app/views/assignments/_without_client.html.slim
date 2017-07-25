@@ -1,0 +1,25 @@
+tr
+  td= without_client.contact.full_name
+  td= t("salutation.#{without_client.salutation}") if without_client.salutation.present?
+  td= nationality_name(without_client.nationality)
+  td= nationality_name(without_client.additional_nationality)
+  td= without_client.contact.city
+  td= without_client.contact.postal_code
+  td
+    - without_client.language_skills.each do |language|
+      = language.full_language_skills
+  td= without_client.motivation
+  td= Volunteer.human_boolean(without_client.experience)
+  td= t("duration.#{without_client.duration}") if without_client.duration.present?
+  td
+    - Volunteer.single_accompaniment.each do |single|
+      - if without_client[single]
+        = t("activerecord.attributes.volunteer.#{single}")
+        br
+  td
+    - Volunteer.group_accompaniment.each do |group|
+      - if without_client[group]
+        = t("activerecord.attributes.volunteer.#{group}")
+        br
+  td= button_link t_action(:show), volunteer_path(without_client)
+  td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: without_client.id)

@@ -18,8 +18,8 @@
         td= t_attr(:birth_year)
         td= l(@volunteer.birth_year) if @volunteer.birth_year
       tr
-        td= t_attr(:gender)
-        td= t("gender.#{@volunteer.gender}") if @volunteer.gender.present?
+        td= t_attr(:salutation)
+        td= t("salutation.#{@volunteer.salutation}") if @volunteer.salutation.present?
       tr
         td= t_attr(:avatar)
         td= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?

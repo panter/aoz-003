@@ -88,7 +88,7 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
         )
       ]
       client.birth_year = Faker::Date.birthday(18, 65)
-      client.gender = ['male', 'female'].sample
+      client.salutation = ['mr', 'mrs'].sample
       client.nationality = ISO3166::Country.codes.sample
       client.relatives = make_relatives
       client.language_skills = make_lang_skills
@@ -159,7 +159,7 @@ Volunteer.state_collection.each do |state|
     ]
     volunteer.birth_year = Faker::Date.birthday(18, 75)
     volunteer.profession = Faker::Company.profession
-    volunteer.gender = ['male', 'female'].sample
+    volunteer.salutation = ['mr', 'mrs'].sample
     volunteer.working_percent = "#{rand(2..10)}0"
     [:experience, :man, :woman, :family, :kid, :sport, :creative, :music,
      :culture, :training, :german_course, :adults, :teenagers, :children].each do |bool_attr|

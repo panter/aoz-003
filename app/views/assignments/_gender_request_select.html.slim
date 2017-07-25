@@ -1,6 +1,6 @@
 - gender_request_filter = request_filter(:gender_request_cont, 'all')
 .btn-group
-  button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:gender_request)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
+  button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:salutation_request)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
     = "#{t_attr(:gender_request, Client)} : "
     = t(gender_request_filter, scope: [:simple_form, :options, :client, :gender_request]) + ' '
     span.caret aria-hidden='true'

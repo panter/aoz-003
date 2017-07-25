@@ -14,7 +14,7 @@ class ClientsTest < ApplicationSystemTestCase
     within '.client_birth_year' do
       select('1995', from: 'Birth year')
     end
-    page.choose('client_gender_female')
+    page.choose('client_salutation_mrs')
     select('Aruba', from: 'Nationality')
     page.choose('client_permit_b')
     fill_in 'Street', with: 'Sihlstrasse 131'

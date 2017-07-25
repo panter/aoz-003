@@ -8,7 +8,12 @@
       = f.input :rejection_type, collection: Volunteer.rejection_collection, as: :radio_buttons
     .col-xs-12
       = f.input :rejection_text
-
+.row
+  .col-xs-12
+    = f.input :salutation,
+              as: :select,
+              collection: Volunteer.salutation_collection,
+              include_blank: true
 = f.simple_fields_for :contact do |c|
   = render 'contacts/fields', f: c
 
@@ -18,10 +23,6 @@
               as: :select,
               collection: Client.year_collection,
               include_blank: true
-
-  .col-xs-12.col-md-6
-    = f.input :gender, collection: Volunteer.gender_collection, as: :radio_buttons
-
 .row
   .col-xs-12
     = f.input :avatar, as: :file

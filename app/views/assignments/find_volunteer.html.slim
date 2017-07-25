@@ -31,7 +31,7 @@
     h1= t('available_volunteers')
 
 .filters
-  = render partial: 'gender_select', locals: {client: @client.id}
+  = render partial: 'salutation_select', locals: {client: @client.id}
   = render partial: 'duration_select', locals: {client: @client.id}
 
 .row
@@ -40,7 +40,7 @@
     thead
       tr
         th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
-        th= sort_link @q, :gender, t_attr(:gender, Volunteer)
+        th= sort_link @q, :salutation, t_attr(:salutation, Volunteer)
         th= sort_link @q, :nationality, t_attr(:nationality, Volunteer)
         th= sort_link @q, :additional_nationality, t_attr(:additional_nationality, Volunteer)
         th= sort_link @q, :contact_city, t_attr(:city, Volunteer)

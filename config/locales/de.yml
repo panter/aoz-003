@@ -23,7 +23,7 @@ de:
         email: Email
         first_name: Vorname
         full_name: Name
-        gender: Geschlecht
+        salutation: Anrede
         gender_request: Geschlecht Freiwillige/r
         goals: Inhalte der Begleitung
         interests: Interessen
@@ -119,7 +119,7 @@ de:
         first_language: Muttersprache
         first_name: Vorname
         full_name: Name
-        gender: Geschlecht
+        salutation: Anrede
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebot (meist in Asylzentren)
         interests: Interessen
@@ -394,10 +394,10 @@ de:
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
-  gender: &id-genders
+  salutation: &id-salutations
     all: Alle
-    female: Weiblich
-    male: Männlich
+    mrs: Frau
+    mr: Herr
   gender_request: &id-gender_requests
     all: Alle
     no_matter: Geschlecht egal
@@ -508,7 +508,7 @@ de:
           suggested: Vorgeschlagen
       client:
         age_request: *id-age_requests
-        gender: *id-genders
+        salutation: *id-salutations
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
@@ -536,8 +536,8 @@ de:
         duration:
           <<: *id-durations
           all: Alle
-        gender:
-          <<: *id-genders
+        salutation:
+          <<: *id-salutations
           all: Alle
         language_skills:
           level: *id-lang-levels

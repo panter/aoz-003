@@ -1,0 +1,11 @@
+- salutation_filter = params[:q] && params[:q][:salutation_cont].present? ? params[:q][:salutation_cont] : 'all'
+.btn-group
+  button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:salutation)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
+    = "#{t_attr(:salutation, Volunteer)} : "
+    = t(salutation_filter, scope: [:simple_form, :options, :volunteer, :salutation]) + ' '
+    span.caret aria-hidden='true'
+  ul.dropdown-menu
+    li
+      = link_to t('all'), params.permit!.to_h.deep_merge(q: {salutation_matches: ''})
+    - Volunteer.salutation_collection.each do |s|
+      li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :salutation]), params.permit!.to_h.deep_merge(q: {salutation_matches: s})

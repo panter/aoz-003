@@ -13,10 +13,10 @@
         td= t_attr(:birth_year)
         td= @client.birth_year.try(:year)
       tr
-        td= t_attr(:gender)
+        td= t_attr(:salutation)
         td
-          - if @client.gender.present?
-            = t("gender.#{@client.gender}")
+          - if @client.salutation.present?
+            = t("salutation.#{@client.salutation}")
       tr
         td= t_attr(:nationality)
         td= nationality_name(@client.nationality)

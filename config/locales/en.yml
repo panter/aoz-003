@@ -258,9 +258,9 @@ en:
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
   full_language_collection: &id-lang-levels
-  gender: &id-genders
-    female: female
-    male: male
+  salutation: &id-salutations
+    mrs: Mrs.
+    mr: Mr.
   gender_request: &id-gender_requests
     all: All
     no_matter: "gender doesn't matter"
@@ -359,7 +359,7 @@ en:
           suggested: Suggested
       client:
         age_request: *id-age_requests
-        gender: *id-genders
+        salutation: *id-salutations
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
@@ -388,8 +388,8 @@ en:
           all: All
           long: Long term (min 6 months)
           short: Short term
-        gender:
-          <<: *id-genders
+        salutation:
+          <<: *id-salutations
           all: All
         language_skills:
           level: *id-lang-levels
