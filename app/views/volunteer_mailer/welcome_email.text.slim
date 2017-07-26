@@ -37,12 +37,12 @@
     = " / #{phone.label}" if phone.label.present?
     = ": #{phone.body}\r\n"
 
-- if @volunteer.birth_year.present?
+- if @volunteer.birth_year?
   = "#{rn2}#{t_attr(:birth_year, Volunteer)}:#{t3}#{l(@volunteer.birth_year)}\r\n"
 
-- if @volunteer.salutation.present?
+- if @volunteer.salutation?
   = "\r\n#{t_attr(:salutation, Volunteer)}:#{t3}"
-  = t("salutation.#{@volunteer.salutation}") if @volunteer.salutation.present?
+  = t("salutation.#{@volunteer.salutation}") if @volunteer.salutation?
 
 - if @volunteer.avatar.present?
   = "#{rn2}#{t_attr(:avatar, Volunteer)}:\t\t"

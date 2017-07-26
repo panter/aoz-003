@@ -45,7 +45,7 @@ p= l(@volunteer.birth_year) if @volunteer.birth_year
 
 
 h4= "#{t_attr(:salutation, Volunteer)}: "
-p= t("salutation.#{@volunteer.salutation}") if @volunteer.salutation.present?
+p= t("salutation.#{@volunteer.salutation}") if @volunteer.salutation?
 
 h4= "#{t_attr(:avatar, Volunteer)}: "
 p= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?

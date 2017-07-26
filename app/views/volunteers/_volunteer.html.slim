@@ -1,11 +1,11 @@
 tr
-  td = t("salutation.#{volunteer.salutation}") unless volunteer.salutation.blank?
+  td = t("salutation.#{volunteer.salutation}") if volunteer.salutation?
   - if action_name == 'index'
     td = volunteer.contact.full_name
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
   td = volunteer.contact.contact_emails.first.body if volunteer.contact.contact_emails.any?
-  td = volunteer.birth_year.year if volunteer.birth_year.present?
+  td = volunteer.birth_year.year if volunteer.birth_year?
   td = volunteer.language_skills.first.language_name if volunteer.language_skills.any?
   td = render 'language_skills/show_inline', language_skills: volunteer.language_skills
   td = volunteer.education
