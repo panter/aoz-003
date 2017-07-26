@@ -2,38 +2,44 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
+  before_validation :assign_primary_email, if: :profile
+
+  has_one :volunteer, dependent: :destroy
+
+  has_one :profile, dependent: :destroy
+  accepts_nested_attributes_for :profile
+
   has_many :clients
   has_many :journals
   has_many :assignments, inverse_of: 'creator'
-  has_one :profile, dependent: :destroy
-  accepts_nested_attributes_for :profile
-  has_one :volunteer, dependent: :destroy
-  has_and_belongs_to_many :department
 
-  before_validation :assign_primary_email, if: :profile
+  has_and_belongs_to_many :department
 
   # Roles definition
   SUPERADMIN = 'superadmin'.freeze
   SOCIAL_WORKER = 'social_worker'.freeze
   DEPARTMENT_MANAGER = 'department_manager'.freeze
   VOLUNTEER = 'volunteer'.freeze
+
+  CAN_MANAGE_DEPARTMENT = [SUPERADMIN, DEPARTMENT_MANAGER].freeze
   ROLES_FOR_USER_CREATE = [SUPERADMIN, SOCIAL_WORKER, DEPARTMENT_MANAGER].freeze
-  ROLES = ROLES_FOR_USER_CREATE + [VOLUNTEER]
+
+  ROLES = ROLES_FOR_USER_CREATE.dup.push(VOLUNTEER).freeze
 
   validates :role, inclusion: { in: ROLES }
 
-  scope :department_assocable, (-> { where(role: [SUPERADMIN, DEPARTMENT_MANAGER]) })
+  scope :department_assocable, (-> { where(role: CAN_MANAGE_DEPARTMENT) })
 
   def superadmin?
     role == SUPERADMIN
   end
 
-  def social_worker?
-    role == SOCIAL_WORKER
-  end
-
   def department_manager?
     role == DEPARTMENT_MANAGER
+  end
+
+  def social_worker?
+    role == SOCIAL_WORKER
   end
 
   def volunteer?
