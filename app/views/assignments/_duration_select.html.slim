@@ -7,5 +7,5 @@
   ul.dropdown-menu
     li
       = link_to t('all'), params.permit!.to_h.deep_merge(q: {duration_cont: ''})
-    - Volunteer.duration_collection.each do |s|
+    - Volunteer::DURATIONS.each do |s|
       li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :duration]), params.permit!.to_h.deep_merge(q: {duration_cont: s})

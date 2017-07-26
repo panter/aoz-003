@@ -27,17 +27,13 @@ class Client < ApplicationRecord
 
   validates :state, inclusion: { in: STATES }
 
-  def self.gender_request_collection
-    [:no_matter, :same]
-  end
+  scope :need_accompanying, lambda {
+    includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
+  }
 
-  def self.age_request_collection
-    [:age_no_matter, :age_young, :age_middle, :age_old]
-  end
-
-  def self.need_accompanying
-    Client.includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
-  end
+  GENDER_REQUESTS = [:no_matter, :same].freeze
+  AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
+  PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
 
   def to_s
     "#{contact.first_name} #{contact.last_name}"

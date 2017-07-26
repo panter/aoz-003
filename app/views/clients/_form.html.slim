@@ -19,7 +19,7 @@
       = f.input :nationality, as: :country
     .col-xs-12.col-md-6
       = f.input :permit,
-                collection: permit_collection,
+                collection: Client::PERMITS,
                 as: :radio_buttons,
                 wrapper: :vertical_radio_and_checkboxes
 
@@ -32,8 +32,8 @@
       h3= t('personal_background')
       = f.input :goals
       h3= t('volunteer_request')
-      = f.input :gender_request, collection: Client.gender_request_collection, default: :no_matter
-      = f.input :age_request, collection: Client.age_request_collection, default: :age_no_matter
+      = f.input :gender_request, collection: Client::GENDER_REQUESTS, default: :no_matter
+      = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
       = f.input :other_request
       = f.input :education
       = f.input :actual_activities

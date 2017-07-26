@@ -12,12 +12,12 @@ tr
   td= Volunteer.human_boolean(seeking_client.experience)
   td= t("duration.#{seeking_client.duration}") if seeking_client.duration.present?
   td
-    - Volunteer.single_accompaniment.each do |single|
+    - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
       - if seeking_client[single]
         = t("activerecord.attributes.volunteer.#{single}")
         br
   td
-    - Volunteer.group_accompaniment.each do |group|
+    - Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
       - if seeking_client[group]
         = t("activerecord.attributes.volunteer.#{group}")
         br

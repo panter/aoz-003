@@ -1,9 +1,7 @@
 class LanguageSkill < ApplicationRecord
   belongs_to :languageable, polymorphic: true, optional: true
 
-  def self.language_level_collection
-    [:native_speaker, :fluent, :good, :basic]
-  end
+  LANGUAGE_LEVELS = [:native_speaker, :fluent, :good, :basic].freeze
 
   def language_name
     return '' if language.blank?

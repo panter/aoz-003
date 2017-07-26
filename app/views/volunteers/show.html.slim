@@ -82,11 +82,11 @@ h3= t_attr(:single_accompaniment)
   table.table.table-striped
     thead
       tr
-        - Volunteer.single_accompaniment.each do |single|
+        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
           th.text-center= t_attr(single)
     tbody
       tr
-        - Volunteer.single_accompaniment.each do |single|
+        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
           td.text-center
             - if @volunteer.read_attribute(single)
               i.glyphicon.glyphicon-ok.text-success
@@ -98,12 +98,12 @@ h3= t_attr(:group_accompaniment)
   table.table.table-striped
     thead
       tr
-        - Volunteer.group_accompaniment.each do |group|
+        - Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
           th.text-center
             = t_attr(group)
     tbody
       tr
-        - Volunteer.group_accompaniment.each do |group|
+        - Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
           td.text-center
             - if @volunteer.read_attribute(group)
               i.glyphicon.glyphicon-ok.text-success

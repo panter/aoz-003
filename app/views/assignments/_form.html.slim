@@ -11,7 +11,7 @@
 
   .row
     .col-xs-12
-      = f.input :state, collection: Assignment.state_collection, default: :suggested
+      = f.input :state, collection: Assignment::STATES, default: :suggested
 
   .row
     .col-xs-12

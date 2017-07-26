@@ -7,5 +7,5 @@
   ul.dropdown-menu
     li
       = link_to t('all'), request_params_filter({age_request_cont: ''})
-    - Client.age_request_collection.each do |s|
+    - Client::AGE_REQUESTS.each do |s|
       li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :age_request]), request_params_filter({age_request_cont: s})

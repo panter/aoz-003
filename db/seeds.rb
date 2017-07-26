@@ -9,11 +9,11 @@ def random_relation
 end
 
 def random_age_request
-  Client.age_request_collection.sample
+  Client::AGE_REQUESTS.sample
 end
 
 def random_gender_request
-  Client.gender_request_collection.sample
+  Client::GENDER_REQUESTS.sample
 end
 
 def make_relatives
@@ -31,7 +31,7 @@ def make_lang_skills
   Array.new(3).map do
     LanguageSkill.new do |l|
       l.language = I18nData.languages.to_a.sample[0]
-      l.level = LanguageSkill.language_level_collection.sample
+      l.level = LanguageSkill::LANGUAGE_LEVELS.sample
     end
   end
 end
@@ -111,13 +111,13 @@ if Department.count < 1
       c.contact_emails = Array.new(3).map do
         ContactEmail.new do |email|
           email.body = Faker::Internet.email
-          email.label = ContactEmail.label_collection.sample
+          email.label = ContactEmail::LABELS.sample
         end
       end
       c.contact_phones = Array.new(3).map do
         ContactPhone.new do |phone|
           phone.body = Faker::PhoneNumber.phone_number
-          phone.label = ContactPhone.label_collection.sample
+          phone.label = ContactPhone::LABELS.sample
         end
       end
     end

@@ -4,7 +4,5 @@ class ContactEmail < ContactPoint
     message: 'Not an email address.'
   }
 
-  def self.label_collection
-    [:work, :home, :miscellaneous]
-  end
+  LABELS = [:work, :home, :miscellaneous].freeze
 end
