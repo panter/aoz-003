@@ -15,7 +15,7 @@
       tr
         td= t_attr(:salutation)
         td
-          - if @client.salutation.present?
+          - if @client.salutation?
             = t("salutation.#{@client.salutation}")
       tr
         td= t_attr(:nationality)

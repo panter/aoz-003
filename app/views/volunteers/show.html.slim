@@ -19,7 +19,7 @@
         td= l(@volunteer.birth_year) if @volunteer.birth_year
       tr
         td= t_attr(:salutation)
-        td= t("salutation.#{@volunteer.salutation}") if @volunteer.salutation.present?
+        td= t("salutation.#{@volunteer.salutation}") if @volunteer.salutation?
       tr
         td= t_attr(:avatar)
         td= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?
@@ -46,7 +46,7 @@
         td
           dl.dl-horizontal
             dt= Volunteer.human_boolean(@volunteer.experience)
-            dd= @volunteer.volunteer_experience_desc if @volunteer.volunteer_experience_desc.present?
+            dd= @volunteer.volunteer_experience_desc if @volunteer.volunteer_experience_desc?
       tr
         td= t_attr(:expectations)
         td= @volunteer.expectations

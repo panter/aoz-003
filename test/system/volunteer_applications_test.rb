@@ -38,7 +38,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     fill_in 'Education', with: 'Gurke'
     fill_in 'What is your motivation to volunteer with migrants?', with: 'asfd'
     page.check('volunteer_experience')
-    fill_in 'If you have any experiences with voluntary work, please describe any further here.', with: 'sdfsdfsdf'
+    fill_in 'If you have any experiences with voluntary work, please describe here.', with: 'sdfsdfsdf'
     fill_in 'What do you expect from a person who would accompany you / your volunteer work?', with: 'asdf'
     fill_in 'Where do you see your strengths? (Social competencies that you could contribute to voluntary work)', with: 'asdf'
     fill_in 'What are your most important leisure interests?', with: 'asdf'
