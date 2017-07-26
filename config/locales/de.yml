@@ -12,18 +12,17 @@ de:
         actual_activities: Aktuelle Tätigkeiten
         address: Adresse
         age_request: Alter Freiwillige/r
+        birth_year: Jahrgang
         city: Stadt
         comments: Bemerkungen
         competent_authority: Zusätzlich involvierte Stelle
         created_at: Erstellt am
-        birth_year: Jahrgang
         date_of_year: Geburtsjahr
         deleted_at: Gelöscht
         education: Beruf oder Ausbildung im Herkunftsland
         email: Email
         first_name: Vorname
         full_name: Name
-        salutation: Anrede
         gender_request: Geschlecht Freiwillige/r
         goals: Inhalte der Begleitung
         interests: Interessen
@@ -35,6 +34,7 @@ de:
         permit: Bewilligung
         phone: Telefonnummer
         relatives: Verwandte/r
+        salutation: Anrede
         schedules: Fahrpläne
         state: Status
         street: Strasse
@@ -119,7 +119,6 @@ de:
         first_language: Muttersprache
         first_name: Vorname
         full_name: Name
-        salutation: Anrede
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebot (meist in Asylzentren)
         interests: Interessen
@@ -136,6 +135,7 @@ de:
         registrar: Registrator
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
+        salutation: Anrede
         single_accompaniment: Einzelbegleitung (Unterstützung in Alltagsfragen, Deutsch Üben, Hausaufgaben u.ä., mind. 6 Mt.)
         skills: Kompetenzen
         sport: Sport
@@ -229,11 +229,11 @@ de:
         item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
         item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
         title: Allenfalls auch
+    birth_year: Jahrgang
     city: Ort
     city_date: Ort, Datum
     client_title: Begleitete Person
     creator_title: Anmeldende Stelle
-    date_of_birth: Geburtsdatum
     duration: Treffen mindestens 6 Monate bis
     email: E-mail
     first_name: Vorname
@@ -379,6 +379,7 @@ de:
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
   entry_year: Einreisejahr
+  entry_year: Einreisejahr
   errors:
     messages:
       already_confirmed: wurde bereits bestätigt
@@ -394,10 +395,6 @@ de:
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
-  salutation: &id-salutations
-    all: Alle
-    mrs: Frau
-    mr: Herr
   gender_request: &id-gender_requests
     all: Alle
     no_matter: Geschlecht egal
@@ -469,6 +466,10 @@ de:
     social_worker: Sozialarbeiter/in
     superadmin: Superadmin
     volunteer: Freiwillige/r
+  salutation: &id-salutations
+    all: Alle
+    mr: Herr
+    mrs: Frau
   schedule: Zeitplan
   schedule_description: Wann sind Sie verfügbar?
   seeking_clients: Klienten suchen
@@ -508,7 +509,6 @@ de:
           suggested: Vorgeschlagen
       client:
         age_request: *id-age_requests
-        salutation: *id-salutations
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
@@ -519,6 +519,7 @@ de:
             phone: Telefonnummer
         relatives:
           relation: *id-relations
+        salutation: *id-salutations
         state: &id-states
           accepted: Akzeptiert
           active: Aktiv
@@ -536,13 +537,13 @@ de:
         duration:
           <<: *id-durations
           all: Alle
-        salutation:
-          <<: *id-salutations
-          all: Alle
         language_skills:
           level: *id-lang-levels
         region: *id-regions
         rejection_type: *id-rejection-types
+        salutation:
+          <<: *id-salutations
+          all: Alle
         state:
           <<: *id-states
           active_further: Aktiv, an weiteren Einsätzen interessiert
@@ -583,9 +584,11 @@ de:
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails: Bestätigungs-Mails
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
@@ -594,6 +597,7 @@ de:
       subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ
       submitted: Die Angaben der Anmeldung
   volunteer_request: Anforderungen an die/den Freiwillige/n
+  volunteer_self_applicant: Selbstanmelder
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
