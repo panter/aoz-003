@@ -94,11 +94,11 @@ en:
         item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
         item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
         title: Allenfalls auch
+    birth_year: Birth year
     city: Ort
     city_date: Ort, Datum
     client_title: Begleitete Person
     creator_title: Anmeldende Stelle
-    date_of_birth: Geburtsdatum
     duration: Treffen mindestens 6 Monate bis
     email: E-mail
     first_name: Vorname
@@ -258,9 +258,6 @@ en:
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
   full_language_collection: &id-lang-levels
-  salutation: &id-salutations
-    mrs: Mrs.
-    mr: Mr.
   gender_request: &id-gender_requests
     all: All
     no_matter: "gender doesn't matter"
@@ -335,6 +332,9 @@ en:
     social_worker: Social worker
     superadmin: Superadmin
     volunteer: Volunteer
+  salutation: &id-salutations
+    mr: Mr.
+    mrs: Mrs.
   schedule: Schedule
   schedule_description: When are you available?
   seeking_clients: Looking for clients
@@ -359,12 +359,12 @@ en:
           suggested: Suggested
       client:
         age_request: *id-age_requests
-        salutation: *id-salutations
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
         relatives:
           relation: *id-relations
+        salutation: *id-salutations
         state: &id-states
           accepted: Accepted
           active: Active
@@ -388,13 +388,13 @@ en:
           all: All
           long: Long term (min 6 months)
           short: Short term
-        salutation:
-          <<: *id-salutations
-          all: All
         language_skills:
           level: *id-lang-levels
         region: *id-regions
         rejection_type: *id-rejection-types
+        salutation:
+          <<: *id-salutations
+          all: All
         state:
           <<: *id-states
           registered: Interested
