@@ -1,6 +1,6 @@
 tr
+  td= t("salutation.#{seeking_client.salutation}") if seeking_client.salutation.present?
   td= seeking_client.contact.full_name
-  td= t("gender.#{seeking_client.gender}") if seeking_client.gender.present?
   td= nationality_name(seeking_client.nationality)
   td= nationality_name(seeking_client.additional_nationality)
   td= seeking_client.contact.city
