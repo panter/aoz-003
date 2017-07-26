@@ -7,19 +7,7 @@ class Volunteer < ApplicationRecord
   acts_as_paranoid
   before_save :default_state
 
-  has_one :contact, as: :contactable
-  accepts_nested_attributes_for :contact
-
-  has_many :journals, as: :journalable, dependent: :destroy
-  accepts_nested_attributes_for :journals, allow_destroy: true
-
-  belongs_to :user, optional: true
-
-  belongs_to :registrar, optional: true,
-    class_name: 'User', foreign_key: 'registrar_id'
-
-  has_attached_file :avatar, styles: { thumb: '100x100#' }
-
+  # States
   REGISTERED = 'registered'.freeze
   ACCEPTED = 'accepted'.freeze
   CONTACTED = 'contacted'.freeze
@@ -28,16 +16,28 @@ class Volunteer < ApplicationRecord
   REJECTED = 'rejected'.freeze
   INACTIVE = 'inactive'.freeze
   RESIGNED = 'resigned'.freeze
+
   STATES_FOR_REVIEWED = [
     CONTACTED, ACTIVE, ACCEPTED, ACTIVE_FURTHER, REJECTED, RESIGNED, INACTIVE
   ].freeze
+
   SEEKING_CLIENTS = [ACCEPTED, ACTIVE_FURTHER, INACTIVE].freeze
-  STATES = [REGISTERED] + STATES_FOR_REVIEWED
+
+  STATES = STATES_FOR_REVIEWED.dup.unshift(REGISTERED).freeze
+
+  belongs_to :user, optional: true
+  belongs_to :registrar, optional: true,
+    class_name: 'User', foreign_key: 'registrar_id'
+
+  has_one :contact, as: :contactable
+  accepts_nested_attributes_for :contact
+
+  has_many :journals, as: :journalable, dependent: :destroy
+  accepts_nested_attributes_for :journals, allow_destroy: true
 
   has_many :assignments
   has_many :clients, through: :assignments
 
-  belongs_to :user, optional: true
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   validates :contact, presence: true
@@ -79,6 +79,10 @@ class Volunteer < ApplicationRecord
   REJECTIONS = [:us, :her, :other].freeze
   TARGET_GROUPS = [:adults, :teenagers, :children].freeze
   GENDERS = [:female, :male].freeze
+
+  def self.human_boolean(boolean)
+    boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
+  end
 
   def to_s
     "#{contact.first_name} #{contact.last_name}"

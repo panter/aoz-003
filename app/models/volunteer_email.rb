@@ -7,6 +7,6 @@ class VolunteerEmail < ApplicationRecord
 
   def ensure_exactly_one_active
     return unless active && changed.include?('active')
-    VolunteerEmail.where(active: true).update(active: false)
+    VolunteerEmail.active_mail.update(active: false)
   end
 end
