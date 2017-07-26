@@ -68,17 +68,13 @@ class DepartmentPolicy < ApplicationPolicy
     @user.superadmin? || @department.user.include?(@user)
   end
 
-  def contact_point_attrs
-    [:id, :body, :label, :_destroy, :type, :contacts_id]
-  end
-
   def department_attributes
     [
       contact_attributes: [
         :id, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
         :extended, :city, :postal_code,
-        contact_emails_attributes: contact_point_attrs,
-        contact_phones_attributes: contact_point_attrs
+        contact_emails_attributes: ContactPoint::FORM_ATTRS,
+        contact_phones_attributes: ContactPoint::FORM_ATTRS
       ]
     ]
   end

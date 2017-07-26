@@ -5,7 +5,5 @@ class Assignment < ApplicationRecord
 
   validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
 
-  def self.state_collection
-    [:suggested, :active]
-  end
+  STATES = [:suggested, :active].freeze
 end

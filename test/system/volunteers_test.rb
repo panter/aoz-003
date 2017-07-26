@@ -4,7 +4,7 @@ class VolunteersTest < ApplicationSystemTestCase
   setup do
     @user = create :user, email: 'superadmin@example.com'
     login_as @user
-    Volunteer.state_collection.each do |s|
+    Volunteer::STATES.each do |s|
       create :volunteer, state: s.to_s
     end
   end

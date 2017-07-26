@@ -12,7 +12,7 @@ class Relative < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def self.relation_collection
-    [:wife, :husband, :mother, :father, :daughter, :son, :sister, :brother, :aunt, :uncle]
-  end
+  RELATIONS = [
+    :wife, :husband, :mother, :father, :daughter, :son, :sister, :brother, :aunt, :uncle
+  ].freeze
 end

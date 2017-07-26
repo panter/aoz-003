@@ -64,22 +64,6 @@ class Volunteer < ApplicationRecord
     state == REJECTED
   end
 
-  def self.duration_collection
-    [:short, :long]
-  end
-
-  def self.region_collection
-    [:city, :region, :canton]
-  end
-
-  def self.single_accompaniment
-    [:man, :woman, :family, :kid]
-  end
-
-  def self.group_accompaniment
-    [:sport, :creative, :music, :culture, :training, :german_course]
-  end
-
   def self.human_boolean(boolean)
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
   end
@@ -88,17 +72,13 @@ class Volunteer < ApplicationRecord
     STATES.map(&:to_sym)
   end
 
-  def self.state_collection_for_reviewed
-    STATES_FOR_REVIEWED.map(&:to_sym)
-  end
-
-  def self.rejection_collection
-    [:us, :her, :other]
-  end
-
-  def self.target_group
-    [:adults, :teenagers, :children]
-  end
+  DURATIONS = [:short, :long].freeze
+  REGIONS = [:city, :region, :canton].freeze
+  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid].freeze
+  GROUP_ACCOMPANIMENTS = [:sport, :creative, :music, :culture, :training, :german_course].freeze
+  REJECTIONS = [:us, :her, :other].freeze
+  TARGET_GROUPS = [:adults, :teenagers, :children].freeze
+  GENDERS = [:female, :male].freeze
 
   def to_s
     "#{contact.first_name} #{contact.last_name}"

@@ -9,11 +9,11 @@ h3= t_attr(:single_accompaniment)
   table.table.table-striped
     thead
       tr
-        - Volunteer.single_accompaniment.each do |single|
+        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
           th.text-center= t_attr(single)
     tbody
       tr
-        - Volunteer.single_accompaniment.each do |single|
+        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
           td.text-center
             - if @volunteer.read_attribute(single)
               i.glyphicon.glyphicon-ok.text-success

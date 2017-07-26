@@ -93,7 +93,7 @@ p= t("duration.#{@volunteer.duration}") if @volunteer.duration.present?
 h4= t_attr(:single_accompaniment, Volunteer)
 tables
   tr
-    - Volunteer.single_accompaniment.each do |single|
+    - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
       td
         - if @volunteer.read_attribute(single)
           span style="#{margin_r}"
@@ -102,7 +102,7 @@ tables
 h4= t_attr(:group_accompaniment, Volunteer)
 table
   tr
-    - Volunteer.group_accompaniment.each do |group|
+    - Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
       td
         - if @volunteer.read_attribute(group)
           span style="#{margin_r}"
