@@ -39,6 +39,16 @@ class Client < ApplicationRecord
     "#{contact.first_name} #{contact.last_name}"
   end
 
+  def self.first_languages
+    [
+      [I18nData.languages(I18n.locale)['TI'], 'TI'],
+      [I18nData.languages(I18n.locale)['AR'], 'AR'],
+      [I18nData.languages(I18n.locale)['FA'], 'FA'],
+      [I18nData.languages(I18n.locale)['DE'], 'DE'],
+      [I18nData.languages(I18n.locale)['EN'], 'EN']
+    ]
+  end
+
   def self.state_collection
     STATES.map(&:to_sym)
   end

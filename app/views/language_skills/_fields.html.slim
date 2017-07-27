@@ -1,7 +1,10 @@
 .nested-fields
   .row
     .col-xs-12.col-md-6
-      = f.input :language, collection: languages
+      - if controller_name == 'clients'
+        = f.input :language, collection: Client.first_languages + languages
+      - else
+        = f.input :language, collection: Volunteer.first_languages + languages
     .col-xs-12.col-md-6
       = f.input :level, collection: LanguageSkill::LANGUAGE_LEVELS
   .row
