@@ -24,8 +24,6 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'City', with: 'Zürich'
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
-    click_link 'Add Phone number'
-    fill_in 'Phone number', with: '0123456789'
     fill_in 'Profession', with: 'Developer'
     fill_in 'Education', with: 'CEID'
     fill_in 'What is your motivation to volunteer with migrants?', with: 'asfd'

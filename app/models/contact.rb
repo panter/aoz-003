@@ -46,4 +46,8 @@ class Contact < ApplicationRecord
   def department?
     contactable_type == 'Department'
   end
+
+  def volunteer?
+    contactable_type == 'Volunteer'
+  end
 end
