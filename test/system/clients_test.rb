@@ -66,6 +66,23 @@ class ClientsTest < ApplicationSystemTestCase
     end
   end
 
+  test 'new client can select custom language' do
+    visit new_client_path
+
+    fill_in 'First name', with: 'Dari'
+    fill_in 'Last name', with: 'Dari'
+    fill_in 'Primary email', with: 'client@aoz.com'
+    click_on('Add language')
+    select('Dari', from: 'Language')
+    select('Native speaker', from: 'Level')
+
+    click_button 'Create Client'
+    assert page.has_text? 'Client was successfully created.'
+    within '.table-no-border-top' do
+      assert page.has_text? 'Dari Native speaker'
+    end
+  end
+
   test 'superadmin can delete client' do
     create :client
     visit clients_path
