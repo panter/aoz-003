@@ -11,6 +11,9 @@ class Contact < ApplicationRecord
   validates :first_name, presence: true, if: :validate_first_name?
 
   validates :primary_email, presence: true, if: :needs_primary_email?
+  validates :primary_phone, presence: true, if: :needs_primary_email?
+
+  validates :street, :postal_code, :city, presence: true, if: :needs_primary_email?
 
   def to_s
     last_name

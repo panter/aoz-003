@@ -17,6 +17,10 @@ class VersionsTest < ApplicationSystemTestCase
       fill_in 'First name', with: 'asdf'
       fill_in 'Last name', with: 'asdf'
       fill_in 'Primary email', with: 'client@gurkenmail.com'
+      fill_in 'Primary phone', with: '0123456789'
+      fill_in 'Street', with: 'Sihlstrasse 131'
+      fill_in 'Zip', with: '8002'
+      fill_in 'City', with: 'Zürich'
       click_button 'Create Client'
 
       assert page.has_text? 'Client was successfully created.'
@@ -34,6 +38,10 @@ class VersionsTest < ApplicationSystemTestCase
       fill_in 'First name', with: 'asdf'
       fill_in 'Last name', with: 'asdf'
       fill_in 'Primary email', with: 'client@gurkenmail.com'
+      fill_in 'Primary phone', with: '0123456789'
+      fill_in 'Street', with: 'Sihlstrasse 131'
+      fill_in 'Zip', with: '8002'
+      fill_in 'City', with: 'Zürich'
       click_button 'Create Client'
 
       click_link 'Edit Client'

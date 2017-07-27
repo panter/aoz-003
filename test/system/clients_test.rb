@@ -22,6 +22,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'City', with: 'Zürich'
 
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
+    fill_in 'Primary phone', with: '0123456789'
 
     click_link 'Add Phone number'
     fill_in 'Phone number', with: '0123456789'
@@ -58,6 +59,10 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'First name', with: 'Client'
     fill_in 'Last name', with: "doesn't matter"
     fill_in 'Primary email', with: 'client@aoz.com'
+    fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
     within '.table-no-border-top' do
