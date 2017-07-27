@@ -5,6 +5,8 @@ class LanguageSkill < ApplicationRecord
 
   def language_name
     return '' if language.blank?
+    return 'Dari' if language == 'DR'
+    return 'Farsi' if language == 'FS'
     I18nData.languages(I18n.locale)[language]
   end
 
