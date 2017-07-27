@@ -42,8 +42,9 @@ class Client < ApplicationRecord
   def self.first_languages
     [
       [I18nData.languages(I18n.locale)['TI'], 'TI'],
+      ['Dari', 'DR'],
       [I18nData.languages(I18n.locale)['AR'], 'AR'],
-      [I18nData.languages(I18n.locale)['FA'], 'FA'],
+      ['Farsi', 'FS'],
       [I18nData.languages(I18n.locale)['DE'], 'DE'],
       [I18nData.languages(I18n.locale)['EN'], 'EN']
     ]
