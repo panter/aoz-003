@@ -39,6 +39,7 @@ Metrics/MethodLength:
     - 'test/*'
     - 'db/seeds.rb'
 Metrics/AbcSize:
+  Max: 19
   Exclude:
     - 'db/migrate/*'
 Metrics/BlockLength:
