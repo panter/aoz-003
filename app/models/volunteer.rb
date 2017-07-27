@@ -84,6 +84,17 @@ class Volunteer < ApplicationRecord
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
   end
 
+  def self.first_languages
+    [
+      [I18nData.languages(I18n.locale)['DE'], 'DE'],
+      [I18nData.languages(I18n.locale)['EN'], 'EN'],
+      [I18nData.languages(I18n.locale)['FR'], 'FR'],
+      [I18nData.languages(I18n.locale)['ES'], 'ES'],
+      [I18nData.languages(I18n.locale)['IT'], 'IT'],
+      [I18nData.languages(I18n.locale)['AR'], 'AR']
+    ]
+  end
+
   def to_s
     "#{contact.first_name} #{contact.last_name}"
   end
