@@ -50,6 +50,7 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'Last name', with: 'Volunteer'
     select('Kosovo', from: 'Nationality')
     fill_in 'Primary email', with: 'volunteer@kosovo.com'
+    select('Mrs.', from: 'Salutation')
 
     click_button 'Create Volunteer'
 
