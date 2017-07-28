@@ -57,9 +57,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
     click_button 'Create Volunteer'
 
-    within '.table-no-border-top' do
-      assert page.has_text? 'Kosovo'
-    end
+    assert page.has_text? 'Kosovo'
   end
 
   test 'conditional field for radio button is shown on radio chosen' do

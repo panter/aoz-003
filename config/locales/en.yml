@@ -30,12 +30,16 @@ en:
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
         address: Address
+        bank_account: Bank account details entered
         creative: Creative
         culture: Culture
+        doc_sent: Engaged volunteer's documents sent
         duration: Duration of the accompaniment
+        evaluation: Final evaluation
         family: Family
         full_name: Name
         german_course: German course
+        intro_course: Introductory course
         kid: Kid
         man: Man
         music: Music
@@ -45,6 +49,7 @@ en:
         single_accompaniment: Single accompaniment
         sport: Sport
         training: Training
+        trial_period: Trial period report
         volunteer_experience_desc: If you have any experiences with voluntary work, please describe here.
         woman: Woman
         working_percent: Employment rate (in Percent)
@@ -129,6 +134,7 @@ en:
   change_my_password: Change my password
   change_password: Change your password
   changed_by: Changed by
+  checklist: Checklist
   clients: Clients
   clients_need_accompanying: Clients who need accompanying
   contact_info: Contact information

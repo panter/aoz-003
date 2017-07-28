@@ -10,6 +10,28 @@
 - if policy(Volunteer).supervisor?
   = render 'journals/journal_block', journaled_for: @volunteer
 
+- if policy(Volunteer).checklist?
+  h3= t('checklist')
+  .table-responsive
+    table.table.table-no-border-top
+      tbody
+        tr
+          td= t_attr(:trial_period)
+          td= Volunteer.human_boolean(@volunteer.trial_period)
+        tr
+          td= t_attr(:intro_course)
+          td= Volunteer.human_boolean(@volunteer.intro_course)
+        tr
+          td= t_attr(:doc_sent)
+          td= Volunteer.human_boolean(@volunteer.doc_sent)
+        tr
+          td= t_attr(:bank_account)
+          td= Volunteer.human_boolean(@volunteer.bank_account)
+        tr
+          td= t_attr(:evaluation)
+          td= Volunteer.human_boolean(@volunteer.evaluation)
+
+h3= t('personal_background')
 .table-responsive
   table.table.table-no-border-top
     tbody
