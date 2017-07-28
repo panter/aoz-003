@@ -42,6 +42,9 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     page.check('volunteer_culture')
     page.check('volunteer_training')
     page.check('volunteer_german_course')
+    page.check('volunteer_other_offer')
+    fill_in 'Description', with: 'Description'
+    page.check('volunteer_zurich')
 
     click_button 'Submit registration'
 

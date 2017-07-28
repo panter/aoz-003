@@ -34,6 +34,9 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'What are your most important leisure interests?', with: 'asdf'
     page.check('volunteer_family')
     page.check('volunteer_training')
+    page.check('volunteer_other_offer')
+    fill_in 'Description', with: 'Description'
+    page.check('volunteer_zurich')
     page.check('volunteer_schedules_attributes_17_available')
 
     click_button 'Create Volunteer'
