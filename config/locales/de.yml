@@ -111,7 +111,7 @@ de:
         created_at: Erstellt am
         creative: Kreativ
         culture: Kultur
-        doc_sent: Dossier Freiwillige engagiert verschick
+        doc_sent: Dossier Freiwillige engagiert verschickt
         duration: Dauer der Begleitung
         education: Ausbildung
         email: Email
@@ -269,7 +269,7 @@ de:
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   changed_by: Geändert durch
-  checklist: Abhak-Liste
+  checklist: Checkliste
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
