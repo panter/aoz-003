@@ -20,13 +20,14 @@ class AccessImport
   def make_clients
     client_transformer = ClientTransform.new(self)
     client_count_before = Client.count
-    @personen_rollen.all_clients.each do |_key, ac_client|
-      next if Client.where(
-        'access_import @> ?',
-        { id_personen_rolle: ac_client[:pk_PersonenRolle].to_i }.to_json
-      ).any?
-      client_params = client_transformer.prepare_attributes(ac_client).merge(user_id: User.first.id)
-      Client.create(client_params)
+    @personen_rollen.all_clients.each do |key, ac_client|
+      next if Client.where('access_import @> ?', {
+        id_personen_rolle: ac_client[:pk_PersonenRolle].to_i
+      }.to_json).any?
+      client_attrs = client_transformer.prepare_attributes(ac_client)
+      client = Client.new(client_attrs)
+      client.user = User.first
+      puts "Importing personen_rolle #{key} and Client.id: #{client.id}" if client.save!
     end
     puts "Imported #{Client.count - client_count_before} new clients from MS Access Datbase."
   end
