@@ -73,12 +73,11 @@ class Volunteer < ApplicationRecord
     STATES.map(&:to_sym)
   end
 
-  DURATIONS = [:short, :long].freeze
-  REGIONS = [:city, :region, :canton].freeze
-  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid].freeze
-  GROUP_ACCOMPANIMENTS = [:sport, :creative, :music, :culture, :training, :german_course].freeze
+  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
+  GROUP_ACCOMPANIMENTS = [:sport, :creative, :music, :culture, :training, :german_course,
+                          :dancing, :health, :cooking, :excursions, :women, :teenagers,
+                          :children, :other_offer].freeze
   REJECTIONS = [:us, :her, :other].freeze
-  TARGET_GROUPS = [:adults, :teenagers, :children].freeze
   GENDERS = [:female, :male].freeze
 
   def self.human_boolean(boolean)

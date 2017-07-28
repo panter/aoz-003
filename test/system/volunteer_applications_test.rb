@@ -39,13 +39,9 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     fill_in 'What do you expect from a person who would accompany you / your volunteer work?', with: 'asdf'
     fill_in 'Where do you see your strengths? (Social competencies that you could contribute to voluntary work)', with: 'asdf'
     fill_in 'What are your most important leisure interests?', with: 'asdf'
-    page.choose('volunteer_duration_short')
-    page.choose('volunteer_region_region')
     page.check('volunteer_culture')
     page.check('volunteer_training')
     page.check('volunteer_german_course')
-    page.check('volunteer_adults')
-    page.choose('volunteer_region_canton')
 
     click_button 'Submit registration'
 

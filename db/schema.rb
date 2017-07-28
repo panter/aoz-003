@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727154038) do
+ActiveRecord::Schema.define(version: 20170728142311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -232,7 +232,6 @@ ActiveRecord::Schema.define(version: 20170727154038) do
     t.text "strengths"
     t.text "interests"
     t.string "state", default: "registered"
-    t.string "duration"
     t.boolean "man"
     t.boolean "woman"
     t.boolean "family"
@@ -243,10 +242,8 @@ ActiveRecord::Schema.define(version: 20170727154038) do
     t.boolean "culture"
     t.boolean "training"
     t.boolean "german_course"
-    t.boolean "adults"
     t.boolean "teenagers"
     t.boolean "children"
-    t.string "region"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -259,13 +256,22 @@ ActiveRecord::Schema.define(version: 20170727154038) do
     t.text "rejection_text"
     t.string "working_percent"
     t.text "volunteer_experience_desc"
-    t.string "region_specific"
     t.bigint "registrar_id"
     t.boolean "trial_period", default: false
     t.boolean "intro_course", default: false
     t.boolean "doc_sent", default: false
     t.boolean "bank_account", default: false
     t.boolean "evaluation", default: false
+    t.boolean "dancing"
+    t.boolean "health"
+    t.boolean "cooking"
+    t.boolean "excursions"
+    t.boolean "women"
+    t.boolean "unaccompanied"
+    t.boolean "zurich"
+    t.boolean "other_offer"
+    t.text "other_offer_desc"
+    t.text "own_kids"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end

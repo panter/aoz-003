@@ -86,10 +86,6 @@ p= @volunteer.strengths
 h4= "#{t_attr(:interests, Volunteer)}: "
 p= @volunteer.interests
 
-h4= "#{t_attr(:duration, Volunteer)}: "
-p= t("duration.#{@volunteer.duration}") if @volunteer.duration.present?
-
-
 h4= t_attr(:single_accompaniment, Volunteer)
 tables
   tr
@@ -107,11 +103,3 @@ table
         - if @volunteer.read_attribute(group)
           span style="#{margin_r}"
             = t_attr(group, Volunteer)
-
-- if @volunteer.region.present?
-  h4= "#{t_attr(:region, Volunteer)}: "
-  p= t("region.#{@volunteer.region}")
-  - if @volunteer.region_specific.present?
-    p
-      strong= "#{t_attr(:region_specific, Volunteer)}: "
-      = @volunteer.region_specific

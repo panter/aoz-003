@@ -34,7 +34,6 @@ en:
         creative: Creative
         culture: Culture
         doc_sent: Engaged volunteer's documents sent
-        duration: Duration of the accompaniment
         evaluation: Final evaluation
         family: Family
         full_name: Name
@@ -43,13 +42,15 @@ en:
         kid: Kid
         man: Man
         music: Music
-        region_specific: City
+        other_offer: Other (please describe)
+        other_offer_desc: Description
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
         single_accompaniment: Single accompaniment
         sport: Sport
         training: Training
         trial_period: Trial period report
+        unaccompanied: Unaccompanied minors
         volunteer_experience_desc: If you have any experiences with voluntary work, please describe here.
         woman: Woman
         working_percent: Employment rate (in Percent)
@@ -241,9 +242,6 @@ en:
       send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
       unlocked: Your account has been unlocked successfully. Please sign in to continue.
   download: Download
-  duration:
-    long: Long term (min 6 months)
-    short: Short term
   edit_login: Edit login
   edit_profile: Edit profile
   engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
@@ -307,10 +305,6 @@ en:
   personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
-  region: &id-regions
-    canton: Canton
-    city: City
-    region: Region
   registered_by: Registered by
   rejection_type: &id-rejection-types
     her: by volunteer before / after the first call
@@ -354,7 +348,6 @@ en:
         experience: Please check this field if you already have some experience with voluntary work.
         interests: What are your most important leisure interests?
         motivation: What is your motivation to volunteer with migrants?
-        region: In which region can you imagine your employment?
         strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
     "no": 'No'
     options:
@@ -389,13 +382,8 @@ en:
       user:
         role: *id-roles
       volunteer:
-        duration:
-          all: All
-          long: Long term (min 6 months)
-          short: Short term
         language_skills:
           level: *id-lang-levels
-        region: *id-regions
         rejection_type: *id-rejection-types
         salutation:
           <<: *id-salutations
@@ -410,7 +398,6 @@ en:
     "yes": 'Yes'
   state: *id-states
   submit_application: Submit registration
-  target_groups: Target groups
   thank_you: "Thank you \U0001F389"
   time:
     formats:
@@ -434,8 +421,6 @@ en:
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_emails: Volunteer emails
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
       <<: *id-volunteer_attributes
@@ -450,4 +435,3 @@ en:
   when: Time
   working_days: Working days
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
-  your_region: In which region can you imagine your employment?
