@@ -15,62 +15,64 @@ class ClientTransform
 
   def prepare_attributes(personen_rolle)
     haupt_person = @haupt_personen.find(personen_rolle[:fk_Hauptperson])
-    begleitet, relatives_attributes = handle_begleitete(personen_rolle, haupt_person)
+    begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
     familien_rolle = @familien_rollen.find(begleitet[:fk_FamilienRolle])
     land = @laender.find(haupt_person[:fk_Land]) if haupt_person[:fk_Land]
     plz = @plz.find(haupt_person[:fk_PLZ])
     sprachen = @sprache_hauptperson.where_person(haupt_person[:pk_Hauptperson])
     {
       salutation: salutation(haupt_person[:t_Anrede]),
-      comments: "
-        #{begleitet[:m_Bemerkung]}
-        #{personen_rolle[:m_Bemerkungen]}
-        #{haupt_person[:m_Bemerkungen]}
-      ",
+      comments: comments(begleitet, personen_rolle, haupt_person),
       birth_year: birth_year(haupt_person[:d_Geburtsdatum], begleitet[:z_Jahrgang]),
       entry_year: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
       language_skills_attributes: language_skills_attributes(sprachen),
       contact_attributes: contact_attributes(haupt_person, plz),
-      relatives_attributes: relatives_attributes,
-      access_import: access_import(begleitet, haupt_person, personen_rolle, familien_rolle, land, sprachen)
+      relatives_attributes: relatives_attrs(relatives),
+      access_import: access_import(begleitet, haupt_person, personen_rolle,
+        familien_rolle, land, sprachen)
     }
+  end
+
+  def comments(begleitet, personen_rolle, haupt_person)
+    comments = ''
+    comments += "#{begleitet[:m_Bemerkung]}\n\n" if begleitet[:m_Bemerkung]
+    comments += "#{personen_rolle[:m_Bemerkungen]}\n\n" if personen_rolle[:m_Bemerkungen]
+    comments += "#{haupt_person[:m_Bemerkungen]}\n\n" if haupt_person[:m_Bemerkungen]
+    comments
   end
 
   def handle_begleitete(personen_rolle, haupt_person)
     begleitete = @begleitete.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
     return [begleitete.first[1], []] if begleitete.size == 1
-
     begleitet = begleitete.select do |_key, beg|
       beg[:fk_FamilienRolle] == 2 # Hauptperson
     end
-    return [begleitet.first[1], relatives_attrs(begleitete.except(begleitet.first[0]))] if begleitet.size == 1
-
+    if begleitet.size == 1
+      return [begleitet.first[1], begleitete.except(begleitet.first[0])]
+    end
     begleitet = begleitete.select do |_key, beg|
       beg[:t_Vorname] == haupt_person[:t_Vorname]
     end
-    return [begleitet.first[1], relatives_attrs(begleitete.except(begleitet.first[0]))] if begleitet.size == 1
-
+    if begleitet.size == 1
+      return [begleitet.first[1], begleitete.except(begleitet.first[0])]
+    end
     begleitet = begleitete.select do |_key, beg|
       haupt_person[:t_Vorname].include? beg[:t_Vorname]
     end
     if begleitet.size.positive?
-      return [begleitet.first[1], relatives_attrs(begleitete.except(begleitet.first[0]))]
-    ends
+      return [begleitet.first[1], begleitete.except(begleitet.first[0])]
+    end
     # nothing worked, just take first
-    [begleitet.first[1], relatives_attrs(begleitete.except(begleitet.first[0]))]
+    [begleitet.first[1], begleitete.except(begleitet.first[0])]
   end
 
   def relatives_attrs(relatives)
     relatives.map do |_key, relative|
-      [
-        (Time.now.to_f * 1000).to_i,
-        {
-          first_name: relative[:t_Vorname],
-          last_name: relative[:t_Name],
-          birth_year: relative[:z_Jahrgang] && Date.parse(relative[:z_Jahrgang] + '-01-01'),
-          relation: relative[:relation]
-        }
-      ]
+      [(Time.now.to_f * 1000).to_i, {
+        first_name: relative[:t_Vorname],
+        last_name: relative[:t_Name], relation: relative[:relation],
+        birth_year: relative[:z_Jahrgang] && Date.parse("#{relative[:z_Jahrgang]}-01-01")
+      }]
     end.to_h
   end
 
@@ -81,7 +83,10 @@ class ClientTransform
 
   def language_skills_attributes(sprachen)
     sprachen.map do |sprache|
-      [(Time.now.to_f * 1000).to_i, { language: sprache[:language][:lang], level: sprache[:kenntnisstufe_ve] }]
+      [
+        (Time.now.to_f * 1000).to_i,
+        { language: sprache[:language][:lang], level: sprache[:kenntnisstufe_ve] }
+      ]
     end.to_h
   end
 
@@ -99,12 +104,24 @@ class ClientTransform
   end
 
   def contact_attributes(haupt_person, plz)
+    mobile_number(haupt_person).merge(
+      first_name: haupt_person[:t_Vorname] || 'unbekannt',
+      last_name: haupt_person[:t_Nachname] || 'unbekannt',
+      city: plz[:t_Ort],
+      street: haupt_person[:t_Adresszeile1] || 'unbekannt',
+      extended: haupt_person[:t_Adresszeile2],
+      postal_code: plz[:t_PLZ],
+      primary_email: email(haupt_person[:h_Email]),
+      primary_phone: haupt_person[:t_Telefon1] || '000 000 00 00'
+    )
+  end
+
+  def mobile_number(haupt_person)
+    return {} unless haupt_person[:t_Telefon2]
     {
-      first_name: haupt_person[:t_Vorname], last_name: haupt_person[:t_Nachname], city: plz[:t_Ort],
-      street: haupt_person[:t_Adresszeile1], extended: haupt_person[:t_Adresszeile2],
-      postal_code: plz[:t_PLZ], primary_email: email(haupt_person[:h_Email]),
-      primary_phone: haupt_person[:t_Telefon1],
-      contact_phones_attributes: [body: haupt_person[:t_Telefon2], label: 'mobile']
+      contact_phones_attributes: [
+        [(Time.now.to_f * 1000).to_i, { body: haupt_person[:t_Telefon2], label: 'mobile' }]
+      ].to_h
     }
   end
 end
