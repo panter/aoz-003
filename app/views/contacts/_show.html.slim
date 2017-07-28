@@ -17,16 +17,17 @@ tr
     td= t_attr(:primary_phone, Contact)
     td= contact.primary_phone
 
-- contact.contact_emails.each do |email|
-  tr
-    td
-      = t_attr(:body, ContactEmail)
-      = " / #{email.label}" if email.label.present?
-    td= mail_to email.body
+- unless contact.volunteer?
+  - contact.contact_emails.each do |email|
+    tr
+      td
+        = t_attr(:body, ContactEmail)
+        = " / #{email.label}" if email.label.present?
+      td= mail_to email.body
 
-- contact.contact_phones.each do |phone|
-  tr
-    td
-      = t_attr(:body, ContactPhone)
-      = " / #{phone.label}" if phone.label.present?
-    td= phone.body
+  - contact.contact_phones.each do |phone|
+    tr
+      td
+        = t_attr(:body, ContactPhone)
+        = " / #{phone.label}" if phone.label.present?
+      td= phone.body

@@ -41,6 +41,7 @@ class Volunteer < ApplicationRecord
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   validates :contact, presence: true
+  validates :salutation, presence: true
   validates :state, inclusion: { in: STATES }
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/

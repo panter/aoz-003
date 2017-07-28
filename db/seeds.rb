@@ -69,7 +69,10 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
         first_name: Faker::Name.first_name,
         last_name: Faker::Name.last_name,
         primary_email: Faker::Internet.email,
-        primary_phone: Faker::PhoneNumber.phone_number
+        primary_phone: Faker::PhoneNumber.phone_number,
+        street: Faker::Address.street_address,
+        postal_code: Faker::Address.zip_code,
+        city: Faker::Address.city
       )
 
       client.contact.contact_emails.build(
