@@ -42,6 +42,7 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'wkhtmltopdf-binary'
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'capybara'
@@ -50,11 +51,13 @@ group :development, :test do
   gem 'faker'
   gem 'i18n_yaml_sorter'
   gem 'listen'
+  gem 'mdb'
   gem 'overcommit', require: false
   gem 'policy-assertions'
   gem 'poltergeist'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'require_all'
   gem 'rubocop', require: false
   gem 'selenium-webdriver'
 end
