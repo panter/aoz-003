@@ -84,8 +84,30 @@ class ClientsTest < ApplicationSystemTestCase
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
     within '.table-no-border-top' do
-      assert page.has_text? 'Dari Native speaker'
+      assert page.has_text? 'Dari'
     end
+  end
+
+  test 'language without a level is shown' do
+    visit new_client_path
+    fill_in 'First name', with: 'asdf'
+    fill_in 'Last name', with: 'asdf'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
+    fill_in 'Primary phone', with: '0123456789'
+
+    click_on('Add language')
+    select('Farsi', from: 'Language')
+
+    click_button 'Create Client'
+    within '.table-no-border-top' do
+      refute page.has_text? ':native_speaker=>"Native speaker"'
+    end
+
+    visit clients_path
+    assert page.has_text? 'Farsi'
   end
 
   test 'superadmin can delete client' do

@@ -11,7 +11,7 @@ class LanguageSkill < ApplicationRecord
   end
 
   def full_language_skills
-    level_human = level ? I18n.t(level, scope: [:language_level]) : ''
-    [language_name, level_human].reject(&:blank?).join(', ')
+    level_human = level? ? I18n.t(level, scope: [:language_level]) : ''
+    [language_name, level_human].reject(&:blank?).join(', ') if language?
   end
 end

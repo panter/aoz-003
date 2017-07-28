@@ -6,4 +6,5 @@ tr
         - speaker.language_skills.each do |language|
           - if language.language_name.present?
             dt= language.language_name
-            dd= t("language_level.#{language.level}")
+            - if language.level?
+              dd= t("language_level.#{language.level}")
