@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.string "age_request"
     t.string "other_request"
     t.text "actual_activities"
+    t.jsonb "access_import"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
@@ -108,6 +109,7 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "access_import"
     t.index ["deleted_at"], name: "index_journals_on_deleted_at"
     t.index ["journalable_type", "journalable_id"], name: "index_journals_on_journalable_type_and_journalable_id"
     t.index ["user_id"], name: "index_journals_on_user_id"
@@ -281,6 +283,7 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.boolean "workday", default: false
     t.boolean "weekend", default: false
     t.text "detailed_description"
+    t.jsonb "access_import"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
