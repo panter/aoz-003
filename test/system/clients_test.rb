@@ -56,6 +56,7 @@ class ClientsTest < ApplicationSystemTestCase
 
   test 'new client form with preselected fields' do
     visit new_client_path
+    select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Client'
     fill_in 'Last name', with: "doesn't matter"
     fill_in 'Primary email', with: 'client@aoz.com'
@@ -73,7 +74,7 @@ class ClientsTest < ApplicationSystemTestCase
 
   test 'new client can select custom language' do
     visit new_client_path
-
+    select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Dari'
     fill_in 'Last name', with: 'Dari'
     fill_in 'Primary email', with: 'client@aoz.com'
@@ -81,6 +82,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
+
     click_on('Add language')
     select('Dari', from: 'Language')
     select('Native speaker', from: 'Level')
@@ -94,6 +96,7 @@ class ClientsTest < ApplicationSystemTestCase
 
   test 'language without a level shows only language' do
     visit new_client_path
+    select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'asdf'
     fill_in 'Last name', with: 'asdf'
     fill_in 'Street', with: 'Sihlstrasse 131'
@@ -116,6 +119,7 @@ class ClientsTest < ApplicationSystemTestCase
 
   test 'level without a language is not shown' do
     visit new_client_path
+    select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'asdf'
     fill_in 'Last name', with: 'asdf'
     fill_in 'Street', with: 'Sihlstrasse 131'
