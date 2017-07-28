@@ -12,6 +12,7 @@ class VolunteersTest < ApplicationSystemTestCase
   test 'new volunteer form' do
     visit new_volunteer_path
 
+    select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Volunteer'
     fill_in 'Last name', with: 'aoz'
     within '.volunteer_birth_year' do
@@ -45,6 +46,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'show volunteer custom nationality (nationality_name test)' do
     visit new_volunteer_path
+    select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Volunteer'
     fill_in 'Last name', with: 'Volunteer'
     select('Kosovo', from: 'Nationality')
@@ -62,9 +64,14 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'show volunteer checklist' do
     visit new_volunteer_path
+    select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Volunteer'
     fill_in 'Last name', with: 'Volunteer'
     fill_in 'Primary email', with: 'volunteer@kosovo.com'
+    fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
 
     page.check('volunteer_trial_period')
     page.check('volunteer_intro_course')
@@ -83,9 +90,14 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'volunteer checklist has default values (false)' do
     visit new_volunteer_path
+    select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Volunteer'
     fill_in 'Last name', with: 'Volunteer'
     fill_in 'Primary email', with: 'volunteer@kosovo.com'
+    fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
 
     click_button 'Create Volunteer'
 
