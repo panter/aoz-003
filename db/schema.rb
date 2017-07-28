@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(version: 20170803092929) do
     t.boolean "workday", default: false
     t.boolean "weekend", default: false
     t.text "detailed_description"
+    t.jsonb "access_import"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
