@@ -46,6 +46,10 @@ class VolunteerPolicy < ApplicationPolicy
     user.superadmin?
   end
 
+  def checklist?
+    user && user.superadmin?
+  end
+
   private
 
   def volunteers_owns_profile
