@@ -110,6 +110,28 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? 'Farsi'
   end
 
+  test 'level without a language is not shown' do
+    visit new_client_path
+    fill_in 'First name', with: 'asdf'
+    fill_in 'Last name', with: 'asdf'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
+    fill_in 'Primary phone', with: '0123456789'
+
+    click_on('Add language')
+    select('Fluent', from: 'Level')
+
+    click_button 'Create Client'
+    within '.table-no-border-top' do
+      refute page.has_text? 'Fluent'
+    end
+
+    visit clients_path
+    refute page.has_text? 'Fluent'
+  end
+
   test 'superadmin can delete client' do
     create :client
     visit clients_path
