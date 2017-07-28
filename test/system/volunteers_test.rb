@@ -150,12 +150,14 @@ class VolunteersTest < ApplicationSystemTestCase
     refute page.has_field? 'Explanation for rejection'
     select('Rejected', from: 'State')
     assert page.has_content? 'Reason for rejection'
+    page.choose('volunteer_rejection_type_other')
     assert page.has_field? 'Explanation for rejection'
+    fill_in 'Explanation for rejection', with: 'Explanation'
     click_button 'Update Volunteer'
 
     visit volunteer_path(volunteer)
-    assert page.has_content? 'Reason for rejection'
-    assert page.has_content? 'Explanation for rejection'
+    assert page.has_content? 'Reason for rejection Other'
+    assert page.has_content? 'Explanation for rejection Explanation'
   end
 
   test 'change filter to other options' do
