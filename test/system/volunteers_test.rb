@@ -60,6 +60,42 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_text? 'Kosovo'
   end
 
+  test 'show volunteer checklist' do
+    visit new_volunteer_path
+    fill_in 'First name', with: 'Volunteer'
+    fill_in 'Last name', with: 'Volunteer'
+    fill_in 'Primary email', with: 'volunteer@kosovo.com'
+
+    page.check('volunteer_trial_period')
+    page.check('volunteer_intro_course')
+    page.check('volunteer_doc_sent')
+    page.check('volunteer_bank_account')
+    page.check('volunteer_evaluation')
+
+    click_button 'Create Volunteer'
+
+    assert page.has_text? 'Trial period report Yes'
+    assert page.has_text? 'Introductory course Yes'
+    assert page.has_text? "Engaged volunteer's documents sent Yes"
+    assert page.has_text? 'Bank account details entered Yes'
+    assert page.has_text? 'Final evaluation Yes'
+  end
+
+  test 'volunteer checklist has default values (false)' do
+    visit new_volunteer_path
+    fill_in 'First name', with: 'Volunteer'
+    fill_in 'Last name', with: 'Volunteer'
+    fill_in 'Primary email', with: 'volunteer@kosovo.com'
+
+    click_button 'Create Volunteer'
+
+    assert page.has_text? 'Trial period report No'
+    assert page.has_text? 'Introductory course No'
+    assert page.has_text? "Engaged volunteer's documents sent No"
+    assert page.has_text? 'Bank account details entered No'
+    assert page.has_text? 'Final evaluation No'
+  end
+
   test 'conditional field for radio button is shown on radio chosen' do
     visit new_volunteer_path
     refute page.has_field? 'volunteer_region_specific'
