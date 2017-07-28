@@ -269,7 +269,6 @@ en:
     no_matter: "gender doesn't matter"
     same: gender same
   get_back: We will soon get back to you.
-  group_accompaniment: Group accompaniment
   helpers:
     submit:
       create: 'Create %{model}'
