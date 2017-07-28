@@ -79,11 +79,11 @@ class ClientsTest < ApplicationSystemTestCase
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
     within '.table-no-border-top' do
-      assert page.has_text? 'Dari'
+      assert page.has_text? 'Dari Native speaker'
     end
   end
 
-  test 'language without a level is shown' do
+  test 'language without a level shows only language' do
     visit new_client_path
     fill_in 'First name', with: 'asdf'
     fill_in 'Last name', with: 'asdf'
