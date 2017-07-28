@@ -52,6 +52,7 @@ group :development, :test do
   gem 'faker'
   gem 'i18n_yaml_sorter'
   gem 'listen'
+  gem 'mdb'
   gem 'overcommit', require: false
   gem 'policy-assertions'
   gem 'poltergeist'
