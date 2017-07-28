@@ -47,7 +47,7 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     assert_permit @superadmin, Volunteer, 'checklist?'
   end
 
-  test "Checklist: social worker can see volunteer's checklist" do
+  test "Checklist: social worker cannot see volunteer's checklist" do
     refute_permit @social_worker, Volunteer, 'checklist?'
   end
 
