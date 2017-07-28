@@ -123,7 +123,7 @@ de:
         first_name: Vorname
         full_name: Name
         german_course: Deutsch-Kurs
-        group_accompaniment: Gruppenangebot (meist in Asylzentren)
+        group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
         interests: Interessen
         intro_course: Einführungskurs besucht
         kid: Kinder
@@ -406,7 +406,6 @@ de:
     no_matter: Geschlecht egal
     same: Geschlecht gleich
   get_back: Wir werden uns bald bei Ihnen melden.
-  group_accompaniment: Gruppenangebot
   helpers:
     submit:
       create: '%{model} erfassen'
