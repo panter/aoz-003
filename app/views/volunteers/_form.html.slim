@@ -56,6 +56,8 @@
   .col-xs-4
     = f.input :working_percent
   .col-xs-12
+    = f.input :own_kids
+  .col-xs-12
     = f.input :education
   .col-xs-12
     = f.input :motivation
@@ -63,6 +65,14 @@
     = f.input :experience
   .col-xs-12
     = f.input :volunteer_experience_desc
+
+h3= t('volunteer_engagement_type_will')
+.row
+  .col-xs-12
+    p= t('duration_info')
+.row
+  .col-xs-12
+    p= link_to t('accompaniment_info'), 'https://www.stadt-zuerich.ch/aoz/de/index/integration/fachstelle-freiwilligenarbeit/einsatzbereiche-fuer-freiwillige-.html'
 
 h3= t_attr(:single_accompaniment, Volunteer)
 .row
@@ -79,6 +89,10 @@ h3= t_attr(:single_accompaniment, Volunteer)
 .row
   .col-xs-12
     = f.input :other_offer_desc
+
+.row
+  .col-xs-12
+    = f.input :zurich
 
 .row
   .col-xs-12

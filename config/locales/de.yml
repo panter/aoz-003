@@ -1,5 +1,6 @@
 ---
 de:
+  accompaniment_info:  Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   activerecord:
     attributes:
       assignment:
@@ -136,6 +137,7 @@ de:
         nationality: Nationalität
         other_offer: Anderes (bitte beschreiben)
         other_offer_desc: Beschreibung
+        own_kids: Familie (Kinder, Jahrgang)
         phone: Telefonnummer
         profession: Beruf
         registrar: Registrator
@@ -157,6 +159,7 @@ de:
         women: Frauen
         working_percent: Stellenprozent
         zip: Postleitzahl
+        zurich: Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt
       volunteer_email:
         active: Aktiv
         body: Textkörper
@@ -382,6 +385,7 @@ de:
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
+  duration_info: Die meisten unserer Einsätze erfordern ein Engagement von mindestens 6 Monaten.
   download: Herunterladen
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
@@ -584,6 +588,7 @@ de:
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails: Bestätigungs-Mails
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
       <<: *id-volunteer_attributes
