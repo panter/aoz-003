@@ -104,15 +104,18 @@ de:
         address: Adresse
         adults: Erwachsene
         avatar: Foto
+        bank_account: Kontodaten eingetragen
         birth_year: Jahrgang
         children: Kinder
         city: Stadt
         created_at: Erstellt am
         creative: Kreativ
         culture: Kultur
+        doc_sent: Dossier Freiwillige engagiert verschick
         duration: Dauer der Begleitung
         education: Ausbildung
         email: Email
+        evaluation: Abschlussevaluation erhalten
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
@@ -122,6 +125,7 @@ de:
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebot (meist in Asylzentren)
         interests: Interessen
+        intro_course: Einführungskurs besucht
         kid: Kinder
         languages: Sprachen
         last_name: Nachname
@@ -144,6 +148,7 @@ de:
         strengths: Stärken
         teenagers: Jugendliche
         training: Bildung
+        trial_period: Probezeitbericht erhalten
         volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         woman: Frau
         working_percent: Stellenprozent
@@ -264,6 +269,7 @@ de:
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   changed_by: Geändert durch
+  checklist: Abhak-Liste
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.

@@ -8,6 +8,21 @@
       = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
     .col-xs-12
       = f.input :rejection_text
+
+- if policy(Volunteer).checklist?
+  h3= t('checklist')
+  .row
+    .col-xs-12
+      = f.input :trial_period
+    .col-xs-12
+      = f.input :intro_course
+    .col-xs-12
+      = f.input :doc_sent
+    .col-xs-12
+      = f.input :bank_account
+    .col-xs-12
+      = f.input :evaluation
+
 .row
   .col-xs-12
     = f.input :salutation,
