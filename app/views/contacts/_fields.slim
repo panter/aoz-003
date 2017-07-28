@@ -3,28 +3,28 @@
     .col-xs-12.col-md-6= f.input :last_name, required: true, label: t('.name')
   - else
     .col-xs-12.col-md-6= f.input :first_name, required: true
-    .col-xs-12.col-md-6= f.input :last_name, label: t('.last_name')
+    .col-xs-12.col-md-6= f.input :last_name, required: true, label: t('.last_name')
 
 .row
   .col-xs-12
     h2= t_attr(:address, Contact)
 
   .col-xs-12
-    = f.input :street
+    = f.input :street, required: true
 
   .col-xs-12
     = f.input :extended
 
   .col-xs-4
-    = f.input :postal_code
+    = f.input :postal_code, required: true
 
   .col-xs-8
-    = f.input :city
+    = f.input :city, required: true
   - if f.object.needs_primary_email?
     .col-xs-12
       = f.input :primary_email, required: true
     .col-xs-12
-      = f.input :primary_phone
+      = f.input :primary_phone, required: true
 
 - unless f.object.volunteer?
   .row
