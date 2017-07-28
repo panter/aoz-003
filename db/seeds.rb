@@ -164,8 +164,10 @@ Volunteer.state_collection.each do |state|
     volunteer.profession = Faker::Company.profession
     volunteer.salutation = ['mr', 'mrs'].sample
     volunteer.working_percent = "#{rand(2..10)}0"
-    [:experience, :man, :woman, :family, :kid, :sport, :creative, :music,
-     :culture, :training, :german_course, :adults, :teenagers, :children].each do |bool_attr|
+    Volunteer::SINGLE_ACCOMPANIMENTS.each do |bool_attr|
+      volunteer[bool_attr] = [true, false].sample
+    end
+    Volunteer::GROUP_ACCOMPANIMENTS.each do |bool_attr|
       volunteer[bool_attr] = [true, false].sample
     end
     [:nationality, :additional_nationality].each { |n| volunteer[n] = ISO3166::Country.codes.sample }
@@ -174,8 +176,6 @@ Volunteer.state_collection.each do |state|
       volunteer[attribute] = Faker::Lorem.sentence(rand(2..5))
     end
     volunteer.strengths = "#{Faker::Job.key_skill}, #{Faker::Job.key_skill}, #{Faker::Job.key_skill}"
-    volunteer.duration = ['long', 'short'].sample
-    volunteer.region = ['city', 'region', 'canton'].sample
     volunteer.language_skills = make_lang_skills
   end
   vol.save!

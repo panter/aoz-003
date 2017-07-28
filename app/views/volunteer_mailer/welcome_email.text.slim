@@ -97,11 +97,6 @@
   = dashs
   = rn2
 
-= t('volunteer_engagement_type_will')
-- if @volunteer.duration.present?.present?
-  = "#{rn2}#{t_attr(:duration, Volunteer)}:\t\t#{t("duration.#{@volunteer.duration}")}\r\n"
-  =
-
 = "\r\n#{t_attr(:single_accompaniment, Volunteer)}#{rn2}"
 - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
   - if @volunteer.read_attribute(single)
@@ -111,12 +106,3 @@
   - if @volunteer.read_attribute(group)
     = t_attr(group, Volunteer)
     = " "
-
-- if @volunteer.region.present?
-  = "\r\n#{rn2}#{t('your_region')}"
-  = "#{rn2}#{t_attr(:region, Volunteer)}: "
-  = t("region.#{@volunteer.region}")
-  - if @volunteer.region_specific.present?
-    = "\r\n"
-    = "#{t_attr(:region_specific, Volunteer)}: "
-    = @volunteer.region_specific

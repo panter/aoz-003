@@ -64,11 +64,6 @@
   .col-xs-12
     = f.input :volunteer_experience_desc
 
-h3= t('volunteer_engagement_type_will')
-.row
-  .col-xs-12
-    = f.input :duration, collection: Volunteer::DURATIONS, as: :radio_buttons
-
 h3= t_attr(:single_accompaniment, Volunteer)
 .row
   - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single_accompaniment|
@@ -83,17 +78,8 @@ h3= t_attr(:single_accompaniment, Volunteer)
       = f.input group_accompaniment
 .row
   .col-xs-12
-    h3= t('target_groups')
-  - Volunteer::TARGET_GROUPS.each do |group|
-    .col-xs-4.col-md-3
-      = multi_conditional_field(f, group, Volunteer::GROUP_ACCOMPANIMENTS)
+    = f.input :other_offer_desc
 
-h3= t('your_region')
-.row
-  .col-xs-4.col-md-2
-    = f.input :region, collection: Volunteer::REGIONS, as: :radio_buttons, label: false
-  .col-xs-8.col-md-10
-    = conditional_field f, :region_specific, :region, :region
 .row
   .col-xs-12
     = f.input :expectations

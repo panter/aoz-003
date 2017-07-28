@@ -102,20 +102,21 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         address: Adresse
-        adults: Erwachsene
         avatar: Foto
         bank_account: Kontodaten eingetragen
         birth_year: Jahrgang
         children: Kinder
         city: Stadt
+        cooking: Kochen
         created_at: Erstellt am
         creative: Kreativ
         culture: Kultur
+        dancing: Tanz
         doc_sent: Dossier Freiwillige engagiert verschickt
-        duration: Dauer der Begleitung
         education: Ausbildung
         email: Email
         evaluation: Abschlussevaluation erhalten
+        excursions: Ausflüge
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
@@ -124,6 +125,7 @@ de:
         full_name: Name
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
+        health: Gesundheit
         interests: Interessen
         intro_course: Einführungskurs besucht
         kid: Kinder
@@ -132,10 +134,10 @@ de:
         man: Mann
         music: Musik
         nationality: Nationalität
+        other_offer: Anderes (bitte beschreiben)
+        other_offer_desc: Beschreibung
         phone: Telefonnummer
         profession: Beruf
-        region: Region
-        region_specific: Gemeinde
         registrar: Registrator
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
@@ -149,8 +151,10 @@ de:
         teenagers: Jugendliche
         training: Bildung
         trial_period: Probezeitbericht erhalten
+        unaccompanied: Unbegleitete Minderjährige
         volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         woman: Frau
+        women: Frauen
         working_percent: Stellenprozent
         zip: Postleitzahl
       volunteer_email:
@@ -379,9 +383,6 @@ de:
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
   download: Herunterladen
-  duration: &id-durations
-    long: Längerfristig (min 6 Mt.)
-    short: Kurzfristig
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
   entry_year: Einreisejahr
@@ -441,10 +442,6 @@ de:
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
-  region: &id-regions
-    canton: Kanton
-    city: Stadt
-    region: Region
   registered_by: Registriert durch
   rejection_type: &id-rejection-types
     her: von Freiwillige/r vor / nach Erstgespräch
@@ -503,7 +500,6 @@ de:
         experience: Bitte ankreuzen falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben.
         interests: Welche sind Ihre wichtigsten Freizeitinteressen?
         motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
-        region: In welcher Region können Sie sich Ihren Einsatz vorstellen?
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
     "no": 'Nein'
@@ -539,12 +535,8 @@ de:
       user:
         role: *id-roles
       volunteer:
-        duration:
-          <<: *id-durations
-          all: Alle
         language_skills:
           level: *id-lang-levels
-        region: *id-regions
         rejection_type: *id-rejection-types
         salutation:
           <<: *id-salutations
@@ -569,7 +561,6 @@ de:
     registered: Interessiert
     resigned: Beendet
   submit_application: Anmeldung abschicken
-  target_groups: Zielgruppe
   thank_you: "Vielen Dank \U0001F389"
   time:
     formats:
@@ -593,8 +584,6 @@ de:
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails: Bestätigungs-Mails
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
       <<: *id-volunteer_attributes
@@ -609,4 +598,3 @@ de:
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   when: Zeit
   working_days: Arbeitstage
-  your_region: In welcher Region können Sie sich Ihren Einsatz vorstellen?

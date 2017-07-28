@@ -32,7 +32,6 @@
 
 .filters
   = render partial: 'salutation_select', locals: {client: @client.id}
-  = render partial: 'duration_select', locals: {client: @client.id}
 
 .row
   .col-xs-12
@@ -48,7 +47,6 @@
         th= t_attr(:languages, Volunteer)
         th= t_attr(:motivation, Volunteer)
         th= sort_link @q, :experience, t_attr(:experience, Volunteer)
-        th= sort_link @q, :duration, t_attr(:duration, Volunteer)
         th= t_attr(:single_accompaniment, Volunteer)
         th= t_attr(:group_accompaniment, Volunteer)
         th
