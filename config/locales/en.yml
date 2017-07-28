@@ -1,5 +1,6 @@
 ---
 en:
+  accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
   activerecord:
     attributes:
       client:
@@ -44,6 +45,7 @@ en:
         music: Music
         other_offer: Other (please describe)
         other_offer_desc: Description
+        own_kids: Family (Kids, Birth year)
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
         single_accompaniment: Single accompaniment
@@ -54,6 +56,7 @@ en:
         volunteer_experience_desc: If you have any experiences with voluntary work, please describe here.
         woman: Woman
         working_percent: Employment rate (in Percent)
+        zurich: Support for moving in Zurich City
       volunteer_email:
         user: Created by
     models:
@@ -242,6 +245,7 @@ en:
       send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
       unlocked: Your account has been unlocked successfully. Please sign in to continue.
   download: Download
+  duration_info: Most of our accompaniments require a commitment of at least 6 months.
   edit_login: Edit login
   edit_profile: Edit profile
   engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
@@ -421,6 +425,7 @@ en:
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_emails: Volunteer emails
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
       <<: *id-volunteer_attributes

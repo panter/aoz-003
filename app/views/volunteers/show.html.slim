@@ -58,6 +58,9 @@ h3= t('personal_background')
         td= t_attr(:profession)
         td= @volunteer.profession
       tr
+        td= t_attr(:own_kids)
+        td= @volunteer.own_kids
+      tr
         td= t_attr(:education)
         td= @volunteer.education
       tr
@@ -89,6 +92,11 @@ h3= t('personal_background')
           tr
             td= t_attr(:rejection_text)
             td= @volunteer.rejection_text
+      tr
+        td= t_attr(:zurich)
+        td
+          dl.dl-horizontal
+            dt= Volunteer.human_boolean(@volunteer.zurich)
 
 h3= t_attr(:single_accompaniment)
 .table-responsive
@@ -122,6 +130,10 @@ h3= t_attr(:group_accompaniment)
               i.glyphicon.glyphicon-ok.text-success
             - else
               i.glyphicon.glyphicon-remove.text-danger
+      - if @volunteer.other_offer_desc?
+        tr
+          td= t_attr(:other_offer_desc)
+          td= @volunteer.other_offer_desc
 
 = render 'schedules/show', participant: @volunteer
 
