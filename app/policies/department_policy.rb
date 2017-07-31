@@ -1,27 +1,13 @@
 class DepartmentPolicy < ApplicationPolicy
-  attr_reader :user, :department
-
-  def initialize(user, department)
-    @user = user
-    @department = department
-  end
-
-  delegate :superadmin?, to: :user
-  delegate :department_manager?, to: :user
-
-  def superadmin_or_the_departments_manager?
-    superadmin? || department.user.include?(@user)
-  end
-
   alias_method :index?,              :superadmin?
   alias_method :new?,                :superadmin?
   alias_method :create?,             :superadmin?
   alias_method :can_associate_user?, :superadmin?
   alias_method :destroy?,            :superadmin?
 
-  alias_method :show?,               :superadmin_or_the_departments_manager?
-  alias_method :edit?,               :superadmin_or_the_departments_manager?
-  alias_method :update?,             :superadmin_or_the_departments_manager?
+  alias_method :show?,               :superadmin_or_user_in_records_related?
+  alias_method :edit?,               :superadmin_or_user_in_records_related?
+  alias_method :update?,             :superadmin_or_user_in_records_related?
 
   def manager_with_department?
     department_manager? && user.manages_department?
@@ -29,7 +15,7 @@ class DepartmentPolicy < ApplicationPolicy
 
   def permitted_attributes
     return department_attributes.push(user_ids: []) if superadmin?
-    return department_attributes if user.department_manager?
+    return department_attributes if department_manager?
     []
   end
 

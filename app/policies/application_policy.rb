@@ -8,6 +8,13 @@ class ApplicationPolicy
     @record = record
   end
 
+  delegate :superadmin?, to: :user
+  delegate :department_manager?, to: :user
+  delegate :social_worker?, to: :user
+  delegate :volunteer?, to: :user
+
+  def superadmin_or_social_worker?
+    superadmin? || social_worker?
   end
 
   def show?
@@ -26,6 +33,32 @@ class ApplicationPolicy
     false
   end
 
+  def allow_all?
+    true
+  end
+
+  def user_owns_record?
+    record.user_id == user.id
+  end
+
+  def superadmin_or_record_owner?
+    superadmin? || user_owns_record?
+  end
+
+  def superadmin_or_user_in_records_related?
+    superadmin? || record.user_ids.include?(user.id)
+  end
+
+  def superadmin_or_volunteers_record?
+    superadmin? || volunteer? && user_owns_record?
+  end
+
+  def superadmin_or_social_workers_record?
+    superadmin? || social_worker? && user_owns_record?
+  end
+
+  def user_present_and_superadmin?
+    user && superadmin?
   end
 
   alias_method :index?,   :deny_all?
