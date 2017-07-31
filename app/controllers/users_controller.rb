@@ -1,11 +1,10 @@
 class UsersController < ApplicationController
   include ContactAttributes
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  after_action :verify_authorized
 
   def index
-    @users = User.all
     authorize User
+    @users = User.all
   end
 
   def show; end
@@ -19,13 +18,13 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params.merge(password: Devise.friendly_token)
+    authorize @user
     if @user.save
       @user.invite!
       redirect_to users_path, notice: t('invite_sent', email: @user.email)
     else
       render :new
     end
-    authorize @user
   end
 
   # only used to update the current user

@@ -4,8 +4,8 @@ class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   def index
-    @assignments = Assignment.all
     authorize Assignment
+    @assignments = policy_scope(Assignment)
   end
 
   def show
@@ -26,14 +26,11 @@ class AssignmentsController < ApplicationController
   def edit; end
 
   def create
-    @assignment = Assignment.new(assignment_params)
-    @assignment.creator = current_user
+    @assignment = Assignment.new(assignment_params.merge(creator_id: current_user.id))
+    @assignment.client.state = Client::RESERVED
+    @assignment.volunteer.state = Volunteer::ACTIVE
     authorize @assignment
     if @assignment.save
-      @assignment.client.state = Client::RESERVED
-      @assignment.client.save
-      @assignment.volunteer.state = Volunteer::ACTIVE
-      @assignment.volunteer.save
       redirect_to assignments_url, make_notice
     else
       render :new

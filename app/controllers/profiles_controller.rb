@@ -15,12 +15,12 @@ class ProfilesController < ApplicationController
 
   def create
     @profile = Profile.new(profile_params)
+    authorize @profile
     if @profile.save
       redirect_to @profile, make_notice
     else
       render :new
     end
-    authorize @profile
   end
 
   def update

@@ -1,8 +1,10 @@
 class DepartmentsController < ApplicationController
-  before_action :set_department, only: [:show, :edit, :update, :destroy]
   include MakeNotice
 
+  before_action :set_department, only: [:show, :edit, :update, :destroy]
+
   def index
+    authorize Department
     @departments = policy_scope(Department)
   end
 
@@ -17,8 +19,8 @@ class DepartmentsController < ApplicationController
 
   def create
     @department = Department.new
-    @department.update_attributes(permitted_attributes(@department))
     authorize @department
+    @department.update_attributes(permitted_attributes(@department))
     if @department.save
       redirect_to @department, make_notice
     else

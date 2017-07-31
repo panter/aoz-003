@@ -5,6 +5,7 @@ class JournalsController < ApplicationController
   before_action :set_journaled
 
   def index
+    authorize Journal
     @journals = Journal.where(journal_relations.except(:user_id))
   end
 
@@ -12,14 +13,14 @@ class JournalsController < ApplicationController
 
   def new
     @journal = Journal.new(journal_relations)
-    authorize(@journal)
+    authorize @journal
   end
 
   def edit; end
 
   def create
     @journal = Journal.new(journal_params.merge(journal_relations))
-    authorize(@journal)
+    authorize @journal
     if @journal.save
       redirect_to @journaled, make_notice
     else
@@ -52,7 +53,7 @@ class JournalsController < ApplicationController
 
   def set_journal
     @journal = Journal.find(params[:id])
-    authorize(@journal)
+    authorize @journal
   end
 
   def set_journaled

@@ -3,6 +3,7 @@ class VolunteerEmailsController < ApplicationController
   before_action :translate_model_name, only: [:update, :destroy]
 
   def index
+    authorize VolunteerEmail
     @volunteer_emails = VolunteerEmail.all.order(created_at: :desc)
   end
 
@@ -17,8 +18,8 @@ class VolunteerEmailsController < ApplicationController
 
   def create
     @volunteer_email = VolunteerEmail.new(volunteer_email_params)
-    @volunteer_email.user = current_user
     authorize @volunteer_email
+    @volunteer_email.user = current_user
     if @volunteer_email.save
       redirect_to @volunteer_email,
         notice: t('crud.created', model: @volunteer_email.class.model_name.human)

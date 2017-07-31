@@ -4,6 +4,7 @@ class VolunteerApplicationsController < ApplicationController
   include VolunteerAttributes
 
   skip_before_action :authenticate_user!
+  before_action :run_authorize
 
   def new
     @volunteer = Volunteer.new
@@ -25,6 +26,10 @@ class VolunteerApplicationsController < ApplicationController
   def thanks; end
 
   private
+
+  def run_authorize
+    authorize :volunteer_application, "#{action_name}?".to_sym
+  end
 
   def volunteer_params
     params.require(:volunteer).permit(volunteer_attributes)
