@@ -1,17 +1,4 @@
 class AssignmentPolicy < ApplicationPolicy
-  class Scope
-    attr_reader :user, :assignment
-
-    def initialize(user, assignment)
-      @user = user
-      @assignment = assignment
-    end
-
-    def resolve
-      assignment.all if user.superadmin?
-    end
-  end
-
   attr_reader :user, :assignment
 
   def initialize(user, assignment)

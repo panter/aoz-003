@@ -5,7 +5,7 @@ class DepartmentsController < ApplicationController
 
   def index
     authorize Department
-    @departments = policy_scope(Department)
+    @departments = DepartmentPolicy::Scope.new(current_user, Department).resolve_superadmin_or_owner
   end
 
   def show; end
