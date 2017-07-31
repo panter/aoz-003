@@ -6,31 +6,13 @@ class VolunteerEmailPolicy < ApplicationPolicy
     @volunteer_email = volunteer_email
   end
 
-  def index?
-    user.superadmin?
-  end
+  delegate :superadmin?, to: :user
 
-  def show?
-    user.superadmin?
-  end
-
-  def edit?
-    user.superadmin?
-  end
-
-  def create?
-    user.superadmin?
-  end
-
-  def update?
-    user.superadmin?
-  end
-
-  def destroy?
-    user.superadmin?
-  end
-
-  def supervisor_privileges?
-    user.superadmin?
-  end
+  alias_method :index?,   :superadmin?
+  alias_method :show?,    :superadmin?
+  alias_method :edit?,    :superadmin?
+  alias_method :create?,  :superadmin?
+  alias_method :update?,  :superadmin?
+  alias_method :destroy?, :superadmin?
+  alias_method :supervisor_privileges?, :superadmin?
 end

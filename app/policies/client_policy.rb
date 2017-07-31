@@ -16,44 +16,33 @@ class ClientPolicy < ApplicationPolicy
     end
   end
 
+  attr_reader :user, :client
+
   def initialize(user, client)
     @user = user
     @client = client
   end
 
-  def index?
-    user.superadmin? || user.social_worker?
+  delegate :superadmin?, to: :user
+  delegate :social_worker?, to: :user
+
+  def super_or_users_client?
+    superadmin? || social_worker? && client.user_id == user.id
   end
 
-  def show?
-    user.superadmin? || @client.user_id == user.id
+  def superadmin_or_social_worker?
+    superadmin? || social_worker?
   end
 
-  def new?
-    user.superadmin? || user.social_worker?
-  end
+  alias_method :destroy?,           :superadmin?
+  alias_method :need_accompanying?, :superadmin?
+  alias_method :supervisor?,        :superadmin?
 
-  def edit?
-    user.superadmin? || @client.user_id == user.id
-  end
+  alias_method :show?,              :super_or_users_client?
+  alias_method :edit?,              :super_or_users_client?
+  alias_method :update?,            :super_or_users_client?
 
-  def create?
-    user.superadmin? || user.social_worker?
-  end
-
-  def update?
-    user.superadmin? || @client.user_id == user.id
-  end
-
-  def destroy?
-    user.superadmin?
-  end
-
-  def need_accompanying?
-    user.superadmin?
-  end
-
-  def supervisor?
-    user.superadmin?
-  end
+  alias_method :index?,             :superadmin_or_social_worker?
+  alias_method :new?,               :superadmin_or_social_worker?
+  alias_method :create?,            :superadmin_or_social_worker?
 end

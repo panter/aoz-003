@@ -6,23 +6,20 @@ class ProfilePolicy < ApplicationPolicy
     @profile = profile
   end
 
-  def show?
-    @user.superadmin? || @profile.user_id == @user.id
+  delegate :superadmin?, to: :user
+
+  def profile_owner?
+    profile.user_id == user.id
   end
 
-  def new?
-    @profile.user_id == @user.id
+  def superadmin_or_profile_owner?
+    superadmin? || profile_owner?
   end
 
-  def edit?
-    @user.superadmin? || @profile.user_id == @user.id
-  end
+  alias_method :show?,   :superadmin_or_profile_owner?
+  alias_method :edit?,   :superadmin_or_profile_owner?
+  alias_method :create?, :superadmin_or_profile_owner?
+  alias_method :update?, :superadmin_or_profile_owner?
 
-  def create?
-    @user.superadmin? || @profile.user_id == @user.id
-  end
-
-  def update?
-    @user.superadmin? || @profile.user_id == @user.id
-  end
+  alias_method :new?,    :profile_owner?
 end

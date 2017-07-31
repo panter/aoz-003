@@ -1,36 +1,28 @@
 class UserPolicy < ApplicationPolicy
-  attr_reader :current_user, :model
+  attr_reader :current_user, :subject_user
 
-  def initialize(current_user, model)
+  def initialize(current_user, subject_user)
     @current_user = current_user
-    @user = model
+    @subject_user = subject_user
   end
 
-  def index?
-    @current_user.superadmin?
+  delegate :superadmin?, to: :current_user
+
+  def superadmin_and_subject_not_superadmin?
+    superadmin? && !subject_user.superadmin?
   end
 
-  def show?
-    @current_user.superadmin? || @current_user == @user
+  def superadmin_or_current_user_is_subject?
+    superadmin? || current_user == subject_user
   end
 
-  def new?
-    @current_user.superadmin?
-  end
+  alias_method :index?,   :superadmin?
+  alias_method :new?,     :superadmin?
+  alias_method :create?,  :superadmin?
 
-  def edit?
-    @current_user.superadmin? || @current_user == @user
-  end
+  alias_method :show?,    :superadmin_or_current_user_is_subject?
+  alias_method :edit?,    :superadmin_or_current_user_is_subject?
+  alias_method :update?,  :superadmin_or_current_user_is_subject?
 
-  def create?
-    @current_user.superadmin?
-  end
-
-  def update?
-    @current_user.superadmin? || @current_user == @user
-  end
-
-  def destroy?
-    @current_user.superadmin? && !@user.superadmin?
-  end
+  alias_method :destroy?, :superadmin_and_subject_not_superadmin?
 end
