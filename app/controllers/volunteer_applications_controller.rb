@@ -4,18 +4,18 @@ class VolunteerApplicationsController < ApplicationController
   include VolunteerAttributes
 
   skip_before_action :authenticate_user!
-  before_action :run_authorize
 
   def new
     @volunteer = Volunteer.new
+    authorize :volunteer_application, :new?
   end
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
+    authorize :volunteer_application, :create?
     if @volunteer.save
-      volunteer_email = VolunteerEmail.active_mail
-      if volunteer_email.present?
-        VolunteerMailer.welcome_email(@volunteer, volunteer_email).deliver
+      if VolunteerEmail.active_mail.present?
+        VolunteerMailer.welcome_email(@volunteer, VolunteerEmail.active_mail).deliver
       end
       redirect_to thanks_volunteer_applications_url
     else
@@ -23,13 +23,11 @@ class VolunteerApplicationsController < ApplicationController
     end
   end
 
-  def thanks; end
+  def thanks
+    authorize :volunteer_application, :thanks?
+  end
 
   private
-
-  def run_authorize
-    authorize :volunteer_application, "#{action_name}?".to_sym
-  end
 
   def volunteer_params
     params.require(:volunteer).permit(volunteer_attributes)
