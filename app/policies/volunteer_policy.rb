@@ -6,53 +6,28 @@ class VolunteerPolicy < ApplicationPolicy
     @volunteer = volunteer
   end
 
-  def new?
-    user.superadmin?
+  delegate :superadmin?, to: :user
+  delegate :volunteer?,  to: :user
+
+  def user_present_and_superadmin?
+    user && superadmin?
   end
 
-  def create?
-    user.superadmin?
+  def superadmin_or_users_volunteer_record?
+    superadmin? || volunteer? && user.volunteer_id == volunteer.id
   end
 
-  def index?
-    user.superadmin?
-  end
+  alias_method :index?,                 :superadmin?
+  alias_method :new?,                   :superadmin?
+  alias_method :create?,                :superadmin?
+  alias_method :supervisor?,            :superadmin?
+  alias_method :seeking_clients?,       :superadmin?
 
-  def show?
-    user.superadmin? || volunteers_owns_profile
-  end
+  alias_method :show?,                  :superadmin_or_users_volunteer_record?
+  alias_method :edit?,                  :superadmin_or_users_volunteer_record?
+  alias_method :update?,                :superadmin_or_users_volunteer_record?
 
-  def edit?
-    user.superadmin? || volunteers_owns_profile
-  end
-
-  def update?
-    user.superadmin? || volunteers_owns_profile
-  end
-
-  def destroy?
-    user && user.superadmin?
-  end
-
-  def supervisor_privileges?
-    user && user.superadmin?
-  end
-
-  def supervisor?
-    user.superadmin?
-  end
-
-  def seeking_clients?
-    user.superadmin?
-  end
-
-  def checklist?
-    user && user.superadmin?
-  end
-
-  private
-
-  def volunteers_owns_profile
-    user.volunteer? && user.volunteer == volunteer
-  end
+  alias_method :destroy?,               :user_present_and_superadmin?
+  alias_method :supervisor_privileges?, :user_present_and_superadmin?
+  alias_method :checklist?,             :user_present_and_superadmin?
 end

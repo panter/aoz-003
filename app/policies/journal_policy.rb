@@ -6,31 +6,13 @@ class JournalPolicy < ApplicationPolicy
     @journal = journal
   end
 
-  def new?
-    user.superadmin?
-  end
+  delegate :superadmin?, to: :user
 
-  def create?
-    user.superadmin?
-  end
-
-  def index?
-    user.superadmin?
-  end
-
-  def show?
-    user.superadmin?
-  end
-
-  def edit?
-    user.superadmin?
-  end
-
-  def update?
-    user.superadmin?
-  end
-
-  def destroy?
-    user.superadmin?
-  end
+  alias_method :new?,     :superadmin?
+  alias_method :create?,  :superadmin?
+  alias_method :index?,   :superadmin?
+  alias_method :show?,    :superadmin?
+  alias_method :edit?,    :superadmin?
+  alias_method :update?,  :superadmin?
+  alias_method :destroy?, :superadmin?
 end

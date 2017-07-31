@@ -46,12 +46,8 @@ class User < ApplicationRecord
     role == VOLUNTEER
   end
 
-  def superadmin_or_department_manager?
-    superadmin? || department_manager?
-  end
-
-  def with_department?
-    department.first.present?
+  def manages_department?
+    department.any?
   end
 
   def self.create_user_and_send_password_reset(email:, role:)
