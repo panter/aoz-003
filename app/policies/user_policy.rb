@@ -1,19 +1,10 @@
 class UserPolicy < ApplicationPolicy
-  attr_reader :current_user, :subject_user
-
-  def initialize(current_user, subject_user)
-    @current_user = current_user
-    @subject_user = subject_user
-  end
-
-  delegate :superadmin?, to: :current_user
-
   def superadmin_and_subject_not_superadmin?
-    superadmin? && !subject_user.superadmin?
+    superadmin? && !record.superadmin?
   end
 
   def superadmin_or_current_user_is_subject?
-    superadmin? || current_user == subject_user
+    superadmin? || user == record
   end
 
   alias_method :index?,   :superadmin?

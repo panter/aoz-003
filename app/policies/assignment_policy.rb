@@ -1,13 +1,4 @@
 class AssignmentPolicy < ApplicationPolicy
-  attr_reader :user, :assignment
-
-  def initialize(user, assignment)
-    @user = user
-    @assignment = assignment
-  end
-
-  delegate :superadmin?, to: :user
-
   alias_method :index?, :superadmin?
   alias_method :show?, :superadmin?
   alias_method :new?, :superadmin?
