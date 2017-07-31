@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
   include Pundit
+
   protect_from_forgery with: :exception
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
-
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  after_action :verify_authorized, unless: :devise_controller?
 
   def after_sign_in_path_for(current_user)
     return volunteer_path(current_user.volunteer.id) if current_user.volunteer?
@@ -16,7 +17,9 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
-  def home; end
+  def home
+    authorize :application, :home?
+  end
 
   private
 

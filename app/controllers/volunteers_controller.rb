@@ -7,6 +7,7 @@ class VolunteersController < ApplicationController
   before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize Volunteer
     @q = Volunteer.ransack(params[:q])
     @volunteers = @q.result
   end
@@ -22,8 +23,8 @@ class VolunteersController < ApplicationController
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
-    @volunteer.registrar = current_user
     authorize @volunteer
+    @volunteer.registrar = current_user
     if @volunteer.save
       redirect_to @volunteer, notice: t('volunteer_created')
     else
@@ -48,6 +49,7 @@ class VolunteersController < ApplicationController
   end
 
   def seeking_clients
+    authorize Volunteer
     @q = Volunteer.where(state: Volunteer::SEEKING_CLIENTS).ransack(params[:q])
     @seeking_clients = @q.result
   end
