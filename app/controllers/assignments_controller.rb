@@ -5,7 +5,7 @@ class AssignmentsController < ApplicationController
 
   def index
     authorize Assignment
-    @assignments = policy_scope(Assignment)
+    @assignments = AssignmentPolicy::Scope.new(current_user, Assignment).resolve_all_to_superadmin
   end
 
   def show

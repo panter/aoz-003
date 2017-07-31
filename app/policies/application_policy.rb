@@ -1,22 +1,21 @@
 class ApplicationPolicy
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      scope
-    end
-  end
+  include ApplicationScope
 
   attr_reader :user, :record
 
   def initialize(user, record)
     @user = user
     @record = record
+  end
+
+  end
+
+  def show?
+    scope.where(id: record.id).exists?
+  end
+
+  def scope
+    Pundit.policy_scope!(user, record.class)
   end
 
   def user_is_in?
@@ -27,8 +26,6 @@ class ApplicationPolicy
     false
   end
 
-  def show?
-    scope.where(id: record.id).exists?
   end
 
   alias_method :index?,   :deny_all?
@@ -39,8 +36,4 @@ class ApplicationPolicy
   alias_method :destroy?, :deny_all?
 
   alias_method :home?,    :user_is_in?
-
-  def scope
-    Pundit.policy_scope!(user, record.class)
-  end
 end

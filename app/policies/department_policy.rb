@@ -1,20 +1,4 @@
 class DepartmentPolicy < ApplicationPolicy
-  class Scope
-    attr_reader :user, :department
-    def initialize(user, department)
-      @user = user
-      @department = department
-    end
-
-    def resolve
-      if @user.superadmin?
-        department.all
-      else
-        department.where(user: user)
-      end
-    end
-  end
-
   attr_reader :user, :department
 
   def initialize(user, department)
