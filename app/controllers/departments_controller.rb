@@ -20,8 +20,7 @@ class DepartmentsController < ApplicationController
   def create
     @department = Department.new
     authorize @department
-    @department.update_attributes(permitted_attributes(@department))
-    if @department.save
+    if @department.update(permitted_attributes(@department))
       redirect_to @department, make_notice
     else
       render :new
@@ -29,7 +28,7 @@ class DepartmentsController < ApplicationController
   end
 
   def update
-    if @department.update_attributes(permitted_attributes(@department))
+    if @department.update(permitted_attributes(@department))
       redirect_to @department, make_notice
     else
       render :edit
