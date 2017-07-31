@@ -12,8 +12,11 @@ class ActiveSupport::TestCase
   def before_setup
     # FIXME: make sure all users are deleted, sometimes records stick around
     # when tests are aborted
-    [:user, :volunteer, :client, :contact, :profile, :journal].each do |model|
-      model.to_s.classify.constantize.with_deleted.map(&:really_destroy!)
+    [
+      User, Volunteer, Client, Contact, Profile, Journal, Assignment, ContactEmail,
+      ContactPhone, Department, LanguageSkill, Relative, Schedule
+    ].each do |model|
+      model.with_deleted.map(&:really_destroy!)
     end
 
     super
