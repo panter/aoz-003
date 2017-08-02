@@ -31,6 +31,7 @@ gem 'pundit'
 gem 'rails-i18n'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'sass-rails'
+gem 'scss_lint', require: false
 gem 'simple_form'
 gem 'slim-rails'
 gem 'sprockets-es6'
