@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728162000) do
+ActiveRecord::Schema.define(version: 20170802142718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,18 +51,6 @@ ActiveRecord::Schema.define(version: 20170728162000) do
     t.text "actual_activities"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
-  end
-
-  create_table "contact_points", force: :cascade do |t|
-    t.bigint "contact_id"
-    t.string "body"
-    t.string "label"
-    t.string "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.index ["contact_id"], name: "index_contact_points_on_contact_id"
-    t.index ["deleted_at"], name: "index_contact_points_on_deleted_at"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -287,7 +275,6 @@ ActiveRecord::Schema.define(version: 20170728162000) do
   add_foreign_key "assignments", "users", column: "creator_id"
   add_foreign_key "assignments", "volunteers"
   add_foreign_key "clients", "users"
-  add_foreign_key "contact_points", "contacts"
   add_foreign_key "journals", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "volunteer_emails", "users"

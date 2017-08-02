@@ -44,8 +44,6 @@ de:
       contact:
         address: Adresse
         city: Ort
-        contact_emails: Mailadressen
-        contact_phones: Telefonnummern
         extended: Adresszusatz
         first_name: Vorname
         last_name: Name
@@ -54,12 +52,6 @@ de:
         primary_phone: Telefonnummer
         street: Strasse
         title: Anrede
-      contact_email:
-        body: Email
-        label: Art
-      contact_phone:
-        body: Telefonnummer
-        label: Art
       department:
         associated_users: Assozierte Benutzer
         city: Ort
@@ -210,8 +202,6 @@ de:
       assignment: Begleitung
       client: Klient/in
       contact: Kontakt
-      contact_email: Mailadresse
-      contact_phone: Telefonnummer
       department: Standort
       journal: Journal
       language_skill: Sprachkompetenz

@@ -65,66 +65,6 @@ class DepartmentsTest < ApplicationSystemTestCase
     assert page.has_link? 'Back'
   end
 
-  test 'superadmin can update a department with additional email and fax number' do
-    login_as @superadmin
-    visit departments_path
-    click_link 'Edit', href: edit_department_path(@superadmin.department.first.id)
-    within '#emails' do
-      within '.links' do
-        click_link 'Add Email address'
-      end
-      within find_all('.nested-fields').last do
-        fill_in 'Email address', with: 'hocusbocus@nowhere.com'
-      end
-    end
-    click_button 'Update Department'
-    assert page.has_text? 'Department was successfully updated.'
-    assert page.has_link? 'hocusbocus@nowhere.com'
-    click_link 'Edit'
-
-    within '#phones' do
-      within '.links' do
-        click_link 'Add Phone number'
-      end
-      within find_all('.nested-fields').last do
-        assert page.has_field? 'Phone number'
-        fill_in 'Phone number', with: '88888 88 88 88'
-      end
-    end
-    click_button 'Update Department'
-    assert page.has_text? 'Department was successfully updated.'
-    assert page.has_text? '88888888888'
-  end
-
-  test 'superadmin can remove phone and email from department' do
-    department = @superadmin.department.first
-    delete_email = department.contact.contact_emails.last.body
-    delete_phone = department.contact.contact_phones.last.body
-    login_as @superadmin
-    visit edit_department_path(department.id)
-    assert page.has_field? 'Email address', with: delete_email
-    find('#emails').find_all('.nested-fields').each do |e|
-      next unless e.find('input').value == delete_email
-      within e do
-        click_link 'Delete Email address'
-      end
-    end
-    click_button 'Update Department'
-    assert page.has_text? 'Department was successfully updated.'
-    refute page.has_link? delete_email
-    visit edit_department_path(department.id)
-    assert page.has_field? 'Phone number', with: delete_phone
-    find('#phones').find_all('.nested-fields').each do |e|
-      next unless e.find('input').value == delete_phone
-      within e do
-        click_link 'Delete Phone number'
-      end
-    end
-    click_button 'Update Department'
-    assert page.has_text? 'Department was successfully updated.'
-    refute page.has_text? delete_phone
-  end
-
   test 'As Department Manager there is a link in the Navbar to his department' do
     login_as @department_manager
     visit profile_path(@department_manager.profile.id)
@@ -141,24 +81,12 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Extended address', with: 'Extended address changed'
     fill_in 'Zip', with: 'Zip changed'
     fill_in 'City', with: 'City changed'
-    within '#emails' do
-      within find_all('.nested-fields').first do
-        fill_in 'Email address', with: 'changed@email.com'
-      end
-    end
-    within '#phones' do
-      within find_all('.nested-fields').first do
-        fill_in 'Phone number', with: '++888 88 88 9999 888'
-      end
-    end
     click_button 'Update Department'
     assert page.has_text? 'Name changed'
     assert page.has_text? 'Street changed'
     assert page.has_text? 'Extended address changed'
     assert page.has_text? 'Zip changed'
     assert page.has_text? 'City changed'
-    assert page.has_link? 'changed@email.com'
-    assert page.has_text? '++888 88 88 9999 888'
   end
 
   test 'After logging in as Department Manager he should see his department' do

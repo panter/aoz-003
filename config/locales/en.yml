@@ -9,18 +9,10 @@ en:
         user: User
       contact:
         city: City
-        contact_emails: Contact emails
-        contact_phones: Contact phones
         extended: Extended address
         last_name: Name
         postal_code: Zip
         street: Street
-      contact_email:
-        body: Email address
-        label: Type
-      contact_phone:
-        body: Phone number
-        label: Type
       journal:
         entry: Entry
       user:
@@ -78,8 +70,6 @@ en:
       assignment: Assignment
       client: Client
       contact: Contact
-      contact_email: Email address
-      contact_phone: Phone number
       department: Department
       journal: Journal
       language_skill: Language skill
