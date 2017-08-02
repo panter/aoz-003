@@ -153,7 +153,7 @@ class ClientsTest < ApplicationSystemTestCase
       create :client
     end
     visit clients_path
-    click_link '2'
+    first(:link, '2').click
 
     assert page.has_css? 'div.pagination'
     Client.all.paginate(page: 2).each do |client|
