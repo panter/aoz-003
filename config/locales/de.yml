@@ -103,6 +103,8 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         address: Adresse
+        adults: Erwachsene
+        afternoon: Nachmittags
         avatar: Foto
         bank_account: Kontodaten eingetragen
         birth_year: Jahrgang
@@ -113,16 +115,19 @@ de:
         creative: Kreativ
         culture: Kultur
         dancing: Tanz
+        detailed_description: Genauere Angaben
         doc_sent: Dossier Freiwillige engagiert verschickt
         education: Ausbildung
         email: Email
         evaluation: Abschlussevaluation erhalten
         excursions: Ausflüge
+        evening: Abends
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
         first_language: Muttersprache
         first_name: Vorname
+        flexible: Flexibel
         full_name: Name
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
@@ -133,6 +138,7 @@ de:
         languages: Sprachen
         last_name: Nachname
         man: Mann
+        morning: Morgens
         music: Musik
         nationality: Nationalität
         other_offer: Anderes (bitte beschreiben)
@@ -154,9 +160,12 @@ de:
         training: Bildung
         trial_period: Probezeitbericht erhalten
         unaccompanied: Unbegleitete Minderjährige
+        volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
+        weekend: Wochenende
         woman: Frau
         women: Frauen
+        workday: Werktags
         working_percent: Stellenprozent
         zip: Postleitzahl
         zurich: Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt
@@ -583,7 +592,6 @@ de:
   versions: Verlauf
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
-  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
