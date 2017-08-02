@@ -69,6 +69,8 @@ class VolunteersController < ApplicationController
 
   def volunteer_params
     params.require(:volunteer).permit(volunteer_attributes, :rejection_type, :rejection_text,
-      :trial_period, :intro_course, :doc_sent, :bank_account, :evaluation, :flexible, :morning, :afternoon, :evening, :workday, :weekend, :detailed_description)
+      :trial_period, :intro_course, :doc_sent, :bank_account, :evaluation, :flexible,
+      :morning, :afternoon, :evening, :workday, :weekend, :detailed_description
+    )
   end
 end
