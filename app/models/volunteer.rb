@@ -78,7 +78,6 @@ class Volunteer < ApplicationRecord
                           :dancing, :health, :cooking, :excursions, :women, :teenagers,
                           :children, :other_offer].freeze
   REJECTIONS = [:us, :her, :other].freeze
-  GENDERS = [:female, :male].freeze
 
   def self.human_boolean(boolean)
     boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
