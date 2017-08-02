@@ -17,13 +17,17 @@
   height: $line-height-computed;
 }
 
+.row {
+  margin-bottom: 10px;
+}
+
 .row-box {
   border: 1px solid $black;
-  padding-top: $padding-large-horizontal;
+  padding-top: $padding-small-horizontal;
   margin-bottom: 0;
 }
 
 .row-bottom {
-  padding-top: $padding-large-horizontal;
+  padding-top: $padding-small-horizontal;
   margin-bottom: 0;
 }
