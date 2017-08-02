@@ -17,7 +17,6 @@ class ClientTransform
     haupt_person = @haupt_personen.find(personen_rolle[:fk_Hauptperson])
     begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
     familien_rolle = @familien_rollen.find(begleitet[:fk_FamilienRolle])
-    land = @laender.find(haupt_person[:fk_Land]) if haupt_person[:fk_Land]
     plz = @plz.find(haupt_person[:fk_PLZ])
     sprachen = @sprache_hauptperson.where_person(haupt_person[:pk_Hauptperson])
     {
@@ -25,6 +24,7 @@ class ClientTransform
       comments: comments(begleitet, personen_rolle, haupt_person),
       birth_year: birth_year(haupt_person[:d_Geburtsdatum], begleitet[:z_Jahrgang]),
       entry_year: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
+      nationality: haupt_person[:fk_Land] && @laender.find(haupt_person[:fk_Land]),
       language_skills_attributes: language_skills_attributes(sprachen),
       contact_attributes: contact_attributes(haupt_person, plz),
       relatives_attributes: relatives_attrs(relatives),
