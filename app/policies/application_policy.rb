@@ -6,7 +6,7 @@ class ApplicationPolicy
     @record = record
   end
 
-  delegate :superadmin?, to: :user
+  delegate :superadmin?, to: :user, allow_nil: true
   delegate :department_manager?, to: :user
   delegate :social_worker?, to: :user
   delegate :volunteer?, to: :user
@@ -53,10 +53,6 @@ class ApplicationPolicy
 
   def superadmin_or_social_workers_record?
     superadmin? || social_worker? && user_owns_record?
-  end
-
-  def user_present_and_superadmin?
-    user && superadmin?
   end
 
   alias_method :index?,   :deny_all!
