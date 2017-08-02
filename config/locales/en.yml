@@ -32,13 +32,18 @@ en:
         additional_phone_numbers: Additional phone numbers
         address: Address
         bank_account: Bank account details entered
+        children: Children
+        cooking: Cooking
         creative: Creative
         culture: Culture
+        dancing: Dancing
         doc_sent: Engaged volunteer's documents sent
         evaluation: Final evaluation
+        excursions: Excursions
         family: Family
         full_name: Name
         german_course: German course
+        health: Health
         intro_course: Introductory course
         kid: Kid
         man: Man
@@ -50,11 +55,13 @@ en:
         rejection_type: Reason for rejection
         single_accompaniment: Single accompaniment
         sport: Sport
+        teenagers: Teenagers
         training: Training
         trial_period: Trial period report
         unaccompanied: Unaccompanied minors
         volunteer_experience_desc: If you have any experiences with voluntary work, please describe here.
         woman: Woman
+        women: Women
         working_percent: Employment rate (in Percent)
         zurich: Support for moving in Zurich City
       volunteer_email:
