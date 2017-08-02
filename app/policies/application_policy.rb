@@ -1,6 +1,4 @@
 class ApplicationPolicy
-  include ApplicationScope
-
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -29,11 +27,11 @@ class ApplicationPolicy
     user.present?
   end
 
-  def deny_all?
+  def deny_all!
     false
   end
 
-  def allow_all?
+  def allow_all!
     true
   end
 
@@ -61,12 +59,12 @@ class ApplicationPolicy
     user && superadmin?
   end
 
-  alias_method :index?,   :deny_all?
-  alias_method :new?,     :deny_all?
-  alias_method :create?,  :deny_all?
-  alias_method :edit?,    :deny_all?
-  alias_method :update?,  :deny_all?
-  alias_method :destroy?, :deny_all?
+  alias_method :index?,   :deny_all!
+  alias_method :new?,     :deny_all!
+  alias_method :create?,  :deny_all!
+  alias_method :edit?,    :deny_all!
+  alias_method :update?,  :deny_all!
+  alias_method :destroy?, :deny_all!
 
   alias_method :home?,    :user_is_in?
 end

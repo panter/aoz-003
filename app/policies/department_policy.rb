@@ -1,4 +1,11 @@
 class DepartmentPolicy < ApplicationPolicy
+  class Scope < ApplicationScope
+    def resolve
+      return all if superadmin?
+      resolve_owner if department_manager?
+    end
+  end
+
   alias_method :index?,              :superadmin?
   alias_method :new?,                :superadmin?
   alias_method :create?,             :superadmin?
