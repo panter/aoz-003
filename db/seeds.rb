@@ -50,9 +50,6 @@ User.role_collection.each do |role|
         primary_email: Faker::Internet.email,
         primary_phone: Faker::PhoneNumber.phone_number
       )
-      profile.contact.contact_phones.build(
-        body: Faker::PhoneNumber.phone_number
-      )
       profile.profession = Faker::Company.profession
       [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
         profile[day] = [true, false].sample
@@ -73,10 +70,6 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
         street: Faker::Address.street_address,
         postal_code: Faker::Address.zip_code,
         city: Faker::Address.city
-      )
-
-      client.contact.contact_emails.build(
-        body: Faker::Internet.unique.email
       )
       client.journals = [
         Journal.new(
@@ -111,18 +104,6 @@ if Department.count < 1
       c.city = Faker::Address.city
       c.primary_email = Faker::Internet.email
       c.primary_phone = Faker::PhoneNumber.phone_number
-      c.contact_emails = Array.new(3).map do
-        ContactEmail.new do |email|
-          email.body = Faker::Internet.email
-          email.label = ContactEmail::LABELS.sample
-        end
-      end
-      c.contact_phones = Array.new(3).map do
-        ContactPhone.new do |phone|
-          phone.body = Faker::PhoneNumber.phone_number
-          phone.label = ContactPhone::LABELS.sample
-        end
-      end
     end
     d.user.push User.find_by(role: 'department_manager')
   end
@@ -141,12 +122,6 @@ Volunteer.state_collection.each do |state|
       street: Faker::Address.street_address,
       primary_email: Faker::Internet.email,
       primary_phone: Faker::PhoneNumber.phone_number
-    )
-    volunteer.contact.contact_emails.build(
-      body: Faker::Internet.unique.email
-    )
-    volunteer.contact.contact_phones.build(
-      body: Faker::PhoneNumber.phone_number
     )
     volunteer.journals = [
       Journal.new(

@@ -32,9 +32,7 @@ class DepartmentPolicy < ApplicationPolicy
     [
       contact_attributes: [
         :id, :last_name, :_destroy, :contactable_id, :contactable_type, :street,
-        :extended, :city, :postal_code,
-        contact_emails_attributes: ContactPoint::FORM_ATTRS,
-        contact_phones_attributes: ContactPoint::FORM_ATTRS
+        :extended, :city, :postal_code
       ]
     ]
   end

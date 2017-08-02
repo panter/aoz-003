@@ -16,29 +16,9 @@ p
 h4= "#{t_attr(:primary_email, Contact)}: "
 p= @volunteer.contact.primary_email
 
-- if @volunteer.contact.contact_emails.any?
-  h4= t('.additional_email_addresses')
-  - @volunteer.contact.contact_emails.each do |email|
-    p
-      strong
-        = t_attr(:body, ContactEmail)
-        = " / #{email.label}" if email.label.present?
-        = ": "
-      = mail_to email.body
-
 - if @volunteer.contact.primary_phone.present?
   h4= "#{t_attr(:primary_phone, Contact)}: "
   p= @volunteer.contact.primary_phone
-
-- if @volunteer.contact.contact_phones.any?
-  h4= t('.additional_phone_numbers')
-  - @volunteer.contact.contact_phones.each do |phone|
-    p
-      strong
-        = t_attr(:body, ContactPhone)
-        = " / #{phone.label}" if phone.label.present?
-        = ": "
-      = phone.body
 
 h4= "#{t_attr(:birth_year, Volunteer)}: "
 p= l(@volunteer.birth_year) if @volunteer.birth_year

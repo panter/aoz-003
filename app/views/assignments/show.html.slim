@@ -45,7 +45,6 @@
           .col-xs-5
             = t('assignment_pdf.mobile')
           .col-xs-7.col-input
-            = @assignment.volunteer.contact.contact_phones.first.body unless @assignment.volunteer.contact.contact_phones.first.nil?
         .row
           .col-xs-5
             = t('assignment_pdf.birth_year')
@@ -100,7 +99,6 @@
           .col-xs-5
             = t('assignment_pdf.telephone_2')
           .col-xs-7.col-input
-            = @assignment.client.contact.contact_phones.first.body unless @assignment.client.contact.contact_phones.first.nil?
         .row
           .col-xs-5
             = "#{t('assignment_pdf.nationality')}, #{t('assignment_pdf.state')}"
