@@ -7,9 +7,7 @@ class ClientsController < ApplicationController
 
   def index
     authorize Client
-    @clients = ClientPolicy::Scope.new(
-      current_user, Client
-    ).resolve_superadmin_or_social_worker_owns.paginate(page: params[:page])
+    @clients = policy_scope(Client).paginate(page: params[:page])
   end
 
   def show; end
