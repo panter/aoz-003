@@ -601,5 +601,8 @@ de:
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
+  will_paginate:
+    previous_label: Zurück
+    next_label: Weiter
   when: Zeit
   working_days: Arbeitstage
