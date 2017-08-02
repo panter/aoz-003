@@ -58,7 +58,6 @@ class Laender
 
   def sanitize_record(rec)
     rec = parse_int_fields(rec, :pk_Land)
-    rec.except(:d_MutDatum, :t_Mutation)
     if INCONSISTENT_LANDER_MAP[rec[:t_Land].to_sym]
       return ISO3166::Country[INCONSISTENT_LANDER_MAP[rec[:t_Land].to_sym]].un_locode
     end
