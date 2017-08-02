@@ -6,7 +6,7 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clients = policy_scope(Client)
+    @clients = policy_scope(Client).paginate(page: params[:page])
   end
 
   def show; end
@@ -45,6 +45,7 @@ class ClientsController < ApplicationController
 
   def need_accompanying
     @need_accompanying = Client.need_accompanying
+    @need_accompanying = @need_accompanying.paginate(page: params[:page])
     authorize @need_accompanying
   end
 
