@@ -45,6 +45,8 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     page.check('volunteer_other_offer')
     fill_in 'Description', with: 'Description'
     page.check('volunteer_zurich')
+    page.check('volunteer_weekend')
+    fill_in 'Detailed Description', with: 'I am every two weeks available on tuesdays asdfasdf.'
 
     click_button 'Submit registration'
 
