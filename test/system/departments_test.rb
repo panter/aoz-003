@@ -48,6 +48,8 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Extended address', with: 'bogus ext. addr.'
     fill_in 'Zip', with: '9999'
     fill_in 'City', with: 'bogus town'
+    fill_in 'Primary email', with: 'department@aoz.ch'
+    fill_in 'Primary phone', with: '0441234567'
     click_button 'Create Department'
     assert page.has_text? 'Department was successfully created.'
     assert page.has_text? 'Bogus Hog Department'
@@ -58,6 +60,8 @@ class DepartmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'bogus ext. addr.'
     assert page.has_text? '9999'
     assert page.has_text? 'bogus town'
+    assert page.has_text? 'department@aoz.ch'
+    assert page.has_text? '0441234567'
     assocable_users.each do |user|
       assert page.has_link? user.to_label
     end
@@ -81,12 +85,16 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Extended address', with: 'Extended address changed'
     fill_in 'Zip', with: 'Zip changed'
     fill_in 'City', with: 'City changed'
+    fill_in 'Primary email', with: 'department@aoz.ch'
+    fill_in 'Primary phone', with: '0441234567'
     click_button 'Update Department'
     assert page.has_text? 'Name changed'
     assert page.has_text? 'Street changed'
     assert page.has_text? 'Extended address changed'
     assert page.has_text? 'Zip changed'
     assert page.has_text? 'City changed'
+    assert page.has_text? 'department@aoz.ch'
+    assert page.has_text? '0441234567'
   end
 
   test 'After logging in as Department Manager he should see his department' do
