@@ -72,6 +72,7 @@ class AssignmentsController < ApplicationController
     @volunteer = Volunteer.find(params[:id])
     @q = Client.need_accompanying.ransack(params[:q])
     @need_accompanying = @q.result
+    @need_accompanying = @need_accompanying.paginate(page: params[:page])
     authorize Assignment
   end
 

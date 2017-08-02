@@ -25,5 +25,5 @@ h3= t_attr(:single_accompaniment)
 .row
   .col-xs-12
     h1= t('clients_need_accompanying')
-
+= will_paginate @need_accompanying
 = render 'clients/columns', clients: @need_accompanying, volunteer: @volunteer
