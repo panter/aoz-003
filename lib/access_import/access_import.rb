@@ -29,6 +29,6 @@ class AccessImport
       client.user = User.first
       puts "Importing personen_rolle #{key} and Client.id: #{client.id}" if client.save!
     end
-    puts "Imported #{Client.count - client_count_before} new clients from MS Access Datbase."
+    puts "Imported #{Client.count - client_count_before} new clients from MS Access Database."
   end
 end
