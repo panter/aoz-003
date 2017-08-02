@@ -102,5 +102,11 @@ h3= t_attr(:single_accompaniment, Volunteer)
   .col-xs-12
     = f.input :interests
 
-h3= t('volunteer_availability')
-= render 'schedules/form', f: f, participant: @volunteer
+.row
+  .col-xs-12
+    h3= t_attr(:volunteer_availability, Volunteer)
+  - Volunteer::AVAILABILITY.each do |availability|
+    .col-xs-6.col-md-3
+      = f.input availability
+  .col-xs-12
+    = f.input :detailed_description
