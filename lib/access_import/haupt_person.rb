@@ -53,11 +53,7 @@ class HauptPerson
     @records
   end
 
-  # reltions
-
   def sprachen
     @sprache_self.where_person([:pk_Hauptperson])
   end
-
-  def ort; end
 end
