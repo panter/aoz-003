@@ -9,10 +9,9 @@ tr
   td= t_attr(:city, Contact)
   td #{contact.postal_code} #{contact.city}
 
-- unless contact.department?
-  tr
-    td= t_attr(:primary_email, Contact)
-    td= contact.primary_email
-  tr
-    td= t_attr(:primary_phone, Contact)
-    td= contact.primary_phone
+tr
+  td= t_attr(:primary_email, Contact)
+  td= contact.primary_email
+tr
+  td= t_attr(:primary_phone, Contact)
+  td= contact.primary_phone
