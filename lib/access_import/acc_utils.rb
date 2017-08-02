@@ -43,7 +43,7 @@ module AccUtils
 
   def email(h_email)
     return "unknown_email_#{Time.now.to_i}@example.com" if h_email.nil?
-    h_email.sub(/^\#mailto:/, '').sub(/\#$/, '') if h_email
+    h_email.sub(/^\#mailto:/, '').sub(/\#$/, '')
   end
 
   def map_gender(value)
