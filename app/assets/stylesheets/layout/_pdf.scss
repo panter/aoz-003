@@ -3,8 +3,8 @@
   width: 75px;
 
   img {
-    width: 100%;
     height: auto;
+    width: 100%;
   }
 }
 
@@ -23,11 +23,11 @@
 
 .row-box {
   border: 1px solid $black;
-  padding-top: $padding-small-horizontal;
   margin-bottom: 0;
+  padding-top: $padding-small-horizontal;
 }
 
 .row-bottom {
-  padding-top: $padding-small-horizontal;
   margin-bottom: 0;
+  padding-top: $padding-small-horizontal;
 }
