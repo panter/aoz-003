@@ -515,11 +515,6 @@ de:
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
-        point_of_contact:
-          label:
-            email: Mailadresse
-            fax: Faxnummer
-            phone: Telefonnummer
         relatives:
           relation: *id-relations
         salutation: *id-salutations
