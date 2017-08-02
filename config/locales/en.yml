@@ -31,22 +31,27 @@ en:
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
         address: Address
+        afternoon: Afternoon
         bank_account: Bank account details entered
         children: Children
         cooking: Cooking
         creative: Creative
         culture: Culture
         dancing: Dancing
+        detailed_description: Detailed Description
         doc_sent: Engaged volunteer's documents sent
         evaluation: Final evaluation
         excursions: Excursions
+        evening: Evening
         family: Family
+        flexible: Flexible
         full_name: Name
         german_course: German course
         health: Health
         intro_course: Introductory course
         kid: Kid
         man: Man
+        morning: Morning
         music: Music
         other_offer: Other (please describe)
         other_offer_desc: Description
@@ -59,9 +64,12 @@ en:
         training: Training
         trial_period: Trial period report
         unaccompanied: Unaccompanied minors
+        volunteer_availability: What times are you available for voluntary engagement?
         volunteer_experience_desc: If you have any experiences with voluntary work, please describe here.
+        weekend: Weekend
         woman: Woman
         women: Women
+        workday: Workday
         working_percent: Employment rate (in Percent)
         zurich: Support for moving in Zurich City
       volunteer_email:
@@ -427,7 +435,6 @@ en:
   versions: History
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Registration
-  volunteer_availability: What times are you available for voluntary engagement?
   volunteer_availability: What times are you available for voluntary engagement?
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
