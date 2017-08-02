@@ -9,24 +9,6 @@ class VolunteerTest < ActiveSupport::TestCase
     assert @volunteer.valid?
   end
 
-  test 'schedules build correctly automaticly' do
-    new_volunteer = create :volunteer
-    new_volunteer.valid? # to kick build_schedules in callback
-    assert_equal new_volunteer.schedules.size, 21
-  end
-
-  test 'schedules size validaton checks for the right size' do
-    new_volunteer = create :volunteer
-    new_volunteer.valid?
-    new_volunteer.schedules.push Schedule.new
-    refute new_volunteer.valid?
-    assert new_volunteer.errors.messages == { schedules: ['too many'] }
-    new_volunteer.schedules.delete_all
-    new_volunteer.schedules.push Schedule.new
-    refute new_volunteer.valid?
-    assert new_volunteer.errors.messages == { schedules: ['not enough'] }
-  end
-
   test 'contact relation is build automaticly' do
     new_volunteer = Volunteer.new
     assert new_volunteer.contact.present?
