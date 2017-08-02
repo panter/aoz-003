@@ -1,7 +1,4 @@
-class Begleitete
-  include AccUtils
-  attr_accessor :record, :records
-
+class Begleitete < Accessor
   def initialize(acimport)
     @acdb = acimport.acdb
     @records = all

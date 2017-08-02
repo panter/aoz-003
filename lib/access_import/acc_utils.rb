@@ -20,6 +20,10 @@ module AccUtils
     record.merge(record.slice(*keys).compact.transform_values(&:to_datetime))
   end
 
+  def parse_float_fields(record, keys)
+    record.merge(record.slice(*keys).compact.transform_values(&:to_f))
+  end
+
   def parse_date_fields(record, *keys)
     record.merge(record.slice(*keys).compact.transform_values(&:to_date))
   end

@@ -1,12 +1,4 @@
-class Laender
-  include AccUtils
-  attr_reader :records
-
-  def initialize(acdb)
-    @acdb = acdb
-    @records = hash_all
-  end
-
+class Laender < Accessor
   def hash_all
     make_mappable(:tbl_Länder, :pk_Land, true)
   end
@@ -73,13 +65,5 @@ class Laender
 
   def alpha_3_search(kurzform)
     ISO3166::Country.all.select { |c| c.alpha3 == kurzform.upcase } || []
-  end
-
-  def all
-    @records
-  end
-
-  def find(id)
-    @records[id.to_i]
   end
 end
