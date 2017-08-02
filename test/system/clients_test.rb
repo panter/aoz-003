@@ -156,7 +156,7 @@ class ClientsTest < ApplicationSystemTestCase
     first(:link, '2').click
 
     assert page.has_css? 'div.pagination'
-    Client.all.paginate(page: 2).each do |client|
+    Client.paginate(page: 2).each do |client|
       assert page.has_text? client.contact.last_name
     end
   end
