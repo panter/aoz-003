@@ -6,8 +6,8 @@
         th= t_model(Client)
         - if action_name == 'index'
           th= t_model(Volunteer)
-        th= t_attr(:state)
-        th= t_attr(:created_at)
+        th= sort_link @q, :state, t_attr(:state, Assignment)
+        th= sort_link @q, :created_at, t_attr(:created_at, Assignment)
         th= t_attr(:created_by)
         th colspan='5'
 

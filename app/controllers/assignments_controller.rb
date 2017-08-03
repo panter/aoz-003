@@ -6,6 +6,8 @@ class AssignmentsController < ApplicationController
   def index
     authorize Assignment
     @assignments = policy_scope(Assignment)
+    @q = Assignment.ransack(params[:q])
+    @assignments = @q.result
   end
 
   def show
