@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.string "age_request"
     t.string "other_request"
     t.text "actual_activities"
-    t.jsonb "access_import"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
@@ -87,6 +86,19 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
   end
 
+  create_table "imports", force: :cascade do |t|
+    t.bigint "access_id"
+    t.jsonb "store"
+    t.string "importable_type"
+    t.bigint "importable_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_id"], name: "index_imports_on_access_id"
+    t.index ["deleted_at"], name: "index_imports_on_deleted_at"
+    t.index ["importable_type", "importable_id"], name: "index_imports_on_importable_type_and_importable_id"
+  end
+
   create_table "journals", force: :cascade do |t|
     t.string "subject"
     t.bigint "user_id"
@@ -96,7 +108,6 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "access_import"
     t.index ["deleted_at"], name: "index_journals_on_deleted_at"
     t.index ["journalable_type", "journalable_id"], name: "index_journals_on_journalable_type_and_journalable_id"
     t.index ["user_id"], name: "index_journals_on_user_id"
@@ -248,7 +259,6 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.string "working_percent"
     t.text "volunteer_experience_desc"
     t.bigint "registrar_id"
-    t.jsonb "access_import"
     t.boolean "trial_period", default: false
     t.boolean "intro_course", default: false
     t.boolean "doc_sent", default: false
@@ -271,7 +281,6 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.boolean "workday", default: false
     t.boolean "weekend", default: false
     t.text "detailed_description"
-    t.jsonb "access_import"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
