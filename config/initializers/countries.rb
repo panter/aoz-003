@@ -1,6 +1,6 @@
 ISO3166::Data.register(
-  alpha2: 'XK',
-  un_locode: 'XK',
+  alpha2: 'KO',
+  un_locode: 'KO',
   name: 'Kosovo',
   translations: {
     'en' => 'Kosovo',
@@ -18,7 +18,7 @@ ISO3166::Data.register(
   }
 )
 
-ISO3166::Country.new('XK').name == 'Kosovo'
+ISO3166::Country.new('KO').name == 'Kosovo'
 ISO3166::Country.new('TI').name == 'Tibet'
 
 ISO3166.configure do |config|

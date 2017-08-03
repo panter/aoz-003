@@ -52,7 +52,7 @@ class Laender
     'China': 'CN',
     'Malay': 'MY',
     'Tibet': 'TI',
-    'Kosovo': 'XK',
+    'Kosovo': 'KO',
     'Guinea': 'GN'
   }.freeze
 
