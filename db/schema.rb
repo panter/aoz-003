@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728162000) do
+ActiveRecord::Schema.define(version: 20170803092929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,19 @@ ActiveRecord::Schema.define(version: 20170728162000) do
     t.bigint "user_id", null: false
     t.bigint "department_id", null: false
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
+  end
+
+  create_table "imports", force: :cascade do |t|
+    t.bigint "access_id"
+    t.jsonb "store"
+    t.string "importable_type"
+    t.bigint "importable_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_id"], name: "index_imports_on_access_id"
+    t.index ["deleted_at"], name: "index_imports_on_deleted_at"
+    t.index ["importable_type", "importable_id"], name: "index_imports_on_importable_type_and_importable_id"
   end
 
   create_table "journals", force: :cascade do |t|
@@ -279,6 +292,7 @@ ActiveRecord::Schema.define(version: 20170728162000) do
     t.boolean "workday", default: false
     t.boolean "weekend", default: false
     t.text "detailed_description"
+    t.jsonb "access_import"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
