@@ -4,6 +4,12 @@
   .col-xs-12
     h1= t('clients')
 
+.row
+  = form_navigation_btn :new, with_row: false, with_col: true, cols: 4
+  - if policy(Client).destroy?
+    .col-xs-4
+      = button_link t('need_accompanying'), need_accompanying_clients_url
+
 = render 'columns', clients: @clients
 
 .row
