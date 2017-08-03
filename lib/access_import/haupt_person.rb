@@ -19,9 +19,9 @@ class HauptPerson
     if @records
       @records[id.to_s]
     else
-      person = @acdb[:tbl_Hauptpersonen].select do |hp|
+      person = @acdb[:tbl_Hauptpersonen].find do |hp|
         hp[:pk_Hauptperson] == id.to_s
-      end.first
+      end
       @record = sanitize_record(person)
       @record
     end
