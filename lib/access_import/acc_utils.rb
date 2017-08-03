@@ -12,25 +12,16 @@ module AccUtils
     row.transform_keys { |key| key.to_s.underscore.to_sym }
   end
 
-  def parse_int_fields(record, keys)
-    keys.each do |key|
-      record[key] = record[key].to_i if record[key]
-    end
-    record
+  def parse_int_fields(record, *keys)
+    record.merge(record.slice(*keys).compact.transform_values(&:to_i))
   end
 
-  def parse_datetime_fields(record, keys)
-    keys.each do |key|
-      record[key] = record[key].to_datetime if record[key]
-    end
-    record
+  def parse_datetime_fields(record, *keys)
+    record.merge(record.slice(*keys).compact.transform_values(&:to_datetime))
   end
 
-  def parse_date_fields(record, keys)
-    keys.each do |key|
-      record[key] = record[key].to_date if record[key]
-    end
-    record
+  def parse_date_fields(record, *keys)
+    record.merge(record.slice(*keys).compact.transform_values(&:to_date))
   end
 
   def salutation(anrede)
