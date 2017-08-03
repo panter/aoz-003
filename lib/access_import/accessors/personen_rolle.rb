@@ -1,13 +1,5 @@
-class PersonenRolle
-  include AccUtils
-  attr_reader :records
-
-  def initialize(acdb)
-    @acdb = acdb
-    @records = hash_map_all
-  end
-
-  def hash_map_all
+class PersonenRolle < Accessor
+  def hash_all
     make_mappable(:tbl_Personenrollen, :pk_PersonenRolle, true)
   end
 
@@ -50,13 +42,5 @@ class PersonenRolle
     @records.select do |_id, val|
       val[:z_Rolle] == 4
     end
-  end
-
-  def all
-    @records
-  end
-
-  def find(id)
-    @records[id.to_i]
   end
 end

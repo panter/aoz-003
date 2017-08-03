@@ -1,4 +1,3 @@
-require_all 'lib/access_import'
 
 class AccessImport
   attr_reader :acdb, :begleitete, :haupt_personen, :personen_rollen, :familien_rollen

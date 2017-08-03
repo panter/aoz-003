@@ -1,12 +1,4 @@
-class Sprachen
-  include AccUtils
-  attr_reader :records
-
-  def initialize(acdb)
-    @acdb = acdb
-    @records = hash_all
-  end
-
+class Sprachen < Accessor
   def hash_all
     make_mappable(:tbl_Sprachen, :pk_Sprache, true)
   end
@@ -22,13 +14,5 @@ class Sprachen
   def language(sprache)
     sprache = 'Tigrinja' if sprache == 'Tigrinia'
     I18nData.languages(:de).select { |_k, v| v == sprache }.keys.first
-  end
-
-  def all
-    @records
-  end
-
-  def find(id)
-    @records[id.to_i]
   end
 end

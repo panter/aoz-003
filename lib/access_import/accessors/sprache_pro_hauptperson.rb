@@ -1,7 +1,4 @@
-class SpracheProHauptperson
-  include AccUtils
-  attr_reader :records
-
+class SpracheProHauptperson < Accessor
   def initialize(acdb, sprachen, sprach_kenntnisse)
     @acdb = acdb
     @sprachen = sprachen
@@ -45,9 +42,5 @@ class SpracheProHauptperson
       key.to_s == person_id.to_s
     end
     languages.map { |s| down_hkeys(s[1]) }
-  end
-
-  def find(id)
-    @records[id.to_i]
   end
 end
