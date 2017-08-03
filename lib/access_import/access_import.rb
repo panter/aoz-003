@@ -26,7 +26,7 @@ class AccessImport
       client_attrs = client_transformer.prepare_attributes(ac_client)
       client = Client.new(client_attrs)
       client.user = User.first
-      puts "Importing personen_rolle #{key} and Client.id: #{client.id}" if client.save!
+      puts "Importing personen_rolle #{key} to Client.id: #{client.id}" if client.save!
     end
     puts "Imported #{Client.count - client_count_before} new clients from MS Access Database."
   end
