@@ -59,10 +59,8 @@ class ClientTransform
     begleitet = begleitete.select do |_key, beg|
       haupt_person[:t_Vorname].include? beg[:t_Vorname]
     end
-    if begleitet.size.positive?
-      return [begleitet.first[1], begleitete.except(begleitet.first[0])]
-    end
-    # nothing worked, just take first
+    # either last match worked or nothing worked, just take first in order to
+    # have a at least somewhat consistent thing
     [begleitet.first[1], begleitete.except(begleitet.first[0])]
   end
 
