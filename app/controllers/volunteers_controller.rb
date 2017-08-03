@@ -24,8 +24,8 @@ class VolunteersController < ApplicationController
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
-    authorize @volunteer
     @volunteer.registrar = current_user
+    authorize @volunteer
     if @volunteer.save
       redirect_to @volunteer, notice: t('volunteer_created')
     else

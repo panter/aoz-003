@@ -17,10 +17,6 @@ class ApplicationScope
     scope.where(user: user)
   end
 
-  def all_to_superadmin
-    all if superadmin?
-  end
-
   def superadmin_or_owner
     return all if superadmin?
     resolve_owner
