@@ -1,4 +1,4 @@
-require_all 'lib/access_import'
+require 'access_import/acc_utils'
 
 class ClientTransform
   include AccUtils
@@ -105,7 +105,7 @@ class ClientTransform
   end
 
   def contact_attributes(haupt_person, plz)
-    mobile_number(haupt_person).merge(
+    {
       first_name: haupt_person[:t_Vorname] || 'unbekannt',
       last_name: haupt_person[:t_Nachname] || 'unbekannt',
       city: plz[:t_Ort],
@@ -113,16 +113,8 @@ class ClientTransform
       extended: haupt_person[:t_Adresszeile2],
       postal_code: plz[:t_PLZ],
       primary_email: email(haupt_person[:h_Email]),
-      primary_phone: haupt_person[:t_Telefon1] || '000 000 00 00'
-    )
-  end
-
-  def mobile_number(haupt_person)
-    return {} unless haupt_person[:t_Telefon2]
-    {
-      contact_phones_attributes: [
-        [(Time.now.to_f * 1000).to_i, { body: haupt_person[:t_Telefon2], label: 'mobile' }]
-      ].to_h
+      primary_phone: haupt_person[:t_Telefon1] || '000 000 00 00',
+      secondary_phone: haupt_person[:t_Telefon2] && haupt_person[:t_Telefon2]
     }
   end
 end
