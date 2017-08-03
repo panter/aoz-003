@@ -13,8 +13,8 @@ class ActiveSupport::TestCase
     # FIXME: make sure all users are deleted, sometimes records stick around
     # when tests are aborted
     [
-      User, Volunteer, Client, Contact, Profile, Journal, Assignment, ContactEmail,
-      ContactPhone, Department, LanguageSkill, Relative, Schedule
+      User, Volunteer, Client, Contact, Profile, Journal, Assignment,
+      Department, LanguageSkill, Relative, Schedule
     ].each do |model|
       model.with_deleted.map(&:really_destroy!)
     end
