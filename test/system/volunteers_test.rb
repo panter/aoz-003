@@ -164,4 +164,12 @@ class VolunteersTest < ApplicationSystemTestCase
     visit edit_volunteer_path(Volunteer.first)
     assert page.has_field? 'Employment rate'
   end
+
+  test 'volunteer has no secondary phone field' do
+    visit new_volunteer_path
+    refute page.has_text? 'Secondary phone'
+
+    visit volunteer_path(Volunteer.first)
+    refute page.has_text? 'Secondary phone'
+  end
 end

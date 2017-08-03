@@ -102,4 +102,19 @@ class ProfilesTest < ApplicationSystemTestCase
     visit edit_profile_path(@user.profile.id)
     assert page.has_text? 'You are not authorized to perform this action.'
   end
+
+  test 'new profile has no secondary phone field' do
+    visit new_user_session_path
+    fill_in 'Email', with: @user_without_profile.email
+    fill_in 'Password', with: 'asdfasdf'
+    click_button 'Log in'
+
+    refute page.has_text? 'Secondary phone'
+  end
+
+  test 'profile has no secondary phone field' do
+    login_as @user
+    visit profile_path(@user.profile.id)
+    refute page.has_text? 'Secondary phone'
+  end
 end
