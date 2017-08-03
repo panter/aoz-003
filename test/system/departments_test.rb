@@ -107,4 +107,13 @@ class DepartmentsTest < ApplicationSystemTestCase
       assert page.has_text? @department_manager.department.first.contact.street
     end
   end
+
+  test 'department has no secondary phone field' do
+    login_as @superadmin
+    visit new_department_path
+    refute page.has_text? 'Secondary phone'
+
+    visit department_path(Department.first)
+    refute page.has_text? 'Secondary phone'
+  end
 end
