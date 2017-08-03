@@ -11,9 +11,9 @@ class Begleitete
     if @records
       @records[id.to_i]
     else
-      @record = @acdb[:tbl_Begleitete].select do |begleiteter|
+      @record = @acdb[:tbl_Begleitete].find do |begleiteter|
         begleiteter[:pk_Begleitete] == id.to_s
-      end.first
+      end
     end
 
     @record = sanitize_record(@record)
