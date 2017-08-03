@@ -248,6 +248,7 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.string "working_percent"
     t.text "volunteer_experience_desc"
     t.bigint "registrar_id"
+    t.jsonb "access_import"
     t.boolean "trial_period", default: false
     t.boolean "intro_course", default: false
     t.boolean "doc_sent", default: false
