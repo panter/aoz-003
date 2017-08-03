@@ -1,7 +1,4 @@
-class HauptPerson
-  include AccUtils
-  attr_reader :record, :records
-
+class HauptPerson < Accessor
   def initialize(acimport, accid = nil)
     @laender = acimport.laender
     @acdb = acimport.acdb
