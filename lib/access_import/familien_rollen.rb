@@ -12,7 +12,7 @@ class FamilienRollen
   end
 
   def sanitize_record(rec)
-    rec = parse_int_fields(rec, [:pk_FamilienRolle])
+    rec = parse_int_fields(rec, :pk_FamilienRolle)
     rec[:d_MutDatum] = rec[:d_MutDatum].to_datetime
     rec
   end

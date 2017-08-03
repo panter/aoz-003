@@ -12,7 +12,7 @@ class Laender
   end
 
   def sanitize_record(rec)
-    rec = parse_int_fields(rec, [:pk_Land])
+    rec = parse_int_fields(rec, :pk_Land)
     rec.except(:d_MutDatum, :t_Mutation)
   end
 

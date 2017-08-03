@@ -12,8 +12,8 @@ class SprachKenntnisse
   end
 
   def sanitize_record(rec)
-    rec = parse_int_fields(rec, [:pk_Sprachkenntnis])
-    parse_datetime_fields(rec, [:d_MutDatum])
+    rec = parse_int_fields(rec, :pk_Sprachkenntnis)
+    parse_datetime_fields(rec, :d_MutDatum)
   end
 
   def all

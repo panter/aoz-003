@@ -12,7 +12,7 @@ class Sprachen
   end
 
   def sanitize_record(rec)
-    rec = parse_int_fields(rec, [:pk_Sprache])
+    rec = parse_int_fields(rec, :pk_Sprache)
     {
       lang: language(rec[:t_Sprache]),
       sprache: rec[:t_Sprache]
