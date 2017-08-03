@@ -18,8 +18,8 @@ class VolunteerEmailsController < ApplicationController
 
   def create
     @volunteer_email = VolunteerEmail.new(volunteer_email_params)
-    authorize @volunteer_email
     @volunteer_email.user = current_user
+    authorize @volunteer_email
     if @volunteer_email.save
       redirect_to @volunteer_email,
         notice: t('crud.created', model: @volunteer_email.class.model_name.human)
