@@ -162,7 +162,7 @@ h3= t_attr(:volunteer_availability)
 
 - if @volunteer.assignments.any?
   .row
-    .col-xs-12
+    .col-xs-12#assignments
       h3= t('assignments')
   = render 'assignments/assignments_block', assignments: @volunteer.assignments
 

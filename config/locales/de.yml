@@ -429,6 +429,7 @@ de:
   login: Anmelden
   logout: Abmelden
   need_accompanying: Ohne Begleitung
+  not_assignable: Nicht zuweisbar
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   other_request: Sonstige Anforderungen an den/die Freiwillige/n
   paper_trail:
@@ -477,6 +478,8 @@ de:
   schedule: Zeitplan
   schedule_description: Wann sind Sie verfügbar?
   seeking_clients: Klienten suchen
+  show_assignment: Begleitung anzeigen
+  show_assignments: Begleiteten anzeigen
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   simple_form:

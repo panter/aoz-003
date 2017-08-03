@@ -298,6 +298,7 @@ en:
     confirm_delete: "Really delete %{model} %{record}?"
     select_prompt: "Select %{model}"
   need_accompanying: Need accompanying
+  not_assignable: Not assignable
   not_authorized: You are not authorized to perform this action.
   other_request: Other requests for volunteers
   paper_trail:
@@ -345,6 +346,8 @@ en:
   schedule: Schedule
   schedule_description: When are you available?
   seeking_clients: Looking for clients
+  show_assignment: Show assignment
+  show_assignments: Show assignments
   show_my_profile: My profile
   show_profile: Show profile
   simple_form:

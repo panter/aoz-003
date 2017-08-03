@@ -26,7 +26,7 @@ class AssignmentsTest < ApplicationSystemTestCase
 
   test 'assign unassigned client (client side)' do
     visit clients_path
-    click_link 'Need accompanying'
+    first(:link, 'Need accompanying').click
     click_link 'Find volunteer'
     click_link 'Reserve'
     click_button 'Create Assignment'

@@ -21,5 +21,11 @@ tr
       = t('volunteer_self_applicant')
   - if action_name == 'index'
     = render 'index_actions', subject: volunteer
+    - if volunteer.seeking_clients?
+      td= button_link t('find_client'), find_client_volunteer_path(id: volunteer)
+    - elsif volunteer.assignments.any?
+      td= button_link t('show_assignments'), volunteer_path(volunteer, anchor: 'assignments')
+    - else
+      td= t('not_assignable')
   - if action_name == 'seeking_clients'
     td = button_link t('find_client'), find_client_volunteer_path(id: volunteer)
