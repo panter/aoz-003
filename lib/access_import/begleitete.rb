@@ -25,8 +25,8 @@ class Begleitete
   end
 
   def sanitize_record(rec)
-    rec = parse_int_fields(rec, [:fk_FamilienRolle, :fk_PersonenRolle, :pk_Begleitete])
-    rec = parse_datetime_fields(rec, [:d_MutDatum])
+    rec = parse_int_fields(rec, :fk_FamilienRolle, :fk_PersonenRolle, :pk_Begleitete)
+    rec = parse_datetime_fields(rec, :d_MutDatum)
     rec[:gender] = map_gender(rec[:t_Geschlecht])
     rec[:relation] = map_familien_rolle(rec)
     rec

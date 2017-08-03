@@ -12,12 +12,10 @@ class PersonenRolle
   end
 
   def sanitize_record(rec)
-    rec = parse_datetime_fields(rec, [:d_MutDatum, :d_Rollenbeginn, :d_Rollenende])
-    rec = parse_int_fields(rec, [
-                             :b_EinführungsKurs, :b_Interesse, :b_SpesenVerzicht, :fk_Hauptperson,
-                             :fk_Kostenträger, :pk_PersonenRolle, :z_AnzErw, :z_AnzKind,
-                             :z_Familienverband, :z_Rolle
-                           ])
+    rec = parse_datetime_fields(rec, :d_MutDatum, :d_Rollenbeginn, :d_Rollenende)
+    rec = parse_int_fields(rec, :b_EinführungsKurs, :b_Interesse, :b_SpesenVerzicht,
+      :fk_Hauptperson, :fk_Kostenträger, :pk_PersonenRolle, :z_AnzErw, :z_AnzKind,
+      :z_Familienverband, :z_Rolle)
     rec[:rolle] = map_rolle(rec[:z_Rolle])
     rec
   end
