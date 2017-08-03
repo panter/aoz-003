@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'capybara/poltergeist'
 
-DIMENSIONS = [1400, 4000].freeze
+DIMENSIONS = [1800, 4000].freeze
 
 Capybara.register_driver :poltergeist_debug do |app|
   Capybara::Poltergeist::Driver.new(
