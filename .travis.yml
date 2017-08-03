@@ -1,6 +1,9 @@
 language: ruby
 
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - travis_phantomjs
 
 services: postgresql
 
