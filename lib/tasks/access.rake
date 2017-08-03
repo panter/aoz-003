@@ -1,5 +1,3 @@
-require_all 'lib/access_import'
-
 namespace :access do
   desc 'TODO'
   task import: :environment do
