@@ -22,6 +22,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'City', with: 'Zürich'
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Secondary phone', with: '0123456789'
     click_on('Add language')
     select('Akan', from: 'Language')
     select('Fluent', from: 'Level')

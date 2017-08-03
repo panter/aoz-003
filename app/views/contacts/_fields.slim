@@ -23,8 +23,14 @@
   - if f.object.needs_primary_email?
     .col-xs-12
       = f.input :primary_email, required: true
-    .col-xs-12
-      = f.input :primary_phone, required: true
+    - if controller_name == 'clients'
+      .col-xs-6
+        = f.input :primary_phone, required: true
+      .col-xs-6
+        = f.input :secondary_phone
+    - else
+      .col-xs-12
+        = f.input :primary_phone, required: true
   - else
     .col-xs-12
       = f.input :primary_email

@@ -99,6 +99,7 @@
           .col-xs-5
             = t('assignment_pdf.telephone_2')
           .col-xs-7.col-input
+            = @assignment.client.contact.secondary_phone
         .row
           .col-xs-5
             = "#{t('assignment_pdf.nationality')}, #{t('assignment_pdf.state')}"
