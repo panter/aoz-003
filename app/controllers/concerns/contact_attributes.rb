@@ -8,7 +8,7 @@ module ContactAttributes
         [
           :id, :first_name, :last_name, :_destroy, :contactable_id,
           :contactable_type, :street, :extended, :city, :postal_code,
-          :primary_email, :primary_phone, :title
+          :primary_email, :primary_phone, :secondary_phone, :title
         ]
       }
     end

@@ -50,6 +50,7 @@ de:
         postal_code: PLZ
         primary_email: Mailadresse
         primary_phone: Telefonnummer
+        secondary_phone: Telefonnummer 2
         street: Strasse
         title: Anrede
       department:
