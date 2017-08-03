@@ -4,6 +4,8 @@ class AssignmentsTest < ApplicationSystemTestCase
   setup do
     @user = create :user, email: 'superadmin@example.com'
     login_as @user
+    Client.with_deleted.map(&:really_destroy!)
+    Volunteer.with_deleted.map(&:really_destroy!)
     @client = create :client
     @volunteer = create :volunteer, state: Volunteer::ACTIVE_FURTHER
   end
@@ -24,7 +26,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'assign unassigned client (client side)' do
+  test 'assign unassigned client - client side' do
     visit clients_path
     first(:link, 'Need accompanying').click
     click_link 'Find volunteer'
@@ -38,7 +40,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'Active'
   end
 
-  test 'assign unassigned client (volunteer side)' do
+  test 'assign unassigned client - volunteer side' do
     # FIXME: If we follow the same logic with the previous test
     # visit volunteers_path
     # click_link 'Looking for clients'
