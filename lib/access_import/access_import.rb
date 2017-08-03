@@ -21,9 +21,9 @@ class AccessImport
     client_transformer = ClientTransform.new(self)
     client_count_before = Client.count
     @personen_rollen.all_clients.each do |key, ac_client|
-      next if Client.where('access_import @> ?', {
-        id_personen_rolle: ac_client[:pk_PersonenRolle].to_i
-      }.to_json).any?
+      next if Import.where(
+        importable_type: 'Client', access_id: ac_client[:pk_PersonenRolle].to_i
+      ).any?
       client_attrs = client_transformer.prepare_attributes(ac_client)
       client = Client.new(client_attrs)
       client.user = User.first

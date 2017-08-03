@@ -28,7 +28,7 @@ class ClientTransform
       language_skills_attributes: language_skills_attributes(sprachen),
       contact_attributes: contact_attributes(haupt_person, plz),
       relatives_attributes: relatives_attrs(relatives),
-      access_import: access_import(begleitet, haupt_person, personen_rolle,
+      import_attributes: access_import(begleitet, haupt_person, personen_rolle,
         familien_rolle, land, sprachen)
     }
   end
@@ -92,14 +92,17 @@ class ClientTransform
 
   def access_import(*fields)
     {
-      id_personen_rolle: fields[2][:pk_PersonenRolle],
-      begleitet: down_hkeys(fields[0].slice(:fk_FamilienRolle, :fk_PersonenRolle, :pk_Begleitete,
-        :m_Bemerkung, :z_Jahrgang)),
-      haupt_person: down_hkeys(fields[1].slice(:b_KlientAOZ, :fk_Land, :fk_PLZ, :t_Anrede,
-        :t_NNummer, :pk_Hauptperson)),
-      personen_rolle: down_hkeys(fields[2]),
-      familien_rolle: down_hkeys(fields[3].except(:d_MutDatum, :t_Mutation)),
-      land: fields[4]
+      access_id: fields[2][:pk_PersonenRolle],
+      store: {
+        id_personen_rolle: fields[2][:pk_PersonenRolle],
+        begleitet: down_hkeys(fields[0].slice(:fk_FamilienRolle, :fk_PersonenRolle, :pk_Begleitete,
+          :m_Bemerkung, :z_Jahrgang)),
+        haupt_person: down_hkeys(fields[1].slice(:b_KlientAOZ, :fk_Land, :fk_PLZ, :t_Anrede,
+          :t_NNummer, :pk_Hauptperson)),
+        personen_rolle: down_hkeys(fields[2]),
+        familien_rolle: down_hkeys(fields[3].except(:d_MutDatum, :t_Mutation)),
+        land: fields[4]
+      }
     }
   end
 
