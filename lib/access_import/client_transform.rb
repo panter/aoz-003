@@ -29,7 +29,7 @@ class ClientTransform
       contact_attributes: contact_attributes(haupt_person, plz),
       relatives_attributes: relatives_attrs(relatives),
       import_attributes: access_import(begleitet, haupt_person, personen_rolle,
-        familien_rolle, land, sprachen)
+        familien_rolle, sprachen)
     }
   end
 
@@ -98,8 +98,7 @@ class ClientTransform
         haupt_person: down_hkeys(fields[1].slice(:b_KlientAOZ, :fk_Land, :fk_PLZ, :t_Anrede,
           :t_NNummer, :pk_Hauptperson)),
         personen_rolle: down_hkeys(fields[2]),
-        familien_rolle: down_hkeys(fields[3].except(:d_MutDatum, :t_Mutation)),
-        land: fields[4]
+        familien_rolle: down_hkeys(fields[3].except(:d_MutDatum, :t_Mutation))
       }
     }
   end
