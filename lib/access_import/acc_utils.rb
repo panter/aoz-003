@@ -9,9 +9,7 @@ module AccUtils
   end
 
   def down_hkeys(row)
-    row.keys.map do |key|
-      [key.to_s.underscore.to_sym, row[key]]
-    end.to_h
+    row.transform_keys { |key| key.to_s.underscore.to_sym }
   end
 
   def parse_int_fields(record, keys)
