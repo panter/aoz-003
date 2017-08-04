@@ -1,6 +1,6 @@
 = simple_form_for [@journaled, @journal] do |f|
   = simple_error_notice f
-
+  h1= @journaled.contact.full_name
   .row
     .col-xs-12
       = f.input :subject
