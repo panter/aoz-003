@@ -1,11 +1,16 @@
 class Assignment < ApplicationRecord
   belongs_to :client
   accepts_nested_attributes_for :client
+
   belongs_to :volunteer
   accepts_nested_attributes_for :volunteer
+
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
   has_many :hours
   has_many :assignment_journals
+
+  has_one :import, as: :importable, dependent: :destroy
+  accepts_nested_attributes_for :import, allow_destroy: true
 
   validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
 
