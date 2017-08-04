@@ -20,6 +20,8 @@ class AccessImport
       ).any?
       client_attrs = client_transformer.prepare_attributes(ac_client)
       client = Client.new(client_attrs)
+      client.created_at = ac_client[:d_Rollenbeginn]
+      client.updated_at = ac_client[:d_MutDatum]
       client.user = User.first
       puts "Importing personen_rolle #{key} to Client.id: #{client.id}" if client.save!
     end
@@ -35,6 +37,8 @@ class AccessImport
       ).any?
       volunteer_attrs = volunteer_transformer.prepare_attributes(ac_volunteer)
       volunteer = Volunteer.new(volunteer_attrs)
+      volunteer.created_at = ac_volunteer[:d_Rollenbeginn]
+      volunteer.updated_at = ac_volunteer[:d_MutDatum]
       puts "Importing personen_rolle #{key} to Volunteer.id: #{volunteer.id}" if volunteer.save!
     end
     puts "Imported #{Volunteer.count - count_before_import} new volunteers from MS Access Datbase."
