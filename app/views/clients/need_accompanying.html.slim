@@ -1,4 +1,4 @@
-= will_paginate @need_accompanying
+= will_paginate @need_accompanying, renderer: BootstrapPagination::Rails
 
 .row
   .col-xs-12
@@ -6,4 +6,4 @@
 
 = render 'columns', clients: @need_accompanying
 
-= will_paginate @need_accompanying
+= will_paginate @need_accompanying, renderer: BootstrapPagination::Rails
