@@ -74,6 +74,9 @@ module ApplicationHelper
   end
 
   def confirm_deleting(record)
+    if controller_name == 'assignments'
+      return { method: :delete, data: { confirm: t('delete_assignment') } }
+    end
     { method: :delete, data: { confirm: t_confirm_delete(record) } }
   end
 

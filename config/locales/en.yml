@@ -169,6 +169,7 @@ en:
       - :day
       - :month
       - :year
+  delete_assignment: Really delete assignment?
   departments: Departments
   devise:
     confirmations:
