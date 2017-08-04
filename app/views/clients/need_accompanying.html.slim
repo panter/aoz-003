@@ -3,10 +3,4 @@
   .col-xs-12
     h1= t('need_accompanying')
 
-.text-center
-  = will_paginate @need_accompanying, renderer: BootstrapPagination::Rails
-
 = render 'columns', clients: @need_accompanying
-
-.text-center
-  = will_paginate @need_accompanying, renderer: BootstrapPagination::Rails

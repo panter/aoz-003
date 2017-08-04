@@ -1,3 +1,6 @@
+.text-center
+  = will_paginate clients, renderer: BootstrapPagination::Rails
+
 .row
   .col-xs-12
   table.table.table-striped
@@ -30,3 +33,6 @@
         = render clients, volunteer: volunteer
       - else
         = render clients
+
+.text-center
+  = will_paginate clients, renderer: BootstrapPagination::Rails
