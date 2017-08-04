@@ -51,7 +51,7 @@ class VolunteersController < ApplicationController
   def seeking_clients
     authorize Volunteer
     @q = Volunteer.where(state: Volunteer::SEEKING_CLIENTS).ransack(params[:q])
-    @seeking_clients = @q.result
+    @seeking_clients = @q.result.paginate(page: params[:page])
   end
 
   private

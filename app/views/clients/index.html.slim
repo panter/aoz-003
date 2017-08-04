@@ -1,5 +1,3 @@
-= will_paginate @clients, renderer: BootstrapPagination::Rails
-
 .row
   .col-xs-12
     h1= t('clients')
@@ -10,6 +8,9 @@
     .col-xs-4
       = button_link t('need_accompanying'), need_accompanying_clients_url
 
+.text-center
+  = will_paginate @clients, renderer: BootstrapPagination::Rails
+
 = render 'columns', clients: @clients
 
 .row
@@ -18,4 +19,5 @@
     .col-xs-4
       = button_link t('need_accompanying'), need_accompanying_clients_url
 
-= will_paginate @clients, renderer: BootstrapPagination::Rails
+.text-center
+  = will_paginate @clients, renderer: BootstrapPagination::Rails
