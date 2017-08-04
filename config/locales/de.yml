@@ -306,6 +306,7 @@ de:
       - :year
   delete_assignment: Begleitung wirklich löschen?
   department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
+  delete_journal: Journal Eintrag wirklich löschen?
   departments: Standorte
   devise:
     confirmations:

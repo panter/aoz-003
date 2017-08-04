@@ -170,6 +170,7 @@ en:
       - :month
       - :year
   delete_assignment: Really delete assignment?
+  delete_journal: Really delete journal?
   departments: Departments
   devise:
     confirmations:
