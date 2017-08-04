@@ -76,8 +76,11 @@ module ApplicationHelper
   def confirm_deleting(record)
     if controller_name == 'assignments'
       return { method: :delete, data: { confirm: t('delete_assignment') } }
+    elsif controller_name == 'journals'
+      return { method: :delete, data: { confirm: t('delete_journal') } }
+    else
+      { method: :delete, data: { confirm: t_confirm_delete(record) } }
     end
-    { method: :delete, data: { confirm: t_confirm_delete(record) } }
   end
 
   def find_version_author_email(version)
