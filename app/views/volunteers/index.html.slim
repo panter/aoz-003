@@ -1,3 +1,4 @@
+
 .row
   .col-xs-12
     h1= t('volunteers')
@@ -9,6 +10,7 @@
   - if policy(Volunteer).destroy?
     .col-xs-12= button_link t('seeking_clients'), seeking_clients_volunteers_url
 
+= will_paginate @volunteers, renderer: BootstrapPagination::Rails
 
 = render 'columns', volunteers: @volunteers
 
@@ -17,3 +19,5 @@
   - if policy(Volunteer).destroy?
     .col-xs-4
       = button_link t('seeking_clients'), seeking_clients_volunteers_url
+
+= will_paginate @volunteers, renderer: BootstrapPagination::Rails

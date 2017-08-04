@@ -39,6 +39,8 @@ gem 'sprockets-es6'
 gem 'turbolinks'
 gem 'uglifier'
 gem 'wicked_pdf'
+gem 'will-paginate-i18n'
+gem 'will_paginate-bootstrap'
 gem 'will_paginate', '~> 3.1.0'
 gem 'wkhtmltopdf-binary'
 
