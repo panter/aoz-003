@@ -86,6 +86,19 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
   end
 
+  create_table "imports", force: :cascade do |t|
+    t.bigint "access_id"
+    t.jsonb "store"
+    t.string "importable_type"
+    t.bigint "importable_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_id"], name: "index_imports_on_access_id"
+    t.index ["deleted_at"], name: "index_imports_on_deleted_at"
+    t.index ["importable_type", "importable_id"], name: "index_imports_on_importable_type_and_importable_id"
+  end
+
   create_table "journals", force: :cascade do |t|
     t.string "subject"
     t.bigint "user_id"
