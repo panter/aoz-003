@@ -24,7 +24,7 @@
               td= l(record.created_at)
               td= record.subject
               td= record.body.truncate(40) if record.body
-              td= link_to record.user.to_label, record.user.profile
+              td= link_to record.user.full_name, record.user.profile
               td= link_to t_action(:show), { controller: 'journals', action: 'show', id: record.id, "#{controller_name.singularize}_id": journaled_for.id }
               td= link_to t_action(:edit), { controller: 'journals', action: 'edit', id: record.id, "#{controller_name.singularize}_id": journaled_for.id }
               td= link_to t_action(:destroy), { controller: 'journals', action: 'destroy', id: record.id, "#{controller_name.singularize}_id": journaled_for.id }, confirm_deleting(record)
