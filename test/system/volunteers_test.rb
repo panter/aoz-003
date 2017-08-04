@@ -172,4 +172,17 @@ class VolunteersTest < ApplicationSystemTestCase
     visit volunteer_path(Volunteer.first)
     refute page.has_text? 'Secondary phone'
   end
+
+  test 'volunteer pagination' do
+    70.times do
+      create :volunteer
+    end
+    visit volunteers_path
+    first(:link, '2').click
+
+    assert page.has_css? '.pagination'
+    Volunteer.paginate(page: 2).each do |volunteer|
+      assert page.has_text? volunteer.contact.last_name
+    end
+  end
 end
