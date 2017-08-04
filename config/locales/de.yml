@@ -602,3 +602,5 @@ de:
     next_label: Weiter
   when: Zeit
   working_days: Arbeitstage
+  works_on: arbeitet am
+  works_not_on: arbeitet nicht am
