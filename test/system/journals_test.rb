@@ -15,13 +15,13 @@ class JournalsTest < ApplicationSystemTestCase
     click_button 'Journal'
     within '.collapse .table-responsive' do
       assert page.has_text? @journal_volunteer.subject
-      assert page.has_link? @journal_volunteer.user.to_label
+      assert page.has_link? @journal_volunteer.user.full_name
       click_link 'Show'
     end
     assert page.has_text? 'Show Journal'
     assert page.has_text? @journal_volunteer.subject
     assert page.has_text? @journal_volunteer.body
-    assert page.has_link? @journal_volunteer.user.to_label
+    assert page.has_link? @journal_volunteer.user.full_name
   end
 
   test 'can create journal entry by link button in show and then delete it' do
