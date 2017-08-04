@@ -7,6 +7,9 @@ cache:
 
 services: postgresql
 
+addons:
+  postgresql: "9.4"
+
 before_install:
   - "export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH"
   - "if [ $(phantomjs --version) != '2.1.1' ]; then rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs; fi"
