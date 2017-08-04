@@ -9,7 +9,7 @@ class VolunteersController < ApplicationController
   def index
     authorize Volunteer
     @q = Volunteer.ransack(params[:q])
-    @volunteers = @q.result
+    @volunteers = @q.result.paginate(page: params[:page])
   end
 
   def show; end
