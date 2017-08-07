@@ -4,7 +4,6 @@ class FallstelleTeilnehmer < Accessor
   end
 
   def sanitize_record(rec)
-    add_records_hash
     rec = parse_int_fields(rec, :pk_FallStelleProTeilnehmer, :fk_PersonenRolle, :fk_Fallstelle,
       :fk_Kontaktperson)
     parse_datetime_fields(rec, :d_MutDatum)
