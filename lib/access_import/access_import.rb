@@ -10,39 +10,46 @@ class AccessImport
   end
 
   def make_clients
-    client_transformer = ClientTransform.new(@begleitete, @haupt_person, @familien_rollen)
-    client_count_before = Client.count
-    @personen_rolle.all_clients.each do |key, ac_client|
-      next if Import.where(
-        importable_type: 'Client', access_id: ac_client[:pk_PersonenRolle].to_i
-      ).any?
-      client_attrs = client_transformer.prepare_attributes(ac_client)
-      client = Client.new(client_attrs)
-      client.created_at = ac_client[:d_Rollenbeginn]
-      client.updated_at = ac_client[:d_MutDatum]
+    transformer = ClientTransform.new(@begleitete, @haupt_person, @familien_rollen)
+    make(@personen_rolle.all_clients, transformer, Client) do |client, personen_rolle|
+      client = personen_rollen_create_update_conversion(client, personen_rolle)
       client.user = User.first
-      puts "Importing personen_rolle #{key} to Client.id: #{client.id}" if client.save!
+      if personen_rolle[:d_Rollenende]
+        client.state = Client::FINISHED
+        " -- Client was set to state finished at #{personen_rolle[:d_Rollenende]}  ----"
+      end
     end
-    puts "Imported #{Client.count - client_count_before} new clients from MS Access Database."
   end
 
   def make_volunteers
-    volunteer_transformer = VolunteerTransform.new(@haupt_person)
-    count_before_import = Volunteer.count
-    @personen_rolle.all_volunteers.each do |key, ac_volunteer|
-      next if Import.where(
-        importable_type: 'Volunteer', access_id: ac_volunteer[:pk_PersonenRolle].to_i
-      ).any?
-      volunteer_attrs = volunteer_transformer.prepare_attributes(ac_volunteer)
-      volunteer = Volunteer.new(volunteer_attrs)
-      volunteer.created_at = ac_volunteer[:d_Rollenbeginn]
-      volunteer.updated_at = ac_volunteer[:d_MutDatum]
-      puts "Importing personen_rolle #{key} to Volunteer.id: #{volunteer.id}" if volunteer.save!
+    transformer = VolunteerTransform.new(@haupt_person)
+    make(@personen_rolle.all_volunteers, transformer, Volunteer) do |volunteer, personen_rolle|
+      volunteer = personen_rollen_create_update_conversion(volunteer, personen_rolle)
+      if personen_rolle[:d_Rollenende]
+        volunteer.state = Volunteer::RESIGNED
+        " -- Volunteer was set to state finished at #{personen_rolle[:d_Rollenende]}  ----"
+      end
     end
-    puts "Imported #{Volunteer.count - count_before_import} new volunteers from MS Access Datbase."
   end
 
-  def class_accessor(*accessors)
+  def personen_rollen_create_update_conversion(model_record, personen_rolle)
+    model_record.created_at = personen_rolle[:d_Rollenbeginn]
+    model_record.updated_at = personen_rolle[:d_MutDatum]
+    model_record
+  end
+
+  def make(base_entities, transformer, destination_model)
+    records_before = destination_model.count
+    base_entities.each do |key, entity|
+      next if Import.where(importable_type: destination_model.to_s, access_id: key).any?
+      import_record = destination_model.new(transformer.prepare_attributes(entity))
+      handler_message = yield(import_record, entity)
+      import_record.save!
+      puts "Importing personen_rolle #{key} to #{destination_model}.id: #{import_record.id}#{handler_message}"
+    end
+    message = "Imported #{destination_model.count - records_before} new "
+    puts "#{message}#{destination_model.class.name} from MS Access Database."
+  end
 
   def instantiate_all_accessors
     Dir['lib/access_import/accessors/*.rb']
