@@ -53,10 +53,12 @@ class AccessImport
 
   def instantiate_all_accessors
     Dir['lib/access_import/accessors/*.rb']
-      .reject { |file| File.basename(file, '.*') == 'accessor' }.map do |file|
-        File.basename(file, '.*').camelize.constantize.new(@acdb)
+      .map { |file| File.basename(file, '.*') }
+      .reject { |name| name == 'accessor' }
+      .map do |name|
+        name.camelize.constantize.new(@acdb)
       end
-  endFile.basename(file, '.*') == 'accessor'
+  end
 
   def make_class_variables(*accessors)
     accessors.each do |accessor|
