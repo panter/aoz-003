@@ -6,7 +6,7 @@ h1= t_title(:show, Journal)
       strong= "#{t_attr(:subject, Journal)}: "
       = @journal.subject
     p
-      strong= "#{t_attr(:category, Journal)}: "
+      strong= "#{t_attr(:category)}: "
       = t("category.#{@journal.category}")
     p
       strong= "#{t_attr(:user, User)}: "
