@@ -5,12 +5,12 @@ class Accessor
   attr_reader :records
 
   def initialize(acdb, *other_accessors)
-    add_other_accessors(other_accessors) if other_accessors.any?
+    add_other_accessors(*other_accessors) if other_accessors.any?
     @acdb = acdb
     @records = hash_all
   end
 
-  def add_other_accessors(accessors)
+  def add_other_accessors(*accessors)
     accessors.each do |accessor|
       instance_variable_set("@#{accessor.class.name.underscore}", accessor)
     end

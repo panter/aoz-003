@@ -3,12 +3,10 @@ class AccessImport
 
   def initialize(path)
     @acdb = Mdb.open(path)
-    class_accessor(*[Laender, Sprachen, SprachKenntnisse, PersonenRolle, Plz, FamilienRollen,
-                     Begleitete, KostenTraeger, Journale, FallstelleTeilnehmer, Stundenerfassung, Ausbildungen,
-                     FreiwilligenEinsaetze, FreiwilligenEntschaedigung, Kontoangaben].map { |cl| cl.new(@acdb) })
-    class_accessor(SpracheProHauptperson.new(@acdb, @sprachen, @sprach_kenntnisse),
-      EinsatzOrte.new(@acdb, @plz))
-    class_accessor(HauptPerson.new(@acdb, @plz, @laender, @sprache_pro_hauptperson))
+    make_class_variables(*instantiate_all_accessors)
+    @sprache_pro_hauptperson.add_other_accessors(@sprachen, @sprach_kenntnisse)
+    @einsatz_orte.add_other_accessors(@plz)
+    @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson)
   end
 
   def make_clients
@@ -45,6 +43,16 @@ class AccessImport
   end
 
   def class_accessor(*accessors)
+
+  def instantiate_all_accessors
+    Dir['lib/access_import/accessors/*.rb']
+      .reject { |file| file.slice(-11..-1) == 'accessor.rb' }
+      .map do |file|
+        file.split('/').last.slice(0..-4).camelize.constantize.new(@acdb)
+      end
+  end
+
+  def make_class_variables(*accessors)
     accessors.each do |accessor|
       class_eval { attr_reader accessor.class.name.underscore.to_sym }
       instance_variable_set("@#{accessor.class.name.underscore}", accessor)
