@@ -2,7 +2,7 @@ if Rails.env.production?
   ActionMailer::Base.delivery_method = :sendmail
 
   ActionMailer::Base.default_url_options = {
-    host: 'aoz-003-staging.panter.biz',
+    host: 'staging.aoz-freiwillige.ch',
     protocol: 'https'
   }
 else

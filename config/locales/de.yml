@@ -362,7 +362,7 @@ de:
       invitation_instructions:
         accept: Einladung annehmen
         accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
-        ignore: 'Wenn Sie die Einladung nicht annehmen möchten, ignorieren Sie bitte diese Email einfach.<br />\nEs wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.'
+        ignore: 'Wenn Sie die Einladung nicht annehmen möchten, ignorieren Sie bitte diese Email einfach.<br>Es wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.'
         someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie können die Einladung mit dem Link unten annehmen:'
         subject: Einladung
       password_change:
