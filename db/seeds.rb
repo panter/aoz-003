@@ -16,6 +16,10 @@ def random_gender_request
   Client::GENDER_REQUESTS.sample
 end
 
+def random_category
+  Journal::CATEGORIES.sample
+end
+
 def make_relatives
   Array.new(2).map do
     Relative.new do |relative|
@@ -76,13 +80,13 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
           subject: Faker::Lorem.sentence(rand(2..5)),
           body: Faker::Lorem.sentence(rand(2..5)),
           user: user,
-          category: Journal.category_collection.sample
+          category: random_category
         ),
         Journal.new(
           subject: Faker::Lorem.sentence(rand(2..5)),
           body: Faker::Lorem.sentence(rand(2..5)),
           user: user,
-          category: Journal.category_collection.sample
+          category: random_category
         )
       ]
       client.birth_year = Faker::Date.birthday(18, 65)
@@ -130,13 +134,13 @@ Volunteer.state_collection.each do |state|
         subject: Faker::Lorem.sentence(rand(2..5)),
         body: Faker::Lorem.sentence(rand(2..5)),
         user: User.first,
-        category: Journal.category_collection.sample
+        category: random_category
       ),
       Journal.new(
         subject: Faker::Lorem.sentence(rand(2..5)),
         body: Faker::Lorem.sentence(rand(2..5)),
         user: User.first,
-        category: Journal.category_collection.sample
+        category: random_category
       )
     ]
     volunteer.birth_year = Faker::Date.birthday(18, 75)
