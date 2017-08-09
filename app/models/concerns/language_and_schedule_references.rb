@@ -5,6 +5,13 @@ module LanguageAndScheduleReferences
     has_many :language_skills, as: :languageable, dependent: :destroy
     accepts_nested_attributes_for :language_skills, allow_destroy: true
 
+    delegate :native_languages, to: :language_skills
+    delegate :foreign_languages, to: :language_skills
+
+    def native_language
+      native_languages.first || LanguageSkill.new
+    end
+
     has_many :schedules, as: :scheduleable, dependent: :destroy
     accepts_nested_attributes_for :schedules
 
