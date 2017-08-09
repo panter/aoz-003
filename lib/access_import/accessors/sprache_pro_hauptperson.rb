@@ -3,7 +3,12 @@ class SpracheProHauptperson < Accessor
     make_mappable(:tbl_SpracheProHauptperson, :pk_SpracheProPerson, true)
   end
 
-  LANGUAGE_LEVELS = [nil, 'basic', 'good', 'fluent', 'native_speaker', nil].freeze
+  LANGUAGE_LEVELS = {
+    1 => 'basic',
+    2 => 'good',
+    3 => 'fluent',
+    7 => 'native_speaker'
+  }.freeze
 
   def sanitize_record(rec)
     rec = parse_int_fields(rec, *level_keys, :fk_Hauptperson, :fk_Sprache, :pk_SpracheProPerson)
