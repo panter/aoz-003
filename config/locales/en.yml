@@ -33,8 +33,8 @@ en:
         detailed_description: Detailed Description
         doc_sent: Engaged volunteer's documents sent
         evaluation: Final evaluation
-        excursions: Excursions
         evening: Evening
+        excursions: Excursions
         family: Family
         flexible: Flexible
         full_name: Name
@@ -262,7 +262,6 @@ en:
   edit_profile: Edit profile
   engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   entry_year: Entry year
-  entry_year: Entry year
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -389,14 +388,11 @@ en:
           all: All
           contacted: Contacted
           finished: Finished
-          inactive: Inactive
           inactive: Looking for new engagement
           interested: Interested
-          registered: Interested
           registered: Registered
           rejected: Rejected
           reserved: Reserved
-          resigned: Resigned
           resigned: Terminated
       journal:
         category: *id-categories
@@ -449,12 +445,11 @@ en:
       submitted: Data submitted with the registration
   volunteer_request: Request for volunteers
   volunteer_self_applicant: Self-applicant
-  volunteer_self_applicant: Self-applicant
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to register as a volunteer?
   when: Time
   working_days: Working days
-  works_on: works on
   works_not_on: works not on
+  works_on: works on
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
