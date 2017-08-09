@@ -61,13 +61,11 @@ module AccUtils
     }
   end
 
-  def access_import(main_entity, pk_main_entity, *related_rows)
+  def access_import(main_entity_name, main_access_id, related_rows)
     {
-      access_id: main_entity[pk_main_entity],
-      store: {
-        main_entity: down_hkeys(main_entity),
-        related_rows: related_rows.map { |r| down_hkeys(r) }
-      }
+      access_id: main_access_id,
+      base_origin_entity: main_entity_name.to_s,
+      store: related_rows
     }
   end
 
