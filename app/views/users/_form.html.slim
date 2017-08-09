@@ -3,7 +3,7 @@
   .row
     .col-xs-12
       = f.input :email
-      - if policy(user).update?
+      - if action_name == 'edit'
         = f.input :password
 
       - if policy(User).create?
