@@ -1,6 +1,6 @@
 ---
 de:
-  accompaniment_info:  Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
+  accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   activerecord:
     attributes:
       assignment:
@@ -71,6 +71,8 @@ de:
         user: Ersteller
       language_skill:
         language: Sprache
+        native_language: Muttersprache
+        foreign_languages: Fremdsprachen
         level: Niveau
       profile:
         address: Adresse
@@ -120,8 +122,8 @@ de:
         education: Ausbildung
         email: Email
         evaluation: Abschlussevaluation erhalten
-        excursions: Ausflüge
         evening: Abends
+        excursions: Ausflüge
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
@@ -319,8 +321,8 @@ de:
       - :month
       - :year
   delete_assignment: Begleitung wirklich löschen?
-  department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
   delete_journal: Journal Eintrag wirklich löschen?
+  department_confirm_destroy: Sind Sie sicher das Sie den Standort löschen wollen?
   departments: Standorte
   devise:
     confirmations:
@@ -399,11 +401,10 @@ de:
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
-  duration_info: Die meisten unserer Einsätze erfordern ein Engagement von mindestens 6 Monaten.
   download: Herunterladen
+  duration_info: Die meisten unserer Einsätze erfordern ein Engagement von mindestens 6 Monaten.
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
-  entry_year: Einreisejahr
   entry_year: Einreisejahr
   errors:
     messages:
@@ -610,14 +611,13 @@ de:
       submitted: Die Angaben der Anmeldung
   volunteer_request: Anforderungen an die/den Freiwillige/n
   volunteer_self_applicant: Selbstanmelder
-  volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
-  will_paginate:
-    previous_label: Zurück
-    next_label: Weiter
   when: Zeit
+  will_paginate:
+    next_label: Weiter
+    previous_label: Zurück
   working_days: Arbeitstage
-  works_on: arbeitet am
   works_not_on: arbeitet nicht am
+  works_on: arbeitet am
