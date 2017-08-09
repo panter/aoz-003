@@ -32,6 +32,7 @@ class JournalsTest < ApplicationSystemTestCase
     assert page.has_text? 'New Journal'
     fill_in 'Subject', with: 'My bogus demo subject, i want to ad here.'
     fill_in 'Body', with: 'My bogus demo text body, just for this test.'
+    select('Telephone', from: 'Category')
     click_button 'Create Journal'
     click_button 'Journal'
     within '.collapse .table-responsive' do
