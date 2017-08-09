@@ -52,11 +52,9 @@ class AccessImport
   end
 
   def instantiate_all_accessors
-    Dir['lib/access_import/accessors/*.rb']
-      .reject { |file| file.slice(-11..-1) == 'accessor.rb' }
-      .map do |file|
-        file.split('/').last.slice(0..-4).camelize.constantize.new(@acdb)
-      end
+    Dir.entries('lib/access_import/accessors').slice(2..-1).map do |file|
+      file.slice(0..-4).camelize.constantize.new(@acdb) unless file == 'accessor.rb'
+    end.compact
   end
 
   def make_class_variables(*accessors)
