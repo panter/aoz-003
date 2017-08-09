@@ -16,8 +16,8 @@ class SpracheProHauptperson < Accessor
   end
 
   def add_kentniss_levels(record)
-    kentnisse = record.slice(*level_keys).compact.map do |k, v|
-      [k.to_s[3..-1].to_sym, LANGUAGE_LEVELS[v]]
+    kentnisse = record.slice(*level_keys).compact.map do |key, level|
+      [key.to_s[3..-1].to_sym, LANGUAGE_LEVELS[level]]
     end.to_h
     record.merge(kentnisse).except(*level_keys)
   end
@@ -31,9 +31,9 @@ class SpracheProHauptperson < Accessor
   end
 
   def where_person(person_id)
-    languages = @records.select do |key|
-      key.to_s == person_id.to_s
+    persons_sprachen = all.select do |_key, sprache_hauptperson|
+      sprache_hauptperson[:fk_Hauptperson].to_s == person_id.to_s
     end
-    languages.map { |s| down_hkeys(s[1]) }
+    persons_sprachen.map { |_key, sprache_hauptperson| down_hkeys(sprache_hauptperson) }
   end
 end
