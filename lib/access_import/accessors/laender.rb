@@ -60,10 +60,10 @@ class Laender < Accessor
   end
 
   def alpha_2_search(kurzform)
-    ISO3166::Country.all.select { |c| c.alpha2 == kurzform.upcase } || []
+    ISO3166::Country.all.select { |country| country.alpha2 == kurzform.upcase }
   end
 
   def alpha_3_search(kurzform)
-    ISO3166::Country.all.select { |c| c.alpha3 == kurzform.upcase } || []
+    ISO3166::Country.all.select { |country| country.alpha3 == kurzform.upcase }
   end
 end
