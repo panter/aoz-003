@@ -14,7 +14,7 @@ class FreiwilligenEntschaedigung < Accessor
   end
 
   def where_personen_rolle(pr_id)
-    @records.select do |_k, fw_einsatz|
+    all.select do |_key, fw_einsatz|
       fw_einsatz[:fk_PersonenRolle] == pr_id.to_i
     end
   end

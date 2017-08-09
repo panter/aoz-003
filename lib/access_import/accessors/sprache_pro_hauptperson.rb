@@ -26,10 +26,6 @@ class SpracheProHauptperson < Accessor
     ['Le', 'Sc', 'Sp', 'Ve'].map { |k| "fk_Kenntnisstufe#{k}".to_sym }
   end
 
-  def all
-    @records
-  end
-
   def where_person(person_id)
     persons_sprachen = all.select do |_key, sprache_hauptperson|
       sprache_hauptperson[:fk_Hauptperson].to_s == person_id.to_s
