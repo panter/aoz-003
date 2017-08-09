@@ -3,6 +3,6 @@ FactoryGirl.define do
     sequence :subject { |n| "bocus subject_#{n}" }
     sequence :body { |n| " Bogus_text_body_#{n}" * 30 }
     user
-    category Journal.category_collection.sample
+    category Journal::CATEGORIES.sample
   end
 end
