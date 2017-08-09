@@ -26,7 +26,10 @@ class VolunteerTransform
       nationality: haupt_person[:nationality],
       language_skills_attributes: language_skills_attributes(haupt_person[:sprachen]),
       contact_attributes: contact_attributes(haupt_person),
-      import_attributes: access_import(personen_rolle, :pk_PersonenRolle, haupt_person)
+      import_attributes: access_import(
+        :tbl_Personenrollen, personen_rolle[:pk_PersonenRolle], personen_rolle: personen_rolle,
+        haupt_person: haupt_person
+      )
     }
   end
 end
