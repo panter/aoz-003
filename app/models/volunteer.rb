@@ -50,6 +50,7 @@ class Volunteer < ApplicationRecord
     content_type: /\Aimage\/.*\z/
   }
 
+  default_scope { order(created_at: :desc) }
   scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
 
   def seeking_clients?

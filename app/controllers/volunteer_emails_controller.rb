@@ -4,7 +4,7 @@ class VolunteerEmailsController < ApplicationController
 
   def index
     authorize VolunteerEmail
-    @volunteer_emails = VolunteerEmail.all.order(created_at: :desc)
+    @volunteer_emails = VolunteerEmail.all
   end
 
   def show; end
