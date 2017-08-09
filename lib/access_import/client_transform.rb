@@ -22,8 +22,10 @@ class ClientTransform
       language_skills_attributes: language_skills_attributes(haupt_person[:sprachen]),
       contact_attributes: contact_attributes(haupt_person),
       relatives_attributes: relatives_attrs(relatives),
-      import_attributes: access_import(personen_rolle, :pk_PersonenRolle, haupt_person,
-        familien_rolle)
+      import_attributes: access_import(
+        :tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle], personen_rolle: personen_rolle,
+        haupt_person: haupt_person, familien_rolle: familien_rolle
+      )
     }
   end
 
