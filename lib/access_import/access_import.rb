@@ -52,8 +52,8 @@ class AccessImport
   end
 
   def instantiate_all_accessors
-    Dir.entries('lib/access_import/accessors').slice(2..-1).map do |file|
-      file.slice(0..-4).camelize.constantize.new(@acdb) unless file == 'accessor.rb'
+    Dir['lib/access_import/accessors/*.rb'].map do |file|
+      File.basename(file, '.*').camelize.constantize.new(@acdb) unless file.include? 'accessor.rb'
     end.compact
   end
 
