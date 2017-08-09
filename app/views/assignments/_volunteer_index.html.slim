@@ -1,0 +1,13 @@
+.row
+  .col-xs-12
+  table.table.table-striped
+    thead
+      tr
+        th= t_model(Client)
+        th= t_attr(:state, Assignment)
+        th= t_attr(:created_at, Assignment)
+        th= t_attr(:created_by)
+        th colspan='5'
+
+    tbody
+      = render assignments

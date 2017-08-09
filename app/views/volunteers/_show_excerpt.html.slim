@@ -1,0 +1,34 @@
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th= t_attr(:title, Contact)
+        th= t_attr(:city, Contact)
+        th= t_attr(:postal_code, Contact)
+        th= t_attr(:primary_email, Contact)
+        th= t_attr(:birth_year, Volunteer)
+        th= t_attr(:native_language, LanguageSkill)
+        th= t_attr(:foreign_languages, LanguageSkill)
+        th= t_attr(:education, Volunteer)
+        th= t_attr(:profession, Volunteer)
+        th= t_attr(:working_percent, Volunteer)
+        th= t_attr(:expectations, Volunteer)
+        th= t_attr(:interests, Volunteer)
+        th= t_attr(:state, Volunteer)
+
+    tbody
+      tr
+        td = t("salutation.#{volunteer.salutation}") if volunteer.salutation?
+        td = volunteer.contact.full_name
+        td = volunteer.contact.city
+        td = volunteer.contact.postal_code
+        td = volunteer.contact.primary_email
+        td = volunteer.birth_year.year if volunteer.birth_year?
+        td = volunteer.language_skills.first.language_name if volunteer.language_skills.any?
+        td = render 'language_skills/show_inline', language_skills: volunteer.language_skills
+        td = volunteer.education
+        td = volunteer.profession
+        td #{volunteer.working_percent}%
+        td = volunteer.expectations
+        td = volunteer.interests
+        td = t("simple_form.options.volunteer.state.#{volunteer.state}")
