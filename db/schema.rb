@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170803113154) do
+ActiveRecord::Schema.define(version: 20170807101812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20170803113154) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "base_origin_entity"
     t.index ["access_id"], name: "index_imports_on_access_id"
     t.index ["deleted_at"], name: "index_imports_on_deleted_at"
     t.index ["importable_type", "importable_id"], name: "index_imports_on_importable_type_and_importable_id"
