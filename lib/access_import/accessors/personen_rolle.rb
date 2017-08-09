@@ -21,26 +21,26 @@ class PersonenRolle < Accessor
   end
 
   def all_volunteers
-    @records.select do |_id, val|
-      val[:z_Rolle] == 1
+    all.select do |_id, personen_rolle|
+      personen_rolle[:z_Rolle] == ACCESS_ROLES.volunteer
     end
   end
 
   def all_clients
-    @records.select do |_id, val|
-      val[:z_Rolle] == 2
+    all.select do |_id, personen_rolle|
+      personen_rolle[:z_Rolle] == ACCESS_ROLES.client
     end
   end
 
   def all_animators
-    @records.select do |_id, val|
-      val[:z_Rolle] == 3
+    all.select do |_id, personen_rolle|
+      personen_rolle[:z_Rolle] == ACCESS_ROLES.animator
     end
   end
 
   def all_participants
-    @records.select do |_id, val|
-      val[:z_Rolle] == 4
+    all.select do |_id, personen_rolle|
+      personen_rolle[:z_Rolle] == ACCESS_ROLES.participant
     end
   end
 end

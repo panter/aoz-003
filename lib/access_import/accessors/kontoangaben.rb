@@ -10,7 +10,7 @@ class Kontoangaben < Accessor
   end
 
   def where_haupt_person(hp_id)
-    @records.select do |_k, kontoangabe|
+    all.select do |_key, kontoangabe|
       kontoangabe[:fk_Hauptperson] == hp_id.to_i
     end
   end

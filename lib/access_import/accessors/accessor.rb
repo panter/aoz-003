@@ -2,12 +2,10 @@ require 'access_import/acc_utils'
 
 class Accessor
   include AccUtils
-  attr_reader :records
 
   def initialize(acdb, *other_accessors)
     add_other_accessors(*other_accessors) if other_accessors.any?
     @acdb = acdb
-    @records = hash_all
   end
 
   def add_other_accessors(*accessors)
@@ -17,11 +15,11 @@ class Accessor
   end
 
   def all
-    @records
+    @all ||= hash_all
   end
 
   def find(id)
-    @records[id.to_i]
+    all[id.to_i]
   end
 
   SEMESTER = [
