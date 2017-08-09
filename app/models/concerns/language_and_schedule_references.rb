@@ -7,10 +7,7 @@ module LanguageAndScheduleReferences
 
     delegate :native_languages, to: :language_skills
     delegate :foreign_languages, to: :language_skills
-
-    def native_language
-      native_languages.first || LanguageSkill.new
-    end
+    delegate :native_language, to: :language_skills
 
     has_many :schedules, as: :scheduleable, dependent: :destroy
     accepts_nested_attributes_for :schedules
