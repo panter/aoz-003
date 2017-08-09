@@ -1,13 +1,20 @@
 class LanguageSkill < ApplicationRecord
   belongs_to :languageable, polymorphic: true, optional: true
 
+  LANGUAGE_LEVELS = [:native_speaker, :fluent, :good, :basic].freeze
+
   scope :native_languages, lambda {
     where(level: 'native_speaker')
       .order("CASE WHEN language = 'DE' THEN 1 WHEN language != 'DE' THEN 2 END")
   }
-  scope :foreign_languages, -> { where.not(id: native_languages.first&.id) }
+  scope :foreign_languages, lambda {
+    return none unless native_language.id
+    where.not(id: native_language.id)
+  }
 
-  LANGUAGE_LEVELS = [:native_speaker, :fluent, :good, :basic].freeze
+  def self.native_language
+    native_languages.first || LanguageSkill.new
+  end
 
   def language_name
     return '' if language.blank?
