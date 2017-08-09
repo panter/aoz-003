@@ -22,50 +22,46 @@ class Accessor
     all[id.to_i]
   end
 
-  SEMESTER = [
-    [1, { semester: 'Frühling / Sommer', rolle: 'Animator/in' }],
-    [2, { semester: 'Herbst / Winter', rolle: 'Animator/in' }],
-    [3, { semester: '1. Halbjahr', rolle: 'Freiwillige/r' }],
-    [4, { semester: '2. Halbjahr', rolle: 'Freiwillige/r' }]
-  ].to_h.freeze
+  SEMESTER = {
+    1 => { semester: 'Frühling / Sommer', rolle: 'Animator/in' },
+    2 => { semester: 'Herbst / Winter', rolle: 'Animator/in' },
+    3 => { semester: '1. Halbjahr', rolle: 'Freiwillige/r' },
+    4 => { semester: '2. Halbjahr', rolle: 'Freiwillige/r' }
+  }.freeze
 
-  FREIWILLIGEN_FUNKTIONEN = [
-    nil,
-    'Begleitung',
-    'Kurs',
-    'Animation F',
-    'Kurzeinsatz',
-    'Andere',
-    'Animation A'
-  ].freeze
+  FREIWILLIGEN_FUNKTIONEN = {
+    1 => 'Begleitung',
+    2 => 'Kurs',
+    3 => 'Animation F',
+    4 => 'Kurzeinsatz',
+    5 => 'Andere',
+    6 => 'Animation A'
+  }.freeze
 
-  LEHRMITTEL = [
-    nil,
-    'ABC 1 - Alphabetisierung für Erwachsene',
-    'ABC 2 - Alphabetisierung für Erwachsene',
-    'Vorstufe Deutsch 1',
-    'Vorstufe Deutsch 2'
-  ].freeze
+  LEHRMITTEL = {
+    1 => 'ABC 1 - Alphabetisierung für Erwachsene',
+    2 => 'ABC 2 - Alphabetisierung für Erwachsene',
+    3 => 'Vorstufe Deutsch 1',
+    4 => 'Vorstufe Deutsch 2'
+  }.freeze
 
-  AUSBILDUNGS_TYPEN = [
-    nil,
-    '<keine>',
-    'Primarschule',
-    'Sekundarschule',
-    'Fachmittelschule',
-    'Fahhochschule',
-    'Gymnasium',
-    'GEP-Einsatz',
-    'EBA Eidg. Berufsattest',
-    'eidg. Anerkannte Berufslehre'
-  ].freeze
+  AUSBILDUNGS_TYPEN = {
+    1 => '<keine>',
+    2 => 'Primarschule',
+    3 => 'Sekundarschule',
+    4 => 'Fachmittelschule',
+    5 => 'Fahhochschule',
+    6 => 'Gymnasium',
+    7 => 'GEP-Einsatz',
+    8 => 'EBA Eidg. Berufsattest',
+    9 => 'eidg. Anerkannte Berufslehre'
+  }.freeze
 
-  JOURNAL_KATEGORIEN = [
-    nil,
-    'Telefonat',
-    'Gespräch',
-    'E-Mail',
-    'Rückmeldung',
-    'Datei'
-  ].freeze
+  JOURNAL_KATEGORIEN = {
+    1 => 'Telefonat',
+    2 => 'Gespräch',
+    3 => 'E-Mail',
+    4 => 'Rückmeldung',
+    5 => 'Datei'
+  }.freeze
 end
