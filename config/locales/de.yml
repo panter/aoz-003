@@ -60,6 +60,7 @@ de:
         name: Name
         user: User
       journal:
+        category: Kategorie
         entry: Eintrag
       language_skill:
         language: Sprache
@@ -271,6 +272,12 @@ de:
   assignments: Begleitungen
   available_volunteers: Verfügbare Freiwillige
   back: Zurück
+  category: &id-categories
+    conversation: Gespräch
+    email: E-Mail
+    feedback: Rückmeldung
+    file: Datei
+    telephone: Telefonat
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   changed_by: Geändert durch
@@ -534,6 +541,8 @@ de:
           rejected: Abgelehnt
           reserved: Reserviert
           resigned: Abgemeldet
+      journal:
+        category: *id-categories
       user:
         role: *id-roles
       volunteer:

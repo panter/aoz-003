@@ -5,6 +5,7 @@ h1= t_title(:index, Journal)
         thead
           tr
             th Datum
+            th= t_attr(:category)
             th Titel
             th Text
             th Author
@@ -13,6 +14,7 @@ h1= t_title(:index, Journal)
           - @journaled.journals.each do |record|
             tr
               td= l(record.created_at)
+              td= record.category
               td= record.subject
               td= record.body.truncate(40) if record.body
               td= link_to record.user.full_name, record.user.profile
