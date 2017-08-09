@@ -11,6 +11,7 @@ class Journal < ApplicationRecord
 
   CATEGORIES = [TELEPHONE, CONVERSATION, EMAIL, FEEDBACK, FILE].freeze
 
+  validates :category, presence: true
   validates :category, inclusion: { in: CATEGORIES }
 
   def self.category_collection

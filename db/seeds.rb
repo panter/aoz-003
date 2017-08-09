@@ -75,12 +75,14 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
         Journal.new(
           subject: Faker::Lorem.sentence(rand(2..5)),
           body: Faker::Lorem.sentence(rand(2..5)),
-          user: user
+          user: user,
+          category: Journal.category_collection.sample
         ),
         Journal.new(
           subject: Faker::Lorem.sentence(rand(2..5)),
           body: Faker::Lorem.sentence(rand(2..5)),
-          user: user
+          user: user,
+          category: Journal.category_collection.sample
         )
       ]
       client.birth_year = Faker::Date.birthday(18, 65)
@@ -127,12 +129,14 @@ Volunteer.state_collection.each do |state|
       Journal.new(
         subject: Faker::Lorem.sentence(rand(2..5)),
         body: Faker::Lorem.sentence(rand(2..5)),
-        user: User.first
+        user: User.first,
+        category: Journal.category_collection.sample
       ),
       Journal.new(
         subject: Faker::Lorem.sentence(rand(2..5)),
         body: Faker::Lorem.sentence(rand(2..5)),
-        user: User.first
+        user: User.first,
+        category: Journal.category_collection.sample
       )
     ]
     volunteer.birth_year = Faker::Date.birthday(18, 75)
