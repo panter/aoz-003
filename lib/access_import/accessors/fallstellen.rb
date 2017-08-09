@@ -1,4 +1,4 @@
-class Fallstellen
+class Fallstellen < Accessor
   def hash_all
     make_mappable(:tbl_FallStellen, :pk_FallStelle, true)
   end
