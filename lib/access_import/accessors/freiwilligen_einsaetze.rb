@@ -17,21 +17,21 @@ class FreiwilligenEinsaetze < Accessor
     )
   end
 
-  def where_begleitete(beg_id)
-    @records.select do |_k, fw_einsatz|
-      fw_einsatz[:fk_Begleitete] == beg_id.to_i
+  def where_begleitete(begleitet_id)
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_Begleitete] == begleitet_id.to_i
     end
   end
 
   def where_einsatz_ort(einsatz_ort_id)
-    @records.select do |_k, fw_einsatz|
+    all.select do |_key, fw_einsatz|
       fw_einsatz[:fk_EinsatzOrt] == einsatz_ort_id.to_i
     end
   end
 
-  def where_personen_rolle(pr_id)
-    @records.select do |_k, fw_einsatz|
-      fw_einsatz[:fk_PersonenRolle] == pr_id.to_i
+  def where_personen_rolle(personen_rolle_id)
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_PersonenRolle] == personen_rolle_id.to_i
     end
   end
 end

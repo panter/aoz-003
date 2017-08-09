@@ -11,7 +11,7 @@ class Ausbildungen < Accessor
   end
 
   def where_haupt_person(hauptperson_id)
-    @records.select do |_k, ausbildung|
+    all.select do |_key, ausbildung|
       ausbildung[:fk_Hauptperson] == hauptperson_id.to_i
     end
   end

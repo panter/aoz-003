@@ -11,9 +11,9 @@ class Begleitete < Accessor
     rec
   end
 
-  def where_personen_rolle(pr_id)
-    @records.select do |_key, pr|
-      pr[:fk_PersonenRolle] == pr_id.to_i
+  def where_personen_rolle(personen_rolle_id)
+    all.select do |_key, personen_rolle|
+      personen_rolle[:fk_PersonenRolle] == personen_rolle_id.to_i
     end
   end
 
