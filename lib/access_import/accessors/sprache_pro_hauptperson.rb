@@ -23,7 +23,7 @@ class SpracheProHauptperson < Accessor
   end
 
   def level_keys
-    ['Le', 'Sc', 'Sp', 'Ve'].map { |k| "fk_Kenntnisstufe#{k}".to_sym }
+    ['Le', 'Sc', 'Sp', 'Ve'].map { |key| "fk_Kenntnisstufe#{key}".to_sym }
   end
 
   def where_person(person_id)

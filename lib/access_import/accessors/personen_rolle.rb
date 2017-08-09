@@ -1,3 +1,5 @@
+require 'ostruct'
+
 class PersonenRolle < Accessor
   def hash_all
     make_mappable(:tbl_Personenrollen, :pk_PersonenRolle, true)
@@ -8,17 +10,18 @@ class PersonenRolle < Accessor
     rec = parse_int_fields(rec, :b_EinführungsKurs, :b_Interesse, :b_SpesenVerzicht,
       :fk_Hauptperson, :fk_Kostenträger, :pk_PersonenRolle, :z_AnzErw, :z_AnzKind,
       :z_Familienverband, :z_Rolle)
-    rec[:rolle] = map_rolle(rec[:z_Rolle])
+    rec[:rolle] = ACCESS_TO_OWN_ROLES_MAP[rec[:z_Rolle]]
     rec
   end
 
-  def map_rolle(z_rolle)
-    return 'Volunteer' if z_rolle == 1
-    return 'Client' if z_rolle == 2
-    return 'Animator' if z_rolle == 3
-    return 'Participant' if z_rolle == 4
-    nil
-  end
+  ACCESS_TO_OWN_ROLES_MAP = {
+    1 => 'Volunteer',
+    2 => 'Client',
+    3 => 'Animator',
+    4 => 'Participant'
+  }.freeze
+
+  ACCESS_ROLES = OpenStruct.new(volunteer: 1, client: 2, animator: 3, participant: 4).freeze
 
   def all_volunteers
     all.select do |_id, personen_rolle|
