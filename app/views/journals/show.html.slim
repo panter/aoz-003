@@ -3,16 +3,16 @@ h1= t_title(:show, Journal)
 .row
   .col-xs-12
     p
-      strong= "#{t_attr(:subject, Journal)}: "
+      strong= "#{t_attr(:subject)}: "
       = @journal.subject
     p
       strong= "#{t_attr(:category)}: "
       = t("category.#{@journal.category}")
     p
-      strong= "#{t_attr(:user, User)}: "
+      strong= "#{t_attr(:user)}: "
       = link_to @journal.user.to_label, @journal.user.profile
     p
-      strong= "#{t_attr(:created_at, Journal)}: "
+      strong= "#{t_attr(:created_at)}: "
       = l(@journal.created_at)
 .row
   .col-xs-12

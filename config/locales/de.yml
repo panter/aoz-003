@@ -60,8 +60,15 @@ de:
         name: Name
         user: User
       journal:
+        author: Author
+        body: Text
         category: Kategorie
+        created_at: Erstellt am
         entry: Eintrag
+        subject: Titel
+        text: Text
+        title: Titel
+        user: Ersteller
       language_skill:
         language: Sprache
         level: Niveau

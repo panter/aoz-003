@@ -13,11 +13,11 @@
       table.table
         thead
           tr
-            th Datum
+            th= t_attr(:created_at)
             th= t_attr(:category)
-            th Titel
-            th Text
-            th Author
+            th= t_attr(:title)
+            th= t_attr(:text)
+            th= t_attr(:author)
             th colspan=3
         tbody
           - journaled_for.journals.each do |record|
