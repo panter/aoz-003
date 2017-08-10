@@ -86,6 +86,10 @@ module AccUtils
     end.to_h
   end
 
+  def now
+    Time.zone.now
+  end
+
   def birth_year(geburtsdatum, jahrgang)
     return geburtsdatum if geburtsdatum
     Date.parse(jahrgang + '-06-01') if jahrgang

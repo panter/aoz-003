@@ -12,9 +12,10 @@ class Assignment < ApplicationRecord
   has_one :import, as: :importable, dependent: :destroy
   accepts_nested_attributes_for :import, allow_destroy: true
 
-  validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
-
   STATES = [:suggested, :active, :finished, :archived].freeze
+
+  validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
+  validates :state, inclusion: { in: STATES.map(&:to_s) }
 
   scope :no_end, (-> { where(assignment_end: nil) })
   scope :has_end, (-> { where.not(assignment_end: nil) })
