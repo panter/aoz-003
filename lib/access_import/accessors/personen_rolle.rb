@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class PersonenRolle < Accessor
   def hash_all
     make_mappable(:tbl_Personenrollen, :pk_PersonenRolle, true)
@@ -20,8 +18,6 @@ class PersonenRolle < Accessor
     3 => 'Animator',
     4 => 'Participant'
   }.freeze
-
-  ACCESS_ROLES = OpenStruct.new(volunteer: 1, client: 2, animator: 3, participant: 4).freeze
 
   def all_volunteers
     all.select do |_id, personen_rolle|
