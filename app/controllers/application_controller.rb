@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   before_action :authenticate_user!
-  before_action :set_paper_trail_whodunnit
   after_action :verify_authorized, unless: :devise_controller?
 
   def after_sign_in_path_for(current_user)

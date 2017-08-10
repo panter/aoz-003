@@ -147,7 +147,6 @@ en:
     telephone: Telephone
   change_my_password: Change my password
   change_password: Change your password
-  changed_by: Changed by
   checklist: Checklist
   clients: Clients
   clients_need_accompanying: Clients who need accompanying
@@ -272,7 +271,6 @@ en:
       not_saved:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
-  event: Event
   find_client: Find client
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
@@ -308,11 +306,6 @@ en:
   not_assignable: Not assignable
   not_authorized: You are not authorized to perform this action.
   other_request: Other requests for volunteers
-  paper_trail:
-    version:
-      create: Create
-      destroy: Destroy
-      update: Update
   password_reset_instructions: I want to reset my password
   pdf_header:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
@@ -423,14 +416,12 @@ en:
         mailer:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
-  timepoint: Timepoint
   times:
     afternoon: afternoon
     evening: evening
     morning: morning
   user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
-  versions: History
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Registration
   volunteer_availability: What times are you available for voluntary engagement?

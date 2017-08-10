@@ -289,7 +289,6 @@ de:
     telephone: Telefonat
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
-  changed_by: Geändert durch
   checklist: Checkliste
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
@@ -417,7 +416,6 @@ de:
       not_saved:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
-  event: Ereignis
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
@@ -449,11 +447,6 @@ de:
   not_assignable: Nicht zuweisbar
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   other_request: Sonstige Anforderungen an den/die Freiwillige/n
-  paper_trail:
-    version:
-      create: Erstellen
-      destroy: Löschen
-      update: Bearbeiten
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   pdf_header:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
@@ -588,14 +581,12 @@ de:
         mailer:
           invitation_instructions:
             accept_until_format: "%d. %B %Y %H:%M"
-  timepoint: Zeitpunkt
   times:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer/in
-  versions: Verlauf
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
