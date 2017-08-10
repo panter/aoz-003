@@ -23,15 +23,9 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_field? 'Zip'
     assert page.has_field? 'City'
     assert page.has_field? 'Profession'
-    assert page.has_field? name: 'profile[monday]'
-    assert page.has_field? name: 'profile[tuesday]'
-    assert page.has_field? name: 'profile[wednesday]'
-    assert page.has_field? name: 'profile[thursday]'
-    assert page.has_field? name: 'profile[friday]'
 
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
-    page.check(name: 'profile[monday]')
 
     click_button 'Create Profile'
     @user_without_profile.reload
@@ -40,9 +34,6 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_text? 'Hans'
     assert page.has_text? 'Muster'
     assert page.has_text? 'Profile was successfully created.'
-    assert page.has_selector?('table > tbody td:nth-child(1) i.glyphicon-ok')
-    refute page.has_selector?('table > tbody td:nth-child(2) i.glyphicon-ok')
-    assert page.has_selector?('table > tbody td:nth-child(2) i.glyphicon-remove')
   end
 
   test 'when profile created it can be displayed' do

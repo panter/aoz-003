@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170811095622) do
+ActiveRecord::Schema.define(version: 20170810092949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,11 +130,6 @@ ActiveRecord::Schema.define(version: 20170811095622) do
   create_table "profiles", force: :cascade do |t|
     t.bigint "user_id"
     t.string "profession"
-    t.boolean "monday"
-    t.boolean "tuesday"
-    t.boolean "wednesday"
-    t.boolean "thursday"
-    t.boolean "friday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "avatar_file_name"
@@ -158,19 +153,6 @@ ActiveRecord::Schema.define(version: 20170811095622) do
     t.string "relativeable_type"
     t.index ["deleted_at"], name: "index_relatives_on_deleted_at"
     t.index ["relativeable_type", "relativeable_id"], name: "index_relatives_on_relativeable_type_and_relativeable_id"
-  end
-
-  create_table "schedules", force: :cascade do |t|
-    t.bigint "scheduleable_id"
-    t.string "day"
-    t.string "time"
-    t.boolean "available", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.string "scheduleable_type"
-    t.index ["deleted_at"], name: "index_schedules_on_deleted_at"
-    t.index ["scheduleable_type", "scheduleable_id"], name: "index_schedules_on_scheduleable_type_and_scheduleable_id"
   end
 
   create_table "users", force: :cascade do |t|

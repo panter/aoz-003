@@ -1,5 +1,5 @@
 class Volunteer < ApplicationRecord
-  include LanguageAndScheduleReferences
+  include LanguageReferences
   include SalutationCollection
   include BuildContactRelation
   include YearCollection

@@ -12,19 +12,4 @@
 
   .row
     .col-xs-12
-      h3= t('working_days')
-      table.table.table-striped
-        thead
-          tr
-            - t('date.day_names').slice(1..5).each do |day_name|
-              th.text-center
-                = day_name
-        tbody
-          tr
-            - Schedule::DAYS.slice(0..4).each do |day|
-              td.text-center
-                = f.label day, class: 'sr-only'
-                = f.input day, as: :boolean, label: false
-  .row
-    .col-xs-12
       = f.button :submit, class: 'btn btn-success'

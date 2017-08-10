@@ -13,11 +13,5 @@ module NestedAttributes
         relatives_attributes: [:id, :first_name, :last_name, :birth_year, :relation, :_destroy]
       }
     end
-
-    def schedules_attributes
-      {
-        schedules_attributes: [:id, :day, :time, :available]
-      }
-    end
   end
 end

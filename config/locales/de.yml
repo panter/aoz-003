@@ -36,7 +36,6 @@ de:
         phone: Telefonnummer
         relatives: Verwandte/r
         salutation: Anrede
-        schedules: Fahrpläne
         state: Status
         street: Strasse
         user: User
@@ -78,23 +77,14 @@ de:
         address: Adresse
         avatar: Foto
         first_name: Vorname
-        friday: Freitag
         last_name: Nachname
-        monday: Montag
         phone: Telefonnummer
         profession: Beruf
-        thursday: Donnerstag
-        tuesday: Dienstag
-        wednesday: Mittwoch
       relative:
         birth_year: Jahrgang
         first_name: Vorname
         last_name: Nachname
         relation: Verwandtschaftsbeziehung
-      schedule:
-        available: Verfügbar
-        day: Tag
-        time: Zeit
       user:
         clients: Kunden/innen
         department: Standort
@@ -218,7 +208,6 @@ de:
       language_skill: Sprachkompetenz
       profile: Profil
       relative: Verwante/r
-      schedule: Zeitplan
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
@@ -485,8 +474,6 @@ de:
     all: Alle
     mr: Herr
     mrs: Frau
-  schedule: Zeitplan
-  schedule_description: Wann sind Sie verfügbar?
   seeking_clients: Klienten suchen
   show_assignment: Begleitung anzeigen
   show_assignments: Begleiteten anzeigen
@@ -605,10 +592,6 @@ de:
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
-  when: Zeit
   will_paginate:
     next_label: Weiter
     previous_label: Zurück
-  working_days: Arbeitstage
-  works_not_on: arbeitet nicht am
-  works_on: arbeitet am

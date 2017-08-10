@@ -75,7 +75,6 @@ en:
       language_skill: Language skill
       profile: Profile
       relative: Relative
-      schedule: Schedule
       user: User
       volunteer: Volunteer
       volunteer_application: Volunteer Registration
@@ -343,8 +342,6 @@ en:
   salutation: &id-salutations
     mr: Mr.
     mrs: Mrs.
-  schedule: Schedule
-  schedule_description: When are you available?
   seeking_clients: Looking for clients
   show_assignment: Show assignment
   show_assignments: Show assignments
@@ -439,8 +436,4 @@ en:
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to register as a volunteer?
-  when: Time
-  working_days: Working days
-  works_not_on: works not on
-  works_on: works on
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?

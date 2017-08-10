@@ -40,8 +40,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :user_id, :picture, :profession, :monday,
-      :tuesday, :wednesday, :thursday, :friday, :avatar,
+      :user_id, :picture, :profession, :avatar,
       contact_attributes
     )
   end
