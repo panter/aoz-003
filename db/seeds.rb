@@ -55,9 +55,6 @@ User.role_collection.each do |role|
         primary_phone: Faker::PhoneNumber.phone_number
       )
       profile.profession = Faker::Company.profession
-      [:monday, :tuesday, :wednesday, :thursday, :friday].each do |day|
-        profile[day] = [true, false].sample
-      end
     end
   end
 end
@@ -176,9 +173,4 @@ if VolunteerEmail.count < 1
       ve.user = User.first
     end.save
   end
-end
-
-Schedule.all.each do |s|
-  s.available = [true, false].sample
-  s.save!
 end

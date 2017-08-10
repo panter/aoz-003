@@ -14,7 +14,7 @@ class ActiveSupport::TestCase
     # when tests are aborted
     [
       User, Volunteer, Client, Contact, Profile, Journal, Assignment,
-      Department, LanguageSkill, Relative, Schedule
+      Department, LanguageSkill, Relative
     ].each do |model|
       model.with_deleted.map(&:really_destroy!)
     end

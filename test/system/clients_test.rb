@@ -44,7 +44,6 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
     fill_in 'Involved authority', with: 'asdfasdf'
-    page.check('client_schedules_attributes_17_available')
 
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'

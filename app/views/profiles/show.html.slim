@@ -15,26 +15,6 @@
             td= t_attr(:profession)
             td= @profile.profession
 
-.row
-  .col-xs-12
-    h3= t('working_days')
-    table.table.table-striped
-      thead
-        tr
-          - t('date.day_names').slice(1..5).each do |day_name|
-            th.text-center
-              = day_name
-      tbody
-        tr
-          - Schedule::DAYS.slice(0..4).each_with_index do |day, index|
-            td.text-center
-              - if @profile.read_attribute(day)
-                i.glyphicon.glyphicon-ok.text-success
-                span.sr-only= t('works_on', day_name: t('date.day_names')[index + 1])
-              - else
-                i.glyphicon.glyphicon-remove.text-danger
-                span.sr-only= t('works_not_on', day_name: t('date.day_names')[index + 1])
-
 = form_navigation_btn :edit
 .row
   .col-xs-12

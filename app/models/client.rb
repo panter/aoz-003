@@ -1,5 +1,5 @@
 class Client < ApplicationRecord
-  include LanguageAndScheduleReferences
+  include LanguageReferences
   include SalutationCollection
   include YearCollection
   include BuildContactRelation
