@@ -84,10 +84,6 @@ class Volunteer < ApplicationRecord
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
-  def self.human_boolean(boolean)
-    boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
-  end
-
   def self.first_languages
     [
       [I18nData.languages(I18n.locale)['DE'], 'DE'],
