@@ -83,15 +83,6 @@ module ApplicationHelper
     end
   end
 
-  def find_version_author_email(version)
-    if version.terminator.present?
-      user = User.find(version.terminator)
-      user.email
-    else
-      ''
-    end
-  end
-
   def nationality_name(nationality)
     return '' if nationality.blank?
     c = ISO3166::Country[nationality]
