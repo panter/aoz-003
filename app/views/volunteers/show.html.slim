@@ -135,30 +135,8 @@ h3= t_attr(:group_accompaniment)
           td= t_attr(:other_offer_desc)
           td= @volunteer.other_offer_desc
 
-h3= t_attr(:volunteer_availability)
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        - Volunteer::AVAILABILITY.each do |availability|
-          th.text-center
-            = t_attr(availability)
-    tbody
-      tr
-        - Volunteer::AVAILABILITY.each do |availability|
-          td.text-center
-            - if @volunteer.read_attribute(availability)
-              i.glyphicon.glyphicon-ok.text-success
-            - else
-              i.glyphicon.glyphicon-remove.text-danger
-
-- if @volunteer.detailed_description?
-  .table-responsive
-    table.table.table-no-border-top
-      tbody
-        tr
-          td= t_attr(:detailed_description)
-          td= @volunteer.detailed_description
+h3= t('volunteer_availability')
+= render 'availability/show', available: @volunteer
 
 - if @volunteer.assignments.any?
   .row

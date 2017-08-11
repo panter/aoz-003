@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def availability_collection
+    [:flexible, :morning, :afternoon, :evening, :workday, :weekend]
+  end
+
   def simple_error_notice(f)
     boostrap_row(f.error_notification) if f.error_notification.present?
   end

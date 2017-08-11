@@ -1,4 +1,4 @@
-
+include ApplicationHelper
 Faker::Config.locale = 'de'
 
 def random_relation
@@ -55,6 +55,9 @@ User.role_collection.each do |role|
         primary_phone: Faker::PhoneNumber.phone_number
       )
       profile.profession = Faker::Company.profession
+      availability_collection.each do |availability|
+        profile[availability] = [true, false].sample
+      end
     end
   end
 end
@@ -93,6 +96,9 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
       client.language_skills = make_lang_skills
       client.age_request = random_age_request
       client.gender_request = random_gender_request
+      availability_collection.each do |availability|
+        client[availability] = [true, false].sample
+      end
     end
   end
   user.save
@@ -157,6 +163,9 @@ Volunteer.state_collection.each do |state|
     end
     volunteer.strengths = "#{Faker::Job.key_skill}, #{Faker::Job.key_skill}"
     volunteer.language_skills = make_lang_skills
+    availability_collection.each do |availability|
+      volunteer[availability] = [true, false].sample
+    end
   end
   vol.save!
 end

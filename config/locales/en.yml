@@ -23,27 +23,22 @@ en:
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
         address: Address
-        afternoon: Afternoon
         bank_account: Bank account details entered
         children: Children
         cooking: Cooking
         creative: Creative
         culture: Culture
         dancing: Dancing
-        detailed_description: Detailed Description
         doc_sent: Engaged volunteer's documents sent
         evaluation: Final evaluation
-        evening: Evening
         excursions: Excursions
         family: Family
-        flexible: Flexible
         full_name: Name
         german_course: German course
         health: Health
         intro_course: Introductory course
         kid: Kid
         man: Man
-        morning: Morning
         music: Music
         other_offer: Other (please describe)
         other_offer_desc: Description
@@ -56,12 +51,9 @@ en:
         training: Training
         trial_period: Trial period report
         unaccompanied: Unaccompanied minors
-        volunteer_availability: What times are you available for voluntary engagement?
         volunteer_experience_desc: If you have any experiences with voluntary work, please describe here.
-        weekend: Weekend
         woman: Woman
         women: Women
-        workday: Workday
         working_percent: Employment rate (in Percent)
         zurich: Support for moving in Zurich City
       volunteer_email:
@@ -136,6 +128,14 @@ en:
     what: Was?
     zurich: Zürich
   assignments: Assignments
+  availability:
+    afternoon: Afternoon
+    detailed_description: Detailed Description
+    evening: Evening
+    flexible: Flexible
+    morning: Morning
+    weekend: Weekend
+    workday: Workday
   available_volunteers: Available volunteers
   back: Back
   category: &id-categories
@@ -278,6 +278,7 @@ en:
     all: All
     no_matter: "gender doesn't matter"
     same: gender same
+  general_availability: When are you available?
   get_back: We will soon get back to you.
   helpers:
     submit:

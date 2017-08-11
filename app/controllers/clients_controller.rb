@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+  include AvailabilityAttributes
   include NestedAttributes
   include ContactAttributes
   include MakeNotice
@@ -61,7 +62,8 @@ class ClientsController < ApplicationController
       :entry_year, :gender_request, :age_request, :other_request, :birth_year,
       :salutation, :nationality, :permit, :goals, :education, :interests,
       :state, :comments, :involved_authority, :competent_authority, :actual_activities,
-      language_skills_attributes, relatives_attributes, contact_attributes
+      language_skills_attributes, relatives_attributes, contact_attributes,
+      availability_attributes
     )
   end
 end

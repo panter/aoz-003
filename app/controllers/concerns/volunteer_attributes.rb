@@ -10,7 +10,7 @@ module VolunteerAttributes
         :music, :culture, :training, :german_course, :teenagers, :children, :state,
         :working_percent, :volunteer_experience_desc, :dancing, :health, :cooking,
         :excursions, :women, :unaccompanied, :zurich, :other_offer, :other_offer_desc,
-        :own_kids, contact_attributes, language_skills_attributes
+        :own_kids, contact_attributes, language_skills_attributes, availability_attributes
       ]
     end
   end

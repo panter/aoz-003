@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  include AvailabilityAttributes
   include ContactAttributes
   include MakeNotice
 
@@ -41,7 +42,7 @@ class ProfilesController < ApplicationController
   def profile_params
     params.require(:profile).permit(
       :user_id, :picture, :profession, :avatar,
-      contact_attributes
+      contact_attributes, availability_attributes
     )
   end
 end
