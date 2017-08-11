@@ -166,5 +166,8 @@ h3= t_attr(:volunteer_availability)
       h3= t('assignments')
   = render 'assignments/volunteer_index', assignments: @volunteer.assignments
 
-= form_navigation_btn :edit
-= form_navigation_btn :back
+- if current_user.volunteer?
+  = button_link t('edit_profile'), edit_volunteer_path(@volunteer)
+- else
+  = form_navigation_btn :edit
+  = form_navigation_btn :back

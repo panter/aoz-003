@@ -420,6 +420,7 @@ en:
     afternoon: afternoon
     evening: evening
     morning: morning
+  update_profile: Update profile
   user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
   voluntary_platform: Voluntaries Platform

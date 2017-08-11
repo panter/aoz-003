@@ -585,6 +585,7 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
+  update_profile: Profil aktualisieren
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer/in
   voluntary_platform: Freiwilligen Plattform
