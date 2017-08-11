@@ -2,7 +2,7 @@
   .col-xs-12
     h1= @volunteer.contact.full_name
 
-- if @volunteer.seeking_clients?
+- if policy(Volunteer).seeking_clients? & @volunteer.seeking_clients?
   .row
     .col-xs-12
       = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
