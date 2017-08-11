@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def permit_collection
-    [:N, :F, :'B-FL', :B, :C]
-  end
-
   def simple_error_notice(f)
     boostrap_row(f.error_notification) if f.error_notification.present?
   end
