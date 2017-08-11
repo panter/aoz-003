@@ -69,6 +69,19 @@ class UserTest < ActiveSupport::TestCase
     assert User.unscoped.find(user.id)
   end
 
+  test 'validates uniqueness only checks non deleted records' do
+    a = User.create!(email: 'superadmin@example.com', role: 'superadmin', password: 'asdfasdf')
+    a.destroy
+    b = User.new(email: 'superadmin@example.com', role: 'superadmin', password: 'asdfasdf')
+    assert b.valid?
+  end
+
+  test 'validates uniqueness still works on non deleted records' do
+    a = User.create!(email: 'superadmin@example.com', role: 'superadmin', password: 'asdfasdf')
+    b = User.new(email: 'superadmin@example.com', role: 'superadmin', password: 'asdfasdf')
+    refute b.valid?
+  end
+
   test 'automatically builds profile relation' do
     assert_instance_of Profile, @user.profile
   end
