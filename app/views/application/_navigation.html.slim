@@ -30,7 +30,10 @@ nav.navbar.navbar-top
               = current_user.email
               span.caret
             ul.dropdown-menu
-              - unless current_user.volunteer?
+              - if current_user.volunteer?
+                li
+                  = link_to t('show_profile'), volunteer_path(current_user.volunteer.id)
+              - else
                 li
                   - if current_user.profile.blank?
                     = link_to t('create_profile'), new_profile_path
