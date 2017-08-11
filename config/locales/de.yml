@@ -96,7 +96,6 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         address: Adresse
-        afternoon: Nachmittags
         avatar: Foto
         bank_account: Kontodaten eingetragen
         birth_year: Jahrgang
@@ -107,19 +106,16 @@ de:
         creative: Kreativ
         culture: Kultur
         dancing: Tanz
-        detailed_description: Genauere Angaben
         doc_sent: Dossier Freiwillige engagiert verschickt
         education: Ausbildung
         email: Email
         evaluation: Abschlussevaluation erhalten
-        evening: Abends
         excursions: Ausflüge
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
         first_language: Muttersprache
         first_name: Vorname
-        flexible: Flexibel
         full_name: Name
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
@@ -130,7 +126,6 @@ de:
         languages: Sprachen
         last_name: Nachname
         man: Mann
-        morning: Morgens
         music: Musik
         nationality: Nationalität
         other_offer: Anderes (bitte beschreiben)
@@ -152,12 +147,9 @@ de:
         training: Bildung
         trial_period: Probezeitbericht erhalten
         unaccompanied: Unbegleitete Minderjährige
-        volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
-        weekend: Wochenende
         woman: Frau
         women: Frauen
-        workday: Werktags
         working_percent: Stellenprozent
         zip: Postleitzahl
         zurich: Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt
@@ -268,6 +260,14 @@ de:
     what: Was?
     zurich: Zürich
   assignments: Begleitungen
+  availability:
+    afternoon: Nachmittags
+    detailed_description: Genauere Angaben
+    evening: Abends
+    flexible: Flexibel
+    morning: Morgens
+    weekend: Wochenende
+    workday: Werktags
   available_volunteers: Verfügbare Freiwillige
   back: Zurück
   category: &id-categories
@@ -412,6 +412,7 @@ de:
     all: Alle
     no_matter: Geschlecht egal
     same: Geschlecht gleich
+  general_availability: Wann sind Sie verfügbar?
   get_back: Wir werden uns bald bei Ihnen melden.
   helpers:
     submit:

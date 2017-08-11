@@ -1,0 +1,5 @@
+- availability_collection.each do |availability|
+  .col-xs-6.col-md-3
+    = f.input availability, label: t("availability.#{availability}")
+.col-xs-12
+  = f.input :detailed_description, label: t("availability.detailed_description")

@@ -1,4 +1,5 @@
 class VolunteerApplicationsController < ApplicationController
+  include AvailabilityAttributes
   include NestedAttributes
   include ContactAttributes
   include VolunteerAttributes

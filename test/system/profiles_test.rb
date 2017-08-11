@@ -23,9 +23,17 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_field? 'Zip'
     assert page.has_field? 'City'
     assert page.has_field? 'Profession'
+    assert page.has_field? name: 'profile[flexible]'
+    assert page.has_field? name: 'profile[morning]'
+    assert page.has_field? name: 'profile[afternoon]'
+    assert page.has_field? name: 'profile[evening]'
+    assert page.has_field? name: 'profile[workday]'
+    assert page.has_field? name: 'profile[weekend]'
+    assert page.has_field? 'Detailed Description'
 
     fill_in 'First name', with: 'Hans'
     fill_in 'Last name', with: 'Muster'
+    page.check(name: 'profile[morning]')
 
     click_button 'Create Profile'
     @user_without_profile.reload
@@ -33,6 +41,9 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_current_path? profile_path(@user_without_profile.profile.id)
     assert page.has_text? 'Hans'
     assert page.has_text? 'Muster'
+    refute page.has_selector?('table > tbody td:nth-child(1) i.glyphicon-ok')
+    assert page.has_selector?('table > tbody td:nth-child(2) i.glyphicon-ok')
+    assert page.has_selector?('table > tbody td:nth-child(3) i.glyphicon-remove')
     assert page.has_text? 'Profile was successfully created.'
   end
 

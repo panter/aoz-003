@@ -15,6 +15,9 @@
             td= t_attr(:profession)
             td= @profile.profession
 
+h3= t('general_availability')
+= render 'availability/show', available: @profile
+
 = form_navigation_btn :edit
 .row
   .col-xs-12

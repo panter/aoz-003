@@ -71,5 +71,8 @@
           td= t_attr(:comments)
           td= @client.comments
 
+h3= t('general_availability')
+= render 'availability/show', available: @client
+
 = form_navigation_btn :edit
 = form_navigation_btn :back

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170810092949) do
+ActiveRecord::Schema.define(version: 20170811095622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,13 @@ ActiveRecord::Schema.define(version: 20170810092949) do
     t.string "age_request"
     t.string "other_request"
     t.text "actual_activities"
+    t.boolean "flexible", default: false
+    t.boolean "morning", default: false
+    t.boolean "afternoon", default: false
+    t.boolean "evening", default: false
+    t.boolean "workday", default: false
+    t.boolean "weekend", default: false
+    t.text "detailed_description"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
@@ -137,6 +144,13 @@ ActiveRecord::Schema.define(version: 20170810092949) do
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.datetime "deleted_at"
+    t.boolean "flexible", default: false
+    t.boolean "morning", default: false
+    t.boolean "afternoon", default: false
+    t.boolean "evening", default: false
+    t.boolean "workday", default: false
+    t.boolean "weekend", default: false
+    t.text "detailed_description"
     t.index ["deleted_at"], name: "index_profiles_on_deleted_at"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
