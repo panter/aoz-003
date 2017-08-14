@@ -9,6 +9,7 @@
 .row
   - if policy(Volunteer).destroy?
     .col-xs-12= button_link t('seeking_clients'), seeking_clients_volunteers_url
+    li= button_link t('export_xlsx'), "#{volunteers_path}.xlsx?#{{q: request.GET[:q]}.to_query}", 'warning  ', dimension: 'sm'
 
 = render 'columns', volunteers: @volunteers
 

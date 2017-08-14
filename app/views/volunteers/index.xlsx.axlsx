@@ -1,0 +1,54 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: t('volunteers')) do |sheet|
+  sheet.add_row [
+    'id',
+    t_attr(:salutation),
+    t_attr(:title, Contact),
+    t_attr(:last_name, Contact),
+    t_attr(:first_name, Contact),
+    t_attr(:street, Contact),
+    t_attr(:extended, Contact),
+    t_attr(:postal_code, Contact),
+    t_attr(:city, Contact),
+    t_attr(:primary_phone, Contact),
+    t_attr(:secondary_phone, Contact),
+    t_attr(:primary_email, Contact),
+    t_attr(:birth_year),
+    t_attr(:nationality),
+    t_attr(:profession),
+    t_attr(:state),
+    t_attr(:created_at),
+    t_attr(:updated_at),
+    t_attr(:assignment_count),
+    t_attr(:german_course)
+  ]
+  @volunteers.each do |volunteer|
+    contact = volunteer.contact
+    sheet.add_row [
+      volunteer.id,
+      t("salutation.#{volunteer.salutation}"),
+      contact.last_name,
+      contact.first_name,
+      contact.street,
+      contact.extended,
+      contact.title,
+      contact.postal_code,
+      contact.city,
+      contact.primary_phone,
+      contact.secondary_phone,
+      contact.primary_email,
+      volunteer.birth_year&.year,
+      nationality_name(volunteer.nationality),
+      volunteer.profession,
+      t("state.#{volunteer.state}"),
+      volunteer.created_at,
+      volunteer.updated_at,
+      volunteer.assignments.count,
+      t(volunteer.german_course)
+    ]
+  end
+
+  sheet.add_row []
+  sheet.add_row ['Amount', @volunteers.count]
+end
