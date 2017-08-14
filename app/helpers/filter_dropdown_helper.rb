@@ -27,7 +27,7 @@ module FilterDropdownHelper
   end
 
   def list_filter_link(q_filter, filter_value, boolean_value = nil)
-    link_class = 'bg-success' if [filter_value, 'true'].include? @local_q[q_filter]
+    link_class = 'bg-success' if [filter_value.to_s, 'true'].include? @local_q[q_filter]
     link_text = translate_value(filter_value)
     filter_value = true if !boolean_value.nil? && boolean_value
     filter_value = '' if !boolean_value.nil? && !boolean_value
@@ -50,8 +50,8 @@ module FilterDropdownHelper
                 role: 'button', href: '#', data: { toggle: 'dropdown' } }
     content_tag :a, options do
       concat t_attr(attribute)
-      concat ': ' if q_filter
-      concat translate_value(@local_q[q_filter]) if q_filter
+      concat ': ' if q_filter.size == 1
+      concat translate_value(@local_q[q_filter[0]]) if q_filter.size == 1
       concat ' '
       concat content_tag(:span, '', class: 'caret')
     end

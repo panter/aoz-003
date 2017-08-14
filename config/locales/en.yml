@@ -1,6 +1,15 @@
 ---
 en:
+  availability: &id-availability
+    afternoon: Afternoon
+    detailed_description: Detailed Description
+    evening: Evening
+    flexible: Flexible
+    morning: Morning
+    weekend: Weekend
+    workday: Workday
   accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
+  clear_filters: Clear filters
   activerecord:
     attributes:
       client:
@@ -20,6 +29,7 @@ en:
         department: Department
         email: Email
       volunteer: &id-volunteer_attributes
+        <<: *id-availability
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
         address: Address
@@ -128,14 +138,6 @@ en:
     what: Was?
     zurich: Zürich
   assignments: Assignments
-  availability:
-    afternoon: Afternoon
-    detailed_description: Detailed Description
-    evening: Evening
-    flexible: Flexible
-    morning: Morning
-    weekend: Weekend
-    workday: Workday
   available_volunteers: Available volunteers
   back: Back
   category: &id-categories

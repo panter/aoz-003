@@ -1,6 +1,7 @@
 ---
 de:
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
+  clear_filters: Filter aufheben
   activerecord:
     attributes:
       assignment:
