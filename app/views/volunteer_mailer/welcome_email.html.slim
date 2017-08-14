@@ -55,7 +55,7 @@ h4= "#{t_attr(:motivation, Volunteer)}: "
 p= @volunteer.motivation
 
 h4= "#{t(:experience, scope: [:simple_form, :labels, :volunteer])}: "
-p= Volunteer.human_boolean(@volunteer.experience)
+p= t(@volunteer.experience)
 
 h4= "#{t_attr(:expectations, Volunteer)}: "
 p= @volunteer.expectations

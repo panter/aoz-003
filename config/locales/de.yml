@@ -279,6 +279,8 @@ de:
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   checklist: Checkliste
+  "true": Ja
+  "false": Nein
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.

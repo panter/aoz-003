@@ -17,19 +17,19 @@
       tbody
         tr
           td= t_attr(:trial_period)
-          td= Volunteer.human_boolean(@volunteer.trial_period)
+          td= t(@volunteer.trial_period)
         tr
           td= t_attr(:intro_course)
-          td= Volunteer.human_boolean(@volunteer.intro_course)
+          td= t(@volunteer.intro_course)
         tr
           td= t_attr(:doc_sent)
-          td= Volunteer.human_boolean(@volunteer.doc_sent)
+          td= t(@volunteer.doc_sent)
         tr
           td= t_attr(:bank_account)
-          td= Volunteer.human_boolean(@volunteer.bank_account)
+          td= t(@volunteer.bank_account)
         tr
           td= t_attr(:evaluation)
-          td= Volunteer.human_boolean(@volunteer.evaluation)
+          td= t(@volunteer.evaluation)
 
 h3= t('personal_background')
 .table-responsive
@@ -70,7 +70,7 @@ h3= t('personal_background')
         td= t_attr(:experience)
         td
           dl.dl-horizontal
-            dt= Volunteer.human_boolean(@volunteer.experience)
+            dt= t(@volunteer.experience)
             dd= @volunteer.volunteer_experience_desc if @volunteer.volunteer_experience_desc?
       tr
         td= t_attr(:expectations)
@@ -96,7 +96,7 @@ h3= t('personal_background')
         td= t_attr(:zurich)
         td
           dl.dl-horizontal
-            dt= Volunteer.human_boolean(@volunteer.zurich)
+            dt= t(@volunteer.zurich)
 
 h3= t_attr(:single_accompaniment)
 .table-responsive

@@ -65,7 +65,7 @@
 
 - if @volunteer.experience.present?
   = "#{rn2}#{t(:experience, scope: [:simple_form, :labels, :volunteer])}:\t"
-  = Volunteer.human_boolean(@volunteer.experience)
+  = t(@volunteer.experience)
 
 - if @volunteer.volunteer_experience_desc.present?
   = "\r\n#{@volunteer.volunteer_experience_desc}#{rn2}"
