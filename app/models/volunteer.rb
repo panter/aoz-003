@@ -69,10 +69,6 @@ class Volunteer < ApplicationRecord
     state == REJECTED
   end
 
-  def self.human_boolean(boolean)
-    boolean ? I18n.t('simple_form.yes') : I18n.t('simple_form.no')
-  end
-
   def self.state_collection
     STATES.map(&:to_sym)
   end

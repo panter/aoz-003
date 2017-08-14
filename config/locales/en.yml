@@ -299,6 +299,8 @@ en:
   language_skills: Language skills
   login: Log in
   logout: Logout
+  "true": "Yes"
+  "false": "No"
   messages:
     confirm_delete: "Really delete %{model} %{record}?"
     select_prompt: "Select %{model}"

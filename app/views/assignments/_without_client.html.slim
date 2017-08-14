@@ -9,7 +9,7 @@ tr
     - without_client.language_skills.each do |language|
       = language.full_language_skills
   td= without_client.motivation
-  td= Volunteer.human_boolean(without_client.experience)
+  td= t(without_client.experience)
   td
     - Volunteer.single_accompaniment.each do |single|
       - if without_client[single]
