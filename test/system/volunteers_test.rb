@@ -134,18 +134,6 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_content? 'Explanation for rejection Explanation'
   end
 
-  test 'change filter to other options' do
-    create :volunteer, state: 'resigned'
-    visit volunteers_path
-    within '.section-navigation' do
-      click_link 'State: All'
-      click_link 'Terminated'
-    end
-    within 'tbody' do
-      assert page.has_text? 'Terminated'
-    end
-  end
-
   test 'thead state filter dropdown can switch to all' do
     visit volunteers_path
     within 'tbody' do
