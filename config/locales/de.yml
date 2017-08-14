@@ -51,7 +51,7 @@ de:
         primary_phone: Telefonnummer
         secondary_phone: Telefonnummer 2
         street: Strasse
-        title: Anrede
+        title: Titel
       department:
         associated_users: Assozierte Benutzer
         city: Ort
@@ -69,10 +69,10 @@ de:
         title: Titel
         user: Ersteller
       language_skill:
-        language: Sprache
-        native_language: Muttersprache
         foreign_languages: Fremdsprachen
+        language: Sprache
         level: Niveau
+        native_language: Muttersprache
       profile:
         address: Adresse
         avatar: Foto
@@ -92,11 +92,13 @@ de:
         profile: Profil
         role: Rolle
       volunteer: &id-volunteer_attributes
+        available: Verfügbar
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         address: Adresse
         avatar: Foto
+        assignment_count: Anzahl begleitungen
         bank_account: Kontodaten eingetragen
         birth_year: Jahrgang
         children: Kinder
@@ -147,6 +149,8 @@ de:
         training: Bildung
         trial_period: Probezeitbericht erhalten
         unaccompanied: Unbegleitete Minderjährige
+        updated_at: Aktualisiert am
+        volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         woman: Frau
         women: Frauen
@@ -203,7 +207,7 @@ de:
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
-      volunteer_email: Bestätigungsmail
+      volunteer_email: Anmeldungsbestätigungs-Nachricht editieren
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journal Eintrag verfassen
   add_language: Sprache hinzufügen
@@ -541,9 +545,7 @@ de:
         language_skills:
           level: *id-lang-levels
         rejection_type: *id-rejection-types
-        salutation:
-          <<: *id-salutations
-          all: Alle
+        salutation: *id-salutations
         state:
           <<: *id-states
           active_further: Aktiv, an weiteren Einsätzen interessiert

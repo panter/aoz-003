@@ -1,20 +1,25 @@
+h1= t('volunteers')
+nav.navbar.section-navigation
+  hr
+  ul.list-inline
+    li= button_link t_title(:new), new_volunteer_path, 'success', dimension: 'sm'
+    - if policy(Volunteer).destroy?
+      li= button_link t('seeking_clients'), seeking_clients_volunteers_url, dimension: 'sm'
+    li |
+    li= button_link t_model(VolunteerEmail), volunteer_emails_path, dimension: 'sm'
 
-.row
-  .col-xs-12
-    h1= t('volunteers')
-.row
-  .col-xs-4.col-md-4= form_navigation_btn :new, with_row: false
-  .col-xs-4.col-md-4.text-center= link_to t('volunteer_emails'), volunteer_emails_path, class: 'btn btn-default'
-  .col-xs-4.col-md-4.text-right= render 'state_select'
-.row
-  - if policy(Volunteer).destroy?
-    .col-xs-12= button_link t('seeking_clients'), seeking_clients_volunteers_url
+  hr
+
+  ul.list-inline
+    li= button_link 'Filter aufheben', "#{volunteers_path}", 'info', dimension: 'sm'
     li= button_link t('export_xlsx'), "#{volunteers_path}.xlsx?#{{q: request.GET[:q]}.to_query}", 'warning  ', dimension: 'sm'
+    = list_eq_filter_dropdown(:state, Volunteer::STATES)
+    = list_eq_filter_dropdown(:salutation, Volunteer.salutation_collection)
+    = list_boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
+    = list_boolean_filter_dropdown(:group_accompaniment, Volunteer::GROUP_ACCOMPANIMENTS)
+    = list_boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)
+  hr
+
+
 
 = render 'columns', volunteers: @volunteers
-
-.row
-  = form_navigation_btn :new, with_row: false, with_col: true, cols: 4
-  - if policy(Volunteer).destroy?
-    .col-xs-4
-      = button_link t('seeking_clients'), seeking_clients_volunteers_url
