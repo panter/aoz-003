@@ -270,6 +270,7 @@ en:
       not_saved:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
+  export_xlsx: Export list as XLSX
   find_client: Find client
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?

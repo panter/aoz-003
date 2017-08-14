@@ -6,14 +6,14 @@
   table.table.table-striped
     thead
       tr
-        th= sort_link @q, :contact_title
+        th= sort_link @q, :salutation
         - if action_name == 'index' || action_name == 'seeking_clients'
           th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
         th= sort_link @q, :contact_city
         th= sort_link @q, :contact_postal_code
         th= sort_link @q, :contact_primary_email
         th= sort_link @q, :birth_year, t_attr(:birth_year, Volunteer)
-        th= sort_link @q, :language_skills_language, t_attr(:first_language, Volunteer)
+        th= t_attr(:first_language, Volunteer)
         th= t_attr(:languages, Volunteer)
         th= sort_link @q, :education
         th= sort_link @q, :profession

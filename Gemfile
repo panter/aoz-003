@@ -8,6 +8,8 @@ end
 gem 'rails', '~> 5.1'
 
 gem 'autoprefixer-rails'
+gem 'axlsx', '2.1.0.pre'
+gem 'axlsx_rails'
 gem 'bootstrap-sass'
 gem 'cocoon'
 gem 'coffee-rails'
@@ -30,6 +32,7 @@ gem 'puma'
 gem 'pundit'
 gem 'rails-i18n'
 gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'rubyzip', '~> 1.1.0'
 gem 'sass-rails'
 gem 'scss_lint', require: false
 gem 'simple_form'
