@@ -7,8 +7,9 @@ module ApplicationHelper
     boostrap_row(f.error_notification) if f.error_notification.present?
   end
 
-  def button_link(text, target, type = 'default')
-    link_to text, target, class: "btn btn-#{type}"
+  def button_link(text, target, type = 'default', dimension: nil)
+    btn_size = " btn-#{dimension}" if dimension
+    link_to text, target, class: "btn btn-#{type}#{btn_size}"
   end
 
   def link_to_add_polymorphic_association(*args)

@@ -13,3 +13,11 @@
     margin-right:  $padding-large-horizontal;
   }
 }
+.section-navigation {
+  margin-bottom: 0;
+  margin-top: 0;
+
+  hr, ul {
+    margin: 5px 0;
+  }
+}

@@ -137,8 +137,8 @@ class VolunteersTest < ApplicationSystemTestCase
   test 'change filter to other options' do
     create :volunteer, state: 'resigned'
     visit volunteers_path
-    within find_all('.btn-group').first do
-      click_button 'State : All'
+    within '.section-navigation' do
+      click_link 'State: All'
       click_link 'Terminated'
     end
     within 'tbody' do
