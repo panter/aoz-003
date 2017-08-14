@@ -183,3 +183,20 @@ if VolunteerEmail.count < 1
     end.save
   end
 end
+
+accompainable = Client.need_accompanying.to_a
+seek_clients = Volunteer.seeking_clients.to_a
+
+if accompainable.size >= seek_clients.size
+  seek_clients.each do |volunteer|
+    client = accompainable.pop
+    Assignment.new(client_id: client.id, volunteer_id: volunteer.id,
+      creator_id: User.where(role: 'superadmin').first.id).save
+  end
+else
+  accompainable.each do |client|
+    volunteer = seek_clients.pop
+    Assignment.new(client_id: client.id, volunteer_id: volunteer.id,
+      creator_id: User.where(role: 'superadmin').first.id).save
+  end
+end
