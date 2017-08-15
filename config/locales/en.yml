@@ -16,6 +16,7 @@ en:
         age_request: Volunteer's age
         gender_request: Volunteer's gender
         user: User
+        no_matter:
       contact:
         city: City
         extended: Extended address
@@ -377,6 +378,12 @@ en:
         relatives:
           relation: *id-relations
         salutation: *id-salutations
+        permit:
+          'n': N
+          f: F
+          b-fl: B-FL
+          b: 'B'
+          c: 'C'
         state: &id-states
           accepted: Accepted
           active: Active

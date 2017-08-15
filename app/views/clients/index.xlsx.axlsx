@@ -1,0 +1,47 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: t('volunteers')) do |sheet|
+  sheet.add_row [
+    'id',
+    t_attr(:salutation),
+    t_attr(:last_name, Contact),
+    t_attr(:first_name, Contact),
+    t_attr(:street, Contact),
+    t_attr(:extended, Contact),
+    t_attr(:postal_code, Contact),
+    t_attr(:city, Contact),
+    t_attr(:primary_phone, Contact),
+    t_attr(:secondary_phone, Contact),
+    t_attr(:primary_email, Contact),
+    t_attr(:birth_year),
+    t_attr(:nationality),
+    t_attr(:education),
+    t_attr(:entry_year),
+    t_attr(:state),
+    t_attr(:created_at),
+    t_attr(:updated_at)
+  ]
+  @clients.each do |client|
+    contact = client.contact
+    sheet.add_row [
+      client.id,
+      t("salutation.#{client.salutation}"),
+      contact.last_name,
+      contact.first_name,
+      contact.street,
+      contact.extended,
+      contact.postal_code,
+      contact.city,
+      contact.primary_phone,
+      contact.secondary_phone,
+      contact.primary_email,
+      client.birth_year&.year,
+      nationality_name(client.nationality),
+      client.education,
+      client.entry_year,
+      t("state.#{client.state}"),
+      client.created_at,
+      client.updated_at
+    ]
+  end
+end
