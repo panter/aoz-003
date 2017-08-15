@@ -1,18 +1,20 @@
-.row
-  .col-xs-12
-    h1= t('clients')
+h1= t('clients')
+nav.navbar.section-navigation
+  hr
+  ul.list-inline
+    li= button_link t_title(:new), new_client_path, 'success', dimension: 'sm'
+    - if policy(Client).destroy?
+      li= button_link t('need_accompanying'), need_accompanying_clients_url, dimension: 'sm'
 
-.row
-  = form_navigation_btn :new, with_row: false, with_col: true, cols: 4
-  - if policy(Client).destroy?
-    .col-xs-4
-      = button_link t('need_accompanying'), need_accompanying_clients_url
+  hr
+
+  ul.list-inline
+    li= button_link t('clear_filters'), "#{clients_path}", 'info', dimension: 'sm'
+    li= button_link t('export_xlsx'), "#{clients_path}.xlsx?#{{q: request.GET[:q]}.to_query}", 'warning  ', dimension: 'sm'
+    = list_eq_filter_dropdown(:state, Client::STATES)
+    = list_eq_filter_dropdown(:gender_request, Client::GENDER_REQUESTS)
+    = list_eq_filter_dropdown(:age_request, Client::AGE_REQUESTS)
+  hr
 
 = render 'columns', clients: @clients
-
-.row
-  = form_navigation_btn :new, with_row: false, with_col: true, cols: 4
-  - if policy(Client).destroy?
-    .col-xs-4
-      = button_link t('need_accompanying'), need_accompanying_clients_url
 

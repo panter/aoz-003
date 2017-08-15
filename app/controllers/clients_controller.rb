@@ -8,7 +8,16 @@ class ClientsController < ApplicationController
 
   def index
     authorize Client
-    @clients = policy_scope(Client).paginate(page: params[:page])
+    @q = policy_scope(Client).ransack(params[:q])
+    respond_to do |format|
+      if params[:format] == 'xlsx'
+        @clients = @q.result
+        format.xlsx
+      else
+        @clients = @q.result.paginate(page: params[:page])
+        format.html
+      end
+    end
   end
 
   def show; end

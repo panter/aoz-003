@@ -521,6 +521,12 @@ de:
           active: Aktiv
           suggested: Vorgeschlagen
       client:
+        permit:
+          'n': N
+          f: F
+          b-fl: B-FL
+          b: 'B'
+          c: 'C'
         age_request: *id-age_requests
         gender_request: *id-gender_requests
         language_skills:
