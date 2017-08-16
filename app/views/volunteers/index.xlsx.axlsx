@@ -45,7 +45,7 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
       volunteer.created_at,
       volunteer.updated_at,
       volunteer.assignments.count,
-      t(volunteer.german_course)
+      volunteer.german_course && t(volunteer.german_course)
     ]
   end
 
