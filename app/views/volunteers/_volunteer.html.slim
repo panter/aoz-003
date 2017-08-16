@@ -10,7 +10,7 @@ tr
   td = render 'language_skills/show_inline', language_skills: volunteer.foreign_languages
   td = volunteer.education
   td = volunteer.profession
-  td #{volunteer.working_percent}%
+  td = "#{volunteer.working_percent}%" if volunteer.working_percent
   td = volunteer.expectations
   td = volunteer.interests
   td = t("simple_form.options.volunteer.state.#{volunteer.state}")
