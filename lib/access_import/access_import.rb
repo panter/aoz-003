@@ -13,7 +13,7 @@ class AccessImport
     transformer = ClientTransform.new(@begleitete, @haupt_person, @familien_rollen)
     make(@personen_rolle.all_clients, transformer, Client) do |client, personen_rolle|
       client = personen_rollen_create_update_conversion(client, personen_rolle)
-      client.user = User.first
+      client.user_id = User.where(role: 'superadmin').first.id
       if personen_rolle[:d_Rollenende]
         client.state = Client::FINISHED
         " -- Client was set to state finished at #{personen_rolle[:d_Rollenende]}  ----"
