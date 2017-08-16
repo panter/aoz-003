@@ -428,7 +428,7 @@ DEPENDENCIES
   rails-i18n
   ransack!
   rubocop
-  rubyzip (~> 1.1.0)
+  rubyzip
   sass-rails
   scss_lint
   selenium-webdriver
