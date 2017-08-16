@@ -1,23 +1,21 @@
 module FilterDropdownHelper
-  def list_eq_filter_dropdown(attribute, collection, t_scope: nil)
+  def list_eq_filter_dropdown(attribute, collection, t_scope = nil)
     t_scope ||= [:simple_form, :options, controller_name.singularize.to_sym]
     t_scope = { scope: t_scope.push(attribute) }
     filter_links = collection.map do |item|
-      list_filter_link "#{attribute}_eq".to_sym, item, t_scope
+      list_filter_link("#{attribute}_eq".to_sym, item, t_scope)
     end
-    dropdown_list_element attribute, filter_links, t_scope, "#{attribute}_eq".to_sym
+    dropdown_list_element(attribute, filter_links, t_scope, "#{attribute}_eq".to_sym)
   end
 
-  def list_boolean_filter_dropdown(attribute_group, collection, t_scope: nil)
-    t_scope = {
-      scope: t_scope || [:activerecord, :attributes, controller_name.singularize.to_sym]
-    }
+  def list_boolean_filter_dropdown(attribute_group, collection, t_scope = nil)
     q_filters = collection.map { |attribute| "#{attribute}_eq".to_sym }
+    t_scope = { scope: t_scope || [:activerecord, :attributes, controller_name.singularize.to_sym] }
     filter_links = q_filters.each_with_index.map do |q_filter, index|
       list_filter_link(q_filter, collection[index].to_sym, t_scope,
         boolean_filter_active(search_parameters[q_filter]))
     end
-    dropdown_list_element attribute_group, filter_links, t_scope, *q_filters
+    dropdown_list_element(attribute_group, filter_links, t_scope, *q_filters)
   end
 
   def dropdown_list_element(attribute, filter_links, t_scope, *q_filters)
@@ -79,9 +77,7 @@ module FilterDropdownHelper
 
   def filter_link(q_filter, filter_value)
     filter_value = '' if filter_value == 'all'
-    "#{request.path}?" + {
-      q: search_parameters.except(q_filter).merge(q_filter => filter_value)
-    }.to_query
+    url_for(q: search_parameters.except(q_filter).merge(q_filter => filter_value))
   end
 
   def search_parameters
