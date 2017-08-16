@@ -11,12 +11,11 @@ class VolunteersController < ApplicationController
     authorize Volunteer
     @q = Volunteer.ransack(params[:q])
     respond_to do |format|
-      if params[:format] == 'xlsx'
+      format.xlsx do
         @volunteers = @q.result
-        format.xlsx
-      else
+      end
+      format.html do
         @volunteers = @q.result.paginate(page: params[:page])
-        format.html
       end
     end
   end
