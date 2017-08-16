@@ -7,3 +7,5 @@ tr
   td = link_to assignment.creator, assignment.creator if assignment.creator.present?
   = render 'index_actions', subject: assignment, controller_name: 'assignments'
   td = link_to t('download'), assignment_path(assignment, format: :pdf)
+  td = link_to 'add hours', new_hour_path(volunteer_id: assignment.volunteer, assignment_id: assignment)
+  td = link_to 'show hours', hours_path

@@ -1,5 +1,6 @@
 td= link_to t_action(:show), subject
-td= link_to t_action(:print), { controller: controller_name, action: :show, id: subject.id, print: 'true' }, target: '_blank'
+- unless controller_name == 'hours'
+  td= link_to t_action(:print), { controller: controller_name, action: :show, id: subject.id, print: 'true' }, target: '_blank'
 - if ['clients', 'volunteers'].include? controller_name
   td= link_to t_model(Journal), { controller: 'journals', action: 'index', "#{controller_name.singularize}_id": subject.id }
 - if policy(subject.class).index?

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  resources :hours
   resources :assignments
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
