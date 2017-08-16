@@ -40,7 +40,7 @@ class ApplicationPolicy
   end
 
   def volunteer_related?
-    record.volunteer.user.id == user.id
+    record.volunteer.user_id == user.id
   end
 
   def superadmin_or_record_owner?
