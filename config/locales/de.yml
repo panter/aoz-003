@@ -2,7 +2,7 @@
 de:
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   clear_filters: Filter aufheben
-  availability: &id-vailability
+  availability: &id-availability
     afternoon: Nachmittags
     detailed_description: Genauere Angaben
     evening: Abends
@@ -101,7 +101,7 @@ de:
         profile: Profil
         role: Rolle
       volunteer: &id-volunteer_attributes
-        <<: *id-vailability
+        <<: *id-availability
         available: Verfügbar
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
