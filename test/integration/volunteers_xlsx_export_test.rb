@@ -8,7 +8,7 @@ class VolunteersXlsxExportTest < ActionDispatch::IntegrationTest
 
   test 'xlsx file is downloadable' do
     login_as @superadmin
-    get volunteers_url + '?format=xlsx'
+    get volunteers_url(format: :xlsx)
     assert_equal 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       response.content_type
   end
