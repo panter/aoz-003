@@ -93,6 +93,21 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
   end
 
+  create_table "hours", force: :cascade do |t|
+    t.date "meeting_date"
+    t.integer "duration"
+    t.string "activity"
+    t.string "comments"
+    t.bigint "volunteer_id"
+    t.bigint "assignment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["assignment_id"], name: "index_hours_on_assignment_id"
+    t.index ["deleted_at"], name: "index_hours_on_deleted_at"
+    t.index ["volunteer_id"], name: "index_hours_on_volunteer_id"
+  end
+
   create_table "imports", force: :cascade do |t|
     t.bigint "access_id"
     t.jsonb "store"
