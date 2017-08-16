@@ -389,7 +389,7 @@ PLATFORMS
 DEPENDENCIES
   autoprefixer-rails
   awesome_print
-  axlsx (= 2.1.0.pre)
+  axlsx
   axlsx_rails
   better_errors
   binding_of_callers

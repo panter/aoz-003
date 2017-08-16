@@ -8,7 +8,7 @@ end
 gem 'rails', '~> 5.1'
 
 gem 'autoprefixer-rails'
-gem 'axlsx', '2.1.0.pre'
+gem 'axlsx'
 gem 'axlsx_rails'
 gem 'bootstrap-sass'
 gem 'cocoon'
