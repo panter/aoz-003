@@ -5,5 +5,5 @@ tr
   td = t("state.#{assignment.state}", scope: [:simple_form, :options, :assignment]) if assignment.state.present?
   td = assignment.created_at.strftime("%d-%m-%Y")
   td = link_to assignment.creator, assignment.creator if assignment.creator.present?
-  = render 'index_actions', subject: assignment
+  = render 'index_actions', subject: assignment, controller_name: 'assignments'
   td = link_to t('download'), assignment_path(assignment, format: :pdf)

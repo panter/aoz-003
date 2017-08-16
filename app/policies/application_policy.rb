@@ -39,6 +39,10 @@ class ApplicationPolicy
     record.user_id == user.id
   end
 
+  def volunteer_related?
+    record.volunteer.user.id == user.id
+  end
+
   def superadmin_or_record_owner?
     superadmin? || user_owns_record?
   end
@@ -53,6 +57,10 @@ class ApplicationPolicy
 
   def superadmin_or_social_workers_record?
     superadmin? || social_worker? && user_owns_record?
+  end
+
+  def superadmin_or_volunteer_related?
+    superadmin? || volunteer? && volunteer_related?
   end
 
   alias_method :index?,   :deny_all!
