@@ -1,6 +1,5 @@
 module FilterDropdownHelper
   def list_eq_filter_dropdown(attribute, collection, t_scope: nil)
-    search_parameters
     t_scope ||= [:simple_form, :options, controller_name.singularize.to_sym]
     t_scope = { scope: t_scope.push(attribute) }
     filter_links = collection.map do |item|
@@ -10,14 +9,13 @@ module FilterDropdownHelper
   end
 
   def list_boolean_filter_dropdown(attribute_group, collection, t_scope: nil)
-    search_parameters
     t_scope = {
       scope: t_scope || [:activerecord, :attributes, controller_name.singularize.to_sym]
     }
     q_filters = collection.map { |attribute| "#{attribute}_eq".to_sym }
     filter_links = q_filters.each_with_index.map do |q_filter, index|
       list_filter_link(q_filter, collection[index].to_sym, t_scope,
-        boolean_filter_active(@search_parameters[q_filter]))
+        boolean_filter_active(search_parameters[q_filter]))
     end
     dropdown_list_element attribute_group, filter_links, t_scope, *q_filters
   end
@@ -30,7 +28,7 @@ module FilterDropdownHelper
   end
 
   def list_filter_link(q_filter, filter_value, t_scope, boolean_value = nil)
-    link_class = 'bg-success' if [filter_value.to_s, 'true'].include? @search_parameters[q_filter]
+    link_class = 'bg-success' if [filter_value.to_s, 'true'].include? search_parameters[q_filter]
     link_text = translate_value(filter_value, t_scope)
     filter_value = true if !boolean_value.nil? && boolean_value
     filter_value = '' if !boolean_value.nil? && !boolean_value
@@ -54,7 +52,7 @@ module FilterDropdownHelper
     content_tag :a, options do
       concat t_attr(attribute)
       concat ': ' if q_filter.size == 1
-      concat translate_value(@search_parameters[q_filter[0]], t_scope) if q_filter.size == 1
+      concat translate_value(search_parameters[q_filter[0]], t_scope) if q_filter.size == 1
       concat ' '
       concat content_tag(:span, '', class: 'caret')
     end
@@ -62,7 +60,7 @@ module FilterDropdownHelper
 
   def deactivate_link(q_filters)
     link_href = "#{request.path}?" + {
-      q: @search_parameters.except(*q_filters)
+      q: search_parameters.except(*q_filters)
     }.to_query
     content_tag :li do
       link_to t('all'), link_href
@@ -82,11 +80,11 @@ module FilterDropdownHelper
   def filter_link(q_filter, filter_value)
     filter_value = '' if filter_value == 'all'
     "#{request.path}?" + {
-      q: @search_parameters.except(q_filter).merge(q_filter => filter_value)
+      q: search_parameters.except(q_filter).merge(q_filter => filter_value)
     }.to_query
   end
 
   def search_parameters
-    @search_parameters = params[:q] || {}
+    @search_parameters = params[:q]&.to_unsafe_hash || {}
   end
 end
