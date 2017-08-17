@@ -4,6 +4,8 @@ col_header = wb.styles.add_style(:bg_color => "FFDFDEDF", b: true , alignment: {
   color: '00', edges: [:bottom], style: :thin
 })
 
+postal_code = wb.styles.add_style(alignment: { horizontal: :right }, width: :auto_fit)
+
 wb.add_worksheet(name: t('volunteers')) do |sheet|
   header_row = [
     'id',
@@ -26,9 +28,16 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
     t_attr(:assignment_count),
     t_attr(:german_course)
   ]
+
+
   sheet.add_row header_row, style: col_header
 
   cell_types = Array.new(header_row.size).map { :string }
+  cell_types[0] = :integer
+  cell_types[11] = :integer
+  cell_types[16] = :integer
+  cell_styles = Array.new(header_row.size).map { nil }
+  cell_styles[6] = postal_code
   @volunteers.each do |volunteer|
     contact = volunteer.contact
     german_course = t(volunteer.german_course) unless volunteer.german_course.nil?
@@ -52,6 +61,6 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
       l(volunteer.updated_at.localtime),
       volunteer.assignments.count,
       german_course
-    ], types: cell_types
+    ], types: cell_types, style: cell_styles
   end
 end
