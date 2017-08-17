@@ -52,6 +52,6 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
       l(volunteer.updated_at.localtime),
       volunteer.assignments.count,
       german_course
-    ], type: cell_types
+    ], types: cell_types
   end
 end
