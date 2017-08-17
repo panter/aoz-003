@@ -1,7 +1,11 @@
 wb = xlsx_package.workbook
 
+col_header = wb.styles.add_style(:bg_color => "FFDFDEDF", b: true , alignment: { horizontal: :center, vertical: :center }, border: {
+  color: '00', edges: [:bottom], style: :thin
+})
+
 wb.add_worksheet(name: t('volunteers')) do |sheet|
-  sheet.add_row [
+  header_row = [
     'id',
     t_attr(:salutation),
     t_attr(:last_name, Contact),
@@ -22,6 +26,7 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
     t_attr(:assignment_count),
     t_attr(:german_course)
   ]
+  sheet.add_row header_row, style: col_header
 
   @volunteers.each do |volunteer|
     contact = volunteer.contact
