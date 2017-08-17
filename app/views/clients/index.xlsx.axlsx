@@ -1,7 +1,11 @@
 wb = xlsx_package.workbook
 
+col_header = wb.styles.add_style(:bg_color => "FFDFDEDF", b: true , alignment: { horizontal: :center, vertical: :center }, border: {
+  color: '00', edges: [:bottom], style: :thin
+})
+
 wb.add_worksheet(name: t('volunteers')) do |sheet|
-  sheet.add_row [
+  header_columns = [
     'id',
     t_attr(:salutation),
     t_attr(:last_name, Contact),
@@ -21,9 +25,13 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
     t_attr(:created_at),
     t_attr(:updated_at)
   ]
+  sheet.add_row header_columns, type: :string, style: col_header
+
+  cell_types = Array.new(header_columns.size).map { :string }
+  cell_types[0] = :integer
   @clients.each do |client|
     contact = client.contact
-    sheet.add_row [
+    body_row = [
       client.id,
       t("salutation.#{client.salutation}"),
       contact.last_name,
@@ -40,8 +48,9 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
       client.education,
       client.entry_year,
       t("state.#{client.state}"),
-      client.created_at,
-      client.updated_at
+      l(client.created_at.localtime),
+      l(client.updated_at.localtime)
     ]
+    sheet.add_row body_row, types: cell_types
   end
 end

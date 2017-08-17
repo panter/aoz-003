@@ -28,6 +28,7 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
   ]
   sheet.add_row header_row, style: col_header
 
+  cell_types = Array.new(header_row.size).map { :string }
   @volunteers.each do |volunteer|
     contact = volunteer.contact
     german_course = t(volunteer.german_course) unless volunteer.german_course.nil?
@@ -51,6 +52,6 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
       l(volunteer.updated_at.localtime),
       volunteer.assignments.count,
       german_course
-    ]
+    ], type: cell_types
   end
 end
