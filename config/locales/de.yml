@@ -10,68 +10,70 @@ de:
     morning: Morgens
     weekend: Wochenende
     workday: Werktags
+  generic_keys: &id-generic_keys
+    created_at: Erstellt am
+    updated_at: Aktualisiert am
+    address: Adresse
+    state: Status
+    street: Strasse
+    avatar: Foto
+    salutation: Anrede
+    email: Email
+    first_name: Vorname
+    last_name: Nachname
+    postal_code: PLZ
+    phone: Telefonnummer
+    birth_year: Jahrgang
+    full_name: Name
+    nationality: Nationalität
+    zip: Postleitzahl
+    languages: Sprachen
+    profession: Beruf
+    city: Ort
   activerecord:
     attributes:
       assignment:
+        <<: *id-generic_keys
         agreement: Zustimmung
         client: Klient/in
         created_by: Verantwortliche/r
-        state: Status
         volunteer: Freiwillige
       client:
+        <<: *id-generic_keys
         actual_activities: Aktuelle Tätigkeiten
-        address: Adresse
         age_request: Alter Freiwillige/r
-        birth_year: Jahrgang
         city: Stadt
         comments: Bemerkungen
         competent_authority: Zusätzlich involvierte Stelle
-        created_at: Erstellt am
         date_of_year: Geburtsjahr
-        deleted_at: Gelöscht
         education: Beruf oder Ausbildung im Herkunftsland
-        email: Email
-        first_name: Vorname
-        full_name: Name
         gender_request: Geschlecht Freiwillige/r
         goals: Inhalte der Begleitung
         interests: Interessen
         involved_authority: Fallführende Stelle
         language_skills: Sprachkenntnisse
-        last_name: Nachname
-        nationality: Nationalität
         other_request: Andere Anforderungen
         permit: Bewilligung
-        phone: Telefonnummer
         relatives: Verwandte/r
-        salutation: Anrede
-        state: Status
-        street: Strasse
         user: User
-        zip: Postleitzahl
       contact:
-        address: Adresse
-        city: Ort
+        <<: *id-generic_keys
         extended: Adresszusatz
-        first_name: Vorname
-        last_name: Name
-        postal_code: PLZ
         primary_email: Mailadresse
         primary_phone: Telefonnummer
         secondary_phone: Telefonnummer 2
-        street: Strasse
         title: Titel
       department:
+        <<: *id-generic_keys
         associated_users: Assozierte Benutzer
-        city: Ort
         department_manager: Standort Betreuer
         name: Name
         user: User
       journal:
+        <<: *id-generic_keys
         author: Author
         body: Text
         category: Kategorie
-        created_at: Erstellt am
         entry: Eintrag
         subject: Titel
         text: Text
@@ -83,89 +85,65 @@ de:
         level: Niveau
         native_language: Muttersprache
       profile:
-        address: Adresse
-        avatar: Foto
-        first_name: Vorname
-        last_name: Nachname
-        phone: Telefonnummer
-        profession: Beruf
+        <<: *id-generic_keys
       relative:
-        birth_year: Jahrgang
-        first_name: Vorname
-        last_name: Nachname
+        <<: *id-generic_keys
         relation: Verwandtschaftsbeziehung
       user:
+        <<: *id-generic_keys
         clients: Kunden/innen
         department: Standort
-        email: Email
         profile: Profil
         role: Rolle
       volunteer: &id-volunteer_attributes
         <<: *id-availability
+        <<: *id-generic_keys
         available: Verfügbar
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
-        address: Adresse
-        avatar: Foto
         assignment_count: Anzahl begleitungen
         bank_account: Kontodaten eingetragen
-        birth_year: Jahrgang
         children: Kinder
-        city: Stadt
         cooking: Kochen
-        created_at: Erstellt am
         creative: Kreativ
         culture: Kultur
         dancing: Tanz
         doc_sent: Dossier Freiwillige engagiert verschickt
         education: Ausbildung
-        email: Email
         evaluation: Abschlussevaluation erhalten
         excursions: Ausflüge
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
-        first_language: Muttersprache
-        first_name: Vorname
-        full_name: Name
+        native_language: Muttersprache
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
         health: Gesundheit
         interests: Interessen
         intro_course: Einführungskurs besucht
         kid: Kinder
-        languages: Sprachen
-        last_name: Nachname
         man: Mann
         music: Musik
-        nationality: Nationalität
         other_offer: Anderes (bitte beschreiben)
         other_offer_desc: Beschreibung
         own_kids: Familie (Kinder, Jahrgang)
-        phone: Telefonnummer
-        profession: Beruf
         registrar: Registrator
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
-        salutation: Anrede
         single_accompaniment: Einzelbegleitungen
         skills: Kompetenzen
         sport: Sport
-        state: Status
-        street: Strasse
         strengths: Stärken
         teenagers: Jugendliche
         training: Bildung
         trial_period: Probezeitbericht erhalten
         unaccompanied: Unbegleitete Minderjährige
-        updated_at: Aktualisiert am
         volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         woman: Frau
         women: Frauen
         working_percent: Stellenprozent
-        zip: Postleitzahl
         zurich: Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt
       volunteer_email:
         active: Aktiv
@@ -235,6 +213,7 @@ de:
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
   assignment_exists: Die Begleitung existiert bereits.
   assignment_pdf:
+    <<: *id-generic_keys
     agreement_text:
       list1:
         item1: Verhaltenskodex für Freiwillige
@@ -245,26 +224,18 @@ de:
         item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
         item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
         title: Allenfalls auch
-    birth_year: Jahrgang
-    city: Ort
     city_date: Ort, Datum
     client_title: Begleitete Person
     creator_title: Anmeldende Stelle
     duration: Treffen mindestens 6 Monate bis
     email: E-mail
-    first_name: Vorname
     first_time: '1.Treffen: Wann, wo?'
     for_aoc: Fur die AOZ
     function: Funktion
     how_often: Wie oft?
-    languages: Sprachen
     last_name: Name
-    nationality: Nationalität
     organization: Organization
-    postal_code: PLZ
     special: Besondere Abmachungen
-    state: Status
-    street: Strasse
     telephone: Telefon
     telephone_2: Telefon 2
     title: Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten
@@ -295,7 +266,7 @@ de:
   contact_info: Kontakt Informationen
   contacts:
     fields:
-      last_name: Nachname
+      <<: *id-generic_keys
       name: Name
   create_client: Klient/in erfassen
   create_profile: Profil erfassen
@@ -535,8 +506,10 @@ de:
           relation: *id-relations
         salutation: *id-salutations
         state: &id-states
+          active_further: Aktiv, an weiteren Einsätzen interessiert
           accepted: Akzeptiert
           active: Aktiv
+          contacted: Kontaktiert
           all: Alle
           finished: Abgeschlossen
           inactive: Inaktiv
@@ -556,8 +529,6 @@ de:
         salutation: *id-salutations
         state:
           <<: *id-states
-          active_further: Aktiv, an weiteren Einsätzen interessiert
-          contacted: Kontaktiert
           inactive: Sucht neuen Einsatz
           registered: Interessiert
           resigned: Beendet
@@ -568,8 +539,6 @@ de:
     "yes": 'Ja'
   state:
     <<: *id-states
-    active_further: Aktiv, an weiteren Einsätzen interessiert
-    contacted: Kontaktiert
     inactive: Sucht neuen Einsatz
     registered: Interessiert
     resigned: Beendet
