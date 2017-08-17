@@ -97,4 +97,8 @@ module ApplicationHelper
   def request_params_filter(query)
     params.permit!.to_h.deep_merge(q: query)
   end
+
+  def search_parameters
+    @search_parameters ||= params[:q]&.to_unsafe_hash || {}
+  end
 end
