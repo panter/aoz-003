@@ -100,7 +100,7 @@
           .col-xs-5
             = "#{t('assignment_pdf.nationality')}, #{t('assignment_pdf.state')}"
           .col-xs-7.col-input
-            = "#{country(@assignment.client.nationality)}, #{@assignment.client.state}"
+            = "#{nationality_name(@assignment.client.nationality)}, #{t("state.#{@assignment.client.state}")}"
         .row
           .col-xs-5
             = t('assignment_pdf.languages')
