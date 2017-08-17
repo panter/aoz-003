@@ -9,7 +9,7 @@ tr
     - seeking_client.language_skills.each do |language|
       = language.full_language_skills
   td= seeking_client.motivation
-  td= t(seeking_client.experience)
+  td= t(seeking_client.experience) if seeking_client.experience.present?
   td
     - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
       - if seeking_client[single]
