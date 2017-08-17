@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def simple_error_notice(f)
-    boostrap_row(f.error_notification) if f.error_notification.present?
+    boostrap_row { f.error_notification } if f.error_notification.present?
   end
 
   def button_link(text, target, type = 'default', dimension: nil)
@@ -19,36 +19,43 @@ module ApplicationHelper
   end
 
   def form_navigation_btn(action, cols: 12, with_row: true, md_cols: nil, with_col: false)
-    text, action, target, button_type = make_nav_button_attributes(action)
-    target[:id] = params[:id] unless action == :index
-    return bootstrap_row_col(button_link(text, target, button_type), cols, md_cols) if with_row
-    return bootstrap_col(button_link(text, target, button_type), cols, md_cols) if with_col
-    button_link text, target, button_type
+    button = make_nav_button(action)
+    button = bootstrap_col(cols, md_cols) { button } if with_col || with_row
+    button = boostrap_row { button } if with_row
+    button
   end
 
-  def make_nav_button_attributes(action)
-    text = action == :back ? t('back') : t_title(action)
-    action = :index if action == :back
-    target = { controller: controller_name, action: action }
-    button_type = action == :new ? 'success' : 'default'
-    [text, action, target, button_type]
+  def make_nav_button(action)
+    if action == :back
+      text = t('back')
+      action = :index if action == :back
+    else
+      text = t_title(action)
+    end
+    button_link(text,
+      { controller: controller_name, action: action, id: action == :index || params[:id] },
+      action == :new ? 'success' : 'default')
   end
 
-  def bootstrap_col(inside, cols = 12, md_cols = nil)
+  def bootstrap_col(cols = 12, md_cols = nil)
     col_class = "col-xs-#{cols}"
     col_class += " col-md-#{md_cols}" if md_cols
     content_tag :div, class: col_class do
-      inside
+      yield
     end
   end
 
-  def bootstrap_row_col(inside, cols = 12, md_cols = nil)
-    boostrap_row bootstrap_col(inside, cols, md_cols)
+  def bootstrap_row_col(cols = 12, md_cols = nil)
+    boostrap_row do
+      bootstrap_col(cols, md_cols) do
+        yield
+      end
+    end
   end
 
-  def boostrap_row(inside)
+  def boostrap_row
     content_tag :div, class: 'row' do
-      inside
+      yield
     end
   end
 
@@ -61,10 +68,8 @@ module ApplicationHelper
   end
 
   def conditional_field(f, property, enabler, value = '')
-    f.input property, class: 'conditional-field', input_html: input_html(f, enabler, value),
-      label_html: {
-        class: 'conditional-field'
-      }
+    css_class = { class: 'conditional-field' }
+    f.input property, css_class, input_html: input_html(f, enabler, value), label_html: css_class
   end
 
   def multi_conditional_field(f, property, enablers)
@@ -75,13 +80,10 @@ module ApplicationHelper
   end
 
   def confirm_deleting(record)
-    if controller_name == 'assignments'
-      return { method: :delete, data: { confirm: t('delete_assignment') } }
-    elsif controller_name == 'journals'
-      return { method: :delete, data: { confirm: t('delete_journal') } }
-    else
-      { method: :delete, data: { confirm: t_confirm_delete(record) } }
+    if ['assignments', 'journals'].include? controller_name
+      confirm_text = t("delete_#{controller_name.singularize}")
     end
+    { method: :delete, data: { confirm: confirm_text || t_confirm_delete(record) } }
   end
 
   def nationality_name(nationality)
@@ -91,11 +93,11 @@ module ApplicationHelper
   end
 
   def request_filter(query, all)
-    params[:q] && params[:q][query].present? ? params[:q][query] : all
+    params.try(:q).try(query) || all
   end
 
   def request_params_filter(query)
-    params.permit!.to_h.deep_merge(q: query)
+    search_parameters.deep_merge(q: query)
   end
 
   def search_parameters

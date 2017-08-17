@@ -67,9 +67,9 @@ module FilterDropdownHelper
   end
 
   def dropdown_toggler_options
-    { class: 'dropdown-toggle btn btn-default btn-sm', srole: 'button', href: '#',
-      aria: { expanded: 'false', haspopup: 'true', toggle: 'dropdown' },
-      data: { toggle: 'dropdown' } }
+    toggle_drop = { toggle: 'dropdown' }
+    { class: 'dropdown-toggle btn btn-default btn-sm', role: 'button', href: '#', data: toggle_drop,
+      aria: { expanded: 'false', haspopup: 'true' }.merge(toggle_drop) }
   end
 
   def translate_value(filter_attribute, t_scope)
