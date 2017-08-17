@@ -76,8 +76,4 @@ module FilterDropdownHelper
     return t('all') if filter_attribute.blank?
     t(filter_attribute, t_scope)
   end
-
-  def search_parameters
-    @search_parameters ||= params[:q]&.to_unsafe_hash || {}
-  end
 end
