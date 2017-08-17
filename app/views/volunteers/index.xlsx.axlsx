@@ -25,6 +25,7 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
   ]
   @volunteers.each do |volunteer|
     contact = volunteer.contact
+    german_course = t(volunteer.german_course) unless volunteer.german_course.nil?
     sheet.add_row [
       volunteer.id,
       t("salutation.#{volunteer.salutation}"),
@@ -45,7 +46,7 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
       volunteer.created_at,
       volunteer.updated_at,
       volunteer.assignments.count,
-      volunteer.german_course && t(volunteer.german_course)
+      german_course
     ]
   end
 
