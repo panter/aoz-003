@@ -172,11 +172,17 @@ de:
         title: Überschrift
         user: Ersteller
       performance_report:
-        created_at: Erstellt am
-        updated_at: Geändert am
-        period_start: Zeitraum von
-        period_end: Zeitraum von
+        <<: *id-generic_keys
+        period_start: Von
+        period_end: Bis
+        scope: Bereich
+        extern: Extern
+        intern: Intern
         period: Zeitraum
+        create_new_report: Neuen Report erstellen
+        title: Titel
+        comment: Kommentar
+        user: Ersteller/in
     errors:
       models:
         profile:
@@ -223,7 +229,7 @@ de:
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
       volunteer_email: Anmeldungsbestätigungs-Nachricht editieren
-      performance_report: Kennzahl
+      performance_report: Kennzahlen Report
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journal Eintrag verfassen
   performance_reports: Kenzahlen
@@ -607,6 +613,7 @@ de:
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
+  to: bis
   will_paginate:
     next_label: Weiter
     previous_label: Zurück

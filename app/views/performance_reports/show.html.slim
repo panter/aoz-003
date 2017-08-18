@@ -1,16 +1,20 @@
+.row
+  .col-xs-12
+    h1
+      = "#{t_model}"
+      = ": #{@performance_report.title}" if @performance_report.title.present?
 
-p
-  strong Period start:
-  = @performance_report.period_start
-p
-  strong Period end:
-  = @performance_report.period_end
-p
-  strong Deleted at:
-  = @performance_report.deleted_at
-p
-  strong Users:
-  = @performance_report.user
+    h3= t_attr(:comment)
+    p= @performance_report.comment
+
+.row
+  .col-xs-12
+    h3= t_attr(:period)
+  .col-xs-12
+    strong= "#{t_attr(:period_start)}: "
+    = l(@performance_report.period_start) if @performance_report.period_start
+    strong= " #{t_attr(:period_end)}: "
+    = l(@performance_report.period_end) if @performance_report.period_end
 
 = form_navigation_btn :edit
 = form_navigation_btn :back

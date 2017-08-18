@@ -7,6 +7,8 @@ class CreatePerformanceReports < ActiveRecord::Migration[5.1]
       t.jsonb :report_content
       t.boolean :extern, default: false
       t.string :scope
+      t.string :title
+      t.text :comment
 
       t.timestamps
     end
