@@ -40,18 +40,18 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'Active'
   end
 
-  # test 'assign unassigned client - volunteer side' do
-  #   visit seeking_clients_volunteers_path
-  #   page.find('a', text: 'Find client').trigger('click')
-  #   page.find('a', text: 'Reserve').trigger('click')
-  #   click_button 'Create Assignment'
-  #   assert page.has_text? @client.contact.full_name
-  #   assert page.has_text? @volunteer.contact.full_name
-  #   visit client_path(@client)
-  #   assert page.has_text? 'Reserved'
-  #   visit volunteer_path(@volunteer)
-  #   assert page.has_text? 'Active'
-  # end
+  test 'assign unassigned client - volunteer side' do
+    visit seeking_clients_volunteers_path
+    page.find('a', text: 'Find client').trigger('click')
+    page.find('a', text: 'Reserve').trigger('click')
+    click_button 'Create Assignment'
+    assert page.has_text? @client.contact.full_name
+    assert page.has_text? @volunteer.contact.full_name
+    visit client_path(@client)
+    assert page.has_text? 'Reserved'
+    visit volunteer_path(@volunteer)
+    assert page.has_text? 'Active'
+  end
 
   test 'no duplicate assignments' do
     create :assignment, client: @client, volunteer: @volunteer, creator: @user
