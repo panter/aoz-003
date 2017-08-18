@@ -3,11 +3,11 @@
 
   .row
     .col-xs-12
-      = f.association :assignment, collection: @assignments
+      = f.association :assignment, collection: @assignments_clients
 
   .row
     .col-xs-12
-      = f.association :volunteer, selected: params[:volunteer_id]
+      = f.hidden_field :volunteer_id, value: params[:volunteer_id]
 
   .row
     .col-xs-12
