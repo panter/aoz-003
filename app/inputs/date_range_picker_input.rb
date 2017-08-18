@@ -11,7 +11,7 @@ class DateRangePickerInput < SimpleForm::Inputs::Base
   def year_buttons(template)
     template.content_tag(:ul, id: "#{object_name}_#{attribute_name}_years",
       class: 'list-inline year-togglers') do
-      (0..5).to_a.reverse.each do |index|
+      (0..9).to_a.reverse.each do |index|
         template.concat year_link(template, Time.zone.now.to_date.year - index)
       end
     end
