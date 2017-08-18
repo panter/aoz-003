@@ -1,4 +1,5 @@
 class HoursController < ApplicationController
+  include MakeNotice
   before_action :set_hour, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -19,30 +20,24 @@ class HoursController < ApplicationController
   def create
     @hour = Hour.new(hour_params)
     authorize @hour
-    respond_to do |format|
-      if @hour.save!
-        format.html { redirect_to @hour, notice: 'Hour was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    if @hour.save!
+      redirect_to @hour, make_notice
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @hour.update(hour_params)
-        format.html { redirect_to @hour, notice: 'Hour was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    if @hour.update(hour_params)
+      redirect_to @hour, notice: make_notice
+    else
+      render :edit
     end
   end
 
   def destroy
     @hour.destroy
-    respond_to do |format|
-      format.html { redirect_to hours_url, notice: 'Hour was successfully destroyed.' }
-    end
+    redirect_to hours_url, notice: make_notice
   end
 
   private
