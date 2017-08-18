@@ -1,8 +1,18 @@
 = simple_form_for(@performance_report) do |f|
   = simple_error_notice f
+  .row
+    .col-xs-12= f.input :title
+    .col-xs-12= f.input :comment
 
   .row
-    .col-xs-12= f.input :period, as: :date_range_picker
+    .col-xs-12= f.input :period, as: :date_range_picker, label: false
+    .col-xs-12
+      ul.list-inline
+        li= link_to '1/4 Jahr', '#', class: 'btn btn-default btn-sm'
+        li= link_to '1/2 Jahr', '#', class: 'btn btn-default btn-sm'
+        li= link_to '3/4 Jahr', '#', class: 'btn btn-default btn-sm'
+        li= link_to '1 Jahr', '#', class: 'btn btn-default btn-sm'
+
     .col-xs-12= f.input :extern
     .col-xs-12= f.input :scope
 

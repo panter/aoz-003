@@ -1,18 +1,31 @@
 class DateRangePickerInput < SimpleForm::Inputs::Base
   def input
-    template.content_tag(:div, class: 'input-daterange input-group') do
-      template.concat date_field('start')
-      template.concat content_tag(:span, 'to', class: 'input-group-addon')
-      template.concat date_field('end')
+    template.content_tag(:fieldset) do
+      template.concat content_tag(:legend,
+        I18n.t("activerecord.attributes.#{object_name}.#{attribute_name}"))
+      template.concat range_fields(template)
     end
   end
 
-  def date_field(position)
-    @builder.text_field("#{attribute_name}_#{position}".to_sym, input_html_options(position))
+  def range_fields(template)
+    template.content_tag(:div, class: 'input-daterange input-group row') do
+      template.concat date_field('start', template)
+      template.concat date_field('end', template)
+    end
   end
 
-  def input_html_options(position = nil)
-    super.merge(class: 'input-sm form-control', data: { provide: 'datepicker' },
-      name: "#{object_name}[#{attribute_name}_#{position}]")
+  def date_field(position, template)
+    attribute = "#{attribute_name}_#{position}"
+    name = { name: "#{object_name}[#{attribute}]" }
+    html_opts = input_html_options.merge(name)
+    template.content_tag(:div, class: 'form-group col-xs-6') do
+      template.concat content_tag(:label,
+        I18n.t("activerecord.attributes.#{object_name}.#{attribute}"), for: html_opts[:id])
+      template.concat @builder.text_field(attribute.to_sym, html_opts)
+    end
+  end
+
+  def input_html_options
+    super.merge(class: 'input-sm form-control', data: { provide: 'datepicker' })
   end
 end

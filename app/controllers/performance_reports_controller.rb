@@ -50,6 +50,6 @@ class PerformanceReportsController < ApplicationController
 
   def performance_report_params
     params.require(:performance_report).permit(:period_start, :period_end, :users_id,
-      :report_content)
+      :report_content, :comment, :title, :scope, :extern)
   end
 end

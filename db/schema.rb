@@ -175,6 +175,8 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.jsonb "report_content"
     t.boolean "extern", default: false
     t.string "scope"
+    t.string "title"
+    t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

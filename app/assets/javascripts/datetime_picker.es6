@@ -1,12 +1,16 @@
 $(() => {
   $(document).on('turbolinks:render, turbolinks:load', () => {
-    $('.input-daterange input').datepicker({
+    const datepickers = $('.input-daterange input').datepicker({
       format: "yyyy-mm-dd",
+      startView: 1,
+      todayBtn: true,
       clearBtn: true,
       language: "de",
       calendarWeeks: true,
       autoclose: true,
-      todayHighlight: true
+      todayHighlight: true,
+      toggleActive: true
     });
+    console.log(datepickers)
   });
 });
