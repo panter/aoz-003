@@ -2,13 +2,18 @@
   .col-xs-12
     h1= @volunteer.contact.full_name
 
-- if policy(Volunteer).seeking_clients? & @volunteer.seeking_clients?
-  .row
-    .col-xs-12
+.row
+  - if policy(Volunteer).supervisor?
+    .col-xs-12.col-md-3
+      = render 'journals/journal_block', journaled_for: @volunteer
+  - if policy(Volunteer).seeking_clients? & @volunteer.seeking_clients?
+    .col-xs-12.col-md-3
       = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
-
-- if policy(Volunteer).supervisor?
-  = render 'journals/journal_block', journaled_for: @volunteer
+  - if @volunteer.assignments.any?
+    .col-xs-12.col-md-3
+      = button_link t_title(:new, Hour), new_hour_url(volunteer_id: @volunteer)
+    .col-xs-12.col-md-3
+      = button_link t_title(:index, Hour), volunteer_hours_volunteer_path(@volunteer)
 
 - if policy(Volunteer).checklist?
   h3= t('checklist')
@@ -149,9 +154,6 @@ h3= t('volunteer_availability')
     .col-xs-12#assignments
       h3= t('assignments')
   = render 'assignments/volunteer_index', assignments: @volunteer.assignments
-  .row
-    .col-xs-12
-      = button_link t_title(:new, Hour), new_hour_url(volunteer_id: @volunteer)
 
 - if current_user.volunteer?
   = button_link t('edit_profile'), edit_volunteer_path(@volunteer)

@@ -3,17 +3,11 @@
     table.table.table-striped
       thead
         tr
-          th Meeting date
-          th Duration
-          th Activity
-          th Comments
+          th= t_attr(:meeting_date, Hour)
+          th= t_attr(:duration, Hour)
+          th= t_attr(:activity, Hour)
+          th= t_attr(:comments, Hour)
           th colspan='3'
 
       tbody
-        - hours.each do |hour|
-          tr
-            td = hour.meeting_date
-            td = hour.duration
-            td = hour.activity
-            td = hour.comments
-            = render 'index_actions', subject: hour
+        = render hours

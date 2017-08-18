@@ -24,7 +24,7 @@ class HoursController < ApplicationController
   def create
     @hour = Hour.new(hour_params)
     authorize @hour
-    if @hour.save!
+    if @hour.save
       redirect_to @hour, make_notice
     else
       render :new
@@ -33,7 +33,7 @@ class HoursController < ApplicationController
 
   def update
     if @hour.update(hour_params)
-      redirect_to @hour, notice: make_notice
+      redirect_to @hour, make_notice
     else
       render :edit
     end
@@ -41,7 +41,7 @@ class HoursController < ApplicationController
 
   def destroy
     @hour.destroy
-    redirect_to hours_url, notice: make_notice
+    redirect_to hours_url, make_notice
   end
 
   private
