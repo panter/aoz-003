@@ -79,8 +79,8 @@ module ApplicationHelper
       label_html: { class: 'conditional-group' }
   end
 
-  def confirm_deleting(record)
-    if ['assignments', 'journals'].include? controller_name
+  def confirm_deleting(record, controller_name)
+    if ['assignments', 'journals', 'hours'].include? controller_name
       confirm_text = t("delete_#{controller_name.singularize}")
     end
     { method: :delete, data: { confirm: confirm_text || t_confirm_delete(record) } }
