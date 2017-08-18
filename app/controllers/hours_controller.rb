@@ -12,6 +12,10 @@ class HoursController < ApplicationController
   def new
     @hour = Hour.new
     @assignments = Assignment.where(volunteer: params[:volunteer_id])
+    @assignments_clients = []
+    @assignments.each do |assignment|
+      @assignments_clients << [assignment.client, assignment.id]
+    end
     authorize @hour
   end
 
