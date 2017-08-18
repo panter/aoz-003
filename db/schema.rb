@@ -168,6 +168,20 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.index ["languageable_type", "languageable_id"], name: "index_language_skills_on_languageable_type_and_languageable_id"
   end
 
+  create_table "performance_reports", force: :cascade do |t|
+    t.date "period_start"
+    t.date "period_end"
+    t.bigint "user_id"
+    t.jsonb "report_content"
+    t.boolean "extern", default: false
+    t.string "scope"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_performance_reports_on_deleted_at"
+    t.index ["user_id"], name: "index_performance_reports_on_user_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.bigint "user_id"
     t.string "profession"
@@ -317,6 +331,7 @@ ActiveRecord::Schema.define(version: 20170824123715) do
   add_foreign_key "assignments", "volunteers"
   add_foreign_key "clients", "users"
   add_foreign_key "journals", "users"
+  add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "volunteer_emails", "users"
   add_foreign_key "volunteers", "users"

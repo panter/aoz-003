@@ -3,16 +3,19 @@ Rails.application.routes.draw do
     get :thanks, on: :collection
   end
 
-  # Authenticated routes start here
+  # Authenticated routes start here (Watch out!)
   devise_for :users
 
-  resources :users
+  resources :assignments
   resources :clients do
     get :need_accompanying, on: :collection
     get :find_volunteer, on: :member, to: 'assignments#find_volunteer'
     resources :journals
   end
   resources :departments
+  resources :performance_reports
+  resources :profiles, except: [:destroy, :index]
+  resources :users
   resources :volunteers do
     get :seeking_clients, on: :collection
     get :find_client, on: :member, to: 'assignments#find_client'

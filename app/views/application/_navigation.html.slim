@@ -24,6 +24,8 @@ nav.navbar.navbar-top
             li= link_to t_model(Department), department_path(current_user.department.first.id)
           - if policy(Assignment).index?
             li= link_to t('assignments'), assignments_path
+          - if policy(PerformanceReport).index?
+            li= link_to t('performance_reports'), performance_reports_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'

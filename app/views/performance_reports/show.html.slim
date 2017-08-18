@@ -1,0 +1,16 @@
+
+p
+  strong Period start:
+  = @performance_report.period_start
+p
+  strong Period end:
+  = @performance_report.period_end
+p
+  strong Deleted at:
+  = @performance_report.deleted_at
+p
+  strong Users:
+  = @performance_report.user
+
+= form_navigation_btn :edit
+= form_navigation_btn :back
