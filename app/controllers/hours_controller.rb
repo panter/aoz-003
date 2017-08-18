@@ -10,6 +10,7 @@ class HoursController < ApplicationController
 
   def new
     @hour = Hour.new
+    @assignments = Assignment.where(volunteer: params[:volunteer_id])
     authorize @hour
   end
 
