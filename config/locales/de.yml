@@ -69,6 +69,12 @@ de:
         department_manager: Standort Betreuer
         name: Name
         user: User
+      hour:
+        activity: Tätigkeit / Was wurde gemacht
+        assignment: Begleitung
+        comments: Bemerkungen / Gab es etwas Besonderes
+        duration: Dauer des Treffens / des Kurses (in Stunden)
+        meeting_date: Datum des Treffens / des Kurses
       journal:
         <<: *id-generic_keys
         author: Author
@@ -192,6 +198,7 @@ de:
       client: Klient/in
       contact: Kontakt
       department: Standort
+      hour: Stunde
       journal: Journal
       language_skill: Sprachkompetenz
       profile: Profil

@@ -1,18 +1,26 @@
-p#notice = notice
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td= t_model(Volunteer)
+            td= @hour.assignment.volunteer.contact.full_name
+          tr
+            td= t_model(Client)
+            td= @hour.assignment.client.contact.full_name
+          tr
+            td= t_attr(:meeting_date)
+            td= l(@hour.meeting_date)
+          tr
+            td= t_attr(:duration)
+            td= @hour.duration
+          tr
+            td= t_attr(:activity)
+            td= @hour.activity
+          tr
+            td= t_attr(:comments)
+            td= @hour.comments
 
-p
-  strong Meeting date:
-  = @hour.meeting_date
-p
-  strong Duration:
-  = @hour.duration
-p
-  strong Activity:
-  = @hour.activity
-p
-  strong Comments:
-  = @hour.comments
-
-= link_to 'Edit', edit_hour_path(@hour)
-'  |
-= link_to 'Back', hours_path
+= form_navigation_btn :edit
+= form_navigation_btn :back

@@ -5,6 +5,7 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :destroy?,               :superadmin?
   alias_method :seeking_clients?,       :superadmin?
   alias_method :checklist?,             :superadmin?
+  alias_method :volunteer_hours?,       :superadmin?
 
   alias_method :show?,                  :superadmin_or_volunteers_record?
   alias_method :edit?,                  :superadmin_or_volunteers_record?
