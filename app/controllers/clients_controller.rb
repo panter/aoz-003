@@ -54,8 +54,8 @@ class ClientsController < ApplicationController
   end
 
   def need_accompanying
-    @need_accompanying = Client.need_accompanying
-    @need_accompanying = @need_accompanying.paginate(page: params[:page])
+    @q = Client.need_accompanying.ransack(params[:q])
+    @need_accompanying = @q.result.paginate(page: params[:page])
     authorize @need_accompanying
   end
 
