@@ -12,6 +12,7 @@ nav.navbar.section-navigation
     li= button_link t('clear_filters'), "#{clients_path}", 'info', dimension: 'sm'
     li= button_link t('export_xlsx'), "#{clients_path}.xlsx?#{{q: request.GET[:q]}.to_query}", 'warning  ', dimension: 'sm'
     = list_eq_filter_dropdown(:state, Client::STATES)
+    = list_eq_filter_dropdown(:salutation, Client.salutation_collection)
     = list_eq_filter_dropdown(:gender_request, Client::GENDER_REQUESTS)
     = list_eq_filter_dropdown(:age_request, Client::AGE_REQUESTS)
   hr
