@@ -4,6 +4,22 @@ class DateRangePickerInput < SimpleForm::Inputs::Base
       template.concat content_tag(:legend,
         I18n.t("activerecord.attributes.#{object_name}.#{attribute_name}"))
       template.concat range_fields(template)
+      template.concat year_buttons(template)
+    end
+  end
+
+  def year_buttons(template)
+    template.content_tag(:ul, id: "#{object_name}_#{attribute_name}_years",
+      class: 'list-inline year-togglers') do
+      (0..5).to_a.reverse.each do |index|
+        template.concat year_link(template, Time.zone.now.to_date.year - index)
+      end
+    end
+  end
+
+  def year_link(template, year)
+    template.content_tag(:li) do
+      template.content_tag(:div, year.to_s, class: 'btn btn-default btn-sm', data: { year: year })
     end
   end
 
