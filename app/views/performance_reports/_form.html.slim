@@ -1,0 +1,9 @@
+= simple_form_for(@performance_report) do |f|
+  = simple_error_notice f
+
+  .row
+    .col-xs-12= f.input :period, as: :date_range_picker
+    .col-xs-12= f.input :extern
+    .col-xs-12= f.input :scope
+
+  = green_submit(f)
