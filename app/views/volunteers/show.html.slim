@@ -149,6 +149,9 @@ h3= t('volunteer_availability')
     .col-xs-12#assignments
       h3= t('assignments')
   = render 'assignments/volunteer_index', assignments: @volunteer.assignments
+  .row
+    .col-xs-12
+      = button_link t_title(:new, Hour), new_hour_url(volunteer_id: @volunteer)
 
 - if current_user.volunteer?
   = button_link t('edit_profile'), edit_volunteer_path(@volunteer)
