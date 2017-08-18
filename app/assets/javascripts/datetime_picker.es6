@@ -5,11 +5,9 @@ $(() => {
       startView: 1,
       todayBtn: true,
       clearBtn: true,
-      language: "de",
-      calendarWeeks: true,
+      language: 'de',
       autoclose: true,
-      todayHighlight: true,
-      toggleActive: true
+      todayHighlight: true
     });
     $('#performance_report_period_years li div').each((index, element) => {
       const year =
