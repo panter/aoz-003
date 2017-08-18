@@ -16,7 +16,6 @@ en:
         age_request: Volunteer's age
         gender_request: Volunteer's gender
         user: User
-        no_matter:
       contact:
         city: City
         extended: Extended address
