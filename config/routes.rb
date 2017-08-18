@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :hours
   resources :assignments
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
@@ -22,6 +21,7 @@ Rails.application.routes.draw do
   end
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
+  resources :hours
 
   root 'application#home'
 end
