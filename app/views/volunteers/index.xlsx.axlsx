@@ -35,7 +35,6 @@ wb.add_worksheet(name: t('volunteers')) do |sheet|
   cell_types = Array.new(header_row.size).map { :string }
   cell_types[0] = :integer
   cell_types[11] = :integer
-  cell_types[16] = :integer
   cell_styles = Array.new(header_row.size).map { nil }
   cell_styles[6] = postal_code
   @volunteers.each do |volunteer|
