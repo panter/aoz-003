@@ -55,7 +55,13 @@ class Volunteer < ApplicationRecord
   default_scope { order(created_at: :desc) }
   scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
 
-  scope :with_assignment, (-> { joins(:assignments) })
+  scope :stat_relevant, (-> { where(state: STATES_FOR_STATS) })
+
+  scope :with_assignments, (-> { joins(:assignments) })
+  scope :with_active_assignments, (-> { with_assignments.merge(Assignment.active) })
+  scope :with_active_assignments_between, lambda { |start_date, end_date|
+    with_assignments.merge(Assignment.active_between(start_date, end_date))
+  }
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
 
   def seeking_clients?

@@ -36,7 +36,18 @@ class Client < ApplicationRecord
   }
 
   scope :with_assignment, (-> { joins(:assignment) })
-  scope :without_assignment, (-> { left_outer_joins(:assignment).where(assignments: { id: nil }) })
+  scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })
+  scope :with_active_assignment_between, lambda { |start_date, end_date|
+    with_assignment.merge(
+      Assignment.active_between(start_date, end_date)
+    )
+  }
+
+  scope :with_inactive_assignment, (-> { with_assignment.merge(Assignment.ended) })
+
+  scope :without_assignment, lambda {
+    left_outer_joins(:assignment).where(assignments: { id: nil })
+  }
 
   ZURICH_ZIPS = [
     '8000', '8001', '8002', '8003', '8004', '8005', '8006', '8008', '8020', '8021', '8022', '8023',
