@@ -6,7 +6,14 @@ class PerformanceReport < ApplicationRecord
     binding.pry
     {
       volunteer: {
-        total: Volunteer.count
+        total: Volunteer.count,
+        active_assignments: Volunteer.with_active_assignments_between(period_start, period_end).count
+      },
+      assignments: {
+        ended: Assignment.end_within(period_start..period_end).count,
+        started: Assignment.start_within(period_start..period_end).count,
+        total: Assignment.count,
+        active: Assignment.active_between(period_start, period_end).count
       }
     }
   end
