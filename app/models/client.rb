@@ -35,6 +35,9 @@ class Client < ApplicationRecord
     includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
   }
 
+  scope :with_assignment, (-> { joins(:assignments) })
+  scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
+
   GENDER_REQUESTS = [:no_matter, :same].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
   PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
