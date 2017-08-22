@@ -35,4 +35,6 @@ class Assignment < ApplicationRecord
       .or(end_within(start_date..end_date))
       .or(no_end.start_before(start_date))
   }
+
+  scope :zurich, (-> { joins(:client).merge(Client.zurich) })
 end
