@@ -175,8 +175,8 @@ ActiveRecord::Schema.define(version: 20170824123715) do
   end
 
   create_table "performance_reports", force: :cascade do |t|
-    t.date "period_start"
-    t.date "period_end"
+    t.datetime "period_start"
+    t.datetime "period_end"
     t.bigint "user_id"
     t.jsonb "report_content"
     t.boolean "extern", default: false

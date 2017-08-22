@@ -1,8 +1,8 @@
 class CreatePerformanceReports < ActiveRecord::Migration[5.1]
   def change
     create_table :performance_reports do |t|
-      t.date :period_start
-      t.date :period_end
+      t.datetime :period_start
+      t.datetime :period_end
       t.references :user, foreign_key: true
       t.jsonb :report_content
       t.boolean :extern, default: false
