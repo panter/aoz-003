@@ -11,9 +11,15 @@ class AssignmentTransform
 
   def prepare_attributes(fw_einsatz, client, volunteer, begleitet)
     {
-      state: map_assignment_state(fw_einsatz[:d_EinsatzBis]),
+      state: map_assignment_state(fw_einsatz[:d_EinsatzVon], fw_einsatz[:d_EinsatzBis]),
       client_id: client.id,
       volunteer_id: volunteer.id,
+      assignment_start: fw_einsatz[:d_EinsatzVon],
+      assignment_end: fw_einsatz[:d_EinsatzBis],
+      performance_appraisal_review: fw_einsatz[:d_Standortgespräch],
+      probation_period: fw_einsatz[:d_Probezeit],
+      home_visit: fw_einsatz[:d_Hausbesuch],
+      first_instruction_lesson: fw_einsatz[:d_ErstUnterricht],
       import_attributes: access_import(
         :tbl_FreiwilligenEinsätze, fw_einsatz[:pk_FreiwilligenEinsatz], fw_einsatz: fw_einsatz,
         begleitet: begleitet
@@ -21,8 +27,10 @@ class AssignmentTransform
     }
   end
 
-  def map_assignment_state(to_date)
+  def map_assignment_state(from_date, to_date)
+    return 'suggested' if from_date > now
+    return 'active' if from_date < now && to_date.nil? || to_date > now
     return 'archived' if to_date < now.years_ago(3)
-    'active' if !to_date || to_date > now
+    'finished'
   end
 end
