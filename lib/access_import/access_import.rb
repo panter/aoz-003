@@ -53,7 +53,7 @@ class AccessImport
       next if client.state == Client::FINISHED
       parameters = transformer.prepare_attributes(fw_einsatz, client, volunteer, begleitet)
       assignment = Assignment.new(parameters)
-      assignment.created_at =
+      assignment.created_at = fw_einsatz[:d_EinsatzVon] || Time.zone.now
       assignment.creator_id = @import_user.id
       binding.pry unless assignment.save
     end
