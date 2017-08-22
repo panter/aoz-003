@@ -48,6 +48,12 @@ de:
         started: Neue
         ended: Beendet
         performance: Kennzahlen
+        assignment_start: Einsatz beginn
+        assignment_end: Einsatz ende
+        performance_appraisal_review: Standortgespräch
+        probation_period: Probezeit
+        home_visit: Hausbesuch
+        first_instruction_lesson: Einführungskurs
       assignment_journal:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
