@@ -85,7 +85,7 @@ class AccessImport
       parameters = transformer.prepare_attributes(entity)
       import_record = destination_model.new(parameters)
       handler_message = yield(import_record, entity)
-      binding.pry unless import_record.save
+      import_record.save!
       puts "Importing personen_rolle #{key} to #{destination_model}.id: #{import_record.id}#{handler_message}"
     end
     message = "Imported #{destination_model.count - records_before} new "
