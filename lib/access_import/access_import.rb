@@ -13,12 +13,13 @@ class AccessImport
     transformer = ClientTransform.new(@begleitete, @haupt_person, @familien_rollen)
     make(@personen_rolle.all_clients, transformer, Client) do |client, personen_rolle|
       client = personen_rollen_create_update_conversion(client, personen_rolle)
-      client.user_id = User.where(role: 'superadmin').first.id
-      if personen_rolle[:d_Rollenende]
-        client.state = Client::FINISHED
-        " -- Client was set to state finished at #{personen_rolle[:d_Rollenende]}  ----"
-      end
+      client.user = User.where_superadmin.first
+      client.state = handle_client_state(client, personen_rolle)
     end
+  end
+
+  def handle_client_state(client, personen_rolle)
+    return Client::FINISHED if personen_rolle[:d_Rollenende]
   end
 
   def make_volunteers
@@ -34,11 +35,23 @@ class AccessImport
 
   def make_assignments
     transformer = AssignmentTransform.new(@begleitete)
-    make(@freiwilligen_einsaetze.where_volunteer, transformer, Assignment) do |assignment, fw_einsatz|
-      assignment.creator = User.where_superadmin.first
-      assignment.created_at = fw_einsatz[:d_EinsatzVon]
-      assignment.updated_at = fw_einsatz[:d_MutDatum]
+    @freiwilligen_einsaetze.where_volunteer.each do |key, fw_einsatz|
+      next if Import.where(importable_type: 'Assignment', access_id: key).any?
+      volunteer = Import.get_imported(:volunteer, fw_einsatz[:fk_PersonenRolle])
+      next if volunteer.state == Volunteer::RESIGNED
+      begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
+      client = Import.get_imported(:client, begleitet[:fk_PersonenRolle])
+      next if client.state == Client::FINISHED
+      binding.pry
+      parameters = transformer.prepare_attributes(fw_einsatz, client, volunteer, begleitet)
+      next unless parameters
+
     end
+    # make(@freiwilligen_einsaetze.where_volunteer, transformer, Assignment) do |assignment, fw_einsatz|
+    #   assignment.creator = User.where_superadmin.first
+    #   assignment.created_at = fw_einsatz[:d_EinsatzVon]
+    #   assignment.updated_at = fw_einsatz[:d_MutDatum]
+    # end
   end
 
   def personen_rollen_create_update_conversion(model_record, personen_rolle)
@@ -55,7 +68,6 @@ class AccessImport
       next unless parameters
       import_record = destination_model.new(parameters)
       handler_message = yield(import_record, entity)
-      binding.pry unless import_record.save
       puts "Importing personen_rolle #{key} to #{destination_model}.id: #{import_record.id}#{handler_message}"
     end
     message = "Imported #{destination_model.count - records_before} new "

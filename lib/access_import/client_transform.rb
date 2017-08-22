@@ -24,7 +24,8 @@ class ClientTransform
       relatives_attributes: relatives_attrs(relatives),
       import_attributes: access_import(
         :tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle], personen_rolle: personen_rolle,
-        haupt_person: haupt_person, familien_rolle: familien_rolle
+        haupt_person: haupt_person, familien_rolle: familien_rolle, begleitet: begleitet,
+        relatives: relatives && relatives
       )
     }
   end
