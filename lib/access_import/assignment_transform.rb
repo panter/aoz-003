@@ -9,15 +9,11 @@ class AssignmentTransform
     end
   end
 
-  def prepare_attributes(fw_einsatz)
-    begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
-    client_import = Import.find_by(access_id: begleitet[:fk_PersonenRolle])
-    volunteer_import = Import.find_by(access_id: fw_einsatz[:fk_PersonenRolle])
-    return false unless client_import && volunteer_import
+  def prepare_attributes(fw_einsatz, client, volunteer, begleitet)
     {
       state: map_assignment_state(fw_einsatz[:d_EinsatzBis]),
-      client_id: client_import.importable.id,
-      volunteer_id: volunteer_import.importable.id,
+      client_id: client.id,
+      volunteer_id: volunteer.id,
       import_attributes: access_import(
         :tbl_FreiwilligenEinsätze, fw_einsatz[:pk_FreiwilligenEinsatz], fw_einsatz: fw_einsatz,
         begleitet: begleitet
