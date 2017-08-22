@@ -55,6 +55,9 @@ class Volunteer < ApplicationRecord
   default_scope { order(created_at: :desc) }
   scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
 
+  scope :with_assignment, (-> { joins(:assignments) })
+  scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
+
   def seeking_clients?
     SEEKING_CLIENTS.include?(state)
   end
