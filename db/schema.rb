@@ -41,6 +41,12 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.datetime "updated_at", null: false
     t.string "state"
     t.bigint "creator_id"
+    t.datetime "assignment_start"
+    t.datetime "assignment_end"
+    t.datetime "performance_appraisal_review"
+    t.datetime "probation_period"
+    t.datetime "home_visit"
+    t.datetime "first_instruction_lesson"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
