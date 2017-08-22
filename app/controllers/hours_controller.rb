@@ -10,7 +10,7 @@ class HoursController < ApplicationController
   def show; end
 
   def new
-    @hour = Hour.new
+    @hour = Hour.new(volunteer_id: params[:volunteer_id])
     @assignments = Assignment.where(volunteer: params[:volunteer_id])
     @assignments_clients = []
     @assignments.each do |assignment|

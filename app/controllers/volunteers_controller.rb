@@ -63,7 +63,6 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_hours
-    authorize Volunteer
     @volunteer_hours = @volunteer.hours
   end
 

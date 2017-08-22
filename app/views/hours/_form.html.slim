@@ -8,7 +8,6 @@
       - else
         = f.hidden_field :assignment_id, value: @hour.assignment.id
 
-
   .row
     .col-xs-12
       = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.assignment.volunteer.id
