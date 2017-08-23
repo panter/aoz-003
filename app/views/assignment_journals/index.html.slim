@@ -1,0 +1,37 @@
+.row
+  .col-xs-12
+    h1= t_title
+
+.row
+  .col-xs-12
+    table.table.table-striped
+      thead
+        tr
+          - if policy(AssignmentJournal).index?
+            th= t_model(Volunteer)
+          th= t_model(Client)
+          th= t_attr(:goals, AssignmentJournal)
+          th= t_attr(:achievements, AssignmentJournal)
+          th= t_attr(:future, AssignmentJournal)
+          th= t_attr(:comments, AssignmentJournal)
+          th= t_attr(:conversation, AssignmentJournal)
+          th colspan='3'
+
+      tbody
+        - @assignment_journals.each do |assignment_journal|
+          tr
+            - if policy(AssignmentJournal).index?
+              td= assignment_journal.volunteer.contact.full_name
+            td= assignment_journal.assignment.client.contact.full_name 
+            td= assignment_journal.goals
+            td= assignment_journal.achievements
+            td= assignment_journal.future
+            td= assignment_journal.comments
+            td= t(assignment_journal.conversation)
+            td= link_to t_action(:show), assignment_journal_path(assignment_journal)
+            td= link_to t_action(:edit), edit_assignment_journal_path(assignment_journal)
+            td= link_to t_action(:destroy), assignment_journal_path(assignment_journal), confirm_deleting(assignment_journal)
+
+.row
+  .col-xs-12
+    = form_navigation_btn :new
