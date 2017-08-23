@@ -14,7 +14,7 @@
 
   .row
     .col-xs-12
-      = f.input :meeting_date, include_blank: true
+      = f.input :meeting_date, include_blank: true, start_year: Date.today.year - 1, end_year: Date.today.year
 
   .row
     .col-xs-12
