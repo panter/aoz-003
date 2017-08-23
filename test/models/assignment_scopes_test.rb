@@ -3,15 +3,14 @@ require 'test_helper'
 class AssignmentScopesTest < ActiveSupport::TestCase
   def setup
     @now = Time.zone.now
-    @start_60_days_ago = create :assignment, assignment_start: @now.days_ago(60)
-    @start_in_one_month = create :assignment, assignment_start: @now.next_month.end_of_month
-    @start_7_days_ago = create :assignment, assignment_start: @now.days_ago(7)
-    @end_30_days_ago = create :assignment, assignment_start: @now.days_ago(60),
-      assignment_end: @now.days_ago(30)
-    @end_15_days_ago = create :assignment, assignment_start: @now.days_ago(30),
-      assignment_end: @now.days_ago(15)
-    @end_future = create :assignment, assignment_start: @now.days_ago(5),
-      assignment_end: @now.next_month.end_of_month
+    [
+      ['start_60_days_ago', @now.days_ago(60), nil],
+      ['start_in_one_month', @now.next_month.end_of_month, nil],
+      ['start_7_days_ago', @now.days_ago(7), nil],
+      ['end_30_days_ago', @now.days_ago(60), @now.days_ago(30)],
+      ['end_15_days_ago', @now.days_ago(30), @now.days_ago(15)],
+      ['end_future', @now.days_ago(5), @now.next_month.end_of_month]
+    ].map { |parameters| make_assignment(*parameters) }
   end
 
   test 'no_end returns only with no end date set' do
@@ -128,5 +127,10 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     refute query.include? @end_future
     refute query.include? @start_in_one_month
     refute query.include? @start_7_days_ago
+  end
+
+  def make_assignment(title, start_date = nil, end_date = nil)
+    assignment = create :assignment, assignment_start: start_date, assignment_end: end_date
+    instance_variable_set("@#{title}", assignment)
   end
 end
