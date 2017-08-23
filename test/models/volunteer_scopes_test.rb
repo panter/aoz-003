@@ -12,8 +12,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
       ['start_in_one_month', @with_multiple_assignments, @now.next_month.end_of_month, nil],
       ['start_7_days_ago', @with_multiple_assignments, @now.days_ago(7), nil],
       ['end_15_days_ago', @with_multiple_assignments, @now.days_ago(30), @now.days_ago(15)],
-      ['end_30_days_ago', @with_inactive_assignment, @now.days_ago(60), @now.days_ago(30)],
-      # ['end_future', nil, @now.days_ago(5), @now.next_month.end_of_month]
+      ['end_future', @with_multiple_assignments, @now.days_ago(5), @now.next_month.end_of_month],
+      ['end_30_days_ago', @with_inactive_assignment, @now.days_ago(60), @now.days_ago(30)]
     ].map { |parameters| make_assignment(*parameters) }
   end
 
