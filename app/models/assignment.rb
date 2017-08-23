@@ -23,6 +23,7 @@ class Assignment < ApplicationRecord
   scope :not_ended, (-> { no_end.or(end_in_future) })
 
   scope :started, (-> { where('assignment_start < ?', Time.zone.now) })
+  scope :will_start, (-> { where('assignment_start > ?', Time.zone.now) })
   scope :start_before, ->(date) { where('assignment_start < ?', date) }
   scope :start_after, ->(date) { where('assignment_start > ?', date) }
   scope :start_within, ->(date_range) { where(assignment_start: date_range) }
