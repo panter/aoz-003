@@ -3,6 +3,10 @@ FactoryGirl.define do
     user
     contact
 
+    trait :zuerich do
+      association(:contact, :zuerich)
+    end
+
     trait :with_relatives do
       relatives do |relative|
         Array.new(2) { relative.association(:relative) }
