@@ -23,8 +23,6 @@
             td= t_attr(:comments)
             td= @hour.comments
 
-- if policy(Hour).index?
-  = form_navigation_btn :back
-- else
+- if current_user.volunteer?
   = form_navigation_btn :edit
-  = button_link t_action(:back), volunteer_hours_volunteer_path(@hour.volunteer)
+= render 'navigation_back'
