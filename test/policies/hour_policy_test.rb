@@ -26,7 +26,7 @@ class HourPolicyTest < PolicyAssertions::Test
     refute_permit @department_manager, Hour.first, 'update?', 'edit?'
   end
 
-  test 'Show: social worker and department mangaer cannot show' do
+  test 'Show: social worker and department manager cannot show' do
     refute_permit @social_worker, Hour.first, 'show?'
     refute_permit @department_manager, Hour.first, 'show?'
   end
