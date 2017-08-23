@@ -4,20 +4,22 @@ class AssignmentJournalsController < ApplicationController
 
   def index
     authorize AssignmentJournal
-    @assignment_journals = policy_scope(AssignmentJournal)
+    @assignment_journals = AssignmentJournal.all
   end
 
   def show; end
 
   def new
-    @assignment_journal = AssignmentJournal.new
+    @assignment_journal = AssignmentJournal.new(volunteer_id: params[:volunteer_id])
     authorize @assignment_journal
   end
 
   def edit; end
 
   def create
-    @assignment_journal = AssignmentJournal.new(assignment_journal_params)
+    @assignment_journal = AssignmentJournal.new(assignment_journal_params
+      .merge(author_id: current_user.id))
+    @assignment_journal.author = current_user
     authorize @assignment_journal
     if @assignment_journal.save
       redirect_to @assignment_journal, make_notice

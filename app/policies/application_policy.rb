@@ -39,6 +39,10 @@ class ApplicationPolicy
     record.user_id == user.id
   end
 
+  def volunteers_entry?
+    volunteer? && record.author_id == user.id
+  end
+
   def volunteer_related?
     volunteer? && record.volunteer.user_id == user.id
   end
@@ -57,6 +61,10 @@ class ApplicationPolicy
 
   def superadmin_or_volunteer_related?
     superadmin? || volunteer_related?
+  end
+
+  def superadmin_or_volunteers_entry?
+    superadmin? || volunteers_entry?
   end
 
   def superadmin_or_social_workers_record?
