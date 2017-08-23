@@ -40,7 +40,8 @@ class HoursController < ApplicationController
 
   def destroy
     @hour.destroy
-    redirect_to hours_url, make_notice
+    redirect_to hours_url, make_notice if current_user.superadmin?
+    redirect_to volunteer_hours_volunteer_path(@hour.volunteer), make_notice
   end
 
   private

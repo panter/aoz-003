@@ -1,8 +1,12 @@
 tr
-  td= hour.volunteer.contact.full_name
+  - if policy(Hour).index?
+    td= hour.volunteer.contact.full_name
   td= hour.assignment.client.contact.full_name
   td= l(hour.meeting_date)
   td= hour.duration
   td= hour.activity
   td= hour.comments
-  = render 'index_actions', subject: hour, controller_name: 'hours'
+  td= link_to t_action(:show), hour_path(hour)
+  - if current_user.volunteer?
+    td= link_to t_action(:edit), edit_hour_path(hour)
+    td= link_to t_action(:destroy), hour_path(hour), confirm_deleting(hour, 'hours')
