@@ -6,7 +6,7 @@
           - if policy(Hour).index?
             tr
               td= t_model(Volunteer)
-              td= @hour.assignment.volunteer.contact.full_name
+              td= @hour.volunteer.contact.full_name
           tr
             td= t_model(Client)
             td= @hour.assignment.client.contact.full_name
