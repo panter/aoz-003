@@ -13,8 +13,8 @@ class Assignment < ApplicationRecord
 
   scope :no_end, (-> { where(assignment_end: nil) })
   scope :has_end, (-> { where.not(assignment_end: nil) })
-  scope :end_in_past, (-> { where('assignment_end < ?', Time.zone.now) })
-  scope :ended, (-> { has_end.end_in_past })
+
+  scope :ended, (-> { where('assignment_end < ?', Time.zone.now) })
   scope :end_before, ->(date) { where('assignment_end < ?', date) }
   scope :end_after, ->(date) { where('assignment_end > ?', date) }
   scope :end_within, ->(date_range) { where(assignment_end: date_range) }
@@ -27,7 +27,6 @@ class Assignment < ApplicationRecord
   scope :start_after, ->(date) { where('assignment_start > ?', date) }
   scope :start_within, ->(date_range) { where(assignment_start: date_range) }
 
-  scope :planned, (-> { where('assignment_start > ?', Time.zone.now) })
   scope :active, (-> { not_ended.started })
 
   scope :active_between, lambda { |start_date, end_date|
