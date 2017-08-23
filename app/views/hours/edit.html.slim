@@ -4,7 +4,4 @@
 
 == render 'form'
 
-- if policy(Hour).index?
-  = form_navigation_btn :back
-- else
-  = button_link t_action(:back), volunteer_hours_volunteer_path(@hour.volunteer)
+= render 'navigation_back'
