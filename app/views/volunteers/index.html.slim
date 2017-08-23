@@ -5,6 +5,7 @@ nav.navbar.section-navigation
     li= button_link t_title(:new), new_volunteer_path, 'success', dimension: 'sm'
     - if policy(Volunteer).destroy?
       li= button_link t('seeking_clients'), seeking_clients_volunteers_url, dimension: 'sm'
+    li= button_link t_title(:index, Hour), hours_path, dimension: 'sm'
     li |
     li= button_link t_model(VolunteerEmail), volunteer_emails_path, dimension: 'sm'
 

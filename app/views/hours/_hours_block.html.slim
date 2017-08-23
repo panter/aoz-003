@@ -3,7 +3,8 @@
     table.table.table-striped
       thead
         tr
-          th= t_model(Volunteer)
+          - if policy(Hour).index?
+            th= t_model(Volunteer)
           th= t_model(Client)
           th= t_attr(:meeting_date, Hour)
           th= t_attr(:duration, Hour)
@@ -13,3 +14,6 @@
 
       tbody
         = render hours
+
+- if current_user.volunteer?
+  = button_link t_title(:new, Hour), new_hour_url(volunteer_id: current_user.volunteer.id)

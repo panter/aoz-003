@@ -3,9 +3,10 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          tr
-            td= t_model(Volunteer)
-            td= @hour.assignment.volunteer.contact.full_name
+          - if policy(Hour).index?
+            tr
+              td= t_model(Volunteer)
+              td= @hour.assignment.volunteer.contact.full_name
           tr
             td= t_model(Client)
             td= @hour.assignment.client.contact.full_name
@@ -22,8 +23,8 @@
             td= t_attr(:comments)
             td= @hour.comments
 
-= form_navigation_btn :edit
 - if policy(Hour).index?
   = form_navigation_btn :back
 - else
+  = form_navigation_btn :edit
   = button_link t_action(:back), volunteer_hours_volunteer_path(@hour.volunteer)
