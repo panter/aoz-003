@@ -7,3 +7,5 @@ tr
   td = link_to assignment.creator, assignment.creator if assignment.creator.present?
   = render 'index_actions', subject: assignment, target_controller: 'assignments'
   td = link_to t('download'), assignment_path(assignment, format: :pdf)
+  td= link_to t_title(:new, AssignmentJournal), new_assignment_journal_path(assignment_id: assignment, volunteer_id: assignment.volunteer)
+  td= link_to t_title(:index, AssignmentJournal), journals_list_assignment_path(assignment)

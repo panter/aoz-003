@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   include MakeNotice
 
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy]
+  before_action :set_assignment, only: [:show, :edit, :update, :destroy, :journals_list]
 
   def index
     authorize Assignment
@@ -73,6 +73,10 @@ class AssignmentsController < ApplicationController
     @need_accompanying = @q.result
     @need_accompanying = @need_accompanying.paginate(page: params[:page])
     authorize Assignment
+  end
+
+  def journals_list
+    @journals_list = @assignment.assignment_journals
   end
 
   private

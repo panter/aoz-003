@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :assignments
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
   end
@@ -22,6 +21,9 @@ Rails.application.routes.draw do
   end
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
+  resources :assignments do
+    get :journals_list, on: :member
+  end
   resources :assignment_journals
 
   root 'application#home'

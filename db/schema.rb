@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.bigint "assignment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "author_id"
     t.index ["assignment_id"], name: "index_assignment_journals_on_assignment_id"
+    t.index ["author_id"], name: "index_assignment_journals_on_author_id"
     t.index ["deleted_at"], name: "index_assignment_journals_on_deleted_at"
     t.index ["volunteer_id"], name: "index_assignment_journals_on_volunteer_id"
   end
@@ -309,6 +311,7 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 
+  add_foreign_key "assignment_journals", "users", column: "author_id"
   add_foreign_key "assignments", "clients"
   add_foreign_key "assignments", "users", column: "creator_id"
   add_foreign_key "assignments", "volunteers"

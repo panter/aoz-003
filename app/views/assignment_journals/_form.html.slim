@@ -3,11 +3,11 @@
 
   .row
     .col-xs-12
-      = f.association :assignment
+      = f.hidden_field :assignment_id, value: params[:assignment_id] || @assignment_journal.assignment.id
 
   .row
     .col-xs-12
-      = f.association :volunteer
+      = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @assignment_journal.volunteer.id
 
   .row
     .col-xs-12
