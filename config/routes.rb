@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
+  resources :assignment_journals
 
   root 'application#home'
 end

@@ -15,6 +15,22 @@ ActiveRecord::Schema.define(version: 20170824123715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "assignment_journals", force: :cascade do |t|
+    t.text "goals"
+    t.text "achievements"
+    t.text "future"
+    t.text "comments"
+    t.boolean "conversation"
+    t.datetime "deleted_at"
+    t.bigint "volunteer_id"
+    t.bigint "assignment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_assignment_journals_on_assignment_id"
+    t.index ["deleted_at"], name: "index_assignment_journals_on_deleted_at"
+    t.index ["volunteer_id"], name: "index_assignment_journals_on_volunteer_id"
+  end
+
   create_table "assignments", force: :cascade do |t|
     t.bigint "client_id"
     t.bigint "volunteer_id"

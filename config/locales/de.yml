@@ -38,6 +38,13 @@ de:
         client: Klient/in
         created_by: Verantwortliche/r
         volunteer: Freiwillige
+      assignment_journal:
+        achievements: Was konnte in den letzten Monaten erreicht werden?
+        assignment: Begleitung
+        comments: Bemerkungen
+        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
+        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
+        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
       client:
         <<: *id-generic_keys
         actual_activities: Aktuelle Tätigkeiten
@@ -197,6 +204,7 @@ de:
               invalid: ist ungültig
     models:
       assignment: Begleitung
+      assignment_journal: Inhaltliches Journal
       client: Klient/in
       contact: Kontakt
       department: Standort

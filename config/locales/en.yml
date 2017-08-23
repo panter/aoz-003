@@ -73,6 +73,7 @@ en:
         user: Created by
     models:
       assignment: Assignment
+      assignment_journal: Assignment journal
       client: Client
       contact: Contact
       department: Department

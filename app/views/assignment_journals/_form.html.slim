@@ -1,0 +1,34 @@
+= simple_form_for(@assignment_journal) do |f|
+  = simple_error_notice f
+
+  .row
+    .col-xs-12
+      = f.association :assignment
+
+  .row
+    .col-xs-12
+      = f.association :volunteer
+
+  .row
+    .col-xs-12
+      = f.input :goals
+
+  .row
+    .col-xs-12
+      = f.input :achievements
+
+  .row
+    .col-xs-12
+      = f.input :future
+
+  .row
+    .col-xs-12
+      = f.input :comments
+
+  .row
+    .col-xs-12
+      = f.input :conversation
+
+  .row
+    .col-xs-12
+      = f.button :submit
