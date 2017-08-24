@@ -3,6 +3,7 @@ class Volunteer < ApplicationRecord
   include SalutationCollection
   include BuildContactRelation
   include YearCollection
+  include ZuerichScopes
 
   acts_as_paranoid
   before_save :default_state

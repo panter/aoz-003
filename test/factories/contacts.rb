@@ -11,7 +11,7 @@ FactoryGirl.define do
 
     trait :zuerich do
       city 'Zürich'
-      postal_code Client::ZURICH_ZIPS.sample
+      postal_code Client.zuerich_zips.sample
     end
   end
 end

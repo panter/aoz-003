@@ -3,6 +3,7 @@ class Client < ApplicationRecord
   include SalutationCollection
   include YearCollection
   include BuildContactRelation
+  include ZuerichScopes
 
   REGISTERED = 'registered'.freeze
   RESERVED = 'reserved'.freeze
@@ -48,17 +49,6 @@ class Client < ApplicationRecord
   scope :without_assignment, lambda {
     left_outer_joins(:assignment).where(assignments: { id: nil })
   }
-
-  ZURICH_ZIPS = [
-    '8000', '8001', '8002', '8003', '8004', '8005', '8006', '8008', '8020', '8021', '8022', '8023',
-    '8024', '8025', '8026', '8027', '8028', '8029', '8030', '8031', '8032', '8033', '8034', '8035',
-    '8036', '8037', '8038', '8039', '8040', '8041', '8042', '8043', '8044', '8045', '8046', '8047',
-    '8048', '8049', '8050', '8051', '8052', '8053', '8055', '8056', '8057', '8058', '8060', '8061',
-    '8062', '8063', '8064', '8065', '8066', '8079', '8087', '8091'
-  ].freeze
-
-  scope :zurich, (-> { joins(:contact).where(contacts: { postal_code: ZURICH_ZIPS }) })
-  scope :not_zurich, (-> { joins(:contact).where.not(contacts: { postal_code: ZURICH_ZIPS }) })
 
   GENDER_REQUESTS = [:no_matter, :same].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
