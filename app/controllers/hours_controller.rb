@@ -11,10 +11,17 @@ class HoursController < ApplicationController
 
   def new
     @hour = Hour.new(volunteer_id: params[:volunteer_id])
+    @clients = Client.having_volunteer
     @assignments = Assignment.where(volunteer: params[:volunteer_id])
-    @assignments_clients = @assignments.map do |assignment|
-      [assignment.client.to_s, assignment.id]
-    end
+    @assignments_clients = if params[:volunteer_id]
+                             @assignments.map do |assignment|
+                               [assignment.client.to_s, assignment.id]
+                             end
+                           else
+                             @assignments_clients = @clients.map do |client|
+                               [client.to_s, client.assignment.id]
+                             end
+                           end
     authorize @hour
   end
 
@@ -40,8 +47,11 @@ class HoursController < ApplicationController
 
   def destroy
     @hour.destroy
-    redirect_to hours_url, make_notice if current_user.superadmin?
-    redirect_to volunteer_hours_volunteer_path(@hour.volunteer), make_notice
+    if current_user.superadmin?
+      redirect_to hours_url, make_notice
+    else
+      redirect_to volunteer_hours_volunteer_path(@hour.volunteer), make_notice
+    end
   end
 
   private

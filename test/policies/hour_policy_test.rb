@@ -8,20 +8,20 @@ class HourPolicyTest < PolicyAssertions::Test
     create :hour
   end
 
-  test 'Create: Superadmin, social worker and department manager cannot create' do
-    refute_permit @superadmin, Hour, 'new?', 'create?'
+  test 'Create: Only superadmin can create' do
+    assert_permit @superadmin, Hour, 'new?', 'create?'
     refute_permit @social_worker, Hour, 'new?', 'create?'
     refute_permit @department_manager, Hour, 'new?', 'create?'
   end
 
-  test 'Destroy: Superadmin, social worker and department manager cannot destroy' do
-    refute_permit @superadmin, Hour.first, 'destroy?'
+  test 'Destroy: Only superadmin can destroy' do
+    assert_permit @superadmin, Hour.first, 'destroy?'
     refute_permit @social_worker, Hour.first, 'destroy?'
     refute_permit @department_manager, Hour.first, 'destroy?'
   end
 
-  test 'Update: Superadmin, social worker and department manager cannot update' do
-    refute_permit @superadmin, Hour.first, 'update?', 'edit?'
+  test 'Update: Only superadmin can update' do
+    assert_permit @superadmin, Hour.first, 'update?', 'edit?'
     refute_permit @social_worker, Hour.first, 'update?', 'edit?'
     refute_permit @department_manager, Hour.first, 'update?', 'edit?'
   end
@@ -38,11 +38,8 @@ class HourPolicyTest < PolicyAssertions::Test
     end
   end
 
-  test 'Index: superadmin can index hours' do
+  test 'Index: Only superadmin can index hours' do
     assert_permit @superadmin, Hour, 'index?'
-  end
-
-  test 'Index: social worker and department manager cannot index assignments' do
     refute_permit @social_worker, Hour, 'index?'
     refute_permit @department_manager, Hour, 'index?'
   end
