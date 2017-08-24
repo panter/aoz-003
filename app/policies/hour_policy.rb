@@ -1,10 +1,4 @@
 class HourPolicy < ApplicationPolicy
-  class Scope < ApplicationScope
-    def resolve
-      all if superadmin?
-    end
-  end
-
   alias_method :index?,          :superadmin?
   alias_method :show?,           :superadmin_or_volunteer_related?
   alias_method :new?,            :superadmin_or_volunteer_related?
