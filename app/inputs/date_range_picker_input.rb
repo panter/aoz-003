@@ -1,5 +1,5 @@
 class DateRangePickerInput < SimpleForm::Inputs::Base
-  def input
+  def input(wrapper_options)
     template.content_tag(:fieldset) do
       template.concat content_tag(:legend,
         I18n.t("activerecord.attributes.#{object_name}.#{attribute_name}"))
@@ -19,7 +19,8 @@ class DateRangePickerInput < SimpleForm::Inputs::Base
 
   def year_link(template, year)
     template.content_tag(:li) do
-      template.content_tag(:div, year.to_s, class: 'btn btn-default btn-sm', data: { year: year })
+      template.content_tag(:a, year.to_s, href: '#', class: 'btn btn-default btn-sm',
+        data: { year: year })
     end
   end
 

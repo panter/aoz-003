@@ -15,7 +15,10 @@ class PerformanceReportsController < ApplicationController
     authorize @performance_report
   end
 
-  def edit; end
+  def edit
+    @performance_report.period_start = @performance_report.period_start.to_date
+    @performance_report.period_end = @performance_report.period_end.to_date
+  end
 
   def create
     @performance_report = PerformanceReport.new(report_params.merge(convert_start_end))
@@ -53,6 +56,7 @@ class PerformanceReportsController < ApplicationController
 
   def set_performance_report
     @performance_report = PerformanceReport.find(params[:id])
+    @report_content = @performance_report.report_content
     authorize @performance_report
   end
 
