@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.boolean "workday", default: false
     t.boolean "weekend", default: false
     t.text "detailed_description"
-    t.datetime "state_changed_at"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
@@ -178,6 +177,7 @@ ActiveRecord::Schema.define(version: 20170824123715) do
   create_table "performance_reports", force: :cascade do |t|
     t.datetime "period_start"
     t.datetime "period_end"
+    t.integer "year"
     t.bigint "user_id"
     t.jsonb "report_content"
     t.boolean "extern", default: false
