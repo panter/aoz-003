@@ -1,8 +1,15 @@
 class PerformanceReport < ApplicationRecord
-  before_validation :generate_report
+  before_save :generate_report
   belongs_to :user
 
+  validates :period_start, presence: true
+  validates :period_end, presence: true
+
   def generate_report
+    period_all_year = period_start.all_year
+    if period_all_year.end == period_end && period_all_year.begin == period_start
+      self.year = period_start.year
+    end
     self.report_content = {
       global: global,
       zuerich: zuerich
@@ -49,7 +56,7 @@ class PerformanceReport < ApplicationRecord
     assignments = zurich ? Assignment.zurich : Assignment.all
     {
       ended: assignments.end_within(period_start..period_end).count,
-      started: assignments.start_within(period_start..period_end).count,
+      new: assignments.start_within(period_start..period_end).count,
       active: assignments.active_between(period_start, period_end).count,
       total: assignments.count
     }

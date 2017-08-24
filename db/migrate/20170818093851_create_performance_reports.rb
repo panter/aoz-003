@@ -3,6 +3,7 @@ class CreatePerformanceReports < ActiveRecord::Migration[5.1]
     create_table :performance_reports do |t|
       t.datetime :period_start
       t.datetime :period_end
+      t.integer :year
       t.references :user, foreign_key: true
       t.jsonb :report_content
       t.boolean :extern, default: false

@@ -60,9 +60,9 @@ class Volunteer < ApplicationRecord
   scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
 
   scope :with_assignments, (-> { joins(:assignments).distinct })
-  scope :with_active_assignments, (-> { with_assignments.merge(Assignment.active) })
+  scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active).distinct })
   scope :with_active_assignments_between, lambda { |start_date, end_date|
-    with_assignments.merge(Assignment.active_between(start_date, end_date))
+    joins(:assignments).merge(Assignment.active_between(start_date, end_date)).distinct
   }
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
 
