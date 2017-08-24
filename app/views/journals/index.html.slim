@@ -20,7 +20,7 @@ h1= t_title(:index, Journal)
               td= link_to record.user.full_name, record.user.profile
               td= link_to t_action(:show), client_journal_path(@journaled, record)
               td= link_to t_action(:edit), edit_client_journal_path(@journaled, record)
-              td= link_to t_action(:destroy), client_journal_path(@journaled, record), confirm_deleting(record, 'journals')
+              td= link_to t_action(:destroy), client_journal_path(@journaled, record), confirm_deleting(record)
 .row
   .col-xs-12
 = form_navigation_btn :new
