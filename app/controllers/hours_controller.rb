@@ -13,15 +13,7 @@ class HoursController < ApplicationController
     @hour = Hour.new(volunteer_id: params[:volunteer_id])
     @clients = Client.having_volunteer
     @assignments = Assignment.where(volunteer: params[:volunteer_id])
-    @assignments_clients = if params[:volunteer_id]
-                             @assignments.map do |assignment|
-                               [assignment.client.to_s, assignment.id]
-                             end
-                           else
-                             @assignments_clients = @clients.map do |client|
-                               [client.to_s, client.assignment.id]
-                             end
-                           end
+    @assignments_clients = select_clients(@assignments)
     authorize @hour
   end
 
@@ -55,6 +47,18 @@ class HoursController < ApplicationController
   end
 
   private
+
+  def select_clients(assignments)
+    if params[:volunteer_id]
+      assignments.map do |assignment|
+        [assignment.client.to_s, assignment.id]
+      end
+    else
+      assignments_clients = @clients.map do |client|
+        [client.to_s, client.assignment.id]
+      end
+    end
+  end
 
   def set_hour
     @hour = Hour.find(params[:id])
