@@ -54,6 +54,7 @@ class Volunteer < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
   scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
+  scope :having_clients, (-> { where(state: HAVING_CLIENTS) })
 
   def seeking_clients?
     SEEKING_CLIENTS.include?(state)

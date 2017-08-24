@@ -34,6 +34,7 @@ class Client < ApplicationRecord
   scope :need_accompanying, lambda {
     includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
   }
+  scope :having_volunteer, (-> { where(state: RESERVED) })
 
   GENDER_REQUESTS = [:no_matter, :same].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
