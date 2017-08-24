@@ -1,30 +1,112 @@
-.row
-  .col-xs-12
-    h1
-      = "#{t_model}"
-      = ": #{@performance_report.title}" if @performance_report.title.present?
+h1
+  = "#{t_model}"
+  = ": #{@performance_report.title}" if @performance_report.title.present?
 
-    h3= t_attr(:comment)
-    p= @performance_report.comment
+- if @performance_report.comment.present?
+  h3= t_attr(:comment)
+  p= @performance_report.comment
 
-.row
-  .col-xs-12
-    h3= t_attr(:period)
-  .col-xs-12
-    strong= "#{t_attr(:period_start)}: "
-    = l(@performance_report.period_start) if @performance_report.period_start
-    strong= " #{t_attr(:period_end)}: "
-    = l(@performance_report.period_end) if @performance_report.period_end
-
-.row
-  .col-xs-12
-    h3 Selection Criteria
+- if @performance_report.extern || @performance_report.scope.present?
+  h3 Selection Criteria
+  - if @performance_report.extern
     p
       strong= "#{t_attr(:extern)}: "
       = t(@performance_report.extern)
+  - if @performance_report.scope.present?
     p
       strong= "#{t_attr(:scope)}: "
       = @performance_report.scope
+
+hr
+- if @performance_report.year.present?
+  h2= t('.title_year', year: @performance_report.year)
+- else
+  h2= t('.title_range', start: l(@performance_report.period_start.to_date, format: :default), end: l(@performance_report.period_end.to_date, format: :default))
+
+h3= t_attr(:global)
+table.table
+  tbody
+    tr
+      td= t('.volunteers.total')
+      td= @report_content['global']['volunteers']['total']
+    tr
+      td= t('.volunteers.new')
+      td= @report_content['global']['volunteers']['new']
+    tr
+      td= t('.volunteers.resigned')
+      td
+    tr.active
+      td= t('.volunteers.active_total')
+      td= @report_content['global']['volunteers']['active']
+
+    tr
+      td= t('.assignments.total')
+      td= @report_content['global']['assignments']['total']
+    tr
+      td= t('.assignments.new')
+      td= @report_content['global']['assignments']['new']
+    tr
+      td= t('.assignments.resigned')
+      td= @report_content['global']['assignments']['ended']
+    tr.active
+      td= t('.assignments.active_total')
+      td= @report_content['global']['assignments']['active']
+
+    tr
+      td= t('.groups.total')
+      td
+    tr
+      td= t('.groups.new')
+      td
+    tr
+      td= t('.groups.resigned')
+      td
+    tr.active
+      td= t('.groups.active_total')
+      td
+
+h3= t_attr(:zuerich)
+table.table
+  tbody
+    tr
+      td= t('.volunteers.total')
+      td= @report_content['zuerich']['volunteers']['total']
+    tr
+      td= t('.volunteers.new')
+      td= @report_content['zuerich']['volunteers']['new']
+    tr
+      td= t('.volunteers.resigned')
+      td
+    tr.active
+      td= t('.volunteers.active_total')
+      td= @report_content['zuerich']['volunteers']['active']
+
+    tr
+      td= t('.zh_assignments.total')
+      td= @report_content['zuerich']['assignments']['total']
+    tr
+      td= t('.zh_assignments.new')
+      td= @report_content['zuerich']['assignments']['new']
+    tr
+      td= t('.zh_assignments.resigned')
+      td= @report_content['zuerich']['assignments']['ended']
+    tr.active
+      td= t('.assignments.active_total')
+      td= @report_content['zuerich']['assignments']['active']
+
+    tr
+      td= t('.groups.total')
+      td
+    tr
+      td= t('.groups.new')
+      td
+    tr
+      td= t('.groups.resigned')
+      td
+    tr.active
+      td= t('.groups.active_total')
+      td
+hr
 
 = form_navigation_btn :edit
 = form_navigation_btn :back

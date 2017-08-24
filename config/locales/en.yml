@@ -468,3 +468,9 @@ en:
   volunteers: Volunteers
   wanna_apply: Do you want to register as a volunteer?
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
+  performance_reports:
+    plural: Performance Reports
+    show:
+      calendar_year: 'Kalenderjahr %{year}'
+      title_year: 'Performance report of the calendar year %{year}'
+      title_range: 'Performance report of the period from "%{start} to %{end}"'
