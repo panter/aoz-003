@@ -30,6 +30,13 @@ de:
     languages: Sprachen
     profession: Beruf
     city: Ort
+    volunteers: Freiwillige
+    assignments: Begleitungen
+    clients: Klienten
+    active: Aktiv
+    zuerich: Zürich
+    new: Neu
+    total: Total
   activerecord:
     attributes:
       assignment:
@@ -38,6 +45,8 @@ de:
         client: Klient/in
         created_by: Verantwortliche/r
         volunteer: Freiwillige
+        started: Neue
+        ended: Beendet
       assignment_journal:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
@@ -164,6 +173,7 @@ de:
         women: Frauen
         working_percent: Stellenprozent
         zurich: Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt
+        ended: ausgetreten
       volunteer_email:
         active: Aktiv
         body: Textkörper
