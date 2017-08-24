@@ -36,12 +36,17 @@ class Client < ApplicationRecord
     includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
   }
 
+  scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+
   scope :with_assignment, (-> { joins(:assignment).distinct })
   scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })
   scope :with_active_assignment_between, lambda { |start_date, end_date|
     with_assignment.merge(
       Assignment.active_between(start_date, end_date)
     )
+  }
+  scope :with_active_assignment_between, lambda { |start_date, end_date|
+    with_assignment.merge(Assignment.active_between(start_date, end_date))
   }
 
   scope :with_inactive_assignment, (-> { with_assignment.merge(Assignment.ended) })
