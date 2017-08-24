@@ -47,6 +47,7 @@ de:
         volunteer: Freiwillige
         started: Neue
         ended: Beendet
+        performance: Kennzahlen
       assignment_journal:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
@@ -189,7 +190,6 @@ de:
         extern: Extern
         intern: Intern
         period: Zeitraum
-        create_new_report: Neuen Report erstellen
         title: Titel
         comment: Kommentar
         user: Ersteller/in
@@ -242,7 +242,6 @@ de:
       performance_report: Kennzahlen Report
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journal Eintrag verfassen
-  performance_reports: Kenzahlen
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   age_request: &id-age_requests
@@ -624,6 +623,35 @@ de:
   volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   to: bis
+  performance_reports:
+    one: Kennzahl
+    other: Kenzahlen
+    index:
+      new_report: Neuen Report erstellen
+    show:
+      volunteers:
+        total: Anzahl FreiwilliIge insgesamt
+        new: Anzahl neue Freiwillige
+        resigned: Anzahl ausgetretene Freiwillige
+        active_total: Total aktive Freiwillige per Zeitraumende
+      assignments:
+        total: Anzahl Begleitungen insgesamt
+        new: Anzahl neue Begleitungen
+        resigned: Anzahl beendete Begleitungen
+        active_total: Total aktive Begleitungen per Zeitraumende
+      groups:
+        total: Anzahl Gruppen insgesamt (Kurse, Animationen, Andere)
+        new: Anzahl neue Gruppen (Kurse, Animationen, Andere)
+        resigned: Anzahl beendete Gruppen (Kurse, Animationen, Andere)
+        active_total: Total laufende Gruppen per Zeitraumende
+      zh_assignments:
+        total: Anzahl Begleitete
+        new: Anzahl neue Begleitungen
+        resigned: Anzahl beendete Begleitungen
+        active_total: Total aktive Begleitungen per Zeitraumende
+      calendar_year: 'Kalenderjahr %{year}'
+      title_year: 'Kennzahlen des Zeitraums "Kalenderjahr %{year}"'
+      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
   will_paginate:
     next_label: Weiter
     previous_label: Zurück

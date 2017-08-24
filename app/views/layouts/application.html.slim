@@ -17,7 +17,7 @@ html
           window.print();
           return false;
         });
-  body
+  body class="#{controller_name.dasherize} #{action_name.dasherize}"
     .wrapper
       = render 'navigation'
       .container
