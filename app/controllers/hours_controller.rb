@@ -4,7 +4,7 @@ class HoursController < ApplicationController
 
   def index
     authorize Hour
-    @hours = policy_scope(Hour)
+    @hours = Hour.all
   end
 
   def show; end
