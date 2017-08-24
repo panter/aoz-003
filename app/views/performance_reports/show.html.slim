@@ -16,5 +16,15 @@
     strong= " #{t_attr(:period_end)}: "
     = l(@performance_report.period_end) if @performance_report.period_end
 
+.row
+  .col-xs-12
+    h3 Selection Criteria
+    p
+      strong= "#{t_attr(:extern)}: "
+      = t(@performance_report.extern)
+    p
+      strong= "#{t_attr(:scope)}: "
+      = @performance_report.scope
+
 = form_navigation_btn :edit
 = form_navigation_btn :back
