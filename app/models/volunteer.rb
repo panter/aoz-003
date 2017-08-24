@@ -57,6 +57,8 @@ class Volunteer < ApplicationRecord
 
   scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
 
+  scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+
   scope :with_assignments, (-> { joins(:assignments).distinct })
   scope :with_active_assignments, (-> { with_assignments.merge(Assignment.active) })
   scope :with_active_assignments_between, lambda { |start_date, end_date|
