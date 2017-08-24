@@ -7,6 +7,5 @@ tr
   td= hour.activity
   td= hour.comments
   td= link_to t_action(:show), hour_path(hour)
-  - if current_user.volunteer?
-    td= link_to t_action(:edit), edit_hour_path(hour)
-    td= link_to t_action(:destroy), hour_path(hour), confirm_deleting(hour, 'hours')
+  td= link_to t_action(:edit), edit_hour_path(hour)
+  td= link_to t_action(:destroy), hour_path(hour), confirm_deleting(hour, 'hours')

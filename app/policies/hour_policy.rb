@@ -7,9 +7,9 @@ class HourPolicy < ApplicationPolicy
 
   alias_method :index?,          :superadmin?
   alias_method :show?,           :superadmin_or_volunteer_related?
-  alias_method :new?,            :volunteer_related?
-  alias_method :edit?,           :volunteer_related?
-  alias_method :create?,         :volunteer_related?
-  alias_method :update?,         :volunteer_related?
-  alias_method :destroy?,        :volunteer_related?
+  alias_method :new?,            :superadmin_or_volunteer_related?
+  alias_method :edit?,           :superadmin_or_volunteer_related?
+  alias_method :create?,         :superadmin_or_volunteer_related?
+  alias_method :update?,         :superadmin_or_volunteer_related?
+  alias_method :destroy?,        :superadmin_or_volunteer_related?
 end

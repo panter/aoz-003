@@ -43,6 +43,10 @@ class Client < ApplicationRecord
     "#{contact.first_name} #{contact.last_name}"
   end
 
+  def self.having_volunteer
+    Client.where(state: RESERVED)
+  end
+
   def self.first_languages
     [
       [I18nData.languages(I18n.locale)['TI'], 'TI'],

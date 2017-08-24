@@ -15,5 +15,7 @@
       tbody
         = render hours
 
-- if current_user.volunteer?
+- if current_user.superadmin?
+  = form_navigation_btn :new
+- else
   = button_link t_title(:new, Hour), new_hour_url(volunteer_id: current_user.volunteer.id)

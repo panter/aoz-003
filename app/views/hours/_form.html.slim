@@ -10,7 +10,10 @@
 
   .row
     .col-xs-12
-      = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
+      - if action_name == 'new' && current_user.superadmin?
+        = f.association :volunteer, collection: Volunteer.having_clients
+      - else
+        = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
 
   .row
     .col-xs-12
