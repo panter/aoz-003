@@ -65,7 +65,7 @@ class HoursController < ApplicationController
   end
 
   def hour_params
-    params.require(:hour).permit(:meeting_date, :duration, :activity, :comments, :volunteer_id,
-      :assignment_id)
+    params.require(:hour).permit(:meeting_date, :hours, :minutes, :activity, :comments,
+      :volunteer_id, :assignment_id)
   end
 end
