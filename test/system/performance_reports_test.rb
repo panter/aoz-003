@@ -13,7 +13,6 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     click_link two_years_ago.to_s
     click_button 'Create Performance Report'
     assert page.has_text? 'Performance Report was successfully created.'
-    assert page.has_text? "01.01.#{two_years_ago - 2000} 00:00"
-    assert page.has_text? "31.12.#{two_years_ago - 2000} 23:59"
+    assert page.has_text? "Performance report of the calendar year #{two_years_ago}"
   end
 end
