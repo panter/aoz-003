@@ -492,8 +492,6 @@ en:
       zh_assignments:
         <<: *id-assignment-report
         total: Total number of assigned clients
-  performance_reports:
-    show:
       calendar_year: 'Calendar Year %{year}'
       title_year: 'Performance report of the calendar year %{year}'
       title_range: 'Performance report of the period from "%{start} to %{end}"'
