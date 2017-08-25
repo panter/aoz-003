@@ -63,7 +63,7 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_hours
-    @volunteer_hours = @volunteer.hours
+    @volunteer_hours = Hour.where(volunteer_id: @volunteer)
   end
 
   private
