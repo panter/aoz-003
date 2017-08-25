@@ -629,12 +629,15 @@ de:
     index:
       new_report: Neuen Report erstellen
     show:
+      calendar_year: 'Kalenderjahr %{year}'
+      title_year: 'Kennzahlen des Zeitraums "Kalenderjahr %{year}"'
+      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
       volunteers:
-        total: Anzahl FreiwilliIge insgesamt
+        total: Anzahl Freiwillige insgesamt
         new: Anzahl neue Freiwillige
         resigned: Anzahl ausgetretene Freiwillige
         active_total: Total aktive Freiwillige per Zeitraumende
-      assignments:
+      assignments: &id-assignment-report
         total: Anzahl Begleitungen insgesamt
         new: Anzahl neue Begleitungen
         resigned: Anzahl beendete Begleitungen
@@ -645,13 +648,8 @@ de:
         resigned: Anzahl beendete Gruppen (Kurse, Animationen, Andere)
         active_total: Total laufende Gruppen per Zeitraumende
       zh_assignments:
+        <<: *id-assignment-report
         total: Anzahl Begleitete
-        new: Anzahl neue Begleitungen
-        resigned: Anzahl beendete Begleitungen
-        active_total: Total aktive Begleitungen per Zeitraumende
-      calendar_year: 'Kalenderjahr %{year}'
-      title_year: 'Kennzahlen des Zeitraums "Kalenderjahr %{year}"'
-      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
   will_paginate:
     next_label: Weiter
     previous_label: Zurück

@@ -469,8 +469,31 @@ en:
   wanna_apply: Do you want to register as a volunteer?
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
   performance_reports:
-    plural: Performance Reports
+    one: Performance Report
+    other: Performance Reports
+    index:
+      new_report: Create new report
     show:
-      calendar_year: 'Kalenderjahr %{year}'
+      volunteers:
+        total: Total number of volunteers
+        new: Number of new volunteers
+        resigned: Number of resigned volunteers
+        active_total: Total active volunteers by the end of the period
+      assignments: &id-assignment-report
+        total: Total number of assignments
+        new: Number of new assignments
+        resigned: Number of finished assignments
+        active_total: Total number of active assignments by the end of the period
+      groups:
+        total: Total number of groups (Courses, Animations, Others)
+        new: Number of new groups (Courses, Animations, Others)
+        resigned: Number of finished groups (Courses, Animations, Others)
+        active_total: Total number of active groups by the end of the period
+      zh_assignments:
+        <<: *id-assignment-report
+        total: Total number of assigned clients
+  performance_reports:
+    show:
+      calendar_year: 'Calendar Year %{year}'
       title_year: 'Performance report of the calendar year %{year}'
       title_range: 'Performance report of the period from "%{start} to %{end}"'
