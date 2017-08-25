@@ -74,7 +74,9 @@ de:
         assignment: Begleitung
         comments: Bemerkungen / Gab es etwas Besonderes
         duration: Dauer des Treffens / des Kurses (in Stunden)
+        hours: Stunden
         meeting_date: Datum des Treffens / des Kurses
+        minutes: Minuten
       journal:
         <<: *id-generic_keys
         author: Author

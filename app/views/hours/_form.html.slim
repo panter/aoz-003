@@ -20,8 +20,10 @@
       = f.input :meeting_date, include_blank: true, start_year: Date.today.year - 1, end_year: Date.today.year
 
   .row
-    .col-xs-12
-      = f.input :duration, collection: 1..8
+    .col-xs-12.col-md-6
+      = f.input :hours, collection: 1..8
+    .col-xs-12.col-md-6
+      = f.input :minutes, collection: (0..59)
 
   .row
     .col-xs-12

@@ -3,7 +3,7 @@ tr
     td= hour.volunteer.contact.full_name
   td= hour.assignment.client.contact.full_name
   td= l(hour.meeting_date)
-  td= hour.duration
+  td= "#{hour.hours}:#{hour.minutes}"
   td= hour.activity
   td= hour.comments
   td= link_to t_action(:show), hour_path(hour)

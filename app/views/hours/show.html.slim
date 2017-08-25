@@ -15,7 +15,7 @@
             td= l(@hour.meeting_date)
           tr
             td= t_attr(:duration)
-            td= @hour.duration
+            td= "#{@hour.hours}:#{@hour.minutes}"
           tr
             td= t_attr(:activity)
             td= @hour.activity

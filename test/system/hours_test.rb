@@ -25,7 +25,8 @@ class HoursTest < ApplicationSystemTestCase
     within '#hour_meeting_date_1i' do
       select(Time.zone.today.year)
     end
-    select '2', from: 'Duration'
+    select '2', from: 'Hours'
+    select '15', from: 'Minutes'
     click_button 'Create Hour report'
     assert page.has_text? 'Hour report was successfully created.'
   end
