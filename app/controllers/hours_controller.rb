@@ -11,9 +11,7 @@ class HoursController < ApplicationController
 
   def new
     @hour = Hour.new(volunteer_id: params[:volunteer_id])
-    @clients = Client.having_volunteer
-    @assignments = Assignment.where(volunteer: params[:volunteer_id])
-    @assignments_clients = select_clients(@assignments)
+    @assignments_clients = select_clients
     authorize @hour
   end
 
@@ -48,13 +46,14 @@ class HoursController < ApplicationController
 
   private
 
-  def select_clients(assignments)
+  def select_clients
     if params[:volunteer_id]
+      assignments = Assignment.where(volunteer: params[:volunteer_id])
       assignments.map do |assignment|
         [assignment.client.to_s, assignment.id]
       end
     else
-      assignments_clients = @clients.map do |client|
+      Client.having_volunteer.map do |client|
         [client.to_s, client.assignment.id]
       end
     end
