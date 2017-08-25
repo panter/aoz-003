@@ -12,9 +12,9 @@
       = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
   - if @volunteer.assignments.any?
     .col-xs-12.col-md-4
-      = button_link t_title(:index, Hour), volunteer_hours_volunteer_path(@volunteer)
+      = button_link t_title(:index, Hour), volunteer_hours_path(@volunteer)
     .col-xs-12.col-md-4
-      = button_link t_title(:new, Hour), new_hour_url(volunteer_id: @volunteer)
+      = button_link t_title(:new, Hour), new_volunteer_hour_url(@volunteer)
 
 - if policy(Volunteer).checklist?
   h3= t('checklist')

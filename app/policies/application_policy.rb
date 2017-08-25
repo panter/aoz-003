@@ -55,12 +55,12 @@ class ApplicationPolicy
     superadmin? || volunteer? && user_owns_record?
   end
 
-  def superadmin_or_social_workers_record?
-    superadmin? || social_worker? && user_owns_record?
-  end
-
   def superadmin_or_volunteer_related?
     superadmin? || volunteer_related?
+  end
+
+  def superadmin_or_social_workers_record?
+    superadmin? || social_worker? && user_owns_record?
   end
 
   alias_method :index?,   :deny_all!

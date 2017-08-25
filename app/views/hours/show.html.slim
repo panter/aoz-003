@@ -3,8 +3,8 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          - if policy(Hour).index?
-            tr
+          tr
+            - if current_user.volunteer?
               td= t_model(Volunteer)
               td= @hour.volunteer.contact.full_name
           tr
@@ -23,5 +23,6 @@
             td= t_attr(:comments)
             td= @hour.comments
 
-= form_navigation_btn :edit
-= render 'navigation_back'
+.row
+  .col-xs-12
+    = button_link t_title(:edit, Hour), params.to_unsafe_h.merge({action: 'edit'})

@@ -5,7 +5,7 @@ class VolunteersController < ApplicationController
   include VolunteerAttributes
   include MakeNotice
 
-  before_action :set_volunteer, only: [:show, :edit, :update, :destroy, :volunteer_hours]
+  before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
 
   def index
     authorize Volunteer
@@ -60,10 +60,6 @@ class VolunteersController < ApplicationController
     authorize Volunteer
     @q = Volunteer.where(state: Volunteer::SEEKING_CLIENTS).ransack(params[:q])
     @seeking_clients = @q.result.paginate(page: params[:page])
-  end
-
-  def volunteer_hours
-    @volunteer_hours = Hour.where(volunteer_id: @volunteer)
   end
 
   private

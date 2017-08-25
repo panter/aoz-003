@@ -17,12 +17,11 @@ Rails.application.routes.draw do
   resources :volunteers do
     get :seeking_clients, on: :collection
     get :find_client, on: :member, to: 'assignments#find_client'
-    get :volunteer_hours, on: :member
     resources :journals
+    resources :hours
   end
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
-  resources :hours
 
   root 'application#home'
 end

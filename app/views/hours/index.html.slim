@@ -1,5 +1,33 @@
+h1= @houred.contact.full_name
+h1= t_title(:index, Hour)
+.table-responsive
+      table.table
+        thead
+          tr
+            - if current_user.volunteer?
+              th= t_model(Volunteer)
+            th= t_model(Client)
+            th= t_attr(:meeting_date)
+            th= t_attr(:duration)
+            th= t_attr(:activity)
+            th= t_attr(:comments)
+            th colspan=3
+        tbody
+          - @houred.hours.each do |record|
+            tr
+              - if current_user.volunteer?
+                td= @houred.contact.full_name
+              td= record.assignment.client.contact.full_name
+              td= l(record.meeting_date)
+              td= "#{record.hours}:#{record.minutes}"
+              td= record.activity
+              td= record.comments
+              td= link_to t_action(:show), volunteer_hour_path(@houred, record)
+              td= link_to t_action(:edit), edit_volunteer_hour_path(@houred, record)
+              td= link_to t_action(:destroy), volunteer_hour_path(@houred, record), confirm_deleting(record)
 .row
   .col-xs-12
-    h1= t_title
-
-= render 'hours_block', hours: @hours
+= form_navigation_btn :new
+.row
+  .col-xs-12
+    = button_link t('back'), @houred
