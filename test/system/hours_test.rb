@@ -42,5 +42,8 @@ class HoursTest < ApplicationSystemTestCase
     click_link 'Hour report index'
     assert page.has_text? 'Client1 Client1'
     refute page.has_text? 'Client2 Client2'
+    visit volunteer_hours_path(@volunteer2)
+    assert page.has_text? 'You are not authorized to perform this action.'
+    refute page.has_text? 'Client2 Client2'
   end
 end

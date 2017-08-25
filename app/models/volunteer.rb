@@ -22,7 +22,6 @@ class Volunteer < ApplicationRecord
   ].freeze
 
   SEEKING_CLIENTS = [ACCEPTED, ACTIVE_FURTHER, INACTIVE].freeze
-  HAVING_CLIENTS = [ACTIVE, ACTIVE_FURTHER].freeze
 
   STATES = STATES_FOR_REVIEWED.dup.unshift(REGISTERED).freeze
 
@@ -54,14 +53,9 @@ class Volunteer < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
   scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
-  scope :having_clients, (-> { where(state: HAVING_CLIENTS) })
 
   def seeking_clients?
     SEEKING_CLIENTS.include?(state)
-  end
-
-  def self.having_clients
-    Volunteer.where(state: HAVING_CLIENTS)
   end
 
   def registered?
