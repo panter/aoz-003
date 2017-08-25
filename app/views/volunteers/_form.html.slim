@@ -94,6 +94,16 @@ h3= t_attr(:single_accompaniment, Volunteer)
   .col-xs-12
     = f.input :zurich
 
+- if current_user.present?
+  .row
+    .col-xs-12.col-md-6
+      = f.input :bank
+    .col-xs-12.col-md-6
+      = f.input :iban
+  .row
+    .col-xs-12
+      = f.input :waive
+
 .row
   .col-xs-12
     = f.input :expectations

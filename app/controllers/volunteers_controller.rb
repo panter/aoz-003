@@ -78,6 +78,6 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    params.require(:volunteer).permit(volunteer_attributes)
+    params.require(:volunteer).permit(volunteer_attributes, :bank, :iban, :waive)
   end
 end
