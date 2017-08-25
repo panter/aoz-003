@@ -103,7 +103,9 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
+        bank: Name der Bank
         bank_account: Kontodaten eingetragen
+        bank_details: Name der Bank / IBAN
         children: Kinder
         cooking: Kochen
         creative: Kreativ
@@ -120,6 +122,7 @@ de:
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
         health: Gesundheit
+        iban: IBAN
         interests: Interessen
         intro_course: Einführungskurs besucht
         kid: Kinder
@@ -141,6 +144,7 @@ de:
         unaccompanied: Unbegleitete Minderjährige
         volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
+        waive: Ich verzichte auf die Auszahlung von Spesen.
         woman: Frau
         women: Frauen
         working_percent: Stellenprozent

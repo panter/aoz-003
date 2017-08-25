@@ -97,6 +97,12 @@ h3= t('personal_background')
         td
           dl.dl-horizontal
             dt= t(@volunteer.zurich)
+      tr
+        td= t_attr(:bank_details)
+        td= "#{@volunteer.bank} #{@volunteer.iban}"
+      tr
+        td= t_attr(:waive)
+        td= t(@volunteer.waive)
 
 h3= t_attr(:single_accompaniment)
 .table-responsive

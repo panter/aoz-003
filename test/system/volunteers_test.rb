@@ -37,6 +37,9 @@ class VolunteersTest < ApplicationSystemTestCase
     page.check('volunteer_other_offer')
     fill_in 'Description', with: 'Description'
     page.check('volunteer_zurich')
+    fill_in 'Bank', with: 'BankName'
+    fill_in 'IBAN', with: 'CH01 2345 6789 0123 4567 8'
+    page.check('volunteer_waive')
     page.check('volunteer_weekend')
     fill_in 'Detailed Description', with: 'I am every two weeks available on tuesdays asdfasdf.'
 
