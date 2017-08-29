@@ -4,6 +4,7 @@ class Client < ApplicationRecord
   include YearCollection
   include BuildContactRelation
   include ZuerichScopes
+  include ImportRelation
 
   REGISTERED = 'registered'.freeze
   RESERVED = 'reserved'.freeze
@@ -19,9 +20,6 @@ class Client < ApplicationRecord
 
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
-
-  has_one :import, as: :importable, dependent: :destroy
-  accepts_nested_attributes_for :import, allow_destroy: true
 
   has_many :relatives, as: :relativeable, dependent: :destroy
   accepts_nested_attributes_for :relatives, allow_destroy: true

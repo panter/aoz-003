@@ -1,5 +1,6 @@
 class Department < ApplicationRecord
   include BuildContactRelation
+  include ImportRelation
 
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
