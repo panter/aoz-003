@@ -1,4 +1,6 @@
 class Assignment < ApplicationRecord
+  include ImportRelation
+
   belongs_to :client
   accepts_nested_attributes_for :client
 
@@ -8,9 +10,6 @@ class Assignment < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
   has_many :hours
   has_many :assignment_journals
-
-  has_one :import, as: :importable, dependent: :destroy
-  accepts_nested_attributes_for :import, allow_destroy: true
 
   STATES = [:suggested, :active, :finished, :archived].freeze
 

@@ -12,6 +12,16 @@ class AccessImport
     @import_user = User.find_by(email: 'aoz_access_importer@example.com') || make_import_superadmin
   end
 
+  def make_departments
+    transformer = DepartmentTransform.new
+    @einsatz_orte.all.each do |key, einsatz_ort|
+      next if Import.where(importable_type: 'Department', access_id: key).any?
+      parameters = transformer.prepare_attributes(einsatz_ort)
+      department = Department.new(parameters)
+      department.save!
+    end
+  end
+
   def make_clients
     transformer = ClientTransform.new(@begleitete, @haupt_person, @familien_rollen)
     make(@personen_rolle.all_clients, transformer, Client) do |client, personen_rolle|
