@@ -63,15 +63,6 @@ class AccessImport
     end
   end
 
-  def make_assignments
-    transformer = AssignmentTransform.new(@begleitete)
-    make(@freiwilligen_einsaetze.where_volunteer, transformer, Assignment) do |assignment, fw_einsatz|
-      assignment.creator = User.where_superadmin.first
-      assignment.created_at = fw_einsatz[:d_EinsatzVon]
-      assignment.updated_at = fw_einsatz[:d_MutDatum]
-    end
-  end
-
   def personen_rollen_create_update_conversion(model_record, personen_rolle)
     model_record.created_at = personen_rolle[:d_Rollenbeginn]
     model_record.updated_at = personen_rolle[:d_MutDatum]
