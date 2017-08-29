@@ -25,7 +25,7 @@ class PerformanceReportsController < ApplicationController
     @performance_report.user = current_user
     authorize @performance_report
     if @performance_report.save
-      redirect_to(@performance_report, make_notice)
+      redirect_to @performance_report, make_notice
     else
       render :new
     end
