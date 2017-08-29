@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170824123715) do
+ActiveRecord::Schema.define(version: 20170825144136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.datetime "probation_period"
     t.datetime "home_visit"
     t.datetime "first_instruction_lesson"
+    t.datetime "progress_meeting"
+    t.datetime "home_visit"
+    t.datetime "probation_period"
+    t.datetime "performance_appraisal_review"
+    t.string "short_description"
+    t.text "goals"
+    t.text "starting_topic"
+    t.text "description"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
