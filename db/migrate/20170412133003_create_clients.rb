@@ -9,7 +9,7 @@ class CreateClients < ActiveRecord::Migration[5.1]
       t.string :other_request
       t.string :nationality
       t.string :permit
-      t.string :gender
+      t.string :salutation
       t.text :goals
       t.text :education
       t.text :interests
