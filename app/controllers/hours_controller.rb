@@ -7,7 +7,7 @@ class HoursController < ApplicationController
   def index
     hour = Hour.new(volunteer: @volunteer)
     authorize hour
-    @hours =  Hour.where(volunteer: @volunteer)
+    @hours = Hour.where(volunteer: @volunteer)
   end
 
   def show; end
