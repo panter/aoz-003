@@ -2,18 +2,18 @@ class HoursController < ApplicationController
   include MakeNotice
 
   before_action :set_hour, only: [:show, :edit, :update, :destroy]
-  before_action :set_houred
+  before_action :set_volunteer
 
   def index
-    hour = Hour.new(volunteer: @houred)
+    hour = Hour.new(volunteer: @volunteer)
     authorize hour
-    @hours =  Hour.where(volunteer: @houred)
+    @hours =  Hour.where(volunteer: @volunteer)
   end
 
   def show; end
 
   def new
-    @hour = Hour.new(volunteer: @houred)
+    @hour = Hour.new(volunteer: @volunteer)
     @assignments_clients = select_clients
     authorize @hour
   end
@@ -24,7 +24,7 @@ class HoursController < ApplicationController
     @hour = Hour.new(hour_params)
     authorize @hour
     if @hour.save
-      redirect_to @houred, make_notice
+      redirect_to @volunteer, make_notice
     else
       render :new
     end
@@ -32,7 +32,7 @@ class HoursController < ApplicationController
 
   def update
     if @hour.update(hour_params)
-      redirect_to @houred, make_notice
+      redirect_to @volunteer, make_notice
     else
       render :edit
     end
@@ -40,7 +40,7 @@ class HoursController < ApplicationController
 
   def destroy
     @hour.destroy
-    redirect_to @houred, make_notice
+    redirect_to @volunteer, make_notice
   end
 
   private
@@ -57,8 +57,8 @@ class HoursController < ApplicationController
     authorize @hour
   end
 
-  def set_houred
-    @houred = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+  def set_volunteer
+    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
   end
 
   def hour_params
