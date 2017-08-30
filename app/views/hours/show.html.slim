@@ -4,7 +4,7 @@
       table.table.table-no-border-top
         tbody
           tr
-            - if current_user.volunteer?
+            - if current_user.superadmin?
               td= t_model(Volunteer)
               td= @hour.volunteer.contact.full_name
           tr
