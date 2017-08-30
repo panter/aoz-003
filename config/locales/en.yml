@@ -474,6 +474,7 @@ en:
     index:
       new_report: Create new report
     show:
+      selection_criteria: Selection Criteria
       volunteers:
         total: Total number of volunteers
         new: Number of new volunteers

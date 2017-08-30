@@ -7,7 +7,7 @@ h1
   p= @performance_report.comment
 
 - if @performance_report.extern || @performance_report.scope.present?
-  h3 Selection Criteria
+  h3= t('.selection_criteria')
   - if @performance_report.extern
     p
       strong= "#{t_attr(:extern)}: "
