@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   include MakeNotice
 
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy, :journals_list]
+  before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   def index
     authorize Assignment
@@ -15,7 +15,8 @@ class AssignmentsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "assignment_#{@assignment.id}", template: 'assignments/show.html.slim', layout: 'pdf.pdf', encoding: 'UTF-8'
+        render pdf: "assignment_#{@assignment.id}", template: 'assignments/show.html.slim',
+          layout: 'pdf.pdf', encoding: 'UTF-8'
       end
     end
   end
@@ -73,10 +74,6 @@ class AssignmentsController < ApplicationController
     @need_accompanying = @q.result
     @need_accompanying = @need_accompanying.paginate(page: params[:page])
     authorize Assignment
-  end
-
-  def journals_list
-    @journals_list = @assignment.assignment_journals
   end
 
   private

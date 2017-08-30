@@ -14,5 +14,4 @@ class AssignmentPolicy < ApplicationPolicy
   alias_method :destroy?,        :superadmin?
   alias_method :find_volunteer?, :superadmin?
   alias_method :find_client?,    :superadmin?
-  alias_method :journals_list?,  :superadmin_or_volunteer_related?
 end

@@ -22,9 +22,8 @@ Rails.application.routes.draw do
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
   resources :assignments do
-    get :journals_list, on: :member
+    resources :assignment_journals
   end
-  resources :assignment_journals
 
   root 'application#home'
 end

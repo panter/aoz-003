@@ -15,6 +15,10 @@ class ApplicationPolicy
     superadmin? || social_worker?
   end
 
+  def superadmin_or_volunteer?
+    superadmin? || volunteer?
+  end
+
   def show?
     scope.where(id: record.id).exists?
   end

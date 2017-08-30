@@ -1,16 +1,19 @@
 class AssignmentJournalsController < ApplicationController
   include MakeNotice
+
   before_action :set_assignment_journal, only: [:show, :edit, :update, :destroy]
+  before_action :set_assignment
 
   def index
     authorize AssignmentJournal
-    @assignment_journals = AssignmentJournal.all
+    @assignment_journals = policy_scope(AssignmentJournal)
   end
 
   def show; end
 
   def new
-    @assignment_journal = AssignmentJournal.new(volunteer_id: params[:volunteer_id])
+    @assignment_journal = AssignmentJournal.new(assignment: @assignment,
+      volunteer: @assignment.volunteer)
     authorize @assignment_journal
   end
 
@@ -19,10 +22,9 @@ class AssignmentJournalsController < ApplicationController
   def create
     @assignment_journal = AssignmentJournal.new(assignment_journal_params
       .merge(author_id: current_user.id))
-    @assignment_journal.author = current_user
     authorize @assignment_journal
     if @assignment_journal.save
-      redirect_to @assignment_journal, make_notice
+      redirect_to @assignment, make_notice
     else
       render :new
     end
@@ -30,7 +32,7 @@ class AssignmentJournalsController < ApplicationController
 
   def update
     if @assignment_journal.update(assignment_journal_params)
-      redirect_to @assignment_journal, make_notice
+      redirect_to @assignment, make_notice
     else
       render :edit
     end
@@ -38,7 +40,7 @@ class AssignmentJournalsController < ApplicationController
 
   def destroy
     @assignment_journal.destroy
-    redirect_to assignment_journals_url, make_notice
+    redirect_to @assignment, make_notice
   end
 
   private
@@ -46,6 +48,10 @@ class AssignmentJournalsController < ApplicationController
   def set_assignment_journal
     @assignment_journal = AssignmentJournal.find(params[:id])
     authorize @assignment_journal
+  end
+
+  def set_assignment
+    @assignment = Assignment.find(params[:assignment_id]) if params[:assignment_id]
   end
 
   def assignment_journal_params
