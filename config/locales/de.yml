@@ -629,6 +629,7 @@ de:
     index:
       new_report: Neuen Report erstellen
     show:
+      selection_criteria: Auswahl
       calendar_year: 'Kalenderjahr %{year}'
       title_year: 'Kennzahlen des Zeitraums "Kalenderjahr %{year}"'
       title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
