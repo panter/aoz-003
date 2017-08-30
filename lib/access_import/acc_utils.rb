@@ -31,7 +31,7 @@ module AccUtils
   def parse_boolean_fields(record, *keys)
     record.merge(
       parse_int_fields(record, *keys).slice(*keys).compact.transform_values do |val|
-        val == 1 ? true : false
+        val == 1
       end
     )
   end

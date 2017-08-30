@@ -22,9 +22,13 @@ class AccessImport
   end
 
   def handle_client_state(personen_rolle)
-    return Client::FINISHED if personen_rolle[:d_Rollenende]
-    return Client::ACTIVE if personen_rolle[:d_Rollenende].nil?
-    Client::REGISTERED
+    if personen_rolle[:d_Rollenende]
+      Client::FINISHED
+    elsif personen_rolle[:d_Rollenende].nil?
+      Client::ACTIVE
+    else
+      Client::REGISTERED
+    end
   end
 
   def make_volunteers
@@ -45,7 +49,7 @@ class AccessImport
   def make_assignments
     transformer = AssignmentTransform.new(@begleitete)
     @freiwilligen_einsaetze.where_volunteer.each do |key, fw_einsatz|
-      next if Import.where(importable_type: 'Assignment', access_id: key).any?
+      next if Import.exists?(importable_type: 'Assignment', access_id: key)
       volunteer = Import.get_imported(:volunteer, fw_einsatz[:fk_PersonenRolle])
       next if volunteer.state == Volunteer::RESIGNED
       begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
@@ -68,7 +72,7 @@ class AccessImport
   def make(base_entities, transformer, destination_model)
     records_before = destination_model.count
     base_entities.each do |key, entity|
-      next if Import.where(importable_type: destination_model.to_s, access_id: key).any?
+      next if Import.exists?(importable_type: destination_model.to_s, access_id: key)
       parameters = transformer.prepare_attributes(entity)
       import_record = destination_model.new(parameters)
       handler_message = yield(import_record, entity)
