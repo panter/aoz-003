@@ -2,7 +2,6 @@ class ClientsController < ApplicationController
   include AvailabilityAttributes
   include NestedAttributes
   include ContactAttributes
-  include MakeNotice
 
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 

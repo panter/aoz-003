@@ -41,11 +41,6 @@ class Client < ApplicationRecord
   scope :with_assignment, (-> { joins(:assignment).distinct })
   scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })
   scope :with_active_assignment_between, lambda { |start_date, end_date|
-    with_assignment.merge(
-      Assignment.active_between(start_date, end_date)
-    )
-  }
-  scope :with_active_assignment_between, lambda { |start_date, end_date|
     with_assignment.merge(Assignment.active_between(start_date, end_date))
   }
 

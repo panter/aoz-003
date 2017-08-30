@@ -11,10 +11,8 @@ class CreatePerformanceReports < ActiveRecord::Migration[5.1]
       t.string :title
       t.text :comment
 
+      t.datetime :deleted_at, index: true
       t.timestamps
     end
-
-    add_column :performance_reports, :deleted_at, :datetime
-    add_index :performance_reports, :deleted_at
   end
 end

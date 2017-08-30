@@ -19,7 +19,7 @@ nav.navbar.section-navigation
     tbody
       - @performance_reports.each do |performance_report|
         tr
-          td= l(performance_report.created_at.localtime, format: :default)
+          td= l(performance_report.created_at, format: :default)
           - if performance_report.year.present?
             td= performance_report.year
           - else

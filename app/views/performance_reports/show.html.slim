@@ -1,8 +1,8 @@
 h1
-  = "#{t_model}"
+  = t_model
   = ": #{@performance_report.title}" if @performance_report.title.present?
 
-- if @performance_report.comment.present?
+- if @performance_report.comment?
   h3= t_attr(:comment)
   p= @performance_report.comment
 
@@ -12,13 +12,13 @@ h1
     p
       strong= "#{t_attr(:extern)}: "
       = t(@performance_report.extern)
-  - if @performance_report.scope.present?
+  - if @performance_report.scope?
     p
       strong= "#{t_attr(:scope)}: "
       = @performance_report.scope
 
 hr
-- if @performance_report.year.present?
+- if @performance_report.year?
   h2= t('.title_year', year: @performance_report.year)
 - else
   h2= t('.title_range', start: l(@performance_report.period_start.to_date, format: :default), end: l(@performance_report.period_end.to_date, format: :default))

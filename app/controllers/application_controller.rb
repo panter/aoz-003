@@ -20,6 +20,16 @@ class ApplicationController < ActionController::Base
     authorize :application, :home?
   end
 
+  def t_model
+    controller_name.singularize.classify.constantize.model_name.human
+  end
+
+  def make_notice
+    {
+      notice: t("crud.c_action.#{action_name}", model: t_model)
+    }
+  end
+
   private
 
   def user_not_authorized
