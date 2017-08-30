@@ -4,8 +4,7 @@
   .row
     .col-xs-12
       - if action_name ==  'new'
-        = f.label :assignment
-        = f.select :assignment_id, options_from_collection_for_select(@assignments, 'id', 'client'), {}, class: 'form-control'
+        = f.association :assignment, collection: @assignments, label_method: :client, value_method: :id
       - else
         = f.hidden_field :assignment_id, value: @hour.assignment.id
 
