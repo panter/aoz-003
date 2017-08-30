@@ -184,9 +184,9 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.string "scope"
     t.string "title"
     t.text "comment"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_performance_reports_on_deleted_at"
     t.index ["user_id"], name: "index_performance_reports_on_user_id"
   end

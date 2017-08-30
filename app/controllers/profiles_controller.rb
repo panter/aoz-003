@@ -1,7 +1,6 @@
 class ProfilesController < ApplicationController
   include AvailabilityAttributes
   include ContactAttributes
-  include MakeNotice
 
   before_action :set_profile, only: [:show, :edit, :update]
 

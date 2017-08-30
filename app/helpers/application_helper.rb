@@ -7,7 +7,7 @@ module ApplicationHelper
     boostrap_row { f.error_notification } if f.error_notification.present?
   end
 
-  def green_submit(f)
+  def success_button(f)
     bootstrap_row_col { f.button :submit, class: 'btn btn-success' }
   end
 

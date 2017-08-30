@@ -1,5 +1,4 @@
 class DepartmentsController < ApplicationController
-  include MakeNotice
 
   before_action :set_department, only: [:show, :edit, :update, :destroy]
 

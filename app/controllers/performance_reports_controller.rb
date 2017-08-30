@@ -1,6 +1,4 @@
 class PerformanceReportsController < ApplicationController
-  include MakeNotice
-
   before_action :set_performance_report, only: [:show, :edit, :update, :destroy]
 
   def index

@@ -1,5 +1,4 @@
 class JournalsController < ApplicationController
-  include MakeNotice
 
   before_action :set_journal, only: [:show, :edit, :update, :destroy]
   before_action :set_journaled

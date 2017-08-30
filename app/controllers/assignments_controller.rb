@@ -1,6 +1,4 @@
 class AssignmentsController < ApplicationController
-  include MakeNotice
-
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   def index
