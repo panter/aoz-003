@@ -124,13 +124,13 @@ ActiveRecord::Schema.define(version: 20170824123715) do
   end
 
   create_table "language_skills", force: :cascade do |t|
-    t.bigint "languageable_id"
     t.string "language"
     t.string "level"
+    t.string "languageable_type"
+    t.bigint "languageable_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.string "languageable_type"
     t.index ["deleted_at"], name: "index_language_skills_on_deleted_at"
     t.index ["languageable_type", "languageable_id"], name: "index_language_skills_on_languageable_type_and_languageable_id"
   end
