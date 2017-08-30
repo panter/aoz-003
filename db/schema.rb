@@ -157,15 +157,15 @@ ActiveRecord::Schema.define(version: 20170824123715) do
   end
 
   create_table "relatives", force: :cascade do |t|
-    t.bigint "relativeable_id"
     t.string "first_name"
     t.string "last_name"
     t.date "birth_year"
     t.string "relation"
+    t.string "relativeable_type"
+    t.bigint "relativeable_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.string "relativeable_type"
     t.index ["deleted_at"], name: "index_relatives_on_deleted_at"
     t.index ["relativeable_type", "relativeable_id"], name: "index_relatives_on_relativeable_type_and_relativeable_id"
   end
