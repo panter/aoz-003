@@ -181,6 +181,7 @@ en:
       - :month
       - :year
   delete_assignment: Really delete assignment?
+  delete_assignment_journal: Really delete assignment journal?
   delete_hour: Really delete hour?
   delete_journal: Really delete journal?
   departments: Departments

@@ -309,6 +309,7 @@ de:
       - :month
       - :year
   delete_assignment: Begleitung wirklich löschen?
+  delete_assignment_journal: Inhaltliches Journal wirklich löschen?
   delete_hour: Stundeneintrag wirklich löschen?
   delete_journal: Journaleintrag wirklich löschen?
   department_confirm_destroy: Sind Sie sicher dass Sie den Standort löschen wollen?
