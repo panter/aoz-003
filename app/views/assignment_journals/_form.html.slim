@@ -1,13 +1,13 @@
-= simple_form_for(@assignment_journal) do |f|
+= simple_form_for [@assignment, @assignment_journal] do |f|
   = simple_error_notice f
 
   .row
     .col-xs-12
-      = f.hidden_field :assignment_id, value: params[:assignment_id] || @assignment_journal.assignment.id
+      = f.hidden_field :assignment_id, value: params[:assignment_id]
 
   .row
     .col-xs-12
-      = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @assignment_journal.volunteer.id
+      = f.hidden_field :volunteer_id, value: @assignment.volunteer.id
 
   .row
     .col-xs-12

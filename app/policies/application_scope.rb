@@ -16,4 +16,8 @@ class ApplicationScope
   def resolve_owner
     scope.where(user: user)
   end
+
+  def resolve_author
+    scope.where(author: user)
+  end
 end
