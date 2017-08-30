@@ -15,7 +15,9 @@ class HoursTest < ApplicationSystemTestCase
 
   test 'volunteer can create an hour report' do
     click_link 'New Hour report'
-    select 'Client1 Client1', from: 'Assignment'
+    within '#hour_assignment_id' do
+      select 'Client1 Client1'
+    end
     within '#hour_meeting_date_3i' do
       select(Time.zone.today.day)
     end
