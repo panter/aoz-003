@@ -4,7 +4,7 @@ h1= t_title(:index, Hour)
       table.table
         thead
           tr
-            - if current_user.volunteer?
+            - if current_user.superadmin?
               th= t_model(Volunteer)
             th= t_model(Client)
             th= t_attr(:meeting_date)
@@ -15,7 +15,7 @@ h1= t_title(:index, Hour)
         tbody
           - @volunteer.hours.each do |record|
             tr
-              - if current_user.volunteer?
+              - if current_user.superadmin?
                 td= @volunteer.contact.full_name
               td= record.assignment.client.contact.full_name
               td= l(record.meeting_date)
