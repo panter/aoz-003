@@ -30,32 +30,33 @@ ActiveRecord::Schema.define(version: 20170824123715) do
 
   create_table "clients", force: :cascade do |t|
     t.date "birth_year"
+    t.date "entry_year"
+    t.string "state", default: "registered"
+    t.string "gender_request"
+    t.string "age_request"
+    t.string "other_request"
     t.string "nationality"
     t.string "permit"
     t.string "salutation"
     t.text "goals"
     t.text "education"
     t.text "interests"
-    t.string "state", default: "registered"
     t.text "comments"
     t.text "competent_authority"
     t.text "involved_authority"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.date "entry_year"
-    t.string "gender_request"
-    t.string "age_request"
-    t.string "other_request"
     t.text "actual_activities"
+    t.text "detailed_description"
+    t.text "text"
     t.boolean "flexible", default: false
     t.boolean "morning", default: false
     t.boolean "afternoon", default: false
     t.boolean "evening", default: false
     t.boolean "workday", default: false
     t.boolean "weekend", default: false
-    t.text "detailed_description"
+    t.bigint "user_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
@@ -135,22 +136,22 @@ ActiveRecord::Schema.define(version: 20170824123715) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.bigint "user_id"
     t.string "profession"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "avatar_file_name"
-    t.string "avatar_content_type"
-    t.integer "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.datetime "deleted_at"
+    t.text "detailed_description"
     t.boolean "flexible", default: false
     t.boolean "morning", default: false
     t.boolean "afternoon", default: false
     t.boolean "evening", default: false
     t.boolean "workday", default: false
     t.boolean "weekend", default: false
-    t.text "detailed_description"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.bigint "user_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_profiles_on_deleted_at"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end

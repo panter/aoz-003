@@ -1,18 +1,19 @@
 class CreateProfiles < ActiveRecord::Migration[5.1]
   def change
     create_table :profiles do |t|
-      t.references :user, foreign_key: true
-      t.string :first_name
-      t.string :last_name
-      t.string :phone
-      t.string :picture
-      t.text :address
       t.string :profession
-      t.boolean :monday
-      t.boolean :tuesday
-      t.boolean :wednesday
-      t.boolean :thursday
-      t.boolean :friday
+      t.text :detailed_description
+
+      t.boolean :flexible, default: false
+      t.boolean :morning, default: false
+      t.boolean :afternoon, default: false
+      t.boolean :evening, default: false
+      t.boolean :workday, default: false
+      t.boolean :weekend, default: false
+
+      t.attachment :avatar
+      t.references :user, foreign_key: true
+      t.datetime :deleted_at, index: true
 
       t.timestamps
     end
