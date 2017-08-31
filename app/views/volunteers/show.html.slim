@@ -111,7 +111,7 @@ h3= t('personal_background')
             dt= t(@volunteer.zurich)
       tr
         td= t_attr(:bank_details)
-        td= "#{@volunteer.bank} #{@volunteer.iban}"
+        td= @volunteer.full_bank_details
       tr
         td= t_attr(:waive)
         td= t(@volunteer.waive)
