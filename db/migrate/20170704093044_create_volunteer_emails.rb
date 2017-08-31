@@ -5,7 +5,8 @@ class CreateVolunteerEmails < ActiveRecord::Migration[5.1]
       t.string :title
       t.text :body
       t.references :user, foreign_key: true
-      t.boolean :active
+      t.boolean :active, default: false
+
       t.datetime :deleted_at
       t.timestamps
     end
