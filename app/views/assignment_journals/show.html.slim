@@ -3,10 +3,9 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          - if current_user.superadmin?
-            tr
-              td= t_model(Volunteer)
-              td= @assignment_journal.volunteer.contact.full_name
+          tr
+            td= t_model(Volunteer)
+            td= @assignment_journal.volunteer.contact.full_name
           tr
             td= t_model(Client)
             td= @assignment_journal.assignment.client.contact.full_name

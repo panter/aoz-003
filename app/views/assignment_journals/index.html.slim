@@ -9,8 +9,7 @@
     table.table.table-striped
       thead
         tr
-          - if current_user.superadmin?
-            th= t_model(Volunteer)
+          th= t_model(Volunteer)
           th= t_model(Client)
           th= t_attr(:goals, AssignmentJournal)
           th= t_attr(:achievements, AssignmentJournal)
@@ -22,8 +21,7 @@
       tbody
         - @assignment_journals.each do |record|
           tr
-            - if current_user.superadmin?
-              td= record.volunteer.contact.full_name
+            td= record.volunteer.contact.full_name
             td= record.assignment.client.contact.full_name
             td= record.goals
             td= record.achievements

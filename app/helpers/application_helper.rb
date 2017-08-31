@@ -69,10 +69,8 @@ module ApplicationHelper
 
   def confirm_deleting(record, target_controller = nil)
     target_controller ||= controller_name
-    if ['assignments', 'journals', 'hours', 'assignment_journals'].include? target_controller
-      confirm_text = t("delete_#{target_controller.singularize}")
-    end
-    { method: :delete, data: { confirm: confirm_text || t_confirm_delete(record) } }
+    confirm_text = t("delete_#{target_controller.singularize}", default: t_confirm_delete(record))
+    { method: :delete, data: { confirm: confirm_text } }
   end
 
   def nationality_name(nationality)
