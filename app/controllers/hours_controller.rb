@@ -1,6 +1,4 @@
 class HoursController < ApplicationController
-  include MakeNotice
-
   before_action :set_hour, only: [:show, :edit, :update, :destroy]
   before_action :set_volunteer
 
