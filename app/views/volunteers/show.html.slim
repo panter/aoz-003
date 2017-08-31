@@ -13,8 +13,10 @@ nav.navbar.section-navigation
           li = button_link t_title(:new, BillingExpense), new_volunteer_billing_expense_path(@volunteer)
           li = button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
         li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
-        - if Certificate.where(volunteer: @volunteer).any?
-          li= button_link t('.show_certificates'), volunteer_certificate_path(@volunteer)
+        - if @volunteer.certificates.size == 1
+          li= button_link t('.show_certificate'), volunteer_certificate_path(@volunteer, @volunteer.certificates.first)
+        - elsif @volunteer.certificates.size > 1
+          li= button_link t('.show_certificates'), volunteer_certificates_path(@volunteer)
   ul.list-inline
     - if @volunteer.assignments.any?
       li = button_link t_title(:new, Hour), new_volunteer_hour_url(@volunteer)
