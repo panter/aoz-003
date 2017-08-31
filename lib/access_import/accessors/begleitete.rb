@@ -17,11 +17,6 @@ class Begleitete < Accessor
     end
   end
 
-  def find_with_personenrolle(begleitet_id)
-    begleitet = find(begleitet_id)
-    begleitet.merge(personen_rolle: @personen_rolle.find(begleitet[:fk_PersonenRolle]))
-  end
-
   # :wife, :husband, :mother, :father, :daughter, :son, :sister, :brother, :aunt, :uncle
   # 1: <keine>, 2: 'Hauptperson', 3: 'Ehepartner/in', 4: 'Kind', 5: 'Geschwister', 6: 'Eltern'
   #
