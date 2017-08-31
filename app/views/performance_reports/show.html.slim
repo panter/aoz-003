@@ -21,7 +21,7 @@ hr
 - if @performance_report.year?
   h2= t('.title_year', year: @performance_report.year)
 - else
-  h2= t('.title_range', start: l(@performance_report.period_start.to_date, format: :default), end: l(@performance_report.period_end.to_date, format: :default))
+  h2= t('.title_range', start: l(@performance_report.period_start, format: :default), end: l(@performance_report.period_end, format: :default))
 
 h3= t_attr(:global)
 table.table

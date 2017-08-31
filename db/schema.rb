@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.datetime "updated_at", null: false
     t.string "state"
     t.bigint "creator_id"
-    t.datetime "assignment_start"
-    t.datetime "assignment_end"
+    t.date "assignment_start"
+    t.date "assignment_end"
     t.datetime "performance_appraisal_review"
     t.datetime "probation_period"
     t.datetime "home_visit"
@@ -175,8 +175,8 @@ ActiveRecord::Schema.define(version: 20170824123715) do
   end
 
   create_table "performance_reports", force: :cascade do |t|
-    t.datetime "period_start"
-    t.datetime "period_end"
+    t.date "period_start"
+    t.date "period_end"
     t.integer "year"
     t.bigint "user_id"
     t.jsonb "report_content"
