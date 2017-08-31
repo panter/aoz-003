@@ -50,10 +50,10 @@ class AccessImport
     transformer = AssignmentTransform.new(@begleitete)
     @freiwilligen_einsaetze.where_volunteer.each do |key, fw_einsatz|
       next if Import.exists?(importable_type: 'Assignment', access_id: key)
-      volunteer = Import.get_imported(:volunteer, fw_einsatz[:fk_PersonenRolle])
+      volunteer = Import.get_imported(Volunteer, fw_einsatz[:fk_PersonenRolle])
       next if volunteer.state == Volunteer::RESIGNED
       begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
-      client = Import.get_imported(:client, begleitet[:fk_PersonenRolle])
+      client = Import.get_imported(Client, begleitet[:fk_PersonenRolle])
       next if client.state == Client::FINISHED
       parameters = transformer.prepare_attributes(fw_einsatz, client, volunteer, begleitet)
       assignment = Assignment.new(parameters)
