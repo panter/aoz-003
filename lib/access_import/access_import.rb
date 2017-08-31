@@ -1,5 +1,3 @@
-require 'securerandom'
-
 class AccessImport
   attr_reader :acdb
 
@@ -9,25 +7,17 @@ class AccessImport
     @sprache_pro_hauptperson.add_other_accessors(@sprachen, @sprach_kenntnisse)
     @einsatz_orte.add_other_accessors(@plz)
     @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson)
-    @import_user = User.find_by(email: 'aoz_access_importer@example.com') || make_import_superadmin
   end
 
   def make_clients
     transformer = ClientTransform.new(@begleitete, @haupt_person, @familien_rollen)
     make(@personen_rolle.all_clients, transformer, Client) do |client, personen_rolle|
       client = personen_rollen_create_update_conversion(client, personen_rolle)
-      client.user_id = @import_user.id
-      client.state = handle_client_state(personen_rolle)
-    end
-  end
-
-  def handle_client_state(personen_rolle)
-    if personen_rolle[:d_Rollenende]
-      Client::FINISHED
-    elsif personen_rolle[:d_Rollenende].nil?
-      Client::ACTIVE
-    else
-      Client::REGISTERED
+      client.user_id = User.where(role: 'superadmin').first.id
+      if personen_rolle[:d_Rollenende]
+        client.state = Client::FINISHED
+        " -- Client was set to state finished at #{personen_rolle[:d_Rollenende]}  ----"
+      end
     end
   end
 
@@ -35,31 +25,10 @@ class AccessImport
     transformer = VolunteerTransform.new(@haupt_person)
     make(@personen_rolle.all_volunteers, transformer, Volunteer) do |volunteer, personen_rolle|
       volunteer = personen_rollen_create_update_conversion(volunteer, personen_rolle)
-      volunteer.registrar_id = @import_user.id
-      volunteer.state = handle_volunteer_state(personen_rolle)
-    end
-  end
-
-  def handle_volunteer_state(personen_rolle)
-    return Volunteer::RESIGNED if personen_rolle[:d_Rollenende]
-    return Volunteer::ACTIVE if personen_rolle[:d_Rollenende].nil?
-    Volunteer::REGISTERED
-  end
-
-  def make_assignments
-    transformer = AssignmentTransform.new(@begleitete)
-    @freiwilligen_einsaetze.where_volunteer.each do |key, fw_einsatz|
-      next if Import.exists?(importable_type: 'Assignment', access_id: key)
-      volunteer = Import.get_imported(Volunteer, fw_einsatz[:fk_PersonenRolle])
-      next if volunteer.state == Volunteer::RESIGNED
-      begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
-      client = Import.get_imported(Client, begleitet[:fk_PersonenRolle])
-      next if client.state == Client::FINISHED
-      parameters = transformer.prepare_attributes(fw_einsatz, client, volunteer, begleitet)
-      assignment = Assignment.new(parameters)
-      assignment.created_at = fw_einsatz[:d_EinsatzVon] || Time.zone.now
-      assignment.creator_id = @import_user.id
-      assignment.save!
+      if personen_rolle[:d_Rollenende]
+        volunteer.state = Volunteer::RESIGNED
+        " -- Volunteer was set to state finished at #{personen_rolle[:d_Rollenende]}  ----"
+      end
     end
   end
 
@@ -72,27 +41,14 @@ class AccessImport
   def make(base_entities, transformer, destination_model)
     records_before = destination_model.count
     base_entities.each do |key, entity|
-      next if Import.exists?(importable_type: destination_model.to_s, access_id: key)
-      parameters = transformer.prepare_attributes(entity)
-      import_record = destination_model.new(parameters)
+      next if Import.where(importable_type: destination_model.to_s, access_id: key).any?
+      import_record = destination_model.new(transformer.prepare_attributes(entity))
       handler_message = yield(import_record, entity)
       import_record.save!
       puts "Importing personen_rolle #{key} to #{destination_model}.id: #{import_record.id}#{handler_message}"
     end
     message = "Imported #{destination_model.count - records_before} new "
     puts "#{message}#{destination_model.class.name} from MS Access Database."
-  end
-
-  def make_import_superadmin
-    import_user_email = 'aoz_access_importer@example.com'
-    password = SecureRandom.hex(60)
-    import_user = User.new(role: 'superadmin', password: password, email: import_user_email)
-    import_user.build_profile
-    import_user.profile.contact.first_name = 'AOZ Import'
-    import_user.profile.contact.last_name = 'AOZ Import'
-    import_user.profile.contact.primary_email = import_user_email
-    import_user.save
-    import_user
   end
 
   def instantiate_all_accessors

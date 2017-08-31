@@ -4,6 +4,5 @@ namespace :access do
     @acimport = AccessImport.new('db/volunteers_data.accdb')
     @acimport.make_clients
     @acimport.make_volunteers
-    @acimport.make_assignments
   end
 end

@@ -30,7 +30,6 @@ class User < ApplicationRecord
   validates :role, inclusion: { in: ROLES }
 
   scope :department_assocable, (-> { where(role: CAN_MANAGE_DEPARTMENT) })
-  scope :superadmins, (-> { where(role: SUPERADMIN) })
 
   def superadmin?
     role == SUPERADMIN

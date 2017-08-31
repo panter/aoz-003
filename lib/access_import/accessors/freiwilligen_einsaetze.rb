@@ -4,23 +4,17 @@ class FreiwilligenEinsaetze < Accessor
   end
 
   def sanitize_record(rec)
-    rec = parse_int_fields(rec, :pk_FreiwilligenEinsatz, :fk_PersonenRolle, :fk_FreiwilligenFunktion,
-      :fk_Kostenträger, :fk_EinsatzOrt, :fk_Begleitete, :fk_Kurs, :fk_Semester, :fk_Lehrmittel, :z_FamilienBegleitung)
-    rec = parse_float_fields(rec, :z_Spesen)
+    rec = parse_int_fields(rec, :pk_FreiwilligenEinsatz, :fk_PersonenRolle,
+      :fk_FreiwilligenFunktion, :fk_Kostenträger, :fk_EinsatzOrt, :fk_Begleitete,
+      :fk_Kurs, :fk_Semester, :fk_Lehrmittel)
+    rec = parse_float_fields(rec, :z_FamilienBegleitung, :z_Spesen)
     rec[:fk_FreiwilligenFunktion] = 0 unless rec[:fk_FreiwilligenFunktion]
     rec[:funktion] = FREIWILLIGEN_FUNKTIONEN[rec[:fk_FreiwilligenFunktion]]
     rec[:lehrmittel] = LEHRMITTEL[rec[:fk_Lehrmittel]] if rec[:fk_Lehrmittel]
     rec[:semester] = SEMESTER[rec[:fk_Semester]] if rec[:fk_Semester]
-    rec = parse_boolean_fields(rec, :b_Probezeitbericht, :b_LP1, :b_LP2, :b_Bücher)
-    parse_datetime_fields(rec, :d_EinsatzVon, :d_EinsatzBis, :d_Probezeit, :d_Hausbesuch,
-      :d_ErstUnterricht, :d_Standortgespräch, :d_MutDatum)
-      .except(:fk_Lehrmittel, :fk_Semester)
-  end
-
-  def where_volunteer
-    all.select do |_key, fw_einsatz|
-      fw_einsatz[:fk_FreiwilligenFunktion] == ACCESS_ROLES.volunteer
-    end
+    parse_datetime_fields(rec, :d_MutDatum, :d_EinsatzVon, :d_EinsatzBis).except(
+      :fk_FreiwilligenFunktion, :fk_Lehrmittel
+    )
   end
 
   def where_begleitete(begleitet_id)
