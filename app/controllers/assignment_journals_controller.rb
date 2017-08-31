@@ -1,6 +1,4 @@
 class AssignmentJournalsController < ApplicationController
-  include MakeNotice
-
   before_action :set_assignment_journal, only: [:show, :edit, :update, :destroy]
   before_action :set_assignment
 
