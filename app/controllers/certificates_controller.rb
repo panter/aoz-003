@@ -23,7 +23,7 @@ class CertificatesController < ApplicationController
     @certificate.user = current_user
     authorize @certificate
     if @certificate.save
-      redirect_to certificates_path(@certificate), make_notice
+      redirect_to volunteer_certificate_path(@volunteer, @certificate)
     else
       render :new
     end
@@ -47,7 +47,11 @@ class CertificatesController < ApplicationController
   end
 
   def certificate_params
-    params.require(:certificate).permit(
+    # params.require(:certificate).permit(
+    #   :institution, :function, :mission, :period, :duration, :description, :creator_details,
+    #   :user_id, :volunteer_id
+    # )
+    params.permit(
       :institution, :function, :mission, :period, :duration, :description, :creator_details,
       :user_id, :volunteer_id
     )
