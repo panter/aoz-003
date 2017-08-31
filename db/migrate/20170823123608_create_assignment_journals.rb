@@ -9,6 +9,7 @@ class CreateAssignmentJournals < ActiveRecord::Migration[5.1]
       t.datetime :deleted_at
       t.belongs_to :volunteer
       t.belongs_to :assignment
+      t.references :author, index: true, foreign_key: { to_table: :users }
 
       t.timestamps
     end

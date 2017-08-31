@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(version: 20170824123715) do
     t.datetime "deleted_at"
     t.bigint "volunteer_id"
     t.bigint "assignment_id"
+    t.bigint "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "author_id"
     t.index ["assignment_id"], name: "index_assignment_journals_on_assignment_id"
     t.index ["author_id"], name: "index_assignment_journals_on_author_id"
     t.index ["deleted_at"], name: "index_assignment_journals_on_deleted_at"
