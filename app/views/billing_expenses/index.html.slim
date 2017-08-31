@@ -7,6 +7,9 @@ h1= t_title(:index, BillingExpense)
           tr
             th= t_model(Volunteer)
             th= t_model(Client)
+            th= t_attr(:address)
+            th= t_attr(:bank_details, Volunteer)
+            th= t_attr(:waive)
             th= t_attr(:amount, BillingExpense)
             th= t_attr(:created_at)
             th colspan=3
@@ -15,6 +18,9 @@ h1= t_title(:index, BillingExpense)
             tr
               td= @volunteer.contact.full_name
               td= record.assignment.client.contact.full_name
+              td= @volunteer.contact.full_address
+              td= @volunteer.full_bank_details
+              td= t(@volunteer.waive)
               td= record.amount
               td= l(record.created_at.to_date)
               td= link_to t_action(:show), volunteer_billing_expense_path(@volunteer, record)

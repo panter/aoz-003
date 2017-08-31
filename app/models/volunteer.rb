@@ -107,6 +107,10 @@ class Volunteer < ApplicationRecord
     "#{contact.first_name} #{contact.last_name}"
   end
 
+  def full_bank_details
+    [bank, iban].reject(&:blank?).join(' ')
+  end
+
   private
 
   def default_state
