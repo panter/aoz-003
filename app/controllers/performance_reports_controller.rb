@@ -13,17 +13,14 @@ class PerformanceReportsController < ApplicationController
     authorize @performance_report
   end
 
-  def edit
-    @performance_report.period_start = @performance_report.period_start.to_date
-    @performance_report.period_end = @performance_report.period_end.to_date
-  end
+  def edit; end
 
   def create
-    @performance_report = PerformanceReport.new(report_params.merge(convert_start_end))
-    @performance_report.user = current_user
-    authorize @performance_report
-    if @performance_report.save
-      redirect_to @performance_report, make_notice
+    performance_report = PerformanceReport.new report_params
+    performance_report.user = current_user
+    authorize performance_report
+    if performance_report.save
+      redirect_to performance_report, make_notice
     else
       render :new
     end
@@ -43,14 +40,6 @@ class PerformanceReportsController < ApplicationController
   end
 
   private
-
-  def convert_start_end
-    dates = report_params.slice(:period_start, :period_end)
-                         .transform_values(&:to_datetime)
-    dates[:period_start] = dates[:period_start].at_beginning_of_day
-    dates[:period_end] = dates[:period_end].at_end_of_day
-    dates
-  end
 
   def set_performance_report
     @performance_report = PerformanceReport.find(params[:id])
