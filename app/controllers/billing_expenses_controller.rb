@@ -1,6 +1,4 @@
 class BillingExpensesController < ApplicationController
-  include MakeNotice
-
   before_action :set_billing_expense, only: [:show, :edit, :update, :destroy]
   before_action :set_volunteer
 
