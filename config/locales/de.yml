@@ -712,6 +712,7 @@ de:
     show:
       availability: Verfügbarkeit
       new_certificate: Bescheinigung ausstellen
+      show_certificates: Bescheinigungen anzeigen
   volunteers: *id-volunteers-by-actions
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   to: bis
