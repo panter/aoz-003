@@ -3,8 +3,6 @@ class LanguageSkill < ApplicationRecord
 
   scope :native, -> { where(level: 'native_speaker') }
   scope :german, -> { where(language: 'DE') }
-  scope :native_language, -> { native.german.first || native.first || LanguageSkill.new }
-  scope :non_native_languages, -> { where.not(id: native_language.id) }
 
   LANGUAGE_LEVELS = [:native_speaker, :fluent, :good, :basic].freeze
 
