@@ -12,9 +12,8 @@ class FreiwilligenEinsaetze < Accessor
     rec[:funktion] = FREIWILLIGEN_FUNKTIONEN[rec[:fk_FreiwilligenFunktion]]
     rec[:lehrmittel] = LEHRMITTEL[rec[:fk_Lehrmittel]] if rec[:fk_Lehrmittel]
     rec[:semester] = SEMESTER[rec[:fk_Semester]] if rec[:fk_Semester]
-    rec = parse_boolean_fields(rec, :b_Bücher, :b_LP1, :b_LP2, :b_Probezeitbericht)
     parse_datetime_fields(rec, :d_MutDatum, :d_EinsatzVon, :d_EinsatzBis).except(
-      :fk_Lehrmittel
+      :fk_FreiwilligenFunktion, :fk_Lehrmittel
     )
   end
 

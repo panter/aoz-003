@@ -28,14 +28,6 @@ module AccUtils
     record.merge(record.slice(*keys).compact.transform_values(&:to_date))
   end
 
-  def parse_boolean_fields(record, *keys)
-    record.merge(
-      parse_int_fields(record, *keys).slice(*keys).compact.transform_values do |val|
-        val == 1 ? true : false
-      end
-    )
-  end
-
   def salutation(anrede, gender = nil)
     return 'mrs' if anrede == 'Frau'
     return 'mr' if anrede == 'Herr'
