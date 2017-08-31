@@ -12,6 +12,11 @@ en:
   clear_filters: Clear filters
   activerecord:
     attributes:
+      assignment_journal:
+        achievements: What could have been achieved during the last months?
+        conversation: I would like to discuss with my supervisor.
+        future: Should the assignment continue? If yes, with which goals?
+        goals: Which were the most important goals during the last months?
       client:
         age_request: Volunteer's age
         gender_request: Volunteer's gender
