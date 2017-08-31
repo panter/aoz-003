@@ -3,7 +3,10 @@ class AddMissingFieldsForAssignments < ActiveRecord::Migration[5.1]
     change_table :assignments do |t|
       t.datetime :assignment_start
       t.datetime :assignment_end
-      t.datetime :first_instruction_lesson     # ErstUnterricht
+      t.datetime :performance_appraisal_review
+      t.datetime :probation_period
+      t.datetime :home_visit
+      t.datetime :first_instruction_lesson
       t.datetime :progress_meeting             # Standortgespräch
       t.string   :short_description            # Kurzbezeichnung
       t.text     :goals                        # Zielsetzung
