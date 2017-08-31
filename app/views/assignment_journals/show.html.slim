@@ -3,7 +3,7 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          - if policy(AssignmentJournal).index?
+          - if current_user.superadmin?
             tr
               td= t_model(Volunteer)
               td= @assignment_journal.volunteer.contact.full_name
