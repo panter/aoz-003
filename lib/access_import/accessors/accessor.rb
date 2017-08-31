@@ -1,5 +1,4 @@
 require 'access_import/acc_utils'
-require 'ostruct'
 
 class Accessor
   include AccUtils
@@ -22,8 +21,6 @@ class Accessor
   def find(id)
     all[id.to_i]
   end
-
-  ACCESS_ROLES = OpenStruct.new(volunteer: 1, client: 2, animator: 3, participant: 4).freeze
 
   SEMESTER = {
     1 => { semester: 'Frühling / Sommer', rolle: 'Animator/in' },
