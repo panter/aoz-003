@@ -14,10 +14,6 @@ class Accessor
     end
   end
 
-  def add_records_hash
-    @records = hash_all unless @records
-  end
-
   def all
     @all ||= hash_all
   end
