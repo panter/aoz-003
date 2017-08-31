@@ -1,0 +1,16 @@
+h1= t('certificates', count: 2)
+
+.table-responsive
+  table.table
+    thead
+      tr
+        th
+        th
+        th
+
+    tbody
+      - @certificates.each do |certificate|
+        tr
+          td= link_to t_action(:show), volunteer_certificate_path(certificate.volunteer, certificate)
+          td= link_to t_action(:destroy), volunteer_certificate_path(certificate.volunteer, certificate), confirm_deleting(certificate)
+

@@ -8,10 +8,11 @@ end
 gem 'rails', '~> 5.1'
 
 gem 'autoprefixer-rails'
-gem 'axlsx'
+gem 'axlsx', '~> 2.1.0.pre'
 gem 'axlsx_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
+gem 'caracal-rails'
 gem 'cocoon'
 gem 'coffee-rails'
 gem 'countries'

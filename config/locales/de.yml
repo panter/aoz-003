@@ -67,6 +67,8 @@ de:
         <<: *id-generic_keys
         amount: Betrag
         assignment: Begleitung
+      certificate:
+        <<: *id-generic_keys
       client:
         <<: *id-generic_keys
         actual_activities: Aktuelle Tätigkeiten
@@ -133,8 +135,7 @@ de:
         profile: Profil
         role: Rolle
       volunteer: &id-volunteer_attributes
-        <<: *id-availability
-        <<: *id-generic_keys
+        <<: [*id-availability, *id-generic_keys]
         available: Verfügbar
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
@@ -240,6 +241,7 @@ de:
       assignment: Begleitung
       assignment_journal: Inhaltliches Journal
       billing_expense: Spesenformular
+      certificate: Bescheinigung
       client: Klient/in
       contact: Kontakt
       department: Standort
@@ -326,6 +328,9 @@ de:
     feedback: Rückmeldung
     file: Datei
     telephone: Telefonat
+  certificates:
+    one: Bescheinigung
+    other: Bescheinigungen
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   checklist: Checkliste

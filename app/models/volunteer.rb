@@ -32,6 +32,8 @@ class Volunteer < ApplicationRecord
   belongs_to :registrar, optional: true,
     class_name: 'User', foreign_key: 'registrar_id'
 
+  has_many :certificates
+
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
 
