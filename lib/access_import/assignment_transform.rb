@@ -20,10 +20,6 @@ class AssignmentTransform
       probation_period: fw_einsatz[:d_Probezeit],
       home_visit: fw_einsatz[:d_Hausbesuch],
       first_instruction_lesson: fw_einsatz[:d_ErstUnterricht],
-      short_description: fw_einsatz[:t_Kurzbezeichnung],
-      goals: fw_einsatz[:m_Zielsetzung],
-      starting_topic: fw_einsatz[:m_Einstiegsthematik],
-      description: fw_einsatz[:m_Beschreibung],
       import_attributes: access_import(
         :tbl_FreiwilligenEinsätze, fw_einsatz[:pk_FreiwilligenEinsatz], fw_einsatz: fw_einsatz,
         begleitet: begleitet
