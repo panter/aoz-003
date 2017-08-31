@@ -16,8 +16,6 @@ class PerformanceReport < ApplicationRecord
     }
   end
 
-  private
-
   def global
     {
       volunteers: volunteers,
