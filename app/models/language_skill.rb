@@ -1,9 +1,6 @@
 class LanguageSkill < ApplicationRecord
   belongs_to :languageable, polymorphic: true, optional: true
 
-  scope :native, -> { where(level: 'native_speaker') }
-  scope :german, -> { where(language: 'DE') }
-
   LANGUAGE_LEVELS = [:native_speaker, :fluent, :good, :basic].freeze
 
   scope :native_languages, lambda {
