@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :billing_expense do
-    amount 1
+    volunteer
+    assignment
+    amount 50
   end
 end
