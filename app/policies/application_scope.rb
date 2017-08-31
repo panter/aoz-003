@@ -16,19 +16,4 @@ class ApplicationScope
   def resolve_owner
     scope.where(user: user)
   end
-
-  def superadmin_or_owner
-    return all if superadmin?
-    resolve_owner
-  end
-
-  def superadmin_or_volunteers
-    return all if superadmin?
-    resolve_owner if volunteer?
-  end
-
-  def superadmin_or_social_workers
-    return all if superadmin?
-    resolve_owner if social_worker?
-  end
 end
