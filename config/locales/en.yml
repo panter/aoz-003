@@ -525,6 +525,7 @@ en:
     show:
       availability: Availability for voluntary engagement
       new_certificate: Create certificate
+      show_certificates: Show certificates
   volunteers: *id-volunteers-by-actions
   wanna_apply: Do you want to register as a volunteer?
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
