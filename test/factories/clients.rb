@@ -1,10 +1,10 @@
 FactoryGirl.define do
   factory :client do
-    user
-    contact
+    association :user
+    association :contact
 
     trait :zuerich do
-      association(:contact, :zuerich)
+      association :contact, factory: :contact_zuerich
     end
 
     trait :with_relatives do

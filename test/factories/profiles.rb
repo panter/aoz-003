@@ -7,6 +7,6 @@ FactoryGirl.define do
     workday true
     weekend false
 
-    contact
+    association :contact
   end
 end
