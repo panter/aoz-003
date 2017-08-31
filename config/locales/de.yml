@@ -43,15 +43,13 @@ de:
         <<: *id-generic_keys
         agreement: Zustimmung
         client: Klient/in
-        created_by: Verantwortliche/rs
+        created_by: Verantwortliche/r
         volunteer: Freiwillige
         started: Neue
         ended: Beendet
         performance: Kennzahlen
         assignment_start: Einsatz beginn
         assignment_end: Einsatz ende
-        assignment_start: Einsatzbeginn
-        assignment_end: Einsatzende
         performance_appraisal_review: Standortgespräch
         probation_period: Probezeit
         home_visit: Hausbesuch
