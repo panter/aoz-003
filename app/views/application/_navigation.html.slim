@@ -17,7 +17,7 @@ nav.navbar.navbar-top
           - if policy(Client).index?
             li= link_to t('clients'), clients_path
           - if policy(Volunteer).index?
-            li= link_to t('volunteers'), volunteers_path
+            li= link_to t('volunteers', count: 2), volunteers_path
           - if policy(Department).index?
             li= link_to t('departments'), departments_path
           - if policy(Department).manager_with_department?

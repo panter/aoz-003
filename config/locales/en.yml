@@ -1,13 +1,58 @@
 ---
 en:
-  availability: &id-availability
-    afternoon: Afternoon
-    detailed_description: Detailed Description
-    evening: Evening
-    flexible: Flexible
-    morning: Morning
-    weekend: Weekend
-    workday: Workday
+  aaa_injectable:
+    age_request: &id-age_requests
+      age_middle: 36 - 50
+      age_no_matter: "age doesn't matter"
+      age_old: older than 51
+      age_young: 20 - 35
+      all: All
+    availability: &id-availability
+      afternoon: Afternoon
+      detailed_description: Detailed Description
+      evening: Evening
+      flexible: Flexible
+      morning: Morning
+      weekend: Weekend
+      workday: Workday
+    category: &id-categories
+      conversation: Conversation
+      email: Email
+      feedback: Feedback
+      file: File
+      telephone: Telephone
+    gender_request: &id-gender_requests
+      all: All
+      no_matter: "gender doesn't matter"
+      same: gender same
+    language_level: &id-lang-levels
+      basic: Basic
+      fluent: Fluent
+      good: Good
+      native_speaker: Native speaker
+    rejection_type: &id-rejection-types
+      her: by volunteer before / after the first call
+      other: Other
+      us: by us before / after conversation
+    relation: &id-relations
+      aunt: Aunt
+      brother: Brother
+      daughter: Daughter
+      father: Father
+      husband: Husband/Partner
+      mother: Mother
+      sister: Sister
+      son: Son
+      uncle: Uncle
+      wife: Wife/Partner
+    role: &id-roles
+      department_manager: Department manager
+      social_worker: Social worker
+      superadmin: Superadmin
+      volunteer: Volunteer
+    salutation: &id-salutations
+      mr: Mr.
+      mrs: Mrs.
   accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
   already_computed: This billing expense was already created.
   clear_filters: Clear filters
@@ -108,12 +153,7 @@ en:
   add_journal_entry: Write a journal entry
   add_language: Add language
   add_relative: Add family member
-  age_request: &id-age_requests
-    age_middle: 36 - 50
-    age_no_matter: "age doesn't matter"
-    age_old: older than 51
-    age_young: 20 - 35
-    all: All
+  age_request: *id-age_requests
   all: All
   application_submitted: Your registration has been successfully sent.
   are_you_sure: Are you sure?
@@ -160,6 +200,7 @@ en:
     what: Was?
     zurich: Zürich
   assignments: Assignments
+  availability: *id-availability
   available_volunteers: Available volunteers
   back: Back
   billing_expense_pdf:
@@ -197,6 +238,7 @@ en:
   change_my_password: Change my password
   change_password: Change your password
   checklist: Checklist
+  clear_filters: Clear filters
   clients: Clients
   clients_need_accompanying: Clients who need accompanying
   contact_info: Contact information
@@ -324,14 +366,12 @@ en:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
   export_xlsx: Export list as XLSX
+  "false": "No"
   find_client: Find client
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
-  full_language_collection: &id-lang-levels
-  gender_request: &id-gender_requests
-    all: All
-    no_matter: "gender doesn't matter"
-    same: gender same
+  full_language_collection: *id-lang-levels
+  gender_request: *id-gender_requests
   general_availability: When are you available?
   get_back: We will soon get back to you.
   helpers:
@@ -345,16 +385,10 @@ en:
         create: Create User
         update: Update login
   invite_sent: 'Invitation sent to %{email}'
-  language_level: &id-lang-levels
-    basic: Basic
-    fluent: Fluent
-    good: Good
-    native_speaker: Native speaker
+  language_level: *id-lang-levels
   language_skills: Language skills
   login: Log in
   logout: Logout
-  "true": "Yes"
-  "false": "No"
   messages:
     confirm_delete: "Really delete %{model} %{record}?"
     select_prompt: "Select %{model}"
@@ -371,34 +405,15 @@ en:
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
   registered_by: Registered by
-  rejection_type: &id-rejection-types
-    her: by volunteer before / after the first call
-    other: Other
-    us: by us before / after conversation
-  relation: &id-relations
-    aunt: Aunt
-    brother: Brother
-    daughter: Daughter
-    father: Father
-    husband: Husband/Partner
-    mother: Mother
-    sister: Sister
-    son: Son
-    uncle: Uncle
-    wife: Wife/Partner
+  rejection_type: *id-rejection-types
+  relation: *id-relations
   relatives: Family members
   remember_me: Remember me
   remove_language: Remove language
   remove_relative: Remove family member
   reserve: Reserve
-  role: &id-roles
-    department_manager: Department manager
-    social_worker: Social worker
-    superadmin: Superadmin
-    volunteer: Volunteer
-  salutation: &id-salutations
-    mr: Mr.
-    mrs: Mrs.
+  role: *id-roles
+  salutation: *id-salutations
   seeking_clients: Looking for clients
   show_assignment: Show assignment
   show_assignments: Show assignments
@@ -427,15 +442,15 @@ en:
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
-        relatives:
-          relation: *id-relations
-        salutation: *id-salutations
         permit:
           'n': N
           f: F
-          b-fl: B-FL
           b: 'B'
+          b-fl: B-FL
           c: 'C'
+        relatives:
+          relation: *id-relations
+        salutation: *id-salutations
         state: &id-states
           accepted: Accepted
           active: Active
@@ -482,12 +497,12 @@ en:
     afternoon: afternoon
     evening: evening
     morning: morning
+  "true": "Yes"
   update_profile: Update profile
   user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Registration
-  volunteer_availability: What times are you available for voluntary engagement?
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_emails: Volunteer emails
@@ -500,7 +515,17 @@ en:
   volunteer_request: Request for volunteers
   volunteer_self_applicant: Self-applicant
   volunteer_updated: Volunteer was successfully updated.
-  volunteers: Volunteers
+  volunteer_applications: &id-volunteers-by-actions
+    one: Volunteer
+    other: Volunteers
+    create: &id-volunteers-create
+      availability: What times are you available for voluntary engagement?
+    new: *id-volunteers-create
+    edit: *id-volunteers-create
+    show:
+      availability: Availability for voluntary engagement
+      new_certificate: Create certificate
+  volunteers: *id-volunteers-by-actions
   wanna_apply: Do you want to register as a volunteer?
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
   performance_reports:

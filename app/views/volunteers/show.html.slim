@@ -12,11 +12,11 @@ nav.navbar.section-navigation
         - if @volunteer.assignments.any?
           li = button_link t_title(:new, BillingExpense), new_volunteer_billing_expense_path(@volunteer)
           li = button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
+        li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
   ul.list-inline
     - if @volunteer.assignments.any?
       li = button_link t_title(:new, Hour), new_volunteer_hour_url(@volunteer)
       li = button_link t_title(:index, Hour), volunteer_hours_path(@volunteer)
-
 
 - if policy(Volunteer).checklist?
   h3= t('checklist')
@@ -149,7 +149,7 @@ h3= t_attr(:group_accompaniment)
           td= t_attr(:other_offer_desc)
           td= @volunteer.other_offer_desc
 
-h3= t('volunteer_availability')
+h3= t('.availability')
 = render 'availability/show', available: @volunteer
 
 - if @volunteer.assignments.any?
