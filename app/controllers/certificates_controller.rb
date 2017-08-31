@@ -3,7 +3,7 @@ class CertificatesController < ApplicationController
   before_action :set_volunteer, except: [:edit, :show, :destroy]
 
   def index
-    @certificates = Certificate.all
+    @certificates = Certificate.where(volunteer: @volunteer)
     authorize Certificate
   end
 
