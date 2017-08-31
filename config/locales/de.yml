@@ -1,5 +1,79 @@
 ---
 de:
+  aaa_injectable:
+    age_request: &id-age_requests
+      age_middle: 36 - 50
+      age_no_matter: egal
+      age_old: älter als 51
+      age_young: 20 - 35
+      all: Alle
+    availability: &id-availability
+      afternoon: Nachmittags
+      detailed_description: Genauere Angaben
+      evening: Abends
+      flexible: Flexibel
+      morning: Morgens
+      weekend: Wochenende
+      workday: Werktags
+    category: &id-categories
+      conversation: Gespräch
+      email: E-Mail
+      feedback: Rückmeldung
+      file: Datei
+      telephone: Telefonat
+    gender_request: &id-gender_requests
+      all: Alle
+      no_matter: Geschlecht egal
+      same: Geschlecht gleich
+    generic_keys: &id-generic_keys
+      address: Adresse
+      avatar: Foto
+      birth_year: Jahrgang
+      city: Ort
+      created_at: Erstellt am
+      email: Email
+      first_name: Vorname
+      full_name: Name
+      languages: Sprachen
+      last_name: Nachname
+      nationality: Nationalität
+      phone: Telefonnummer
+      postal_code: PLZ
+      profession: Beruf
+      salutation: Anrede
+      state: Status
+      street: Strasse
+      updated_at: Aktualisiert am
+      zip: Postleitzahl
+    language_level: &id-lang-levels
+      basic: Grundlagen
+      fluent: Fliessend
+      good: Gut
+      native_speaker: Muttersprachler/in
+    rejection_type: &id-rejection-types
+      her: von Freiwillige/r vor / nach Erstgespräch
+      other: Anderer Grund
+      us: durch uns vor / nach Gespräch
+    relation: &id-relations
+      aunt: Tante
+      brother: Bruder
+      daughter: Tochter
+      father: Vater
+      husband: (Ehe-)Partner
+      mother: Mutter
+      sister: Schwester
+      son: Sohn
+      uncle: Onkel
+      wife: (Ehe-)Partnerin
+    role: &id-roles
+      department_manager: Standortverantwortliche/er
+      social_worker: Sozialarbeiter/in
+      superadmin: Superadmin
+      volunteer: Freiwillige/r
+    salutation: &id-salutations
+      all: Alle
+      mr: Herr
+      mrs: Frau
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieses Spesenformular ist bereits erstellt.
   availability: &id-availability
@@ -141,6 +215,7 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
+        available: Verfügbar
         bank: Name der Bank
         bank_account: Kontodaten eingetragen
         bank_details: Name der Bank / IBAN
@@ -156,7 +231,6 @@ de:
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
-        native_language: Muttersprache
         german_course: Deutsch-Kurs
         group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
         health: Gesundheit
@@ -166,6 +240,7 @@ de:
         kid: Kinder
         man: Mann
         music: Musik
+        native_language: Muttersprache
         other_offer: Anderes (bitte beschreiben)
         other_offer_desc: Beschreibung
         own_kids: Familie (Kinder, Jahrgang)
@@ -259,12 +334,7 @@ de:
   add_journal_entry: Journal Eintrag verfassen
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
-  age_request: &id-age_requests
-    age_middle: 36 - 50
-    age_no_matter: egal
-    age_old: älter als 51
-    age_young: 20 - 35
-    all: Alle
+  age_request: *id-age_requests
   all: Alle
   application_submitted: 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
@@ -304,6 +374,7 @@ de:
     what: Was?
     zurich: Zürich
   assignments: Begleitungen
+  availability: *id-availability
   available_volunteers: Verfügbare Freiwillige
   back: Zurück
   billing_expense_pdf:
@@ -334,8 +405,7 @@ de:
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   checklist: Checkliste
-  "true": Ja
-  "false": Nein
+  clear_filters: Filter aufheben
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
@@ -466,14 +536,13 @@ de:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   export_xlsx: Liste als XLSX exportieren
+  "false": Nein
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
-  gender_request: &id-gender_requests
-    all: Alle
-    no_matter: Geschlecht egal
-    same: Geschlecht gleich
+  gender_request: *id-gender_requests
   general_availability: Wann sind Sie verfügbar?
+  generic_keys: *id-generic_keys
   get_back: Wir werden uns bald bei Ihnen melden.
   helpers:
     submit:
@@ -486,11 +555,7 @@ de:
         create: Benutzer/in erstellen
         update: Login aktualisieren
   invite_sent: 'Einladung wurde an %{email} verschickt.'
-  language_level: &id-lang-levels
-    basic: Grundlagen
-    fluent: Fliessend
-    good: Gut
-    native_speaker: Muttersprachler/in
+  language_level: *id-lang-levels
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
@@ -507,35 +572,15 @@ de:
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
   registered_by: Registriert durch
-  rejection_type: &id-rejection-types
-    her: von Freiwillige/r vor / nach Erstgespräch
-    other: Anderer Grund
-    us: durch uns vor / nach Gespräch
-  relation: &id-relations
-    aunt: Tante
-    brother: Bruder
-    daughter: Tochter
-    father: Vater
-    husband: (Ehe-)Partner
-    mother: Mutter
-    sister: Schwester
-    son: Sohn
-    uncle: Onkel
-    wife: (Ehe-)Partnerin
+  rejection_type: *id-rejection-types
+  relation: *id-relations
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   reserve: Reservieren
-  role: &id-roles
-    department_manager: Standortverantwortliche/er
-    social_worker: Sozialarbeiter/in
-    superadmin: Superadmin
-    volunteer: Freiwillige/r
-  salutation: &id-salutations
-    all: Alle
-    mr: Herr
-    mrs: Frau
+  role: *id-roles
+  salutation: *id-salutations
   seeking_clients: Klienten suchen
   show_assignment: Begleitung anzeigen
   show_assignments: Begleiteten anzeigen
@@ -575,25 +620,25 @@ de:
           finished: Abgeschlossen
           suggested: Vorgeschlagen
       client:
-        permit:
-          'n': N
-          f: F
-          b-fl: B-FL
-          b: 'B'
-          c: 'C'
         age_request: *id-age_requests
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
+        permit:
+          'n': N
+          f: F
+          b: 'B'
+          b-fl: B-FL
+          c: 'C'
         relatives:
           relation: *id-relations
         salutation: *id-salutations
         state: &id-states
-          active_further: Aktiv, an weiteren Einsätzen interessiert
           accepted: Akzeptiert
           active: Aktiv
-          contacted: Kontaktiert
+          active_further: Aktiv, an weiteren Einsätzen interessiert
           all: Alle
+          contacted: Kontaktiert
           finished: Abgeschlossen
           inactive: Inaktiv
           interested: Interessiert
@@ -638,12 +683,12 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
+  "true": Ja
   update_profile: Profil aktualisieren
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer/in
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
-  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails: Bestätigungs-Mails
@@ -657,7 +702,17 @@ de:
   volunteer_request: Anforderungen an die/den Freiwillige/n
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
-  volunteers: Freiwillige
+  volunteer_applications: &id-volunteers-by-actions
+    one: Freiwillige/r
+    other: Freiwillige
+    create: &id-volunteers-create
+      availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+    new: *id-volunteers-create
+    edit: *id-volunteers-create
+    show:
+      availability: Verfügbarkeit
+      new_certificate: Bescheinigung ausstellen
+  volunteers: *id-volunteers-by-actions
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   to: bis
   performance_reports:
