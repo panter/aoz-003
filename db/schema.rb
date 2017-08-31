@@ -62,14 +62,27 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.integer "amount"
     t.string "bank"
     t.string "iban"
+    t.index ["deleted_at"], name: "index_billing_expenses_on_deleted_at"
+    t.index ["user_id"], name: "index_billing_expenses_on_user_id"
+    t.index ["volunteer_id"], name: "index_billing_expenses_on_volunteer_id"
+  end
+
+  create_table "certificates", force: :cascade do |t|
+    t.string "institution"
+    t.string "function"
+    t.string "mission"
+    t.string "period"
+    t.string "duration"
+    t.string "creator_details"
+    t.text "description"
+    t.index ["deleted_at"], name: "index_certificates_on_deleted_at"
+    t.index ["user_id"], name: "index_certificates_on_user_id"
+    t.index ["volunteer_id"], name: "index_certificates_on_volunteer_id"
     t.bigint "volunteer_id"
     t.bigint "user_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_billing_expenses_on_deleted_at"
-    t.index ["user_id"], name: "index_billing_expenses_on_user_id"
-    t.index ["volunteer_id"], name: "index_billing_expenses_on_volunteer_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -360,6 +373,8 @@ ActiveRecord::Schema.define(version: 20170907090939) do
   add_foreign_key "assignments", "clients"
   add_foreign_key "assignments", "users", column: "creator_id"
   add_foreign_key "assignments", "volunteers"
+  add_foreign_key "certificates", "users"
+  add_foreign_key "certificates", "volunteers"
   add_foreign_key "clients", "users"
   add_foreign_key "hours", "billing_expenses"
   add_foreign_key "journals", "users"
