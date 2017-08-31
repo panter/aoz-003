@@ -84,6 +84,7 @@ en:
     models:
       assignment: Assignment
       assignment_journal: Assignment journal
+      billing_expense: Billing expense
       client: Client
       contact: Contact
       department: Department
@@ -193,6 +194,7 @@ en:
       - :year
   delete_assignment: Really delete assignment?
   delete_assignment_journal: Really delete assignment journal?
+  delete_billing_expense: Really delete billing expense?
   delete_hour: Really delete hour?
   delete_journal: Really delete journal?
   departments: Departments

@@ -8,13 +8,19 @@
       = render 'journals/journal_block', journaled_for: @volunteer
 .row
   - if policy(Volunteer).seeking_clients? & @volunteer.seeking_clients?
-    .col-xs-12.col-md-4
+    .col-xs-12
       = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
+.row
   - if @volunteer.assignments.any?
-    .col-xs-12.col-md-4
+    .col-xs-12.col-md-3
       = button_link t_title(:index, Hour), volunteer_hours_path(@volunteer)
-    .col-xs-12.col-md-4
+    .col-xs-12.col-md-3
       = button_link t_title(:new, Hour), new_volunteer_hour_url(@volunteer)
+  .col-xs-12.col-md-3
+    = button_link t_title(:new, BillingExpense), new_volunteer_billing_expense_path(@volunteer)
+  .col-xs-12.col-md-3
+    = button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
+
 
 - if policy(Volunteer).checklist?
   h3= t('checklist')

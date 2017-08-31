@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825144136) do
+ActiveRecord::Schema.define(version: 20170831105352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,18 @@ ActiveRecord::Schema.define(version: 20170825144136) do
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
+  end
+
+  create_table "billing_expenses", force: :cascade do |t|
+    t.integer "amount"
+    t.bigint "volunteer_id"
+    t.bigint "assignment_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_billing_expenses_on_assignment_id"
+    t.index ["deleted_at"], name: "index_billing_expenses_on_deleted_at"
+    t.index ["volunteer_id"], name: "index_billing_expenses_on_volunteer_id"
   end
 
   create_table "clients", force: :cascade do |t|

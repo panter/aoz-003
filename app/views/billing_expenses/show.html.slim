@@ -1,0 +1,18 @@
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td= t_model(Volunteer)
+            td= @billing_expense.volunteer.contact.full_name
+          tr
+            td= t_attr(:amount)
+            td= @billing_expense.amount
+          tr
+            td= t_attr(:created_at)
+            td= l(@billing_expense.created_at.to_date)
+
+.row
+  .col-xs-12
+    = button_link t_title(:edit, BillingExpense), params.to_unsafe_h.merge({action: 'edit'})

@@ -41,6 +41,7 @@ class Volunteer < ApplicationRecord
   has_many :clients, through: :assignments
   has_many :hours, through: :assignments
   has_many :assignment_journals, through: :assignments
+  has_many :billing_expenses
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
