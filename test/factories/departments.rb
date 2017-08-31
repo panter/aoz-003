@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :department do
-    contact
+    association :contact, factory: :contact_department
   end
 end
