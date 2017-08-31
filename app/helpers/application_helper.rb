@@ -67,18 +67,6 @@ module ApplicationHelper
     } }
   end
 
-  def conditional_field(f, property, enabler, value = '')
-    css_class = { class: 'conditional-field' }
-    f.input property, css_class, input_html: input_html(f, enabler, value), label_html: css_class
-  end
-
-  def multi_conditional_field(f, property, enablers)
-    f.input property, input_html: input_html(f, enablers, '', 'group'),
-      class: 'conditional-group conditional-group-' +
-        model_name_from_record_or_class(f.object).element,
-      label_html: { class: 'conditional-group' }
-  end
-
   def confirm_deleting(record, target_controller = nil)
     target_controller ||= controller_name
     if ['assignments', 'journals', 'hours'].include? target_controller
