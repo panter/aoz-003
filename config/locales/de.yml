@@ -61,6 +61,10 @@ de:
         conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
         future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
         goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
+      billing_expense:
+        <<: *id-generic_keys
+        amount: Betrag
+        assignment: Begleitung
       client:
         <<: *id-generic_keys
         actual_activities: Aktuelle Tätigkeiten
@@ -233,6 +237,7 @@ de:
     models:
       assignment: Begleitung
       assignment_journal: Inhaltliches Journal
+      billing_expense: Spesenformular
       client: Klient/in
       contact: Kontakt
       department: Standort
@@ -339,6 +344,7 @@ de:
       - :year
   delete_assignment: Begleitung wirklich löschen?
   delete_assignment_journal: Inhaltliches Journal wirklich löschen?
+  delete_billing_expense: Spesenformular wirklich löschen?
   delete_hour: Stundeneintrag wirklich löschen?
   delete_journal: Journaleintrag wirklich löschen?
   department_confirm_destroy: Sind Sie sicher dass Sie den Standort löschen wollen?
