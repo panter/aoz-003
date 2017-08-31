@@ -55,7 +55,7 @@ class AccessImport
       assignment = Assignment.new(parameters)
       assignment.created_at = fw_einsatz[:d_EinsatzVon] || Time.zone.now
       assignment.creator_id = @import_user.id
-      assignment.save!
+      binding.pry unless assignment.save
     end
     # make(@freiwilligen_einsaetze.where_volunteer, transformer, Assignment) do |assignment, fw_einsatz|
     #   assignment.creator = User.where_superadmin.first
