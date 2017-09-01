@@ -39,7 +39,7 @@ class HoursTest < ApplicationSystemTestCase
     @assignment2 = create :assignment, volunteer: @volunteer2, client: @client2
     @hour1 = create :hour, assignment: @assignment1, volunteer: @volunteer1
     @hour2 = create :hour, assignment: @assignment2, volunteer: @volunteer2
-    click_link 'Hour report index'
+    click_link 'Hour reports'
     assert page.has_text? 'Client1 Client1'
     refute page.has_text? 'Client2 Client2'
     visit volunteer_hours_path(@volunteer2)
