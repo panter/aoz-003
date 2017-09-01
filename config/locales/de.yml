@@ -1,6 +1,6 @@
 ---
 de:
-  aaa_injectable:
+  aaa_injectable: &id-injectables
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: egal
@@ -74,45 +74,23 @@ de:
       all: Alle
       mr: Herr
       mrs: Frau
+    volunteer_applications: &id-volunteers-by-actions
+      create: &id-volunteers-create
+        availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+      edit: *id-volunteers-create
+      new: *id-volunteers-create
+      one: Freiwillige/r
+      other: Freiwillige
+      show:
+        availability: Verfügbarkeit
+        hour_reports: Stunden Rapporte
+        new_certificate: Bescheinigung ausstellen
+        report_hours: Stunden erfassen
+        show_certificates: Bescheinigungen anzeigen
+    volunteers: *id-volunteers-by-actions
+  <<: *id-injectables
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieses Spesenformular ist bereits erstellt.
-  availability: &id-availability
-    afternoon: Nachmittags
-    detailed_description: Genauere Angaben
-    evening: Abends
-    flexible: Flexibel
-    morning: Morgens
-    weekend: Wochenende
-    workday: Werktags
-  clear_filters: Filter aufheben
-  generic_keys: &id-generic_keys
-    created_at: Erstellt am
-    created_by: Verantwortliche/r
-    updated_at: Aktualisiert am
-    address: Adresse
-    state: Status
-    street: Strasse
-    avatar: Foto
-    salutation: Anrede
-    email: Email
-    first_name: Vorname
-    last_name: Nachname
-    postal_code: PLZ
-    phone: Telefonnummer
-    birth_year: Jahrgang
-    full_name: Name
-    nationality: Nationalität
-    zip: Postleitzahl
-    languages: Sprachen
-    profession: Beruf
-    city: Ort
-    volunteers: Freiwillige
-    assignments: Begleitungen
-    clients: Klienten
-    active: Aktiv
-    zuerich: Zürich
-    new: Neu
-    total: Total
   activerecord:
     attributes:
       assignment:
@@ -122,6 +100,8 @@ de:
         assignment_start: Einsatzbeginn
         client: Klient/in
         confirmation: Ich bestätige alle Stunden eingetragen und Feedback zum Einsatz gegeben zu haben.
+        volunteer: Freiwillige
+        created_by: Verantwortliche/rs
         ended: Beendet
         first_instruction_lesson: Einführungskurs
         home_visit: Hausbesuch
@@ -197,6 +177,17 @@ de:
         language: Sprache
         level: Niveau
         native_language: Muttersprache
+      performance_report:
+        <<: *id-generic_keys
+        comment: Kommentar
+        extern: Extern
+        intern: Intern
+        period: Zeitraum
+        period_end: Bis
+        period_start: Von
+        scope: Bereich
+        title: Titel
+        user: Ersteller/in
       profile:
         <<: *id-generic_keys
       relative:
@@ -226,6 +217,7 @@ de:
         dancing: Tanz
         doc_sent: Dossier Freiwillige engagiert verschickt
         education: Ausbildung
+        ended: ausgetreten
         evaluation: Abschlussevaluation erhalten
         excursions: Ausflüge
         expectations: Erwartungen
@@ -262,7 +254,6 @@ de:
         women: Frauen
         working_percent: Stellenprozent
         zurich: Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt
-        ended: ausgetreten
       volunteer_email:
         active: Aktiv
         body: Textkörper
@@ -270,17 +261,6 @@ de:
         subject: Betreff
         title: Überschrift
         user: Ersteller
-      performance_report:
-        <<: *id-generic_keys
-        period_start: Von
-        period_end: Bis
-        scope: Bereich
-        extern: Extern
-        intern: Intern
-        period: Zeitraum
-        title: Titel
-        comment: Kommentar
-        user: Ersteller/in
     errors:
       models:
         profile:
@@ -323,18 +303,17 @@ de:
       hour: Stunde
       journal: Journal
       language_skill: Sprachkompetenz
+      performance_report: Kennzahlen Report
       profile: Profil
       relative: Verwante/r
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
       volunteer_email: Anmeldungsbestätigungs-Nachricht editieren
-      performance_report: Kennzahlen Report
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journal Eintrag verfassen
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
-  age_request: *id-age_requests
   all: Alle
   application_submitted: 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
@@ -374,7 +353,6 @@ de:
     what: Was?
     zurich: Zürich
   assignments: Begleitungen
-  availability: *id-availability
   available_volunteers: Verfügbare Freiwillige
   back: Zurück
   billing_expense_pdf:
@@ -540,9 +518,7 @@ de:
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
-  gender_request: *id-gender_requests
   general_availability: Wann sind Sie verfügbar?
-  generic_keys: *id-generic_keys
   get_back: Wir werden uns bald bei Ihnen melden.
   helpers:
     submit:
@@ -555,7 +531,6 @@ de:
         create: Benutzer/in erstellen
         update: Login aktualisieren
   invite_sent: 'Einladung wurde an %{email} verschickt.'
-  language_level: *id-lang-levels
   language_skills: Sprachkenntnisse
   login: Anmelden
   logout: Abmelden
@@ -568,19 +543,43 @@ de:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
     title: Fachstelle Freiwilligenarbeit
+  performance_reports:
+    index:
+      new_report: Neuen Report erstellen
+    one: Kennzahl
+    other: Kenzahlen
+    show:
+      assignments: &id-assignment-report
+        active_total: Total aktive Begleitungen per Zeitraumende
+        new: Anzahl neue Begleitungen
+        resigned: Anzahl beendete Begleitungen
+        total: Anzahl Begleitungen insgesamt
+      calendar_year: 'Kalenderjahr %{year}'
+      groups:
+        active_total: Total laufende Gruppen per Zeitraumende
+        new: Anzahl neue Gruppen (Kurse, Animationen, Andere)
+        resigned: Anzahl beendete Gruppen (Kurse, Animationen, Andere)
+        total: Anzahl Gruppen insgesamt (Kurse, Animationen, Andere)
+      selection_criteria: Auswahl
+      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
+      title_year: 'Kennzahlen des Zeitraums "Kalenderjahr %{year}"'
+      volunteers:
+        active_total: Total aktive Freiwillige per Zeitraumende
+        new: Anzahl neue Freiwillige
+        resigned: Anzahl ausgetretene Freiwillige
+        total: Anzahl Freiwillige insgesamt
+      zh_assignments:
+        <<: *id-assignment-report
+        total: Anzahl Begleitete
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
   registered_by: Registriert durch
-  rejection_type: *id-rejection-types
-  relation: *id-relations
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   reserve: Reservieren
-  role: *id-roles
-  salutation: *id-salutations
   seeking_clients: Klienten suchen
   show_assignment: Begleitung anzeigen
   show_assignments: Begleiteten anzeigen
@@ -683,6 +682,7 @@ de:
     afternoon: Nachmittag
     evening: Abend
     morning: Morgen
+  to: bis
   "true": Ja
   update_profile: Profil aktualisieren
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
@@ -702,20 +702,6 @@ de:
   volunteer_request: Anforderungen an die/den Freiwillige/n
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
-  volunteer_applications: &id-volunteers-by-actions
-    one: Freiwillige/r
-    other: Freiwillige
-    create: &id-volunteers-create
-      availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
-    new: *id-volunteers-create
-    edit: *id-volunteers-create
-    show:
-      availability: Verfügbarkeit
-      new_certificate: Bescheinigung ausstellen
-      show_certificates: Bescheinigungen anzeigen
-      hour_reports: Stunden Rapporte
-      report_hours: Stunden erfassen
-  volunteers: *id-volunteers-by-actions
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   to: bis
   performance_reports:
