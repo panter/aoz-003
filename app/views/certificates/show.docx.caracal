@@ -1,4 +1,35 @@
+docx.h1 'AOZ'
+docx.p
+docx.p
+docx.p
+docx.p
+docx.h1 'NACHWEIS'
+docx.h2 'FÜR FREIWILLIGES UND EHRENAMTLICHES ENGAGEMENT'
+docx.p
+docx.p
+docx.p "#{"Vorname/Name"}                    #{@certificate.volunteer.contact.full_name}"
+docx.p "#{"Strasse"}                         #{@certificate.volunteer.contact.street}"
+docx.p "#{"PLZ/Ort"}                    #{@certificate.volunteer.contact.postal_code} #{@certificate.volunteer.contact.city}"
 
 
-docx.h1 'Certificate'
-docx.hr
+docx.p "#{"Institution"}                    #{@certificate.institution}"
+docx.p "#{"Funktion"}                    #{@certificate.function}"
+docx.p "#{"Einsatz"}                     #{@certificate.mission}"
+docx.p "#{"Einsatzdauer"}                    #{@certificate.period}"
+docx.p "#{"Zeitauwand"}                    #{"not working yet! @certificate.volunteer.hours.total_hours"}"
+docx.p
+docx.p
+docx.p  'Die AOZ ist ein Unternehmen der Stadt Zürich und mit über 1000 Mitarbeitenden seit vielen Jahren im Auftrag des Bundes,
+des Kantons, der Stadt und weiterer Gemeinden im Migrations- und Integrations bereich tätig.'
+docx.p
+docx.p 'TransFair vermittelt Kontakte zwischen Asylsuchenden, Flüchtlingen und Migrant/innen (Begleitete) mit Menschen,
+die schon länger in der Schweiz leben und sehr gut Deutsch sprechen (Freiwillige). Durch wöchentliche Besuche bei den Begleiteten
+zuhause während mindestens sechs Monaten oder im Gruppenunterricht fördern die Freiwilligen gezielt und konkret die soziale und
+Berufliche Integration der Begleiteten. Dadurch ergänzen sie die Sozialberatung auf sinvolle Weise. Das von TransFair angebotene
+Weiterbildungsprogramm (Einführungskurs, Erfahrungsaustausch, Fachveranstaltungen) bietet den Freiwillgen die Gelegenheit sich
+vertiefter mit Fragen zu Asylverfahren und Integration auseinanderzusetzen.'
+docx.p
+docx.p
+docx.p
+docx.p @certificate.user.profile.contact.full_name
+docx.p "#{@certificate.creator_details}               "#{"Zürich,"} #{@certificate.created_at.to_date}"
