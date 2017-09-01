@@ -14,7 +14,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
     mailer = VolunteerMailer.welcome_email(@volunteer, @volunteer_email).deliver
     assert_equal @volunteer_email.subject, mailer.subject
     assert_equal [@volunteer.contact.primary_email], mailer.to
-    assert_equal ['from@example.com'], mailer.from
+    assert_equal ['info@aoz-freiwillige.ch'], mailer.from
 
     mail_body = mailer.body.encoded
     assert_match @volunteer.contact.first_name, mail_body
