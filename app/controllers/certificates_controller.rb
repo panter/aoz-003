@@ -47,10 +47,6 @@ class CertificatesController < ApplicationController
   end
 
   def certificate_params
-    # params.require(:certificate).permit(
-    #   :institution, :function, :mission, :period, :duration, :description, :creator_details,
-    #   :user_id, :volunteer_id
-    # )
     params.permit(
       :institution, :function, :mission, :period, :duration, :description, :creator_details,
       :user_id, :volunteer_id
