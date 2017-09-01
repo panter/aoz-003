@@ -5,16 +5,16 @@
         tbody
           tr
             td= t_model(Volunteer)
-            td= @billing_expense.volunteer.contact.full_name
+            td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
           tr
             td= t_attr(:address)
-            td= @billing_expense.volunteer.contact.full_address
+            td= @volunteer.contact.full_address
           tr
             td= t_attr(:bank_details, Volunteer)
             td= @billing_expense.full_bank_details
           tr
             td= t_attr(:waive, Volunteer)
-            td= t(@billing_expense.volunteer.waive)
+            td= t(@volunteer.waive)
           tr
             td= t_attr(:amount)
             td= @billing_expense.amount

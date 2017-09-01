@@ -17,7 +17,7 @@ h1= t_title(:index, BillingExpense)
         tbody
           - @volunteer.billing_expenses.each do |record|
             tr
-              td= @volunteer.contact.full_name
+              td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
               td= @volunteer.contact.full_address
               td= record.full_bank_details
               td= t(@volunteer.waive)
