@@ -4,7 +4,6 @@ class CreateBillingExpenses < ActiveRecord::Migration[5.1]
       t.integer :amount
       t.string :bank
       t.string :iban
-      t.string :state, default: :unpaid
       t.belongs_to :volunteer
       t.belongs_to :assignment
       t.belongs_to :user

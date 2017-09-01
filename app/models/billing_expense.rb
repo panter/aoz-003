@@ -9,18 +9,9 @@ class BillingExpense < ApplicationRecord
 
   AMOUNT = [50, 100, 150].freeze
 
-  PAID = 'paid'.freeze
-  UNPAID = 'unpaid'.freeze
-  STATES = [PAID, UNPAID].freeze
-
   validates :amount, inclusion: { in: AMOUNT }
-  validates :state, inclusion: { in: STATES }
 
   def self.amount_collection
     AMOUNT.map(&:to_s)
-  end
-
-  def self.state_collection
-    STATES.map(&:to_sym)
   end
 end

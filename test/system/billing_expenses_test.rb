@@ -12,7 +12,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer)
     click_link 'New Billing expense'
     select '50', from: 'Amount'
-    select 'Unpaid', from: 'State'
     click_button 'Create Billing expense'
     assert page.has_text? 'Billing expense was successfully created.'
   end

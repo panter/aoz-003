@@ -551,10 +551,6 @@ de:
           archived: Archiviert
           finished: Abgeschlossen
           suggested: Vorgeschlagen
-      billing_expense:
-        state:
-          paid: Bezahlt
-          unpaid: Unbezahlt
       client:
         permit:
           'n': N
@@ -604,10 +600,8 @@ de:
   state:
     <<: *id-states
     inactive: Sucht neuen Einsatz
-    paid: Bezahlt
     registered: Interessiert
     resigned: Beendet
-    unpaid: Unbezahlt
   submit_application: Anmeldung abschicken
   thank_you: "Vielen Dank \U0001F389"
   time:

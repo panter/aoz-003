@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20170901120755) do
     t.integer "amount"
     t.string "bank"
     t.string "iban"
-    t.string "state", default: "unpaid"
     t.bigint "volunteer_id"
     t.bigint "assignment_id"
     t.bigint "user_id"

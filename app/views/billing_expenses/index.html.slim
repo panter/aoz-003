@@ -12,7 +12,6 @@ h1= t_title(:index, BillingExpense)
             th= t_attr(:amount, BillingExpense)
             th= t_attr(:created_at)
             th= t_attr(:created_by)
-            th= t_attr(:state)
             th colspan=3
         tbody
           - @volunteer.billing_expenses.each do |record|
@@ -24,7 +23,6 @@ h1= t_title(:index, BillingExpense)
               td= record.amount
               td= l(record.created_at.to_date)
               td= record.user.profile.contact.full_name
-              td= t("state.#{record.state}")
               td= link_to t_action(:show), volunteer_billing_expense_path(@volunteer, record)
               td= link_to t_action(:edit), edit_volunteer_billing_expense_path(@volunteer, record)
               td= link_to t_action(:destroy), volunteer_billing_expense_path(@volunteer, record), confirm_deleting(record)
