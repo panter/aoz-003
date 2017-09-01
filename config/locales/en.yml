@@ -53,6 +53,19 @@ en:
     salutation: &id-salutations
       mr: Mr.
       mrs: Mrs.s
+    state: &id-states
+      accepted: Accepted
+      active: Active
+      active_further: Active and interested in further engagements
+      all: All
+      contacted: Contacted
+      finished: Finished
+      inactive: Looking for new engagement
+      interested: Interested
+      registered: Registered
+      rejected: Rejected
+      reserved: Reserved
+      resigned: Terminated
     volunteer_applications: &id-volunteers-by-actions
       create: &id-volunteers-create
         availability: What times are you available for voluntary engagement?
@@ -66,6 +79,7 @@ en:
         new_certificate: Create certificate
         report_hours: Report hours
         show_certificates: Show certificates
+
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
@@ -484,19 +498,7 @@ en:
         relatives:
           relation: *id-relations
         salutation: *id-salutations
-        state: &id-states
-          accepted: Accepted
-          active: Active
-          active_further: Active and interested in further engagements
-          all: All
-          contacted: Contacted
-          finished: Finished
-          inactive: Looking for new engagement
-          interested: Interested
-          registered: Registered
-          rejected: Rejected
-          reserved: Reserved
-          resigned: Terminated
+        state: *id-states
       journal:
         category: *id-categories
       user:
