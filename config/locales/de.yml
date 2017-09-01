@@ -713,6 +713,8 @@ de:
       availability: Verfügbarkeit
       new_certificate: Bescheinigung ausstellen
       show_certificates: Bescheinigungen anzeigen
+      hour_reports: Stunden Rapporte
+      report_hours: Stunden erfassen
   volunteers: *id-volunteers-by-actions
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   to: bis
