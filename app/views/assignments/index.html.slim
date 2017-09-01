@@ -2,6 +2,8 @@
   .col-xs-12
     h1= t('assignments')
 
+= form_navigation_btn :new
+
 = render 'assignments_block', assignments: @assignments
 
 = form_navigation_btn :new
