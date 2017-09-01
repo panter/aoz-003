@@ -3,8 +3,7 @@ class BillingExpensesController < ApplicationController
   before_action :set_volunteer
 
   def index
-    billing_expense = BillingExpense.new(volunteer: @volunteer)
-    authorize billing_expense
+    authorize BillingExpense
     @billing_expenses = BillingExpense.where(volunteer: @volunteer)
   end
 
