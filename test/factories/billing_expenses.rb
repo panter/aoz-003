@@ -3,6 +3,5 @@ FactoryGirl.define do
     volunteer
     user
     amount 50
-    state 'unpaid'
   end
 end

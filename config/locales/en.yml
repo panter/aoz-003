@@ -391,10 +391,6 @@ en:
           archived: Archived
           finished: Finished
           suggested: Suggested
-      billing_expense:
-        state:
-          paid: Paid
-          unpaid: Unpaid
       client:
         age_request: *id-age_requests
         gender_request: *id-gender_requests
@@ -441,10 +437,7 @@ en:
       mark: '*'
       text: 'required'
     "yes": 'Yes'
-  state:
-    <<: *id-states
-    paid: Paid
-    unpaid: Unpaid
+  state: *id-states
   submit_application: Submit registration
   thank_you: "Thank you \U0001F389"
   time:
