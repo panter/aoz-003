@@ -13,7 +13,7 @@ class DepartmentTransform
     {
       contact_attributes: {
         last_name: einsatz_ort[:t_EinsatzOrt],
-        street: einsatz_ort[:t_Adresses],
+        street: einsatz_ort[:t_Adresse1],
         extended: einsatz_ort[:t_Adresse2],
         postal_code: einsatz_ort[:postal_code],
         city: einsatz_ort[:city]
