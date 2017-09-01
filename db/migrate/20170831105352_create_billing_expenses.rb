@@ -5,7 +5,6 @@ class CreateBillingExpenses < ActiveRecord::Migration[5.1]
       t.string :bank
       t.string :iban
       t.belongs_to :volunteer
-      t.belongs_to :assignment
       t.belongs_to :user
       t.datetime :deleted_at, index: true
 
