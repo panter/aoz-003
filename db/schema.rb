@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831162818) do
+ActiveRecord::Schema.define(version: 20170825144136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,11 +43,11 @@ ActiveRecord::Schema.define(version: 20170831162818) do
     t.bigint "creator_id"
     t.date "assignment_start"
     t.date "assignment_end"
+    t.datetime "performance_appraisal_review"
+    t.datetime "probation_period"
+    t.datetime "home_visit"
     t.datetime "first_instruction_lesson"
     t.datetime "progress_meeting"
-    t.datetime "home_visit"
-    t.datetime "probation_period"
-    t.datetime "performance_appraisal_review"
     t.string "short_description"
     t.text "goals"
     t.text "starting_topic"
