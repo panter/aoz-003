@@ -12,7 +12,6 @@ class BillingExpensesController < ApplicationController
 
   def new
     @billing_expense = BillingExpense.new(volunteer: @volunteer)
-    @assignments = Assignment.where(volunteer: params[:volunteer_id])
     authorize @billing_expense
   end
 

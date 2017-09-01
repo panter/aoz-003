@@ -4,7 +4,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
     @volunteer = create :volunteer
-    assignment = create :assignment, volunteer: @volunteer
+    create :assignment, volunteer: @volunteer
     login_as superadmin
   end
 
