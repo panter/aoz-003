@@ -87,6 +87,7 @@ de:
         new_certificate: Bescheinigung ausstellen
         report_hours: Stunden erfassen
         show_certificates: Bescheinigungen anzeigen
+        show_certificate: Bescheinigung anzeigen
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
