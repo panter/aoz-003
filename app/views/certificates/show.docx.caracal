@@ -1,3 +1,19 @@
+docx.page_size do
+  width       11905.511811024 # sets the page width. units in twips.
+  height      16837.79527559  # sets the page height. units in twips.
+  orientation :portrait       # sets the printer orientation. accepts :portrait and :landscape.
+end
+docx.page_margins do
+  left    1133.858267717 # sets the left margin. units in twips.
+  right   1984.251968504 # sets the right margin. units in twips.
+  top     1133.858267717 # sets the top margin. units in twips.
+  bottom  850.393700787  # sets the bottom margin. units in twips.
+end
+
+docx.font do
+  name 'Droid Serif'
+end
+
 docx.h1 'AOZ'
 docx.p
 docx.p
@@ -9,7 +25,7 @@ docx.p
 docx.p
 docx.p "#{"Vorname/Name"}                    #{@certificate.volunteer.contact.full_name}"
 docx.p "#{"Strasse"}                         #{@certificate.volunteer.contact.street}"
-docx.p "#{"PLZ/Ort"}                    #{@certificate.volunteer.contact.postal_code} #{@certificate.volunteer.contact.city}"
+docx.p "#{"PLZ/Ort"}                         #{@certificate.volunteer.contact.postal_code} #{@certificate.volunteer.contact.city}"
 
 
 docx.p "#{"Institution"}                    #{@certificate.institution}"

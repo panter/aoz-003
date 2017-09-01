@@ -25,6 +25,26 @@ en:
       all: All
       no_matter: "gender doesn't matter"
       same: gender same
+    generic_keys: &id-generic_keys
+      address: Address
+      avatar: Photo
+      birth_year: Birth year
+      city: City
+      created_at: Created at
+      email: Email
+      first_name: First name
+      full_name: Name
+      languages: Languages
+      last_name: Last name
+      nationality: Nationality
+      phone: Phone number
+      postal_code: Zip
+      profession: Profession
+      salutation: Salutation
+      state: State
+      street: Street
+      updated_at: Updated at
+      zip: Postleitzahl
     language_level: &id-lang-levels
       basic: Basic
       fluent: Fluent
@@ -79,7 +99,7 @@ en:
         new_certificate: Create certificate
         report_hours: Report hours
         show_certificates: Show certificates
-
+        show_certificate: Show certificate
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
@@ -116,7 +136,7 @@ en:
         department: Department
         email: Email
       volunteer: &id-volunteer_attributes
-        <<: *id-availability
+        <<: [*id-availability, *id-generic_keys]
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
         address: Address
