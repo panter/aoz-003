@@ -2,9 +2,10 @@ require 'application_system_test_case'
 
 class BillingExpensesTest < ApplicationSystemTestCase
   def setup
-    @superadmin = create :user
+    superadmin = create :user
     @volunteer = create :volunteer
-    login_as @superadmin
+    assignment = create :assignment, volunteer: @volunteer
+    login_as superadmin
   end
 
   test 'superadmin can create a billing expense' do
