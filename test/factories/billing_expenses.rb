@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :billing_expense do
     volunteer
-    assignment
+    user
     amount 50
+    state 'unpaid'
   end
 end

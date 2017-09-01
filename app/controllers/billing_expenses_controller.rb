@@ -20,6 +20,9 @@ class BillingExpensesController < ApplicationController
 
   def create
     @billing_expense = BillingExpense.new(billing_expense_params)
+    @billing_expense.user = current_user
+    @billing_expense.bank = @volunteer.bank
+    @billing_expense.iban = @volunteer.iban
     authorize @billing_expense
     if @billing_expense.save!
       redirect_to @volunteer, make_notice
@@ -53,6 +56,6 @@ class BillingExpensesController < ApplicationController
   end
 
   def billing_expense_params
-    params.require(:billing_expense).permit(:amount, :assignment_id, :volunteer_id)
+    params.require(:billing_expense).permit(:amount, :bank, :iban, :state, :volunteer_id)
   end
 end

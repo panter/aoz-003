@@ -11,7 +11,7 @@
             td= @billing_expense.volunteer.contact.full_address
           tr
             td= t_attr(:bank_details, Volunteer)
-            td= @billing_expense.volunteer.full_bank_details
+            td= @billing_expense.full_bank_details
           tr
             td= t_attr(:waive, Volunteer)
             td= t(@billing_expense.volunteer.waive)
@@ -21,6 +21,12 @@
           tr
             td= t_attr(:created_at)
             td= l(@billing_expense.created_at.to_date)
+          tr
+            td= t_attr(:created_by)
+            td= @billing_expense.user.profile.contact.full_name
+          tr
+            td= t_attr(:state)
+            td= t("state.#{@billing_expense.state}")
 
 .row
   .col-xs-12
