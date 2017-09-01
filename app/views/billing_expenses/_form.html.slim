@@ -1,9 +1,7 @@
 = simple_form_for [@volunteer, @billing_expense] do |f|
   = simple_error_notice f
 
-  .row
-    .col-xs-12
-      = f.hidden_field :volunteer_id, value: params[:volunteer_id]
+  = f.hidden_field :volunteer_id, value: params[:volunteer_id]
 
   .row
     .col-xs-12
