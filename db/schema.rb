@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831105352) do
+ActiveRecord::Schema.define(version: 20170901120755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,7 +150,9 @@ ActiveRecord::Schema.define(version: 20170831105352) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "billing_expense_id"
     t.index ["assignment_id"], name: "index_hours_on_assignment_id"
+    t.index ["billing_expense_id"], name: "index_hours_on_billing_expense_id"
     t.index ["deleted_at"], name: "index_hours_on_deleted_at"
     t.index ["volunteer_id"], name: "index_hours_on_volunteer_id"
   end
@@ -361,6 +363,7 @@ ActiveRecord::Schema.define(version: 20170831105352) do
   add_foreign_key "assignments", "users", column: "creator_id"
   add_foreign_key "assignments", "volunteers"
   add_foreign_key "clients", "users"
+  add_foreign_key "hours", "billing_expenses"
   add_foreign_key "journals", "users"
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
