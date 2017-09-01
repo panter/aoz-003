@@ -386,6 +386,8 @@ en:
       assignment:
         state:
           active: Active
+          archived: Archived
+          finished: Finished
           suggested: Suggested
       client:
         age_request: *id-age_requests
