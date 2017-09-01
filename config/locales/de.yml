@@ -544,6 +544,8 @@ de:
       assignment:
         state:
           active: Aktiv
+          archived: Archiviert
+          finished: Abgeschlossen
           suggested: Vorgeschlagen
       client:
         permit:
