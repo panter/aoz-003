@@ -18,9 +18,10 @@ class AccessImport
   def make_departments
     transformer = DepartmentTransform.new
     @einsatz_orte.all.each do |key, einsatz_ort|
-      next if Import.where(importable_type: 'Department', access_id: key).any?
+      next if Import.exists?(importable_type: 'Department', access_id: key)
       parameters = transformer.prepare_attributes(einsatz_ort)
       department = Department.new(parameters)
+      department.updated_at = einsatz_ort[:d_MutDatum]
       department.save!
     end
   end
