@@ -5,6 +5,7 @@ class Volunteer < ApplicationRecord
   include YearCollection
   include ZuerichScopes
   include ImportRelation
+  include FullBankDetails
 
   acts_as_paranoid
   before_save :default_state
@@ -105,10 +106,6 @@ class Volunteer < ApplicationRecord
 
   def to_s
     "#{contact.first_name} #{contact.last_name}"
-  end
-
-  def full_bank_details
-    [bank, iban].reject(&:blank?).join(' ')
   end
 
   private

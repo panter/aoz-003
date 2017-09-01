@@ -3,18 +3,15 @@
 
   .row
     .col-xs-12
-      - if action_name ==  'new'
-        = f.association :assignment, collection: @assignments, label_method: :client, value_method: :id
-      - else
-        = f.hidden_field :assignment_id, value: @billing_expense.assignment.id
-
-  .row
-    .col-xs-12
       = f.hidden_field :volunteer_id, value: params[:volunteer_id]
 
   .row
     .col-xs-12
       = f.input :amount, collection: BillingExpense.amount_collection
+
+  .row
+    .col-xs-12
+      = f.input :state, collection: BillingExpense.state_collection, default: :unpaid
 
   .row
     .col-xs-12

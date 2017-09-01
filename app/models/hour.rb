@@ -1,6 +1,7 @@
 class Hour < ApplicationRecord
   belongs_to :volunteer
   belongs_to :assignment
+  belongs_to :billing_expense, optional: true
 
   validates :hours, presence: true, numericality: { greater_than: 0 }
   validates :minutes, presence: true, numericality: { greater_than_or_equal_to: 0 }
