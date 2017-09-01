@@ -18,12 +18,11 @@ class BillingExpensesController < ApplicationController
   def edit; end
 
   def create
-    @billing_expense = BillingExpense.new(billing_expense_params)
+    @billing_expense = BillingExpense
+                       .new(billing_expense_params.merge(@volunteer.slice(:bank, :iban)))
     @billing_expense.user = current_user
-    @billing_expense.bank = @volunteer.bank
-    @billing_expense.iban = @volunteer.iban
     authorize @billing_expense
-    if @billing_expense.save!
+    if @billing_expense.save
       redirect_to @volunteer, make_notice
     else
       render :new
@@ -31,7 +30,7 @@ class BillingExpensesController < ApplicationController
   end
 
   def update
-    if @billing_expense.update!(billing_expense_params)
+    if @billing_expense.update(billing_expense_params)
       redirect_to @volunteer, make_notice
     else
       render :edit
