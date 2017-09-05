@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state"
+    t.string "state", default: "suggested"
     t.bigint "creator_id"
     t.date "assignment_start"
     t.date "assignment_end"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.text "starting_topic"
     t.text "description"
     t.boolean "confirmation", default: false
+    t.string "kind", default: "accompaniment"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
@@ -62,27 +63,26 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.integer "amount"
     t.string "bank"
     t.string "iban"
+    t.bigint "volunteer_id"
+    t.bigint "user_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_billing_expenses_on_deleted_at"
     t.index ["user_id"], name: "index_billing_expenses_on_user_id"
     t.index ["volunteer_id"], name: "index_billing_expenses_on_volunteer_id"
   end
 
   create_table "certificates", force: :cascade do |t|
-    t.string "institution"
-    t.string "function"
-    t.string "mission"
-    t.string "period"
-    t.string "duration"
-    t.string "creator_details"
-    t.text "description"
-    t.index ["deleted_at"], name: "index_certificates_on_deleted_at"
-    t.index ["user_id"], name: "index_certificates_on_user_id"
-    t.index ["volunteer_id"], name: "index_certificates_on_volunteer_id"
+    t.jsonb "values"
     t.bigint "volunteer_id"
     t.bigint "user_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_certificates_on_deleted_at"
+    t.index ["user_id"], name: "index_certificates_on_user_id"
+    t.index ["volunteer_id"], name: "index_certificates_on_volunteer_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -152,8 +152,8 @@ ActiveRecord::Schema.define(version: 20170907090939) do
 
   create_table "hours", force: :cascade do |t|
     t.date "meeting_date"
-    t.integer "hours"
-    t.integer "minutes"
+    t.integer "hours", default: 0
+    t.integer "minutes", default: 0
     t.string "activity"
     t.string "comments"
     t.bigint "volunteer_id"
@@ -310,23 +310,23 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.string "profession"
     t.text "education"
     t.text "motivation"
-    t.boolean "experience"
+    t.boolean "experience", default: false
     t.text "expectations"
     t.text "strengths"
     t.text "interests"
     t.string "state", default: "registered"
-    t.boolean "man"
-    t.boolean "woman"
-    t.boolean "family"
-    t.boolean "kid"
-    t.boolean "sport"
-    t.boolean "creative"
-    t.boolean "music"
-    t.boolean "culture"
-    t.boolean "training"
-    t.boolean "german_course"
-    t.boolean "teenagers"
-    t.boolean "children"
+    t.boolean "man", default: false
+    t.boolean "woman", default: false
+    t.boolean "family", default: false
+    t.boolean "kid", default: false
+    t.boolean "sport", default: false
+    t.boolean "creative", default: false
+    t.boolean "music", default: false
+    t.boolean "culture", default: false
+    t.boolean "training", default: false
+    t.boolean "german_course", default: false
+    t.boolean "teenagers", default: false
+    t.boolean "children", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -345,14 +345,14 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.boolean "doc_sent", default: false
     t.boolean "bank_account", default: false
     t.boolean "evaluation", default: false
-    t.boolean "dancing"
-    t.boolean "health"
-    t.boolean "cooking"
-    t.boolean "excursions"
-    t.boolean "women"
-    t.boolean "unaccompanied"
-    t.boolean "zurich"
-    t.boolean "other_offer"
+    t.boolean "dancing", default: false
+    t.boolean "health", default: false
+    t.boolean "cooking", default: false
+    t.boolean "excursions", default: false
+    t.boolean "women", default: false
+    t.boolean "unaccompanied", default: false
+    t.boolean "zurich", default: false
+    t.boolean "other_offer", default: false
     t.text "other_offer_desc"
     t.text "own_kids"
     t.boolean "flexible", default: false

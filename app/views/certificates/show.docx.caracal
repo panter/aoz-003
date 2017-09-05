@@ -28,11 +28,11 @@ docx.p "#{"Strasse"}                         #{@certificate.volunteer.contact.st
 docx.p "#{"PLZ/Ort"}                         #{@certificate.volunteer.contact.postal_code} #{@certificate.volunteer.contact.city}"
 
 
-docx.p "#{"Institution"}                    #{@certificate.institution}"
-docx.p "#{"Funktion"}                    #{@certificate.function}"
-docx.p "#{"Einsatz"}                     #{@certificate.mission}"
-docx.p "#{"Einsatzdauer"}                    #{@certificate.period}"
-docx.p "#{"Zeitauwand"}                    #{"not working yet! @certificate.volunteer.hours.total_hours"}"
+docx.p "#{"Institution"}                    AOZ Zürich, Flüelastrasse 32, 8047 Zürich, 044 415 67 35, info@aoz-freiwillige.ch"
+docx.p "#{"Funktion"}                    #{@certificate}"
+docx.p "#{"Einsatz"}                     #{@certificate.values['kinds']}"
+docx.p "#{"Einsatzdauer"}                    #{l(@certificate.values['duration']['from'].to_date)} bis #{l(@certificate.values['duration']['to'].to_date)}"
+docx.p "#{"Zeitauwand"}                   Total ca. #{@certificate.values['hours']} Stunden"
 docx.p
 docx.p
 docx.p  'Die AOZ ist ein Unternehmen der Stadt Zürich und mit über 1000 Mitarbeitenden seit vielen Jahren im Auftrag des Bundes,
@@ -48,4 +48,4 @@ docx.p
 docx.p
 docx.p
 docx.p @certificate.user.profile.contact.full_name
-docx.p "#{@certificate.creator_details}               "#{"Zürich,"} #{@certificate.created_at.to_date}"
+docx.p "#{@certificate.user.profile.profession}            #{"Zürich,"} #{l(@certificate.created_at.to_date)}"

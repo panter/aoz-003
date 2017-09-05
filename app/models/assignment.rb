@@ -8,10 +8,11 @@ class Assignment < ApplicationRecord
   accepts_nested_attributes_for :volunteer
 
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
-  has_many :hours
+  has_many :hours, dependent: :destroy
   has_many :assignment_journals
 
   STATES = [:suggested, :active, :finished, :archived].freeze
+  KINDS = [:accompaniment, :family, :workshop, :german_class, :transit_center].freeze
 
   has_one :import, as: :importable, dependent: :destroy
   accepts_nested_attributes_for :import, allow_destroy: true
@@ -47,4 +48,6 @@ class Assignment < ApplicationRecord
   }
 
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
+
+  scope :with_hours, (-> { joins(:hours).distinct })
 end
