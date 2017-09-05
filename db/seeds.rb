@@ -186,19 +186,15 @@ if VolunteerEmail.count < 1
   end
 end
 
-accompainable = Client.need_accompanying.to_a
-seek_clients = Volunteer.seeking_clients.to_a
-
-if accompainable.size >= seek_clients.size
-  seek_clients.each do |volunteer|
-    client = accompainable.pop
-    Assignment.new(client_id: client.id, volunteer_id: volunteer.id,
-      creator_id: User.where(role: 'superadmin').first.id).save
-  end
-else
-  accompainable.each do |client|
-    volunteer = seek_clients.pop
-    Assignment.new(client_id: client.id, volunteer_id: volunteer.id,
-      creator_id: User.where(role: 'superadmin').first.id).save
+if Assignment.count < 1
+  10.times do
+    client = FactoryGirl.create :client, state: Client::ACTIVE
+    volunteer = FactoryGirl.create :volunteer, state: Volunteer::SEEKING_CLIENTS.sample
+    assignment = FactoryGirl.create(:assignment, volunteer: volunteer, client: client,
+      creator_id: User.find_by(role: 'superadmin').id)
+    assignment.hours << Array.new(4).map do
+      FactoryGirl.create(:hour, volunteer: volunteer,
+        meeting_date: Faker::Date.between(assignment.assignment_start + 1, 2.days.ago))
+    end
   end
 end

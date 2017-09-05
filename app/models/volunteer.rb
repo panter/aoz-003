@@ -68,6 +68,17 @@ class Volunteer < ApplicationRecord
   }
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
 
+  scope :with_hours, (-> { joins(:hours).distinct })
+
+  def assignment_kinds
+    has_kinds = assignments.map(&:kind).uniq
+    Assignment::KINDS.map { |kind| [kind, has_kinds.include?(kind.to_s)] }.to_h
+  end
+
+  def assignments_duration
+    { from: assignments.minimum(:assignment_start), to: assignments.maximum(:assignment_end) }
+  end
+
   def seeking_clients?
     SEEKING_CLIENTS.include?(state)
   end

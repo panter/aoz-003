@@ -88,9 +88,11 @@ en:
       resigned: Terminated
     volunteer_applications: &id-volunteers-by-actions
       create: &id-volunteers-create
+        <<: *id-availability
         availability: What times are you available for voluntary engagement?
       edit: *id-volunteers-create
       new: *id-volunteers-create
+      form: *id-volunteers-create
       one: Volunteer
       other: Volunteers
       show:
