@@ -1,25 +1,35 @@
 
+pages_width = 11906
+left_margin = 1150
+right_margin = 2200
+
+main_font_name = 'Arial'
+main_font_size = 20
+
 docx.page_size do
-  width       11905.511811024 # sets the page width. units in twips.
-  height      16837.79527559  # sets the page height. units in twips.
+  width       pages_width # sets the page width. units in twips.
+  height      16838  # sets the page height. units in twips.
   orientation :portrait       # sets the printer orientation. accepts :portrait and :landscape.
 end
 
 docx.page_margins do
-  left    1134 # sets the left margin. units in twips.
-  right   2000 # sets the right margin. units in twips.
+  left    left_margin # sets the left margin. units in twips.
+  right   right_margin # sets the right margin. units in twips.
   top     1134 # sets the top margin. units in twips.
-  bottom  850  # sets the bottom margin. units in twips.
+  bottom  1  # sets the bottom margin. units in twips.
 end
 
 docx.font do
   name 'Arial'
 end
 
+docx
+
+
 docx.style do
   id              'aoz'  # sets the internal identifier for the style.
   name            'aoz logo' # sets the friendly name of the style.
-  font            'Arial' # sets the font family.
+  font            main_font_name # sets the font family.
   color           'A51A0F'    # sets the text color. accepts hex RGB.
   size            60          # sets the font size. units in half points.
   bold            false       # sets the font weight.
@@ -41,11 +51,11 @@ docx.style do
   font            'Calibri Light'
   caps            true
   bold            false
-  size            50
-  line 50
+  size            55
+  line 55
   color '005AF8'
   top 700
-  bottom 0
+  bottom 100
 end
 
 docx.style do
@@ -63,8 +73,8 @@ end
 docx.style do
   id 'specparagraph'
   name 'specparagraph'
-  font 'Arial'
-  size 18
+  font main_font_name
+  size main_font_size
   caps false
   bottom 80
 end
@@ -72,11 +82,41 @@ end
 docx.style do
   id 'description'
   name 'description'
-  size 18
-  font 'Arial'
+  size main_font_size
+  font main_font_name
+  top 200
+  bottom 200
+end
+
+
+docx.style do
+  id 'descriptionfirst'
+  name 'descriptionfirst'
+  size main_font_size
+  font main_font_name
+  top 500
+  bottom 200
+end
+
+docx.style do
+  id 'descriptionlast'
+  name 'descriptionlast'
+  size main_font_size
+  font main_font_name
+  bottom 900
+end
+
+docx.style do
+  id 'issuername'
+  name 'issuername'
+  size main_font_size
+  font main_font_name
+  top 1000
+  bottom 1000
 end
 
 certificate = @certificate
+
 docx.p 'Aoz', style: 'aoz'
 docx.p 'Nachweis', style: 'nachweis'
 docx.p 'Für freiwilliges und ehrenamtliches Engagement', style: 'nachnachweis'
@@ -98,24 +138,37 @@ docx.p do
 end
 docx.p do
   style 'specparagraph'
-  text "Funktion\t\t\t\tFörderung der sozialen und beruflichen Integration"
+  text "Funktion\t\t\tFörderung der sozialen und beruflichen Integration"
   br
-  text "\t\t\t\tvon Asylsuchenden, Geflüchteten und Migranten/innen"
+  text "\t\t\t\tvon Asylsuchenden, Geflüchteten und Migrant/innen"
 end
-docx.p "#{"Einsatz"}\t\t\t\t#{@certificate.values['kinds']}", style: 'specparagraph'
-docx.p "#{"Einsatzdauer"}\t\t\t#{l(@certificate.values['duration']['from'].to_date)} bis #{l(@certificate.values['duration']['to'].to_date)}", style: 'specparagraph'
-docx.p "#{"Zeitaufwand"}\t\t\tTotal ca. #{@certificate.values['hours']} Stunden" do
-  binding.pry
+
+docx.p do
+  style 'specparagraph'
+  text "Einsatz\t\t\t\t"
+  text certificate.values['kinds'].map { |kind| I18n.t("assignment_kinds.#{kind}") }.join(', ')
 end
+docx.p "Einsatzdauer\t\t\t#{l(@certificate.values['duration']['from'].to_date)} bis #{l(@certificate.values['duration']['to'].to_date)}", style: 'specparagraph'
+docx.p "Zeitaufwand\t\t\tTotal ca. #{@certificate.values['hours']} Stunden"
+
+
 docx.p  'Die AOZ ist ein Unternehmen der Stadt Zürich und mit über 1000 Mitarbeitenden seit vielen Jahren im Auftrag des Bundes,
-des Kantons, der Stadt und weiterer Gemeinden im Migrations- und Integrations bereich tätig.', style: 'description'
+des Kantons, der Stadt und weiterer Gemeinden im Migrations- und Integrations bereich tätig.', style: 'descriptionfirst'
 docx.p "TransFair vermittelt Kontakte zwischen Asylsuchenden, Flüchtlingen und Migrant/innen (Begleitete) mit Menschen,
 die schon länger in der Schweiz leben und sehr gut Deutsch sprechen (Freiwillige). Durch wöchentliche Besuche bei den Begleiteten
 zuhause während mindestens sechs Monaten oder im Gruppenunterricht fördern die Freiwilligen gezielt und konkret die soziale und
 Berufliche Integration der Begleiteten. Dadurch ergänzen sie die Sozialberatung auf sinvolle Weise. Das von TransFair angebotene
 Weiterbildungsprogramm (Einführungskurs, Erfahrungsaustausch, Fachveranstaltungen) bietet den Freiwillgen die Gelegenheit sich
-vertiefter mit Fragen zu Asylverfahren und Integration auseinanderzusetzen.", style: 'description'
-docx.p "\n\n"
-docx.p @certificate.user.profile.contact.full_name
-docx.p "\n\n"
-docx.p "#{@certificate.user.profile.profession}\t\t\t\t#{"Zürich,"} #{l(@certificate.created_at.to_date)}"
+vertiefter mit Fragen zu Asylverfahren und Integration auseinanderzusetzen.", style: 'descriptionlast'
+
+docx.table [
+  [certificate.user.profile.contact.full_name, nil],
+  [certificate.user.profile.profession, "Zürich #{I18n.l(certificate.created_at.to_date)}"]
+] do
+  cell_style cols[0], align: :left, padding_left: 0
+  cell_style cols[1], align: :right, padding_right: 0
+  cell_style rows[0], margins: { top: 400, bottom: 0, left: 0, right: 0 }
+  cell_style rows[1], margins: { top: 0, bottom: 0, left: 0, right: 100 }
+  cell_style cells, size: main_font_size
+  width (pages_width - left_margin - right_margin)
+end

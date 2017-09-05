@@ -1,6 +1,12 @@
 ---
 en:
   aaa_injectable: &id-injectables
+    assignment_kinds:
+      accompaniment: Accompaniment
+      family: Family
+      workshop: Workshop
+      german_class: German Class
+      transit_center: Transit center
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: "age doesn't matter"
