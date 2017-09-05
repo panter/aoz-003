@@ -1,6 +1,12 @@
 ---
 de:
   aaa_injectable: &id-injectables
+    assignment_kinds:
+      accompaniment: Einzelperson
+      family: Familie
+      workshop: Handwerkstatt
+      german_class: Deutschkurs
+      transit_center: Durchgangszentrum
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: egal

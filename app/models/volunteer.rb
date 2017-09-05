@@ -71,8 +71,7 @@ class Volunteer < ApplicationRecord
   scope :with_hours, (-> { joins(:hours).distinct })
 
   def assignment_kinds
-    has_kinds = assignments.map(&:kind).uniq
-    Assignment::KINDS.map { |kind| [kind, has_kinds.include?(kind.to_s)] }.to_h
+    assignments.map(&:kind).uniq
   end
 
   def assignments_duration
