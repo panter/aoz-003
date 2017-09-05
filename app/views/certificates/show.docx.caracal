@@ -1,51 +1,121 @@
+
 docx.page_size do
   width       11905.511811024 # sets the page width. units in twips.
   height      16837.79527559  # sets the page height. units in twips.
   orientation :portrait       # sets the printer orientation. accepts :portrait and :landscape.
 end
+
 docx.page_margins do
-  left    1133.858267717 # sets the left margin. units in twips.
-  right   1984.251968504 # sets the right margin. units in twips.
-  top     1133.858267717 # sets the top margin. units in twips.
-  bottom  850.393700787  # sets the bottom margin. units in twips.
+  left    1134 # sets the left margin. units in twips.
+  right   2000 # sets the right margin. units in twips.
+  top     1134 # sets the top margin. units in twips.
+  bottom  850  # sets the bottom margin. units in twips.
 end
 
 docx.font do
-  name 'Droid Serif'
+  name 'Arial'
 end
 
-docx.h1 'AOZ'
-docx.p
-docx.p
-docx.p
-docx.p
-docx.h1 'NACHWEIS'
-docx.h2 'FÜR FREIWILLIGES UND EHRENAMTLICHES ENGAGEMENT'
-docx.p
-docx.p
-docx.p "#{"Vorname/Name"}                    #{@certificate.volunteer.contact.full_name}"
-docx.p "#{"Strasse"}                         #{@certificate.volunteer.contact.street}"
-docx.p "#{"PLZ/Ort"}                         #{@certificate.volunteer.contact.postal_code} #{@certificate.volunteer.contact.city}"
+docx.style do
+  id              'aoz'  # sets the internal identifier for the style.
+  name            'aoz logo' # sets the friendly name of the style.
+  font            'Arial' # sets the font family.
+  color           'A51A0F'    # sets the text color. accepts hex RGB.
+  size            60          # sets the font size. units in half points.
+  bold            false       # sets the font weight.
+  italic          false       # sets the font style.
+  underline       false       # sets whether or not to underline the text.
+  caps            true       # sets whether or not text should be rendered in all capital letters.
+  # align           :left       # sets the alignment. accepts :left, :center, :right, and :both.
+  # line            360         # sets the line height. units in twips.
+  top             1000        # sets the spacing above the paragraph. units in twips.
+  bottom          0           # sets the spacing below the paragraph. units in twips.
+  indent_left     0         # sets the left indent. units in twips.
+  indent_right    0         # sets the rights indent. units in twips.
+  indent_first    0         # sets the first line indent. units in twips.
+end
 
+docx.style do
+  id              'nachweis'
+  name            'nachweis'
+  font            'Calibri Light'
+  caps            true
+  bold            false
+  size            50
+  line 50
+  color '005AF8'
+  top 700
+  bottom 0
+end
 
-docx.p "#{"Institution"}                    AOZ Zürich, Flüelastrasse 32, 8047 Zürich, 044 415 67 35, info@aoz-freiwillige.ch"
-docx.p "#{"Funktion"}                    #{@certificate}"
-docx.p "#{"Einsatz"}                     #{@certificate.values['kinds']}"
-docx.p "#{"Einsatzdauer"}                    #{l(@certificate.values['duration']['from'].to_date)} bis #{l(@certificate.values['duration']['to'].to_date)}"
-docx.p "#{"Zeitauwand"}                   Total ca. #{@certificate.values['hours']} Stunden"
-docx.p
-docx.p
+docx.style do
+  id 'nachnachweis'
+  name 'nachnachweis'
+  font 'Calibri Light'
+  caps true
+  bold false
+  color '005AF8'
+  size 35
+  top 0
+  bottom 400
+end
+
+docx.style do
+  id 'specparagraph'
+  name 'specparagraph'
+  font 'Arial'
+  size 18
+  caps false
+  bottom 80
+end
+
+docx.style do
+  id 'description'
+  name 'description'
+  size 18
+  font 'Arial'
+end
+
+certificate = @certificate
+docx.p 'Aoz', style: 'aoz'
+docx.p 'Nachweis', style: 'nachweis'
+docx.p 'Für freiwilliges und ehrenamtliches Engagement', style: 'nachnachweis'
+docx.p(certificate: @certificate) do
+  style 'specparagraph'
+  text "Vorname/Name\t\t\t#{certificate.volunteer.contact.full_name}"
+  br
+  text "Strasse\t\t\t\t#{certificate.volunteer.contact.street}"
+  br
+  text "PLZ/Ort\t\t\t\t#{certificate.volunteer.contact.postal_code} #{certificate.volunteer.contact.city}"
+end
+docx.p do
+  style 'specparagraph'
+  text "Institution\t\t\t"
+  text 'AOZ ', bold: true
+  text 'Zürich, Flüelastrasse 32, 8047 Zürich'
+  br
+  text "\t\t\t\t044 415 67 35, info@aoz-freiwillige.ch"
+end
+docx.p do
+  style 'specparagraph'
+  text "Funktion\t\t\t\tFörderung der sozialen und beruflichen Integration"
+  br
+  text "\t\t\t\tvon Asylsuchenden, Geflüchteten und Migranten/innen"
+end
+docx.p "#{"Einsatz"}\t\t\t\t#{@certificate.values['kinds']}", style: 'specparagraph'
+docx.p "#{"Einsatzdauer"}\t\t\t#{l(@certificate.values['duration']['from'].to_date)} bis #{l(@certificate.values['duration']['to'].to_date)}", style: 'specparagraph'
+docx.p "#{"Zeitaufwand"}\t\t\tTotal ca. #{@certificate.values['hours']} Stunden" do
+  binding.pry
+end
 docx.p  'Die AOZ ist ein Unternehmen der Stadt Zürich und mit über 1000 Mitarbeitenden seit vielen Jahren im Auftrag des Bundes,
-des Kantons, der Stadt und weiterer Gemeinden im Migrations- und Integrations bereich tätig.'
-docx.p
-docx.p 'TransFair vermittelt Kontakte zwischen Asylsuchenden, Flüchtlingen und Migrant/innen (Begleitete) mit Menschen,
+des Kantons, der Stadt und weiterer Gemeinden im Migrations- und Integrations bereich tätig.', style: 'description'
+docx.p "TransFair vermittelt Kontakte zwischen Asylsuchenden, Flüchtlingen und Migrant/innen (Begleitete) mit Menschen,
 die schon länger in der Schweiz leben und sehr gut Deutsch sprechen (Freiwillige). Durch wöchentliche Besuche bei den Begleiteten
 zuhause während mindestens sechs Monaten oder im Gruppenunterricht fördern die Freiwilligen gezielt und konkret die soziale und
 Berufliche Integration der Begleiteten. Dadurch ergänzen sie die Sozialberatung auf sinvolle Weise. Das von TransFair angebotene
 Weiterbildungsprogramm (Einführungskurs, Erfahrungsaustausch, Fachveranstaltungen) bietet den Freiwillgen die Gelegenheit sich
-vertiefter mit Fragen zu Asylverfahren und Integration auseinanderzusetzen.'
-docx.p
-docx.p
-docx.p
+vertiefter mit Fragen zu Asylverfahren und Integration auseinanderzusetzen.", style: 'description'
+docx.p "\n\n"
 docx.p @certificate.user.profile.contact.full_name
-docx.p "#{@certificate.user.profile.profession}            #{"Zürich,"} #{l(@certificate.created_at.to_date)}"
+docx.p "\n\n"
+docx.p "#{@certificate.user.profile.profession}\t\t\t\t#{"Zürich,"} #{l(@certificate.created_at.to_date)}"
