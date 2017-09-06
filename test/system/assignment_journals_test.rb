@@ -32,7 +32,7 @@ class HoursTest < ApplicationSystemTestCase
 
   test 'volunteer can create only their assignment journals' do
     create :assignment
-    visit new_assignment_assignment_journal_path(Assignment.first)
+    visit new_assignment_assignment_journal_path(Assignment.last)
     assert page.has_text? 'You are not authorized to perform this action.'
   end
 end
