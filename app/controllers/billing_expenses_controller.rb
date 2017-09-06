@@ -10,6 +10,7 @@ class BillingExpensesController < ApplicationController
   end
 
   def show
+    @billing_expense = BillingExpense.find(params[:id])
     respond_to do |format|
       format.html
       format.pdf do
