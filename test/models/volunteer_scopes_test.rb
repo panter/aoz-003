@@ -54,8 +54,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   def make_assignment(title, volunteer, start_date = nil, end_date = nil)
-    assignment = create :assignment, volunteer: volunteer, assignment_start: start_date,
-      assignment_end: end_date
+    assignment = create :assignment, volunteer: volunteer, period_start: start_date,
+      period_end: end_date
     instance_variable_set("@#{title}", assignment)
   end
 end

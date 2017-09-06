@@ -103,8 +103,8 @@ de:
       assignment:
         <<: *id-generic_keys
         agreement: Zustimmung
-        assignment_end: Einsatzende
-        assignment_start: Einsatzbeginn
+        period_end: Einsatzende
+        period_start: Einsatzbeginn
         client: Klient/in
         confirmation: Ich bestätige alle Stunden eingetragen und Feedback zum Einsatz gegeben zu haben.
         volunteer: Freiwillige

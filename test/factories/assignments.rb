@@ -4,7 +4,7 @@ FactoryGirl.define do
     volunteer
     state ['suggested', 'active'].sample
     association :creator, factory: :user
-    assignment_start Faker::Date.between(500.days.ago, 200.days.ago)
-    assignment_end [nil, Faker::Date.between(199.days.ago, 10.days.ago)].sample
+    period_start Faker::Date.between(500.days.ago, 200.days.ago)
+    period_end [nil, Faker::Date.between(199.days.ago, 10.days.ago)].sample
   end
 end
