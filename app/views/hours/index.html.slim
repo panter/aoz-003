@@ -16,8 +16,8 @@ h1= t_title(:index, Hour)
           - @volunteer.hours.each do |record|
             tr
               - if current_user.superadmin?
-                td= @volunteer.contact.full_name
-              td= record.assignment.client.contact.full_name
+                td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
+              td= link_to record.assignment.client.contact.full_name, client_path(record.assignment.client)
               td= l(record.meeting_date)
               td= "#{record.hours}:#{'%02i' % record.minutes}"
               td= record.activity

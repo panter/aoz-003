@@ -21,8 +21,8 @@
       tbody
         - @assignment_journals.each do |record|
           tr
-            td= record.volunteer.contact.full_name
-            td= record.assignment.client.contact.full_name
+            td= link_to record.volunteer.contact.full_name, volunteer_path(record.volunteer)
+            td= link_to record.assignment.client.contact.full_name, client_path(record.assignment.client)
             td= record.goals
             td= record.achievements
             td= record.future
