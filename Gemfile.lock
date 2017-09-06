@@ -110,13 +110,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    caracal (1.1.0)
-      nokogiri (~> 1.6)
-      rubyzip (~> 1.1)
-      tilt (>= 1.4)
-    caracal-rails (1.0.1)
-      caracal (~> 1.0)
-      rails (>= 3.2)
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
     climate_control (0.2.0)
@@ -405,7 +398,6 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass
   capybara
-  caracal-rails
   cocoon
   coffee-rails
   countries

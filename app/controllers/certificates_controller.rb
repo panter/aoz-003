@@ -9,18 +9,19 @@ class CertificatesController < ApplicationController
 
   def show
     respond_to do |format|
-      format.docx { headers['Content-Disposition'] = 'attachment; filename="caracal.docx"' }
+      format.html { render :show }
     end
   end
 
   def new
-    @certificate = Certificate.new
+    @certificate = Certificate.new(volunteer_id: @volunteer.id, user_id: current_user.id)
     authorize @certificate
   end
 
   def create
-    @certificate = Certificate.new(certificate_params.merge(volunteer_id: @volunteer.id))
-    @certificate.user = current_user
+    @certificate = Certificate.new(
+      certificate_params.merge(volunteer_id: @volunteer.id, user_id: current_user.id)
+    )
     authorize @certificate
     if @certificate.save
       redirect_to volunteer_certificate_path(@volunteer, @certificate)
@@ -48,8 +49,8 @@ class CertificatesController < ApplicationController
 
   def certificate_params
     params.permit(
-      :institution, :function, :mission, :period, :duration, :description, :creator_details,
-      :user_id, :volunteer_id
+      :institution, :duration, :duration_start, :duration_end, :hours, :minutes, :kinds,
+      :paragraphs, assignment_kinds: Assignment::KINDS
     )
   end
 end

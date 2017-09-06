@@ -1,0 +1,11 @@
+.certificates.show {
+  h1 {
+    margin-bottom: 20px;
+  }
+  .cert-main {
+    @extend .col-xs-11;
+  }
+  .cert-right {
+    @extend .col-xs-1;
+  }
+}
