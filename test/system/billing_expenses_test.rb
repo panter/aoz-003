@@ -26,6 +26,16 @@ class BillingExpensesTest < ApplicationSystemTestCase
     end
   end
 
+  test 'no duplicate billing expenses' do
+    click_link 'New Billing expense'
+    click_button 'Create Billing expense'
+    assert_no_difference 'BillingExpense.count' do
+      click_link 'New Billing expense'
+      click_button 'Create Billing expense'
+      assert page.has_text? 'This billing expense was already created'
+    end
+  end
+
   test 'created billing expenses has needed fields' do
     within '.table-responsive' do
       assert page.has_link? @volunteer.contact.full_name
