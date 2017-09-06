@@ -307,9 +307,19 @@ de:
   billing_expense_pdf:
     <<: *id-generic_keys
     account: Konto
-    cost_center: Kostenstelle
+    amount: Betrag
+    aoz: AOZ
+    book_text_1: Buchungstext
+    book_text_2: Spensenpauschale
     chosen_amount: zu überweisender Betrag
+    cost_center: Kostenstelle
+    creditor: Kreditor
+    kst: KST
     title: Spesenauszahlung an
+    visum_f: F-Visum
+    visum_k: K-Visum
+    visum_kst: KST-Visum
+    year: Jahr
   category: &id-categories
     conversation: Gespräch
     email: E-Mail

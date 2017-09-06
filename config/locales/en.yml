@@ -162,17 +162,27 @@ en:
   back: Back
   billing_expense_pdf:
     account: Konto
+    amount: Betrag
+    aoz: AOZ
+    book_text_1: Buchungstext
+    book_text_2: Spensenpauschale
+    chosen_amount: zu überweisender Betrag
     city: Ort
     cost_center: Kostenstelle
-    chosen_amount: zu überweisender Betrag
+    created_at: Erstellt am
+    created_by: Verantwortliche/r
+    creditor: Kreditor
     first_name: Vorname
+    kst: KST
     last_name: Name
     postal_code: PLZ
     street: Strasse
     title: Spesenauszahlung an
+    visum_f: F-Visum
+    visum_k: K-Visum
+    visum_kst: KST-Visum
+    year: Jahr
     zurich: Zürich
-    created_at: Erstellt am
-    created_by: Verantwortliche/r
   category: &id-categories
     conversation: Conversation
     email: Email
