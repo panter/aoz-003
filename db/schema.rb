@@ -74,7 +74,13 @@ ActiveRecord::Schema.define(version: 20170907090939) do
   end
 
   create_table "certificates", force: :cascade do |t|
-    t.jsonb "values"
+    t.integer "hours"
+    t.integer "minutes"
+    t.date "duration_start"
+    t.date "duration_end"
+    t.text "institution"
+    t.jsonb "paragraphs"
+    t.jsonb "assignment_kinds"
     t.bigint "volunteer_id"
     t.bigint "user_id"
     t.datetime "deleted_at"

@@ -85,6 +85,7 @@ de:
         availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
       edit: *id-volunteers-create
       new: *id-volunteers-create
+      form: *id-volunteers-create
       one: Freiwillige/r
       other: Freiwillige
       show:

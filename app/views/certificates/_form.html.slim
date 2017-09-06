@@ -2,6 +2,16 @@
   = simple_error_notice f
 
   .form-inputs
+    = f.input :hours, as: :hours
+    = f.input :minutes
+    = f.simple_fields_for :assignment_kinds do |fk|
+      .row
+        - Assignment::KINDS.each do |kind|
+          .col-xs-2= fk.input kind, as: :boolean, input_html: { checked: @certificate.assignment_kinds[kind.to_s] }
 
-  .form-actions
+    = f.input :duration, as: :date_range_picker, label: false
+
+
+
+  .form-actionsc
     = f.button :submit
