@@ -9,6 +9,7 @@ en:
     weekend: Weekend
     workday: Workday
   accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
+  already_computed: This billing expense was already created.
   clear_filters: Clear filters
   performance_reports: Performance Reports
   activerecord:

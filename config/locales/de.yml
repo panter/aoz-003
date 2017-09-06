@@ -1,7 +1,7 @@
 ---
 de:
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
-  clear_filters: Filter aufheben
+  already_computed: Dieses Spesenformular ist bereits erstellt.
   availability: &id-availability
     afternoon: Nachmittags
     detailed_description: Genauere Angaben
@@ -10,6 +10,7 @@ de:
     morning: Morgens
     weekend: Wochenende
     workday: Werktags
+  clear_filters: Filter aufheben
   generic_keys: &id-generic_keys
     created_at: Erstellt am
     created_by: Verantwortliche/r

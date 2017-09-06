@@ -21,7 +21,3 @@
           tr
             td= t_attr(:created_by)
             td= @billing_expense.user.profile.contact.full_name
-
-.row
-  .col-xs-12
-    = button_link t_title(:edit, BillingExpense), params.to_unsafe_h.merge({action: 'edit'})

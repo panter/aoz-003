@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     get :find_client, on: :member, to: 'assignments#find_client'
     resources :journals
     resources :hours
-    resources :billing_expenses
+    resources :billing_expenses, except: [:edit, :update]
   end
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]

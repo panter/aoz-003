@@ -1,6 +1,8 @@
 class BillingExpensesController < ApplicationController
-  before_action :set_billing_expense, only: [:show, :edit, :update, :destroy]
+  before_action :set_billing_expense, only: [:show, :destroy]
   before_action :set_volunteer
+  before_action :set_volunteer_hours, only: :create
+  after_action :volunteer_hours_update, only: :create
 
   def index
     authorize BillingExpense
@@ -14,25 +16,16 @@ class BillingExpensesController < ApplicationController
     authorize @billing_expense
   end
 
-  def edit; end
-
   def create
     @billing_expense = BillingExpense
                        .new(billing_expense_params.merge(@volunteer.slice(:bank, :iban)))
     @billing_expense.user = current_user
+    @billing_expense.amount = compute_hours
     authorize @billing_expense
     if @billing_expense.save
       redirect_to @volunteer, make_notice
     else
-      render :new
-    end
-  end
-
-  def update
-    if @billing_expense.update(billing_expense_params)
-      redirect_to @volunteer, make_notice
-    else
-      render :edit
+      redirect_to @volunteer, notice: t('already_computed')
     end
   end
 
@@ -50,6 +43,37 @@ class BillingExpensesController < ApplicationController
 
   def set_volunteer
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+  end
+
+  def set_volunteer_hours
+    @volunteer_hours = @volunteer.hours.where(billing_expense: nil)
+  end
+
+  def compute_hours
+    return if @volunteer_hours.empty?
+    hours = minutes = 0
+    @volunteer_hours.each do |hour|
+      hours += hour.hours
+      minutes += hour.minutes
+    end
+    hours += minutes / 60
+    compute_amount(hours)
+  end
+
+  def compute_amount(hours)
+    if hours < 25
+      50
+    elsif hours < 50
+      100
+    else
+      150
+    end
+  end
+
+  def volunteer_hours_update
+    @volunteer_hours.each do |hour|
+      hour.update(billing_expense: @billing_expense)
+    end
   end
 
   def billing_expense_params
