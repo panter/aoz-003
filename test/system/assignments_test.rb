@@ -30,8 +30,8 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as @user
     visit clients_path
     first(:link, 'Need accompanying').click
-    click_link 'Find volunteer'
-    click_link 'Reserve'
+    page.find('a', text: 'Find volunteer').trigger('click')
+    page.find('a', text: 'Reserve').trigger('click')
     click_button 'Create Assignment'
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
