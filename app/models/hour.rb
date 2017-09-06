@@ -8,5 +8,5 @@ class Hour < ApplicationRecord
   validates :meeting_date, presence: true
 
   HOUR_RANGE = (1..8).to_a
-  MINUTE_RANGE = (0..59).to_a
+  MINUTE_RANGE = [0, 15, 30, 45].freeze
 end
