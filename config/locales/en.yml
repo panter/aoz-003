@@ -157,8 +157,6 @@ en:
   assignments: Assignments
   available_volunteers: Available volunteers
   back: Back
-  billing_expense_pdf:
-    title: Billing enxpenses for a volunteer
   category: &id-categories
     conversation: Conversation
     email: Email

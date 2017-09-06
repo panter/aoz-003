@@ -302,9 +302,6 @@ de:
   assignments: Begleitungen
   available_volunteers: Verfügbare Freiwillige
   back: Zurück
-  billing_expense_pdf:
-    <<: *id-generic_keys
-    title: Spesenauszahlung an Freiwillige
   category: &id-categories
     conversation: Gespräch
     email: E-Mail
