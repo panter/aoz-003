@@ -160,6 +160,19 @@ en:
   assignments: Assignments
   available_volunteers: Available volunteers
   back: Back
+  billing_expense_pdf:
+    account: Konto
+    city: Ort
+    cost_center: Kostenstelle
+    chosen_amount: zu überweisender Betrag
+    first_name: Vorname
+    last_name: Name
+    postal_code: PLZ
+    street: Strasse
+    title: Spesenauszahlung an
+    zurich: Zürich
+    created_at: Erstellt am
+    created_by: Verantwortliche/r
   category: &id-categories
     conversation: Conversation
     email: Email

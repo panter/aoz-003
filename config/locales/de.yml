@@ -304,6 +304,12 @@ de:
   assignments: Begleitungen
   available_volunteers: Verfügbare Freiwillige
   back: Zurück
+  billing_expense_pdf:
+    <<: *id-generic_keys
+    account: Konto
+    cost_center: Kostenstelle
+    chosen_amount: zu überweisender Betrag
+    title: Spesenauszahlung an
   category: &id-categories
     conversation: Gespräch
     email: E-Mail
