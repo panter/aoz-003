@@ -13,7 +13,7 @@ h1= t_title(:index, BillingExpense)
             th= t_attr(:amount, BillingExpense)
             th= t_attr(:created_at)
             th= t_attr(:created_by)
-            th colspan=3
+            th colspan=4
         tbody
           - @volunteer.billing_expenses.each do |record|
             tr
