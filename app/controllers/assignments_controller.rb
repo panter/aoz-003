@@ -86,8 +86,8 @@ class AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:client_id, :volunteer_id, :state, :assignment_start,
-      :assignment_end, :performance_appraisal_review, :probation_period, :home_visit,
+    params.require(:assignment).permit(:client_id, :volunteer_id, :state, :period_start,
+      :period_end, :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :confirmation)
   end
 end

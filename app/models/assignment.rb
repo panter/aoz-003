@@ -22,22 +22,22 @@ class Assignment < ApplicationRecord
 
   scope :default_order, (-> { order(created_at: :desc) })
 
-  scope :no_end, (-> { where(assignment_end: nil) })
-  scope :has_end, (-> { where.not(assignment_end: nil) })
+  scope :no_end, (-> { where(period_end: nil) })
+  scope :has_end, (-> { where.not(period_end: nil) })
 
-  scope :ended, (-> { where('assignment_end < ?', Time.zone.now) })
-  scope :end_before, ->(date) { where('assignment_end < ?', date) }
-  scope :end_after, ->(date) { where('assignment_end > ?', date) }
-  scope :end_within, ->(date_range) { where(assignment_end: date_range) }
+  scope :ended, (-> { where('period_end < ?', Time.zone.now) })
+  scope :end_before, ->(date) { where('period_end < ?', date) }
+  scope :end_after, ->(date) { where('period_end > ?', date) }
+  scope :end_within, ->(date_range) { where(period_end: date_range) }
 
-  scope :end_in_future, (-> { where('assignment_end > ?', Time.zone.now) })
+  scope :end_in_future, (-> { where('period_end > ?', Time.zone.now) })
   scope :not_ended, (-> { no_end.or(end_in_future) })
 
-  scope :started, (-> { where('assignment_start < ?', Time.zone.now) })
-  scope :will_start, (-> { where('assignment_start > ?', Time.zone.now) })
-  scope :start_before, ->(date) { where('assignment_start < ?', date) }
-  scope :start_after, ->(date) { where('assignment_start > ?', date) }
-  scope :start_within, ->(date_range) { where(assignment_start: date_range) }
+  scope :started, (-> { where('period_start < ?', Time.zone.now) })
+  scope :will_start, (-> { where('period_start > ?', Time.zone.now) })
+  scope :start_before, ->(date) { where('period_start < ?', date) }
+  scope :start_after, ->(date) { where('period_start > ?', date) }
+  scope :start_within, ->(date_range) { where(period_start: date_range) }
 
   scope :active, (-> { not_ended.started })
 

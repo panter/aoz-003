@@ -62,8 +62,8 @@ class ClientScopesTest < ActiveSupport::TestCase
   end
 
   def make_assignment(title, client, start_date = nil, end_date = nil)
-    assignment = create :assignment, client: client, assignment_start: start_date,
-      assignment_end: end_date
+    assignment = create :assignment, client: client, period_start: start_date,
+      period_end: end_date
     instance_variable_set("@#{title}", assignment)
   end
 end

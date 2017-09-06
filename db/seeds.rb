@@ -194,7 +194,7 @@ if Assignment.count < 1
       creator_id: User.find_by(role: 'superadmin').id)
     assignment.hours << Array.new(4).map do
       FactoryGirl.create(:hour, volunteer: volunteer,
-        meeting_date: Faker::Date.between(assignment.assignment_start + 1, 2.days.ago))
+        meeting_date: Faker::Date.between(assignment.period_start + 1, 2.days.ago))
     end
   end
 end

@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.datetime "updated_at", null: false
     t.string "state", default: "suggested"
     t.bigint "creator_id"
-    t.date "assignment_start"
-    t.date "assignment_end"
+    t.date "period_start"
+    t.date "period_end"
     t.datetime "performance_appraisal_review"
     t.datetime "probation_period"
     t.datetime "home_visit"
