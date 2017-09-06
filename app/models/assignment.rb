@@ -19,6 +19,8 @@ class Assignment < ApplicationRecord
   validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
   validates :state, inclusion: { in: STATES.map(&:to_s) }
 
+  default_scope { order(created_at: :desc) }
+
   scope :no_end, (-> { where(assignment_end: nil) })
   scope :has_end, (-> { where.not(assignment_end: nil) })
 
