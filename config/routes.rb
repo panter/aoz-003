@@ -22,8 +22,7 @@ Rails.application.routes.draw do
     resources :journals
     resources :hours
     resources :billing_expenses, except: [:edit, :update]
-    resources :certificates, except: [:update, :show]
-    resources :certificates, only: [:show], format: 'docx'
+    resources :certificates
   end
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
