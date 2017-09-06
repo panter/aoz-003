@@ -5,7 +5,7 @@ class AssignmentsController < ApplicationController
     authorize Assignment
     @assignments = policy_scope(Assignment)
     @q = Assignment.ransack(params[:q])
-    @assignments = @q.result.paginate(page: params[:page])
+    @assignments = @q.result.default_order.paginate(page: params[:page])
   end
 
   def show
