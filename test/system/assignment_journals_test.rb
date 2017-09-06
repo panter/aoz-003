@@ -4,8 +4,7 @@ class HoursTest < ApplicationSystemTestCase
   def setup
     user_volunteer = create :user, role: 'volunteer', email: 'volunteer@example.com'
     volunteer = user_volunteer.volunteer = create :volunteer
-    client = create :client
-    assignment = create :assignment, volunteer: volunteer, client: client
+    assignment = create :assignment, volunteer: volunteer
     superadmin = create :user
     create :assignment_journal, assignment: assignment, volunteer: volunteer,
       author: superadmin, comments: 'author superadmin'
