@@ -9,7 +9,16 @@ class BillingExpensesController < ApplicationController
     @billing_expenses = BillingExpense.where(volunteer: @volunteer)
   end
 
-  def show; end
+  def show
+    @billing_expense = BillingExpense.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "volunteers/#{@volunteer.id}/billing_expenses/#{@billing_expense.id}", template: 'billing_expenses/show.html.slim',
+          layout: 'pdf.pdf', encoding: 'UTF-8'
+      end
+    end
+  end
 
   def new
     @billing_expense = BillingExpense.new(volunteer: @volunteer)
