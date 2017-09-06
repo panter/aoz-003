@@ -10,4 +10,8 @@ class BillingExpense < ApplicationRecord
   AMOUNT = [50, 100, 150].freeze
 
   validates :amount, inclusion: { in: AMOUNT }
+
+  def billing_hours
+    Hour.where(billing_expense: id).size
+  end
 end
