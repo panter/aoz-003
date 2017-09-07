@@ -1,52 +1,9 @@
-h1= t_title
-hr
-.row
-  .cert-main
-    = image_tag 'AOZ_Logo.svg', alt: 'AOZ Logo'
-    h2.nachweis
-      span Nachweis
-      = " für freiwilliges und ehrenamtliches Engagement"
-    dl.dl-horizontal
-      dt Vorname/Name
-      dd= @certificate.volunteer.contact.full_name
-      dt Strasse
-      dd= @certificate.volunteer.contact.street
-      dt PLZ/Ort
-      dd= "#{@certificate.volunteer.contact.postal_code} #{@certificate.volunteer.contact.city}"
-
-    dl.dl-horizontal
-      dt Institution
-      dd
-        strong AOZ
-        = " Zürich, Flüelastrasse 32, 8047 Zürich"
-        br
-        = "044 415 67 35, info@aoz-freiwillige.ch"
-
-    dl.dl-horizontal
-      dt Funktion
-      dd Förderung der sozialen und beruflichen Integration von Asylsuchenden, Geflüchteten und Migrant/innen
-
-    dl.dl-horizontal
-      dt Einsatz
-      dd
-        ul.list-inline
-          - @certificate.assignment_kinds.each do |kind, value|
-            li
-              input*{ type: 'checkbox', checked: value } onclick='return false;'
-              = " #{t("assignment_kinds.#{kind}")}"
-    dl.dl-horizontal
-      dt Einsatzdauer
-      dd= "#{l(@certificate.duration_start)} bis #{l(@certificate.duration_end)}"
-      dt Zeitaufwand
-      dd= "Total ca. #{@certificate.hours} Stunden"
-
-    - @certificate.paragraphs.each do |key, paragraph|
-      p= paragraph
-
-  .cert-right
-    h2 Dossier
-    p Freiwillig Engagiert
-    p Bénévolat
-    p Volontariato
-
-= make_nav_button :back
+.hidden-print
+  h1= t_title
+  nav.navbar.section-navigation
+    ul.list-inline
+      li= button_link t_title(:edit), edit_volunteer_certificate_path(@volunteer, @certificate)
+      li= button_link t_action(:print), volunteer_certificate_path(@volunteer, @certificate, print: true), 'success'
+      li= button_link t_action(:back), volunteer_path(@volunteer)
+  hr
+= render 'certificate'

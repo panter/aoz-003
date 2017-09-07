@@ -1,0 +1,39 @@
+.certificate
+  .text-content
+    .logo-image= image_tag 'AOZ_Logo.svg', alt: 'AOZ Logo'
+    dl
+      dt Vorname/Name
+      dd= @certificate.volunteer_contact['name']
+      dt Strasse
+      dd= @certificate.volunteer_contact['street']
+      dt PLZ/Ort
+      dd= @certificate.volunteer_contact['city']
+
+    dl
+      dt Institution
+      dd= markdown(@certificate.institution)
+
+    dl
+      dt Funktion
+      dd= @certificate.funktion
+
+    dl
+      dt Einsatz
+      dd
+        - @certificate.assignment_kinds.each do |kind, value|
+          span.kind-list
+            input*{ type: 'checkbox', checked: value } onclick='return false;'
+            = "#{t("assignment_kinds.#{kind}")}"
+    dl
+      dt Einsatzdauer
+      dd= "#{l(@certificate.duration_start)} bis #{l(@certificate.duration_end) if @certificate.duration_end}"
+      dt Zeitaufwand
+      dd= "Total ca. #{@certificate.hours} Stunden"
+
+    .text-body= markdown(@certificate.text_body)
+
+  .signature
+    .person
+      .name= @certificate.user.profile.contact.full_name
+      .position= @certificate.user.profile.profession
+    .place-date= "Zürich #{l(@certificate.created_at.to_date)}"
