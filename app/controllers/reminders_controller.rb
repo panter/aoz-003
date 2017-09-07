@@ -2,6 +2,7 @@ class RemindersController < ApplicationController
   before_action :set_reminder, only: [:update, :destroy]
 
   def index
+    authorize Reminder
     @reminders = Reminder.all
   end
 
@@ -18,6 +19,7 @@ class RemindersController < ApplicationController
 
   def set_reminder
     @reminder = Reminder.find(params[:id])
+    authorize @reminder
   end
 
   def reminder_params
