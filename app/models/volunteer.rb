@@ -76,7 +76,10 @@ class Volunteer < ApplicationRecord
   end
 
   def assignments_duration
-    [assignments.minimum(:period_start), assignments.maximum(:period_end)]
+    {
+      duration_start: assignments.minimum(:period_start),
+      duration_end: assignments.maximum(:period_end)
+    }
   end
 
   def seeking_clients?

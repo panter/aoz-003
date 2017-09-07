@@ -2,8 +2,7 @@
   = simple_error_notice f
 
   .form-inputs
-    = f.input :hours, as: :hours
-    = f.input :minutes
+    = f.input :hours, include_blank: true
     = f.simple_fields_for :assignment_kinds do |fk|
       .row
         - Assignment::KINDS.each do |kind|
@@ -11,7 +10,8 @@
 
     = f.input :duration, as: :date_range_picker, label: false
 
+    = f.input :text_body
 
 
-  .form-actionsc
+  .form-actions
     = f.button :submit

@@ -1,7 +1,7 @@
 ---
 de:
   aaa_injectable: &id-injectables
-    assignment_kinds:
+    assignment_kinds: &id-assignment-kinds
       accompaniment: Einzelperson
       family: Familie
       workshop: Handwerkstatt
@@ -51,6 +51,8 @@ de:
       street: Strasse
       updated_at: Aktualisiert am
       zip: Postleitzahl
+      hours: Stunden
+      minutes: Minuten
     language_level: &id-lang-levels
       basic: Grundlagen
       fluent: Fliessend
@@ -131,6 +133,9 @@ de:
         assignment: Begleitung
       certificate:
         <<: *id-generic_keys
+        duration: Zeitraum
+        duration_start: Von
+        duration_end: Bis
       client:
         <<: *id-generic_keys
         actual_activities: Aktuelle Tätigkeiten
@@ -597,6 +602,11 @@ de:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
     labels:
+      assignment:
+        kinds: *id-assignment-kinds
+      certificate:
+        assignment_kinds:
+          <<: *id-assignment-kinds
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
@@ -626,6 +636,9 @@ de:
           archived: Archiviert
           finished: Abgeschlossen
           suggested: Vorgeschlagen
+      certificate:
+        assignment_kinds:
+          <<: *id-assignment-kinds
       client:
         age_request: *id-age_requests
         gender_request: *id-gender_requests

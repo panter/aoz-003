@@ -33,6 +33,7 @@ gem 'puma'
 gem 'pundit'
 gem 'rails-i18n'
 gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'redcarpet'
 gem 'rubyzip'
 gem 'sass-rails'
 gem 'scss_lint', require: false
