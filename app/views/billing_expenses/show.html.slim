@@ -87,33 +87,37 @@
           tr
             td
               p= t('billing_expense_pdf.aoz')
-                br=
+                br
             td
               p
                 = t('billing_expense_pdf.creditor')
-                br=
+                br
             td
               p
                 = t('billing_expense_pdf.year')
-                br= @billing_expense.created_at.year
+                br
+                = @billing_expense.created_at.year
           tr
             td
               p
                 = t('billing_expense_pdf.account')
-                br= '4621'
+                br
+                '4621
             td
               p
                 = t('billing_expense_pdf.kst')
-                br= '4182'
+                br
+                '4182
             td
               p
                 = t('billing_expense_pdf.amount')
-                br=
+                br
           tr
             td colspan='3'
               p
                 = t('billing_expense_pdf.book_text_1')
-                br= t('billing_expense_pdf.book_text_2')
+                br
+                = t('billing_expense_pdf.book_text_2')
           tr
             td
               p
