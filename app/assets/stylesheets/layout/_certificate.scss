@@ -29,7 +29,7 @@ $cert-font-size: 13px;
     font-weight: $cert-font-weight;
     font-size: $cert-font-size;
     line-height: 1.5;
-    min-height: 250px;
+    min-height: 300px;
   }
 }
 
@@ -103,12 +103,10 @@ $cert-font-size: 13px;
       margin-top: 2cm;
     }
 
-
-
-
     .text-content {
       flex: 1 0 auto;
     }
+
     .signature {
       width: 100%;
       flex: 0 1 auto;

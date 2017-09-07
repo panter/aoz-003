@@ -2,33 +2,33 @@
   .text-content
     .logo-image= image_tag 'AOZ_Logo.svg', alt: 'AOZ Logo'
     dl
-      dt Vorname/Name
+      dt= t_attr(:first_last_name)
       dd= @certificate.volunteer_contact['name']
-      dt Strasse
+      dt= t_attr(:street, Contact)
       dd= @certificate.volunteer_contact['street']
-      dt PLZ/Ort
+      dt= t_attr(:zip_city)
       dd= @certificate.volunteer_contact['city']
 
     dl
-      dt Institution
+      dt= t_attr(:institution)
       dd= markdown(@certificate.institution)
 
     dl
-      dt Funktion
+      dt= t_attr(:funktion)
       dd= @certificate.funktion
 
     dl
-      dt Einsatz
+      dt= t_attr(:assignment)
       dd
         - @certificate.assignment_kinds.each do |kind, value|
           span.kind-list
             input*{ type: 'checkbox', checked: value } onclick='return false;'
             = "#{t("assignment_kinds.#{kind}")}"
     dl
-      dt Einsatzdauer
-      dd= "#{l(@certificate.duration_start)} bis #{l(@certificate.duration_end) if @certificate.duration_end}"
-      dt Zeitaufwand
-      dd= "Total ca. #{@certificate.hours} Stunden"
+      dt= t_attr(:duration)
+      dd= "#{l(@certificate.duration_start)} #{t('to')} #{l(@certificate.duration_end) if @certificate.duration_end}"
+      dt= t_attr(:time_given)
+      dd= t('.aprox_hours_given', hours: @certificate.hours)
 
     .text-body= markdown(@certificate.text_body)
 
