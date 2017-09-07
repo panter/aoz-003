@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   # Authenticated routes start here (Watch out!)
   devise_for :users
 
-  resources :assignments
   resources :clients do
     get :need_accompanying, on: :collection
     get :find_volunteer, on: :member, to: 'assignments#find_volunteer'
@@ -29,6 +28,7 @@ Rails.application.routes.draw do
   resources :assignments do
     resources :assignment_journals
   end
+  resources :reminders, only: [:index, :update, :destroy]
 
   root 'application#home'
 end

@@ -271,6 +271,18 @@ ActiveRecord::Schema.define(version: 20170912184235) do
     t.index ["relativeable_type", "relativeable_id"], name: "index_relatives_on_relativeable_type_and_relativeable_id"
   end
 
+  create_table "reminders", force: :cascade do |t|
+    t.date "sent_at"
+    t.bigint "assignment_id"
+    t.bigint "volunteer_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_reminders_on_assignment_id"
+    t.index ["deleted_at"], name: "index_reminders_on_deleted_at"
+    t.index ["volunteer_id"], name: "index_reminders_on_volunteer_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
