@@ -94,4 +94,12 @@ module ApplicationHelper
   def search_parameters
     @search_parameters ||= params[:q]&.to_unsafe_hash || {}
   end
+
+  def markdown(content)
+    return '' if content.blank?
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::XHTML, autolink: true,
+      space_after_headers: true, disable_indented_code_blocks: true, filter_html: true,
+      no_images: true, no_links: true, no_styles: true, hard_wrap: true)
+    sanitize(markdown.render(content))
+  end
 end
