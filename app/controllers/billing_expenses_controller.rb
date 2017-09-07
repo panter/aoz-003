@@ -51,8 +51,8 @@ class BillingExpensesController < ApplicationController
 
   def compute_hours
     return if @volunteer_hours.empty?
-    hours = @volunteer_hours.sum(:hours)
-    minutes = @volunteer_hours.sum(:minutes)
+    hours = @volunteer_hours.sum(&:hours)
+    minutes = @volunteer_hours.sum(&:minutes)
     hours += minutes / 60
     compute_amount(hours)
   end
