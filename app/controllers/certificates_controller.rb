@@ -7,11 +7,7 @@ class CertificatesController < ApplicationController
     authorize Certificate
   end
 
-  def show
-    respond_to do |format|
-      format.html { render :show }
-    end
-  end
+  def show; end
 
   def new
     @certificate = Certificate.new(volunteer_id: @volunteer.id, user_id: current_user.id)
@@ -36,8 +32,10 @@ class CertificatesController < ApplicationController
   def update
     @certificate.update(certificate_params.merge(volunteer_id: @volunteer.id,
       user_id: current_user.id))
-    @certificate.assignment_kinds = assignment_kinds
-    @certificate.text_body = certificate_params['text_body']
+    @certificate.update(assignment_kinds: assignment_kinds,
+      text_body: certificate_params['text_body'],
+      volunteer_contact: certificate_params['volunteer_contact'],
+      institution: certificate_params['institution'])
     authorize @certificate
     if @certificate.save
       redirect_to volunteer_certificate_path(@volunteer, @certificate)
@@ -72,8 +70,8 @@ class CertificatesController < ApplicationController
 
   def certificate_params
     params.require(:certificate).permit(
-      :duration, :duration_end, :duration_start, :hours, :minutes, :text_body,
-      assignment_kinds: Assignment::KINDS
+      :duration, :duration_end, :duration_start, :hours, :minutes, :text_body, :institution,
+      :funktion, volunteer_contact: [:name, :street, :city], assignment_kinds: Assignment::KINDS
     )
   end
 end

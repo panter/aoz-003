@@ -1,11 +1,128 @@
+@mixin a4 {
+  background: white;
+  height: 29.7cm;
+  margin: 0;
+  padding: 0;
+  size: a4 portrait;
+  width: 21cm;
+}
+
+$cert-font-family: 'Arial', sans-serif;
+$cert-font-weight: 500;
+$cert-font-size: 13px;
+
+@media print {
+  html,
+  .wrapper,
+  .container {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 21cm;
+  }
+}
+
+.certificates.edit,
+.certificates.new {
+  .text-body {
+    font-family: $cert-font-family;
+    font-weight: $cert-font-weight;
+    font-size: $cert-font-size;
+    line-height: 1.5;
+    min-height: 250px;
+  }
+}
+
 .certificates.show {
-  h1 {
-    margin-bottom: 20px;
+  @media print {
+    @include a4;
+    display: block;
+    .wrapper,
+    .container {
+      @include a4;
+    }
   }
-  .cert-main {
-    @extend .col-xs-11;
+  .certificate,
+  dd,
+  dt,
+  .text-body {
+    font-family: $cert-font-family;
+    font-weight: $cert-font-weight;
+    font-size: $cert-font-size;
+    line-height: 1.5;
   }
-  .cert-right {
-    @extend .col-xs-1;
+
+  dl {
+    display: flex;
+    flex-wrap: wrap;
+
+    dt {
+      flex: 0 0 35%;
+    }
+    dd {
+      flex: 0 0 65%;
+    }
+  }
+
+  .kind-list {
+    display: inline-block;
+    width: 50%;
+    height: $cert-font-size * 1.5;
+    overflow: visible;
+
+    input {
+      margin-right: 5px;
+    }
+  }
+
+  .logo-image {
+    margin-bottom: 5.1cm;
+
+    img {
+      height: .8cm;
+    }
+  }
+
+  .certificate {
+    @include a4;
+    padding-top: 2.6cm;
+    padding-left: 2cm;
+    padding-right: 4cm;
+    padding-bottom: 2cm;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    @media screen {
+      background-image: url(image_path('certificates/vorlage.jpg'));
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+      margin-bottom: 2cm;
+      margin-top: 2cm;
+    }
+
+
+
+
+    .text-content {
+      flex: 1 0 auto;
+    }
+    .signature {
+      width: 100%;
+      flex: 0 1 auto;
+      display: flex;
+
+      .person {
+        flex: 1 0 60%;
+      }
+
+      .place-date {
+        flex: 0 1 40%;
+        align-self: flex-end;
+      }
+    }
+
   }
 }

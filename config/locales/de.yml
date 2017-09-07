@@ -607,6 +607,7 @@ de:
       certificate:
         assignment_kinds:
           <<: *id-assignment-kinds
+        text_body: Dossier Freitext
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen

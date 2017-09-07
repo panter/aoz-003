@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.text "institution"
     t.text "text_body"
     t.string "funktion"
+    t.jsonb "volunteer_contact"
     t.jsonb "assignment_kinds"
     t.bigint "volunteer_id"
     t.bigint "user_id"
