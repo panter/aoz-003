@@ -136,6 +136,13 @@ de:
         duration: Zeitraum
         duration_start: Von
         duration_end: Bis
+        funktion: Funktion
+        institution: Institution
+        first_last_name: Vorname/Name
+        zip_city: PLZ/Ort
+        assignment: Einsatz
+        duration: Einsatzdauer
+        time_given: Zeitaufwand
       client:
         <<: *id-generic_keys
         actual_activities: Aktuelle Tätigkeiten
@@ -393,6 +400,16 @@ de:
   certificates:
     one: Bescheinigung
     other: Bescheinigungen
+    form: &id-certificate-form
+      assignment_kinds: Einsatz Arten
+      edit_more_fields: Weitere Felder anpassen
+      volunteers_contact_data: Kontaktangaben des Freiwilligen
+    edit: *id-certificate-form
+    update: *id-certificate-form
+    show: &id-certificates-show
+      back_to_volunteer: Zurück zum Freiwilligen
+      aprox_hours_given: 'Total ca. %{hours} Stunden'
+    certificate: *id-certificates-show
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   checklist: Checkliste

@@ -1,41 +1,33 @@
 = simple_form_for [@volunteer, @certificate] do |f|
   = simple_error_notice f
 
-  .form-inputs
+
+  = f.input :text_body, input_html: { class: 'text-body' }
+
+  = f.input :duration, as: :date_range_picker, label: false
+  = f.input :hours, include_blank: true
 
 
-    = f.input :text_body, input_html: { class: 'text-body' }
-
-    h3 Anpassungen
-
-    h4 Einsatz Dauer
-    = f.input :duration, as: :date_range_picker, label: false
-
-    h4 Einsatz Arten
+  button.btn.btn-primary(data-toggle='collapse' data-target='#additionalEdit' type='button'  aria-expanded='false' aria-controls='additionalEdit')
+    = t('.edit_more_fields')
+  hr
+  #additionalEdit.collapse
+    h4= t('.assignment_kinds')
     = f.simple_fields_for :assignment_kinds do |fk|
       .row
         - Assignment::KINDS.each do |kind|
           .col-xs-2= fk.input kind, as: :boolean, input_html: { checked: @certificate.assignment_kinds[kind.to_s] }
 
-    h4 Stunden
-    = f.input :hours, include_blank: true
 
-    h4 Kontaktangaben des Freiwilligen
+    h4= t('.volunteers_contact_data')
     = f.simple_fields_for :volunteer_contact do |fvc|
       = fvc.input :name, input_html: { value: @certificate.volunteer_contact['name'] }
       = fvc.input :street, input_html: { value: @certificate.volunteer_contact['street'] }
       = fvc.input :city, input_html: { value: @certificate.volunteer_contact['city'] }
 
-    h4 Funktion
     = f.input :funktion
-
-    h4 Istitution
     = f.input :institution
 
-
-  .form-actions
-    = f.button :submit
-
-.row
-  .col-xs-12
-    = button_link t_action(:back), volunteer_path(@volunteer)
+  ul.list-inline
+    li= button_link t_action(:back), volunteer_path(@volunteer)
+    li= f.button :submit, class: 'btn btn-success'

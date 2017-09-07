@@ -4,6 +4,6 @@
     ul.list-inline
       li= button_link t_title(:edit), edit_volunteer_certificate_path(@volunteer, @certificate)
       li= button_link t_action(:print), volunteer_certificate_path(@volunteer, @certificate, print: true), 'success'
-      li= button_link t_action(:back), volunteer_path(@volunteer)
+      li= button_link t('.back_to_volunteer'), volunteer_path(@volunteer)
   hr
 = render 'certificate'
