@@ -18,9 +18,12 @@ h1= t('reminders')
             tr
               td= link_to reminder.volunteer.contact.full_name, volunteer_path(reminder.volunteer)
               td= link_to reminder.assignment.client.contact.full_name, client_path(reminder.client)
-              td= reminder.updated_at
-              td= reminder.volunteer.hours.last
-              td= reminder.volunteer.assignment_journals.last
+              td= l(reminder.updated_at)
+              td= reminder.assignment.last_hour
+              td= reminder.assignment.last_assignment_journal
               td= reminder.volunteer.state
-              td= button_link t('send'), root_url
-              td= button_link t('delete'), root_url
+              - if reminder.sent_at
+                td= l(reminder.sent_at)
+              - else
+                td= button_link t('send'), root_url
+              td= button_link t('quit'), root_url
