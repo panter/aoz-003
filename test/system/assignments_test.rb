@@ -3,7 +3,6 @@ require 'application_system_test_case'
 class AssignmentsTest < ApplicationSystemTestCase
   setup do
     @user = create :user, email: 'superadmin@example.com'
-    login_as @user
     Assignment.with_deleted.map(&:really_destroy!)
     @volunteer_user = create :user, role: 'volunteer'
     @client = create :client, user: @user
@@ -11,6 +10,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'new assignment form with preselected fields' do
+    login_as @user
     visit new_assignment_path
     within '.assignment_client' do
       select(@client.contact.full_name, from: 'Client')
@@ -27,6 +27,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'assign unassigned client - client side' do
+    login_as @user
     visit clients_path
     first(:link, 'Need accompanying').click
     click_link 'Find volunteer'
@@ -41,6 +42,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'assign unassigned client - volunteer side' do
+    login_as @user
     visit seeking_clients_volunteers_path
     page.find('a', text: 'Find client').trigger('click')
     page.find('a', text: 'Reserve').trigger('click')
@@ -54,6 +56,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'creating a pdf with a user that has no profile will not crash' do
+    login_as @user
     user = create :user, profile: nil
     refute user.profile.present?
 
@@ -70,5 +73,11 @@ class AssignmentsTest < ApplicationSystemTestCase
       click_link 'Show'
     end
     assert page.has_text? @client.contact.full_name
+  end
+
+  test 'volunteer can not see new assignment button' do
+    login_as @volunteer_user
+    visit volunteer_path(@volunteer)
+    refute page.has_link? 'New Assignment'
   end
 end

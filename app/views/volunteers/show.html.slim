@@ -6,12 +6,12 @@ nav.navbar.section-navigation
   ul.list-inline
     - if policy(Volunteer).supervisor?
       li = render 'journals/journal_block', journaled_for: @volunteer
-    ul.list-inline
-      - if @volunteer.seeking_clients?
-        li = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
-      - if @volunteer.assignments.any?
-        li = button_link t_title(:new, BillingExpense), new_volunteer_billing_expense_path(@volunteer)
-        li = button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
+      ul.list-inline
+        - if @volunteer.seeking_clients?
+          li = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
+        - if @volunteer.assignments.any?
+          li = button_link t_title(:new, BillingExpense), new_volunteer_billing_expense_path(@volunteer)
+          li = button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
   ul.list-inline
     - if @volunteer.assignments.any?
       li = button_link t_title(:new, Hour), new_volunteer_hour_url(@volunteer)
