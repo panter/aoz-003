@@ -6,6 +6,8 @@ tr
   td = assignment.created_at.strftime("%d-%m-%Y")
   td = link_to assignment.creator, assignment.creator if assignment.creator.present?
   = render 'index_actions', subject: assignment, target_controller: 'assignments'
+  - if current_user.volunteer == assignment.volunteer
+    td= link_to t_title(:edit, Assignment), edit_assignment_path(assignment)
   td = link_to t('download'), assignment_path(assignment, format: :pdf)
   td= link_to t_title(:new, AssignmentJournal), new_assignment_assignment_journal_path(assignment_id: assignment, volunteer_id: assignment.volunteer)
   td= link_to t_title(:index, AssignmentJournal), assignment_assignment_journals_path(assignment)
