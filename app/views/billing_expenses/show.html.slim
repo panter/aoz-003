@@ -1,4 +1,6 @@
 .row
+  br=
+  br=
   .col-xs-11.col-xs-offset-1
     h3= t('billing_expense_pdf.title')
 
@@ -7,22 +9,22 @@
     .row
       .col-xs-6
         .row
-          .col-xs-5
+          br=
+          .col-xs-6
             = t('billing_expense_pdf.cost_center')
-          .col-xs-7
+          .col-xs-6
             = '4182'
         .row
-          .col-xs-5
+          .col-xs-6
             = t('billing_expense_pdf.account')
-          .col-xs-7
+          .col-xs-6
             = '4621'
         .row
-          .col-xs-5
-          .col-xs-7
+          br=
         .row
-          .col-xs-5
+          .col-xs-6
             = t('billing_expense_pdf.chosen_amount')
-          .col-xs-7.col_input
+          .col-xs-6.col_input
             = "#{'Fr.'} #{@billing_expense.amount}"
 
 .row
@@ -30,24 +32,25 @@
     .row
       .col-xs-6
         .row
-          .col-xs-5
+          br=
+          .col-xs-6
             = t('billing_expense_pdf.last_name')
-          .col-xs-7
+          .col-xs-6
             = @billing_expense.volunteer.contact.last_name
         .row
-          .col-xs-5
+          .col-xs-6
             = t('billing_expense_pdf.first_name')
-          .col-xs-7
+          .col-xs-6
             = @billing_expense.volunteer.contact.first_name
         .row
-          .col-xs-5
+          .col-xs-6
             = t('billing_expense_pdf.street')
-          .col-xs-7
+          .col-xs-6
             = @billing_expense.volunteer.contact.street
         .row
-          .col-xs-5
+          .col-xs-6
             = "#{t('billing_expense_pdf.postal_code')} / #{t('billing_expense_pdf.city')}"
-          .col-xs-7
+          .col-xs-6
             = "#{@billing_expense.volunteer.contact.postal_code}, #{@billing_expense.volunteer.contact.city}"
 
 .row
@@ -55,19 +58,21 @@
     .row
       .col-xs-6
         .row
-          .col-xs-5
+          br=
+          .col-xs-6
             = t_attr(:bank_details, Volunteer)
-          .col-xs-7
+          .col-xs-6
             = "#{@billing_expense.volunteer.bank_account}" if @billing_expense.volunteer.bank_account.present?
         .row
-          .col-xs-5
+          br=
+          .col-xs-6
             = t_attr(:created_at)
-          .col-xs-7
+          .col-xs-6
             = "#{t('assignment_pdf.zurich')}, #{l @billing_expense.created_at.to_date}"
         .row
-          .col-xs-5
+          .col-xs-6
             = t_attr(:created_by)
-          .col-xs-7
+          .col-xs-6
             = @billing_expense.user.profile.contact.full_name
 
 .row
