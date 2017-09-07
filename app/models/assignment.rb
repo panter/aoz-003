@@ -55,4 +55,12 @@ class Assignment < ApplicationRecord
   def creator
     super || User.deleted.find_by(id: creator_id)
   end
+
+  def last_assignment_journal
+    AssignmentJournal.where(assignment: id).last
+  end
+
+  def last_hour
+    Hour.where(assignment: id).last
+  end
 end
