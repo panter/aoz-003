@@ -14,6 +14,8 @@ en:
   performance_reports: Performance Reports
   activerecord:
     attributes:
+      assignment:
+        confirmation: I have submitted my hours and feedback journal for this assignment.
       assignment_journal:
         achievements: What could have been achieved during the last months?
         conversation: I would like to discuss with my supervisor.

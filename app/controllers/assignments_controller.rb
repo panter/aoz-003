@@ -40,7 +40,11 @@ class AssignmentsController < ApplicationController
 
   def update
     if @assignment.update(assignment_params)
-      redirect_to assignments_url, make_notice
+      if current_user.superadmin?
+        redirect_to assignments_url, make_notice
+      else
+        redirect_to @assignment.volunteer, make_notice
+      end
     else
       render :edit
     end
@@ -84,6 +88,6 @@ class AssignmentsController < ApplicationController
   def assignment_params
     params.require(:assignment).permit(:client_id, :volunteer_id, :state, :assignment_start,
       :assignment_end, :performance_appraisal_review, :probation_period, :home_visit,
-      :first_instruction_lesson)
+      :first_instruction_lesson, :confirmation)
   end
 end
