@@ -1,4 +1,4 @@
-class DateYearRangePicker < SimpleForm::Inputs::Base
+class DateYearRangePickerInput < SimpleForm::Inputs::Base
   def input(wrapper_options)
     template.content_tag(:fieldset) do
       template.concat content_tag(:legend,
