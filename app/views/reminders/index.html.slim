@@ -1,21 +1,26 @@
-h1 Listing reminders
+h1= t('reminders')
 
-table
-  thead
-    tr
-      th Sent at
-      th
-      th
-      th
+.table-responsive
+      table.table
+        thead
+          tr
+            th= t_model(Volunteer)
+            th= t_model(Client)
+            th= t_attr(:updated_at, Assignment)
+            th= t_attr(:last, Hour)
+            th= t_attr(:last, AssignmentJournal)
+            th= t_attr(:state, Volunteer)
+            th= t_attr(:sent_at)
+            th
 
-  tbody
-    - @reminders.each do |reminder|
-      tr
-        td = reminder.sent_at
-        td = link_to 'Show', reminder
-        td = link_to 'Edit', edit_reminder_path(reminder)
-        td = link_to 'Destroy', reminder, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Reminder', new_reminder_path
+        tbody
+          - @reminders.each do |reminder|
+            tr
+              td= link_to reminder.volunteer.contact.full_name, volunteer_path(reminder.volunteer)
+              td= link_to reminder.assignment.client.contact.full_name, client_path(reminder.client)
+              td= reminder.updated_at
+              td= reminder.volunteer.hours.last
+              td= reminder.volunteer.assignment_journals.last
+              td= reminder.volunteer.state
+              td= button_link t('send'), root_url
+              td= button_link t('delete'), root_url

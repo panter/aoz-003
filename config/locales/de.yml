@@ -150,6 +150,7 @@ de:
         conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
         future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
         goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
+        last: Letzter inhaltliches Journal Eintrag am
       billing_expense:
         <<: *id-generic_keys
         amount: Betrag
@@ -204,6 +205,7 @@ de:
         comments: Bemerkungen / Gab es etwas Besonderes
         duration: Dauer des Treffens / des Kurses (in Stunden)
         hours: Stunden
+        last: Letzter Stundeneintrag am
         meeting_date: Datum des Treffens / des Kurses
         minutes: Minuten
       journal:
@@ -226,6 +228,8 @@ de:
       relative:
         <<: *id-generic_keys
         relation: Verwandtschaftsbeziehung
+      reminder:
+        sent_at: Gesendet am
       user:
         <<: *id-generic_keys
         clients: Kunden/innen
@@ -348,6 +352,7 @@ de:
       language_skill: Sprachkompetenz
       profile: Profil
       relative: Verwante/r
+      reminder: Erinnerung
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
@@ -472,6 +477,7 @@ de:
       - :day
       - :month
       - :year
+  delete: Quittieren
   department_confirm_destroy: Sind Sie sicher dass Sie den Standort löschen wollen?
   departments: Standorte
   devise:
@@ -599,10 +605,12 @@ de:
   registered_by: Registriert durch
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
+  reminders: Erinnerungen
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   reserve: Reservieren
   seeking_clients: Klienten suchen
+  send: Zustellen
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   simple_form:
