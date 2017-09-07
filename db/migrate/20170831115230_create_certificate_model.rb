@@ -6,7 +6,8 @@ class CreateCertificateModel < ActiveRecord::Migration[5.1]
       t.date :duration_start
       t.date :duration_end
       t.text :institution
-      t.jsonb :paragraphs
+      t.text :text_body
+      t.string :funktion
       t.jsonb :assignment_kinds
       t.references :volunteer, foreign_key: true
       t.references :user, foreign_key: true
