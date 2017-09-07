@@ -12,16 +12,21 @@ nav.navbar.section-navigation
         - if @volunteer.assignments.any?
           li = button_link t_title(:new, BillingExpense), new_volunteer_billing_expense_path(@volunteer)
           li = button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
-          - if @volunteer.state == Volunteer::RESIGNED
-            li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
-            - if @volunteer.certificates.size == 1
-              li= button_link t('.show_certificate'), volunteer_certificate_path(@volunteer, @volunteer.certificates.first)
-            - elsif @volunteer.certificates.size > 1
-              li= button_link t('.show_certificates'), volunteer_certificates_path(@volunteer)
+        - if @volunteer.state == Volunteer::RESIGNED
+          li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
+          - if @volunteer.certificates.size == 1
+            li= button_link t('.show_certificate'), volunteer_certificate_path(@volunteer, @volunteer.certificates.first)
+          - elsif @volunteer.certificates.size > 1
+            li= button_link t('.show_certificates'), volunteer_certificates_path(@volunteer)
   ul.list-inline
     - if @volunteer.assignments.any?
-      li = button_link t_title(:new, Hour), new_volunteer_hour_url(@volunteer)
-      li = button_link t_title(:index, Hour), volunteer_hours_path(@volunteer)
+      li = button_link t('.report_hours'), new_volunteer_hour_url(@volunteer)
+      li = button_link t('.hour_reports'), volunteer_hours_path(@volunteer)
+    - if current_user.volunteer?
+      li= button_link t('edit_profile'), edit_volunteer_path(@volunteer)
+    - else
+      li= form_navigation_btn :edit, with_row: false
+    li= form_navigation_btn :back, with_row: false
 
 - if policy(Volunteer).checklist?
   h3= t('checklist')
@@ -163,8 +168,10 @@ h3= t('.availability')
       h3= t('assignments')
   = render 'assignments/volunteer_index', assignments: @volunteer.assignments
 
-- if current_user.volunteer?
-  = button_link t('edit_profile'), edit_volunteer_path(@volunteer)
-- else
-  = form_navigation_btn :edit
-  = form_navigation_btn :back
+nav.navbar.section-navigation
+  ul.list-inline
+    - if current_user.volunteer?
+      li= button_link t('edit_profile'), edit_volunteer_path(@volunteer)
+    - else
+      li= form_navigation_btn :edit, with_row: false
+    li= form_navigation_btn :back, with_row: false
