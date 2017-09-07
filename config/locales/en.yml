@@ -133,6 +133,7 @@ en:
         conversation: I would like to discuss with my supervisor.
         future: Should the assignment continue? If yes, with which goals?
         goals: Which were the most important goals during the last months?
+        last: Last Assignment journal entry
       certificate:
         duration: Duration
         duration_start: Start
@@ -148,6 +149,8 @@ en:
         last_name: Name
         postal_code: Zip
         street: Street
+      hour:
+        last: Last hour entry
       journal:
         entry: Entry
       user:
@@ -214,6 +217,7 @@ en:
       language_skill: Language skill
       profile: Profile
       relative: Relative
+      reminder: Reminder
       user: User
       volunteer: Volunteer
       volunteer_application: Volunteer Registration
@@ -344,6 +348,7 @@ en:
       - :day
       - :month
       - :year
+  delete: Delete
   departments: Departments
   devise:
     confirmations:
@@ -473,10 +478,12 @@ en:
   registered_by: Registered by
   relatives: Family members
   remember_me: Remember me
+  reminders: Reminders
   remove_language: Remove language
   remove_relative: Remove family member
   reserve: Reserve
   seeking_clients: Looking for clients
+  send: Send
   show_my_profile: My profile
   show_profile: Show profile
   simple_form:
