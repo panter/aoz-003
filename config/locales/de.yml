@@ -1,6 +1,10 @@
 ---
 de:
   aaa_injectable: &id-injectables
+    messages:
+      confirm_record_delete: '%{model} wirklich löschen?'
+      confirm_delete: "Wirklich %{model} %{record} löschen?"
+      select_prompt: "%{model} wählen"
     created_at: Erstellt um
     updated_at: Geändert um
     assignment_kinds: &id-assignment-kinds
@@ -99,12 +103,16 @@ de:
       mrs: Frau
     volunteer_applications: &id-volunteers-by-actions
       create: &id-volunteers-create
+        <<: *id-availability
         availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
       edit: *id-volunteers-create
       new: *id-volunteers-create
       form: *id-volunteers-create
       one: Freiwillige/r
       other: Freiwillige
+      index: &id-volunteers-index
+        show_assignments: Begleitete anzeigen
+      volunteer: *id-volunteers-index
       show:
         availability: Verfügbarkeit
         hour_reports: Stunden Rapporte
@@ -175,6 +183,7 @@ de:
         permit: Bewilligung
         relatives: Verwandte/r
         user: User
+        entry_year: Einreisejahr
       contact:
         <<: *id-generic_keys
         extended: Adresszusatz
@@ -454,16 +463,13 @@ de:
     title:
       add: '%{model} hinzufügen'
     updated: '%{model} wurde erfolgreich geändert.'
+    created: '%{model} wurde erfolgreich erstellt.'
+    destroyed: '%{model} wurde erfolgreich gelöscht.'
   date:
     order:
       - :day
       - :month
       - :year
-  delete_assignment: Begleitung wirklich löschen?
-  delete_assignment_journal: Inhaltliches Journal wirklich löschen?
-  delete_billing_expense: Spesenformular wirklich löschen?
-  delete_hour: Stundeneintrag wirklich löschen?
-  delete_journal: Journaleintrag wirklich löschen?
   department_confirm_destroy: Sind Sie sicher dass Sie den Standort löschen wollen?
   departments: Standorte
   devise:
@@ -547,7 +553,6 @@ de:
   duration_info: Die meisten unserer Einsätze erfordern ein Engagement von mindestens 6 Monaten.
   edit_login: Login bearbeiten
   edit_profile: Profil bearbeiten
-  entry_year: Einreisejahr
   errors:
     messages:
       already_confirmed: wurde bereits bestätigt
@@ -582,14 +587,12 @@ de:
   need_accompanying: Ohne Begleitung
   not_assignable: Nicht zuweisbar
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
-  other_request: Sonstige Anforderungen an den/die Freiwillige/n
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   pdf_header:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
     title: Fachstelle Freiwilligenarbeit
   personal_background: Persönlicher Hintergrund
-  profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
   registered_by: Registriert durch
   relatives: Familienangehörige im Haushalt
@@ -598,8 +601,6 @@ de:
   remove_relative: Verwandte entfernen
   reserve: Reservieren
   seeking_clients: Klienten suchen
-  show_assignment: Begleitung anzeigen
-  show_assignments: Begleiteten anzeigen
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   simple_form:
@@ -686,10 +687,6 @@ de:
         mailer:
           invitation_instructions:
             accept_until_format: "%d. %B %Y %H:%M"
-  times:
-    afternoon: Nachmittag
-    evening: Abend
-    morning: Morgen
   to: bis
   update_profile: Profil aktualisieren
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
@@ -699,7 +696,9 @@ de:
   volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
-  volunteer_emails: Bestätigungs-Mails
+  volunteer_emails:
+    one: Bestätigungs-Mail
+    other: Bestätigungs-Mails
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:

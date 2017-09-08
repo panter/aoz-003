@@ -30,7 +30,7 @@
             td= t(record.conversation)
             td= link_to t_action(:show), assignment_assignment_journal_path(@assignment, record)
             td= link_to t_action(:edit), edit_assignment_assignment_journal_path(@assignment, record)
-            td= link_to t_action(:destroy), assignment_assignment_journal_path(@assignment, record), confirm_deleting(record, 'assignment_journals')
+            td= link_to t_action(:destroy), assignment_assignment_journal_path(@assignment, record), confirm_deleting(record)
 
 .row
   .col-xs-12
