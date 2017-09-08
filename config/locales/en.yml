@@ -50,7 +50,7 @@ en:
       state: State
       street: Street
       updated_at: Updated at
-      zip: Postleitzahl
+      zip: Zip code
     language_level: &id-lang-levels
       basic: Basic
       fluent: Fluent
@@ -78,7 +78,7 @@ en:
       volunteer: Volunteer
     salutation: &id-salutations
       mr: Mr.
-      mrs: Mrs.s
+      mrs: Mrs.
     state: &id-states
       accepted: Accepted
       active: Active
