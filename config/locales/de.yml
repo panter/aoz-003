@@ -641,7 +641,7 @@ de:
   to: bis
   performance_reports:
     one: Kennzahl
-    other: Kenzahlen
+    other: Kennzahlen
     index:
       new_report: Neuen Report erstellen
     show:
