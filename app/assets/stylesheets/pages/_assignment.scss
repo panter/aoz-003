@@ -1,0 +1,81 @@
+.assignments.show {
+  .row {
+    margin-bottom: 0;
+  }
+
+  .wrapper > .container {
+    @media (min-width: $container-md) {
+      padding-left: $container-md / 12;
+    }
+
+    @media (min-width: $container-sm) {
+      padding-left: $container-sm / 12;
+    }
+  }
+}
+
+body.pdf {
+  .container {
+    padding-left: $container-sm / 12;
+  }
+
+}
+
+.pdf-logo-image {
+  height: 30px;
+  width: 75px;
+
+  img {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.pdf-header {
+  font-size: $font-size-small;
+}
+
+.col-input {
+  border-bottom: 1px dotted $gray-light;
+  margin-bottom: 10px;
+  height: $line-height-computed;
+}
+
+
+.row-box {
+  @extend .row;
+  border: 1px solid $black;
+  margin-bottom: 0;
+  padding-top: $padding-small-horizontal;
+}
+
+.row-bottom {
+  @extend .row;
+  margin-top: 10px;
+  padding-top: $padding-small-horizontal;
+
+  .col-xs-12 {
+    span {
+      display: inline-block;
+      margin-right: 20px;
+    }
+  }
+}
+
+.signature-title-row {
+  @extend .row;
+
+  span {
+    display: block;
+    font-style: italic;
+  }
+}
+.signature-row {
+  @extend .row;
+
+  .col-xs-4 {
+    margin: 45px 10px 0 10px;
+    width: 30%;
+    border-bottom: 1px black dotted;
+  }
+}
