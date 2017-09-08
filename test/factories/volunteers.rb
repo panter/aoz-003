@@ -10,5 +10,11 @@ FactoryGirl.define do
         Array.new(2) { language_skill.association(:language_skill) }
       end
     end
+
+    trait :with_assignment do
+      assignments do |assignment|
+        [assignment.association(:assignment, period_start: 300.days.ago, period_end: 20.days.ago)]
+      end
+    end
   end
 end
