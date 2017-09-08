@@ -1,6 +1,8 @@
 ---
 de:
   aaa_injectable: &id-injectables
+    created_at: Erstellt um
+    updated_at: Geändert um
     assignment_kinds: &id-assignment-kinds
       accompaniment: Einzelperson
       family: Familie
@@ -154,6 +156,7 @@ de:
         assignment: Einsatz
         duration: Einsatzdauer
         time_given: Zeitaufwand
+        issuer: Aussteller
       client:
         <<: *id-generic_keys
         actual_activities: Aktuelle Tätigkeiten
@@ -417,9 +420,11 @@ de:
     edit: *id-certificates-form
     update: *id-certificates-form
     show: &id-certificates-show
-      back_to_volunteer: Zurück zum Freiwilligen
+      back_to_volunteer: Zurück zum Freiwilligenprofil
       aprox_hours_given: 'Total ca. %{hours} Stunden'
     certificate: *id-certificates-show
+    index:
+      volunteers_certificates: 'Bescheinigungen von %{name}'
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   checklist: Checkliste
@@ -705,7 +710,6 @@ de:
   volunteer_request: Anforderungen an die/den Freiwillige/n
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
-  volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   to: bis
   performance_reports:
