@@ -5,11 +5,11 @@ h1= t('reminders')
         thead
           tr
             th= t_model(Volunteer)
+            th= t_attr(:state, Volunteer)
             th= t_model(Client)
             th= t_attr(:updated_at, Assignment)
             th= t_attr(:last, Hour)
             th= t_attr(:last, AssignmentJournal)
-            th= t_attr(:state, Volunteer)
             th= t_attr(:sent_at)
             th= t('delete')
 
@@ -17,6 +17,7 @@ h1= t('reminders')
           - @reminders.each do |reminder|
             tr
               td= link_to reminder.volunteer.contact.full_name, volunteer_path(reminder.volunteer)
+              td= t("state.#{reminder.volunteer.state}")
               td= link_to reminder.assignment.client.contact.full_name, client_path(reminder.assignment.client)
               td= l(reminder.updated_at.to_date)
               td
@@ -27,7 +28,6 @@ h1= t('reminders')
                 - if reminder.assignment.last_assignment_journal
                   = link_to l(reminder.assignment.last_assignment_journal.updated_at.to_date),
                     assignment_assignment_journal_url(reminder.assignment, reminder.assignment.last_assignment_journal)
-              td= t("state.#{reminder.volunteer.state}")
               - if reminder.sent_at
                 td= l(reminder.sent_at)
               - else
