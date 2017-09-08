@@ -57,7 +57,7 @@ class Assignment < ApplicationRecord
   end
 
   def last_assignment_journal
-    AssignmentJournal.where(assignment: id).last
+    AssignmentJournal.where(assignment: id, author: volunteer.user).last
   end
 
   def last_hour
