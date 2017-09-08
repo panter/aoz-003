@@ -1,0 +1,5 @@
+- margin_r = 'margin-right: 5px;'
+
+h3
+  = "#{@volunteer.contact.title} " if @volunteer.contact.title.present?
+  = "#{@volunteer.contact.first_name} #{@volunteer.contact.last_name}"

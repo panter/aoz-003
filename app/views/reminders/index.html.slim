@@ -25,5 +25,5 @@ h1= t('reminders')
               - if reminder.sent_at
                 td= l(reminder.sent_at)
               - else
-                td= button_link t('send'), root_url
+                td= button_to t('send'), { action: 'update', id: reminder.id }, { method: :put, class: 'btn btn-info btn-xs' }
               td= button_to t('delete'), { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }

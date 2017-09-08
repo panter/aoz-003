@@ -7,6 +7,10 @@ class RemindersController < ApplicationController
   end
 
   def update
+    volunteer = @reminder.volunteer
+    email = @reminder.volunteer.contact.primary_email
+    ReminderMailer.reminder_email(volunteer, email).deliver
+    @reminder.update(sent_at: Time.zone.now)
     redirect_to reminders_url, notice: 'Reminder was successfully updated.'
   end
 

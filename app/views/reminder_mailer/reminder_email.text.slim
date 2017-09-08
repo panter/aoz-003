@@ -1,0 +1,9 @@
+- rn2 = "\r\n\r\n"
+- dashs = "-" * 80
+- t4 = "\t" * 4
+- t3 = "\t" * 3
+
+- if @volunteer.contact.title.present?
+  = "\r\n#{t_attr(:title, Contact)}:#{t4}#{@volunteer.contact.title.strip}\r\n"
+= "#{t_attr(:first_name, Contact)}:#{t3}#{@volunteer.contact.first_name}\r\n"
+= "#{t_attr(:last_name, Contact)}:#{t4}#{@volunteer.contact.last_name}\r\n"
