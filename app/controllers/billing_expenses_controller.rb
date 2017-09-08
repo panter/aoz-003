@@ -68,9 +68,9 @@ class BillingExpensesController < ApplicationController
   end
 
   def volunteer_hours_update
-    @volunteer_hours.each do |hour|
-      hour.update(billing_expense: @billing_expense)
-    end
+    # Skips validations
+    # It should receive only values that can be passed as-is to the SQL database
+    @volunteer_hours.update_all(billing_expense_id: @billing_expense.id)
   end
 
   def billing_expense_params
