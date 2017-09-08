@@ -11,7 +11,7 @@ h1= t('reminders')
             th= t_attr(:last, AssignmentJournal)
             th= t_attr(:state, Volunteer)
             th= t_attr(:sent_at)
-            th
+            th= t('delete')
 
         tbody
           - @reminders.each do |reminder|

@@ -7,3 +7,8 @@
   = "\r\n#{t_attr(:title, Contact)}:#{t4}#{@volunteer.contact.title.strip}\r\n"
 = "#{t_attr(:first_name, Contact)}:#{t3}#{@volunteer.contact.first_name}\r\n"
 = "#{t_attr(:last_name, Contact)}:#{t4}#{@volunteer.contact.last_name}\r\n"
+
+= "#{rn2}#{t('.please_confirm', client: @reminder.assignment.client)}#{rn2}"
+= link_to t_title(:index, Hour), volunteer_hours_url(@volunteer)
+= link_to t_title(:index, AssignmentJournal), assignment_assignment_journals_url(@reminder.assignment)
+= link_to t_title(:edit, Assignment), edit_assignment_url(@reminder.assignment)
