@@ -226,15 +226,17 @@ en:
   assignment_exists: Assignment already exists.
   assignment_pdf:
     agreement_text:
-      list1:
-        item1: Verhaltenskodex für Freiwillige
-        item2: Rechte und Pflichten für Freiwillige
-        item3: AOZ Leitlinien Praktische Integrationsarbeit 2011
+      -
         title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-      list2:
-        item1: Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
-        item2: Abmachungen für das Leiten von niederschwelligen Deutschkursen
+        items:
+          - Verhaltenskodex für Freiwillige
+          - Rechte und Pflichten für Freiwillige
+          - AOZ Leitlinien Praktische Integrationsarbeit 2011
+      -
         title: Allenfalls auch
+        items:
+          - Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
+          - Abmachungen für das Leiten von niederschwelligen Deutschkursen
     birth_year: Jahrgang
     city: Ort
     city_date: Ort, Datum
@@ -244,7 +246,7 @@ en:
     email: E-mail
     first_name: Vorname
     first_time: '1.Treffen: Wann, wo?'
-    for_aoc: Fur die AOZ
+    for_aoz: Fur die AOZ
     function: Funktion
     how_often: Wie oft?
     languages: Sprachen

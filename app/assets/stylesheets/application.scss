@@ -7,7 +7,11 @@
 
 @import 'layout/navbar';
 @import 'layout/content';
-@import 'layout/certificate';
 @import 'layout/footer';
 @import 'layout/forms';
-@import 'layout/pdf';
+
+@import 'pages/assignment';
+@import 'pages/certificate';
+@import 'pages/performance_report';
+
+@import 'utility';
