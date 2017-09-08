@@ -302,6 +302,8 @@ en:
       back_to_volunteer: Back to volunteer
       aprox_hours_given: 'Aprox. %{hours} Hours given'
     certificate: *id-certificates-show
+    index:
+      volunteers_certificates: "%{name}'s Certificates"
   change_my_password: Change my password
   change_password: Change your password
   checklist: Checklist

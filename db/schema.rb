@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.text "goals"
     t.text "starting_topic"
     t.text "description"
-    t.boolean "confirmation", default: false
     t.string "kind", default: "accompaniment"
+    t.boolean "confirmation", default: false
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
