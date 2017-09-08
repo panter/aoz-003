@@ -605,6 +605,7 @@ de:
   registered_by: Registriert durch
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
+  reminder_sent: 'Erinnerung wird zugestellt an %{email}'
   reminders: Erinnerungen
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
