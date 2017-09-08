@@ -478,6 +478,10 @@ en:
   registered_by: Registered by
   relatives: Family members
   remember_me: Remember me
+  reminder_mailer:
+    reminder_email:
+      please_confirm: 'Please confirm the hour report and assignment journal for %{client}.'
+      subject: "Reports' confirmation"
   reminder_sent: 'Reminder sent at %{email}'
   reminders: Reminders
   remove_language: Remove language

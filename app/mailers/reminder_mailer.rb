@@ -1,6 +1,7 @@
 class ReminderMailer < ApplicationMailer
-  def reminder_email(volunteer, volunteer_email)
+  def reminder_email(volunteer, reminder, volunteer_email)
     @volunteer = volunteer
-    mail(to: volunteer_email, subject: 'Reminder')
+    @reminder = reminder
+    mail(to: volunteer_email, subject: t('.subject'))
   end
 end
