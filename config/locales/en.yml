@@ -123,6 +123,9 @@ en:
         future: Should the assignment continue? If yes, with which goals?
         goals: Which were the most important goals during the last months?
       certificate:
+        duration: Duration
+        duration_start: Start
+        duration_end: End
       client:
         age_request: Volunteer's age
         gender_request: Volunteer's gender
@@ -295,9 +298,10 @@ en:
       volunteers_contact_data: Volunteers address
     edit: *id-certificate-form
     update: *id-certificate-form
-    show:
+    show: &id-certificates-show
       back_to_volunteer: Back to volunteer
       aprox_hours_given: 'Aprox. %{hours} Hours given'
+    certificate: *id-certificates-show
   change_my_password: Change my password
   change_password: Change your password
   checklist: Checklist
@@ -588,3 +592,4 @@ en:
   volunteer_updated: Volunteer was successfully updated.
   wanna_apply: Do you want to register as a volunteer?
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
+  to: to
