@@ -39,7 +39,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
       assert page.has_text? @volunteer.contact.full_address
       click_link 'Show'
     end
-    assert page.has_text? 'Spesenauszahlung an'
+    assert page.has_text? 'Spesenauszahlung für'
     assert page.has_text? 'Kostenstelle'
     assert page.has_text? '4182'
     assert page.has_text? 'Konto'
