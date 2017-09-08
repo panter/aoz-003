@@ -27,4 +27,4 @@ tr
   - elsif client.assignment.nil?
     td= button_link t('find_volunteer'), find_volunteer_client_path(id: client)
   - else
-    td= button_link t('show_assignment'), assignment_path(client.assignment)
+    td= button_link t_title(:show, Assignment), assignment_path(client.assignment)

@@ -1,6 +1,10 @@
 ---
 en:
   aaa_injectable: &id-injectables
+    messages:
+      confirm_record_delete: 'Really delete %{model}?'
+      confirm_delete: "Really delete %{model} %{record}?"
+      select_prompt: "Select %{model}"
     assignment_kinds:
       accompaniment: Accompaniment
       family: Family
@@ -102,6 +106,7 @@ en:
       one: Volunteer
       other: Volunteers
       show:
+        show_assignments: Show assignments
         availability: Availability for voluntary engagement
         hour_reports: Hour reports
         new_certificate: Create certificate
@@ -130,6 +135,7 @@ en:
         age_request: Volunteer's age
         gender_request: Volunteer's gender
         user: User
+        entry_year: Entry year
       contact:
         city: City
         extended: Extended address
@@ -328,16 +334,13 @@ en:
     title:
       add: 'Add %{model}'
     updated: '%{model} successfully updated.'
+    created: '%{model} was successfully created.'
+    destroyed: '%{model} was successfully deleted.'
   date:
     order:
       - :day
       - :month
       - :year
-  delete_assignment: Really delete assignment?
-  delete_assignment_journal: Really delete assignment journal?
-  delete_billing_expense: Really delete billing expense?
-  delete_hour: Really delete hour?
-  delete_journal: Really delete journal?
   departments: Departments
   devise:
     confirmations:
@@ -422,7 +425,6 @@ en:
   edit_login: Edit login
   edit_profile: Edit profile
   engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
-  entry_year: Entry year
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
@@ -455,20 +457,15 @@ en:
   logout: Logout
   "true": "Yes"
   "false": "No"
-  messages:
-    confirm_delete: "Really delete %{model} %{record}?"
-    select_prompt: "Select %{model}"
   need_accompanying: Need accompanying
   not_assignable: Not assignable
   not_authorized: You are not authorized to perform this action.
-  other_request: Other requests for volunteers
   password_reset_instructions: I want to reset my password
   pdf_header:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
     title: Fachstelle Freiwilligenarbeit
   personal_background: Personal background
-  profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
   registered_by: Registered by
   relatives: Family members
@@ -477,8 +474,7 @@ en:
   remove_relative: Remove family member
   reserve: Reserve
   seeking_clients: Looking for clients
-  show_assignment: Show assignment
-  show_assignments: Show assignments
+
   show_my_profile: My profile
   show_profile: Show profile
   simple_form:
@@ -543,10 +539,6 @@ en:
         mailer:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
-  times:
-    afternoon: afternoon
-    evening: evening
-    morning: morning
   update_profile: Update profile
   user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
@@ -555,7 +547,9 @@ en:
   volunteer_availability: What times are you available for voluntary engagement?
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
-  volunteer_emails: Volunteer emails
+  volunteer_emails:
+    one: Volunteer email
+    other: Volunteer emails
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
@@ -567,7 +561,6 @@ en:
   volunteer_updated: Volunteer was successfully updated.
   volunteers: Volunteers
   wanna_apply: Do you want to register as a volunteer?
-  your_expectations: What do you expect from a person who would accompany you / your volunteer work?
   performance_reports:
     one: Performance Report
     other: Performance Reports

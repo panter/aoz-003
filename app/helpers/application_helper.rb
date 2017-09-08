@@ -71,10 +71,11 @@ module ApplicationHelper
     } }
   end
 
-  def confirm_deleting(record, target_controller = nil)
-    target_controller ||= controller_name
-    confirm_text = t("delete_#{target_controller.singularize}", default: t_confirm_delete(record))
-    { method: :delete, data: { confirm: confirm_text } }
+  def confirm_deleting(record)
+    { method: :delete, data: {
+      confirm: t('messages.confirm_record_delete',
+        model: locale == :en ? t_model(record).downcase : t_model(record))
+    } }
   end
 
   def nationality_name(nationality)
