@@ -138,10 +138,6 @@ en:
         street: Street
       journal:
         entry: Entry
-      performance_report:
-        period: Period
-        period_end: Period end
-        period_start: Period start
       user:
         clients: Clients
         department: Department
@@ -189,6 +185,10 @@ en:
         zurich: Support for moving in Zurich City
       volunteer_email:
         user: Created by
+      performance_report:
+        period_start: Period start
+        period_end: Period end
+        period: Period
     models:
       assignment: Assignment
       assignment_journal: Assignment journal
@@ -200,7 +200,6 @@ en:
       hour: Hour report
       journal: Journal
       language_skill: Language skill
-      performance_report: Performance Report
       profile: Profile
       relative: Relative
       user: User
@@ -208,6 +207,7 @@ en:
       volunteer_application: Volunteer Registration
       volunteer_email: Confirmation email
       volunteer_experience_desc: If you have any experiences with voluntary work, please describe any further here.
+      performance_report: Performance Report
   add_entry: Add entry
   add_journal_entry: Write a journal entry
   add_language: Add language
@@ -292,12 +292,12 @@ en:
   certificates:
     one: Certificate
     other: Certificates
-    form: &id-certificate-form
+    form: &id-certificates-form
       assignment_kinds: Assignment types
       edit_more_fields: Edit more fields
       volunteers_contact_data: Volunteers address
-    edit: *id-certificate-form
-    update: *id-certificate-form
+    edit: *id-certificates-form
+    update: *id-certificates-form
     show: &id-certificates-show
       back_to_volunteer: Back to volunteer
       aprox_hours_given: 'Aprox. %{hours} Hours given'
@@ -305,7 +305,6 @@ en:
   change_my_password: Change my password
   change_password: Change your password
   checklist: Checklist
-  clear_filters: Clear filters
   clients: Clients
   clients_need_accompanying: Clients who need accompanying
   contact_info: Contact information
@@ -433,7 +432,6 @@ en:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
   export_xlsx: Export list as XLSX
-  "false": "No"
   find_client: Find client
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
@@ -453,6 +451,8 @@ en:
   language_skills: Language skills
   login: Log in
   logout: Logout
+  "true": "Yes"
+  "false": "No"
   messages:
     confirm_delete: "Really delete %{model} %{record}?"
     select_prompt: "Select %{model}"
@@ -465,34 +465,6 @@ en:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
     title: Fachstelle Freiwilligenarbeit
-  performance_reports:
-    index:
-      new_report: Create new report
-    one: Performance Report
-    other: Performance Reports
-    show:
-      assignments: &id-assignment-report
-        active_total: Total number of active assignments by the end of the period
-        new: Number of new assignments
-        resigned: Number of finished assignments
-        total: Total number of assignments
-      calendar_year: 'Calendar Year %{year}'
-      groups:
-        active_total: Total number of active groups by the end of the period
-        new: Number of new groups (Courses, Animations, Others)
-        resigned: Number of finished groups (Courses, Animations, Others)
-        total: Total number of groups (Courses, Animations, Others)
-      selection_criteria: Selection Criteria
-      title_range: 'Performance report of the period from "%{start} to %{end}"'
-      title_year: 'Performance report of the calendar year %{year}'
-      volunteers:
-        active_total: Total active volunteers by the end of the period
-        new: Number of new volunteers
-        resigned: Number of resigned volunteers
-        total: Total number of volunteers
-      zh_assignments:
-        <<: *id-assignment-report
-        total: Total number of assigned clients
   personal_background: Personal background
   profile_created: Profile was successfully created.
   profile_updated: Profile was successfully updated.
@@ -530,15 +502,15 @@ en:
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
-        permit:
-          'n': N
-          f: F
-          b: 'B'
-          b-fl: B-FL
-          c: 'C'
         relatives:
           relation: *id-relations
         salutation: *id-salutations
+        permit:
+          'n': N
+          f: F
+          b-fl: B-FL
+          b: 'B'
+          c: 'C'
         state: *id-states
       journal:
         category: *id-categories
@@ -559,6 +531,7 @@ en:
       mark: '*'
       text: 'required'
     "yes": 'Yes'
+  state: *id-states
   submit_application: Submit registration
   thank_you: "Thank you \U0001F389"
   time:
@@ -572,12 +545,12 @@ en:
     afternoon: afternoon
     evening: evening
     morning: morning
-  "true": "Yes"
   update_profile: Update profile
   user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Registration
+  volunteer_availability: What times are you available for voluntary engagement?
   volunteer_created: Volunteer was successfully created.
   volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_emails: Volunteer emails
@@ -590,6 +563,34 @@ en:
   volunteer_request: Request for volunteers
   volunteer_self_applicant: Self-applicant
   volunteer_updated: Volunteer was successfully updated.
+  volunteers: Volunteers
   wanna_apply: Do you want to register as a volunteer?
   your_expectations: What do you expect from a person who would accompany you / your volunteer work?
-  to: to
+  performance_reports:
+    one: Performance Report
+    other: Performance Reports
+    index:
+      new_report: Create new report
+    show:
+      assignments: &id-assignment-report
+        active_total: Total number of active assignments by the end of the period
+        new: Number of new assignments
+        resigned: Number of finished assignments
+        total: Total number of assignments
+      groups:
+        active_total: Total number of active groups by the end of the period
+        new: Number of new groups (Courses, Animations, Others)
+        resigned: Number of finished groups (Courses, Animations, Others)
+        total: Total number of groups (Courses, Animations, Others)
+      selection_criteria: Selection Criteria
+      title_range: 'Performance report of the period from "%{start} to %{end}"'
+      title_year: 'Performance report of the calendar year %{year}'
+      volunteers:
+        active_total: Total active volunteers by the end of the period
+        new: Number of new volunteers
+        resigned: Number of resigned volunteers
+        total: Total number of volunteers
+      zh_assignments:
+        <<: *id-assignment-report
+        total: Total number of assigned clients
+      calendar_year: 'Calendar Year %{year}'

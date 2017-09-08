@@ -73,6 +73,19 @@ de:
       son: Sohn
       uncle: Onkel
       wife: (Ehe-)Partnerin
+    state: &id-states
+      active_further: Aktiv, an weiteren Einsätzen interessiert
+      accepted: Akzeptiert
+      active: Aktiv
+      contacted: Kontaktiert
+      all: Alle
+      finished: Abgeschlossen
+      inactive: Inaktiv
+      interested: Interessiert
+      registered: Registriert
+      rejected: Abgelehnt
+      reserved: Reserviert
+      resigned: Abgemeldet
     role: &id-roles
       department_manager: Standortverantwortliche/er
       social_worker: Sozialarbeiter/in
@@ -101,6 +114,7 @@ de:
   <<: *id-injectables
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieses Spesenformular ist bereits erstellt.
+  clear_filters: Filter aufheben
   activerecord:
     attributes:
       assignment:
@@ -118,8 +132,6 @@ de:
         performance: Kennzahlen
         performance_appraisal_review: Standortgespräch
         probation_period: Probezeit
-        started: Neue
-        volunteer: Freiwillige
       assignment_journal:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
@@ -133,7 +145,6 @@ de:
         assignment: Begleitung
       certificate:
         <<: *id-generic_keys
-        duration: Zeitraum
         duration_start: Von
         duration_end: Bis
         funktion: Funktion
@@ -197,17 +208,6 @@ de:
         language: Sprache
         level: Niveau
         native_language: Muttersprache
-      performance_report:
-        <<: *id-generic_keys
-        comment: Kommentar
-        extern: Extern
-        intern: Intern
-        period: Zeitraum
-        period_end: Bis
-        period_start: Von
-        scope: Bereich
-        title: Titel
-        user: Ersteller/in
       profile:
         <<: *id-generic_keys
       relative:
@@ -226,7 +226,6 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
-        available: Verfügbar
         bank: Name der Bank
         bank_account: Kontodaten eingetragen
         bank_details: Name der Bank / IBAN
@@ -281,6 +280,17 @@ de:
         subject: Betreff
         title: Überschrift
         user: Ersteller
+      performance_report:
+        <<: *id-generic_keys
+        period_start: Von
+        period_end: Bis
+        scope: Bereich
+        extern: Extern
+        intern: Intern
+        period: Zeitraum
+        title: Titel
+        comment: Kommentar
+        user: Ersteller/in
     errors:
       models:
         profile:
@@ -316,20 +326,20 @@ de:
       assignment: Begleitung
       assignment_journal: Inhaltliches Journal
       billing_expense: Spesenformular
-      certificate: Bescheinigung
       client: Klient/in
+      certificate: Bescheinigung
       contact: Kontakt
       department: Standort
       hour: Stunde
       journal: Journal
       language_skill: Sprachkompetenz
-      performance_report: Kennzahlen Report
       profile: Profil
       relative: Verwante/r
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
       volunteer_email: Anmeldungsbestätigungs-Nachricht editieren
+      performance_report: Kennzahlen Report
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journal Eintrag verfassen
   add_language: Sprache hinzufügen
@@ -400,12 +410,12 @@ de:
   certificates:
     one: Bescheinigung
     other: Bescheinigungen
-    form: &id-certificate-form
+    form: &id-certificates-form
       assignment_kinds: Einsatz Arten
       edit_more_fields: Weitere Felder anpassen
       volunteers_contact_data: Kontaktangaben des Freiwilligen
-    edit: *id-certificate-form
-    update: *id-certificate-form
+    edit: *id-certificates-form
+    update: *id-certificates-form
     show: &id-certificates-show
       back_to_volunteer: Zurück zum Freiwilligen
       aprox_hours_given: 'Total ca. %{hours} Stunden'
@@ -413,7 +423,8 @@ de:
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   checklist: Checkliste
-  clear_filters: Filter aufheben
+  "true": Ja
+  "false": Nein
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
@@ -544,7 +555,6 @@ de:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   export_xlsx: Liste als XLSX exportieren
-  "false": Nein
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
@@ -573,34 +583,6 @@ de:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
     title: Fachstelle Freiwilligenarbeit
-  performance_reports:
-    index:
-      new_report: Neuen Report erstellen
-    one: Kennzahl
-    other: Kenzahlen
-    show:
-      assignments: &id-assignment-report
-        active_total: Total aktive Begleitungen per Zeitraumende
-        new: Anzahl neue Begleitungen
-        resigned: Anzahl beendete Begleitungen
-        total: Anzahl Begleitungen insgesamt
-      calendar_year: 'Kalenderjahr %{year}'
-      groups:
-        active_total: Total laufende Gruppen per Zeitraumende
-        new: Anzahl neue Gruppen (Kurse, Animationen, Andere)
-        resigned: Anzahl beendete Gruppen (Kurse, Animationen, Andere)
-        total: Anzahl Gruppen insgesamt (Kurse, Animationen, Andere)
-      selection_criteria: Auswahl
-      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
-      title_year: 'Kennzahlen des Zeitraums "Kalenderjahr %{year}"'
-      volunteers:
-        active_total: Total aktive Freiwillige per Zeitraumende
-        new: Anzahl neue Freiwillige
-        resigned: Anzahl ausgetretene Freiwillige
-        total: Anzahl Freiwillige insgesamt
-      zh_assignments:
-        <<: *id-assignment-report
-        total: Anzahl Begleitete
   personal_background: Persönlicher Hintergrund
   profile_created: Profil wurde erfolgreich erstellt.
   profile_updated: Profil wurde erfolgreich aktualisiert.
@@ -619,12 +601,6 @@ de:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
     labels:
-      assignment:
-        kinds: *id-assignment-kinds
-      certificate:
-        assignment_kinds:
-          <<: *id-assignment-kinds
-        text_body: Dossier Freitext
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
@@ -658,32 +634,20 @@ de:
         assignment_kinds:
           <<: *id-assignment-kinds
       client:
+        permit:
+          'n': N
+          f: F
+          b-fl: B-FL
+          b: 'B'
+          c: 'C'
         age_request: *id-age_requests
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
-        permit:
-          'n': N
-          f: F
-          b: 'B'
-          b-fl: B-FL
-          c: 'C'
         relatives:
           relation: *id-relations
         salutation: *id-salutations
-        state: &id-states
-          accepted: Akzeptiert
-          active: Aktiv
-          active_further: Aktiv, an weiteren Einsätzen interessiert
-          all: Alle
-          contacted: Kontaktiert
-          finished: Abgeschlossen
-          inactive: Inaktiv
-          interested: Interessiert
-          registered: Registriert
-          rejected: Abgelehnt
-          reserved: Reserviert
-          resigned: Abgemeldet
+        state: *id-states
       journal:
         category: *id-categories
       user:
@@ -722,12 +686,12 @@ de:
     evening: Abend
     morning: Morgen
   to: bis
-  "true": Ja
   update_profile: Profil aktualisieren
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer/in
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
+  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails: Bestätigungs-Mails
@@ -741,6 +705,7 @@ de:
   volunteer_request: Anforderungen an die/den Freiwillige/n
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
+  volunteers: Freiwillige
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
   to: bis
   performance_reports:
