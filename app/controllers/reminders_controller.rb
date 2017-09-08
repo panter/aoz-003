@@ -6,17 +6,18 @@ class RemindersController < ApplicationController
     @reminders = Reminder.all
   end
 
+  # Sends the email
   def update
     volunteer = @reminder.volunteer
     email = @reminder.volunteer.contact.primary_email
     ReminderMailer.reminder_email(volunteer, email).deliver
     @reminder.update(sent_at: Time.zone.now)
-    redirect_to reminders_url, notice: 'Reminder was successfully updated.'
+    redirect_to reminders_url, notice: t('reminder_sent', email: email)
   end
 
   def destroy
     @reminder.destroy
-    redirect_to reminders_url, notice: 'Reminder was successfully destroyed.'
+    redirect_to reminders_url
   end
 
   private

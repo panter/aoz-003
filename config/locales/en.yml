@@ -478,6 +478,7 @@ en:
   registered_by: Registered by
   relatives: Family members
   remember_me: Remember me
+  reminder_sent: 'Reminder sent at %{email}'
   reminders: Reminders
   remove_language: Remove language
   remove_relative: Remove family member
