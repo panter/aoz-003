@@ -3,14 +3,16 @@ require 'application_system_test_case'
 class CertificatesTest < ApplicationSystemTestCase
   def setup
     @user = create :user
-    @volunteer = create :volunteer, :with_assignment, state: 'resigned'
+    @volunteer = create(
+      :volunteer, :with_assignment, state: 'resigned', user: create(:user_volunteer)
+    )
     @assignment = @volunteer.assignments.first
     @hour = create :hour, volunteer: @volunteer, assignment: @assignment, hours: 2,
       minutes: 15
-    login_as @user
   end
 
   test 'only resigned volunteer can get a certificate' do
+    login_as @user
     active_volunteer = create :volunteer, state: 'active'
     visit volunteer_path(active_volunteer)
     assert page.has_no_link? 'Create certificate'
@@ -18,7 +20,14 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_link? 'Create certificate'
   end
 
+  test 'volunteer user can not see create certificate button' do
+    login_as @volunteer.user
+    visit volunteer_path(@volunteer)
+    assert page.has_no_link? 'Create certificate'
+  end
+
   test 'Creating volunteer certificate form has right content prefilled' do
+    login_as @user
     visit volunteer_path(@volunteer)
     click_link 'Create certificate'
     assert page.has_text? 'New Certificate'
