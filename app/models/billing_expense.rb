@@ -16,4 +16,8 @@ class BillingExpense < ApplicationRecord
     minutes = Hour.where(billing_expense: id).sum(&:minutes)
     hours + minutes / 60
   end
+
+  def billed_hours
+    Hour.where(billing_expense: id)
+  end
 end
