@@ -27,12 +27,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
   end
 
   test 'created billing expenses has needed fields' do
-    visit volunteer_path(@volunteer)
-    click_link 'New Billing expense'
-    select '100', from: 'Amount'
-    click_button 'Create Billing expense'
-    assert page.has_text? 'Billing expense was successfully created.'
-
     click_link 'Billing expense index'
     within '.table-responsive' do
       assert page.has_link? @volunteer.contact.full_name
