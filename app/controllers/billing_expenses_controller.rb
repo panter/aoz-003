@@ -14,7 +14,9 @@ class BillingExpensesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "volunteers/#{@volunteer.id}/billing_expenses/#{@billing_expense.id}", template: 'billing_expenses/show.html.slim',
+        render pdf:
+          "Spesenauszahlung-#{@volunteer.contact.first_name}-#{@volunteer.contact.last_name}-#{@volunteer.hours.last.meeting_date}",
+          template: 'billing_expenses/show.html.slim',
           layout: 'pdf.pdf', encoding: 'UTF-8'
       end
     end
