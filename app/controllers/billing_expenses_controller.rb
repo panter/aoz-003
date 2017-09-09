@@ -27,10 +27,10 @@ class BillingExpensesController < ApplicationController
   end
 
   def create
-    @billing_expense = BillingExpense
-                       .new(billing_expense_params.merge(@volunteer.slice(:bank, :iban)))
-    @billing_expense.user = current_user
-    @billing_expense.amount = compute_hours
+    @billing_expense = BillingExpense.new(
+      billing_expense_params.merge(@volunteer.slice(:bank, :iban))
+                            .merge(amount: compute_hours, user_id: current_user.id)
+    )
     authorize @billing_expense
     if @billing_expense.save
       redirect_to @volunteer, make_notice
@@ -61,10 +61,7 @@ class BillingExpensesController < ApplicationController
 
   def compute_hours
     return if @volunteer_hours.empty?
-    hours = @volunteer_hours.sum(&:hours)
-    minutes = @volunteer_hours.sum(&:minutes)
-    hours += minutes / 60
-    compute_amount(hours)
+    compute_amount(@volunteer_hours.sum(&:hours) + @volunteer_hours.sum(&:minutes)/60)
   end
 
   def compute_amount(hours)
