@@ -4,10 +4,9 @@
   .col-xs-11.col-xs-offset-1
     h3
       strong
-        = "#{t('billing_expense_pdf.title')} "
-        = "#{@billing_expense.volunteer.contact.full_name} "
+        = "#{t('billing_expense_pdf.title')} #{@billing_expense.volunteer.contact.full_name} "
         - if @billing_expense.billed_hours.any?
-          = "#{'von'} #{@billing_expense.billed_hours.last.meeting_date}"
+          = "von #{(l @billing_expense.billed_hours.last.meeting_date, format: :long)}"
 
 .row
   .col-xs-11.col-xs-offset-1
@@ -73,7 +72,7 @@
           .col-xs-6
             = t_attr(:created_at)
           .col-xs-6
-            = "#{t('assignment_pdf.zurich')}, #{l @billing_expense.created_at.to_date}"
+            = "#{t('assignment_pdf.zurich')}, #{(l @billing_expense.created_at.to_date, format: :long)}"
         .row
           .col-xs-6
             = t_attr(:created_by)

@@ -12,9 +12,8 @@ class BillingExpense < ApplicationRecord
   validates :amount, inclusion: { in: AMOUNT }
 
   def billing_hours
-    hours = Hour.where(billing_expense: id).sum(&:hours)
-    minutes = Hour.where(billing_expense: id).sum(&:minutes)
-    hours + minutes / 60
+    relevant_hours = Hour.where(billing_expense: id)
+    relevant_hours.sum(&:hours) + relevant_hours.sum(&:minutes) / 60
   end
 
   def billed_hours
