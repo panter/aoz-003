@@ -7,7 +7,17 @@ class CertificatesController < ApplicationController
     @certificates = Certificate.where(volunteer: @volunteer)
   end
 
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "volunteer_certificate_#{@certificate.id}", encoding: 'UTF-8',
+          template: 'certificates/show.pdf.slim', layout: 'certificate.pdf', page_size: 'A4',
+          print_media_type: true, margin: { top: 0, bottom: 0, left: 0, right: 0 },
+          no_background: true
+      end
+    end
+  end
 
   def new
     @certificate = Certificate.new(volunteer_id: @volunteer.id, user_id: current_user.id)

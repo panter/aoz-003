@@ -462,6 +462,7 @@ de:
     action:
       destroy: Löschen
       print: Drucken
+      download: Herunterladen
     c_action:
       create: '%{model} wurde erfolgreich erstellt.'
       destroy: '%{model} wurde erfolgreich gelöscht.'
