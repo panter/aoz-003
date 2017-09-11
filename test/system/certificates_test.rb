@@ -37,7 +37,7 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_field? 'Name', with: @volunteer.contact.full_name
     assert page.find_field('Street').value.include? @volunteer.contact.street
     assert page.find_field('City').value.include? @volunteer.contact.city
-    assert page.find_field('Funktion').value.include? 'Förderung der sozialen und beruflichen Integ'
+    assert page.find_field('Function').value.include? 'Förderung der sozialen und beruflichen Integ'
     assert page.find_field('Institution').value.include? '**AOZ** Zürich, Flüelastrasse 32, 8047'
     page.find_button('Update Certificate').trigger('click')
     assert page.has_text? 'AOZ Zürich, Flüelastrasse 32, 8047'
