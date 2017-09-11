@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20170907090939) do
     t.date "duration_end"
     t.text "institution"
     t.text "text_body"
-    t.string "funktion"
+    t.string "function"
     t.jsonb "volunteer_contact"
     t.jsonb "assignment_kinds"
     t.bigint "volunteer_id"
