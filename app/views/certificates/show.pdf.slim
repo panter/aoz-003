@@ -1,0 +1,39 @@
+.certificate
+  .text-content
+    .logo-image= wicked_pdf_image_tag 'AOZ_Logo.svg', alt: 'AOZ Logo'
+    .row
+      .col-xs-3= t_attr(:first_last_name)
+      .col-xs-7= @certificate.volunteer_contact['name']
+      .col-xs-3= t_attr(:street, Contact)
+      .col-xs-7= @certificate.volunteer_contact['street']
+      .col-xs-3= t_attr(:zip_city)
+      .col-xs-7= @certificate.volunteer_contact['city']
+
+    .row
+      .col-xs-3= t_attr(:institution)
+      .col-xs-7= markdown(@certificate.institution)
+
+    .row
+      .col-xs-3= t_attr(:function)
+      .col-xs-7= @certificate.function
+
+    .row
+      .col-xs-3= t_attr(:assignment)
+      .col-xs-7
+        - @certificate.assignment_kinds.each do |kind, value|
+          span.kind-list
+            input*{ type: 'checkbox', checked: value } onclick='return false;'
+            = "#{t("assignment_kinds.#{kind}")}"
+    .row
+      .col-xs-3= t_attr(:duration)
+      .col-xs-7= "#{l(@certificate.duration_start)} #{t('to')} #{l(@certificate.duration_end) if @certificate.duration_end}"
+      .col-xs-3= t_attr(:time_given)
+      .col-xs-7= t('.aprox_hours_given', hours: @certificate.hours)
+
+    .text-body= markdown(@certificate.text_body)
+
+  .signature.row
+    .col-xs-8
+      .name= @certificate.user.profile.contact.full_name
+      .position= @certificate.user.profile.profession
+    .col-xs-4= "Zürich #{l(@certificate.created_at.to_date)}"
