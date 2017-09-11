@@ -157,7 +157,7 @@ de:
         <<: *id-generic_keys
         duration_start: Von
         duration_end: Bis
-        funktion: Funktion
+        function: Funktion
         institution: Institution
         first_last_name: Vorname/Name
         zip_city: PLZ/Ort
@@ -430,9 +430,13 @@ de:
       volunteers_contact_data: Kontaktangaben des Freiwilligen
     edit: *id-certificates-form
     update: *id-certificates-form
-    show: &id-certificates-show
+    for_show: &id-certificates-show
       back_to_volunteer: Zurück zum Freiwilligenprofil
       aprox_hours_given: 'Total ca. %{hours} Stunden'
+    show:
+      <<: *id-certificates-show
+      pdf:
+        slim: *id-certificates-show
     certificate: *id-certificates-show
     index:
       volunteers_certificates: 'Bescheinigungen von %{name}'
