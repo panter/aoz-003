@@ -33,9 +33,9 @@ class BillingExpensesController < ApplicationController
     )
     authorize @billing_expense
     if @billing_expense.save
-      redirect_to @volunteer, make_notice
+      redirect_to volunteer_billing_expenses_url, make_notice
     else
-      redirect_to @volunteer, notice: t('already_computed')
+      redirect_to volunteer_billing_expenses_url, notice: t('already_computed')
     end
   end
 

@@ -27,7 +27,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
   end
 
   test 'created billing expenses has needed fields' do
-    click_link 'Billing expense index'
     within '.table-responsive' do
       assert page.has_link? @volunteer.contact.full_name
       assert page.has_text? @volunteer.contact.full_address
