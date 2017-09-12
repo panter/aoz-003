@@ -1,6 +1,10 @@
 class Journal < ApplicationRecord
+  include ImportRelation
+
   belongs_to :user
   belongs_to :journalable, polymorphic: true, required: false
+
+  belongs_to :assignment, required: false
 
   default_scope { order(created_at: :desc) }
 

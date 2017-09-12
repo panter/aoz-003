@@ -90,7 +90,8 @@ class AccessImport
         assignment = Import.get_imported(Assignment, journal[:fk_FreiwilligenEinsatz])
       end
       parameters = transformer.prepare_attributes(journal, person, assignment)
-      binding.pry if ass_imp
+      journal_entry = Journal.new(parameters)
+      binding.pry
     end
   end
 
