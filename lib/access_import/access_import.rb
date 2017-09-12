@@ -28,7 +28,7 @@ class AccessImport
 
   def make_clients
     transformer = ClientTransform.new(@begleitete, @haupt_person, @familien_rollen)
-    make(@personen_rolle.all_clients, transformer, Client) do |client, personen_rolle|
+    make_personen_rolle(@personen_rolle.all_clients, transformer, Client) do |client, personen_rolle|
       client = personen_rollen_create_update_conversion(client, personen_rolle)
       client.user_id = @import_user.id
       client.state = handle_client_state(personen_rolle)
@@ -47,7 +47,7 @@ class AccessImport
 
   def make_volunteers
     transformer = VolunteerTransform.new(@haupt_person)
-    make(@personen_rolle.all_volunteers, transformer, Volunteer) do |volunteer, personen_rolle|
+    make_personen_rolle(@personen_rolle.all_volunteers, transformer, Volunteer) do |volunteer, personen_rolle|
       volunteer = personen_rollen_create_update_conversion(volunteer, personen_rolle)
       volunteer.registrar_id = @import_user.id
       volunteer.state = handle_volunteer_state(personen_rolle)
@@ -62,6 +62,7 @@ class AccessImport
 
   def make_assignments
     transformer = AssignmentTransform.new(@begleitete)
+    records_before = Assignment.count
     @freiwilligen_einsaetze.where_volunteer.each do |key, fw_einsatz|
       next if Import.exists?(importable_type: 'Assignment', access_id: key)
       volunteer = Import.get_imported(Volunteer, fw_einsatz[:fk_PersonenRolle])
@@ -75,15 +76,31 @@ class AccessImport
       assignment.creator_id = @import_user.id
       assignment.save!
     end
+    puts "Imported #{Assignment.count - records_before} new #{Assignment.class.name} "\
+      'from MS Access Database.'
+  end
+
+  def make_journal
+    transformer = JournalTransform.new
+    @journale.all.each do |key, journal|
+      person_import = Import.find_by_hauptperson(journal[:fk_Hauptperson])
+      next unless person_import
+      person = person_import&.importable
+      if journal[:fk_FreiwilligenEinsatz].positive?
+        assignment = Import.get_imported(Assignment, journal[:fk_FreiwilligenEinsatz])
+      end
+      parameters = transformer.prepare_attributes(journal, person, assignment)
+      binding.pry if ass_imp
+    end
   end
 
   def personen_rollen_create_update_conversion(model_record, personen_rolle)
     model_record.created_at = personen_rolle[:d_Rollenbeginn]
     model_record.updated_at = personen_rolle[:d_MutDatum]
-    model_record
+    model_records
   end
 
-  def make(base_entities, transformer, destination_model)
+  def make_personen_rolle(base_entities, transformer, destination_model)
     records_before = destination_model.count
     base_entities.each do |key, entity|
       next if Import.exists?(importable_type: destination_model.to_s, access_id: key)
