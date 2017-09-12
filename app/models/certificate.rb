@@ -8,8 +8,8 @@ class Certificate < ApplicationRecord
     return unless text_body.nil?
     update(text_body: default_text_body, function: default_function,
       assignment_kinds: volunteer.assignment_kinds, volunteer_contact: convert_volunteer_contact,
-      hours: volunteer.hours.sum(:hours) + (volunteer.hours.sum(:minutes) / 60),
-      minutes: volunteer.hours.sum(:minutes) % 60, institution: default_institution)
+      hours: volunteer.hours.sum(&:hours) + (volunteer.hours.sum(&:minutes) / 60),
+      minutes: volunteer.hours.sum(&:minutes) % 60, institution: default_institution)
     update(volunteer.assignments_duration)
   end
 
