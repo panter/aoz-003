@@ -22,10 +22,7 @@ nav.navbar.section-navigation
     - if @volunteer.assignments.any?
       li = button_link t('.report_hours'), new_volunteer_hour_url(@volunteer)
       li = button_link t('.hour_reports'), volunteer_hours_path(@volunteer)
-    - if current_user.volunteer?
-      li= button_link t('edit_profile'), edit_volunteer_path(@volunteer)
-    - else
-      li= form_navigation_btn :edit, with_row: false
+    li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
     li= form_navigation_btn :back, with_row: false
 
 - if policy(Volunteer).checklist?
@@ -170,8 +167,5 @@ h3= t('.availability')
 
 nav.navbar.section-navigation
   ul.list-inline
-    - if current_user.volunteer?
-      li= button_link t('edit_profile'), edit_volunteer_path(@volunteer)
-    - else
-      li= form_navigation_btn :edit, with_row: false
+    li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
     li= form_navigation_btn :back, with_row: false
