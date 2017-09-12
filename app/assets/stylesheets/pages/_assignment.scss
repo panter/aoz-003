@@ -19,6 +19,12 @@ body.pdf {
     padding-left: $container-sm / 12;
   }
 
+  .col-xs-6 {
+    .row {
+      margin-bottom: 0;
+    }
+  }
+
 }
 
 .pdf-logo-image {
