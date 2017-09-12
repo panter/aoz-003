@@ -72,7 +72,7 @@ class Volunteer < ApplicationRecord
 
   def assignment_kinds
     has_kinds = assignments.map(&:kind).uniq
-    Assignment::KINDS.map { |kind| [kind, has_kinds.include?(kind.to_s)] }.to_h
+    Assignment::KINDS.map { |kind| [kind.to_sym, has_kinds.include?(kind.to_s)] }.to_h
   end
 
   def assignments_duration
