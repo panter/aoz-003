@@ -1,6 +1,6 @@
 class CertificatesController < ApplicationController
-  before_action :set_certificate, only: [:show, :destroy, :update, :edit]
-  before_action :set_volunteer, except: [:edit, :show, :destroy]
+  before_action :set_certificate, except: [:index, :new]
+  before_action :set_volunteer, only: [:index, :new]
 
   def index
     authorize Certificate
