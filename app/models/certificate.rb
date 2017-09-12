@@ -6,18 +6,17 @@ class Certificate < ApplicationRecord
 
   def build_values
     return unless text_body.nil?
-    update(text_body: default_text_body, function: default_function,
-      assignment_kinds: volunteer.assignment_kinds, volunteer_contact: convert_volunteer_contact,
-      hours: volunteer.hours.sum(&:hours) + (volunteer.hours.sum(&:minutes) / 60),
-      minutes: volunteer.hours.sum(&:minutes) % 60, institution: default_institution)
+    update(text_body: default_text_body, function: default_function, hours: volunteer.hours_sum,
+      minutes: volunteer.minutes_sum, assignment_kinds: volunteer.assignment_kinds,
+      volunteer_contact: convert_volunteer_contact)
     update(volunteer.assignments_duration)
   end
 
   def convert_volunteer_contact
     {
-      name: volunteer.contact.slice(:first_name, :last_name).values.join(' '),
-      street: volunteer.contact.slice(:street, :extended).values.join(', '),
-      city: volunteer.contact.slice(:postal_code, :city).values.join(' ')
+      name: volunteer.contact.full_name,
+      street: volunteer.contact.full_street,
+      city: volunteer.contact.full_city
     }
   end
 

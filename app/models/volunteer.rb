@@ -70,6 +70,14 @@ class Volunteer < ApplicationRecord
 
   scope :with_hours, (-> { joins(:hours).distinct })
 
+  def hours_sum
+    hours.sum(&:hours) + hours.sum(&:minutes) / 60
+  end
+
+  def minutes_sum
+    hours.sum(&:minutes) % 60
+  end
+
   def assignment_kinds
     has_kinds = assignments.map(&:kind).uniq
     Assignment::KINDS.map { |kind| [kind.to_sym, has_kinds.include?(kind.to_s)] }.to_h
@@ -80,6 +88,10 @@ class Volunteer < ApplicationRecord
       duration_start: assignments.minimum(:period_start),
       duration_end: assignments.maximum(:period_end)
     }
+  end
+
+  def assignments?
+    assignments.size.positive?
   end
 
   def seeking_clients?
