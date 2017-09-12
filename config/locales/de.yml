@@ -116,10 +116,10 @@ de:
       show:
         availability: Verfügbarkeit
         hour_reports: Stunden Rapporte
-        new_certificate: Bescheinigung ausstellen
+        new_certificate: Nachweis ausstellen
         report_hours: Stunden erfassen
-        show_certificates: Bescheinigungen anzeigen
-        show_certificate: Bescheinigung anzeigen
+        show_certificates: Nachweise anzeigen
+        show_certificate: Nachweis anzeigen
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
@@ -339,7 +339,7 @@ de:
       assignment_journal: Inhaltliches Journal
       billing_expense: Spesenformular
       client: Klient/in
-      certificate: Bescheinigung
+      certificate: Nachweis
       contact: Kontakt
       department: Standort
       hour: Stunde
@@ -422,8 +422,8 @@ de:
     file: Datei
     telephone: Telefonat
   certificates:
-    one: Bescheinigung
-    other: Bescheinigungen
+    one: Nachweis
+    other: Nachweise
     form: &id-certificates-form
       assignment_kinds: Einsatz Arten
       edit_more_fields: Weitere Felder anpassen
@@ -439,7 +439,7 @@ de:
         slim: *id-certificates-show
     certificate: *id-certificates-show
     index:
-      volunteers_certificates: 'Bescheinigungen von %{name}'
+      volunteers_certificates: 'Nachweise von %{name}'
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   checklist: Checkliste
