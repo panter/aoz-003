@@ -6,9 +6,9 @@ class Certificate < ApplicationRecord
 
   def build_values
     return unless text_body.nil?
-    update(text_body: default_text_body, function: default_function, hours: volunteer.hours_sum,
+    update(text_body: default_text_body, function: DEFAULT_FUNCTION, hours: volunteer.hours_sum,
       minutes: volunteer.minutes_sum, assignment_kinds: volunteer.assignment_kinds,
-      volunteer_contact: convert_volunteer_contact)
+      volunteer_contact: convert_volunteer_contact, institution: DEFAULT_INSTITUTION)
     update(volunteer.assignments_duration)
   end
 
@@ -27,18 +27,11 @@ class Certificate < ApplicationRecord
     end.to_h)
   end
 
-  def default_institution
-    <<~HEREDOC
-      **AOZ** Zürich, Flüelastrasse 32, 8047 Zürich<br>
-      044 415 67 35, info@aoz-freiwillige.ch
-    HEREDOC
-  end
+  DEFAULT_INSTITUTION = "**AOZ** Zürich, Flüelastrasse 32, 8047 Zürich  \r\n"\
+    '044 415 67 35, info@aoz-freiwillige.ch'.freeze
 
-  def default_function
-    <<~HEREDOC
-      Förderung der sozialen und beruflichen Integration von Asylsuchenden, Geflüchteten und Migrant/innen
-    HEREDOC
-  end
+  DEFAULT_FUNCTION = 'Förderung der sozialen und beruflichen Integration von Asylsuchenden, '\
+    'Geflüchteten und Migrant/innen'.freeze
 
   def default_text_body
     <<~HEREDOC
