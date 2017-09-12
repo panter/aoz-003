@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912092408) do
+ActiveRecord::Schema.define(version: 20170912184235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,6 +200,8 @@ ActiveRecord::Schema.define(version: 20170912092408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
+    t.bigint "assignment_id"
+    t.index ["assignment_id"], name: "index_journals_on_assignment_id"
     t.index ["deleted_at"], name: "index_journals_on_deleted_at"
     t.index ["journalable_type", "journalable_id"], name: "index_journals_on_journalable_type_and_journalable_id"
     t.index ["user_id"], name: "index_journals_on_user_id"
@@ -385,6 +387,7 @@ ActiveRecord::Schema.define(version: 20170912092408) do
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "clients", "users"
   add_foreign_key "hours", "billing_expenses"
+  add_foreign_key "journals", "assignments"
   add_foreign_key "journals", "users"
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
