@@ -21,6 +21,13 @@ class Certificate < ApplicationRecord
     }
   end
 
+  def assignment_kinds=(value)
+    super(value.to_h.map do |key, bool|
+      bool = bool.to_i == 1 if bool.is_a? String
+      [key.to_sym, bool]
+    end.to_h)
+  end
+
   def default_institution
     <<~HEREDOC
       **AOZ** Zürich, Flüelastrasse 32, 8047 Zürich<br>

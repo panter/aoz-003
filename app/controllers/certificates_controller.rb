@@ -23,28 +23,13 @@ class CertificatesController < ApplicationController
     authorize @certificate
   end
 
-  def create
-    @certificate = Certificate.new(certificate_params.merge(volunteer_id: @volunteer.id,
-      user_id: current_user.id))
-    @certificate.assignment_kinds = assignment_kinds
-    @certificate.text_body = certificate_params['text_body']
-    authorize @certificate
-    if @certificate.save
-      redirect_to volunteer_certificate_path(@volunteer, @certificate)
-    else
-      render :new
-    end
-  end
-
   def edit; end
 
   def update
     @certificate.update(certificate_params.merge(volunteer_id: @volunteer.id,
       user_id: current_user.id))
-    @certificate.update(assignment_kinds: assignment_kinds,
-      text_body: certificate_params['text_body'],
-      volunteer_contact: certificate_params['volunteer_contact'],
-      institution: certificate_params['institution'])
+    @certificate.update(volunteer_contact: certificate_params['volunteer_contact'],
+      assignment_kinds: certificate_params['assignment_kinds'])
     authorize @certificate
     if @certificate.save
       redirect_to volunteer_certificate_path(@volunteer, @certificate)
@@ -59,13 +44,6 @@ class CertificatesController < ApplicationController
   end
 
   private
-
-  def assignment_kinds
-    certificate_params['assignment_kinds']
-      .to_h
-      .map { |key, bool| [key.to_sym, bool.to_i == 1] }
-      .to_h
-  end
 
   def set_certificate
     @certificate = Certificate.find(params[:id])
