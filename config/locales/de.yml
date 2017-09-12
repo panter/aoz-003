@@ -415,12 +415,6 @@ de:
     visum_k: K-Visum
     visum_kst: KST-Visum
     year: Jahr
-  category: &id-categories
-    conversation: Gespräch
-    email: E-Mail
-    feedback: Rückmeldung
-    file: Datei
-    telephone: Telefonat
   certificates:
     one: Nachweis
     other: Nachweise
@@ -680,11 +674,6 @@ de:
       mark: '*'
       text: notwendig
     "yes": 'Ja'
-  state:
-    <<: *id-states
-    inactive: Sucht neuen Einsatz
-    registered: Interessiert
-    resigned: Beendet
   submit_application: Anmeldung abschicken
   thank_you: "Vielen Dank \U0001F389"
   time:
@@ -717,7 +706,6 @@ de:
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
-  to: bis
   performance_reports:
     one: Kennzahl
     other: Kennzahlen

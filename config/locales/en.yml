@@ -291,12 +291,6 @@ en:
     visum_kst: KST-Visum
     year: Jahr
     zurich: Zürich
-  category: &id-categories
-    conversation: Conversation
-    email: Email
-    feedback: Feedback
-    file: File
-    telephone: Telephone
   certificates:
     one: Certificate
     other: Certificates
@@ -476,7 +470,6 @@ en:
   remove_relative: Remove family member
   reserve: Reserve
   seeking_clients: Looking for clients
-
   show_my_profile: My profile
   show_profile: Show profile
   simple_form:
@@ -531,7 +524,6 @@ en:
       mark: '*'
       text: 'required'
     "yes": 'Yes'
-  state: *id-states
   submit_application: Submit registration
   thank_you: "Thank you \U0001F389"
   time:
