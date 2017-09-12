@@ -46,3 +46,12 @@
 .m-r-10 {
   margin-right: 10px;
 }
+
+@mixin a4 {
+  background: white;
+  height: 29.7cm;
+  margin: 0;
+  padding: 0;
+  size: a4 portrait;
+  width: 21cm;
+}
