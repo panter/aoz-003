@@ -2,8 +2,8 @@ class CreateHours < ActiveRecord::Migration[5.1]
   def change
     create_table :hours do |t|
       t.date :meeting_date
-      t.integer :hours, default: 0
-      t.integer :minutes, default: 0
+      t.integer :hours
+      t.integer :minutes
       t.string :activity
       t.string :comments
       t.belongs_to :volunteer
