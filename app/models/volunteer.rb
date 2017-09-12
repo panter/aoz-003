@@ -98,6 +98,10 @@ class Volunteer < ApplicationRecord
     state == REJECTED
   end
 
+  def resigned?
+    state == RESIGNED
+  end
+
   def self.state_collection
     STATES.map(&:to_sym)
   end
