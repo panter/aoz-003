@@ -1,25 +1,27 @@
 class MakeBooleanFieldsDefaultFalse < ActiveRecord::Migration[5.1]
   def change
-    change_column_default :volunteers, :experience, from: nil, to: false
-    change_column_default :volunteers, :man, from: nil, to: false
-    change_column_default :volunteers, :woman, from: nil, to: false
-    change_column_default :volunteers, :family, from: nil, to: false
-    change_column_default :volunteers, :kid, from: nil, to: false
-    change_column_default :volunteers, :sport, from: nil, to: false
-    change_column_default :volunteers, :creative, from: nil, to: false
-    change_column_default :volunteers, :music, from: nil, to: false
-    change_column_default :volunteers, :culture, from: nil, to: false
-    change_column_default :volunteers, :training, from: nil, to: false
-    change_column_default :volunteers, :german_course, from: nil, to: false
-    change_column_default :volunteers, :teenagers, from: nil, to: false
-    change_column_default :volunteers, :children, from: nil, to: false
-    change_column_default :volunteers, :dancing, from: nil, to: false
-    change_column_default :volunteers, :health, from: nil, to: false
-    change_column_default :volunteers, :cooking, from: nil, to: false
-    change_column_default :volunteers, :excursions, from: nil, to: false
-    change_column_default :volunteers, :women, from: nil, to: false
-    change_column_default :volunteers, :unaccompanied, from: nil, to: false
-    change_column_default :volunteers, :zurich, from: nil, to: false
-    change_column_default :volunteers, :other_offer, from: nil, to: false
+    with_options from: nil, to: false do |o|
+      o.change_column_default :volunteers, :experience
+      o.change_column_default :volunteers, :man
+      o.change_column_default :volunteers, :woman
+      o.change_column_default :volunteers, :family
+      o.change_column_default :volunteers, :kid
+      o.change_column_default :volunteers, :sport
+      o.change_column_default :volunteers, :creative
+      o.change_column_default :volunteers, :music
+      o.change_column_default :volunteers, :culture
+      o.change_column_default :volunteers, :training
+      o.change_column_default :volunteers, :german_course
+      o.change_column_default :volunteers, :teenagers
+      o.change_column_default :volunteers, :children
+      o.change_column_default :volunteers, :dancing
+      o.change_column_default :volunteers, :health
+      o.change_column_default :volunteers, :cooking
+      o.change_column_default :volunteers, :excursions
+      o.change_column_default :volunteers, :women
+      o.change_column_default :volunteers, :unaccompanied
+      o.change_column_default :volunteers, :zurich
+      o.change_column_default :volunteers, :other_offer
+    end
   end
 end
