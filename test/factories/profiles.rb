@@ -7,6 +7,8 @@ FactoryGirl.define do
     workday true
     weekend false
 
-    association :contact
+    contact
+    # pass empty profile to avoid infinite loop
+    user { build :user, profile: nil }
   end
 end
