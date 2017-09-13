@@ -10,7 +10,7 @@ h1= t_title(:show, Journal)
       = t("category.#{@journal.category}")
     p
       strong= "#{t_attr(:user)}: "
-      = link_to @journal.user.to_label, @journal.user.profile
+      = link_to @journal.user.full_name, @journal.user.profile
     p
       strong= "#{t_attr(:created_at)}: "
       = l(@journal.created_at)
