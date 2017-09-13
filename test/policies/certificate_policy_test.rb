@@ -6,7 +6,7 @@ class CertificatePolicyTest < PolicyAssertions::Test
       'update?', 'destroy?')
   end
 
-  test 'other have no access' do
+  test 'others have no access' do
     refute_permit(create(:social_worker), Certificate, 'new?', 'create?', 'index?', 'show?',
       'edit?',
       'update?', 'destroy?')
