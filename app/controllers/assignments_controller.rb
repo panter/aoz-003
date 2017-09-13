@@ -88,8 +88,7 @@ class AssignmentsController < ApplicationController
   end
 
   def delete_reminder
-    reminders = Reminder.where(assignment: @assignment)
-    Reminder.destroy(reminders.first.id) if reminders.any?
+    Reminder.where(assignment: @assignment).destroy_all
   end
 
   def assignment_params
