@@ -82,23 +82,25 @@ class AccessImport
 
   def make_journal
     transformer = JournalTransform.new
-    @journale.all.each do |key, journal|
-      person_import = Import.find_by_hauptperson(journal[:fk_Hauptperson])
+    @journale.all.each do |key, acc_journal|
+      next if Import.exists?(importable_type: 'Journal', access_id: key)
+      person_import = Import.find_by_hauptperson(acc_journal[:fk_Hauptperson])
       next unless person_import
       person = person_import&.importable
-      if journal[:fk_FreiwilligenEinsatz].positive?
-        assignment = Import.get_imported(Assignment, journal[:fk_FreiwilligenEinsatz])
+      if acc_journal[:fk_FreiwilligenEinsatz]&.positive?
+        assignment = Import.get_imported(Assignment, acc_journal[:fk_FreiwilligenEinsatz])
       end
-      parameters = transformer.prepare_attributes(journal, person, assignment)
-      journal_entry = Journal.new(parameters)
-      binding.pry
+      local_journal = Journal.new(transformer.prepare_attributes(acc_journal, person, assignment,
+        @import_user.id))
+      local_journal.save!
+      puts "Journal no. #{key} imported to Journal.id #{local_journal.id}"
     end
   end
 
   def personen_rollen_create_update_conversion(model_record, personen_rolle)
     model_record.created_at = personen_rolle[:d_Rollenbeginn]
     model_record.updated_at = personen_rolle[:d_MutDatum]
-    model_records
+    model_record
   end
 
   def make_personen_rolle(base_entities, transformer, destination_model)
