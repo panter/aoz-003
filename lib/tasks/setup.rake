@@ -7,4 +7,13 @@ namespace :setup do
       warn 'No email set, run `rails setup:superadmin email=email@test.com`'
     end
   end
+
+  desc 'Create a superadmin with factory'
+  task superadmin_factory: :environment do
+    if ENV['email'].present?
+      FactoryGirl.create(:user, email: ENV['email'], password: 'asdfasdf', role: 'superadmin')
+    else
+      warn 'No email set, run `rails setup:superadmin email=email@test.com`'
+    end
+  end
 end
