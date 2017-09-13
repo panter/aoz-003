@@ -163,6 +163,7 @@ en:
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
         address: Address
+        external: External
         bank_account: Bank account details entered
         bank_details: Bank / IBAN
         children: Children
@@ -458,6 +459,9 @@ en:
       read: 'Show %{model}'
       show: 'Show %{model}'
       update: 'Update %{model}'
+      journal:
+        create: Create Journal entry
+        update: Update Journal entry
       user:
         create: Create User
         update: Update login
@@ -502,6 +506,7 @@ en:
         interests: What are your most important leisure interests?
         motivation: What is your motivation to volunteer with migrants?
         strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
+        external: Register the Volunteer as external?
     "no": 'No'
     options:
       assignment:
@@ -540,6 +545,9 @@ en:
           <<: *id-states
           registered: Interested
     placeholders:
+    hints:
+      volunteer:
+        external: External Volunteers have no direct relationship with AOZ.
     required:
       mark: '*'
       text: 'required'

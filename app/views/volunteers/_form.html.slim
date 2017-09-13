@@ -3,8 +3,10 @@
 - if policy(Volunteer).supervisor_privileges?
   .row
     .col-xs-12
+      = f.input :external
+    .col-xs-6
       = f.input :state, collection: Volunteer.state_collection, default: :registered
-    .col-xs-12
+    .col-xs-6
       = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
     .col-xs-12
       = f.input :rejection_text
@@ -13,15 +15,12 @@
   h3= t('checklist')
   .row
     .col-xs-12
-      = f.input :trial_period
-    .col-xs-12
-      = f.input :intro_course
-    .col-xs-12
-      = f.input :doc_sent
-    .col-xs-12
-      = f.input :bank_account
-    .col-xs-12
-      = f.input :evaluation
+      ul.list-inline
+        li= f.input :trial_period
+        li= f.input :intro_course
+        li= f.input :doc_sent
+        li= f.input :bank_account
+        li= f.input :evaluation
 
 .row
   .col-xs-12
