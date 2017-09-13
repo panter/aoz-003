@@ -106,9 +106,10 @@ en:
       one: Volunteer
       other: Volunteers
       index: &id-volunteers-index
-        show_assignments: Show assignments
-      volunteer: *id-volunteers-index
-      show:
+        show_assignments: Show Assignments
+      volunteer:
+        <<: *id-volunteers-index
+      show: &id-volunteers-show
         show_assignments: Show assignments
         availability: Availability for voluntary engagement
         hour_reports: Hour reports
