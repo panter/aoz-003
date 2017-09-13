@@ -1,35 +1,35 @@
 h1= t('reminders')
 
 .table-responsive
-      table.table
-        thead
-          tr
-            th= t_model(Volunteer)
-            th= t_attr(:state, Volunteer)
-            th= t_model(Client)
-            th= t_attr(:updated_at, Assignment)
-            th= t_attr(:last, Hour)
-            th= t_attr(:last, AssignmentJournal)
-            th= t_attr(:sent_at)
-            th= t('delete')
+  table.table.table-no-border-top
+    thead
+      tr
+        th= t_model(Volunteer)
+        th= t_attr(:state, Volunteer)
+        th= t_model(Client)
+        th= t_attr(:updated_at, Assignment)
+        th= t_attr(:last, Hour)
+        th= t_attr(:last, AssignmentJournal)
+        th= t_attr(:sent_at)
 
-        tbody
-          - @reminders.each do |reminder|
-            tr
-              td= link_to reminder.volunteer.contact.full_name, volunteer_path(reminder.volunteer)
-              td= t("state.#{reminder.volunteer.state}")
-              td= link_to reminder.assignment.client.contact.full_name, client_path(reminder.assignment.client)
-              td= l(reminder.updated_at.to_date)
-              td
-                - if reminder.assignment.last_hour
-                  = link_to l(reminder.assignment.last_hour.updated_at.to_date),
-                    volunteer_hour_url(reminder.volunteer, reminder.assignment.last_hour)
-              td
-                - if reminder.assignment.last_assignment_journal
-                  = link_to l(reminder.assignment.last_assignment_journal.updated_at.to_date),
-                    assignment_assignment_journal_url(reminder.assignment, reminder.assignment.last_assignment_journal)
-              - if reminder.sent_at
-                td= l(reminder.sent_at)
-              - else
-                td= button_to t('send'), { action: 'update', id: reminder.id }, { method: :put, class: 'btn btn-info btn-xs' }
-              td= button_to t('delete'), { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }
+        th= t('delete')
+    tbody
+      - @reminders.each do |reminder|
+        tr
+          td= link_to reminder.volunteer.contact.full_name, volunteer_path(reminder.volunteer)
+          td= t("state.#{reminder.volunteer.state}")
+          td= link_to reminder.assignment.client.contact.full_name, client_path(reminder.assignment.client)
+          td= l(reminder.updated_at.to_date)
+          td
+            - if reminder.assignment.last_hour
+              = link_to l(reminder.assignment.last_hour.updated_at.to_date),
+                volunteer_hour_url(reminder.volunteer, reminder.assignment.last_hour)
+          td
+            - if reminder.assignment.last_assignment_journal
+              = link_to l(reminder.assignment.last_assignment_journal.updated_at.to_date),
+                assignment_assignment_journal_url(reminder.assignment, reminder.assignment.last_assignment_journal)
+          - if reminder.sent_at
+            td= l(reminder.sent_at)
+          - else
+            td= button_to t('send'), { action: 'update', id: reminder.id }, { method: :put, class: 'btn btn-info btn-xs' }
+          td= button_to t('delete'), { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }
