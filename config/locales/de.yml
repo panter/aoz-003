@@ -243,6 +243,7 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
+        external: Extern
         bank: Name der Bank
         bank_account: Kontodaten eingetragen
         bank_details: Name der Bank / IBAN
@@ -586,6 +587,9 @@ de:
       read: '%{model} anzeigen'
       show: '%{model} anzeigen'
       update: '%{model} aktualisieren'
+      journal:
+        create: Journal Eintrag speichern
+        update: Journal Eintrag aktualisieren
       user:
         create: Benutzer/in erstellen
         update: Login aktualisieren
@@ -643,6 +647,7 @@ de:
         motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
+        external: Als externen Freiwilligen registrieren?
     "no": 'Nein'
     options:
       assignment:
@@ -684,6 +689,9 @@ de:
           registered: Interessiert
           resigned: Beendet
     placeholders:
+    hints:
+      volunteer:
+        external: Externe Freiwillige stehen nicht in direkter Verbindung mit der AOZ.
     required:
       mark: '*'
       text: notwendig
