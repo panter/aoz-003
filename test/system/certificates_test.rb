@@ -15,9 +15,9 @@ class CertificatesTest < ApplicationSystemTestCase
     login_as @user
     active_volunteer = create :volunteer, state: 'active'
     visit volunteer_path(active_volunteer)
-    assert page.has_no_link? 'New Certificate'
+    assert page.has_no_link? 'Create certificate'
     visit volunteer_path(@volunteer)
-    assert page.has_link? 'New Certificate'
+    assert page.has_link? 'Create certificate'
   end
 
   test 'volunteer user can not see create certificate button' do
@@ -29,8 +29,8 @@ class CertificatesTest < ApplicationSystemTestCase
   test 'Creating volunteer certificate form has right content prefilled' do
     login_as @user
     visit volunteer_path(@volunteer)
-    click_link 'New Certificate'
-    assert page.has_text? 'New Certificate'
+    click_link 'Create certificate'
+    assert page.has_text? 'Create certificate'
     assert page.has_field? 'Text body', text: 'Die **AOZ** ist ein Unternehmen der Stadt Zürich und'
     assert page.has_field? 'Hours', with: 2
     click_button 'Edit more fields'
@@ -49,7 +49,7 @@ class CertificatesTest < ApplicationSystemTestCase
   test 'Creating certificate with custom values' do
     login_as @user
     visit volunteer_path(@volunteer)
-    click_link 'New Certificate'
+    click_link 'Create certificate'
     click_button 'Edit more fields'
     fill_in 'Hours', with: 555
     fill_in 'Name', with: 'This bogus test name'

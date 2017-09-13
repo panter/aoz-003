@@ -130,6 +130,7 @@ de:
       assignment:
         <<: *id-generic_keys
         agreement: Zustimmung
+        period: Zeitraum
         period_end: Einsatzende
         period_start: Einsatzbeginn
         client: Klient/in
@@ -689,7 +690,6 @@ de:
   users: Benutzer/in
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
-  volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails:
