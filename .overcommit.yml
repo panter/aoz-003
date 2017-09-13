@@ -22,7 +22,7 @@ PreCommit:
     problem_on_unmodified_line: warn
 
   RailsSchemaUpToDate:
-    enabled: true
+    enabled: false
     problem_on_unmodified_line: warn
 
   RuboCop:
