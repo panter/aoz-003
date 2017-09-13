@@ -26,4 +26,8 @@ class VolunteerTest < ActiveSupport::TestCase
     result = Volunteer.seeking_clients
     assert_equal [@inactive, @active_further, @accepted], result.to_a
   end
+
+  test 'external field is default false' do
+    assert_kind_of FalseClass, @volunteer.external
+  end
 end
