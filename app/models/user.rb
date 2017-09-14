@@ -56,13 +56,7 @@ class User < ApplicationRecord
 
   def self.create_user_and_send_password_reset(email:, role:)
     new_user = User.new(
-      email: email, password: Devise.friendly_token, role: role,
-      profile_attributes: {
-        contact_attributes: {
-          first_name: 'firstname',
-          last_name: 'lastname'
-        }
-      }
+      email: email, password: Devise.friendly_token, role: role
     )
 
     new_user.save! && new_user.send_reset_password_instructions
