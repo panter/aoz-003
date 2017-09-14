@@ -18,9 +18,9 @@ h1= t_title(:index, Journal)
               td= record.subject
               td= record.body&.truncate(40)
               td= link_to record.user.full_name, record.user.profile
-              td= link_to t_action(:show), params.to_unsafe_hash.merge(action: :show, id: record.id)
-              td= link_to t_action(:edit), params.to_unsafe_hash.merge(action: :edit, id: record.id)
-              td= link_to t_action(:destroy), params.to_unsafe_hash.merge(action: :destroy, id: record.id), confirm_deleting(record)
+              td= link_to t_action(:show), url_for([@journaled, record])
+              td= link_to t_action(:edit), url_for([@journaled, record]) + '/edit'
+              td= link_to t_action(:destroy), url_for([@journaled, record]), confirm_deleting(record)
 .row
   .col-xs-12
 = form_navigation_btn :new
