@@ -1,14 +1,4 @@
-require 'acc_utils'
-
-class AssignmentTransform
-  include AccUtils
-
-  def initialize(*accessors)
-    accessors.each do |accessor|
-      instance_variable_set("@#{accessor.class.name.underscore}", accessor)
-    end
-  end
-
+class AssignmentTransform < Transformer
   def prepare_attributes(fw_einsatz, client, volunteer, begleitet)
     {
       state: map_assignment_state(fw_einsatz[:d_EinsatzVon], fw_einsatz[:d_EinsatzBis]),

@@ -1,14 +1,4 @@
-require 'access_import/acc_utils'
-
-class ClientTransform
-  include AccUtils
-
-  def initialize(*accessors)
-    accessors.each do |accessor|
-      instance_variable_set("@#{accessor.class.name.underscore}", accessor)
-    end
-  end
-
+class ClientTransform < Transformer
   def prepare_attributes(personen_rolle)
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson])
     begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
