@@ -102,6 +102,22 @@ class Volunteer < ApplicationRecord
     assignments.size.positive?
   end
 
+  def external?
+    external
+  end
+
+  def internal?
+    !external
+  end
+
+  def internal_and_assignments?
+    internal? && assignments?
+  end
+
+  def self_applicant?
+    registrar.blank?
+  end
+
   def seeking_clients?
     SEEKING_CLIENTS.include?(state)
   end

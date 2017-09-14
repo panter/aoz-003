@@ -14,11 +14,8 @@ tr
   td = volunteer.expectations
   td = volunteer.interests
   td = t("simple_form.options.volunteer.state.#{volunteer.state}")
-  td
-    - if volunteer.registrar.present?
-      = volunteer.registrar.full_name
-    - else
-      = t('volunteer_self_applicant')
+  td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
+  td = volunteer.self_applicant? ? t('volunteer_self_applicant') : volunteer.registrar.full_name
   - if action_name == 'index'
     = render 'index_actions', subject: volunteer
     - if volunteer.seeking_clients?

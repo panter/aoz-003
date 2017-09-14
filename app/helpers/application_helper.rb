@@ -103,4 +103,12 @@ module ApplicationHelper
       no_images: true, no_links: true, no_styles: true, hard_wrap: true)
     sanitize(markdown.render(content))
   end
+
+  def boolean_glyph(value)
+    if value
+      content_tag(:i, '', class: 'glyphicon glyphicon-ok text-success')
+    else
+      content_tag(:i, '', class: 'glyphicon glyphicon-remove text-danger')
+    end
+  end
 end

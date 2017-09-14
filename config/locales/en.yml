@@ -164,6 +164,7 @@ en:
         additional_phone_numbers: Additional phone numbers
         address: Address
         external: External
+        internal: Internal
         bank_account: Bank account details entered
         bank_details: Bank / IBAN
         children: Children

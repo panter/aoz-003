@@ -23,13 +23,13 @@ nav.navbar.section-navigation
           - elsif @volunteer.certificates.size > 1
             li= button_link t('.show_certificates'), volunteer_certificates_path(@volunteer)
   ul.list-inline
-    - if @volunteer.assignments.any?
+    - if @volunteer.internal_and_assignments?
       li = button_link t('.report_hours'), new_volunteer_hour_url(@volunteer)
       li = button_link t('.hour_reports'), volunteer_hours_path(@volunteer)
     li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
     li= form_navigation_btn :back, with_row: false
 
-- if policy(Volunteer).checklist?
+- if @volunteer.internal? && policy(Volunteer).checklist?
   h3= t('checklist')
   .table-responsive
     table.table.table-no-border-top
@@ -111,17 +111,17 @@ h3= t('personal_background')
           tr
             td= t_attr(:rejection_text)
             td= @volunteer.rejection_text
+      - if @volunteer.internal?
+        tr
+          td= t_attr(:bank_details)
+          td= @volunteer.full_bank_details
+        tr
+          td= t_attr(:waive)
+          td= t(@volunteer.waive)
+
       tr
-        td= t_attr(:zurich)
-        td
-          dl.dl-horizontal
-            dt= t(@volunteer.zurich)
-      tr
-        td= t_attr(:bank_details)
-        td= @volunteer.full_bank_details
-      tr
-        td= t_attr(:waive)
-        td= t(@volunteer.waive)
+        td #{t_attr(:external)} / #{t_attr(:internal)}
+        td= @volunteer.external? ? t_attr(:external) : t_attr(:internal)
 
 h3= t_attr(:single_accompaniment)
 .table-responsive
@@ -132,12 +132,17 @@ h3= t_attr(:single_accompaniment)
           th.text-center= t_attr(single)
     tbody
       tr
-        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
-          td.text-center
-            - if @volunteer.read_attribute(single)
-              i.glyphicon.glyphicon-ok.text-success
-            - else
-              i.glyphicon.glyphicon-remove.text-danger
+        - @volunteer.slice(Volunteer::SINGLE_ACCOMPANIMENTS).values.each do |value|
+          td.text-center= boolean_glyph(value)
+
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th= t_attr(:zurich)
+    tbody
+      tr
+        td.text-center= boolean_glyph(@volunteer.zurich)
 
 h3= t_attr(:group_accompaniment)
 .table-responsive
@@ -149,12 +154,9 @@ h3= t_attr(:group_accompaniment)
             = t_attr(group)
     tbody
       tr
-        - Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
-          td.text-center
-            - if @volunteer.read_attribute(group)
-              i.glyphicon.glyphicon-ok.text-success
-            - else
-              i.glyphicon.glyphicon-remove.text-danger
+        - @volunteer.slice(Volunteer::GROUP_ACCOMPANIMENTS).values.each do |value|
+          td.text-center= boolean_glyph(value)
+
       - if @volunteer.other_offer_desc?
         tr
           td= t_attr(:other_offer_desc)
