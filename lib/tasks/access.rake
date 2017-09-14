@@ -9,7 +9,7 @@ namespace :access do
       @acimport.make_assignments
       @acimport.make_journal
     else
-      puts 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
+      warn 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
     end
   end
 end
