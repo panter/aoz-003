@@ -5,34 +5,33 @@
     .col-xs-12.col-md-6= f.input :first_name, required: true
     .col-xs-12.col-md-6= f.input :last_name, required: true, label: t('.last_name')
 
-.row
-  .col-xs-12
-    h2= t_attr(:address, Contact)
-
-  .col-xs-12
-    = f.input :street, required: true
-
-  .col-xs-12
-    = f.input :extended
-
-  .col-xs-4
-    = f.input :postal_code, required: true
-
-  .col-xs-8
-    = f.input :city, required: true
-  - if f.object.needs_primary_email?
+fieldset
+  legend= t_attr(:address, Contact)
+  .row
     .col-xs-12
-      = f.input :primary_email, required: true
-    - if controller_name == 'clients'
-      .col-xs-6
-        = f.input :primary_phone, required: true
-      .col-xs-6
-        = f.input :secondary_phone
+      = f.input :street, required: true
+
+    .col-xs-12
+      = f.input :extended
+
+    .col-xs-4
+      = f.input :postal_code, required: true
+
+    .col-xs-8
+      = f.input :city, required: true
+    - if f.object.needs_primary_email?
+      .col-xs-12
+        = f.input :primary_email, required: true
+      - if controller_name == 'clients'
+        .col-xs-6
+          = f.input :primary_phone, required: true
+        .col-xs-6
+          = f.input :secondary_phone
+      - else
+        .col-xs-12
+          = f.input :primary_phone, required: true
     - else
       .col-xs-12
-        = f.input :primary_phone, required: true
-  - else
-    .col-xs-12
-      = f.input :primary_email
-    .col-xs-12
-      = f.input :primary_phone
+        = f.input :primary_email, as: :email
+      .col-xs-12
+        = f.input :primary_phone, as: :tel

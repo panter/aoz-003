@@ -1,51 +1,54 @@
 = simple_error_notice f
 
 - if policy(Volunteer).supervisor_privileges?
-  .row
-    .col-xs-12
-      = f.input :external
-    .col-xs-6
-      = f.input :state, collection: Volunteer.state_collection, default: :registered
-    .col-xs-6
-      = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
-    .col-xs-12
-      = f.input :rejection_text
+  fieldset
+    legend= t_attr(:state)
+    .row
+      .col-xs-12
+        = f.input :external, input_html: { data: { state: { remove: ['contacted', 'resigned', 'inactive', 'rejected'], selected: 'accepted' }, hide: ['banc-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
+      .col-xs-6
+        = f.input :state, collection: Volunteer.state_collection, default: :registered
+      .col-xs-6
+        = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
+      .col-xs-12
+        = f.input :rejection_text
 
 - if policy(Volunteer).checklist?
-  h3= t('checklist')
+  fieldset.checklist
+    legend= t('checklist')
+    ul.list-inline
+      li= f.input :trial_period
+      li= f.input :intro_course
+      li= f.input :doc_sent
+      li= f.input :bank_account
+      li= f.input :evaluation
+
+fieldset
+  legend= t_attr(:personal_particulars, Contact)
   .row
     .col-xs-12
-      ul.list-inline
-        li= f.input :trial_period
-        li= f.input :intro_course
-        li= f.input :doc_sent
-        li= f.input :bank_account
-        li= f.input :evaluation
+      = f.input :salutation,
+                as: :select,
+                collection: Volunteer.salutation_collection,
+                include_blank: true
+  = f.simple_fields_for :contact do |c|
+    = render 'contacts/fields', f: c
 
-.row
-  .col-xs-12
-    = f.input :salutation,
-              as: :select,
-              collection: Volunteer.salutation_collection,
-              include_blank: true
-= f.simple_fields_for :contact do |c|
-  = render 'contacts/fields', f: c
+  .row
+    .col-xs-12.col-md-6
+      = f.input :birth_year,
+                as: :select,
+                collection: Volunteer.year_collection,
+                include_blank: true
+  .row
+    .col-xs-12.col-md-6
+      = f.input :nationality, as: :country
+    .col-xs-12.col-md-6
+      = f.input :additional_nationality, as: :country
+  .row
+    .col-xs-12
+      = f.input :avatar, as: :file
 
-.row
-  .col-xs-12.col-md-6
-    = f.input :birth_year,
-              as: :select,
-              collection: Volunteer.year_collection,
-              include_blank: true
-.row
-  .col-xs-12
-    = f.input :avatar, as: :file
-
-.row
-  .col-xs-12.col-md-6
-    = f.input :nationality, as: :country
-  .col-xs-12.col-md-6
-    = f.input :additional_nationality, as: :country
 
 = render 'language_skills/form', f: f, speaker: @volunteer
 
@@ -73,18 +76,19 @@ h3= t('volunteer_engagement_type_will')
   .col-xs-12
     p= link_to t('accompaniment_info'), 'https://www.stadt-zuerich.ch/aoz/de/index/integration/fachstelle-freiwilligenarbeit/einsatzbereiche-fuer-freiwillige-.html'
 
-h3= t_attr(:single_accompaniment, Volunteer)
-.row
-  - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single_accompaniment|
-    .col-xs-12.col-md-3
-      = f.input single_accompaniment
+fieldset
+  legend= t_attr(:single_accompaniment, Volunteer)
+  .row
+    - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single_accompaniment|
+      .col-xs-12.col-md-3
+        = f.input single_accompaniment
 
-.row
-  .col-xs-12
-    h3= t_attr(:group_accompaniment, Volunteer)
-  - Volunteer::GROUP_ACCOMPANIMENTS.each do |group_accompaniment|
-    .col-xs-6.col-md-3
-      = f.input group_accompaniment
+fieldset
+  legend= t_attr(:group_accompaniment, Volunteer)
+  .row
+    - Volunteer::GROUP_ACCOMPANIMENTS.each do |group_accompaniment|
+      .col-xs-6.col-md-3
+        = f.input group_accompaniment
 .row
   .col-xs-12
     = f.input :other_offer_desc
@@ -94,24 +98,26 @@ h3= t_attr(:single_accompaniment, Volunteer)
     = f.input :zurich
 
 - if current_user.present?
-  .row
-    .col-xs-12.col-md-6
-      = f.input :bank
-    .col-xs-12.col-md-6
-      = f.input :iban
+  fieldset.banc-data
+    legend Bankdaten für Spesen
+    .row
+      .col-xs-12.col-md-6
+        = f.input :bank
+      .col-xs-12.col-md-6
+        = f.input :iban
+      .col-xs-12
+        = f.input :waive
+
+fieldset
   .row
     .col-xs-12
-      = f.input :waive
-
-.row
-  .col-xs-12
-    = f.input :expectations
-  .col-xs-12
-    = f.input :strengths
-  .col-xs-12
-    = f.input :interests
-
-.row
-  .col-xs-12
-    h3= t('.availability')
-  = render 'availability/form', f: f
+      = f.input :expectations
+    .col-xs-12
+      = f.input :strengths
+    .col-xs-12
+      = f.input :interests
+fieldset
+  legend= t('.availability')
+  .row
+    .col-xs-12
+    = render 'availability/form', f: f
