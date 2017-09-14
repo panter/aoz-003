@@ -5,9 +5,26 @@ class Contact < ApplicationRecord
   validates :first_name, presence: true, if: :validate_first_name?
 
   validates :primary_email, presence: true, if: :needs_primary_email?
-  validates :primary_phone, presence: true, if: :needs_primary_email?
+  validates :primary_phone, presence: true, if: :needs_primary_phone?
 
-  validates :street, :postal_code, :city, presence: true, if: :needs_primary_email?
+  validates :street, :postal_code, :city, presence: true, if: :needs_address?
+
+  def needs_primary_email?
+    !external && volunteer? || client?
+  end
+  alias :needs_primary_phone? :needs_primary_email?
+
+  def needs_address?
+    volunteer? || client?
+  end
+
+  def validate_first_name?
+    !department? && !profile?
+  end
+
+  def validate_last_name?
+    !profile?
+  end
 
   def to_s
     last_name
@@ -29,18 +46,6 @@ class Contact < ApplicationRecord
     [street, extended, postal_code, city].reject(&:blank?).join(', ')
   end
 
-  def needs_primary_email?
-    ['Client', 'Volunteer'].include? contactable_type
-  end
-
-  def validate_first_name?
-    !department? && !profile?
-  end
-
-  def validate_last_name?
-    !profile?
-  end
-
   def profile?
     contactable_type == 'Profile'
   end
@@ -51,5 +56,9 @@ class Contact < ApplicationRecord
 
   def volunteer?
     contactable_type == 'Volunteer'
+  end
+
+  def client?
+    contactable_type == 'Client'
   end
 end

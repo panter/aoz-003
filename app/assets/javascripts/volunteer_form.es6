@@ -6,31 +6,42 @@ $(function() {
       show_rejection();
     });
 
-    const store = {
-      stateOptions: $('#volunteer_state')
-    }
-
-    $('#volunteer_external').bind('change', ({target}) => {
+    $('.volunteer-active-checkbox-changes').bind('change', ({target}) => {
+      const data = $(target).data();
       if(target.checked) {
-        removeNonExternalStates(store.stateOptions);
+        changeStateSelectToActiveVolunteer(data.state);
+        hideFormRegions(data.hide);
       } else {
-        addStateOptionsBack(store.stateOptions);
+        changeStateSelectToNonActiveVolunteer(data.state);
+        showFormRegions(data.hide);
       }
     });
   });
 });
 
-const addStateOptionsBack = (options) => {
-  options.find('[value="contacted"]').show();
-  options.find('[value="resigned"]').show();
-  options.find('[value="inactive"]').show();
+const hideFormRegions = (hide) => {
+  console.log(hide);
+  hide.forEach(cssClass => $(`.${cssClass}`).hide());
 }
 
-const removeNonExternalStates = (options) => {
-  options.find('[value="contacted"]').hide();
-  options.find('[value="resigned"]').hide();
-  options.find('[value="inactive"]').hide();
-  options.val('active');
+const showFormRegions = (hide) => {
+  hide.forEach(cssClass => $('.' + cssClass).show());
+}
+
+const changeStateSelectToNonActiveVolunteer = ({remove}) => {
+  const options = $('#volunteer_state');
+  remove.forEach(value => {
+    options.find(`[value="${value}"]`).show();
+  });
+}
+
+const changeStateSelectToActiveVolunteer = ({remove, selected}) => {
+  const options = $('#volunteer_state');
+  remove.forEach(value => {
+    console.log(options);
+    options.find(`[value="${value}"]`).hide();
+  });
+  options.val(selected);
 }
 
 function show_rejection() {

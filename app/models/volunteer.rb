@@ -8,6 +8,7 @@ class Volunteer < ApplicationRecord
   include FullBankDetails
 
   acts_as_paranoid
+  before_validation :handle_external
   before_save :default_state
 
   # States
@@ -72,6 +73,18 @@ class Volunteer < ApplicationRecord
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
 
   scope :with_hours, (-> { joins(:hours).distinct })
+
+  def handle_external
+    contact.external = true if external
+  end
+
+  def hours_sum
+    hours.sum(&:hours) + hours.sum(&:minutes) / 60
+  end
+
+  def minutes_sum
+    hours.sum(&:minutes) % 60
+  end
 
   def assignment_kinds
     has_kinds = assignments.map(&:kind).uniq

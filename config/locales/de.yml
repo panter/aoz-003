@@ -193,6 +193,7 @@ de:
         primary_phone: Telefonnummer
         secondary_phone: Telefonnummer 2
         title: Titel
+        personal_particulars: Personalien
       department:
         <<: *id-generic_keys
         associated_users: Assozierte Benutzer

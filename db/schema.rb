@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 20170913133848) do
     t.string "primary_email"
     t.string "primary_phone"
     t.string "secondary_phone"
+    t.boolean "external", default: false
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
     t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
   end
