@@ -41,7 +41,7 @@ Use `rails db:seed` to get these users:
 
 ### Create initial superadmin account
 
-Sends a invitaion email to the email address, so that the account can be activated:
+Sends an invitation email to the email address, so that the account can be activated:
 
 ```bash
 $  rails setup:superadmin email=email@test.com
