@@ -1,11 +1,10 @@
 class Profile < ApplicationRecord
   include BuildContactRelation
-  include DeletedUserRelationFallback
 
   has_one :contact, as: :contactable
   accepts_nested_attributes_for :contact
 
-  belongs_to :user
+  belongs_to :user, -> { with_deleted }
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
