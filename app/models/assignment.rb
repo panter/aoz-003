@@ -10,7 +10,7 @@ class Assignment < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
   has_many :hours, dependent: :destroy
   has_many :assignment_journals
-  has_many :reminders
+  has_many :reminders, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze
   KINDS = [:accompaniment, :family, :workshop, :german_class, :transit_center].freeze
