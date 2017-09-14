@@ -75,13 +75,15 @@ class AccessImport
       assignment.created_at = fw_einsatz[:d_EinsatzVon] || Time.zone.now
       assignment.creator_id = @import_user.id
       assignment.save!
+      puts format('-- Access Assignment %d imported to Assignment.id %d', key, assignment.id)
     end
-    puts "Imported #{Assignment.count - records_before} new #{Assignment.class.name} "\
-      'from MS Access Database.'
+    puts format('Imported %d new Assignments from MS Access Database.',
+      Assignment.count - records_before)
   end
 
   def make_journal
     transformer = JournalTransform.new
+    records_before = Journal.count
     @journale.all.each do |key, acc_journal|
       next if Import.exists?(importable_type: 'Journal', access_id: key)
       person_import = Import.find_by_hauptperson(acc_journal[:fk_Hauptperson])
@@ -93,8 +95,10 @@ class AccessImport
       local_journal = Journal.new(transformer.prepare_attributes(acc_journal, person, assignment,
         @import_user.id))
       local_journal.save!
-      puts "Journal no. #{key} imported to Journal.id #{local_journal.id}"
+      puts format('Imported Access Journal %d to Journal.id %d', key, local_journal.id)
     end
+    puts format('Imported %d new %s from MS Access Database.',
+      Assignment.count - records_before, Assignment.name)
   end
 
   def personen_rollen_create_update_conversion(model_record, personen_rolle)
@@ -111,10 +115,11 @@ class AccessImport
       import_record = destination_model.new(parameters)
       handler_message = yield(import_record, entity)
       import_record.save!
-      puts "Importing personen_rolle #{key} to #{destination_model}.id: #{import_record.id}#{handler_message}"
+      puts format('Importing personen_rolle %d to %s.id %d  %s', key, destination_model,
+        import_record.id, handler_message)
     end
-    message = "Imported #{destination_model.count - records_before} new "
-    puts "#{message}#{destination_model.class.name} from MS Access Database."
+    puts format('Imported %d new %s from MS Access Database.',
+      destination_model.count - records_before, destination_model.name.pluralize)
   end
 
   def instantiate_all_accessors
