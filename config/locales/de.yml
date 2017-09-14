@@ -150,7 +150,7 @@ de:
         conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
         future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
         goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
-        last: Letzter inhaltliches Journal Eintrag am
+        last: Letzter inhaltlicher Journaleintrag am
       billing_expense:
         <<: *id-generic_keys
         amount: Betrag
@@ -229,7 +229,7 @@ de:
         <<: *id-generic_keys
         relation: Verwandtschaftsbeziehung
       reminder:
-        sent_at: Gesendet am
+        sent_at: Versandt am
       user:
         <<: *id-generic_keys
         clients: Kunden/innen
@@ -462,6 +462,7 @@ de:
     action:
       destroy: Löschen
       print: Drucken
+      send: Senden
       download: Herunterladen
     c_action:
       create: '%{model} wurde erfolgreich erstellt.'
@@ -607,15 +608,14 @@ de:
   remember_me: Angemeldet bleiben
   reminder_mailer:
     reminder_email:
-      please_confirm: 'Bitte bestätigen Sie die Stundenrapporte und das Feedback zum Einstatz %{client}.'
+      please_confirm: 'Bitte bestätigen Sie die Stundenrapporte und das Feedback zum Einsatz %{client}.'
       subject: Rapporte bestätigen
-  reminder_sent: 'Erinnerung wird zugestellt an %{email}'
+  reminder_sent: 'Erinnerung wurde versendet an %{email}'
   reminders: Erinnerungen
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   reserve: Reservieren
   seeking_clients: Klienten suchen
-  send: Zustellen
   show_my_profile: Mein Profil
   show_profile: Profil anzeigen
   simple_form:

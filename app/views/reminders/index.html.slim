@@ -11,7 +11,6 @@ h1= t('reminders')
         th= t_attr(:last, Hour)
         th= t_attr(:last, AssignmentJournal)
         th= t_attr(:sent_at)
-
         th= t('delete')
     tbody
       - @reminders.each do |reminder|
@@ -31,5 +30,5 @@ h1= t('reminders')
           - if reminder.sent_at
             td= l(reminder.sent_at)
           - else
-            td= button_to t('send'), { action: 'update', id: reminder.id }, { method: :put, class: 'btn btn-info btn-xs' }
+            td= button_to t_action(:send), { action: 'update', id: reminder.id }, { method: :put, class: 'btn btn-info btn-xs' }
           td= button_to t('delete'), { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }

@@ -10,7 +10,7 @@ class ReminderTest < ActiveSupport::TestCase
     @volunteer = @assignment.volunteer
     @email = @volunteer.contact.primary_email
     r = Reminder.create_for(@volunteer, @assignment)
-    mailer = ReminderMailer.reminder_email(@volunteer, r, @email).deliver
+    mailer = ReminderMailer.reminder_email(r).deliver
     assert_equal [@email], mailer.to
     assert_equal ['info@aoz-freiwillige.ch'], mailer.from
     assert_equal "Reports' confirmation", mailer.subject

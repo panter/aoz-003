@@ -1,8 +1,5 @@
-- margin_r = 'margin-right: 5px;'
-
 h3
-  = "#{@volunteer.contact.title} " if @volunteer.contact.title.present?
-  = "#{@volunteer.contact.first_name} #{@volunteer.contact.last_name}"
+  = "#{@volunteer.salutation} #{@volunteer.contact.full_name}"
 
 p= t('.please_confirm', client: @reminder.assignment.client)
 p= link_to t_title(:index, Hour), volunteer_hours_url(@volunteer)

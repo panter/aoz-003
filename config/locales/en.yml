@@ -133,7 +133,7 @@ en:
         conversation: I would like to discuss with my supervisor.
         future: Should the assignment continue? If yes, with which goals?
         goals: Which were the most important goals during the last months?
-        last: Last Assignment journal entry
+        last: Last assignment journal entry
       certificate:
         duration: Duration
         duration_start: Start
@@ -333,6 +333,7 @@ en:
     action:
       destroy: Delete
       download: Download
+      send: Send
       print: Print
     c_action:
       create: '%{model} was successfully created.'
@@ -482,13 +483,12 @@ en:
     reminder_email:
       please_confirm: 'Please confirm the hour report and assignment journal for %{client}.'
       subject: "Reports' confirmation"
-  reminder_sent: 'Reminder sent at %{email}'
+  reminder_sent: 'Reminder sent to %{email}'
   reminders: Reminders
   remove_language: Remove language
   remove_relative: Remove family member
   reserve: Reserve
   seeking_clients: Looking for clients
-  send: Send
   show_my_profile: My profile
   show_profile: Show profile
   simple_form:

@@ -1,6 +1,8 @@
 class Assignment < ApplicationRecord
   include ImportRelation
 
+  after_update :delete_reminder, if: :saved_change_to_confirmation?
+
   belongs_to :client
   accepts_nested_attributes_for :client
 
@@ -9,7 +11,7 @@ class Assignment < ApplicationRecord
 
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
   has_many :hours, dependent: :destroy
-  has_many :assignment_journals
+  has_many :assignment_journals, dependent: :destroy
   has_many :reminders, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze
@@ -57,10 +59,14 @@ class Assignment < ApplicationRecord
   end
 
   def last_assignment_journal
-    AssignmentJournal.where(assignment: id, author: volunteer.user).last
+    assignment_journals.where(author: volunteer.user).last
   end
 
   def last_hour
-    Hour.where(assignment: id).last
+    hours.last
+  end
+
+  def delete_reminder
+    Reminder.where(assignment: id).destroy_all
   end
 end

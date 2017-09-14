@@ -8,11 +8,10 @@ class RemindersController < ApplicationController
 
   # Sends the email
   def update
-    volunteer = @reminder.volunteer
-    email = @reminder.volunteer.contact.primary_email
-    ReminderMailer.reminder_email(volunteer, @reminder, email).deliver
+    ReminderMailer.reminder_email(@reminder).deliver
     @reminder.update(sent_at: Time.zone.now)
-    redirect_to reminders_url, notice: t('reminder_sent', email: email)
+    redirect_to reminders_url, notice: t('reminder_sent',
+      email: @reminder.volunteer.contact.primary_email)
   end
 
   def destroy
@@ -25,9 +24,5 @@ class RemindersController < ApplicationController
   def set_reminder
     @reminder = Reminder.find(params[:id])
     authorize @reminder
-  end
-
-  def reminder_params
-    {}
   end
 end
