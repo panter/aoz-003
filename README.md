@@ -5,17 +5,27 @@
 
 Ruby version: 2.4.1
 
-## Dependencies
+## Table of content
+
+1. [Dependencies](#dependencies)
+1. [Developer Dependencies](#developer-dependencies)
+1. [User seeds for development](#user-seeds-for-development)
+1. [Create initial superadmin account](#create-initial-superadmin-account)
+1. [Sort locale yaml files](#sort-locale-yaml-files)
+1. [Importing from access db with rake task](#importing-from-access-db-with-rake-task)
+1. [LICENSE](#license)
+
+### Dependencies
 
 - Postgresql
 - [ImageMagick](http://www.imagemagick.org/) (for [paperclip](https://github.com/thoughtbot/paperclip))
 
-## Developer Dependencies
+### Developer Dependencies
 
 - [overcommit](https://github.com/brigade/overcommit)
 - [rubocop](https://github.com/bbatsov/rubocop)
 
-## User seeds for development
+### User seeds for development
 
 Use `rails db:seed` to get these users:
 
@@ -29,15 +39,39 @@ Use `rails db:seed` to get these users:
   - email: department_manager@example.com
   - password: asdfasdf
 
-## Sort locale yaml files
+### Create initial superadmin account
+
+Sends a invitaion email to the email address, so that the account can be activated:
+
+```bash
+$  rails setup:superadmin email=email@test.com
+```
+
+Ready to use with standard Password `asdfasdf` (No activation needed):
+
+**Only use this on testing servers that are unable to send emails (_security risk_)**
+
+```bash
+$  rails setup:superadmin_initialized email=email@test.com
+```
+
+### Sort locale yaml files
 
 Run this task, in order to sort the locale files alphabetically.
 
-```shell
-rails i18n:sort
+```bash
+$  rails i18n:sort
 ```
 
-## LICENSE
+### Importing from access db with rake task
+
+Run in the command line:
+
+```bash
+$  rails access:import file=path/to/access_file.accdb
+```
+
+### LICENSE
 
 All the sources created are made available under the terms
 of the GNU Affero General Public License (GNU AGPLv3).
