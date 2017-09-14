@@ -6,7 +6,6 @@ class Volunteer < ApplicationRecord
   include ZuerichScopes
   include ImportRelation
   include FullBankDetails
-  include DeletedUserRelationFallback
 
   acts_as_paranoid
   before_save :default_state
@@ -29,7 +28,7 @@ class Volunteer < ApplicationRecord
 
   STATES = STATES_FOR_REVIEWED.dup.unshift(REGISTERED).freeze
 
-  belongs_to :user, optional: true
+  belongs_to :user, -> { with_deleted }, optional: true
   belongs_to :registrar, optional: true,
     class_name: 'User', foreign_key: 'registrar_id'
 

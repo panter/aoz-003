@@ -1,10 +1,8 @@
 class Certificate < ApplicationRecord
-  include DeletedUserRelationFallback
-
   after_initialize :build_values
 
   belongs_to :volunteer
-  belongs_to :user
+  belongs_to :user, -> { with_deleted }
 
   def build_values
     return unless text_body.nil?

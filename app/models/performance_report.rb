@@ -1,8 +1,7 @@
 class PerformanceReport < ApplicationRecord
-  include DeletedUserRelationFallback
 
   before_save :generate_report
-  belongs_to :user
+  belongs_to :user, -> { with_deleted }
 
   validates :period_start, presence: true
   validates :period_end, presence: true

@@ -1,9 +1,8 @@
 class BillingExpense < ApplicationRecord
   include FullBankDetails
-  include DeletedUserRelationFallback
 
   belongs_to :volunteer
-  belongs_to :user
+  belongs_to :user, -> { with_deleted }
   has_many :hours
 
   default_scope { order(created_at: :desc) }

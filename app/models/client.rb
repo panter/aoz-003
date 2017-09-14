@@ -5,7 +5,6 @@ class Client < ApplicationRecord
   include BuildContactRelation
   include ZuerichScopes
   include ImportRelation
-  include DeletedUserRelationFallback
 
   REGISTERED = 'registered'.freeze
   RESERVED = 'reserved'.freeze
@@ -14,7 +13,7 @@ class Client < ApplicationRecord
   REJECTED = 'rejected'.freeze
   STATES = [REGISTERED, RESERVED, ACTIVE, FINISHED, REJECTED].freeze
 
-  belongs_to :user
+  belongs_to :user, -> { with_deleted }
 
   has_one :assignment
   has_one :volunteer, through: :assignments
