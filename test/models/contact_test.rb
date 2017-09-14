@@ -28,7 +28,8 @@ class ContactTest < ActiveSupport::TestCase
   end
 
   test 'Required fields for external Volunteers' do
-    volunteer = build :volunteer, :blank_contact, external: true
+    volunteer = build :volunteer, external: true
+    volunteer.contact = Contact.new
     refute volunteer.valid?
     assert_equal volunteer.contact.errors.keys, [:last_name, :first_name, :street, :postal_code,
                                                  :city]
