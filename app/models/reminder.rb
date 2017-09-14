@@ -13,12 +13,14 @@ class Reminder < ApplicationRecord
 
   def self.conditionally_create_reminders(time = Time.zone.now)
     logger.info("Beginning reminder run, reference Date #{time}")
-    reminders_created_count =
-      Volunteer.all.find_each.count do |volunteer|
-        volunteer.assignments.each do |assignment|
-          conditionally_create_reminder_for_volunteer(volunteer, assignment)
-        end
+    logger.flush
+
+    reminders_created_count = 0
+    Volunteer.all.find_each.count do |volunteer|
+      reminders_created_count = volunteer.assignments.each do |assignment|
+        conditionally_create_reminder_for_volunteer(volunteer, assignment)
       end
+    end
 
     logger.info("Created #{reminders_created_count} reminders, reference Date #{time}")
     logger.flush
