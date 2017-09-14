@@ -1,14 +1,4 @@
-require 'acc_utils'
-
-class JournalTransform
-  include AccUtils
-
-  def initialize(*accessors)
-    accessors.each do |accessor|
-      instance_variable_set("@#{accessor.class.name.underscore}", accessor)
-    end
-  end
-
+class JournalTransform < Transformer
   def prepare_attributes(journal, person, assignment, user_id)
     {
       body: journal[:m_Text],

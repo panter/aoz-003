@@ -1,14 +1,4 @@
-require 'acc_utils'
-
-class VolunteerTransform
-  include AccUtils
-
-  def initialize(*accessors)
-    accessors.each do |accessor|
-      instance_variable_set("@#{accessor.class.name.underscore}", accessor)
-    end
-  end
-
+class VolunteerTransform < Transformer
   # could be needed relations
   #
   # k_traeger = @kosten_traeger.find(personen_rolle[:fk_Kostenträger])
