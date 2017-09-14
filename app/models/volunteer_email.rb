@@ -1,4 +1,6 @@
 class VolunteerEmail < ApplicationRecord
+  include DeletedUserRelationFallback
+
   before_save :ensure_exactly_one_active
 
   default_scope { order(created_at: :desc) }

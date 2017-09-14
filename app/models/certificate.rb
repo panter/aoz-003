@@ -1,4 +1,6 @@
 class Certificate < ApplicationRecord
+  include DeletedUserRelationFallback
+
   after_initialize :build_values
 
   belongs_to :volunteer

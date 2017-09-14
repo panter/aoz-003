@@ -1,5 +1,6 @@
 class BillingExpense < ApplicationRecord
   include FullBankDetails
+  include DeletedUserRelationFallback
 
   belongs_to :volunteer
   belongs_to :user

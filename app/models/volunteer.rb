@@ -6,6 +6,7 @@ class Volunteer < ApplicationRecord
   include ZuerichScopes
   include ImportRelation
   include FullBankDetails
+  include DeletedUserRelationFallback
 
   acts_as_paranoid
   before_save :default_state

@@ -1,4 +1,6 @@
 class PerformanceReport < ApplicationRecord
+  include DeletedUserRelationFallback
+
   before_save :generate_report
   belongs_to :user
 
