@@ -17,7 +17,7 @@ class RemindersController < ApplicationController
 
   def destroy
     @reminder.destroy
-    redirect_to reminders_url
+    redirect_to reminders_url, make_notice
   end
 
   private
