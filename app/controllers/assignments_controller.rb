@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy, :delete_reminder]
+  before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   def index
     authorize Assignment
@@ -39,9 +39,7 @@ class AssignmentsController < ApplicationController
   end
 
   def update
-    confirmation = @assignment.confirmation
     if @assignment.update(assignment_params)
-      delete_reminder if @assignment.confirmation && @assignment.confirmation != confirmation
       if current_user.superadmin?
         redirect_to assignments_url, make_notice
       else
@@ -85,10 +83,6 @@ class AssignmentsController < ApplicationController
   def set_assignment
     @assignment = Assignment.find(params[:id])
     authorize @assignment
-  end
-
-  def delete_reminder
-    Reminder.where(assignment: @assignment).destroy_all
   end
 
   def assignment_params

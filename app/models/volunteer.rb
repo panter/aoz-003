@@ -40,12 +40,12 @@ class Volunteer < ApplicationRecord
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
 
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
   has_many :clients, through: :assignments
   has_many :hours, through: :assignments
   has_many :assignment_journals, through: :assignments
   has_many :billing_expenses
-  has_many :reminders
+  has_many :reminders, dependent: :destroy
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
