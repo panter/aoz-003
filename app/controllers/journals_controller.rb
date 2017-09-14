@@ -37,7 +37,7 @@ class JournalsController < ApplicationController
 
   def destroy
     @journal.destroy
-    redirect_to request.referer, make_notice
+    redirect_back(fallback_location: url_for(@journaled))
   end
 
   private
