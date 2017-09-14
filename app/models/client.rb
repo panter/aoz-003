@@ -5,6 +5,7 @@ class Client < ApplicationRecord
   include BuildContactRelation
   include ZuerichScopes
   include ImportRelation
+  include DeletedUserRelationFallback
 
   REGISTERED = 'registered'.freeze
   RESERVED = 'reserved'.freeze

@@ -1,5 +1,6 @@
 class Journal < ApplicationRecord
   include ImportRelation
+  include DeletedUserRelationFallback
 
   belongs_to :user
   belongs_to :assignment, optional: true
@@ -11,8 +12,4 @@ class Journal < ApplicationRecord
   CATEGORIES = [:telephone, :conversation, :email, :feedback, :file].freeze
 
   validates :category, presence: true
-
-  def user
-    super || User.deleted.find_by(id: user_id)
-  end
 end
