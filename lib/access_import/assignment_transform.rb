@@ -2,8 +2,8 @@ class AssignmentTransform < Transformer
   def prepare_attributes(fw_einsatz, client, volunteer, begleitet)
     {
       state: map_assignment_state(fw_einsatz[:d_EinsatzVon], fw_einsatz[:d_EinsatzBis]),
-      client_id: client.id,
-      volunteer_id: volunteer.id,
+      client: client,
+      volunteer: volunteer,
       period_start: fw_einsatz[:d_EinsatzVon],
       period_end: fw_einsatz[:d_EinsatzBis],
       performance_appraisal_review: fw_einsatz[:d_Standortgespräch],

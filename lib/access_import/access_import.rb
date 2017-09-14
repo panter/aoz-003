@@ -93,7 +93,7 @@ class AccessImport
         assignment = Import.get_imported(Assignment, acc_journal[:fk_FreiwilligenEinsatz])
       end
       local_journal = Journal.new(transformer.prepare_attributes(acc_journal, person, assignment,
-        @import_user.id))
+        @import_user))
       local_journal.save!
       puts format('Imported Access Journal %d to Journal.id %d', key, local_journal.id)
     end
