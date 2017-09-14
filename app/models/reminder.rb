@@ -33,7 +33,7 @@ class Reminder < ApplicationRecord
                     'not yet 6 months'
                   elsif assignment.confirmation?
                     'already confirmed'
-                  elsif assignment.state == 'suggested'
+                  elsif assignment.state != 'active'
                     'not active assignment'
                   elsif assignment.reminders.any?
                     'reminder already present'
