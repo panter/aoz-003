@@ -16,9 +16,5 @@ FactoryGirl.define do
         [assignment.association(:assignment, period_start: 300.days.ago, period_end: 20.days.ago)]
       end
     end
-
-    trait :blank_contact do
-      contact Contact.new
-    end
   end
 end
