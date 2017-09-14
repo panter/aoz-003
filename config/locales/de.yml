@@ -245,6 +245,7 @@ de:
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
         external: Extern
+        internal: Intern
         bank: Name der Bank
         bank_account: Kontodaten eingetragen
         bank_details: Name der Bank / IBAN

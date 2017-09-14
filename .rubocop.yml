@@ -26,6 +26,8 @@ Style/FrozenStringLiteralComment:
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
+Style/FormatString:
+  Enabled: false
 Style/AsciiComments:
   Enabled: false
 Metrics/LineLength:

@@ -18,9 +18,16 @@ module FilterDropdownHelper
   end
 
   def dropdown_list_element(attribute, filter_links, t_scope, *q_filters)
+    dropdown_li_container(
+      dropdown_toggle_link(toggler_text(attribute, q_filters, t_scope)),
+      dropdown_menu(filter_links, q_filters)
+    )
+  end
+
+  def dropdown_li_container(toggler, menu)
     content_tag :li, class: 'dropdown' do
-      concat dropdown_toggle_link(attribute, t_scope, q_filters)
-      concat dropdown_menu(filter_links, q_filters)
+      concat toggler
+      concat menu
     end
   end
 
@@ -47,23 +54,41 @@ module FilterDropdownHelper
   end
 
   def dropdown_menu(filter_links, q_filters)
-    content_tag :ul, class: 'dropdown-menu' do
-      concat content_tag(:li, link_to(t('all'), url_for(q: search_parameters.except(*q_filters))))
-      concat content_tag :li, '', class: 'divider', role: 'separator'
+    dropdown_ul(content_tag(:li, all_link_to(q_filters))) do
       filter_links.each { |item| concat item }
     end
   end
 
-  def dropdown_toggle_link(attribute, t_scope, q_filter)
-    content_tag :a, dropdown_toggler_options do
-      concat toggler_text(attribute, q_filter, t_scope)
-      concat content_tag(:span, '', class: 'caret')
+  def all_link_to(q_filters)
+    link_to t('all'), url_for(q: search_parameters.except(*q_filters))
+  end
+
+  def dropdown_ul(all_list_link)
+    content_tag :ul, class: 'dropdown-menu' do
+      concat all_list_link
+      concat dropdown_devider
+      yield
     end
   end
 
+  def dropdown_devider
+    content_tag :li, '', class: 'divider', role: 'separator'
+  end
+
+  def dropdown_toggle_link(title_text)
+    content_tag :a, dropdown_toggler_options do
+      concat title_text + ' '
+      concat bootstrap_caret
+    end
+  end
+
+  def bootstrap_caret
+    content_tag :span, '', class: 'caret'
+  end
+
   def toggler_text(attribute, q_filter, t_scope)
-    return "#{t_attr(attribute)} " if q_filter.size > 1
-    "#{t_attr(attribute)}: #{translate_value(search_parameters[q_filter[0]], t_scope)} "
+    return t_attr(attribute) if q_filter.size > 1
+    '%s: %s' % [t_attr(attribute), translate_value(search_parameters[q_filter[0]], t_scope)]
   end
 
   def dropdown_toggler_options
