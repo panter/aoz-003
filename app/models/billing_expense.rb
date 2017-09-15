@@ -1,7 +1,8 @@
 class BillingExpense < ApplicationRecord
   include FullBankDetails
 
-  before_validation :compute_amount
+  before_validation :auto_set_amount
+
   belongs_to :volunteer
   belongs_to :user, -> { with_deleted }
   has_many :hours
@@ -23,6 +24,10 @@ class BillingExpense < ApplicationRecord
 
   def amount=(_value)
     super(compute_amount)
+  end
+
+  def auto_set_amount
+    self.amount = nil
   end
 
   def compute_amount
