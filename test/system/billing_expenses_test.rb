@@ -8,7 +8,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
     create :hour, volunteer: @volunteer, assignment: assignment
     login_as superadmin
     visit volunteer_path(@volunteer)
-    click_link 'New Billing expense'
     click_button 'Create Billing expense'
   end
 
@@ -17,10 +16,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
   end
 
   test 'no duplicate billing expenses' do
-    click_link 'New Billing expense'
-    click_button 'Create Billing expense'
     assert_no_difference 'BillingExpense.count' do
-      click_link 'New Billing expense'
       click_button 'Create Billing expense'
       assert page.has_text? 'This billing expense was already created'
     end

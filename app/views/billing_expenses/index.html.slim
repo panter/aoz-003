@@ -32,7 +32,7 @@ h1= t_title(:index, BillingExpense)
   .col-xs-12
     = simple_form_for [@volunteer, BillingExpense.new] do |f|
       = f.hidden_field :volunteer_id, value: @volunteer.id
-      = f.button :submits
+      = f.button :submit
 .row
   .col-xs-12
     = button_link t('back'), @volunteer
