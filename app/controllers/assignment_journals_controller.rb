@@ -22,7 +22,7 @@ class AssignmentJournalsController < ApplicationController
       .merge(author_id: current_user.id))
     authorize @assignment_journal
     if @assignment_journal.save
-      redirect_to @assignment, make_notice
+      redirect_to assignment_assignment_journal_path(@assignment, @assignment_journal), make_notice
     else
       render :new
     end
@@ -30,7 +30,7 @@ class AssignmentJournalsController < ApplicationController
 
   def update
     if @assignment_journal.update(assignment_journal_params)
-      redirect_to @assignment, make_notice
+      redirect_to assignment_assignment_journal_path(@assignment, @assignment_journal), make_notice
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class AssignmentJournalsController < ApplicationController
 
   def destroy
     @assignment_journal.destroy
-    redirect_to @assignment, make_notice
+    redirect_to assignment_assignment_journals_path, make_notice
   end
 
   private
