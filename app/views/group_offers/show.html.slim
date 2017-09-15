@@ -11,12 +11,14 @@
             td= t_attr(:offer_state)
             td
               = t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
-              - if @group_offer.external?
-                br
+              - if @group_offer.external? && @group_offer.organization
+                = "#{t('.offer_of')} "
                 = @group_offer.organization
-              - elsif @group_offer.department
                 br
+              - if !@group_offer.external? && @group_offer.department
+                = "#{t('.offer_of')} "
                 = link_to @group_offer.department, department_path(@group_offer.department.id)
+                br
           tr
             td= t_attr(:volunteer_state)
             td

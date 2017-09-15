@@ -61,10 +61,10 @@ en:
     group_offers:
       form:
         for_external: Organization (for external group offers)
-      index:
+      index: &id-help-texts
         necessary_volunteers: Necessary volunteers
-      show:
-        necessary_volunteers: Necessary volunteers
+        offer_of: Offer from
+      show: *id-help-texts
     language_level: &id-lang-levels
       basic: Basic
       fluent: Fluent
