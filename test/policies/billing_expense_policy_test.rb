@@ -5,7 +5,13 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
     @superadmin = create :user, role: 'superadmin'
     @social_worker = create :user, role: 'social_worker'
     @department_manager = create :user, role: 'department_manager'
-    create :billing_expense
+    @volunteer = create :volunteer
+    @billing_expense = BillingExpense.create!(
+      user: @superadmin, volunteer: @volunteer,
+      hours: [
+        create(:hour, volunteer: @volunteer, assignment: create(:assignment, volunteer: @volunteer))
+      ]
+    )
   end
 
   test 'Create: Only superadmin can create billing expense' do
@@ -32,7 +38,12 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
   end
 
   test 'Show: superadmin can see all billing expenses' do
-    create :billing_expense
+    BillingExpense.create!(
+      user: @superadmin, volunteer: @volunteer,
+      hours: [
+        create(:hour, volunteer: @volunteer, assignment: create(:assignment, volunteer: @volunteer))
+      ]
+    )
     BillingExpense.all.each do |billing_expense|
       assert_permit @superadmin, billing_expense, 'show?'
     end
