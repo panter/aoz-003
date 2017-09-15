@@ -1,6 +1,9 @@
 ---
 de:
   aaa_injectable: &id-injectables
+    application:
+      navigation:
+        group_offers: Gruppenangebote
     messages:
       confirm_record_delete: '%{model} wirklich löschen?'
       confirm_delete: "Wirklich %{model} %{record} löschen?"
@@ -59,11 +62,21 @@ de:
       zip: Postleitzahl
       hours: Stunden
       minutes: Minuten
+    group_offers:
+      index:
+        necessary_volunteers: nötig(e) Freiwillige
+      show:
+        necessary_volunteers: nötig(e) Freiwillige
+      form:
+        for_external: Organization (Bei externen Gruppenangebot)
     language_level: &id-lang-levels
       basic: Grundlagen
       fluent: Fliessend
       good: Gut
       native_speaker: Muttersprachler/in
+    offer_state: &id-offer-states
+      external_offer: Externes Gruppenangebot
+      internal_offer: Internes Gruppenangebot
     rejection_type: &id-rejection-types
       her: von Freiwillige/r vor / nach Erstgespräch
       other: Anderer Grund
@@ -120,6 +133,12 @@ de:
         report_hours: Stunden erfassen
         show_certificates: Nachweise anzeigen
         show_certificate: Nachweis anzeigen
+    volunteer_state: &id-volunteer-states
+      external_volunteer: Externe Freiwillige
+      internal_volunteer: AOZ-Freiwillige
+    volunteer_responsible: &id-volunteer-responsible
+      volunteer_accountable: Verantwortliche/r für eine Freiwilligengruppe
+      volunteer_member: Mitglied in einer Freiwilligengruppe
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
@@ -200,6 +219,27 @@ de:
         department_manager: Standort Betreuer
         name: Name
         user: User
+      group_offer:
+        all: Alle
+        availability: Verfügbarkeit
+        children: Kinder
+        date_time: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum angeben
+        description: Beschreibung des Angebotes
+        duration: Dauer
+        necessary_volunteers: Anzahl nötiger Freiwillige
+        long_term: Langfristig
+        men: Männer
+        offer_state: Internes oder externes Gruppenangebot
+        regular: Regelmässig
+        short_term: Kurzfristig
+        target_group: Zielpublikum
+        teenagers: Jugendliche
+        title: Bezeichnung
+        unaccompanied: Unbegleitete Minderjährige
+        volunteer_responsible: Verantwortliche Person
+        volunteer_responsible_name: Name des/r Verantwortlichen für interne Freiwillige
+        volunteer_state: Interne oder externe Freiwillige
+        women: Frauen
       hour:
         activity: Tätigkeit / Was wurde gemacht
         assignment: Begleitung
@@ -350,6 +390,7 @@ de:
       certificate: Nachweis
       contact: Kontakt
       department: Standort
+      group_offer: Gruppenangebot
       hour: Stunde
       journal: Journal
       language_skill: Sprachkompetenz
@@ -676,6 +717,10 @@ de:
           relation: *id-relations
         salutation: *id-salutations
         state: *id-states
+      group_offer:
+        offer_state: *id-offer-states
+        volunteer_state: *id-volunteer-states
+        volunteer_responsible: &id-volunteer-responsible
       journal:
         category: *id-categories
       user:

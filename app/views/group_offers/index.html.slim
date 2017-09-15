@@ -1,0 +1,68 @@
+.row
+  .col-xs-12
+    h1= t_title
+
+= form_navigation_btn :new
+
+.row
+  .col-xs-12
+    table.table.table-striped
+      thead
+        tr
+          th= t_attr(:title)
+          th= t_attr(:offer_state)
+          th= t_attr(:volunteer_state)
+          th= t_attr(:description)
+          th= t_attr(:target_group)
+          th= t_attr(:duration)
+          th= t_attr(:availability)
+          th= t_attr(:date_time)
+          th colspan='3'
+
+      tbody
+        - @group_offers.each do |offer|
+          tr
+            td= offer.title
+            td
+              - if offer.offer_state?
+                = t("offer_state.#{offer.offer_state}")
+                br
+              - if offer.external?
+                = offer.organization
+              - elsif offer.department
+                = link_to offer.department, department_path(offer.department.id)
+            td
+              - if offer.necessary_volunteers
+                = "#{offer.necessary_volunteers} "
+                = t('.necessary_volunteers')
+              - if offer.volunteer_state?
+                = t("volunteer_state.#{offer.volunteer_state}")
+                br
+              - if offer.volunteer_responsible?
+                = t("volunteer_responsible.#{offer.volunteer_responsible}")
+                br
+              - if offer.volunteer_responsible_name
+                = offer.volunteer_responsible_name
+            td= offer.description
+            td
+              - GroupOffer.target_collection.each do |target|
+                - if offer[target]
+                  = t_attr(target)
+                  br
+            td
+              - GroupOffer.duration_collection.each do |duration|
+                - if offer[duration]
+                  = t_attr(duration)
+                  br
+            td
+              - availability_collection.each do |availability|
+                - if offer[availability]
+                  = t("availability.#{availability}")
+                  br
+            td= offer.date_time
+            td= link_to t_action(:show), group_offer_path(offer)
+            td= link_to t_action(:edit), edit_group_offer_path(offer)
+            - if policy(GroupOffer).destroy?
+              td= link_to t_action(:destroy), group_offer_path(offer), confirm_deleting(offer)
+
+= form_navigation_btn :new

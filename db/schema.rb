@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913133848) do
+ActiveRecord::Schema.define(version: 20170914094802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,39 @@ ActiveRecord::Schema.define(version: 20170913133848) do
     t.bigint "user_id", null: false
     t.bigint "department_id", null: false
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
+  end
+
+  create_table "group_offers", force: :cascade do |t|
+    t.string "title"
+    t.string "offer_state"
+    t.string "volunteer_state"
+    t.integer "necessary_volunteers"
+    t.string "volunteer_responsible"
+    t.string "volunteer_responsible_name"
+    t.text "description"
+    t.boolean "women", default: false
+    t.boolean "men", default: false
+    t.boolean "children", default: false
+    t.boolean "teenagers", default: false
+    t.boolean "unaccompanied", default: false
+    t.boolean "all", default: false
+    t.boolean "long_term", default: false
+    t.boolean "regular", default: false
+    t.boolean "short_term", default: false
+    t.boolean "workday", default: false
+    t.boolean "weekend", default: false
+    t.boolean "flexible", default: false
+    t.boolean "morning", default: false
+    t.boolean "afternoon", default: false
+    t.boolean "evening", default: false
+    t.text "date_time"
+    t.datetime "deleted_at"
+    t.string "organization"
+    t.bigint "department_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
+    t.index ["department_id"], name: "index_group_offers_on_department_id"
   end
 
   create_table "hours", force: :cascade do |t|
@@ -400,6 +433,7 @@ ActiveRecord::Schema.define(version: 20170913133848) do
   add_foreign_key "certificates", "users"
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "clients", "users"
+  add_foreign_key "group_offers", "departments"
   add_foreign_key "hours", "billing_expenses"
   add_foreign_key "journals", "assignments"
   add_foreign_key "journals", "users"
