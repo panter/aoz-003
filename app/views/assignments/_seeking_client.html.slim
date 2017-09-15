@@ -5,20 +5,15 @@ tr
   td= nationality_name(seeking_client.additional_nationality)
   td= seeking_client.contact.city
   td= seeking_client.contact.postal_code
-  td
-    - seeking_client.language_skills.each do |language|
-      = language.full_language_skills
+  td= seeking_client.language_skills.map { |language| language.full_language_skills }.join(', ')
   td= seeking_client.motivation
   td= t(seeking_client.experience) if seeking_client.experience.present?
   td
-    - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
-      - if seeking_client[single]
-        = t("activerecord.attributes.volunteer.#{single}")
-        br
+    - seeking_client.slice(Volunteer::SINGLE_ACCOMPANIMENTS).reject { |k, v| !v }.keys.each do |key|
+      div= t("activerecord.attributes.volunteer.#{key}")
   td
-    - Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
-      - if seeking_client[group]
-        = t("activerecord.attributes.volunteer.#{group}")
-        br
+    - seeking_client.slice(Volunteer::GROUP_ACCOMPANIMENTS).reject { |k, v| !v }.keys.each do |key|
+      div= t("activerecord.attributes.volunteer.#{key}")
+  td= seeking_client.external? ? t_attr(:external) : t_attr(:internal)
   td= button_link t_action(:show), volunteer_path(seeking_client)
   td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: seeking_client.id)
