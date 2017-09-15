@@ -30,7 +30,9 @@ h1= t_title(:index, BillingExpense)
               td= link_to t_action(:destroy), volunteer_billing_expense_path(@volunteer, record), confirm_deleting(record)
 .row
   .col-xs-12
-= form_navigation_btn :new
+    = simple_form_for [@volunteer, BillingExpense.new] do |f|
+      = f.hidden_field :volunteer_id, value: @volunteer.id
+      = f.button :submits
 .row
   .col-xs-12
     = button_link t('back'), @volunteer
