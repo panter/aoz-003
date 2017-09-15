@@ -1,9 +1,9 @@
 ---
 de:
+  application:
+    navigation:
+      group_offers: Gruppenangebote
   aaa_injectable: &id-injectables
-    application:
-      navigation:
-        group_offers: Gruppenangebote
     messages:
       confirm_record_delete: '%{model} wirklich löschen?'
       confirm_delete: "Wirklich %{model} %{record} löschen?"
