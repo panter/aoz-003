@@ -24,4 +24,8 @@ class ApplicationScope
   def resolve_author_and_assignment
     scope.joins(:assignment).where(author: user)
   end
+
+  def resolve_department
+    scope.where(department: user.department)
+  end
 end

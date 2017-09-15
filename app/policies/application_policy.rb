@@ -19,6 +19,18 @@ class ApplicationPolicy
     superadmin? || volunteer?
   end
 
+  def superadmin_or_department_manager?
+    superadmin? || department_manager?
+  end
+
+  def departments_offer?
+    department_manager? && record.department == user.department.first
+  end
+
+  def superadmin_or_departments_offer?
+    superadmin? || departments_offer?
+  end
+
   def show?
     scope.where(id: record.id).exists?
   end

@@ -1,0 +1,63 @@
+.row
+  .col-xs-12
+    h1= @group_offer.title
+
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td= t_attr(:offer_state)
+            td
+              = t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
+              - if @group_offer.external?
+                br
+                = @group_offer.organization
+              - elsif @group_offer.department
+                br
+                = link_to @group_offer.department, department_path(@group_offer.department.id)
+          tr
+            td= t_attr(:volunteer_state)
+            td
+              - if @group_offer.necessary_volunteers
+                = "#{@group_offer.necessary_volunteers} "
+                = t('.necessary_volunteers')
+                br
+              - if @group_offer.volunteer_state?
+                = t("volunteer_state.#{@group_offer.volunteer_state}")
+                br
+              - if @group_offer.volunteer_responsible?
+                = t("volunteer_responsible.#{@group_offer.volunteer_responsible}")
+                br
+              = @group_offer.volunteer_responsible_name if @group_offer.volunteer_responsible_name
+          tr
+            td= t_attr(:description)
+            td= @group_offer.description
+          tr
+            td= t_attr(:target_group)
+            td
+              - GroupOffer.target_collection.each do |target|
+                - if @group_offer[target]
+                  = t_attr(target)
+                  br
+          tr
+            td= t_attr(:duration)
+            td
+              - GroupOffer.duration_collection.each do |duration|
+                - if @group_offer[duration]
+                  = t_attr(duration)
+                  br
+          tr
+            td= t_attr(:availability)
+            td
+              - availability_collection.each do |availability|
+                - if @group_offer[availability]
+                  = t("availability.#{availability}")
+                  br
+          tr
+            td= t_attr(:date_time)
+            td= @group_offer.date_time
+
+= form_navigation_btn :edit
+= form_navigation_btn :back

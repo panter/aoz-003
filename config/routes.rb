@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :assignment_journals
   end
   resources :reminders, only: [:index, :update, :destroy]
+  resources :group_offers
 
   root 'application#home'
 end

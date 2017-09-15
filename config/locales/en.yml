@@ -1,5 +1,8 @@
 ---
 en:
+  application:
+    navigation:
+      group_offers: Group offers
   aaa_injectable: &id-injectables
     messages:
       confirm_record_delete: 'Really delete %{model}?'
@@ -55,11 +58,21 @@ en:
       street: Street
       updated_at: Updated at
       zip: Zip code
+    group_offers:
+      form:
+        for_external: Organization (for external group offers)
+      index:
+        necessary_volunteers: Necessary volunteers
+      show:
+        necessary_volunteers: Necessary volunteers
     language_level: &id-lang-levels
       basic: Basic
       fluent: Fluent
       good: Good
       native_speaker: Native speaker
+    offer_state: &id-offer-states
+      external_offer: External group offer
+      internal_offer: Internal group offer
     rejection_type: &id-rejection-types
       her: by volunteer before / after the first call
       other: Other
@@ -117,6 +130,12 @@ en:
         report_hours: Report hours
         show_certificates: Show certificates
         show_certificate: Show certificate
+    volunteer_responsible: &id-volunteer-responsible
+      volunteer_accountable: Manager of volunteer group
+      volunteer_member: Member in a volunteer group
+    volunteer_state: &id-volunteer-states
+      external_volunteer: External volunteer
+      internal_volunteer: Internal volunteer
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
@@ -215,6 +234,7 @@ en:
       client: Client
       contact: Contact
       department: Department
+      group_offer: Group offer
       hour: Hour report
       journal: Journal
       language_skill: Language skill
@@ -531,6 +551,10 @@ en:
           b: 'B'
           c: 'C'
         state: *id-states
+      group_offer:
+        offer_state: *id-offer-states
+        volunteer_responsible: *id-volunteer-responsible
+        volunteer_state: *id-volunteer-states
       journal:
         category: *id-categories
       user:

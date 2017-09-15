@@ -24,6 +24,8 @@ nav.navbar.navbar-top.hidden-print
             li= link_to t_model(Department), department_path(current_user.department.first.id)
           - if policy(Assignment).index?
             li= link_to t('assignments'), assignments_path
+          - if policy(GroupOffer).index?
+            li= link_to t('.group_offers'), group_offers_path
           - if policy(PerformanceReport).index?
             li= link_to t('performance_reports', count: 2), performance_reports_path
           - if policy(Reminder).index?
