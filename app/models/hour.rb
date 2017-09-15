@@ -8,6 +8,8 @@ class Hour < ApplicationRecord
   validates :hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :meeting_date, presence: true
 
+  scope :billable, (-> { where(billing_expense: nil) })
+
   HOUR_RANGE = (1..8).to_a
   MINUTE_RANGE = [0, 15, 30, 45].freeze
 end
