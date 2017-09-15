@@ -9,7 +9,7 @@ class BillingExpense < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  AMOUNT = [0, 50, 100, 150].freeze
+  AMOUNT = [50, 100, 150].freeze
 
   validates :amount, inclusion: { in: AMOUNT }
 

@@ -13,7 +13,7 @@ nav.navbar.section-navigation
           li
             = simple_form_for [@volunteer, BillingExpense.new] do |f|
               = f.hidden_field :volunteer_id, value: @volunteer.id
-              = f.button :submits
+              = f.button :submit
           - if @volunteer.billing_expenses.any?
             li = button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
         - if @volunteer.assignments?
