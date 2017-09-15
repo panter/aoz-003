@@ -71,6 +71,10 @@ class Volunteer < ApplicationRecord
 
   scope :with_hours, (-> { joins(:hours).distinct })
 
+  def billable_hours_sum
+    hours.billable.sum(&:hours) + hours.billable.sum(&:minutes) / 60
+  end
+
   def hours_sum
     hours.sum(&:hours) + hours.sum(&:minutes) / 60
   end

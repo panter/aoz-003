@@ -1,8 +1,6 @@
 class BillingExpensesController < ApplicationController
   before_action :set_billing_expense, only: [:show, :destroy]
   before_action :set_volunteer
-  before_action :set_volunteer_hours, only: :create
-  after_action :volunteer_hours_update, only: :create
 
   def index
     authorize BillingExpense
@@ -13,10 +11,7 @@ class BillingExpensesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf:
-          "Spesenauszahlung-#{@volunteer.contact.first_name}-#{@volunteer.contact.last_name}-#{@volunteer.hours.last.meeting_date}",
-          template: 'billing_expenses/show.html.slim',
-          layout: 'pdf.pdf', encoding: 'UTF-8'
+        render pdf: file_name, layout: 'pdf.pdf', encoding: 'UTF-8'
       end
     end
   end
@@ -29,8 +24,9 @@ class BillingExpensesController < ApplicationController
   def create
     @billing_expense = BillingExpense.new(
       billing_expense_params.merge(@volunteer.slice(:bank, :iban))
-                            .merge(amount: compute_hours, user_id: current_user.id)
     )
+    @billing_expense.hours = @volunteer.hours.billable
+    @billing_expense.user = current_user
     authorize @billing_expense
     if @billing_expense.save
       redirect_to volunteer_billing_expenses_url, make_notice
@@ -55,27 +51,8 @@ class BillingExpensesController < ApplicationController
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
   end
 
-  def set_volunteer_hours
-    @volunteer_hours = @volunteer.hours.where(billing_expense: nil)
-  end
-
-  def compute_hours
-    return if @volunteer_hours.empty?
-    compute_amount(@volunteer_hours.sum(&:hours) + @volunteer_hours.sum(&:minutes)/60)
-  end
-
-  def compute_amount(hours)
-    if hours < 25
-      50
-    elsif hours < 50
-      100
-    else
-      150
-    end
-  end
-
-  def volunteer_hours_update
-    @volunteer_hours.update(billing_expense_id: @billing_expense.id)
+  def file_name
+    [@volunteer.contact.full_name, @volunteer.hours.maximum(:meeting_date)].join('-').parameterize
   end
 
   def billing_expense_params
