@@ -27,9 +27,11 @@
               - if offer.offer_state?
                 = t("offer_state.#{offer.offer_state}")
                 br
-              - if offer.external?
+              - if offer.external? && offer.organization
+                = "#{t('.offer_of')} "
                 = offer.organization
-              - elsif offer.department
+              - if !offer.external? && offer.department
+                = "#{t('.offer_of')} "
                 = link_to offer.department, department_path(offer.department.id)
             td
               - if offer.necessary_volunteers

@@ -63,10 +63,10 @@ de:
       hours: Stunden
       minutes: Minuten
     group_offers:
-      index:
+      index: &id-help-texts
         necessary_volunteers: nötig(e) Freiwillige
-      show:
-        necessary_volunteers: nötig(e) Freiwillige
+        offer_of: Angebot von
+      show: *id-help-texts
       form:
         for_external: Organization (Bei externen Gruppenangebot)
     language_level: &id-lang-levels
