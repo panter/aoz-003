@@ -4,7 +4,7 @@ class AssignmentJournalsController < ApplicationController
 
   def index
     authorize AssignmentJournal
-    @assignment_journals = policy_scope(AssignmentJournal)
+    @assignment_journals = policy_scope(AssignmentJournal).where(assignment: @assignment)
   end
 
   def show; end

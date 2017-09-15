@@ -1,8 +1,8 @@
 class AssignmentJournalPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      return all if superadmin?
-      resolve_author if volunteer?
+      return resolve_assignment if superadmin?
+      resolve_author_and_assignment if volunteer?
     end
   end
 

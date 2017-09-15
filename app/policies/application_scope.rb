@@ -17,7 +17,11 @@ class ApplicationScope
     scope.where(user: user)
   end
 
-  def resolve_author
-    scope.where(author: user)
+  def resolve_assignment
+    scope.joins(:assignment)
+  end
+
+  def resolve_author_and_assignment
+    scope.joins(:assignment).where(author: user)
   end
 end
