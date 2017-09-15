@@ -1,46 +1,24 @@
 require 'test_helper'
 
 class AssignmentJournalPolicyTest < PolicyAssertions::Test
-  def setup
-    @superadmin = create :user, role: 'superadmin'
-    @social_worker = create :user, role: 'social_worker'
-    @department_manager = create :user, role: 'department_manager'
-    create :assignment_journal
+  test 'superadmin can use all actions' do
+    assert_permit(create(:user), AssignmentJournal, 'new?', 'create?', 'index?', 'show?', 'edit?',
+      'update?', 'destroy?')
   end
 
-  test 'Create: Only superadmin can create Assignment Journal' do
-    assert_permit @superadmin, AssignmentJournal, 'new?', 'create?'
-    refute_permit @social_worker, AssignmentJournal, 'new?', 'create?'
-    refute_permit @department_manager, AssignmentJournal, 'new?', 'create?'
+  test 'social worker and department manager have no access' do
+    refute_permit(create(:social_worker), AssignmentJournal, 'new?', 'create?', 'index?', 'show?',
+      'edit?', 'update?', 'destroy?')
+    refute_permit(create(:department_manager), AssignmentJournal, 'new?', 'create?', 'index?',
+      'show?', 'edit?', 'update?', 'destroy?')
   end
 
-  test 'Destroy: Only superadmin can destroy Assignment Journal' do
-    assert_permit @superadmin, AssignmentJournal.first, 'destroy?'
-    refute_permit @social_worker, AssignmentJournal.first, 'destroy?'
-    refute_permit @department_manager, AssignmentJournal.first, 'destroy?'
-  end
-
-  test 'Update: Only superadmin can update Assignment Journal' do
-    assert_permit @superadmin, AssignmentJournal.first, 'update?', 'edit?'
-    refute_permit @social_worker, AssignmentJournal.first, 'update?', 'edit?'
-    refute_permit @department_manager, AssignmentJournal.first, 'update?', 'edit?'
-  end
-
-  test 'Show: social worker and department manager cannot show Assignment Journal' do
-    refute_permit @social_worker, AssignmentJournal.first, 'show?'
-    refute_permit @department_manager, AssignmentJournal.first, 'show?'
-  end
-
-  test 'Show: superadmin can see all Assignment Journals' do
-    create :assignment_journal
-    AssignmentJournal.all.each do |assignment_journal|
-      assert_permit @superadmin, assignment_journal, 'show?'
-    end
-  end
-
-  test 'Index: Only superadmin can index Assignment Journals' do
-    assert_permit @superadmin, AssignmentJournal, 'index?'
-    refute_permit @social_worker, AssignmentJournal, 'index?'
-    refute_permit @department_manager, AssignmentJournal, 'index?'
+  test 'volunteer has limited access' do
+    volunteer = create(:user_volunteer)
+    assignment_journal = create :assignment_journal
+    assignment_journal_volunteer = create :assignment_journal, author: volunteer
+    refute_permit(volunteer, assignment_journal, 'show?', 'edit?', 'update?', 'destroy?')
+    assert_permit(volunteer, assignment_journal_volunteer, 'index?', 'show?', 'edit?', 'update?',
+      'destroy?')
   end
 end
