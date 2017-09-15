@@ -22,12 +22,8 @@ class BillingExpense < ApplicationRecord
     Hour.where(billing_expense: id)
   end
 
-  def amount=(_value)
-    super(compute_amount)
-  end
-
   def auto_set_amount
-    self.amount = nil
+    self.amount = compute_amount
   end
 
   def compute_amount
