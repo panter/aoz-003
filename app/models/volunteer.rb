@@ -42,7 +42,9 @@ class Volunteer < ApplicationRecord
 
   has_many :assignments
   has_many :clients, through: :assignments
+
   has_many :hours, through: :assignments
+
   has_many :assignment_journals, through: :assignments
   has_many :billing_expenses
 
@@ -69,18 +71,6 @@ class Volunteer < ApplicationRecord
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
 
   scope :with_hours, (-> { joins(:hours).distinct })
-
-  def billable_hours_sum
-    hours.billable.sum(&:hours) + hours.billable.sum(&:minutes) / 60
-  end
-
-  def hours_sum
-    hours.sum(&:hours) + hours.sum(&:minutes) / 60
-  end
-
-  def minutes_sum
-    hours.sum(&:minutes) % 60
-  end
 
   def assignment_kinds
     has_kinds = assignments.map(&:kind).uniq

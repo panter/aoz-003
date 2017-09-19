@@ -5,8 +5,8 @@
     h3
       strong
         = "#{t('billing_expense_pdf.title')} #{@billing_expense.volunteer.contact.full_name} "
-        - if @billing_expense.billed_hours.any?
-          = "von #{(l @billing_expense.billed_hours.last.meeting_date, format: :long)}"
+        - if @billing_expense.hours.any?
+          = "von #{l(@billing_expense.hours.maximum(:meeting_date), format: :long)}"
 
 .row
   .col-xs-11.col-xs-offset-1

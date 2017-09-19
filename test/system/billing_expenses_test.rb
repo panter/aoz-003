@@ -16,6 +16,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
   end
 
   test 'no duplicate billing expenses' do
+    click_button 'Create Billing expense'
+    visit volunteer_path(@volunteer)
     assert_no_difference 'BillingExpense.count' do
       click_button 'Create Billing expense'
       assert page.has_text? 'This billing expense was already created'

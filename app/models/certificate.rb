@@ -6,9 +6,10 @@ class Certificate < ApplicationRecord
 
   def build_values
     return unless text_body.nil?
-    update(text_body: default_text_body, function: DEFAULT_FUNCTION, hours: volunteer.hours_sum,
-      minutes: volunteer.minutes_sum, assignment_kinds: volunteer.assignment_kinds,
-      volunteer_contact: convert_volunteer_contact, institution: DEFAULT_INSTITUTION)
+    update(text_body: default_text_body, function: DEFAULT_FUNCTION,
+      hours: volunteer.hours.total_hours, minutes: volunteer.hours.minutes_rest,
+      assignment_kinds: volunteer.assignment_kinds, volunteer_contact: convert_volunteer_contact,
+      institution: DEFAULT_INSTITUTION)
     update(volunteer.assignments_duration)
   end
 

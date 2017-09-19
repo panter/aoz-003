@@ -11,7 +11,7 @@ class BillingExpensesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: file_name, layout: 'pdf.pdf', encoding: 'UTF-8'
+        render pdf: pdf_file_name, layout: 'pdf.pdf', encoding: 'UTF-8'
       end
     end
   end
@@ -22,10 +22,9 @@ class BillingExpensesController < ApplicationController
   end
 
   def create
-    @billing_expense = BillingExpense.new(
-      billing_expense_params.merge(@volunteer.slice(:bank, :iban))
-    )
+    @billing_expense = BillingExpense.new(@volunteer.slice(:bank, :iban))
     @billing_expense.hours = @volunteer.hours.billable
+    @billing_expense.volunteer = @volunteer
     @billing_expense.user = current_user
     authorize @billing_expense
     if @billing_expense.save
@@ -51,8 +50,9 @@ class BillingExpensesController < ApplicationController
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
   end
 
-  def file_name
-    [@volunteer.contact.full_name, @volunteer.hours.maximum(:meeting_date)].join('-').parameterize
+  def pdf_file_name
+    'Spesenauszahlung-' +
+      [@volunteer.contact.full_name, @volunteer.hours.maximum(:meeting_date)].join('-').parameterize
   end
 
   def billing_expense_params
