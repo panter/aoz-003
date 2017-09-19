@@ -1,17 +1,19 @@
 = simple_error_notice f
 
 - if policy(Volunteer).supervisor_privileges?
+  = f.input :external, input_html: { data: { state: { remove: ['contacted', 'resigned', 'inactive', 'rejected'], selected: 'accepted' }, hide: ['banc-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
   fieldset
-    legend= t_attr(:state)
-    .row
-      .col-xs-12
-        = f.input :external, input_html: { data: { state: { remove: ['contacted', 'resigned', 'inactive', 'rejected'], selected: 'accepted' }, hide: ['banc-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
-      .col-xs-6
-        = f.input :state, collection: Volunteer.state_collection, default: :registered
-      .col-xs-6
-        = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
-      .col-xs-12
-        = f.input :rejection_text
+  legend= t('.acceptance.management')
+  = f.input :acceptance, collection: Volunteer.acceptance_collection, as: :radio_buttons, include_blank: false, selected: @volunteer.acceptance.to_i
+  - unless @volunteer.undecided?
+    p= "#{t_attr(:accepted_at)} #{l(@volunteer.accepted_at)}" if @volunteer.accepted_at.present?
+    p= "#{t_attr(:undecided_at)} #{l(@volunteer.undecided_at)}" if @volunteer.undecided_at.present?
+    p= "#{t_attr(:rejected_at)} #{l(@volunteer.rejected_at)}" if @volunteer.rejected_at.present?
+    p= "#{t_attr(:resigned_at)} #{l(@volunteer.resigned_at)}" if @volunteer.resigned_at.present?
+
+  = f.input :state, collection: Volunteer.state_collection, default: :registered
+  = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
+  = f.input :rejection_text
 
 - if policy(Volunteer).checklist?
   fieldset.checklist

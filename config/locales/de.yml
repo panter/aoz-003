@@ -124,8 +124,22 @@ de:
       resigned: Abgemeldet
     updated_at: Geändert um
     volunteer_applications: &id-volunteers-by-actions
+      acceptance: &id-volunteer-acceptance
+        management: Aufnahme Verwaltung
+        accepted: Akzeptiert
+        accept: Akzeptieren
+        accepted_at: Akzeptiert am
+        registered: Registriert
+        registered_at: Registriert am
+        rejected: Abgelehnt
+        reject: Ablehnen
+        rejected_at: Abgelehnt am
+        resigned: Ausgetreten
+        resign: Austreten
+        resigned_at: Ausgetreten am
       create: &id-volunteers-create
         <<: *id-availability
+        acceptance: *id-volunteer-acceptance
         availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
       edit: *id-volunteers-create
       form: *id-volunteers-create
@@ -302,7 +316,7 @@ de:
         profile: Profil
         role: Rolle
       volunteer: &id-volunteer_attributes
-        <<: [*id-availability, *id-generic_keys]
+        <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance]
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
@@ -346,6 +360,7 @@ de:
         skills: Kompetenzen
         sport: Sport
         strengths: Stärken
+        take_more_assignments: Akzeptiere weitere Einsätze
         teenagers: Jugendliche
         training: Bildung
         trial_period: Probezeitbericht erhalten

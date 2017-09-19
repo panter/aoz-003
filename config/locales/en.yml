@@ -119,6 +119,19 @@ en:
       reserved: Reserved
       resigned: Terminated
     volunteer_applications: &id-volunteers-by-actions
+      acceptance: &id-volunteer-aceptance
+        acceptance_management: Acceptance Management
+        accepted: Accepted
+        accept: Accept
+        accepted_at: Accepted at
+        registered: Registered
+        registered_at: Registered at
+        rejected: Rejected
+        reject: Reject
+        rejected_at: Rejected at
+        resigned: Resigned
+        resign: Resign
+        resigned_at: Resigned at
       create: &id-volunteers-create
         <<: *id-availability
         availability: What times are you available for voluntary engagement?
@@ -189,7 +202,7 @@ en:
         department: Department
         email: Email
       volunteer: &id-volunteer_attributes
-        <<: [*id-availability, *id-generic_keys]
+        <<: [*id-availability, *id-generic_keys, *id-volunteer-aceptance]
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
         address: Address

@@ -443,6 +443,13 @@ ActiveRecord::Schema.define(version: 20170922120423) do
     t.string "iban"
     t.boolean "waive", default: false
     t.boolean "external", default: false
+    t.datetime "registered"
+    t.integer "acceptance", default: 0
+    t.datetime "accepted_at"
+    t.datetime "rejected_at"
+    t.datetime "resigned_at"
+    t.datetime "undecided_at"
+    t.boolean "take_more_assignments", default: false
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end

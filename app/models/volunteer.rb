@@ -9,6 +9,7 @@ class Volunteer < ApplicationRecord
 
   before_validation :handle_external
   before_save :default_state
+  before_save :record_acceptance_changed
 
   # States
   REGISTERED = 'registered'.freeze
@@ -28,9 +29,10 @@ class Volunteer < ApplicationRecord
 
   STATES = STATES_FOR_REVIEWED.dup.unshift(REGISTERED).freeze
 
+  enum acceptance: [:undecided, :accepted, :rejected, :resigned]
+
   belongs_to :user, -> { with_deleted }, optional: true
-  belongs_to :registrar, optional: true,
-    class_name: 'User', foreign_key: 'registrar_id'
+  belongs_to :registrar, optional: true, class_name: 'User', foreign_key: 'registrar_id'
 
   has_many :certificates
 
@@ -62,11 +64,16 @@ class Volunteer < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
-
   scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
   scope :created_before, ->(max_time) { where('volunteers.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('volunteers.created_at > ?', min_time) }
+
+  scope :with_hours, (-> { joins(:hours).distinct })
+
+  scope :all_accepted, (-> { where(acceptance: :accepted) })
+  scope :all_resigned, (-> { where(acceptance: :resigned) })
+  scope :all_rejected, (-> { where(acceptance: :rejected) })
+  scope :all_undecided, (-> { where(acceptance: :undecided) })
 
   scope :with_assignments, (-> { joins(:assignments).distinct })
   scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active).distinct })
@@ -79,10 +86,28 @@ class Volunteer < ApplicationRecord
   scope :not_in_any_group_offer, lambda {
     left_joins(:group_offers).where(group_offers_volunteers: { volunteer_id: nil })
   }
+  scope :with_inactive_assignments, (-> { joins(:assignments).merge(Assignment.inactive).distinct })
 
 
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
+  scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
+
+  scope :seeking_clients, lambda {
+    all_inactive + all_active.will_take_more_assignments
+  }
+  scope :all_active, (-> { all_accepted.with_active_assignments })
+  scope :all_inactive, lambda {
+    all_accepted.without_assignment + all_accepted.with_inactive_assignments
+  }
+
+  def active?
+    accepted? && assignments.active.any?
+  end
+
+  def inactive?
+    accepted? && assignments.active.blank?
+  end
 
   def handle_external
     contact.external = true if external
@@ -136,20 +161,26 @@ class Volunteer < ApplicationRecord
     state == REGISTERED
   end
 
-  def accepted?
-    state == ACCEPTED
-  end
 
-  def rejected?
-    state == REJECTED
-  end
 
-  def resigned?
-    state == RESIGNED
-  end
+  # def accepted?
+  #   state == ACCEPTED
+  # end
+
+  # def rejected?
+  #   state == REJECTED
+  # end
+
+  # def resigned?
+  #   state == RESIGNED
+  # end
 
   def self.state_collection
     STATES.map(&:to_sym)
+  end
+
+  def self.acceptance_collection
+    acceptances.keys.map(&:to_sym)
   end
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
@@ -175,6 +206,10 @@ class Volunteer < ApplicationRecord
   end
 
   private
+
+  def record_acceptance_changed
+    self["#{acceptance_change[1]}_at".to_sym] = Time.zone.now if acceptance_changed?
+  end
 
   def default_state
     self.state ||= REGISTERED
