@@ -10,10 +10,9 @@
 
   = f.input :profession
 
-  .row
-    .col-xs-12
-      h3= t('general_availability')
-    = render 'availability/form', f: f
+
+  h3= t('general_availability')
+  = render 'availability/form', f: f
 
   .row
     .col-xs-12

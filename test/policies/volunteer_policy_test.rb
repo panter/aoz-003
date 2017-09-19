@@ -42,16 +42,4 @@ class VolunteerPolicyTest < PolicyAssertions::Test
   test 'Seeking clients: department manager cannot see volunteers seeking clients' do
     refute_permit @department_manager, Volunteer, 'seeking_clients?'
   end
-
-  test "Checklist: superadmin can see volunteer's checklist" do
-    assert_permit @superadmin, Volunteer, 'checklist?'
-  end
-
-  test "Checklist: social worker cannot see volunteer's checklist" do
-    refute_permit @social_worker, Volunteer, 'checklist?'
-  end
-
-  test "Checklist: department manager cannot see volunteer's checklist" do
-    refute_permit @department_manager, Volunteer, 'checklist?'
-  end
 end
