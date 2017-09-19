@@ -49,6 +49,7 @@ class Assignment < ApplicationRecord
   scope :start_within, ->(date_range) { where(period_start: date_range) }
 
   scope :active, (-> { not_ended.started })
+  scope :inactive, (-> { ended })
 
   scope :active_between, lambda { |start_date, end_date|
     start_within(start_date..end_date)
