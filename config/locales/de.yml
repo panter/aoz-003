@@ -4,24 +4,18 @@ de:
     navigation:
       group_offers: Gruppenangebote
   aaa_injectable: &id-injectables
-    messages:
-      confirm_record_delete: '%{model} wirklich löschen?'
-      confirm_delete: "Wirklich %{model} %{record} löschen?"
-      select_prompt: "%{model} wählen"
-    created_at: Erstellt um
-    updated_at: Geändert um
-    assignment_kinds: &id-assignment-kinds
-      accompaniment: Einzelperson
-      family: Familie
-      workshop: Handwerkstatt
-      german_class: Deutschkurs
-      transit_center: Durchgangszentrum
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: egal
       age_old: älter als 51
       age_young: 20 - 35
       all: Alle
+    assignment_kinds: &id-assignment-kinds
+      accompaniment: Einzelperson
+      family: Familie
+      german_class: Deutschkurs
+      transit_center: Durchgangszentrum
+      workshop: Handwerkstatt
     availability: &id-availability
       afternoon: Nachmittags
       detailed_description: Genauere Angaben
@@ -36,6 +30,7 @@ de:
       feedback: Rückmeldung
       file: Datei
       telephone: Telefonat
+    created_at: Erstellt um
     gender_request: &id-gender_requests
       all: Alle
       no_matter: Geschlecht egal
@@ -49,8 +44,10 @@ de:
       email: Email
       first_name: Vorname
       full_name: Name
+      hours: Stunden
       languages: Sprachen
       last_name: Nachname
+      minutes: Minuten
       nationality: Nationalität
       phone: Telefonnummer
       postal_code: PLZ
@@ -60,8 +57,6 @@ de:
       street: Strasse
       updated_at: Aktualisiert am
       zip: Postleitzahl
-      hours: Stunden
-      minutes: Minuten
     group_offers:
       index: &id-help-texts
         necessary_volunteers: 'Benötigt %{amount} Freiwillige'
@@ -86,6 +81,10 @@ de:
     offer_type: &id-offer-types
       external_offer: Externes Gruppenangebot
       internal_offer: Internes Gruppenangebot
+    messages:
+      confirm_delete: "Wirklich %{model} %{record} löschen?"
+      confirm_record_delete: '%{model} wirklich löschen?'
+      select_prompt: "%{model} wählen"
     rejection_type: &id-rejection-types
       her: von Freiwillige/r vor / nach Erstgespräch
       other: Anderer Grund
@@ -101,19 +100,6 @@ de:
       son: Sohn
       uncle: Onkel
       wife: (Ehe-)Partnerin
-    state: &id-states
-      active_further: Aktiv, an weiteren Einsätzen interessiert
-      accepted: Akzeptiert
-      active: Aktiv
-      contacted: Kontaktiert
-      all: Alle
-      finished: Abgeschlossen
-      inactive: Inaktiv
-      interested: Interessiert
-      registered: Registriert
-      rejected: Abgelehnt
-      reserved: Reserviert
-      resigned: Abgemeldet
     role: &id-roles
       department_manager: Standortverantwortliche/er
       social_worker: Sozialarbeiter/in
@@ -123,25 +109,39 @@ de:
       all: Alle
       mr: Herr
       mrs: Frau
+    state: &id-states
+      accepted: Akzeptiert
+      active: Aktiv
+      active_further: Aktiv, an weiteren Einsätzen interessiert
+      all: Alle
+      contacted: Kontaktiert
+      finished: Abgeschlossen
+      inactive: Inaktiv
+      interested: Interessiert
+      registered: Registriert
+      rejected: Abgelehnt
+      reserved: Reserviert
+      resigned: Abgemeldet
+    updated_at: Geändert um
     volunteer_applications: &id-volunteers-by-actions
       create: &id-volunteers-create
         <<: *id-availability
         availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
       edit: *id-volunteers-create
-      new: *id-volunteers-create
       form: *id-volunteers-create
-      one: Freiwillige/r
-      other: Freiwillige
       index: &id-volunteers-index
         show_assignments: Begleitete anzeigen
-      volunteer: *id-volunteers-index
+      new: *id-volunteers-create
+      one: Freiwillige/r
+      other: Freiwillige
       show:
         availability: Verfügbarkeit
         hour_reports: Stunden Rapporte
         new_certificate: Nachweis ausstellen
         report_hours: Stunden erfassen
-        show_certificates: Nachweise anzeigen
         show_certificate: Nachweis anzeigen
+        show_certificates: Nachweise anzeigen
+      volunteer: *id-volunteers-index
     volunteer_state: &id-volunteer-states
       external_volunteer: Externe Freiwillige
       internal_volunteer: AOZ-Freiwillige
@@ -158,19 +158,19 @@ de:
       assignment:
         <<: *id-generic_keys
         agreement: Zustimmung
-        period: Zeitraum
-        period_end: Einsatzende
-        period_start: Einsatzbeginn
         client: Klient/in
         confirmation: Ich bestätige alle Stunden eingetragen und Feedback zum Einsatz gegeben zu haben.
-        volunteer: Freiwillige
         created_by: Verantwortliche/rs
         ended: Beendet
         first_instruction_lesson: Einführungskurs
         home_visit: Hausbesuch
         performance: Kennzahlen
         performance_appraisal_review: Standortgespräch
+        period: Zeitraum
+        period_end: Einsatzende
+        period_start: Einsatzbeginn
         probation_period: Probezeit
+        volunteer: Freiwillige
       assignment_journal:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
@@ -185,16 +185,16 @@ de:
         assignment: Begleitung
       certificate:
         <<: *id-generic_keys
-        duration_start: Von
-        duration_end: Bis
-        function: Funktion
-        institution: Institution
-        first_last_name: Vorname/Name
-        zip_city: PLZ/Ort
         assignment: Einsatz
         duration: Einsatzdauer
-        time_given: Zeitaufwand
+        duration_end: Bis
+        duration_start: Von
+        first_last_name: Vorname/Name
+        function: Funktion
+        institution: Institution
         issuer: Aussteller
+        time_given: Zeitaufwand
+        zip_city: PLZ/Ort
       client:
         <<: *id-generic_keys
         actual_activities: Aktuelle Tätigkeiten
@@ -204,6 +204,7 @@ de:
         competent_authority: Zusätzlich involvierte Stelle
         date_of_year: Geburtsjahr
         education: Beruf oder Ausbildung im Herkunftsland
+        entry_year: Einreisejahr
         gender_request: Geschlecht Freiwillige/r
         goals: Inhalte der Begleitung
         interests: Interessen
@@ -213,7 +214,6 @@ de:
         permit: Bewilligung
         relatives: Verwandte/r
         user: User
-        entry_year: Einreisejahr
       contact:
         <<: *id-generic_keys
         extended: Adresszusatz
@@ -264,7 +264,7 @@ de:
         minutes: Minuten
       journal:
         <<: *id-generic_keys
-        author: Author
+        author: Autor
         body: Text
         category: Kategorie
         entry: Eintrag
@@ -277,6 +277,17 @@ de:
         language: Sprache
         level: Niveau
         native_language: Muttersprache
+      performance_report:
+        <<: *id-generic_keys
+        comment: Kommentar
+        extern: Extern
+        intern: Intern
+        period: Zeitraum
+        period_end: Bis
+        period_start: Von
+        scope: Bereich
+        title: Titel
+        user: Ersteller/in
       profile:
         <<: *id-generic_keys
       relative:
@@ -292,13 +303,13 @@ de:
         role: Rolle
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys]
-        available: Verfügbar
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
         external: Extern
         internal: Intern
+        available: Verfügbar
         bank: Name der Bank
         bank_account: Kontodaten eingetragen
         bank_details: Name der Bank / IBAN
@@ -353,17 +364,6 @@ de:
         subject: Betreff
         title: Überschrift
         user: Ersteller
-      performance_report:
-        <<: *id-generic_keys
-        period_start: Von
-        period_end: Bis
-        scope: Bereich
-        extern: Extern
-        intern: Intern
-        period: Zeitraum
-        title: Titel
-        comment: Kommentar
-        user: Ersteller/in
     errors:
       models:
         profile:
@@ -399,8 +399,8 @@ de:
       assignment: Begleitung
       assignment_journal: Inhaltliches Journal
       billing_expense: Spesenformular
-      client: Klient/in
       certificate: Nachweis
+      client: Klient/in
       contact: Kontakt
       department: Standort
       group_offer: Gruppenangebot
@@ -409,6 +409,7 @@ de:
       hour: Stunde
       journal: Journal
       language_skill: Sprachkompetenz
+      performance_report: Kennzahlen Report
       profile: Profil
       relative: Verwante/r
       reminder: Erinnerung
@@ -416,7 +417,6 @@ de:
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
       volunteer_email: Anmeldungsbestätigungs-Nachricht editieren
-      performance_report: Kennzahlen Report
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journaleintrag verfassen
   add_language: Sprache hinzufügen
@@ -432,15 +432,10 @@ de:
     agreement_text:
       -
         title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-        items:
-          - Verhaltenskodex für Freiwillige
-          - Rechte und Pflichten für Freiwillige
-          - AOZ Leitlinien Praktische Integrationsarbeit 2011
+        items: ['Verhaltenskodex für Freiwillige', 'Rechte und Pflichten für Freiwillige', 'AOZ Leitlinien Praktische Integrationsarbeit 2011']
       -
         title: Allenfalls auch
-        items:
-          - Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
-          - Abmachungen für das Leiten von niederschwelligen Deutschkursen
+        items: ['Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)', 'Abmachungen für das Leiten von niederschwelligen Deutschkursen']
     city_date: Ort, Datum
     client_title: Begleitete Person
     creator_title: Anmeldende Stelle
@@ -481,29 +476,27 @@ de:
     visum_kst: KST-Visum
     year: Jahr
   certificates:
-    one: Nachweis
-    other: Nachweise
-    form: &id-certificates-form
+    certificate: &id-certificates-show
+      aprox_hours_given: 'Total ca. %{hours} Stunden'
+      back_to_volunteer: Zurück zum Freiwilligenprofil
+    edit: &id-certificates-form
       assignment_kinds: Einsatz Arten
       edit_more_fields: Weitere Felder anpassen
       volunteers_contact_data: Kontaktangaben des Freiwilligen
-    edit: *id-certificates-form
-    update: *id-certificates-form
-    for_show: &id-certificates-show
-      back_to_volunteer: Zurück zum Freiwilligenprofil
-      aprox_hours_given: 'Total ca. %{hours} Stunden'
+    for_show: *id-certificates-show
+    form: *id-certificates-form
+    index:
+      volunteers_certificates: 'Nachweise von %{name}'
+    one: Nachweis
+    other: Nachweise
     show:
       <<: *id-certificates-show
       pdf:
         slim: *id-certificates-show
-    certificate: *id-certificates-show
-    index:
-      volunteers_certificates: 'Nachweise von %{name}'
+    update: *id-certificates-form
   change_my_password: Ihr Passwort ändern
   change_password: Ihr Passwort ändern
   checklist: Checkliste
-  "true": Ja
-  "false": Nein
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
@@ -520,18 +513,18 @@ de:
   crud:
     action:
       destroy: Löschen
-      print: Drucken
       send: Senden
       download: Herunterladen
+      print: Drucken
     c_action:
       create: '%{model} wurde erfolgreich erstellt.'
       destroy: '%{model} wurde erfolgreich gelöscht.'
       update: '%{model} wurde erfolgreich geändert.'
+    created: '%{model} wurde erfolgreich erstellt.'
+    destroyed: '%{model} wurde erfolgreich gelöscht.'
     title:
       add: '%{model} hinzufügen'
     updated: '%{model} wurde erfolgreich geändert.'
-    created: '%{model} wurde erfolgreich erstellt.'
-    destroyed: '%{model} wurde erfolgreich gelöscht.'
   date:
     order:
       - :day
@@ -633,6 +626,7 @@ de:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   export_xlsx: Liste als XLSX exportieren
+  "false": Nein
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
@@ -665,6 +659,34 @@ de:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
     title: Fachstelle Freiwilligenarbeit
+  performance_reports:
+    index:
+      new_report: Neuen Report erstellen
+    one: Kennzahl
+    other: Kennzahlen
+    show:
+      assignments: &id-assignment-report
+        active_total: Total aktive Begleitungen per Zeitraumende
+        new: Anzahl neue Begleitungen
+        resigned: Anzahl beendete Begleitungen
+        total: Anzahl Begleitungen insgesamt
+      calendar_year: 'Kalenderjahr %{year}'
+      groups:
+        active_total: Total laufende Gruppen per Zeitraumende
+        new: Anzahl neue Gruppen (Kurse, Animationen, Andere)
+        resigned: Anzahl beendete Gruppen (Kurse, Animationen, Andere)
+        total: Anzahl Gruppen insgesamt (Kurse, Animationen, Andere)
+      selection_criteria: Auswahl
+      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
+      title_year: 'Kennzahlen des Zeitraums "Kalenderjahr %{year}"'
+      volunteers:
+        active_total: Total aktive Freiwillige per Zeitraumende
+        new: Anzahl neue Freiwillige
+        resigned: Anzahl ausgetretene Freiwillige
+        total: Anzahl Freiwillige insgesamt
+      zh_assignments:
+        <<: *id-assignment-report
+        total: Anzahl Begleitete
   personal_background: Persönlicher Hintergrund
   profile_updated: Profil wurde erfolgreich aktualisiert.
   registered_by: Registriert durch
@@ -720,16 +742,16 @@ de:
         assignment_kinds:
           <<: *id-assignment-kinds
       client:
-        permit:
-          'n': N
-          f: F
-          b-fl: B-FL
-          b: 'B'
-          c: 'C'
         age_request: *id-age_requests
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
+        permit:
+          'n': N
+          f: F
+          b: 'B'
+          b-fl: B-FL
+          c: 'C'
         relatives:
           relation: *id-relations
         salutation: *id-salutations
@@ -775,6 +797,7 @@ de:
           invitation_instructions:
             accept_until_format: "%d. %B %Y %H:%M"
   to: bis
+  "true": Ja
   update_profile: Profil aktualisieren
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
   users: Benutzer/in
@@ -796,34 +819,6 @@ de:
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
-  performance_reports:
-    one: Kennzahl
-    other: Kennzahlen
-    index:
-      new_report: Neuen Report erstellen
-    show:
-      selection_criteria: Auswahl
-      calendar_year: 'Kalenderjahr %{year}'
-      title_year: 'Kennzahlen des Zeitraums "Kalenderjahr %{year}"'
-      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
-      volunteers:
-        total: Anzahl Freiwillige insgesamt
-        new: Anzahl neue Freiwillige
-        resigned: Anzahl ausgetretene Freiwillige
-        active_total: Total aktive Freiwillige per Zeitraumende
-      assignments: &id-assignment-report
-        total: Anzahl Begleitungen insgesamt
-        new: Anzahl neue Begleitungen
-        resigned: Anzahl beendete Begleitungen
-        active_total: Total aktive Begleitungen per Zeitraumende
-      groups:
-        total: Anzahl Gruppen insgesamt (Kurse, Animationen, Andere)
-        new: Anzahl neue Gruppen (Kurse, Animationen, Andere)
-        resigned: Anzahl beendete Gruppen (Kurse, Animationen, Andere)
-        active_total: Total laufende Gruppen per Zeitraumende
-      zh_assignments:
-        <<: *id-assignment-report
-        total: Anzahl Begleitete
   will_paginate:
     next_label: Weiter
     previous_label: Zurück
