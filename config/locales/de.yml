@@ -362,7 +362,7 @@ de:
       volunteer_email: Anmeldungsbestätigungs-Nachricht editieren
       performance_report: Kennzahlen Report
   add_entry: Eintrag Hinzufügen
-  add_journal_entry: Journal Eintrag verfassen
+  add_journal_entry: Journaleintrag verfassen
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   all: Alle
@@ -590,8 +590,8 @@ de:
       show: '%{model} anzeigen'
       update: '%{model} aktualisieren'
       journal:
-        create: Journal Eintrag speichern
-        update: Journal Eintrag aktualisieren
+        create: Journaleintrag speichern
+        update: Journaleintrag aktualisieren
       user:
         create: Benutzer/in erstellen
         update: Login aktualisieren

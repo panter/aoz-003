@@ -9,23 +9,6 @@ class Contact < ApplicationRecord
 
   validates :street, :postal_code, :city, presence: true, if: :needs_address?
 
-  def needs_primary_email?
-    !external && volunteer? || client?
-  end
-  alias :needs_primary_phone? :needs_primary_email?
-
-  def needs_address?
-    volunteer? || client?
-  end
-
-  def validate_first_name?
-    !department? && !profile?
-  end
-
-  def validate_last_name?
-    !profile?
-  end
-
   def to_s
     last_name
   end
@@ -60,5 +43,24 @@ class Contact < ApplicationRecord
 
   def client?
     contactable_type == 'Client'
+  end
+
+  def needs_primary_email?
+    !external && volunteer? || client?
+  end
+  alias :needs_primary_phone? :needs_primary_email?
+
+  def needs_address?
+    volunteer? || client?
+  end
+
+  private
+
+  def validate_first_name?
+    !department? && !profile?
+  end
+
+  def validate_last_name?
+    !profile?
   end
 end
