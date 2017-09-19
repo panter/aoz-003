@@ -9,7 +9,7 @@ class InternExternVolunteersTest < ApplicationSystemTestCase
   test 'Volunteer can be created as extern' do
     visit volunteers_path
     click_link 'New Volunteer'
-    check 'Register the Volunteer as external?'
+    check 'Register the volunteer as external?'
     assert page.has_select? 'State', selected: 'Accepted'
   end
 end

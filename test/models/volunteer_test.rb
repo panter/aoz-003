@@ -28,6 +28,6 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'external field is default false' do
-    assert_kind_of FalseClass, @volunteer.external
+    assert_equal false, @volunteer.external
   end
 end

@@ -27,7 +27,7 @@ Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 Style/FormatString:
-  Enabled: false
+  EnforcedStyle: percent
 Style/AsciiComments:
   Enabled: false
 Metrics/LineLength:

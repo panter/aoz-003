@@ -461,8 +461,8 @@ en:
       show: 'Show %{model}'
       update: 'Update %{model}'
       journal:
-        create: Create Journal entry
-        update: Update Journal entry
+        create: Create journal entry
+        update: update journal entry
       user:
         create: Create User
         update: Update login
@@ -507,7 +507,7 @@ en:
         interests: What are your most important leisure interests?
         motivation: What is your motivation to volunteer with migrants?
         strengths: Where do you see your strengths? (Social competencies that you could contribute to voluntary work)
-        external: Register the Volunteer as external?
+        external: Register the volunteer as external?
     "no": 'No'
     options:
       assignment:
@@ -548,7 +548,7 @@ en:
     placeholders:
     hints:
       volunteer:
-        external: External Volunteers have no direct relationship with AOZ.
+        external: External volunteers have no direct relationship with AOZ.
     required:
       mark: '*'
       text: 'required'

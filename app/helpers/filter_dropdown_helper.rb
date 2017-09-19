@@ -66,12 +66,12 @@ module FilterDropdownHelper
   def dropdown_ul(all_list_link)
     content_tag :ul, class: 'dropdown-menu' do
       concat all_list_link
-      concat dropdown_devider
+      concat dropdown_divider
       yield
     end
   end
 
-  def dropdown_devider
+  def dropdown_divider
     content_tag :li, '', class: 'divider', role: 'separator'
   end
 
