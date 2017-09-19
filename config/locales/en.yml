@@ -4,22 +4,18 @@ en:
     navigation:
       group_offers: Group offers
   aaa_injectable: &id-injectables
-    messages:
-      confirm_record_delete: 'Really delete %{model}?'
-      confirm_delete: "Really delete %{model} %{record}?"
-      select_prompt: "Select %{model}"
-    assignment_kinds:
-      accompaniment: Accompaniment
-      family: Family
-      workshop: Workshop
-      german_class: German Class
-      transit_center: Transit center
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: "age doesn't matter"
       age_old: older than 51
       age_young: 20 - 35
       all: All
+    assignment_kinds:
+      accompaniment: Accompaniment
+      family: Family
+      german_class: German Class
+      transit_center: Transit center
+      workshop: Workshop
     availability: &id-availability
       afternoon: Afternoon
       detailed_description: Detailed Description
@@ -82,6 +78,10 @@ en:
     offer_type: &id-offer-types
       external_offer: External group offer
       internal_offer: Internal group offer
+    messages:
+      confirm_delete: "Really delete %{model} %{record}?"
+      confirm_record_delete: 'Really delete %{model}?'
+      select_prompt: "Select %{model}"
     rejection_type: &id-rejection-types
       her: by volunteer before / after the first call
       other: Other
@@ -123,22 +123,21 @@ en:
         <<: *id-availability
         availability: What times are you available for voluntary engagement?
       edit: *id-volunteers-create
-      new: *id-volunteers-create
       form: *id-volunteers-create
-      one: Volunteer
-      other: Volunteers
       index: &id-volunteers-index
         show_assignments: Show Assignments
-      volunteer:
-        <<: *id-volunteers-index
-      show: &id-volunteers-show
-        show_assignments: Show assignments
         availability: Availability for voluntary engagement
         hour_reports: Hour reports
         new_certificate: Create certificate
         report_hours: Report hours
-        show_certificates: Show certificates
         show_certificate: Show certificate
+        show_certificates: Show certificates
+      show:
+        <<: *id-volunteers-index
+      new: *id-volunteers-create
+      one: Volunteer
+      other: Volunteers
+      volunteer: *id-volunteers-index
     volunteer_responsible_state: &id-volunteer-responsible-states
       volunteer_accountable: Manager of volunteer group
       volunteer_member: Member in a volunteer group
@@ -149,7 +148,6 @@ en:
   <<: *id-injectables
   accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
   already_computed: There are no billable hours for this volunteer, therefore the billing report cannot be created.
-  clear_filters: Clear filters
   activerecord:
     attributes:
       assignment:
@@ -165,13 +163,13 @@ en:
         last: Last assignment journal entry
       certificate:
         duration: Duration
-        duration_start: Start
         duration_end: End
+        duration_start: Start
       client:
         age_request: Volunteer's age
+        entry_year: Entry year
         gender_request: Volunteer's gender
         user: User
-        entry_year: Entry year
       contact:
         city: City
         extended: Extended address
@@ -182,6 +180,10 @@ en:
         last: Last hour entry
       journal:
         entry: Entry
+      performance_report:
+        period: Period
+        period_end: Period end
+        period_start: Period start
       user:
         clients: Clients
         department: Department
@@ -231,10 +233,6 @@ en:
         zurich: Support for moving in Zurich City
       volunteer_email:
         user: Created by
-      performance_report:
-        period_start: Period start
-        period_end: Period end
-        period: Period
     models:
       assignment: Assignment
       assignment_journal: Assignment journal
@@ -249,6 +247,7 @@ en:
       hour: Hour report
       journal: Journal
       language_skill: Language skill
+      performance_report: Performance Report
       profile: Profile
       relative: Relative
       reminder: Reminder
@@ -257,7 +256,6 @@ en:
       volunteer_application: Volunteer Registration
       volunteer_email: Confirmation email
       volunteer_experience_desc: If you have any experiences with voluntary work, please describe any further here.
-      performance_report: Performance Report
   add_entry: Add entry
   add_journal_entry: Write a journal entry
   add_language: Add language
@@ -272,15 +270,10 @@ en:
     agreement_text:
       -
         title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-        items:
-          - Verhaltenskodex für Freiwillige
-          - Rechte und Pflichten für Freiwillige
-          - AOZ Leitlinien Praktische Integrationsarbeit 2011
+        items: ['Verhaltenskodex für Freiwillige', 'Rechte und Pflichten für Freiwillige', 'AOZ Leitlinien Praktische Integrationsarbeit 2011']
       -
         title: Allenfalls auch
-        items:
-          - Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)
-          - Abmachungen für das Leiten von niederschwelligen Deutschkursen
+        items: ['Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)', 'Abmachungen für das Leiten von niederschwelligen Deutschkursen']
     birth_year: Jahrgang
     city: Ort
     city_date: Ort, Datum
@@ -336,23 +329,24 @@ en:
     year: Jahr
     zurich: Zürich
   certificates:
-    one: Certificate
-    other: Certificates
-    form: &id-certificates-form
+    certificate: &id-certificates-show
+      aprox_hours_given: 'Aprox. %{hours} Hours given'
+      back_to_volunteer: Back to volunteer
+    edit: &id-certificates-form
       assignment_kinds: Assignment types
       edit_more_fields: Edit more fields
       volunteers_contact_data: Volunteers address
-    edit: *id-certificates-form
-    update: *id-certificates-form
-    show: &id-certificates-show
-      back_to_volunteer: Back to volunteer
-      aprox_hours_given: 'Aprox. %{hours} Hours given'
-    certificate: *id-certificates-show
+    form: *id-certificates-form
     index:
       volunteers_certificates: "%{name}'s Certificates"
+    one: Certificate
+    other: Certificates
+    show: *id-certificates-show
+    update: *id-certificates-form
   change_my_password: Change my password
   change_password: Change your password
   checklist: Checklist
+  clear_filters: Clear filters
   clients: Clients
   clients_need_accompanying: Clients who need accompanying
   contact_info: Contact information
@@ -373,11 +367,11 @@ en:
       create: '%{model} was successfully created.'
       destroy: '%{model} was successfully deleted.'
       update: '%{model} was successfully updated.'
+    created: '%{model} was successfully created.'
+    destroyed: '%{model} was successfully deleted.'
     title:
       add: 'Add %{model}'
     updated: '%{model} successfully updated.'
-    created: '%{model} was successfully created.'
-    destroyed: '%{model} was successfully deleted.'
   date:
     order:
       - :day
@@ -479,6 +473,7 @@ en:
         one: '1 error prohibited this %{resource} from being saved:'
         other: '%{count} errors prohibited this %{resource} from being saved:'
   export_xlsx: Export list as XLSX
+  "false": "No"
   find_client: Find client
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
@@ -503,8 +498,6 @@ en:
   language_skills: Language skills
   login: Log in
   logout: Logout
-  "true": "Yes"
-  "false": "No"
   need_accompanying: Need accompanying
   not_assignable: Not assignable
   not_authorized: You are not authorized to perform this action.
@@ -513,6 +506,34 @@ en:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
     title: Fachstelle Freiwilligenarbeit
+  performance_reports:
+    index:
+      new_report: Create new report
+    one: Performance Report
+    other: Performance Reports
+    show:
+      assignments: &id-assignment-report
+        active_total: Total number of active assignments by the end of the period
+        new: Number of new assignments
+        resigned: Number of finished assignments
+        total: Total number of assignments
+      calendar_year: 'Calendar Year %{year}'
+      groups:
+        active_total: Total number of active groups by the end of the period
+        new: Number of new groups (Courses, Animations, Others)
+        resigned: Number of finished groups (Courses, Animations, Others)
+        total: Total number of groups (Courses, Animations, Others)
+      selection_criteria: Selection Criteria
+      title_range: 'Performance report of the period from "%{start} to %{end}"'
+      title_year: 'Performance report of the calendar year %{year}'
+      volunteers:
+        active_total: Total active volunteers by the end of the period
+        new: Number of new volunteers
+        resigned: Number of resigned volunteers
+        total: Total number of volunteers
+      zh_assignments:
+        <<: *id-assignment-report
+        total: Total number of assigned clients
   personal_background: Personal background
   profile_updated: Profile was successfully updated.
   registered_by: Registered by
@@ -554,15 +575,15 @@ en:
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels
-        relatives:
-          relation: *id-relations
-        salutation: *id-salutations
         permit:
           'n': N
           f: F
-          b-fl: B-FL
           b: 'B'
+          b-fl: B-FL
           c: 'C'
+        relatives:
+          relation: *id-relations
+        salutation: *id-salutations
         state: *id-states
       group_offer:
         group_offer_categories: Group offer categories
@@ -605,6 +626,7 @@ en:
           invitation_instructions:
             accept_until_format: "%B %d, %Y %I:%M %p"
   to: to
+  "true": "Yes"
   update_profile: Update profile
   user_destroyed: 'User %{email} was successfully deleted.'
   users: Users
@@ -626,31 +648,3 @@ en:
   volunteer_self_applicant: Self-applicant
   volunteer_updated: Volunteer was successfully updated.
   wanna_apply: Do you want to register as a volunteer?
-  performance_reports:
-    one: Performance Report
-    other: Performance Reports
-    index:
-      new_report: Create new report
-    show:
-      assignments: &id-assignment-report
-        active_total: Total number of active assignments by the end of the period
-        new: Number of new assignments
-        resigned: Number of finished assignments
-        total: Total number of assignments
-      groups:
-        active_total: Total number of active groups by the end of the period
-        new: Number of new groups (Courses, Animations, Others)
-        resigned: Number of finished groups (Courses, Animations, Others)
-        total: Total number of groups (Courses, Animations, Others)
-      selection_criteria: Selection Criteria
-      title_range: 'Performance report of the period from "%{start} to %{end}"'
-      title_year: 'Performance report of the calendar year %{year}'
-      volunteers:
-        active_total: Total active volunteers by the end of the period
-        new: Number of new volunteers
-        resigned: Number of resigned volunteers
-        total: Total number of volunteers
-      zh_assignments:
-        <<: *id-assignment-report
-        total: Total number of assigned clients
-      calendar_year: 'Calendar Year %{year}'
