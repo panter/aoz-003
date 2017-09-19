@@ -1,6 +1,6 @@
 = simple_error_notice f
 
-- if policy(Volunteer).supervisor_privileges?
+- if policy(Volunteer).can_manage?
   = f.input :external, input_html: { data: { state: { remove: ['contacted', 'resigned', 'inactive', 'rejected'], selected: 'accepted' }, hide: ['banc-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
   fieldset
   legend= t('.acceptance.management')
@@ -15,7 +15,7 @@
   = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
   = f.input :rejection_text
 
-- if policy(Volunteer).checklist?
+- if policy(Volunteer).can_manage?
   fieldset.checklist
     legend= t('checklist')
     ul.list-inline
@@ -99,27 +99,20 @@ fieldset
   .col-xs-12
     = f.input :zurich
 
-- if current_user.present?
+- if @volunteer.user_id?
   fieldset.banc-data
     legend Bankdaten für Spesen
-    .row
-      .col-xs-12.col-md-6
-        = f.input :bank
-      .col-xs-12.col-md-6
-        = f.input :iban
-      .col-xs-12
-        = f.input :waive
+    = f.input :bank
+    = f.input :iban
+    = f.input :waive
 
-fieldset
-  .row
-    .col-xs-12
-      = f.input :expectations
-    .col-xs-12
-      = f.input :strengths
-    .col-xs-12
-      = f.input :interests
-fieldset
-  legend= t('.availability')
-  .row
-    .col-xs-12
-    = render 'availability/form', f: f
+.row
+  .col-xs-12
+    = f.input :expectations
+  .col-xs-12
+    = f.input :strengths
+  .col-xs-12
+    = f.input :interests
+
+h3= policy(@volunteer).can_manage? ? t('.availability') : t('.availability_question')
+= render 'availability/form', f: f
