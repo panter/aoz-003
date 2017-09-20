@@ -68,7 +68,7 @@ de:
         offer_of: Angebot von
       show: *id-help-texts
       form:
-        for_external: Organization (Bei externen Gruppenangebot)
+        for_external: Organisation (bei externem Gruppenangebot)
     language_level: &id-lang-levels
       basic: Grundlagen
       fluent: Fliessend
@@ -136,7 +136,7 @@ de:
     volunteer_state: &id-volunteer-states
       external_volunteer: Externe Freiwillige
       internal_volunteer: AOZ-Freiwillige
-    volunteer_responsible: &id-volunteer-responsible
+    volunteer_responsible_state: &id-volunteer-responsible-states
       volunteer_accountable: Verantwortliche/r für eine Freiwilligengruppe
       volunteer_member: Mitglied in einer Freiwilligengruppe
     volunteers: *id-volunteers-by-actions
@@ -236,8 +236,7 @@ de:
         teenagers: Jugendliche
         title: Bezeichnung
         unaccompanied: Unbegleitete Minderjährige
-        volunteer_responsible: Verantwortliche Person
-        volunteer_responsible_name: Name des/r Verantwortlichen für interne Freiwillige
+        volunteer_responsible_state: Verantwortliche Person
         volunteer_state: Interne oder externe Freiwillige
         women: Frauen
       hour:
@@ -720,7 +719,7 @@ de:
       group_offer:
         offer_state: *id-offer-states
         volunteer_state: *id-volunteer-states
-        volunteer_responsible: &id-volunteer-responsible
+        volunteer_responsible_state: &id-volunteer-responsible-states
       journal:
         category: *id-categories
       user:

@@ -27,7 +27,7 @@
               - if offer.offer_state?
                 = t("offer_state.#{offer.offer_state}")
                 br
-              - if offer.external? && offer.organization
+              - if offer.external? && offer.organization?
                 = "#{t('.offer_of')} "
                 = offer.organization
               - if !offer.external? && offer.department
@@ -37,22 +37,23 @@
               - if offer.necessary_volunteers
                 = "#{offer.necessary_volunteers} "
                 = t('.necessary_volunteers')
+                br
               - if offer.volunteer_state?
                 = t("volunteer_state.#{offer.volunteer_state}")
                 br
-              - if offer.volunteer_responsible?
-                = t("volunteer_responsible.#{offer.volunteer_responsible}")
-                br
-              - if offer.volunteer_responsible_name
-                = offer.volunteer_responsible_name
+              - if offer.volunteer_responsible_state?
+                = t("volunteer_responsible_state.#{offer.volunteer_responsible_state}")
             td= offer.description
             td
-              - GroupOffer.target_collection.each do |target|
-                - if offer[target]
-                  = t_attr(target)
-                  br
+              - if offer.all?
+                = t_attr(:all)
+              - else
+                - GroupOffer::TARGET_GROUP.each do |target|
+                  - if offer[target]
+                    = t_attr(target)
+                    br
             td
-              - GroupOffer.duration_collection.each do |duration|
+              - GroupOffer::DURATION.each do |duration|
                 - if offer[duration]
                   = t_attr(duration)
                   br
