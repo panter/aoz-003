@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20170914094802) do
 
   create_table "group_offers", force: :cascade do |t|
     t.string "title"
+    t.string "offer_type"
     t.string "offer_state"
     t.string "volunteer_state"
     t.integer "necessary_volunteers"
@@ -184,6 +185,7 @@ ActiveRecord::Schema.define(version: 20170914094802) do
     t.text "date_time"
     t.datetime "deleted_at"
     t.string "organization"
+    t.string "location"
     t.bigint "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

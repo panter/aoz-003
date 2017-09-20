@@ -68,13 +68,18 @@ de:
         offer_of: Angebot von
       show: *id-help-texts
       form:
-        for_external: Organisation (bei externem Gruppenangebot)
+        location_external: Ort (bei externem Gruppenangebot)
+        organization_external: Organisation (bei externem Gruppenangebot)
     language_level: &id-lang-levels
       basic: Grundlagen
       fluent: Fliessend
       good: Gut
       native_speaker: Muttersprachler/in
     offer_state: &id-offer-states
+      full: Voll
+      open: Offen
+      partially_occupied: Teilweise besetzt
+    offer_type: &id-offer-types
       external_offer: Externes Gruppenangebot
       internal_offer: Internes Gruppenangebot
     rejection_type: &id-rejection-types
@@ -221,22 +226,24 @@ de:
         user: User
       group_offer:
         all: Alle
-        availability: Verfügbarkeit
+        availability: Zeitangaben
         children: Kinder
-        date_time: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum angeben
+        date_time: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum
         description: Beschreibung des Angebotes
         duration: Dauer
-        necessary_volunteers: Anzahl nötiger Freiwillige
+        location: Ort
         long_term: Langfristig
         men: Männer
-        offer_state: Internes oder externes Gruppenangebot
+        necessary_volunteers: Anzahl nötiger Freiwillige
+        offer_state: Status des FW-Einsatzes
+        offer_type: Internes oder externes Gruppenangebot
         regular: Regelmässig
         short_term: Kurzfristig
         target_group: Zielpublikum
         teenagers: Jugendliche
         title: Bezeichnung
         unaccompanied: Unbegleitete Minderjährige
-        volunteer_responsible_state: Verantwortliche Person
+        volunteer_responsible_state: Verantwortliche Person (bei internem Gruppenangebot)
         volunteer_state: Interne oder externe Freiwillige
         women: Frauen
       hour:
@@ -717,6 +724,7 @@ de:
         salutation: *id-salutations
         state: *id-states
       group_offer:
+        offer_type: *id-offer-types
         offer_state: *id-offer-states
         volunteer_state: *id-volunteer-states
         volunteer_responsible_state: &id-volunteer-responsible-states

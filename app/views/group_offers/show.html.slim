@@ -8,17 +8,23 @@
       table.table.table-no-border-top
         tbody
           tr
-            td= t_attr(:offer_state)
+            td= t_attr(:offer_type)
             td
-              = t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
-              - if @group_offer.external? && @group_offer.organization?
+              - if @group_offer.offer_type?
+                = t("offer_type.#{@group_offer.offer_type}")
                 br
+              - if @group_offer.external? && @group_offer.organization?
                 = "#{t('.offer_of')} "
                 = @group_offer.organization
-              - if !@group_offer.external? && @group_offer.department
                 br
+                = @group_offer.location
+                br
+              - if !@group_offer.external? && @group_offer.department
                 = "#{t('.offer_of')} "
                 = link_to @group_offer.department, department_path(@group_offer.department.id)
+          tr
+            td= t_attr(:offer_state)
+            td= t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
           tr
             td= t_attr(:volunteer_state)
             td
