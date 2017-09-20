@@ -1,10 +1,13 @@
 class GroupOfferPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      return GroupOffer.none if all.empty?
-      return GroupOffer.none if department_manager? && resolve_department.empty?
-      return all if superadmin?
-      resolve_department if department_manager?
+      if superadmin?
+        all
+      elsif department_manager?
+        resolve_department
+      else
+        none
+      end
     end
   end
 
