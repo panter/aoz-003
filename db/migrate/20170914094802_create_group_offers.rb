@@ -2,6 +2,7 @@ class CreateGroupOffers < ActiveRecord::Migration[5.1]
   def change
     create_table :group_offers do |t|
       t.string :title
+      t.string :offer_type
       t.string :offer_state
       t.string :volunteer_state
       t.integer :necessary_volunteers
@@ -25,6 +26,7 @@ class CreateGroupOffers < ActiveRecord::Migration[5.1]
       t.text :date_time
       t.datetime :deleted_at, index: true
       t.string :organization
+      t.string :location
       t.belongs_to :department, foreign_key: true
 
       t.timestamps

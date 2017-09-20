@@ -6,17 +6,21 @@
       = f.input :title
 
   .row
-    .col-xs-6
+    .col-xs-12.col-md-4
+      = f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons
+    .col-xs-12.col-md-4
       = f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
-    .col-xs-6
+    .col-xs-12.col-md-4
       = f.input :volunteer_state, collection: GroupOffer::VOLUNTEER_STATES, as: :radio_buttons
 
   - if policy(GroupOffer).supervisor_privileges?
     .row
-      .col-xs-12.col-md-6
+      .col-xs-12.col-md-4
         = f.association :department
-      .col-xs-12.col-md-6
-        = f.input :organization, label: t('.for_external')
+      .col-xs-12.col-md-4
+        = f.input :organization, label: t('.organization_external')
+      .col-xs-12.col-md-4
+        = f.input :location, label: t('.location_external')
 
   .row
     .col-xs-12.col-md-2

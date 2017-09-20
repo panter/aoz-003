@@ -10,7 +10,8 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     fill_in 'Title', with: 'asdf'
-    page.choose('group_offer_offer_state_internal_offer')
+    page.choose('group_offer_offer_type_internal_offer')
+    page.choose('group_offer_offer_state_full')
     page.choose('group_offer_volunteer_state_internal_volunteer')
     select Department.first.contact.last_name, from: 'Department'
     select '2', from: 'Necessary volunteers'
