@@ -123,7 +123,7 @@ de:
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
-  already_computed: Dieses Spesenformular ist bereits erstellt.
+  already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
   clear_filters: Filter aufheben
   activerecord:
     attributes:

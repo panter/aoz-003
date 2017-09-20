@@ -20,7 +20,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer)
     assert_no_difference 'BillingExpense.count' do
       click_button 'Create Billing expense'
-      assert page.has_text? 'This billing expense was already created'
+      assert page.has_text? 'There are no billable hours for this volunteer'
     end
   end
 

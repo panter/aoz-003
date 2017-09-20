@@ -119,7 +119,7 @@ en:
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: The AOZ has several options for volunteering. Find out more about the different areas of volunteering here.
-  already_computed: This billing expense was already created.
+  already_computed: There are no billable hours for this volunteer, therefore the billing report cannot be created.
   clear_filters: Clear filters
   activerecord:
     attributes:
