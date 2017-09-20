@@ -172,6 +172,9 @@ Volunteer.state_collection.each do |state|
     end
   end
   vol.save!
+  if state == :accepted
+    FactoryGirl.create(:user, role: 'volunteer', volunteer: vol, email: vol.contact.primary_email)
+  end
 end
 
 if VolunteerEmail.count < 1
@@ -199,4 +202,9 @@ if Assignment.count < 1
         meeting_date: Faker::Date.between(assignment.period_start + 1, 2.days.ago))
     end
   end
+end
+
+Assignment.all.each do |assignment|
+  FactoryGirl.create(:assignment_journal, volunteer: assignment.volunteer, assignment: assignment,
+    author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
 end
