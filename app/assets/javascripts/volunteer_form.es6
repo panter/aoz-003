@@ -2,8 +2,8 @@ $(function() {
   $( document ).on('turbolinks:render, turbolinks:load', function() {
     show_rejection();
 
-    $('#volunteer_state').on('change', function(){
-      show_rejection();
+    $('#volunteer_state').on('change', ({target}) => {
+      show_rejection(target);
     });
 
     $('.volunteer-active-checkbox-changes').on('change', ({target}) => {
@@ -38,13 +38,10 @@ const changeStateSelectToActiveVolunteer = ({remove, selected}) => {
   options.val(selected);
 }
 
-function show_rejection() {
-  if($('#volunteer_state').val() == 'rejected') {
-    $('.volunteer_rejection_type').show();
-    $('.volunteer_rejection_text').show();
-  } else {
-    $('.volunteer_rejection_type').hide();
-    $('.volunteer_rejection_text').hide();
+const show_rejection = (target) => {
+  if($(target).val() == 'rejected') {
+    return $('.volunteer_rejection_type, .volunteer_rejection_text').show();
   }
+  $('.volunteer_rejection_type, .volunteer_rejection_text').hide();
 }
 
