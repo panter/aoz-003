@@ -12,6 +12,7 @@ class ApplicationScope
   delegate :volunteer?, to: :user
 
   delegate :all, to: :scope
+  delegate :none, to: :scope
 
   def resolve_owner
     scope.where(user: user)
