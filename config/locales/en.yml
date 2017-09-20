@@ -130,7 +130,7 @@ en:
         report_hours: Report hours
         show_certificates: Show certificates
         show_certificate: Show certificate
-    volunteer_responsible: &id-volunteer-responsible
+    volunteer_responsible_state: &id-volunteer-responsible-states
       volunteer_accountable: Manager of volunteer group
       volunteer_member: Member in a volunteer group
     volunteer_state: &id-volunteer-states
@@ -553,7 +553,7 @@ en:
         state: *id-states
       group_offer:
         offer_state: *id-offer-states
-        volunteer_responsible: *id-volunteer-responsible
+        volunteer_responsible_state: *id-volunteer-responsible-states
         volunteer_state: *id-volunteer-states
       journal:
         category: *id-categories

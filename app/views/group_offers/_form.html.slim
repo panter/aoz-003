@@ -7,11 +7,11 @@
 
   .row
     .col-xs-6
-      = f.input :offer_state, collection: GroupOffer.offer_state_collection, as: :radio_buttons
+      = f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
     .col-xs-6
-      = f.input :volunteer_state, collection: GroupOffer.volunteer_state_collection, as: :radio_buttons
+      = f.input :volunteer_state, collection: GroupOffer::VOLUNTEER_STATES, as: :radio_buttons
 
-  - if current_user.superadmin?
+  - if policy(GroupOffer).supervisor_privileges?
     .row
       .col-xs-12.col-md-6
         = f.association :department
@@ -22,9 +22,7 @@
     .col-xs-12.col-md-2
       = f.input :necessary_volunteers, collection: 1..10
     .col-xs-12.col-md-4
-      = f.input :volunteer_responsible, collection: GroupOffer.volunteer_responsible_collection
-    .col-xs-12.col-md-6
-      =f.input :volunteer_responsible_name
+      = f.input :volunteer_responsible_state, collection: GroupOffer::VOLUNTEER_RESPONSIBLE_STATES
 
   .row
     .col-xs-12
@@ -32,13 +30,13 @@
 
   h3= t_attr(:target_group)
   .row
-    - GroupOffer.target_collection.each do |target|
+    - GroupOffer::TARGET_GROUP.each do |target|
       .col-xs-6.col-md-3
         = f.input target, label: t_attr("#{target}")
 
   h3= t_attr(:duration)
   .row
-    - GroupOffer.duration_collection.each do |duration|
+    - GroupOffer::DURATION.each do |duration|
       .col-xs-6.col-md-3
         = f.input duration, label: t_attr("#{duration}")
 

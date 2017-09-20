@@ -164,8 +164,7 @@ ActiveRecord::Schema.define(version: 20170914094802) do
     t.string "offer_state"
     t.string "volunteer_state"
     t.integer "necessary_volunteers"
-    t.string "volunteer_responsible"
-    t.string "volunteer_responsible_name"
+    t.string "volunteer_responsible_state"
     t.text "description"
     t.boolean "women", default: false
     t.boolean "men", default: false
