@@ -71,7 +71,7 @@ class User < ApplicationRecord
   end
 
   def to_label
-    if profile && profile.contact
+    if profile&.contact
       "#{full_name} #{email}"
     else
       email
@@ -79,7 +79,7 @@ class User < ApplicationRecord
   end
 
   def full_name
-    if profile && profile.contact
+    if profile&.contact
       "#{profile.contact.first_name} #{profile.contact.last_name}"
     else
       email
