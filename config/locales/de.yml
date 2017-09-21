@@ -243,7 +243,7 @@ de:
         teenagers: Jugendliche
         title: Bezeichnung
         unaccompanied: Unbegleitete Minderjährige
-        volunteer_responsible_state: Verantwortliche Person (bei internem Gruppenangebot)
+        volunteer_responsible_state: Verantwortliche Person (betrifft interne Gruppenangebote)
         volunteer_state: Interne oder externe Freiwillige
         women: Frauen
       hour:
@@ -727,7 +727,7 @@ de:
         offer_type: *id-offer-types
         offer_state: *id-offer-states
         volunteer_state: *id-volunteer-states
-        volunteer_responsible_state: &id-volunteer-responsible-states
+        volunteer_responsible_state: *id-volunteer-responsible-states
       journal:
         category: *id-categories
       user:
