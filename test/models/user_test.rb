@@ -89,4 +89,10 @@ class UserTest < ActiveSupport::TestCase
   test 'automatically assigns primary email on contact' do
     assert_equal @user.profile.contact.primary_email, @user.email
   end
+
+  test 'updating user email contact also on user' do
+    @user.profile.contact.update(primary_email: 'supervolunteer@example.com')
+    @user.reload
+    assert_equal 'supervolunteer@example.com', @user.email
+  end
 end
