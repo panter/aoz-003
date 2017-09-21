@@ -10,6 +10,13 @@ class Volunteer < ApplicationRecord
   before_validation :handle_external
   before_save :record_acceptance_changed
 
+  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
+  GROUP_ACCOMPANIMENTS = [:sport, :creative, :music, :culture, :training, :german_course,
+                          :dancing, :health, :cooking, :excursions, :women, :teenagers,
+                          :children, :other_offer].freeze
+  REJECTIONS = [:us, :her, :other].freeze
+  AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
+
   enum acceptance: [:undecided, :accepted, :rejected, :resigned]
 
   belongs_to :user, -> { with_deleted }, optional: true
@@ -142,13 +149,6 @@ class Volunteer < ApplicationRecord
   def self.acceptance_collection
     acceptances.keys.map(&:to_sym)
   end
-
-  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
-  GROUP_ACCOMPANIMENTS = [:sport, :creative, :music, :culture, :training, :german_course,
-                          :dancing, :health, :cooking, :excursions, :women, :teenagers,
-                          :children, :other_offer].freeze
-  REJECTIONS = [:us, :her, :other].freeze
-  AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
   def self.first_languages
     ['DE', 'EN', 'FR', 'ES', 'IT', 'AR'].map do |lang|
