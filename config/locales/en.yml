@@ -34,6 +34,9 @@ en:
       feedback: Feedback
       file: File
       telephone: Telephone
+    category_states: &id-category_states
+      active: active
+      inactive: inactive
     gender_request: &id-gender_requests
       all: All
       no_matter: "gender doesn't matter"
@@ -240,6 +243,8 @@ en:
       contact: Contact
       department: Department
       group_offer: Group offer
+      group_offer_category: Group offer category
+      group_offer_categories: Group offer categories
       hour: Hour report
       journal: Journal
       language_skill: Language skill
@@ -478,6 +483,7 @@ en:
   forgot_password: Forgot your password?
   general_availability: When are you available?
   get_back: We will soon get back to you.
+  group_offer_categories: Group offer categories
   helpers:
     submit:
       create: 'Create %{model}'
@@ -557,10 +563,14 @@ en:
           c: 'C'
         state: *id-states
       group_offer:
+        group_offer_categories: Group offer categories
         offer_state: *id-offer-states
         offer_type: *id-offer-types
         volunteer_responsible_state: *id-volunteer-responsible-states
         volunteer_state: *id-volunteer-states
+      group_offer_category:
+        category_name: Category name
+        category_state: *id-category_states
       journal:
         category: *id-categories
       user:
