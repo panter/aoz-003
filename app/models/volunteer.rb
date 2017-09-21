@@ -59,12 +59,6 @@ class Volunteer < ApplicationRecord
   scope :created_after, ->(min_time) { where('volunteers.created_at > ?', min_time) }
 
   scope :with_hours, (-> { joins(:hours) })
-
-  scope :all_accepted, (-> { where(acceptance: :accepted) })
-  scope :all_resigned, (-> { where(acceptance: :resigned) })
-  scope :all_rejected, (-> { where(acceptance: :rejected) })
-  scope :all_undecided, (-> { where(acceptance: :undecided) })
-
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
   scope :with_active_assignments_between, lambda { |start_date, end_date|
@@ -100,14 +94,6 @@ class Volunteer < ApplicationRecord
 
   def handle_external
     contact.external = true if external
-  end
-
-  def hours_sum
-    hours.sum(&:hours) + hours.sum(&:minutes) / 60
-  end
-
-  def minutes_sum
-    hours.sum(&:minutes) % 60
   end
 
   def assignment_kinds
