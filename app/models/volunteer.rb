@@ -51,17 +51,17 @@ class Volunteer < ApplicationRecord
   scope :created_before, ->(max_time) { where('volunteers.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('volunteers.created_at > ?', min_time) }
 
-  scope :with_hours, (-> { joins(:hours).distinct })
+  scope :with_hours, (-> { joins(:hours) })
 
   scope :all_accepted, (-> { where(acceptance: :accepted) })
   scope :all_resigned, (-> { where(acceptance: :resigned) })
   scope :all_rejected, (-> { where(acceptance: :rejected) })
   scope :all_undecided, (-> { where(acceptance: :undecided) })
 
-  scope :with_assignments, (-> { joins(:assignments).distinct })
-  scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active).distinct })
+  scope :with_assignments, (-> { joins(:assignments) })
+  scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
   scope :with_active_assignments_between, lambda { |start_date, end_date|
-    joins(:assignments).merge(Assignment.active_between(start_date, end_date)).distinct
+    joins(:assignments).merge(Assignment.active_between(start_date, end_date))
   }
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
   scope :without_active_assignment, (-> { joins(:assignments).merge(Assignment.ended) })
@@ -69,20 +69,19 @@ class Volunteer < ApplicationRecord
   scope :not_in_any_group_offer, lambda {
     left_joins(:group_offers).where(group_offers_volunteers: { volunteer_id: nil })
   }
-  scope :with_inactive_assignments, (-> { joins(:assignments).merge(Assignment.inactive).distinct })
-
 
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
+  scope :with_inactive_assignments, lambda {
+    joins(:assignments)
+      .merge(Assignment.inactive)
+      .where.not(id: with_active_assignments.ids)
+  }
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
-
   scope :seeking_clients, lambda {
-    all_inactive + all_active.will_take_more_assignments
+    accepted.where(id: with_inactive_assignments.ids.uniq)
   }
   scope :all_active, (-> { all_accepted.with_active_assignments })
-  scope :all_inactive, lambda {
-    all_accepted.without_assignment + all_accepted.with_inactive_assignments
-  }
 
   def active?
     accepted? && assignments.active.any?

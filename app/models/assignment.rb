@@ -59,7 +59,7 @@ class Assignment < ApplicationRecord
 
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
 
-  scope :with_hours, (-> { joins(:hours).distinct })
+  scope :with_hours, (-> { joins(:hours) })
 
   def creator
     super || User.deleted.find_by(id: creator_id)
