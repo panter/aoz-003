@@ -14,7 +14,6 @@
         th= t_attr(:working_percent, Volunteer)
         th= t_attr(:expectations, Volunteer)
         th= t_attr(:interests, Volunteer)
-        th= t_attr(:state, Volunteer)
         th= t_attr(:external, Volunteer)
 
     tbody
@@ -32,5 +31,5 @@
         td #{volunteer.working_percent}%
         td = volunteer.expectations
         td = volunteer.interests
-        td = t("simple_form.options.volunteer.state.#{volunteer.state}")
         td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
+

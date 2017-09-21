@@ -8,26 +8,7 @@ class Volunteer < ApplicationRecord
   include FullBankDetails
 
   before_validation :handle_external
-  before_save :default_state
   before_save :record_acceptance_changed
-
-  # States
-  REGISTERED = 'registered'.freeze
-  ACCEPTED = 'accepted'.freeze
-  CONTACTED = 'contacted'.freeze
-  ACTIVE = 'active'.freeze
-  ACTIVE_FURTHER = 'active_further'.freeze
-  REJECTED = 'rejected'.freeze
-  INACTIVE = 'inactive'.freeze
-  RESIGNED = 'resigned'.freeze
-
-  STATES_FOR_REVIEWED = [
-    CONTACTED, ACTIVE, ACCEPTED, ACTIVE_FURTHER, REJECTED, RESIGNED, INACTIVE
-  ].freeze
-
-  SEEKING_CLIENTS = [ACCEPTED, ACTIVE_FURTHER, INACTIVE].freeze
-
-  STATES = STATES_FOR_REVIEWED.dup.unshift(REGISTERED).freeze
 
   enum acceptance: [:undecided, :accepted, :rejected, :resigned]
 
@@ -57,7 +38,6 @@ class Volunteer < ApplicationRecord
 
   validates :contact, presence: true
   validates :salutation, presence: true
-  validates :state, inclusion: { in: STATES }
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/
   }
@@ -154,29 +134,7 @@ class Volunteer < ApplicationRecord
   end
 
   def seeking_clients?
-    SEEKING_CLIENTS.include?(state)
-  end
-
-  def registered?
-    state == REGISTERED
-  end
-
-
-
-  # def accepted?
-  #   state == ACCEPTED
-  # end
-
-  # def rejected?
-  #   state == REJECTED
-  # end
-
-  # def resigned?
-  #   state == RESIGNED
-  # end
-
-  def self.state_collection
-    STATES.map(&:to_sym)
+    accepted? && inactive? || take_more_assignments && active?
   end
 
   def self.acceptance_collection
@@ -209,9 +167,5 @@ class Volunteer < ApplicationRecord
 
   def record_acceptance_changed
     self["#{acceptance_change[1]}_at".to_sym] = Time.zone.now if acceptance_changed?
-  end
-
-  def default_state
-    self.state ||= REGISTERED
   end
 end

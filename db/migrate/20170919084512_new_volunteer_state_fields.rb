@@ -9,4 +9,12 @@ class NewVolunteerStateFields < ActiveRecord::Migration[5.1]
       t.boolean :take_more_assignments, default: false
     end
   end
+
+  def up
+    remove_column :volunteers, :state
+  end
+
+  def down
+    add_column :volunteers, :state, :string, default: 'registered'
+  end
 end

@@ -28,7 +28,6 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params.merge(creator_id: current_user.id))
     @assignment.client.state = Client::RESERVED
-    @assignment.volunteer.state = Volunteer::ACTIVE
     authorize @assignment
     if @assignment.save
       redirect_to assignments_url, make_notice
@@ -51,14 +50,9 @@ class AssignmentsController < ApplicationController
 
   def destroy
     client = @assignment.client
-    volunteer = @assignment.volunteer
     @assignment.destroy
     client.state = Client::REGISTERED
     client.save
-    unless volunteer.assignments.any?
-      volunteer.state = Volunteer::ACCEPTED
-      volunteer.save
-    end
     redirect_to assignments_url, make_notice
   end
 

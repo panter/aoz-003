@@ -443,7 +443,6 @@ ActiveRecord::Schema.define(version: 20170922120423) do
     t.string "iban"
     t.boolean "waive", default: false
     t.boolean "external", default: false
-    t.datetime "registered"
     t.integer "acceptance", default: 0
     t.datetime "accepted_at"
     t.datetime "rejected_at"
