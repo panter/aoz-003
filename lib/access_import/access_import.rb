@@ -50,14 +50,14 @@ class AccessImport
     make_personen_rolle(@personen_rolle.all_volunteers, transformer, Volunteer) do |volunteer, personen_rolle|
       volunteer = personen_rollen_create_update_conversion(volunteer, personen_rolle)
       volunteer.registrar_id = @import_user.id
-      volunteer.state = handle_volunteer_state(personen_rolle)
+      volunteer.acceptance = handle_volunteer_state(personen_rolle)
     end
   end
 
   def handle_volunteer_state(personen_rolle)
-    return Volunteer::RESIGNED if personen_rolle[:d_Rollenende]
-    return Volunteer::ACTIVE if personen_rolle[:d_Rollenende].nil?
-    Volunteer::REGISTERED
+    return :resigned if personen_rolle[:d_Rollenende]
+    return :active if personen_rolle[:d_Rollenende].nil?
+    :undecided
   end
 
   def make_assignments
@@ -66,7 +66,7 @@ class AccessImport
     @freiwilligen_einsaetze.where_volunteer.each do |key, fw_einsatz|
       next if Import.exists?(importable_type: 'Assignment', access_id: key)
       volunteer = Import.get_imported(Volunteer, fw_einsatz[:fk_PersonenRolle])
-      next if volunteer.state == Volunteer::RESIGNED
+      next if volunteer.resigned?
       begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
       client = Import.get_imported(Client, begleitet[:fk_PersonenRolle])
       next if client.state == Client::FINISHED

@@ -4,8 +4,8 @@ class VolunteersTest < ApplicationSystemTestCase
   setup do
     @user = create :user, email: 'superadmin@example.com'
     login_as @user
-    Volunteer::STATES.each do |s|
-      create :volunteer, state: s.to_s
+    Volunteer.acceptance_collection.each do |acceptance|
+      create :volunteer, acceptance: acceptance
     end
   end
 
@@ -125,7 +125,7 @@ class VolunteersTest < ApplicationSystemTestCase
     visit edit_volunteer_path(volunteer)
     refute page.has_text? 'Reason for rejection'
     refute page.has_field? 'Explanation for rejection'
-    select('Rejected', from: 'State')
+    choose 'Rejected'
     assert page.has_content? 'Reason for rejection'
     page.choose('volunteer_rejection_type_other')
     assert page.has_field? 'Explanation for rejection'

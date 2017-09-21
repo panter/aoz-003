@@ -3,12 +3,12 @@ require 'application_system_test_case'
 class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
   def setup
     @user = create :user, role: 'superadmin'
-    Volunteer::STATES.map do |state|
+    Volunteer.acceptance_collection.map do |acceptance|
       [
-        create(:volunteer, state: state, man: true, training: true, morning: true,
-          salutation: 'mrs'),
-        create(:volunteer, state: state, man: true, woman: true, sport: true, workday: true,
-          salutation: 'mr')
+        create(:volunteer, acceptance: acceptance, man: true, training: true,
+          morning: true, salutation: 'mrs'),
+        create(:volunteer, acceptance: acceptance, man: true, woman: true, sport: true,
+          workday: true, salutation: 'mr')
       ]
     end
     login_as @user
@@ -17,23 +17,23 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter by state works and disabling works as well' do
     within '.section-navigation' do
-      click_link 'State: All'
-      click_link 'Interested'
+      click_link 'Acceptance: All'
+      click_link 'Undecided'
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Interested'
-      refute page.has_text? 'Terminated'
+      assert page.has_text? 'Undecided'
+      refute page.has_text? 'Accepted'
     end
     within '.section-navigation' do
-      click_link 'State: Interested'
-      assert page.find('a.bg-success', text: 'Interested').present?
+      click_link 'Acceptance: Undecided'
+      assert page.find('a.bg-success', text: 'Undecided').present?
       click_link 'All'
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Interested'
-      assert page.has_text? 'Terminated'
+      assert page.has_text? 'Accepted'
+      assert page.has_text? 'Undecided'
     end
   end
 
@@ -44,7 +44,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'State: All'
+      click_link 'Acceptance: All'
       click_link 'Terminated'
     end
     visit current_url

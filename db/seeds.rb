@@ -137,7 +137,8 @@ Volunteer.acceptance_collection.each do |acceptance|
       FactoryGirl.build(:assignment, volunteer: volunteer, client: assignment_client,
         creator: User.superadmins.last, period_start: 300.days.ago, period_end: 100.days.ago),
       FactoryGirl.build(:assignment, volunteer: volunteer, client: assignment_client,
-        creator: User.superadmins.last, period_start: 300.days.ago, period_end: Date.today + 100)
+        creator: User.superadmins.last, period_start: 300.days.ago,
+        period_end: Time.zone.now.to_date + 100)
     ].sample
     assignment.save
     volunteer.assignments = [assignment]
@@ -166,7 +167,7 @@ end
 if Assignment.count < 1
   10.times do
     client = FactoryGirl.create :client, state: Client::ACTIVE
-    volunteer = FactoryGirl.create :volunteer, state: Volunteer::SEEKING_CLIENTS.sample
+    volunteer = FactoryGirl.create :volunteer, acceptance: :accepted, take_more_assignments: true
     assignment = FactoryGirl.create(:assignment, volunteer: volunteer, client: client,
       creator_id: User.find_by(role: 'superadmin').id)
     assignment.hours << Array.new(4).map do
