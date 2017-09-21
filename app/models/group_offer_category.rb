@@ -15,6 +15,6 @@ class GroupOfferCategory < ApplicationRecord
   private
 
   def default_state
-    self.gategory_state ||= ACTIVE
+    self.category_state ||= ACTIVE
   end
 end

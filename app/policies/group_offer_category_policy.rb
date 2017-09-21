@@ -1,4 +1,10 @@
 class GroupOfferCategoryPolicy < ApplicationPolicy
+  class Scope < ApplicationScope
+    def resolve
+      all if superadmin?
+    end
+  end
+
   alias_method :index?,                 :superadmin?
   alias_method :show?,                  :superadmin?
   alias_method :new?,                   :superadmin?
