@@ -75,8 +75,10 @@ class Volunteer < ApplicationRecord
   scope :internal, (-> { where(external: false) })
   scope :with_inactive_assignments, lambda {
     joins(:assignments)
+  scope :with_only_inactive_assignments, lambda {
+    left_outer_joins(:assignments)
       .merge(Assignment.inactive)
-      .where.not(id: with_active_assignments.ids)
+      .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
   scope :seeking_clients, lambda {
