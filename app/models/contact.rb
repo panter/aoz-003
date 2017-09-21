@@ -9,6 +9,8 @@ class Contact < ApplicationRecord
 
   validates :street, :postal_code, :city, presence: true, if: :needs_address?
 
+  after_save :update_user_email
+
   def to_s
     last_name
   end
@@ -62,5 +64,9 @@ class Contact < ApplicationRecord
 
   def validate_last_name?
     !profile?
+  end
+
+  def update_user_email
+    contactable&.user&.update(email: primary_email)
   end
 end
