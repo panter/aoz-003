@@ -41,7 +41,7 @@ def make_lang_skills
 end
 
 User.role_collection.each do |role|
-  new_user = new_user.find_or_create_by(email: "#{role}@example.com") do |new_user|
+  new_user = User.find_or_create_by(email: "#{role}@example.com") do |new_user|
     new_user.password = 'asdfasdf'
     new_user.role = role
   end
@@ -55,7 +55,7 @@ User.role_collection.each do |role|
       primary_email: Faker::Internet.email,
       primary_phone: Faker::PhoneNumber.phone_number
     )
-    profile.new_user_id = new_user.id
+    profile.user_id = new_user.id
     profile.profession = Faker::Company.profession
     availability_collection.each do |availability|
       profile[availability] = [true, false].sample
@@ -122,7 +122,7 @@ if Department.count < 1
 end
 
 Volunteer.acceptance_collection.each do |acceptance|
-  40.times do
+  15.times do
     volunteer = FactoryGirl.create(:volunteer, :with_language_skills, acceptance: acceptance)
     volunteer.contact.primary_email = Faker::Internet.safe_email(
       Faker::Internet.user_name(volunteer.full_name, %w(. _ -))
@@ -142,10 +142,10 @@ Volunteer.acceptance_collection.each do |acceptance|
     assignment.save
     volunteer.assignments = [assignment]
     volunteer.save!
-  end
-  vol.save!
-  if state == :accepted
-    FactoryGirl.create(:user, role: 'volunteer', volunteer: vol, email: vol.contact.primary_email)
+    if acceptance == :accepted
+      FactoryGirl.create(:user, role: 'volunteer', volunteer: volunteer,
+        email: volunteer.contact.primary_email)
+    end
   end
 end
 
