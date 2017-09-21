@@ -55,7 +55,7 @@ wb.add_worksheet(name: t('volunteers', count: 2)) do |sheet|
       volunteer.birth_year&.year,
       nationality_name(volunteer.nationality),
       volunteer.profession,
-      t("state.#{volunteer.state}"),
+      '',
       l(volunteer.created_at.localtime),
       l(volunteer.updated_at.localtime),
       volunteer.assignments.count,

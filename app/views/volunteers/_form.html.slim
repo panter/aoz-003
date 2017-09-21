@@ -11,7 +11,6 @@
     p= "#{t_attr(:rejected_at)} #{l(@volunteer.rejected_at)}" if @volunteer.rejected_at.present?
     p= "#{t_attr(:resigned_at)} #{l(@volunteer.resigned_at)}" if @volunteer.resigned_at.present?
 
-  = f.input :state, collection: Volunteer.state_collection, default: :registered
   = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
   = f.input :rejection_text
 
