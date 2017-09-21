@@ -7,7 +7,6 @@ class Volunteer < ApplicationRecord
   include ImportRelation
   include FullBankDetails
 
-  acts_as_paranoid
   before_validation :handle_external
   before_save :default_state
 
@@ -33,21 +32,21 @@ class Volunteer < ApplicationRecord
   belongs_to :registrar, optional: true,
     class_name: 'User', foreign_key: 'registrar_id'
 
-  has_many :certificates
+  has_many :certificates, dependent: :destroy
 
-  has_one :contact, as: :contactable
+  has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
 
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
 
   has_many :assignments, dependent: :destroy
-  has_many :clients, through: :assignments
+  has_many :clients, through: :assignments, dependent: :destroy
 
-  has_many :hours, through: :assignments
+  has_many :hours, through: :assignments, dependent: :destroy
 
-  has_many :assignment_journals, through: :assignments
-  has_many :billing_expenses
+  has_many :assignment_journals, through: :assignments, dependent: :destroy
+  has_many :billing_expenses, dependent: :destroy
   has_many :reminders, dependent: :destroy
 
   has_and_belongs_to_many :group_offers
