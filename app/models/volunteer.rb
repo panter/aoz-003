@@ -81,8 +81,19 @@ class Volunteer < ApplicationRecord
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
+  scope :all_active, (-> { all_accepted.with_active_assignments })
+  scope :accepted_joined, (-> { accepted.left_outer_joins(:assignments) })
+  scope :loj_without_assignments, (-> { accepted_joined.where(assignments: { id: nil }) })
+  scope :loj_active_take_more, lambda {
+    accepted_joined.will_take_more_assignments.where(assignments: { id: Assignment.active.ids })
+  }
+
   scope :seeking_clients, lambda {
-    accepted.where(id: with_inactive_assignments.ids.uniq)
+    accepted_joined
+      .merge(Assignment.inactive)
+      .where.not(assignments: { volunteer_id: with_active_assignments.ids })
+      .or(loj_without_assignments)
+      .or(loj_active_take_more)
   }
   scope :all_active, (-> { all_accepted.with_active_assignments })
 
