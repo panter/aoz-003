@@ -80,8 +80,10 @@ class Volunteer < ApplicationRecord
       .merge(Assignment.inactive)
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
+  scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
-  scope :all_active, (-> { all_accepted.with_active_assignments })
+  scope :active, (-> { accepted.with_active_assignments })
+
   scope :accepted_joined, (-> { accepted.left_outer_joins(:assignments) })
   scope :loj_without_assignments, (-> { accepted_joined.where(assignments: { id: nil }) })
   scope :loj_active_take_more, lambda {
@@ -95,7 +97,6 @@ class Volunteer < ApplicationRecord
       .or(loj_without_assignments)
       .or(loj_active_take_more)
   }
-  scope :all_active, (-> { all_accepted.with_active_assignments })
 
   def active?
     accepted? && assignments.active.any?
