@@ -5,8 +5,11 @@ class AssignmentsTest < ApplicationSystemTestCase
     @user = create :user, email: 'superadmin@example.com'
     Assignment.with_deleted.map(&:really_destroy!)
     @volunteer_user = create :user, role: 'volunteer'
-    @client = create :client
-    @volunteer = create :volunteer, state: Volunteer::ACTIVE_FURTHER, user: @volunteer_user
+    @client = create :client, user: @user
+    @volunteer = create :volunteer, acceptance: :accepted, user: @volunteer_user,
+      take_more_assignments: true
+    @assignment = create :assignment, volunteer: create(:volunteer), creator: @user,
+      client: create(:client), period_end: nil
   end
 
   test 'new assignment form with preselected fields' do

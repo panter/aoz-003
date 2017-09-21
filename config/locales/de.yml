@@ -137,15 +137,18 @@ de:
         resigned: Ausgetreten
         resign: Austreten
         resigned_at: Ausgetreten am
+        undecided: Nicht entschieden
       create: &id-volunteers-create
         <<: *id-availability
         acceptance: *id-volunteer-acceptance
         availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
       edit: *id-volunteers-create
-      form: *id-volunteers-create
+      form:
+        <<: [*id-volunteers-create, *id-volunteer-acceptance]
       index: &id-volunteers-index
         show_assignments: Begleitete anzeigen
-      new: *id-volunteers-create
+      new:
+        <<: [*id-volunteers-create, *id-volunteer-acceptance]
       one: Freiwillige/r
       other: Freiwillige
       show:
@@ -785,6 +788,7 @@ de:
       user:
         role: *id-roles
       volunteer:
+        acceptance: *id-volunteer-acceptance
         language_skills:
           level: *id-lang-levels
         rejection_type: *id-rejection-types

@@ -83,7 +83,7 @@ class UsersTest < ApplicationSystemTestCase
     volunteer = create :volunteer
 
     visit edit_volunteer_path(volunteer.id)
-    select('Accepted', from: 'State')
+    page.choose 'Accepted'
     assert_difference 'User.count', 1 do
       click_button 'Update Volunteer'
     end

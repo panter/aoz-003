@@ -120,7 +120,7 @@ en:
       resigned: Terminated
     volunteer_applications: &id-volunteers-by-actions
       acceptance: &id-volunteer-aceptance
-        acceptance_management: Acceptance Management
+        management: Acceptance Management
         accepted: Accepted
         accept: Accept
         accepted_at: Accepted at
@@ -132,11 +132,14 @@ en:
         resigned: Resigned
         resign: Resign
         resigned_at: Resigned at
+        undecided: Undecided
       create: &id-volunteers-create
-        <<: *id-availability
+        <<: [*id-availability, *id-volunteer-aceptance]
+        acceptance: *id-volunteer-aceptance
         availability: What times are you available for voluntary engagement?
       edit: *id-volunteers-create
-      form: *id-volunteers-create
+      form:
+        <<: [*id-volunteers-create, *id-availability]
       index: &id-volunteers-index
         show_assignments: Show Assignments
         availability: Availability for voluntary engagement
@@ -147,7 +150,8 @@ en:
         show_certificates: Show certificates
       show:
         <<: *id-volunteers-index
-      new: *id-volunteers-create
+      new:
+        <<: [*id-volunteers-create, *id-availability, *id-volunteer-aceptance]
       one: Volunteer
       other: Volunteers
       volunteer: *id-volunteers-index
@@ -612,6 +616,7 @@ en:
       user:
         role: *id-roles
       volunteer:
+        acceptance: *id-volunteer-aceptance
         language_skills:
           level: *id-lang-levels
         rejection_type: *id-rejection-types
