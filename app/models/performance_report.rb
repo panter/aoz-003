@@ -38,8 +38,8 @@ class PerformanceReport < ApplicationRecord
     volunteers = volunteers.zurich if zurich
     {
       total: volunteers.count,
-      active: volunteers.with_active_assignments_between(period_start, period_end).count,
-      new: volunteers.created_after(period_start).count
+      active: volunteers.with_active_assignments_between(period_start, period_end).distinct.count,
+      new: volunteers.created_between(period_start, period_end).count
     }
   end
 
@@ -47,8 +47,8 @@ class PerformanceReport < ApplicationRecord
     clients = Client.created_before(period_end)
     clients = clients.zurich if zurich
     {
-      new: clients.created_after(period_start).count,
-      active: clients.with_active_assignment_between(period_start, period_end).count,
+      new: clients.created_between(period_start, period_end).distinct.count,
+      active: clients.with_active_assignment_between(period_start, period_end).distinct.count,
       total: clients.count
     }
   end
