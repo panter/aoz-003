@@ -58,8 +58,12 @@ class User < ApplicationRecord
     new_user = User.new(
       email: email, password: Devise.friendly_token, role: role
     )
-
     new_user.save! && new_user.send_reset_password_instructions
+  end
+
+  def self.new_volunteer(volunteer)
+    User.new(email: volunteer.primary_email, password: Devise.friendly_token, role: 'volunteer',
+      volunteer: volunteer).save
   end
 
   def to_s
