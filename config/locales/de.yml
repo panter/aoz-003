@@ -64,12 +64,12 @@ de:
       minutes: Minuten
     group_offers:
       index: &id-help-texts
-        necessary_volunteers: nötig(e) Freiwillige
+        necessary_volunteers: 'Benötigt %{amount} Freiwillige'
         offer_of: Angebot von
       show: *id-help-texts
       form:
-        location_external: Ort (bei externem Gruppenangebot)
-        organization_external: Organisation (bei externem Gruppenangebot)
+        location_external: Ort (betrifft externe Gruppenangebote)
+        organization_external: Organisation (betrifft externe Gruppenangebote)
     language_level: &id-lang-levels
       basic: Grundlagen
       fluent: Fliessend
@@ -228,16 +228,16 @@ de:
         all: Alle
         availability: Zeitangaben
         children: Kinder
-        date_time: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum
         description: Beschreibung des Angebotes
         duration: Dauer
         location: Ort
         long_term: Langfristig
         men: Männer
-        necessary_volunteers: Anzahl nötiger Freiwillige
+        necessary_volunteers: Anzahl der benötigten Freiwilligen
         offer_state: Status des FW-Einsatzes
         offer_type: Internes oder externes Gruppenangebot
         regular: Regelmässig
+        schedule_details: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum
         short_term: Kurzfristig
         target_group: Zielpublikum
         teenagers: Jugendliche

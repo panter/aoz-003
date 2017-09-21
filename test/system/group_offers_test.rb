@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class GroupOffersTest < ApplicationSystemTestCase
   def setup
-    create :department
+    @department = create :department
   end
 
   test 'new group offer form' do
@@ -13,14 +13,14 @@ class GroupOffersTest < ApplicationSystemTestCase
     page.choose('group_offer_offer_type_internal_offer')
     page.choose('group_offer_offer_state_full')
     page.choose('group_offer_volunteer_state_internal_volunteer')
-    select Department.first.contact.last_name, from: 'Department'
+    select @department.contact.last_name, from: 'Department'
     select '2', from: 'Necessary volunteers'
     select 'Manager of volunteer group', from: 'Volunteer responsible'
     fill_in 'Description', with: 'asdf'
     page.check('group_offer_all')
     page.check('group_offer_regular')
     page.check('group_offer_weekend')
-    fill_in 'Date time', with: 'asdf'
+    fill_in 'Schedule details', with: 'asdf'
 
     click_button 'Create Group offer'
     assert page.has_text? 'Group offer was successfully created.'
