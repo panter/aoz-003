@@ -17,8 +17,11 @@ class Volunteer < ApplicationRecord
 
   has_many :certificates
 
-  has_one :contact, as: :contactable
+  has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
+
+  delegate :primary_email, to: :contact
+  delegate :full_name, to: :contact
 
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
@@ -149,14 +152,9 @@ class Volunteer < ApplicationRecord
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
   def self.first_languages
-    [
-      [I18nData.languages(I18n.locale)['DE'], 'DE'],
-      [I18nData.languages(I18n.locale)['EN'], 'EN'],
-      [I18nData.languages(I18n.locale)['FR'], 'FR'],
-      [I18nData.languages(I18n.locale)['ES'], 'ES'],
-      [I18nData.languages(I18n.locale)['IT'], 'IT'],
-      [I18nData.languages(I18n.locale)['AR'], 'AR']
-    ]
+    ['DE', 'EN', 'FR', 'ES', 'IT', 'AR'].map do |lang|
+      [I18nData.languages(I18n.locale)[lang], lang]
+    end
   end
 
   def to_s
