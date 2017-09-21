@@ -176,4 +176,11 @@ class VolunteersTest < ApplicationSystemTestCase
       assert page.has_text? volunteer.contact.last_name
     end
   end
+
+  test 'volunteer (with assignments) index partial has no journal link' do
+    volunteer = create :volunteer
+    create :assignment, volunteer: volunteer
+    visit volunteer_path(volunteer)
+    refute page.has_link? 'Journal'
+  end
 end
