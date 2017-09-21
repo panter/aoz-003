@@ -23,7 +23,7 @@ class CreateGroupOffers < ActiveRecord::Migration[5.1]
       t.boolean :morning, default: false
       t.boolean :afternoon, default: false
       t.boolean :evening, default: false
-      t.text :date_time
+      t.text :schedule_details
       t.datetime :deleted_at, index: true
       t.string :organization
       t.string :location

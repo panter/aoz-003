@@ -1,6 +1,4 @@
-.row
-  .col-xs-12
-    h1= @group_offer.title
+h1= @group_offer.title
 
 .row
   .col-xs-12
@@ -29,8 +27,7 @@
             td= t_attr(:volunteer_state)
             td
               - if @group_offer.necessary_volunteers
-                = "#{@group_offer.necessary_volunteers} "
-                = t('.necessary_volunteers')
+                = t('.necessary_volunteers', amount: @group_offer.necessary_volunteers)
                 br
               - if @group_offer.volunteer_state?
                 = t("volunteer_state.#{@group_offer.volunteer_state}")
@@ -65,8 +62,8 @@
                   = t("availability.#{availability}")
                   br
           tr
-            td= t_attr(:date_time)
-            td= @group_offer.date_time
+            td= t_attr(:schedule_details)
+            td= @group_offer.schedule_details
 
 = form_navigation_btn :edit
 = form_navigation_btn :back

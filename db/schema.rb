@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 20170914094802) do
     t.boolean "morning", default: false
     t.boolean "afternoon", default: false
     t.boolean "evening", default: false
-    t.text "date_time"
+    t.text "schedule_details"
     t.datetime "deleted_at"
     t.string "organization"
     t.string "location"

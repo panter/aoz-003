@@ -24,7 +24,7 @@ class ApplicationPolicy
   end
 
   def departments_offer?
-    department_manager? && record.department == user.department.first
+    department_manager? && user.department.include?(record.department)
   end
 
   def superadmin_or_departments_offer?

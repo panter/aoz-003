@@ -50,7 +50,7 @@ class GroupOffersController < ApplicationController
     params.require(:group_offer).permit(:title, :offer_type, :offer_state, :volunteer_state,
       :necessary_volunteers, :volunteer_responsible_state, :description, :women, :men, :children,
       :teenagers, :unaccompanied, :all, :long_term, :regular, :short_term, :workday, :weekend,
-      :morning, :afternoon, :evening, :flexible, :date_time, :department_id, :organization,
+      :morning, :afternoon, :evening, :flexible, :schedule_details, :department_id, :organization,
       :location)
   end
 end
