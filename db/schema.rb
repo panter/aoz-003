@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914094802) do
+ActiveRecord::Schema.define(version: 20170921113107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -425,6 +425,13 @@ ActiveRecord::Schema.define(version: 20170914094802) do
     t.boolean "external", default: false
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
+  end
+
+  create_table "volunteers_group_offers", id: false, force: :cascade do |t|
+    t.integer "volunteer_id"
+    t.integer "group_offer_id"
+    t.index ["group_offer_id"], name: "index_volunteers_group_offers_on_group_offer_id"
+    t.index ["volunteer_id"], name: "index_volunteers_group_offers_on_volunteer_id"
   end
 
   add_foreign_key "assignment_journals", "users", column: "author_id"
