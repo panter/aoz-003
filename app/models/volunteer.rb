@@ -73,6 +73,12 @@ class Volunteer < ApplicationRecord
     joins(:assignments).merge(Assignment.active_between(start_date, end_date)).distinct
   }
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
+  scope :without_active_assignment, (-> { joins(:assignments).merge(Assignment.ended) })
+  scope :not_responsible, (-> { where.not(id: GroupOffer.pluck(:responsible_id)) })
+  scope :not_in_any_group_offer, lambda {
+    joins('LEFT JOIN group_offers_volunteers ON volunteers.id = group_offers_volunteers.volunteer_id')
+      .where('group_offers_volunteers.volunteer_id IS NULL')
+  }
 
   scope :with_hours, (-> { joins(:hours).distinct })
 

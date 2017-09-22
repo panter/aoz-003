@@ -26,11 +26,20 @@
     .col-xs-12.col-md-4
       = f.input :necessary_volunteers, collection: 1..10
     .col-xs-12.col-md-8
-      = f.association :volunteers
+      - if policy(GroupOffer).supervisor_privileges?
+        = f.association :volunteers
+      - else
+        = f.association :volunteers,
+          collection: Volunteer.without_active_assignment.not_responsible.not_in_any_group_offer
 
   .row
     .col-xs-12.col-md-4
-      = f.association :responsible, prompt: true
+      - if policy(GroupOffer).supervisor_privileges?
+        = f.association :responsible, prompt: true
+      - else
+        = f.association :responsible,
+          collection: Volunteer.without_active_assignment.not_responsible.not_in_any_group_offer,
+          prompt: true
     .col-xs-12.col-md-8
       = f.input :volunteer_responsible_state, collection: GroupOffer::VOLUNTEER_RESPONSIBLE_STATES
 
