@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
   resources :reminders, only: [:index, :update, :destroy]
   resources :group_offers
-  resources :group_offer_categories, except: [:destroy, :show]
+  resources :group_offer_categories, except: [:destroy]
 
 
   root 'application#home'

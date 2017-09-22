@@ -8,8 +8,9 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
 
 
   test 'create new group offer category and update it' do
-    visit new_group_offer_category_path
+    visit group_offers_path
     click_button 'Group offer categories'
+    assert page.has_text? 'Group offer categories'
     click_button 'New Group offer category'
 
     fill_in 'Category name', with: 'Nähen'
@@ -27,9 +28,12 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
       click_link 'Edit'
     end
 
+    assert page.has_text? 'Edit Group offer category'
     fill_in 'Category name', with: 'Nähen und Sticken'
     page.choose('group_offer_category_category_state_inactive')
     click_button 'Update Group offer category'
     assert page.has_text? 'Group offer category was successfully updated.'
+    assert page.has_text? 'Nähen und Sticken'
+    assert page.has_text? 'inactive'
   end
 end
