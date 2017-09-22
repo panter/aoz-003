@@ -7,7 +7,6 @@ class Volunteer < ApplicationRecord
   include ImportRelation
   include FullBankDetails
 
-  acts_as_paranoid
   before_validation :handle_external
   before_save :default_state
 
