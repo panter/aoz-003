@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914094802) do
+ActiveRecord::Schema.define(version: 20170922120423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,8 +189,17 @@ ActiveRecord::Schema.define(version: 20170914094802) do
     t.bigint "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "responsible_id"
     t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
     t.index ["department_id"], name: "index_group_offers_on_department_id"
+    t.index ["responsible_id"], name: "index_group_offers_on_responsible_id"
+  end
+
+  create_table "group_offers_volunteers", id: false, force: :cascade do |t|
+    t.bigint "group_offer_id"
+    t.bigint "volunteer_id"
+    t.index ["group_offer_id"], name: "index_group_offers_volunteers_on_group_offer_id"
+    t.index ["volunteer_id"], name: "index_group_offers_volunteers_on_volunteer_id"
   end
 
   create_table "hours", force: :cascade do |t|
@@ -435,6 +444,7 @@ ActiveRecord::Schema.define(version: 20170914094802) do
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "clients", "users"
   add_foreign_key "group_offers", "departments"
+  add_foreign_key "group_offers", "volunteers", column: "responsible_id"
   add_foreign_key "hours", "billing_expenses"
   add_foreign_key "journals", "assignments"
   add_foreign_key "journals", "users"

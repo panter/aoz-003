@@ -142,8 +142,8 @@ de:
       external_volunteer: Externe Freiwillige
       internal_volunteer: AOZ-Freiwillige
     volunteer_responsible_state: &id-volunteer-responsible-states
-      volunteer_accountable: Verantwortliche/r für eine Freiwilligengruppe
-      volunteer_member: Mitglied in einer Freiwilligengruppe
+      volunteer_accountable: Verantwortliche/r für die Freiwilligengruppe
+      volunteer_member: Mitglied in der Freiwilligengruppe
     volunteers: *id-volunteers-by-actions
   <<: *id-injectables
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
@@ -237,13 +237,15 @@ de:
         offer_state: Status des FW-Einsatzes
         offer_type: Internes oder externes Gruppenangebot
         regular: Regelmässig
+        responsible: Verantwortliche Person
         schedule_details: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum
         short_term: Kurzfristig
         target_group: Zielpublikum
         teenagers: Jugendliche
         title: Bezeichnung
         unaccompanied: Unbegleitete Minderjährige
-        volunteer_responsible_state: Verantwortliche Person (betrifft interne Gruppenangebote)
+        volunteers: Freiwillige
+        volunteer_responsible_state: Verantwortliche Person Status (betrifft interne Gruppenangebote)
         volunteer_state: Interne oder externe Freiwillige
         women: Frauen
       hour:
