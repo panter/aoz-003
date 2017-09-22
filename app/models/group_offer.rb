@@ -9,6 +9,9 @@ class GroupOffer < ApplicationRecord
 
   belongs_to :department, optional: true
 
+  has_and_belongs_to_many :volunteers
+  belongs_to :responsible, class_name: 'Volunteer', optional: true
+
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
 
   def external?

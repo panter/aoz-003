@@ -31,9 +31,6 @@ h1= @group_offer.title
                 br
               - if @group_offer.volunteer_state?
                 = t("volunteer_state.#{@group_offer.volunteer_state}")
-                br
-              - if @group_offer.volunteer_responsible_state?
-                = t("volunteer_responsible_state.#{@group_offer.volunteer_responsible_state}")
           tr
             td= t_attr(:description)
             td= @group_offer.description
@@ -64,6 +61,24 @@ h1= @group_offer.title
           tr
             td= t_attr(:schedule_details)
             td= @group_offer.schedule_details
+
+- if @group_offer.responsible
+  - if @group_offer.volunteer_responsible_state?
+    h3= t("volunteer_responsible_state.#{@group_offer.volunteer_responsible_state}")
+  - else
+    h3= t_attr(:responsible)
+  .row
+    .col-xs-12
+      ul
+        li= link_to @group_offer.responsible, volunteer_path(@group_offer.responsible)
+
+- if @group_offer.volunteers.any?
+  h3= t_attr(:volunteers)
+  .row
+    .col-xs-12
+      ul
+        - @group_offer.volunteers.each do |volunteer|
+          li= link_to volunteer, volunteer_path(volunteer)
 
 = form_navigation_btn :edit
 = form_navigation_btn :back

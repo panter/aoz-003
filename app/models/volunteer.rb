@@ -49,6 +49,8 @@ class Volunteer < ApplicationRecord
   has_many :billing_expenses
   has_many :reminders, dependent: :destroy
 
+  has_and_belongs_to_many :group_offers
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   validates :contact, presence: true
