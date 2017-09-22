@@ -1,10 +1,12 @@
 class GroupOfferCategoriesController < ApplicationController
-  before_action :set_group_offer_category, only: [:edit, :update]
+  before_action :set_group_offer_category, only: [:show, :edit, :update]
 
   def index
     authorize GroupOfferCategory
     @group_offer_categories = policy_scope(GroupOfferCategory)
   end
+
+  def show; end
 
   def new
     @group_offer_category = GroupOfferCategory.new
@@ -25,7 +27,7 @@ class GroupOfferCategoriesController < ApplicationController
 
   def update
     if @group_offer_category.update(group_offer_category_params)
-      redirect_to group_offer_categories_url, make_notice
+      redirect_to @group_offer_category, make_notice
     else
       render :edit
     end
