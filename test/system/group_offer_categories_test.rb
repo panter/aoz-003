@@ -9,24 +9,22 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
 
   test 'create new group offer category and update it' do
     visit group_offers_path
-    click_button 'Group offer categories'
+    click_link 'Group offer categories'
     assert page.has_text? 'Group offer categories'
-    click_button 'New Group offer category'
+    click_link 'New Group offer category'
 
     fill_in 'Category name', with: 'Nähen'
-    assert page.has_select? 'Category state', selected: 'active'
+    assert page.has_checked_field?('group_offer_category_category_state_active')
     click_button 'Create Group offer category'
 
     assert page.has_text? 'Group offer category was successfully created.'
 
-    within '.collapse .table-responsive' do
-      assert page.has_text? 'Category name'
-      assert page.has_text? 'Nähen'
-      assert page.has_text? 'Category state'
-      assert page.has_text? 'active'
-      assert page.has_link? 'Edit'
-      click_link 'Edit'
-    end
+    assert page.has_text? 'Category name'
+    assert page.has_text? 'Nähen'
+    assert page.has_text? 'Category state'
+    assert page.has_text? 'active'
+    assert page.has_link? 'Edit'
+    click_link 'Edit'
 
     assert page.has_text? 'Edit Group offer category'
     fill_in 'Category name', with: 'Nähen und Sticken'

@@ -24,6 +24,9 @@ h1= @group_offer.title
             td= t_attr(:offer_state)
             td= t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
           tr
+            td= t_attr(:group_offer_category)
+            td= @group_offer.group_offer_category.category_name
+          tr
             td= t_attr(:volunteer_state)
             td
               - if @group_offer.necessary_volunteers

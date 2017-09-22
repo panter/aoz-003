@@ -42,6 +42,8 @@
           prompt: true
     .col-xs-12.col-md-8
       = f.input :volunteer_responsible_state, collection: GroupOffer::VOLUNTEER_RESPONSIBLE_STATES
+    .col-xs-12.col-md-4
+      = f.association :group_offer_category, label_method: :category_name
 
   .row
     .col-xs-12
