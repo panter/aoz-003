@@ -5,7 +5,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     @user = create :user, email: 'superadmin@example.com'
     Assignment.with_deleted.map(&:really_destroy!)
     @volunteer_user = create :user, role: 'volunteer'
-    @client = create :client, user: @user
+    @client = create :client
     @volunteer = create :volunteer, state: Volunteer::ACTIVE_FURTHER, user: @volunteer_user
   end
 
@@ -22,7 +22,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'Assignment was successfully created.'
     within '.table-striped' do
       assert page.has_text? 'Suggested'
-      assert page.has_link? 'superadmin@example.com'
+      assert page.has_link? 'superadmin@example.com', @user.email
     end
   end
 

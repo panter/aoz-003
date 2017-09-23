@@ -22,7 +22,7 @@ class IndexActionPartialsTest < ApplicationSystemTestCase
     click_link 'Print'
     assert_equal page.windows.count, 2
     page.switch_to_window(page.windows[1])
-    assert page.has_link? @client.user.email
+    assert page.has_link? @client.contact.primary_email
   end
 
   test 'volunteer list shows all actions needed' do
