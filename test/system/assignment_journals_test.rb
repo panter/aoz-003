@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class AssignmentJournalsTest < ApplicationSystemTestCase
   def setup
     @user_volunteer = create :user, role: 'volunteer', email: 'volunteer@example.com'
-    @volunteer = @user_volunteer.volunteer = create :volunteer
+    @volunteer = @user_volunteer.volunteer = create :volunteer, acceptance: :accepted
     @assignment = create :assignment, volunteer: @volunteer
     superadmin = create :user
     @assignment_journal = create :assignment_journal, assignment: @assignment,

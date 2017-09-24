@@ -141,6 +141,8 @@ en:
       form:
         <<: [*id-volunteers-create, *id-availability]
       index: &id-volunteers-index
+        state:
+          <<: [*id-volunteer-aceptance, *id-states]
         show_assignments: Show Assignments
         availability: Availability for voluntary engagement
         hour_reports: Hour reports
@@ -154,7 +156,9 @@ en:
         <<: [*id-volunteers-create, *id-availability, *id-volunteer-aceptance]
       one: Volunteer
       other: Volunteers
-      volunteer: *id-volunteers-index
+      volunteer:
+        <<: *id-volunteers-index
+        acceptance: *id-volunteer-aceptance
     volunteer_responsible_state: &id-volunteer-responsible-states
       volunteer_accountable: Manager of volunteer group
       volunteer_member: Member in a volunteer group

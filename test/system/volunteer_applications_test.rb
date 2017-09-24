@@ -58,11 +58,6 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     assert page.has_text? 'We will soon get back to you.'
   end
 
-  test 'state field not visible in the application form' do
-    visit new_volunteer_application_path
-    assert_not page.has_text? 'State'
-  end
-
   test 'secondary phone not visible in the application form' do
     visit new_volunteer_application_path
     refute page.has_text? 'Secondary phone'

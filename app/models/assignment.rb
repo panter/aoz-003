@@ -61,6 +61,14 @@ class Assignment < ApplicationRecord
 
   scope :with_hours, (-> { joins(:hours) })
 
+  def inactive?
+    period_end.nil? || period_end < Time.zone.now.to_date
+  end
+
+  def active?
+    period_end.nil? && period_start < Time.zone.now.to_date
+  end
+
   def creator
     super || User.deleted.find_by(id: creator_id)
   end

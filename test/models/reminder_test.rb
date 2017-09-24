@@ -26,13 +26,13 @@ class ReminderTest < ActiveSupport::TestCase
 
   test 'creates batch reminders when criteria are met' do
     10.times do
-      create :assignment, state: 'active'
+      create :assignment, period_start: 10.months.ago, period_end: nil
     end
     Reminder.conditionally_create_reminders
     assert_equal Reminder.count, 10
-    create :assignment, period_start: 1.month.ago
+    create :assignment, period_start: 1.month.ago, period_end: nil
     create :assignment, confirmation: true
-    create :assignment, state: 'suggested'
+    create :assignment, state: 'suggested', period_start: nil, period_end: nil
     Reminder.conditionally_create_reminders
     assert_equal Reminder.count, 10
   end

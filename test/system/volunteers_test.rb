@@ -137,17 +137,13 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_content? 'Explanation for rejection Explanation'
   end
 
-  test 'thead state filter dropdown can switch to all' do
+  test 'thead acceptance filter dropdown can switch to all' do
     visit volunteers_path
     within 'tbody' do
-      assert page.has_text? 'Interested'
-      assert page.has_text? 'Contacted'
-      assert page.has_text? 'Active'
       assert page.has_text? 'Accepted'
-      assert page.has_text? 'Active and interested in further engagements'
+      assert page.has_text? 'Undecided'
       assert page.has_text? 'Rejected'
-      assert page.has_text? 'Terminated'
-      assert page.has_text? 'Looking for new engagement'
+      assert page.has_text? 'Resigned'
     end
   end
 
@@ -166,7 +162,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'volunteer pagination' do
     70.times do
-      create :volunteer
+      create :volunteer, acceptance: :accepted
     end
     visit volunteers_path
     first(:link, '2').click
@@ -178,7 +174,7 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'volunteer (with assignments) index partial has no journal link' do
-    volunteer = create :volunteer
+    volunteer = create :volunteer, acceptance: :accepted
     create :assignment, volunteer: volunteer
     visit volunteer_path(volunteer)
     refute page.has_link? 'Journal'

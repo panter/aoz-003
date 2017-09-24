@@ -13,6 +13,7 @@ tr
   td = "#{volunteer.working_percent}%" if volunteer.working_percent.present?
   td = volunteer.expectations
   td = volunteer.interests
+  td = t(".acceptance.#{volunteer.acceptance}")
   td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
   td = volunteer.self_applicant? ? t('volunteer_self_applicant') : volunteer.registrar.full_name
   - if action_name == 'index'

@@ -145,20 +145,27 @@ de:
       edit: *id-volunteers-create
       form:
         <<: [*id-volunteers-create, *id-volunteer-acceptance]
+        state: &id-volunteer-active-states
       index: &id-volunteers-index
+        state: &id-volunteer-active-states
+          <<: [*id-volunteer-acceptance, *id-states]
         show_assignments: Begleitete anzeigen
       new:
         <<: [*id-volunteers-create, *id-volunteer-acceptance]
       one: Freiwillige/r
       other: Freiwillige
       show:
+        <<: [*id-volunteers-index]
+        state: *id-volunteer-active-states
         availability: Verfügbarkeit
         hour_reports: Stunden Rapporte
         new_certificate: Nachweis ausstellen
         report_hours: Stunden erfassen
         show_certificate: Nachweis anzeigen
         show_certificates: Nachweise anzeigen
-      volunteer: *id-volunteers-index
+      volunteer:
+        <<: *id-volunteers-index
+        state: *id-volunteer-active-states
     volunteer_state: &id-volunteer-states
       external_volunteer: Externe Freiwillige
       internal_volunteer: AOZ-Freiwillige
