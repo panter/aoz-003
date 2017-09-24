@@ -1,56 +1,73 @@
 module FilterDropdownHelper
-  def list_eq_filter_dropdown(attribute, collection, t_scope = nil)
-    t_scope ||= [:simple_form, :options, controller_name.singularize.to_sym]
-    t_scope = { scope: t_scope.push(attribute) }
+  def list_filter_dropdown(attribute, collection = nil)
     filter_links = collection.map do |item|
-      list_filter_link("#{attribute}_eq".to_sym, item, t_scope)
+      list_filter_link("#{attribute}_eq".to_sym, item)
     end
-    dropdown_list_element(attribute, filter_links, t_scope, "#{attribute}_eq".to_sym)
+    dropdown_list_filter(attribute, filter_links, "#{attribute}_eq".to_sym)
   end
 
-  def list_boolean_filter_dropdown(attribute_group, collection, t_scope = nil)
+  def boolean_filter_dropdown(attribute_group, collection = nil)
     q_filters = collection.map { |attribute| "#{attribute}_true".to_sym }
-    t_scope = { scope: t_scope || [:activerecord, :attributes, controller_name.singularize.to_sym] }
     filter_links = q_filters.each_with_index.map do |q_filter, index|
-      list_filter_link(q_filter, collection[index], t_scope, bool_filter: true)
+      list_filter_link(q_filter, collection[index], bool_filter: true)
     end
-    dropdown_list_element(attribute_group, filter_links, t_scope, *q_filters)
+    dropdown_list_filter(attribute_group, filter_links, *q_filters)
   end
 
-  def dropdown_list_element(attribute, filter_links, t_scope, *q_filters)
-    dropdown_li_container(
-      dropdown_toggle_link(toggler_text(attribute, q_filters, t_scope)),
-      dropdown_menu(filter_links, q_filters)
-    )
-  end
-
-  def dropdown_li_container(toggler, menu)
-    content_tag :li, class: 'dropdown' do
-      concat toggler
-      concat menu
+  def enum_filter_dropdown(attribute, collection)
+    filter_links = collection.map do |option|
+      list_filter_link("#{attribute}_eq".to_sym, option[0], enum_value: option[1])
+    end
+    li_dropdown do
+      concat dropdown_toggle_link(enum_toggler_text(attribute, collection))
+      concat dropdown_menu(filter_links, "#{attribute}_eq".to_sym)
     end
   end
 
-  def list_filter_link(q_filter, filter_attribute, t_scope, bool_filter: false)
-    link_class = 'bg-success' if filter_active?(q_filter, filter_attribute)
-    content_tag :li do
-      link_to(filter_url(q_filter, bool_filter, filter_attribute), class: link_class) do
-        translate_value(filter_attribute, t_scope)
+  def enum_toggler_text(attribute, collection)
+    if filter_active?("#{attribute}_eq".to_sym, '', search_parameters["#{attribute}_eq"])
+      "#{t_attr(attribute)}: " + collection.invert[search_parameters["#{attribute}_eq"].to_i].humanize
+    else
+      "#{t_attr(attribute)} "
+    end
+  end
+
+  def dropdown_list_filter(attribute, filter_links, *q_filters)
+    li_dropdown do
+      concat dropdown_toggle_link(toggler_text(attribute, q_filters))
+      concat dropdown_menu(filter_links, q_filters)
+    end
+  end
+
+  def li_dropdown
+    tag.li class: 'dropdown' do
+      yield
+    end
+  end
+
+  def list_filter_link(q_filter, filter_attribute, bool_filter: false, enum_value: false)
+    link_class = 'bg-success' if filter_active?(q_filter, filter_attribute, enum_value)
+    tag.li do
+      link_to(
+        filter_url(q_filter, bool_filter, filter_attribute, enum_value: enum_value),
+        class: link_class
+      ) do
+        translate_value(filter_attribute, q_filter)
       end
     end
   end
 
-  def filter_url(q_filter, bool_filter, filter_attribute)
-    if filter_active?(q_filter, filter_attribute)
+  def filter_url(q_filter, bool_filter, filter_attribute, enum_value: false)
+    if filter_active?(q_filter, filter_attribute, enum_value)
       url_for(q: search_parameters.except(q_filter))
     else
-      filter_parameter = { q_filter => bool_filter || filter_attribute }
+      filter_parameter = { q_filter => bool_filter || enum_value || filter_attribute }
       url_for(q: search_parameters.merge(filter_parameter))
     end
   end
 
-  def filter_active?(q_filter, filter_attribute)
-    [filter_attribute.to_s, 'true'].include? search_parameters[q_filter]
+  def filter_active?(q_filter, filter_attribute, enum_value = nil)
+    [filter_attribute.to_s, 'true', enum_value.to_s].include? search_parameters[q_filter]
   end
 
   def dropdown_menu(filter_links, q_filters)
@@ -64,31 +81,23 @@ module FilterDropdownHelper
   end
 
   def dropdown_ul(all_list_link)
-    content_tag :ul, class: 'dropdown-menu' do
+    tag.ul class: 'dropdown-menu' do
       concat all_list_link
-      concat dropdown_divider
+      concat tag.li class: 'divider', role: 'separator'
       yield
     end
   end
 
-  def dropdown_divider
-    content_tag :li, '', class: 'divider', role: 'separator'
-  end
-
   def dropdown_toggle_link(title_text)
-    content_tag :a, dropdown_toggler_options do
+    tag.a dropdown_toggler_options do
       concat title_text + ' '
-      concat bootstrap_caret
+      concat tag.span class: 'caret'
     end
   end
 
-  def bootstrap_caret
-    content_tag :span, '', class: 'caret'
-  end
-
-  def toggler_text(attribute, q_filter, t_scope)
-    return t_attr(attribute) if q_filter.size > 1
-    '%s: %s' % [t_attr(attribute), translate_value(search_parameters[q_filter[0]], t_scope)]
+  def toggler_text(attribute, q_filter)
+    return t_attr(attribute) if q_filter.size > 1 || search_parameters[q_filter[0]].nil?
+    '%s: %s' % [t_attr(attribute), translate_value(search_parameters[q_filter[0]], q_filter)]
   end
 
   def dropdown_toggler_options
@@ -97,12 +106,17 @@ module FilterDropdownHelper
       aria: { expanded: 'false', haspopup: 'true' }.merge(toggle_drop) }
   end
 
-  def translate_value(filter_attribute, t_scope)
+  def translate_value(filter_attribute, q_filter)
     return t('all') if filter_attribute.blank?
     if [Department, GroupOfferCategory].include?(filter_attribute.class) ||
         filter_attribute.to_s.to_i != 0
       return filter_attribute.to_s
     end
-    t(filter_attribute, t_scope)
+    q_filter = q_filter.is_a?(Symbol) ? q_filter.to_s : q_filter.first.to_s
+    if q_filter.slice! '_true'
+      t_attr(q_filter)
+    elsif q_filter.slice! '_eq'
+      t("simple_form.options.#{controller_name.singularize}.#{q_filter}.#{filter_attribute}")
+    end
   end
 end
