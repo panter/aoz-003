@@ -8,8 +8,8 @@ class AssignmentsTest < ApplicationSystemTestCase
     @client = create :client, user: @user
     @volunteer = create :volunteer, acceptance: :accepted, user: @volunteer_user,
       take_more_assignments: true
-    @assignment = create :assignment, volunteer: create(:volunteer), creator: @user,
-      client: create(:client), period_end: nil
+    @assignment = create :assignment, volunteer: @volunteer, creator: @user,
+      client: @client, period_end: nil
   end
 
   test 'new assignment form with preselected fields' do

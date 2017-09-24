@@ -98,7 +98,7 @@ fieldset
   .col-xs-12
     = f.input :zurich
 
-- if @volunteer.user_id?
+- if current_user.present?
   fieldset.banc-data
     legend Bankdaten für Spesen
     = f.input :bank

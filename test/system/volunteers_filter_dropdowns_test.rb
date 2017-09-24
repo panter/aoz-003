@@ -15,7 +15,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     visit volunteers_path
   end
 
-  test 'filter by state works and disabling works as well' do
+  test 'filter by acceptance works and disabling works as well' do
     within '.section-navigation' do
       click_link 'Acceptance: All'
       click_link 'Undecided'
@@ -37,7 +37,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'Filter state and salutation at the same time' do
+  test 'Filter acceptance and salutation at the same time' do
     within '.section-navigation' do
       click_link 'Salutation: All'
       click_link 'Mr.'
@@ -45,14 +45,14 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     visit current_url
     within '.section-navigation' do
       click_link 'Acceptance: All'
-      click_link 'Terminated'
+      click_link 'Accepted'
     end
     visit current_url
     within 'tbody' do
       assert page.has_text? 'Mr.'
       refute page.has_text? 'Mrs.'
-      assert page.has_text? 'Terminated'
-      refute page.has_text? 'Interested'
+      assert page.has_text? 'Accepted'
+      refute page.has_text? 'Rejected'
     end
     within '.section-navigation' do
       click_link 'Salutation: Mr.'
@@ -63,8 +63,8 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     within 'tbody' do
       assert page.has_text? 'Mrs.'
       assert page.has_text? 'Mr.'
-      assert page.has_text? 'Terminated'
-      refute page.has_text? 'Interested'
+      assert page.has_text? 'Accepted'
+      refute page.has_text? 'Rejected'
     end
     click_link 'Clear filters'
     visit current_url
@@ -72,13 +72,13 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       assert page.has_text? 'Mrs.'
       assert page.has_text? 'Mr.'
       assert page.has_text? 'Terminated'
-      assert page.has_text? 'Interested'
+      assert page.has_text? 'Rejected'
     end
   end
 
   test 'boolean filters for single accompainment' do
     false_volunteer = create :volunteer, man: false, woman: false, sport: false, training: false,
-      morning: false, workday: false
+      morning: false, workday: false, acceptance: :accepted
     within '.section-navigation' do
       click_link 'Single accompaniment'
       click_link 'Man'
