@@ -21,7 +21,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter by state works and disabling works as well' do
     within '.section-navigation' do
-      click_link 'State: All'
+      click_link 'State'
       click_link 'Registered'
     end
     visit current_url
@@ -43,12 +43,12 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'Filter state and salutation at the same time' do
     within '.section-navigation' do
-      click_link 'Salutation: All'
+      click_link 'Salutation'
       click_link 'Mr.'
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'State: All'
+      click_link 'State'
       click_link 'Active'
     end
     visit current_url
@@ -79,7 +79,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'boolean filters for gender request and age_request' do
     within '.section-navigation' do
-      click_link "Volunteer's gender: All"
+      click_link "Volunteer's gender"
       click_link 'gender same'
     end
     visit current_url
@@ -90,7 +90,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @registered_mr_no_matter_age_middle
     end
     within '.section-navigation' do
-      click_link "Volunteer's age: All"
+      click_link "Volunteer's age"
       click_link '36 - 50'
     end
     visit current_url
