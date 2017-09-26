@@ -2,7 +2,7 @@ $(function() {
   $( document ).on('turbolinks:render, turbolinks:load', function() {
     show_rejection();
 
-    $('#volunteer_state').on('change', ({target}) => {
+    $('#volunteer_acceptance_rejected').on('change', ({target}) => {
       show_rejection(target);
     });
 
