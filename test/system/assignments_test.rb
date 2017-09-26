@@ -12,13 +12,11 @@ class AssignmentsTest < ApplicationSystemTestCase
   test 'new assignment form with preselected fields' do
     login_as @user
     visit new_assignment_path
-    within '.assignment_client' do
-      select(@client.contact.full_name, from: 'Client')
-    end
-    within '.assignment_volunteer' do
-      select(@volunteer.contact.full_name, from: 'Volunteer')
-    end
-
+    select @client.contact.full_name, from: 'Client'
+    select @volunteer.contact.full_name, from: 'Volunteer'
+    page.find('#assignment_period_start').click
+    page.find('.month', text: 'Jan').click
+    page.find_all('.day', exact_text: '1').first.click
     click_button 'Create Assignment'
     assert page.has_text? 'Assignment was successfully created.'
     within '.table-striped' do
@@ -33,6 +31,9 @@ class AssignmentsTest < ApplicationSystemTestCase
     first(:link, 'Need accompanying').click
     click_link 'Find volunteer'
     click_link 'Reserve'
+    page.find('#assignment_period_start').click
+    page.find('.month', text: 'Jan').click
+    page.find_all('.day', exact_text: '1').first.click
     click_button 'Create Assignment'
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
@@ -47,6 +48,9 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit seeking_clients_volunteers_path
     click_link 'Find client'
     click_link 'Reserve'
+    page.find('#assignment_period_start').click
+    page.find('.month', text: 'Jan').click
+    page.find_all('.day', exact_text: '1').first.click
     click_button 'Create Assignment'
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
@@ -63,12 +67,11 @@ class AssignmentsTest < ApplicationSystemTestCase
 
     login_as user
     visit new_assignment_path
-    within '.assignment_client' do
-      select @client.contact.full_name, from: 'Client'
-    end
-    within '.assignment_volunteer' do
-      select @volunteer.contact.full_name, from: 'Volunteer'
-    end
+    select @client.contact.full_name, from: 'Client'
+    select @volunteer.contact.full_name, from: 'Volunteer'
+    page.find('#assignment_period_start').click
+    page.find('.month', text: 'Jan').click
+    page.find_all('.day', exact_text: '1').first.click
     click_button 'Create Assignment'
     within '.table-striped' do
       click_link 'Show'

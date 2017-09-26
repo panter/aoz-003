@@ -106,7 +106,7 @@ h3= t('personal_background')
           td= @volunteer.acceptance
         tr
           td= t_attr(:state)
-          td
+          td= t(".state.#{@volunteer.state}")
         - if @volunteer.rejected?
           tr
             td= t_attr(:rejection_type)
