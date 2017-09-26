@@ -17,7 +17,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter by acceptance works and disabling works as well' do
     within '.section-navigation' do
-      click_link 'Acceptance: All'
+      click_link 'Acceptance'
       click_link 'Undecided'
     end
     visit current_url
@@ -39,12 +39,12 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'Filter acceptance and salutation at the same time' do
     within '.section-navigation' do
-      click_link 'Salutation: All'
+      click_link 'Salutation'
       click_link 'Mr.'
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Acceptance: All'
+      click_link 'Acceptance'
       click_link 'Accepted'
     end
     visit current_url
@@ -71,7 +71,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     within 'tbody' do
       assert page.has_text? 'Mrs.'
       assert page.has_text? 'Mr.'
-      assert page.has_text? 'Terminated'
+      assert page.has_text? 'Accepted'
       assert page.has_text? 'Rejected'
     end
   end
