@@ -78,7 +78,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'boolean filters for single accompainment' do
     false_volunteer = create :volunteer, man: false, woman: false, sport: false, training: false,
-      morning: false, workday: false, acceptance: :accepted
+      morning: false, workday: false
     within '.section-navigation' do
       click_link 'Single accompaniment'
       click_link 'Man'

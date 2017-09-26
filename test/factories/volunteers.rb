@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence :birth_year { Time.zone.now.to_date - rand(5000..20_000) }
     contact
     salutation 'mrs'
+    acceptance :accepted
 
     trait :with_language_skills do
       language_skills do |language_skill|

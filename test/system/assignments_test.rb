@@ -6,10 +6,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     Assignment.with_deleted.map(&:really_destroy!)
     @volunteer_user = create :user, role: 'volunteer'
     @client = create :client, user: @user
-    @volunteer = create :volunteer, acceptance: :accepted, user: @volunteer_user,
-      take_more_assignments: true
-    @assignment = create :assignment, volunteer: @volunteer, creator: @user,
-      client: @client, period_end: nil
+    @volunteer = create :volunteer, user: @volunteer_user, take_more_assignments: true
   end
 
   test 'new assignment form with preselected fields' do
@@ -21,6 +18,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     within '.assignment_volunteer' do
       select(@volunteer.contact.full_name, from: 'Volunteer')
     end
+
     click_button 'Create Assignment'
     assert page.has_text? 'Assignment was successfully created.'
     within '.table-striped' do
@@ -33,8 +31,8 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as @user
     visit clients_path
     first(:link, 'Need accompanying').click
-    page.find('a', text: 'Find volunteer').trigger('click')
-    page.find('a', text: 'Reserve').trigger('click')
+    click_link 'Find volunteer'
+    click_link 'Reserve'
     click_button 'Create Assignment'
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
@@ -47,8 +45,8 @@ class AssignmentsTest < ApplicationSystemTestCase
   test 'assign unassigned client - volunteer side' do
     login_as @user
     visit seeking_clients_volunteers_path
-    page.find('a', text: 'Find client').trigger('click')
-    page.find('a', text: 'Reserve').trigger('click')
+    click_link 'Find client'
+    click_link 'Reserve'
     click_button 'Create Assignment'
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
@@ -66,10 +64,10 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as user
     visit new_assignment_path
     within '.assignment_client' do
-      select(@client.contact.full_name, from: 'Client')
+      select @client.contact.full_name, from: 'Client'
     end
     within '.assignment_volunteer' do
-      select(@volunteer.contact.full_name, from: 'Volunteer')
+      select @volunteer.contact.full_name, from: 'Volunteer'
     end
     click_button 'Create Assignment'
     within '.table-striped' do

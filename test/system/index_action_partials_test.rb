@@ -26,7 +26,7 @@ class IndexActionPartialsTest < ApplicationSystemTestCase
   end
 
   test 'volunteer list shows all actions needed' do
-    volunteer = create :volunteer, acceptance: :accepted
+    volunteer = create :volunteer
     visit volunteers_path
     assert page.has_link? 'Show', href: volunteer_path(volunteer)
     assert page.has_link? 'Edit', href: edit_volunteer_path(volunteer)

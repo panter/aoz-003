@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class HoursTest < ApplicationSystemTestCase
   def setup
     @user_volunteer1 = create :user, role: 'volunteer', email: 'volunteer1@example.com'
-    @volunteer1 = @user_volunteer1.volunteer = create :volunteer, acceptance: :accepted
+    @volunteer1 = @user_volunteer1.volunteer = create :volunteer
     @client1 = create :client
     @client1.contact.first_name = @client1.contact.last_name = 'Client1'
     @assignment1 = create :assignment, volunteer: @volunteer1, client: @client1
@@ -33,7 +33,7 @@ class HoursTest < ApplicationSystemTestCase
 
   test 'volunteer can see only her assignment' do
     @user_volunteer2 = create :user, role: 'volunteer', email: 'volunteer2@example.com'
-    @volunteer2 = @user_volunteer2.volunteer = create :volunteer, acceptance: :accepted
+    @volunteer2 = @user_volunteer2.volunteer = create :volunteer
     @client2 = create :client
     @client2.contact.first_name = @client2.contact.last_name = 'Client2'
     @assignment2 = create :assignment, volunteer: @volunteer2, client: @client2

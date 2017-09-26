@@ -2,7 +2,7 @@ require 'test_helper'
 
 class VolunteerMailerTest < ActionMailer::TestCase
   def setup
-    @volunteer = create :volunteer, education: 'Bogus Education', woman: true, acceptance: :accepted
+    @volunteer = create :volunteer, education: 'Bogus Education', woman: true
     @volunteer_email = create :volunteer_email
   end
 
