@@ -60,6 +60,8 @@ class Volunteer < ApplicationRecord
 
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
+  scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
+
   scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
   scope :with_active_assignments_between, lambda { |start_date, end_date|
     joins(:assignments).merge(Assignment.active_between(start_date, end_date))
@@ -75,12 +77,15 @@ class Volunteer < ApplicationRecord
   scope :internal, (-> { where(external: false) })
   scope :with_inactive_assignments, lambda {
     joins(:assignments)
+  scope :with_assignment_6_months_ago, lambda {
+    joins(:assignments).where('assignments.period_start < ?', 6.months.ago.to_date.to_s)
+  }
+
   scope :with_only_inactive_assignments, lambda {
     left_outer_joins(:assignments)
       .merge(Assignment.inactive)
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
-  scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
   scope :active, (-> { accepted.with_active_assignments })
 
@@ -89,7 +94,6 @@ class Volunteer < ApplicationRecord
   scope :loj_active_take_more, lambda {
     accepted_joined.will_take_more_assignments.where(assignments: { id: Assignment.active.ids })
   }
-
   scope :seeking_clients, lambda {
     accepted_joined
       .merge(Assignment.inactive)

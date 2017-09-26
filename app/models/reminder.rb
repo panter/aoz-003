@@ -11,38 +11,39 @@ class Reminder < ApplicationRecord
   def self.conditionally_create_reminders(time = Time.zone.now)
     logger.info("Beginning reminder run, reference Date #{time}")
     logger.flush
-
-    existing_reminders = Reminder.all.count
-
-    Volunteer.includes(:assignments).find_each.count do |volunteer|
-      volunteer.assignments.each do |assignment|
+    reminders_created = Volunteer.with_assignment_6_months_ago.map do |volunteer|
+      volunteer.assignments.map do |assignment|
         conditionally_create_reminder_for_volunteer(volunteer, assignment)
       end
-    end
-
-    reminders_created_count = Reminder.all.count - existing_reminders
-
-    logger.info("Created #{reminders_created_count} reminders, reference Date #{time}")
+    end.flatten.compact
+    logger.info("Created #{reminders_created.count} reminders, reference Date #{time}")
     logger.flush
 
-    reminders_created_count
+    reminders_created.size
   end
 
   def self.conditionally_create_reminder_for_volunteer(volunteer, assignment)
-    log_message =
-      if assignment.period_start? && assignment.period_start > 6.months.ago
-        'not yet 6 months'
-      elsif assignment.confirmation?
-        'already confirmed'
-      elsif assignment.inactive?
-        'not active assignment'
-      elsif assignment.reminders.any?
-        'reminder already present'
-      else
-        reminder = Reminder.create_for(volunteer, assignment)
-        "created reminder [#{reminder.id}]"
-      end
-    logger.info("[#{volunteer.id}] #{volunteer.contact.full_name}:" + log_message)
+    if !assignment.started_six_months_ago?
+      log_reminder volunteer, 'not yet 6 months'
+      nil
+    elsif assignment.confirmation?
+      log_reminder volunteer, 'already confirmed'
+      nil
+    elsif assignment.inactive?
+      log_reminder volunteer, 'not active assignment'
+      nil
+    elsif assignment.reminders.any?
+      log_reminder volunteer, 'reminder already present'
+      nil
+    else
+      reminder = Reminder.create_for(volunteer, assignment)
+      log_reminder volunteer, "created reminder [#{reminder.id}]"
+      reminder.id
+    end
+  end
+
+  def self.log_reminder(volunteer, message)
+    logger.info("[#{volunteer.id}] #{volunteer.contact.full_name}: #{message}")
     logger.flush
   end
 end
