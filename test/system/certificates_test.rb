@@ -11,17 +11,6 @@ class CertificatesTest < ApplicationSystemTestCase
       minutes: 15
   end
 
-  test 'only resigned volunteer can get a certificate' do
-    login_as @user
-    active_volunteer = create :volunteer, acceptance: :accepted
-    create :assignment, volunteer: active_volunteer, creator: User.superadmins.first,
-      client: create(:client), period_start: 2.months.ago, period_end: nil
-    visit volunteer_path(active_volunteer)
-    assert page.has_no_link? 'Create certificate'
-    visit volunteer_path(@volunteer)
-    assert page.has_link? 'Create certificate'
-  end
-
   test 'volunteer user can not see create certificate button' do
     login_as @volunteer.user
     visit volunteer_path(@volunteer)
