@@ -162,7 +162,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'volunteer pagination' do
     70.times do
-      create :volunteer, acceptance: :accepted
+      create :volunteer
     end
     visit volunteers_path
     first(:link, '2').click
@@ -174,7 +174,7 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'volunteer (with assignments) index partial has no journal link' do
-    volunteer = create :volunteer, acceptance: :accepted
+    volunteer = create :volunteer
     create :assignment, volunteer: volunteer
     visit volunteer_path(volunteer)
     refute page.has_link? 'Journal'

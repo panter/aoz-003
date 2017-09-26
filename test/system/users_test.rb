@@ -80,9 +80,10 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test 'accepted volunteer becomes a user' do
-    volunteer = create :volunteer
+    volunteer = create :volunteer, acceptance: :undecided
 
     visit edit_volunteer_path(volunteer.id)
+    assert page.has_text? 'Edit Volunteer'
     page.choose 'Accepted'
     assert_difference 'User.count', 1 do
       click_button 'Update Volunteer'

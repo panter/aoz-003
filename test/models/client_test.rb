@@ -20,7 +20,7 @@ class ClientTest < ActiveSupport::TestCase
   end
 
   test 'a client with an assignment should not show up in without assignment' do
-    @volunteer = create :volunteer, acceptance: :accepted
+    @volunteer = create :volunteer
     @user = create :user
     @client.create_assignment!(volunteer: @volunteer, creator: @user, period_start: 10.days.ago,
       period_end: nil)

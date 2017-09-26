@@ -16,7 +16,7 @@ class AssignmentTest < ActiveSupport::TestCase
 
   test 'no duplicate assignment' do
     user = create :user
-    volunteer = create :volunteer, acceptance: :accepted
+    volunteer = create :volunteer
     client = create :client
     assignment = create :assignment, client: client, volunteer: volunteer, creator: user
 
