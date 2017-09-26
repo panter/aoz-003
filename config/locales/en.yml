@@ -142,7 +142,9 @@ en:
         <<: [*id-volunteers-create, *id-availability]
       index: &id-volunteers-index
         state:
-          <<: [*id-volunteer-aceptance, *id-states]
+          <<: [*id-volunteer-aceptance]
+          active: Active
+          inactive: Inactive
         show_assignments: Show Assignments
         availability: Availability for voluntary engagement
         hour_reports: Hour reports

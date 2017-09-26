@@ -41,27 +41,11 @@ def make_lang_skills
 end
 
 User.role_collection.each do |role|
-  new_user = User.find_or_create_by(email: "#{role}@example.com") do |new_user|
-    new_user.password = 'asdfasdf'
-    new_user.role = role
-  end
-  new_user.profile = Profile.new do |profile|
-    profile.build_contact(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      postal_code: Faker::Address.zip_code,
-      city: Faker::Address.city,
-      street: Faker::Address.street_address,
-      primary_email: Faker::Internet.email,
-      primary_phone: Faker::PhoneNumber.phone_number
-    )
-    profile.user_id = new_user.id
-    profile.profession = Faker::Company.profession
-    availability_collection.each do |availability|
-      profile[availability] = [true, false].sample
-    end
-  end
-  new_user.save!
+  user = FactoryGirl.create :user, email: "#{role}@example.com", password: 'asdfasdf',
+    role: role
+  user.email = "#{role}@example.com"
+  user.profile.contact.primary_email = "#{role}@example.com"
+  user.save!
 end
 
 User.where(role: ['superadmin', 'social_worker']).each do |user|
@@ -129,6 +113,10 @@ Volunteer.acceptance_collection.each do |acceptance|
     )
     volunteer.save
     next if acceptance != :accepted
+    if acceptance == :accepted
+      FactoryGirl.create(:user, role: 'volunteer', volunteer: volunteer,
+        email: Faker::Internet.email)
+    end
     next if [true, false].sample
     assignment_client = FactoryGirl.create(:client, user: User.superadmins.last)
     assignment = [
@@ -143,10 +131,6 @@ Volunteer.acceptance_collection.each do |acceptance|
     assignment.save
     volunteer.assignments = [assignment]
     volunteer.save!
-    if acceptance == :accepted
-      FactoryGirl.create(:user, role: 'volunteer', volunteer: volunteer,
-        email: volunteer.contact.primary_email)
-    end
   end
 end
 

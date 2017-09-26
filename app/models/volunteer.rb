@@ -110,6 +110,12 @@ class Volunteer < ApplicationRecord
     accepted? && assignments.active.blank?
   end
 
+  def state
+    return acceptance unless accepted?
+    return :active if active?
+    return :inactive if inactive?
+  end
+
   def handle_external
     contact.external = true if external
   end
