@@ -29,11 +29,11 @@ class ReminderTest < ActiveSupport::TestCase
       create :assignment, period_start: 10.months.ago, period_end: nil
     end
     Reminder.conditionally_create_reminders
-    assert_equal Reminder.count, 10
+    assert_equal 10, Reminder.count
     create :assignment, period_start: 1.month.ago, period_end: nil
     create :assignment, confirmation: true
     create :assignment, state: 'suggested', period_start: nil, period_end: nil
     Reminder.conditionally_create_reminders
-    assert_equal Reminder.count, 10
+    assert_equal 10, Reminder.count
   end
 end

@@ -21,7 +21,6 @@ class Assignment < ApplicationRecord
   accepts_nested_attributes_for :import, allow_destroy: true
 
   validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
-  validates :state, inclusion: { in: STATES.map(&:to_s) }
 
   scope :default_order, (-> { order(created_at: :desc) })
 
@@ -48,6 +47,12 @@ class Assignment < ApplicationRecord
   scope :start_after, ->(date) { where('period_start > ?', date) }
   scope :start_within, ->(date_range) { where(period_start: date_range) }
 
+  scope :started_six_months_ago, (-> { where('period_start < ?', 6.months.ago.to_date.to_s) })
+
+  def started_six_months_ago?
+    period_start < 6.months.ago.to_date
+  end
+
   scope :active, (-> { not_ended.started })
   scope :inactive, (-> { ended })
 
@@ -61,12 +66,16 @@ class Assignment < ApplicationRecord
 
   scope :with_hours, (-> { joins(:hours) })
 
+  def ended?
+    period_end && period_end < Time.zone.now.to_date
+  end
+
   def inactive?
-    period_end.nil? || period_end < Time.zone.now.to_date
+    ended? || period_start > Time.zone.now.to_date
   end
 
   def active?
-    period_end.nil? && period_start < Time.zone.now.to_date
+    ended? || period_start < Time.zone.now.to_date
   end
 
   def creator
