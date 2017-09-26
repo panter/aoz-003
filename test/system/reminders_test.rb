@@ -5,7 +5,7 @@ class RemindersTest < ApplicationSystemTestCase
     @user = create :user
     @now = Time.zone.now.to_date
     @volunteer = create :volunteer, acceptance: :accepted
-    @assignment = create :assignment, period_start: 50.days.ago, period_end: nil,
+    @assignment = create :assignment, period_start: 7.months.ago.to_date, period_end: nil,
       volunteer: @volunteer, creator: @user
     Reminder.conditionally_create_reminders
     login_as @user
