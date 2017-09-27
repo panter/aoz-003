@@ -32,11 +32,8 @@ class AssignmentsTest < ApplicationSystemTestCase
     first(:link, 'Need accompanying').click
     click_link 'Find volunteer'
     click_link 'Reserve'
-    visit current_url
-    page.find('#assignment_period_start').click
-    page.find('.month', text: 'Jan').click
-    page.find_all('.day', exact_text: '1').first.click
     click_button 'Create Assignment'
+    Assignment.last.update(period_start: 2.months.ago.to_date)
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
     visit client_path(@client)
@@ -51,10 +48,11 @@ class AssignmentsTest < ApplicationSystemTestCase
     click_link 'Find client'
     click_link 'Reserve'
     visit current_url
-    page.find('#assignment_period_start').click
-    page.find('.month', text: 'Jan').click
-    page.find_all('.day', exact_text: '1').first.click
+    assert page.has_text? 'New Assignment' # dummy waiting checks to hope for button visibility
+    assert page.has_link? 'Back'
+    sleep 5
     click_button 'Create Assignment'
+    Assignment.last.update(period_start: 2.months.ago.to_date)
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
     visit client_path(@client)
