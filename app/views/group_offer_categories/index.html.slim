@@ -1,20 +1,17 @@
-.row
-  .col-xs-12
-    h1= t_attr(:group_offer_categories)
+h1= t_attr(:group_offer_categories)
 
 = form_navigation_btn :new
 
-.row
-  .col-xs-12
-    table.table.table-striped
-      thead
-        tr
-          th= t_attr(:category_name)
-          th= t_attr(:category_state)
-          th colspan='1'
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th= t_attr(:category_name)
+        th= t_attr(:category_state)
+        th colspan='1'
 
-      tbody
-        - @group_offer_categories.each do |category|
+    tbody
+      - @group_offer_categories.each do |category|
           tr
             td= category.category_name
             td= category.category_state
