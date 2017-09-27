@@ -80,7 +80,7 @@ de:
       open: Offen
       partially_occupied: Teilweise besetzt
     category_states: &id-category_states
-      active:
+      active: aktive
       inactive: inaktiv
     offer_type: &id-offer-types
       external_offer: Externes Gruppenangebot

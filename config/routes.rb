@@ -32,5 +32,6 @@ Rails.application.routes.draw do
   resources :group_offers
   resources :group_offer_categories, except: [:destroy]
 
+
   root 'application#home'
 end
