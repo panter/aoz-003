@@ -14,7 +14,7 @@ h1= t_title
           th= t_attr(:offer_state)
           th= t_attr(:responsible)
           th= t_attr(:volunteers)
-          th colspan='3'
+          th colspan=(policy(GroupOffer).destroy? ? '4' : '3')
 
       tbody
         - @group_offers.each do |offer|
@@ -52,6 +52,7 @@ h1= t_title
                 = link_to volunteer, volunteer_path(volunteer)
                 br
             td= link_to t_action(:show), group_offer_path(offer)
+            td= link_to t('download'), group_offer_path(offer, format: :pdf)
             td= link_to t_action(:edit), edit_group_offer_path(offer)
             - if policy(GroupOffer).destroy?
               td= link_to t_action(:destroy), group_offer_path(offer), confirm_deleting(offer)

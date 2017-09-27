@@ -6,7 +6,15 @@ class GroupOffersController < ApplicationController
     @group_offers = policy_scope(GroupOffer)
   end
 
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "group_offer_#{@group_offer.id}", layout: 'pdf.pdf',
+        template: 'group_offers/show.html.slim', encoding: 'UTF-8'
+      end
+    end
+  end
 
   def new
     @group_offer = GroupOffer.new
