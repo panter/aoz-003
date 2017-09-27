@@ -1,14 +1,18 @@
-h1= t_attr(:group_offer_category)
+.row
+    .col-xs-12
+      h1= t_attr(:group_offer_category)
 
-.table-responsive
-  table.table.table-no-border-top
-    tbody
-      tr
-        td= t_attr(:category_name)
-        td= @group_offer_category.category_name
-      tr
-        td= t_attr(:category_state)
-        td= @group_offer_category.category_state
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          tr
+            td= t_attr(:category_name)
+            td= @group_offer_category.category_name
+          tr
+            td= t_attr(:category_state)
+            td= @group_offer_category.category_state
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
