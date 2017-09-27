@@ -1,7 +1,11 @@
 class GroupOfferCategoryPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      all if superadmin?
+      if superadmin?
+        all
+      else
+        none
+      end
     end
   end
 
