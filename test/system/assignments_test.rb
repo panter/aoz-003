@@ -22,7 +22,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'Assignment was successfully created.'
     within '.table-striped' do
       assert page.has_text? 'Suggested'
-      assert page.has_link? 'superadmin@example.com', @user.email
+      assert page.has_link? @user.email
     end
   end
 
