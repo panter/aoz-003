@@ -1,12 +1,6 @@
 h1= t_title
 
-nav.navbar.section-navigation
-  ul.list-inline
-    li= button_link t_title(:new), new_group_offer_path, 'success', dimension: 'sm'
-    - if current_user.superadmin?
-      li= button_link t('group_offer_categories'), group_offer_categories_path, dimension: 'sm'
-
-
+= form_navigation_btn :new
 
 .row
   .col-xs-12
