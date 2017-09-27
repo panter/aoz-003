@@ -37,9 +37,9 @@
   .row
     .col-xs-12.col-md-4
       - if policy(GroupOffer).supervisor_privileges?
-        = f.association :responsible, prompt: true
+        = f.association :responsible, label: t('.responsible_internal'), prompt: true
       - else
-        = f.association :responsible,
+        = f.association :responsible, label: t('.responsible_internal'),
           collection: Volunteer.without_active_assignment.not_in_any_group_offer.not_responsible,
           prompt: true
     .col-xs-12.col-md-8

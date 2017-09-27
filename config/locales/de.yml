@@ -70,6 +70,7 @@ de:
       form:
         location_external: Ort (betrifft externe Gruppenangebote)
         organization_external: Organisation (betrifft externe Gruppenangebote)
+        responsible_internal: Verantwortliche Person (betrifft interne Gruppenangebote)
     language_level: &id-lang-levels
       basic: Grundlagen
       fluent: Fliessend
