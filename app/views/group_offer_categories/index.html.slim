@@ -16,3 +16,6 @@ h1= t_attr(:group_offer_categories)
             td= category.category_name
             td= category.category_state
             td= link_to t_action(:edit), edit_group_offer_category_path(category)
+
+= form_navigation_btn :back
+= button_link t('group_offers'), group_offers_path
