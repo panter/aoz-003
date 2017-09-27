@@ -12,13 +12,13 @@ h1= @group_offer.title
                 = t("offer_type.#{@group_offer.offer_type}")
                 br
               - if @group_offer.external? && @group_offer.organization?
-                = "#{t('.offer_of')} "
+                = "#{t('group_offers.index.offer_of')} "
                 = @group_offer.organization
                 br
                 = @group_offer.location
                 br
               - if !@group_offer.external? && @group_offer.department
-                = "#{t('.offer_of')} "
+                = "#{t('group_offers.index.offer_of')} "
                 = link_to @group_offer.department, department_path(@group_offer.department.id)
           tr
             td= t_attr(:offer_state)
@@ -27,7 +27,7 @@ h1= @group_offer.title
             td= t_attr(:volunteer_state)
             td
               - if @group_offer.necessary_volunteers
-                = t('.necessary_volunteers', amount: @group_offer.necessary_volunteers)
+                = t('group_offers.index.necessary_volunteers', amount: @group_offer.necessary_volunteers)
                 br
               - if @group_offer.volunteer_state?
                 = t("volunteer_state.#{@group_offer.volunteer_state}")
@@ -80,5 +80,6 @@ h1= @group_offer.title
         - @group_offer.volunteers.each do |volunteer|
           li= link_to volunteer, volunteer_path(volunteer)
 
-= form_navigation_btn :edit
-= form_navigation_btn :back
+- unless params[:format] == 'pdf'
+  = form_navigation_btn :edit
+  = form_navigation_btn :back
