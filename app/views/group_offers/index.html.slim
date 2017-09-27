@@ -7,59 +7,60 @@ nav.navbar.section-navigation
       li= button_link t('group_offer_categories'), group_offer_categories_path, dimension: 'sm'
 
 
-table.table.table-striped
-  thead
-    tr
-      th= t_attr(:title)
-      th= t_attr(:location)
-      th= t_attr(:availability)
-      th= t_attr(:target_group)
-      th= t_attr(:offer_state)
-      th= t_attr(:responsible)
-      th= t_attr(:volunteers)
-      th= t_attr(:group_offer_category)
-      th colspan=(policy(GroupOffer).destroy? ? '4' : '3')
 
-  tbody
-    - @group_offers.each do |offer|
-      tr
-        td= offer.title
-        td
-          - if offer.external? && offer.organization?
-            = offer.organization
-            br
-            = offer.location
-          - if !offer.external? && offer.department
-            = offer.department.contact.last_name
-        td
-          - availability_collection.each do |availability|
-            - if offer[availability]
-              = t("availability.#{availability}")
-              br
-        td
-          - if offer.all?
-            = t_attr(:all)
-          - else
-            - GroupOffer::TARGET_GROUP.each do |target|
-              - if offer[target]
-                = t_attr(target)
+.row
+  .col-xs-12
+    table.table.table-striped
+      thead
+        tr
+          th= t_attr(:title)
+          th= t_attr(:location)
+          th= t_attr(:availability)
+          th= t_attr(:target_group)
+          th= t_attr(:offer_state)
+          th= t_attr(:responsible)
+          th= t_attr(:volunteers)
+          th colspan=(policy(GroupOffer).destroy? ? '4' : '3')
+
+      tbody
+        - @group_offers.each do |offer|
+          tr
+            td= offer.title
+            td
+              - if offer.external? && offer.organization?
+                = offer.organization
                 br
-        td= t("offer_state.#{offer.offer_state}") if offer.offer_state?
-        td
-          - if offer.responsible
-            - if offer.volunteer_responsible_state?
-              = t("volunteer_responsible_state.#{offer.volunteer_responsible_state}")
-              br
-            = link_to offer.responsible, volunteer_path(offer.responsible)
-        td
-          - offer.volunteers.each do |volunteer|
-            = link_to volunteer, volunteer_path(volunteer)
-            br
-        td= offer.group_offer_category.category_name
-        td= link_to t_action(:show), group_offer_path(offer)
-        td= link_to t('download'), group_offer_path(offer, format: :pdf)
-        td= link_to t_action(:edit), edit_group_offer_path(offer)
-        - if policy(GroupOffer).destroy?
-          td= link_to t_action(:destroy), group_offer_path(offer), confirm_deleting(offer)
+                = offer.location
+              - if !offer.external? && offer.department
+                = offer.department.contact.last_name
+            td
+              - availability_collection.each do |availability|
+                - if offer[availability]
+                  = t("availability.#{availability}")
+                  br
+            td
+              - if offer.all?
+                = t_attr(:all)
+              - else
+                - GroupOffer::TARGET_GROUP.each do |target|
+                  - if offer[target]
+                    = t_attr(target)
+                    br
+            td= t("offer_state.#{offer.offer_state}") if offer.offer_state?
+            td
+              - if offer.responsible
+                - if offer.volunteer_responsible_state?
+                  = t("volunteer_responsible_state.#{offer.volunteer_responsible_state}")
+                  br
+                = link_to offer.responsible, volunteer_path(offer.responsible)
+            td
+              - offer.volunteers.each do |volunteer|
+                = link_to volunteer, volunteer_path(volunteer)
+                br
+            td= link_to t_action(:show), group_offer_path(offer)
+            td= link_to t('download'), group_offer_path(offer, format: :pdf)
+            td= link_to t_action(:edit), edit_group_offer_path(offer)
+            - if policy(GroupOffer).destroy?
+              td= link_to t_action(:destroy), group_offer_path(offer), confirm_deleting(offer)
 
 = form_navigation_btn :new
