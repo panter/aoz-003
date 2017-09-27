@@ -3,7 +3,8 @@ class GroupOffersController < ApplicationController
 
   def index
     authorize GroupOffer
-    @group_offers = policy_scope(GroupOffer)
+    @q = policy_scope(GroupOffer).ransack(params[:q])
+    @group_offers = @q.result
   end
 
   def show
