@@ -11,23 +11,23 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     make_volunteer :resigned_active, acceptance: :resigned
     group_offer = create :group_offer, responsible: @group_offer_responsible
     group_offer.volunteers << @group_offer_member
-    assignments_make_parameters.map { |parameters| make_assignment(*parameters) }
+    create_all_assignments
   end
 
-  def assignments_make_parameters
+  def create_all_assignments
     [
-      ['start_60_days_ago', @with_assignment, @now.days_ago(60), nil],
-      ['start_in_one_month', @with_multiple_assignments, @now.next_month.end_of_month, nil],
-      ['start_7_days_ago', @with_multiple_assignments, @now.days_ago(7), nil],
-      ['end_15_days_ago', @with_multiple_assignments, @now.days_ago(30), @now.days_ago(15)],
-      ['end_future', @with_multiple_assignments, @now.days_ago(5), @now.next_month.end_of_month],
-      ['active_asignment', @with_active_and_inactive_assignment, @today - 300, nil],
-      ['inactive_asignment', @with_active_and_inactive_assignment, @today - 300, @today - 200],
-      ['end_30_days_ago', @with_inactive_assignment, @now.days_ago(60), @now.days_ago(30)],
-      ['active_asignment_for_will', @active_will_take_more, @today - 300, nil],
-      ['inactive_asignment_for_will', @inactive_will_take_more, @today - 300, @today - 200],
-      ['inactive_asignment_for_resigned', @resigned_inactive, @today - 300, @today - 200],
-      ['active_asignment_for_resigned', @resigned_active, @today - 300, nil]
+      [:start_60_days_ago, @has_assignment, @today.days_ago(60), nil],
+      [:start_in_one_month, @has_multiple, @today.next_month.end_of_month, nil],
+      [:start_7_days_ago, @has_multiple, @today.days_ago(7), nil],
+      [:end_15_days_ago, @has_multiple, @today.days_ago(30), @today.days_ago(15)],
+      [:end_future, @has_multiple, @today.days_ago(5), @today.next_month.end_of_month],
+      [:active_asignment, @has_active_and_inactive, @today - 300, nil],
+      [:inactive_asignment, @has_active_and_inactive, @today - 300, @today - 200],
+      [:end_30_days_ago, @has_inactive, @today.days_ago(60), @today.days_ago(30)],
+      [:active_asignment_for_will, @active_will_take_more, @today - 300, nil],
+      [:inactive_asignment_for_will, @inactive_will_take_more, @today - 300, @today - 200],
+      [:inactive_asignment_for_resigned, @resigned_inactive, @today - 300, @today - 200],
+      [:active_asignment_for_resigned, @resigned_active, @today - 300, nil]
     ].map { |parameters| make_assignment(*parameters) }
   end
 
@@ -52,7 +52,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? @has_inactive
   end
 
-  test 'with_assignments returns only the ones that have assignments' do
+  test 'has_assignments returns only the ones that have assignments' do
     query = Volunteer.with_assignments.distinct
     assert query.include? @has_assignment
     assert query.include? @has_multiple
@@ -101,9 +101,9 @@ class VolunteerScopesTest < ActiveSupport::TestCase
 
   test 'not_in_any_group_offer returns volunteers not in group offer (as members)' do
     query = Volunteer.not_in_any_group_offer
-    assert query.include? @with_assignment
-    assert query.include? @with_multiple_assignments
-    assert query.include? @with_inactive_assignment
+    assert query.include? @has_assignment
+    assert query.include? @has_multiple
+    assert query.include? @has_inactive
     assert query.include? @no_assignment
     refute query.include? @group_offer_member
     assert query.include? @group_offer_responsible
@@ -111,9 +111,9 @@ class VolunteerScopesTest < ActiveSupport::TestCase
 
   test 'not_responsible returns volunteers not responsible for group offer' do
     query = Volunteer.not_responsible
-    assert query.include? @with_assignment
-    assert query.include? @with_multiple_assignments
-    assert query.include? @with_inactive_assignment
+    assert query.include? @has_assignment
+    assert query.include? @has_multiple
+    assert query.include? @has_inactive
     assert query.include? @no_assignment
     assert query.include? @group_offer_member
     refute query.include? @group_offer_responsible
@@ -121,9 +121,9 @@ class VolunteerScopesTest < ActiveSupport::TestCase
 
   test 'without_active_assignment.not_responsible.not_in_any_group_offer' do
     query = Volunteer.without_active_assignment.not_responsible.not_in_any_group_offer
-    refute query.include? @with_assignment
-    assert query.include? @with_multiple_assignments
-    assert query.include? @with_inactive_assignment
+    refute query.include? @has_assignment
+    assert query.include? @has_multiple
+    assert query.include? @has_inactive
     refute query.include? @no_assignment
     refute query.include? @group_offer_member
     refute query.include? @group_offer_responsible
