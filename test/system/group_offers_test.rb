@@ -38,4 +38,13 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? 'Group offer was successfully created.'
     assert page.has_text? department_manager.department.first.contact.last_name
   end
+
+  test 'category for a group offer is required' do
+    login_as create(:user)
+    visit new_group_offer_path
+
+    click_button 'Create Group offer'
+    assert page.has_text? 'Please review the problems below:'
+    assert page.has_text? 'must exist'
+  end
 end
