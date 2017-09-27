@@ -11,7 +11,8 @@ class BillingExpensesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: pdf_file_name, layout: 'pdf.pdf', encoding: 'UTF-8'
+        render pdf: pdf_file_name, layout: 'pdf.pdf',
+        template: 'billing_expenses/show.html.slim', encoding: 'UTF-8'
       end
     end
   end
