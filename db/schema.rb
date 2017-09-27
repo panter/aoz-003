@@ -159,15 +159,6 @@ ActiveRecord::Schema.define(version: 20170922120423) do
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
   end
 
-  create_table "group_offer_categories", force: :cascade do |t|
-    t.string "category_name"
-    t.string "category_state", default: "active"
-    t.bigint "group_offers_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_offers_id"], name: "index_group_offer_categories_on_group_offers_id"
-  end
-
   create_table "group_offers", force: :cascade do |t|
     t.string "title"
     t.string "offer_type"
@@ -452,7 +443,6 @@ ActiveRecord::Schema.define(version: 20170922120423) do
   add_foreign_key "certificates", "users"
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "clients", "users"
-  add_foreign_key "group_offer_categories", "group_offers", column: "group_offers_id"
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "volunteers", column: "responsible_id"
   add_foreign_key "hours", "billing_expenses"
