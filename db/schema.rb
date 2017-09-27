@@ -159,15 +159,6 @@ ActiveRecord::Schema.define(version: 20170922120423) do
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
   end
 
-  create_table "group_offer_categories", force: :cascade do |t|
-    t.string "category_name"
-    t.string "category_state", default: "active"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_group_offer_categories_on_deleted_at"
-  end
-
   create_table "group_offers", force: :cascade do |t|
     t.string "title"
     t.string "offer_type"
@@ -198,11 +189,9 @@ ActiveRecord::Schema.define(version: 20170922120423) do
     t.bigint "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "group_offer_category_id", null: false
     t.bigint "responsible_id"
     t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
     t.index ["department_id"], name: "index_group_offers_on_department_id"
-    t.index ["group_offer_category_id"], name: "index_group_offers_on_group_offer_category_id"
     t.index ["responsible_id"], name: "index_group_offers_on_responsible_id"
   end
 
@@ -455,7 +444,6 @@ ActiveRecord::Schema.define(version: 20170922120423) do
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "clients", "users"
   add_foreign_key "group_offers", "departments"
-  add_foreign_key "group_offers", "group_offer_categories"
   add_foreign_key "group_offers", "volunteers", column: "responsible_id"
   add_foreign_key "hours", "billing_expenses"
   add_foreign_key "journals", "assignments"

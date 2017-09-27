@@ -59,6 +59,6 @@ class GroupOffersController < ApplicationController
       :necessary_volunteers, :volunteer_responsible_state, :description, :women, :men, :children,
       :teenagers, :unaccompanied, :all, :long_term, :regular, :short_term, :workday, :weekend,
       :morning, :afternoon, :evening, :flexible, :schedule_details, :department_id, :organization,
-      :location, :group_offer_category_id, :responsible_id, volunteer_ids: [])
+      :location, :responsible_id, volunteer_ids: [])
   end
 end

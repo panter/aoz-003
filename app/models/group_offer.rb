@@ -8,7 +8,6 @@ class GroupOffer < ApplicationRecord
   VOLUNTEER_RESPONSIBLE_STATES = [:volunteer_accountable, :volunteer_member].freeze
 
   belongs_to :department, optional: true
-  belongs_to :group_offer_category
 
   has_and_belongs_to_many :volunteers
   belongs_to :responsible, class_name: 'Volunteer', optional: true
