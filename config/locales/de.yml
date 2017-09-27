@@ -79,9 +79,6 @@ de:
       full: Voll
       open: Offen
       partially_occupied: Teilweise besetzt
-    category_states: &id-category_states
-      active: aktive
-      inactive: inaktiv
     offer_type: &id-offer-types
       external_offer: Externes Gruppenangebot
       internal_offer: Internes Gruppenangebot
@@ -402,8 +399,6 @@ de:
       contact: Kontakt
       department: Standort
       group_offer: Gruppenangebot
-      group_offer_category: Gruppenangebot Kategorie
-      group_offer_categories: Gruppenangebot Kategorien
       hour: Stunde
       journal: Journal
       language_skill: Sprachkompetenz
@@ -636,7 +631,6 @@ de:
   forgot_password: Passwort vergessen?
   general_availability: Wann sind Sie verfügbar?
   get_back: Wir werden uns bald bei Ihnen melden.
-  group_offer_categories: Gruppenangebot Kategorien
   helpers:
     submit:
       create: '%{model} erfassen'
@@ -732,14 +726,10 @@ de:
         salutation: *id-salutations
         state: *id-states
       group_offer:
-        group_offer_categories: Gruppenangebot Kategorien
         offer_type: *id-offer-types
         offer_state: *id-offer-states
         volunteer_state: *id-volunteer-states
         volunteer_responsible_state: *id-volunteer-responsible-states
-      group_offer_category:
-        category_name: Kategorie Name
-        category_state: *id-category_states
       journal:
         category: *id-categories
       user:
