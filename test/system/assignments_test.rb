@@ -32,6 +32,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     first(:link, 'Need accompanying').click
     click_link 'Find volunteer'
     click_link 'Reserve'
+    visit current_url
     page.find('#assignment_period_start').click
     page.find('.month', text: 'Jan').click
     page.find_all('.day', exact_text: '1').first.click
@@ -49,6 +50,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit seeking_clients_volunteers_path
     click_link 'Find client'
     click_link 'Reserve'
+    visit current_url
     page.find('#assignment_period_start').click
     page.find('.month', text: 'Jan').click
     page.find_all('.day', exact_text: '1').first.click
