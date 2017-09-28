@@ -34,11 +34,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     driven_by_default
   end
 
+  def scroll_to_element(element)
+    script = <<-JS
+      arguments[0].scrollIntoView(true);
+    JS
+    page.execute_script(script, element.native)
+  end
+
   def scroll_table_right
-    # script = <<-JS
-    #   $('.table-responsive').animate({ scrollLeft: 1000 }, 0);
-    # JS
-    # page.execute_script(script)
     page.driver.scroll_to(1000, 0)
   end
 
