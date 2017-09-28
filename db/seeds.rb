@@ -194,9 +194,9 @@ end
 if Assignment.count < 1
   10.times do
     client = FactoryGirl.create :client, state: Client::ACTIVE
-    volunteer = FactoryGirl.create :volunteer, state: Volunteer::SEEKING_CLIENTS.sample
+    volunteer = FactoryGirl.create :volunteer
     assignment = FactoryGirl.create(:assignment, volunteer: volunteer, client: client,
-      creator_id: User.find_by(role: 'superadmin').id)
+      creator_id: User.find_by(role: 'superadmin').id, period_start: 5.days.ago.to_date)
     assignment.hours << Array.new(4).map do
       FactoryGirl.create(:hour, volunteer: volunteer,
         meeting_date: Faker::Date.between(assignment.period_start + 1, 2.days.ago))
