@@ -47,9 +47,6 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit seeking_clients_volunteers_path
     click_link 'Find client'
     click_link 'Reserve'
-    visit current_url
-    assert page.has_text? 'New Assignment' # dummy waiting checks to hope for button visibility
-    assert page.has_link? 'Back'
     sleep 5
     click_button 'Create Assignment'
     Assignment.last.update(period_start: 2.months.ago.to_date)
