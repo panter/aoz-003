@@ -50,6 +50,9 @@ class AssignmentsTest < ApplicationSystemTestCase
     click_link 'Looking for clients'
     click_link 'Find client'
     click_link 'Reserve'
+    visit current_url
+    page.refresh
+    sleep 5
     click_button 'Create Assignment'
     assignment = Assignment.last
     assignment.period_start = 2.days.ago.to_date
