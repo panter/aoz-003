@@ -17,15 +17,14 @@ table.table.table-striped
   thead
     tr
       th= t_attr(:title)
-      th= t_attr(:location)
+      th= sort_link @q, :location
       th= t_attr(:availability)
       th= t_attr(:target_group)
-      th= t_attr(:offer_state)
+      th= sort_link @q, :offer_state
       th= t_attr(:responsible)
       th= t_attr(:volunteers)
       th= t_attr(:group_offer_category)
       th colspan=(policy(GroupOffer).destroy? ? '4' : '3')
-
   tbody
     - @group_offers.each do |offer|
       tr
