@@ -45,15 +45,11 @@ class AssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'assign unassigned client - volunteer side' do
-    Volunteer.with_deleted.map(&:really_destroy!)
-    Client.with_deleted.map(&:really_destroy!)
-    @volunteer = create :volunteer, user: @volunteer_user, take_more_assignments: true
-    @client = create :client, user: @user
     login_as @user
     visit volunteers_path
     click_link 'Looking for clients'
     click_link 'Find client'
-    click_link 'Reserve'
+    page.find('a', text: 'Reserve').click
     visit current_url
     page.refresh
     sleep 5
