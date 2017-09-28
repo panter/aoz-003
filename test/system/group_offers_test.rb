@@ -47,4 +47,43 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? 'Please review the problems below:'
     assert page.has_text? 'must exist'
   end
+
+  test 'archived group offers are not indexed' do
+    group_offer = create :group_offer, active: false
+    login_as create(:user)
+    visit group_offers_path
+    refute page.has_text? group_offer.title
+    visit archived_group_offers_path
+    assert page.has_text? group_offer.title
+  end
+
+  test 'group offer can be deactivated' do
+    group_offer = create :group_offer
+    login_as create(:user)
+    visit group_offers_path
+    assert page.has_text? group_offer.title
+    refute page.has_link? 'Activate'
+    click_link 'Deactivate'
+
+    assert page.has_text? group_offer.title
+    assert page.has_link? 'Activate'
+    refute page.has_link? 'Deactivate'
+    visit group_offers_path
+    refute page.has_text? group_offer.title
+  end
+
+  test 'group offer can be activated' do
+    group_offer = create :group_offer, active: false
+    login_as create(:user)
+    visit archived_group_offers_path
+    assert page.has_text? group_offer.title
+    assert page.has_link? 'Activate'
+    click_link 'Activate'
+
+    assert page.has_text? group_offer.title
+    assert page.has_link? 'Deactivate'
+    refute page.has_link? 'Activate'
+    visit archived_group_offers_path
+    refute page.has_text? group_offer.title
+  end
 end
