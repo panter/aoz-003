@@ -40,17 +40,17 @@ Metrics/MethodLength:
     - 'db/migrate/*'
     - 'test/*'
     - 'db/seeds.rb'
+
 Metrics/AbcSize:
   Max: 19
   Exclude:
     - 'db/migrate/*'
-Metrics/BlockLength:
-  Exclude:
-    - 'db/seeds.rb'
+    - 'test/*'
 
 Metrics/BlockLength:
   Exclude:
     - 'test/system/*'
+    - 'db/seeds.rb'
 
 Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
