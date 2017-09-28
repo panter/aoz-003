@@ -50,10 +50,10 @@ class AssignmentsTest < ApplicationSystemTestCase
     click_link 'Looking for clients'
     click_link 'Find client'
     click_link 'Reserve'
-    page.find('#assignment_period_start').click
-    page.find('.month', text: 'Jan').click
-    page.find_all('.day', exact_text: '1').first.click
     click_button 'Create Assignment'
+    assignment = Assignment.last
+    assignment.period_start = 2.days.ago.to_date
+    assignment.save!
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
     visit client_path(@client)
