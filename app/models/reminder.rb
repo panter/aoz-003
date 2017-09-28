@@ -12,12 +12,15 @@ class Reminder < ApplicationRecord
     logger.info("Beginning reminder run, reference Date #{time}")
     logger.flush
 
-    reminders_created_count =
-      Volunteer.includes(:assignments).find_each.count do |volunteer|
-        volunteer.assignments.each do |assignment|
-          conditionally_create_reminder_for_volunteer(volunteer, assignment)
-        end
+    existing_reminders = Reminder.all.count
+
+    Volunteer.includes(:assignments).find_each.count do |volunteer|
+      volunteer.assignments.each do |assignment|
+        conditionally_create_reminder_for_volunteer(volunteer, assignment)
       end
+    end
+
+    reminders_created_count = Reminder.all.count - existing_reminders
 
     logger.info("Created #{reminders_created_count} reminders, reference Date #{time}")
     logger.flush
