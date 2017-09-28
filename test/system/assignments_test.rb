@@ -44,7 +44,8 @@ class AssignmentsTest < ApplicationSystemTestCase
 
   test 'assign unassigned client - volunteer side' do
     login_as @user
-    visit seeking_clients_volunteers_path
+    visit volunteers_path
+    click_link 'Looking for clients'
     click_link 'Find client'
     click_link 'Reserve'
     sleep 5
