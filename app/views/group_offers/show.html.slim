@@ -65,7 +65,7 @@ h1= @group_offer.title
             td= t_attr(:schedule_details)
             td= @group_offer.schedule_details
 
-- if @group_offer.responsible && !offer.external?
+- if @group_offer.responsible && !@group_offer.external?
   - if @group_offer.volunteer_responsible_state?
     h3= t("volunteer_responsible_state.#{@group_offer.volunteer_responsible_state}")
   - else
