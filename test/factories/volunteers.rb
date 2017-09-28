@@ -16,5 +16,16 @@ FactoryGirl.define do
         [assignment.association(:assignment, period_start: 300.days.ago, period_end: 20.days.ago)]
       end
     end
+
+    trait :external do
+      external true
+    end
+
+    trait :zuerich do
+      association :contact, factory: :contact_zuerich
+    end
+
+    factory :volunteer_external, traits: [:external]
+    factory :volunteer_z, traits: [:zuerich]
   end
 end
