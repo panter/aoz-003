@@ -5,6 +5,7 @@ DIMENSIONS = [1800, 4000].freeze
 Capybara.register_driver :poltergeist_debug do |app|
   Capybara::Poltergeist::Driver.new(
     app,
+    phantomjs: Phantomjs.path,
     inspector: true,
     screen_size: DIMENSIONS,
     window_size: DIMENSIONS
@@ -14,6 +15,7 @@ end
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(
     app,
+    phantomjs: Phantomjs.path,
     screen_size: DIMENSIONS,
     window_size: DIMENSIONS
   )
