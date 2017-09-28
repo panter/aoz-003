@@ -234,6 +234,7 @@ GEM
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.21.0)
+    phantomjs (2.1.1.0)
     policy-assertions (0.0.3)
       activesupport (>= 3.0.0)
       pundit (>= 1.0.0)
@@ -425,6 +426,7 @@ DEPENDENCIES
   paperclip
   paranoia
   pg
+  phantomjs
   policy-assertions
   poltergeist
   pry-byebug

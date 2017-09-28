@@ -60,6 +60,7 @@ group :development, :test do
   gem 'i18n_yaml_sorter'
   gem 'listen'
   gem 'overcommit', require: false
+  gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'policy-assertions'
   gem 'poltergeist'
   gem 'pry-byebug'
