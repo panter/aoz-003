@@ -233,6 +233,7 @@ de:
         children: Kinder
         description: Beschreibung des Angebotes
         duration: Dauer
+        group_offer_category: Gruppenangebot Kategorie
         location: Ort
         long_term: Langfristig
         men: Männer
