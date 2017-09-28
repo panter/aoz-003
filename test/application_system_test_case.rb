@@ -34,8 +34,11 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     driven_by_default
   end
 
-  def scroll_right
-    Capybara.current_session.driver.browser.scroll_to(0, 1000)
+  def scroll_table_right
+    script = <<-JS
+      $('.table-responsive').animate({ scrollLeft: 1000 }, 0);
+    JS
+    page.execute_script(script)
   end
 
   def select_date(selects, *values)

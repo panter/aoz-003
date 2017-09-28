@@ -48,7 +48,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as @user
     visit volunteers_path
     click_link 'Looking for clients'
-    scroll_right
+    scroll_table_right
     click_link 'Find client'
     click_link 'Reserve'
     page.find('#assignment_period_start').click
