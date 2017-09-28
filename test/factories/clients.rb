@@ -18,5 +18,7 @@ FactoryGirl.define do
         Array.new(2) { language_skill.association(:language_skill) }
       end
     end
+
+    factory :client_z, traits: [:zuerich]
   end
 end
