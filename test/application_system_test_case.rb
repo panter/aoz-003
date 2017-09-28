@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'capybara/poltergeist'
 
 DIMENSIONS = [1800, 4000].freeze
 
