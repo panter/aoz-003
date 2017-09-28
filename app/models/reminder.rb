@@ -27,7 +27,7 @@ class Reminder < ApplicationRecord
 
   def self.conditionally_create_reminder_for_volunteer(volunteer, assignment)
     log_message =
-      if assignment.period_start > 6.months.ago
+      if assignment.period_start? && assignment.period_start > 6.months.ago
         'not yet 6 months'
       elsif assignment.confirmation?
         'already confirmed'
