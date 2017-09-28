@@ -41,10 +41,26 @@ def make_lang_skills
 end
 
 User.role_collection.each do |role|
-  user = FactoryGirl.create :user, email: "#{role}@example.com", password: 'asdfasdf',
-    role: role
-  user.email = "#{role}@example.com"
-  user.profile.contact.primary_email = "#{role}@example.com"
+  user = User.find_or_create_by(email: "#{role}@example.com") do |user|
+    user.password = 'asdfasdf'
+    user.role = role
+  end
+  user.profile = Profile.new do |profile|
+    profile.build_contact(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      postal_code: Faker::Address.zip_code,
+      city: Faker::Address.city,
+      street: Faker::Address.street_address,
+      primary_email: Faker::Internet.email,
+      primary_phone: Faker::PhoneNumber.phone_number
+    )
+    profile.user_id = user.id
+    profile.profession = Faker::Company.profession
+    availability_collection.each do |availability|
+      profile[availability] = [true, false].sample
+    end
+  end
   user.save!
 end
 
@@ -105,32 +121,59 @@ if Department.count < 1
   department.save!
 end
 
-Volunteer.acceptance_collection.each do |acceptance|
-  15.times do
-    volunteer = FactoryGirl.create(:volunteer, :with_language_skills, acceptance: acceptance)
-    volunteer.contact.primary_email = Faker::Internet.safe_email(
-      Faker::Internet.user_name(volunteer.full_name, %w(. _ -))
+Volunteer.acceptance_collection.each do |state|
+  vol = Volunteer.new do |volunteer|
+    volunteer.acceptance = state
+    volunteer.build_contact(
+      title: Faker::Name.title,
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      postal_code: Faker::Address.zip_code,
+      city: Faker::Address.city,
+      street: Faker::Address.street_address,
+      primary_email: Faker::Internet.email,
+      primary_phone: Faker::PhoneNumber.phone_number
     )
-    volunteer.save
-    next if acceptance != :accepted
-    if acceptance == :accepted
-      FactoryGirl.create(:user, role: 'volunteer', volunteer: volunteer,
-        email: Faker::Internet.email)
+    volunteer.journals = [
+      Journal.new(
+        subject: Faker::Lorem.sentence(rand(2..5)),
+        body: Faker::Lorem.sentence(rand(2..5)),
+        user: User.first,
+        category: random_category
+      ),
+      Journal.new(
+        subject: Faker::Lorem.sentence(rand(2..5)),
+        body: Faker::Lorem.sentence(rand(2..5)),
+        user: User.first,
+        category: random_category
+      )
+    ]
+    volunteer.birth_year = Faker::Date.birthday(18, 75)
+    volunteer.profession = Faker::Company.profession
+    volunteer.salutation = ['mr', 'mrs'].sample
+    volunteer.working_percent = "#{rand(2..10)}0"
+    Volunteer::SINGLE_ACCOMPANIMENTS.each do |bool_attr|
+      volunteer[bool_attr] = [true, false].sample
     end
-    next if [true, false].sample
-    assignment_client = FactoryGirl.create(:client, user: User.superadmins.last)
-    assignment = [
-      FactoryGirl.build(:assignment, volunteer: volunteer, client: assignment_client,
-        creator: User.superadmins.last, period_start: 300.days.ago, period_end: nil),
-      FactoryGirl.build(:assignment, volunteer: volunteer, client: assignment_client,
-        creator: User.superadmins.last, period_start: 300.days.ago, period_end: 100.days.ago),
-      FactoryGirl.build(:assignment, volunteer: volunteer, client: assignment_client,
-        creator: User.superadmins.last, period_start: 300.days.ago,
-        period_end: Time.zone.now.to_date + 100)
-    ].sample
-    assignment.save
-    volunteer.assignments = [assignment]
-    volunteer.save!
+    Volunteer::GROUP_ACCOMPANIMENTS.each do |bool_attr|
+      volunteer[bool_attr] = [true, false].sample
+    end
+    [:nationality, :additional_nationality].each { |n| volunteer[n] = ISO3166::Country.codes.sample }
+    volunteer.education = "#{Faker::Educator.secondary_school}, #{Faker::Educator.university}"
+    [:motivation, :expectations, :strengths, :interests].each do |attribute|
+      volunteer[attribute] = Faker::Lorem.sentence(rand(2..5))
+    end
+    volunteer.experience = [true, false].sample
+    volunteer.zurich = [true, false].sample
+    volunteer.strengths = "#{Faker::Job.key_skill}, #{Faker::Job.key_skill}"
+    volunteer.language_skills = make_lang_skills
+    availability_collection.each do |availability|
+      volunteer[availability] = [true, false].sample
+    end
+  end
+  vol.save!
+  if vol.accepted?
+    FactoryGirl.create(:user, role: 'volunteer', volunteer: vol, email: vol.contact.primary_email)
   end
 end
 
@@ -151,7 +194,7 @@ end
 if Assignment.count < 1
   10.times do
     client = FactoryGirl.create :client, state: Client::ACTIVE
-    volunteer = FactoryGirl.create :volunteer, take_more_assignments: true
+    volunteer = FactoryGirl.create :volunteer, state: Volunteer::SEEKING_CLIENTS.sample
     assignment = FactoryGirl.create(:assignment, volunteer: volunteer, client: client,
       creator_id: User.find_by(role: 'superadmin').id)
     assignment.hours << Array.new(4).map do
