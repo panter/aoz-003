@@ -1,20 +1,5 @@
 h1= t_title
 
-nav.navbar.section-navigation#filters
-  hr
-  ul.list-inline
-    li= button_link t_title(:new), new_group_offer_path, 'success', dimension: 'sm'
-    - if policy(GroupOfferCategory).superadmin?
-      li= button_link t('group_offer_categories'), group_offer_categories_path, dimension: 'sm'
-    li= button_link t('.archived'), archived_group_offers_path, dimension: 'sm'
-  hr
-  ul.list-inline
-    li= button_link t('clear_filters'), group_offers_path, 'info', dimension: 'sm'
-    = list_filter_dropdown(:department_id, Department.all)
-    = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
-    = list_filter_dropdown(:group_offer_category_id, GroupOfferCategory.all)
-  hr
-
 = render 'group_offers_block', group_offers: @group_offers
 
 nav.navbar.section-navigation

@@ -1,14 +1,3 @@
 h1= t_title
 
-nav.navbar.section-navigation
-  ul.list-inline
-    li= button_link t_title(:new), new_group_offer_path, 'success', dimension: 'sm'
-    - if policy(GroupOfferCategory).superadmin?
-      li= button_link t('group_offer_categories'), group_offer_categories_path, dimension: 'sm'
-    li= button_link t('.active'), group_offers_path, dimension: 'sm'
-
 = render 'group_offers_block', group_offers: @archived
-
-nav.navbar.section-navigation
-  ul.list-inline
-    li= button_link t_title(:new), new_group_offer_path, 'success', dimension: 'sm'
