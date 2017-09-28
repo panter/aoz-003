@@ -6,8 +6,8 @@ class GroupOfferCategoryPolicyTest < PolicyAssertions::Test
       'update?')
   end
 
-  test "department manager can't create/access categories" do
-    refute_permit(create(:department_manager), GroupOfferCategory, 'new?', 'create?', 'index?', 'show?',
-      'edit?', 'update?')
+  test 'department can use all category actions' do
+    assert_permit(create(:department_manager), GroupOfferCategory, 'new?', 'create?', 'index?',
+      'show?', 'edit?', 'update?')
   end
 end
