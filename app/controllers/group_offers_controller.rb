@@ -1,5 +1,5 @@
 class GroupOffersController < ApplicationController
-  before_action :set_group_offer, only: [:show, :edit, :update, :destroy]
+  before_action :set_group_offer, only: [:show, :edit, :update, :destroy, :change_active_state]
 
   def index
     authorize GroupOffer
@@ -48,10 +48,27 @@ class GroupOffersController < ApplicationController
     redirect_to group_offers_url, make_notice
   end
 
+  def archived
+    authorize GroupOffer
+    @archived = GroupOffer.archived
+  end
+
+  def change_active_state
+    if @group_offer.update(active: !@group_offer.active)
+      if @group_offer.active?
+        redirect_to group_offers_url, notice: t('.activated')
+      else
+        redirect_to archived_group_offers_url, notice: t('.deactivated')
+      end
+    else
+      redirect_to group_offers_url, notice: t('.no-change')
+    end
+  end
+
   private
 
   def set_group_offer
-    @group_offer = GroupOffer.find(params[:id])
+    @group_offer = GroupOffer.unscoped.find(params[:id])
     authorize @group_offer
   end
 

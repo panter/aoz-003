@@ -58,7 +58,17 @@ de:
       updated_at: Aktualisiert am
       zip: Postleitzahl
     group_offers:
+      archived:
+        active: Aktiv
+        title: Archivierte Gruppenangebote
+      change_active_state:
+        activated: Gruppenangebot wurde erfolgreich aktiviert.
+        deactivated: Gruppenangebot wurde erfolgreich archiviert.
+      group_offers_block:
+        activate: Aktivieren
+        deactivate: Deaktivieren
       index: &id-help-texts
+        archived: Archiviert
         necessary_volunteers: 'Benötigt %{amount} Freiwillige'
         offer_of: Angebot von
       show: *id-help-texts
@@ -253,6 +263,7 @@ de:
         name: Name
         user: User
       group_offer:
+        active: Aktiv
         all: Alle
         availability: Zeitangaben
         children: Kinder

@@ -15,7 +15,14 @@ class GroupOffer < ApplicationRecord
 
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
 
+  default_scope { where(active: true) }
+  scope :archived, (-> { unscoped.where(active: false) })
+
   def external?
     offer_type == EXTERNAL_OFFER
+  end
+
+  def archived
+    archived
   end
 end
