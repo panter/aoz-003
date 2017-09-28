@@ -6,34 +6,159 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     @year_ago = 1.year.ago.to_date
     @user = create :user
 
-    # volunteer zuerich new and active this year
-    @v_z_this_y = create :volunteer_z, created_at: @today.beginning_of_year
-    @c_z_this_y = create :client_z, user: @user, created_at: @today.beginning_of_year
-    create_assignment(:a_this_y, @v_z_this_y, @c_z_this_y, @today.beginning_of_year + 2)
+    create_stat_entity(nil, :volunteer_z, :client_z, @today.beginning_of_year + 2)
+    create_stat_entity(nil, :volunteer, :client, @today.beginning_of_year + 2)
+    create_stat_entity(nil, :volunteer_external, :client, @today.beginning_of_year + 2)
 
-    # volunteer zuerich active last year, inactive now
-    @v_z_last_y = create :volunteer_z, created_at: @year_ago.beginning_of_year + 10
-    @c_z_last_y = create :client_z, user: @user, created_at: @year_ago.beginning_of_year + 10
-    create_assignment(:a_last_y, @v_z_last_y, @c_z_last_y, @year_ago, @year_ago.end_of_year)
+    create_stat_entity(nil, :volunteer_z, :client_z, @year_ago, @year_ago.end_of_year - 2)
+    create_stat_entity(nil, :volunteer, :client, @year_ago, @year_ago.end_of_year - 2)
+    create_stat_entity(nil, :volunteer_external, :client, @year_ago, @year_ago.end_of_year - 2)
 
-    # volunteer zuerich created last year, active this and last year
-    @v_z_last_y_still_active = create :volunteer_z, created_at: @year_ago.beginning_of_year + 10
-    @c_z_last_y_still_active = create :client_z, user: @user,
-      created_at: @year_ago.beginning_of_year + 10
-    create_assignment(:a_this_y, @v_z_last_y_still_active, @c_z_last_y_still_active, @year_ago)
-
-    # @v_internal_active_last_y = create :volunteer
-    # @c_zuerich_last_y = create :client_z
+    create_stat_entity(nil, :volunteer_z, :client_z, @year_ago)
+    create_stat_entity(nil, :volunteer, :client, @year_ago)
+    create_stat_entity(nil, :volunteer_external, :client, @year_ago)
   end
 
-  test 'empty' do
-    this_year_report = PerformanceReport.new(period_start: @today.beginning_of_year,
+  test 'this year report' do
+    report_this_year = PerformanceReport.create!(period_start: @today.beginning_of_year,
       period_end: @today.end_of_year, user: @user)
-    this_year_report.save
+    g_vol, g_cli, g_ass, z_vol, z_cli, z_ass = extract_results(report_this_year)
 
-    last_year_report = PerformanceReport.new(period_start: @year_ago.beginning_of_year,
+    assert_equal 2, z_vol['active']
+    assert_equal 1, z_vol['new']
+    assert_equal 3, z_vol['total']
+
+    assert_equal 2, z_cli['active']
+    assert_equal 1, z_cli['new']
+    assert_equal 3, z_cli['total']
+
+    assert_equal 2, z_ass['active']
+    assert_equal 1, z_ass['new']
+    assert_equal 3, z_ass['total']
+    assert_equal 0, z_ass['ended']
+
+    assert_equal 4, g_vol['active']
+    assert_equal 2, g_vol['new']
+    assert_equal 6, g_vol['total']
+
+    assert_equal 6, g_cli['active']
+    assert_equal 3, g_cli['new']
+    assert_equal 9, g_cli['total']
+
+    assert_equal 6, g_ass['active']
+    assert_equal 3, g_ass['new']
+    assert_equal 9, g_ass['total']
+    assert_equal 0, g_ass['ended']
+  end
+
+  test 'last year report' do
+    report_last_year = PerformanceReport.create!(period_start: @year_ago.beginning_of_year,
       period_end: @year_ago.end_of_year, user: @user)
-    last_year_report.save
+    g_vol, g_cli, g_ass, z_vol, z_cli, z_ass = extract_results(report_last_year)
+
+    assert_equal 2, z_vol['active']
+    assert_equal 2, z_vol['new']
+    assert_equal 2, z_vol['total']
+
+    assert_equal 2, z_cli['active']
+    assert_equal 2, z_cli['new']
+    assert_equal 2, z_cli['total']
+
+    assert_equal 2, z_ass['active']
+    assert_equal 2, z_ass['new']
+    assert_equal 2, z_ass['total']
+    assert_equal 1, z_ass['ended']
+
+    assert_equal 4, g_vol['active']
+    assert_equal 4, g_vol['new']
+    assert_equal 4, g_vol['total']
+
+    assert_equal 6, g_cli['active']
+    assert_equal 6, g_cli['new']
+    assert_equal 6, g_cli['total']
+
+    assert_equal 6, g_ass['active']
+    assert_equal 6, g_ass['new']
+    assert_equal 6, g_ass['total']
+    assert_equal 3, g_ass['ended']
+  end
+
+  test 'this year extern report' do
+    report_this_year_extern = PerformanceReport.create!(period_start: @today.beginning_of_year,
+      period_end: @today.end_of_year, user: @user, extern: true)
+    g_vol, g_cli, g_ass, z_vol, z_cli, z_ass = extract_results(report_this_year_extern)
+
+    assert_equal 0, z_vol['active']
+    assert_equal 0, z_vol['new']
+    assert_equal 0, z_vol['total']
+
+    assert_equal 2, z_cli['active']
+    assert_equal 1, z_cli['new']
+    assert_equal 3, z_cli['total']
+
+    assert_equal 2, z_ass['active']
+    assert_equal 1, z_ass['new']
+    assert_equal 3, z_ass['total']
+    assert_equal 0, z_ass['ended']
+
+    assert_equal 2, g_vol['active']
+    assert_equal 1, g_vol['new']
+    assert_equal 3, g_vol['total']
+
+    assert_equal 6, g_cli['active']
+    assert_equal 3, g_cli['new']
+    assert_equal 9, g_cli['total']
+
+    assert_equal 6, g_ass['active']
+    assert_equal 3, g_ass['new']
+    assert_equal 9, g_ass['total']
+    assert_equal 0, g_ass['ended']
+  end
+
+  test 'last year extern report' do
+    report_last_year_extern = PerformanceReport.create!(period_start: @year_ago.beginning_of_year,
+      period_end: @year_ago.end_of_year, user: @user, extern: true)
+    g_vol, g_cli, g_ass, z_vol, z_cli, z_ass = extract_results(report_last_year_extern)
+
+    assert_equal 0, z_vol['active']
+    assert_equal 0, z_vol['new']
+    assert_equal 0, z_vol['total']
+
+    assert_equal 2, z_cli['active']
+    assert_equal 2, z_cli['new']
+    assert_equal 2, z_cli['total']
+
+    assert_equal 2, z_ass['active']
+    assert_equal 2, z_ass['new']
+    assert_equal 2, z_ass['total']
+    assert_equal 1, z_ass['ended']
+
+    assert_equal 2, g_vol['active']
+    assert_equal 2, g_vol['new']
+    assert_equal 2, g_vol['total']
+
+    assert_equal 6, g_cli['active']
+    assert_equal 6, g_cli['new']
+    assert_equal 6, g_cli['total']
+
+    assert_equal 6, g_ass['active']
+    assert_equal 6, g_ass['new']
+    assert_equal 6, g_ass['total']
+    assert_equal 3, g_ass['ended']
+  end
+
+  def extract_results(report)
+    report.report_content['global'].values_at('volunteers', 'clients', 'assignments') +
+      report.report_content['zuerich'].values_at('volunteers', 'clients', 'assignments')
+  end
+
+  def create_stat_entity(title, volunteer, client, start_date, end_date = nil)
+    volunteer = create volunteer, created_at: start_date
+    client = create client, user: @user, created_at: start_date
+    assignment = create_assignment(title && "a_#{title}", volunteer, client, start_date, end_date)
+    return [volunteer, client, assignment] unless title
+    instance_variable_set("@c_#{title}", client)
+    instance_variable_set("@v_#{title}", volunteer)
   end
 
   def create_assignment(title, volunteer, client, period_start = nil, period_end = nil)

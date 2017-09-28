@@ -65,6 +65,8 @@ class Volunteer < ApplicationRecord
   scope :seeking_clients, (-> { where(state: SEEKING_CLIENTS) })
 
   scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+  scope :created_before, ->(max_time) { where('volunteers.created_at < ?', max_time) }
+  scope :created_after, ->(min_time) { where('volunteers.created_at > ?', min_time) }
 
   scope :with_assignments, (-> { joins(:assignments).distinct })
   scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active).distinct })
@@ -78,7 +80,9 @@ class Volunteer < ApplicationRecord
     left_joins(:group_offers).where(group_offers_volunteers: { volunteer_id: nil })
   }
 
-  scope :with_hours, (-> { joins(:hours).distinct })
+
+  scope :external, (-> { where(external: true) })
+  scope :internal, (-> { where(external: false) })
 
   def handle_external
     contact.external = true if external
