@@ -59,20 +59,20 @@ en:
       zip: Zip code
     group_offers:
       archived:
-        active: Active
         title: Archived group offers
       change_active_state:
         activated: Group offer was successfully activated.
         deactivated: Group offer was successfully deactivated.
       group_offers_block:
         activate: Activate
+        active: Active
+        archived: Archived
         deactivate: Deactivate
       form:
         location_external: Location (for external group offers)
         organization_external: Organization (for external group offers)
         responsible_internal: Responsible person (for internal group offers)
       index: &id-help-texts
-        archived: Archived
         necessary_volunteers: '%{amount} necessary volunteers'
         offer_of: Offer from
       show: *id-help-texts

@@ -50,7 +50,8 @@ class GroupOffersController < ApplicationController
 
   def archived
     authorize GroupOffer
-    @archived = GroupOffer.archived
+    @q = GroupOffer.archived.ransack(params[:q])
+    @archived = @q.result
   end
 
   def change_active_state
