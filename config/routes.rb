@@ -29,7 +29,10 @@ Rails.application.routes.draw do
     resources :assignment_journals
   end
   resources :reminders, only: [:index, :update, :destroy]
-  resources :group_offers
+  resources :group_offers do
+    get :archived, on: :collection
+    put :change_active_state, on: :member
+  end
   resources :group_offer_categories, except: [:destroy]
 
   root 'application#home'
