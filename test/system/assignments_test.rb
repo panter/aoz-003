@@ -48,7 +48,6 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as @user
     visit volunteers_path
     click_link 'Looking for clients'
-    scroll_to_element(page.find('a.btn', text: 'Find client'))
     click_link 'Find client'
     click_link 'Reserve'
     page.find('#assignment_period_start').click
