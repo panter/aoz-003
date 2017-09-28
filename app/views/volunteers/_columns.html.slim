@@ -6,7 +6,7 @@
   table.table.table-striped
     thead
       tr
-        th colspan=(action_name == 'index' ? '5' : '2')
+        th colspan=(action_name == 'index' ? '6' : '2')
         th= sort_link @q, :salutation
         - if action_name == 'index' || action_name == 'seeking_clients'
           th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
