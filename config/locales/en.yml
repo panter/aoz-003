@@ -620,6 +620,7 @@ en:
         salutation: *id-salutations
         state: *id-states
       group_offer:
+        add_volunteers: add volunteers
         group_offer_categories: Group offer categories
         offer_state: *id-offer-states
         offer_type: *id-offer-types

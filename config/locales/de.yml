@@ -794,6 +794,7 @@ de:
         salutation: *id-salutations
         state: *id-states
       group_offer:
+        add_volunteers: Freiwillige hinzufügen
         group_offer_categories: Gruppenangebot Kategorien
         offer_type: *id-offer-types
         offer_state: *id-offer-states
