@@ -35,10 +35,11 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def scroll_table_right
-    script = <<-JS
-      $('.table-responsive').animate({ scrollLeft: 1000 }, 0);
-    JS
-    page.execute_script(script)
+    # script = <<-JS
+    #   $('.table-responsive').animate({ scrollLeft: 1000 }, 0);
+    # JS
+    # page.execute_script(script)
+    page.driver.scroll_to(1000, 0)
   end
 
   def select_date(selects, *values)
