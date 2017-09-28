@@ -99,7 +99,9 @@ module FilterDropdownHelper
 
   def translate_value(filter_attribute, t_scope)
     return t('all') if filter_attribute.blank?
-    unless filter_attribute.class == Department || filter_attribute.to_s.to_i != 0
+    unless filter_attribute.class == Department ||
+        filter_attribute.class == GroupOfferCategory ||
+        filter_attribute.to_s.to_i != 0
       return t(filter_attribute, t_scope)
     end
     filter_attribute.to_s
