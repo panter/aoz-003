@@ -50,7 +50,7 @@ class GroupOffersController < ApplicationController
 
   def archived
     authorize GroupOffer
-    @q = GroupOffer.archived.ransack(params[:q])
+    @q = policy_scope(GroupOffer.archived).ransack(params[:q])
     @archived = @q.result
   end
 
