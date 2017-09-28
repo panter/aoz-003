@@ -15,7 +15,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
   end
 
   test 'filter by department' do
-    within '.section-navigation' do
+    within '.section-navigation#filters' do
       click_link 'Department: All'
     end
     visit current_url
@@ -27,7 +27,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @full_d2.title
       assert page.has_text? @part_d2.title
     end
-    within '.section-navigation' do
+    within '.section-navigation#filters' do
       click_link 'Department: All'
       click_link @d1.to_s
     end
@@ -43,7 +43,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
   end
 
   test 'filter by state' do
-    within '.section-navigation' do
+    within '.section-navigation#filters' do
       click_link 'Offer state: All'
     end
     visit current_url
@@ -55,7 +55,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @full_d2.title
       assert page.has_text? @part_d2.title
     end
-    within '.section-navigation' do
+    within '.section-navigation#filters' do
       click_link 'Offer state: All'
       click_link 'Open'
     end
@@ -71,12 +71,12 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
   end
 
   test 'filter by department and state' do
-    within '.section-navigation' do
+    within '.section-navigation#filters' do
       click_link 'Offer state: All'
       click_link 'Open'
     end
     visit current_url
-    within '.section-navigation' do
+    within '.section-navigation#filters' do
       click_link 'Department: All'
       click_link @d1.to_s
     end
@@ -89,7 +89,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       refute page.has_text? @full_d2.title
       refute page.has_text? @part_d2.title
     end
-    within '.section-navigation' do
+    within '.section-navigation#filters' do
       click_link 'Offer state: Open'
       click_link 'All'
     end
