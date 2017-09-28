@@ -34,6 +34,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     driven_by_default
   end
 
+  def scroll_right
+    Capybara.current_session.driver.browser.scroll_to(0, 1000)
+  end
+
   def select_date(selects, *values)
     selects[0].select values[0]
     selects[1].select values[1]

@@ -32,8 +32,10 @@ class AssignmentsTest < ApplicationSystemTestCase
     first(:link, 'Need accompanying').click
     click_link 'Find volunteer'
     click_link 'Reserve'
+    page.find('#assignment_period_start').click
+    page.find('.month', text: 'Jan').click
+    page.find_all('.day', exact_text: '1').first.click
     click_button 'Create Assignment'
-    Assignment.last.update(period_start: 2.months.ago.to_date)
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
     visit client_path(@client)
@@ -46,11 +48,13 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as @user
     visit volunteers_path
     click_link 'Looking for clients'
+    scroll_right
     click_link 'Find client'
     click_link 'Reserve'
-    sleep 5
+    page.find('#assignment_period_start').click
+    page.find('.month', text: 'Jan').click
+    page.find_all('.day', exact_text: '1').first.click
     click_button 'Create Assignment'
-    Assignment.last.update(period_start: 2.months.ago.to_date)
     assert page.has_text? @client.contact.full_name
     assert page.has_text? @volunteer.contact.full_name
     visit client_path(@client)
