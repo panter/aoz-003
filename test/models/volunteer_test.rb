@@ -17,4 +17,14 @@ class VolunteerTest < ActiveSupport::TestCase
   test 'external field is default false' do
     assert_equal false, @volunteer.external
   end
+
+  test 'external volunteer can have no user' do
+    external_volunteer = create :volunteer, external: true
+    volunteer_user = create :user_volunteer
+    external_volunteer.user = volunteer_user
+    refute external_volunteer.valid?
+    assert_equal ['must be blank'], external_volunteer.errors.messages[:user]
+    external_volunteer.external = false
+    assert external_volunteer.valid?
+  end
 end
