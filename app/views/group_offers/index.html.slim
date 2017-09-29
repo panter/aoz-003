@@ -9,9 +9,9 @@ nav.navbar.section-navigation#filters
   hr
   ul.list-inline
     li= button_link t('clear_filters'), group_offers_path, 'info', dimension: 'sm'
-    = list_eq_filter_dropdown(:department_id, Department.all)
-    = list_eq_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
-    = list_eq_filter_dropdown(:group_offer_category_id, GroupOfferCategory.all)
+    = list_filter_dropdown(:department_id, Department.all)
+    = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
+    = list_filter_dropdown(:group_offer_category_id, GroupOfferCategory.all)
   hr
 
 table.table.table-striped

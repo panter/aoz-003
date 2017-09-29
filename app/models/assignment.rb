@@ -24,8 +24,6 @@ class Assignment < ApplicationRecord
 
   scope :default_order, (-> { order(created_at: :desc) })
 
-
-
   scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
   scope :created_before, ->(max_time) { where('assignments.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('assignments.created_at > ?', min_time) }
@@ -70,12 +68,16 @@ class Assignment < ApplicationRecord
     period_end && period_end < Time.zone.now.to_date
   end
 
+  def ongoing?
+    !ended?
+  end
+
   def inactive?
     ended? || period_start > Time.zone.now.to_date
   end
 
   def active?
-    ended? || period_start < Time.zone.now.to_date
+    ongoing? && period_start < Time.zone.now.to_date
   end
 
   def creator
