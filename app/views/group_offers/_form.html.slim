@@ -66,19 +66,29 @@
   .row
     .col-xs-12.col-md-4
       = f.input :necessary_volunteers, collection: 1..10
+    - if @group_offer.volunteers.any?
     .col-xs-12.col-md-4
-      = button_link t_action(:edit), # render group_offers/volunteers_form ? how to? can I combine button link with render partial or create a route for this?
-  .row
-    .col-xs-12.col-md-8
-      .group-offer-volunteers
+      =t_attr(:volunteers)
+      ul
+        - @group_offer.volunteers.each do |volunteer|
+          li= link_to volunteer, volunteer_path(volunteer)
+    .col-xs-12.col-md-4
+      button.btn.btn-primary(data-toggle='collapse' data-target='#volunteerBlock' type='button'  aria-expanded='false' aria-controls='volunteerBlock')
+          = 'edit Volunteers'
+
+    .col-xs-12.col-md-4
+      #volunteerBlock.collapse
         - if policy(GroupOffer).supervisor_privileges?
-          = f.association :volunteers,
-            input_html: { style: 'height: 240px; border-radius: 5px;'}
+          = f.association :volunteers, as: :check_boxes, label: false
 
         - else
           = f.association :volunteers,
-            collection: Volunteer.without_active_assignment.not_in_any_group_offer.not_responsible
+            collection: Volunteer.without_active_assignment.not_in_any_group_offer.not_responsible,
+            as: :check_boxes, label: false
+
+
 
   .row
     .col-xs-12
       = f.button :submit, class: 'btn btn-success'
+

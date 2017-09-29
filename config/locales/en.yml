@@ -70,6 +70,7 @@ en:
         archived: Archived
         deactivate: Deactivate
       form:
+        add_volunteers: add volunteers
         location_external: Location (for external group offers)
         organization_external: Organization (for external group offers)
         responsible_internal: Responsible person (for internal group offers)
@@ -294,6 +295,7 @@ en:
   add_journal_entry: Write a journal entry
   add_language: Add language
   add_relative: Add family member
+  add_volunteers: add volunteers
   all: All
   application_submitted: Your registration has been successfully sent.
   are_you_sure: Are you sure?
