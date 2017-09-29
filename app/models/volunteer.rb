@@ -9,6 +9,9 @@ class Volunteer < ApplicationRecord
 
   before_validation :handle_external
   before_save :record_acceptance_changed
+  before_validation :handle_user_with_external_change,
+    if: :external_changed?,
+    unless: proc { user_id.nil? }
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
   GROUP_ACCOMPANIMENTS = [:sport, :creative, :music, :culture, :training, :german_course,
@@ -52,7 +55,9 @@ class Volunteer < ApplicationRecord
     content_type: /\Aimage\/.*\z/
   }
 
-  validates :user, absence: true, if: :external?
+  validates :user, absence: true,
+    if: :external?,
+    unless: proc { |user| user.deleted? }
 
   default_scope { order(created_at: :desc) }
 
@@ -177,5 +182,14 @@ class Volunteer < ApplicationRecord
 
   def record_acceptance_changed
     self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now if will_save_change_to_acceptance?
+  end
+
+  def external_changed?
+    will_save_change_to_external?
+  end
+
+  def handle_user_with_external_change
+    user.destroy if external?
+    user.restore if internal?
   end
 end
