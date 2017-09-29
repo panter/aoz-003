@@ -3,7 +3,7 @@ class GroupOfferCategoriesController < ApplicationController
 
   def index
     authorize GroupOfferCategory
-    @group_offer_categories = policy_scope(GroupOfferCategory)
+    @group_offer_categories = GroupOfferCategory.all
   end
 
   def show; end
