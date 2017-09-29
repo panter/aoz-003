@@ -17,7 +17,7 @@ class Volunteer < ApplicationRecord
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
-  enum acceptance: [:undecided, :accepted, :rejected, :resigned]
+  enum acceptance: { undecided: 0, accepted: 1, rejected: 2, resigned: 3 }
 
   belongs_to :user, -> { with_deleted }, optional: true
   belongs_to :registrar, optional: true, class_name: 'User', foreign_key: 'registrar_id'
