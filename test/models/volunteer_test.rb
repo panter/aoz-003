@@ -27,4 +27,14 @@ class VolunteerTest < ActiveSupport::TestCase
     external_volunteer.external = false
     assert external_volunteer.valid?
   end
+
+  test 'a internal volunteer turned into a external, having a user, user gets softdeleted' do
+    volunteer_user = create :user_volunteer
+    volunteer = create :volunteer, state: 'accepted', external: false, user: volunteer_user
+    assert volunteer.valid?
+    volunteer.update external: true
+    volunteer.save
+    refute volunteer_user.deleted_at.nil?
+    assert volunteer.user_id.nil?
+  end
 end
