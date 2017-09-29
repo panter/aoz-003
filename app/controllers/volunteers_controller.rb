@@ -72,7 +72,12 @@ class VolunteersController < ApplicationController
   end
 
   def invite_volunteer_user
-    User.new_volunteer(@volunteer) && @volunteer.user.invite!
+    return false if @volunteer.external
+    new_user = User.new(
+      email: @volunteer.contact.primary_email, password: Devise.friendly_token,
+      role: 'volunteer', volunteer: @volunteer
+    )
+    new_user.save && new_user.invite!
   end
 
   def set_volunteer
