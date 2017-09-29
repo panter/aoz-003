@@ -2,6 +2,14 @@ class Reminder < ApplicationRecord
   belongs_to :assignment
   belongs_to :volunteer
 
+  validate :volunteer_is_internal?
+
+  def volunteer_is_internal?
+    if volunteer.external
+      errors.add(:volunteer, 'external volunteers can not get reminders')
+    end
+  end
+
   default_scope { order(created_at: :desc) }
 
   def self.create_for(volunteer, assignment)

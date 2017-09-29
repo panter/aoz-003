@@ -36,4 +36,12 @@ class ReminderTest < ActiveSupport::TestCase
     Reminder.conditionally_create_reminders
     assert_equal 10, Reminder.count
   end
+
+  test 'reminders can only be created with internal volunteers' do
+    assignment = create :assignment
+    assignment.volunteer.update(external: true)
+    assignment.reload
+    reminder = build :reminder, volunteer: assignment.volunteer
+    refute reminder.valid?
+  end
 end
