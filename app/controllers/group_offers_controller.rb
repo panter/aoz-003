@@ -3,7 +3,7 @@ class GroupOffersController < ApplicationController
 
   def index
     authorize GroupOffer
-    @q = policy_scope(GroupOffer).ransack(params[:q])
+    @q = policy_scope(GroupOffer.active).ransack(params[:q])
     @group_offers = @q.result
   end
 
@@ -69,7 +69,7 @@ class GroupOffersController < ApplicationController
   private
 
   def set_group_offer
-    @group_offer = GroupOffer.unscoped.find(params[:id])
+    @group_offer = GroupOffer.find(params[:id])
     authorize @group_offer
   end
 
