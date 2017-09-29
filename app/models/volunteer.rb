@@ -77,6 +77,7 @@ class Volunteer < ApplicationRecord
   scope :internal, (-> { where(external: false) })
   scope :with_inactive_assignments, lambda {
     joins(:assignments)
+  }
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).where('assignments.period_start < ?', 6.months.ago.to_date.to_s)
   }
@@ -113,7 +114,7 @@ class Volunteer < ApplicationRecord
   def state
     return acceptance unless accepted?
     return :active if active?
-    return :inactive if inactive?
+    :inactive if inactive?
   end
 
   def handle_external
@@ -173,6 +174,6 @@ class Volunteer < ApplicationRecord
   private
 
   def record_acceptance_changed
-    self["#{acceptance_change[1]}_at".to_sym] = Time.zone.now if acceptance_changed?
+    self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now if will_save_change_to_acceptance?
   end
 end

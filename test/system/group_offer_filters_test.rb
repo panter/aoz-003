@@ -24,7 +24,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
 
   test 'filter by department' do
     within '.section-navigation#filters' do
-      click_link 'Department: All'
+      click_link 'Department'
     end
     visit current_url
     within 'tbody' do
@@ -36,7 +36,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @part_d2.title
     end
     within '.section-navigation#filters' do
-      click_link 'Department: All'
+      click_link 'Department'
       click_link @d1.to_s
     end
     visit current_url
@@ -52,7 +52,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
 
   test 'filter by state' do
     within '.section-navigation#filters' do
-      click_link 'Offer state: All'
+      click_link 'Offer state'
     end
     visit current_url
     within 'tbody' do
@@ -64,7 +64,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @part_d2.title
     end
     within '.section-navigation#filters' do
-      click_link 'Offer state: All'
+      click_link 'Offer state'
       click_link 'Open'
     end
     visit current_url
@@ -80,7 +80,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
 
   test 'filter by category' do
     within '.section-navigation#filters' do
-      click_link 'Group offer category: All'
+      click_link 'Group offer category'
     end
     visit current_url
     within 'tbody' do
@@ -92,7 +92,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @part_d2.title
     end
     within '.section-navigation#filters' do
-      click_link 'Group offer category: All'
+      click_link 'Group offer category'
       click_link @c1.to_s
     end
     visit current_url
@@ -108,12 +108,12 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
 
   test 'filter by department, state and category' do
     within '.section-navigation#filters' do
-      click_link 'Offer state: All'
+      click_link 'Offer state'
       click_link 'Open'
     end
     visit current_url
     within '.section-navigation#filters' do
-      click_link 'Department: All'
+      click_link 'Department'
       click_link @d1.to_s
     end
     visit current_url
@@ -139,7 +139,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       refute page.has_text? @part_d2.title
     end
     within '.section-navigation#filters' do
-      click_link 'Group offer category: All'
+      click_link 'Group offer category'
       click_link @c2.to_s
     end
     visit current_url
