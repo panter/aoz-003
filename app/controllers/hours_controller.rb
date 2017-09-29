@@ -13,6 +13,7 @@ class HoursController < ApplicationController
   def new
     @hour = Hour.new(volunteer: @volunteer)
     @assignments = Assignment.where(volunteer: params[:volunteer_id])
+    @group_offers = GroupOffer.where(volunteer: params[:volunteer_id])
     authorize @hour
   end
 
@@ -54,6 +55,6 @@ class HoursController < ApplicationController
 
   def hour_params
     params.require(:hour).permit(:meeting_date, :hours, :minutes, :activity, :comments,
-      :volunteer_id, :assignment_id)
+      :volunteer_id, :assignment_id, :group_offer_id)
   end
 end

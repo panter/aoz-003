@@ -12,6 +12,7 @@ class GroupOffer < ApplicationRecord
 
   has_and_belongs_to_many :volunteers
   belongs_to :responsible, class_name: 'Volunteer', optional: true
+  has_many :hours, dependent: :destroy
 
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
 

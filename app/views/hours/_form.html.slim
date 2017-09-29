@@ -10,6 +10,13 @@
 
   .row
     .col-xs-12
+      - if action_name ==  'new'
+        = f.association :group_offer, collection: @group_offers, label_method: :client, value_method: :id
+      - else
+        = f.hidden_field :group_offer_id, value: @hour.group_offer.id
+
+  .row
+    .col-xs-12
         = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
 
   .row
