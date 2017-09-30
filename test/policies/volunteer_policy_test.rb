@@ -2,9 +2,9 @@ require 'test_helper'
 
 class VolunteerPolicyTest < PolicyAssertions::Test
   def setup
-    @superadmin = create :user, role: 'superadmin'
-    @social_worker = create :user, role: 'social_worker'
-    @department_manager = create :user, role: 'department_manager'
+    @superadmin = create :user
+    @social_worker = create :social_worker
+    @department_manager = create :department_manager
   end
 
   test 'Create: only superadmin can create volunteer' do
@@ -35,11 +35,7 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     assert_permit @superadmin, Volunteer, 'seeking_clients?'
   end
 
-  test 'Seeking clients: social worker cannot see volunteers seeking clients' do
-    refute_permit @social_worker, Volunteer, 'seeking_clients?'
-  end
-
-  test 'Seeking clients: department manager cannot see volunteers seeking clients' do
-    refute_permit @department_manager, Volunteer, 'seeking_clients?'
+  test 'Seeking clients: department manager can see volunteers seeking clients' do
+    assert_permit @department_manager, Volunteer, 'seeking_clients?'
   end
 end
