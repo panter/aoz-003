@@ -9,7 +9,7 @@ class Contact < ApplicationRecord
 
   validates :street, :postal_code, :city, presence: true, if: :needs_address?
 
-  after_save :update_user_email
+  after_save :update_user_email, unless: :client?
 
   def to_s
     last_name
