@@ -6,7 +6,7 @@ class GroupOfferCategoryPolicyTest < PolicyAssertions::Test
       'update?')
   end
 
-  test 'department can use all category actions' do
+  test 'department managaer can use all category actions' do
     assert_permit(create(:department_manager), GroupOfferCategory, 'new?', 'create?', 'index?',
       'show?', 'edit?', 'update?')
   end
