@@ -74,6 +74,8 @@ de:
         offer_of: Angebot von
       show: *id-help-texts
       form:
+        add_volunteers: Freiwillige hinzufügen
+        edit_volunteers: Freiwillige bearbeiten
         location_external: Ort (betrifft externe Gruppenangebote)
         organization_external: Organisation (betrifft externe Gruppenangebote)
         responsible_internal: Verantwortliche Person (betrifft interne Gruppenangebote)
@@ -458,7 +460,6 @@ de:
   add_journal_entry: Journaleintrag verfassen
   add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
-  add_volunteers: Freiwillige hinzufügen
   all: Alle
   application_submitted: 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
@@ -795,7 +796,6 @@ de:
         salutation: *id-salutations
         state: *id-states
       group_offer:
-        add_volunteers: Freiwillige hinzufügen
         group_offer_categories: Gruppenangebot Kategorien
         offer_type: *id-offer-types
         offer_state: *id-offer-states

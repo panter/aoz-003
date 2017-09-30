@@ -26,7 +26,7 @@
 
   .row
     .col-xs-12.col-md-4
-      - if policy(GroupOffer).supervisor_privileges?
+      - if policy(GroupOffer).superadmin_or_department_manager?
         = f.association :responsible, label: t('.responsible_internal'), prompt: true
       - else
         = f.association :responsible, label: t('.responsible_internal'),
@@ -74,7 +74,10 @@
           li= link_to volunteer, volunteer_path(volunteer)
     .col-xs-12.col-md-4
       button.btn.btn-primary(data-toggle='collapse' data-target='#volunteerBlock' type='button'  aria-expanded='false' aria-controls='volunteerBlock')
-          = 'edit Volunteers'
+        - if action_name ==  'new'
+          = t('.add_volunteers')
+        - else
+          = t('.edit_volunteers')
     .col-xs-12.col-md-4
       #volunteerBlock.collapse
         - if policy(GroupOffer).supervisor_privileges?
