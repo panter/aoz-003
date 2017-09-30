@@ -25,10 +25,9 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
     assert page.has_text? 'active'
   end
 
-  test 'department manager can update a category' do
-    department_manager = create :user, :department_manager
+  test 'superadmin can update a category' do
     create :group_offer_category, category_name: 'Schwimmen'
-    login_as department_manager
+    login_as @user
     visit group_offer_categories_path
 
     assert page.has_text? 'Schwimmen'
