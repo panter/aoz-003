@@ -77,7 +77,7 @@ class ClientPolicyTest < PolicyAssertions::Test
     refute_permit @social_worker, Client.first, 'need_accompanying?'
   end
 
-  test 'Need accompanying: department manager cannot see clients need accompanying' do
-    refute_permit @department_manager, Client.first, 'need_accompanying?'
+  test 'Need accompanying: department manager can see clients need accompanying' do
+    assert_permit @department_manager, Client.first, 'need_accompanying?'
   end
 end
