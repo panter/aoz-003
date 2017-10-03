@@ -30,6 +30,12 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def specific_policy_scope(scope_name, policy_subject = nil)
+    policy_subject ||= controller_name.singularize.classify.constantize
+    "#{policy_subject.name.classify}Policy".constantize::Scope
+      .new(current_user, policy_subject).send(scope_name)
+  end
+
   private
 
   def user_not_authorized
