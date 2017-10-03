@@ -66,8 +66,8 @@ class AssignmentPolicyTest < PolicyAssertions::Test
     refute_permit @social_worker, @assignment, 'index?'
   end
 
-  test 'Index: department manager cannot index assignments' do
-    refute_permit @department_manager, @assignment, 'index?'
+  test 'Index: department manager can index assignments' do
+    assert_permit @department_manager, @assignment, 'index?'
   end
 
   test 'Find volunteer: superadmin can find a volunteer for client' do

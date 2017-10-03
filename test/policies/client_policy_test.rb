@@ -11,12 +11,8 @@ class ClientPolicyTest < PolicyAssertions::Test
     assert_permit @superadmin, Client, 'new?', 'create?'
   end
 
-  test 'Create: social worker can create' do
-    assert_permit @social_worker, Client, 'new?', 'create?'
-  end
-
-  test 'Create: department manager cannot create' do
-    refute_permit @department_manager, Client, 'new?', 'create?'
+  test 'Create: department manager can create' do
+    assert_permit @department_manager, Client, 'new?', 'create?'
   end
 
   test 'Destroy: superadmin can destroy' do
@@ -66,7 +62,7 @@ class ClientPolicyTest < PolicyAssertions::Test
   end
 
   test 'Index: department manager cannot index clients' do
-    refute_permit @department_manager, Client.first, 'index?'
+    assert_permit @department_manager, Client.first, 'index?'
   end
 
   test 'Need accompanying: superadmin can see clients need accompanying' do
