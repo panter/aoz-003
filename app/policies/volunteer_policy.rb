@@ -11,10 +11,10 @@ class VolunteerPolicy < ApplicationPolicy
     end
   end
 
-  alias_method :index?,           :superadmin?
+  alias_method :index?,           :superadmin_or_department_manager?
   alias_method :index_xls?,       :superadmin?
-  alias_method :new?,             :superadmin?
-  alias_method :create?,          :superadmin?
+  alias_method :new?,             :superadmin_or_department_manager?
+  alias_method :create?,          :superadmin_or_department_manager?
   alias_method :destroy?,         :superadmin?
   alias_method :seeking_clients?, :superadmin_or_department_manager?
 
