@@ -160,6 +160,7 @@ en:
         availability: What times are you available for voluntary engagement?
       edit: *id-volunteers-create
       form:
+        availability_question: What times are you available for voluntary engagements?
         <<: [*id-volunteers-create, *id-availability]
       index: &id-volunteers-index
         state:
@@ -176,6 +177,7 @@ en:
       show:
         <<: [*id-volunteers-index, *id-volunteers-create]
       new:
+        availability_question: What times are you available for voluntary engagements?
         <<: [*id-volunteers-create, *id-availability, *id-volunteer-aceptance]
       one: Volunteer
       other: Volunteers

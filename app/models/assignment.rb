@@ -31,16 +31,16 @@ class Assignment < ApplicationRecord
   scope :no_end, (-> { where(period_end: nil) })
   scope :has_end, (-> { where.not(period_end: nil) })
 
-  scope :ended, (-> { where('period_end < ?', Time.zone.now) })
+  scope :ended, (-> { where('period_end < ?', Time.zone.now.to_date) })
   scope :end_before, ->(date) { where('period_end < ?', date) }
   scope :end_after, ->(date) { where('period_end > ?', date) }
   scope :end_within, ->(date_range) { where(period_end: date_range) }
 
-  scope :end_in_future, (-> { where('period_end > ?', Time.zone.now) })
+  scope :end_in_future, (-> { where('period_end > ?', Time.zone.now.to_date) })
   scope :not_ended, (-> { no_end.or(end_in_future) })
 
-  scope :started, (-> { where('period_start < ?', Time.zone.now) })
-  scope :will_start, (-> { where('period_start > ?', Time.zone.now) })
+  scope :started, (-> { where('period_start < ?', Time.zone.now.to_date) })
+  scope :will_start, (-> { where('period_start > ?', Time.zone.now.to_date) })
   scope :start_before, ->(date) { where('period_start < ?', date) }
   scope :start_after, ->(date) { where('period_start > ?', date) }
   scope :start_within, ->(date_range) { where(period_start: date_range) }

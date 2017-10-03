@@ -159,7 +159,8 @@ de:
       create: &id-volunteers-create
         <<: *id-availability
         acceptance: *id-volunteer-acceptance
-        availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+        availability: Verfügbarkeit?
+        availability_question: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
       edit: *id-volunteers-create
       form:
         <<: [*id-volunteers-create, *id-volunteer-acceptance]

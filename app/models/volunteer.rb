@@ -22,8 +22,20 @@ class Volunteer < ApplicationRecord
 
   enum acceptance: { undecided: 0, accepted: 1, rejected: 2, resigned: 3 }
 
+  # User with role: 'volunteer'
   belongs_to :user, -> { with_deleted }, optional: true
+
+  # User that registered the volunteer, in case not self registered
   belongs_to :registrar, optional: true, class_name: 'User', foreign_key: 'registrar_id'
+  has_one :department, through: :registrar
+
+  has_and_belongs_to_many :group_offers
+  has_many :departments, through: :group_offers
+
+  has_many :assignments, dependent: :destroy
+  has_many :clients, through: :assignments
+  has_many :hours, through: :assignments
+  has_many :assignment_journals, through: :assignments
 
   has_many :certificates
 
@@ -36,16 +48,8 @@ class Volunteer < ApplicationRecord
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
 
-  has_many :assignments, dependent: :destroy
-  has_many :clients, through: :assignments
-
-  has_many :hours, through: :assignments
-
-  has_many :assignment_journals, through: :assignments
   has_many :billing_expenses
   has_many :reminders, dependent: :destroy
-
-  has_and_belongs_to_many :group_offers
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
@@ -102,7 +106,14 @@ class Volunteer < ApplicationRecord
   scope :loj_active_take_more, lambda {
     accepted_joined.will_take_more_assignments.where(assignments: { id: Assignment.active.ids })
   }
+
   scope :seeking_clients, lambda {
+    accepted_joined
+      .merge(Assignment.inactive)
+      .where.not(assignments: { volunteer_id: with_active_assignments.ids })
+      .or(loj_without_assignments)
+  }
+  scope :seeking_clients_will_take_more, lambda {
     accepted_joined
       .merge(Assignment.inactive)
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
