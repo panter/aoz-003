@@ -1,4 +1,16 @@
 class VolunteerPolicy < ApplicationPolicy
+  class Scope < ApplicationScope
+    def resolve
+      return all if superadmin?
+      seeking_clients if department_manager?
+    end
+
+    def seeking_clients
+      return scope.seeking_clients_will_take_more if superadmin?
+      scope.seeking_clients if department_manager?
+    end
+  end
+
   alias_method :index?,           :superadmin?
   alias_method :new?,             :superadmin?
   alias_method :create?,          :superadmin?

@@ -3,8 +3,7 @@ class AssignmentsController < ApplicationController
 
   def index
     authorize Assignment
-    @assignments = policy_scope(Assignment)
-    @q = Assignment.ransack(params[:q])
+    @q = policy_scope(Assignment).ransack(params[:q])
     @assignments = @q.result.default_order.paginate(page: params[:page])
   end
 
@@ -38,7 +37,7 @@ class AssignmentsController < ApplicationController
 
   def update
     if @assignment.update(assignment_params)
-      if current_user.superadmin?
+      if current_user.superadmin? || current_user.department_manager?
         redirect_to assignments_url, make_notice
       else
         redirect_to @assignment.volunteer, make_notice
