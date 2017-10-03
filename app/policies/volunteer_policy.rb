@@ -3,7 +3,7 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :new?,             :superadmin?
   alias_method :create?,          :superadmin?
   alias_method :destroy?,         :superadmin?
-  alias_method :seeking_clients?, :superadmin?
+  alias_method :seeking_clients?, :superadmin_or_department_manager?
   alias_method :checklist?,       :superadmin?
 
   alias_method :show?,   :superadmin_or_volunteers_record?
