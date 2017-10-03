@@ -6,9 +6,9 @@ class ClientPolicy < ApplicationPolicy
     end
   end
 
-  alias_method :index?,             :superadmin_or_social_worker?
-  alias_method :new?,               :superadmin_or_social_worker?
-  alias_method :create?,            :superadmin_or_social_worker?
+  alias_method :index?,             :superadmin_or_department_manager?
+  alias_method :new?,               :superadmin_or_department_manager?
+  alias_method :create?,            :superadmin_or_department_manager?
 
   alias_method :show?,              :superadmin_or_social_workers_record?
   alias_method :edit?,              :superadmin_or_social_workers_record?
@@ -16,5 +16,9 @@ class ClientPolicy < ApplicationPolicy
 
   alias_method :destroy?,           :superadmin?
   alias_method :need_accompanying?, :superadmin_or_department_manager?
-  alias_method :supervisor?,        :superadmin?
+
+  # suplementary policies
+  alias_method :supervisor?, :superadmin?
+  alias_method :journals?,   :superadmin?
+  alias_method :comments?,   :superadmin?
 end
