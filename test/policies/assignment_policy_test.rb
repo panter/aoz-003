@@ -21,35 +21,35 @@ class AssignmentPolicyTest < PolicyAssertions::Test
   end
 
   test 'Destroy: superadmin can destroy' do
-    assert_permit @superadmin, Assignment.first, 'destroy?'
+    assert_permit @superadmin, @assignment, 'destroy?'
   end
 
   test 'Destroy: social worker cannot destroy' do
-    refute_permit @social_worker, Assignment.first, 'destroy?'
+    refute_permit @social_worker, @assignment, 'destroy?'
   end
 
   test 'Destroy: department manager cannot destroy' do
-    refute_permit @department_manager, Assignment.first, 'destroy?'
+    refute_permit @department_manager, @assignment, 'destroy?'
   end
 
   test 'Update: superadmin can update assignment' do
-    assert_permit @superadmin, Assignment.first, 'update?', 'edit?'
+    assert_permit @superadmin, @assignment, 'update?', 'edit?'
   end
 
   test 'Update: social worker cannot update assignment' do
-    refute_permit @social_worker, Assignment.first, 'update?', 'edit?'
+    refute_permit @social_worker, @assignment, 'update?', 'edit?'
   end
 
   test 'Update: department manager can update assignment' do
-    assert_permit @department_manager, Assignment.first, 'update?', 'edit?'
+    assert_permit @department_manager, @assignment, 'update?', 'edit?'
   end
 
   test 'Show: social worker cannot show assignment' do
-    refute_permit @social_worker, Assignment.first, 'show?'
+    refute_permit @social_worker, @assignment, 'show?'
   end
 
   test 'Show: department manager can show assignment' do
-    assert_permit @department_manager, Assignment.first, 'show?'
+    assert_permit @department_manager, @assignment, 'show?'
   end
 
   test 'Show: superadmin can see all assignments' do
@@ -59,38 +59,38 @@ class AssignmentPolicyTest < PolicyAssertions::Test
   end
 
   test 'Index: superadmin can index assignments' do
-    assert_permit @superadmin, Assignment.first, 'index?'
+    assert_permit @superadmin, @assignment, 'index?'
   end
 
   test 'Index: social worker cannot index assignments' do
-    refute_permit @social_worker, Assignment.first, 'index?'
+    refute_permit @social_worker, @assignment, 'index?'
   end
 
   test 'Index: department manager cannot index assignments' do
-    refute_permit @department_manager, Assignment.first, 'index?'
+    refute_permit @department_manager, @assignment, 'index?'
   end
 
   test 'Find volunteer: superadmin can find a volunteer for client' do
-    assert_permit @superadmin, Assignment.first, 'find_volunteer?'
+    assert_permit @superadmin, @assignment, 'find_volunteer?'
   end
 
   test 'Find volunteer: social worker cannot find a volunteer for client' do
-    refute_permit @social_worker, Assignment.first, 'find_volunteer?'
+    refute_permit @social_worker, @assignment, 'find_volunteer?'
   end
 
   test 'Find volunteer: department_manager can find a volunteer for client' do
-    assert_permit @department_manager, Assignment.first, 'find_volunteer?'
+    assert_permit @department_manager, @assignment, 'find_volunteer?'
   end
 
   test 'Find client: superadmin can find a client for volunteer' do
-    assert_permit @superadmin, Assignment.first, 'find_client?'
+    assert_permit @superadmin, @assignment, 'find_client?'
   end
 
   test 'Find client: social worker cannot find a client for volunteer' do
-    refute_permit @social_worker, Assignment.first, 'find_client?'
+    refute_permit @social_worker, @assignment, 'find_client?'
   end
 
   test 'Find client: department_manager can find a client for volunteer' do
-    assert_permit @department_manager, Assignment.first, 'find_client?'
+    assert_permit @department_manager, @assignment, 'find_client?'
   end
 end
