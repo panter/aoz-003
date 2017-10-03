@@ -7,9 +7,9 @@ class AssignmentPolicy < ApplicationPolicy
   end
 
   alias_method :index?,          :superadmin_or_department_manager?
-  alias_method :show?,           :admin_or_department_manager_or_volunteer_related?
-  alias_method :edit?,           :admin_or_department_manager_or_volunteer_related?
-  alias_method :update?,         :admin_or_department_manager_or_volunteer_related?
+  alias_method :show?,           :admin_or_department_manager_or_assignment_related?
+  alias_method :edit?,           :admin_or_department_manager_or_assignment_related?
+  alias_method :update?,         :admin_or_department_manager_or_assignment_related?
   alias_method :new?,            :superadmin_or_department_manager?
   alias_method :create?,         :superadmin_or_department_manager?
   alias_method :destroy?,        :superadmin?

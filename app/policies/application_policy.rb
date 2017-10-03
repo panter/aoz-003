@@ -52,7 +52,7 @@ class ApplicationPolicy
   end
 
   def user_owns_record?
-    record.user_id == user.id
+    record.class != Class && record.user_id == user.id
   end
 
   def volunteers_entry?
@@ -79,8 +79,12 @@ class ApplicationPolicy
     superadmin? || volunteer_related?
   end
 
-  def admin_or_department_manager_or_volunteer_related?
+  def admin_or_department_manager_or_assignment_related?
     superadmin_or_department_manager? || volunteer_related?
+  end
+
+  def admin_or_department_manager_or_volunteer_related?
+    superadmin_or_department_manager? || user_owns_record?
   end
 
   def superadmin_or_volunteers_entry?
