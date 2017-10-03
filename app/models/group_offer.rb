@@ -18,6 +18,8 @@ class GroupOffer < ApplicationRecord
   scope :active, (-> { where(active: true) })
   scope :archived, (-> { where(active: false) })
 
+  scope :in_department, (-> { where.not(department_id: nil) })
+
   def external?
     offer_type == EXTERNAL_OFFER
   end

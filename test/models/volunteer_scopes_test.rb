@@ -146,9 +146,23 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? @resigned_active
   end
 
-  test 'seeking_clients only returns accepted volunteers that fullfill all criteria' do
+  test 'seeking clients shows only volunteers with no active assignments' do
     undecided_no_assignment = make_volunteer nil, acceptance: :undecided
     query = Volunteer.seeking_clients
+    refute query.include? @has_active_and_inactive
+    assert query.include? @has_inactive
+    refute query.include? @resigned_inactive
+    refute query.include? @resigned_active
+    refute query.include? @has_multiple
+    assert query.include? @inactive_will_take_more
+    refute query.include? @active_will_take_more
+    assert query.include? @no_assignment
+    refute query.include? undecided_no_assignment
+  end
+
+  test 'seeking_clients_will_take_more only returns accepted volunteers that fullfill all criteria' do
+    undecided_no_assignment = make_volunteer nil, acceptance: :undecided
+    query = Volunteer.seeking_clients_will_take_more
     refute query.include? @has_active_and_inactive
     assert query.include? @has_inactive
     refute query.include? @resigned_inactive
