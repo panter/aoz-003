@@ -16,25 +16,10 @@ class SocialworkerTest < ApplicationSystemTestCase
     assert_not page.has_field? 'Role'
   end
 
-  test 'has a navbar link to clients page' do
-    visit user_path(@socialworker.id)
-    assert page.has_link? 'Clients'
-  end
-
   test 'does not have navbar link to users and volunteers page' do
     visit user_path(@socialworker.id)
     assert_not page.has_link? 'Users'
     assert_not page.has_link? 'Volunteers'
-  end
-
-  test 'can see his clients' do
-    visit clients_path
-    @socialworker.clients.each do |client|
-      assert page.has_text? client.contact.first_name
-      assert page.has_text? client.contact.last_name
-      assert page.has_link? href: client_path(client.id)
-      assert page.has_link? href: edit_client_path(client.id)
-    end
   end
 
   test 'cannot see comment field in client creation or show' do
