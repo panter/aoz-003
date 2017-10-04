@@ -5,13 +5,12 @@ class GroupOffer < ApplicationRecord
   EXTERNAL_OFFER = 'external_offer'.freeze
   OFFER_STATES = [:open, :partially_occupied, :full].freeze
   VOLUNTEER_STATES = [:internal_volunteer, :external_volunteer].freeze
-  VOLUNTEER_RESPONSIBLE_STATES = [:volunteer_accountable, :volunteer_member].freeze
 
   belongs_to :department, optional: true
   belongs_to :group_offer_category
 
-  has_and_belongs_to_many :volunteers
-  belongs_to :responsible, class_name: 'Volunteer', optional: true
+  has_many :group_assignments
+  has_many :volunteers, through: :group_assignments
 
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
 

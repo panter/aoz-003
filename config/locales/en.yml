@@ -82,7 +82,6 @@ en:
       form:
         location_external: Location (for external group offers)
         organization_external: Organization (for external group offers)
-        responsible_internal: Responsible person (for internal group offers)
       index: &id-help-texts
         necessary_volunteers: '%{amount} necessary volunteers'
         offer_of: Offer from
@@ -630,7 +629,6 @@ en:
       group_offer:
         offer_state: *id-offer-states
         offer_type: *id-offer-types
-        volunteer_responsible_state: *id-volunteer-responsible-states
         volunteer_state: *id-volunteer-states
       group_offer_category:
         category_state: *id-group-offer-category-states

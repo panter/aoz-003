@@ -3,13 +3,13 @@ require 'test_helper'
 class VolunteerScopesTest < ActiveSupport::TestCase
   def setup
     @today = Time.zone.today
-    [:has_assignment, :has_multiple, :has_inactive, :group_offer_member, :group_offer_responsible,
+    [:has_assignment, :has_multiple, :has_inactive, :group_offer_member,
      :has_active_and_inactive, :no_assignment].map { |v| make_volunteer v, acceptance: :accepted }
     make_volunteer :active_will_take_more, take_more_assignments: true, acceptance: :accepted
     make_volunteer :inactive_will_take_more, take_more_assignments: true, acceptance: :accepted
     make_volunteer :resigned_inactive, acceptance: :resigned
     make_volunteer :resigned_active, acceptance: :resigned
-    group_offer = create :group_offer, responsible: @group_offer_responsible
+    group_offer = create :group_offer
     group_offer.volunteers << @group_offer_member
     create_all_assignments
   end
@@ -59,7 +59,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? @has_inactive
     refute query.include? @no_assignment
     refute query.include? @group_offer_member
-    refute query.include? @group_offer_responsible
   end
 
   test 'with_active_assignments returns only volunteers that have active assignments' do
@@ -70,7 +69,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? @has_inactive
     refute query.include? @no_assignment
     refute query.include? @group_offer_member
-    refute query.include? @group_offer_responsible
   end
 
   test 'volunteers that have active and inactive assignments are not in only_inactive' do
@@ -86,7 +84,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? @has_inactive
     refute query.include? @no_assignment
     refute query.include? @group_offer_member
-    refute query.include? @group_offer_responsible
   end
 
   test 'without_assignment returns volunteers with no assignments' do
@@ -96,7 +93,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? @has_inactive
     assert query.include? @no_assignment
     assert query.include? @group_offer_member
-    assert query.include? @group_offer_responsible
   end
 
   test 'not_in_any_group_offer returns volunteers not in group offer (as members)' do
@@ -106,27 +102,15 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? @has_inactive
     assert query.include? @no_assignment
     refute query.include? @group_offer_member
-    assert query.include? @group_offer_responsible
   end
 
-  test 'not_responsible returns volunteers not responsible for group offer' do
-    query = Volunteer.not_responsible
-    assert query.include? @has_assignment
-    assert query.include? @has_multiple
-    assert query.include? @has_inactive
-    assert query.include? @no_assignment
-    assert query.include? @group_offer_member
-    refute query.include? @group_offer_responsible
-  end
-
-  test 'without_active_assignment.not_responsible.not_in_any_group_offer' do
-    query = Volunteer.without_active_assignment.not_responsible.not_in_any_group_offer
+  test 'without_active_assignment.not_in_any_group_offer' do
+    query = Volunteer.without_active_assignment.not_in_any_group_offer
     refute query.include? @has_assignment
     assert query.include? @has_multiple
     assert query.include? @has_inactive
     refute query.include? @no_assignment
     refute query.include? @group_offer_member
-    refute query.include? @group_offer_responsible
   end
 
   test 'will_take_more_assignments selects only active volunteers that take more' do

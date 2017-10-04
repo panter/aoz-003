@@ -29,7 +29,6 @@ class Volunteer < ApplicationRecord
   belongs_to :registrar, optional: true, class_name: 'User', foreign_key: 'registrar_id'
   has_one :department, through: :registrar
 
-  has_and_belongs_to_many :group_offers
   has_many :departments, through: :group_offers
 
   has_many :assignments, dependent: :destroy
@@ -50,6 +49,9 @@ class Volunteer < ApplicationRecord
 
   has_many :billing_expenses
   has_many :reminders, dependent: :destroy
+
+  has_many :group_assignments
+  has_many :group_offers, through: :group_assignments
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
@@ -79,9 +81,8 @@ class Volunteer < ApplicationRecord
   }
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
   scope :without_active_assignment, (-> { joins(:assignments).merge(Assignment.ended) })
-  scope :not_responsible, (-> { where.not(id: GroupOffer.pluck(:responsible_id)) })
   scope :not_in_any_group_offer, lambda {
-    left_joins(:group_offers).where(group_offers_volunteers: { volunteer_id: nil })
+    left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })
   }
 
   scope :external, (-> { where(external: true) })
