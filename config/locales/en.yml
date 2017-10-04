@@ -70,8 +70,8 @@ en:
         archived: Archived
         deactivate: Deactivate
       form:
-        add_volunteers: add volunteers
-        edit_volunteers: edit volunteers
+        add_volunteers: Add volunteers
+        edit_volunteers: Edit volunteers
         location_external: Location (for external group offers)
         organization_external: Organization (for external group offers)
         responsible_internal: Responsible person (for internal group offers)

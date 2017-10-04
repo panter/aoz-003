@@ -18,7 +18,7 @@ class GroupOfferPolicy < ApplicationPolicy
   alias_method :create?,                :superadmin_or_department_manager?
   alias_method :update?,                :superadmin_or_departments_offer?
   alias_method :destroy?,               :superadmin?
-  alias_method :supervisor_privileges?, :superadmin_or_department_manager?
+  alias_method :supervisor_privileges?, :superadmin?
   alias_method :archived?,              :superadmin_or_department_manager?
   alias_method :change_active_state?,   :superadmin_or_departments_offer?
 end
