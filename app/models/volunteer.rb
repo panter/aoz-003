@@ -189,7 +189,10 @@ class Volunteer < ApplicationRecord
   end
 
   def handle_user_with_external_change
-    user.destroy if external?
-    user.restore if internal?
+    if external?
+      user.destroy
+    else
+      user.restore
+    end
   end
 end
