@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170928093844) do
+ActiveRecord::Schema.define(version: 20171004145120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,18 @@ ActiveRecord::Schema.define(version: 20170928093844) do
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
   end
 
+  create_table "group_assignments", force: :cascade do |t|
+    t.bigint "group_offer_id"
+    t.bigint "volunteer_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.boolean "responsible", default: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
+    t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
+    t.index ["volunteer_id"], name: "index_group_assignments_on_volunteer_id"
+  end
+
   create_table "group_offer_categories", force: :cascade do |t|
     t.string "category_name"
     t.string "category_state", default: "active"
@@ -174,7 +186,6 @@ ActiveRecord::Schema.define(version: 20170928093844) do
     t.string "offer_state"
     t.string "volunteer_state"
     t.integer "necessary_volunteers"
-    t.string "volunteer_responsible_state"
     t.text "description"
     t.boolean "women", default: false
     t.boolean "men", default: false
@@ -199,19 +210,10 @@ ActiveRecord::Schema.define(version: 20170928093844) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "group_offer_category_id", null: false
-    t.bigint "responsible_id"
     t.boolean "active", default: true
     t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
     t.index ["department_id"], name: "index_group_offers_on_department_id"
     t.index ["group_offer_category_id"], name: "index_group_offers_on_group_offer_category_id"
-    t.index ["responsible_id"], name: "index_group_offers_on_responsible_id"
-  end
-
-  create_table "group_offers_volunteers", id: false, force: :cascade do |t|
-    t.bigint "group_offer_id"
-    t.bigint "volunteer_id"
-    t.index ["group_offer_id"], name: "index_group_offers_volunteers_on_group_offer_id"
-    t.index ["volunteer_id"], name: "index_group_offers_volunteers_on_volunteer_id"
   end
 
   create_table "hours", force: :cascade do |t|
@@ -463,7 +465,6 @@ ActiveRecord::Schema.define(version: 20170928093844) do
   add_foreign_key "clients", "users"
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"
-  add_foreign_key "group_offers", "volunteers", column: "responsible_id"
   add_foreign_key "hours", "billing_expenses"
   add_foreign_key "journals", "assignments"
   add_foreign_key "journals", "users"

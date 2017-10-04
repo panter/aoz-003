@@ -17,7 +17,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     select @group_offer_category.category_name, from: 'Group offer category'
     select @department.contact.last_name, from: 'Department'
     select '2', from: 'Necessary volunteers'
-    select 'Manager of volunteer group', from: 'Volunteer responsible'
     fill_in 'Description', with: 'asdf'
     page.check('group_offer_all')
     page.check('group_offer_regular')
