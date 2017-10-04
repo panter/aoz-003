@@ -43,5 +43,6 @@ class ReminderTest < ActiveSupport::TestCase
     assignment.reload
     reminder = build :reminder, volunteer: assignment.volunteer
     refute reminder.valid?
+    assert reminder.errors.messages[:volunteer].include? 'external volunteers can not get reminders'
   end
 end
