@@ -97,13 +97,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'updating client mail doesnt change current user email' do
-    @superadmin = create :user, role: 'superadmin', email: 'superadmin@example.com'
-    @client = create :user, email: 'client@example.com'
-    login_as(@superadmin)
-    @client.profile.contact.update(primary_email: 'superclient@example.com')
+    @client = create :client
+    @client.contact.update(primary_email: 'superclient@example.com')
     @client.reload
-    assert_equal 'superclient@example.com', @client.profile.contact.primary_email
-    assert_not_equal 'superclient@example.com', @superadmin.email
-    assert_equal 'superadmin@example.com', @superadmin.email
+    @client.user.reload
+
+    assert_equal 'superclient@example.com', @client.contact.primary_email
+    assert_not_equal 'superclient@example.com', @client.user.email
   end
 end
