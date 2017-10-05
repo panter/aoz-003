@@ -171,6 +171,7 @@ en:
           inactive: Inactive
         show_assignments: Show Assignments
         availability: Availability for voluntary engagement
+        group_assignments: Group offers
         hour_reports: Hour reports
         new_certificate: Create certificate
         report_hours: Report hours
