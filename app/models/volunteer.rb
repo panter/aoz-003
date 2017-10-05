@@ -33,7 +33,7 @@ class Volunteer < ApplicationRecord
 
   has_many :assignments, dependent: :destroy
   has_many :clients, through: :assignments
-  has_many :hours, through: :assignments
+  has_many :hours, dependent: :destroy
   has_many :assignment_journals, through: :assignments
 
   has_many :certificates
@@ -184,6 +184,22 @@ class Volunteer < ApplicationRecord
   def self.first_languages
     ['DE', 'EN', 'FR', 'ES', 'IT', 'AR'].map do |lang|
       [I18nData.languages(I18n.locale)[lang], lang]
+    end
+  end
+
+  def assignment_group_offer_collection
+    assignments_hour_form_collection + group_offers_form_collection
+  end
+
+  def assignments_hour_form_collection
+    assignments
+      .where('period_end > ? OR period_end IS NULL', 7.months.ago.to_date)
+      .map { |assignment| [assignment.to_label, "#{assignment.id},#{assignment.class}"] }
+  end
+
+  def group_offers_form_collection
+    group_offers.map do |group_offer|
+      [group_offer.to_label, "#{group_offer.id},#{group_offer.class}"]
     end
   end
 

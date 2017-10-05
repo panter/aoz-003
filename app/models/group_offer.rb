@@ -34,4 +34,10 @@ class GroupOffer < ApplicationRecord
   def responsible?(volunteer)
     group_assignments.find_by(volunteer: volunteer).responsible
   end
+
+  def to_label
+    label = "#{self.class.name.humanize} - #{title} - #{group_offer_category}"
+    label += " - #{department}" if department_id?
+    label
+  end
 end

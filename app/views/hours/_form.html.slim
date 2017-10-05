@@ -3,14 +3,11 @@
 
   .row
     .col-xs-12
-      - if action_name ==  'new'
-        = f.association :assignment, collection: @assignments, label_method: :client, value_method: :id
-      - else
-        = f.hidden_field :assignment_id, value: @hour.assignment.id
+      = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection
 
   .row
     .col-xs-12
-        = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
+      = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
 
   .row
     .col-xs-12

@@ -314,6 +314,8 @@ de:
         category_name: Name
         category_state: Status
       hour:
+        hourable: Einsatz
+        hourable_id_and_type: Einsatz
         activity: Tätigkeit / Was wurde gemacht
         assignment: Begleitung
         comments: Bemerkungen / Gab es etwas Besonderes

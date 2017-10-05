@@ -230,6 +230,8 @@ en:
         street: Street
       hour:
         last: Last hour entry
+        hourable: Einsatz
+        hourable_id_and_type: Einsatz
       journal:
         entry: Entry
       performance_report:
