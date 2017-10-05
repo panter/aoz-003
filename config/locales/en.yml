@@ -241,8 +241,8 @@ en:
         responsible: Responsible
       hour:
         last: Last hour entry
-        hourable: Assignment
-        hourable_id_and_type: Assignment
+        hourable: Einsatz
+        hourable_id_and_type: Einsatz
       journal:
         entry: Entry
       performance_report:
