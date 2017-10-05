@@ -4,7 +4,7 @@
       - if policy(GroupOffer).supervisor_privileges?
         = f.association :volunteer, prompt: true
       - else
-        = f.association :volunteers,
+        = f.association :volunteer,
           collection: Volunteer.without_active_assignment.not_in_any_group_offer
     .col-xs-12.col-md-3
       = f.input :responsible

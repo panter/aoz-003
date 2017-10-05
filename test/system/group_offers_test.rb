@@ -32,6 +32,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     login_as department_manager
     visit new_group_offer_path
 
+    fill_in 'Title', with: 'asdf'
     select @group_offer_category.category_name, from: 'Group offer category'
     click_button 'Create Group offer'
     assert page.has_text? 'Group offer was successfully created.'

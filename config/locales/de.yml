@@ -180,6 +180,7 @@ de:
         acceptance: *id-volunteer-acceptance
         state: *id-volunteer-active-states
         availability: Verfügbarkeit
+        group_assignments: Gruppenangebote
         hour_reports: Stunden Rapporte
         new_certificate: Nachweis ausstellen
         report_hours: Stunden erfassen
