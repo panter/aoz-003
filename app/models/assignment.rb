@@ -96,4 +96,9 @@ class Assignment < ApplicationRecord
   def delete_reminder
     Reminder.where(assignment: id).destroy_all
   end
+
+  def to_label
+    "#{self.class.name.humanize} - #{client.contact.full_name} - "\
+      "#{period_start && I18n.l(period_start)}"
+  end
 end

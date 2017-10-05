@@ -6,7 +6,7 @@ h1= t_title(:index, Hour)
           tr
             - if current_user.superadmin?
               th= t_model(Volunteer)
-            th= t_model(Client)
+            th= t_attr(:hourable)
             th= t_attr(:meeting_date)
             th= t_attr(:duration)
             th= t_attr(:activity)
@@ -17,7 +17,11 @@ h1= t_title(:index, Hour)
             tr
               - if current_user.superadmin?
                 td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
-              td= link_to record.assignment.client.contact.full_name, client_path(record.assignment.client)
+              td
+                - if record.assignment?
+                  = link_to record.hourable.client.contact.full_name, client_path(record.hourable.client)
+                - else
+                  = link_to record.hourable.to_label, group_offer_path(record.hourable)
               td= l(record.meeting_date)
               td= "#{record.hours}:#{'%02i' % record.minutes}"
               td= record.activity

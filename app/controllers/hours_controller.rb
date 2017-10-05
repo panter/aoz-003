@@ -3,16 +3,13 @@ class HoursController < ApplicationController
   before_action :set_volunteer
 
   def index
-    hour = Hour.new(volunteer: @volunteer)
-    authorize hour
-    @hours = Hour.where(volunteer: @volunteer)
+    authorize Hour
   end
 
   def show; end
 
   def new
     @hour = Hour.new(volunteer: @volunteer)
-    @assignments = Assignment.where(volunteer: params[:volunteer_id])
     authorize @hour
   end
 
@@ -54,6 +51,6 @@ class HoursController < ApplicationController
 
   def hour_params
     params.require(:hour).permit(:meeting_date, :hours, :minutes, :activity, :comments,
-      :volunteer_id, :assignment_id)
+      :volunteer_id, :hourable_id, :hourable_type, :hourable_id_and_type)
   end
 end

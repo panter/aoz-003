@@ -3,13 +3,14 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          tr
-            - if current_user.superadmin?
+          - if current_user.superadmin?
+            tr
               td= t_model(Volunteer)
               td= @hour.volunteer.contact.full_name
-          tr
-            td= t_model(Client)
-            td= @hour.assignment.client.contact.full_name
+          - if @hour.assignment?
+            tr
+              td= t_model(Client)
+              td= @hour.hourable.client.contact.full_name
           tr
             td= t_attr(:meeting_date)
             td= l(@hour.meeting_date)

@@ -1,4 +1,6 @@
 class Hour < ApplicationRecord
+  attr_reader :hourable_id_and_type
+
   belongs_to :volunteer
 
   belongs_to :hourable, polymorphic: true, optional: true
@@ -15,11 +17,27 @@ class Hour < ApplicationRecord
   HOUR_RANGE = (1..8).to_a
   MINUTE_RANGE = [0, 15, 30, 45].freeze
 
+  def assignment?
+    hourable_type == 'Assignment'
+  end
+
+  def group_offer?
+    hourable_type == 'GroupOffer'
+  end
+
   def self.total_hours
     sum(&:hours) + sum(&:minutes) / 60
   end
 
   def self.minutes_rest
     sum(&:minutes) % 60
+  end
+
+  def hourable_id_and_type=(id_and_type)
+    self.hourable_id, self.hourable_type = id_and_type.split(',', 2)
+  end
+
+  def hourable_id_and_type
+    "#{hourable_id},#{hourable_type}"
   end
 end
