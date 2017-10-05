@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :hour do
-    assignment
     volunteer
     meeting_date Faker::Date.between(300.days.ago, 10.days.ago)
     hours Faker::Number.between(1, 5)
