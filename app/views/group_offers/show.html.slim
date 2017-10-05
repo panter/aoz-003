@@ -68,13 +68,20 @@ h1= @group_offer.title
             td= t_attr(:schedule_details)
             td= @group_offer.schedule_details
 
-- if @group_offer.volunteers.any?
+- if @group_offer.group_assignments.any?
   h3= t_attr(:volunteers)
   .row
-    .col-xs-12
-      ul
-        - @group_offer.volunteers.each do |volunteer|
-          li= link_to volunteer, volunteer_path(volunteer)
+    ul
+      - @group_offer.group_assignments.each do |group_assignment|
+        li
+          .col-xs-12.col-md-3
+            = link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
+          .col-xs-12.col-md-3
+            = t_attr(:responsible, GroupAssignment) if group_assignment.responsible
+          .col-xs-12.col-md-3
+            = l(group_assignment.start_date)
+          .col-xs-12.col-md-3
+            = l(group_assignment.end_date)
 
 - unless params[:format] == 'pdf'
   = form_navigation_btn :edit
