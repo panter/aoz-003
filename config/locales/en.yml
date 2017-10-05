@@ -73,6 +73,8 @@ en:
         activated: Group offer was successfully activated.
         deactivated: Group offer was successfully deactivated.
         no-change: Group offer could not be upadated.
+      group_assignment_fields:
+        remove_volunteer: Remove volunteer
       group_offers_block:
         activate: Activate
         active: Active
@@ -80,6 +82,7 @@ en:
         deactivate: Deactivate
         group_offer_categories: Group offer categories
       form:
+        add_volunteer: Add volunteer
         location_external: Location (for external group offers)
         organization_external: Organization (for external group offers)
       index: &id-help-texts

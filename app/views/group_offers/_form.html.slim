@@ -7,14 +7,6 @@
     .col-xs-12
       = f.association :group_offer_category, label_method: :category_name
 
-  .row
-    .col-xs-12.col-md-4
-      = f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons
-    .col-xs-12.col-md-4
-      = f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
-    .col-xs-12.col-md-4
-      = f.input :volunteer_state, collection: GroupOffer::VOLUNTEER_STATES, as: :radio_buttons
-
   - if policy(GroupOffer).supervisor_privileges?
     .row
       .col-xs-12.col-md-4
@@ -25,14 +17,21 @@
         = f.input :location, label: t('.location_external')
 
   .row
-    .col-xs-12.col-md-4
+    .col-xs-12.col-md-3
+      = f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons
+    .col-xs-12.col-md-3
+      = f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
+    .col-xs-12.col-md-3
+      = f.input :volunteer_state, collection: GroupOffer::VOLUNTEER_STATES, as: :radio_buttons
+    .col-xs-12.col-md-3
       = f.input :necessary_volunteers, collection: 1..10
-    .col-xs-12.col-md-8
-      - if policy(GroupOffer).supervisor_privileges?
-        = f.association :volunteers
-      - else
-        = f.association :volunteers,
-          collection: Volunteer.without_active_assignment.not_in_any_group_offer
+
+  .row
+    .col-xs-12
+      #volunteers
+        = f.simple_fields_for :group_assignments do |group_assignment|
+          = render 'group_assignment_fields', f: group_assignment
+        = link_to_add_association t('.add_volunteer'), f, :group_assignments
 
   .row
     .col-xs-12

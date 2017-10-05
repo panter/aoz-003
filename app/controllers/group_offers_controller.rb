@@ -1,4 +1,5 @@
 class GroupOffersController < ApplicationController
+  include GroupAssignmentsAttributes
   before_action :set_group_offer, only: [:show, :edit, :update, :destroy, :change_active_state]
 
   def index
@@ -78,6 +79,6 @@ class GroupOffersController < ApplicationController
       :necessary_volunteers, :description, :women, :men, :children, :teenagers, :unaccompanied,
       :all, :long_term, :regular, :short_term, :workday, :weekend, :morning, :afternoon, :evening,
       :flexible, :schedule_details, :department_id, :organization, :location,
-      :group_offer_category_id, volunteer_ids: [])
+      :group_offer_category_id, group_assignments_attributes)
   end
 end
