@@ -63,7 +63,7 @@ en:
       change_active_state:
         activated: Group offer was successfully activated.
         deactivated: Group offer was successfully deactivated.
-        no-change: Group offer could not be upadated.
+        "no-change": Group offer could not be upadated.
       group_offers_block:
         activate: Activate
         active: Active

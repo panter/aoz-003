@@ -69,7 +69,7 @@ class GroupOffersController < ApplicationController
   private
 
   def set_group_offer
-    @group_offer = GroupOffer.find(params[:id])
+    @group_offer = GroupOffer.unscoped.find(params[:id])
     authorize @group_offer
   end
 

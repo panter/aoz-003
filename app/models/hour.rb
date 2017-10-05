@@ -1,6 +1,7 @@
 class Hour < ApplicationRecord
   belongs_to :volunteer
   belongs_to :assignment
+  belongs_to :group_offer
   belongs_to :billing_expense, optional: true
   belongs_to :certificate, optional: true
 
