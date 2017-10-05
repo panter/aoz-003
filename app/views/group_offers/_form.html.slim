@@ -27,11 +27,10 @@
       = f.input :necessary_volunteers, collection: 1..10
 
   .row
-    .col-xs-12
-      #volunteers
-        = f.simple_fields_for :group_assignments do |group_assignment|
-          = render 'group_assignment_fields', f: group_assignment
-        = link_to_add_association t('.add_volunteer'), f, :group_assignments
+    #volunteers
+      = f.simple_fields_for :group_assignments do |group_assignment|
+        = render 'group_assignment_fields', f: group_assignment
+      = link_to_add_association t('.add_volunteer'), f, :group_assignments, class: 'btn btn-success'
 
   .row
     .col-xs-12
