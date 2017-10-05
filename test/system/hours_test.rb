@@ -37,7 +37,7 @@ class HoursTest < ApplicationSystemTestCase
 
   test 'volunteer can create also an hour report for group offer' do
     click_link 'Report hours'
-    select @group_offer1.to_label, from: 'Assignment'
+    select @group_offer1.to_label, from: 'Einsatz'
     within '#hour_meeting_date_3i' do
       select(Time.zone.today.day)
     end
