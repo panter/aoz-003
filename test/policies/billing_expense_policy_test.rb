@@ -6,10 +6,11 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
     @social_worker = create :user, role: 'social_worker'
     @department_manager = create :user, role: 'department_manager'
     @volunteer = create :volunteer
+    @assignment = create(:assignment, volunteer: @volunteer)
     @billing_expense = BillingExpense.create!(
       user: @superadmin, volunteer: @volunteer,
       hours: [
-        create(:hour, volunteer: @volunteer, assignment: create(:assignment, volunteer: @volunteer))
+        create(:hour, volunteer: @volunteer, hourable: @assignment)
       ]
     )
   end
@@ -41,7 +42,7 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
     BillingExpense.create!(
       user: @superadmin, volunteer: @volunteer,
       hours: [
-        create(:hour, volunteer: @volunteer, assignment: create(:assignment, volunteer: @volunteer))
+        create(:hour, volunteer: @volunteer, hourable: create(:assignment, volunteer: @volunteer))
       ]
     )
     BillingExpense.all.each do |billing_expense|
