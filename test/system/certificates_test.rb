@@ -7,7 +7,7 @@ class CertificatesTest < ApplicationSystemTestCase
       :volunteer, :with_assignment, state: 'resigned', user: create(:user_volunteer)
     )
     @assignment = @volunteer.assignments.first
-    @hour = create :hour, volunteer: @volunteer, assignment: @assignment, hours: 2,
+    @hour = create :hour, volunteer: @volunteer, hourable: @assignment, hours: 2,
       minutes: 15
   end
 

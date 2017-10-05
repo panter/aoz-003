@@ -46,7 +46,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   test 'with hours only returns volunteers that have hours' do
-    create :hour, assignment: @start_60_days_ago, volunteer: @has_assignment, hours: 4
+    create :hour, hourable: @start_60_days_ago, volunteer: @has_assignment, hours: 4
     query = Volunteer.with_hours
     assert query.include? @has_assignment
     refute query.include? @has_inactive

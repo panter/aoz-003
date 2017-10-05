@@ -15,7 +15,7 @@ class HoursTest < ApplicationSystemTestCase
 
   test 'volunteer can create an hour report' do
     click_link 'Report hours'
-    select 'Client1 Client1', from: 'Assignment'
+    select @assignment1.to_label, from: 'Einsatz'
     within '#hour_meeting_date_3i' do
       select(Time.zone.today.day)
     end
@@ -37,8 +37,8 @@ class HoursTest < ApplicationSystemTestCase
     @client2 = create :client
     @client2.contact.first_name = @client2.contact.last_name = 'Client2'
     @assignment2 = create :assignment, volunteer: @volunteer2, client: @client2
-    @hour1 = create :hour, assignment: @assignment1, volunteer: @volunteer1
-    @hour2 = create :hour, assignment: @assignment2, volunteer: @volunteer2
+    @hour1 = create :hour, hourable: @assignment1, volunteer: @volunteer1
+    @hour2 = create :hour, hourable: @assignment2, volunteer: @volunteer2
     click_link 'Hour reports'
     assert page.has_text? 'Client1 Client1'
     refute page.has_text? 'Client2 Client2'

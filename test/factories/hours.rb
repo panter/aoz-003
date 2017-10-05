@@ -6,5 +6,6 @@ FactoryGirl.define do
     minutes [0, 15, 30, 45].sample
     activity 'MyString'
     comments 'MyString'
+    association :hourable, factory: :assignment
   end
 end

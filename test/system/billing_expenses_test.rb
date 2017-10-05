@@ -5,7 +5,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     superadmin = create :user
     @volunteer = create :volunteer
     assignment = create :assignment, volunteer: @volunteer
-    create :hour, volunteer: @volunteer, assignment: assignment
+    create :hour, volunteer: @volunteer, hourable: assignment
     login_as superadmin
     visit volunteer_path(@volunteer)
     click_button 'Create Billing expense'
