@@ -73,6 +73,8 @@ de:
         activated: Gruppenangebot wurde erfolgreich aktiviert.
         deactivated: Gruppenangebot wurde erfolgreich archiviert.
         no-change: Gruppenangebot konnte nicht aktualisiert werden.
+      group_assignment_fields:
+        remove_volunteer: Freiwillige entfernen
       group_offers_block:
         activate: Aktivieren
         active: Aktiv
@@ -84,6 +86,7 @@ de:
         offer_of: Angebot von
       show: *id-help-texts
       form:
+        add_volunteer: Freiwillige hinzufügen
         location_external: Ort (betrifft externe Gruppenangebote)
         organization_external: Organisation (betrifft externe Gruppenangebote)
     language_level: &id-lang-levels
@@ -269,6 +272,9 @@ de:
         department_manager: Standort Betreuer
         name: Name
         user: User
+      group_assignment:
+        responsible: Verantwortliche/r für eine Freiwilligengruppe
+        volunteer: Freiwillige
       group_offer:
         active: Aktiv
         all: Alle

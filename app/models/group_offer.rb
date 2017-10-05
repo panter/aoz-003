@@ -12,6 +12,8 @@ class GroupOffer < ApplicationRecord
   has_many :group_assignments
   has_many :volunteers, through: :group_assignments
 
+  accepts_nested_attributes_for :group_assignments, allow_destroy: true
+
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
 
   scope :active, (-> { where(active: true) })
