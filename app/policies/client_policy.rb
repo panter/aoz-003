@@ -8,11 +8,11 @@ class ClientPolicy < ApplicationPolicy
   end
 
   # controller action policies
-  alias_method :index?,  :volunteer_managing_user?
-  alias_method :new?,    :volunteer_managing_user?
-  alias_method :create?, :volunteer_managing_user?
+  alias_method :index?,  :user_managing_volunteer?
+  alias_method :new?,    :user_managing_volunteer?
+  alias_method :create?, :user_managing_volunteer?
 
-  alias_method :show?,   :superadmin_or_social_workers_record?
+  alias_method :show?,   :user_managing_volunteer?
   alias_method :edit?,   :superadmin_or_social_workers_record?
   alias_method :update?, :superadmin_or_social_workers_record?
 

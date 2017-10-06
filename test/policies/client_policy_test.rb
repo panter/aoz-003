@@ -51,8 +51,8 @@ class ClientPolicyTest < PolicyAssertions::Test
     refute_permit @social_worker, @superadmin.clients.first, 'show?'
   end
 
-  test 'Show: department manager cannot show clients' do
-    refute_permit @department_manager, Client.first, 'show?'
+  test 'Show: department manager can show clients' do
+    assert_permit @department_manager, Client.first, 'show?'
   end
 
   test 'Show: superadmin can see all clients' do

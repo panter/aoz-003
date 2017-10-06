@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class SocialworkerTest < ApplicationSystemTestCase
   def setup
-    @socialworker = create :user, :with_clients, role: 'social_worker'
+    @socialworker = create :social_worker, :with_clients
     login_as @socialworker
   end
 
@@ -16,10 +16,25 @@ class SocialworkerTest < ApplicationSystemTestCase
     assert_not page.has_field? 'Role'
   end
 
+  test 'has a navbar link to clients page' do
+    visit user_path(@socialworker.id)
+    assert page.has_link? 'Clients'
+  end
+
   test 'does not have navbar link to users and volunteers page' do
     visit user_path(@socialworker.id)
     assert_not page.has_link? 'Users'
     assert_not page.has_link? 'Volunteers'
+  end
+
+  test 'can see his clients' do
+    visit clients_path
+    @socialworker.clients.each do |client|
+      assert page.has_text? client.contact.first_name
+      assert page.has_text? client.contact.last_name
+      assert page.has_link? href: client_path(client.id)
+      assert page.has_link? href: edit_client_path(client.id)
+    end
   end
 
   test 'cannot see comment field in client creation or show' do
@@ -31,7 +46,7 @@ class SocialworkerTest < ApplicationSystemTestCase
 
   test 'can only see her own clients' do
     visit clients_path
-    other_socialworker = create :user, :with_clients, role: 'social_worker'
+    other_socialworker = create :social_worker, :with_clients
     Client.where(user: other_socialworker) do |client|
       assert_not page.has_text? client.first_name
       assert_not page.has_text? client.last_name
