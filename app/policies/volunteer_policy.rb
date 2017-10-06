@@ -10,15 +10,15 @@ class VolunteerPolicy < ApplicationPolicy
 
   # controller action policies
   alias_method :index?,           :superadmin_or_department_manager?
-  alias_method :new?,             :volunteer_managing_user?
-  alias_method :create?,          :volunteer_managing_user?
-  alias_method :seeking_clients?, :volunteer_managing_user?
+  alias_method :new?,             :user_managing_volunteer?
+  alias_method :create?,          :user_managing_volunteer?
+  alias_method :seeking_clients?, :user_managing_volunteer?
 
   alias_method :destroy?,         :superadmin?
   alias_method :index_xls?,       :superadmin?
 
   def volunteer_managing_or_volunteers_profile?
-    volunteer_managing_user? || user_owns_record?
+    user_managing_volunteer? || user_owns_record?
   end
 
   alias_method :show?,   :volunteer_managing_or_volunteers_profile?

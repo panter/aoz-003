@@ -353,7 +353,6 @@ de:
         role: Rolle
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance]
-        acceptance: *id-volunteer-acceptance
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
