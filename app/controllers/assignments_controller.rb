@@ -1,5 +1,7 @@
 class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
+  before_action :set_volunteer, only: [:find_client]
+  before_action :set_client, only: [:find_volunteer]
 
   def index
     authorize Assignment
@@ -56,21 +58,27 @@ class AssignmentsController < ApplicationController
   end
 
   def find_volunteer
-    @client = Client.find(params[:id])
     @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
     @seeking_clients = @q.result
-    authorize Assignment
   end
 
   def find_client
-    @volunteer = Volunteer.find(params[:id])
     @q = Client.need_accompanying.ransack(params[:q])
     @need_accompanying = @q.result
     @need_accompanying = @need_accompanying.paginate(page: params[:page])
-    authorize Assignment
   end
 
   private
+
+  def set_client
+    @client = Client.find(params[:id])
+    authorize Assignment
+  end
+
+  def set_volunteer
+    @volunteer = Volunteer.find(params[:id])
+    authorize Assignment
+  end
 
   def set_assignment
     @assignment = Assignment.find(params[:id])
