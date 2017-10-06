@@ -17,7 +17,7 @@ class ClientPolicy < ApplicationPolicy
   alias_method :update?, :superadmin_or_social_workers_record?
 
   alias_method :destroy?,           :superadmin?
-  alias_method :need_accompanying?, :volunteer_managing_user?
+  alias_method :need_accompanying?, :superadmin_or_department_manager?
 
   # suplementary policies
   alias_method :supervisor?, :superadmin?
