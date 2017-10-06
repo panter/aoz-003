@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :volunteer_emails
   resources :profiles, except: [:destroy, :index]
   resources :assignments do
-    resources :assignment_journals
+    resources :feedbacks
   end
   resources :reminders, only: [:index, :update, :destroy]
   resources :group_offers do

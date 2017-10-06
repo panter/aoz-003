@@ -5,25 +5,25 @@
         tbody
           tr
             td= t_model(Volunteer)
-            td= @assignment_journal.volunteer.contact.full_name
+            td= @feedback.volunteer.contact.full_name
           tr
             td= t_model(Client)
-            td= @assignment_journal.assignment.client.contact.full_name
+            td= @feedback.assignment.client.contact.full_name
           tr
             td= t_attr(:goals)
-            td= @assignment_journal.goals
+            td= @feedback.goals
           tr
             td= t_attr(:achievements)
-            td= @assignment_journal.achievements
+            td= @feedback.achievements
           tr
             td= t_attr(:future)
-            td= @assignment_journal.future
+            td= @feedback.future
           tr
             td= t_attr(:comments)
-            td= @assignment_journal.comments
+            td= @feedback.comments
           tr
             td= t_attr(:conversation)
-            td= t(@assignment_journal.conversation)
+            td= t(@feedback.conversation)
 
 = form_navigation_btn :edit
 = form_navigation_btn :back

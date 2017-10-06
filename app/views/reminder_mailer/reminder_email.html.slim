@@ -3,5 +3,5 @@ h3
 
 p= t('.please_confirm', client: @reminder.assignment.client)
 p= link_to t_title(:index, Hour), volunteer_hours_url(@volunteer)
-p= link_to t_title(:index, AssignmentJournal), assignment_assignment_journals_url(@reminder.assignment)
+p= link_to t_title(:index, Feedback), assignment_feedbacks_url(@reminder.assignment)
 p= link_to t_title(:edit, Assignment), edit_assignment_url(@reminder.assignment)

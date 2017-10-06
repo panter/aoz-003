@@ -12,7 +12,9 @@ class Assignment < ApplicationRecord
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
   has_many :hours, as: :hourable, dependent: :destroy
 
-  has_many :assignment_journals, dependent: :destroy
+  has_many :hours, dependent: :destroy
+  has_many :feedbacks, dependent: :destroy
+
   has_many :reminders, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze
@@ -85,8 +87,8 @@ class Assignment < ApplicationRecord
     super || User.deleted.find_by(id: creator_id)
   end
 
-  def last_assignment_journal
-    assignment_journals.where(author: volunteer.user).last
+  def last_feedback
+    feedbacks.where(author: volunteer.user).last
   end
 
   def last_hour

@@ -211,7 +211,7 @@ en:
         period: Period
         period_end: End date
         period_start: Start date
-      assignment_journal:
+      feedback:
         achievements: What could have been achieved during the last months?
         conversation: I would like to discuss with my supervisor.
         future: Should the assignment continue? If yes, with which goals?
@@ -295,7 +295,7 @@ en:
         user: Created by
     models:
       assignment: Assignment
-      assignment_journal: Assignment journal
+      feedback: Feedback
       billing_expense: Billing expense
       certificate: Certificate
       client: Client

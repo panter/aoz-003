@@ -224,7 +224,7 @@ de:
         period_start: Einsatzbeginn
         probation_period: Probezeit
         volunteer: Freiwillige
-      assignment_journal:
+      feedback:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
         comments: Bemerkungen
@@ -464,7 +464,7 @@ de:
               invalid: ist ungültig
     models:
       assignment: Begleitung
-      assignment_journal: Inhaltliches Journal
+      feedback: Inhaltliches Journal
       billing_expense: Spesenformular
       certificate: Nachweis
       client: Klient/in
