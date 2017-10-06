@@ -3,6 +3,13 @@ class AssignmentPolicy < ApplicationPolicy
     def resolve
       return all if superadmin?
       scope.where(creator_id: user.id) if department_manager?
+      none
+    end
+
+    def seeking_clients
+      return scope.seeking_clients_will_take_more if superadmin?
+      return scope.seeking_clients if department_manager?
+      none
     end
   end
 

@@ -57,7 +57,7 @@ class AssignmentsController < ApplicationController
 
   def find_volunteer
     @client = Client.find(params[:id])
-    @q = Volunteer.seeking_clients.ransack(params[:q])
+    @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
     @seeking_clients = @q.result
     authorize Assignment
   end
