@@ -3,7 +3,7 @@ class HoursController < ApplicationController
   before_action :set_volunteer
 
   def index
-    authorize @volunteer.hours.first
+    authorize @volunteer.hours.first || Hour
   end
 
   def show; end
