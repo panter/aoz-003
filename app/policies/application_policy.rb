@@ -23,6 +23,10 @@ class ApplicationPolicy
     superadmin? || department_manager?
   end
 
+  def department_manager_or_social_worker?
+    department_manager? || social_worker?
+  end
+
   def departments_offer?
     department_manager? && user.department.include?(record.department)
   end
