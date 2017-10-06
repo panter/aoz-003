@@ -28,9 +28,9 @@ class AssignmentsController < ApplicationController
 
   def create
     @assignment = Assignment.new(assignment_params.merge(creator_id: current_user.id))
-    @assignment.client.state = Client::RESERVED
     authorize @assignment
     if @assignment.save
+      @assignment.client.update(state: Client::RESERVED)
       redirect_to assignments_url, make_notice
     else
       render :new
@@ -46,9 +46,7 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
-    client = @assignment.client
-    @assignment.destroy
-    client.update(state: Client::REGISTERED)
+    @assignment.destroy.client.update(state: Client::REGISTERED)
     redirect_to assignments_url, make_notice
   end
 
@@ -58,9 +56,8 @@ class AssignmentsController < ApplicationController
   end
 
   def find_client
-    @q = Client.need_accompanying.ransack(params[:q])
-    @need_accompanying = @q.result
-    @need_accompanying = @need_accompanying.paginate(page: params[:page])
+    @q = policy_scope(Client).need_accompanying.ransack(params[:q])
+    @need_accompanying = @q.result.paginate(page: params[:page])
   end
 
   private
