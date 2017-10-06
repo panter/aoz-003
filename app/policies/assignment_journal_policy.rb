@@ -1,4 +1,4 @@
-class AssignmentJournalPolicy < ApplicationPolicy
+class FeedbackPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return resolve_assignment if superadmin?

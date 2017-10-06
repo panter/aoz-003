@@ -1,4 +1,4 @@
-- @assignment_journals ||= @assignment.assignment_journals
+- @feedbacks ||= @assignment.feedbacks
 
 .row
   .col-xs-12
@@ -11,15 +11,15 @@
         tr
           th= t_model(Volunteer)
           th= t_model(Client)
-          th= t_attr(:goals, AssignmentJournal)
-          th= t_attr(:achievements, AssignmentJournal)
-          th= t_attr(:future, AssignmentJournal)
-          th= t_attr(:comments, AssignmentJournal)
-          th= t_attr(:conversation, AssignmentJournal)
+          th= t_attr(:goals, Feedback)
+          th= t_attr(:achievements, Feedback)
+          th= t_attr(:future, Feedback)
+          th= t_attr(:comments, Feedback)
+          th= t_attr(:conversation, Feedback)
           th colspan='3'
 
       tbody
-        - @assignment_journals.each do |record|
+        - @feedbacks.each do |record|
           tr
             td= link_to record.volunteer.contact.full_name, volunteer_path(record.volunteer)
             td= link_to record.assignment.client.contact.full_name, client_path(record.assignment.client)
@@ -28,9 +28,9 @@
             td= record.future
             td= record.comments
             td= t(record.conversation)
-            td= link_to t_action(:show), assignment_assignment_journal_path(@assignment, record)
-            td= link_to t_action(:edit), edit_assignment_assignment_journal_path(@assignment, record)
-            td= link_to t_action(:destroy), assignment_assignment_journal_path(@assignment, record), confirm_deleting(record)
+            td= link_to t_action(:show), assignment_feedback_path(@assignment, record)
+            td= link_to t_action(:edit), edit_assignment_feedback_path(@assignment, record)
+            td= link_to t_action(:destroy), assignment_feedback_path(@assignment, record), confirm_deleting(record)
 
 .row
   .col-xs-12

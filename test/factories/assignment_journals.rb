@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :assignment_journal do
+  factory :feedback do
     assignment
     volunteer
     association :author, factory: :user
