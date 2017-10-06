@@ -9,7 +9,7 @@ class VolunteerPolicyTest < PolicyAssertions::Test
 
   test 'Create: only superadmin can create volunteer' do
     assert_permit @superadmin, Volunteer, 'new?', 'create?'
-    refute_permit @social_worker, Volunteer, 'new?', 'create?'
+    assert_permit @social_worker, Volunteer, 'new?', 'create?'
     assert_permit @department_manager, Volunteer, 'new?', 'create?'
   end
 
@@ -21,14 +21,14 @@ class VolunteerPolicyTest < PolicyAssertions::Test
 
   test 'Update: only superadmin can update and show all volunteers' do
     assert_permit @superadmin, Volunteer, 'update?', 'edit?', 'show?'
-    refute_permit @social_worker, Volunteer, 'update?', 'edit?', 'show?'
+    assert_permit @social_worker, Volunteer, 'update?', 'edit?', 'show?'
     assert_permit @department_manager, Volunteer, 'update?', 'edit?', 'show?'
   end
 
   test 'Index: only a superadmin can index Volunteers' do
     assert_permit @superadmin, Volunteer, 'index?'
     assert_permit @department_manager, Volunteer, 'index?'
-    refute_permit @social_worker, Volunteer, 'index?'
+    assert_permit @social_worker, Volunteer, 'index?'
   end
 
   test 'Seeking clients: superadmin can see volunteers seeking clients' do

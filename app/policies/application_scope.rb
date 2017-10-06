@@ -11,6 +11,10 @@ class ApplicationScope
   delegate :social_worker?, to: :user
   delegate :volunteer?, to: :user
 
+  def department_manager_or_social_worker?
+    department_manager? || social_worker?
+  end
+
   delegate :all, to: :scope
   delegate :none, to: :scope
 

@@ -2,7 +2,7 @@ class ClientPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
-      resolve_owner if department_manager_or_social_worker?
+      return resolve_owner if department_manager_or_social_worker?
       none
     end
   end
