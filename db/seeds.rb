@@ -40,29 +40,15 @@ def make_lang_skills
   end
 end
 
-User.role_collection.each do |role|
-  user = User.find_or_create_by(email: "#{role}@example.com") do |user|
-    user.password = 'asdfasdf'
-    user.role = role
-  end
-  user.profile = Profile.new do |profile|
-    profile.build_contact(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      postal_code: Faker::Address.zip_code,
-      city: Faker::Address.city,
-      street: Faker::Address.street_address,
-      primary_email: Faker::Internet.email,
-      primary_phone: Faker::PhoneNumber.phone_number
-    )
-    profile.user_id = user.id
-    profile.profession = Faker::Company.profession
-    availability_collection.each do |availability|
-      profile[availability] = [true, false].sample
-    end
-  end
+[:superadmin, :social_worker, :department_manager].each do |role|
+  user = FactoryGirl.create(:user, role: role, email: "#{role}@example.com", password: 'asdfasdf')
+  user.profile.contact.primary_email = "#{role}@example.com"
   user.save!
 end
+
+FactoryGirl.create(:user_volunteer, volunteer: FactoryGirl.create(:volunteer),
+  email: 'volunteer@example.com', password: 'asdfasdf')
+
 
 User.where(role: ['superadmin', 'social_worker']).each do |user|
   next if user.clients.count > 1
