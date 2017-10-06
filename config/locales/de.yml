@@ -275,9 +275,11 @@ de:
         user: User
       group_assignment:
         end_date: Enddatum
-        responsible: Verantwortliche/r für eine Freiwilligengruppe
+        member: Mitglied in der Freiwilligengruppe
+        responsible: Verantwortliche/r für die Freiwilligengruppe
         start_date: Anfangsdatum
         volunteer: Freiwillige
+        volunteer_role: Freiwillige Rolle
       group_offer:
         active: Aktiv
         all: Alle
