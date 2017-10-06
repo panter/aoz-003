@@ -22,19 +22,23 @@
         - @feedbacks.each do |record|
           tr
             td= link_to record.volunteer.contact.full_name, volunteer_path(record.volunteer)
-            td= link_to record.assignment.client.contact.full_name, client_path(record.assignment.client)
+            td
+              - if record.assignment?
+                = link_to record.feedbackable.client.contact.full_name, client_path(record.feedbackable.client)
+              - else
+                = link_to record.feedbackable.group_offer.to_label, group_offer_path(record.feedbackable)
             td= record.goals
             td= record.achievements
             td= record.future
             td= record.comments
             td= t(record.conversation)
-            td= link_to t_action(:show), assignment_feedback_path(@assignment, record)
-            td= link_to t_action(:edit), edit_assignment_feedback_path(@assignment, record)
-            td= link_to t_action(:destroy), assignment_feedback_path(@assignment, record), confirm_deleting(record)
+            td= link_to t_action(:show), url_for([@feedback_about, record])
+            td= link_to t_action(:edit), url_for([@feedback_about, record]) + '/edit'
+            td= link_to t_action(:destroy), url_for([@feedback_about, record]), confirm_deleting(record)
 
 .row
   .col-xs-12
 = form_navigation_btn :new
 .row
   .col-xs-12
-    = button_link t('back'), @assignment
+    = button_link t('back'), @feedbacked

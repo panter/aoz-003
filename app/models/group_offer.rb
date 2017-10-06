@@ -16,6 +16,8 @@ class GroupOffer < ApplicationRecord
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
 
   validates :title, presence: true
+  has_many :feedbacks, as: :feedbackable, dependent: :destroy
+
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
 
   scope :active, (-> { where(active: true) })

@@ -7,5 +7,7 @@ FactoryGirl.define do
     activity { Faker::Lorem.word }
     comments { Faker::Lorem.sentence }
     association :hourable, factory: :assignment
+    activity Faker::DrWho.quote
+    comments Faker::ChuckNorris.fact
   end
 end

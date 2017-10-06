@@ -1,8 +1,8 @@
-= simple_form_for [@assignment, @feedback] do |f|
+= simple_form_for [@feedback_about, @feedback] do |f|
   = simple_error_notice f
 
-  = f.hidden_field :assignment_id, value: params[:assignment_id]
-  = f.hidden_field :volunteer_id, value: @assignment.volunteer.id
+  = f.hidden_field :feedbackable_id, value: params["#{controller_name.singularize}_id".to_sym]
+  = f.hidden_field :feedbackable_type, value: @feedback_about
 
   .row
     .col-xs-12
