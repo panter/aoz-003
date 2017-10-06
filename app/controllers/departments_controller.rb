@@ -7,9 +7,7 @@ class DepartmentsController < ApplicationController
   end
 
   def show
-    @volunteers = Volunteer.joins(:group_offers).merge(
-      GroupOffer.where(department: @department).internal_and_active
-    )
+    @group_offers = GroupOffer.where(department: @department).active
   end
 
   def new
