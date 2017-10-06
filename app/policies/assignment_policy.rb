@@ -2,10 +2,15 @@ class AssignmentPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
-      return scope.where(creator_id: user.id) if department_manager? || social_worker?
+      return scope.where(creator_id: user.id) if department_manager_or_social_worker?
       none
     end
     alias :seeking_clients :resolve
+
+    def need_accompanying
+      return scope.need_accompanying if superadmin? || department_manager_or_social_worker?
+      none
+    end
   end
 
   # controller action policies
