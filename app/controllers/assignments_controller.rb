@@ -39,11 +39,7 @@ class AssignmentsController < ApplicationController
 
   def update
     if @assignment.update(assignment_params)
-      if current_user.superadmin? || current_user.department_manager?
-        redirect_to assignments_url, make_notice
-      else
-        redirect_to @assignment.volunteer, make_notice
-      end
+      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
     else
       render :edit
     end

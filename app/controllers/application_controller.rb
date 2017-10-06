@@ -7,8 +7,13 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   after_action :verify_authorized, unless: :devise_controller?
 
+  delegate :superadmin?, to: :current_user
+  delegate :department_manager?, to: :current_user
+  delegate :social_worker?, to: :current_user
+  delegate :volunteer?, to: :current_user
+
   def after_sign_in_path_for(current_user)
-    return volunteer_path(current_user.volunteer.id) if current_user.volunteer?
+    return volunteer_path(current_user.volunteer.id) if volunteer?
     return new_profile_path if current_user.profile.blank?
     if policy(Department).manager_with_department?
       return department_path(current_user.department.first.id)
