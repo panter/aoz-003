@@ -48,8 +48,7 @@ class AssignmentsController < ApplicationController
   def destroy
     client = @assignment.client
     @assignment.destroy
-    client.state = Client::REGISTERED
-    client.save
+    client.update(state: Client::REGISTERED)
     redirect_to assignments_url, make_notice
   end
 
