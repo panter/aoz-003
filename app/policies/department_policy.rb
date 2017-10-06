@@ -6,15 +6,18 @@ class DepartmentPolicy < ApplicationPolicy
     end
   end
 
-  alias_method :index?,              :superadmin?
-  alias_method :new?,                :superadmin?
-  alias_method :create?,             :superadmin?
-  alias_method :can_associate_user?, :superadmin?
-  alias_method :destroy?,            :superadmin?
+  # controller action policies
+  alias_method :index?,   :superadmin?
+  alias_method :new?,     :superadmin?
+  alias_method :create?,  :superadmin?
+  alias_method :destroy?, :superadmin?
 
-  alias_method :show?,               :superadmin_or_user_in_records_related?
-  alias_method :edit?,               :superadmin_or_user_in_records_related?
-  alias_method :update?,             :superadmin_or_user_in_records_related?
+  alias_method :show?,   :superadmin_or_user_in_records_related?
+  alias_method :edit?,   :superadmin_or_user_in_records_related?
+  alias_method :update?, :superadmin_or_user_in_records_related?
+
+  # supplemental policies
+  alias_method :can_associate_user?, :superadmin?
 
   def manager_with_department?
     department_manager? && user.manages_department?
