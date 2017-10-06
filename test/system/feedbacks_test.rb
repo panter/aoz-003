@@ -14,23 +14,23 @@ class FeedbacksTest < ApplicationSystemTestCase
     click_link 'Show profile'
   end
 
-  test 'volunteer can create an assignment journal' do
-    click_link 'New Assignment journal'
+  test 'volunteer can create an feedback' do
+    click_link 'New Feedback'
     fill_in 'Which were the most important goals during the last months?', with: 'asdf'
     fill_in 'What could have been achieved during the last months?', with: 'asdf'
     fill_in 'Should the assignment continue? If yes, with which goals?', with: 'asdf'
     fill_in 'Comments', with: 'asdf'
     page.check('feedback_conversation')
-    click_button 'Create Assignment journal'
-    assert page.has_text? 'Assignment journal was successfully created.'
+    click_button 'Create Feedback'
+    assert page.has_text? 'Feedback was successfully created.'
   end
 
-  test 'volunteer can see only her assignment journals' do
-    click_link 'Assignment journal index'
+  test 'volunteer can see only her feedbacks' do
+    click_link 'Feedback index'
     refute page.has_text? 'author superadmin'
   end
 
-  test 'assignment journal index contains only the journals of one assignment' do
+  test 'feedback index contains only the journals of one assignment' do
     assignment2 = create :assignment, volunteer: @volunteer
     volunteer_journal = create :feedback, assignment: @assignment,
       author: @user_volunteer, comments: 'assignment1'
@@ -41,7 +41,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     refute page.has_text? 'assignment2'
   end
 
-  test 'volunteer can create only their assignment journals' do
+  test 'volunteer can create only their feedbacks' do
     assignment = create :assignment
     visit new_assignment_feedback_path(assignment)
     assert page.has_text? 'You are not authorized to perform this action.'
