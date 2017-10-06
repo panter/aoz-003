@@ -3,12 +3,15 @@
     thead
       tr
         th= t_attr(:title, GroupOffer)
-        th= t_attr(:responsible, GroupAssignment)
+        th= t_attr(:volunteer_role, GroupAssignment)
         th= t_attr(:start_date, GroupAssignment)
         th= t_attr(:end_date, GroupAssignment)
     tbody
       tr
         td= link_to group_assignment.group_offer.title, group_offer_path(group_assignment.group_offer)
-        td= t_attr(:responsible, GroupAssignment) if group_assignment.responsible
+        - if group_assignment.responsible
+          td= t_attr(:responsible, GroupAssignment)
+        - else
+          td= t_attr(:member, GroupAssignment)
         td= l(group_assignment.start_date)
         td= l(group_assignment.end_date)

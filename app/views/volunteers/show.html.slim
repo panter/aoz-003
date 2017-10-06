@@ -169,15 +169,11 @@ h3= t('.availability')
 = render 'availability/show', available: @volunteer
 
 - if @volunteer.assignments.any?
-  .row
-    .col-xs-12#assignments
-      h3= t('assignments')
+  h3#assignments= t('assignments')
   = render 'assignments/volunteer_index', assignments: @volunteer.assignments
 
 - if @volunteer.group_assignments.any?
-  .row
-    .col-xs-12#group_assignments
-      h3= t('.group_assignments')
+  h3#group_assignments= t('.group_assignments')
   = render 'group_assignments', group_assignments: @volunteer.group_assignments
 
 nav.navbar.section-navigation
