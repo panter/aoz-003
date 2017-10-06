@@ -230,8 +230,8 @@ en:
         street: Street
       hour:
         last: Last hour entry
-        hourable: Einsatz
-        hourable_id_and_type: Einsatz
+        hourable: Assignment
+        hourable_id_and_type: Assignment
       journal:
         entry: Entry
       performance_report:

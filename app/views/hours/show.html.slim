@@ -3,7 +3,7 @@
     .table-responsive
       table.table.table-no-border-top
         tbody
-          - if current_user.superadmin?
+          - if policy(Hour).superadmin_or_volunteer_related?
             tr
               td= t_model(Volunteer)
               td= @hour.volunteer.contact.full_name
