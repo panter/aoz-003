@@ -27,6 +27,10 @@ class ApplicationPolicy
     department_manager? || social_worker?
   end
 
+  def volunteer_managing_user?
+    superadmin? || department_manager? || social_worker?
+  end
+
   def departments_offer?
     department_manager? && user.department.include?(record.department)
   end
