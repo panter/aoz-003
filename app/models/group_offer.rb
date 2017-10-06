@@ -20,6 +20,10 @@ class GroupOffer < ApplicationRecord
 
   scope :in_department, (-> { where.not(department_id: nil) })
 
+  scope :external_offer, (-> { where(offer_type: EXTERNAL_OFFER) })
+  scope :internal_offer, (-> { where(offer_type: 'internal_offer') })
+  scope :internal_and_active, (-> { active.internal_offer })
+
   def external?
     offer_type == EXTERNAL_OFFER
   end

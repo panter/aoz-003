@@ -107,18 +107,15 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
 end
 
 if Department.count < 1
-  department = Department.new do |d|
-    d.contact = Contact.new do |c|
-      c.last_name = 'Bogus Department'
-      c.street = Faker::Address.street_address
-      c.postal_code = Faker::Address.zip_code
-      c.city = Faker::Address.city
-      c.primary_email = Faker::Internet.email
-      c.primary_phone = Faker::PhoneNumber.phone_number
+  department = FactoryGirl.create(:department,
+    user: User.where(email: 'department_manager@example.com'))
+  4.times do
+    volunteers = Array.new(3).map do
+      FactoryGirl.create(:volunteer, user: FactoryGirl.create(:user_volunteer))
     end
-    d.user.push User.find_by(role: 'department_manager')
+    FactoryGirl.create(:group_offer, active: true, offer_type: 'internal_offer',
+      volunteers: volunteers, department: department)
   end
-  department.save!
 end
 
 Volunteer.acceptance_collection.each do |state|
