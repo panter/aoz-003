@@ -1,5 +1,4 @@
-h1= t_attr(:group_offer_categories)
-
+h1= t('.group_offer_categories')
 = form_navigation_btn :new
 
 .table-responsive
@@ -14,7 +13,7 @@ h1= t_attr(:group_offer_categories)
       - @group_offer_categories.each do |category|
           tr
             td= category.category_name
-            td= category.category_state
+            td= t(".category_states.#{category.category_state}")
             td= link_to t_action(:edit), edit_group_offer_category_path(category)
 
 = form_navigation_btn :back

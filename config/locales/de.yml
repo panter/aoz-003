@@ -57,6 +57,15 @@ de:
       street: Strasse
       updated_at: Aktualisiert am
       zip: Postleitzahl
+    group_offer_categories:
+      index:
+        category_states: &id-group-offer-category-states
+          active: Aktiv
+          inactive: Inaktiv
+        group_offers: Gruppenangebote
+        group_offer_categories: Gruppenangebot Kategorien
+      show:
+        category_states: *id-group-offer-category-states
     group_offers:
       archived:
         title: Archivierte Gruppenangebote
@@ -69,6 +78,7 @@ de:
         active: Aktiv
         archived: Archiviert
         deactivate: Deaktivieren
+        group_offer_categories: Gruppenangebot Kategorien
       index: &id-help-texts
         necessary_volunteers: 'Benötigt %{amount} Freiwillige'
         offer_of: Angebot von
@@ -86,9 +96,6 @@ de:
       full: Voll
       open: Offen
       partially_occupied: Teilweise besetzt
-    category_states: &id-category_states
-      active: aktiv
-      inactive: inaktiv
     offer_type: &id-offer-types
       external_offer: Externes Gruppenangebot
       internal_offer: Internes Gruppenangebot
@@ -167,6 +174,7 @@ de:
       other: Freiwillige
       show:
         <<: [*id-volunteers-index]
+        acceptance: *id-volunteer-acceptance
         state: *id-volunteer-active-states
         availability: Verfügbarkeit
         hour_reports: Stunden Rapporte
@@ -176,6 +184,7 @@ de:
         show_certificates: Nachweise anzeigen
       volunteer:
         <<: *id-volunteers-index
+        acceptance: *id-volunteer-acceptance
         state: *id-volunteer-active-states
     volunteer_state: &id-volunteer-states
       external_volunteer: Externe Freiwillige
@@ -270,7 +279,8 @@ de:
         children: Kinder
         description: Beschreibung des Angebotes
         duration: Dauer
-        group_offer_category: Gruppenangebot Kategorie
+        group_offer_category: Kategorie
+        group_offer_category_id: Kategorie
         location: Ort
         long_term: Langfristig
         men: Männer
@@ -289,6 +299,9 @@ de:
         volunteer_responsible_state: Verantwortliche Person Status (betrifft interne Gruppenangebote)
         volunteer_state: Interne oder externe Freiwillige
         women: Frauen
+      group_offer_category:
+        category_name: Name
+        category_state: Status
       hour:
         activity: Tätigkeit / Was wurde gemacht
         assignment: Begleitung
@@ -339,6 +352,7 @@ de:
         role: Rolle
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance]
+        acceptance: Affirmation
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
@@ -442,7 +456,6 @@ de:
       department: Standort
       group_offer: Gruppenangebot
       group_offer_category: Gruppenangebot Kategorie
-      group_offer_categories: Gruppenangebot Kategorien
       hour: Stunde
       journal: Journal
       language_skill: Sprachkompetenz
@@ -669,8 +682,6 @@ de:
   forgot_password: Passwort vergessen?
   general_availability: Wann sind Sie verfügbar?
   get_back: Wir werden uns bald bei Ihnen melden.
-  group_offers_back: Gruppenangebote
-  group_offer_categories: Gruppenangebot Kategorien
   helpers:
     submit:
       create: '%{model} erfassen'
@@ -799,9 +810,8 @@ de:
         offer_state: *id-offer-states
         volunteer_state: *id-volunteer-states
         volunteer_responsible_state: *id-volunteer-responsible-states
-      group_offer_categories:
-        category_name: Kategorie Name
-        category_state: *id-category_states
+      group_offer_category:
+        category_state: *id-group-offer-category-states
       journal:
         category: *id-categories
       user:

@@ -22,7 +22,7 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
     assert page.has_text? 'Category name'
     assert page.has_text? 'Nähen'
     assert page.has_text? 'Category state'
-    assert page.has_text? 'active'
+    assert page.has_text? 'Active'
   end
 
   test 'superadmin can update a category' do
@@ -37,6 +37,6 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
     click_button 'Update Group offer category'
     assert page.has_text? 'Group offer category was successfully updated.'
     assert page.has_text? 'Schwimmkurs für Anfänger'
-    assert page.has_text? 'inactive'
+    assert page.has_text? 'Inactive'
   end
 end

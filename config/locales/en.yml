@@ -57,6 +57,15 @@ en:
       street: Street
       updated_at: Updated at
       zip: Zip code
+    group_offer_categories:
+      index:
+        category_states: &id-group-offer-category-states
+          active: Active
+          inactive: Inactive
+        group_offer_categories: Group offer categories
+        group_offers: Group offers
+      show:
+        category_states: *id-group-offer-category-states
     group_offers:
       archived:
         title: Archived group offers
@@ -69,6 +78,7 @@ en:
         active: Active
         archived: Archived
         deactivate: Deactivate
+        group_offer_categories: Group offer categories
       form:
         location_external: Location (for external group offers)
         organization_external: Organization (for external group offers)
@@ -164,14 +174,13 @@ en:
         show_certificate: Show certificate
         show_certificates: Show certificates
       show:
-        <<: *id-volunteers-index
+        <<: [*id-volunteers-index, *id-volunteers-create]
       new:
         <<: [*id-volunteers-create, *id-availability, *id-volunteer-aceptance]
       one: Volunteer
       other: Volunteers
       volunteer:
-        <<: *id-volunteers-index
-        acceptance: *id-volunteer-aceptance
+        <<: [*id-volunteers-index, *id-volunteers-create]
     volunteer_responsible_state: &id-volunteer-responsible-states
       volunteer_accountable: Manager of volunteer group
       volunteer_member: Member in a volunteer group
@@ -277,7 +286,6 @@ en:
       department: Department
       group_offer: Group offer
       group_offer_category: Group offer category
-      group_offer_categories: Group offer categories
       hour: Hour report
       journal: Journal
       language_skill: Language skill
@@ -513,8 +521,6 @@ en:
   forgot_password: Forgot your password?
   general_availability: When are you available?
   get_back: We will soon get back to you.
-  group_offers_back: Group offers
-  group_offer_categories: Group offer categories
   helpers:
     submit:
       create: 'Create %{model}'
@@ -620,14 +626,12 @@ en:
         salutation: *id-salutations
         state: *id-states
       group_offer:
-        group_offer_categories: Group offer categories
         offer_state: *id-offer-states
         offer_type: *id-offer-types
         volunteer_responsible_state: *id-volunteer-responsible-states
         volunteer_state: *id-volunteer-states
       group_offer_category:
-        category_name: Category name
-        category_state: *id-category_states
+        category_state: *id-group-offer-category-states
       journal:
         category: *id-categories
       user:
