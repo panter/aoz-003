@@ -114,7 +114,7 @@ if Department.count < 1
       FactoryGirl.create(:volunteer, user: FactoryGirl.create(:user_volunteer))
     end
     FactoryGirl.create(:group_offer, active: true, offer_type: 'internal_offer',
-      volunteers: volunteers, department: department)
+      volunteers: volunteers, department: department, title: Faker::Book.title)
   end
 end
 
