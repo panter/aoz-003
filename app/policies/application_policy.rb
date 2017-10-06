@@ -83,10 +83,6 @@ class ApplicationPolicy
     superadmin_or_department_manager? || volunteer_related?
   end
 
-  def admin_or_department_manager_or_volunteer_related?
-    superadmin_or_department_manager? || user_owns_record?
-  end
-
   def superadmin_or_volunteers_entry?
     superadmin? || volunteers_entry?
   end
