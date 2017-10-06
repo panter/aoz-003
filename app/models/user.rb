@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :clients
   has_many :journals
   has_many :assignments, inverse_of: 'creator'
-  has_many :assignment_journals, inverse_of: 'author'
+  has_many :feedbacks, inverse_of: 'author'
   has_many :billing_expenses
 
   has_and_belongs_to_many :department
