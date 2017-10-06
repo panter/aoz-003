@@ -9,7 +9,7 @@ class VolunteerPolicy < ApplicationPolicy
   end
 
   # controller action policies
-  alias_method :index?,           :volunteer_managing_user?
+  alias_method :index?,           :superadmin_or_department_manager?
   alias_method :new?,             :volunteer_managing_user?
   alias_method :create?,          :volunteer_managing_user?
   alias_method :seeking_clients?, :volunteer_managing_user?
