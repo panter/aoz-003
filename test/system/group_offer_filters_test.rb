@@ -20,13 +20,6 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       group_offer_category: @c2)
     login_as create(:user)
     visit group_offers_path
-  end
-
-  test 'filter by department' do
-    within '.section-navigation#filters' do
-      click_link 'Department'
-    end
-    visit current_url
     within 'tbody' do
       assert page.has_text? @open_d1.title
       assert page.has_text? @full_d1.title
@@ -35,6 +28,9 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @full_d2.title
       assert page.has_text? @part_d2.title
     end
+  end
+
+  test 'filter by department' do
     within '.section-navigation#filters' do
       click_link 'Department'
       click_link @d1.to_s
@@ -53,18 +49,6 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
   test 'filter by state' do
     within '.section-navigation#filters' do
       click_link 'Offer state'
-    end
-    visit current_url
-    within 'tbody' do
-      assert page.has_text? @open_d1.title
-      assert page.has_text? @full_d1.title
-      assert page.has_text? @part_d1.title
-      assert page.has_text? @open_d2.title
-      assert page.has_text? @full_d2.title
-      assert page.has_text? @part_d2.title
-    end
-    within '.section-navigation#filters' do
-      click_link 'Offer state'
       click_link 'Open'
     end
     visit current_url
@@ -79,18 +63,6 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
   end
 
   test 'filter by category' do
-    within '.section-navigation#filters' do
-      click_link 'Group offer category'
-    end
-    visit current_url
-    within 'tbody' do
-      assert page.has_text? @open_d1.title
-      assert page.has_text? @full_d1.title
-      assert page.has_text? @part_d1.title
-      assert page.has_text? @open_d2.title
-      assert page.has_text? @full_d2.title
-      assert page.has_text? @part_d2.title
-    end
     within '.section-navigation#filters' do
       click_link 'Group offer category'
       click_link @c1.to_s

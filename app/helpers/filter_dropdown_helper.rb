@@ -19,7 +19,7 @@ module FilterDropdownHelper
       list_filter_link("#{attribute}_eq".to_sym, option[0], enum_value: option[1])
     end
     li_dropdown do
-      concat dropdown_toggle_link(enum_toggler_text(attribute, collection))
+      concat dropdown_toggle_link(toggler_text(attribute, collection))
       concat dropdown_menu(filter_links, "#{attribute}_eq".to_sym)
     end
   end

@@ -26,7 +26,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? 'Accepted'
     end
     within '.section-navigation' do
-      click_link 'Acceptance: Undecided'
+      click_link 'Acceptance'
       assert page.find('a.bg-success', text: 'Undecided').present?
       click_link 'All'
     end
