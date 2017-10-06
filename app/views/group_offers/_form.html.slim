@@ -26,16 +26,6 @@
 
   .row
     .col-xs-12.col-md-4
-      = f.input :necessary_volunteers, collection: 1..10
-    .col-xs-12.col-md-8
-      - if policy(GroupOffer).supervisor_privileges?
-        = f.association :volunteers
-      - else
-        = f.association :volunteers,
-          collection: Volunteer.without_active_assignment.not_in_any_group_offer.not_responsible
-
-  .row
-    .col-xs-12.col-md-4
       - if policy(GroupOffer).supervisor_privileges?
         = f.association :responsible, label: t('.responsible_internal'), prompt: true
       - else
@@ -71,6 +61,30 @@
   .row
     .col-xs-12
       = f.input :schedule_details
+
+  h3= t_attr(:volunteers)
+  .row
+    .col-xs-12.col-md-4
+      = f.input :necessary_volunteers, collection: 1..10
+    - if @group_offer.volunteers.any?
+    .col-xs-12.col-md-4
+      =t_attr(:volunteers)
+      ul
+        - @group_offer.volunteers.each do |volunteer|
+          li= link_to volunteer, volunteer_path(volunteer)
+    .col-xs-12.col-md-4
+      button.btn.btn-primary(data-toggle='collapse' data-target='#volunteerBlock' type='button'  aria-expanded='false' aria-controls='volunteerBlock')
+        - if action_name ==  'new' || @group_offer.volunteers.empty?
+          = t('.add_volunteers')
+        - else
+          = t('.edit_volunteers')
+    #volunteerBlock.collapse.col-xs-12.col-md-4
+      - if policy(GroupOffer).supervisor_privileges?
+        = f.association :volunteers, as: :check_boxes, label: false
+      - else
+        = f.association :volunteers,
+          collection: Volunteer.without_active_assignment.not_in_any_group_offer.not_responsible,
+          as: :check_boxes, label: false
 
   .row
     .col-xs-12

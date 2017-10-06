@@ -80,6 +80,8 @@ en:
         deactivate: Deactivate
         group_offer_categories: Group offer categories
       form:
+        add_volunteers: Add volunteers
+        edit_volunteers: Edit volunteers
         location_external: Location (for external group offers)
         organization_external: Organization (for external group offers)
         responsible_internal: Responsible person (for internal group offers)

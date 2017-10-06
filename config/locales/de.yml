@@ -84,6 +84,8 @@ de:
         offer_of: Angebot von
       show: *id-help-texts
       form:
+        add_volunteers: Freiwillige hinzufügen
+        edit_volunteers: Freiwillige bearbeiten
         location_external: Ort (betrifft externe Gruppenangebote)
         organization_external: Organisation (betrifft externe Gruppenangebote)
         responsible_internal: Verantwortliche Person (betrifft interne Gruppenangebote)
