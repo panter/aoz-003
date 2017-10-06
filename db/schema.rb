@@ -177,13 +177,14 @@ ActiveRecord::Schema.define(version: 20171011151358) do
     t.boolean "conversation"
     t.datetime "deleted_at"
     t.bigint "volunteer_id"
-    t.bigint "assignment_id"
     t.bigint "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["assignment_id"], name: "index_feedbacks_on_assignment_id"
+    t.string "feedbackable_type"
+    t.bigint "feedbackable_id"
     t.index ["author_id"], name: "index_feedbacks_on_author_id"
     t.index ["deleted_at"], name: "index_feedbacks_on_deleted_at"
+    t.index ["feedbackable_type", "feedbackable_id"], name: "index_feedbacks_on_feedbackable_type_and_feedbackable_id"
     t.index ["volunteer_id"], name: "index_feedbacks_on_volunteer_id"
   end
 

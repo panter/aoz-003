@@ -6,7 +6,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     @volunteer = @user_volunteer.volunteer = create :volunteer
     @assignment = create :assignment, volunteer: @volunteer
     superadmin = create :user
-    @feedback = create :feedback, assignment: @assignment,
+    @feedback = create :feedback, feedbackable: @assignment,
       volunteer: @volunteer, author: superadmin, comments: 'author superadmin'
     login_as @user_volunteer
     visit root_url
@@ -32,9 +32,9 @@ class FeedbacksTest < ApplicationSystemTestCase
 
   test 'feedback index contains only the journals of one assignment' do
     assignment2 = create :assignment, volunteer: @volunteer
-    volunteer_journal = create :feedback, assignment: @assignment,
+    volunteer_journal = create :feedback, feedbackable: @assignment,
       author: @user_volunteer, comments: 'assignment1'
-    create :feedback, assignment: assignment2, author: @user_volunteer,
+    create :feedback, feedbackable: assignment2, author: @user_volunteer,
       comments: 'assignment2'
     visit assignment_feedback_path(@assignment, volunteer_journal)
     click_link 'Back'

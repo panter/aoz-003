@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :feedback do
-    assignment
+    association :feedbackable, factory: :assignment
     volunteer
     association :author, factory: :user
     goals { Faker::Lorem.words(4) }

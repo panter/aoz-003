@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :group_offers do
     get :archived, on: :collection
     put :change_active_state, on: :member
+    resources :feedbacks
   end
   resources :group_offer_categories, except: [:destroy]
 

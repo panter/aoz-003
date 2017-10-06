@@ -1,29 +1,31 @@
-.row
-  .col-xs-12
-    .table-responsive
-      table.table.table-no-border-top
-        tbody
-          tr
-            td= t_model(Volunteer)
-            td= @feedback.volunteer.contact.full_name
-          tr
-            td= t_model(Client)
-            td= @feedback.assignment.client.contact.full_name
-          tr
-            td= t_attr(:goals)
-            td= @feedback.goals
-          tr
-            td= t_attr(:achievements)
-            td= @feedback.achievements
-          tr
-            td= t_attr(:future)
-            td= @feedback.future
-          tr
-            td= t_attr(:comments)
-            td= @feedback.comments
-          tr
-            td= t_attr(:conversation)
-            td= t(@feedback.conversation)
+.table-responsive
+  table.table.table-no-border-top
+    tbody
+      tr
+        td= t_model(Volunteer)
+        td= @feedback.volunteer.contact.full_name
+      tr
+        - if @feedback.assignment?
+          td= t_model(Client)
+          td= @feedback.feedbackable.client.contact.full_name
+        - else
+          td= t_model(GroupOffer)
+          td= @feedback.feedbackable.to_label
+      tr
+        td= t_attr(:goals)
+        td= @feedback.goals
+      tr
+        td= t_attr(:achievements)
+        td= @feedback.achievements
+      tr
+        td= t_attr(:future)
+        td= @feedback.future
+      tr
+        td= t_attr(:comments)
+        td= @feedback.comments
+      tr
+        td= t_attr(:conversation)
+        td= t(@feedback.conversation)
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
