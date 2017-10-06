@@ -551,6 +551,7 @@ de:
       aprox_hours_given: 'Total ca. %{hours} Stunden'
       back_to_volunteer: Zurück zum Freiwilligenprofil
     edit: &id-certificates-form
+      group_offer: Gruppenangebot
       assignment_kinds: Einsatz Arten
       edit_more_fields: Weitere Felder anpassen
       volunteers_contact_data: Kontaktangaben des Freiwilligen

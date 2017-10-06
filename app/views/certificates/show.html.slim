@@ -34,9 +34,11 @@
           span.kind-list
             input*{ type: 'checkbox', checked: value } onclick='return false;'
             = "#{t("assignment_kinds.#{kind}")}"
+        input*{ type: 'checkbox', checked: "#{@certificate.group_offer}" } onclick='return false;'
+        = t_attr(:group_offer)
     dl
       dt= t_attr(:duration)
-      dd= "#{l(@certificate.duration_start)} #{t('to')} #{l(@certificate.duration_end) if @certificate.duration_end}"
+      dd= "#{l(@certificate.duration_start) if @certificate.duration_start} #{t('to')} #{l(@certificate.duration_end) if @certificate.duration_end}"
       dt= t_attr(:time_given)
       dd= t('.aprox_hours_given', hours: @certificate.hours)
 

@@ -9,8 +9,16 @@ class Certificate < ApplicationRecord
     update(text_body: default_text_body, function: DEFAULT_FUNCTION,
       hours: volunteer.hours.total_hours, minutes: volunteer.hours.minutes_rest,
       assignment_kinds: volunteer.assignment_kinds, volunteer_contact: convert_volunteer_contact,
-      institution: DEFAULT_INSTITUTION)
+      institution: DEFAULT_INSTITUTION, group_offer: volunteer.group_offers.any?)
     update(volunteer.assignments_duration)
+  end
+
+  def convert_volunteer_contact
+    {
+      name: volunteer.contact.full_name,
+      street: volunteer.contact.full_street,
+      city: volunteer.contact.full_city
+    }
   end
 
   def convert_volunteer_contact
