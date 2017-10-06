@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :volunteer do
-    sequence :birth_year { Time.zone.now.to_date - rand(5000..20_000) }
+    sequence :birth_year { Time.zone.today - rand(5000..20_000) }
     contact
     salutation 'mrs'
     acceptance :accepted

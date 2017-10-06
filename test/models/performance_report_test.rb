@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GroupOfferCategoryTest < ActiveSupport::TestCase
   def setup
-    @today = Time.zone.now.to_date
+    @today = Time.zone.today
     @year_ago = 1.year.ago.to_date
     @user = create :user
 

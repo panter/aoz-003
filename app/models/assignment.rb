@@ -31,21 +31,21 @@ class Assignment < ApplicationRecord
   scope :no_end, (-> { where(period_end: nil) })
   scope :has_end, (-> { where.not(period_end: nil) })
 
-  scope :ended, (-> { where('period_end < ?', Time.zone.now.to_date) })
+  scope :ended, (-> { where('period_end < ?', Time.zone.today) })
   scope :end_before, ->(date) { where('period_end < ?', date) }
   scope :end_after, ->(date) { where('period_end > ?', date) }
   scope :end_within, ->(date_range) { where(period_end: date_range) }
 
-  scope :end_in_future, (-> { where('period_end > ?', Time.zone.now.to_date) })
+  scope :end_in_future, (-> { where('period_end > ?', Time.zone.today) })
   scope :not_ended, (-> { no_end.or(end_in_future) })
 
-  scope :started, (-> { where('period_start < ?', Time.zone.now.to_date) })
-  scope :will_start, (-> { where('period_start > ?', Time.zone.now.to_date) })
+  scope :started, (-> { where('period_start < ?', Time.zone.today) })
+  scope :will_start, (-> { where('period_start > ?', Time.zone.today) })
   scope :start_before, ->(date) { where('period_start < ?', date) }
   scope :start_after, ->(date) { where('period_start > ?', date) }
   scope :start_within, ->(date_range) { where(period_start: date_range) }
 
-  scope :started_six_months_ago, (-> { where('period_start < ?', 6.months.ago.to_date.to_s) })
+  scope :started_six_months_ago, (-> { where('period_start < ?', 6.months.ago.to_date) })
 
   def started_six_months_ago?
     period_start < 6.months.ago.to_date
@@ -65,7 +65,7 @@ class Assignment < ApplicationRecord
   scope :with_hours, (-> { joins(:hours) })
 
   def ended?
-    period_end && period_end < Time.zone.now.to_date
+    period_end && period_end < Time.zone.today
   end
 
   def ongoing?
@@ -73,11 +73,11 @@ class Assignment < ApplicationRecord
   end
 
   def inactive?
-    ended? || period_start > Time.zone.now.to_date
+    ended? || period_start > Time.zone.today
   end
 
   def active?
-    ongoing? && period_start < Time.zone.now.to_date
+    ongoing? && period_start < Time.zone.today
   end
 
   def creator

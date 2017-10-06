@@ -2,7 +2,7 @@ require 'test_helper'
 
 class VolunteerScopesTest < ActiveSupport::TestCase
   def setup
-    @today = Time.zone.now.to_date
+    @today = Time.zone.today
     [:has_assignment, :has_multiple, :has_inactive, :group_offer_member, :group_offer_responsible,
      :has_active_and_inactive, :no_assignment].map { |v| make_volunteer v, acceptance: :accepted }
     make_volunteer :active_will_take_more, take_more_assignments: true, acceptance: :accepted
