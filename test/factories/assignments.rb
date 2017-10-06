@@ -7,7 +7,7 @@ FactoryGirl.define do
     period_end [nil, Faker::Date.between(199.days.ago, 10.days.ago)].sample
 
     trait :active_this_year do
-      period_start Time.zone.now.to_date.beginning_of_year + 1
+      period_start Time.zone.today.beginning_of_year + 1
       period_end nil
     end
 

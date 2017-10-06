@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class RemindersTest < ApplicationSystemTestCase
   def setup
     @user = create :user
-    @now = Time.zone.now.to_date
+    @now = Time.zone.today
     @volunteer = create :volunteer
     @assignment = create :assignment, period_start: 7.months.ago.to_date, period_end: nil,
       volunteer: @volunteer, creator: @user
