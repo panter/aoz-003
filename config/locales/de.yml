@@ -813,7 +813,6 @@ de:
         offer_type: *id-offer-types
         offer_state: *id-offer-states
         volunteer_state: *id-volunteer-states
-        volunteer_responsible_state: *id-volunteer-responsible-states
       group_offer_category:
         category_state: *id-group-offer-category-states
       journal:

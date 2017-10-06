@@ -186,7 +186,6 @@ en:
       other: Volunteers
       volunteer:
         <<: [*id-volunteers-index, *id-volunteers-create]
-    volunteer_responsible_state: &id-volunteer-responsible-states
       volunteer_accountable: Manager of volunteer group
       volunteer_member: Member in a volunteer group
     volunteer_state: &id-volunteer-states
