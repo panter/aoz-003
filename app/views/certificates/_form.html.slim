@@ -17,6 +17,7 @@
       .row
         - Assignment::KINDS.each do |kind|
           .col-xs-2= fk.input kind, as: :boolean, input_html: { checked: @certificate.assignment_kinds[kind.to_s] }
+    = f.input :group_offer, as: :boolean, input_html: { checked: @certificate.group_offer }
 
 
     h4= t('.volunteers_contact_data')
