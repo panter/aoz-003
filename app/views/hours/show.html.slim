@@ -11,6 +11,10 @@
             tr
               td= t_model(Client)
               td= @hour.hourable.client.contact.full_name
+          - else
+            tr
+              td= t_model(GroupOffer)
+              td= @hour.hourable.title
           tr
             td= t_attr(:meeting_date)
             td= l(@hour.meeting_date)
