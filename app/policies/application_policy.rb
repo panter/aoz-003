@@ -71,6 +71,10 @@ class ApplicationPolicy
     volunteer? && record.volunteer.user_id == user.id
   end
 
+  def volunteer_included?
+    volunteer? && record.volunteers.include?(user.volunteer)
+  end
+
   def superadmin_or_record_owner?
     superadmin? || user_owns_record?
   end
@@ -89,6 +93,10 @@ class ApplicationPolicy
 
   def admin_or_department_manager_or_volunteer_related?
     superadmin_or_department_manager? || volunteer_related?
+  end
+
+  def superadmin_or_departments_offer_or_volunteer_included?
+    superadmin_or_departments_offer? || volunteer_included?
   end
 
   def superadmin_or_volunteers_entry?

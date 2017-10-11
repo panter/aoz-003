@@ -6,6 +6,7 @@
         th= t_attr(:volunteer_role, GroupAssignment)
         th= t_attr(:start_date, GroupAssignment)
         th= t_attr(:end_date, GroupAssignment)
+        th colspan='5'
     tbody
       tr
         td= link_to group_assignment.group_offer.title, group_offer_path(group_assignment.group_offer)
@@ -15,3 +16,12 @@
           td= t_attr(:member, GroupAssignment)
         td= l(group_assignment.start_date)
         td= l(group_assignment.end_date)
+        td= link_to t_action(:show), group_offer_path(group_assignment.group_offer)
+        td= link_to t('download'), group_offer_path(group_assignment.group_offer, format: :pdf)
+        - if policy(GroupOffer).edit?
+          td= link_to t_action(:edit), edit_group_offer_path(group_assignment.group_offer)
+        - if policy(GroupOffer).destroy?
+          td= link_to t_action(:destroy), group_offer_path(group_assignment.group_offer), confirm_deleting(group_assignment.group_offer)
+        - if policy(GroupOffer).change_active_state?
+          td= link_to "#{ group_assignment.group_offer.active? ? t('.deactivate') : t('.activate') }",
+            change_active_state_group_offer_path(group_assignment.group_offer), method: :put, remote: :true

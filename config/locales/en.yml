@@ -164,6 +164,9 @@ en:
       form:
         availability_question: What times are you available for voluntary engagements?
         <<: [*id-volunteers-create, *id-availability]
+      group_assignments:
+        activate: Activate
+        deactivate: Deactivate
       index: &id-volunteers-index
         state:
           <<: [*id-volunteer-aceptance]
