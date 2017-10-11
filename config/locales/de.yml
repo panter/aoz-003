@@ -167,6 +167,9 @@ de:
       form:
         <<: [*id-volunteers-create, *id-volunteer-acceptance]
         state: &id-volunteer-active-states
+      group_assignments:
+        activate: Aktivieren
+        deactivate: Deaktivieren
       index: &id-volunteers-index
         state: &id-volunteer-active-states
           <<: [*id-volunteer-acceptance, *id-states]

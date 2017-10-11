@@ -6,10 +6,8 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
       'update?', 'destroy?')
   end
 
-  test 'social worker and volunteer have no access' do
+  test 'social worker has no access' do
     refute_permit(create(:social_worker), GroupOffer, 'new?', 'create?', 'index?', 'show?',
-      'edit?', 'update?', 'destroy?')
-    refute_permit(create(:user_volunteer), GroupOffer, 'new?', 'create?', 'index?', 'show?',
       'edit?', 'update?', 'destroy?')
   end
 
@@ -22,5 +20,16 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
     refute_permit(department_manager, other_group_offer, 'show?', 'edit?', 'update?')
     assert_permit(department_manager, department_manager_offer, 'show?', 'edit?', 'update?')
     refute_permit(department_manager, other_group_offer, 'show?', 'edit?', 'update?')
+  end
+
+  test 'volunteer has limited access' do
+    volunteer = create :volunteer
+    user_volunteer = create :user_volunteer, volunteer: volunteer
+    group_offer_volunteer = create :group_offer, volunteers: [volunteer]
+    group_offer_other = create :group_offer
+    refute_permit(user_volunteer, GroupOffer, 'new?', 'create?', 'index?',
+      'edit?', 'update?', 'destroy?')
+    assert_permit(user_volunteer, group_offer_volunteer, 'show?')
+    refute_permit(user_volunteer, group_offer_other, 'show?')
   end
 end
