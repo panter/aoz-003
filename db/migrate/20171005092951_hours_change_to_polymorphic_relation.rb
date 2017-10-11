@@ -14,8 +14,5 @@ class HoursChangeToPolymorphicRelation < ActiveRecord::Migration[5.1]
     Hour.with_deleted.where(hourable_type: 'Assignment').each do |hour|
       hour.update(assignment_id: hour.hourable_id)
     end
-    # destroy existing hours with relation to Group offer
-    Hour.with_deleted.where(hourable_type: 'GroupOffer').map(&:really_destroy!)
-    remove_reference :hours, :hourable
   end
 end
