@@ -9,7 +9,7 @@
     .col-xs-12.col-md-3
       = f.input :responsible
     .col-xs-12.col-md-3
-      = f.input :start_date
+      = f.input :start_date, include_blank: true
     .col-xs-12.col-md-3
-      = f.input :end_date
+      = f.input :end_date, include_blank: true
   = link_to_remove_association t('.remove_volunteer'), f, class: 'btn btn-danger'
