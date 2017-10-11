@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004145120) do
+ActiveRecord::Schema.define(version: 20171011151358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,22 @@ ActiveRecord::Schema.define(version: 20171004145120) do
     t.bigint "user_id", null: false
     t.bigint "department_id", null: false
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
+  end
+
+  create_table "group_assignment_logs", force: :cascade do |t|
+    t.bigint "group_offer_id"
+    t.bigint "volunteer_id"
+    t.bigint "group_assignment_id"
+    t.string "title"
+    t.date "start_date"
+    t.date "end_date"
+    t.boolean "responsible", default: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
+    t.index ["group_assignment_id"], name: "index_group_assignment_logs_on_group_assignment_id"
+    t.index ["group_offer_id"], name: "index_group_assignment_logs_on_group_offer_id"
+    t.index ["title"], name: "index_group_assignment_logs_on_title"
+    t.index ["volunteer_id"], name: "index_group_assignment_logs_on_volunteer_id"
   end
 
   create_table "group_assignments", force: :cascade do |t|
