@@ -1,10 +1,11 @@
-h1= @volunteer.contact.full_name
+- if policy(Hour).supervisor?
+  h1= @volunteer.contact.full_name
 h1= t_title(:index, Hour)
 .table-responsive
       table.table
         thead
           tr
-            - if current_user.superadmin?
+            - if policy(Hour).supervisor?
               th= t_model(Volunteer)
             th= t_attr(:hourable)
             th= t_attr(:meeting_date)
