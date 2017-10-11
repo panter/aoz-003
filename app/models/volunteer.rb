@@ -52,6 +52,7 @@ class Volunteer < ApplicationRecord
 
   has_many :group_assignments
   has_many :group_offers, through: :group_assignments
+  has_many :group_assignment_logs
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
