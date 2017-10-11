@@ -42,7 +42,7 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
     BillingExpense.create!(
       user: @superadmin, volunteer: @volunteer,
       hours: [
-        create(:hour, volunteer: @volunteer, hourable: create(:assignment, volunteer: @volunteer))
+        create(:hour, volunteer: @volunteer, hourable: @assignment)
       ]
     )
     BillingExpense.all.each do |billing_expense|
