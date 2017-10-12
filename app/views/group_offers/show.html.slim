@@ -78,9 +78,9 @@ h1= @group_offer.title
         .col-xs-12.col-md-3
           = group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
         .col-xs-12.col-md-3
-          = l(group_assignment.start_date) if group_assignment.start_date
+          = l(group_assignment.period_start) if group_assignment.period_start
         .col-xs-12.col-md-3
-          = l(group_assignment.end_date) if group_assignment.end_date
+          = l(group_assignment.period_end) if group_assignment.period_end
 
 - unless params[:format] == 'pdf'
   = form_navigation_btn :edit

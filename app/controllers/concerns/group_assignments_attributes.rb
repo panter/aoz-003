@@ -6,7 +6,7 @@ module GroupAssignmentsAttributes
       {
         group_assignments_attributes:
         [
-          :id, :volunteer_id, :group_offer_id, :responsible, :start_date, :end_date, :_destroy
+          :id, :volunteer_id, :group_offer_id, :responsible, :period_start, :period_end, :_destroy
         ]
       }
     end

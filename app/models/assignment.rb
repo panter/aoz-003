@@ -31,7 +31,7 @@ class Assignment < ApplicationRecord
   scope :no_end, (-> { where(period_end: nil) })
   scope :has_end, (-> { where.not(period_end: nil) })
 
-  scope :ended, (-> { where('period_end < ?', Time.zone.today) })
+  scope :ended, (-> { where('assignments.period_end < ?', Time.zone.today) })
   scope :end_before, ->(date) { where('period_end < ?', date) }
   scope :end_after, ->(date) { where('period_end > ?', date) }
   scope :end_within, ->(date_range) { where(period_end: date_range) }
