@@ -124,7 +124,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? 'Group offers log'
     assert page.has_link? group_offer.title, count: 2
 
-    group_offer.group_assignments.last.update(start_date: 6.months.ago, end_date: 3.months.ago)
+    group_offer.group_assignments.last.update(end_date: 3.months.ago)
 
     visit volunteer_path(volunteer)
     assert page.has_text? 'Group offers log'
