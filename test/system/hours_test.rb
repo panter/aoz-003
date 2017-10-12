@@ -37,7 +37,7 @@ class HoursTest < ApplicationSystemTestCase
 
   test 'volunteer can create also an hour report for group offer' do
     click_link 'Report hours'
-    select @group_offer1.to_label, from: 'Einsatz'
+    select @group_offer1.to_label, from: 'Assignment'
     within '#hour_meeting_date_3i' do
       select(Time.zone.today.day)
     end
@@ -71,7 +71,7 @@ class HoursTest < ApplicationSystemTestCase
     refute page.has_text? 'Client2 Client2'
   end
 
-  test 'volunteer can see only her and group_offers' do
+  test 'volunteer can see only her group_offers' do
     @user_volunteer2 = create :user, role: 'volunteer', email: 'volunteer2@example.com'
     @volunteer2 = @user_volunteer2.volunteer = create :volunteer
     @group_offer2 = create :group_offer, volunteers: [@volunteer2],
