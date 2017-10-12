@@ -26,6 +26,14 @@ class ApplicationScope
     scope.joins(:assignment)
   end
 
+  def resolve_volunteer
+    scope.where(volunteer: user.volunteer)
+  end
+
+  def resolve_volunteer_and_hour
+    scope.joins(:hour).where(volunteer: volunteer)
+  end
+
   def resolve_author_and_assignment
     scope.joins(:assignment).where(author: user)
   end
