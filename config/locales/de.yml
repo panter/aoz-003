@@ -278,10 +278,10 @@ de:
         name: Name
         user: User
       group_assignment:
-        end_date: Enddatum
         member: Mitglied in der Freiwilligengruppe
+        period_end: Enddatum
+        period_start: Anfangsdatum
         responsible: Verantwortliche/r für die Freiwilligengruppe
-        start_date: Anfangsdatum
         volunteer: Freiwillige
         volunteer_role: Freiwillige Rolle
       group_offer:

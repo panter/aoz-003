@@ -118,13 +118,13 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_link? group_offer.title
     refute page.has_text? 'Group offers log'
 
-    group_offer.group_assignments.last.update(start_date: 7.months.ago, end_date: 2.months.ago)
+    group_offer.group_assignments.last.update(period_start: 7.months.ago, period_end: 2.months.ago)
 
     visit volunteer_path(volunteer)
     assert page.has_text? 'Group offers log'
     assert page.has_link? group_offer.title, count: 2
 
-    group_offer.group_assignments.last.update(end_date: 3.months.ago)
+    group_offer.group_assignments.last.update(period_end: 3.months.ago)
 
     visit volunteer_path(volunteer)
     assert page.has_text? 'Group offers log'

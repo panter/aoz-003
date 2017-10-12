@@ -164,8 +164,8 @@ ActiveRecord::Schema.define(version: 20171011151358) do
     t.bigint "volunteer_id"
     t.bigint "group_assignment_id"
     t.string "title"
-    t.date "start_date"
-    t.date "end_date"
+    t.date "period_start"
+    t.date "period_end"
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
@@ -178,8 +178,8 @@ ActiveRecord::Schema.define(version: 20171011151358) do
   create_table "group_assignments", force: :cascade do |t|
     t.bigint "group_offer_id"
     t.bigint "volunteer_id"
-    t.date "start_date"
-    t.date "end_date"
+    t.date "period_start"
+    t.date "period_end"
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
