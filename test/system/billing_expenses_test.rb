@@ -4,8 +4,12 @@ class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
     @volunteer = create :volunteer
-    assignment = create :assignment, volunteer: @volunteer
-    create :hour, volunteer: @volunteer, hourable: assignment
+    @assignment = create :assignment, volunteer: @volunteer
+    @hour1 = create :hour, volunteer: @volunteer, hourable: @assignment, hours: '2', minutes: '30'
+    category = create :group_offer_category
+    @group_offer = create :group_offer, volunteers: [@volunteer], group_offer_category: category
+    @hour2 = create :hour, hourable: @group_offer, volunteer: @volunteer, hours: '3', minutes: '30'
+
     login_as superadmin
     visit volunteer_path(@volunteer)
     click_button 'Create Billing expense'
@@ -13,6 +17,13 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
   test 'superadmin can create a billing expense' do
     assert page.has_text? 'Billing expense was successfully created.'
+  end
+
+  test 'created billing expenses collects hours from assignment and group offer' do
+    within '.table-responsive' do
+      assert_equal 6, @volunteer.hours.total_hours
+      assert_equal 50, @volunteer.billing_expenses.last.amount
+    end
   end
 
   test 'no duplicate billing expenses' do
@@ -42,4 +53,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert page.has_text? 'PLZ / Ort'
     assert page.has_text? 'Bank / IBAN'
   end
+
+
 end
