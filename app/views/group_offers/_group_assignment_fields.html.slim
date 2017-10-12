@@ -1,15 +1,17 @@
 .nested-fields.group-assignment-fields
   .volunteer_from_list
-    .col-xs-12.col-md-3
+    .col-xs-12.col-md-2
       - if policy(GroupOffer).supervisor_privileges?
         = f.association :volunteer, prompt: true
       - else
         = f.association :volunteer,
           collection: Volunteer.without_active_assignment.not_in_any_group_offer
-    .col-xs-12.col-md-3
+    .col-xs-12.col-md-2
       = f.input :responsible
     .col-xs-12.col-md-3
       = f.input :start_date, include_blank: true
     .col-xs-12.col-md-3
       = f.input :end_date, include_blank: true
-  = link_to_remove_association t('.remove_volunteer'), f, class: 'btn btn-danger'
+    .col-xs-12.col-md-2
+      br
+      = link_to_remove_association t('.remove_volunteer'), f, class: 'btn btn-danger'
