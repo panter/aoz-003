@@ -86,4 +86,48 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit archived_group_offers_path
     refute page.has_text? group_offer.title
   end
+
+  test 'deleting volunteer from group offer creates log entry' do
+    login_as create(:user)
+    volunteer = create :volunteer
+    user_volunteer = create :user_volunteer, volunteer: volunteer
+    group_offer = create :group_offer, volunteers: [volunteer]
+
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'Group offers'
+    assert page.has_link? group_offer.title
+    refute page.has_text? 'Group offers log'
+
+    visit edit_group_offer_path(group_offer)
+    click_link 'Remove volunteer'
+    click_button 'Update Group offer'
+
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'Group offers log'
+    assert page.has_link? group_offer.title
+  end
+
+  test 'modifying volunteer dates creates log entry' do
+    login_as create(:user)
+    volunteer = create :volunteer
+    user_volunteer = create :user_volunteer, volunteer: volunteer
+    group_offer = create :group_offer, volunteers: [volunteer]
+
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'Group offers'
+    assert page.has_link? group_offer.title
+    refute page.has_text? 'Group offers log'
+
+    group_offer.group_assignments.last.update(start_date: 7.months.ago, end_date: 2.months.ago)
+
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'Group offers log'
+    assert page.has_link? group_offer.title, count: 2
+
+    group_offer.group_assignments.last.update(start_date: 6.months.ago, end_date: 3.months.ago)
+
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'Group offers log'
+    assert page.has_link? group_offer.title, count: 3
+  end
 end
