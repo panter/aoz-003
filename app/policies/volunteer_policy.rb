@@ -2,7 +2,7 @@ class VolunteerPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
-      return resolve_owner if department_manager_or_social_worker?
+      return seeking_clients if department_manager_or_social_worker?
       none
     end
     alias :seeking_clients :resolve
