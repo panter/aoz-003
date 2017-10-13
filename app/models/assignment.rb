@@ -98,7 +98,9 @@ class Assignment < ApplicationRecord
   end
 
   def to_label
-    "#{self.class.name.humanize} - #{client.contact.full_name} - "\
-      "#{period_start && I18n.l(period_start)}"
+    label = "#{self.class.name.humanize}"
+    label += " - #{client.contact.full_name}" if client.contact.present?
+    label += " - #{period_start && I18n.l(period_start)}"
+    label
   end
 end
