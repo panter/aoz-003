@@ -282,8 +282,8 @@ de:
         period_end: Enddatum
         period_start: Anfangsdatum
         responsible: Verantwortliche/r für die Freiwilligengruppe
+        role: Rolle
         volunteer: Freiwillige
-        volunteer_role: Freiwillige Rolle
       group_offer:
         active: Aktiv
         all: Alle

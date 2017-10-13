@@ -29,4 +29,8 @@ class GroupOffer < ApplicationRecord
   def archived
     archived
   end
+
+  def responsible?(volunteer)
+    group_assignments.find_by(volunteer: volunteer).responsible
+  end
 end
