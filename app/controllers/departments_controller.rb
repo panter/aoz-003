@@ -6,11 +6,7 @@ class DepartmentsController < ApplicationController
     @departments = policy_scope(Department)
   end
 
-  def show
-    @volunteers = Volunteer.joins(:group_offers).merge(
-      GroupOffer.where(department: @department).internal_and_active
-    )
-  end
+  def show; end
 
   def new
     @department = Department.new

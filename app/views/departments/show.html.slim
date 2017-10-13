@@ -1,23 +1,23 @@
-h1= @department.contact.last_name
+.row
+  .col-xs-12
+    h1= @department.contact.last_name
 
-.table-responsive
-  table.table.table-no-border-top
-    tbody
-      = render 'contacts/show', contact: @department.contact
+.row
+  .col-xs-12
+    .table-responsive
+      table.table.table-no-border-top
+        tbody
+          = render 'contacts/show', contact: @department.contact
 
 - if @department.user.any?
-  h2= t_attr(:associated_users)
-  ul
-    - @department.user.each do |user|
-      li= link_to user.to_label, profile_path(user.profile)
-
-  h2= t('volunteers', count: 2)
-  dl.dl-horizontal
-    - @volunteers.each do |volunteer|
-      dt= link_to volunteer.full_name, volunteer_path(volunteer)
-      dd
-        = "#{t_model(GroupOffer)}: "
-        = link_to volunteer.group_offers.find_by(department: @department).title, group_offer_path(volunteer.group_offers.find_by(department: @department))
+  .row
+    .col-xs-12
+      h2= t_attr(:associated_users)
+  .row
+    .col-xs-12
+      ul
+        - @department.user.each do |user|
+          li= link_to user.to_label, profile_path(user.profile)
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
