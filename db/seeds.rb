@@ -110,7 +110,7 @@ if Department.count < 1
   department = FactoryGirl.create(:department,
     user: User.where(email: 'department_manager@example.com'))
   4.times do
-    volunteers = 3.times.map do
+    volunteers = Array.new(3).map do
       FactoryGirl.create(:volunteer, user: FactoryGirl.create(:user_volunteer))
     end
     FactoryGirl.create(:group_offer, active: true, offer_type: 'internal_offer',
