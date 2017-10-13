@@ -3,7 +3,6 @@ class GroupOffer < ApplicationRecord
   DURATION = [:long_term, :regular, :short_term].freeze
   OFFER_TYPES = [:internal_offer, :external_offer].freeze
   EXTERNAL_OFFER = 'external_offer'.freeze
-  INTERNAL_OFFER = 'internal_offer'.freeze
   OFFER_STATES = [:open, :partially_occupied, :full].freeze
   VOLUNTEER_STATES = [:internal_volunteer, :external_volunteer].freeze
   VOLUNTEER_RESPONSIBLE_STATES = [:volunteer_accountable, :volunteer_member].freeze
@@ -22,7 +21,7 @@ class GroupOffer < ApplicationRecord
   scope :in_department, (-> { where.not(department_id: nil) })
 
   scope :external_offer, (-> { where(offer_type: EXTERNAL_OFFER) })
-  scope :internal_offer, (-> { where(offer_type: INTERNAL_OFFER) })
+  scope :internal_offer, (-> { where(offer_type: 'internal_offer') })
   scope :internal_and_active, (-> { active.internal_offer })
 
   def external?
