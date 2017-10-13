@@ -56,6 +56,12 @@ table.table.table-striped
         td
           - offer.volunteers.each do |volunteer|
             = link_to volunteer, volunteer_path(volunteer)
+            - if offer.responsible?(volunteer)
+              br
+              = t_attr(:responsible, GroupAssignment)
+            -else
+              br
+              = t_attr(:member, GroupAssignment)
             br
         td= offer.group_offer_category.category_name
         td= link_to t_action(:show), group_offer_path(offer)
