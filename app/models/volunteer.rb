@@ -78,13 +78,20 @@ class Volunteer < ApplicationRecord
 
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
+  scope :with_group_offers, (-> { joins(:group_offers) })
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
+  scope :without_group_offer, (-> { left_outer_joins(:group_offers).where(group_offers: { id: nil }) })
 
   scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
+  scope :with_active_group_offers, (-> { joins(:group_offers).merge(GroupOffer.active) })
   scope :with_active_assignments_between, lambda { |start_date, end_date|
     joins(:assignments).merge(Assignment.active_between(start_date, end_date))
   }
+  scope :with_active_group_offers_between, lambda { |start_date, end_date|
+  joins(:group_offers).merge(GroupOffer.active_between(start_date, end_date))
+}
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
+  scope :without_group_offer, (-> { left_outer_joins(:group_offers).where(group_offers: { id: nil }) })
   scope :without_active_assignment, (-> { joins(:assignments).merge(Assignment.ended) })
   scope :not_in_any_group_offer, lambda {
     left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })
