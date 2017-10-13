@@ -124,11 +124,11 @@ class Volunteer < ApplicationRecord
   }
 
   def active?
-    accepted? && assignments.active.any?
+    accepted? && (assignments.active.any? || group_assignments.ongoing.any? || group_assignments.no_end.any?)
   end
 
   def inactive?
-    accepted? && assignments.active.blank?
+    accepted? && assignments.active.blank? && group_assignments.ongoing.blank? && group_assignments.no_end.blank?
   end
 
   def state
@@ -174,7 +174,7 @@ class Volunteer < ApplicationRecord
   end
 
   def seeking_clients?
-    accepted? && inactive? || take_more_assignments && active?
+    accepted? && inactive? || take_more_assignments? && active?
   end
 
   def self.acceptance_collection

@@ -6,6 +6,9 @@ class GroupAssignment < ApplicationRecord
   after_save :save_group_assignment_logs, if: :dates_updated?
   before_destroy :save_group_assignment_logs
 
+  scope :ongoing, (-> { where('group_assignments.period_end > ?', Time.zone.today) })
+  scope :no_end, (-> { where(period_end: nil) })
+
   def save_group_assignment_logs
     group_assignment_logs.create!(group_offer_id: group_offer_id, volunteer_id: volunteer_id,
       group_assignment_id: id, title: group_offer.title,
