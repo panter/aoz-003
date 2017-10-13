@@ -12,7 +12,8 @@ class PerformanceReport < ApplicationRecord
     end
     self.report_content = {
       global: global,
-      zuerich: zuerich
+      zuerich: zuerich,
+      internal_offer: internal_offer
     }
   end
 
@@ -20,7 +21,8 @@ class PerformanceReport < ApplicationRecord
     {
       volunteers: volunteers,
       clients: clients,
-      assignments: assignments
+      assignments: assignments,
+      group_offers: group_offers
     }
   end
 
@@ -61,6 +63,23 @@ class PerformanceReport < ApplicationRecord
       new: assignments.start_within(period_start..period_end).count,
       active: assignments.active_between(period_start, period_end).count,
       total: assignments.count
+    }
+  end
+
+  def internal_offer
+    {
+      group_offers: group_offers(true)
+    }
+  end
+
+  def group_offers(internal_offer = false)
+    group_offers = GroupOffer.created_before(period_end)
+    group_offers = group_offers.internal_offer if internal_offer
+    {
+      ended: group_offers.end_within(period_start..period_end).count,
+      new: group_offers.start_within(period_start..period_end).count,
+      active: group_offers.active_between(period_start, period_end).count,
+      total: group_offers.count
     }
   end
 end
