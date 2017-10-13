@@ -156,6 +156,7 @@ en:
         resign: Resign
         resigned_at: Resigned at
         undecided: Undecided
+        undecided_at: Undecided at
       create: &id-volunteers-create
         <<: [*id-availability, *id-volunteer-aceptance]
         acceptance: *id-volunteer-aceptance

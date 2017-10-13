@@ -158,6 +158,7 @@ de:
         resign: Austreten
         resigned_at: Ausgetreten am
         undecided: Nicht entschieden
+        undecided_at: Nicht entschiedet am
       create: &id-volunteers-create
         <<: *id-availability
         acceptance: *id-volunteer-acceptance
