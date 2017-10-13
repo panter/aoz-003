@@ -67,8 +67,6 @@ en:
       show:
         category_states: *id-group-offer-category-states
     group_offers:
-      one: Group offer
-      other: Group offers
       archived:
         title: Archived group offers
       change_active_state:
