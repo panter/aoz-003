@@ -11,21 +11,13 @@ h1= @department.contact.last_name
     - @department.user.each do |user|
       li= link_to user.to_label, profile_path(user.profile)
 
-- if @group_offers.any?
-  h2.m-b-20= t('group_offers', count: 2)
-  table.table.table-striped.table-condensed
-    thead
-      tr
-        th= t_model(GroupOffer)
-        th= t('volunteers', count: 2)
-    tbody
-      - @group_offers.each do |group_offer|
-        tr
-          td= link_to group_offer.title, group_offer_path(group_offer)
-          td
-            ul.list-unstyled
-              - group_offer.volunteers.each do |volunteer|
-                li= link_to volunteer.full_name, volunteer_path(volunteer)
+  h2= t('volunteers', count: 2)
+  dl.dl-horizontal
+    - @volunteers.each do |volunteer|
+      dt= link_to volunteer.full_name, volunteer_path(volunteer)
+      dd
+        = "#{t_model(GroupOffer)}: "
+        = link_to volunteer.group_offers.find_by(department: @department).title, group_offer_path(volunteer.group_offers.find_by(department: @department))
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
