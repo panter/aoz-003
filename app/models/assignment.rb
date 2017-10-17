@@ -12,7 +12,6 @@ class Assignment < ApplicationRecord
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
   has_many :hours, as: :hourable, dependent: :destroy
 
-  has_many :hours, dependent: :destroy
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
   has_many :reminders, dependent: :destroy
 
