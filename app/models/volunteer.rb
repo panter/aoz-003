@@ -51,7 +51,6 @@ class Volunteer < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :clients, through: :assignments
 
-  has_many :hours, through: :assignments
 
 
   has_many :billing_expenses
