@@ -1,31 +1,29 @@
-.table-responsive
+h1= t_title(:show)
+
+.table-responsive.m-t-30.m-b-20
   table.table.table-no-border-top
     tbody
       tr
         td= t_model(Volunteer)
-        td= @feedback.volunteer.contact.full_name
-      tr
-        - if @feedback.assignment?
+        td= link_to @feedback.volunteer.contact.full_name, volunteer_path(@feedback.volunteer)
+      - if @feedback.assignment?
+        tr
+          td= t_model(Assignment)
+          td= link_to @feedback.feedbackable.to_label, assignment_path(@feedback.feedbackable)
+        tr
           td= t_model(Client)
-          td= @feedback.feedbackable.client.contact.full_name
-        - else
+          td= link_to @feedback.feedbackable.client.contact.full_name, client_path(@feedback.feedbackable.client)
+      - else
+        tr
           td= t_model(GroupOffer)
-          td= @feedback.feedbackable.to_label
-      tr
-        td= t_attr(:goals)
-        td= @feedback.goals
-      tr
-        td= t_attr(:achievements)
-        td= @feedback.achievements
-      tr
-        td= t_attr(:future)
-        td= @feedback.future
-      tr
-        td= t_attr(:comments)
-        td= @feedback.comments
+          td= link_to @feedback.feedbackable.to_label, group_offer_path(@feedback.feedbackable)
+      - [:goals, :achievements, :future, :comments].each do |field|
+        tr
+          td= t_attr(field)
+          td= @feedback[field]
       tr
         td= t_attr(:conversation)
         td= t(@feedback.conversation)
 
 = form_navigation_btn :edit
-= form_navigation_btn :back
+= bootstrap_row_col { button_link t('back'), volunteer_feedbacks_path(@volunteer) }
