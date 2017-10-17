@@ -144,6 +144,9 @@ en:
       reserved: Reserved
       resigned: Terminated
     volunteer_applications: &id-volunteers-by-actions
+      feedback: &id-volunteer-feedbacks
+        new: New feedback
+        index: Feedback index
       acceptance: &id-volunteer-aceptance
         management: Acceptance Management
         accepted: Accepted

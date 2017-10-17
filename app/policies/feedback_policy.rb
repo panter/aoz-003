@@ -1,15 +1,14 @@
 class FeedbackPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      return resolve_assignment if superadmin?
-      resolve_author_and_assignment if volunteer?
+      return all if superadmin?
+      scope.where(volunteer: user.volunteer, author: user) if volunteer?
     end
   end
 
   alias_method :index?, :superadmin_or_volunteer?
 
   def superadmin_or_volunteers_feedback?
-    binding.pry
     superadmin? || volunteer? && user.volunteer.id == record.volunteer.id
   end
 
