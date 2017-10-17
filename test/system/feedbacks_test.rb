@@ -8,13 +8,13 @@ class FeedbacksTest < ApplicationSystemTestCase
     superadmin = create :user
     @feedback = create :feedback, feedbackable: @assignment,
       volunteer: @volunteer, author: superadmin, comments: 'author superadmin'
-    login_as @user_volunteer
-    visit root_url
-    click_link 'volunteer@example.com'
-    click_link 'Show profile'
+    login_as @volunteer.user
   end
 
   test 'volunteer can create an feedback' do
+    visit root_url
+    click_link 'volunteer@example.com'
+    click_link 'Show profile'
     click_link 'New Feedback'
     fill_in 'Which were the most important goals during the last months?', with: 'asdf'
     fill_in 'What could have been achieved during the last months?', with: 'asdf'
@@ -26,6 +26,9 @@ class FeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'volunteer can see only her feedbacks' do
+    visit root_url
+    click_link 'volunteer@example.com'
+    click_link 'Show profile'
     click_link 'Feedback index'
     refute page.has_text? 'author superadmin'
   end
@@ -42,7 +45,7 @@ class FeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'volunteer can create only their feedbacks' do
-    assignment = create :assignment
+    assignment = create :assignment, volunteer: create(:volunteer)
     visit new_assignment_feedback_path(assignment)
     assert page.has_text? 'You are not authorized to perform this action.'
   end

@@ -33,8 +33,9 @@ class Volunteer < ApplicationRecord
 
   has_many :assignments, dependent: :destroy
   has_many :clients, through: :assignments
+
   has_many :hours, dependent: :destroy
-  has_many :assignment_journals, through: :assignments
+  has_many :feedbacks, as: :feedbackable, dependent: :destroy
 
   has_many :certificates
 
@@ -52,7 +53,6 @@ class Volunteer < ApplicationRecord
 
   has_many :hours, through: :assignments
 
-  has_many :feedbacks, through: :assignments
 
   has_many :billing_expenses
   has_many :reminders, dependent: :destroy
@@ -236,7 +236,7 @@ class Volunteer < ApplicationRecord
     if external?
       user.destroy
     else
-      user.restore
+      user.restore recursive: true
     end
   end
 end
