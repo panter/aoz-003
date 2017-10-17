@@ -3,10 +3,10 @@ FactoryGirl.define do
     assignment
     volunteer
     association :author, factory: :user
-    goals 'MyText'
-    achievements 'MyText'
-    future 'MyText'
-    comments 'MyText'
+    goals { Faker::Lorem.words(4) }
+    achievements { Faker::Lorem.sentence }
+    future { Faker::Lorem.sentence }
+    comments { Faker::Lorem.paragraph }
     conversation false
   end
 end

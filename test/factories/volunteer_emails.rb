@@ -7,9 +7,9 @@ FactoryGirl.define do
     active true
 
     trait :fakered do
-      subject Faker::Hobbit.quote
-      title Faker::Hobbit.quote
-      body Faker::HeyArnold.quote
+      subject { Faker::Hobbit.quote }
+      title { Faker::Hobbit.quote }
+      body { Faker::HeyArnold.quote }
     end
 
     factory :volunteer_email_seed, traits: [:fakered]
