@@ -79,24 +79,27 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
   user.save
 end
 
+def create_two_group_offers(group_offer_category)
+  [
+    FactoryGirl.create(:group_offer, necessary_volunteers: 2,
+      group_offer_category: group_offer_category,
+      volunteers: [FactoryGirl.create(:volunteer_seed), FactoryGirl.create(:volunteer_seed)]),
+    FactoryGirl.create(:group_offer, necessary_volunteers: 2,
+      group_offer_category: group_offer_category,
+      volunteers: [FactoryGirl.create(:volunteer_seed), FactoryGirl.create(:volunteer_seed)])
+  ]
+end
+
 if Department.count < 1
   group_offer_category = FactoryGirl.create :group_offer_category
   # first department for user with login
   department_manager = User.find_by role: 'department_manager'
-  group_offers = [
-    FactoryGirl.create(:group_offer, group_offer_category: group_offer_category),
-    FactoryGirl.create(:group_offer, group_offer_category: group_offer_category),
-  ]
-  FactoryGirl.create :department, user: [department_manager], group_offers: group_offers
-
+  department = FactoryGirl.create :department, user: [department_manager]
+  department.update(group_offers: create_two_group_offers(group_offer_category))
   # additional departments
   3.times do
-    group_offers = [
-      FactoryGirl.create(:group_offer, group_offer_category: group_offer_category),
-      FactoryGirl.create(:group_offer, group_offer_category: group_offer_category),
-    ]
-    FactoryGirl.create :department, user: [FactoryGirl.create(:department_manager)],
-      group_offers: group_offers
+    department = FactoryGirl.create :department, user: [FactoryGirl.create(:department_manager)]
+    department.update(group_offers: create_two_group_offers(group_offer_category))
   end
 end
 
