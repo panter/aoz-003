@@ -21,14 +21,6 @@ class Certificate < ApplicationRecord
     }
   end
 
-  def convert_volunteer_contact
-    {
-      name: volunteer.contact.full_name,
-      street: volunteer.contact.full_street,
-      city: volunteer.contact.full_city
-    }
-  end
-
   def assignment_kinds=(value)
     super(value.to_h.map do |key, bool|
       bool = bool.to_i == 1 if bool.is_a? String
