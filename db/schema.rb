@@ -141,6 +141,25 @@ ActiveRecord::Schema.define(version: 20171011151358) do
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
   end
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "goals"
+    t.text "achievements"
+    t.text "future"
+    t.text "comments"
+    t.boolean "conversation"
+    t.datetime "deleted_at"
+    t.bigint "volunteer_id"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "feedbackable_type"
+    t.bigint "feedbackable_id"
+    t.index ["author_id"], name: "index_feedbacks_on_author_id"
+    t.index ["deleted_at"], name: "index_feedbacks_on_deleted_at"
+    t.index ["feedbackable_type", "feedbackable_id"], name: "index_feedbacks_on_feedbackable_type_and_feedbackable_id"
+    t.index ["volunteer_id"], name: "index_feedbacks_on_volunteer_id"
+  end
+
   create_table "group_assignment_logs", force: :cascade do |t|
     t.bigint "group_offer_id"
     t.bigint "volunteer_id"
@@ -167,25 +186,6 @@ ActiveRecord::Schema.define(version: 20171011151358) do
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["volunteer_id"], name: "index_group_assignments_on_volunteer_id"
-  end
-
-  create_table "feedbacks", force: :cascade do |t|
-    t.text "goals"
-    t.text "achievements"
-    t.text "future"
-    t.text "comments"
-    t.boolean "conversation"
-    t.datetime "deleted_at"
-    t.bigint "volunteer_id"
-    t.bigint "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "feedbackable_type"
-    t.bigint "feedbackable_id"
-    t.index ["author_id"], name: "index_feedbacks_on_author_id"
-    t.index ["deleted_at"], name: "index_feedbacks_on_deleted_at"
-    t.index ["feedbackable_type", "feedbackable_id"], name: "index_feedbacks_on_feedbackable_type_and_feedbackable_id"
-    t.index ["volunteer_id"], name: "index_feedbacks_on_volunteer_id"
   end
 
   create_table "group_offer_categories", force: :cascade do |t|
