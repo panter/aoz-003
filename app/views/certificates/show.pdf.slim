@@ -24,6 +24,9 @@
           span.kind-list
             input*{ type: 'checkbox', checked: value } onclick='return false;'
             = "#{t("assignment_kinds.#{kind}")}"
+        span.kind-list
+          input type="checkbox" checked="#{@certificate.group_offer} " onclick="return false"
+          = t_attr(:group_offer)
     .row
       .col-xs-3= t_attr(:duration)
       .col-xs-7= "#{l(@certificate.duration_start)} #{t('to')} #{l(@certificate.duration_end) if @certificate.duration_end}"
