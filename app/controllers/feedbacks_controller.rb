@@ -21,7 +21,7 @@ class FeedbacksController < ApplicationController
       volunteer_id: @volunteer.id))
     authorize @feedback
     if @feedback.save
-      redirect_to url_for([@feedback.feedbackable, @feedback]), make_notice
+      redirect_to url_for([@feedback.volunteer, @feedback]), make_notice
     else
       render :new
     end
@@ -29,7 +29,7 @@ class FeedbacksController < ApplicationController
 
   def update
     if @feedback.update(feedback_params)
-      redirect_to url_for([@feedbackable, @feedback]), make_notice
+      redirect_to url_for([@feedback.volunteer, @feedback]), make_notice
     else
       render :edit
     end

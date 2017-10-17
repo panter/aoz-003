@@ -218,6 +218,7 @@ en:
         future: Should the assignment continue? If yes, with which goals?
         goals: Which were the most important goals during the last months?
         last: Last assignment journal entry
+        feedbackable_id_and_type: Activities
       certificate:
         duration: Duration
         duration_end: End

@@ -1,7 +1,5 @@
-.row
-  .col-xs-12
-    h1= t_title(:new)
+h1= t_title(:new)
 
 = render 'form'
 
-= form_navigation_btn :back
+= bootstrap_row_col { button_link t('back'), volunteer_feedbacks_path(@volunteer) }

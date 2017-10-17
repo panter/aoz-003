@@ -234,6 +234,8 @@ de:
         future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
         goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
         last: Letzter inhaltlicher Journaleintrag am
+        feedback_activity: Aktivität
+        feedbackable_id_and_type: Aktivitäten
       billing_expense:
         <<: *id-generic_keys
         amount: Betrag
