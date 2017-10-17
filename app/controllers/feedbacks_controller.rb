@@ -17,7 +17,8 @@ class FeedbacksController < ApplicationController
   def edit; end
 
   def create
-    @feedback = Feedback.new(feedback_params.merge(author_id: current_user.id))
+    @feedback = Feedback.new(feedback_params.merge(author_id: current_user.id,
+      volunteer_id: current_user.volunteer.id))
     authorize @feedback
     if @feedback.save
       redirect_to url_for([@feedback_about, @feedback]), make_notice
