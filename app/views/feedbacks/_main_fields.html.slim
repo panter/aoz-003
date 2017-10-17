@@ -1,0 +1,12 @@
+
+= f.hidden_field :volunteer_id, value: @feedback.volunteer_id
+= f.hidden_field :author_id, value: @feedback.author_id
+
+- [:goals, :achievements, :future, :comments, :conversation].each do |field|
+  .row
+    .col-xs-12
+      = f.input field
+
+.row
+  .col-xs-12
+    = f.button :submit

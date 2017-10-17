@@ -14,11 +14,11 @@ class FeedbackPolicyTest < PolicyAssertions::Test
   end
 
   test 'volunteer has limited access' do
-    volunteer = create(:user_volunteer)
-    feedback = create :feedback
-    feedback_volunteer = create :feedback, author: volunteer
-    refute_permit(volunteer, feedback, 'show?', 'edit?', 'update?', 'destroy?')
-    assert_permit(volunteer, feedback_volunteer, 'index?', 'show?', 'edit?', 'update?',
+    volunteer = create(:volunteer, user: create(:user_volunteer))
+    foreign_feedback = create :feedback, volunteer: volunteer, author: create(:user)
+    feedback_volunteer = create :feedback, author: volunteer.user
+    refute_permit(volunteer.user, foreign_feedback, 'show?', 'edit?', 'update?', 'destroy?')
+    assert_permit(volunteer.user, feedback_volunteer, 'index?', 'show?', 'edit?', 'update?',
       'destroy?')
   end
 end

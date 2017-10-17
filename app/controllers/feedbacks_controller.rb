@@ -1,16 +1,16 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback, only: [:show, :edit, :update, :destroy]
-  before_action :set_feedback_about
+  before_action :set_feedbackable, only: [:new, :create]
 
   def index
     authorize Feedback
-    @feedbacks = policy_scope(Feedback).where(feedbackable: @assignment)
+    @feedbacks = policy_scope(Feedback)
   end
 
   def show; end
 
   def new
-    @feedback = Feedback.new(feedbackable: @feedback_about, volunteer: current_user.volunteer)
+    @feedback = Feedback.new(feedbackable: @feedbackable, volunteer: @volunteer, author: current_user)
     authorize @feedback
   end
 
@@ -18,10 +18,10 @@ class FeedbacksController < ApplicationController
 
   def create
     @feedback = Feedback.new(feedback_params.merge(author_id: current_user.id,
-      volunteer_id: current_user.volunteer.id))
+      volunteer_id: @volunteer.id))
     authorize @feedback
     if @feedback.save
-      redirect_to url_for([@feedback_about, @feedback]), make_notice
+      redirect_to url_for([@feedback.feedbackable, @feedback]), make_notice
     else
       render :new
     end
@@ -29,7 +29,7 @@ class FeedbacksController < ApplicationController
 
   def update
     if @feedback.update(feedback_params)
-      redirect_to url_for([@feedback_about, @feedback]), make_notice
+      redirect_to url_for([@feedbackable, @feedback]), make_notice
     else
       render :edit
     end
@@ -37,24 +37,27 @@ class FeedbacksController < ApplicationController
 
   def destroy
     @feedback.destroy
-    redirect_back(fallback_location: url_for(@feedback_about))
+    redirect_back(fallback_location: url_for(@feedbackable))
   end
 
   private
 
-  def set_feedback
-    @feedback = Feedback.find(params[:id])
-    authorize @feedback
+  def set_feedbackable
+    @feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
+    @feedbackable = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
+    return @volunteer = @feedbackable.volunteer if @feedbackable.class == Assignment
+    @volunteer = current_user.volunteer if current_user.volunteer?
   end
 
-  def set_feedback_about
-    return @feedback_about = Assignment.find(params[:assignment_id]) if params[:assignment_id]
-    return @feedback_about = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
-    @feedback_about = nil
+  def set_feedback
+    @feedback = Feedback.find(params[:id])
+    @feedbackable = @feedback.feedbackable
+    @volunteer = @feedback.volunteer
+    authorize @feedback
   end
 
   def feedback_params
     params.require(:feedback).permit(:goals, :achievements, :future, :comments, :conversation,
-      :feedbackable_id, :feedbackable_type, :volunteer_id)
+      :feedbackable_id, :feedbackable_type, :volunteer_id, :feedbackable_id_and_type, :author_id)
   end
 end

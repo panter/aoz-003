@@ -147,6 +147,9 @@ de:
       resigned: Abgemeldet
     updated_at: Geändert um
     volunteer_applications: &id-volunteers-by-actions
+      feedback:
+        new: Neues Feedback
+        index: Feedback Liste
       acceptance: &id-volunteer-acceptance
         management: Aufnahme Verwaltung
         accepted: Akzeptiert
