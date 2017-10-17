@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :client do
     association :user
     association :contact
+    salutation { ['mr', 'mrs'].sample }
 
     trait :zuerich do
       association :contact, factory: :contact_zuerich
@@ -9,10 +10,6 @@ FactoryGirl.define do
 
     trait :seed_contact do
       association :contact, factory: :contact_seed
-    end
-
-    trait :random_gender do
-      salutation ['mr', 'mrs'].sample
     end
 
     trait :with_relatives do
@@ -47,24 +44,24 @@ FactoryGirl.define do
     end
 
     trait :faker_misc do
-      gender_request Client::GENDER_REQUESTS.sample
-      age_request Client::AGE_REQUESTS.sample
-      permit Client::PERMITS.sample
-      goals Faker::Lorem.sentence
-      education Faker::Company.profession
-      interests Faker::Lorem.sentence
-      comments Faker::Lorem.sentence
-      other_request Faker::Lorem.sentence
-      actual_activities Faker::Lorem.sentence
-      detailed_description Faker::Lorem.sentence
-      nationality ISO3166::Country.codes.sample
+      gender_request { Client::GENDER_REQUESTS.sample }
+      age_request { Client::AGE_REQUESTS.sample }
+      permit { Client::PERMITS.sample }
+      goals { Faker::Lorem.sentence }
+      education { Faker::Company.profession }
+      interests { Faker::Lorem.sentence }
+      comments { Faker::Lorem.sentence }
+      other_request { Faker::Lorem.sentence }
+      actual_activities { Faker::Lorem.sentence }
+      detailed_description { Faker::Lorem.sentence }
+      nationality { ISO3166::Country.codes.sample }
     end
 
     factory :client_z, traits: [:zuerich]
     factory(
       :client_seed,
       traits: [
-        :seed_contact, :with_language_skills, :random_gender, :with_journals, :fake_availability,
+        :seed_contact, :with_language_skills, :with_journals, :fake_availability,
         :faker_misc
       ]
     )
