@@ -1,29 +1,16 @@
-= simple_form_for [@feedback_about, @feedback] do |f|
-  = simple_error_notice f
+- if @feedbackable.present?
+  = simple_form_for [@feedbackable, @feedback] do |f|
+    = simple_error_notice f
 
-  = f.hidden_field :feedbackable_id, value: params["#{controller_name.singularize}_id".to_sym]
-  = f.hidden_field :feedbackable_type, value: @feedback_about
+    = f.hidden_field :feedbackable_id, value: @feedbackable
+    = f.hidden_field :feedbackable_type, value: @feedbackable
 
-  .row
-    .col-xs-12
-      = f.input :goals
+    = render 'main_fields', f: f
+- else
+  = simple_form_for @feedback do |f|
+    = simple_error_notice f
 
-  .row
-    .col-xs-12
-      = f.input :achievements
+    = f.input :feedbackable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection
 
-  .row
-    .col-xs-12
-      = f.input :future
+    = render 'main_fields', f: f
 
-  .row
-    .col-xs-12
-      = f.input :comments
-
-  .row
-    .col-xs-12
-      = f.input :conversation
-
-  .row
-    .col-xs-12
-      = f.button :submit
