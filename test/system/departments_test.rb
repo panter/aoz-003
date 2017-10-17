@@ -116,4 +116,16 @@ class DepartmentsTest < ApplicationSystemTestCase
     visit department_path(Department.first)
     refute page.has_text? 'Secondary phone'
   end
+
+  test 'departments group offers with volunteers are displayed' do
+    department = @department_manager.department.first
+    volunteers = [create(:volunteer), create(:volunteer)]
+    group_offer = create :group_offer, volunteers: volunteers, department: department
+    login_as @department_manager
+    visit department_path(department)
+    assert page.has_link? group_offer.title
+    volunteers.each do |volunteer|
+      assert page.has_link? volunteer.full_name
+    end
+  end
 end

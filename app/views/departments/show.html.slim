@@ -15,7 +15,7 @@
     - @department.user.each do |user|
       li= link_to user.to_label, profile_path(user.profile)
 
-- if @department.group_offers.any?
+- if @department.group_offers.active.any?
   h2.m-b-20= t('group_offers', count: 2)
   table.table-condensed.table-striped.m-b-20.table
     thead
@@ -23,7 +23,7 @@
         th= t_model(GroupOffer)
         th= t('volunteers', count: 2)
     tbody
-      - @department.group_offers.each do |group_offer|
+      - @department.group_offers.active.each do |group_offer|
         tr
           td= link_to group_offer.title, group_offer_path(group_offer)
           td
