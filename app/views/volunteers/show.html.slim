@@ -24,8 +24,6 @@ nav.navbar.section-navigation
     - if @volunteer.internal_and_assignments?
       li= button_link t('.report_hours'), new_volunteer_hour_url(@volunteer)
       li= button_link t('.hour_reports'), volunteer_hours_path(@volunteer)
-    li= button_link t('volunteers.feedback.new'), new_volunteer_feedback_path(@volunteer)
-    li= button_link t('volunteers.feedback.index'), url_for([@volunteer, Feedback])
     li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
     li= form_navigation_btn :back, with_row: false unless current_user.volunteer?
 

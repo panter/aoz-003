@@ -2,13 +2,13 @@ require 'application_system_test_case'
 
 class FeedbacksTest < ApplicationSystemTestCase
   def setup
-    @user_volunteer = create :user, role: 'volunteer', email: 'volunteer@example.com'
-    @volunteer = @user_volunteer.volunteer = create :volunteer
+    @user_volunteer = create :user_volunteer, email: 'volunteer@example.com'
+    @volunteer = create :volunteer, user: @user_volunteer
     @assignment = create :assignment, volunteer: @volunteer
-    superadmin = create :user
+    @superadmin = create :user
     @feedback = create :feedback, feedbackable: @assignment,
-      volunteer: @volunteer, author: superadmin, comments: 'author superadmin'
-    login_as @volunteer.user
+      volunteer: @volunteer, author: @superadmin, comments: 'author superadmin'
+    login_as @user_volunteer
   end
 
   test 'volunteer can create an feedback' do
@@ -35,13 +35,13 @@ class FeedbacksTest < ApplicationSystemTestCase
 
   test 'feedback index contains only the journals of one assignment' do
     assignment2 = create :assignment, volunteer: @volunteer
-    volunteer_journal = create :feedback, feedbackable: @assignment,
-      author: @user_volunteer, comments: 'assignment1'
-    create :feedback, feedbackable: assignment2, author: @user_volunteer,
-      comments: 'assignment2'
-    visit assignment_feedback_path(@assignment, volunteer_journal)
+    create :feedback, volunteer: @volunteer, feedbackable: assignment2,
+      author: @superadmin, comments: 'assignment_number_2'
+    volunteer_feedback = create :feedback, volunteer: @volunteer, feedbackable: @assignment,
+      author: @user_volunteer, comments: 'assignment_number_1'
+    visit assignment_feedback_path(@assignment, volunteer_feedback)
     click_link 'Back'
-    refute page.has_text? 'assignment2'
+    refute page.has_text? 'assignment_number_2'
   end
 
   test 'volunteer can create only their feedbacks' do
