@@ -5,6 +5,11 @@ class FeedbacksController < ApplicationController
   def index
     authorize Feedback
     @feedbacks = policy_scope(Feedback)
+    if params[:group_offer_id]
+      @feedbacks = @feedbacks.where(feedbackable_id: params[:group_offer_id])
+    elsif params[:assignment_id]
+      @feedbacks = @feedbacks.where(feedbackable_id: params[:assignment_id])
+    end
   end
 
   def show; end
