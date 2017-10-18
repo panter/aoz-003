@@ -21,7 +21,7 @@ nav.navbar.section-navigation
           - elsif @volunteer.certificates.size > 1
             li= button_link t('.show_certificates'), volunteer_certificates_path(@volunteer)
   ul.list-inline
-    - if @volunteer.internal_and_assignments?
+    - if @volunteer.internal_and_started_assignments?
       li= button_link t('.report_hours'), new_volunteer_hour_url(@volunteer)
       li= button_link t('.hour_reports'), volunteer_hours_path(@volunteer)
     li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
