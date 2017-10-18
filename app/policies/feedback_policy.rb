@@ -9,7 +9,11 @@ class FeedbackPolicy < ApplicationPolicy
   alias_method :index?, :superadmin_or_volunteer?
 
   def superadmin_or_volunteers_feedback?
-    superadmin? || volunteer? && user.volunteer.id == record.volunteer.id
+    superadmin? || volunteer? && is_of_and_from_volunteer?
+  end
+
+  def is_of_and_from_volunteer?
+    user.volunteer.id == record.volunteer.id && user.id == record.author.id
   end
 
   alias_method :new?,     :superadmin_or_volunteers_feedback?
