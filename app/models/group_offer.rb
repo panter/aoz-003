@@ -40,4 +40,24 @@ class GroupOffer < ApplicationRecord
     label += " - #{department}" if department_id?
     label
   end
+
+  def full_location
+    if external?
+      "#{organization} #{location}"
+    elsif department
+      department.to_s
+    else
+      ''
+    end
+  end
+
+  def volunteers_with_roles
+    volunteers.map do |volunteer|
+      if responsible?(volunteer)
+        "#{volunteer} (#{I18n.t('activerecord.attributes.group_assignment.responsible')})"
+      else
+        "#{volunteer} (#{I18n.t('activerecord.attributes.group_assignment.member')})"
+      end
+    end.compact.join(', ')
+  end
 end

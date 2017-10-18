@@ -232,6 +232,9 @@ en:
         last_name: Name
         postal_code: Zip
         street: Street
+      group_assignment:
+        member: Member
+        responsible: Responsible
       hour:
         last: Last hour entry
         hourable: Assignment

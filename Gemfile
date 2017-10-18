@@ -65,6 +65,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'roo', '~> 2.7.0'
   gem 'rubocop', require: false
   gem 'selenium-webdriver'
 end
