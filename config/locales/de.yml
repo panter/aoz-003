@@ -3,6 +3,7 @@ de:
   application:
     navigation:
       group_offers: Gruppenangebote
+      reminders: Erinnerungen
   aaa_injectable: &id-injectables
     age_request: &id-age_requests
       age_middle: 36 - 50
@@ -760,7 +761,6 @@ de:
       please_confirm: 'Bitte bestätigen Sie die Stundenrapporte und das Feedback zum Einsatz %{client}.'
       subject: Rapporte bestätigen
   reminder_sent: 'Erinnerung wurde versendet an %{email}'
-  reminders: Erinnerungen
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   reserve: Reservieren
