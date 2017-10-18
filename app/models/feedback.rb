@@ -5,6 +5,8 @@ class Feedback < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :feedbackable, polymorphic: true, optional: true
 
+  validates :comments, presence: true
+
   def assignment?
     feedbackable_type == 'Assignment'
   end
