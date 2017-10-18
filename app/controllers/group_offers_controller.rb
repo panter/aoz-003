@@ -6,6 +6,10 @@ class GroupOffersController < ApplicationController
     authorize GroupOffer
     @q = policy_scope(GroupOffer.active).ransack(params[:q])
     @group_offers = @q.result
+    respond_to do |format|
+      format.xlsx
+      format.html
+    end
   end
 
   def show
