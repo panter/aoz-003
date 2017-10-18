@@ -1,8 +1,10 @@
 wb = xlsx_package.workbook
 
-col_header = wb.styles.add_style(:bg_color => "FFDFDEDF", b: true , alignment: { horizontal: :center, vertical: :center }, border: {
-  color: '00', edges: [:bottom], style: :thin
-})
+col_header = wb.styles.add_style(
+  bg_color: 'FFDFDEDF',
+  b: true,
+  alignment: { horizontal: :center, vertical: :center },
+  border: { color: '00', edges: [:bottom], style: :thin})
 postal_code = wb.styles.add_style(alignment: { horizontal: :right }, width: :auto_fit)
 
 wb.add_worksheet(name: t('volunteers', count: 2)) do |sheet|
