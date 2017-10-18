@@ -234,7 +234,7 @@ de:
         conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
         future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
         goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
-        last: Letzter inhaltlicher Journaleintrag am
+        last: Letzter Feedback-Eintrag am
         feedback_activity: Aktivität
         feedbackable_id_and_type: Aktivitäten
       billing_expense:
@@ -469,7 +469,7 @@ de:
               invalid: ist ungültig
     models:
       assignment: Begleitung
-      feedback: Inhaltliches Journal
+      feedback: Feedback
       billing_expense: Spesenformular
       certificate: Nachweis
       client: Klient/in
