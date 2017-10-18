@@ -7,8 +7,13 @@ class FeedbacksController < ApplicationController
     @feedbacks = policy_scope(Feedback)
     if params[:group_offer_id]
       @feedbacks = @feedbacks.where(feedbackable_id: params[:group_offer_id])
+      @volunteer = current_user.volunteer || @feedbacks.first.volunteer
     elsif params[:assignment_id]
       @feedbacks = @feedbacks.where(feedbackable_id: params[:assignment_id])
+      @volunteer = Assignment.find(params[:assignment_id]).volunteer
+    elsif params[:volunteer_id]
+      @feedbacks = @feedbacks.where(volunteer_id: params[:volunteer_id])
+      @volunteer = Volunteer.find(params[:volunteer_id])
     end
   end
 

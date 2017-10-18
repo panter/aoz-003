@@ -173,11 +173,11 @@ h3= t('.availability')
 
 - if @volunteer.group_assignments.any?
   h3#assignments= t('.group_assignments')
-  = render 'group_assignments', group_assignments: @volunteer.group_assignments, editable: 'yes'
+  = render 'group_assignments', group_assignments: @volunteer.group_assignments, editable: true
 
 - if @volunteer.group_assignment_logs.any?
   h3= t('.old_group_assignments')
-  = render 'group_assignments', group_assignments: @volunteer.group_assignment_logs, editable: 'no'
+  = render 'group_assignments', group_assignments: @volunteer.group_assignment_logs, editable: false
 
 nav.navbar.section-navigation
   ul.list-inline
