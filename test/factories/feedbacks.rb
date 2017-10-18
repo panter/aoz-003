@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :assignment_journal do
-    assignment
+  factory :feedback do
+    association :feedbackable, factory: :assignment
     volunteer
     association :author, factory: :user
     goals { Faker::Lorem.words(4) }

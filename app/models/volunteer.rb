@@ -33,8 +33,9 @@ class Volunteer < ApplicationRecord
 
   has_many :assignments, dependent: :destroy
   has_many :clients, through: :assignments
+
   has_many :hours, dependent: :destroy
-  has_many :assignment_journals, through: :assignments
+  has_many :feedbacks, as: :feedbackable, dependent: :destroy
 
   has_many :certificates
 
@@ -46,6 +47,11 @@ class Volunteer < ApplicationRecord
 
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
+
+  has_many :assignments, dependent: :destroy
+  has_many :clients, through: :assignments
+
+
 
   has_many :billing_expenses
   has_many :reminders, dependent: :destroy
@@ -157,6 +163,15 @@ class Volunteer < ApplicationRecord
     assignments.size.positive?
   end
 
+  def assignment_started?
+    assignments.started.size.positive?
+  end
+
+  def group_assignment_stared?
+    group_assignments.started.size.positive?
+  end
+
+
   def external?
     external
   end
@@ -165,8 +180,8 @@ class Volunteer < ApplicationRecord
     !external
   end
 
-  def internal_and_assignments?
-    internal? && assignments?
+  def internal_and_started_assignments?
+    internal? && assignment_started? || group_assignment_stared?
   end
 
   def self_applicant?
@@ -221,7 +236,7 @@ class Volunteer < ApplicationRecord
     if external?
       user.destroy
     else
-      user.restore
+      user.restore recursive: true
     end
   end
 end

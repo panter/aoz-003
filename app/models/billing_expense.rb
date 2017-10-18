@@ -15,14 +15,9 @@ class BillingExpense < ApplicationRecord
 
   def compute_amount
     hour_count = id ? hours.total_hours : volunteer.hours.billable.total_hours
-    if hour_count > 50
-      self.amount = 150
-    elsif hour_count > 25
-      self.amount = 100
-    elsif hour_count >= 1
-      self.amount = 50
-    else
-      self.amount = 0
-    end
+    return self.amount = 150 if hour_count > 50
+    return self.amount = 100 if hour_count > 25
+    return self.amount = 50 if hour_count >= 1
+    self.amount = 0
   end
 end

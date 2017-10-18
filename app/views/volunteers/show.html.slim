@@ -1,21 +1,19 @@
-.row
-  .col-xs-12
-    h1= @volunteer.contact.full_name
+h1= @volunteer.contact.full_name
 
 nav.navbar.section-navigation
   ul.list-inline
     - if policy(Volunteer).can_manage?
-      li = render 'journals/journal_block', journaled_for: @volunteer
+      li= render 'journals/journal_block', journaled_for: @volunteer
       ul.list-inline
         - if @volunteer.seeking_clients?
-          li = button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
+          li= button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
         - if @volunteer.assignments.any?
           li
             = simple_form_for [@volunteer, BillingExpense.new] do |f|
               = f.hidden_field :volunteer_id, value: @volunteer.id
               = f.button :submit
           - if @volunteer.billing_expenses.any?
-            li = button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
+            li= button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
         - if @volunteer.assignments?
           li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
           - if @volunteer.certificates.size == 1
@@ -23,13 +21,13 @@ nav.navbar.section-navigation
           - elsif @volunteer.certificates.size > 1
             li= button_link t('.show_certificates'), volunteer_certificates_path(@volunteer)
   ul.list-inline
-    - if @volunteer.internal_and_assignments?
-      li = button_link t('.report_hours'), new_volunteer_hour_url(@volunteer)
-      li = button_link t('.hour_reports'), volunteer_hours_path(@volunteer)
+    - if @volunteer.internal_and_started_assignments?
+      li= button_link t('.report_hours'), new_volunteer_hour_url(@volunteer)
+      li= button_link t('.hour_reports'), volunteer_hours_path(@volunteer)
     li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
     li= form_navigation_btn :back, with_row: false unless current_user.volunteer?
 
-- if policy(Volunteer).can_manage?
+- if policy(Volunteer).checklist?
   h3= t('checklist')
   .table-responsive
     table.table.table-no-border-top
@@ -100,10 +98,11 @@ h3= t('personal_background')
       tr
         td= t_attr(:interests)
         td= @volunteer.interests
-      - if policy(Volunteer).can_manage?
+      - if policy(Volunteer).acceptance?
         tr
           td= t_attr(:acceptance)
           td= t(".acceptance.#{@volunteer.acceptance}")
+      - if policy(Volunteer).state?
         tr
           td= t_attr(:state)
           td= t(".state.#{@volunteer.state}")
@@ -174,13 +173,14 @@ h3= t('.availability')
 
 - if @volunteer.group_assignments.any?
   h3#assignments= t('.group_assignments')
-  = render 'group_assignments', group_assignments: @volunteer.group_assignments, editable: 'yes'
+  = render 'group_assignments', group_assignments: @volunteer.group_assignments, editable: true
 
 - if @volunteer.group_assignment_logs.any?
   h3= t('.old_group_assignments')
-  = render 'group_assignments', group_assignments: @volunteer.group_assignment_logs, editable: 'no'
+  = render 'group_assignments', group_assignments: @volunteer.group_assignment_logs, editable: false
 
 nav.navbar.section-navigation
   ul.list-inline
     li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
-    li= form_navigation_btn :back, with_row: false
+    - if policy(Volunteer).index?
+      li= form_navigation_btn :back, with_row: false

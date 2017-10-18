@@ -9,5 +9,5 @@ tr
   - if current_user.volunteer == assignment.volunteer
     td= link_to t_title(:edit, Assignment), edit_assignment_path(assignment)
   td = link_to t('download'), assignment_path(assignment, format: :pdf)
-  td= link_to t_title(:new, AssignmentJournal), new_assignment_assignment_journal_path(assignment_id: assignment, volunteer_id: assignment.volunteer)
-  td= link_to t_title(:index, AssignmentJournal), assignment_assignment_journals_path(assignment)
+  td= link_to t_title(:new, Feedback), new_assignment_feedback_path(assignment_id: assignment, volunteer_id: assignment.volunteer)
+  td= link_to t_title(:index, Feedback), assignment_feedbacks_path(assignment)

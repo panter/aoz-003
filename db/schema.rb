@@ -15,24 +15,6 @@ ActiveRecord::Schema.define(version: 20171011151358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "assignment_journals", force: :cascade do |t|
-    t.text "goals"
-    t.text "achievements"
-    t.text "future"
-    t.text "comments"
-    t.boolean "conversation"
-    t.datetime "deleted_at"
-    t.bigint "volunteer_id"
-    t.bigint "assignment_id"
-    t.bigint "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assignment_id"], name: "index_assignment_journals_on_assignment_id"
-    t.index ["author_id"], name: "index_assignment_journals_on_author_id"
-    t.index ["deleted_at"], name: "index_assignment_journals_on_deleted_at"
-    t.index ["volunteer_id"], name: "index_assignment_journals_on_volunteer_id"
-  end
-
   create_table "assignments", force: :cascade do |t|
     t.bigint "client_id"
     t.bigint "volunteer_id"
@@ -157,6 +139,25 @@ ActiveRecord::Schema.define(version: 20171011151358) do
     t.bigint "user_id", null: false
     t.bigint "department_id", null: false
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "goals"
+    t.text "achievements"
+    t.text "future"
+    t.text "comments"
+    t.boolean "conversation"
+    t.datetime "deleted_at"
+    t.bigint "volunteer_id"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "feedbackable_type"
+    t.bigint "feedbackable_id"
+    t.index ["author_id"], name: "index_feedbacks_on_author_id"
+    t.index ["deleted_at"], name: "index_feedbacks_on_deleted_at"
+    t.index ["feedbackable_type", "feedbackable_id"], name: "index_feedbacks_on_feedbackable_type_and_feedbackable_id"
+    t.index ["volunteer_id"], name: "index_feedbacks_on_volunteer_id"
   end
 
   create_table "group_assignment_logs", force: :cascade do |t|
@@ -473,13 +474,13 @@ ActiveRecord::Schema.define(version: 20171011151358) do
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 
-  add_foreign_key "assignment_journals", "users", column: "author_id"
   add_foreign_key "assignments", "clients"
   add_foreign_key "assignments", "users", column: "creator_id"
   add_foreign_key "assignments", "volunteers"
   add_foreign_key "certificates", "users"
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "clients", "users"
+  add_foreign_key "feedbacks", "users", column: "author_id"
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"
   add_foreign_key "hours", "billing_expenses"

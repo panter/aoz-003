@@ -136,6 +136,6 @@ end
 
 # create Assignment Journal
 Assignment.all.each do |assignment|
-  FactoryGirl.create(:assignment_journal, volunteer: assignment.volunteer, assignment: assignment,
+  FactoryGirl.create(:feedback, volunteer: assignment.volunteer, feedbackable: assignment,
     author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
 end

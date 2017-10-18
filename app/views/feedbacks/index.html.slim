@@ -1,0 +1,34 @@
+h1= t_title
+
+table.table.table-striped
+  thead
+    tr
+      th= t_model(Volunteer)
+      th= t_attr(:feedback_activity, Feedback)
+      th= t_attr(:goals, Feedback)
+      th= t_attr(:achievements, Feedback)
+      th= t_attr(:future, Feedback)
+      th= t_attr(:comments, Feedback)
+      th= t_attr(:conversation, Feedback)
+      th colspan='3'
+
+  tbody
+    - @feedbacks.each do |record|
+      tr
+        td= link_to record.volunteer.contact.full_name, volunteer_path(record.volunteer)
+        td
+          - if record.assignment?
+            = link_to record.feedbackable.to_label, client_path(record.feedbackable.client)
+          - else
+            = link_to record.feedbackable.to_label, group_offer_path(record.feedbackable)
+        td= record.goals
+        td= record.achievements
+        td= record.future
+        td= record.comments
+        td= t(record.conversation)
+        td= link_to t_action(:show), url_for([record.feedbackable, record])
+        td= link_to t_action(:edit), url_for([record.feedbackable, record]) + '/edit'
+        td= link_to t_action(:destroy), url_for([record.feedbackable, record]), confirm_deleting(record)
+
+= form_navigation_btn :new
+= bootstrap_row_col { button_link t('back'), @volunteer || :back  }

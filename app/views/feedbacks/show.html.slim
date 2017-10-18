@@ -1,0 +1,29 @@
+h1= t_title(:show)
+
+.table-responsive.m-t-30.m-b-20
+  table.table.table-no-border-top
+    tbody
+      tr
+        td= t_model(Volunteer)
+        td= link_to @feedback.volunteer.contact.full_name, volunteer_path(@feedback.volunteer)
+      - if @feedback.assignment?
+        tr
+          td= t_model(Assignment)
+          td= link_to @feedback.feedbackable.to_label, assignment_path(@feedback.feedbackable)
+        tr
+          td= t_model(Client)
+          td= link_to @feedback.feedbackable.client.contact.full_name, client_path(@feedback.feedbackable.client)
+      - else
+        tr
+          td= t_model(GroupOffer)
+          td= link_to @feedback.feedbackable.to_label, group_offer_path(@feedback.feedbackable)
+      - [:goals, :achievements, :future, :comments].each do |field|
+        tr
+          td= t_attr(field)
+          td= @feedback[field]
+      tr
+        td= t_attr(:conversation)
+        td= t(@feedback.conversation)
+
+= form_navigation_btn :edit
+= bootstrap_row_col { button_link t('back'), @volunteer }

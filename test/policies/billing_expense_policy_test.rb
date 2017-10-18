@@ -6,13 +6,9 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
     @social_worker = create :user, role: 'social_worker'
     @department_manager = create :user, role: 'department_manager'
     @volunteer = create :volunteer
-    @assignment = create(:assignment, volunteer: @volunteer)
-    @billing_expense = BillingExpense.create!(
-      user: @superadmin, volunteer: @volunteer,
-      hours: [
-        create(:hour, volunteer: @volunteer, hourable: @assignment)
-      ]
-    )
+    @assignment = create(:assignment, volunteer: @volunteer,
+      hours: [create(:hour, volunteer: @volunteer)])
+    @billing_expense = BillingExpense.create!(user: @superadmin, volunteer: @volunteer, hours: @volunteer.hours.billable)
   end
 
   test 'Create: Only superadmin can create billing expense' do

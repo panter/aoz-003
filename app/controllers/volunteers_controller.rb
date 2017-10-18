@@ -56,7 +56,7 @@ class VolunteersController < ApplicationController
 
   def seeking_clients
     authorize Volunteer
-    @q = specific_policy_scope(:seeking_clients).ransack(params[:q])
+    @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
     @seeking_clients = @q.result.paginate(page: params[:page])
   end
 

@@ -146,6 +146,9 @@ de:
       resigned: Abgemeldet
     updated_at: Geändert um
     volunteer_applications: &id-volunteers-by-actions
+      feedback:
+        new: Neues Feedback
+        index: Feedback Liste
       acceptance: &id-volunteer-acceptance
         management: Aufnahme Verwaltung
         accepted: Akzeptiert
@@ -223,7 +226,7 @@ de:
         period_start: Einsatzbeginn
         probation_period: Probezeit
         volunteer: Freiwillige
-      assignment_journal:
+      feedback:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
         comments: Bemerkungen
@@ -231,6 +234,8 @@ de:
         future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
         goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
         last: Letzter inhaltlicher Journaleintrag am
+        feedback_activity: Aktivität
+        feedbackable_id_and_type: Aktivitäten
       billing_expense:
         <<: *id-generic_keys
         amount: Betrag
@@ -463,7 +468,7 @@ de:
               invalid: ist ungültig
     models:
       assignment: Begleitung
-      assignment_journal: Inhaltliches Journal
+      feedback: Inhaltliches Journal
       billing_expense: Spesenformular
       certificate: Nachweis
       client: Klient/in

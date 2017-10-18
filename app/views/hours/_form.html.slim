@@ -1,13 +1,11 @@
 = simple_form_for [@volunteer, @hour] do |f|
   = simple_error_notice f
+  = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
 
   .row
     .col-xs-12
       = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection
 
-  .row
-    .col-xs-12
-      = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
 
   .row
     .col-xs-12
