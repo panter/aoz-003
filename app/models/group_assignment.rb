@@ -3,7 +3,7 @@ class GroupAssignment < ApplicationRecord
   belongs_to :volunteer
   has_many :group_assignment_logs
 
-  after_save :save_group_assignment_logs, if: :dates_updated?
+  after_update :save_group_assignment_logs, if: :dates_updated?
   before_destroy :save_group_assignment_logs
 
   scope :ongoing, (-> { where('group_assignments.period_end > ?', Time.zone.today) })
