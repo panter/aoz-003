@@ -1,7 +1,6 @@
 - if @feedbackable.present?
   = simple_form_for [@feedbackable, @feedback] do |f|
     = simple_error_notice f
-
     = f.hidden_field :feedbackable_id, value: @feedbackable.id
     = f.hidden_field :feedbackable_type, value: @feedbackable.class
 
