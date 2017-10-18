@@ -1,5 +1,5 @@
 h3
-  = "#{@volunteer.salutation} #{@volunteer.contact.full_name}"
+  = "#{t("salutation.#{@volunteer.salutation}")} #{@volunteer.contact.full_name}"
 
 p= t('.please_confirm', client: @reminder.assignment.client)
 p= link_to t_title(:index, Hour), volunteer_hours_url(@volunteer)
