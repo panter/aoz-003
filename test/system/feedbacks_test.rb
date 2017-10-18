@@ -98,7 +98,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     create :feedback, feedbackable: other_assignment, volunteer: @volunteer,
       author: @user_volunteer, comments: 'other_assignment_feedback'
     login_as @user_volunteer
-    visit volunteer_feedbacks_path(@assignment)
+    visit volunteer_feedbacks_path(@volunteer)
     assert page.has_text? 'some_assignment_feedback'
     refute page.has_text? 'some_assignment_superadmin_feedback'
     assert page.has_text? 'other_assignment_feedback'
@@ -106,7 +106,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     refute page.has_text? 'some_group_offer_superadmin_feedback'
     refute page.has_text? 'other_volunteers_group_offer_feedback'
     login_as @superadmin
-    visit volunteer_feedbacks_path(@assignment)
+    visit volunteer_feedbacks_path(@volunteer)
     assert page.has_text? 'some_assignment_feedback'
     assert page.has_text? 'some_assignment_superadmin_feedback'
     assert page.has_text? 'other_assignment_feedback'
