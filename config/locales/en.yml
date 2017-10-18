@@ -172,6 +172,7 @@ en:
         activate: Activate
         deactivate: Deactivate
       index: &id-volunteers-index
+        <<: *id-volunteers-create
         state:
           <<: [*id-volunteer-aceptance]
           active: Active

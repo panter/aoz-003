@@ -175,8 +175,8 @@ de:
         activate: Aktivieren
         deactivate: Deaktivieren
       index: &id-volunteers-index
+        <<: [*id-volunteers-create, *id-volunteer-acceptance, *id-states]
         state: &id-volunteer-active-states
-          <<: [*id-volunteer-acceptance, *id-states]
         show_assignments: Begleitete anzeigen
       new:
         <<: [*id-volunteers-create, *id-volunteer-acceptance]

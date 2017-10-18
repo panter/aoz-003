@@ -34,10 +34,11 @@ wb.add_worksheet(name: t('volunteers', count: 2)) do |sheet|
   cell_styles = Array.new(header_row.size).map { nil }
   cell_styles[6] = postal_code
   @clients.each do |client|
+    salutation = t("salutation.#{client.salutation}") if client.salutation
     contact = client.contact
     body_row = [
       client.id,
-      t("salutation.#{client.salutation}"),
+      salutation,
       contact.last_name,
       contact.first_name,
       contact.street,
