@@ -31,4 +31,4 @@ table.table.table-striped
         td= link_to t_action(:destroy), url_for([record.feedbackable, record]), confirm_deleting(record)
 
 = form_navigation_btn :new
-= bootstrap_row_col { button_link t('back'), volunteer_path(params[:volunteer_id]) }
+= bootstrap_row_col { button_link t('back'), :back }
