@@ -3,6 +3,7 @@ en:
   application:
     navigation:
       group_offers: Group offers
+      reminders: Reminders
   aaa_injectable: &id-injectables
     age_request: &id-age_requests
       age_middle: 36 - 50
@@ -262,7 +263,6 @@ en:
         evaluation: Final evaluation
         excursions: Excursions
         family: Family
-        full_name: Name
         german_course: German course
         health: Health
         iban: IBAN
@@ -597,7 +597,6 @@ en:
       please_confirm: 'Please confirm the hour report and assignment journal for %{client}.'
       subject: "Reports' confirmation"
   reminder_sent: 'Reminder sent to %{email}'
-  reminders: Reminders
   remove_language: Remove language
   remove_relative: Remove family member
   reserve: Reserve

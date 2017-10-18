@@ -29,7 +29,7 @@ nav.navbar.navbar-top.hidden-print
           - if policy(PerformanceReport).index?
             li= link_to t('performance_reports', count: 2), performance_reports_path
           - if policy(Reminder).index?
-            li= link_to t('reminders'), reminders_path
+            li= link_to t('.reminders'), reminders_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
