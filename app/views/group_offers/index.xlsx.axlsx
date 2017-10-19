@@ -22,7 +22,7 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
 
   cell_types = Array.new(header_row.size).map { :string }
   cell_styles = Array.new(header_row.size).map { nil }
-  @group_offers.each do |offer|
+  group_offers.each do |offer|
     availabilities = availability_collection.map do |availability|
                       t("availability.#{availability}") if offer[availability]
                     end.compact.join(', ')

@@ -7,7 +7,7 @@ class GroupOffersController < ApplicationController
     @q = policy_scope(GroupOffer.active).ransack(params[:q])
     @group_offers = @q.result
     respond_to do |format|
-      format.xlsx
+      format.xlsx { render xlsx: 'index', locals: { group_offers: @group_offers } }
       format.html
     end
   end
@@ -57,6 +57,10 @@ class GroupOffersController < ApplicationController
     authorize GroupOffer
     @q = policy_scope(GroupOffer.archived).ransack(params[:q])
     @archived = @q.result
+    respond_to do |format|
+      format.xlsx { render xlsx: 'index', locals: { group_offers: @archived } }
+      format.html
+    end
   end
 
   def change_active_state
