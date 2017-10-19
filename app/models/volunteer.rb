@@ -83,7 +83,7 @@ class Volunteer < ApplicationRecord
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
   scope :without_active_assignment, (-> { joins(:assignments).merge(Assignment.ended) })
   scope :not_in_any_group_offer, lambda {
-    left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })
+    left_outer_joins(:group_assignments).where(group_assignments: { id: nil })
   }
 
   scope :external, (-> { where(external: true) })
@@ -114,17 +114,29 @@ class Volunteer < ApplicationRecord
       .merge(Assignment.inactive)
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
       .or(loj_without_assignments)
+      .merge(
+        left_outer_joins(:group_assignments)
+          .where('group_assignments.period_end IS NULL
+            OR group_assignments.period_end < ?', Time.zone.today)
+      )
   }
+
   scope :seeking_clients_will_take_more, lambda {
     accepted_joined
       .merge(Assignment.inactive)
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
       .or(loj_without_assignments)
       .or(loj_active_take_more)
+      .merge(
+        left_outer_joins(:group_assignments)
+          .where('group_assignments.period_end IS NULL
+            OR group_assignments.period_end < ?', Time.zone.today)
+      )
   }
 
   def active?
-    accepted? && (assignments.active.any? || group_assignments.ongoing.any? || group_assignments.no_end.any?)
+    accepted? &&
+      (assignments.active.any? || group_assignments.ongoing.any? || group_assignments.no_end.any?)
   end
 
   def inactive?

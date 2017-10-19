@@ -95,7 +95,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? @group_offer_member
   end
 
-  test 'not_in_any_group_offer returns volunteers not in group offer (as members)' do
+  test 'not_in_any_group_offer returns volunteers not in group offer' do
     query = Volunteer.not_in_any_group_offer
     assert query.include? @has_assignment
     assert query.include? @has_multiple
@@ -144,7 +144,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? undecided_no_assignment
   end
 
-  test 'seeking_clients_will_take_more only returns accepted volunteers that fullfill all criteria' do
+  test 'seeking_clients_will_take_more returns accepted volunteers that fullfill all criteria' do
     undecided_no_assignment = make_volunteer nil, acceptance: :undecided
     query = Volunteer.seeking_clients_will_take_more
     refute query.include? @has_active_and_inactive
