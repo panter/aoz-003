@@ -1,11 +1,11 @@
 require 'test_helper'
 
-class GroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
+class ArchivedGroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
-    10.times { create :group_offer }
+    10.times { create :group_offer, active: false }
     login_as @superadmin
-    get group_offers_url(format: :xlsx)
+    get archived_group_offers_url(format: :xlsx)
   end
 
   test 'xlsx file is downloadable' do
@@ -20,6 +20,7 @@ class GroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
     wb = Roo::Spreadsheet.open(excel_file.path, extension: 'xlsx')
 
     assert_equal wb.cell(1, 1), 'Title'
+    assert_equal wb.cell(2, 1), GroupOffer.archived.last.title
     assert_equal wb.cell(1, 2), 'Location'
     assert_equal wb.cell(1, 3), 'Availability'
     assert_equal wb.cell(1, 4), 'Target group'
