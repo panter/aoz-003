@@ -25,6 +25,12 @@ class GroupOffer < ApplicationRecord
 
   scope :in_department, (-> { where.not(department_id: nil) })
 
+  scope :active_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
+  }
+
+  scope :created_before, ->(date) { where('created_at < ?', date) }
+
   def external?
     offer_type == EXTERNAL_OFFER
   end

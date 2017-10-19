@@ -10,6 +10,15 @@ class GroupAssignment < ApplicationRecord
   scope :ongoing, (-> { where('group_assignments.period_end > ?', Time.zone.today) })
   scope :no_end, (-> { where(period_end: nil) })
 
+  scope :start_within, ->(date_range) { where(period_start: date_range) }
+  scope :end_within, ->(date_range) { where(period_end: date_range) }
+  scope :start_before, ->(date) { where('period_start < ?', date) }
+
+  scope :active_between, lambda { |start_date, end_date|
+    start_within(start_date..end_date)
+      .or(end_within(start_date..end_date))
+  }
+
   def save_group_assignment_logs
     group_assignment_logs.create!(group_offer_id: group_offer_id, volunteer_id: volunteer_id,
       group_assignment_id: id, title: group_offer.title,
