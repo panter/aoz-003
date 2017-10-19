@@ -7,6 +7,11 @@ class Feedback < ApplicationRecord
 
   validates :comments, presence: true
 
+  scope :on_group_offer, lambda { |group_offer_id|
+    where(feedbackable_type: 'GroupOffer').where(feedbackable_id: group_offer_id)
+  }
+  scope :on_assignment, (-> { where(feedbackable_type: 'Assignment') })
+
   def assignment?
     feedbackable_type == 'Assignment'
   end

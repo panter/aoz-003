@@ -1,20 +1,21 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback, only: [:show, :edit, :update, :destroy]
-  before_action :set_feedbackable, only: [:new, :create]
+  before_action :set_feedbackable, only: [:index, :new, :create]
   before_action :set_volunteer, only: [:new, :create]
 
   def index
     authorize Feedback
     @feedbacks = policy_scope(Feedback)
     if params[:group_offer_id]
-      @feedbacks = @feedbacks.where(feedbackable_id: params[:group_offer_id])
-      @volunteer = current_user.volunteer || @feedbacks.first.volunteer
+      @volunteer = current_user.volunteer || Volunteer.find(params[:volunteer])
+      @feedbacks = @feedbacks.on_group_offer(params[:group_offer_id])
     elsif params[:assignment_id]
-      @feedbacks = @feedbacks.where(feedbackable_id: params[:assignment_id])
-      @volunteer = Assignment.find(params[:assignment_id]).volunteer
+      assignment = Assignment.find(params[:assignment_id])
+      @volunteer = assignment.volunteer
+      @feedbacks = @feedbacks.where(feedbackable: assignment)
     elsif params[:volunteer_id]
-      @feedbacks = @feedbacks.where(volunteer_id: params[:volunteer_id])
       @volunteer = Volunteer.find(params[:volunteer_id])
+      @feedbacks = @feedbacks.where(volunteer: @volunteer)
     end
   end
 
