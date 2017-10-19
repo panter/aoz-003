@@ -56,7 +56,7 @@ class AccessImport
 
   def handle_volunteer_state(personen_rolle)
     return :resigned if personen_rolle[:d_Rollenende]
-    return :active if personen_rolle[:d_Rollenende].nil?
+    return :accepted if personen_rolle[:d_Rollenende].nil?
     :undecided
   end
 
