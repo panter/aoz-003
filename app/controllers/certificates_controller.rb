@@ -1,6 +1,6 @@
 class CertificatesController < ApplicationController
-  before_action :set_certificate, except: [:index, :new]
-  before_action :set_volunteer, only: [:index, :new]
+  before_action :set_certificate, except: [:show, :index, :new, :create]
+  before_action :set_volunteer
 
   def index
     authorize Certificate
@@ -54,18 +54,17 @@ class CertificatesController < ApplicationController
 
   def set_certificate
     @certificate = Certificate.find(params[:id])
-    @volunteer = @certificate.volunteer
     authorize @certificate
   end
 
   def set_volunteer
-    @volunteer = Volunteer.find(params[:volunteer_id])
+    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
   end
 
   def certificate_params
     params.require(:certificate).permit(
       :duration, :duration_end, :duration_start, :hours, :minutes, :text_body, :institution,
-      :function, :group_offer, volunteer_contact: [:name, :street, :city],
+      :function, :group_offer, :volunteer_id, volunteer_contact: [:name, :street, :city],
       assignment_kinds: Assignment::KINDS
     )
   end
