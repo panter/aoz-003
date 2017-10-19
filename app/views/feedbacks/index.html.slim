@@ -31,8 +31,8 @@ table.table.table-striped
             - else
               = link_to record.author.full_name, record.author
         td= link_to t_action(:show), polymorphic_path([record.feedbackable, record])
-        td= link_to t_action(:edit), polymorphic_path([record.feedbackable, record], action: :edit)
+        td= link_to t_action(:edit), edit_polymorphic_path([record.feedbackable, record])
         td= link_to t_action(:destroy), polymorphic_path([record.feedbackable, record]), confirm_deleting(record)
 
-= form_navigation_btn :new
+= bootstrap_row_col { button_link t_title(:new, Feedback), polymorphic_url([@feedbackable, Feedback], action: :new, volunteer_id: @volunteer.id) }
 = bootstrap_row_col { button_link t('back'), @volunteer || :back  }

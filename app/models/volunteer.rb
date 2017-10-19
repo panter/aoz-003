@@ -35,7 +35,7 @@ class Volunteer < ApplicationRecord
   has_many :clients, through: :assignments
 
   has_many :hours, dependent: :destroy
-  has_many :feedbacks, as: :feedbackable, dependent: :destroy
+  has_many :feedbacks, dependent: :destroy
 
   has_many :certificates
 
