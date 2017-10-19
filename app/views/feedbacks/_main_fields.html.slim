@@ -1,6 +1,6 @@
 
-= f.hidden_field :volunteer_id, value: @feedback.volunteer_id
-= f.hidden_field :author_id, value: @feedback.author_id
+= f.hidden_field :volunteer_id, value: @feedback.volunteer.id
+= f.hidden_field :author_id, value: @feedback.author_id || current_user.id
 
 - [:goals, :achievements, :future, :comments, :conversation].each do |field|
   .row
