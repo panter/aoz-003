@@ -1,16 +1,22 @@
 class Certificate < ApplicationRecord
-  after_initialize :build_values
-
   belongs_to :volunteer
   belongs_to :user, -> { with_deleted }
 
   def build_values
     return unless text_body.nil?
-    update(text_body: default_text_body, function: DEFAULT_FUNCTION,
-      hours: volunteer.hours.total_hours, minutes: volunteer.hours.minutes_rest,
-      assignment_kinds: volunteer.assignment_kinds, volunteer_contact: convert_volunteer_contact,
-      institution: DEFAULT_INSTITUTION, group_offer: volunteer.group_offers.any?)
-    update(volunteer.assignments_duration)
+    self.text_body ||= default_text_body
+    self.function ||= DEFAULT_FUNCTION
+    self.hours ||= volunteer.hours.total_hours
+    self.minutes ||= volunteer.hours.minutes_rest
+    self.assignment_kinds ||= volunteer.assignment_kinds
+    self.volunteer_contact ||= convert_volunteer_contact
+    self.institution ||= DEFAULT_INSTITUTION
+    self.assignments_duration ||= volunteer.assignments_duration
+    self.group_offer ||= has_group_offer
+  end
+
+  def has_group_offer
+    volunteer.group_offers = true if group_offer
   end
 
   def convert_volunteer_contact
