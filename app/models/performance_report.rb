@@ -69,11 +69,19 @@ class PerformanceReport < ApplicationRecord
 
   def group_offers
     group_offers = GroupOffer.created_before(period_end)
-    group_offers = group_offers.internal_offer unless external
+    # group_offers = group_offers.internal_offer unless extern
+    ended = group_offers.map do |group_offer|
+      group_offer.all_group_assignments_ended_within?(period_start..period_end)
+    end
+    new_group_offers = group_offers.map do |group_offer|
+      group_offer.all_group_assignments_started_within?(period_start..period_end)
+    end
+
+    binding.pry
     {
-      ended: group_offers.end_within(period_start..period_end).count,
-      new: group_offers.start_within(period_start..period_end).count,
-      active: group_offers.active_between(period_start, period_end).count,
+      ended: ended.count,
+      new: group_offers.count,
+      active: new_group_offers.count,
       total: group_offers.count
     }
   end

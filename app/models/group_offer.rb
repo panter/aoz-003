@@ -31,6 +31,26 @@ class GroupOffer < ApplicationRecord
 
   scope :created_before, ->(date) { where('created_at < ?', date) }
 
+  def all_group_assignments_ended_within?(date_range)
+    # TODO
+    # are group assignments put in group_assignments_log on group_offer.destroy ?
+    ended_within = group_assignments.end_within(date_range)
+    ended_before = group_assignments.ended_before(date_range.first)
+    return true if ended_within.size == group_assignments.size
+    return true if ended_within.size + ended_before.size >= group_assignments.size
+    false
+  end
+
+  def all_group_assignments_started_within?(date_range)
+    # TODO
+    # are group assignments put in group_assignments_log on group_offer.destroy ?
+    started_within = group_assignments.start_within(date_range)
+    started_before = group_assignments.started_before(date_range.first)
+    return true if started_within.size == group_assignments.size
+    return true if started_before.size.zero?
+    false
+  end
+
   def external?
     offer_type == EXTERNAL_OFFER
   end
