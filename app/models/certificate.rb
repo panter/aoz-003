@@ -11,12 +11,11 @@ class Certificate < ApplicationRecord
     self.assignment_kinds ||= volunteer.assignment_kinds
     self.volunteer_contact ||= convert_volunteer_contact
     self.institution ||= DEFAULT_INSTITUTION
-    self.assignments_duration ||= volunteer.assignments_duration
     self.group_offer ||= has_group_offer
   end
 
   def has_group_offer
-    volunteer.group_offers = true if group_offer
+    true unless volunteer.group_offers.nil?
   end
 
   def convert_volunteer_contact
