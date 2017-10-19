@@ -32,7 +32,7 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.new(feedback_params.merge(author_id: current_user.id))
     authorize @feedback
     if @feedback.save
-      redirect_to url_for([@feedback.volunteer, @feedback]), make_notice
+      redirect_to @feedback.volunteer, make_notice
     else
       render :new
     end
@@ -40,7 +40,7 @@ class FeedbacksController < ApplicationController
 
   def update
     if @feedback.update(feedback_params)
-      redirect_to url_for([@feedback.volunteer, @feedback]), make_notice
+      redirect_to @feedback.volunteer, make_notice
     else
       render :edit
     end
@@ -77,6 +77,7 @@ class FeedbacksController < ApplicationController
 
   def feedback_params
     params.require(:feedback).permit(:goals, :achievements, :future, :comments, :conversation,
-      :feedbackable_id, :feedbackable_type, :volunteer_id, :feedbackable_id_and_type, :author_id, :volunteer)
+      :feedbackable_id, :feedbackable_type, :volunteer_id, :feedbackable_id_and_type, :author_id,
+      :volunteer)
   end
 end
