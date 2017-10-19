@@ -1,6 +1,7 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback, only: [:show, :edit, :update, :destroy]
   before_action :set_feedbackable, only: [:new, :create]
+  before_action :set_volunteer, only: [:new, :create]
 
   def index
     authorize Feedback
@@ -53,11 +54,18 @@ class FeedbacksController < ApplicationController
   private
 
   def set_feedbackable
-    @feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
-    @feedbackable = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
-    return @volunteer = @feedbackable.volunteer if @feedbackable.class == Assignment
+    return @feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
+    return @feedbackable = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
+    if params[:feedbackable_type] == 'GroupOffer'
+      @feedbackable = GroupOffer.find(params[:feedbackable_id])
+    end
+  end
+
+  def set_volunteer
     @volunteer = current_user.volunteer if current_user.volunteer?
-    @volunteer = Volunteer.find(params[:volunteer]) if params[:volunteer]
+    @volunteer ||= Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+    @volunteer ||= Volunteer.find(params[:volunteer]) if params[:volunteer]
+    @volunteer ||= @feedbackable.volunteer if @feedbackable.class == Assignment
   end
 
   def set_feedback
