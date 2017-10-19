@@ -7,7 +7,7 @@ col_header = wb.styles.add_style(
   border: { color: '00', edges: [:bottom], style: :thin})
 postal_code = wb.styles.add_style(alignment: { horizontal: :right }, width: :auto_fit)
 
-wb.add_worksheet(name: t('clients', count: 2)) do |sheet|
+wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
   header_row = [
     'id',
     t_attr(:salutation),

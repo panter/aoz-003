@@ -567,6 +567,7 @@ de:
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
   clients: Klienten/innen
+  clients_xlsx: Klienten
   clients_need_accompanying: Klienten ohne Begleitung
   contact_info: Kontakt Informationen
   contacts:
