@@ -20,18 +20,25 @@ class CertificatesController < ApplicationController
 
   def new
     @certificate = Certificate.new(volunteer_id: @volunteer.id, user_id: current_user.id)
+    @certificate.build_values
     authorize @certificate
   end
 
   def edit; end
 
-  def update
-    @certificate.update(certificate_params.merge(volunteer_id: @volunteer.id,
+  def create
+    @certificate = Certificate.new(certificate_params.merge(volunteer_id: @volunteer.id,
       user_id: current_user.id))
-    @certificate.update(volunteer_contact: certificate_params['volunteer_contact'],
-      assignment_kinds: certificate_params['assignment_kinds'])
     authorize @certificate
     if @certificate.save
+      redirect_to volunteer_certificate_path(@volunteer, @certificate)
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @certificate.update(certificate_params)
       redirect_to volunteer_certificate_path(@volunteer, @certificate)
     else
       render :new
