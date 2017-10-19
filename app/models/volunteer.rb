@@ -70,9 +70,11 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: proc { |user| user.deleted? }
 
-  default_scope { order(created_at: :desc) }
+  # default_scope { order(created_at: :desc) }
 
-  scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+  scope :created_between, lambda { |start_date, end_date|
+    created_after(start_date).created_before(end_date)
+  }
   scope :created_before, ->(max_time) { where('volunteers.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('volunteers.created_at > ?', min_time) }
 
@@ -84,16 +86,19 @@ class Volunteer < ApplicationRecord
     left_outer_joins(:group_assignments).where(group_assignments: { id: nil })
   }
 
-  scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
-  scope :with_active_group_offers, (-> { joins(:group_offers).merge(GroupOffer.active) })
   scope :with_active_assignments_between, lambda { |start_date, end_date|
     joins(:assignments).merge(Assignment.active_between(start_date, end_date))
   }
   scope :with_active_group_assignments_between, lambda { |start_date, end_date|
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
   }
+
+  scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
+  scope :with_active_group_offers, (-> { joins(:group_offers).merge(GroupOffer.active) })
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
-  scope :without_group_offer, (-> { left_outer_joins(:group_offers).where(group_offers: { id: nil }) })
+  scope :without_group_offer, lambda {
+    left_outer_joins(:group_offers).where(group_offers: { id: nil })
+  }
   scope :without_active_assignment, (-> { joins(:assignments).merge(Assignment.ended) })
   scope :not_in_any_group_offer, lambda {
     left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })

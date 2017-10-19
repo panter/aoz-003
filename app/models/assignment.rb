@@ -25,7 +25,9 @@ class Assignment < ApplicationRecord
 
   scope :default_order, (-> { order(created_at: :desc) })
 
-  scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+  scope :created_between, lambda { |start_date, end_date|
+    created_before(end_date).crated_after(start_date)
+  }
   scope :created_before, ->(max_time) { where('assignments.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('assignments.created_at > ?', min_time) }
 
@@ -58,7 +60,6 @@ class Assignment < ApplicationRecord
   scope :active_between, lambda { |start_date, end_date|
     start_within(start_date..end_date)
       .or(end_within(start_date..end_date))
-      .or(no_end.start_before(start_date))
   }
 
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })

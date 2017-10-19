@@ -37,9 +37,11 @@ class PerformanceReport < ApplicationRecord
     volunteers = Volunteer.created_before(period_end)
     volunteers = extern ? volunteers.external : volunteers.internal
     volunteers = volunteers.zurich if zurich
+    active_ids = volunteers.with_active_assignments_between(period_start, period_end).ids
+    active_ids += volunteers.with_active_group_assignments_between(period_start, period_end).ids
     {
       total: volunteers.count,
-      active: volunteers.with_active_assignments_between(period_start, period_end).distinct.count,
+      active: active_ids.uniq.size,
       new: volunteers.created_between(period_start, period_end).count
     }
   end
