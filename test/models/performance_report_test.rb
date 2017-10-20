@@ -31,20 +31,20 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
       period_end: @today.end_of_year, user: @user)
     gl_vol, gl_cli, gl_ass, z_vol, z_cli, z_ass, group_off = extract_results(report_this_year)
 
-    assert_equal 2, z_vol['active']
+    assert_equal 1, z_vol['active']
     assert_equal 1, z_vol['new']
     assert_equal 3, z_vol['total']
 
-    assert_equal 2, z_cli['active']
+    assert_equal 1, z_cli['active']
     assert_equal 1, z_cli['new']
     assert_equal 3, z_cli['total']
 
-    assert_equal 2, z_ass['active']
+    assert_equal 1, z_ass['active']
     assert_equal 1, z_ass['new']
     assert_equal 3, z_ass['total']
     assert_equal 0, z_ass['ended']
 
-    assert_equal 4, gl_vol['active']
+    assert_equal 2, gl_vol['active']
     assert_equal 2, gl_vol['new']
     assert_equal 6, gl_vol['total']
 
@@ -94,7 +94,7 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     assert_equal 6, gl_ass['total']
     assert_equal 3, gl_ass['ended']
 
-    assert_equal 0, group_off['active']
+    assert_equal 2, group_off['active']
     assert_equal 0, group_off['new']
     assert_equal 0, group_off['total']
     assert_equal 0, group_off['ended']
@@ -109,11 +109,11 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     assert_equal 0, z_vol['new']
     assert_equal 0, z_vol['total']
 
-    assert_equal 2, z_cli['active']
+    assert_equal 1, z_cli['active']
     assert_equal 1, z_cli['new']
     assert_equal 3, z_cli['total']
 
-    assert_equal 2, z_ass['active']
+    assert_equal 1, z_ass['active']
     assert_equal 1, z_ass['new']
     assert_equal 3, z_ass['total']
     assert_equal 0, z_ass['ended']
@@ -168,16 +168,16 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     assert_equal 6, gl_ass['total']
     assert_equal 3, gl_ass['ended']
 
-    assert_equal 0, group_off['active']
-    assert_equal 0, group_off['new']
-    assert_equal 0, group_off['total']
-    assert_equal 0, group_off['ended']
+    assert_equal 2, group_off['active']
+    assert_equal 2, group_off['new']
+    assert_equal 2, group_off['total']
+    assert_equal 2, group_off['ended']
   end
 
   def extract_results(report)
     report.report_content['global'].values_at('volunteers', 'clients', 'assignments') +
       report.report_content['zuerich'].values_at('volunteers', 'clients', 'assignments') +
-      report.report_content['group_offers']
+      [report.report_content['group_offers']]
   end
 
   def create_assignment_entity(title, volunteer, client, start_date, end_date = nil)
@@ -191,7 +191,7 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
 
   def create_group_offer_entity(title, start_date, end_date, *volunteers)
     category = create :group_offer_category, category_name: "Category #{title}"
-    group_offer = create_group_offer(title, category, volunteers.size)
+    group_offer = create_group_offer(title, category, volunteers.size, start_date)
     group_assignments = volunteers.map do |volunteer|
       g_assignment = GroupAssignment.new(group_offer: group_offer, volunteer: volunteer,
         period_start: start_date, period_end: end_date)
@@ -212,9 +212,9 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     instance_variable_set("@#{title}", assignment)
   end
 
-  def create_group_offer(title, group_offer_category, volunteer_count)
+  def create_group_offer(title, group_offer_category, volunteer_count, start_date)
     group_offer = create :group_offer, group_offer_category: group_offer_category, title: title,
-      necessary_volunteers: volunteer_count
+      necessary_volunteers: volunteer_count, created_at: start_date.to_date - 1
     return group_offer unless title
     instance_variable_set("@group_offer_#{title}", group_offer)
     group_offer
