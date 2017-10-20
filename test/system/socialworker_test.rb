@@ -21,10 +21,9 @@ class SocialworkerTest < ApplicationSystemTestCase
     assert page.has_link? 'Clients'
   end
 
-  test 'does not have navbar link to users and volunteers page' do
+  test 'does not have navbar link to users page' do
     visit user_path(@socialworker.id)
     assert_not page.has_link? 'Users'
-    assert_not page.has_link? 'Volunteers'
   end
 
   test 'can see his clients' do
