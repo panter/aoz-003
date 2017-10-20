@@ -32,15 +32,11 @@ Rails.application.routes.draw do
     resources :assignments do
       resources :feedbacks
     end
-    resources :feedbacks
   end
-  resources :assignments do
-    resources :feedbacks
-  end
+  resources :assignments
   resources :group_offers do
     get :archived, on: :collection
     put :change_active_state, on: :member
-    resources :feedbacks
   end
 
   root 'application#home'
