@@ -3,19 +3,13 @@ class Certificate < ApplicationRecord
   belongs_to :user, -> { with_deleted }
 
   def build_values
-    return unless text_body.nil?
+    self.assignment_kinds ||= volunteer.assignment_kinds
     self.text_body ||= default_text_body
     self.function ||= DEFAULT_FUNCTION
     self.hours ||= volunteer.hours.total_hours
     self.minutes ||= volunteer.hours.minutes_rest
-    self.assignment_kinds ||= volunteer.assignment_kinds
     self.volunteer_contact ||= convert_volunteer_contact
     self.institution ||= DEFAULT_INSTITUTION
-    self.group_offer ||= has_group_offer
-  end
-
-  def has_group_offer
-    true unless volunteer.group_offers.nil?
   end
 
   def convert_volunteer_contact

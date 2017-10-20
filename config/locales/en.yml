@@ -12,6 +12,8 @@ en:
       age_young: 20 - 35
       all: All
     assignment_kinds:
+      assignment: Assignment
+      group_offer: Group offer
       accompaniment: Accompaniment
       family: Family
       german_class: German Class

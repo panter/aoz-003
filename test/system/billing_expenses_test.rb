@@ -53,6 +53,4 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert page.has_text? 'PLZ / Ort'
     assert page.has_text? 'Bank / IBAN'
   end
-
-
 end
