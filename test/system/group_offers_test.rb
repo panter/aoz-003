@@ -90,11 +90,10 @@ class GroupOffersTest < ApplicationSystemTestCase
   test 'deleting volunteer from group offer creates log entry' do
     login_as create(:user)
     volunteer = create :volunteer
-    user_volunteer = create :user_volunteer, volunteer: volunteer
     group_offer = create :group_offer, volunteers: [volunteer]
 
     visit volunteer_path(volunteer)
-    assert page.has_text? 'Group offers'
+    assert page.has_text? 'Active group offers'
     assert page.has_link? group_offer.title
     refute page.has_text? 'Group offers log'
 
@@ -103,6 +102,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_button 'Update Group offer'
 
     visit volunteer_path(volunteer)
+    refute page.has_text? 'Active group offers'
     assert page.has_text? 'Group offers log'
     assert page.has_link? group_offer.title
   end
@@ -110,24 +110,44 @@ class GroupOffersTest < ApplicationSystemTestCase
   test 'modifying volunteer dates creates log entry' do
     login_as create(:user)
     volunteer = create :volunteer
-    user_volunteer = create :user_volunteer, volunteer: volunteer
     group_offer = create :group_offer, volunteers: [volunteer]
 
     visit volunteer_path(volunteer)
-    assert page.has_text? 'Group offers'
+    assert page.has_text? 'Active group offers'
     assert page.has_link? group_offer.title
     refute page.has_text? 'Group offers log'
 
     group_offer.group_assignments.last.update(period_start: 7.months.ago, period_end: 2.months.ago)
 
     visit volunteer_path(volunteer)
+    assert page.has_text? 'Active group offers'
     assert page.has_text? 'Group offers log'
     assert page.has_link? group_offer.title, count: 2
 
     group_offer.group_assignments.last.update(period_end: 3.months.ago)
 
     visit volunteer_path(volunteer)
+    assert page.has_text? 'Active group offers'
     assert page.has_text? 'Group offers log'
     assert page.has_link? group_offer.title, count: 3
+  end
+
+  test 'deleting group offer creates log and does not crash volunteer show' do
+    login_as create(:user)
+    volunteer = create :volunteer
+    group_offer = create :group_offer, volunteers: [volunteer]
+    title = group_offer.title
+
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'Active group offers'
+    assert page.has_link? group_offer.title
+    refute page.has_text? 'Group offers log'
+
+    GroupOffer.last.destroy
+
+    visit volunteer_path(volunteer)
+    refute page.has_text? 'Active group offers'
+    assert page.has_text? 'Group offers log'
+    assert page.has_text? title
   end
 end

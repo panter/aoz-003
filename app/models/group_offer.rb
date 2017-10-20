@@ -9,7 +9,7 @@ class GroupOffer < ApplicationRecord
   belongs_to :department, optional: true
   belongs_to :group_offer_category
 
-  has_many :group_assignments
+  has_many :group_assignments, dependent: :destroy
   has_many :volunteers, through: :group_assignments
   has_many :hours, as: :hourable, dependent: :destroy
 
