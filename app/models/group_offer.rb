@@ -29,16 +29,19 @@ class GroupOffer < ApplicationRecord
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
   }
 
+  def has_active_assignments_between?(start_date, end_date)
+    group_assignments.active_between(start_date, end_date).size.positive?
+  end
+
   scope :created_before, ->(date) { where('created_at < ?', date) }
 
   def all_group_assignments_ended_within?(date_range)
     # TODO
     # are group assignments put in group_assignments_log on group_offer.destroy ?
-    ended_within = group_assignments.end_within(date_range)
-    ended_before = group_assignments.end_before(date_range.first)
-    return true if ended_within.size == group_assignments.size
-    return true if ended_within.size + ended_before.size >= group_assignments.size
-    false
+    ended_within = group_assignments.end_within(date_range).ids
+    not_end_before = group_assignments.not_end_before(date_range.last).ids
+    not_end_before += group_assignments.no_end.ids if date_range.last >= Time.zone.today
+    ended_within.size.positive? && not_end_before.blank?
   end
 
   def all_group_assignments_started_within?(date_range)
