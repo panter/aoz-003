@@ -6,8 +6,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     @volunteer = create :volunteer
     @assignment = create :assignment, volunteer: @volunteer
     @hour1 = create :hour, volunteer: @volunteer, hourable: @assignment, hours: '2', minutes: '30'
-    category = create :group_offer_category
-    @group_offer = create :group_offer, volunteers: [@volunteer], group_offer_category: category
+    @group_offer = create :group_offer, volunteers: [@volunteer]
     @hour2 = create :hour, hourable: @group_offer, volunteer: @volunteer, hours: '3', minutes: '30'
 
     login_as superadmin
