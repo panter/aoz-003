@@ -26,6 +26,12 @@ Rails.application.routes.draw do
     resources :hours
     resources :billing_expenses, except: [:edit, :update]
     resources :certificates
+    resources :group_offers do
+      resources :feedbacks
+    end
+    resources :assignments do
+      resources :feedbacks
+    end
     resources :feedbacks
   end
   resources :assignments do
