@@ -53,7 +53,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     volunteer_feedback = create :feedback, volunteer: @volunteer, feedbackable: @assignment,
       author: @user_volunteer, comments: 'assignment_number_1'
     login_as @user_volunteer
-    visit assignment_feedback_path(@assignment, volunteer_feedback)
+    visit polymorphic_path([@volunteer, @assignment, volunteer_feedback])
     click_link 'Back'
     refute page.has_text? 'assignment_number_2'
   end
@@ -65,15 +65,17 @@ class FeedbacksTest < ApplicationSystemTestCase
     create :feedback, volunteer: @volunteer, feedbackable: other_group_offer,
       author: @user_volunteer, comments: 'other_feedback'
     login_as @user_volunteer
-    visit group_offer_feedbacks_path(@group_offer)
+    visit polymorphic_path([@volunteer, @group_offer, Feedback])
     assert page.has_text? 'some_group_offer_feedback'
     refute page.has_text? 'some_group_offer_superadmin_feedback'
     refute page.has_text? 'other_volunteers_group_offer_feedback'
+    refute page.has_text? 'other_feedback'
     login_as @superadmin
-    visit group_offer_feedbacks_path(@group_offer)
+    visit polymorphic_path([@volunteer, @group_offer, Feedback])
     assert page.has_text? 'some_group_offer_feedback'
     assert page.has_text? 'some_group_offer_superadmin_feedback'
     assert page.has_text? 'other_volunteers_group_offer_feedback'
+    refute page.gas_text? 'other_feedback'
   end
 
   test 'assignment feedbacks index contains only the feedbacks related to that assignment' do
@@ -86,49 +88,21 @@ class FeedbacksTest < ApplicationSystemTestCase
     create :feedback, feedbackable: other_assignment, volunteer: @volunteer,
       author: @user_volunteer, comments: 'other_feedback'
     login_as @user_volunteer
-    visit assignment_feedbacks_path(@assignment)
+    visit polymorphic_path([@volunteer, @assignment, Feedback])
     assert page.has_text? 'some_feedback'
     refute page.has_text? 'some_superadmin_feedback'
     refute page.has_text? 'other_feedback'
     login_as @superadmin
-    visit assignment_feedbacks_path(@assignment)
+    visit polymorphic_path([@volunteer, @assignment, Feedback])
     assert page.has_text? 'some_feedback'
     assert page.has_text? 'some_superadmin_feedback'
     refute page.has_text? 'other_feedback'
   end
 
-
-  test 'volunteer feedbacks index contains only the feedbacks related to that group offer' do
-    setup_feedbacks
-    create :feedback, volunteer: @volunteer, author: @user_volunteer, feedbackable: @assignment,
-      comments: 'some_assignment_feedback'
-    create :feedback, volunteer: @volunteer, author: @superadmin, feedbackable: @assignment,
-      comments: 'some_assignment_superadmin_feedback'
-    other_assignment = create :assignment, volunteer: @volunteer
-    create :feedback, feedbackable: other_assignment, volunteer: @volunteer,
-      author: @user_volunteer, comments: 'other_assignment_feedback'
-    login_as @user_volunteer
-    visit volunteer_feedbacks_path(@volunteer)
-    assert page.has_text? 'some_assignment_feedback'
-    refute page.has_text? 'some_assignment_superadmin_feedback'
-    assert page.has_text? 'other_assignment_feedback'
-    assert page.has_text? 'some_group_offer_feedback'
-    refute page.has_text? 'some_group_offer_superadmin_feedback'
-    refute page.has_text? 'other_volunteers_group_offer_feedback'
-    login_as @superadmin
-    visit volunteer_feedbacks_path(@volunteer)
-    assert page.has_text? 'some_assignment_feedback'
-    assert page.has_text? 'some_assignment_superadmin_feedback'
-    assert page.has_text? 'other_assignment_feedback'
-    assert page.has_text? 'some_group_offer_feedback'
-    assert page.has_text? 'some_group_offer_superadmin_feedback'
-    refute page.has_text? 'other_volunteers_group_offer_feedback'
-  end
-
   test 'volunteer can create only their feedbacks on assignment' do
     other_assignment = create :assignment, volunteer: create(:volunteer, user: create(:user_volunteer))
     login_as @user_volunteer
-    visit new_assignment_feedback_path(other_assignment)
+    visit new_polymorphic_path([@volunteer, other_assignment, Feedback])
     assert page.has_text? 'You are not authorized to perform this action.'
   end
 
@@ -139,7 +113,7 @@ class FeedbacksTest < ApplicationSystemTestCase
         create(:volunteer, user: create(:user_volunteer))
       ]
     login_as @user_volunteer
-    visit new_group_offer_feedback_path(other_group_offer)
+    visit new_polymorphic_path([@volunteer, other_group_offer, Feedback])
     assert page.has_text? 'You are not authorized to perform this action.'
   end
 
