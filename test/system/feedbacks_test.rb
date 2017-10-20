@@ -75,7 +75,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     assert page.has_text? 'some_group_offer_feedback'
     assert page.has_text? 'some_group_offer_superadmin_feedback'
     assert page.has_text? 'other_volunteers_group_offer_feedback'
-    refute page.gas_text? 'other_feedback'
+    refute page.has_text? 'other_feedback'
   end
 
   test 'assignment feedbacks index contains only the feedbacks related to that assignment' do
