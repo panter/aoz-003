@@ -12,6 +12,8 @@ de:
       age_young: 20 - 35
       all: Alle
     assignment_kinds: &id-assignment-kinds
+      assignment: Tandem
+      group_offer: Gruppenangebot
       accompaniment: Einzelperson
       family: Familie
       german_class: Deutschkurs

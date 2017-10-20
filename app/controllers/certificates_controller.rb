@@ -1,5 +1,5 @@
 class CertificatesController < ApplicationController
-  before_action :set_certificate, except: [:show, :index, :new, :create]
+  before_action :set_certificate, only: [:show, :edit, :update, :destroy]
   before_action :set_volunteer
 
   def index
@@ -19,7 +19,7 @@ class CertificatesController < ApplicationController
   end
 
   def new
-    @certificate = Certificate.new(volunteer_id: @volunteer.id, user_id: current_user.id)
+    @certificate = Certificate.new(volunteer: @volunteer, user_id: current_user.id)
     @certificate.build_values
     authorize @certificate
   end
@@ -27,8 +27,9 @@ class CertificatesController < ApplicationController
   def edit; end
 
   def create
-    @certificate = Certificate.new(certificate_params.merge(volunteer_id: @volunteer.id,
+    @certificate = Certificate.new(certificate_params.except(:assignment_kinds).merge(volunteer: @volunteer,
       user_id: current_user.id))
+    @certificate.assignment_kinds = certificate_params.to_unsafe_h[:assignment_kinds]
     authorize @certificate
     if @certificate.save
       redirect_to volunteer_certificate_path(@volunteer, @certificate)
@@ -38,10 +39,10 @@ class CertificatesController < ApplicationController
   end
 
   def update
-    if @certificate.update(certificate_params)
+    if @certificate.update(certificate_params.except(:assignment_kinds)) && @certificate.update(assignment_kinds: certificate_params.to_unsafe_h[:assignment_kinds])
       redirect_to volunteer_certificate_path(@volunteer, @certificate)
     else
-      render :new
+      render :edit
     end
   end
 
@@ -54,18 +55,19 @@ class CertificatesController < ApplicationController
 
   def set_certificate
     @certificate = Certificate.find(params[:id])
+    @volunteer = @certificate.volunteer
     authorize @certificate
   end
 
   def set_volunteer
-    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+    @volunteer = Volunteer.find(params[:volunteer_id])
   end
 
   def certificate_params
     params.require(:certificate).permit(
       :duration, :duration_end, :duration_start, :hours, :minutes, :text_body, :institution,
-      :function, :group_offer, :volunteer_id, volunteer_contact: [:name, :street, :city],
-      assignment_kinds: Assignment::KINDS
+      :function, :volunteer_id, volunteer_contact: [:name, :street, :city],
+      assignment_kinds: [:group_offer, :assignment]
     )
   end
 end
