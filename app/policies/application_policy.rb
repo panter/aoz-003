@@ -27,6 +27,10 @@ class ApplicationPolicy
     department_manager? || social_worker?
   end
 
+  def superadmin_or_department_manager_or_social_worker?
+    superadmin_or_department_manager? || social_worker?
+  end
+
   def user_managing_volunteer?
     superadmin? || department_manager? || social_worker?
   end
