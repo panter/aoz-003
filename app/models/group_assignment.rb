@@ -12,6 +12,7 @@ class GroupAssignment < ApplicationRecord
 
   scope :start_within, ->(date_range) { where(period_start: date_range) }
   scope :end_within, ->(date_range) { where(period_end: date_range) }
+  scope :end_before, ->(date) { where('period_end < ?', date) }
   scope :start_before, ->(date) { where('period_start < ?', date) }
 
   scope :active_between, lambda { |start_date, end_date|

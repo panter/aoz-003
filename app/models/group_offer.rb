@@ -35,7 +35,7 @@ class GroupOffer < ApplicationRecord
     # TODO
     # are group assignments put in group_assignments_log on group_offer.destroy ?
     ended_within = group_assignments.end_within(date_range)
-    ended_before = group_assignments.ended_before(date_range.first)
+    ended_before = group_assignments.end_before(date_range.first)
     return true if ended_within.size == group_assignments.size
     return true if ended_within.size + ended_before.size >= group_assignments.size
     false
@@ -45,7 +45,7 @@ class GroupOffer < ApplicationRecord
     # TODO
     # are group assignments put in group_assignments_log on group_offer.destroy ?
     started_within = group_assignments.start_within(date_range)
-    started_before = group_assignments.started_before(date_range.first)
+    started_before = group_assignments.start_before(date_range.first)
     return true if started_within.size == group_assignments.size
     return true if started_before.size.zero?
     false
