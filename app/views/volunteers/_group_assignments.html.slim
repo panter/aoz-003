@@ -16,15 +16,20 @@ table.table.table-striped.group-assignments-table
   tbody
     - group_assignments.each do |group_assignment|
       tr
-        td= link_to group_assignment.group_offer.title, group_offer_path(group_assignment.group_offer)
+        td
+          - if group_assignment.group_offer
+            = link_to group_assignment.group_offer.title, group_offer_path(group_assignment.group_offer)
+          - else
+            = group_assignment.title
         - if group_assignment.responsible
           td= t_attr(:responsible, GroupAssignment)
         - else
           td= t_attr(:member, GroupAssignment)
         td= l(group_assignment.period_start) if group_assignment.period_start
         td= l(group_assignment.period_end) if group_assignment.period_end
-        td= link_to t_action(:show), group_offer_path(group_assignment.group_offer)
-        td= link_to t('download'), group_offer_path(group_assignment.group_offer, format: :pdf)
+        - if group_assignment.group_offer
+          td= link_to t_action(:show), group_offer_path(group_assignment.group_offer)
+          td= link_to t('download'), group_offer_path(group_assignment.group_offer, format: :pdf)
         - if editable
           - if policy(GroupOffer).edit?
             td= link_to t_action(:edit), edit_group_offer_path(group_assignment.group_offer)

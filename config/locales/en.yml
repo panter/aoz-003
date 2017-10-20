@@ -182,7 +182,7 @@ en:
           inactive: Inactive
         show_assignments: Show Assignments
         availability: Availability for voluntary engagement
-        group_assignments: Group offers
+        group_assignments: Active group offers
         hour_reports: Hour reports
         new_certificate: Create certificate
         old_group_assignments: Group offers log
