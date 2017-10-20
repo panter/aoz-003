@@ -12,16 +12,17 @@ class FeedbacksTest < ApplicationSystemTestCase
   end
 
   def setup_feedbacks
-    create :feedback, volunteer: @volunteer, author: @user_volunteer, feedbackable: @assignment,
-      comments: 'some_feedback'
+    @assignment_volunteer_feedback = create :feedback, volunteer: @volunteer,
+      author: @user_volunteer, feedbackable: @assignment,
+      comments: 'author_volunteer_assignment_feedback'
     create :feedback, feedbackable: @assignment,
-      volunteer: @volunteer, author: @superadmin, comments: 'author superadmin'
+      volunteer: @volunteer, author: @superadmin, comments: 'author_superadmin_assignment_feedback'
     create :feedback, feedbackable: @group_offer, author: @user_volunteer,
-      volunteer: @volunteer, comments: 'some_group_offer_feedback'
+      volunteer: @volunteer, comments: 'author_volunteer_group_offer_feedback'
     create :feedback, feedbackable: @group_offer, author: @superadmin, volunteer: @volunteer,
-      comments: 'some_group_offer_superadmin_feedback'
+      comments: 'author_superadmin_group_offer_feedback'
     create :feedback, volunteer: @other_volunteer, feedbackable: @group_offer,
-      author: @superadmin, comments: 'other_volunteers_group_offer_feedback'
+      author: @superadmin, comments: 'author_other_volunteer_group_offer_feedback'
   end
 
   test 'volunteer can see assignment feedbacks index' do
@@ -33,8 +34,8 @@ class FeedbacksTest < ApplicationSystemTestCase
     within '.assignments-table' do
       click_link 'Feedback index'
     end
-    refute page.has_text? 'author superadmin'
-    assert page.has_text? 'some_feedback'
+    refute page.has_text? 'author_superadmin_assignment_feedback'
+    assert page.has_text? 'author_volunteer_assignment_feedback'
   end
 
   test 'volunteer can see group offer feedbacks index' do
@@ -46,24 +47,20 @@ class FeedbacksTest < ApplicationSystemTestCase
     within '.group-assignments-table' do
       click_link 'Feedback index'
     end
-    refute page.has_text? 'author superadmin'
-    assert page.has_text? 'some_group_offer_feedback'
+    refute page.has_text? 'author_superadmin_group_offer_feedback'
+    assert page.has_text? 'author_volunteer_group_offer_feedback'
   end
 
   test 'assignment feedback index contains only the feedbacks of one assignment' do
-    assignment2 = create :assignment, volunteer: @volunteer
-    create :feedback, volunteer: @volunteer, feedbackable: assignment2,
-      author: @superadmin, comments: 'assignment_number_2'
-    volunteer_feedback = create :feedback, volunteer: @volunteer, feedbackable: @assignment,
-      author: @user_volunteer, comments: 'assignment_number_1_feedback'
+    setup_feedbacks
     login_as @user_volunteer
-    visit polymorphic_path([@volunteer, @assignment, volunteer_feedback])
+    visit polymorphic_path([@volunteer, @assignment, @assignment_volunteer_feedback])
     click_link 'Back'
     within '.assignments-table' do
-      page.find_all('a', text: 'Feedback index').last.click
+      click_link 'Feedback index'
     end
-    refute page.has_text? 'assignment_number_2'
-    assert page.has_text? 'assignment_number_1_feedback'
+    refute page.has_text? 'author_superadmin_assignment_feedback'
+    assert page.has_text? 'author_volunteer_assignment_feedback'
   end
 
   test 'group offer feedbacks index contains only the feedbacks related to that group offer' do
@@ -71,38 +68,36 @@ class FeedbacksTest < ApplicationSystemTestCase
     other_group_offer = create :group_offer, title: 'some_other_group_offer',
       volunteers: [@volunteer, @other_volunteer], necessary_volunteers: 2
     create :feedback, volunteer: @volunteer, feedbackable: other_group_offer,
-      author: @user_volunteer, comments: 'other_feedback'
+      author: @user_volunteer, comments: 'same_volunteer_other_groupoffer_feedback'
     login_as @user_volunteer
     visit polymorphic_path([@volunteer, @group_offer, Feedback])
-    assert page.has_text? 'some_group_offer_feedback'
-    refute page.has_text? 'some_group_offer_superadmin_feedback'
-    refute page.has_text? 'other_volunteers_group_offer_feedback'
-    refute page.has_text? 'other_feedback'
+    assert page.has_text? 'author_volunteer_group_offer_feedback'
+    refute page.has_text? 'author_superadmin_group_offer_feedback'
+    refute page.has_text? 'author_other_volunteer_group_offer_feedback'
+    refute page.has_text? 'same_volunteer_other_groupoffer_feedback'
     login_as @superadmin
     visit polymorphic_path([@volunteer, @group_offer, Feedback])
-    assert page.has_text? 'some_group_offer_feedback'
-    assert page.has_text? 'some_group_offer_superadmin_feedback'
-    assert page.has_text? 'other_volunteers_group_offer_feedback'
-    refute page.has_text? 'other_feedback'
+    assert page.has_text? 'author_volunteer_group_offer_feedback'
+    assert page.has_text? 'author_superadmin_group_offer_feedback'
+    assert page.has_text? 'author_other_volunteer_group_offer_feedback'
+    refute page.has_text? 'same_volunteer_other_groupoffer_feedback'
   end
 
   test 'assignment feedbacks index contains only the feedbacks related to that assignment' do
     setup_feedbacks
-    create :feedback, volunteer: @volunteer, author: @superadmin, feedbackable: @assignment,
-      comments: 'some_superadmin_feedback'
     other_assignment = create :assignment, volunteer: @volunteer
     create :feedback, feedbackable: other_assignment, volunteer: @volunteer,
-      author: @user_volunteer, comments: 'other_feedback'
+      author: @user_volunteer, comments: 'same_volunteer_other_assignment_feedback'
     login_as @user_volunteer
     visit polymorphic_path([@volunteer, @assignment, Feedback])
-    assert page.has_text? 'some_feedback'
-    refute page.has_text? 'some_superadmin_feedback'
-    refute page.has_text? 'other_feedback'
+    assert page.has_text? 'author_volunteer_assignment_feedback'
+    refute page.has_text? 'author_superadmin_assignment_feedback'
+    refute page.has_text? 'same_volunteer_other_assignment_feedback'
     login_as @superadmin
     visit polymorphic_path([@volunteer, @assignment, Feedback])
-    assert page.has_text? 'some_feedback'
-    assert page.has_text? 'some_superadmin_feedback'
-    refute page.has_text? 'other_feedback'
+    assert page.has_text? 'author_volunteer_assignment_feedback'
+    assert page.has_text? 'author_superadmin_assignment_feedback'
+    refute page.has_text? 'same_volunteer_other_assignment_feedback'
   end
 
   test 'volunteer can create only their feedbacks on assignment' do
