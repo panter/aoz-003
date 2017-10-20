@@ -5,8 +5,7 @@ class FeedbacksController < ApplicationController
 
   def index
     authorize Feedback
-    @feedbacks = policy_scope(Feedback)
-    @feedbacks = @feedbacks.where(feedbackable: @feedbackable)
+    @feedbacks = policy_scope(Feedback).where(feedbackable: @feedbackable)
   end
 
   def show; end
