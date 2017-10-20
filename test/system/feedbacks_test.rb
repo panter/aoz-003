@@ -12,10 +12,12 @@ class FeedbacksTest < ApplicationSystemTestCase
   end
 
   def setup_feedbacks
+    create :feedback, volunteer: @volunteer, author: @user_volunteer, feedbackable: @assignment,
+      comments: 'some_feedback'
     create :feedback, feedbackable: @assignment,
-    volunteer: @volunteer, author: @superadmin, comments: 'author superadmin'
+      volunteer: @volunteer, author: @superadmin, comments: 'author superadmin'
     create :feedback, feedbackable: @group_offer, author: @user_volunteer,
-    volunteer: @volunteer, comments: 'some_group_offer_feedback'
+      volunteer: @volunteer, comments: 'some_group_offer_feedback'
     create :feedback, feedbackable: @group_offer, author: @superadmin, volunteer: @volunteer,
       comments: 'some_group_offer_superadmin_feedback'
     create :feedback, volunteer: @other_volunteer, feedbackable: @group_offer,
@@ -32,6 +34,7 @@ class FeedbacksTest < ApplicationSystemTestCase
       click_link 'Feedback index'
     end
     refute page.has_text? 'author superadmin'
+    assert page.has_text? 'some_feedback'
   end
 
   test 'volunteer can see group offer feedbacks index' do
@@ -44,6 +47,7 @@ class FeedbacksTest < ApplicationSystemTestCase
       click_link 'Feedback index'
     end
     refute page.has_text? 'author superadmin'
+    assert page.has_text? 'some_group_offer_feedback'
   end
 
   test 'assignment feedback index contains only the feedbacks of one assignment' do
@@ -51,11 +55,15 @@ class FeedbacksTest < ApplicationSystemTestCase
     create :feedback, volunteer: @volunteer, feedbackable: assignment2,
       author: @superadmin, comments: 'assignment_number_2'
     volunteer_feedback = create :feedback, volunteer: @volunteer, feedbackable: @assignment,
-      author: @user_volunteer, comments: 'assignment_number_1'
+      author: @user_volunteer, comments: 'assignment_number_1_feedback'
     login_as @user_volunteer
     visit polymorphic_path([@volunteer, @assignment, volunteer_feedback])
     click_link 'Back'
+    within '.assignments-table' do
+      page.find_all('a', text: 'Feedback index').last.click
+    end
     refute page.has_text? 'assignment_number_2'
+    assert page.has_text? 'assignment_number_1_feedback'
   end
 
   test 'group offer feedbacks index contains only the feedbacks related to that group offer' do
@@ -80,8 +88,6 @@ class FeedbacksTest < ApplicationSystemTestCase
 
   test 'assignment feedbacks index contains only the feedbacks related to that assignment' do
     setup_feedbacks
-    create :feedback, volunteer: @volunteer, author: @user_volunteer, feedbackable: @assignment,
-      comments: 'some_feedback'
     create :feedback, volunteer: @volunteer, author: @superadmin, feedbackable: @assignment,
       comments: 'some_superadmin_feedback'
     other_assignment = create :assignment, volunteer: @volunteer
@@ -127,31 +133,6 @@ class FeedbacksTest < ApplicationSystemTestCase
     play_create_new_assignment_feedback
   end
 
-  def play_create_new_assignment_feedback
-    visit volunteer_path(@volunteer)
-    within '.assignments-table' do
-      click_link 'New Feedback'
-    end
-    fill_in 'Which were the most important goals during the last months?',
-      with: 'important_goals_answer_given'
-    fill_in 'What could have been achieved during the last months?',
-      with: 'achievment_answer_given'
-    fill_in 'Should the assignment continue? If yes, with which goals?',
-      with: 'continue_answer_given'
-    fill_in 'Comments', with: 'comments_given'
-    page.check('feedback_conversation')
-    click_button 'Create Feedback'
-    assert page.has_text? 'Feedback was successfully created.'
-    within '.assignments-table' do
-      click_link 'Feedback index'
-    end
-    click_link 'Show'
-    assert page.has_text? 'important_goals_answer_given'
-    assert page.has_text? 'achievment_answer_given'
-    assert page.has_text? 'continue_answer_given'
-    assert page.has_text? 'comments_given'
-  end
-
   test 'create new group_offer feedback as volunteer' do
     login_as @user_volunteer
     play_create_new_group_offer_feedback
@@ -162,28 +143,48 @@ class FeedbacksTest < ApplicationSystemTestCase
     play_create_new_group_offer_feedback
   end
 
+  FEEDBACK_FORM_FILL = [
+    { text: 'important_goals_answer_given' , field: 'Which were the most important goals during the last months?'},
+    { text: 'achievment_answer_given' , field: 'What could have been achieved during the last months?' },
+    { text: 'continue_answer_given' , field: 'Should the assignment continue? If yes, with which goals?' },
+    { text: 'new_comments_given', field: 'Comments' }
+  ].freeze
+
+  def play_create_new_assignment_feedback
+    visit volunteer_path(@volunteer)
+    within '.assignments-table' do
+      click_link 'New Feedback'
+    end
+    FEEDBACK_FORM_FILL.each do |fill_values|
+      fill_in fill_values[:field], with: fill_values[:text]
+    end
+    click_button 'Create Feedback'
+    assert page.has_text? 'Feedback was successfully created.'
+    within '.assignments-table' do
+      click_link 'Feedback index'
+    end
+    click_link 'Show'
+    FEEDBACK_FORM_FILL.each do |fill_values|
+      assert page.has_text? fill_values[:text]
+    end
+  end
+
   def play_create_new_group_offer_feedback
     visit volunteer_path(@volunteer)
     within '.group-assignments-table' do
       click_link 'New Feedback'
     end
-    fill_in 'Which were the most important goals during the last months?',
-      with: 'important_goals_answer_given'
-    fill_in 'What could have been achieved during the last months?',
-      with: 'achievment_answer_given'
-    fill_in 'Should the assignment continue? If yes, with which goals?',
-      with: 'continue_answer_given'
-    fill_in 'Comments', with: 'new_comments_given'
-    page.check('feedback_conversation')
+    FEEDBACK_FORM_FILL.each do |fill_values|
+      fill_in fill_values[:field], with: fill_values[:text]
+    end
     click_button 'Create Feedback'
     assert page.has_text? 'Feedback was successfully created.'
     within '.group-assignments-table' do
       click_link 'Feedback index'
     end
     click_link 'Show'
-    assert page.has_text? 'important_goals_answer_given'
-    assert page.has_text? 'achievment_answer_given'
-    assert page.has_text? 'continue_answer_given'
-    assert page.has_text? 'new_comments_given'
+    FEEDBACK_FORM_FILL.each do |fill_values|
+      assert page.has_text? fill_values[:text]
+    end
   end
 end
