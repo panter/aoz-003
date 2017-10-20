@@ -2,7 +2,7 @@ class ModifyFeedbacksToBePolymorphic < ActiveRecord::Migration[5.1]
   def up
     add_reference :feedbacks, :feedbackable, polymorphic: true, index: true
     Feedback.with_deleted.each do |feedback|
-      feedback.update(feedbackable_id: feedback.assignment.id, feedbackable_type: 'Assignment')
+      feedback.update(feedbackable_id: feedback.assignment_id, feedbackable_type: 'Assignment')
     end
     remove_belongs_to :feedbacks, :assignment
   end
