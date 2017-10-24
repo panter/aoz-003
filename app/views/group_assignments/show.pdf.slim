@@ -1,0 +1,104 @@
+h3.m-b-10= t('assignment_pdf.title_group_assignment')
+
+h4.m-b-10= t('assignment_pdf.volunteer_title')
+.row.m-b-10
+  .col-xs-6
+    .row
+      .col-xs-5= t('assignment_pdf.last_name')
+      .col-xs-7.col-input= @group_assignment.volunteer.contact.last_name
+
+      .col-xs-5= t('assignment_pdf.address')
+      .col-xs-7.col-input= @group_assignment.volunteer.contact.street
+
+      .col-xs-5= t('assignment_pdf.telephone')
+      .col-xs-7.col-input= @group_assignment.volunteer.contact.primary_phone
+
+      .col-xs-5= t('assignment_pdf.birthdate')
+      - if @group_assignment.volunteer.birth_year?
+        .col-xs-7.col-input= @group_assignment.volunteer.birth_year.year
+      - else
+        .col-xs-7.col-input
+
+  .col-xs-6
+    .row
+      .col-xs-5= t('assignment_pdf.first_name')
+      .col-xs-7.col-input= @group_assignment.volunteer.contact.first_name
+
+      .col-xs-5 #{t('assignment_pdf.postal_code')} / #{t('assignment_pdf.city')}
+      .col-xs-7.col-input= @group_assignment.volunteer.contact.full_city
+
+      .col-xs-5= t('assignment_pdf.email')
+      .col-xs-7.col-input= @group_assignment.volunteer.contact.primary_email
+
+      .col-xs-5= t('assignment_pdf.nationality')
+      .col-xs-7.col-input= nationality_name(@group_assignment.volunteer.nationality)
+
+.row-box
+  .col-xs-12
+    .row
+      .col-xs-4= t('assignment_pdf.place')
+      .col-xs-8.col-input
+      .col-xs-4= t('assignment_pdf.description')
+      .col-xs-8.col-input
+      .col-xs-4
+      .col-xs-8.col-input
+      .col-xs-4= t('assignment_pdf.when')
+      .col-xs-8.col-input
+      .col-xs-4= t('assignment_pdf.frequency')
+      .col-xs-8.col-input
+      .col-xs-4= t('assignment_pdf.trial_time')
+      .col-xs-8.col-input
+      .col-xs-12= t('assignment_pdf.details')
+
+h4.m-b-10= t('assignment_pdf.responsible_title')
+.row.m-b-10
+  .col-xs-6
+    .row
+      .col-xs-5= t('assignment_pdf.last_name')
+      .col-xs-7.col-input
+    .row
+      .col-xs-5= t('assignment_pdf.address')
+      .col-xs-7.col-input
+    .row
+      .col-xs-5= t('assignment_pdf.telephone')
+      .col-xs-7.col-input
+    .row
+      .col-xs-5= t('assignment_pdf.mobile')
+      .col-xs-7.col-input
+  .col-xs-6
+    .row
+      .col-xs-5= t('assignment_pdf.first_name')
+      .col-xs-7.col-input
+    .row
+      .col-xs-5 #{t('assignment_pdf.postal_code')} / #{t('assignment_pdf.city')}
+      .col-xs-7.col-input
+    .row
+      .col-xs-5= t('assignment_pdf.email')
+      .col-xs-7.col-input
+    .row
+      .col-xs-5= t('assignment_pdf.function')
+      .col-xs-7.col-input
+
+.row-box
+  .col-xs-12
+    - t('assignment_pdf.group_agreement_text').each do |list|
+      p= list[:title]
+      ul
+        - list[:items].each do |item|
+          li= item
+
+.row-bottom
+  .col-xs-6
+    .row
+      .col-xs-5= t('assignment_pdf.city_date')
+      .col-xs-7.col-input
+    .row
+      .col-xs-5= t('assignment_pdf.for_aoz')
+      .col-xs-7.col-input
+  .col-xs-6
+    .row
+      .col-xs-5= t('assignment_pdf.city_date')
+      .col-xs-7.col-input
+    .row
+      .col-xs-5= t('assignment_pdf.volunteer_title_2')
+      .col-xs-7.col-input

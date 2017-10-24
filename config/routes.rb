@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   resources :profiles, except: [:destroy, :index]
   resources :reminders, only: [:index, :update, :destroy]
   resources :group_offer_categories, except: [:destroy]
-
   resources :feedbacks, only: [:new, :create]
   resources :volunteers do
     get :seeking_clients, on: :collection
@@ -33,6 +32,7 @@ Rails.application.routes.draw do
       resources :feedbacks
     end
   end
+  resources :group_assignments, only: [:show]
   resources :assignments
   resources :group_offers do
     get :archived, on: :collection
