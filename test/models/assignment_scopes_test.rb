@@ -143,15 +143,42 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_equal 3, query.count
   end
 
+  test 'inactive' do
+    started_not_ended = make_assignment(nil, 20.days.ago)
+    started_and_ended_past = make_assignment(nil, 100.days.ago, 50.days.ago)
+    started_and_ends_in_future = make_assignment(nil, 100.days.ago, Time.zone.today + 20)
+    no_start_and_end = make_assignment(nil)
+    query = Assignment.inactive
+    assert query.include? no_start_and_end
+    assert query.include? started_and_ended_past
+    refute query.include? started_and_ends_in_future
+    refute query.include? started_not_ended
+  end
+
   test 'active_between returns only started and not ended between start and end date' do
-    query = Assignment.active_between(@now.days_ago(40), @now.days_ago(20))
+    started_before_not_ended = make_assignment(nil, 45.days.ago)
+    started_before_end_within = make_assignment(nil, 45.days.ago, 25.days.ago)
+    started_within_not_ended = make_assignment(nil, 30.days.ago)
+    started_within_end_after = make_assignment(nil, 30.days.ago, 15.days.ago)
+    started_after_no_end = make_assignment(nil, 15.days.ago)
+    started_after_has_end = make_assignment(nil, 15.days.ago, 5.days.ago)
+    started_before_ended_before = make_assignment(nil, 100.days.ago, 80.days.ago)
+    no_start_and_end = make_assignment(nil)
+    query = Assignment.active_between(40.days.ago, 20.days.ago)
     assert query.include? @start_60_days_ago
     assert query.include? @end_30_days_ago
     assert query.include? @end_15_days_ago
+    assert query.include? started_before_not_ended
+    assert query.include? started_before_end_within
+    assert query.include? started_within_not_ended
+    assert query.include? started_within_end_after
+    refute query.include? started_after_no_end
+    refute query.include? started_after_has_end
+    refute query.include? started_before_ended_before
+    refute query.include? no_start_and_end
     refute query.include? @end_future
     refute query.include? @start_in_one_month
     refute query.include? @start_7_days_ago
-    assert_equal 3, query.count
   end
 
   test 'will_start returns only assignments that will start in future' do
@@ -165,9 +192,81 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_equal 1, query.count
   end
 
+  test 'created_between' do
+    created_before = make_assignment(nil, 120.days.ago)
+    created_after = make_assignment(nil, 40.days.ago)
+    created_within = make_assignment(nil, 70.days.ago)
+    query = Assignment.created_between(100.days.ago, 50.days.ago)
+    assert query.include? created_within
+    refute query.include? created_before
+    refute query.include? created_after
+  end
+
+  test 'created_before' do
+    created_before = make_assignment(nil, 120.days.ago)
+    created_after = make_assignment(nil, 40.days.ago)
+    query = Assignment.created_before(50.days.ago)
+    assert query.include? created_before
+    refute query.include? created_after
+  end
+
+  test 'created_after' do
+    created_before = make_assignment(nil, 120.days.ago)
+    created_after = make_assignment(nil, 40.days.ago)
+    query = Assignment.created_after(50.days.ago)
+    refute query.include? created_before
+    assert query.include? created_after
+  end
+
+  test 'started_six_months_ago' do
+    created_before = make_assignment(nil, 7.months.ago)
+    created_after = make_assignment(nil, 2.months.ago)
+    query = Assignment.started_six_months_ago
+    assert query.include? created_before
+    refute query.include? created_after
+  end
+
+  test 'zurich' do
+    assignment_zurich = make_assignment(nil, nil, nil, create(:client_z))
+    assignment_not_zurich = make_assignment(nil, nil, nil, create(:client))
+    query = Assignment.zurich
+    assert query.include? assignment_zurich
+    refute query.include? assignment_not_zurich
+  end
+
+  test 'not_zurich' do
+    assignment_zurich = make_assignment(nil, nil, nil, create(:client_z))
+    assignment_not_zurich = make_assignment(nil, nil, nil, create(:client))
+    query = Assignment.not_zurich
+    refute query.include? assignment_zurich
+    assert query.include? assignment_not_zurich
+  end
+
+  test 'internal' do
+    assignment_internal = make_assignment(nil)
+    assignment_internal.update(volunteer: create(:volunteer))
+    assignment_external = make_assignment(nil)
+    assignment_external.update(volunteer: create(:volunteer_external))
+    query = Assignment.internal
+    assert query.include? assignment_internal
+    refute query.include? assignment_external
+  end
+
+  test 'external' do
+    assignment_internal = make_assignment(nil)
+    assignment_internal.update(volunteer: create(:volunteer))
+    assignment_external = make_assignment(nil)
+    assignment_external.update(volunteer: create(:volunteer_external))
+    query = Assignment.external
+    refute query.include? assignment_internal
+    assert query.include? assignment_external
+  end
+
   def make_assignment(title, start_date = nil, end_date = nil, client = nil)
     assignment = create :assignment, period_start: start_date, period_end: end_date,
       client: client || create(:client)
+    assignment.update(created_at: start_date) if start_date
+    return assignment unless title
     instance_variable_set("@#{title}", assignment)
   end
 end
