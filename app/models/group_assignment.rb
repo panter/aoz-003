@@ -10,10 +10,13 @@ class GroupAssignment < ApplicationRecord
   scope :ongoing, (-> { where('group_assignments.period_end > ?', Time.zone.today) })
   scope :no_end, (-> { where(period_end: nil) })
 
-  scope :start_within, ->(date_range) { where(period_start: date_range) }
+
+  scope :start_within, ->(date_range) { start_before(date_range.last).start_after(date_range.first) }
   scope :end_within, ->(date_range) { where(period_end: date_range) }
   scope :end_after, ->(date) { where('period_end > ?', date) }
   scope :end_before, ->(date) { where('period_end < ?', date) }
+
+  scope :start_after, ->(date) { where('period_start > ?', date) }
   scope :start_before, ->(date) { where('period_start < ?', date) }
 
   scope :not_end_before, ->(date) { where('period_end > ?', date) }
