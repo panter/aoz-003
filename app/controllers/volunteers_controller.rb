@@ -8,7 +8,7 @@ class VolunteersController < ApplicationController
 
   def index
     authorize Volunteer
-    @q = policy_scope(Volunteer).ransack(params[:q])
+    @q = policy_scope(Volunteer).default_order.ransack(params[:q])
     respond_to do |format|
       format.xlsx do
         @volunteers = @q.result
@@ -56,7 +56,7 @@ class VolunteersController < ApplicationController
 
   def seeking_clients
     authorize Volunteer
-    @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
+    @q = policy_scope(Volunteer).seeking_clients.default_order.ransack(params[:q])
     @seeking_clients = @q.result.paginate(page: params[:page])
   end
 
