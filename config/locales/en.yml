@@ -60,6 +60,10 @@ en:
       street: Street
       updated_at: Updated at
       zip: Zip code
+    group_assignments:
+      volunteer_group_assignments:
+        activate: Activate
+        deactivate: Deactivate
     group_offer_categories:
       index:
         category_states: &id-group-offer-category-states
@@ -173,9 +177,6 @@ en:
       form:
         availability_question: What times are you available for voluntary engagements?
         <<: [*id-volunteers-create, *id-availability]
-      group_assignments:
-        activate: Activate
-        deactivate: Deactivate
       index: &id-volunteers-index
         <<: *id-volunteers-create
         state:
@@ -332,6 +333,7 @@ en:
   are_you_sure_invitation: Are you sure you want to send an invitation?
   assignment_exists: Assignment already exists.
   assignment_pdf:
+    address: Adresse
     agreement_text:
       -
         title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
@@ -339,33 +341,50 @@ en:
       -
         title: Allenfalls auch
         items: ['Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)', 'Abmachungen für das Leiten von niederschwelligen Deutschkursen']
+    group_agreement_text:
+      -
+        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
+        items: ['Verhaltenskodex für Freiwillige', 'Rechte und Pflichten für Freiwillige', 'AOZ Leitlinien Praktische Integrationsarbeit']
+      -
+        title: Allenfalls auch
+        items: ['Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)', 'Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende']
+    birthdate: Geburtsdatum
     birth_year: Jahrgang
     city: Ort
-    city_date: Ort, Datum
+    city_date: 'Ort, Datum:'
     client_title: Begleitete Person
     creator_title: Anmeldende Stelle
+    description: Beschreibung des Einsatzes
+    details: Die Einsatzdauer beträgt mindestens 6 Monate. Entscheiden sich Freiwillige, ihre Tätigkeit aufzugeben, so teilen sie dies der verantwortlichen Person vor Ort spätestens vier Wochen vor Einsatzende mit.
     duration: Treffen mindestens 6 Monate bis
     email: E-mail
     first_name: Vorname
     first_time: '1.Treffen: Wann, wo?'
     for_aoz: Fur die AOZ
+    frequency: Frequenz
     function: Funktion
     how_often: Wie oft?
     languages: Sprachen
     last_name: Name
+    mobile: Handy
     nationality: Nationalität
     organization: Organization
+    place: Einsatzort
     postal_code: PLZ
+    responsible_title: Verantwortliche Person in der AOZ
     special: Besondere Abmachungen
     state: Status
     street: Strasse
     telephone: Telefon
     telephone_2: Telefon 2
     title: Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten
+    title_group_assignment: Vereinbarung zwischen der AOZ und Freiwilligen
     trial_time: 4 Wochen Probezeit bis
     volunteer_title: Freiwillige Person
+    volunteer_title_2: Der/die Freiwillige
     weekly: 1x pro Woche
     what: Was?
+    when: Tag / Zeit
     zurich: Zürich
   assignments: Assignments
   available_volunteers: Available volunteers
