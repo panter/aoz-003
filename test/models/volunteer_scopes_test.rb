@@ -158,6 +158,155 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? undecided_no_assignment
   end
 
+  test 'created_before' do
+    created_before = create :volunteer
+    created_before.update(created_at: 100.days.ago)
+    created_after = create :volunteer
+    created_after.update(created_at: 10.days.ago)
+    query = Volunteer.created_before(50.days.ago)
+    assert query.include? created_before
+    refute query.include? created_after
+  end
+
+  test 'created_after' do
+    Volunteer.with_deleted.map(&:really_destroy!)
+    created_before = create :volunteer
+    created_before.update(created_at: 100.days.ago)
+    created_after = create :volunteer
+    created_after.update(created_at: 10.days.ago)
+    query = Volunteer.created_after(50.days.ago)
+    refute query.include? created_before
+    assert query.include? created_after
+  end
+
+  test 'with_group_assignments' do
+    Volunteer.with_deleted.map(&:really_destroy!)
+    volunteer_with_ga = create :volunteer
+    create_group_assignments(create(:group_offer), 100.days.ago, nil, volunteer_with_ga)
+    volunteer_without_ga = create :volunteer
+    query = Volunteer.with_group_assignments
+    assert query.include? volunteer_with_ga
+    refute query.include? volunteer_without_ga
+  end
+
+  test 'without_group_assignments' do
+    Volunteer.with_deleted.map(&:really_destroy!)
+    volunteer_with_ga = create :volunteer
+    create_group_assignments(create(:group_offer), 100.days.ago, nil, volunteer_with_ga)
+    volunteer_without_ga = create :volunteer
+    query = Volunteer.without_group_assignments
+    refute query.include? volunteer_with_ga
+    assert query.include? volunteer_without_ga
+  end
+
+  test 'with_active_group_assignments_between' do
+    Volunteer.with_deleted.map(&:really_destroy!)
+    started_before_end_after = create :volunteer
+    create_group_assignments(create(:group_offer), 100.days.ago, 10.days.ago, started_before_end_after)
+    started_before_no_end = create :volunteer
+    create_group_assignments(create(:group_offer), 100.days.ago, nil, started_before_no_end)
+    started_within_end_after = create :volunteer
+    create_group_assignments(create(:group_offer), 35.days.ago, 10.days.ago, started_within_end_after)
+    started_after_no_end = create :volunteer
+    create_group_assignments(create(:group_offer), 10.days.ago, nil, started_after_no_end)
+    started_before_ended_before = create :volunteer
+    create_group_assignments(create(:group_offer), 100.days.ago, 50.days.ago, started_before_ended_before)
+    started_before_end_within = create :volunteer
+    create_group_assignments(create(:group_offer), 100.days.ago, 35.days.ago, started_before_end_within)
+    started_after_end_after = create :volunteer
+    create_group_assignments(create(:group_offer), 10.days.ago, 5.days.ago, started_after_end_after)
+    started_within_end_within = create :volunteer
+    create_group_assignments(create(:group_offer), 39.days.ago, 31.days.ago, started_within_end_within)
+
+    query = Volunteer.with_active_group_assignments_between(40.days.ago, 30.days.ago)
+    assert query.include? started_before_end_after
+    assert query.include? started_before_no_end
+    assert query.include? started_within_end_after
+    refute query.include? started_after_no_end
+    refute query.include? started_before_ended_before
+    assert query.include? started_before_end_within
+    refute query.include? started_after_end_after
+    assert query.include? started_within_end_within
+  end
+
+  test 'with_active_group_offers' do
+    with_active = create :volunteer,
+      group_assignments: [
+        GroupAssignment.create(group_offer: create(:group_offer, active: true))
+      ]
+    with_archived = create :volunteer,
+      group_assignments: [
+        GroupAssignment.create(group_offer: create(:group_offer, active: false))
+      ]
+    with_active_and_archived = create :volunteer,
+      group_assignments: [
+        GroupAssignment.create(group_offer: create(:group_offer, active: true)),
+        GroupAssignment.create(group_offer: create(:group_offer, active: false))
+      ]
+    without_group_offers = create :volunteer
+    query = Volunteer.with_active_group_offers
+    assert query.include? with_active
+    assert query.include? with_active_and_archived
+    refute query.include? with_archived
+    refute query.include? without_group_offers
+  end
+
+  test 'without_group_offer' do
+    with_active = create :volunteer,
+      group_assignments: [
+        GroupAssignment.create(group_offer: create(:group_offer, active: true))
+      ]
+    with_archived = create :volunteer,
+      group_assignments: [
+        GroupAssignment.create(group_offer: create(:group_offer, active: false))
+      ]
+    with_active_and_archived = create :volunteer,
+      group_assignments: [
+        GroupAssignment.create(group_offer: create(:group_offer, active: true)),
+        GroupAssignment.create(group_offer: create(:group_offer, active: false))
+      ]
+    without_group_offers = create :volunteer
+    query = Volunteer.without_group_offer
+    refute query.include? with_active
+    refute query.include? with_active_and_archived
+    refute query.include? with_archived
+    assert query.include? without_group_offers
+  end
+
+  test 'external' do
+    external = create :volunteer, external: true
+    internal = create :volunteer, external: false
+    query = Volunteer.external
+    assert query.include? external
+    refute query.include? internal
+  end
+
+  test 'internal' do
+    external = create :volunteer, external: true
+    internal = create :volunteer, external: false
+    query = Volunteer.internal
+    refute query.include? external
+    assert query.include? internal
+  end
+
+  test 'with_assignment_6_months_ago' do
+    started_before_no_end = create :volunteer
+    make_assignment(nil, started_before_no_end, 10.months.ago, nil)
+    started_before_end_after = create :volunteer
+    make_assignment(nil, started_before_end_after, 10.months.ago, 2.months.ago)
+    started_after_no_end = create :volunteer
+    make_assignment(nil, started_after_no_end, 2.months.ago, nil)
+    no_start_end_set = create :volunteer
+    make_assignment(nil, no_start_end_set, nil, nil)
+    no_assignment = create :volunteer
+    query = Volunteer.with_assignment_6_months_ago
+    assert query.include? started_before_no_end
+    assert query.include? started_before_end_after
+    refute query.include? started_after_no_end
+    refute query.include? no_start_end_set
+    refute query.include? no_assignment
+  end
+
   def make_volunteer(title, *attributes)
     volunteer = create :volunteer, *attributes
     return volunteer if title.nil?
@@ -169,5 +318,40 @@ class VolunteerScopesTest < ActiveSupport::TestCase
       period_end: end_date
     return assignment if title.nil?
     instance_variable_set("@#{title}", assignment)
+  end
+
+  def create_group_offer_entity(title, start_date, end_date, *volunteers)
+    category = create :group_offer_category, category_name: "Category #{title}"
+    group_offer = create_group_offer(title, volunteers.size, start_date, category)
+    group_offer.update(created_at: start_date)
+    if volunteers.first.is_a?(Integer)
+      volunteers = Array.new(volunteers.first).map { create(:volunteer) }
+    end
+    group_assignments = create_group_assignments(group_offer, start_date, end_date, *volunteers)
+
+    return [group_offer, category, group_assignments] unless title
+    instance_variable_set("@category_#{title}", category)
+    instance_variable_set("@group_ass_#{title}", group_assignments)
+    [group_offer, category, group_assignments]
+  end
+
+  def create_group_assignments(group_offer, start_date, end_date, *volunteers)
+    volunteers.map do |volunteer|
+      g_assignment = GroupAssignment.new(group_offer: group_offer, volunteer: volunteer,
+        period_start: start_date, period_end: end_date)
+      g_assignment.save
+      g_assignment
+    end
+  end
+
+  def create_group_offer(title, volunteer_count, start_date, group_offer_category = nil)
+    group_offer_category ||= create :group_offer_category
+    go_title = title ? title : Faker::Simpsons.quote
+    group_offer = create :group_offer, group_offer_category: group_offer_category, title: go_title,
+      necessary_volunteers: volunteer_count
+    group_offer.update(created_at: start_date)
+    return group_offer unless title
+    instance_variable_set("@group_offer_#{title}", group_offer)
+    group_offer
   end
 end
