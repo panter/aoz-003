@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'ostruct'
 
 class GroupOfferCategoryTest < ActiveSupport::TestCase
   def setup
@@ -10,40 +11,47 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
   test 'only group offer entitys exist' do
     volunteer = create :volunteer, user: create(:user_volunteer)
     volunteer.update(created_at: 500.days.ago)
-    this_year_go = create_group_offer_entity(:this_year, @today.beginning_of_year + 2, nil,
+    this_year_go, _rest = create_group_offer_entity(:this_year, @today.beginning_of_year + 2, nil,
       volunteer)
     last_year_gro, _rest = create_group_offer_entity(:last_year, @year_ago, @year_ago.end_of_year - 2,
       volunteer)
+    last_year_gro.update(created_at: @year_ago.beginning_of_year + 2)
     last_year_still_active_gro, _rest = create_group_offer_entity(:last_year_still, @year_ago, nil,
       volunteer)
-
-    last_year_gro.update(created_at: @year_ago.beginning_of_year + 2)
     last_year_still_active_gro.update(created_at: @year_ago.beginning_of_year + 2)
 
-    report_this_year = PerformanceReport.create!(period_start: @today.beginning_of_year,
+    this_year_rep = extract_results PerformanceReport.create!(period_start: @today.beginning_of_year,
       period_end: @today.end_of_year, user: @user)
-    report_last_year = PerformanceReport.create!(period_start: @year_ago.beginning_of_year,
+    last_year_rep = extract_results PerformanceReport.create!(period_start: @year_ago.beginning_of_year,
       period_end: @year_ago.end_of_year, user: @user)
 
-    gl_vol, gl_cli, gl_ass, z_vol, z_cli, z_ass, group_off = extract_results(report_this_year)
-    binding.pry
-    # assert_equal({ 'active' => 1, 'new' => 0, 'total' => 1 }, gl_vol)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, gl_cli)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, z_vol)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, z_cli)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, gl_ass)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, z_ass)
-    # assert_equal({ 'active' => 2, 'new' => 1, 'total' => 3, 'ended' => 0 }, group_off)
+    assert_equal({ 'active' => 1, 'new' => 0, 'total' => 1 }, this_year_rep.global.volunteers)
+    assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, this_year_rep.global.clients)
+    assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, this_year_rep.zuerich.volunteers)
+    assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, this_year_rep.zuerich.clients)
+    assert_equal(
+      { 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, this_year_rep.global.assignments
+    )
+    assert_equal(
+      { 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, this_year_rep.zuerich.assignments
+    )
+    assert_equal(
+      { 'active' => 2, 'new' => 1, 'total' => 3, 'ended' => 0 }, this_year_rep.group_offers
+    )
 
-    gl_vol, gl_cli, gl_ass, z_vol, z_cli, z_ass, group_off = extract_results(report_last_year)
-    binding.pry
-    # assert_equal({ 'active' => 1, 'new' => 1, 'total' => 1 }, gl_vol)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, gl_cli)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, z_vol)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, z_cli)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, gl_ass)
-    # assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, z_ass)
-    # assert_equal({ 'active' => 2, 'new' => 2, 'total' => 2, 'ended' => 1 }, group_off)
+    assert_equal({ 'active' => 1, 'new' => 1, 'total' => 1 }, last_year_rep.global.volunteers)
+    assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, last_year_rep.global.clients)
+    assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, last_year_rep.zuerich.volunteers)
+    assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, last_year_rep.zuerich.clients)
+    assert_equal(
+      { 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, last_year_rep.global.assignments
+    )
+    assert_equal(
+      { 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, last_year_rep.zuerich.assignments
+    )
+    assert_equal(
+      { 'active' => 2, 'new' => 2, 'total' => 2, 'ended' => 1 }, last_year_rep.group_offers
+    )
   end
 
   # test 'this year report' do
@@ -226,9 +234,10 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
   end
 
   def extract_results(report)
-    report.report_content['global'].values_at('volunteers', 'clients', 'assignments') +
-      report.report_content['zuerich'].values_at('volunteers', 'clients', 'assignments') +
-      [report.report_content['group_offers']]
+    accessible = OpenStruct.new(report.report_content)
+    accessible.global = OpenStruct.new(accessible.global)
+    accessible.zuerich = OpenStruct.new(accessible.zuerich)
+    accessible
   end
 
   def create_assignment_entity(title, volunteer, client, start_date, end_date = nil)
