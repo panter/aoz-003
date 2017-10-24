@@ -106,9 +106,7 @@ class Volunteer < ApplicationRecord
 
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
-  scope :with_inactive_assignments, lambda {
-    joins(:assignments)
-  }
+
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).where('assignments.period_start < ?', 6.months.ago.to_date.to_s)
   }
