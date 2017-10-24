@@ -36,7 +36,7 @@ class PerformanceReport < ApplicationRecord
   def volunteers(zurich = false)
     volunteers = Volunteer.created_before(period_end)
     volunteers = extern ? volunteers.external : volunteers.internal
-    volunteers = volunteers.zurich if zurich
+    volunteers = zurich ? volunteers.zurich : volunteers.not_zurich
     active_ids = volunteers.with_active_assignments_between(period_start, period_end).ids
     active_ids += volunteers.with_active_group_assignments_between(period_start, period_end).ids
     {
@@ -48,7 +48,7 @@ class PerformanceReport < ApplicationRecord
 
   def clients(zurich = false)
     clients = Client.created_before(period_end)
-    clients = clients.zurich if zurich
+    clients = zurich ? clients.zurich : clients.not_zurich
     {
       new: clients.created_between(period_start, period_end).distinct.count,
       active: clients.with_active_assignment_between(period_start, period_end).distinct.count,
@@ -58,7 +58,8 @@ class PerformanceReport < ApplicationRecord
 
   def assignments(zurich = false)
     assignments = Assignment.created_before(period_end)
-    assignments = assignments.zurich if zurich
+    assignments = zurich ? assignments.zurich : assignments.not_zurich
+    assignments = extern ? assignments.external : assignments.internal
     {
       ended: assignments.end_within(period_start..period_end).count,
       new: assignments.start_within(period_start..period_end).count,
@@ -72,7 +73,6 @@ class PerformanceReport < ApplicationRecord
     active = group_offers.map do |group_offer|
       group_offer.has_active_assignments_between?(period_start, period_end)
     end
-    # group_offers = group_offers.internal_offer unless extern
     ended = group_offers.map do |group_offer|
       group_offer.all_group_assignments_ended_within?(period_start..period_end)
     end
