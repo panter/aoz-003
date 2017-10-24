@@ -7,7 +7,7 @@ class ClientsController < ApplicationController
 
   def index
     authorize Client
-    @q = policy_scope(Client).ransack(params[:q])
+    @q = policy_scope(Client).default_order.ransack(params[:q])
     respond_to do |format|
       if params[:format] == 'xlsx'
         @clients = @q.result
@@ -53,7 +53,7 @@ class ClientsController < ApplicationController
   end
 
   def need_accompanying
-    @q = Client.need_accompanying.ransack(params[:q])
+    @q = Client.need_accompanying.default_order.ransack(params[:q])
     @need_accompanying = @q.result.paginate(page: params[:page])
     authorize @need_accompanying
   end
