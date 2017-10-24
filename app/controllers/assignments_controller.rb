@@ -56,7 +56,7 @@ class AssignmentsController < ApplicationController
   end
 
   def find_client
-    @q = policy_scope(Client).need_accompanying.ransack(params[:q])
+    @q = policy_scope(Client).need_accompanying.default_order.ransack(params[:q])
     @need_accompanying = @q.result.paginate(page: params[:page])
   end
 
