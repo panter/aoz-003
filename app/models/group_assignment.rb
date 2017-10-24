@@ -12,14 +12,17 @@ class GroupAssignment < ApplicationRecord
 
   scope :start_within, ->(date_range) { where(period_start: date_range) }
   scope :end_within, ->(date_range) { where(period_end: date_range) }
-  scope :end_after, ->(date) { where('period_end < ?', date) }
+  scope :end_after, ->(date) { where('period_end > ?', date) }
   scope :end_before, ->(date) { where('period_end < ?', date) }
   scope :start_before, ->(date) { where('period_start < ?', date) }
 
   scope :not_end_before, ->(date) { where('period_end > ?', date) }
 
   scope :active_between, lambda { |start_date, end_date|
-    start_before(start_date).end_after(end_date)
+    no_end.start_before(end_date)
+          .or(
+            start_before(end_date).end_after(start_date)
+          )
   }
 
   def save_group_assignment_logs
