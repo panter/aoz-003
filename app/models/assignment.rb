@@ -58,11 +58,17 @@ class Assignment < ApplicationRecord
   scope :inactive, (-> { ended })
 
   scope :active_between, lambda { |start_date, end_date|
-    start_within(start_date..end_date)
-      .or(end_within(start_date..end_date))
+    no_end.start_before(end_date)
+          .or(
+            start_before(end_date).end_after(start_date)
+          )
   }
 
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
+  scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })
+
+  scope :internal, (-> { joins(:volunteer).merge(Volunteer.internal) })
+  scope :external, (-> { joins(:volunteer).merge(Volunteer.external) })
 
   scope :with_hours, (-> { joins(:hours) })
 
