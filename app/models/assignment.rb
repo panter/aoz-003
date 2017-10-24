@@ -26,7 +26,7 @@ class Assignment < ApplicationRecord
   scope :default_order, (-> { order(created_at: :desc) })
 
   scope :created_between, lambda { |start_date, end_date|
-    created_before(end_date).crated_after(start_date)
+    created_before(end_date).created_after(start_date)
   }
   scope :created_before, ->(max_time) { where('assignments.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('assignments.created_at > ?', min_time) }
@@ -42,6 +42,7 @@ class Assignment < ApplicationRecord
   scope :end_in_future, (-> { where('period_end > ?', Time.zone.today) })
   scope :not_ended, (-> { no_end.or(end_in_future) })
 
+  scope :no_start, (-> { where(period_start: nil) })
   scope :started, (-> { where('period_start < ?', Time.zone.today) })
   scope :will_start, (-> { where('period_start > ?', Time.zone.today) })
   scope :start_before, ->(date) { where('period_start < ?', date) }
@@ -55,7 +56,7 @@ class Assignment < ApplicationRecord
   end
 
   scope :active, (-> { not_ended.started })
-  scope :inactive, (-> { ended })
+  scope :inactive, (-> { ended.or(no_start) })
 
   scope :active_between, lambda { |start_date, end_date|
     no_end.start_before(end_date)
