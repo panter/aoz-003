@@ -29,7 +29,6 @@ class Client < ApplicationRecord
 
   validates :state, inclusion: { in: STATES }
 
-  scope :default_order, (-> { order(created_at: :desc) })
 
   scope :need_accompanying, lambda {
     includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
