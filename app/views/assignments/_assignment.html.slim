@@ -1,10 +1,18 @@
 tr
-  td = link_to assignment.client, assignment.client
+  td
+    - if policy(Client).show?
+      = link_to assignment.client, assignment.client
+    - else
+      = assignment.client
   - if action_name == 'index'
     td = link_to assignment.volunteer, assignment.volunteer
   td = t("state.#{assignment.state}", scope: [:simple_form, :options, :assignment]) if assignment.state.present?
   td = assignment.created_at.strftime("%d-%m-%Y")
-  td = link_to assignment.creator, assignment.creator if assignment.creator.present?
+  td
+    - if policy(User).show?
+      = link_to assignment.creator, assignment.creator if assignment.creator.present?
+    - else
+      = assignment.creator
   = render 'index_actions', subject: assignment, target_controller: 'assignments'
   - if current_user.volunteer == assignment.volunteer
     td= link_to t_title(:edit, Assignment), edit_assignment_path(assignment)

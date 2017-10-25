@@ -20,7 +20,10 @@ h1= @group_offer.title
             br
           - if !@group_offer.external? && @group_offer.department
             = "#{t('group_offers.index.offer_of')} "
-            = link_to @group_offer.department, department_path(@group_offer.department.id)
+            - if policy(@group_offer.department).show?
+              = link_to @group_offer.department, department_path(@group_offer.department.id)
+            - else
+              = @group_offer.department
       tr
         td= t_attr(:offer_state)
         td= t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
@@ -78,7 +81,11 @@ h1= @group_offer.title
       tbody
         - @group_offer.group_assignments.each do |group_assignment|
           tr
-            td= link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
+            td
+              - if policy(Volunteer).show?
+                = link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
+              - else
+                = group_assignment.volunteer
             td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
             td= l(group_assignment.period_start) if group_assignment.period_start
             td= l(group_assignment.period_end) if group_assignment.period_end
