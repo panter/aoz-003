@@ -34,6 +34,6 @@ table.table.table-striped.group-assignments-table
           - if policy(Feedback).index?
             td= link_to t_title(:new, Feedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
             td= link_to t_title(:index, Feedback), polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
-        - else
-          td
-          td
+          - else
+            td
+            td
