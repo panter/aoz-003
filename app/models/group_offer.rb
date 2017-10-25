@@ -45,7 +45,9 @@ class GroupOffer < ApplicationRecord
   def all_group_assignments_started_within?(date_range)
     started_within = group_assignments.start_within(date_range)
     started_before = group_assignments.start_before(date_range.first)
-    started_within.size == group_assignments.size || started_before.any?
+    return true if started_within.size == group_assignments.size
+    return true unless started_before.any?
+    false
   end
 
   def external?
