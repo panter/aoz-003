@@ -111,9 +111,7 @@ class Volunteer < ApplicationRecord
   scope :loj_without_assignments, (-> { accepted_joined.where(assignments: { id: nil }) })
   scope :loj_without_group_assignments, (-> { accepted_joined.where(group_assignments: { id: nil }) })
   scope :loj_active_take_more, lambda {
-    accepted_joined.will_take_more_assignments.where(id: with_active_assignments.distinct.ids).or(
-      will_take_more_assignments.where(id: group_assignment_active.distinct.ids)
-    )
+    accepted_joined.will_take_more_assignments.where(assignments: { id: Assignment.active.ids })
   }
 
   scope :group_assignment_inactive, lambda {
@@ -128,7 +126,6 @@ class Volunteer < ApplicationRecord
       .merge(Assignment.inactive)
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
       .or(loj_without_assignments)
-      .or(loj_without_group_assignments)
   }
   scope :seeking_clients_will_take_more, lambda {
     accepted_joined
