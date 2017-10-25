@@ -29,10 +29,6 @@ class GroupOffer < ApplicationRecord
     offer_type == EXTERNAL_OFFER
   end
 
-  def archived
-    archived
-  end
-
   def responsible?(volunteer)
     group_assignments.find_by(volunteer: volunteer).responsible
   end
