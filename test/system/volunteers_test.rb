@@ -161,8 +161,11 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'volunteer pagination' do
+    created_time_shift = 2.days.ago.to_datetime
     70.times do
-      create :volunteer
+      created_time_shift += 100
+      volunteer = create :volunteer
+      volunteer.update(created_at: created_time_shift)
     end
     visit volunteers_path
     first(:link, '2').click
