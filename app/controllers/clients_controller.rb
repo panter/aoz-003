@@ -7,7 +7,7 @@ class ClientsController < ApplicationController
 
   def index
     authorize Client
-    @q = policy_scope(Client).default_order.ransack(params[:q])
+    @q = policy_scope(Client).ransack(params[:q])
     respond_to do |format|
       if params[:format] == 'xlsx'
         @clients = @q.result
