@@ -9,13 +9,10 @@ class VolunteersController < ApplicationController
   def index
     authorize Volunteer
     @q = policy_scope(Volunteer).ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
     respond_to do |format|
-      format.xlsx do
-        @volunteers = @q.result
-      end
-      format.html do
-        @volunteers = @q.result.paginate(page: params[:page])
-      end
+      format.xlsx { @volunteers = @q.result }
+      format.html { @volunteers = @q.result.paginate(page: params[:page]) }
     end
   end
 
@@ -56,7 +53,8 @@ class VolunteersController < ApplicationController
 
   def seeking_clients
     authorize Volunteer
-    @q = policy_scope(Volunteer).seeking_clients.default_order.ransack(params[:q])
+    @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @seeking_clients = @q.result.paginate(page: params[:page])
   end
 

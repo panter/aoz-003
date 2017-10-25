@@ -5,6 +5,7 @@ class GroupOffersController < ApplicationController
   def index
     authorize GroupOffer
     @q = policy_scope(GroupOffer.active).ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @group_offers = @q.result
     respond_to do |format|
       format.xlsx { render xlsx: 'index', locals: { group_offers: @group_offers } }
