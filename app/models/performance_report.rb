@@ -72,18 +72,18 @@ class PerformanceReport < ApplicationRecord
     group_offers = GroupOffer.created_before(period_end)
     active = group_offers.map do |group_offer|
       group_offer.has_active_group_assignments_between?(period_start, period_end)
-    end
+    end.grep(true)
     ended = group_offers.map do |group_offer|
       group_offer.all_group_assignments_ended_within?(period_start..period_end)
-    end
+    end.grep(true)
     new_group_offers = group_offers.map do |group_offer|
       group_offer.all_group_assignments_started_within?(period_start..period_end)
-    end
+    end.grep(true)
     {
-      active: active.reject(&:blank?).size,
-      new: new_group_offers.reject(&:blank?).size,
+      active: active.size,
+      new: new_group_offers.size,
       total: group_offers.count,
-      ended: ended.reject(&:blank?).size
+      ended: ended.size
     }
   end
 end
