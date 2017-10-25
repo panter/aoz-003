@@ -2,11 +2,7 @@ module GroupAssignmentAndAssignmentScopes
   extend ActiveSupport::Concern
 
   included do
-
-    scope :default_order, (-> { order(created_at: :desc) })
-
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
-
 
     scope :no_end, (-> { where(period_end: nil) })
     scope :has_end, (-> { where.not(period_end: nil) })

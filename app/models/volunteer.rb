@@ -70,8 +70,6 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: proc { |user| user.deleted? }
 
-  scope :default_order, (-> { order(created_at: :desc) })
-
   scope :created_between, lambda { |start_date, end_date|
     created_after(start_date).created_before(end_date)
   }
