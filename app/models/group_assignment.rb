@@ -19,8 +19,6 @@ class GroupAssignment < ApplicationRecord
   scope :start_after, ->(date) { where('period_start > ?', date) }
   scope :start_before, ->(date) { where('period_start < ?', date) }
 
-  scope :not_end_before, ->(date) { where('period_end > ?', date) }
-
   scope :active_between, lambda { |start_date, end_date|
     no_end.start_before(end_date)
           .or(

@@ -91,24 +91,6 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     refute query.include? started_after_ended.first
   end
 
-  test 'not_end_before' do
-    started_before = create_group_assignments 100.days.ago, nil, create(:volunteer)
-    started_before_ended_within = create_group_assignments 100.days.ago, 40.days.ago, create(:volunteer)
-    started_after = create_group_assignments 10.days.ago, nil, create(:volunteer)
-    started_after_ended = create_group_assignments 20.days.ago, 10.days.ago, create(:volunteer)
-    started_within_no_end = create_group_assignments 40.days.ago, nil, create(:volunteer)
-    started_within_ended_within = create_group_assignments 40.days.ago, 35.days.ago, create(:volunteer)
-    started_within_ended_after = create_group_assignments 40.days.ago, 20.days.ago, create(:volunteer)
-    query = GroupAssignment.not_end_before(30.days.ago)
-    refute query.include? started_within_no_end.first
-    refute query.include? started_within_ended_within.first
-    assert query.include? started_within_ended_after.first
-    refute query.include? started_before.first
-    refute query.include? started_before_ended_within.first
-    refute query.include? started_after.first
-    assert query.include? started_after_ended.first
-  end
-
   test 'active_between' do
     started_before = create_group_assignments 100.days.ago, nil, create(:volunteer)
     started_before_ended_within = create_group_assignments 100.days.ago, 40.days.ago, create(:volunteer)
