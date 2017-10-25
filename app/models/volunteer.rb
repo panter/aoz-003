@@ -94,7 +94,6 @@ class Volunteer < ApplicationRecord
   }
 
   scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
-  scope :with_active_group_offers, (-> { joins(:group_offers).merge(GroupOffer.active) })
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
   scope :without_group_offer, lambda {
     left_outer_joins(:group_offers).where(group_offers: { id: nil })
