@@ -39,14 +39,14 @@ class GroupOffer < ApplicationRecord
     ended_within = group_assignments.end_within(date_range).ids
     not_end_before = group_assignments.end_after(date_range.last).ids
     not_end_before += group_assignments.no_end.ids if date_range.last >= Time.zone.today
-    ended_within.size.positive? && not_end_before.blank?
+    ended_within.any? && not_end_before.blank?
   end
 
   def all_group_assignments_started_within?(date_range)
     started_within = group_assignments.start_within(date_range)
     started_before = group_assignments.start_before(date_range.first)
     return true if started_within.size == group_assignments.size
-    return true if started_before.size.zero?
+    return true unless started_before.any?
     false
   end
 
