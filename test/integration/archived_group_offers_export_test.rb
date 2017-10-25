@@ -3,17 +3,20 @@ require 'test_helper'
 class ArchivedGroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
-    10.times { create :group_offer, active: false }
-    login_as @superadmin
-    get archived_group_offers_url(format: :xlsx)
   end
 
   test 'xlsx file is downloadable' do
+    10.times { create :group_offer, active: false }
+    login_as @superadmin
+    get archived_group_offers_url(format: :xlsx)
     assert_equal 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       response.content_type
   end
 
   test 'xlsx files has the right columns' do
+    create :group_offer, active: false
+    login_as @superadmin
+    get archived_group_offers_url(format: :xlsx)
     excel_file = Tempfile.new
     excel_file.write(response.body)
     excel_file.close
