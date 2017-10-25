@@ -39,7 +39,7 @@ class GroupOffer < ApplicationRecord
     # TODO
     # are group assignments put in group_assignments_log on group_offer.destroy ?
     ended_within = group_assignments.end_within(date_range).ids
-    not_end_before = group_assignments.not_end_before(date_range.last).ids
+    not_end_before = group_assignments.end_after(date_range.last).ids
     not_end_before += group_assignments.no_end.ids if date_range.last >= Time.zone.today
     ended_within.size.positive? && not_end_before.blank?
   end
