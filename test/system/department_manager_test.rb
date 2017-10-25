@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class DepartmentManagerTest < ApplicationSystemTestCase
   def setup
-    @department_manager = create :user, role: 'department_manager'
+    @department_manager = create :user, :with_departments, role: 'department_manager'
     3.times do
       create :client, user: @department_manager
     end
@@ -32,5 +32,15 @@ class DepartmentManagerTest < ApplicationSystemTestCase
       assert page.has_link? href: client_path(client.id)
       assert page.has_link? href: edit_client_path(client.id)
     end
+  end
+
+  test 'can see a group offer volunteer and return to the group offer' do
+    volunteer = create :volunteer
+    group_offer = create :group_offer, volunteers: [volunteer],
+      department: @department_manager.department.first
+    visit volunteer_path(volunteer)
+    assert page.has_link? group_offer.title
+    visit group_offer_path(group_offer)
+    assert page.has_link? volunteer.contact.full_name
   end
 end
