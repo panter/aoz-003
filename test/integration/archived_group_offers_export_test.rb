@@ -20,7 +20,7 @@ class ArchivedGroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
     wb = Roo::Spreadsheet.open(excel_file.path, extension: 'xlsx')
 
     assert_equal wb.cell(1, 1), 'Title'
-    assert_equal wb.cell(2, 1), GroupOffer.archived.last.title
+    assert_equal wb.cell(2, 1), GroupOffer.archived.first.title
     assert_equal wb.cell(1, 2), 'Location'
     assert_equal wb.cell(1, 3), 'Availability'
     assert_equal wb.cell(1, 4), 'Target group'
