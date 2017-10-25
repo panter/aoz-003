@@ -6,7 +6,6 @@ table.table.table-striped.group-assignments-table
       th= t_attr(:period_start, GroupAssignment)
       th= t_attr(:period_end, GroupAssignment)
       th colspan=(editable ? '7' : '2')
-
   tbody
     - group_assignments.each do |group_assignment|
       tr
