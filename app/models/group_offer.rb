@@ -29,7 +29,7 @@ class GroupOffer < ApplicationRecord
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
   }
 
-  def has_active_assignments_between?(start_date, end_date)
+  def has_active_group_assignments_between?(start_date, end_date)
     group_assignments.active_between(start_date, end_date).size.positive?
   end
 
