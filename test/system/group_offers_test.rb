@@ -87,7 +87,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_text? group_offer.title
   end
 
-  test 'deleting volunteer from group offer creates log entry' do
+  test 'deleting volunteer from group offer creates log entry without an agreement' do
     login_as create(:user)
     volunteer = create :volunteer
     group_offer = create :group_offer, volunteers: [volunteer]
@@ -105,6 +105,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_text? 'Active group offers'
     assert page.has_text? 'Group offers log'
     assert page.has_link? group_offer.title
+    refute page.has_link? 'Download'
   end
 
   test 'modifying volunteer dates creates log entry' do
