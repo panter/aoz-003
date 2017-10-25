@@ -3,7 +3,7 @@ class Hour < ApplicationRecord
 
   belongs_to :volunteer
 
-  belongs_to :hourable, polymorphic: true, optional: true, dependent: :destroy
+  belongs_to :hourable, polymorphic: true, optional: true
 
   belongs_to :billing_expense, optional: true
   belongs_to :certificate, optional: true
