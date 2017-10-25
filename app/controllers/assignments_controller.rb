@@ -6,7 +6,8 @@ class AssignmentsController < ApplicationController
   def index
     authorize Assignment
     @q = policy_scope(Assignment).ransack(params[:q])
-    @assignments = @q.result.default_order.paginate(page: params[:page])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @assignments = @q.result.paginate(page: params[:page])
   end
 
   def show
@@ -52,11 +53,13 @@ class AssignmentsController < ApplicationController
 
   def find_volunteer
     @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @seeking_clients = @q.result
   end
 
   def find_client
-    @q = policy_scope(Client).need_accompanying.default_order.ransack(params[:q])
+    @q = policy_scope(Client).need_accompanying.ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @need_accompanying = @q.result.paginate(page: params[:page])
   end
 
