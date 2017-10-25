@@ -229,28 +229,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? started_within_end_within
   end
 
-  test 'with_active_group_offers' do
-    with_active = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: true))
-      ]
-    with_archived = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: false))
-      ]
-    with_active_and_archived = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: true)),
-        GroupAssignment.create(group_offer: create(:group_offer, active: false))
-      ]
-    without_group_offers = create :volunteer
-    query = Volunteer.with_active_group_offers
-    assert query.include? with_active
-    assert query.include? with_active_and_archived
-    refute query.include? with_archived
-    refute query.include? without_group_offers
-  end
-
   test 'without_group_offer' do
     with_active = create :volunteer,
       group_assignments: [
