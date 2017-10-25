@@ -48,8 +48,10 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     volunteer = create :volunteer
     group_offer = create :group_offer, volunteers: [volunteer],
       department: @department_manager.department.first
+    assignment = create :assignment, volunteer: volunteer
     visit volunteer_path(volunteer)
     assert page.has_link? group_offer.title
+    assert page.has_link? assignment.client.contact.full_name
     refute page.has_link? 'Delete'
     refute page.has_link? 'New Feedback'
     refute page.has_link? 'Feedback index'
