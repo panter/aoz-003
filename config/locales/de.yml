@@ -151,6 +151,7 @@ de:
       rejected: Abgelehnt
       reserved: Reserviert
       resigned: Abgemeldet
+      undecided: Nicht entschieden
     updated_at: Geändert um
     volunteer_applications: &id-volunteers-by-actions
       feedback:

@@ -150,6 +150,7 @@ en:
       rejected: Rejected
       reserved: Reserved
       resigned: Terminated
+      undecided: Undecided
     volunteer_applications: &id-volunteers-by-actions
       feedback: &id-volunteer-feedbacks
         new: New feedback
