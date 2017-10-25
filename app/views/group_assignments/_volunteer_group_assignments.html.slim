@@ -25,8 +25,15 @@ table.table.table-striped.group-assignments-table
         - if editable
           td= link_to t('download'), group_assignment_path(group_assignment, format: :pdf)
           td= link_to t_action(:edit), edit_group_offer_path(group_assignment.group_offer)
-          td= link_to t_action(:destroy), group_offer_path(group_assignment.group_offer), confirm_deleting(group_assignment.group_offer)
+          - if policy(GroupOffer).destroy?
+            td= link_to t_action(:destroy), group_offer_path(group_assignment.group_offer), confirm_deleting(group_assignment.group_offer)
+          - else
+            td
           td= link_to "#{ group_assignment.group_offer.active? ? t('.deactivate') : t('.activate') }",
               change_active_state_group_offer_path(group_assignment.group_offer), method: :put, remote: :true
-          td= link_to t_title(:new, Feedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
-          td= link_to t_title(:index, Feedback), polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
+          - if policy(Feedback).index?
+            td= link_to t_title(:new, Feedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
+            td= link_to t_title(:index, Feedback), polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
+        - else
+          td
+          td

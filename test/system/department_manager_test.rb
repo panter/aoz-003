@@ -43,4 +43,15 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     visit group_offer_path(group_offer)
     assert page.has_link? volunteer.contact.full_name
   end
+
+  test 'department manager has no destroy and feedback links on volunteer show' do
+    volunteer = create :volunteer
+    group_offer = create :group_offer, volunteers: [volunteer],
+      department: @department_manager.department.first
+    visit volunteer_path(volunteer)
+    assert page.has_link? group_offer.title
+    refute page.has_link? 'Delete'
+    refute page.has_link? 'New Feedback'
+    refute page.has_link? 'Feedback index'
+  end
 end
