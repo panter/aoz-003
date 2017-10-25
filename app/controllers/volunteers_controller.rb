@@ -8,7 +8,7 @@ class VolunteersController < ApplicationController
 
   def index
     authorize Volunteer
-    @q = policy_scope(Volunteer).default_order.ransack(params[:q])
+    @q = policy_scope(Volunteer).ransack(params[:q])
     respond_to do |format|
       format.xlsx do
         @volunteers = @q.result
