@@ -108,7 +108,7 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? started_before_ended_within.first
     refute query.include? started_after.first
     refute query.include? started_after_ended.first
-    refute query.include? started_before_ended_before
+    refute query.include? started_before_ended_before.first
   end
 
   def create_group_assignments(start_date = nil, end_date = nil, *volunteers)
