@@ -3,7 +3,7 @@ require 'test_helper'
 class GroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
-    10.times { create :group_offer }
+    @group_offers = Array.new(10).map { create :group_offer }
     login_as @superadmin
     get group_offers_url(format: :xlsx)
   end
@@ -20,7 +20,7 @@ class GroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
     wb = Roo::Spreadsheet.open(excel_file.path, extension: 'xlsx')
 
     assert_equal wb.cell(1, 1), 'Title'
-    assert_equal wb.cell(2, 1), GroupOffer.last.title
+    assert_equal wb.cell(2, 1), @group_offers.last.title
     assert_equal wb.cell(1, 2), 'Location'
     assert_equal wb.cell(1, 3), 'Availability'
     assert_equal wb.cell(1, 4), 'Target group'
