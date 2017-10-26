@@ -597,6 +597,11 @@ en:
     one: Performance Report
     other: Performance Reports
     show:
+      clients:
+        new: Number of new clients
+        active_total: Total number of active clients by the end of the period
+        resigned: Number of finished clients
+        total: Total number of clients
       assignments: &id-assignment-report
         active_total: Total number of active assignments by the end of the period
         new: Number of new assignments

@@ -37,7 +37,20 @@ table.table
       td
     tr.active
       td= t('.volunteers.active_total')
-      td= @report_content['global']['volunteers']['active']
+      td= @report_content['global']['clients']['active']
+
+    tr
+      td= t('.clients.total')
+      td= @report_content['global']['clients']['total']
+    tr
+      td= t('.clients.new')
+      td= @report_content['global']['clients']['new']
+    tr
+      td= t('.clients.resigned')
+      td
+    tr.active
+      td= t('.clients.active_total')
+      td= @report_content['global']['clients']['active']
 
     tr
       td= t('.assignments.total')
@@ -51,19 +64,6 @@ table.table
     tr.active
       td= t('.assignments.active_total')
       td= @report_content['global']['assignments']['active']
-
-    tr
-      td= t('.groups.total')
-      td
-    tr
-      td= t('.groups.new')
-      td
-    tr
-      td= t('.groups.resigned')
-      td
-    tr.active
-      td= t('.groups.active_total')
-      td
 
 h3= t_attr(:zuerich)
 table.table
@@ -82,6 +82,19 @@ table.table
       td= @report_content['zuerich']['volunteers']['active']
 
     tr
+      td= t('.clients.total')
+      td= @report_content['zuerich']['clients']['total']
+    tr
+      td= t('.clients.new')
+      td= @report_content['zuerich']['clients']['new']
+    tr
+      td= t('.clients.resigned')
+      td
+    tr.active
+      td= t('.clients.active_total')
+      td= @report_content['zuerich']['clients']['active']
+
+    tr
       td= t('.zh_assignments.total')
       td= @report_content['zuerich']['assignments']['total']
     tr
@@ -94,18 +107,22 @@ table.table
       td= t('.assignments.active_total')
       td= @report_content['zuerich']['assignments']['active']
 
+h3= t('group_offers', count: 2)
+table.table
+  tbody
     tr
       td= t('.groups.total')
-      td
+      td= @report_content['group_offers']['total']
     tr
       td= t('.groups.new')
-      td
+      td= @report_content['group_offers']['new']
     tr
       td= t('.groups.resigned')
-      td
+      td= @report_content['group_offers']['ended']
     tr.active
       td= t('.groups.active_total')
-      td
+      td= @report_content['group_offers']['active']
+
 hr
 
 = form_navigation_btn :edit
