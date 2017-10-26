@@ -900,6 +900,7 @@ de:
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
+  volunteer_created_invite_sent: 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an %{email} verschickt.'
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_emails:
     one: Bestätigungs-Mail
