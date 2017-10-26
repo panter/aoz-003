@@ -32,4 +32,5 @@
                 li= link_to volunteer.full_name, volunteer_path(volunteer)
 
 = form_navigation_btn :edit
-= form_navigation_btn :back
+- if policy(Department).index?
+  = form_navigation_btn :back
