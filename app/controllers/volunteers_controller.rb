@@ -30,7 +30,13 @@ class VolunteersController < ApplicationController
     @volunteer.registrar = current_user
     authorize @volunteer
     if @volunteer.save
-      redirect_to @volunteer, notice: t('volunteer_created')
+      if @volunteer.acceptance == 'accepted'
+        invite_volunteer_user
+        redirect_to @volunteer, notice: t('volunteer_created_invite_sent',
+          email: @volunteer.primary_email)
+      else
+        redirect_to @volunteer, notice: t('volunteer_created')
+      end
     else
       render :new
     end
