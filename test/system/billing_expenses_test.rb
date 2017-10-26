@@ -52,4 +52,15 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert page.has_text? 'PLZ / Ort'
     assert page.has_text? 'Bank / IBAN'
   end
+
+  test 'volunteer that has only group offers can create billing expenses' do
+    volunteer = create :volunteer
+    group_offer = create :group_offer, volunteers: [volunteer]
+    volunteer.group_assignments.last.update(period_start: 2.months.ago)
+    create :hour, hourable: group_offer, volunteer: volunteer, hours: '3', minutes: '30'
+
+    visit volunteer_path(volunteer)
+    click_button 'Create Billing expense'
+    assert page.has_text? 'Billing expense was successfully created.'
+  end
 end
