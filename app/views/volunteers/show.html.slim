@@ -55,7 +55,7 @@ h3= t('personal_background')
       = render 'contacts/show', contact: @volunteer.contact
       tr
         td= t_attr(:birth_year)
-        td= l(@volunteer.birth_year) if @volunteer.birth_year
+        td= @volunteer.birth_year.try(:year)
       tr
         td= t_attr(:salutation)
         td= t("salutation.#{@volunteer.salutation}") if @volunteer.salutation?
