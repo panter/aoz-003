@@ -57,4 +57,17 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_text? 'The Testology Institute'
     assert page.has_text? 'Bold or not bold, that is this tests Question? both'
   end
+
+  test 'volunteer that has only group offers can have certificate' do
+    volunteer = create :volunteer
+    create :group_offer, volunteers: [volunteer]
+    volunteer.group_assignments.last.update(period_start: 2.months.ago)
+    login_as @user
+
+    visit volunteer_path(volunteer)
+    assert page.has_link? 'Create certificate'
+    click_link 'Create certificate'
+    page.find_button('Create Certificate').trigger('click')
+    assert page.has_text? 'Die AOZ ist ein Unternehmen der Stadt Zürich'
+  end
 end
