@@ -16,14 +16,14 @@
     = f.simple_fields_for :assignment_kinds do |fk|
       .row
         - @certificate.assignment_kinds.each do |kind, value|
-          .col-xs-2= fk.input kind, as: :boolean, input_html: { checked: value }
+          .col-xs-2= fk.input kind, label: "#{t("assignment_kinds.#{kind}")}", as: :boolean, input_html: { checked: value }
 
 
     h4= t('.volunteers_contact_data')
     = f.simple_fields_for :volunteer_contact do |fvc|
-      = fvc.input :name, input_html: { value: @certificate.volunteer_contact['name'] }
-      = fvc.input :street, input_html: { value: @certificate.volunteer_contact['street'] }
-      = fvc.input :city, input_html: { value: @certificate.volunteer_contact['city'] }
+      = fvc.input :name, label: t_attr(:name), input_html: { value: @certificate.volunteer_contact['name'] }
+      = fvc.input :street, label: t_attr(:street), input_html: { value: @certificate.volunteer_contact['street'] }
+      = fvc.input :city, label: t_attr(:city), input_html: { value: @certificate.volunteer_contact['city'] }
 
     = f.input :function
     = f.input :institution
