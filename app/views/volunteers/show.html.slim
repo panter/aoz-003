@@ -7,7 +7,7 @@ nav.navbar.section-navigation
       ul.list-inline
         - if @volunteer.seeking_clients?
           li= button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
-        - if @volunteer.assignments.any?
+        - if @volunteer.internal_and_started_assignments?
           li
             = simple_form_for [@volunteer, BillingExpense.new] do |f|
               = f.hidden_field :volunteer_id, value: @volunteer.id
