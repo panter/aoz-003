@@ -59,7 +59,7 @@ class GroupOffer < ApplicationRecord
   end
 
   def to_label
-    label = "#{self.class.name.humanize} - #{title} - #{group_offer_category}"
+    label = "#{I18n.t('activerecord.models.group_offer')} - #{title} - #{group_offer_category}"
     label += " - #{department}" if department_id?
     label
   end
