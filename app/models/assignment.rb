@@ -24,25 +24,20 @@ class Assignment < ApplicationRecord
 
   validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
 
-
   scope :created_before, ->(max_time) { where('assignments.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('assignments.created_at > ?', min_time) }
 
-
   scope :ended, (-> { where('assignments.period_end < ?', Time.zone.today) })
-
 
   def started_six_months_ago?
     period_start < 6.months.ago.to_date
   end
-
 
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
   scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })
 
   scope :internal, (-> { joins(:volunteer).merge(Volunteer.internal) })
   scope :external, (-> { joins(:volunteer).merge(Volunteer.external) })
-
 
   def ended?
     period_end && period_end < Time.zone.today
@@ -77,7 +72,7 @@ class Assignment < ApplicationRecord
   end
 
   def to_label
-    label = "#{self.class.name.humanize}"
+    label = I18n.t('activerecord.models.assignment')
     label += " - #{client.contact.full_name}" if client.contact.present?
     label += " - #{period_start && I18n.l(period_start)}"
     label
