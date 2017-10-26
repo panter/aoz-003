@@ -25,8 +25,7 @@ h1= t('application.navigation.reminders')
                 volunteer_hour_url(reminder.volunteer, reminder.assignment.last_hour)
           td
             - if reminder.assignment.last_feedback
-              = link_to l(reminder.assignment.last_feedback.updated_at.to_date),
-                assignment_feedback_url(reminder.assignment, reminder.assignment.last_feedback)
+              = link_to l(reminder.assignment.last_feedback.updated_at.to_date), polymorphic_path([reminder.volunteer, reminder.assignment, reminder.assignment.last_feedback])
           - if reminder.sent_at
             td= l(reminder.sent_at)
           - else
