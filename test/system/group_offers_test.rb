@@ -151,4 +151,21 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? 'Group offers log'
     assert page.has_text? title
   end
+
+  test 'deleting volunteer does not crash group offer show' do
+    login_as create(:user)
+    volunteer1 = create :volunteer
+    volunteer2 = create :volunteer
+    group_offer = create :group_offer, volunteers: [volunteer1, volunteer2]
+
+    visit group_offer_path(group_offer)
+    assert page.has_link? volunteer1.contact.full_name
+    assert page.has_link? volunteer2.contact.full_name
+
+    Volunteer.find(volunteer1.id).destroy
+
+    visit group_offer_path(group_offer)
+    refute page.has_link? volunteer1.contact.full_name
+    assert page.has_link? volunteer2.contact.full_name
+  end
 end
