@@ -161,17 +161,24 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'volunteer pagination' do
-    created_time_shift = 2.days.ago.to_datetime
-    70.times do
-      created_time_shift += 100
+    Volunteer.with_deleted.map(&:really_destroy!)
+    second_page_volunteers = (1..20).to_a.map do
       volunteer = create :volunteer
-      volunteer.update(created_at: created_time_shift)
+      volunteer.update created_at: 10.days.ago
+      volunteer.contact.update(
+        first_name: 'second_page',
+        last_name: 'second_page' + volunteer.contact.last_name
+      )
+      volunteer
+    end
+    20.times do
+      create :volunteer
     end
     visit volunteers_path
     first(:link, '2').click
 
     assert page.has_css? '.pagination'
-    Volunteer.paginate(page: 2).each do |volunteer|
+    second_page_volunteers.each do |volunteer|
       assert page.has_text? volunteer.contact.last_name
     end
   end
