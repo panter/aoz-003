@@ -758,6 +758,11 @@ de:
     one: Kennzahl
     other: Kennzahlen
     show:
+      clients:
+        new: Anzahl neuer Klienten
+        active_total: Total aktive Klienten per Zeitraumende
+        resigned: Anzahl beendete Klienten
+        total: Anzahl Klienten insgesamt
       assignments: &id-assignment-report
         active_total: Total aktive Begleitungen per Zeitraumende
         new: Anzahl neue Begleitungen
