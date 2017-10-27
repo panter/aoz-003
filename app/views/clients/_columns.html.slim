@@ -15,8 +15,9 @@
         th= sort_link @q, :language_skills_language, t_attr(:language_skills, Client)
         th= t_attr(:goals, Client)
         th= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
+        th= sort_link @q, :comments
         th= sort_link @q, :created_at, t_attr(:created_at, Client)
-        th colspan='5'
+        th colspan='2'
     tbody
       = render clients
 

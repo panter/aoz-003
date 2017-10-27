@@ -8,7 +8,7 @@ h1= t('volunteer_emails', count: 2)
       th= t_attr(:subject)
       th= t_attr(:title)
       th= t_attr(:body)
-      th colspan='4'
+      th
     tbody
       - @volunteer_emails.each do |volunteer_email|
         tr class=(volunteer_email.active ? 'bg-success': '') title=(volunteer_email.active ? 'Aktiv': '')
