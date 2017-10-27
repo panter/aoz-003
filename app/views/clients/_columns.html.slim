@@ -7,7 +7,8 @@
       tr
         th= sort_link @q, :salutation, t_attr(:salutation, Client)
         th= sort_link @q, :contact_last_name, t_attr(:full_name, Contact)
-        th= sort_link @q, :contact_city, t_attr(:address, Client)
+        th= sort_link @q, :contact_city, t_attr(:city, Contact)
+        th= sort_link @q, :contact_postal_code, t_attr(:postal_code, Contact)
         th= sort_link @q, :birth_year, t_attr(:birth_year, Client)
         th= t_attr(:relatives, Client)
         th= sort_link @q, :nationality, t_attr(:nationality, Client)

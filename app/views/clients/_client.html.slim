@@ -1,13 +1,14 @@
 tr
-  td = t("salutation.#{client.salutation}") if client.salutation?
-  td = client.contact.full_name
-  td = client.contact.full_address
-  td = client.birth_year.year if client.birth_year
+  td= t("salutation.#{client.salutation}") if client.salutation?
+  td= client.contact.full_name
+  td= client.contact.city
+  td= client.contact.postal_code
+  td= client.birth_year.year if client.birth_year
   td
     - client.relatives.each do |relative|
       = relative.to_s
       br
-  td = nationality_name(client.nationality)
+  td= nationality_name(client.nationality)
   td
     - client.language_skills.each do |language|
       = language.full_language_skills
