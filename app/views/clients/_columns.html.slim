@@ -1,8 +1,7 @@
 .text-center
   = will_paginate clients, renderer: BootstrapPagination::Rails
 
-.row
-  .col-xs-12
+.table-responsive
   table.table.table-striped
     thead
       tr
@@ -16,20 +15,9 @@
         th= t_attr(:goals, Client)
         th= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
         th= sort_link @q, :created_at, t_attr(:created_at, Client)
-        - if action_name == 'find_client'
-          th= sort_link @q, :gender_request, t_attr(:gender_request, Client)
-          th= sort_link @q, :age_request, t_attr(:age_request, Client)
-        th colspan=(action_name == 'index' ? '5' : '2')
-
+        th colspan='5'
     tbody
-      - if action_name == 'find_client'
-        .filters
-          = render 'gender_request_select'
-          = render 'age_request_select'
-          = render 'language_skills_language_select'
-        = render clients, volunteer: volunteer
-      - else
-        = render clients
+      = render clients
 
 .text-center
   = will_paginate clients, renderer: BootstrapPagination::Rails
