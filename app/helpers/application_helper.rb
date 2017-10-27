@@ -71,11 +71,11 @@ module ApplicationHelper
     } }
   end
 
-  def confirm_deleting(record)
+  def confirm_deleting(record, html_class = nil)
     { method: :delete, data: {
       confirm: t('messages.confirm_record_delete',
         model: locale == :en ? t_model(record).downcase : t_model(record))
-    } }
+    }, class: html_class }
   end
 
   def nationality_name(nationality)
