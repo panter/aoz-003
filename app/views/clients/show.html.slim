@@ -8,15 +8,15 @@
 .table-responsive
   table.table.table-no-border-top
     tbody
-      = render 'contacts/show', contact: @client.contact
-      tr
-        td= t_attr(:birth_year)
-        td= @client.birth_year.try(:year)
       tr
         td= t_attr(:salutation)
         td
           - if @client.salutation?
             = t("salutation.#{@client.salutation}")
+      = render 'contacts/show', contact: @client.contact
+      tr
+        td= t_attr(:birth_year)
+        td= @client.birth_year.try(:year)
       tr
         td= t_attr(:nationality)
         td= nationality_name(@client.nationality)
