@@ -61,13 +61,11 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
 
   journals = [
     Journal.new(
-      subject: Faker::Lorem.sentence(rand(2..5)),
       body: Faker::Lorem.sentence(rand(2..5)),
       user: user,
       category: random_category
     ),
     Journal.new(
-      subject: Faker::Lorem.sentence(rand(2..5)),
       body: Faker::Lorem.sentence(rand(2..5)),
       user: user,
       category: random_category

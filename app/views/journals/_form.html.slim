@@ -2,13 +2,8 @@
   = simple_error_notice f
   h1= @journaled.contact.full_name
   .row
-    .col-xs-12
-      = f.input :category, collection: Journal::CATEGORIES
-    .col-xs-12
-      = f.input :subject
-    .col-xs-12
-      = f.input :body
-
-  .row
-    .col-xs-12
-      = f.button :submit
+    .col-xs-12= f.input :category, collection: Journal::CATEGORIES
+    .col-xs-12= f.input :body
+    .col-xs-12= f.button :submit
+    - if action_name == 'edit'
+      .col-xs-12= link_to t_action(:destroy), url_for([@journaled, @journal]), confirm_deleting(@journal)

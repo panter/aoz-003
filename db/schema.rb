@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171026145935) do
+ActiveRecord::Schema.define(version: 20171027140514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -269,7 +269,6 @@ ActiveRecord::Schema.define(version: 20171026145935) do
   end
 
   create_table "journals", force: :cascade do |t|
-    t.string "subject"
     t.bigint "user_id"
     t.text "body"
     t.string "journalable_type"

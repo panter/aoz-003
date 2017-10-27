@@ -19,6 +19,6 @@ class JournalTransform < Transformer
     2 => :conversation,
     3 => :email,
     4 => :feedback,
-    5 => :file
+    5 => :feedback
   }.freeze
 end
