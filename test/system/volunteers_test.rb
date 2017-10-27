@@ -7,6 +7,7 @@ class VolunteersTest < ApplicationSystemTestCase
     Volunteer.acceptance_collection.each do |acceptance|
       create :volunteer, acceptance: acceptance
     end
+    ActionMailer::Base.deliveries.clear
   end
 
   test 'new volunteer form' do
@@ -18,7 +19,6 @@ class VolunteersTest < ApplicationSystemTestCase
     within '.volunteer_birth_year' do
       select('1988', from: 'Birth year')
     end
-    select('Mrs.', from: 'Salutation')
     select('Syrian Arab Republic', from: 'Nationality')
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
@@ -200,6 +200,33 @@ class VolunteersTest < ApplicationSystemTestCase
     social_worker = create :social_worker
     login_as social_worker
     play_user_index_volunteer_display
+  end
+
+  test 'accepted at creation volunteer gets invited' do
+    visit new_volunteer_path
+    choose('volunteer_acceptance_accepted')
+    select('Mrs.', from: 'Salutation')
+    fill_in 'First name', with: 'Volunteer'
+    fill_in 'Last name', with: 'accepted'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    fill_in 'Primary email', with: 'volunteer@aoz.ch'
+    fill_in 'Primary phone', with: '0123456789'
+    click_button 'Create Volunteer'
+
+    assert page.has_text? 'Volunteer was successfully created. Invitation sent to volunteer@aoz.ch.'
+    assert_equal 1, ActionMailer::Base.deliveries.size
+  end
+
+  test 'undecided to accepted volunteer gets invited' do
+    volunteer = create :volunteer, acceptance: 'undecided'
+    visit edit_volunteer_path(volunteer)
+    choose('volunteer_acceptance_accepted')
+    click_button 'Update Volunteer'
+
+    assert page.has_text? "Invitation sent to #{volunteer.contact.primary_email}"
+    assert_equal 1, ActionMailer::Base.deliveries.size
   end
 
   def play_user_index_volunteer_display
