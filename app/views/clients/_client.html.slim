@@ -14,9 +14,11 @@ tr
       = language.full_language_skills
       br
   td= client.goals
+  td= client.interests
   td= client.competent_authority
+  td= client.comments
   td= l(client.created_at.to_date)
-  = render 'index_actions', subject: client
+  td= link_to t_action(:show), client
   - if client.assignment.nil?
     td= button_link t('find_volunteer'), find_volunteer_client_path(id: client)
   - else

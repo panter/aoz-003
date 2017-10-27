@@ -1,11 +1,10 @@
-.row
-  .col-xs-12
-    h1= @client.contact.full_name
 
-- if policy(Client).supervisor?
-  = render 'journals/journal_block', journaled_for: @client
 
-.table-responsive
+= render 'show_navigation'
+
+h1= @client.contact.full_name
+
+.table-responsive.m-t-20
   table.table.table-no-border-top
     tbody
       tr
@@ -74,5 +73,4 @@
 h3= t('general_availability')
 = render 'availability/show', available: @client
 
-= form_navigation_btn :edit
-= form_navigation_btn :back
+= render 'show_navigation'
