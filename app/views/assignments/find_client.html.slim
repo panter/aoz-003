@@ -1,6 +1,4 @@
-.row
-  .col-xs-12
-    h1= @volunteer.contact.full_name
+h1= @volunteer.contact.full_name
 
 = render 'volunteers/show_excerpt', volunteer: @volunteer
 
@@ -22,7 +20,57 @@ h3= t_attr(:single_accompaniment, Volunteer)
 
 = render 'availability/show', available: @volunteer
 
-.row
-  .col-xs-12
-    h1= t('clients_need_accompanying')
-= render 'clients/columns', clients: @need_accompanying, volunteer: @volunteer
+h1= t('clients_need_accompanying')
+
+nav.navbar.section-navigation
+  ul.list-inline
+    li= render 'gender_request_select'
+    li= render 'age_request_select'
+    li= render 'language_skills_language_select'
+
+.text-center
+  = will_paginate @need_accompanying, renderer: BootstrapPagination::Rails
+
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th= sort_link @q, :salutation, t_attr(:salutation, Client)
+        th= sort_link @q, :contact_last_name, t_attr(:full_name, Contact)
+        th= sort_link @q, :contact_city, t_attr(:address, Client)
+        th= sort_link @q, :birth_year, t_attr(:birth_year, Client)
+        th= t_attr(:relatives, Client)
+        th= sort_link @q, :nationality, t_attr(:nationality, Client)
+        th= sort_link @q, :language_skills_language, t_attr(:language_skills, Client)
+        th= t_attr(:goals, Client)
+        th= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
+        th= sort_link @q, :created_at, t_attr(:created_at, Client)
+        th= sort_link @q, :gender_request, t_attr(:gender_request, Client)
+        th= sort_link @q, :age_request, t_attr(:age_request, Client)
+        th colspan='2'
+    tbody
+      - @need_accompanying.each do |client|
+        tr
+          td = t("salutation.#{client.salutation}") if client.salutation?
+          td = client.contact.full_name
+          td = client.contact.full_address
+          td = client.birth_year.year if client.birth_year
+          td
+            - client.relatives.each do |relative|
+              = relative.to_s
+              br
+          td = nationality_name(client.nationality)
+          td
+            - client.language_skills.each do |language|
+              = language.full_language_skills
+              br
+          td = client.goals
+          td = client.competent_authority
+          td = l(client.created_at.to_date)
+          td = t("gender_request.#{client.gender_request}") if client.gender_request.present?
+          td = t("age_request.#{client.age_request}") if client.age_request.present?
+          td= button_link t_action(:show), client
+          td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: @volunteer)
+
+.text-center
+  = will_paginate @need_accompanying, renderer: BootstrapPagination::Rails
