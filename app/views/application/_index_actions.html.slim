@@ -1,6 +1,5 @@
 td.index-action-cell
   span= link_to t_action(:show), subject
-  - if policy(subject.class).edit?
-    span= link_to t_action(:edit), edit_polymorphic_path(subject)
+  span= link_to t_action(:edit), edit_polymorphic_path(subject)
   - if policy(subject.class).destroy?
     span= link_to t_action(:destroy), subject, confirm_deleting(subject)
