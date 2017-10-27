@@ -227,7 +227,7 @@ class Volunteer < ApplicationRecord
   end
 
   def to_s
-    "#{contact.first_name} #{contact.last_name}"
+    contact.full_name
   end
 
   private

@@ -29,7 +29,6 @@ class Client < ApplicationRecord
 
   validates :state, inclusion: { in: STATES }
 
-
   scope :need_accompanying, lambda {
     includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
   }
@@ -56,7 +55,7 @@ class Client < ApplicationRecord
   PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
 
   def to_s
-    "#{contact.first_name} #{contact.last_name}"
+    contact.full_name
   end
 
   def self.first_languages

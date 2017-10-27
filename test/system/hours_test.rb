@@ -54,21 +54,21 @@ class HoursTest < ApplicationSystemTestCase
   end
 
   test 'volunteer can see only her assignment' do
-    @user_volunteer2 = create :user, role: 'volunteer', email: 'volunteer2@example.com'
-    @volunteer2 = @user_volunteer2.volunteer = create :volunteer
-    @client2 = create :client
-    @client2.contact.first_name = @client2.contact.last_name = 'Client2'
-    @assignment2 = create :assignment, volunteer: @volunteer2, client: @client2
+    user_volunteer2 = create :user, role: 'volunteer', email: 'volunteer2@example.com'
+    volunteer2 = user_volunteer2.volunteer = create :volunteer
+    client2 = create :client
+    client2.contact.first_name = client2.contact.last_name = 'Client2'
+    assignment2 = create :assignment, volunteer: volunteer2, client: client2
 
-    @assignment_hour1 = create :hour, hourable: @assignment1, volunteer: @volunteer1
-    @assignment_hour2 = create :hour, hourable: @assignment2, volunteer: @volunteer2
+    create :hour, hourable: @assignment1, volunteer: @volunteer1
+    create :hour, hourable: assignment2, volunteer: volunteer2
 
     click_link 'Hour reports'
-    assert page.has_text? 'Client1 Client1'
-    refute page.has_text? 'Client2 Client2'
-    visit volunteer_hours_path(@volunteer2)
+    assert page.has_text? @client1.contact.full_name
+    refute page.has_text? client2.contact.full_name
+    visit volunteer_hours_path(volunteer2)
     assert page.has_text? 'You are not authorized to perform this action.'
-    refute page.has_text? 'Client2 Client2'
+    refute page.has_text? client2.contact.full_name
   end
 
   test 'volunteer can see only her group_offers' do
