@@ -20,31 +20,32 @@ class JournalsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'can create journal entry by link button in show' do
+  test 'can_create_journal_entry_by_link_button_in_show' do
     visit client_path(@client)
-    click_button 'Journal'
-    click_link 'Write a journal entry'
+    first('a', text: 'Journal').click
+    click_link 'New Journal'
     assert page.has_text? 'New Journal'
     fill_in 'Body', with: 'My bogus demo text body, just for this test.'
     select('Telephone', from: 'Category')
     click_button 'Create journal'
+    assert page.has_text? 'Journal was successfully created.'
+    first('a', text: 'Journal').click
+    assert page.has_text? 'My bogus demo text body, just for this test.'
   end
 
-  test 'can delete a journal through edit' do
+  test 'can_delete_a_journal_through_edit' do
     visit volunteer_path(@volunteer)
+
     click_button 'Journal'
-    within '.collapse .table-responsive' do
-      assert page.has_link? @journal_volunteer.user.full_name
-      assert page.has_text? @journal_volunteer.body
+    within '#journalBlock' do
       click_link 'Edit'
     end
-
     assert_difference 'Journal.count', -1 do
       click_link 'Delete'
-      assert page.has_text? 'Journal was successfully deleted.'
-      click_button 'Journal'
-      refute page.has_link? @journal_volunteer.user.full_name
-      refute page.has_text? @journal_volunteer.body
     end
+    assert page.has_text? 'Journal was successfully deleted.'
+    click_button 'Journal'
+    refute page.has_link? @journal_volunteer.user.full_name
+    refute page.has_text? @journal_volunteer.body
   end
 end

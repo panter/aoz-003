@@ -76,49 +76,4 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
       assert page.has_text? @registered_mr_no_matter_age_middle
     end
   end
-
-  test 'boolean filters for gender request and age_request' do
-    within '.section-navigation' do
-      click_link "Volunteer's gender"
-      click_link 'gender same'
-    end
-    visit current_url
-    within 'tbody' do
-      assert page.has_text? @registered_mrs_same_age_old
-      refute page.has_text? @active_mr_no_matter_age_old
-      assert page.has_text? @active_mrs_same_age_middle
-      refute page.has_text? @registered_mr_no_matter_age_middle
-    end
-    within '.section-navigation' do
-      click_link "Volunteer's age"
-      click_link '36 - 50'
-    end
-    visit current_url
-    within 'tbody' do
-      refute page.has_text? @registered_mrs_same_age_old
-      refute page.has_text? @active_mr_no_matter_age_old
-      assert page.has_text? @active_mrs_same_age_middle
-      refute page.has_text? @registered_mr_no_matter_age_middle
-    end
-    within '.section-navigation' do
-      click_link "Volunteer's gender: gender same"
-      assert page.find('a.bg-success', text: 'gender same').present?
-      click_link 'gender same'
-    end
-    visit current_url
-    within 'tbody' do
-      refute page.has_text? @registered_mrs_same_age_old
-      refute page.has_text? @active_mr_no_matter_age_old
-      assert page.has_text? @active_mrs_same_age_middle
-      assert page.has_text? @registered_mr_no_matter_age_middle
-    end
-    click_link 'Clear filters'
-    visit current_url
-    within 'tbody' do
-      assert page.has_text? @registered_mrs_same_age_old
-      assert page.has_text? @active_mr_no_matter_age_old
-      assert page.has_text? @active_mrs_same_age_middle
-      assert page.has_text? @registered_mr_no_matter_age_middle
-    end
-  end
 end
