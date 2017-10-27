@@ -12,19 +12,11 @@ tr
     - client.language_skills.each do |language|
       = language.full_language_skills
       br
-
-  td = client.goals
-  td = client.competent_authority
-  td = l(client.created_at.to_date)
-  - if action_name == 'find_client'
-    td = t("gender_request.#{client.gender_request}") unless client.gender_request.blank?
-    td = t("age_request.#{client.age_request}") unless client.age_request.blank?
-  - if action_name == 'index'
-    = render 'index_actions', subject: client
-  - if action_name == 'find_client'
-    td= button_link t_action(:show), client
-    td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: volunteer)
-  - elsif client.assignment.nil?
+  td= client.goals
+  td= client.competent_authority
+  td= l(client.created_at.to_date)
+  = render 'index_actions', subject: client
+  - if client.assignment.nil?
     td= button_link t('find_volunteer'), find_volunteer_client_path(id: client)
   - else
     td= button_link t_title(:show, Assignment), assignment_path(client.assignment)

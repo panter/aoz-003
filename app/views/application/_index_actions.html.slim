@@ -1,10 +1,10 @@
-- target_controller ||= controller_name
-
-td= link_to t_action(:show), subject
-td= link_to t_action(:print), { controller: target_controller, action: :show, id: subject.id, print: 'true' }, target: '_blank'
-- if ['clients', 'volunteers'].include? target_controller
-  td= link_to t_model(Journal), { controller: 'journals', action: 'index', "#{target_controller.singularize}_id": subject.id }
-- if policy(subject.class).index?
-  td= link_to t_action(:edit), { controller: target_controller, action: :edit, id: subject.id }
+td
+  span= link_to t_action(:show), subject
+  - if policy(subject.class).edit?
+    span= link_to t_action(:edit), edit_polymorphic_path(subject)
+  span= link_to t_action(:print), polymorphic_path(subject, print: true), target: '_blank'
+td
+- if ['clients', 'volunteers'].include? controller_name
+  td= link_to t_model(Journal), polymorphic_path([subject, Journal])
 - if policy(subject.class).destroy?
   td= link_to t_action(:destroy), subject, confirm_deleting(subject)
