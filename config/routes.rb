@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :clients do
     get :need_accompanying, on: :collection
     get :find_volunteer, on: :member, to: 'assignments#find_volunteer'
-    resources :journals
+    resources :journals, except: [:show]
   end
   resources :departments
   resources :performance_reports
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :volunteers do
     get :seeking_clients, on: :collection
     get :find_client, on: :member, to: 'assignments#find_client'
-    resources :journals
+    resources :journals, except: [:show]
     resources :hours
     resources :billing_expenses, except: [:edit, :update]
     resources :certificates

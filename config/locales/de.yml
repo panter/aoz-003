@@ -31,7 +31,6 @@ de:
       conversation: Gespräch
       email: E-Mail
       feedback: Rückmeldung
-      file: Datei
       telephone: Telefonat
     created_at: Erstellt um
     gender_request: &id-gender_requests
@@ -338,14 +337,11 @@ de:
         minutes: Minuten
       journal:
         <<: *id-generic_keys
-        author: Autor
+        author: Erstellt von
         body: Text
         category: Kategorie
         entry: Eintrag
-        subject: Titel
         text: Text
-        title: Titel
-        user: Ersteller
       language_skill:
         foreign_languages: Fremdsprachen
         language: Sprache
