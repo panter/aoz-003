@@ -29,7 +29,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   test 'assign unassigned client - client side' do
     login_as @user
     visit clients_path
-    first(:link, 'Need accompanying').click
+    first(:link, 'Klienten ohne Begleitung').click
     click_link 'Find volunteer'
     click_link 'Reserve'
     page.find('#assignment_period_start').click

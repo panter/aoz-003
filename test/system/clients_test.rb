@@ -138,9 +138,9 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'superadmin can delete client' do
-    create :client
-    visit clients_path
-    click_link 'Delete'
+    client = create :client
+    visit client_path(client)
+    first('a', text: 'Delete').click
 
     assert page.has_text? 'Client was successfully deleted.'
   end
