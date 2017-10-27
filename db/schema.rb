@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171025125818) do
+ActiveRecord::Schema.define(version: 20171026145935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,8 +183,10 @@ ActiveRecord::Schema.define(version: 20171025125818) do
     t.date "period_end"
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
+    t.boolean "active", default: true
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
+    t.index ["volunteer_id", "group_offer_id", "active"], name: "group_assignment_group_offer_volunteer", unique: true
     t.index ["volunteer_id"], name: "index_group_assignments_on_volunteer_id"
   end
 
