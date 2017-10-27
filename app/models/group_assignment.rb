@@ -2,7 +2,6 @@ class GroupAssignment < ApplicationRecord
   include GroupAssignmentAndAssignmentScopes
 
   belongs_to :group_offer
-  validates_presence_of :group_offer
 
   belongs_to :volunteer
   has_many :group_assignment_logs
