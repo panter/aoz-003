@@ -1,6 +1,6 @@
 .nested-fields.group-assignment-fields
   .col-xs-12.col-md-3
-    = f.association :volunteer, prompt: true
+    = f.association :volunteer, prompt: true, collection: @assignable
   .col-xs-12.col-md-2
     = f.input :responsible
   .col-xs-12.col-md-3

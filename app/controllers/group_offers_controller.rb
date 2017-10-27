@@ -1,6 +1,7 @@
 class GroupOffersController < ApplicationController
   include GroupAssignmentsAttributes
   before_action :set_group_offer, only: [:show, :edit, :update, :destroy, :change_active_state]
+  before_action :set_assignable_collection, only: [:edit]
 
   def index
     authorize GroupOffer
@@ -81,6 +82,14 @@ class GroupOffersController < ApplicationController
   def set_group_offer
     @group_offer = GroupOffer.find(params[:id])
     authorize @group_offer
+  end
+
+  def set_assignable_collection
+    @assignable = VolunteerPolicy::Scope.new(current_user, Volunteer).resolve.map do |volunteer|
+      [volunteer.contact.full_name, volunteer.id]
+    end
+    @assignable += @group_offer.volunteers.map { |volunteer| [volunteer.contact.full_name, volunteer.id] }
+    @assignable.uniq!
   end
 
   def group_offer_params
