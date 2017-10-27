@@ -31,7 +31,6 @@ en:
       conversation: Conversation
       email: Email
       feedback: Feedback
-      file: File
       telephone: Telephone
     category_states: &id-category_states
       active: active

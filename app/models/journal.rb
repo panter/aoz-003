@@ -8,7 +8,7 @@ class Journal < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  CATEGORIES = [:telephone, :conversation, :email, :feedback, :file].freeze
+  CATEGORIES = [:telephone, :conversation, :email, :feedback].freeze
 
   validates :category, presence: true
 end

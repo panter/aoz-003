@@ -1,14 +1,11 @@
 class JournalsController < ApplicationController
-
-  before_action :set_journal, only: [:show, :edit, :update, :destroy]
+  before_action :set_journal, only: [:edit, :update, :destroy]
   before_action :set_journaled
 
   def index
     authorize Journal
     @journals = Journal.where(journal_relations.except(:user_id))
   end
-
-  def show; end
 
   def new
     @journal = Journal.new(journal_relations)
@@ -51,8 +48,12 @@ class JournalsController < ApplicationController
   end
 
   def set_journal
-    @journal = Journal.find(params[:id])
-    authorize @journal
+    if Journal.exists?(params[:id])
+      @journal = Journal.find(params[:id])
+      authorize @journal
+    else
+      redirect_to set_journaled, notice: t('crud.c_action.destroy', model: t_model)
+    end
   end
 
   def set_journaled
@@ -62,7 +63,7 @@ class JournalsController < ApplicationController
 
   def journal_params
     params.require(:journal).permit(
-      :category, :subject, :user_id, :body, :client_id, :volunteer_id
+      :category, :user_id, :body, :client_id, :volunteer_id
     )
   end
 end
