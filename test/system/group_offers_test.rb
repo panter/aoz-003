@@ -168,4 +168,21 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_link? volunteer1.contact.full_name
     assert page.has_link? volunteer2.contact.full_name
   end
+
+  test 'department_manager has group assignment select dropdowns in edit form filled' do
+    department_manager = create :department_manager, department: [@department]
+    volunteer_one = create :volunteer
+    volunteer_two = create :volunteer
+    group_offer = create :group_offer, group_offer_category: @group_offer_category, department: @department,
+      group_assignments: [
+        GroupAssignment.create(volunteer: volunteer_one),
+        GroupAssignment.create(volunteer: volunteer_two)
+      ]
+    login_as department_manager
+    visit edit_group_offer_path(group_offer)
+    select_values = page.find_all('#volunteers .group_offer_group_assignments_volunteer select')
+                        .map(&:value).map(&:to_i)
+    assert select_values.include? volunteer_one.id
+    assert select_values.include? volunteer_two.id
+  end
 end
