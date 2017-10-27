@@ -2,11 +2,15 @@ class GroupAssignment < ApplicationRecord
   include GroupAssignmentAndAssignmentScopes
 
   belongs_to :group_offer
+  validates_presence_of :group_offer
+
   belongs_to :volunteer
   has_many :group_assignment_logs
 
   after_update :save_group_assignment_logs, if: :dates_updated?
   before_destroy :save_group_assignment_logs
+
+  validates_uniqueness_of :volunteer, scope: :group_offer
 
   scope :ongoing, (-> { where('group_assignments.period_end > ?', Time.zone.today) })
 
