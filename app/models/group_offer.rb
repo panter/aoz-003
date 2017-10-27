@@ -10,14 +10,14 @@ class GroupOffer < ApplicationRecord
   belongs_to :group_offer_category
 
   has_many :group_assignments, dependent: :destroy
+  accepts_nested_attributes_for :group_assignments, allow_destroy: true
+
   has_many :volunteers, through: :group_assignments
   has_many :hours, as: :hourable, dependent: :destroy
 
-  accepts_nested_attributes_for :group_assignments, allow_destroy: true
-
-  validates :title, presence: true
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
 
+  validates :title, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
 
   scope :active, (-> { where(active: true) })
