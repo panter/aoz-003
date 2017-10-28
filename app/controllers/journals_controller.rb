@@ -48,8 +48,8 @@ class JournalsController < ApplicationController
   end
 
   def set_journal
-    if Journal.exists?(params[:id])
-      @journal = Journal.find(params[:id])
+    @journal = Journal.find_by(id: params[:id])
+    if @journal
       authorize @journal
     else
       redirect_to set_journaled, notice: t('crud.c_action.destroy', model: t_model)
