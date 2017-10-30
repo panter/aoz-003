@@ -1,6 +1,6 @@
 class JournalsController < ApplicationController
-  before_action :set_journal, only: [:edit, :update, :destroy]
   before_action :set_journaled
+  before_action :set_journal, only: [:edit, :update, :destroy]
 
   def index
     authorize Journal
@@ -52,7 +52,7 @@ class JournalsController < ApplicationController
     if @journal
       authorize @journal
     else
-      redirect_to set_journaled, notice: t('crud.c_action.destroy', model: t_model)
+      redirect_to @journaled, notice: t('crud.c_action.destroy', model: t_model)
     end
   end
 
