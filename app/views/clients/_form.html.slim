@@ -10,28 +10,43 @@
 
   .row
     .col-xs-12.col-md-6
-      = f.input :birth_year,
-                as: :select,
-                collection: Client.year_collection,
-                include_blank: true
-  .row
+      = f.input :birth_year, as: :select, collection: Client.year_collection, include_blank: true
     .col-xs-12.col-md-6
       = f.input :nationality, as: :country
     .col-xs-12.col-md-6
-      = f.input :permit,
-                collection: Client::PERMITS,
-                as: :radio_buttons,
-                wrapper: :vertical_radio_and_checkboxes
+      = f.input :permit, collection: Client::PERMITS, as: :radio_buttons
 
-  = render 'language_skills/form', f: f, speaker: @client
+  h3= t('language_skills')
+
+  #languages
+    = f.simple_fields_for :language_skills do |language|
+      - if language.object.language == 'DE'
+        .nested-fields
+          h4 Deutsch
+          = language.input :level, as: :radio_buttons, collection: LanguageSkill::LANGUAGE_LEVELS.without(:native_speaker)
+          = language.hidden_field :language, value: 'DE'
+          hr
+      - elsif language.index == 1 && language.object.level == 'native_speaker'
+        .nested_fields
+          h4 Muttersprache
+          = language.input :language, collection: Client.first_languages + languages
+          = language.hidden_field :level, value: 'native_speaker'
+          hr
+      - else
+        = render 'language_skills/fields', f: language, speaker: @client
+    .links
+      = link_to_add_polymorphic_association t('add_language'), f, :language_skills, class: 'btn btn-success'
+
 
   = render 'relatives/form', f: f, relative: @client
 
+  h3= t('personal_background')
   .row
     .col-xs-12
-      h3= t('personal_background')
       = f.input :goals
-      h3= t('volunteer_request')
+  h3= t('volunteer_request')
+  .row
+    .col-xs-12
       = f.input :gender_request, collection: Client::GENDER_REQUESTS, default: :no_matter
       = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
       = f.input :other_request
@@ -39,7 +54,7 @@
       = f.input :actual_activities
       = f.input :interests
       = f.input :state, collection: Client.state_collection, include_blank: false
-      - if policy(Client).destroy?
+      - if policy(Client).comments?
         = f.input :comments
       = f.input :involved_authority
       = f.input :competent_authority

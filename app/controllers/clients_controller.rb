@@ -18,6 +18,7 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new(user: current_user)
+    @client.language_skills = [LanguageSkill.new(language: 'DE'), LanguageSkill.new(level: :native_speaker)]
     authorize @client
   end
 
