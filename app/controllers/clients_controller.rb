@@ -22,7 +22,16 @@ class ClientsController < ApplicationController
     authorize @client
   end
 
-  def edit; end
+  def edit
+    if @client.language_skills.german.blank?
+      @client.language_skills << LanguageSkill.new(language: 'DE')
+      @client.save
+    end
+    if @client.language_skills.native_languages.blank?
+      @client.language_skills << LanguageSkill.new(level: 'native_speaker')
+      @client.save
+    end
+  end
 
   def create
     @client = Client.new(client_params)

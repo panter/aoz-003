@@ -19,7 +19,7 @@
   h3= t('language_skills')
 
   #languages
-    = f.simple_fields_for :language_skills do |language|
+    = f.simple_fields_for :language_skills, @client.language_skills.lang_order do |language|
       - if language.object.language == 'DE'
         .nested-fields
           h4 Deutsch
