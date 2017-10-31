@@ -2,11 +2,11 @@ require 'application_system_test_case'
 
 class ClientsTest < ApplicationSystemTestCase
   setup do
-    @user = create :user, email: 'superadmin@example.com'
-    login_as @user
+    @superadmin = create :user, email: 'superadmin@example.com'
   end
 
   test 'new client form' do
+    login_as @superadmin
     visit new_client_path
 
     fill_in 'First name', with: 'asdf'
@@ -52,6 +52,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'new client form with preselected fields' do
+    login_as @superadmin
     visit new_client_path
     select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Client'
@@ -70,6 +71,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'new client can select custom language' do
+    login_as @superadmin
     visit new_client_path
     select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Dari'
@@ -92,6 +94,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'language without a level shows only language' do
+    login_as @superadmin
     visit new_client_path
     select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'asdf'
@@ -115,6 +118,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'level without a language is not shown' do
+    login_as @superadmin
     visit new_client_path
     select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'asdf'
@@ -138,6 +142,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'superadmin can delete client' do
+    login_as @superadmin
     client = create :client
     visit client_path(client)
     first('a', text: 'Delete').click
@@ -146,6 +151,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'client pagination' do
+    login_as @superadmin
     70.times do
       create :client
     end
@@ -156,5 +162,23 @@ class ClientsTest < ApplicationSystemTestCase
     Client.paginate(page: 2).each do |client|
       assert page.has_text? client.contact.last_name
     end
+  end
+
+  test 'superadmin sees all required features in index' do
+    with_assignment = create :client, comments: 'with_assignment', competent_authority: 'assigned_authority',
+                             goals: 'assigned_goals', interests: 'assigned_interests'
+    create :assignment, volunteer: create(:volunteer), client: with_assignment
+    with_assignment.update(created_at: 2.days.ago)
+    without_assignment = create :client, comments: 'without_assignment', competent_authority: 'unassigned_authority',
+                                goals: 'unassigned_goals', interests: 'unassigned_interests'
+    without_assignment.update(created_at: 4.days.ago)
+    login_as @superadmin
+    visit clients_path
+    assert page.has_text? with_assignment.contact.full_name
+    assert page.has_text? without_assignment.contact.full_name
+    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority without_assignment '\
+      "#{I18n.l(without_assignment.created_at.to_date)} Show Find volunteer"
+    assert page.has_text? 'assigned_goals assigned_interests assigned_authority with_assignment '\
+      "#{I18n.l(with_assignment.created_at.to_date)} Show Show Assignment"
   end
 end
