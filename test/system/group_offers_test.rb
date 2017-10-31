@@ -28,7 +28,7 @@ class GroupOffersTest < ApplicationSystemTestCase
   end
 
   test "department manager's offer belongs to their department" do
-    department_manager = create :user, :with_departments
+    department_manager = create :department_manager, department: [create(:department)]
     login_as department_manager
     visit new_group_offer_path
 

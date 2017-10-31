@@ -25,7 +25,7 @@ class GroupOffersController < ApplicationController
   end
 
   def new
-    @group_offer = GroupOffer.new
+    @group_offer = GroupOffer.new(user: current_user)
     authorize @group_offer
   end
 
@@ -33,7 +33,7 @@ class GroupOffersController < ApplicationController
 
   def create
     @group_offer = GroupOffer.new(group_offer_params)
-    @group_offer.department = current_user.department.first if current_user.manages_department?
+    @group_offer.department ||= current_user.department.first if current_user.department_manager?
     authorize @group_offer
     if @group_offer.save
       redirect_to @group_offer, make_notice
@@ -97,6 +97,6 @@ class GroupOffersController < ApplicationController
       :necessary_volunteers, :description, :women, :men, :children, :teenagers, :unaccompanied,
       :all, :long_term, :regular, :short_term, :workday, :weekend, :morning, :afternoon, :evening,
       :flexible, :schedule_details, :department_id, :organization, :location,
-      :group_offer_category_id, group_assignments_attributes)
+      :group_offer_category_id, :user_id, group_assignments_attributes)
   end
 end
