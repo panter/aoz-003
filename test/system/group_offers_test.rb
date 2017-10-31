@@ -185,4 +185,14 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert select_values.include? volunteer_one.id
     assert select_values.include? volunteer_two.id
   end
+
+  test 'department_manager cannot access group offer pages unless there is a department assigned' do
+    department_manager = create :user, role: 'department_manager'
+    login_as department_manager
+    refute page.has_link? 'Group Offers'
+    visit group_offers_path
+    assert page.has_text? 'You are not authorized to perform this action.'
+    visit new_group_offer_path
+    assert page.has_text? 'You are not authorized to perform this action.'
+  end
 end
