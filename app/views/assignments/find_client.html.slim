@@ -53,10 +53,10 @@ nav.navbar.section-navigation
           td = t("salutation.#{client.salutation}") if client.salutation?
           td = client.contact.full_name
           td = client.contact.full_address
-          td = client.birth_year.year if client.birth_year
+          td = client.birth_year&.year
           td
             - client.relatives.each do |relative|
-              = relative.to_s
+              = relative
               br
           td = nationality_name(client.nationality)
           td
