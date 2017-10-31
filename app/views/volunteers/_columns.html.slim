@@ -1,6 +1,4 @@
-
-.text-center
-  = will_paginate volunteers, renderer: BootstrapPagination::Rails
+= bootstrap_paginate(volunteers)
 
 .table-responsive
   table.table.table-striped
@@ -28,5 +26,4 @@
     tbody
       = render volunteers
 
-.text-center
-  = will_paginate volunteers, renderer: BootstrapPagination::Rails
+= bootstrap_paginate(volunteers)

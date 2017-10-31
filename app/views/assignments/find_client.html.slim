@@ -28,8 +28,7 @@ nav.navbar.section-navigation
     li= render 'age_request_select'
     li= render 'language_skills_language_select'
 
-.text-center
-  = will_paginate @need_accompanying, renderer: BootstrapPagination::Rails
+= bootstrap_paginate(@need_accompanying)
 
 .table-responsive
   table.table.table-striped
@@ -72,5 +71,4 @@ nav.navbar.section-navigation
           td= button_link t_action(:show), client
           td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: @volunteer)
 
-.text-center
-  = will_paginate @need_accompanying, renderer: BootstrapPagination::Rails
+= bootstrap_paginate(@need_accompanying)

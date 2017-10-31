@@ -1,5 +1,4 @@
-.text-center
-  = will_paginate assignments, renderer: BootstrapPagination::Rails
+= bootstrap_paginate(assignments)
 
 .row
   .col-xs-12
@@ -17,5 +16,4 @@
     tbody
       = render assignments
 
-.text-center
-  = will_paginate assignments, renderer: BootstrapPagination::Rails
+= bootstrap_paginate(assignments)
