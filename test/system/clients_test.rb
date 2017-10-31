@@ -267,4 +267,31 @@ class ClientsTest < ApplicationSystemTestCase
     without_assignment.update(created_at: 4.days.ago)
     [with_assignment, without_assignment]
   end
+
+  test 'department manager sees his scoped client index correctly' do
+    superadmins_client = create :client, user: @superadmin
+    with_assignment, without_assignment = create_clients_for_index_text_check
+    with_assignment.update(user: @department_manager)
+    without_assignment.update(user: @department_manager)
+    login_as @department_manager
+    visit clients_path
+    assert page.has_text? with_assignment.contact.full_name
+    assert page.has_text? without_assignment.contact.full_name
+    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority without_assignment '\
+      "#{I18n.l(without_assignment.created_at.to_date)} Show Find volunteer"
+    assert page.has_text? 'assigned_goals assigned_interests assigned_authority with_assignment '\
+      "#{I18n.l(with_assignment.created_at.to_date)} Show Show Assignment"
+    refute page.has_text? superadmins_client.contact.full_name
+  end
+
+  def create_clients_for_index_text_check
+    with_assignment = create :client, comments: 'with_assignment', competent_authority: 'assigned_authority',
+                             goals: 'assigned_goals', interests: 'assigned_interests'
+    create :assignment, volunteer: create(:volunteer), client: with_assignment
+    with_assignment.update(created_at: 2.days.ago)
+    without_assignment = create :client, comments: 'without_assignment', competent_authority: 'unassigned_authority',
+                                goals: 'unassigned_goals', interests: 'unassigned_interests'
+    without_assignment.update(created_at: 4.days.ago)
+    [with_assignment, without_assignment]
+  end
 end
