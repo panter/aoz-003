@@ -1,6 +1,8 @@
 = simple_form_for(@group_offer) do |f|
   = simple_error_notice f
-
+  = f.hidden_field :user_id
+  - unless policy(GroupOffer).department?
+    = f.hidden_field :department_id
   .row
     .col-xs-12
       = f.input :title
