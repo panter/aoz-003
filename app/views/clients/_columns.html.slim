@@ -1,5 +1,4 @@
-.text-center
-  = will_paginate clients, renderer: BootstrapPagination::Rails
+= bootstrap_paginate(clients)
 
 .table-responsive
   table.table.table-striped
@@ -22,5 +21,4 @@
     tbody
       = render clients
 
-.text-center
-  = will_paginate clients, renderer: BootstrapPagination::Rails
+= bootstrap_paginate(clients)

@@ -54,7 +54,7 @@ class AssignmentsController < ApplicationController
   def find_volunteer
     @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @seeking_clients = @q.result
+    @seeking_clients = @q.result.paginate(page: params[:page])
   end
 
   def find_client

@@ -1,40 +1,35 @@
-.row
-  .col-xs-12
-    h1= @client.contact.full_name
+h1= @client.contact.full_name
 
-.row
-  .col-xs-12
-    .table-responsive
-      table.table.table-no-border-top
-        tbody
-          = render 'contacts/show', contact: @client.contact
-          tr
-            td= t_attr(:nationality, Client)
-            td= nationality_name(@client.nationality)
-          tr
-            td= t_attr(:permit, Client)
-            td= @client.permit
+.table-responsive
+  table.table.table-no-border-top
+    tbody
+      = render 'contacts/show', contact: @client.contact
+      tr
+        td= t_attr(:nationality, Client)
+        td= nationality_name(@client.nationality)
+      tr
+        td= t_attr(:permit, Client)
+        td= @client.permit
 
-          = render 'language_skills/show', speaker: @client
+      = render 'language_skills/show', speaker: @client
 
-          tr
-            td= t_attr(:goals, Client)
-            td= @client.goals
+      tr
+        td= t_attr(:goals, Client)
+        td= @client.goals
 
-          - if policy(Client).destroy?
-            tr
-              td= t_attr(:comments, Client)
-              td= @client.comments
+      - if policy(Client).destroy?
+        tr
+          td= t_attr(:comments, Client)
+          td= @client.comments
 
-.row
-  .col-xs-12
-    h1= t('available_volunteers')
+h1= t('available_volunteers')
 
 .filters
   = render partial: 'salutation_select', locals: {client: @client.id}
 
-.row
-  .col-xs-12
+= bootstrap_paginate(@seeking_clients)
+
+.table-responsives
   table.table.table-striped
     thead
       tr
@@ -55,3 +50,5 @@
     tbody
       - @seeking_clients.each do |volunteer|
         = render partial: 'seeking_client', object: volunteer, locals: {client: @client.id}
+
+  = bootstrap_paginate(@seeking_clients)
