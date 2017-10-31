@@ -9,10 +9,10 @@ tr
       = relative
       br
   td= nationality_name(client.nationality)
-  td
-    - client.language_skills.each do |language|
-      = language.full_language_skills
-      br
+  td.language-skill-index
+    - [client.language_skills.german, client.language_skills.native_languages].flatten.each do |language|
+      span= language.full_language_skills
+
   td= client.goals
   td= client.interests
   td= client.competent_authority
