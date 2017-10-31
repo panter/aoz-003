@@ -11,12 +11,16 @@ class GroupOfferPolicy < ApplicationPolicy
     end
   end
 
+  def superadmin_or_department_manager_has_department?
+    superadmin? || department_manager? && user.department.any?
+  end
+
   # controller action policies
-  alias_method :index?,               :superadmin_or_department_manager?
+  alias_method :index?,               :superadmin_or_department_manager_has_department?
+  alias_method :new?,                 :superadmin_or_department_manager_has_department?
+  alias_method :create?,              :superadmin_or_department_manager_has_department?
   alias_method :show?,                :superadmin_or_departments_offer_or_volunteer_included?
-  alias_method :new?,                 :superadmin_or_department_manager?
   alias_method :edit?,                :superadmin_or_departments_offer?
-  alias_method :create?,              :superadmin_or_department_manager?
   alias_method :update?,              :superadmin_or_departments_offer?
   alias_method :archived?,            :superadmin_or_department_manager?
   alias_method :change_active_state?, :superadmin_or_departments_offer?
