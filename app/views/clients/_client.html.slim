@@ -3,10 +3,10 @@ tr
   td= client.contact.full_name
   td= client.contact.city
   td= client.contact.postal_code
-  td= client.birth_year.year if client.birth_year
+  td= client.birth_year&.year
   td
     - client.relatives.each do |relative|
-      = relative.to_s
+      = relative
       br
   td= nationality_name(client.nationality)
   td
