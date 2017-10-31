@@ -35,8 +35,13 @@ FactoryGirl.define do
       profile {}
     end
 
+    trait :fake_email do
+      email { Faker::Internet.email }
+    end
+
     factory :social_worker, traits: [:social_worker]
     factory :department_manager, traits: [:department_manager, :with_departments]
     factory :user_volunteer, traits: [:volunteer]
+    factory :user_fake_email, traits: [:fake_email]
   end
 end
