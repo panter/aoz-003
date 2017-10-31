@@ -8,6 +8,7 @@ class GroupOffer < ApplicationRecord
 
   belongs_to :department, optional: true
   belongs_to :group_offer_category
+  belongs_to :user # creator
 
   has_many :group_assignments, dependent: :destroy
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
@@ -17,8 +18,12 @@ class GroupOffer < ApplicationRecord
 
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
 
+  delegate :department_manager?, to: :user
+
   validates :title, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
+  validate :department_manager_has_department?, if: :department_manager?
+  validates :department, presence: true, if: :department_manager?
 
   scope :active, (-> { where(active: true) })
   scope :archived, (-> { where(active: false) })
@@ -82,5 +87,16 @@ class GroupOffer < ApplicationRecord
         "#{volunteer} (#{I18n.t('activerecord.attributes.group_assignment.member')})"
       end
     end.compact.join(', ')
+  end
+
+  private
+
+  def department_manager_has_department?
+    if user.department.blank?
+      errors.add(:user_no_department, "#{I18n.t('role.department_manager')} müssen einem Standort zugeteilt sein, "\
+        "bevor sie #{I18n.t('group_offers', count: 2)} erfassen können.")
+    elsif !user.department.include?(department)
+      errors.add(:user_wrong_department, 'Nicht der richtige Standort.')
+    end
   end
 end

@@ -230,9 +230,11 @@ ActiveRecord::Schema.define(version: 20171101081636) do
     t.datetime "updated_at", null: false
     t.bigint "group_offer_category_id", null: false
     t.boolean "active", default: true
+    t.bigint "user_id"
     t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
     t.index ["department_id"], name: "index_group_offers_on_department_id"
     t.index ["group_offer_category_id"], name: "index_group_offers_on_group_offer_category_id"
+    t.index ["user_id"], name: "index_group_offers_on_user_id"
   end
 
   create_table "hours", force: :cascade do |t|
