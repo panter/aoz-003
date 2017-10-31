@@ -111,4 +111,10 @@ module ApplicationHelper
       content_tag(:i, '', class: 'glyphicon glyphicon-remove text-danger')
     end
   end
+
+  def bootstrap_paginate(paginate_collection)
+    tag.div class: 'text-center' do
+      will_paginate paginate_collection, renderer: BootstrapPagination::Rails
+    end
+  end
 end
