@@ -13,11 +13,6 @@ class LanguageSkill < ApplicationRecord
     where.not(id: native_language.id)
   }
 
-  scope :lang_order, lambda {
-    order("CASE WHEN language = 'DE' THEN 1 ELSE 2 END")
-      .order("CASE WHEN level = 'native_speaker' THEN 3 ELSE 4 END")
-  }
-
   def self.native_language
     native_languages.first || LanguageSkill.new
   end
