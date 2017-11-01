@@ -78,12 +78,19 @@ User.where(role: ['superadmin', 'social_worker']).each do |user|
 end
 
 def create_two_group_offers(group_offer_category)
+  department_manager = User.find_by(role: 'department_manager')
+  if department_manager.department.blank?
+    department_manager.department << FactoryBot.create(:department)
+    department_manager.save
+  end
   [
     FactoryBot.create(:group_offer, necessary_volunteers: 2,
-      group_offer_category: group_offer_category, creator: User.find_by(role: 'department_manager'),
+      department: department_manager.department.first,
+      group_offer_category: group_offer_category, creator: department_manager,
       volunteers: [FactoryBot.create(:volunteer_seed), FactoryBot.create(:volunteer_seed)]),
-    FactoryBot.create(:group_offer, necessary_volunteers: 2, creator: User.find_by(role: 'superadmin'),
+    FactoryBot.create(:group_offer, necessary_volunteers: 2,
       group_offer_category: group_offer_category,
+      creator: User.find_by(role: 'superadmin'),
       volunteers: [FactoryBot.create(:volunteer_seed), FactoryBot.create(:volunteer_seed)])
   ]
 end
