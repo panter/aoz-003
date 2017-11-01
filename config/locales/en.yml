@@ -229,6 +229,7 @@ en:
         duration_end: End
         duration_start: Start
       client:
+        <<: *id-generic_keys
         age_request: Volunteer's age
         entry_year: Entry year
         gender_request: Volunteer's gender
