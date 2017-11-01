@@ -169,12 +169,12 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_link? volunteer2.contact.full_name
   end
 
-  test 'department_manager has group assignment select dropdowns in edit form filled' do
+  test 'department_manager_has_group_assignment_select_dropdowns_in_edit_form_filled' do
     department_manager = create :department_manager
     volunteer_one = create :volunteer
     volunteer_two = create :volunteer
-    group_offer = create :group_offer, group_offer_category: @group_offer_category, department: @department,
-      group_assignments: [
+    group_offer = create :group_offer, group_offer_category: @group_offer_category,
+      department: department_manager.department.first, group_assignments: [
         GroupAssignment.create(volunteer: volunteer_one),
         GroupAssignment.create(volunteer: volunteer_two)
       ]
