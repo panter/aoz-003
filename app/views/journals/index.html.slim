@@ -17,7 +17,6 @@ h1= t_title(:index, Journal)
               td= word_wrap(record.body)
               td= link_to record.user.full_name, record.user.profile
               td= link_to t_action(:edit), url_for([@journaled, record]) + '/edit'
-.row
-  .col-xs-12= form_navigation_btn :new
+= form_navigation_btn :new
 .row
   .col-xs-12= button_link t('back'), @journaled
