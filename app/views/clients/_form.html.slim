@@ -3,57 +3,72 @@
   = f.input :salutation, as: :select, collection: Client.salutation_collection,
               include_blank: true
 
-  = f.simple_fields_for :contact do |c|
-    = render 'contacts/fields', f: c
-
   .row
+    = f.simple_fields_for :contact do |c|
+      .col-xs-12.col-md-6
+        = c.input :first_name
+      .col-xs-12.col-md-6
+        = c.input :last_name
     .col-xs-12.col-md-6
       = f.input :birth_year, as: :select, collection: Client.year_collection, include_blank: true
     .col-xs-12.col-md-6
       = f.input :nationality, as: :country
-    .col-xs-12.col-md-6
-      = f.input :permit, collection: Client::PERMITS, as: :radio_buttons
 
-  h3= t('language_skills')
+  = f.simple_fields_for :contact do |c|
+    = render 'contacts/fields', f: c
 
-  #languages
-    = f.simple_fields_for :language_skills do |language|
-      - if language.object.language == 'DE'
-        .nested-fields
-          h4 Deutsch
-          = language.input :level, as: :radio_buttons, collection: LanguageSkill::LANGUAGE_LEVELS.without(:native_speaker)
-          = language.hidden_field :language, value: 'DE'
-          hr
-      - else
-        = render 'language_skills/fields', f: language, speaker: @client
-    .links
-      = link_to_add_polymorphic_association t('add_language'), f, :language_skills, class: 'btn btn-success'
+
+  fieldset
+    legend= t_attr(:permit, Client)
+    = f.input :permit, collection: Client::PERMITS, as: :radio_buttons, label: false
+
+  fieldset
+    legend= t('language_skills')
+    #languages
+      = f.simple_fields_for :language_skills do |language|
+        - if language.object.language == 'DE'
+          .nested-fields
+            h4 Deutsch
+            = language.input :level, as: :radio_buttons, collection: LanguageSkill::LANGUAGE_LEVELS.without(:native_speaker)
+            = language.hidden_field :language, value: 'DE'
+            hr
+        - else
+          = render 'language_skills/fields', f: language, speaker: @client
+      .links
+        = link_to_add_polymorphic_association t('add_language'), f, :language_skills, class: 'btn btn-success'
 
 
   = render 'relatives/form', f: f, relative: @client
 
-  h3= t('personal_background')
-  .row
-    .col-xs-12
-      = f.input :goals
-  h3= t('volunteer_request')
-  .row
-    .col-xs-12
-      = f.input :gender_request, collection: Client::GENDER_REQUESTS, default: :no_matter
-      = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
-      = f.input :other_request
-      = f.input :education
-      = f.input :actual_activities
-      = f.input :interests
+  fieldset
+    legend= t('personal_background')
+    = f.input :goals
+    = f.input :education
+    = f.input :actual_activities
+    = f.input :interests
+
+  fieldset
+    legend= t('volunteer_request')
+    = f.input :gender_request, collection: Client::GENDER_REQUESTS, default: :no_matter
+    = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
+    = f.input :other_request
+
+  fieldset
+    legend Interne Kriterien
+    - if policy(Client).state?
       = f.input :state, collection: Client.state_collection, include_blank: false
-      - if policy(Client).comments?
-        = f.input :comments
-      = f.input :involved_authority
-      = f.input :competent_authority
+    - if policy(Client).comments?
+      = f.input :comments
+    = f.input :involved_authority
+    = f.input :competent_authority
 
-  h3= t('general_availability')
-  = render 'availability/form', f: f
+  fieldset
+    legend= t('general_availability')
+    = render 'availability/form', f: f
 
-  .row
-    .col-xs-12
-      = f.button :submit, class: 'btn btn-success'
+  nav.navbar.section-navigation
+    hr
+    ul.list-inline
+      li= f.button :submit, class: 'btn btn-success'
+      li
+      li= button_link t('back'), f.object

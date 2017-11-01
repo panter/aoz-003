@@ -23,4 +23,5 @@ class ClientPolicy < ApplicationPolicy
   alias_method :supervisor?, :superadmin?
   alias_method :journals?,   :superadmin?
   alias_method :comments?,   :superadmin?
+  alias_method :state?,      :superadmin?
 end
