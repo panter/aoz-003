@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :language_skill do
     language { I18nData.languages.to_a.sample.first }
     level 'fluent'

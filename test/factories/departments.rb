@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :department do
     association :contact, factory: :contact_department
   end

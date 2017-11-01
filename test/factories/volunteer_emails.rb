@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :volunteer_email do
     sequence :subject { |n| "demo subject_#{n}" }
     sequence :title { |n| "demo title_#{n}" }

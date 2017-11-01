@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :hour do
     volunteer
     meeting_date { Faker::Date.between(300.days.ago, 10.days.ago) }
