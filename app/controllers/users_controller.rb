@@ -5,7 +5,8 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @users = User.all
+    @q = User.ransack(params[:q])
+    @users = @q.result
   end
 
   def show; end

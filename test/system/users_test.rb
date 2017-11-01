@@ -109,4 +109,41 @@ class UsersTest < ApplicationSystemTestCase
     visit edit_user_path(@user)
     assert page.has_field? 'Password'
   end
+
+  test 'filter users by role' do
+    department_manager = create :department_manager
+    social_worker = create :social_worker
+    user_volunteer = create :user_volunteer
+
+    visit users_path
+
+    assert page.has_link? @user.email
+    assert page.has_link? department_manager.email
+    assert page.has_link? social_worker.email
+    assert page.has_link? user_volunteer.email
+
+    within '.section-navigation' do
+      click_link 'Role'
+      click_link 'Superadmin'
+    end
+    visit current_url
+    within 'tbody' do
+      assert page.has_link? @user.email
+      refute page.has_link? department_manager.email
+      refute page.has_link? social_worker.email
+      refute page.has_link? user_volunteer.email
+    end
+
+    within '.section-navigation' do
+      click_link 'Role: Superadmin'
+      click_link 'Volunteer'
+    end
+    visit current_url
+    within 'tbody' do
+      refute page.has_link? @user.email
+      refute page.has_link? department_manager.email
+      refute page.has_link? social_worker.email
+      assert page.has_link? user_volunteer.email
+    end
+  end
 end

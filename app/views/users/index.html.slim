@@ -1,16 +1,21 @@
-.row
-  .col-xs-12
-    h1= t('users')
+h1= t('users')
 
-.row
-  .col-xs-12
-    table.table.table-striped
-      thead
-        tr
-          th= t_attr(:email)
-          th= t_attr(:role)
-          th
-      tbody
-        = render @users
+nav.navbar.section-navigation
+  hr
+  ul.list-inline
+    li= button_link t_title(:new), new_user_path, 'success', dimension: 'sm'
+    li |
+    li= button_link t('clear_filters'), users_path, dimension: 'sm'
+    li= list_filter_dropdown(:role, User::ROLES)
+  hr
+
+table.table.table-striped
+  thead
+    tr
+      th= t_attr(:email)
+      th= sort_link @q, :role, t_attr(:role, User)
+      th
+  tbody
+    = render @users
 
 = form_navigation_btn :new
