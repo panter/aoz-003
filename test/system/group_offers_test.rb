@@ -28,7 +28,7 @@ class GroupOffersTest < ApplicationSystemTestCase
   end
 
   test "department manager's offer belongs to their department" do
-    department_manager = create :department_manager, department: [create(:department)]
+    department_manager = create :department_manager
     login_as department_manager
     visit new_group_offer_path
 
@@ -170,7 +170,7 @@ class GroupOffersTest < ApplicationSystemTestCase
   end
 
   test 'department_manager has group assignment select dropdowns in edit form filled' do
-    department_manager = create :department_manager, department: [@department]
+    department_manager = create :department_manager
     volunteer_one = create :volunteer
     volunteer_two = create :volunteer
     group_offer = create :group_offer, group_offer_category: @group_offer_category, department: @department,

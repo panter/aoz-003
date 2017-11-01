@@ -5,7 +5,7 @@ class UserPolicyTest < PolicyAssertions::Test
     @superadmin = create :user, :with_clients, role: 'superadmin'
     @other_superadmin = create :user, role: 'superadmin'
     @social_worker = create :user, :with_clients, role: 'social_worker'
-    @department_manager = create :user, role: 'department_manager'
+    @department_manager = create :department_manager
   end
 
   test 'Destroy: superadmin can delete other user' do

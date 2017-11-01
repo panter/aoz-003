@@ -6,7 +6,7 @@ class JournalPolicyTest < PolicyAssertions::Test
   def setup
     @superadmin = create :user, role: 'superadmin'
     @social_worker = create :user, role: 'social_worker'
-    @department_manager = create :user, role: 'department_manager'
+    @department_manager = create :department_manager
     @journal = create :journal, user: @superadmin
   end
 

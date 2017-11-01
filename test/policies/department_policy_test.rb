@@ -1,9 +1,9 @@
 require 'test_helper'
 class DepartmentPolicyTest < PolicyAssertions::Test
   def setup
-    @superadmin = create :user, :with_clients, :with_departments, role: 'superadmin'
+    @superadmin = create :user, :with_clients, :with_department, role: 'superadmin'
     @social_worker = create :user, :with_clients, role: 'social_worker'
-    @department_manager = create :user, :with_departments, role: 'department_manager'
+    @department_manager = create :department_manager
     @department = create :department
   end
 
