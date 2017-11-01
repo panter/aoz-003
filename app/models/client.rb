@@ -18,7 +18,7 @@ class Client < ApplicationRecord
   has_one :assignment
   has_one :volunteer, through: :assignments
 
-  has_one :contact, as: :contactable
+  has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
 
   has_many :relatives, as: :relativeable, dependent: :destroy
@@ -71,5 +71,9 @@ class Client < ApplicationRecord
 
   def self.state_collection
     STATES.map(&:to_sym)
+  end
+
+  def german_missing?
+    language_skills.blank? || language_skills.german.blank?
   end
 end
