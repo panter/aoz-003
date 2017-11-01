@@ -24,8 +24,6 @@ gem 'i18n_data'
 gem 'i18n_rails_helpers'
 gem 'jbuilder'
 gem 'jquery-rails'
-gem 'mdb'
-gem 'panter-rails-deploy'
 gem 'paperclip'
 gem 'paranoia'
 gem 'pg'
@@ -36,7 +34,6 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'redcarpet'
 gem 'rubyzip'
 gem 'sass-rails'
-gem 'scss_lint', require: false
 gem 'simple_form'
 gem 'slim-rails'
 gem 'sprockets-es6'
@@ -49,27 +46,33 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
 gem 'wkhtmltopdf-binary'
 
+group :production, :development do
+  gem 'mdb'
+  gem 'panter-rails-deploy'
+end
+
 group :development, :test do
-  gem 'awesome_print'
-  gem 'better_errors'
   gem 'binding_of_callers'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'i18n_yaml_sorter'
-  gem 'listen'
-  gem 'overcommit', require: false
   gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'policy-assertions'
   gem 'poltergeist'
-  gem 'pry-byebug'
-  gem 'pry-rails'
   gem 'roo', '~> 2.7.0'
-  gem 'rubocop', require: false
   gem 'selenium-webdriver'
+  gem 'spring'
 end
 
 group :development do
-  gem 'spring'
+  gem 'awesome_print'
+  gem 'better_errors'
+  gem 'i18n_yaml_sorter'
+  gem 'listen'
+  gem 'overcommit', require: false
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'rubocop', require: false
+  gem 'scss_lint', require: false
 end
