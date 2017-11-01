@@ -170,21 +170,35 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'client index shows german and native_languages only' do
-    create :client, language_skills: [
-      create(:language_skill, language: 'DE', level: 'good'),
-      create(:language_skill, language: 'IT', level: 'native_speaker'),
-      create(:language_skill, language: 'FR', level: 'fluent')
-    ]
+    client = create :client, language_skills: [
+        create(:language_skill, language: 'DE', level: 'good'),
+        create(:language_skill, language: 'IT', level: 'native_speaker'),
+        create(:language_skill, language: 'FR', level: 'fluent')
+      ]
     visit clients_path
     assert page.has_text? 'German, Good'
     assert page.has_text? 'Italian, Native speaker'
     refute page.has_text? 'French, Fluent'
   end
 
-  test 'new client form has german with its non native speaker abilities' do
+  test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
     visit new_client_path
     assert page.has_text? 'Language skills Deutsch Level'
-    within '#languages'
+    within '#languages' do
+      page.choose('client_language_skills_attributes_0_level_fluent')
+      page.choose('client_language_skills_attributes_0_level_good')
+      page.choose('client_language_skills_attributes_0_level_basic')
+    end
+    select('Mrs.', from: 'Salutation')
+    fill_in 'First name', with: 'Client'
+    fill_in 'Last name', with: "doesn't matter"
+    fill_in 'Primary email', with: 'client@aoz.com'
+    fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    click_button 'Create Client'
+    assert page.has_text? 'German Basic'
   end
 
   def create_clients_for_index_text_check
