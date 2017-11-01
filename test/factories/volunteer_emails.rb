@@ -1,8 +1,14 @@
 FactoryBot.define do
   factory :volunteer_email do
-    sequence :subject { |n| "demo subject_#{n}" }
-    sequence :title { |n| "demo title_#{n}" }
-    sequence :body { |n| "the demonstration rar ra ra body_#{n}" }
+    sequence :subject do |n|
+      "demo subject_#{n}"
+    end
+    sequence :title do |n|
+      "demo title_#{n}"
+    end
+    sequence :body do |n|
+      "the demonstration rar ra ra body_#{n}"
+    end
     user
     active true
 
