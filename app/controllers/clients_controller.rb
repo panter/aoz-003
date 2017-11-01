@@ -18,19 +18,12 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new(user: current_user)
-    @client.language_skills = [LanguageSkill.new(language: 'DE'), LanguageSkill.new(level: :native_speaker)]
+    @client.language_skills << LanguageSkill.new(language: 'DE')
     authorize @client
   end
 
   def edit
-    if @client.language_skills.german.blank?
-      @client.language_skills << LanguageSkill.new(language: 'DE')
-      @client.save
-    end
-    if @client.language_skills.native_languages.blank?
-      @client.language_skills << LanguageSkill.new(level: 'native_speaker')
-      @client.save
-    end
+    @client.language_skills << LanguageSkill.new(language: 'DE') if @client.german_missing?
   end
 
   def create

@@ -1,8 +1,6 @@
 = simple_form_for(@client) do |f|
   = simple_error_notice f
-  = f.input :salutation,
-              as: :select,
-              collection: Client.salutation_collection,
+  = f.input :salutation, as: :select, collection: Client.salutation_collection,
               include_blank: true
 
   = f.simple_fields_for :contact do |c|
@@ -19,18 +17,12 @@
   h3= t('language_skills')
 
   #languages
-    = f.simple_fields_for :language_skills, @client.language_skills.lang_order do |language|
+    = f.simple_fields_for :language_skills do |language|
       - if language.object.language == 'DE'
         .nested-fields
           h4 Deutsch
           = language.input :level, as: :radio_buttons, collection: LanguageSkill::LANGUAGE_LEVELS.without(:native_speaker)
           = language.hidden_field :language, value: 'DE'
-          hr
-      - elsif language.index == 1 && language.object.level == 'native_speaker'
-        .nested_fields
-          h4 Muttersprache
-          = language.input :language, collection: Client.first_languages + languages
-          = language.hidden_field :level, value: 'native_speaker'
           hr
       - else
         = render 'language_skills/fields', f: language, speaker: @client
