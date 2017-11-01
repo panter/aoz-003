@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class DepartmentManagerTest < ApplicationSystemTestCase
   def setup
-    @department_manager = create :user, :with_departments, role: 'department_manager'
+    @department_manager = create :department_manager
     3.times do
       create :client, user: @department_manager
     end

@@ -12,7 +12,7 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
   end
 
   test 'department manager has limited access' do
-    department_manager = create :department_manager, :with_departments
+    department_manager = create :department_manager
     department_manager_offer = create :group_offer, department: department_manager.department.last
     other_group_offer = create :group_offer
     refute_permit(department_manager, GroupOffer, 'destroy?')

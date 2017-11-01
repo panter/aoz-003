@@ -3,11 +3,10 @@ require 'test_helper'
 class DepartmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @superadmin = create :user, :with_clients,
-      :with_departments, role: 'superadmin'
+      :with_department, role: 'superadmin'
     @social_worker = create :user, :with_clients,
-      :with_departments, role: 'social_worker'
-    @department_manager = create :user, :with_departments,
-      role: 'department_manager'
+      :with_department, role: 'social_worker'
+    @department_manager = create :department_manager
   end
 
   test 'superadmin can submit user associations' do

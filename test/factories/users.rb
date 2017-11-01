@@ -25,13 +25,7 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_departments do
-      department do
-        Array.new(1).map { create(:department) }
-      end
-    end
-
-    trait :with_a_department do
+    trait :with_department do
       department { [create(:department)] }
     end
 
@@ -40,7 +34,7 @@ FactoryGirl.define do
     end
 
     factory :social_worker, traits: [:social_worker]
-    factory :department_manager, traits: [:department_manager, :with_a_department]
+    factory :department_manager, traits: [:department_manager, :with_department]
     factory :user_volunteer, traits: [:volunteer]
   end
 end
