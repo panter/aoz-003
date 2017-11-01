@@ -60,9 +60,12 @@ group :development, :test do
   gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'policy-assertions'
   gem 'poltergeist'
-  gem 'roo', '~> 2.7.0'
   gem 'selenium-webdriver'
   gem 'spring'
+end
+
+group :test do
+  gem 'roo', '~> 2.7.0'
 end
 
 group :development do
