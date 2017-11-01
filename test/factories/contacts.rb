@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :contact do
-    sequence :first_name { Faker::Name.first_name }
-    sequence :last_name { Faker::Name.first_name }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.first_name }
     extended { Faker::Address.secondary_address }
     street { Faker::Address.street_address }
     city { Faker::Address.city }
