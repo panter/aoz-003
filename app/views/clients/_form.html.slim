@@ -53,14 +53,13 @@
     = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
     = f.input :other_request
 
-  fieldset
-    legend Interne Kriterien
-    - if policy(Client).state?
+  - if policy(Client).supervisor?
+    fieldset
+      legend Interne Kriterien
       = f.input :state, collection: Client.state_collection, include_blank: false
-    - if policy(Client).comments?
       = f.input :comments
-    = f.input :involved_authority
-    = f.input :competent_authority
+      = f.input :involved_authority
+      = f.input :competent_authority
 
   fieldset
     legend= t('general_availability')

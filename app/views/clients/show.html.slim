@@ -49,23 +49,25 @@ h1= @client.contact.full_name
         td= t_attr(:interests)
         td= @client.interests
 
-      tr
-        td= t_attr(:state)
-        td= t("state.#{@client.state}")
+      - if policy(Client).state?
+        tr
+          td= t_attr(:state)
+          td= t("state.#{@client.state}")
 
-      tr
-        td= t_attr(:involved_authority)
-        td= @client.involved_authority
+      - if policy(Client).authority_fields?
+        tr
+          td= t_attr(:involved_authority)
+          td= @client.involved_authority
 
-      tr
-        td= t_attr(:competent_authority)
-        td= @client.competent_authority
+        tr
+          td= t_attr(:competent_authority)
+          td= @client.competent_authority
 
       tr
         td= t('registered_by')
         td= mail_to @client.user.email
 
-      - if policy(Client).destroy?
+      - if policy(Client).comments?
         tr
           td= t_attr(:comments)
           td= @client.comments
