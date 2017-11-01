@@ -12,7 +12,7 @@ services: postgresql
 addons:
   postgresql: "9.4"
 
-bundler_args: --without production
+bundler_args: --without production --without development
 
 before_script:
   - bundle exec rails db:create
