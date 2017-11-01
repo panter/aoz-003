@@ -161,11 +161,28 @@ class Volunteer < ApplicationRecord
     }
   end
 
-  def assignments_duration
-    {
-      duration_start: assignments.minimum(:period_start),
-      duration_end: assignments.maximum(:period_end)
-    }
+  def assignment_start_dates
+    assignments.select('period_start').where.not(period_start: nil).map(&:period_start)
+  end
+
+  def assignment_end_dates
+    assignments.select('period_end').where.not(period_end: nil).map(&:period_end)
+  end
+
+  def group_assignment_start_dates
+    group_assignments.select('period_start').where.not(period_start: nil).map(&:period_start)
+  end
+
+  def group_assignment_end_dates
+    group_assignments.select('period_end').where.not(period_end: nil).map(&:period_end)
+  end
+
+  def min_assignment_date
+    (assignment_start_dates + group_assignment_start_dates).min
+  end
+
+  def max_assignment_date
+    (assignment_end_dates + group_assignment_end_dates).max
   end
 
   def assignments?
