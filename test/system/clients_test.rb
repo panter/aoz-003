@@ -284,12 +284,13 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? superadmins_client.contact.full_name
   end
 
-  test 'client index shows german and native_languages only' do
+  test 'client_index_shows_german_and_native_languages_only' do
     client = create :client, language_skills: [
         create(:language_skill, language: 'DE', level: 'good'),
         create(:language_skill, language: 'IT', level: 'native_speaker'),
         create(:language_skill, language: 'FR', level: 'fluent')
       ]
+    login_as @superadmin
     visit clients_path
     assert page.has_text? 'German, Good'
     assert page.has_text? 'Italian, Native speaker'
