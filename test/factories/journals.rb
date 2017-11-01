@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :journal do
-    sequence :body { |n| " Bogus_text_body_#{n}" * 30 }
+    sequence :body do |n|
+      " Bogus_text_body_#{n}" * 30
+    end
     user
     category { Journal::CATEGORIES.sample }
 

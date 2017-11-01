@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :user do
-    sequence :email { |n| "superadmin#{n}@example.com" }
+    sequence :email do |n|
+      "superadmin#{n}@example.com"
+    end
     password 'asdfasdf'
     role User::SUPERADMIN
 
