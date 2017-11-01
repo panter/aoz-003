@@ -16,7 +16,7 @@ before_install:
 
 before_script:
   - bundle exec rails db:create
-  - bundle exec rails db:migrate
+  - bundle exec rails db:schema:load
 
 script:
   - bundle exec rails test
