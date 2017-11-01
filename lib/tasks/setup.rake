@@ -11,7 +11,7 @@ namespace :setup do
   desc 'Create Superadmin account ready to use (no activation needed)'
   task superadmin_initialized: :environment do
     if ENV['email'].present?
-      FactoryGirl.create(:user, email: ENV['email'], password: 'asdfasdf', role: 'superadmin')
+      FactoryBot.create(:user, email: ENV['email'], password: 'asdfasdf', role: 'superadmin')
     else
       warn 'No email set, run `rails setup:superadmin_initialized email=an.email@you-choose.com`'
     end

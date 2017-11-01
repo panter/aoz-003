@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :group_offer do
     association :creator, factory: :user
     group_offer_category

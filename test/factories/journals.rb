@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :journal do
     sequence :body { |n| " Bogus_text_body_#{n}" * 30 }
     user
