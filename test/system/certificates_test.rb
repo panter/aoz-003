@@ -18,6 +18,8 @@ class CertificatesTest < ApplicationSystemTestCase
   end
 
   test 'Creating volunteer certificate form has right content prefilled' do
+    group_offer = create :group_offer, volunteers: [@volunteer]
+    group_offer.group_assignments.last.update(period_start: 2.years.ago)
     login_as @user
     visit volunteer_path(@volunteer)
     click_link 'Create certificate'
@@ -35,6 +37,8 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_text? 'AOZ Zürich, Flüelastrasse 32, 8047'
     assert page.has_text? @volunteer.contact.full_name
     assert page.has_text? @volunteer.certificates.first.created_at.to_date.to_s
+    assert page.has_text? @volunteer.min_assignment_date
+    assert page.has_text? @volunteer.max_assignment_date
     assert page.has_link? 'Print'
   end
 

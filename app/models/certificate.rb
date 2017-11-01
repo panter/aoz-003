@@ -10,6 +10,8 @@ class Certificate < ApplicationRecord
     self.minutes ||= volunteer.hours.minutes_rest
     self.volunteer_contact ||= convert_volunteer_contact
     self.institution ||= DEFAULT_INSTITUTION
+    self.duration_start = volunteer.min_assignment_date
+    self.duration_end = volunteer.max_assignment_date
   end
 
   def convert_volunteer_contact
