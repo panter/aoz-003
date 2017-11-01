@@ -4,7 +4,7 @@ require 'database_cleaner'
 require 'policy_assertions'
 
 class ActiveSupport::TestCase
-  include FactoryGirl::Syntax::Methods
+  include FactoryBot::Syntax::Methods
   include Warden::Test::Helpers
 
   DatabaseCleaner.strategy = :transaction

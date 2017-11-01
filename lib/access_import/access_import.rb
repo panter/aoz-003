@@ -141,7 +141,7 @@ class AccessImport
   def create_or_fetch_import_user
     return User.find_by(email: EMAIL) if User.exists?(email: EMAIL)
     return User.deleted.find_by(email: EMAIL).restore if User.deleted.exists?(email: EMAIL)
-    import_user = FactoryGirl.create :user, email: EMAIL, password: SecureRandom.hex(60)
+    import_user = FactoryBot.create :user, email: EMAIL, password: SecureRandom.hex(60)
     import_user.profile.contact.first_name = 'AOZ Import'
     import_user.profile.contact.last_name = 'AOZ Import'
     import_user.profile.contact.primary_email = EMAIL

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :contact do
     sequence :first_name { Faker::Name.first_name }
     sequence :last_name { Faker::Name.first_name }

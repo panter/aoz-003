@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :volunteer do
     birth_year { Faker::Date.birthday(18, 85) }
     contact
