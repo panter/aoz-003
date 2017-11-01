@@ -31,12 +31,16 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_a_department do
+      department { [create(:department)] }
+    end
+
     trait :without_profile do
       profile {}
     end
 
     factory :social_worker, traits: [:social_worker]
-    factory :department_manager, traits: [:department_manager, :with_departments]
+    factory :department_manager, traits: [:department_manager, :with_a_department]
     factory :user_volunteer, traits: [:volunteer]
   end
 end

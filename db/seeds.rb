@@ -80,9 +80,9 @@ end
 def create_two_group_offers(group_offer_category)
   [
     FactoryGirl.create(:group_offer, necessary_volunteers: 2,
-      group_offer_category: group_offer_category,
+      group_offer_category: group_offer_category, creator: User.find_by(role: 'department_manager'),
       volunteers: [FactoryGirl.create(:volunteer_seed), FactoryGirl.create(:volunteer_seed)]),
-    FactoryGirl.create(:group_offer, necessary_volunteers: 2,
+    FactoryGirl.create(:group_offer, necessary_volunteers: 2, creator: User.find_by(role: 'superadmin'),
       group_offer_category: group_offer_category,
       volunteers: [FactoryGirl.create(:volunteer_seed), FactoryGirl.create(:volunteer_seed)])
   ]
