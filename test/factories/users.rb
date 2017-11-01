@@ -31,6 +31,10 @@ FactoryBot.define do
       department { [create(:department)] }
     end
 
+    trait :with_a_department do
+      department { [create(:department)] }
+    end
+
     trait :without_profile do
       profile {}
     end

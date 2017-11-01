@@ -99,6 +99,6 @@ class GroupOffersController < ApplicationController
       :necessary_volunteers, :description, :women, :men, :children, :teenagers, :unaccompanied,
       :all, :long_term, :regular, :short_term, :workday, :weekend, :morning, :afternoon, :evening,
       :flexible, :schedule_details, :department_id, :organization, :location,
-      :group_offer_category_id, :user_id, group_assignments_attributes)
+      :group_offer_category_id, group_assignments_attributes)
   end
 end
