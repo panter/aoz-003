@@ -94,30 +94,6 @@ class ClientsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'language without a level shows only language' do
-    login_as @superadmin
-    visit new_client_path
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'asdf'
-    fill_in 'Last name', with: 'asdf'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
-    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
-    fill_in 'Primary phone', with: '0123456789'
-
-    click_on('Add language')
-    select('Farsi', from: 'Language')
-
-    click_button 'Create Client'
-    within '.table-no-border-top' do
-      refute page.has_text? ':native_speaker=>"Native speaker"'
-    end
-
-    visit clients_path
-    assert page.has_text? 'Farsi'
-  end
-
   test 'level without a language is not shown' do
     login_as @superadmin
     visit new_client_path
