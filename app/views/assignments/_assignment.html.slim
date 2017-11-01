@@ -13,7 +13,7 @@ tr
       = link_to assignment.creator, assignment.creator if assignment.creator.present?
     - else
       = assignment.creator
-  = render 'index_actions', subject: assignment, target_controller: 'assignments'
+  = render 'index_actions', subject: assignment
   - if current_user.volunteer == assignment.volunteer
     td= link_to t_title(:edit, Assignment), edit_assignment_path(assignment)
   td = link_to t('download'), assignment_path(assignment, format: :pdf)
