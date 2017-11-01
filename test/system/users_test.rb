@@ -93,4 +93,20 @@ class UsersTest < ApplicationSystemTestCase
     email = ActionMailer::Base.deliveries.last
     assert_equal volunteer.contact.primary_email, email['to'].to_s
   end
+
+  test 'superadmin can edit only their password' do
+    other_superadmin = create :user
+    department_manager = create :department_manager
+    social_worker = create :social_worker
+    volunteer = create :user_volunteer
+    other_users = [other_superadmin, department_manager, social_worker, volunteer]
+
+    other_users.each do |user|
+      visit edit_user_path(user)
+      refute page.has_field? 'Password'
+    end
+
+    visit edit_user_path(@user)
+    assert page.has_field? 'Password'
+  end
 end
