@@ -8,7 +8,7 @@ class GroupOffer < ApplicationRecord
 
   belongs_to :department, optional: true
   belongs_to :group_offer_category
-  belongs_to :user # creator
+  belongs_to :creator, -> { with_deleted }, class_name: 'User'
 
   has_many :group_assignments, dependent: :destroy
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
@@ -18,7 +18,7 @@ class GroupOffer < ApplicationRecord
 
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
 
-  delegate :department_manager?, to: :user
+  delegate :department_manager?, to: :creator
 
   validates :title, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
@@ -92,11 +92,11 @@ class GroupOffer < ApplicationRecord
   private
 
   def department_manager_has_department?
-    if user.department.blank?
-      errors.add(:user_no_department, "#{I18n.t('role.department_manager')} müssen einem Standort zugeteilt sein, "\
+    if creator.department.blank?
+      errors.add(:creator_no_department, "#{I18n.t('role.department_manager')} müssen einem Standort zugeteilt sein, "\
         "bevor sie #{I18n.t('group_offers', count: 2)} erfassen können.")
-    elsif !user.department.include?(department)
-      errors.add(:user_wrong_department, 'Nicht der richtige Standort.')
+    elsif !creator.department.include?(department)
+      errors.add(:creator_wrong_department, 'Nicht der richtige Standort.')
     end
   end
 end
