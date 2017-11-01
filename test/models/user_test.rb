@@ -4,8 +4,8 @@ class UserTest < ActiveSupport::TestCase
   def setup
     @user = create :user
     @superadmin = create :user, role: 'superadmin'
-    @social_worker = create :user, role: 'social_worker'
-    @department_manager = create :user, role: 'department_manager'
+    @social_worker = create :social_worker
+    @department_manager = create :department_manager
   end
 
   test 'valid factory' do

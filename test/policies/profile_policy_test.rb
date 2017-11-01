@@ -4,7 +4,7 @@ class ProfilePolicyTest < PolicyAssertions::Test
   def setup
     @superadmin = create :user, :with_clients, role: 'superadmin'
     @social_worker = create :user, :with_clients, role: 'social_worker'
-    @department_manager = create :user, role: 'department_manager'
+    @department_manager = create :department_manager
     @user_without_profile = create :user
   end
 

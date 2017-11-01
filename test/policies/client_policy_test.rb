@@ -4,7 +4,7 @@ class ClientPolicyTest < PolicyAssertions::Test
   def setup
     @superadmin = create :user, :with_clients, role: 'superadmin'
     @social_worker = create :user, :with_clients, role: 'social_worker'
-    @department_manager = create :user, role: 'department_manager'
+    @department_manager = create :department_manager
   end
 
   test 'Create: superadmin can create' do
