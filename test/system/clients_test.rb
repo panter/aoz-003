@@ -284,9 +284,27 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? superadmins_client.contact.full_name
   end
 
+  test 'client index shows german and native_languages only' do
+    create :client, language_skills: [
+      create(:language_skill, language: 'DE', level: 'good'),
+      create(:language_skill, language: 'IT', level: 'native_speaker'),
+      create(:language_skill, language: 'FR', level: 'fluent')
+    ]
+    visit clients_path
+    assert page.has_text? 'German, Good'
+    assert page.has_text? 'Italian, Native speaker'
+    refute page.has_text? 'French, Fluent'
+  end
+
+  test 'new client form has german with its non native speaker abilities' do
+    visit new_client_path
+    assert page.has_text? 'Language skills Deutsch Level'
+    within '#languages'
+  end
+
   def create_clients_for_index_text_check
     with_assignment = create :client, comments: 'with_assignment', competent_authority: 'assigned_authority',
-                             goals: 'assigned_goals', interests: 'assigned_interests'
+                              goals: 'assigned_goals', interests: 'assigned_interests'
     create :assignment, volunteer: create(:volunteer), client: with_assignment
     with_assignment.update(created_at: 2.days.ago)
     without_assignment = create :client, comments: 'without_assignment', competent_authority: 'unassigned_authority',
