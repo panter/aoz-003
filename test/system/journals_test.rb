@@ -34,15 +34,18 @@ class JournalsTest < ApplicationSystemTestCase
   end
 
   test 'can_delete_a_journal_through_edit' do
+    superadmin = create :user
     Journal.with_deleted.map(&:really_destroy!)
-    create :journal, journalable: @volunteer
+    create :journal, journalable: @volunteer, user: superadmin, body: 'bogus_journal_text'
+    login_as superadmin
     visit volunteer_path(@volunteer)
 
     click_button 'Journal'
-    within '#journalBlock' do
-      click_link 'Edit'
-    end
-    page.find('a', text: 'Delete').click
+    assert page.has_text? 'bogus_journal_text'
+    first('a', text: 'Edit').click
+    assert page.has_text? 'Edit Journal'
+
+    click_link 'Delete'
     assert page.has_text? 'Journal was successfully deleted.'
     click_button 'Journal'
     refute page.has_link? @journal_volunteer.user.full_name
