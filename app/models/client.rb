@@ -74,6 +74,6 @@ class Client < ApplicationRecord
   end
 
   def german_missing?
-    language_skills.blank? || language_skills.german.blank?
+    language_skills.german.blank?
   end
 end
