@@ -43,10 +43,8 @@ def make_lang_skills
 end
 
 [:superadmin, :social_worker, :department_manager].each do |role|
-  user = FactoryBot.create(:user, role: role, email: "#{role}#{EMAIL_DOMAIN}",
+  FactoryBot.create(:user, role: role, email: "#{role}#{EMAIL_DOMAIN}",
     password: 'asdfasdf')
-  user.profile.contact.primary_email = "#{role}#{EMAIL_DOMAIN}"
-  user.save!
 end
 
 FactoryBot.create(
