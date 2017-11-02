@@ -38,6 +38,9 @@ Use `rails db:seed` to get these users:
 - department_manager
   - email: department_manager@example.com
   - password: asdfasdf
+- volunteer
+  - email: volunteer@example.com
+  - password: asdfasdf
 
 ### Create initial superadmin account
 
