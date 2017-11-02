@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101081636) do
+ActiveRecord::Schema.define(version: 20171103121704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20171101081636) do
     t.boolean "workday", default: false
     t.boolean "weekend", default: false
     t.text "detailed_description"
+    t.string "entry_date"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end

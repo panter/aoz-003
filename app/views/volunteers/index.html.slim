@@ -14,7 +14,7 @@ nav.navbar.section-navigation
     li= button_link t('clear_filters'), volunteers_path, 'info', dimension: 'sm'
     li= button_link t('export_xlsx'), url_for(format: :xlsx, q: search_parameters), 'warning', dimension: 'sm'
     = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
-    = list_filter_dropdown(:salutation, Volunteer.salutation_collection)
+    = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
     = boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
     = boolean_filter_dropdown(:group_accompaniment, Volunteer::GROUP_ACCOMPANIMENTS)
     = boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)

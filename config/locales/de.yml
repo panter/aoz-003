@@ -31,8 +31,9 @@ de:
     created_at: Erstellt um
     gender_request: &id-gender_requests
       all: Alle
-      no_matter: Geschlecht egal
-      same: Geschlecht gleich
+      man: Mann
+      no_matter: egal
+      woman: Frau
     generic_keys: &id-generic_keys
       address: Adresse
       avatar: Foto
@@ -130,6 +131,7 @@ de:
       volunteer: Freiwillige/r
     salutation: &id-salutations
       all: Alle
+      family: Familie
       mr: Herr
       mrs: Frau
     state: &id-states
@@ -776,7 +778,7 @@ de:
         total: Anzahl Begleitete
   personal_background: Persönlicher Hintergrund
   profile_updated: Profil wurde erfolgreich aktualisiert.
-  registered_by: Registriert durch
+  registered_by: Angemeldet von
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
   reminder_mailer:

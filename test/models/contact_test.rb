@@ -11,12 +11,12 @@ class ContactTest < ActiveSupport::TestCase
     assert @contact.valid?
   end
 
-  test 'Require primary_email, first and last name for Clients' do
+  test 'Required fields for Clients' do
     @contact.contactable_type = 'Client'
 
     refute @contact.valid?
-    assert_equal @contact.errors.keys, [:last_name, :first_name, :primary_email, :primary_phone,
-                                        :street, :postal_code, :city]
+    assert_equal @contact.errors.keys, [:last_name, :first_name, :primary_phone, :street,
+                                        :postal_code, :city]
   end
 
   test 'Required fields for Volunteers' do

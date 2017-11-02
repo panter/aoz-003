@@ -7,5 +7,5 @@
   ul.dropdown-menu
     li
       = link_to t('all'), params.permit!.to_h.deep_merge(q: {salutation_matches: ''})
-    - Volunteer.salutation_collection.each do |s|
+    - Volunteer::SALUTATIONS.each do |s|
       li= link_to t(s.to_s, scope: [:simple_form, :options, :volunteer, :salutation]), params.permit!.to_h.deep_merge(q: {salutation_matches: s})
