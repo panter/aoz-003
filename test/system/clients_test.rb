@@ -17,6 +17,7 @@ class ClientsTest < ApplicationSystemTestCase
     end
     select('Mrs.', from: 'Salutation')
     select('Aruba', from: 'Nationality')
+    fill_in 'Entry date', with: 'Sept. 2015'
     page.choose('client_permit_b')
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
@@ -35,7 +36,7 @@ class ClientsTest < ApplicationSystemTestCase
       select('Uncle', from: 'Relation')
     end
     fill_in 'Goals', with: 'asdfasdf'
-    select('gender same', from: "Volunteer's gender")
+    select("gender doesn't matter", from: "Volunteer's gender")
     select('36 - 50', from: "Volunteer's age")
     fill_in 'Other request', with: 'asdfasdf'
     fill_in 'Education', with: 'asdfasdf'
@@ -58,7 +59,6 @@ class ClientsTest < ApplicationSystemTestCase
     select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Client'
     fill_in 'Last name', with: "doesn't matter"
-    fill_in 'Primary email', with: 'client@aoz.com'
     fill_in 'Primary phone', with: '0123456789'
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
@@ -147,10 +147,10 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
-    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority without_assignment '\
-      "#{I18n.l(without_assignment.created_at.to_date)} Show Find volunteer"
-    assert page.has_text? 'assigned_goals assigned_interests assigned_authority with_assignment '\
-      "#{I18n.l(with_assignment.created_at.to_date)} Show Show Assignment"
+    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
+      "#{I18n.l(without_assignment.created_at.to_date)} without_assignment Show Find volunteer"
+    assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
+      "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Show Assignment"
   end
 
   test 'department manager sees his scoped client index correctly' do
@@ -162,9 +162,9 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
-    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority without_assignment '\
+    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
       "#{I18n.l(without_assignment.created_at.to_date)} Show Find volunteer"
-    assert page.has_text? 'assigned_goals assigned_interests assigned_authority with_assignment '\
+    assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
       "#{I18n.l(with_assignment.created_at.to_date)} Show Show Assignment"
     refute page.has_text? superadmins_client.contact.full_name
   end
