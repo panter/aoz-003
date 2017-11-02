@@ -52,11 +52,16 @@ group :production, :development do
 end
 
 group :development, :test do
+  gem 'awesome_print'
+  gem 'better_errors'
   gem 'binding_of_callers'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'i18n_yaml_sorter'
+  gem 'listen'
+  gem 'overcommit', require: false
   gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'policy-assertions'
   gem 'poltergeist'
