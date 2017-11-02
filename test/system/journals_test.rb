@@ -33,21 +33,19 @@ class JournalsTest < ApplicationSystemTestCase
     assert page.has_text? 'My bogus demo text body, just for this test.'
   end
 
-  # Test runs locally, but misteriously never runs on travis
-  #
-  # test 'can_delete_a_journal_through_edit' do
-  #   Journal.with_deleted.map(&:really_destroy!)
-  #   create :journal, journalable: @volunteer
-  #   visit volunteer_path(@volunteer)
+  test 'can_delete_a_journal_through_edit' do
+    Journal.with_deleted.map(&:really_destroy!)
+    create :journal, journalable: @volunteer
+    visit volunteer_path(@volunteer)
 
-  #   click_button 'Journal'
-  #   within '#journalBlock' do
-  #     click_link 'Edit'
-  #   end
-  #   page.find('a', text: 'Delete').click
-  #   assert page.has_text? 'Journal was successfully deleted.'
-  #   click_button 'Journal'
-  #   refute page.has_link? @journal_volunteer.user.full_name
-  #   refute page.has_text? @journal_volunteer.body
-  # end
+    click_button 'Journal'
+    within '#journalBlock' do
+      click_link 'Edit'
+    end
+    page.find('a', text: 'Delete').click
+    assert page.has_text? 'Journal was successfully deleted.'
+    click_button 'Journal'
+    refute page.has_link? @journal_volunteer.user.full_name
+    refute page.has_text? @journal_volunteer.body
+  end
 end
