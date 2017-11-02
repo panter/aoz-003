@@ -1,6 +1,5 @@
 class Client < ApplicationRecord
   include LanguageReferences
-  include SalutationCollection
   include YearCollection
   include BuildContactRelation
   include ZuerichScopes
@@ -12,6 +11,11 @@ class Client < ApplicationRecord
   FINISHED = 'finished'.freeze
   REJECTED = 'rejected'.freeze
   STATES = [REGISTERED, RESERVED, ACTIVE, FINISHED, REJECTED].freeze
+
+  GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
+  AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
+  PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
+  SALUTATIONS = [:mrs, :mr, :family].freeze
 
   belongs_to :user, -> { with_deleted }
 
@@ -27,6 +31,7 @@ class Client < ApplicationRecord
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
 
+  validates :salutation, presence: true
   validates :state, inclusion: { in: STATES }
 
   scope :need_accompanying, lambda {
@@ -49,10 +54,6 @@ class Client < ApplicationRecord
   scope :without_assignment, lambda {
     left_outer_joins(:assignment).where(assignments: { id: nil })
   }
-
-  GENDER_REQUESTS = [:no_matter, :same].freeze
-  AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
-  PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
 
   def to_s
     contact.full_name

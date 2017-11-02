@@ -1,6 +1,5 @@
 class Volunteer < ApplicationRecord
   include LanguageReferences
-  include SalutationCollection
   include BuildContactRelation
   include YearCollection
   include ZuerichScopes
@@ -19,6 +18,7 @@ class Volunteer < ApplicationRecord
                           :children, :other_offer].freeze
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
+  SALUTATIONS = [:mrs, :mr].freeze
 
   enum acceptance: { undecided: 0, accepted: 1, rejected: 2, resigned: 3 }
 

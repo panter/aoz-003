@@ -33,8 +33,9 @@ en:
       inactive: inactive
     gender_request: &id-gender_requests
       all: All
+      man: Man
       no_matter: "gender doesn't matter"
-      same: gender same
+      woman: Woman
     generic_keys: &id-generic_keys
       address: Address
       avatar: Photo
@@ -129,6 +130,7 @@ en:
       superadmin: Superadmin
       volunteer: Volunteer
     salutation: &id-salutations
+      family: Family
       mr: Mr.
       mrs: Mrs.
     state: &id-states

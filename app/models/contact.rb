@@ -3,10 +3,8 @@ class Contact < ApplicationRecord
 
   validates :last_name, presence: true, if: :validate_last_name?
   validates :first_name, presence: true, if: :validate_first_name?
-
   validates :primary_email, presence: true, if: :needs_primary_email?
   validates :primary_phone, presence: true, if: :needs_primary_phone?
-
   validates :street, :postal_code, :city, presence: true, if: :needs_address?
 
   after_save :update_user_email, unless: :client?
@@ -48,9 +46,12 @@ class Contact < ApplicationRecord
   end
 
   def needs_primary_email?
+    !external && volunteer?
+  end
+
+  def needs_primary_phone?
     !external && volunteer? || client?
   end
-  alias :needs_primary_phone? :needs_primary_email?
 
   def needs_address?
     volunteer? || client?
