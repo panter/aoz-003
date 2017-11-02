@@ -47,11 +47,15 @@
   margin-right: 10px;
 }
 
+$a4-short-side: 210mm;
+$a4-long-side: 297mm;
+
 @mixin a4 {
   background: white;
-  height: 29.7cm;
+  height: $a4-long-side;
   margin: 0;
   padding: 0;
   size: a4 portrait;
-  width: 21cm;
+  width: $a4-short-side;
 }
+

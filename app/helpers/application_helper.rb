@@ -113,7 +113,7 @@ module ApplicationHelper
   end
 
   def bootstrap_paginate(paginate_collection)
-    tag.div class: 'text-center' do
+    tag.div class: 'text-center hidden-print' do
       will_paginate paginate_collection, renderer: BootstrapPagination::Rails
     end
   end

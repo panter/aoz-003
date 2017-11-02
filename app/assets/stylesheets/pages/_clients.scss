@@ -1,0 +1,43 @@
+body.clients {
+  @media print {
+    height: $a4-short-side;
+    margin: 0;
+    padding: 0;
+    size: A4 landscape;
+    width: $a4-long-side;
+
+    a[href]::after {
+      content: '';
+    }
+
+    .truncate-th {
+      span {
+        width: 55px;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .relatives-cell {
+      span {
+        width: 80px;
+        display: block;
+      }
+    }
+
+    table {
+      max-width: $a4-long-side;
+
+      .no-wrap {
+        white-space: nowrap;
+      }
+    }
+    .container, .wrapper {
+      width: $a4-long-side;
+      height: $a4-short-side;
+    }
+  }
+}
+
