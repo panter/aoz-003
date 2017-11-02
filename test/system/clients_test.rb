@@ -183,6 +183,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
+    login_as @superadmin
     visit new_client_path
     assert page.has_text? 'Language skills Deutsch Level'
     within '#languages' do
