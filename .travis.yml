@@ -4,6 +4,7 @@ cache:
   bundler: true
   directories:
     - .phantomjs
+    - vendor/bundle
     - .rvm
 
 services: postgresql
