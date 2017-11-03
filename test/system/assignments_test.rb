@@ -90,4 +90,12 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer)
     refute page.has_link? 'New Assignment'
   end
+
+  test 'assignments_print_view_is_not_paginated' do
+    Assignment.with_deleted.map(&:really_destroy!)
+    45.times { create :assignment }
+    login_as @user
+    visit assignments_url(print: true)
+    assert_equal Assignment.count, find_all('tbody tr').size
+  end
 end
