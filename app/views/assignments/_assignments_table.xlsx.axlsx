@@ -1,0 +1,56 @@
+col_header = wb.styles.add_style(
+  bg_color: 'FFDFDEDF',
+  b: true,
+  alignment: { horizontal: :center, vertical: :center },
+  border: { color: '00', edges: [:bottom], style: :thin },
+  width: :auto_fit
+)
+standard_format = wb.styles.add_style alignment: { horizontal: :left }, width: :auto_fit
+date_format = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
+date_time_format = wb.styles.add_style(alignment: { horizontal: :center }, format_code: 'dd.mm.yyyy HH:MM',
+  with: :auto_fit)
+
+cell_styles = [
+  standard_format,  # 0
+  standard_format,  # 1
+  standard_format,  # 2
+  date_format,      # 3
+  date_format,      # 4
+  standard_format,  # 5
+  date_time_format, # 6
+  date_time_format  # 7
+]
+
+wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
+  # add header row
+  sheet.add_row(
+    [
+      'id',                   # 0
+      'Klient/in',            # 1
+      'Freiwillige/r',        # 2
+      t_attr(:period_start),  # 3
+      t_attr(:period_end),    # 4
+      t_attr(:state),         # 5
+      t_attr(:created_at),    # 6
+      t_attr(:updated_at)     # 7
+    ],
+    type: :string, style: col_header
+  )
+
+  # add body rows
+  assignments.each do |assignment|
+    sheet.add_row(
+      [
+        assignment.id,                                                 # 0
+        assignment.client.contact.full_name,                           # 1
+        assignment.volunteer.contact.full_name,                        # 2
+        assignment.period_start,                                       # 3
+        assignment.period_end,                                         # 4
+        t("simple_form.options.assignment.state.#{assignment.state}"), # 5
+        assignment.created_at.localtime,                               # 6
+        assignment.updated_at.localtime                                # 7
+      ],
+      style: cell_styles
+    )
+  end
+end

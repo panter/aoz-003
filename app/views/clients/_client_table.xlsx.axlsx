@@ -2,9 +2,12 @@ col_header = wb.styles.add_style(
   bg_color: 'FFDFDEDF',
   b: true,
   alignment: { horizontal: :center, vertical: :center },
-  border: { color: '00', edges: [:bottom], style: :thin})
+  border: { color: '00', edges: [:bottom], style: :thin}
+)
 postal_code = wb.styles.add_style(alignment: { horizontal: :right }, width: :auto_fit)
-
+date_time_format = wb.styles.add_style format_code: 'dd.mm.yyyy HH:MM'
+date_format = wb.styles.add_style format_code: 'dd.mm.yyyy'
+birth_year_format = wb.styles.add_style format_code: 'yyyy'
 wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
   header_row = [
     'id',
@@ -30,31 +33,38 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
 
   cell_types = Array.new(header_row.size).map { :string }
   cell_types[0] = :integer
-  cell_types[11] = :integer
+  cell_types[8] = :string
+  cell_types[9] = :string
+  cell_types[11] = :time
+  cell_types[16] = :time
+  cell_types[17] = :time
   cell_styles = Array.new(header_row.size).map { nil }
   cell_styles[6] = postal_code
+  cell_styles[11] = birth_year_format
+  cell_styles[16] = date_time_format
+  cell_styles[17] = date_time_format
   clients.each do |client|
     salutation = t("salutation.#{client.salutation}") if client.salutation?
     contact = client.contact
     body_row = [
-      client.id,
-      salutation,
-      contact.last_name,
-      contact.first_name,
-      contact.street,
-      contact.extended,
-      contact.postal_code,
-      contact.city,
-      contact.primary_phone,
-      contact.secondary_phone,
-      contact.primary_email,
-      client.birth_year&.year,
-      nationality_name(client.nationality),
-      client.education,
-      client.entry_year,
-      t("state.#{client.state}"),
-      l(client.created_at.localtime),
-      l(client.updated_at.localtime)
+      client.id,                                # 00
+      salutation,                               # 01
+      contact.last_name,                        # 02
+      contact.first_name,                       # 03
+      contact.street,                           # 04
+      contact.extended,                         # 05
+      contact.postal_code,                      # 06
+      contact.city,                             # 07
+      contact.primary_phone,                    # 08
+      contact.secondary_phone,                  # 09
+      contact.primary_email,                    # 10
+      client.birth_year,                        # 11
+      nationality_name(client.nationality),     # 12
+      client.education,                         # 13
+      client.entry_year,                        # 14
+      t("state.#{client.state}"),               # 15
+      client.created_at.localtime,              # 16
+      client.updated_at.localtime               # 17
     ]
     sheet.add_row body_row, types: cell_types, style: cell_styles
   end

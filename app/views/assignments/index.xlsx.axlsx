@@ -1,0 +1,2 @@
+wb = xlsx_package.workbook
+render partial: 'assignments_table', locals: { wb: wb, assignments: @assignments }

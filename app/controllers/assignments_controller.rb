@@ -7,7 +7,14 @@ class AssignmentsController < ApplicationController
     authorize Assignment
     @q = policy_scope(Assignment).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @assignments = @q.result.paginate(page: params[:page])
+    @assignments = @q.result
+    respond_to do |format|
+      format.xlsx
+      format.html do
+        @assignments = @assignments.paginate(page: params[:page],
+          per_page: params[:print] && @assignments.size)
+      end
+    end
   end
 
   def show

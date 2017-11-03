@@ -707,6 +707,7 @@ en:
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
+      date_only: "%d.%m.%Y"
       devise:
         mailer:
           invitation_instructions:

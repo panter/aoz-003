@@ -218,7 +218,7 @@ de:
         agreement: Zustimmung
         client: Klient/in
         confirmation: Ich bestätige alle Stunden eingetragen und Feedback zum Einsatz gegeben zu haben.
-        created_by: Verantwortliche/rs
+        created_by: Verantwortliche/r
         ended: Beendet
         first_instruction_lesson: Einführungskurs
         home_visit: Hausbesuch
@@ -886,6 +886,7 @@ de:
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
+      date_only: "%d.%m.%Y"
       devise:
         mailer:
           invitation_instructions:
