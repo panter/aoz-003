@@ -31,8 +31,8 @@ class SessionsTest < ApplicationSystemTestCase
     within 'nav' do
       click_link @user.email
     end
-    assert page.has_link? 'Logout'
-    click_link 'Logout'
+    assert page.has_link? 'Abmelden'
+    click_link 'Abmelden'
 
     assert page.has_current_path? new_user_session_path
     assert page.has_text? 'You need to sign in or sign up before continuing.'

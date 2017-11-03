@@ -1,9 +1,5 @@
 ---
 en:
-  application:
-    navigation:
-      group_offers: Group offers
-      reminders: Reminders
   aaa_injectable: &id-injectables
     age_request: &id-age_requests
       age_middle: 36 - 50
@@ -386,7 +382,6 @@ en:
     what: Was?
     when: Tag / Zeit
     zurich: Zürich
-  assignments: Assignments
   available_volunteers: Available volunteers
   back: Back
   billing_expense_pdf:
@@ -432,7 +427,6 @@ en:
   change_password: Change your password
   checklist: Checklist
   clear_filters: Clear filters
-  clients: Clients
   clients_xlsx: Clients
   clients_need_accompanying: Clients who need accompanying
   contact_info: Contact information
@@ -441,7 +435,6 @@ en:
       last_name: Last name
       name: Name
   create_client: Create client
-  create_profile: Create profile
   create_user: Create user
   crud:
     action:
@@ -464,7 +457,6 @@ en:
       - :month
       - :year
   delete: Delete
-  departments: Departments
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
@@ -581,7 +573,6 @@ en:
   invite_sent: 'Invitation sent to %{email}'
   language_skills: Language skills
   login: Log in
-  logout: Logout
   need_accompanying: Need accompanying
   not_assignable: Not assignable
   not_authorized: You are not authorized to perform this action.
@@ -638,7 +629,6 @@ en:
   reserve: Reserve
   seeking_clients: Looking for clients
   show_my_profile: My profile
-  show_profile: Show profile
   simple_form:
     error_notification:
       default_message: 'Please review the problems below:'
@@ -716,7 +706,6 @@ en:
   "true": "Yes"
   update_profile: Update profile
   user_destroyed: 'User %{email} was successfully deleted.'
-  users: Users
   voluntary_platform: Voluntaries Platform
   volunteer_application: Volunteer Registration
   volunteer_availability: What times are you available for voluntary engagement?

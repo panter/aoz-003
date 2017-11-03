@@ -30,7 +30,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     login_as @user_volunteer
     visit root_url
     click_link 'volunteer@example.com'
-    click_link 'Show profile'
+    click_link 'Profil anzeigen'
     within '.assignments-table' do
       click_link 'Feedback index'
     end
@@ -43,7 +43,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     login_as @user_volunteer
     visit root_url
     click_link 'volunteer@example.com'
-    click_link 'Show profile'
+    click_link 'Profil anzeigen'
     within '.group-assignments-table' do
       click_link 'Feedback index'
     end

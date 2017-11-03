@@ -14,13 +14,13 @@ class DepartmentsTest < ApplicationSystemTestCase
   test 'superadmin should see departments link in navigation' do
     login_as @superadmin
     visit root_path
-    assert page.has_link? 'Departments'
+    assert page.has_link? 'Standorte'
   end
 
   test 'other users should not see departments link in navigation' do
     login_as @social_worker
     visit root_path
-    refute page.has_link? 'Departments'
+    refute page.has_link? 'Standorte'
   end
 
   test 'superadmin can see all departments in departments_path' do
