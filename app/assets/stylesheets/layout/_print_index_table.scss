@@ -1,4 +1,5 @@
-body.clients {
+body.clients,
+body.assignments {
   @media print {
     height: $a4-short-side;
     margin: 0;
