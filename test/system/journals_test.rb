@@ -44,8 +44,9 @@ class JournalsTest < ApplicationSystemTestCase
     assert page.has_text? 'bogus_journal_text'
     first('a', text: 'Edit').click
     assert page.has_text? 'Edit Journal'
-
-    click_link 'Delete'
+    page.accept_confirm do
+      first('a', text: 'Delete').click
+    end
     assert page.has_text? 'Journal was successfully deleted.'
     click_button 'Journal'
     refute page.has_link? @journal_volunteer.user.full_name
