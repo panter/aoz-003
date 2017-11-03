@@ -13,23 +13,23 @@ nav.navbar.navbar-top.hidden-print
       #navbar.collapse.navbar-collapse
         ul.nav.navbar-nav
           - if policy(User).index?
-            li= link_to t('users'), users_path
+            li= link_to 'Benutzer/in', users_path
           - if policy(Client).index?
-            li= link_to t('clients'), clients_path
+            li= link_to 'Klienten/innen', clients_path
           - if policy(Volunteer).index?
-            li= link_to t('volunteers', count: 2), volunteers_path
+            li= link_to 'Freiwillige', volunteers_path
           - if policy(Department).index?
-            li= link_to t('departments'), departments_path
+            li= link_to 'Standorte', departments_path
           - if policy(Department).manager_with_department?
             li= link_to t_model(Department), department_path(current_user.department.first.id)
           - if policy(Assignment).index?
-            li= link_to t('assignments'), assignments_path
+            li= link_to 'Begleitungen', assignments_path
           - if policy(GroupOffer).index?
-            li= link_to t('.group_offers'), group_offers_path
+            li= link_to 'Gruppenangebote', group_offers_path
           - if policy(PerformanceReport).index?
-            li= link_to t('performance_reports', count: 2), performance_reports_path
+            li= link_to 'Kennzahlen', performance_reports_path
           - if policy(Reminder).index?
-            li= link_to t('.reminders'), reminders_path
+            li= link_to 'Erinnerungen', reminders_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
@@ -38,12 +38,12 @@ nav.navbar.navbar-top.hidden-print
             ul.dropdown-menu
               - if current_user.volunteer?
                 li
-                  = link_to t('show_profile'), volunteer_path(current_user.volunteer.id)
+                  = link_to 'Profil anzeigen', volunteer_path(current_user.volunteer.id)
               - else
                 li
                   - if current_user.profile.blank?
-                    = link_to t('create_profile'), new_profile_path
+                    = link_to 'Profil erfassen', new_profile_path
                   - else
-                    = link_to t('show_profile'), current_user.profile
+                    = link_to 'Profil anzeigen', current_user.profile
               li
-                = link_to t('logout'), destroy_user_session_path, method: :delete
+                = link_to 'Abmelden', destroy_user_session_path, method: :delete
