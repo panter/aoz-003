@@ -1,6 +1,7 @@
 body.clients,
 body.assignments {
   @media print {
+    height: $a4-short-side;
     margin: 0;
     padding: 0;
     size: A4 landscape;
@@ -36,8 +37,7 @@ body.assignments {
     }
     .container, .wrapper {
       width: $a4-long-side;
-      margin: 0;
-      padding: 0;
+      height: $a4-short-side;
     }
   }
 }
