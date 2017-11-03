@@ -229,6 +229,15 @@ class VolunteersTest < ApplicationSystemTestCase
     assert_equal 1, ActionMailer::Base.deliveries.size
   end
 
+  test 'department manager has no link to group offer of not their own' do
+    volunteer = create :volunteer
+    group_offer = create :group_offer, volunteers: [volunteer]
+    login_as create :department_manager
+    visit volunteer_path(volunteer)
+    assert page.has_text? group_offer.title
+    refute page.has_link? group_offer.title
+  end
+
   def play_user_index_volunteer_display
     volunteer_seeks = create :volunteer, user: create(:user_volunteer),
       assignments: [create(:assignment, period_start: 500.days.ago, period_end: 200.days.ago)]
