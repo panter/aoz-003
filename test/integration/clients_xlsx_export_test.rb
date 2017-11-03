@@ -15,8 +15,9 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
   end
 
   test 'xlsx files columns and cells are correct' do
-    client_older = create :client
-    client = create :client, entry_year: 2.years.ago, birth_year: 30.years.ago, education: 'educati'
+    client_older = create :client, created_at: 10.days.ago
+    client = create :client, entry_year: 2.years.ago, birth_year: 30.years.ago,
+      education: 'educati', created_at: 2.days.ago
     get clients_url(format: :xlsx)
     excel_file = Tempfile.new
     excel_file.write(response.body)
