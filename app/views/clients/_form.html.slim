@@ -8,8 +8,8 @@
       .col-xs-12.col-md-6= c.input :last_name, required: true, label: t_attr(:last_name)
     .col-xs-12.col-md-4= f.input :birth_year, as: :select, collection: Client.year_collection,
                                  include_blank: true
-    .col-xs-12.col-md-4= f.input :entry_date
     .col-xs-12.col-md-4= f.input :nationality, as: :country
+    .col-xs-12.col-md-4= f.input :entry_date
 
   = f.simple_fields_for :contact do |c|
     = render 'contacts/fields', f: c
@@ -48,12 +48,13 @@
     = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
     = f.input :other_request
 
-  - if policy(Client).supervisor?
-    fieldset
-      legend Interne Kriterien
+  fieldset
+    legend Interne Kriterien
+    - if policy(Client).state?
       = f.input :state, collection: Client.state_collection, include_blank: false
-      = f.input :involved_authority
-      = f.input :competent_authority
+    = f.input :involved_authority
+    = f.input :competent_authority
+    - if policy(Client).comments?
       = f.input :comments
 
   fieldset

@@ -147,10 +147,10 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
-    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} without_assignment Show Find volunteer"
-    assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Show Assignment"
+    assert page.has_text? 'unassigned_goals unassigned_interests '\
+      "#{I18n.l(without_assignment.created_at.to_date)} unassigned_authority without_assignment Show Find volunteer"
+    assert page.has_text? 'assigned_goals assigned_interests  '\
+      "#{I18n.l(with_assignment.created_at.to_date)} assigned_authority  with_assignment Show Show Assignment"
   end
 
   test 'department manager sees his scoped client index correctly' do
@@ -162,19 +162,19 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
-    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} Show Find volunteer"
-    assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} Show Show Assignment"
+    assert page.has_text? 'unassigned_goals unassigned_interests '\
+      "#{I18n.l(without_assignment.created_at.to_date)} unassigned_authority Show Find volunteer"
+    assert page.has_text? 'assigned_goals assigned_interests '\
+      "#{I18n.l(with_assignment.created_at.to_date)} assigned_authority Show Show Assignment"
     refute page.has_text? superadmins_client.contact.full_name
   end
 
   test 'client_index_shows_german_and_native_languages_only' do
-    client = create :client, language_skills: [
-        create(:language_skill, language: 'DE', level: 'good'),
-        create(:language_skill, language: 'IT', level: 'native_speaker'),
-        create(:language_skill, language: 'FR', level: 'fluent')
-      ]
+    create :client, language_skills: [
+      create(:language_skill, language: 'DE', level: 'good'),
+      create(:language_skill, language: 'IT', level: 'native_speaker'),
+      create(:language_skill, language: 'FR', level: 'fluent')
+    ]
     login_as @superadmin
     visit clients_path
     assert page.has_text? 'German, Good'
