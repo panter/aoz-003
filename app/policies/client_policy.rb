@@ -20,9 +20,6 @@ class ClientPolicy < ApplicationPolicy
   alias_method :need_accompanying?, :superadmin_or_department_manager?
 
   # suplementary policies
-  alias_method :supervisor?,       :superadmin?
-  alias_method :journals?,         :superadmin?
   alias_method :comments?,         :superadmin?
   alias_method :state?,            :superadmin?
-  alias_method :authority_fields?, :superadmin?
 end

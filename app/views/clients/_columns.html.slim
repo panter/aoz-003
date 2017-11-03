@@ -19,7 +19,8 @@
           span= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
         th.truncate-th
           span= sort_link @q, :created_at, t_attr(:created_at, Client)
-        th= t_attr(:comments, Client)
+        - if policy(Client).comments?
+          th= t_attr(:comments, Client)
         th.hidden-print colspan='2'
     tbody
       = render clients
