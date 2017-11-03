@@ -33,7 +33,7 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.find_field('City').value.include? @volunteer.contact.city
     assert page.find_field('Function').value.include? 'Förderung der sozialen und beruflichen Integ'
     assert page.find_field('Institution').value.include? '**AOZ** Zürich, Flüelastrasse 32, 8047'
-    page.find_button('Create Certificate').trigger('click')
+    page.find_button('Create Certificate').click
     assert page.has_text? 'AOZ Zürich, Flüelastrasse 32, 8047'
     assert page.has_text? @volunteer.contact.full_name
     assert page.has_text? @volunteer.certificates.first.created_at.to_date.to_s
@@ -57,7 +57,7 @@ class CertificatesTest < ApplicationSystemTestCase
     fill_in 'Hours', with: 555
     fill_in 'Name', with: 'This bogus test name'
     fill_in 'Institution', with: 'The Testology Institute'
-    page.find_button('Update Certificate').trigger('click')
+    page.find_button('Update Certificate').click
     assert page.has_text? '555'
     assert page.has_text? 'This bogus test name'
     assert page.has_text? 'The Testology Institute'
@@ -73,7 +73,7 @@ class CertificatesTest < ApplicationSystemTestCase
     visit volunteer_path(volunteer)
     assert page.has_link? 'Create certificate'
     click_link 'Create certificate'
-    page.find_button('Create Certificate').trigger('click')
+    page.find_button('Create Certificate').click
     assert page.has_text? 'Die AOZ ist ein Unternehmen der Stadt Zürich'
   end
 end
