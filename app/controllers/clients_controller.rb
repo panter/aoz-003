@@ -8,9 +8,12 @@ class ClientsController < ApplicationController
   def index
     authorize Client
     @q = policy_scope(Client).ransack(params[:q])
+    @clients = @q.result
     respond_to do |format|
-      format.xlsx { @clients = @q.result }
-      format.html { @clients = @q.result.paginate(page: params[:page]) }
+      format.xlsx
+      format.html do
+        @clients = @clients.paginate(page: params[:page], per_page: params[:print] && @clients.size)
+      end
     end
   end
 
