@@ -3,7 +3,6 @@ language: ruby
 cache:
   bundler: true
   directories:
-    - .phantomjs
     - vendor
     - .rvm
 
