@@ -29,12 +29,6 @@ Capybara.register_driver(:visible_chrome) do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
-DIMENSIONS = [1800, 4000].freeze
-
-def driven_by_default(driver = :poltergeist, using: nil)
-  driven_by driver, using: using, screen_size: DIMENSIONS
-end
-
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   case ENV['driver']
   when 'visible'
