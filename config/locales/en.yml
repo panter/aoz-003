@@ -90,7 +90,6 @@ en:
         deactivate: Deactivate
         group_offer_categories: Group offer categories
       form:
-        add_volunteer: Add volunteer
         location_external: Location (for external group offers)
         organization_external: Organization (for external group offers)
       index: &id-help-texts
