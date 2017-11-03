@@ -94,7 +94,6 @@ de:
         offer_of: Angebot von
       show: *id-help-texts
       form:
-        add_volunteer: Freiwillige hinzufügen
         location_external: Ort (betrifft externe Gruppenangebote)
         organization_external: Organisation (betrifft externe Gruppenangebote)
     language_level: &id-lang-levels
