@@ -58,15 +58,15 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'capybara'
+  gem 'capybara-selenium'
+  gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'i18n_yaml_sorter'
   gem 'listen'
   gem 'overcommit', require: false
-  gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'policy-assertions'
-  gem 'poltergeist'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop', require: false
