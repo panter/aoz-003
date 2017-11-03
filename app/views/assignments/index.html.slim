@@ -1,9 +1,5 @@
-.row
-  .col-xs-12
-    h1= t('assignments')
+h1= t('assignments')
 
-= form_navigation_btn :new
+= render 'listing_menu'
 
 = render 'assignments_block', assignments: @assignments
-
-= form_navigation_btn :new
