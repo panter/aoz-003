@@ -322,7 +322,6 @@ en:
       volunteer_experience_desc: If you have any experiences with voluntary work, please describe any further here.
   add_entry: Add entry
   add_journal_entry: Write a journal entry
-  add_language: Add language
   add_relative: Add family member
   all: All
   application_submitted: Your registration has been successfully sent.
@@ -557,7 +556,6 @@ en:
   find_client: Find client
   find_volunteer: Find volunteer
   forgot_password: Forgot your password?
-  general_availability: When are you available?
   get_back: We will soon get back to you.
   helpers:
     submit:
@@ -575,7 +573,6 @@ en:
   invite_sent: 'Invitation sent to %{email}'
   language_skills: Language skills
   login: Log in
-  need_accompanying: Need accompanying
   not_assignable: Not assignable
   not_authorized: You are not authorized to perform this action.
   password_reset_instructions: I want to reset my password
@@ -616,7 +613,6 @@ en:
       zh_assignments:
         <<: *id-assignment-report
         total: Total number of assigned clients
-  personal_background: Personal background
   profile_updated: Profile was successfully updated.
   registered_by: Registered by
   relatives: Family members
@@ -723,7 +719,6 @@ en:
       <<: *id-volunteer_attributes
       subject: Volunteer registration confirmation
       submitted: Data submitted with the registration
-  volunteer_request: Request for volunteers
   volunteer_self_applicant: Self-applicant
   volunteer_updated: Volunteer was successfully updated.
   wanna_apply: Do you want to register as a volunteer?
