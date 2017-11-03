@@ -14,7 +14,6 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
   end
 
   test 'xlsx files columns and cells are correct' do
-    assignment_older = create :assignment
     assignment = create :assignment, period_start: 3.months.ago, period_end: 2.days.ago
     get assignments_url(format: :xlsx)
     excel_file = Tempfile.new
@@ -47,10 +46,6 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
       assignment.created_at.localtime.to_time.to_s.slice(0..-9),
       wb.cell(2, 7).to_time.to_s.slice(0..-9)
     )
-
-    assert_equal assignment_older.id,                          wb.cell(3, 1)
-    assert_equal assignment_older.client.contact.full_name,    wb.cell(3, 2)
-    assert_equal assignment_older.volunteer.contact.full_name, wb.cell(3, 3)
   end
 
   test 'assignments xls export is not paginated' do
