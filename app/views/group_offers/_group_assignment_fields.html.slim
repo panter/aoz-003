@@ -1,6 +1,9 @@
 .nested-fields.group-assignment-fields
   .col-xs-12.col-md-3
-    = f.association :volunteer, prompt: true, collection: @assignable
+    - if action_name == 'edit'
+      = f.association :volunteer, prompt: true, collection: @assignable
+    - else
+      = f.association :volunteer, prompt: true
   .col-xs-12.col-md-2
     = f.input :responsible
   .col-xs-12.col-md-3

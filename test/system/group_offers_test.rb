@@ -195,4 +195,16 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
     assert page.has_text? 'You are not authorized to perform this action.'
   end
+
+  test 'volunteer collection on creation is present' do
+    volunteer = create :volunteer
+    login_as create(:user)
+    visit new_group_offer_path
+    select(@group_offer_category, from: 'Group offer category')
+    fill_in 'Title', with: 'Title'
+    click_link 'Freiwillige hinzufügen'
+    select(volunteer.full_name, from: 'Volunteer')
+    click_button 'Create Group offer'
+    assert page.has_text? 'Group offer was successfully created.'
+  end
 end

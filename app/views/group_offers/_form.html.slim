@@ -32,7 +32,7 @@
       = f.simple_fields_for :group_assignments do |group_assignment|
         = render 'group_assignment_fields', f: group_assignment
       .col-xs-12
-        = link_to_add_association t('.add_volunteer'), f, :group_assignments, class: 'btn btn-success'
+        = link_to_add_association 'Freiwillige hinzufügen', f, :group_assignments, class: 'btn btn-success'
 
   .row
     .col-xs-12
