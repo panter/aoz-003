@@ -20,10 +20,10 @@ cell_types = [
   :string,   # 08
   :string,   # 09
   :string,   # 10
-  :string,   # 11
+  :integer,  # 11
   :string,   # 12
   :string,   # 13
-  :string,   # 14
+  :integer,  # 14
   :string,   # 15
   :time,     # 16
   :time      # 17
@@ -88,10 +88,10 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
       contact.primary_phone,                # 08
       contact.secondary_phone,              # 09
       contact.primary_email,                # 10
-      client.birth_year&.year,               # 11
+      client.birth_year&.year,              # 11
       nationality_name(client.nationality), # 12
       client.education,                     # 13
-      client.entry_year,                    # 14
+      client.entry_year&.year,              # 14
       t("state.#{client.state}"),           # 15
       client.created_at.localtime,          # 16
       client.updated_at.localtime           # 17

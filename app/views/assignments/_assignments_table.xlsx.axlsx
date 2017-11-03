@@ -10,6 +10,17 @@ date_format = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
 date_time_format = wb.styles.add_style(alignment: { horizontal: :center }, format_code: 'dd.mm.yyyy HH:MM',
   with: :auto_fit)
 
+cell_types = [
+  :integer, # 0
+  :string,  # 1
+  :string,  # 2
+  :date,    # 3
+  :date,    # 4
+  :string,  # 5
+  :time,    # 6
+  :time     # 7
+]
+
 cell_styles = [
   standard_format,  # 0
   standard_format,  # 1
@@ -50,7 +61,7 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
         assignment.created_at.localtime,                               # 6
         assignment.updated_at.localtime                                # 7
       ],
-      style: cell_styles
+      types: cell_types, style: cell_styles
     )
   end
 end
