@@ -17,7 +17,6 @@ class Assignment < ApplicationRecord
   has_many :reminders, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze
-  KINDS = [:accompaniment, :family, :workshop, :german_class, :transit_center].freeze
 
   has_one :import, as: :importable, dependent: :destroy
   accepts_nested_attributes_for :import, allow_destroy: true
