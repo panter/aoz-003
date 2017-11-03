@@ -45,9 +45,9 @@
     = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
     = f.input :other_request
 
-  - if policy(Client).supervisor?
-    fieldset
-      legend Interne Kriterien
+  fieldset
+    legend Interne Kriterien
+    - if policy(Client).state?
       = f.input :state, collection: Client.state_collection, include_blank: false
     = f.input :involved_authority
     = f.input :competent_authority
