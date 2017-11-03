@@ -10,7 +10,6 @@
 * [ ] Story under test
 * [ ] Mobile works
 * [ ] Seeds created
-* [ ] Translated
 * [ ] Code is reviewed
 
 ### Done after the merge?
