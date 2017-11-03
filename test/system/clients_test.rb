@@ -25,7 +25,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
     fill_in 'Secondary phone', with: '0123456789'
-    click_on('Add language')
+    click_on('Sprache hinzufügen')
     select('Akan', from: 'Language')
     select('Fluent', from: 'Level')
     click_on('Add family member')
@@ -83,7 +83,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
 
-    click_on('Add language')
+    click_on('Sprache hinzufügen')
     select('Dari', from: 'Language')
     select('Native speaker', from: 'Level')
 
@@ -106,7 +106,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
 
-    click_on('Add language')
+    click_on('Sprache hinzufügen')
     select('Fluent', from: 'Level')
 
     click_button 'Create Client'
@@ -185,7 +185,7 @@ class ClientsTest < ApplicationSystemTestCase
   test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
     login_as @superadmin
     visit new_client_path
-    assert page.has_text? 'Language skills Deutsch Level'
+    assert page.has_text? 'Sprachkenntnisse Deutsch Level'
     within '#languages' do
       page.choose('client_language_skills_attributes_0_level_fluent')
       page.choose('client_language_skills_attributes_0_level_good')
