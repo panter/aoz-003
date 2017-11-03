@@ -6,4 +6,5 @@ nav.navbar.section-navigation
       li= link_to t_action(:destroy), @client, confirm_deleting(@client, 'btn btn-default')
     li.m-l-20= button_link t('back'), clients_path
     - if policy(Journal).index?
-      li= button_link 'Journal', polymorphic_path([@client, Journal])
+      ul.list-inline.pull-right
+        li= button_link 'Journal', polymorphic_path([@client, Journal])
