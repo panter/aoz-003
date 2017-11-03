@@ -490,7 +490,6 @@ de:
       volunteer_email: Anmeldungsbestätigungs-Nachricht editieren
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journaleintrag verfassen
-  add_language: Sprache hinzufügen
   add_relative: Verwandte hinzufügen
   all: Alle
   application_submitted: 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
@@ -717,7 +716,6 @@ de:
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
-  general_availability: Wann sind Sie verfügbar?
   get_back: Wir werden uns bald bei Ihnen melden.
   helpers:
     submit:
@@ -735,7 +733,6 @@ de:
   invite_sent: 'Einladung wurde an %{email} verschickt.'
   language_skills: Sprachkenntnisse
   login: Anmelden
-  need_accompanying: Ohne Begleitung
   not_assignable: Nicht zuweisbar
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
@@ -776,7 +773,6 @@ de:
       zh_assignments:
         <<: *id-assignment-report
         total: Anzahl Begleitete
-  personal_background: Persönlicher Hintergrund
   profile_updated: Profil wurde erfolgreich aktualisiert.
   registered_by: Angemeldet von
   relatives: Familienangehörige im Haushalt
@@ -902,7 +898,6 @@ de:
       lead: Dies ist die Bestätigung für das Freiwilligen Email
       subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ
       submitted: Die Angaben der Anmeldung
-  volunteer_request: Anforderungen an die/den Freiwillige/n
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?

@@ -19,7 +19,7 @@
     = f.input :permit, collection: Client::PERMITS, as: :radio_buttons, label: false
 
   fieldset
-    legend= t('language_skills')
+    legend Sprachkenntnisse
     #languages
       = f.simple_fields_for :language_skills do |language|
         - if language.object.language == 'DE'
@@ -31,19 +31,19 @@
         - else
           = render 'language_skills/fields', f: language, speaker: @client
       .links
-        = link_to_add_polymorphic_association t('add_language'), f, :language_skills, class: 'btn btn-success'
+        = link_to_add_polymorphic_association 'Sprache hinzufügen', f, :language_skills, class: 'btn btn-success'
 
   = render 'relatives/form', f: f, relative: @client
 
   fieldset
-    legend= t('personal_background')
+    legend Persönlicher Hintergrund
     = f.input :goals
     = f.input :education
     = f.input :actual_activities
     = f.input :interests
 
   fieldset
-    legend= t('volunteer_request')
+    legend Anforderungen an die/den Freiwillige/n
     = f.input :gender_request, collection: Client::GENDER_REQUESTS, default: :no_matter
     = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
     = f.input :other_request
@@ -58,7 +58,7 @@
       = f.input :comments
 
   fieldset
-    legend= t('general_availability')
+    legend Wann sind Sie verfügbar?
     = render 'availability/form', f: f
 
   nav.navbar.section-navigation
@@ -66,4 +66,4 @@
     ul.list-inline
       li= f.button :submit, class: 'btn btn-success'
       li
-      li= button_link t('back'), f.object
+      li= button_link 'Zurück', f.object
