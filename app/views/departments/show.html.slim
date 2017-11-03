@@ -21,7 +21,7 @@
     thead
       tr
         th= t_model(GroupOffer)
-        th= t('volunteers', count: 2)
+        th Freiwillige
     tbody
       - @department.group_offers.active.each do |group_offer|
         tr

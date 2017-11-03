@@ -62,8 +62,8 @@ class ProfilesTest < ApplicationSystemTestCase
     within '#menu' do
       assert page.has_link? @user_without_profile.email
       click_link @user_without_profile.email
-      assert page.has_link? 'Show profile'
-      click_link 'Show profile'
+      assert page.has_link? 'Profil anzeigen'
+      click_link 'Profil anzeigen'
     end
     assert page.has_text? @user_without_profile.profile.contact.first_name
     assert page.has_text? @user_without_profile.profile.contact.last_name
@@ -93,8 +93,8 @@ class ProfilesTest < ApplicationSystemTestCase
     visit user_path(@user_without_profile)
     within '#menu' do
       click_link @user_without_profile.email
-      assert page.has_link? 'Create profile'
-      click_link 'Create profile'
+      assert page.has_link? 'Profil erfassen'
+      click_link 'Profil erfassen'
     end
     assert page.has_text? 'New Profile'
   end

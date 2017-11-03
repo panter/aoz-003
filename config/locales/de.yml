@@ -1,9 +1,5 @@
 ---
 de:
-  application:
-    navigation:
-      group_offers: Gruppenangebote
-      reminders: Erinnerungen
   aaa_injectable: &id-injectables
     age_request: &id-age_requests
       age_middle: 36 - 50
@@ -547,7 +543,6 @@ de:
     what: Was?
     when: Tag / Zeit
     zurich: Zürich
-  assignments: Begleitungen
   available_volunteers: Verfügbare Freiwillige
   back: Zurück
   billing_expense_pdf:
@@ -592,7 +587,6 @@ de:
   client_created: Klient/in wurde erfolgreich erstellt.
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
-  clients: Klienten/innen
   clients_xlsx: Klienten
   clients_need_accompanying: Klienten ohne Begleitung
   contact_info: Kontakt Informationen
@@ -601,7 +595,6 @@ de:
       <<: *id-generic_keys
       name: Name
   create_client: Klient/in erfassen
-  create_profile: Profil erfassen
   create_user: Benutzer/in erfassen
   crud:
     action:
@@ -625,7 +618,6 @@ de:
       - :year
   delete: Quittieren
   department_confirm_destroy: Sind Sie sicher dass Sie den Standort löschen wollen?
-  departments: Standorte
   devise:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
@@ -741,7 +733,6 @@ de:
   invite_sent: 'Einladung wurde an %{email} verschickt.'
   language_skills: Sprachkenntnisse
   login: Anmelden
-  logout: Abmelden
   need_accompanying: Ohne Begleitung
   not_assignable: Nicht zuweisbar
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
@@ -798,7 +789,6 @@ de:
   reserve: Reservieren
   seeking_clients: Klienten suchen
   show_my_profile: Mein Profil
-  show_profile: Profil anzeigen
   simple_form:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
@@ -895,7 +885,6 @@ de:
   "true": Ja
   update_profile: Profil aktualisieren
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
-  users: Benutzer/in
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.

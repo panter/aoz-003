@@ -168,7 +168,7 @@ h3= t('.availability')
 = render 'availability/show', available: @volunteer
 
 - if @volunteer.assignments.any?
-  h3#assignments= t('assignments')
+  h3#assignments Begleitungen
   = render 'assignments/volunteer_index', assignments: @volunteer.assignments
 
 - if @volunteer.group_assignments.any?

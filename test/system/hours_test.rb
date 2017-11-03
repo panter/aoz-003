@@ -14,7 +14,7 @@ class HoursTest < ApplicationSystemTestCase
     login_as @user_volunteer1
     visit root_url
     click_link 'volunteer1@example.com'
-    click_link 'Show profile'
+    click_link 'Profil anzeigen'
   end
 
   test 'volunteer can create hour report for an assignment' do

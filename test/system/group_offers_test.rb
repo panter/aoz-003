@@ -189,7 +189,7 @@ class GroupOffersTest < ApplicationSystemTestCase
   test 'department_manager cannot access group offer pages unless there is a department assigned' do
     department_manager = create :user, role: 'department_manager'
     login_as department_manager
-    refute page.has_link? 'Group Offers'
+    refute page.has_link? 'Gruppenangebote'
     visit group_offers_path
     assert page.has_text? 'You are not authorized to perform this action.'
     visit new_group_offer_path
