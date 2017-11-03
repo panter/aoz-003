@@ -16,10 +16,8 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
 
   test 'xlsx files columns and cells are correct' do
     client_older = create :client
-    client_older.update(created_at: 10.days.ago)
     client = create :client, entry_year: 2.years.ago, birth_year: 30.years.ago,
       education: 'educati', created_at: 2.days.ago
-    client.update(created_at: 2.days.ago)
 
     # order id desc to be sure to have the right record at row 2
     get clients_url(format: :xlsx, q: { s: 'id+desc' })
@@ -61,7 +59,7 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
     assert_equal client.birth_year&.year,                    wb.cell(2, 12)
     assert_equal nationality_name(client.nationality),       wb.cell(2, 13)
     assert_equal client.education,                           wb.cell(2, 14)
-    assert_equal client.entry_year&.year,                     wb.cell(2, 15)
+    assert_equal client.entry_year&.year,                    wb.cell(2, 15)
     assert_equal I18n.t("state.#{client.state}"),            wb.cell(2, 16)
     assert_equal client.created_at.to_date,                  wb.cell(2, 17).to_date
     assert_equal client.updated_at.to_date,                  wb.cell(2, 18).to_date
