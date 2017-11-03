@@ -203,6 +203,13 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? 'German Basic'
   end
 
+  test 'client_print_view_is_not_paginated' do
+    45.times { create :client }
+    login_as @superadmin
+    visit clients_url(print: true)
+    assert_equal Client.count, find_all('tbody tr').size
+  end
+
   def create_clients_for_index_text_check
     with_assignment = create :client, comments: 'with_assignment', competent_authority: 'assigned_authority',
                               goals: 'assigned_goals', interests: 'assigned_interests'
