@@ -16,7 +16,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
 
   test 'does not have navbar links to users' do
     visit user_path(@department_manager.id)
-    assert_not page.has_link? 'Benutzer/in'
+    assert_not page.has_link? 'Benutzer/innen'
   end
 
   test 'has a navbar link to clients page' do
