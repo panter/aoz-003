@@ -18,7 +18,7 @@ class ClientsTest < ApplicationSystemTestCase
     select('Mrs.', from: 'Salutation')
     select('Aruba', from: 'Nationality')
     fill_in 'Entry date', with: 'Sept. 2015'
-    select('B', from: 'Permit')
+    choose('client_permit_b')
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
