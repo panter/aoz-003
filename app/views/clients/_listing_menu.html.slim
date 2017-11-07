@@ -1,5 +1,11 @@
 nav.navbar.section-navigation.hidden-print
   hr
+
+  ul.list-unstyled
+    li.li-search-form
+      = search_form_for @q do |f|
+        = f.search_field :contact_last_name_cont, class: 'search-field', placeholder: 'Nachname'
+        = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link 'Klient erfassen', new_client_path, dimension: :sm
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
@@ -12,5 +18,6 @@ nav.navbar.section-navigation.hidden-print
       li= button_link 'Klienten ohne Begleitung', need_accompanying_clients_url, dimension: :sm
     - if action_name == 'need_accompanying'
       li= button_link 'Klienten mit Begleitung', with_assignment_clients_url, dimension: :sm
+
 
   hr
