@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get :with_assignment, on: :collection
     get :find_volunteer, on: :member, to: 'assignments#find_volunteer'
     resources :journals, except: [:show]
+    get :search, on: :collection
   end
   resources :departments
   resources :performance_reports
