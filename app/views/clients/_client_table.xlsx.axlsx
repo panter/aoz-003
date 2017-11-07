@@ -23,7 +23,7 @@ cell_types = [
   :integer,  # 11
   :string,   # 12
   :string,   # 13
-  :integer,  # 14
+  :string,   # 14
   :string,   # 15
   :time,     # 16
   :time      # 17
@@ -66,7 +66,7 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
     t_attr(:birth_year),                # 11
     t_attr(:nationality),               # 12
     t_attr(:education),                 # 13
-    t_attr(:entry_year),                # 14
+    t_attr(:entry_date),                # 14
     t_attr(:state),                     # 15
     t_attr(:created_at),                # 16
     t_attr(:updated_at)                 # 17
@@ -91,7 +91,7 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
       client.birth_year&.year,              # 11
       nationality_name(client.nationality), # 12
       client.education,                     # 13
-      client.entry_year&.year,              # 14
+      client.entry_date,                    # 14
       t("state.#{client.state}"),           # 15
       client.created_at.localtime,          # 16
       client.updated_at.localtime           # 17
