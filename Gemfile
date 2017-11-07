@@ -7,6 +7,7 @@ end
 
 gem 'rails', '~> 5.1'
 
+gem 'autocomplete_rails'
 gem 'autoprefixer-rails'
 gem 'axlsx', '~> 2.1.0.pre' # Requirement for axlsx to run with actual rails version
 gem 'axlsx_rails'
@@ -24,6 +25,7 @@ gem 'i18n_data'
 gem 'i18n_rails_helpers'
 gem 'jbuilder'
 gem 'jquery-rails'
+gem 'jquery-ui-sass-rails'
 gem 'paperclip'
 gem 'paranoia'
 gem 'pg'
