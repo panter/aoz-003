@@ -1,5 +1,5 @@
 class Contact < ApplicationRecord
-  before_save :update_full_name, if: :full_name_changed?
+  before_save :update_full_name, if: :full_name_changed?, unless: :department?
 
   belongs_to :contactable, polymorphic: true, optional: true
 
@@ -70,7 +70,7 @@ class Contact < ApplicationRecord
   end
 
   def update_full_name
-    self.full_name = "#{last_name}, #{try(first_name)}"
+    self.full_name = "#{last_name}, #{first_name}"
   end
 
   def update_user_email
