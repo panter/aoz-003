@@ -13,7 +13,7 @@ nav.navbar.navbar-top.hidden-print
       #navbar.collapse.navbar-collapse
         ul.nav.navbar-nav
           - if policy(User).index?
-            li= link_to 'Benutzer/in', users_path
+            li= link_to 'Benutzer/innen', users_path
           - if policy(Client).index?
             li= link_to 'Klienten/innen', clients_path
           - if policy(Volunteer).index?
