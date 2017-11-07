@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(version: 20171103121704) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.date "entry_year"
     t.string "gender_request"
     t.string "age_request"
     t.string "other_request"
