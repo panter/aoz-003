@@ -70,6 +70,13 @@ class ClientsController < ApplicationController
     authorize @need_accompanying
   end
 
+  def with_assignment
+    @q = Client.with_suggested_active_assignment.ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @with_assignment = @q.result.paginate(page: params[:page])
+    authorize @with_assignment
+  end
+
   private
 
   def set_client
