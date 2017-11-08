@@ -58,6 +58,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     page.execute_script %{ $('[name="#{name}"]').trigger('focus') }
     page.execute_script %{ $('[name="#{name}"]').trigger('keydown') }
     selector = %{ ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}") }
+    assert false
     page.should have_selector('ul.ui-autocomplete li.ui-menu-item a')
     page.execute_script %{ $('#{selector}').trigger('mouseenter').click() }
   end
