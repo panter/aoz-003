@@ -22,11 +22,8 @@ class ClientSearchesTest < ApplicationSystemTestCase
   end
 
   test 'enter_search_text_brings_suggestions' do
-    fill_autocomplete 'q[contact_full_name_cont]', with: 'zzzz'
-    # fill_in name: 'q[contact_full_name_cont]', with: 'zzzz'
-    assert false
+    fill_in name: 'q[contact_full_name_cont]', with: 'zzzz'
     assert page.has_text? @clients.last.first.contact.full_name
     assert page.has_text? @clients.last.last.contact.full_name
   end
-
 end
