@@ -148,9 +148,40 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
     assert page.has_text? 'unassigned_goals unassigned_interests  unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} without_assignment Show Find volunteer"
+      "#{I18n.l(without_assignment.created_at.to_date)} without_assignment Show Edit Find volunteer"
     assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Show Assignment"
+      "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Edit Show Assignment"
+  end
+
+  test 'all_needed_actions_are_available_in_the_index' do
+    client = create :client
+    social_worker = create :social_worker
+    client_department_manager = create :client, user: @department_manager
+    client_social_worker = create :client, user: social_worker
+
+    login_as @superadmin
+    visit clients_path
+    assert page.has_link? 'Show', count: 3
+    assert page.has_link? 'Edit', count: 3
+    refute page.has_link? 'Delete'
+
+    login_as @department_manager
+    visit clients_path
+    assert page.has_text? client_department_manager
+    refute page.has_text? client_social_worker
+    refute page.has_text? client
+    assert page.has_link? 'Show'
+    refute page.has_link? 'Edit'
+    refute page.has_link? 'Delete'
+
+    login_as social_worker
+    visit clients_path
+    assert page.has_text? client_social_worker
+    refute page.has_text? client_department_manager
+    refute page.has_text? client
+    assert page.has_link? 'Show'
+    assert page.has_link? 'Edit'
+    refute page.has_link? 'Delete'
   end
 
   test 'department manager sees his scoped client index correctly' do
@@ -211,11 +242,13 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   def create_clients_for_index_text_check
-    with_assignment = create :client, comments: 'with_assignment', competent_authority: 'assigned_authority',
+    with_assignment = create :client, comments: 'with_assignment',
+                              competent_authority: 'assigned_authority',
                               goals: 'assigned_goals', interests: 'assigned_interests'
     create :assignment, volunteer: create(:volunteer), client: with_assignment
     with_assignment.update(created_at: 2.days.ago)
-    without_assignment = create :client, comments: 'without_assignment', competent_authority: 'unassigned_authority',
+    without_assignment = create :client, comments: 'without_assignment',
+                                competent_authority: 'unassigned_authority',
                                 goals: 'unassigned_goals', interests: 'unassigned_interests'
     without_assignment.update(created_at: 4.days.ago)
     [with_assignment, without_assignment]

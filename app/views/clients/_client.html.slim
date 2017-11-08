@@ -19,7 +19,10 @@ tr
   td.no-wrap= l(client.created_at.to_date)
   - if policy(Client).comments?
     td= client.comments
-  td.hidden-print= link_to t_action(:show), client
+  td.index-action-cell.hidden-print
+    span= link_to t_action(:show), client
+    - if policy(client).edit?
+      span= link_to t_action(:edit), edit_client_path(client)
   - if client.assignment.nil?
     td.hidden-print= button_link t('find_volunteer'), find_volunteer_client_path(id: client)
   - else
