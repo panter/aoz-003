@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'selenium/webdriver'
 
-Capybara.register_driver(:headless_chrome) do |app|
+Capybara.register_driver(:headless_chrome_no_gpu) do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     chromeOptions: { args: %w[headless disable-gpu] }
   )
@@ -13,7 +13,7 @@ Capybara.register_driver(:headless_chrome) do |app|
   )
 end
 
-Capybara.register_driver(:local_headless_chrome) do |app|
+Capybara.register_driver(:headless_chrome) do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     chromeOptions: { args: %w[headless] }
   )
@@ -33,8 +33,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   case ENV['driver']
   when 'visible'
     driven_by :visible_chrome
-  when 'faster' # maybe, don't know if gpu helps at all
-    driven_by :local_headless_chrome
+  when 'no_gpu'
+    driven_by :headless_chrome_no_gpu
   else
     driven_by :headless_chrome
   end
