@@ -144,7 +144,6 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'client pagination' do
-    Client.with_deleted.map(&:really_destroy!)
     login_as @superadmin
     70.times do
       create :client
@@ -153,7 +152,7 @@ class ClientsTest < ApplicationSystemTestCase
     first(:link, '2').click
 
     assert page.has_css? '.pagination'
-    Client.paginate(page: 2).each do |client|
+    Client.order('created_at desc').paginate(page: 2).each do |client|
       assert page.has_text? client.contact.last_name
     end
   end
