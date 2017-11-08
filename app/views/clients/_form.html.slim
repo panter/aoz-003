@@ -62,5 +62,7 @@
     hr
     ul.list-inline
       li= f.button :submit, class: 'btn btn-success'
+      - if action_name == 'edit' && policy(Client).destroy?
+        li= link_to t_action(:destroy), url_for(@client), confirm_deleting(@client, 'btn btn-default')
       li
       li= button_link 'Zurück', f.object
