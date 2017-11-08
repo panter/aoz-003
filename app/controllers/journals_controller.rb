@@ -18,7 +18,7 @@ class JournalsController < ApplicationController
     @journal = Journal.new(journal_params.merge(journal_relations))
     authorize @journal
     if @journal.save
-      redirect_to @journaled, make_notice
+      journal_redirect
     else
       render :new
     end
@@ -26,7 +26,7 @@ class JournalsController < ApplicationController
 
   def update
     if @journal.update(journal_params)
-      redirect_to @journaled, make_notice
+      journal_redirect
     else
       render :edit
     end
@@ -38,6 +38,14 @@ class JournalsController < ApplicationController
   end
 
   private
+
+  def journal_redirect
+    if @journaled.class == Client
+      redirect_to polymorphic_path([@journaled, Journal]), make_notice
+    else
+      redirect_to @journaled, make_notice
+    end
+  end
 
   def journal_relations
     {
