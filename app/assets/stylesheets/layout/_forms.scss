@@ -5,38 +5,8 @@
 
 fieldset {
   margin-top: 10px;
-
   legend {
-    border-bottom: 1px solid $legend-border-color;
     font-size: 20px;
-  }
-}
-
-.li-search-form {
-  padding: 0 5px 5px 5px;
-
-  form {
-    display: flex;
-    width: 100%;
-  }
-
-  .search-field {
-    border: 1px solid $input-border;
-    border-radius: 4px 0 0 4px;
-    color: $gray;
-    display: inline-block;
-    flex: 0 0 80%;
-    font-size: 12px;
-    line-height: 1.4;
-    padding: 6px 12px;
-  }
-
-  .search-submit {
-    background-color: $btn-default-bg;
-    border: 1px solid $btn-default-border;
-    border-radius: 0 4px 4px 0;
-    border-width: 1px 1px 1px 0;
-    color: $btn-default-color;
-    flex: 0 0 20%;
+    border-bottom: 1px solid #e5e5e5;
   }
 }
