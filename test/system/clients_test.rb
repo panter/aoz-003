@@ -74,6 +74,7 @@ class ClientsTest < ApplicationSystemTestCase
     within '.table-no-border-top' do
       assert page.has_text? "age doesn't matter"
       assert page.has_text? "gender doesn't matter"
+      assert page.has_text? 'German Good'
     end
   end
 
@@ -101,6 +102,7 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? 'Client was successfully created.'
     within '.table-no-border-top' do
       assert page.has_text? 'Dari Native speaker'
+      assert page.has_text? 'German Good'
     end
   end
 
