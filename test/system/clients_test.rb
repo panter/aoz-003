@@ -25,6 +25,9 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
     fill_in 'Secondary phone', with: '0123456789'
+    within '#languages' do
+      page.choose('client_language_skills_attributes_0_level_good')
+    end
     click_on('Sprache hinzufügen')
     select('Akan', from: 'Language')
     select('Fluent', from: 'Level')
@@ -63,6 +66,9 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
+    within '#languages' do
+      page.choose('client_language_skills_attributes_0_level_good')
+    end
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
     within '.table-no-border-top' do
@@ -82,6 +88,10 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
+
+    within '#languages' do
+      page.choose('client_language_skills_attributes_0_level_good')
+    end
 
     click_on('Sprache hinzufügen')
     select('Dari', from: 'Language')
@@ -105,6 +115,9 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'City', with: 'Zürich'
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
+    within '#languages' do
+      page.choose('client_language_skills_attributes_0_level_basic')
+    end
 
     click_on('Sprache hinzufügen')
     select('Fluent', from: 'Level')
@@ -112,6 +125,7 @@ class ClientsTest < ApplicationSystemTestCase
     click_button 'Create Client'
     within '.table-no-border-top' do
       refute page.has_text? 'Fluent'
+      assert page.has_text? 'German Basic'
     end
 
     visit clients_path
@@ -230,10 +244,8 @@ class ClientsTest < ApplicationSystemTestCase
   test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
     login_as @superadmin
     visit new_client_path
-    assert page.has_text? 'Sprachkenntnisse Deutsch Level'
+    assert page.has_text? 'Sprachkenntnisse Deutsch * Level'
     within '#languages' do
-      page.choose('client_language_skills_attributes_0_level_fluent')
-      page.choose('client_language_skills_attributes_0_level_good')
       page.choose('client_language_skills_attributes_0_level_basic')
     end
     select('Mrs.', from: 'Salutation')
