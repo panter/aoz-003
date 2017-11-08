@@ -467,11 +467,6 @@ de:
         group_offer:
           department:
             blank: Freiwilligenverantwortliche können nur ihrem Standort zugeteilte Gruppenangebote erfassen
-        client:
-          language_skills:
-            german:
-              level:
-                blank: asdf level döf ned leer si
     models:
       assignment: Begleitung
       feedback: Feedback
