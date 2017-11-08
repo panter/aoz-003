@@ -51,4 +51,13 @@ class ContactTest < ActiveSupport::TestCase
     volunteer.contact.update(last_name: 'zzzzzzzzz')
     assert_not_equal full_name_before, volunteer.contact.full_name
   end
+
+  test 'full_name_not_filled_on_department' do
+    department = Department.new
+    department.contact.last_name = 'testing department'
+    department.save
+    assert department.contact.full_name.nil?
+    department.contact.update(last_name: 'new name')
+    assert department.contact.full_name.nil?
+  end
 end
