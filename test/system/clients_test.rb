@@ -153,6 +153,20 @@ class ClientsTest < ApplicationSystemTestCase
       "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Edit Show Assignment"
   end
 
+  test 'can_delete_a_client_through_edit' do
+    client = create :client
+    login_as @superadmin
+
+    visit clients_path
+    assert page.has_text? client
+
+    visit edit_client_path(client)
+    click_link 'Delete'
+
+    assert page.has_text? 'Client was successfully deleted.'
+    refute page.has_text? client
+  end
+
   test 'all_needed_actions_are_available_in_the_index' do
     client = create :client
     social_worker = create :social_worker
