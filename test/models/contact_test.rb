@@ -42,7 +42,7 @@ class ContactTest < ActiveSupport::TestCase
     assert_equal @contact.errors.keys, [:last_name]
   end
 
-  test 'update_first_or_lastname_changes_full_name_atribute' do
+  test 'update_first_or_lastname_changes_full_name_attribute' do
     volunteer = create :volunteer
     full_name_before = volunteer.contact.full_name
     volunteer.contact.update(first_name: 'aaaaaaaa')
