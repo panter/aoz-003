@@ -1,6 +1,8 @@
 class LanguageSkill < ApplicationRecord
   belongs_to :languageable, polymorphic: true, optional: true
 
+  validates :level, presence: true
+
   LANGUAGE_LEVELS = [:native_speaker, :fluent, :good, :basic].freeze
 
   scope :german_first, (-> { order("CASE WHEN language = 'DE' THEN 1 ELSE 2 END") })
