@@ -18,7 +18,6 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
     client = create :client, entry_date: 'Feb. 2014', birth_year: 30.years.ago,
       education: 'educati', created_at: 2.days.ago, nationality: 'IT'
 
-    # order id desc to be sure to have the right record at row 2
     get clients_url(format: :xlsx)
     excel_file = Tempfile.new
     excel_file.write(response.body)
