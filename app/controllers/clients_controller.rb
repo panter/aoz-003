@@ -18,15 +18,6 @@ class ClientsController < ApplicationController
     end
   end
 
-  def search
-    authorize Client
-    @q = policy_scope(Client).ransack(contact_full_name_cont: params[:search])
-    @clients = @q.result distinct: true
-    respond_to do |format|
-      format.json
-    end
-  end
-
   def show; end
 
   def new
