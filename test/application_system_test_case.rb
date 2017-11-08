@@ -51,4 +51,15 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     selects[1].select values[1]
     selects[2].select values[2]
   end
+
+  def fill_autocomplete(name, options = {})
+    fill_in name: name, with: options[:with]
+
+    page.execute_script %{ $('[name="#{name}"]').trigger('focus') }
+    page.execute_script %{ $('[name="#{name}"]').trigger('keydown') }
+    selector = %{ ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}") }
+    assert false
+    page.should have_selector('ul.ui-autocomplete li.ui-menu-item a')
+    page.execute_script %{ $('#{selector}').trigger('mouseenter').click() }
+  end
 end
