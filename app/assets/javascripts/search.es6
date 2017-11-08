@@ -6,7 +6,7 @@ $(document).on('turbolinks:load', () => {
       focus: handleAutosuggestFocus
     });
 
-    // Select all text in input, for easier deleting of all content if desired
+    // Select all text in input, for easyer deleting of all content if desired
     $(input).on('focus', ({target}) => $(target).select());
   });
 });
