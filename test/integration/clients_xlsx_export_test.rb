@@ -17,7 +17,7 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
   test 'xlsx files columns and cells are correct' do
     client_older = create :client
     client = create :client, entry_date: 'Feb. 2014', birth_year: 30.years.ago,
-      education: 'educati', created_at: 2.days.ago
+      education: 'educati', created_at: 2.days.ago, nationality: 'IT'
 
     # order id desc to be sure to have the right record at row 2
     get clients_url(format: :xlsx, q: { s: 'id+desc' })
