@@ -66,7 +66,7 @@ class Contact < ApplicationRecord
   end
 
   def full_name_changed?
-    will_save_change_to_attribute?(:first_name) || will_save_change_to_attribute?(:last_name)
+    saved_change_to_first_name? || saved_change_to_last_name?
   end
 
   def update_full_name
