@@ -1,6 +1,7 @@
 nav.navbar.section-navigation
   ul.list-inline
-    li= button_link t_action(:edit), edit_client_path(@client), 'success'
+    - if policy(@client).edit?
+      li= button_link t_action(:edit), edit_client_path(@client), 'success'
     li= button_link t_action(:print), client_path(@client, print: true)
     - if policy(Client).destroy?
       li= link_to t_action(:destroy), @client, confirm_deleting(@client, 'btn btn-default')
