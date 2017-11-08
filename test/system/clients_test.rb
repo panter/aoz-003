@@ -180,7 +180,9 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? client
 
     visit edit_client_path(client)
-    click_link 'Delete'
+    page.accept_confirm do
+      click_link 'Delete'
+    end
 
     assert page.has_text? 'Client was successfully deleted.'
     refute page.has_text? client
