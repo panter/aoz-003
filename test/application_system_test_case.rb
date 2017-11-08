@@ -52,25 +52,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     selects[2].select values[2]
   end
 
-  def wait_for_ajax
-    Timeout.timeout(Capybara.default_max_wait_time) do
-      active = page.evaluate_script('jQuery.active')
-      active = page.evaluate_script('jQuery.active') until active.zero?
-    end
-  end
-
   def fill_autocomplete(name, options = {})
-    find("[name=\"#{name}\"]").native.send_keys options[:with], :down
-    wait_for_ajax
-    items = page.find_all('li.ui-menu-item')
-    if options[:items_expected]
-      assert_equal options[:items_expected], items.size
-    end
-    if options[:check_items].present?
-      items.each do |item|
-        assert options[:check_items].include? item.text
-      end
-    end
-    find("[name=\"#{name}\"]").native.send_keys :down, :enter
+    fill_in name: name, with: options[:with]
+
+    page.execute_script %{ $('[name="#{name}"]').trigger('focus') }
+    page.execute_script %{ $('[name="#{name}"]').trigger('keydown') }
+    selector = %{ ul.ui-autocomplete li.ui-menu-item a:contains("#{options[:select]}") }
+    page.should have_selector('ul.ui-autocomplete li.ui-menu-item a')
+    page.execute_script %{ $('#{selector}').trigger('mouseenter').click() }
   end
 end
