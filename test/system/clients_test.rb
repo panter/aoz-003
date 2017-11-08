@@ -26,7 +26,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Primary phone', with: '0123456789'
     fill_in 'Secondary phone', with: '0123456789'
     within '#languages' do
-      page.choose('client_language_skills_attributes_0_level_good')
+      choose('Good')
     end
     click_on('Sprache hinzufügen')
     select('Akan', from: 'Language')
@@ -67,7 +67,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
     within '#languages' do
-      page.choose('client_language_skills_attributes_0_level_good')
+      choose('Good')
     end
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
@@ -91,7 +91,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'City', with: 'Zürich'
 
     within '#languages' do
-      page.choose('client_language_skills_attributes_0_level_good')
+      choose('Good')
     end
 
     click_on('Sprache hinzufügen')
@@ -118,7 +118,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
     within '#languages' do
-      page.choose('client_language_skills_attributes_0_level_basic')
+      choose('Basic')
     end
 
     click_on('Sprache hinzufügen')
@@ -248,7 +248,7 @@ class ClientsTest < ApplicationSystemTestCase
     visit new_client_path
     assert page.has_text? 'Sprachkenntnisse Deutsch * Level'
     within '#languages' do
-      page.choose('client_language_skills_attributes_0_level_basic')
+      choose('Basic')
     end
     select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'Client'
