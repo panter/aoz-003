@@ -33,6 +33,7 @@ class Client < ApplicationRecord
 
   validates :salutation, presence: true
   validates :state, inclusion: { in: STATES }
+  validates :client_has_german_skills?, acceptance: true
 
   scope :need_accompanying, lambda {
     includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
@@ -81,5 +82,9 @@ class Client < ApplicationRecord
 
   def german_missing?
     language_skills.german.blank?
+  end
+
+  def client_has_german_skills?
+    language_skills.german.first
   end
 end
