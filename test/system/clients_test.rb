@@ -128,6 +128,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'client pagination' do
+    Client.with_deleted.map(&:really_destroy!)
     login_as @superadmin
     70.times do
       create :client
