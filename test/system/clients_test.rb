@@ -326,11 +326,13 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   def create_clients_for_index_text_check
-    with_assignment = create :client, comments: 'with_assignment', competent_authority: 'assigned_authority',
+    with_assignment = create :client, comments: 'with_assignment',
+                              competent_authority: 'assigned_authority',
                               goals: 'assigned_goals', interests: 'assigned_interests'
     create :assignment, volunteer: create(:volunteer), client: with_assignment
     with_assignment.update(created_at: 2.days.ago)
-    without_assignment = create :client, comments: 'without_assignment', competent_authority: 'unassigned_authority',
+    without_assignment = create :client, comments: 'without_assignment',
+                                competent_authority: 'unassigned_authority',
                                 goals: 'unassigned_goals', interests: 'unassigned_interests'
     without_assignment.update(created_at: 4.days.ago)
     [with_assignment, without_assignment]
