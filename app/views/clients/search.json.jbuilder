@@ -1,6 +1,7 @@
-
+json.clients do
   json.array!(@clients) do |client|
-    json.id client.id
-    json.label client.contact.full_name
-    json.value client.contact.full_name
+    json.last_name client.contact.last_name
+    json.first_name client.contact.first_name
+    json.url client_path(client)
   end
+end
