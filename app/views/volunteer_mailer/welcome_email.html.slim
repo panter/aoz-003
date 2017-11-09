@@ -78,8 +78,8 @@ tables
 h4= t_attr(:group_accompaniment, Volunteer)
 table
   tr
-    - Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
+    - @volunteer.group_accompaniments_all_values.each do |group|
       td
-        - if @volunteer.read_attribute(group)
+        - if group[:value]
           span style="#{margin_r}"
-            = t_attr(group, Volunteer)
+            = t_attr(group[:title], Volunteer)
