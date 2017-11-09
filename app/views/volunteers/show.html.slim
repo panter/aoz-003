@@ -151,13 +151,13 @@ h3= t_attr(:group_accompaniment)
   table.table.table-striped
     thead
       tr
-        - Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
+        - @volunteer.group_accompaniments_all_values.each do |group|
           th.text-center
-            = t_attr(group)
+            = t_attr(group[:title])
     tbody
       tr
-        - @volunteer.slice(Volunteer::GROUP_ACCOMPANIMENTS).values.each do |value|
-          td.text-center= boolean_glyph(value)
+        - @volunteer.group_accompaniments_all_values.each do |group|
+          td.text-center= boolean_glyph(group[:value])
 
       - if @volunteer.other_offer_desc?
         tr
