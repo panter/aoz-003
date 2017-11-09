@@ -212,6 +212,14 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.index ["deleted_at"], name: "index_group_offer_categories_on_deleted_at"
   end
 
+  create_table "group_offer_categories_volunteers", id: false, force: :cascade do |t|
+    t.bigint "group_offer_category_id", null: false
+    t.bigint "volunteer_id", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_group_offer_categories_volunteers_on_deleted_at"
+    t.index ["group_offer_category_id", "volunteer_id"], name: "index_group_offer_on_volunteer"
+  end
+
   create_table "group_offers", force: :cascade do |t|
     t.string "title"
     t.string "offer_type"
