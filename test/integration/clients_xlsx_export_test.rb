@@ -15,12 +15,11 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
   end
 
   test 'xlsx files columns and cells are correct' do
-    client_older = create :client
     client = create :client, entry_date: 'Feb. 2014', birth_year: 30.years.ago,
-      education: 'educati', created_at: 2.days.ago
+      education: 'educati', created_at: 2.days.ago, nationality: 'IT'
 
     # order id desc to be sure to have the right record at row 2
-    get clients_url(format: :xlsx, q: { s: 'id+desc' })
+    get clients_url(format: :xlsx)
     excel_file = Tempfile.new
     excel_file.write(response.body)
     excel_file.close
@@ -63,8 +62,6 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
     assert_equal I18n.t("state.#{client.state}"),            wb.cell(2, 16)
     assert_equal client.created_at.to_date,                  wb.cell(2, 17).to_date
     assert_equal client.updated_at.to_date,                  wb.cell(2, 18).to_date
-
-    assert_equal client_older.id,                            wb.cell(3, 1)
   end
 
   test 'clients xls export is not paginated' do

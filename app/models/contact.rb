@@ -1,4 +1,6 @@
 class Contact < ApplicationRecord
+  before_save :update_full_name, if: :full_name_changed?, unless: :department?
+
   belongs_to :contactable, polymorphic: true, optional: true
 
   validates :last_name, presence: true, if: :validate_last_name?
@@ -11,10 +13,6 @@ class Contact < ApplicationRecord
 
   def to_s
     last_name
-  end
-
-  def full_name
-    "#{last_name}, #{try(:first_name)}"
   end
 
   def full_city
@@ -57,6 +55,10 @@ class Contact < ApplicationRecord
     volunteer? || client?
   end
 
+  def update_full_name
+    self.full_name = "#{last_name}, #{first_name}"
+  end
+
   private
 
   def validate_first_name?
@@ -65,6 +67,10 @@ class Contact < ApplicationRecord
 
   def validate_last_name?
     !profile?
+  end
+
+  def full_name_changed?
+    will_save_change_to_attribute?(:first_name) || will_save_change_to_attribute?(:last_name)
   end
 
   def update_user_email

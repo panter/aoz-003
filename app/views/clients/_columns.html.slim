@@ -19,6 +19,8 @@
           span= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
         th.truncate-th
           span= sort_link @q, :created_at, t_attr(:created_at, Client)
+        - if action_name == 'with_assignment'
+          th Begleitung Status
         - if policy(Client).comments?
           th= t_attr(:comments, Client)
         th.hidden-print colspan='2'

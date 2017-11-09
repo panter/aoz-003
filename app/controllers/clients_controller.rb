@@ -18,6 +18,15 @@ class ClientsController < ApplicationController
     end
   end
 
+  def search
+    authorize Client
+    @q = policy_scope(Client).ransack contact_full_name_cont: params[:term]
+    @clients = @q.result distinct: true
+    respond_to do |format|
+      format.json
+    end
+  end
+
   def show; end
 
   def new
@@ -59,6 +68,13 @@ class ClientsController < ApplicationController
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @need_accompanying = @q.result.paginate(page: params[:page])
     authorize @need_accompanying
+  end
+
+  def with_assignment
+    @q = Client.with_suggested_active_assignment.ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @with_assignment = @q.result.paginate(page: params[:page])
+    authorize @with_assignment
   end
 
   private

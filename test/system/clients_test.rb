@@ -25,6 +25,9 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
     fill_in 'Secondary phone', with: '0123456789'
+    within '#languages' do
+      choose('Good')
+    end
     click_on('Sprache hinzufügen')
     select('Akan', from: 'Language')
     select('Fluent', from: 'Level')
@@ -63,11 +66,15 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
+    within '#languages' do
+      choose('Good')
+    end
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
     within '.table-no-border-top' do
       assert page.has_text? "age doesn't matter"
       assert page.has_text? "gender doesn't matter"
+      assert page.has_text? 'German Good'
     end
   end
 
@@ -83,6 +90,10 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
 
+    within '#languages' do
+      choose('Good')
+    end
+
     click_on('Sprache hinzufügen')
     select('Dari', from: 'Language')
     select('Native speaker', from: 'Level')
@@ -91,6 +102,7 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? 'Client was successfully created.'
     within '.table-no-border-top' do
       assert page.has_text? 'Dari Native speaker'
+      assert page.has_text? 'German Good'
     end
   end
 
@@ -105,6 +117,9 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'City', with: 'Zürich'
     fill_in 'Primary email', with: 'gurke@gurkenmail.com'
     fill_in 'Primary phone', with: '0123456789'
+    within '#languages' do
+      choose('Basic')
+    end
 
     click_on('Sprache hinzufügen')
     select('Fluent', from: 'Level')
@@ -112,6 +127,7 @@ class ClientsTest < ApplicationSystemTestCase
     click_button 'Create Client'
     within '.table-no-border-top' do
       refute page.has_text? 'Fluent'
+      assert page.has_text? 'German Basic'
     end
 
     visit clients_path
@@ -136,7 +152,7 @@ class ClientsTest < ApplicationSystemTestCase
     first(:link, '2').click
 
     assert page.has_css? '.pagination'
-    Client.paginate(page: 2).each do |client|
+    Client.order('created_at desc').paginate(page: 2).each do |client|
       assert page.has_text? client.contact.last_name
     end
   end
@@ -196,6 +212,74 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_link? 'Show'
     assert page.has_link? 'Edit'
     refute page.has_link? 'Delete'
+  end
+
+  test 'department manager sees his scoped client index correctly' do
+    superadmins_client = create :client, user: @superadmin
+    with_assignment, without_assignment = create_clients_for_index_text_check
+    with_assignment.update(user: @department_manager)
+    without_assignment.update(user: @department_manager)
+    login_as @department_manager
+    visit clients_path
+    assert page.has_text? with_assignment.contact.full_name
+    assert page.has_text? without_assignment.contact.full_name
+    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
+      "#{I18n.l(without_assignment.created_at.to_date)} Show Find volunteer"
+    assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
+      "#{I18n.l(with_assignment.created_at.to_date)} Show Show Assignment"
+    refute page.has_text? superadmins_client.contact.full_name
+  end
+
+  test 'client_index_shows_german_and_native_languages_only' do
+    create :client, language_skills: [
+      create(:language_skill, language: 'DE', level: 'good'),
+      create(:language_skill, language: 'IT', level: 'native_speaker'),
+      create(:language_skill, language: 'FR', level: 'fluent')
+    ]
+    login_as @superadmin
+    visit clients_path
+    assert page.has_text? 'German, Good'
+    assert page.has_text? 'Italian, Native speaker'
+    refute page.has_text? 'French, Fluent'
+  end
+
+  test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
+    login_as @superadmin
+    visit new_client_path
+    assert page.has_text? 'Sprachkenntnisse Deutsch * Level'
+    within '#languages' do
+      choose('Basic')
+    end
+    select('Mrs.', from: 'Salutation')
+    fill_in 'First name', with: 'Client'
+    fill_in 'Last name', with: "doesn't matter"
+    fill_in 'Primary email', with: 'client@aoz.com'
+    fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    click_button 'Create Client'
+    assert page.has_text? 'German Basic'
+  end
+
+  test 'client_print_view_is_not_paginated' do
+    45.times { create :client }
+    login_as @superadmin
+    visit clients_url(print: true)
+    assert_equal Client.count, find_all('tbody tr').size
+  end
+
+  def create_clients_for_index_text_check
+    with_assignment = create :client, comments: 'with_assignment',
+                              competent_authority: 'assigned_authority',
+                              goals: 'assigned_goals', interests: 'assigned_interests'
+    create :assignment, volunteer: create(:volunteer), client: with_assignment
+    with_assignment.update(created_at: 2.days.ago)
+    without_assignment = create :client, comments: 'without_assignment',
+                                competent_authority: 'unassigned_authority',
+                                goals: 'unassigned_goals', interests: 'unassigned_interests'
+    without_assignment.update(created_at: 4.days.ago)
+    [with_assignment, without_assignment]
   end
 
   test 'department manager sees his scoped client index correctly' do
