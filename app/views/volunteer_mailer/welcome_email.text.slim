@@ -91,7 +91,7 @@
   - if @volunteer.read_attribute(single)
     = "#{t_attr(single, Volunteer)} "
 = "#{rn2}#{t_attr(:group_accompaniment, Volunteer)}#{rn2}"
-- Volunteer::GROUP_ACCOMPANIMENTS.each do |group|
-  - if @volunteer.read_attribute(group)
-    = t_attr(group, Volunteer)
+- @volunteer.group_accompaniments_all_values.each do |group|
+  - if group[:value]
+    = t_attr(group[:title], Volunteer)
     = " "

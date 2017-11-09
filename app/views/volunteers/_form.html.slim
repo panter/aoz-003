@@ -87,9 +87,8 @@ fieldset
 fieldset
   legend= t_attr(:group_accompaniment, Volunteer)
   .row
-    - Volunteer::GROUP_ACCOMPANIMENTS.each do |group_accompaniment|
-      .col-xs-6.col-md-3
-        = f.input group_accompaniment
+    .col-xs-12.col-md-3
+      = f.association :group_offer_categories, as: :check_boxes, label: false, collection: GroupOfferCategory.active
 .row
   .col-xs-12
     = f.input :other_offer_desc
