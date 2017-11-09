@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109194014) do
+ActiveRecord::Schema.define(version: 20171109152750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -431,14 +431,6 @@ ActiveRecord::Schema.define(version: 20171109194014) do
     t.boolean "woman", default: false
     t.boolean "family", default: false
     t.boolean "kid", default: false
-    t.boolean "sport", default: false
-    t.boolean "creative", default: false
-    t.boolean "music", default: false
-    t.boolean "culture", default: false
-    t.boolean "training", default: false
-    t.boolean "german_course", default: false
-    t.boolean "teenagers", default: false
-    t.boolean "children", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -457,14 +449,8 @@ ActiveRecord::Schema.define(version: 20171109194014) do
     t.boolean "doc_sent", default: false
     t.boolean "bank_account", default: false
     t.boolean "evaluation", default: false
-    t.boolean "dancing", default: false
-    t.boolean "health", default: false
-    t.boolean "cooking", default: false
-    t.boolean "excursions", default: false
-    t.boolean "women", default: false
     t.boolean "unaccompanied", default: false
     t.boolean "zurich", default: false
-    t.boolean "other_offer", default: false
     t.text "other_offer_desc"
     t.text "own_kids"
     t.boolean "flexible", default: false
