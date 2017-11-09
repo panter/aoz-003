@@ -18,6 +18,7 @@ class ClientPolicy < ApplicationPolicy
 
   alias_method :destroy?,           :superadmin?
   alias_method :need_accompanying?, :superadmin_or_department_manager?
+  alias_method :with_assignment?,   :superadmin_or_department_manager?
 
   # suplementary policies
   alias_method :comments?,         :superadmin?

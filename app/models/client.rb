@@ -19,7 +19,7 @@ class Client < ApplicationRecord
 
   belongs_to :user, -> { with_deleted }
 
-  has_one :assignment
+  has_one :assignment, dependent: :destroy
   has_one :volunteer, through: :assignments
 
   has_one :contact, as: :contactable, dependent: :destroy
@@ -53,6 +53,11 @@ class Client < ApplicationRecord
 
   scope :without_assignment, lambda {
     left_outer_joins(:assignment).where(assignments: { id: nil })
+  }
+
+  scope :with_suggested_active_assignment, lambda {
+    joins(:assignment)
+      .where('assignments.state = ? OR assignments.state = ?', 'suggested', 'active')
   }
 
   def to_s
