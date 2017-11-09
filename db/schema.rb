@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
     t.index ["deleted_at"], name: "index_group_offer_categories_on_deleted_at"
   end
 
