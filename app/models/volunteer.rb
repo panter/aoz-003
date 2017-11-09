@@ -13,9 +13,6 @@ class Volunteer < ApplicationRecord
     unless: proc { user_id.nil? }
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
-  GROUP_ACCOMPANIMENTS = [:sport, :creative, :music, :culture, :training, :german_course,
-                          :dancing, :health, :cooking, :excursions, :women, :teenagers,
-                          :children, :other_offer].freeze
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
@@ -57,6 +54,7 @@ class Volunteer < ApplicationRecord
   has_many :group_assignments
   has_many :group_offers, through: :group_assignments
   has_many :group_assignment_logs
+  has_and_belongs_to_many :group_offer_categories
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
@@ -246,6 +244,10 @@ class Volunteer < ApplicationRecord
     group_offers.map do |group_offer|
       [group_offer.to_label, "#{group_offer.id},#{group_offer.class}"]
     end
+  end
+
+  def group_accompaniments_all_values
+    GroupOfferCategory.active.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
   end
 
   def to_s

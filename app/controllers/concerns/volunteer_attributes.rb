@@ -13,7 +13,7 @@ module VolunteerAttributes
         :trial_period, :doc_sent, :bank_account, :evaluation, :own_kids, :rejection_type,
         :rejection_text, :intro_course, :flexible, :morning, :afternoon, :evening,
         :workday, :weekend, :detailed_description, contact_attributes,
-        language_skills_attributes, availability_attributes
+        language_skills_attributes, availability_attributes, group_offer_category_ids: []
       ]
     end
   end
