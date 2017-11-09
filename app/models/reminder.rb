@@ -2,6 +2,8 @@ class Reminder < ApplicationRecord
   belongs_to :assignment
   belongs_to :volunteer
 
+  enum kind: { trial: 0, assignment: 1 }
+
   validate :volunteer_is_internal?
 
   def volunteer_is_internal?
@@ -13,7 +15,8 @@ class Reminder < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
   def self.create_for(volunteer, assignment)
-    Reminder.create!(volunteer: volunteer, assignment: assignment)
+    Reminder.create!(volunteer: volunteer, assignment: assignment,
+      kind: Reminder.kinds[:assignment])
   end
 
   def self.conditionally_create_reminders(time = Time.zone.now)
@@ -28,6 +31,14 @@ class Reminder < ApplicationRecord
     logger.flush
 
     reminders_created.size
+  end
+
+  def self.trial_end_reminders
+    Volunteer.with_assignment_6_weeks_ago.map do |volunteer|
+      volunteer.assignments.map do |assignment|
+        conditionally_create_trial_end_reminder_for_volunteer(volunteer, assignment)
+      end
+    end.flatten.compact
   end
 
   def self.conditionally_create_reminder_for_volunteer(volunteer, assignment)
@@ -47,6 +58,12 @@ class Reminder < ApplicationRecord
       reminder = Reminder.create_for(volunteer, assignment)
       log_reminder volunteer, "created reminder [#{reminder.id}]"
       reminder.id
+    end
+  end
+
+  def self.conditionally_create_trial_end_reminder_for_volunteer(volunteer, a)
+    if a.started_six_weeks_ago? && !a.confirmation? && a.reminders.none?
+      Reminder.create!(volunteer: volunteer, assignment: a, kind: Reminder.kinds[:trial])
     end
   end
 
