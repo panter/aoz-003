@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109150621) do
+ActiveRecord::Schema.define(version: 20171109154536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 20171109150621) do
     t.string "full_name"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
     t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
+    t.index ["full_name"], name: "index_contacts_on_full_name"
   end
 
   create_table "departments", force: :cascade do |t|
