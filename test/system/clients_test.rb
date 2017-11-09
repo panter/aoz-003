@@ -89,11 +89,9 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Street', with: 'Sihlstrasse 131'
     fill_in 'Zip', with: '8002'
     fill_in 'City', with: 'Zürich'
-
     within '#languages' do
       choose('Good')
     end
-
     click_on('Sprache hinzufügen')
     select('Dari', from: 'Language')
     select('Native speaker', from: 'Level')
