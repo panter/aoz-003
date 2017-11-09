@@ -55,6 +55,10 @@ class Contact < ApplicationRecord
     volunteer? || client?
   end
 
+  def update_full_name
+    self.full_name = "#{last_name}, #{first_name}"
+  end
+
   private
 
   def validate_first_name?
@@ -67,10 +71,6 @@ class Contact < ApplicationRecord
 
   def full_name_changed?
     will_save_change_to_attribute?(:first_name) || will_save_change_to_attribute?(:last_name)
-  end
-
-  def update_full_name
-    self.full_name = "#{last_name}, #{first_name}"
   end
 
   def update_user_email
