@@ -1,21 +1,9 @@
 require 'test_helper'
 require 'selenium/webdriver'
 
-Capybara.register_driver(:headless_chrome_no_gpu) do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu] }
-  )
-
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    desired_capabilities: capabilities
-  )
-end
-
 Capybara.register_driver(:headless_chrome) do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless] }
+    chromeOptions: { args: %w[headless disable-gpu] }
   )
 
   Capybara::Selenium::Driver.new(
@@ -33,8 +21,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   case ENV['driver']
   when 'visible'
     driven_by :visible_chrome
-  when 'no_gpu'
-    driven_by :headless_chrome_no_gpu
   else
     driven_by :headless_chrome
   end
