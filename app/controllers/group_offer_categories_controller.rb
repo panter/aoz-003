@@ -41,6 +41,6 @@ class GroupOfferCategoriesController < ApplicationController
   end
 
   def group_offer_category_params
-    params.require(:group_offer_category).permit(:category_name, :category_state, :group_offers_id)
+    params.require(:group_offer_category).permit(:category_name, :category_state, :description, :group_offers_id)
   end
 end
