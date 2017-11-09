@@ -20,7 +20,7 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
       education: 'educati', created_at: 2.days.ago, nationality: 'IT'
 
     # order id desc to be sure to have the right record at row 2
-    get clients_url(format: :xlsx, q: { s: 'id+desc' })
+    get clients_url(format: :xlsx, q: { s: 'created_at desc' })
     excel_file = Tempfile.new
     excel_file.write(response.body)
     excel_file.close
