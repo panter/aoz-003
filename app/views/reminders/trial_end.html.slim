@@ -1,4 +1,4 @@
-h1 Erinnerungen
+h1 Probezeit Erinnerungen
 
 .table-responsive
   table.table.table-no-border-top
@@ -13,7 +13,7 @@ h1 Erinnerungen
         th= t_attr(:sent_at)
         th= t('delete')
     tbody
-      - @reminders.each do |reminder|
+      - @trial_end.each do |reminder|
         tr
           td= link_to reminder.volunteer.contact.full_name, volunteer_path(reminder.volunteer)
           td= t("volunteer_applications.acceptance.#{reminder.volunteer.acceptance}")
