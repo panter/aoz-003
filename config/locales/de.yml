@@ -321,6 +321,7 @@ de:
       group_offer_category:
         category_name: Name
         category_state: Status
+        description: Beschreibung
       hour:
         hourable: Einsatz
         hourable_id_and_type: Einsatz

@@ -4,8 +4,9 @@
     .col-xs-12.col-md-4
       = f.input :category_name
     .col-xs-12.col-md-4
-      = f.input :category_state, collection: GroupOfferCategory::CATEGORY_STATES, as: :radio_buttons
+      = f.input :description
     .col-xs-12.col-md-4
+      = f.input :category_state, collection: GroupOfferCategory::CATEGORY_STATES, as: :radio_buttons
 
   .row
     .col-xs-12
