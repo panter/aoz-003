@@ -3,7 +3,7 @@ class RemindersController < ApplicationController
 
   def index
     authorize Reminder
-    @reminders = Reminder.all
+    @reminders = Reminder.assignment
   end
 
   # Sends the email
@@ -17,6 +17,12 @@ class RemindersController < ApplicationController
   def destroy
     @reminder.destroy
     redirect_to reminders_url, make_notice
+  end
+
+  def trial_end
+    authorize Reminder
+    Reminder.trial_end_reminders
+    @trial_end = Reminder.trial
   end
 
   private
