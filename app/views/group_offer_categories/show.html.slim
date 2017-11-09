@@ -9,6 +9,9 @@ h1= t_model
       tr
         td= t_attr(:category_state)
         td= t(".category_states.#{@group_offer_category.category_state}")
+      tr
+        td= t_attr(:description)
+        td= @group_offer_category.description
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
