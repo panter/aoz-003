@@ -105,7 +105,7 @@ class Volunteer < ApplicationRecord
   scope :internal, (-> { where(external: false) })
 
   scope :with_assignment_6_months_ago, lambda {
-    joins(:assignments).where('assignments.period_start < ?', 6.months.ago.to_date.to_s)
+    joins(:assignments).where('assignments.period_start < ?', 6.months.ago)
   }
 
   scope :with_assignment_ca_6_weeks_ago, lambda {
@@ -238,7 +238,7 @@ class Volunteer < ApplicationRecord
 
   def assignments_hour_form_collection
     assignments
-      .where('period_end > ? OR period_end IS NULL', 7.months.ago.to_date)
+      .where('period_end > ? OR period_end IS NULL', 7.months.ago)
       .map { |assignment| [assignment.to_label, "#{assignment.id},#{assignment.class}"] }
   end
 
