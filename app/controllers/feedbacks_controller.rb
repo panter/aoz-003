@@ -20,11 +20,12 @@ class FeedbacksController < ApplicationController
 
   def create
     @feedback = Feedback.new(feedback_params.merge(author_id: current_user.id,
-      volunteer_id: @volunteer.id))
+      volunteer_id: @volunteer.id,
+      kind: (feedback_params[:kind].nil? ? nil : feedback_params[:kind].to_i)))
     @feedback.feedbackable = @feedbackable
     authorize @feedback
     if @feedback.save
-      redirect_to @feedback.volunteer, make_notice
+      redirect_to @feedback.trial? ? trial_end_reminders_url : @feedback.volunteer, make_notice
     else
       render :new
     end
@@ -63,6 +64,6 @@ class FeedbacksController < ApplicationController
 
   def feedback_params
     params.require(:feedback).permit(:goals, :achievements, :future, :comments, :conversation,
-      :volunteer_id, :group_offer_id, :assignment_id)
+      :volunteer_id, :group_offer_id, :assignment_id, :kind)
   end
 end
