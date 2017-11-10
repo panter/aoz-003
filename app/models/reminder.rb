@@ -7,9 +7,7 @@ class Reminder < ApplicationRecord
   validate :volunteer_is_internal?
 
   def volunteer_is_internal?
-    if volunteer.external
-      errors.add(:volunteer, 'external volunteers can not get reminders')
-    end
+    errors.add(:volunteer, 'external volunteers can not get reminders') if volunteer.external
   end
 
   default_scope { order(created_at: :desc) }
