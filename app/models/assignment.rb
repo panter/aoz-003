@@ -1,6 +1,7 @@
 class Assignment < ApplicationRecord
   include ImportRelation
   include GroupAssignmentAndAssignmentScopes
+  include VolunteerStateUpdate
 
   after_update :delete_reminder, if: :saved_change_to_confirmation?
 
