@@ -29,7 +29,7 @@ class Assignment < ApplicationRecord
   scope :ended, (-> { where('assignments.period_end < ?', Time.zone.today) })
 
   def started_six_months_ago?
-    period_start < 6.months.ago.to_date
+    period_start < 6.months.ago
   end
 
   def started_ca_six_weeks_ago?
