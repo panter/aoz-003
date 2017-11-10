@@ -15,8 +15,7 @@ class Reminder < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
   def self.create_for(volunteer, assignment)
-    Reminder.create!(volunteer: volunteer, assignment: assignment,
-      kind: Reminder.kinds[:assignment])
+    Reminder.create!(volunteer: volunteer, assignment: assignment, kind: 1)
   end
 
   def self.conditionally_create_reminders(time = Time.zone.now)
@@ -34,7 +33,7 @@ class Reminder < ApplicationRecord
   end
 
   def self.trial_end_reminders
-    Volunteer.with_assignment_6_weeks_ago.map do |volunteer|
+    Volunteer.with_assignment_ca_6_weeks_ago.map do |volunteer|
       volunteer.assignments.map do |assignment|
         conditionally_create_trial_end_reminder_for_volunteer(volunteer, assignment)
       end
@@ -62,9 +61,8 @@ class Reminder < ApplicationRecord
   end
 
   def self.conditionally_create_trial_end_reminder_for_volunteer(volunteer, a)
-    if a.started_six_weeks_ago? && !a.confirmation? && a.reminders.none?
-      Reminder.create!(volunteer: volunteer, assignment: a, kind: Reminder.kinds[:trial])
-    end
+    Reminder.create!(volunteer: volunteer, assignment: a, kind: 0) if a.started_ca_six_weeks_ago? &&
+        !a.confirmation? && a.reminders.none?
   end
 
   def self.log_reminder(volunteer, message)
