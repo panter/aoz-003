@@ -18,7 +18,7 @@ module GroupAssignmentAndAssignmentScopes
     scope :start_before, ->(date) { where('period_start < ?', date) }
     scope :start_after, ->(date) { where('period_start > ?', date) }
     scope :start_within, ->(date_range) { where(period_start: date_range) }
-    scope :started_six_months_ago, (-> { where('period_start < ?', 6.months.ago.to_date) })
+    scope :started_six_months_ago, (-> { where('period_start < ?', 6.months.ago) })
     scope :started_ca_six_weeks_ago, lambda {
       where('period_start < ? AND period_start > ?', 6.weeks.ago, 8.weeks.ago)
     }
