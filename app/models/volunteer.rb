@@ -139,12 +139,16 @@ class Volunteer < ApplicationRecord
       .or(loj_active_take_more)
   }
 
+  def verify_and_update_state
+    update(active: active?)
+  end
+
   def active?
-    accepted? && (assignments.active.any? || group_assignments.ongoing.any? || group_assignments.no_end.any?)
+    accepted? && assignments.active.any? || group_assignments.active.any?
   end
 
   def inactive?
-    accepted? && assignments.active.blank? && group_assignments.ongoing.blank? && group_assignments.no_end.blank?
+    accepted? && assignments.active.blank? && group_assignments.active.blank?
   end
 
   def state
