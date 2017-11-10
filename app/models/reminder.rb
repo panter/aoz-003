@@ -60,7 +60,7 @@ class Reminder < ApplicationRecord
 
   def self.conditionally_create_trial_end_reminder_for_volunteer(volunteer, a)
     Reminder.create!(volunteer: volunteer, assignment: a, kind: 0) if a.started_ca_six_weeks_ago? &&
-        !a.confirmation? && a.reminders.none?
+        !a.confirmation? && a.reminders.none? && a.feedbacks.trial.none?
   end
 
   def self.log_reminder(volunteer, message)
