@@ -8,26 +8,14 @@ h1 Probezeit Erinnerungen
         th= t_attr(:acceptance, Volunteer)
         th= t_model(Client)
         th= t_attr(:period_start, Assignment)
-        th= t_attr(:last, Hour)
-        th= t_attr(:last, Feedback)
-        th= t_attr(:sent_at)
-        th= t('delete')
+        th Feedback
+        th Quittieren
     tbody
       - @trial_end.each do |reminder|
         tr
           td= link_to reminder.volunteer.contact.full_name, volunteer_path(reminder.volunteer)
           td= t("volunteer_applications.acceptance.#{reminder.volunteer.acceptance}")
           td= link_to reminder.assignment.client.contact.full_name, client_path(reminder.assignment.client)
-          td= l(reminder.assignment.period_start.to_date)
-          td
-            - if reminder.assignment.last_hour
-              = link_to l(reminder.assignment.last_hour.updated_at.to_date),
-                volunteer_hour_url(reminder.volunteer, reminder.assignment.last_hour)
-          td
-            - if reminder.assignment.last_feedback
-              = link_to l(reminder.assignment.last_feedback.updated_at.to_date), polymorphic_path([reminder.volunteer, reminder.assignment, reminder.assignment.last_feedback])
-          - if reminder.sent_at
-            td= l(reminder.sent_at)
-          - else
-            td= button_to t_action(:send), { action: 'update', id: reminder.id }, { method: :put, class: 'btn btn-info btn-xs' }
-          td= button_to t('delete'), { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }
+          td= link_to l(reminder.assignment.period_start.to_date), edit_assignment_path(reminder.assignment)
+          td= link_to 'Feedback hinzufügen', url_for(new_polymorphic_path([reminder.volunteer, reminder.assignment, Feedback])), { class: 'btn btn-success btn-xs' }
+          td= button_to 'Quittieren', { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }

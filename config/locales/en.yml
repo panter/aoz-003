@@ -456,7 +456,6 @@ en:
       - :day
       - :month
       - :year
-  delete: Delete
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
