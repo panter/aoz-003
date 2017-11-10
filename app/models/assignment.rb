@@ -32,8 +32,8 @@ class Assignment < ApplicationRecord
     period_start < 6.months.ago.to_date
   end
 
-  def started_six_weeks_ago?
-    period_start < 6.weeks.ago.to_date
+  def started_ca_six_weeks_ago?
+    period_start < 6.weeks.ago && period_start > 8.weeks.ago
   end
 
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
