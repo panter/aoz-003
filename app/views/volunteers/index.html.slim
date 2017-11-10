@@ -16,7 +16,7 @@ nav.navbar.section-navigation
     = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
     = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
     = boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
-    = boolean_filter_dropdown(:group_accompaniment, GroupOffer.all)
+    = list_filter_dropdown(:group_accompaniment, Volunteer::GroupOfferCategory.active.all)
     = boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)
   hr
 

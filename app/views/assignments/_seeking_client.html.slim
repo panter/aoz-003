@@ -13,7 +13,7 @@ tr
       div= t("activerecord.attributes.volunteer.#{key}")
   td
     - seeking_client.group_accompaniments_all_values.reject { |v| !v[:value] }.each do |group|
-      div= t("activerecord.attributes.volunteer.#{group[:title]}")
+      div= group[:title]
   td= seeking_client.external? ? t_attr(:external) : t_attr(:internal)
   td= button_link t_action(:show), volunteer_path(seeking_client)
   td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: seeking_client.id)
