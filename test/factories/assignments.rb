@@ -15,5 +15,12 @@ FactoryBot.define do
       period_start { 1.year.ago.to_date }
       period_end { 1.year.ago.to_date.end_of_year - 2 }
     end
+
+    trait :blank_period do
+      period_start { nil }
+      period_end { nil }
+    end
+
+    factory :assignment_blank_period, traits: [:blank_period]
   end
 end
