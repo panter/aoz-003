@@ -2,6 +2,7 @@
   = simple_form_for [@volunteer, @feedbackable, @feedback] do |f|
     = simple_error_notice f
 
+    = f.hidden_field :kind, value: params[:kind] unless params[:kind].nil?
     = render 'main_fields', f: f
 - else
   = simple_form_for @feedback do |f|
@@ -10,4 +11,3 @@
     = f.input :feedbackable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection
 
     = render 'main_fields', f: f
-

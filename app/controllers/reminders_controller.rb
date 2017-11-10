@@ -16,7 +16,7 @@ class RemindersController < ApplicationController
 
   def destroy
     @reminder.destroy
-    redirect_to reminders_url, make_notice
+    redirect_to @reminder.trial? ? trial_end_reminders_url : reminders_url, make_notice
   end
 
   def trial_end
