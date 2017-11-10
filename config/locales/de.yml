@@ -617,7 +617,6 @@ de:
       - :day
       - :month
       - :year
-  delete: Quittieren
   department_confirm_destroy: Sind Sie sicher dass Sie den Standort löschen wollen?
   devise:
     confirmations:

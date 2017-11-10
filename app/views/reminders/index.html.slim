@@ -11,7 +11,7 @@ h1 Erinnerungen
         th= t_attr(:last, Hour)
         th= t_attr(:last, Feedback)
         th= t_attr(:sent_at)
-        th= t('delete')
+        th Quittieren
     tbody
       - @reminders.each do |reminder|
         tr
@@ -30,4 +30,4 @@ h1 Erinnerungen
             td= l(reminder.sent_at)
           - else
             td= button_to t_action(:send), { action: 'update', id: reminder.id }, { method: :put, class: 'btn btn-info btn-xs' }
-          td= button_to t('delete'), { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }
+          td= button_to 'Quittieren', { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }

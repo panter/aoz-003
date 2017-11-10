@@ -20,7 +20,7 @@ class RemindersTest < ApplicationSystemTestCase
 
   test 'can delete reminder' do
     assert page.has_text? @volunteer.contact.full_name
-    click_button 'Delete'
+    click_button 'Quittieren'
     refute page.has_text? @volunteer.contact.full_name
   end
 
