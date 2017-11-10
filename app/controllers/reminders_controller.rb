@@ -16,6 +16,7 @@ class RemindersController < ApplicationController
 
   def destroy
     @reminder.destroy
+    @reminder.volunteer.update(trial_period: true) if @reminder.trial?
     redirect_to @reminder.trial? ? trial_end_reminders_url : reminders_url, make_notice
   end
 

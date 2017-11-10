@@ -1,8 +1,6 @@
 class Feedback < ApplicationRecord
   attr_reader :feedbackable_id_and_type
 
-  enum kind: { trial: 0, assignment: 1 }
-
   belongs_to :volunteer
   belongs_to :author, class_name: 'User'
   belongs_to :feedbackable, polymorphic: true, optional: true
