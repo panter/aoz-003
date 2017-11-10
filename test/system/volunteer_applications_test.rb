@@ -14,6 +14,11 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
   end
 
   test 'new volunteer application' do
+    create(:group_offer_category, category_name: 'Culture')
+    create(:group_offer_category, category_name: 'Training')
+    create(:group_offer_category, category_name: 'German Course')
+    create(:group_offer_category, category_name: 'Other Offer')
+
     visit root_path
     click_link 'Do you want to register as a volunteer?'
 
@@ -39,10 +44,10 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     fill_in 'What do you expect from a person who would accompany you / your volunteer work?', with: 'asdf'
     fill_in 'Where do you see your strengths? (Social competencies that you could contribute to voluntary work)', with: 'asdf'
     fill_in 'What are your most important leisure interests?', with: 'asdf'
-    page.check('volunteer_culture')
-    page.check('volunteer_training')
-    page.check('volunteer_german_course')
-    page.check('volunteer_other_offer')
+    page.check('Culture')
+    page.check('Training')
+    page.check('German Course')
+    page.check('Other Offer')
     fill_in 'Description', with: 'Description'
     page.check('volunteer_zurich')
     page.check('volunteer_weekend')

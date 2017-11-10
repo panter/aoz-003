@@ -11,6 +11,10 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'new volunteer form' do
+    create(:group_offer_category, category_name: 'Training')
+    create(:group_offer_category, category_name: 'German Course')
+    create(:group_offer_category, category_name: 'Other Offer')
+
     visit new_volunteer_path
 
     select('Mrs.', from: 'Salutation')
@@ -32,9 +36,9 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'What do you expect from a person who would accompany you', with: 'asdf'
     fill_in 'Where do you see your strengths?', with: 'asdf'
     fill_in 'What are your most important leisure interests?', with: 'asdf'
-    page.check('volunteer_family')
-    page.check('volunteer_training')
-    page.check('volunteer_other_offer')
+    page.check('Training')
+    page.check('German Course')
+    page.check('Other Offer')
     fill_in 'Description', with: 'Description'
     page.check('volunteer_zurich')
     fill_in 'Bank', with: 'BankName'
