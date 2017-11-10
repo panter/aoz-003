@@ -17,9 +17,5 @@ h1 Probezeit Erinnerungen
           td= t("volunteer_applications.acceptance.#{reminder.volunteer.acceptance}")
           td= link_to reminder.assignment.client.contact.full_name, client_path(reminder.assignment.client)
           td= link_to l(reminder.assignment.period_start.to_date), edit_assignment_path(reminder.assignment)
-          td
-            - if reminder.assignment.feedbacks.trial.any?
-              = link_to l(reminder.assignment.feedbacks.trial.last.updated_at.to_date), polymorphic_path([reminder.volunteer, reminder.assignment, reminder.assignment.feedbacks.trial.last])
-            - else
-              = link_to 'Feedback hinzufügen', url_for(new_polymorphic_path([reminder.volunteer, reminder.assignment, Feedback], kind: 0)), { class: 'btn btn-success btn-xs' }
+          td= link_to 'Feedback hinzufügen', '#', { class: 'btn btn-success btn-xs' }
           td= button_to 'Quittieren', { action: 'destroy', id: reminder.id }, { method: :delete, class: 'btn btn-danger btn-xs' }
