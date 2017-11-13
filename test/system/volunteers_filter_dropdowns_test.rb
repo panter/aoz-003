@@ -2,6 +2,8 @@ require 'application_system_test_case'
 
 class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
   def setup
+    #TODO
+    #fix filters
     @user = create :user, role: 'superadmin'
     Volunteer.acceptance_collection.map do |acceptance|
       [
