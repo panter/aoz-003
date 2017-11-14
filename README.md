@@ -13,6 +13,8 @@ Ruby version: 2.4.2
 1. [Create initial superadmin account](#create-initial-superadmin-account)
 1. [Sort locale yaml files](#sort-locale-yaml-files)
 1. [Importing from access db with rake task](#importing-from-access-db-with-rake-task)
+1. [Run model, integration and controller tests](#run-model-integration-and-controller-tests)
+1. [Run system (acceptance) tests](#run-system-acceptance-tests)
 1. [LICENSE](#license)
 
 ### Dependencies
@@ -72,6 +74,26 @@ Run in the command line:
 
 ```bash
 $  rails access:import file=path/to/access_file.accdb
+```
+
+### Run model, integration and controller tests
+
+```bash
+$ rails test
+```
+
+### Run system (acceptance) tests
+
+For system (acceptance) tests run:
+
+```bash
+$ rails test:system
+```
+
+For having chrome open and visible when running system tests locally:
+
+```bash
+$ rails test:system driver=visible
 ```
 
 ### LICENSE
