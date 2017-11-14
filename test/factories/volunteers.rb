@@ -52,21 +52,10 @@ FactoryBot.define do
       unaccompanied { [true, false].sample }
     end
 
-    trait :fake_group_assignments do
-      sport { [true, false].sample }
-      creative { [true, false].sample }
-      music { [true, false].sample }
-      culture { [true, false].sample }
-      training { [true, false].sample }
-      german_course { [true, false].sample }
-      dancing { [true, false].sample }
-      health { [true, false].sample }
-      cooking { [true, false].sample }
-      excursions { [true, false].sample }
-      women { [true, false].sample }
-      teenagers { [true, false].sample }
-      children { [true, false].sample }
-      other_offer { [true, false].sample }
+    trait :with_group_offer_categories do
+      group_offer_categories do |category|
+        category.association(:group_offer_category)
+      end
     end
 
     trait :fake_availability do
@@ -85,7 +74,7 @@ FactoryBot.define do
       :volunteer_seed,
       traits: [
         :seed_contact, :with_language_skills, :with_journals, :faker_extra,
-        :fake_availability, :fake_single_assignments, :fake_group_assignments
+        :fake_availability, :fake_single_assignments
       ]
     )
   end
