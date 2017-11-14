@@ -2,15 +2,17 @@ require 'application_system_test_case'
 
 class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
   def setup
-    #TODO
-    #fix filters
     @user = create :user, role: 'superadmin'
+    @c1 = create :group_offer_category
+    @c2 = create :group_offer_category
+    @c3 = create :group_offer_category
+    @volunteer1 = create :volunteer, group_offer_categories: [@c1, @c2]
+    @volunteer2 = create :volunteer, group_offer_categories: [@c2, @c3]
+    @volunteer3 = create :volunteer
     Volunteer.acceptance_collection.map do |acceptance|
       [
-        create(:volunteer, acceptance: acceptance, man: true, training: true,
-          morning: true, salutation: 'mrs'),
-        create(:volunteer, acceptance: acceptance, man: true, woman: true, sport: true,
-          workday: true, salutation: 'mr')
+        create(:volunteer, acceptance: acceptance, man: true, morning: true, salutation: 'mrs'),
+        create(:volunteer, acceptance: acceptance, man: true, woman: true, workday: true, salutation: 'mr')
       ]
     end
     login_as @user
@@ -79,8 +81,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
   end
 
   test 'boolean filters for single accompainment' do
-    false_volunteer = create :volunteer, man: false, woman: false, sport: false, training: false,
-      morning: false, workday: false
+    false_volunteer = create :volunteer, man: false, woman: false, morning: false, workday: false
     within '.section-navigation' do
       click_link 'Single accompaniment'
       click_link 'Man'
@@ -114,6 +115,46 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert page.has_text? false_volunteer.to_s
+    end
+  end
+
+  test 'Filter for group offer categories' do
+    within '.section-navigation' do
+      click_link 'Group offer categories'
+      click_link @c1
+    end
+    visit current_url
+    within 'tbody' do
+      assert page.has_text? @volunteer1
+      refute page.has_text? @volunteer2
+      refute page.has_text? @volunteer3
+    end
+    within '.section-navigation' do
+      click_link 'Group offer categories'
+      click_link @c3
+    end
+    visit current_url
+    within 'tbody' do
+      assert page.has_text? @volunteer2
+      refute page.has_text? @volunteer1
+      refute page.has_text? @volunteer3
+    end
+    within '.section-navigation' do
+      click_link 'Group offer categories'
+      click_link @c2
+    end
+    visit current_url
+    within 'tbody' do
+      assert page.has_text? @volunteer1
+      assert page.has_text? @volunteer2
+      refute page.has_text? @volunteer3
+    end
+    click_link 'Clear filters'
+    visit current_url
+    within 'tbody' do
+      assert page.has_text? @volunteer1
+      assert page.has_text? @volunteer2
+      assert page.has_text? @volunteer1
     end
   end
 end
