@@ -250,6 +250,14 @@ class Volunteer < ApplicationRecord
     GroupOfferCategory.active.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
   end
 
+  def group_accompaniments_active_without_house_moving
+    GroupOfferCategory.active_without_house_moving.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
+  end
+
+  def group_accompaniments_house_moving
+    GroupOfferCategory.house_moving.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
+  end
+
   def to_s
     contact.full_name
   end
