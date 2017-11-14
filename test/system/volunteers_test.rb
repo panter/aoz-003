@@ -14,6 +14,7 @@ class VolunteersTest < ApplicationSystemTestCase
     create(:group_offer_category, category_name: 'Training')
     create(:group_offer_category, category_name: 'German Course')
     create(:group_offer_category, category_name: 'Other Offer')
+    create(:group_offer_category, category_name: 'Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
 
     visit new_volunteer_path
 
@@ -40,7 +41,7 @@ class VolunteersTest < ApplicationSystemTestCase
     page.check('German Course')
     page.check('Other Offer')
     fill_in 'Description', with: 'Description'
-    page.check('volunteer_zurich')
+    page.check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
     fill_in 'Bank', with: 'BankName'
     fill_in 'IBAN', with: 'CH01 2345 6789 0123 4567 8'
     page.check('volunteer_waive')

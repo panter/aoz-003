@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109154602) do
+ActiveRecord::Schema.define(version: 20171114212823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -451,7 +451,6 @@ ActiveRecord::Schema.define(version: 20171109154602) do
     t.boolean "bank_account", default: false
     t.boolean "evaluation", default: false
     t.boolean "unaccompanied", default: false
-    t.boolean "zurich", default: false
     t.text "other_offer_desc"
     t.text "own_kids"
     t.boolean "flexible", default: false
