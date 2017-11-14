@@ -18,6 +18,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     create(:group_offer_category, category_name: 'Training')
     create(:group_offer_category, category_name: 'German Course')
     create(:group_offer_category, category_name: 'Other Offer')
+    create(:group_offer_category, category_name: 'Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
 
     visit root_path
     click_link 'Do you want to register as a volunteer?'
@@ -49,7 +50,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     page.check('German Course')
     page.check('Other Offer')
     fill_in 'Description', with: 'Description'
-    page.check('volunteer_zurich')
+    page.check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
     page.check('volunteer_weekend')
     fill_in 'Detailed Description', with: 'I am every two weeks available on tuesdays asdfasdf.'
 

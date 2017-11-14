@@ -462,7 +462,6 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.boolean "bank_account", default: false
     t.boolean "evaluation", default: false
     t.boolean "unaccompanied", default: false
-    t.boolean "zurich", default: false
     t.text "other_offer_desc"
     t.text "own_kids"
     t.boolean "flexible", default: false

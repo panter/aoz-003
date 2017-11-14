@@ -141,22 +141,22 @@ h3= t_attr(:single_accompaniment)
   table.table.table-striped
     thead
       tr
-        th= t_attr(:zurich)
+        th= 'Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt'
     tbody
       tr
-        td.text-center= boolean_glyph(@volunteer.zurich)
+        td.text-center= boolean_glyph(@volunteer.group_accompaniments_house_moving)
 
 h3= t_attr(:group_accompaniment)
 .table-responsive
   table.table.table-striped
     thead
       tr
-        - @volunteer.group_accompaniments_all_values.each do |group|
+        - @volunteer.group_accompaniments_active_without_house_moving.each do |group|
           th.text-center
             = t_attr(group[:title])
     tbody
       tr
-        - @volunteer.group_accompaniments_all_values.each do |group|
+        - @volunteer.group_accompaniments_active_without_house_moving.each do |group|
           td.text-center= boolean_glyph(group[:value])
 
       - if @volunteer.other_offer_desc?
