@@ -94,15 +94,21 @@ def create_two_group_offers(group_offer_category)
 end
 
 if Department.count < 1
-  group_offer_category = FactoryBot.create :group_offer_category
+  [
+    'Sport', 'Kreativ', 'Musik', 'Kultur', 'Bildung', 'Deutsch-Kurs',
+    'Schreibdienst für Wohnungssuchende', 'Hausaufgabenhilfe', 'Bewerbungswerkstatt', 'Freizeit',
+    'Kinderbetreuung', 'Fussballnachmittag', 'Nähen'
+  ].each do |category_name|
+    GroupOfferCategory.find_or_create_by(category_name: category_name)
+  end
   # first department for user with login
   department_manager = User.find_by role: 'department_manager'
   department = FactoryBot.create :department, user: [department_manager]
-  department.update(group_offers: create_two_group_offers(group_offer_category))
+  department.update(group_offers: create_two_group_offers(GroupOfferCategory.first))
   # additional departments
   3.times do
     department = FactoryBot.create :department, user: [FactoryBot.create(:department_manager)]
-    department.update(group_offers: create_two_group_offers(group_offer_category))
+    department.update(group_offers: create_two_group_offers(GroupOfferCategory.last))
   end
 end
 
