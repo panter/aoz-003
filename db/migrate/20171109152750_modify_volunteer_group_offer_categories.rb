@@ -14,5 +14,7 @@ class ModifyVolunteerGroupOfferCategories < ActiveRecord::Migration[5.1]
     remove_column :volunteers, :german_course, :boolean
     remove_column :volunteers, :teenagers, :boolean
     remove_column :volunteers, :children, :boolean
+    remove_column :volunteers, :zurich, :boolean
+    add_column :group_offer_categories, :description, :text
   end
 end
