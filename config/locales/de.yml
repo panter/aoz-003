@@ -321,7 +321,6 @@ de:
       group_offer_category:
         category_name: Name
         category_state: Status
-        description: Beschreibung
       hour:
         hourable: Einsatz
         hourable_id_and_type: Einsatz
@@ -426,7 +425,6 @@ de:
         woman: Frau
         women: Frauen
         working_percent: Stellenprozent
-        zurich: Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt
       volunteer_email:
         active: Aktiv
         body: Textkörper
