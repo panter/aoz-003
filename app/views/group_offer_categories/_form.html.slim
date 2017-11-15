@@ -4,7 +4,7 @@
     .col-xs-12.col-md-4
       = f.input :category_name
     .col-xs-12.col-md-4
-      = f.input :description
+      = f.input :description, label: 'Beschreibung'
     .col-xs-12.col-md-4
       = f.input :category_state, collection: GroupOfferCategory::CATEGORY_STATES, as: :radio_buttons
 
