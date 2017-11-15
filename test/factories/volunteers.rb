@@ -52,11 +52,11 @@ FactoryBot.define do
       unaccompanied { [true, false].sample }
     end
 
-    trait :with_group_offer_categories do
-      group_offer_categories do |category|
-        category.association(:group_offer_category)
-      end
-    end
+    # trait :with_group_offer_categories do
+    #   group_offer_categories do |category|
+    #     category.association(:group_offer_category)
+    #   end
+    # end
 
     trait :fake_availability do
       flexible { [true, false].sample }
