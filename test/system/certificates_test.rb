@@ -4,7 +4,7 @@ class CertificatesTest < ApplicationSystemTestCase
   def setup
     @user = create :user
     @volunteer = create(
-      :volunteer, :with_assignment, state: 'resigned', user: create(:user_volunteer)
+      :volunteer, :with_assignment, user: create(:user_volunteer), acceptance: :resigned
     )
     @assignment = @volunteer.assignments.first
     @hour = create :hour, volunteer: @volunteer, hourable: @assignment, hours: 2,
