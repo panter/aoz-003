@@ -244,10 +244,10 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   def play_user_index_volunteer_display
-    volunteer_seeks = create :volunteer, user: create(:user_volunteer)
+    volunteer_seeks = create :volunteer_with_user
     create :assignment, period_start: 500.days.ago, period_end: 200.days.ago,
       volunteer: volunteer_seeks
-    volunteer_not_seeking = create :volunteer, user: create(:user_volunteer)
+    volunteer_not_seeking = create :volunteer_with_user
     create :assignment, period_start: 10.days.ago, period_end: nil,
       volunteer: volunteer_not_seeking
     visit volunteers_path
