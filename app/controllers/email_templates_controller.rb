@@ -1,5 +1,6 @@
 class EmailTemplatesController < ApplicationController
   before_action :set_email_template, only: [:show, :edit, :update, :destroy]
+  before_action :build_values, only: [:new, :create]
 
   def index
     authorize EmailTemplate
@@ -9,7 +10,7 @@ class EmailTemplatesController < ApplicationController
   def show; end
 
   def new
-    @email_template = EmailTemplate.new
+    @email_template = EmailTemplate.new(body: default_text_body)
     authorize @email_template
   end
 
@@ -43,6 +44,23 @@ class EmailTemplatesController < ApplicationController
   def set_email_template
     @email_template = EmailTemplate.find(params[:id])
     authorize @email_template
+  end
+
+  def build_values
+    @salutation ||= 'Anrede'
+    @name ||= 'Name'
+    @feedback_link ||= 'feedback_link'
+    @assignment_title ||= 'assignment_title'
+  end
+
+  def default_text_body
+    <<~HEREDOC
+      Liebe/r #{@salutation} #{@name}
+
+      Wir brauchen Ihre #{@feedback_link} für #{@assignment_title}.
+
+      Danke im Voraus!
+    HEREDOC
   end
 
   def email_template_params
