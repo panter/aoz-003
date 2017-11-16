@@ -44,6 +44,7 @@ class ClientsController < ApplicationController
     @client.user = current_user
     authorize @client
     if @client.save
+      # TODO: add notification message here if user.role == social_worker
       redirect_to @client, make_notice
     else
       render :new
@@ -78,6 +79,15 @@ class ClientsController < ApplicationController
   end
 
   private
+  #TODO
+  # def inform_waiting_time
+  #   return false if @volunteer.external
+  #   new_client = User.new(
+  #     email: @volunteer.contact.primary_email, password: Devise.friendly_token,
+  #     role: 'volunteer', volunteer: @volunteer
+  #   )
+  #   new_user.save && new_user.invite!
+  # end
 
   def set_client
     @client = Client.find(params[:id])
