@@ -141,10 +141,13 @@ h3= t_attr(:single_accompaniment)
   table.table.table-striped
     thead
       tr
-        th= 'Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt'
+        - @volunteer.group_accompaniments_house_moving.each do |group|
+          th.text-center
+            = t_attr(group[:title])
     tbody
       tr
-        td.text-center= boolean_glyph(@volunteer.group_accompaniments_house_moving)
+        - @volunteer.group_accompaniments_house_moving.each do |group|
+          td.text-center= boolean_glyph(group[:value])
 
 h3= t_attr(:group_accompaniment)
 .table-responsive
