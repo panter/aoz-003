@@ -292,7 +292,7 @@ class Volunteer < ApplicationRecord
   end
 
   def copy_contact_to_user
-    user.profile&.contac&.update(contact.slice(:first_name, :last_name, :street, :postal_code,
+    user.profile&.contact&.update(contact.slice(:first_name, :last_name, :street, :postal_code,
       :city, :primary_phone, :secondary_phone, :primary_email))
     user.update(email: contact.primary_email)
   end
