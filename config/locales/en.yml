@@ -262,37 +262,23 @@ en:
         internal: Internal
         bank_account: Bank account details entered
         bank_details: Bank / IBAN
-        children: Children
-        cooking: Cooking
-        creative: Creative
-        culture: Culture
-        dancing: Dancing
         doc_sent: Engaged volunteer's documents sent
         evaluation: Final evaluation
-        excursions: Excursions
         family: Family
-        german_course: German course
-        health: Health
         iban: IBAN
         intro_course: Introductory course
         kid: Kid
         man: Man
-        music: Music
-        other_offer: Other (please describe)
         other_offer_desc: Description
         own_kids: Family (Kids, Birth year)
         rejection_text: Explanation for rejection
         rejection_type: Reason for rejection
         single_accompaniment: Single accompaniment
-        sport: Sport
-        teenagers: Teenagers
-        training: Training
         trial_period: Trial period report
         unaccompanied: Unaccompanied minors
         volunteer_experience_desc: If you have any experiences with voluntary work, please describe here.
         waive: I waived the compensation of my expenses.
         woman: Woman
-        women: Women
         working_percent: Employment rate (in Percent)
       volunteer_email:
         user: Created by

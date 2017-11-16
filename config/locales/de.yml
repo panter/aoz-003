@@ -381,30 +381,20 @@ de:
         bank: Name der Bank
         bank_account: Kontodaten eingetragen
         bank_details: Name der Bank / IBAN
-        children: Kinder
-        cooking: Kochen
-        creative: Kreativ
-        culture: Kultur
-        dancing: Tanz
         doc_sent: Dossier Freiwillige engagiert verschickt
         education: Ausbildung
         ended: ausgetreten
         evaluation: Abschlussevaluation erhalten
-        excursions: Ausflüge
         expectations: Erwartungen
         experience: Erfahrung
         family: Familie
-        german_course: Deutsch-Kurs
         group_offer_categories_id: Gruppenangebote in AOZ-Einrichtungen
-        health: Gesundheit
         iban: IBAN
         interests: Interessen
         intro_course: Einführungskurs besucht
         kid: Kinder
         man: Mann
-        music: Musik
         native_language: Muttersprache
-        other_offer: Anderes (bitte beschreiben)
         other_offer_desc: Beschreibung
         own_kids: Familie (Kinder, Jahrgang)
         registrar: Registrator
@@ -412,18 +402,14 @@ de:
         rejection_type: Grund für die Ablehnung
         single_accompaniment: Einzelbegleitungen
         skills: Kompetenzen
-        sport: Sport
         strengths: Stärken
         take_more_assignments: Akzeptiere weitere Einsätze
-        teenagers: Jugendliche
-        training: Bildung
         trial_period: Probezeitbericht erhalten
         unaccompanied: Unbegleitete Minderjährige
         volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         waive: Ich verzichte auf die Auszahlung von Spesen.
         woman: Frau
-        women: Frauen
         working_percent: Stellenprozent
       volunteer_email:
         active: Aktiv
