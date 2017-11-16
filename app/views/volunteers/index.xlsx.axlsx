@@ -27,8 +27,7 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
     t_attr(:acceptance),
     t_attr(:created_at),
     t_attr(:updated_at),
-    t_attr(:assignment_count),
-    t_attr(:german_course)
+    t_attr(:assignment_count)
   ]
 
 
@@ -41,7 +40,6 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
   cell_styles[6] = postal_code
   @volunteers.each do |volunteer|
     contact = volunteer.contact
-    german_course = t(volunteer.german_course) unless volunteer.german_course.nil?
     sheet.add_row [
       volunteer.id,
       t("salutation.#{volunteer.salutation}"),
@@ -61,7 +59,6 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
       l(volunteer.created_at.localtime),
       l(volunteer.updated_at.localtime),
       volunteer.assignments.count,
-      german_course
     ], types: cell_types, style: cell_styles
   end
 end
