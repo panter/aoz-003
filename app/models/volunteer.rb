@@ -150,15 +150,7 @@ class Volunteer < ApplicationRecord
   def relevant_period_end_max
     # any assignment with no end means activeness is not going to end
     return nil if group_assignments.stay_active.any? || assignments.stay_active.any?
-    group_assignment_max = active_group_assignment_end_dates.max
-    assignment_max = active_assignment_end_dates.max
-    if group_assignment_max.nil?
-      assignment_max
-    elsif assignment_max.nil?
-      group_assignment_max
-    else
-      [group_assignment_max, assignment_max].max # get the later date
-    end
+    [active_group_assignment_end_dates.max, active_assignment_end_dates.max].compact.max
   end
 
   def active?
