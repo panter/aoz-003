@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :departments
   resources :performance_reports
   resources :volunteer_emails
+  resources :email_templates
   resources :users
   resources :profiles, except: [:destroy, :index]
   resources :reminders, only: [:index, :update, :destroy] do

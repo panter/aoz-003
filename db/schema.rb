@@ -154,6 +154,17 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
   end
 
+  create_table "email_templates", force: :cascade do |t|
+    t.string "subject"
+    t.text "body"
+    t.integer "kind"
+    t.boolean "active"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_email_templates_on_deleted_at"
+  end
+
   create_table "feedbacks", force: :cascade do |t|
     t.text "goals"
     t.text "achievements"
