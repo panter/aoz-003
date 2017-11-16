@@ -72,8 +72,7 @@ FactoryBot.define do
 
     factory :volunteer_with_user do
       after(:create) do |volunteer|
-        volunteer.user = FactoryBot.create(:user_volunteer)
-        volunteer.save
+        volunteer.update(user: FactoryBot.create(:user_volunteer))
       end
     end
     factory :volunteer_external, traits: [:external]
