@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :client_notifications
   resources :clients do
     get :need_accompanying, on: :collection
     get :with_assignment, on: :collection

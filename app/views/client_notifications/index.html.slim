@@ -1,0 +1,16 @@
+h1= t('volunteer_emails', count: 2)
+
+= form_navigation_btn :new
+
+.table-responsive
+  table.table
+    thead
+      th= t_attr(:body)
+      th
+    tbody
+      - @client_notifications.each do |client_notification|
+        tr class=(client_notification.active ? 'bg-success': '') title=(client_notification.active ? 'Aktiv': '')
+          td= truncate(client_notification.body, length: 40, omission: ' ……')
+          / = render 'index_actions', subject: client_notification
+
+= form_navigation_btn :new
