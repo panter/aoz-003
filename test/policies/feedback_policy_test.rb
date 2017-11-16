@@ -2,10 +2,10 @@ require 'test_helper'
 
 class FeedbackPolicyTest < PolicyAssertions::Test
   def setup
-    @volunteer = create :volunteer, user: create(:user_volunteer)
+    @volunteer = create :volunteer_with_user
     @user_volunteer = @volunteer.user
     @superadmin = create :user
-    @other_volunteer = create :volunteer, user: create(:user_volunteer)
+    @other_volunteer = create :volunteer_with_user
   end
 
   test 'superadmin can use all actions' do

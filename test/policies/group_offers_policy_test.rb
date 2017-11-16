@@ -23,13 +23,12 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
   end
 
   test 'volunteer has limited access' do
-    volunteer = create :volunteer
-    user_volunteer = create :user_volunteer, volunteer: volunteer
+    volunteer = create :volunteer_with_user
     group_offer_volunteer = create :group_offer, volunteers: [volunteer]
     group_offer_other = create :group_offer
-    refute_permit(user_volunteer, GroupOffer, 'new?', 'create?', 'index?',
+    refute_permit(volunteer.user, GroupOffer, 'new?', 'create?', 'index?',
       'edit?', 'update?', 'destroy?')
-    assert_permit(user_volunteer, group_offer_volunteer, 'show?')
-    refute_permit(user_volunteer, group_offer_other, 'show?')
+    assert_permit(volunteer.user, group_offer_volunteer, 'show?')
+    refute_permit(volunteer.user, group_offer_other, 'show?')
   end
 end

@@ -1,19 +1,13 @@
 require 'test_helper'
 
 class VolunteerStateTest < ActiveSupport::TestCase
-  def create_basic_accepted_volunteer
-    volunteer_user = create :user_volunteer, volunteer: create(:volunteer)
-    volunteer_user.volunteer
-  end
-
-
   test 'volunteer_inactive_is_not_active' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     assert_not volunteer.active
   end
 
   test 'volunteer_with_inactive_assignment_isnt_active' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     assignment = create :assignment_blank_period, volunteer: volunteer
     assert assignment.inactive?
     assert_not volunteer.active
@@ -26,7 +20,7 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'volunteer_with_inactive_assignments_and_one_active_has_correct_state' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     assignment_one = create :assignment_blank_period, volunteer: volunteer
     create :assignment_blank_period, volunteer: volunteer
     assignment_three = create :assignment_blank_period, volunteer: volunteer
@@ -45,7 +39,7 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'volunteer_with_inactive_group_assignment_isnt_active' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     group_offer = create :group_offer
     group_assignment = GroupAssignment.create(volunteer: volunteer, group_offer: group_offer)
     assert group_assignment.inactive?
@@ -59,7 +53,7 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'volunteer_with_inactive_group_assignments_and_one_active_is_active' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     group_assignment_one = GroupAssignment.create(volunteer: volunteer, group_offer: create(:group_offer))
     group_assignment_two = GroupAssignment.create(volunteer: volunteer, group_offer: create(:group_offer))
     GroupAssignment.create(volunteer: volunteer, group_offer: create(:group_offer))
@@ -80,7 +74,7 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'volunteer_with_inactive_mixed_assignments_and_one_active_is_active' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     group_assignment = GroupAssignment.create(volunteer: volunteer, group_offer: create(:group_offer))
     GroupAssignment.create(volunteer: volunteer, group_offer: create(:group_offer))
     GroupAssignment.create(volunteer: volunteer, group_offer: create(:group_offer))
@@ -105,7 +99,7 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'volunteer_assignment_will_end_activeness_ends_after_period_end_reached' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     create :assignment, volunteer: volunteer, period_start: 10.days.ago,
       period_end: Time.zone.today + 20
     Assignment.all.map { |tandem| assert tandem.active? }
@@ -120,7 +114,7 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'volunteer_assignment_will_end_and_will_not_end_stays_active' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     assignment_ends = create :assignment, volunteer: volunteer, period_start: 10.days.ago,
       period_end: Time.zone.today + 20
     assignment_doesnt_end = create :assignment, volunteer: volunteer, period_start: 10.days.ago,
@@ -140,7 +134,7 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'mixed_assignment_group_assignment_might_end_ends_correctly' do
-    volunteer = create_basic_accepted_volunteer
+    volunteer = create :volunteer_with_user
     assignment = create :assignment, volunteer: volunteer, period_start: 10.days.ago,
       period_end: Time.zone.today + 20
     group_assignment = GroupAssignment.create(volunteer: volunteer,

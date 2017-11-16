@@ -14,7 +14,7 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
   end
 
   test 'group offer counts' do
-    volunteer = create :volunteer, user: create(:user_volunteer)
+    volunteer = create :volunteer_with_user
     volunteer.update(created_at: 500.days.ago)
     create_group_offer_entity(:this_year, @today.beginning_of_year + 2, nil, volunteer)
     create_group_offer_entity(:last_year, @year_ago, @year_ago.end_of_year - 2, volunteer)

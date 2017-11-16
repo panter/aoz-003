@@ -4,9 +4,8 @@ class AssignmentsTest < ApplicationSystemTestCase
   setup do
     @user = create :user, email: 'superadmin@example.com'
     Assignment.with_deleted.map(&:really_destroy!)
-    @volunteer_user = create :user, role: 'volunteer'
     @client = create :client, user: @user
-    @volunteer = create :volunteer, user: @volunteer_user, take_more_assignments: true
+    @volunteer = create :volunteer_with_user, take_more_assignments: true
   end
 
   test 'new assignment form with preselected fields' do
@@ -86,7 +85,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'volunteer can not see new assignment button' do
-    login_as @volunteer_user
+    login_as @volunteer.user
     visit volunteer_path(@volunteer)
     refute page.has_link? 'New Assignment'
   end

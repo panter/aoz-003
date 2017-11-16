@@ -4,11 +4,11 @@ class VolunteerActivenessFilterTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
     @volunteer_undecided = create :volunteer, acceptance: 'undecided'
-    @volunteer_active = create :volunteer, user: create(:user_volunteer)
+    @volunteer_active = create :volunteer_with_user
     create :assignment_active, volunteer: @volunteer_active
-    @volunteer_resigned = create :volunteer, acceptance: 'resigned', user: create(:user_volunteer)
+    @volunteer_resigned = create :volunteer_with_user, acceptance: 'resigned'
     create :assignment_active, volunteer: @volunteer_resigned
-    @volunteer_inactive = create :volunteer, user: create(:user_volunteer)
+    @volunteer_inactive = create :volunteer_with_user
     create :assignment_inactive, volunteer: @volunteer_inactive
     login_as @superadmin
   end
