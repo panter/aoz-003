@@ -11,6 +11,7 @@ class Volunteer < ApplicationRecord
   before_validation :handle_user_with_external_change,
     if: :external_changed?,
     unless: proc { user_id.nil? }
+  before_update :copy_contact_to_user, if: :user_added?
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
   REJECTIONS = [:us, :her, :other].freeze
@@ -285,6 +286,16 @@ class Volunteer < ApplicationRecord
   end
 
   private
+
+  def user_added?
+    will_save_change_to_attribute?(:user_id)
+  end
+
+  def copy_contact_to_user
+    user.profile.contact.update(contact.slice(:first_name, :last_name, :street, :postal_code,
+      :city, :primary_phone, :secondary_phone, :primary_email))
+    user.update(email: contact.primary_email)
+  end
 
   def record_acceptance_changed
     self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now if will_save_change_to_acceptance?
