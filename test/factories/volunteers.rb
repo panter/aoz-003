@@ -70,6 +70,12 @@ FactoryBot.define do
       weekend { [true, false].sample }
     end
 
+    factory :volunteer_with_user do
+      after(:create) do |volunteer|
+        volunteer.user = FactoryBot.create(:user_volunteer)
+        volunteer.save
+      end
+    end
     factory :volunteer_external, traits: [:external]
     factory :volunteer_z, traits: [:zuerich]
 

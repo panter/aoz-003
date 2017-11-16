@@ -7,7 +7,7 @@ class CertificateTest < ActiveSupport::TestCase
     error_msgs = { volunteer: ['must exist'], user: ['must exist'] }
     assert_equal error_msgs, certificate.errors.messages
     certificate.user = create :user
-    certificate.volunteer = create :volunteer
+    certificate.volunteer = create :volunteer_with_user
     assert certificate.valid?
   end
 end

@@ -6,7 +6,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     @volunteer = create :volunteer, user: @user_volunteer
     @assignment = create :assignment, volunteer: @volunteer
     @superadmin = create :user
-    @other_volunteer = create :volunteer, user: create(:user_volunteer)
+    @other_volunteer = create :volunteer_with_user
     @group_offer = create :group_offer, necessary_volunteers: 2, title: 'some_group_offer',
       volunteers: [@volunteer, @other_volunteer]
   end
