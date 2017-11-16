@@ -286,8 +286,11 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   def make_volunteer(title, *attributes)
-    volunteer = create :volunteer, *attributes
-    create(:user_volunteer, volunteer: volunteer) if volunteer.accepted?
+    volunteer = if attributes.include?(acceptance: 'accepted')
+                  create :volunteer_with_user, *attributes
+                else
+                  create :volunteer, *attributes
+                end
     return volunteer if title.nil?
     instance_variable_set("@#{title}", volunteer)
   end
