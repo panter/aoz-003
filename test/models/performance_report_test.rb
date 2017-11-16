@@ -15,7 +15,7 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
 
   test 'group offer counts' do
     volunteer = create :volunteer_with_user
-    volunteer.update(created_at: 500.days.ago)
+    volunteer.update(created_at: 5.years.ago)
     create_group_offer_entity(:this_year, @today.beginning_of_year + 2, nil, volunteer)
     create_group_offer_entity(:last_year, @year_ago, @year_ago.end_of_year - 2, volunteer)
     create_group_offer_entity(:last_year_still, @year_ago, nil, volunteer)
@@ -33,7 +33,7 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0, 'ended' => 0 }, this_year_rep.zuerich.assignments)
     assert_equal({ 'active' => 2, 'new' => 1, 'total' => 3, 'ended' => 0 }, this_year_rep.group_offers)
 
-    assert_equal({ 'active' => 1, 'new' => 1, 'total' => 1 }, last_year_rep.global.volunteers)
+    assert_equal({ 'active' => 1, 'new' => 0, 'total' => 1 }, last_year_rep.global.volunteers)
     assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, last_year_rep.global.clients)
     assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, last_year_rep.zuerich.volunteers)
     assert_equal({ 'active' => 0, 'new' => 0, 'total' => 0 }, last_year_rep.zuerich.clients)
