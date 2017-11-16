@@ -3,11 +3,11 @@ require 'test_helper'
 class ArchivedGroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
+    login_as @superadmin
   end
 
   test 'xlsx file is downloadable' do
     10.times { create :group_offer, active: false }
-    login_as @superadmin
     get archived_group_offers_url(format: :xlsx)
     assert_equal 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       response.content_type
@@ -15,21 +15,11 @@ class ArchivedGroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
 
   test 'xlsx files has the right columns' do
     create :group_offer, active: false
-    login_as @superadmin
-    get archived_group_offers_url(format: :xlsx)
-    excel_file = Tempfile.new
-    excel_file.write(response.body)
-    excel_file.close
-    wb = Roo::Spreadsheet.open(excel_file.path, extension: 'xlsx')
+    wb = get_xls_from_response(archived_group_offers_url(format: :xlsx))
 
-    assert_equal wb.cell(1, 1), 'Title'
-    assert_equal wb.cell(2, 1), GroupOffer.archived.first.title
-    assert_equal wb.cell(1, 2), 'Location'
-    assert_equal wb.cell(1, 3), 'Availability'
-    assert_equal wb.cell(1, 4), 'Target group'
-    assert_equal wb.cell(1, 5), 'Duration'
-    assert_equal wb.cell(1, 6), 'Offer state'
-    assert_equal wb.cell(1, 7), 'Volunteers'
-    assert_equal wb.cell(1, 8), 'Group offer category'
+    assert_xls_cols_equal(wb, 1, 0, 'Title', 'Location', 'Availability', 'Target group',
+      'Duration', 'Offer state', 'Volunteers', 'Group offer category')
+
+    assert_xls_cols_equal(wb, 2, 0, GroupOffer.archived.first.title)
   end
 end
