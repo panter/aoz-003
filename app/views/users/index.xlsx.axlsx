@@ -1,0 +1,69 @@
+wb = xlsx_package.workbook
+col_header = wb.styles.add_style(
+    bg_color: 'FFDFDEDF',
+    b: true,
+    alignment: { horizontal: :center, vertical: :center },
+    border: { color: '00', edges: [:bottom], style: :thin}
+)
+standard_format = wb.styles.add_style alignment: { horizontal: :left }, width: :auto_fit
+date_time_format = wb.styles.add_style format_code: 'dd.mm.yyyy HH:MM'
+date_format = wb.styles.add_style format_code: 'dd.mm.yyyy'
+
+cell_types = [
+    :integer,  # 00
+    :string, # 01
+    :string, # 02
+    :string, # 03
+    :string, # 04
+    :string, # 05
+    :string, # 06
+    :string, # 07
+    :time,     # 08
+    :time      # 09
+]
+
+cell_styles = [
+    standard_format, # 00
+    standard_format, # 01
+    standard_format, # 02
+    standard_format, # 03
+    standard_format, # 04
+    standard_format, # 05
+    standard_format, # 06
+    standard_format, # 07
+    date_time_format, # 08
+    date_time_format # 09
+]
+
+wb.add_worksheet(name: 'Plattform Benutzer') do |sheet|
+  header_row = [
+      'id',                               # 00
+      t_attr(:name, Contact),             # 01
+      t_attr(:street, Contact),           # 02
+      t_attr(:extended, Contact),         # 03
+      t_attr(:postal_code, Contact),      # 04
+      t_attr(:city, Contact),             # 05
+      t_attr(:primary_phone, Contact),    # 06
+      t_attr(:email, User),               # 07
+      t_attr(:created_at),                # 08
+      t_attr(:updated_at)                 # 09
+  ]
+  sheet.add_row header_row, type: :string, style: col_header
+
+  @users.each do |user|
+    contact = user.profile.contact
+    body_row = [
+        user.id,                               # 00
+        contact.full_name,             # 01
+        contact.street,           # 02
+        contact.extended,         # 03
+        contact.postal_code,      # 04
+        contact.city,             # 05
+        contact.primary_phone,    # 06
+        user.email,               # 07
+        user.created_at,                # 08
+        user.updated_at                # 09
+    ]
+    sheet.add_row body_row, types: cell_types, style: cell_styles
+  end
+end
