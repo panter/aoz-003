@@ -42,7 +42,7 @@ class PerformanceReport < ApplicationRecord
     {
       total: volunteers.count,
       active: active_ids.uniq.size,
-      new: volunteers.created_between(period_start, period_end).count
+      new: volunteers.created_between(period_start, period_end).size
     }
   end
 

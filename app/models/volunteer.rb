@@ -73,6 +73,9 @@ class Volunteer < ApplicationRecord
   }
   scope :created_before, ->(max_time) { where('volunteers.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('volunteers.created_at > ?', min_time) }
+  scope :created_between, lambda { |start_date, end_date|
+    created_before(end_date).created_after(start_date)
+  }
 
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
