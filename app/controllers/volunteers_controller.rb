@@ -10,9 +10,11 @@ class VolunteersController < ApplicationController
     authorize Volunteer
     @q = policy_scope(Volunteer).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @volunteers = @q.result
+    activeness_filter
     respond_to do |format|
-      format.xlsx { @volunteers = @q.result }
-      format.html { @volunteers = @q.result.paginate(page: params[:page]) }
+      format.xlsx
+      format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
     end
   end
 
@@ -54,7 +56,7 @@ class VolunteersController < ApplicationController
 
   def destroy
     @volunteer.destroy
-    redirect_to volunteers_url, notice: t('volunteer_destroyed')
+    redirect_back fallback_location: volunteers_url, notice: t('volunteer_destroyed')
   end
 
   def seeking_clients
@@ -65,6 +67,15 @@ class VolunteersController < ApplicationController
   end
 
   private
+
+  def activeness_filter
+    return unless params[:q] && params[:q][:active_eq]
+    if params[:q][:active_eq] == 'true'
+      @volunteers = @volunteers.active
+    elsif params[:q][:active_eq] == 'false'
+      @volunteers = @volunteers.inactive
+    end
+  end
 
   def handle_volunteer_update
     if @volunteer.acceptance_change == ['undecided', 'accepted'] && @volunteer.user_id.blank?

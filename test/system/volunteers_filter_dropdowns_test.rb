@@ -20,6 +20,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
   end
 
   test 'filter by acceptance works and disabling works as well' do
+    prepare_acceptance_and_gender_volunteers
     within '.section-navigation' do
       click_link 'Acceptance'
       click_link 'Undecided'
@@ -42,6 +43,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
   end
 
   test 'Filter acceptance and salutation at the same time' do
+    prepare_acceptance_and_gender_volunteers
     within '.section-navigation' do
       click_link 'Salutation'
       click_link 'Mr.'

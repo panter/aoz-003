@@ -195,13 +195,13 @@ class VolunteersTest < ApplicationSystemTestCase
     refute page.has_link? 'Journal'
   end
 
-  test 'department manager can see volunteer index and only seeking clients volunteers' do
+  test 'department_manager_can_see_volunteer_index_and_only_seeking_clients_volunteers' do
     department_manager = create :department_manager
     login_as department_manager
     play_user_index_volunteer_display
   end
 
-  test 'social worker can see volunteer index and only seeking clients volunteers' do
+  test 'social_worker_can_see_volunteer_index_and_only_seeking_clients_volunteers' do
     social_worker = create :social_worker
     login_as social_worker
     play_user_index_volunteer_display
@@ -244,10 +244,12 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   def play_user_index_volunteer_display
-    volunteer_seeks = create :volunteer, user: create(:user_volunteer),
-      assignments: [create(:assignment, period_start: 500.days.ago, period_end: 200.days.ago)]
-    volunteer_not_seeking = create :volunteer, user: create(:user_volunteer),
-      assignments: [create(:assignment, period_start: 10.days.ago, period_end: nil)]
+    volunteer_seeks = create :volunteer, user: create(:user_volunteer)
+    create :assignment, period_start: 500.days.ago, period_end: 200.days.ago,
+      volunteer: volunteer_seeks
+    volunteer_not_seeking = create :volunteer, user: create(:user_volunteer)
+    create :assignment, period_start: 10.days.ago, period_end: nil,
+      volunteer: volunteer_not_seeking
     visit volunteers_path
     assert page.has_text? volunteer_seeks.contact.full_name
     refute page.has_text? volunteer_not_seeking.contact.full_name

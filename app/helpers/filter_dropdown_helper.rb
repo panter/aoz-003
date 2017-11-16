@@ -24,6 +24,34 @@ module FilterDropdownHelper
     end
   end
 
+  def activeness_filter_dropdown
+    li_dropdown do
+      concat dropdown_toggle_link('Status' + status_toggler_text_end)
+      concat dropdown_ul(tag.li { all_link_to(:active_eq) }) { activeness_links }
+    end
+  end
+
+  def status_toggler_text_end
+    return ' ' unless search_parameters['active_eq']
+    if search_parameters['active_eq'] == 'true'
+      ': Aktiv '
+    elsif search_parameters['active_eq'] == 'false'
+      ': Inaktiv '
+    end
+  end
+
+  def activeness_links
+    params_u = params.to_unsafe_hash.except('page')
+    [
+      tag.li do
+        link_to('Aktiv ', url_for(params_u.merge(q: search_parameters.merge(active_eq: 'true'))))
+      end,
+      tag.li do
+        link_to('Inaktiv ', url_for(params_u.merge(q: search_parameters.merge(active_eq: 'false'))))
+      end
+    ].collect { |li| concat li }
+  end
+
   def enum_toggler_text(attribute, collection)
     if filter_active?("#{attribute}_eq".to_sym, '', search_parameters["#{attribute}_eq"])
       "#{t_attr(attribute)}: " + collection.invert[search_parameters["#{attribute}_eq"].to_i].humanize
