@@ -269,8 +269,25 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? no_assignment
   end
 
+  test 'active_only_returns_accepted_volunteers_that_have_an_active_assignment' do
+    volunteer_will_inactive = make_volunteer nil
+    make_assignment(nil, volunteer_will_inactive, 10.days.ago, @today + 1)
+    query = Volunteer.active
+    assert query.include? volunteer_will_inactive
+    assert query.include? @has_assignment
+    assert query.include? @has_multiple
+    assert query.include? @has_active_and_inactive
+    refute query.include? @has_inactive
+    refute query.include? @resigned_inactive
+    refute query.include? @resigned_active
+    travel_to(@today + 2)
+    query = Volunteer.active
+    refute query.include? volunteer_will_inactive
+  end
+
   def make_volunteer(title, *attributes)
     volunteer = create :volunteer, *attributes
+    create(:user_volunteer, volunteer: volunteer) if volunteer.accepted?
     return volunteer if title.nil?
     instance_variable_set("@#{title}", volunteer)
   end

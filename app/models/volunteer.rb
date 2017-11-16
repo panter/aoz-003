@@ -116,35 +116,50 @@ class Volunteer < ApplicationRecord
       .merge(Assignment.inactive)
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
-  scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
-  scope :active, (-> { accepted.with_active_assignments })
 
-  scope :accepted_joined, (-> { accepted.left_outer_joins(:assignments) })
-  scope :loj_without_assignments, (-> { accepted_joined.where(assignments: { id: nil }) })
-  scope :loj_active_take_more, lambda {
-    accepted_joined.will_take_more_assignments.where(assignments: { id: Assignment.active.ids })
+  scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
+
+  scope :activeness_not_ended, lambda {
+    where('activeness_might_end IS NULL OR activeness_might_end > ?', Time.zone.today)
+  }
+  scope :activeness_ended, lambda {
+    where(active: true)
+      .where('activeness_might_end IS NOT NULL AND activeness_might_end < ?', Time.zone.today)
+  }
+  scope :active, lambda {
+    activeness_not_ended.where(active: true)
   }
 
+  scope :inactive, lambda {
+    seeking_clients
+  }
   scope :seeking_clients, lambda {
-    accepted_joined
-      .merge(Assignment.inactive)
-      .where.not(assignments: { volunteer_id: with_active_assignments.ids })
-      .or(loj_without_assignments)
+    accepted.where(active: false).or(accepted.activeness_ended)
   }
   scope :seeking_clients_will_take_more, lambda {
-    accepted_joined
-      .merge(Assignment.inactive)
-      .where.not(assignments: { volunteer_id: with_active_assignments.ids })
-      .or(loj_without_assignments)
-      .or(loj_active_take_more)
+    seeking_clients.or(accepted.will_take_more_assignments)
   }
 
   def verify_and_update_state
-    update(active: active?)
+    update(active: active?, activeness_might_end: relevant_period_end_max)
+  end
+
+  def relevant_period_end_max
+    # any assignment with no end means activeness is not going to end
+    return nil if group_assignments.stay_active.any? || assignments.stay_active.any?
+    group_assignment_max = active_group_assignment_end_dates.max
+    assignment_max = active_assignment_end_dates.max
+    if group_assignment_max.nil?
+      assignment_max
+    elsif assignment_max.nil?
+      group_assignment_max
+    else
+      [group_assignment_max, assignment_max].max # get the later date
+    end
   end
 
   def active?
-    accepted? && assignments.active.any? || group_assignments.active.any?
+    accepted? && (assignments.active.any? || group_assignments.active.any?)
   end
 
   def inactive?
@@ -169,19 +184,27 @@ class Volunteer < ApplicationRecord
   end
 
   def assignment_start_dates
-    assignments.select('period_start').where.not(period_start: nil).map(&:period_start)
+    assignments.where.not(period_start: nil).pluck(:period_start)
   end
 
   def assignment_end_dates
-    assignments.select('period_end').where.not(period_end: nil).map(&:period_end)
+    assignments.where.not(period_end: nil).pluck(:period_end)
+  end
+
+  def active_assignment_end_dates
+    assignments.active.where.not(period_end: nil).pluck(:period_end)
   end
 
   def group_assignment_start_dates
-    group_assignments.select('period_start').where.not(period_start: nil).map(&:period_start)
+    group_assignments.where.not(period_start: nil).pluck(:period_start)
   end
 
   def group_assignment_end_dates
-    group_assignments.select('period_end').where.not(period_end: nil).map(&:period_end)
+    group_assignments.where.not(period_end: nil).pluck(:period_end)
+  end
+
+  def active_group_assignment_end_dates
+    group_assignments.active.where.not(period_end: nil).pluck(:period_end)
   end
 
   def min_assignment_date

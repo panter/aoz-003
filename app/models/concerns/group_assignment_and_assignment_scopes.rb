@@ -24,6 +24,7 @@ module GroupAssignmentAndAssignmentScopes
     }
 
     scope :active, (-> { not_ended.started })
+    scope :stay_active, (-> { active.no_end })
     scope :inactive, (-> { ended.or(no_start) })
 
     scope :with_hours, (-> { joins(:hours) })
