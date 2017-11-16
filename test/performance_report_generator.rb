@@ -34,8 +34,10 @@ module PerformanceReportGenerator
   end
 
   def create_assignment_entity(title, volunteer, client, start_date, end_date = nil)
-    volunteer = create volunteer, created_at: start_date
-    client = create client, user: @user, created_at: start_date
+    volunteer = create volunteer
+    volunteer.update(created_at: start_date)
+    client = create client, user: @user
+    client.update(created_at: start_date)
     assignment = create_assignment(title && "a_#{title}", volunteer, client, start_date, end_date)
     assignment.update(created_at: start_date)
     return [volunteer, client, assignment] unless title
