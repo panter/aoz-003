@@ -28,6 +28,14 @@ FactoryBot.define do
       end
     end
 
+    trait :female do
+      salutation { 'mrs' }
+    end
+
+    trait :male do
+      salutation { 'mr' }
+    end
+
     trait :seed_contact do
       association :contact, factory: :contact_seed
     end

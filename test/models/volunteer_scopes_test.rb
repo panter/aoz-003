@@ -297,6 +297,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
       period_end: end_date
     return assignment if title.nil?
     instance_variable_set("@#{title}", assignment)
+    assignment
   end
 
   def create_group_offer_entity(title, start_date, end_date, *volunteers)
