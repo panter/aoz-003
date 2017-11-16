@@ -12,6 +12,9 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
   end
 
   test 'group offer counts' do
+    [GroupAssignment, GroupOffer, Assignment, Volunteer].map do |model|
+      model.with_deleted.map(&:really_destroy!)
+    end
     volunteer = create :volunteer, user: create(:user_volunteer)
     volunteer.update(created_at: 500.days.ago)
     create_group_offer_entity(:this_year, @today.beginning_of_year + 2, nil, volunteer)
