@@ -15,20 +15,9 @@ class GroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
 
   test 'xlsx files has the right columns' do
     create :group_offer
-    get group_offers_url(format: :xlsx)
-    excel_file = Tempfile.new
-    excel_file.write(response.body)
-    excel_file.close
-    wb = Roo::Spreadsheet.open(excel_file.path, extension: 'xlsx')
-
-    assert_equal wb.cell(1, 1), 'Title'
-    assert_equal wb.cell(2, 1), GroupOffer.first.title
-    assert_equal wb.cell(1, 2), 'Location'
-    assert_equal wb.cell(1, 3), 'Availability'
-    assert_equal wb.cell(1, 4), 'Target group'
-    assert_equal wb.cell(1, 5), 'Duration'
-    assert_equal wb.cell(1, 6), 'Offer state'
-    assert_equal wb.cell(1, 7), 'Volunteers'
-    assert_equal wb.cell(1, 8), 'Group offer category'
+    wb = get_xls_from_response(group_offers_url(format: :xlsx))
+    assert_xls_cols_equal(wb, 1, 0, 'Title', 'Location', 'Availability',
+      'Target group', 'Duration', 'Offer state', 'Volunteers', 'Group offer category')
+    assert_xls_cols_equal(wb, 2, 0, GroupOffer.first.title)
   end
 end
