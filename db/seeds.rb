@@ -148,3 +148,11 @@ Assignment.all.each do |assignment|
   FactoryBot.create(:feedback, volunteer: assignment.volunteer, feedbackable: assignment,
     author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
 end
+
+# Create ClientNotifications
+if ClientNotification.count < 1
+  FactoryBot.create :client_notification_seed, active: true
+  2.times do
+    ClientNotification.create :client_notification_seed, active: false
+  end
+end
