@@ -1,3 +1,19 @@
+javascript:
+  $( document ).on('turbolinks:render, turbolinks:load', function() {
+    $('#email_template_kind').change(function(){
+      var probezeit = "Liebe/r $[Anrede] $[Name]\n\nWir bitten um Ihre $[Feedback_Link] für $[Begleitung_Titel].\n\nDanke im Voraus!"
+      var assignment = "Liebe/r $[Anrede] $[Name]\n\nWir bitten um Ihre $[Stunde_Raport] und $[Feedback_Link] für $[Begleitung_Titel].\n\nDanke im Voraus!"
+      var signup = "Liebe/r $[Anrede] $[Name]\n\nDanke für Ihre Bewerbung."
+      if ($("#email_template_kind").val() == 'Probezeit') {
+        $("#email_template_body").text(probezeit);
+      } else if ($("#email_template_kind").val() == 'Begleitung') {
+        $("#email_template_body").text(assignment);
+      } else {
+        $("#email_template_body").text(signup);
+      }
+    });
+  });
+
 h1= t_title(:new)
 
 = render 'form'
