@@ -9,7 +9,7 @@ gem 'rails', '~> 5.1'
 
 gem 'autocomplete_rails'
 gem 'autoprefixer-rails'
-gem 'axlsx', '~> 2.1.0.pre' # Requirement for axlsx to run with actual rails version
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874' # Requirement for axlsx to run with actual rails version
 gem 'axlsx_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
@@ -34,7 +34,7 @@ gem 'pundit'
 gem 'rails-i18n'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'redcarpet'
-gem 'rubyzip'
+gem 'rubyzip', '>= 1.2.1'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'slim-rails'
