@@ -31,6 +31,34 @@ module FilterDropdownHelper
     end
   end
 
+  def intern_extern_filter_dropdown
+    li_dropdown do
+      concat dropdown_toggle_link('Intern/Extern' + external_toggler_text_end)
+      concat dropdown_ul(tag.li { all_link_to(:external_eq) }) { external_internal_links }
+    end
+  end
+
+  def external_internal_links
+    params_u = params.to_unsafe_hash.except('page')
+    [
+      tag.li do
+        link_to('Extern ', url_for(params_u.merge(q: search_parameters.merge(external_eq: 'true'))))
+      end,
+      tag.li do
+        link_to('Intern ', url_for(params_u.merge(q: search_parameters.merge(external_eq: 'false'))))
+      end
+    ].collect { |li| concat li }
+  end
+
+  def external_toggler_text_end
+    return ' ' unless search_parameters['active_eq']
+    if search_parameters['external_eq'] == 'true'
+      ': Extern '
+    elsif search_parameters['external_eq'] == 'false'
+      ': Intern '
+    end
+  end
+
   def status_toggler_text_end
     return ' ' unless search_parameters['active_eq']
     if search_parameters['active_eq'] == 'true'
