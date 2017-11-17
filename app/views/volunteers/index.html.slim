@@ -6,7 +6,7 @@ nav.navbar.section-navigation
     - if policy(Volunteer).destroy?
       li= button_link t('seeking_clients'), seeking_clients_volunteers_url, dimension: 'sm'
     li |
-    li= button_link t_model(VolunteerEmail), volunteer_emails_path, dimension: 'sm'
+    li= button_link 'E-mailvorlagen', email_templates_path, dimension: 'sm'
 
   hr
 
