@@ -1,7 +1,5 @@
 h1 Klienten Wartezeit Benachrichtigungen
 
-= form_navigation_btn :new
-
 .table-responsive
   table.table
     thead
@@ -22,3 +20,4 @@ h1 Klienten Wartezeit Benachrichtigungen
             span= link_to t_action(:destroy), edit_client_notification_path(notification), confirm_deleting(notification)
 
 = form_navigation_btn :new
+= form_navigation_btn :back

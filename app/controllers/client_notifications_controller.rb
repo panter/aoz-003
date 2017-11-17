@@ -19,7 +19,7 @@ class ClientNotificationsController < ApplicationController
     @client_notification.user = current_user
     authorize @client_notification
     if @client_notification.save
-      redirect_to @client_notification,
+      redirect_to client_notifications_path,
         notice: t('crud.created', model: @client_notification.class.model_name.human)
     else
       render :new
@@ -28,7 +28,7 @@ class ClientNotificationsController < ApplicationController
 
   def update
     if @client_notification.update(client_notification_params)
-      redirect_to @client_notification, notice: t('crud.updated', model: @translated_model_name)
+      redirect_to client_notifications_path, notice: t('crud.updated', model: @translated_model_name)
     else
       render :edit
     end
