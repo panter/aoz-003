@@ -4,20 +4,22 @@
 }
 
 .dl-horizontal dt {
-    text-align: left;
-    font-weight: normal;
+  font-weight: normal;
+  text-align: left;
 }
 
 .filters {
   .btn-group {
-    margin-right:  $padding-large-horizontal;
+    margin-right: $padding-large-horizontal;
   }
 }
+
 .section-navigation {
   margin-bottom: 0;
   margin-top: 0;
 
-  hr, ul {
+  hr,
+  ul {
     margin: 5px 0;
   }
 }
@@ -37,7 +39,6 @@
   display: block;
   margin-bottom: 3px;
 }
-
 
 #email_template_body {
   font-family: monospace;
