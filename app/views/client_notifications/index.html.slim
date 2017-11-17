@@ -1,16 +1,24 @@
-h1= t('volunteer_emails', count: 2)
+h1 Klienten Wartezeit Benachrichtigungen
 
 = form_navigation_btn :new
 
 .table-responsive
   table.table
     thead
-      th= t_attr(:body)
-      th
+      th Erstellt am
+      th Aktiv
+      th Text
+      th Erstellt von
+      th colspan=2
     tbody
-      - @client_notifications.each do |client_notification|
-        tr class=(client_notification.active ? 'bg-success': '') title=(client_notification.active ? 'Aktiv': '')
-          td= truncate(client_notification.body, length: 40, omission: ' ……')
-          / = render 'index_actions', subject: client_notification
+      - @client_notifications.each do |notification|
+        tr class=(notification.active ? 'bg-success': '') title=(notification.active ? 'Aktiv': '')
+          td= l(notification.created_at.to_date)
+          td= boolean_glyph(notification.active)
+          td= word_wrap(notification.body) if notification.body
+          td= link_to notification.user.full_name, notification.user.profile
+          td.index-action-cell.hidden-print
+            span= link_to t_action(:edit), edit_client_notification_path(notification)
+            span= link_to t_action(:destroy), edit_client_notification_path(notification), confirm_deleting(notification)
 
 = form_navigation_btn :new
