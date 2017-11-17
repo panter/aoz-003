@@ -13,7 +13,7 @@ class VolunteersController < ApplicationController
     @volunteers = @q.result
     activeness_filter
     respond_to do |format|
-      format.xlsx
+      format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
     end
   end
