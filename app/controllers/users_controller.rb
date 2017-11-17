@@ -16,14 +16,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def xlsx_filename
-    if params[:q] && User::ROLES.include?(params[:q][:role_eq])
-      t("role.#{params[:q][:role_eq]}")
-    else
-      'Benutzer_Liste'
-    end
-  end
-
   def show; end
 
   def new
@@ -60,6 +52,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def xlsx_filename
+    if params[:q] && User::ROLES.include?(params[:q][:role_eq])
+      t("role.#{params[:q][:role_eq]}")
+    else
+      'Benutzer_Liste'
+    end
+  end
 
   def handle_update(user_params)
     if user_params[:password].blank?
