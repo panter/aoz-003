@@ -2,14 +2,14 @@ require 'application_system_test_case'
 
 class ClientNotificationsTest < ApplicationSystemTestCase
   def setup
-    @superadmin = create :user
+    @user = create :user
     @social_worker = create :social_worker
     @other_client_notification = create :client_notification, user: @user
     @client_notification = create :client_notification, active: true, user: @user
   end
 
   test 'the right client notification should be marked active' do
-    login_as @superadmin
+    login_as @user
     visit clients_path
     click_link 'Wartezeit Benachrichtigungen'
     click_link 'Klienten Wartezeit Benachrichtigung erfassen'
@@ -23,7 +23,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
   end
 
   test 'changing another notification to active deactivates the former active' do
-    login_as @superadmin
+    login_as @user
     visit client_notifications_path
     within 'tbody tr:last-child' do
       assert page.has_text? @other_client_notification.body
@@ -66,7 +66,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
   end
 
   test 'superadmin does not see this notification' do
-    login_as @superadmin
+    login_as @user
     visit clients_path
 
     click_button 'New Client'
