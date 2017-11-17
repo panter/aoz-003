@@ -2,10 +2,10 @@
   = simple_error_notice f
 
   .row
+    .col-xs-12= f.input :kind, collection: EmailTemplate.kind_collection, label: 'Art'
     .col-xs-12= f.input :subject, label: 'Betreff'
     .col-xs-12= f.input :body, label: 'Textkörper'
-    .col-xs-12= f.input :kind, collection: EmailTemplate.kind_collection, label: 'Art'
     .col-xs-12= f.input :active, label: 'Aktiv'
 
   .row
-    .col-xs-12= f.button :submit, 'Speichern', class: 'btn btn-success'
+    .col-xs-12= f.button :submit, class: 'btn btn-success'
