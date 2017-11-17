@@ -3,10 +3,10 @@
 
   .row
     .col-xs-12
-      = f.input :body
+      = f.input :body, label: 'Text'
     - unless @client_notification.active
       .col-xs-12
-        = f.input :active
+        = f.input :active, label: 'aktiv'
   .row
     .col-xs-12
       = f.button :submit, class: 'btn btn-success'
