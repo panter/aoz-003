@@ -1,13 +1,11 @@
 class ClientNotificationsController < ApplicationController
-  before_action :set_client_notification, only: [:show, :edit, :update, :destroy]
+  before_action :set_client_notification, only: [:edit, :update, :destroy]
   before_action :translate_model_name, only: [:update, :destroy]
 
   def index
     authorize ClientNotification
     @client_notifications = ClientNotification.all
   end
-
-  def show; end
 
   def new
     @client_notification = ClientNotification.new
