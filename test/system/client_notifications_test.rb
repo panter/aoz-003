@@ -12,7 +12,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @user
     visit clients_path
     click_link 'Wartezeit Benachrichtigungen'
-    click_link 'Klienten Wartezeit Benachrichtigung erfassen'
+    click_link 'New Klienten Wartezeit Benachrichtigung'
     assert page.has_text? @client_notification.body
     within 'tr.bg-success' do
       assert page.has_text? @client_notification.body
@@ -31,7 +31,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     end
     page.check('client_notification_active')
     click_button 'Update Klienten Wartezeit Benachrichtigung'
-    click_link 'Back'
+    click_button 'Back'
     within 'tr.bg-success' do
       refute page.has_text? @client_notification.body
       assert page.has_text? @other_client_notification.body
@@ -42,7 +42,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @social_worker
     visit clients_path
 
-    click_link 'New Client'
+    click_link 'Klient erfassen'
     select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'asdf'
     fill_in 'Last name', with: 'asdf'
@@ -69,7 +69,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @user
     visit clients_path
 
-    click_button 'New Client'
+    click_link 'Klient erfassen'
     select('Mrs.', from: 'Salutation')
     fill_in 'First name', with: 'asdf'
     fill_in 'Last name', with: 'asdf'
