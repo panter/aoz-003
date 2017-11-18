@@ -134,11 +134,14 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? 'Fluent'
   end
 
-  test 'superadmin can delete client' do
+  test 'superadmin_can_delete_client' do
     login_as @superadmin
     client = create :client
     visit client_path(client)
-    first('a', text: 'Delete').click
+
+    page.accept_confirm do
+      first('a', text: 'Delete').click
+    end
 
     assert page.has_text? 'Client was successfully deleted.'
   end
@@ -177,7 +180,9 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? client
 
     visit edit_client_path(client)
-    click_link 'Delete'
+    page.accept_confirm do
+      click_link 'Delete'
+    end
 
     assert page.has_text? 'Client was successfully deleted.'
     refute page.has_text? client

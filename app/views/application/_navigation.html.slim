@@ -30,6 +30,8 @@ nav.navbar.navbar-top.hidden-print
             li= link_to 'Kennzahlen', performance_reports_path
           - if policy(Reminder).index?
             li= link_to 'Erinnerungen', reminders_path
+          - if policy(Reminder).trial_end?
+            li = link_to 'Probezeit Erinnerungen', trial_end_reminders_path
         ul.nav.navbar-nav.navbar-right
           li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'

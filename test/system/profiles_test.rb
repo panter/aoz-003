@@ -38,7 +38,7 @@ class ProfilesTest < ApplicationSystemTestCase
     click_button 'Create Profile'
     @user_without_profile.reload
 
-    assert page.has_current_path? profile_path(@user_without_profile.profile.id)
+    assert page.has_current_path? profile_path(@user_without_profile.profile)
     assert page.has_text? 'Hans'
     assert page.has_text? 'Muster'
     refute page.has_selector?('table > tbody td:nth-child(1) i.glyphicon-ok')

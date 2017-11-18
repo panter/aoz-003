@@ -5,8 +5,11 @@ class RemindersTest < ApplicationSystemTestCase
     @user = create :user
     @now = Time.zone.today
     @volunteer = create :volunteer
-    @assignment = create :assignment, period_start: 7.months.ago.to_date, period_end: nil,
+    @trial_volunteer = create :volunteer
+    @assignment = create :assignment, period_start: 7.months.ago, period_end: nil,
       volunteer: @volunteer, creator: @user
+    @trial_assignment = create :assignment, period_start: 7.weeks.ago, period_end: nil,
+      volunteer: @trial_volunteer, creator: @user
     Reminder.conditionally_create_reminders
     login_as @user
     visit reminders_path
@@ -20,8 +23,15 @@ class RemindersTest < ApplicationSystemTestCase
 
   test 'can delete reminder' do
     assert page.has_text? @volunteer.contact.full_name
-    click_button 'Delete'
+    click_button 'Quittieren'
     refute page.has_text? @volunteer.contact.full_name
+  end
+
+  test 'can delete trial period reminder' do
+    visit trial_end_reminders_path
+    assert page.has_text? @trial_volunteer.contact.full_name
+    click_link 'Quittieren'
+    refute page.has_text? @trial_volunteer.contact.full_name
   end
 
   test 'when assignment is confirmed, reminder gets deleted' do

@@ -2,18 +2,18 @@ class Reminder < ApplicationRecord
   belongs_to :assignment
   belongs_to :volunteer
 
+  enum kind: { trial: 0, assignment: 1 }
+
   validate :volunteer_is_internal?
 
   def volunteer_is_internal?
-    if volunteer.external
-      errors.add(:volunteer, 'external volunteers can not get reminders')
-    end
+    errors.add(:volunteer, 'external volunteers can not get reminders') if volunteer.external
   end
 
   default_scope { order(created_at: :desc) }
 
   def self.create_for(volunteer, assignment)
-    Reminder.create!(volunteer: volunteer, assignment: assignment)
+    Reminder.create!(volunteer: volunteer, assignment: assignment, kind: 1)
   end
 
   def self.conditionally_create_reminders(time = Time.zone.now)
@@ -28,6 +28,14 @@ class Reminder < ApplicationRecord
     logger.flush
 
     reminders_created.size
+  end
+
+  def self.trial_end_reminders
+    Volunteer.with_assignment_ca_6_weeks_ago.map do |volunteer|
+      volunteer.assignments.map do |assignment|
+        conditionally_create_trial_end_reminder_for_volunteer(volunteer, assignment)
+      end
+    end.flatten.compact
   end
 
   def self.conditionally_create_reminder_for_volunteer(volunteer, assignment)
@@ -48,6 +56,11 @@ class Reminder < ApplicationRecord
       log_reminder volunteer, "created reminder [#{reminder.id}]"
       reminder.id
     end
+  end
+
+  def self.conditionally_create_trial_end_reminder_for_volunteer(volunteer, a)
+    Reminder.create!(volunteer: volunteer, assignment: a, kind: 0) if a.started_ca_six_weeks_ago? &&
+        !volunteer.trial_period && a.reminders.none?
   end
 
   def self.log_reminder(volunteer, message)

@@ -3,13 +3,14 @@ language: ruby
 cache:
   bundler: true
   directories:
-    - .phantomjs
+    - node_modules
     - vendor
     - .rvm
 
 services: postgresql
 
 addons:
+  chrome: stable
   postgresql: "9.4"
 
 before_script:
@@ -17,5 +18,5 @@ before_script:
   - bundle exec rails db:schema:load
 
 script:
-  - bundle exec rails test
   - bundle exec rails test:system
+  - bundle exec rails test

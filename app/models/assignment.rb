@@ -1,6 +1,7 @@
 class Assignment < ApplicationRecord
   include ImportRelation
   include GroupAssignmentAndAssignmentScopes
+  include VolunteersGroupAndTandemStateUpdate
 
   after_update :delete_reminder, if: :saved_change_to_confirmation?
 
@@ -26,10 +27,28 @@ class Assignment < ApplicationRecord
   scope :created_before, ->(max_time) { where('assignments.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('assignments.created_at > ?', min_time) }
 
-  scope :ended, (-> { where('assignments.period_end < ?', Time.zone.today) })
+  scope :active, lambda {
+    started.where(
+      'assignments.period_end > ? OR assignments.period_end IS NULL',
+      Time.zone.today
+    )
+  }
+  scope :started, lambda {
+    where(
+      'assignments.period_start < ? AND assignments.period_start IS NOT NULL',
+      Time.zone.today
+    )
+  }
+  scope :ended, lambda {
+    where('assignments.period_end < ?', Time.zone.today)
+  }
 
   def started_six_months_ago?
-    period_start < 6.months.ago.to_date
+    period_start < 6.months.ago
+  end
+
+  def started_ca_six_weeks_ago?
+    period_start < 6.weeks.ago && period_start > 8.weeks.ago
   end
 
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
@@ -37,22 +56,6 @@ class Assignment < ApplicationRecord
 
   scope :internal, (-> { joins(:volunteer).merge(Volunteer.internal) })
   scope :external, (-> { joins(:volunteer).merge(Volunteer.external) })
-
-  def ended?
-    period_end && period_end < Time.zone.today
-  end
-
-  def ongoing?
-    !ended?
-  end
-
-  def inactive?
-    ended? || period_start > Time.zone.today
-  end
-
-  def active?
-    ongoing? && period_start < Time.zone.today
-  end
 
   def creator
     super || User.deleted.find_by(id: creator_id)

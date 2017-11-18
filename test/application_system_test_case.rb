@@ -1,38 +1,28 @@
 require 'test_helper'
+require 'selenium/webdriver'
 
-DIMENSIONS = [1800, 4000].freeze
+Capybara.register_driver(:headless_chrome) do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w[headless disable-gpu] }
+  )
 
-Capybara.register_driver :poltergeist_debug do |app|
-  Capybara::Poltergeist::Driver.new(
+  Capybara::Selenium::Driver.new(
     app,
-    phantomjs: Phantomjs.path,
-    inspector: true,
-    screen_size: DIMENSIONS,
-    window_size: DIMENSIONS
+    browser: :chrome,
+    desired_capabilities: capabilities
   )
 end
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(
-    app,
-    phantomjs: Phantomjs.path,
-    screen_size: DIMENSIONS,
-    window_size: DIMENSIONS
-  )
-end
-
-def driven_by_default(driver = :poltergeist, using: nil)
-  driven_by driver, using: using, screen_size: DIMENSIONS
+Capybara.register_driver(:visible_chrome) do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   case ENV['driver']
-  when 'chrome'
-    driven_by_default :selenium, using: :chrome
-  when 'poltergeist_debug'
-    driven_by_default :poltergeist_debug
+  when 'visible'
+    driven_by :visible_chrome
   else
-    driven_by_default
+    driven_by :headless_chrome
   end
 
   def scroll_to_element(element)

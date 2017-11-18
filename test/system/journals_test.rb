@@ -21,15 +21,15 @@ class JournalsTest < ApplicationSystemTestCase
   end
 
   test 'can_create_journal_entry_by_link_button_in_show' do
+    Journal.with_deleted(&:really_destroy!)
     visit client_path(@client)
     first('a', text: 'Journal').click
     click_link 'New Journal'
     assert page.has_text? 'New Journal'
     fill_in 'Body', with: 'My bogus demo text body, just for this test.'
     select('Telephone', from: 'Category')
-    click_button 'Create journal'
+    click_button 'Create journal entry'
     assert page.has_text? 'Journal was successfully created.'
-    first('a', text: 'Journal').click
     assert page.has_text? 'My bogus demo text body, just for this test.'
   end
 
@@ -44,8 +44,9 @@ class JournalsTest < ApplicationSystemTestCase
     assert page.has_text? 'bogus_journal_text'
     first('a', text: 'Edit').click
     assert page.has_text? 'Edit Journal'
-
-    click_link 'Delete'
+    page.accept_confirm do
+      first('a', text: 'Delete').click
+    end
     assert page.has_text? 'Journal was successfully deleted.'
     click_button 'Journal'
     refute page.has_link? @journal_volunteer.user.full_name
