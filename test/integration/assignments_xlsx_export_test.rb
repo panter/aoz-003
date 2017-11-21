@@ -9,8 +9,7 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
   test 'xlsx file is downloadable' do
     10.times { create :assignment }
     get assignments_url(format: :xlsx)
-    assert_equal 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      response.content_type
+    assert_equal Mime[:xlsx], response.content_type
   end
 
   test 'xlsx files columns and cells are correct' do

@@ -6,7 +6,6 @@ class VolunteersXlsxExportTest < ActionDispatch::IntegrationTest
     10.times { create :volunteer }
     login_as superadmin
     get volunteers_url(format: :xlsx)
-    assert_equal 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      response.content_type
+    assert_equal Mime[:xlsx], response.content_type
   end
 end
