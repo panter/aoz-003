@@ -123,10 +123,13 @@ end
 
 # Create VolunteerEmails
 if VolunteerEmail.count < 1
-  FactoryBot.create :volunteer_email_seed, active: true
-  2.times do
-    FactoryBot.create :volunteer_email_seed, active: false
-  end
+  superadmin = User.find_by(email: 'superadmin@example.com')
+  [
+    FactoryBot.create(:volunteer_email_seed, active: true, user: superadmin),
+    2.times do
+      FactoryBot.create(:volunteer_email_seed, active: false, user: superadmin)
+    end
+  ]
 end
 
 # Create assignments
