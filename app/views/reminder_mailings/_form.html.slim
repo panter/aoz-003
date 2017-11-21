@@ -1,0 +1,9 @@
+= simple_form_for @reminder_mailing do |f|
+  = simple_error_notice f
+
+  = f.input :kind, collection: ReminderMailing.kind_collection, as: :radio_buttons, include_blank: false, selected: @reminder_mailing.kind.to_i
+
+  = f.input :subject
+  = f.input :body
+
+  = f.button :submit, class: 'btn btn-success'
