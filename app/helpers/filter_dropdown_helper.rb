@@ -41,30 +41,32 @@ module FilterDropdownHelper
   def external_internal_links
     params_u = params.to_unsafe_hash.except('page')
     [
-      tag.li do
+      concat(tag.li do
         link_to('Extern ', url_for(params_u.merge(q: search_parameters.merge(external_eq: 'true'))))
-      end,
-      tag.li do
+      end),
+      concat(tag.li do
         link_to('Intern ', url_for(params_u.merge(q: search_parameters.merge(external_eq: 'false'))))
-      end
-    ].collect { |li| concat li }
+      end)
+    ].collect
   end
 
   def external_toggler_text_end
-    return ' ' unless search_parameters['active_eq']
     if search_parameters['external_eq'] == 'true'
       ': Extern '
     elsif search_parameters['external_eq'] == 'false'
       ': Intern '
+    else
+      ' '
     end
   end
 
   def status_toggler_text_end
-    return ' ' unless search_parameters['active_eq']
     if search_parameters['active_eq'] == 'true'
       ': Aktiv '
     elsif search_parameters['active_eq'] == 'false'
       ': Inaktiv '
+    else
+      ' '
     end
   end
 

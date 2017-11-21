@@ -20,8 +20,7 @@ class UsersXlsxExportTest < ActionDispatch::IntegrationTest
 
   test 'xlsx file is downloadable' do
     get users_url(format: :xlsx)
-    assert_equal('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      response.content_type)
+    assert_equal Mime[:xlsx], response.content_type
   end
 
   test 'filtering volunteer users has only volunteer in xls' do
