@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :feedbacks, inverse_of: 'author'
   has_many :billing_expenses
   has_many :group_offers, inverse_of: 'creator'
+  has_many :reminder_mailings, inverse_of: 'creator'
 
   has_and_belongs_to_many :department
 
