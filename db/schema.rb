@@ -383,6 +383,30 @@ ActiveRecord::Schema.define(version: 20171122175340) do
     t.index ["relativeable_type", "relativeable_id"], name: "index_relatives_on_relativeable_type_and_relativeable_id"
   end
 
+  create_table "reminder_mailing_volunteers", force: :cascade do |t|
+    t.bigint "volunteer_id"
+    t.bigint "reminder_mailing_id"
+    t.string "reminder_mailable_type"
+    t.bigint "reminder_mailable_id"
+    t.integer "link_visits", default: 0
+    t.boolean "confirmed_form", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reminder_mailable_type", "reminder_mailable_id"], name: "reminder_mailable_index"
+    t.index ["reminder_mailing_id"], name: "index_reminder_mailing_volunteers_on_reminder_mailing_id"
+    t.index ["volunteer_id"], name: "index_reminder_mailing_volunteers_on_volunteer_id"
+  end
+
+  create_table "reminder_mailings", force: :cascade do |t|
+    t.bigint "creator_id"
+    t.text "email_body"
+    t.string "subject"
+    t.integer "kind", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_reminder_mailings_on_creator_id"
+  end
+
   create_table "reminders", force: :cascade do |t|
     t.date "sent_at"
     t.bigint "assignment_id"

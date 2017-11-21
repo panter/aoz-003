@@ -9,6 +9,8 @@ class GroupAssignment < ApplicationRecord
   belongs_to :volunteer
   has_many :group_assignment_logs
 
+  has_many :reminder_mailings, as: :reminder_mailable
+
   validates :volunteer, uniqueness: {
     scope: :group_offer,
     message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
