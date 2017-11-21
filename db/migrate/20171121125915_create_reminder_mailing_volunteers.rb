@@ -7,6 +7,7 @@ class CreateReminderMailingVolunteers < ActiveRecord::Migration[5.1]
       t.integer :link_visits, default: 0
       t.boolean :confirmed_form, default: false
 
+      t.datetime :deleted_at, index: true
       t.timestamps
     end
   end

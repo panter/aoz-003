@@ -390,8 +390,10 @@ ActiveRecord::Schema.define(version: 20171122175340) do
     t.bigint "reminder_mailable_id"
     t.integer "link_visits", default: 0
     t.boolean "confirmed_form", default: false
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_reminder_mailing_volunteers_on_deleted_at"
     t.index ["reminder_mailable_type", "reminder_mailable_id"], name: "reminder_mailable_index"
     t.index ["reminder_mailing_id"], name: "index_reminder_mailing_volunteers_on_reminder_mailing_id"
     t.index ["volunteer_id"], name: "index_reminder_mailing_volunteers_on_volunteer_id"
@@ -399,12 +401,14 @@ ActiveRecord::Schema.define(version: 20171122175340) do
 
   create_table "reminder_mailings", force: :cascade do |t|
     t.bigint "creator_id"
-    t.text "email_body"
+    t.text "body"
     t.string "subject"
     t.integer "kind", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_reminder_mailings_on_creator_id"
+    t.index ["deleted_at"], name: "index_reminder_mailings_on_deleted_at"
   end
 
   create_table "reminders", force: :cascade do |t|
