@@ -12,11 +12,10 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @user
     visit clients_path
     click_link 'Wartezeit Benachrichtigungen'
-    click_link 'New Klienten Wartezeit Benachrichtigung'
     assert page.has_text? @client_notification.body
     within 'tr.bg-success' do
       assert page.has_text? @client_notification.body
-      assert page.has_selector?('table > tbody td:nth-child(1) i.glyphicon-ok')
+      assert page.has_selector?('table > tbody td:nth-child(2) i.glyphicon-ok')
       refute page.has_text? @other_client_notification.body
       refute page.has_selector?('table > tbody td:nth-child(2) i.glyphicon-remove')
     end
@@ -31,7 +30,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     end
     page.check('client_notification_active')
     click_button 'Update Klienten Wartezeit Benachrichtigung'
-    click_button 'Back'
+    click_link 'Back'
     within 'tr.bg-success' do
       refute page.has_text? @client_notification.body
       assert page.has_text? @other_client_notification.body
