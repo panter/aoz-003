@@ -24,6 +24,64 @@ module FilterDropdownHelper
     end
   end
 
+  def activeness_filter_dropdown
+    li_dropdown do
+      concat dropdown_toggle_link('Status' + status_toggler_text_end)
+      concat dropdown_ul(tag.li { all_link_to(:active_eq) }) { activeness_links }
+    end
+  end
+
+  def intern_extern_filter_dropdown
+    li_dropdown do
+      concat dropdown_toggle_link('Intern/Extern' + external_toggler_text_end)
+      concat dropdown_ul(tag.li { all_link_to(:external_eq) }) { external_internal_links }
+    end
+  end
+
+  def external_internal_links
+    params_u = params.to_unsafe_hash.except('page')
+    [
+      concat(tag.li do
+        link_to('Extern ', url_for(params_u.merge(q: search_parameters.merge(external_eq: 'true'))))
+      end),
+      concat(tag.li do
+        link_to('Intern ', url_for(params_u.merge(q: search_parameters.merge(external_eq: 'false'))))
+      end)
+    ].collect
+  end
+
+  def external_toggler_text_end
+    if search_parameters['external_eq'] == 'true'
+      ': Extern '
+    elsif search_parameters['external_eq'] == 'false'
+      ': Intern '
+    else
+      ' '
+    end
+  end
+
+  def status_toggler_text_end
+    if search_parameters['active_eq'] == 'true'
+      ': Aktiv '
+    elsif search_parameters['active_eq'] == 'false'
+      ': Inaktiv '
+    else
+      ' '
+    end
+  end
+
+  def activeness_links
+    params_u = params.to_unsafe_hash.except('page')
+    [
+      tag.li do
+        link_to('Aktiv ', url_for(params_u.merge(q: search_parameters.merge(active_eq: 'true'))))
+      end,
+      tag.li do
+        link_to('Inaktiv ', url_for(params_u.merge(q: search_parameters.merge(active_eq: 'false'))))
+      end
+    ].collect { |li| concat li }
+  end
+
   def enum_toggler_text(attribute, collection)
     if filter_active?("#{attribute}_eq".to_sym, '', search_parameters["#{attribute}_eq"])
       "#{t_attr(attribute)}: " + collection.invert[search_parameters["#{attribute}_eq"].to_i].humanize

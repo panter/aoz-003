@@ -71,12 +71,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? @group_offer_member
   end
 
-  test 'volunteers that have active and inactive assignments are not in only_inactive' do
-    query = Volunteer.with_only_inactive_assignments.distinct
-    assert query.include? @has_inactive
-    refute query.include? @has_active_and_inactive
-  end
-
   test 'with_active_assignments_between returns volunteers with active assignments in date range' do
     query = Volunteer.with_active_assignments_between(@today - 16, @today - 8)
     assert query.include? @has_assignment
@@ -118,16 +112,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? @active_will_take_more
     assert query.include? @inactive_will_take_more
     refute query.include? @has_assignment
-  end
-
-  test 'active only returns accepted volunteers that have an active assignment' do
-    query = Volunteer.active
-    assert query.include? @has_assignment
-    assert query.include? @has_multiple
-    assert query.include? @has_active_and_inactive
-    refute query.include? @has_inactive
-    refute query.include? @resigned_inactive
-    refute query.include? @resigned_active
   end
 
   test 'seeking clients shows only volunteers with no active assignments' do
@@ -285,8 +269,28 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? no_assignment
   end
 
+  test 'active_only_returns_accepted_volunteers_that_have_an_active_assignment' do
+    volunteer_will_inactive = make_volunteer nil
+    make_assignment(nil, volunteer_will_inactive, 10.days.ago, @today + 1)
+    query = Volunteer.active
+    assert query.include? volunteer_will_inactive
+    assert query.include? @has_assignment
+    assert query.include? @has_multiple
+    assert query.include? @has_active_and_inactive
+    refute query.include? @has_inactive
+    refute query.include? @resigned_inactive
+    refute query.include? @resigned_active
+    travel_to(@today + 2)
+    query = Volunteer.active
+    refute query.include? volunteer_will_inactive
+  end
+
   def make_volunteer(title, *attributes)
-    volunteer = create :volunteer, *attributes
+    volunteer = if attributes.include?(acceptance: 'accepted')
+                  create :volunteer_with_user, *attributes
+                else
+                  create :volunteer, *attributes
+                end
     return volunteer if title.nil?
     instance_variable_set("@#{title}", volunteer)
   end
@@ -296,6 +300,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
       period_end: end_date
     return assignment if title.nil?
     instance_variable_set("@#{title}", assignment)
+    assignment
   end
 
   def create_group_offer_entity(title, start_date, end_date, *volunteers)

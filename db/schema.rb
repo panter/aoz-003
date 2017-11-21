@@ -209,7 +209,16 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
     t.index ["deleted_at"], name: "index_group_offer_categories_on_deleted_at"
+  end
+
+  create_table "group_offer_categories_volunteers", id: false, force: :cascade do |t|
+    t.bigint "group_offer_category_id", null: false
+    t.bigint "volunteer_id", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_group_offer_categories_volunteers_on_deleted_at"
+    t.index ["group_offer_category_id", "volunteer_id"], name: "index_group_offer_on_volunteer"
   end
 
   create_table "group_offers", force: :cascade do |t|
@@ -434,14 +443,6 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.boolean "woman", default: false
     t.boolean "family", default: false
     t.boolean "kid", default: false
-    t.boolean "sport", default: false
-    t.boolean "creative", default: false
-    t.boolean "music", default: false
-    t.boolean "culture", default: false
-    t.boolean "training", default: false
-    t.boolean "german_course", default: false
-    t.boolean "teenagers", default: false
-    t.boolean "children", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -460,14 +461,7 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.boolean "doc_sent", default: false
     t.boolean "bank_account", default: false
     t.boolean "evaluation", default: false
-    t.boolean "dancing", default: false
-    t.boolean "health", default: false
-    t.boolean "cooking", default: false
-    t.boolean "excursions", default: false
-    t.boolean "women", default: false
     t.boolean "unaccompanied", default: false
-    t.boolean "zurich", default: false
-    t.boolean "other_offer", default: false
     t.text "other_offer_desc"
     t.text "own_kids"
     t.boolean "flexible", default: false
@@ -487,6 +481,8 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.datetime "resigned_at"
     t.datetime "undecided_at"
     t.boolean "take_more_assignments", default: false
+    t.boolean "active", default: false
+    t.date "activeness_might_end"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end

@@ -4,6 +4,7 @@ FactoryBot.define do
     contact
     salutation { ['mr', 'mrs'].sample }
     acceptance :accepted
+    group_offer_categories { |category| [category.association(:group_offer_category)] }
 
     trait :with_language_skills do
       language_skills do |language_skill|
@@ -25,6 +26,14 @@ FactoryBot.define do
           journal.association(:journal_seed)
         ]
       end
+    end
+
+    trait :female do
+      salutation { 'mrs' }
+    end
+
+    trait :male do
+      salutation { 'mr' }
     end
 
     trait :seed_contact do
@@ -52,23 +61,6 @@ FactoryBot.define do
       unaccompanied { [true, false].sample }
     end
 
-    trait :fake_group_assignments do
-      sport { [true, false].sample }
-      creative { [true, false].sample }
-      music { [true, false].sample }
-      culture { [true, false].sample }
-      training { [true, false].sample }
-      german_course { [true, false].sample }
-      dancing { [true, false].sample }
-      health { [true, false].sample }
-      cooking { [true, false].sample }
-      excursions { [true, false].sample }
-      women { [true, false].sample }
-      teenagers { [true, false].sample }
-      children { [true, false].sample }
-      other_offer { [true, false].sample }
-    end
-
     trait :fake_availability do
       flexible { [true, false].sample }
       morning { [true, false].sample }
@@ -78,6 +70,11 @@ FactoryBot.define do
       weekend { [true, false].sample }
     end
 
+    factory :volunteer_with_user do
+      after(:create) do |volunteer|
+        volunteer.update(user: create(:user_volunteer))
+      end
+    end
     factory :volunteer_external, traits: [:external]
     factory :volunteer_z, traits: [:zuerich]
 
@@ -85,7 +82,7 @@ FactoryBot.define do
       :volunteer_seed,
       traits: [
         :seed_contact, :with_language_skills, :with_journals, :faker_extra,
-        :fake_availability, :fake_single_assignments, :fake_group_assignments
+        :fake_availability, :fake_single_assignments
       ]
     )
   end

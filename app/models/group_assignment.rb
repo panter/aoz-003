@@ -1,17 +1,34 @@
 class GroupAssignment < ApplicationRecord
   include GroupAssignmentAndAssignmentScopes
-
-  belongs_to :group_offer
-
-  belongs_to :volunteer
-  has_many :group_assignment_logs
+  include VolunteersGroupAndTandemStateUpdate
 
   after_update :save_group_assignment_logs, if: :dates_updated?
   before_destroy :save_group_assignment_logs
 
-  validates_uniqueness_of :volunteer, scope: :group_offer
+  belongs_to :group_offer
+  belongs_to :volunteer
+  has_many :group_assignment_logs
 
-  scope :ongoing, (-> { where('group_assignments.period_end > ?', Time.zone.today) })
+  validates :volunteer, uniqueness: {
+    scope: :group_offer,
+    message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
+  }
+
+  scope :active, lambda {
+    started.where(
+      'group_assignments.period_end > ? OR group_assignments.period_end IS NULL',
+      Time.zone.today
+    )
+  }
+  scope :started, lambda {
+    where(
+      'group_assignments.period_start < ? AND group_assignments.period_start IS NOT NULL',
+      Time.zone.today
+    )
+  }
+  scope :ended, lambda {
+    where('group_assignments.period_end < ?', Time.zone.today)
+  }
 
   def save_group_assignment_logs
     group_assignment_logs.create!(group_offer_id: group_offer_id, volunteer_id: volunteer_id,

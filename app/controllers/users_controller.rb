@@ -6,7 +6,14 @@ class UsersController < ApplicationController
   def index
     authorize User
     @q = User.ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @users = @q.result
+    respond_to do |format|
+      format.html
+      format.xlsx do
+        render xlsx: 'index', filename: xlsx_filename
+      end
+    end
   end
 
   def show; end
@@ -45,6 +52,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def xlsx_filename
+    if params[:q] && User::ROLES.include?(params[:q][:role_eq])
+      t("role.#{params[:q][:role_eq]}")
+    else
+      'Benutzer_Liste'
+    end
+  end
 
   def handle_update(user_params)
     if user_params[:password].blank?

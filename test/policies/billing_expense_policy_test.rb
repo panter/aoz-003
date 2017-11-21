@@ -5,7 +5,7 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
     @superadmin = create :user, role: 'superadmin'
     @social_worker = create :user, role: 'social_worker'
     @department_manager = create :user, role: 'department_manager'
-    @volunteer = create :volunteer
+    @volunteer = create :volunteer_with_user
     @assignment = create(:assignment, volunteer: @volunteer,
       hours: [create(:hour, volunteer: @volunteer)])
     @billing_expense = BillingExpense.create!(user: @superadmin, volunteer: @volunteer, hours: @volunteer.hours.billable)

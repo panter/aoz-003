@@ -5,9 +5,9 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     @superadmin = create :user
     @social_worker = create :social_worker
     @department_manager = create :department_manager
-    @volunteer_seeks = create :volunteer, user: create(:user_volunteer),
+    @volunteer_seeks = create :volunteer_with_user,
       assignments: [create(:assignment, period_start: 500.days.ago, period_end: 200.days.ago)]
-    @volunteer_not_seeking = create :volunteer, user: create(:user_volunteer),
+    @volunteer_not_seeking = create :volunteer_with_user,
       assignments: [create(:assignment, period_start: 10.days.ago, period_end: nil)]
   end
 

@@ -11,11 +11,9 @@ class Volunteer < ApplicationRecord
   before_validation :handle_user_with_external_change,
     if: :external_changed?,
     unless: proc { user_id.nil? }
+  after_update :copy_contact_to_user, if: :user_added?
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
-  GROUP_ACCOMPANIMENTS = [:sport, :creative, :music, :culture, :training, :german_course,
-                          :dancing, :health, :cooking, :excursions, :women, :teenagers,
-                          :children, :other_offer].freeze
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
@@ -57,6 +55,7 @@ class Volunteer < ApplicationRecord
   has_many :group_assignments
   has_many :group_offers, through: :group_assignments
   has_many :group_assignment_logs
+  has_and_belongs_to_many :group_offer_categories
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
@@ -75,6 +74,9 @@ class Volunteer < ApplicationRecord
   }
   scope :created_before, ->(max_time) { where('volunteers.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('volunteers.created_at > ?', min_time) }
+  scope :created_between, lambda { |start_date, end_date|
+    created_before(end_date).created_after(start_date)
+  }
 
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
@@ -118,35 +120,46 @@ class Volunteer < ApplicationRecord
       .merge(Assignment.inactive)
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
-  scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
-  scope :active, (-> { accepted.with_active_assignments })
 
-  scope :accepted_joined, (-> { accepted.left_outer_joins(:assignments) })
-  scope :loj_without_assignments, (-> { accepted_joined.where(assignments: { id: nil }) })
-  scope :loj_active_take_more, lambda {
-    accepted_joined.will_take_more_assignments.where(assignments: { id: Assignment.active.ids })
+  scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
+
+  scope :activeness_not_ended, lambda {
+    where('activeness_might_end IS NULL OR activeness_might_end > ?', Time.zone.today)
+  }
+  scope :activeness_ended, lambda {
+    where(active: true)
+      .where('activeness_might_end IS NOT NULL AND activeness_might_end < ?', Time.zone.today)
+  }
+  scope :active, lambda {
+    activeness_not_ended.where(active: true)
   }
 
+  scope :inactive, lambda {
+    seeking_clients
+  }
   scope :seeking_clients, lambda {
-    accepted_joined
-      .merge(Assignment.inactive)
-      .where.not(assignments: { volunteer_id: with_active_assignments.ids })
-      .or(loj_without_assignments)
+    accepted.where(active: false).or(accepted.activeness_ended)
   }
   scope :seeking_clients_will_take_more, lambda {
-    accepted_joined
-      .merge(Assignment.inactive)
-      .where.not(assignments: { volunteer_id: with_active_assignments.ids })
-      .or(loj_without_assignments)
-      .or(loj_active_take_more)
+    seeking_clients.or(accepted.will_take_more_assignments)
   }
 
+  def verify_and_update_state
+    update(active: active?, activeness_might_end: relevant_period_end_max)
+  end
+
+  def relevant_period_end_max
+    # any assignment with no end means activeness is not going to end
+    return nil if group_assignments.stay_active.any? || assignments.stay_active.any?
+    [active_group_assignment_end_dates.max, active_assignment_end_dates.max].compact.max
+  end
+
   def active?
-    accepted? && (assignments.active.any? || group_assignments.ongoing.any? || group_assignments.no_end.any?)
+    accepted? && (assignments.active.any? || group_assignments.active.any?)
   end
 
   def inactive?
-    accepted? && assignments.active.blank? && group_assignments.ongoing.blank? && group_assignments.no_end.blank?
+    accepted? && assignments.active.blank? && group_assignments.active.blank?
   end
 
   def state
@@ -167,19 +180,27 @@ class Volunteer < ApplicationRecord
   end
 
   def assignment_start_dates
-    assignments.select('period_start').where.not(period_start: nil).map(&:period_start)
+    assignments.where.not(period_start: nil).pluck(:period_start)
   end
 
   def assignment_end_dates
-    assignments.select('period_end').where.not(period_end: nil).map(&:period_end)
+    assignments.where.not(period_end: nil).pluck(:period_end)
+  end
+
+  def active_assignment_end_dates
+    assignments.active.where.not(period_end: nil).pluck(:period_end)
   end
 
   def group_assignment_start_dates
-    group_assignments.select('period_start').where.not(period_start: nil).map(&:period_start)
+    group_assignments.where.not(period_start: nil).pluck(:period_start)
   end
 
   def group_assignment_end_dates
-    group_assignments.select('period_end').where.not(period_end: nil).map(&:period_end)
+    group_assignments.where.not(period_end: nil).pluck(:period_end)
+  end
+
+  def active_group_assignment_end_dates
+    group_assignments.active.where.not(period_end: nil).pluck(:period_end)
   end
 
   def min_assignment_date
@@ -248,11 +269,33 @@ class Volunteer < ApplicationRecord
     end
   end
 
+  def group_accompaniments_all_values
+    GroupOfferCategory.active.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
+  end
+
+  def group_accompaniments_active_without_house_moving
+    GroupOfferCategory.active_without_house_moving.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
+  end
+
+  def group_accompaniments_house_moving
+    GroupOfferCategory.house_moving.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
+  end
+
   def to_s
     contact.full_name
   end
 
   private
+
+  def user_added?
+    saved_change_to_attribute?(:user_id)
+  end
+
+  def copy_contact_to_user
+    user.profile&.contact&.update(contact.slice(:first_name, :last_name, :street, :postal_code,
+      :city, :primary_phone, :secondary_phone, :primary_email))
+    user.update(email: contact.primary_email)
+  end
 
   def record_acceptance_changed
     self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now if will_save_change_to_acceptance?

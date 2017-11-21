@@ -14,7 +14,8 @@ class ActiveSupport::TestCase
     # when tests are aborted
     [
       User, Volunteer, Client, ClientNotification, Contact, Profile, Journal, Assignment,
-      Department, LanguageSkill, Relative, GroupOffer, GroupAssignment
+      Department, LanguageSkill, Relative, GroupOffer, GroupAssignment, Feedback, BillingExpense,
+      Certificate, GroupAssignmentLog, Hour, Import, Reminder
     ].each do |model|
       model.with_deleted.map(&:really_destroy!)
     end
@@ -26,5 +27,23 @@ class ActiveSupport::TestCase
   def after_teardown
     DatabaseCleaner.clean
     super
+  end
+
+  def get_xls_from_response(url)
+    get url
+    excel_file = Tempfile.new
+    excel_file.write(response.body)
+    excel_file.close
+    Roo::Spreadsheet.open(excel_file.path, extension: 'xlsx')
+  end
+
+  def assert_xls_cols_equal(wb, row, offset, *columns)
+    columns.each_with_index do |column, index|
+      assert_equal column, wb.cell(row, index + 1 + offset)
+    end
+  end
+
+  def assert_xls_row_empty(wb, row, cols = 8)
+    (1..cols).to_a.each { |column| assert_nil wb.cell(row, column) }
   end
 end

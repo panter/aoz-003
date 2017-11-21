@@ -6,11 +6,11 @@
 @import 'bootstrap';
 @import 'bootstrap-datepicker3';
 @import 'bootstrap/variables';
-@import 'themes/jquery.ui.smoothness'; // variables for 'smothness' theme
 
-@import 'jquery.ui.core';
-@import 'jquery.ui.theme';
-@import 'jquery.ui.autocomplete';
+@import 'jquery-ui/core';
+@import 'jquery-ui/autocomplete';
+
+@import 'jquery-ui/theme';
 
 @import 'layout/navbar';
 @import 'layout/content';
