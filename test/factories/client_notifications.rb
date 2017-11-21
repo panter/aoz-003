@@ -6,10 +6,10 @@ FactoryBot.define do
     user
     active true
 
-    trait :fakered do
+    trait :faker_text do
       body { Faker::HeyArnold.quote }
     end
 
-    factory :client_notification_seed, traits: [:fakered]
+    factory :client_notification_seed, traits: [:faker_text]
   end
 end
