@@ -9,8 +9,7 @@ class GroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
   test 'xlsx file is downloadable' do
     10.times { create :group_offer }
     get group_offers_url(format: :xlsx)
-    assert_equal 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      response.content_type
+    assert_equal Mime[:xlsx], response.content_type
   end
 
   test 'xlsx files has the right columns' do

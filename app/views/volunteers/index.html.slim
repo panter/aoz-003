@@ -13,9 +13,9 @@ nav.navbar.section-navigation
   ul.list-inline
     li= button_link t('clear_filters'), volunteers_path, 'info', dimension: 'sm'
     li= button_link t('export_xlsx'), url_for(format: :xlsx, q: search_parameters), 'warning', dimension: 'sm'
-    - unless search_parameters.keys.include? 'acceptance_eq'
+    - unless search_parameters.include? 'acceptance_eq'
       = activeness_filter_dropdown
-    - unless search_parameters.keys.include? 'active_eq'
+    - unless search_parameters.include? 'active_eq'
       = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
     = intern_extern_filter_dropdown
     = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
