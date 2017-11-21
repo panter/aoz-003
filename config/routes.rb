@@ -47,5 +47,8 @@ Rails.application.routes.draw do
     put :change_active_state, on: :member
   end
 
+  resources :reminder_mailings do
+  end
+
   root 'application#home'
 end
