@@ -1,6 +1,10 @@
 ---
 en:
   aaa_injectable: &id-injectables
+    reminder_mailings:
+      kinds: &id-kinds-enum-values
+        probation_period: Probezeit
+        half_year: Halbjährlich
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: "age doesn't matter"
@@ -253,10 +257,14 @@ en:
         clients: Clients
         department: Department
         email: Email
+      reminder_mailing:
+        kinds: *id-kinds-enum-values
+        kind: Art
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-aceptance]
         additional_email_addresses: Additional email addresses
         additional_phone_numbers: Additional phone numbers
+        acceptances: *id-volunteer-aceptance
         address: Address
         external: External
         internal: Internal
