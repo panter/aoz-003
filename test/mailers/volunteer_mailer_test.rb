@@ -3,7 +3,7 @@ require 'test_helper'
 class VolunteerMailerTest < ActionMailer::TestCase
   def setup
     @volunteer = create :volunteer, education: 'Bogus Education', woman: true
-    @volunteer_email = create :volunteer_email
+    @email_template = create :email_template
   end
 
   test 'volunteer welcome mail with confirmation data is sent correctly' do
@@ -11,8 +11,8 @@ class VolunteerMailerTest < ActionMailer::TestCase
     # email encoded utf-8 umlauts
     @volunteer.contact.city = 'Zuerich'
     @volunteer.save
-    mailer = VolunteerMailer.welcome_email(@volunteer, @volunteer_email).deliver
-    assert_equal @volunteer_email.subject, mailer.subject
+    mailer = VolunteerMailer.welcome_email(@volunteer, @email_template).deliver
+    assert_equal @email_template.subject, mailer.subject
     assert_equal [@volunteer.contact.primary_email], mailer.to
     assert_equal ['info@aoz-freiwillige.ch'], mailer.from
 
