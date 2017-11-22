@@ -57,7 +57,7 @@ class Volunteer < ApplicationRecord
   has_many :group_assignment_logs
   has_and_belongs_to_many :group_offer_categories
 
-  has_many :reminder_mailing_volunteer, dependent: :destroy
+  has_many :reminder_mailing_volunteer
   has_many :reminder_mailings, through: :reminder_mailing_volunteer
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
