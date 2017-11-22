@@ -1,6 +1,10 @@
 ---
 de:
   aaa_injectable: &id-injectables
+    reminder_mailings:
+      kinds: &id-kinds-enum-values
+        probation_period: Probezeit
+        half_year: Halbjährlich
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: egal
@@ -369,6 +373,9 @@ de:
       relative:
         <<: *id-generic_keys
         relation: Verwandtschaftsbeziehung
+      reminder_mailing:
+        kinds: *id-kinds-enum-values
+        kind: Art
       reminder:
         sent_at: Versandt am
       user:
@@ -380,6 +387,7 @@ de:
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance]
         acceptance: Affirmation
+        acceptances: *id-volunteer-acceptance
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
@@ -779,6 +787,8 @@ de:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
     labels:
+      reminder_mailing:
+        kind: Art
       defaults:
         password: Passwort
         password_confirmation: Passwort bestätigen
