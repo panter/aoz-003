@@ -1,0 +1,20 @@
+h1 Errinnerungs Email Versand
+
+dl
+  dt Art
+  dd= @reminder_mailing.t_enum(:kind)
+  dt Betreff
+  dd= @reminder_mailing.subject
+  dt Email Text
+  dd= @reminder_mailing.body
+  dt Erstellt am
+  dd= l(@reminder_mailing.created_at.to_date)
+  - if @reminder_mailing.created_at.to_date < @reminder_mailing.updated_at.to_date
+    dt Geändert am
+    dd= l(@reminder_mailing.updated_at.to_date)
+  dt Versandt an
+  dd
+    dl
+      - @reminder_mailing.reminder_mailing_volunteers.each do |mailing_volunteer|
+        dt= mailing_volunteer.volunteer.to_s
+        dd= mailing_volunteer.reminder_mailable.to_s
