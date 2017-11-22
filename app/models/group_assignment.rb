@@ -1,15 +1,13 @@
 class GroupAssignment < ApplicationRecord
-  include GroupAssignmentAndAssignmentScopes
+  include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
   after_update :save_group_assignment_logs, if: :dates_updated?
   before_destroy :save_group_assignment_logs
 
   belongs_to :group_offer
-  belongs_to :volunteer
-  has_many :group_assignment_logs
 
-  has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
+  has_many :group_assignment_logs
 
   validates :volunteer, uniqueness: {
     scope: :group_offer,

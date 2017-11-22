@@ -7,6 +7,12 @@ class ReminderMailingVolunteer < ApplicationRecord
   belongs_to :volunteer
   belongs_to :reminder_mailable, polymorphic: true, optional: true
 
+  scope :group_assignment, (-> { where(reminder_mailable_type: 'GroupAssignment') })
+  scope :assignment, (-> { where(reminder_mailable_type: 'Assignment') })
+
+  scope :probation_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
+  scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
+
   private
 
   def remove_or_process_email_content
