@@ -5,6 +5,7 @@ class EmailTemplate < ApplicationRecord
   validates :kind, presence: true
 
   default_scope { order(created_at: :desc) }
+  scope :active_mail, -> { where(active: true) }
 
   def self.kind_collection
     kinds.keys.map(&:to_sym)
