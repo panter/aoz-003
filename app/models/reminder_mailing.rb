@@ -6,9 +6,14 @@ class ReminderMailing < ApplicationRecord
   accepts_nested_attributes_for :reminder_mailing_volunteers
 
   has_many :volunteers, through: :reminder_mailing_volunteers
-  has_many :volunteer_users, through: :volunteers, inverse_of: :user
+  has_many :users, through: :volunteers
 
-  enum kind: { half_year: 0, probation_period: 1  }
+  has_many :assignments, through: :reminder_mailing_volunteers, source: :reminder_mailable,
+    source_type: 'Assignment'
+  has_many :group_assignments, through: :reminder_mailing_volunteers, source: :reminder_mailable,
+    source_type: 'GroupAssignment'
+
+  enum kind: { half_year: 0, probation_period: 1 }
 
   # setter generates relation to assignment/group_assignment and volunteer in one go
   def reminder_mailing_volunteers=(reminder_mailable)
