@@ -9,7 +9,7 @@ class ReminderMailingsController < ApplicationController
   def show; end
 
   def new_probation_period
-    @assignments = Assignment.started_ca_six_weeks_ago
+    @assignments = Assignment.need_probation_period_reminder_mailing.distinct
     @reminder_mailing = ReminderMailing.new(
       kind: 'probation_period', reminder_mailing_volunteers: @assignments
     )
@@ -58,6 +58,9 @@ class ReminderMailingsController < ApplicationController
   end
 
   def reminder_mailing_params
-    params.require(:reminder_mailing).permit(:body, :subject, :volunteers, reminder_mailing_volunteers_attributes: [:volunteer_id, :reminder_mailable_id, :reminder_mailable_type, :selected])
+    params.require(:reminder_mailing).permit(:body, :kind, :subject, :volunteers,
+      reminder_mailing_volunteers_attributes: [
+        :volunteer_id, :reminder_mailable_id, :reminder_mailable_type, :selected
+      ])
   end
 end
