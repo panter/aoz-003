@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class VolunteerApplicationsTest < ApplicationSystemTestCase
   setup do
     @user = create :user
-    create :volunteer_email
+    create :email_template
   end
 
   test 'login page show link for volunteer application' do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116140737) do
+ActiveRecord::Schema.define(version: 20171122145632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -424,19 +424,6 @@ ActiveRecord::Schema.define(version: 20171116140737) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "volunteer_emails", force: :cascade do |t|
-    t.string "subject"
-    t.string "title"
-    t.text "body"
-    t.bigint "user_id"
-    t.boolean "active"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_at"], name: "index_volunteer_emails_on_deleted_at"
-    t.index ["user_id"], name: "index_volunteer_emails_on_user_id"
-  end
-
   create_table "volunteers", force: :cascade do |t|
     t.date "birth_year"
     t.string "salutation"
@@ -513,6 +500,5 @@ ActiveRecord::Schema.define(version: 20171116140737) do
   add_foreign_key "journals", "users"
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
-  add_foreign_key "volunteer_emails", "users"
   add_foreign_key "volunteers", "users"
 end

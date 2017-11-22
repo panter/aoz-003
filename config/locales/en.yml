@@ -280,8 +280,6 @@ en:
         waive: I waived the compensation of my expenses.
         woman: Woman
         working_percent: Employment rate (in Percent)
-      volunteer_email:
-        user: Created by
     models:
       assignment: Assignment
       feedback: Feedback
@@ -291,6 +289,7 @@ en:
       client_notification: Klienten Wartezeit Benachrichtigung
       contact: Contact
       department: Department
+      email_template: E-mailvorlage
       group_offer: Group offer
       group_offer_category: Group offer category
       hour: Hour report
@@ -303,7 +302,6 @@ en:
       user: User
       volunteer: Volunteer
       volunteer_application: Volunteer Registration
-      volunteer_email: Confirmation email
       volunteer_experience_desc: If you have any experiences with voluntary work, please describe any further here.
   add_entry: Add entry
   add_journal_entry: Write a journal entry
@@ -694,9 +692,6 @@ en:
   volunteer_created: Volunteer was successfully created.
   volunteer_created_invite_sent: 'Volunteer was successfully created. Invitation sent to %{email}.'
   volunteer_destroyed: Volunteer was successfully deleted.
-  volunteer_emails:
-    one: Volunteer email
-    other: Volunteer emails
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
