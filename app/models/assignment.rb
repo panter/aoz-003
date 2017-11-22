@@ -1,6 +1,6 @@
 class Assignment < ApplicationRecord
   include ImportRelation
-  include GroupAssignmentAndAssignmentScopes
+  include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
   after_update :delete_reminder, if: :saved_change_to_confirmation?
@@ -8,17 +8,12 @@ class Assignment < ApplicationRecord
   belongs_to :client
   accepts_nested_attributes_for :client
 
-  belongs_to :volunteer
-  accepts_nested_attributes_for :volunteer
-
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
   has_many :hours, as: :hourable, dependent: :destroy
 
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
   has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
   has_many :reminders, dependent: :destroy
-
-  has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze
 
@@ -46,19 +41,8 @@ class Assignment < ApplicationRecord
     where('assignments.period_end < ?', Time.zone.today)
   }
 
-  def started_six_months_ago?
-    period_start < 6.months.ago
-  end
-
-  def started_ca_six_weeks_ago?
-    period_start < 6.weeks.ago && period_start > 8.weeks.ago
-  end
-
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
   scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })
-
-  scope :internal, (-> { joins(:volunteer).merge(Volunteer.internal) })
-  scope :external, (-> { joins(:volunteer).merge(Volunteer.external) })
 
   def creator
     super || User.deleted.find_by(id: creator_id)

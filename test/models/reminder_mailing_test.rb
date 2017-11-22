@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ReminderMailingTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'reminder_mailing_has_users_through' do
+    volunteer_user = create :volunteer_with_user
+  end
 end

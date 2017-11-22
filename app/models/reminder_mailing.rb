@@ -1,10 +1,14 @@
 class ReminderMailing < ApplicationRecord
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
-  has_many :reminder_mailing_volunteers, dependent: :destroy
+
+  # nullify on delete in order to keep sent mail links available
+  has_many :reminder_mailing_volunteers, dependent: :nullify
   accepts_nested_attributes_for :reminder_mailing_volunteers
 
   has_many :volunteers, through: :reminder_mailing_volunteers
-  enum kind: { probation_period: 1, half_year: 0 }
+  has_many :volunteer_users, through: :volunteers, inverse_of: :user
+
+  enum kind: { half_year: 0, probation_period: 1  }
 
   # setter generates relation to assignment/group_assignment and volunteer in one go
   def reminder_mailing_volunteers=(reminder_mailable)
