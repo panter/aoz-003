@@ -21,9 +21,11 @@ class ReminderMailingVolunteer < ApplicationRecord
       Name: "#{volunteer.contact.first_name} #{volunteer.contact.last_name}"
     }
     if reminder_mailable.class == Assignment
-      template_vars[:Begleitung] = reminder_mailable.title
+      template_vars[:Begleitung] = reminder_mailable.to_label
+      template_vars[:EinsatzStart] = I18n.l(reminder_mailable.period_start)
     elsif reminder_mailable.class == GroupAssignment
-      template_vars[:Gruppenangebot] = reminder_mailable.group_offer.title
+      template_vars[:Gruppenangebot] = reminder_mailable.group_offer.to_label
+      template_vars[:EinsatzStart] = I18n.l(reminder_mailable.period_start)
     end
     template_vars
   end
