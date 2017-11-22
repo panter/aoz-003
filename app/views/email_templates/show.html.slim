@@ -14,7 +14,7 @@ h1= t_title(:show)
         td= t(@email_template.active)
       tr
         td Art
-        td= @email_template.kind
+        td= t(".#{@email_template.kind}")
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
