@@ -6,6 +6,8 @@ class CreateReminderMailingVolunteers < ActiveRecord::Migration[5.1]
       t.references :reminder_mailable, polymorphic: true, index: { name: 'reminder_mailable_index' }
       t.integer :link_visits, default: 0
       t.boolean :confirmed_form, default: false
+      t.string :subject
+      t.text :body
 
       t.datetime :deleted_at, index: true
       t.timestamps

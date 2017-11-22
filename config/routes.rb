@@ -47,7 +47,9 @@ Rails.application.routes.draw do
     put :change_active_state, on: :member
   end
 
-  resources :reminder_mailings do
+  resources :reminder_mailings, except: [:new] do
+    get :new_probation_period, on: :collection
+    get :new_half_year, on: :collection
   end
 
   root 'application#home'
