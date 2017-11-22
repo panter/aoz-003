@@ -1,6 +1,5 @@
 class ClientNotificationsController < ApplicationController
   before_action :set_client_notification, only: [:edit, :update, :destroy]
-  before_action :translate_model_name, only: [:update, :destroy]
 
   def index
     authorize ClientNotification
@@ -20,7 +19,7 @@ class ClientNotificationsController < ApplicationController
     authorize @client_notification
     if @client_notification.save
       redirect_to client_notifications_path,
-        notice: t('crud.created', model: @client_notification.class.model_name.human)
+        notice: t('crud.created', model: human_model_name)
     else
       render :new
     end
@@ -28,7 +27,7 @@ class ClientNotificationsController < ApplicationController
 
   def update
     if @client_notification.update(client_notification_params)
-      redirect_to client_notifications_path, notice: t('crud.updated', model: @translated_model_name)
+      redirect_to client_notifications_path, notice: t('crud.updated', model: human_model_name)
     else
       render :edit
     end
@@ -36,7 +35,7 @@ class ClientNotificationsController < ApplicationController
 
   def destroy
     @client_notification.destroy
-    redirect_to client_notifications_url, notice: t('crud.destroyed', model: @translated_model_name)
+    redirect_to client_notifications_url, notice: t('crud.destroyed', model: human_model_name)
   end
 
   private
@@ -46,8 +45,8 @@ class ClientNotificationsController < ApplicationController
     authorize @client_notification
   end
 
-  def translate_model_name
-    @translated_model_name = @client_notification.class.model_name.human
+  def human_model_name
+    @client_notification.class.model_name.human
   end
 
   def client_notification_params
