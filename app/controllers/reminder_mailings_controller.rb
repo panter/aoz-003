@@ -6,13 +6,27 @@ class ReminderMailingsController < ApplicationController
     @reminder_mailings = ReminderMailing.all
   end
 
-  def new
-    @reminder_mailing = ReminderMailing.new
+  def show; end
+
+  def new_probation_period
+    @assignments = Assignment.started_ca_six_weeks_ago
+    @reminder_mailing = ReminderMailing.new(
+      kind: 'probation_period', reminder_mailing_volunteers: @assignments
+    )
+    authorize @reminder_mailing
+  end
+
+  def new_half_year
+    @reminder_mailables = Assignment.started_six_months_ago + GroupAssignment.started_six_months_ago
+    @reminder_mailing = ReminderMailing.new(
+      kind: 'half_year', reminder_mailing_volunteers: @reminder_mailables
+    )
     authorize @reminder_mailing
   end
 
   def create
     @reminder_mailing = ReminderMailing.new(reminder_mailing_params)
+    @reminder_mailing.creator = current_user
     authorize @reminder_mailing
     if @reminder_mailing.save
       redirect_to @reminder_mailing, make_notice
@@ -44,6 +58,6 @@ class ReminderMailingsController < ApplicationController
   end
 
   def reminder_mailing_params
-    params.require(:reminder_mailing).permit(:body, :subject, :volunteers, :kind)
+    params.require(:reminder_mailing).permit(:body, :subject, :volunteers, reminder_mailing_volunteers_attributes: [:volunteer_id, :reminder_mailable_id, :reminder_mailable_type, :selected])
   end
 end
