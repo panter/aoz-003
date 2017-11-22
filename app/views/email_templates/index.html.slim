@@ -15,7 +15,7 @@ h1 Alle E-mailvorlagen
         tr
           td = email_template.subject
           td = word_wrap(email_template.body)
-          td = email_template.kind
+          td = t(".#{email_template.kind}")
           td = t(email_template.active)
           = render 'index_actions', subject: email_template
 
