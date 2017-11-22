@@ -420,13 +420,6 @@ de:
         waive: Ich verzichte auf die Auszahlung von Spesen.
         woman: Frau
         working_percent: Stellenprozent
-      volunteer_email:
-        active: Aktiv
-        body: Textkörper
-        registrar: Registrator/in
-        subject: Betreff
-        title: Überschrift
-        user: Ersteller
     errors:
       models:
         profile:
@@ -483,7 +476,6 @@ de:
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
-      volunteer_email: Anmeldungsbestätigungs-Nachricht editieren
   add_entry: Eintrag Hinzufügen
   add_journal_entry: Journaleintrag verfassen
   add_relative: Verwandte hinzufügen
@@ -885,9 +877,6 @@ de:
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_created_invite_sent: 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an %{email} verschickt.'
   volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
-  volunteer_emails:
-    one: Bestätigungs-Mail
-    other: Bestätigungs-Mails
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:
