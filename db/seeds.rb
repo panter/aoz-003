@@ -121,15 +121,12 @@ Volunteer.acceptance_collection.each do |acceptance|
   end
 end
 
-# Create VolunteerEmails
-if VolunteerEmail.count < 1
-  superadmin = User.find_by(email: 'superadmin@example.com')
-  [
-    FactoryBot.create(:volunteer_email_seed, active: true, user: superadmin),
-    2.times do
-      FactoryBot.create(:volunteer_email_seed, active: false, user: superadmin)
-    end
-  ]
+# Create EmailTemplates
+if EmailTemplate.count < 1
+  FactoryBot.create :email_template_seed, active: true
+  2.times do
+    FactoryBot.create :email_template_seed, active: false
+  end
 end
 
 # Create assignments

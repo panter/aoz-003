@@ -12,7 +12,7 @@ h1 Alle E-mailvorlagen
       th
     tbody
       - @email_templates.each do |email_template|
-        tr
+        tr class=(email_template.active ? 'bg-success': '')
           td = email_template.subject
           td = word_wrap(email_template.body)
           td = t(".#{email_template.kind}")

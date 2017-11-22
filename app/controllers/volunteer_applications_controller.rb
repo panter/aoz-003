@@ -15,8 +15,8 @@ class VolunteerApplicationsController < ApplicationController
     @volunteer = Volunteer.new(volunteer_params)
     authorize :volunteer_application, :create?
     if @volunteer.save
-      if VolunteerEmail.active_mail.present?
-        VolunteerMailer.welcome_email(@volunteer, VolunteerEmail.active_mail).deliver
+      if EmailTemplate.active_mail.signup.present?
+        VolunteerMailer.welcome_email(@volunteer, EmailTemplate.active_mail.signup.last).deliver
       end
       redirect_to thanks_volunteer_applications_url
     else
