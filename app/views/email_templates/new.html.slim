@@ -2,13 +2,13 @@ h1= t_title(:new)
 
 p Sie können die folgenden Variablen benützen:
 ul
-  li %{anrede}
-  li %{name}
-  li %{feedback-link}
-  li %{assignment-title}
+  li %<anrede>
+  li %<name>
+  li %<feedback-link>
+  li %<assignment-title>
 p Zum Beispeil:
-p Liebe/r %{anrede} %{name}
-p Wir bitten um Ihre %{feedback_link} für %{assignment_title}.
+p Liebe/r %<anrede> %<name>
+p Wir bitten um Ihre %<feedback_link> für %<assignment_title>.
 p Danke im Voraus!
 
 = render 'form'
