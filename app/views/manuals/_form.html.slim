@@ -1,0 +1,19 @@
+= simple_form_for(@manual) do |f|
+  = simple_error_notice f
+
+  .row
+    .col-xs-12
+      = f.input :category,
+                as: :select,
+                collection: Manual::CATEGORIES,
+                include_blank: true
+    .col-xs-12
+      = f.input :title
+    .col-xs-12
+      = f.input :description
+    .col-xs-12
+      = f.input :attachment, as: :file
+
+  .row
+    .col-xs-12
+      = f.button :submit, class: 'btn btn-success'

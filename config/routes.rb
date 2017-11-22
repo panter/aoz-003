@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     get :archived, on: :collection
     put :change_active_state, on: :member
   end
+  resources :manuals, except: [:show]
 
   root 'application#home'
 end

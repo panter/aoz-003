@@ -1,0 +1,28 @@
+h1 Anleitungen
+
+= form_navigation_btn :new
+
+.table-responsive
+  table.table
+    thead
+      th Erstellt am
+      th Kategorie
+      th Titel
+      th Beschreibung
+      th Anhang
+      th Erstellt von
+      th colspan=2
+    tbody
+      - @manuals.each do |manual|
+        tr
+          td= l(manual.created_at.to_date)
+          td= manual.category
+          td= manual.title
+          td= truncate(manual.description, length: 40, omission: ' ……')
+          td= link_to attachment_glyph(manual.attachment_file_size), manual.attachment.url
+          td= link_to manual.user.full_name, manual.user.profile
+          td.index-action-cell.hidden-print
+            span= link_to t_action(:edit), edit_manual_path(manual)
+            span= link_to t_action(:destroy), manual_path(manual), confirm_deleting(manual)
+
+= form_navigation_btn :new
