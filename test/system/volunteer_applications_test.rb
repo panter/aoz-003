@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class VolunteerApplicationsTest < ApplicationSystemTestCase
   setup do
     @user = create :user
-    create :email_template
+    create :email_template, body: 'Liebe/r %<anrede> %<name>', subject: '%<anrede> %<name>'
   end
 
   test 'login page show link for volunteer application' do
@@ -26,8 +26,8 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
 
     assert page.has_current_path? new_volunteer_application_path
     assert page.has_text? 'Volunteer Registration'
-    fill_in 'First name', with: 'Volunteer'
-    fill_in 'Last name', with: 'Application'
+    fill_in 'First name', with: 'Vorname'
+    fill_in 'Last name', with: 'Name'
     within '.volunteer_birth_year' do
       select('1980', from: 'Birth year')
     end
@@ -60,6 +60,12 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     click_button 'Submit registration'
 
     assert_equal 1, ActionMailer::Base.deliveries.size
+    mailer = ActionMailer::Base.deliveries.last
+    mail_body = mailer.body.encoded
+
+    assert_includes mail_body, 'Liebe/r Mrs. Vorname Name'
+    refute_includes mail_body, '%<anrede> %<name>'
+    assert_equal mailer.subject, 'Mrs. Vorname Name'
 
     assert page.has_current_path? thanks_volunteer_applications_path
     assert page.has_text? 'Thank you'
