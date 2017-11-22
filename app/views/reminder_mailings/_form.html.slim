@@ -1,5 +1,6 @@
 = simple_form_for @reminder_mailing do |f|
   = simple_error_notice f
+  = f.input_field :kind, value: @reminder_mailing.kind, as: :hidden
 
   table.table.table-striped
     thead
