@@ -29,6 +29,15 @@ de:
       feedback: Rückmeldung
       telephone: Telefonat
     created_at: Erstellt um
+    email_templates:
+      kind: &id-kinds
+        assignment: Begleitung
+        signup: Anmeldung
+        trial: Probezeit
+      index:
+        <<: *id-kinds
+      show:
+        <<: *id-kinds
     gender_request: &id-gender_requests
       all: Alle
       man: Mann
@@ -825,6 +834,8 @@ de:
           relation: *id-relations
         salutation: *id-salutations
         state: *id-states
+      email_template:
+        kind: *id-kinds
       group_offer:
         group_offer_categories: Gruppenangebot Kategorien
         offer_type: *id-offer-types
