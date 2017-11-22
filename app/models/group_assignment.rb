@@ -9,7 +9,7 @@ class GroupAssignment < ApplicationRecord
   belongs_to :volunteer
   has_many :group_assignment_logs
 
-  has_many :reminder_mailings, as: :reminder_mailable
+  has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
 
   validates :volunteer, uniqueness: {
     scope: :group_offer,

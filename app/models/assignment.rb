@@ -18,7 +18,7 @@ class Assignment < ApplicationRecord
   has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
   has_many :reminders, dependent: :destroy
 
-  has_many :reminder_mailings, as: :reminder_mailable, dependent: :destroy
+  has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze
 
