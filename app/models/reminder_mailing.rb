@@ -1,6 +1,6 @@
 class ReminderMailing < ApplicationRecord
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
-  has_many :reminder_mailing_volunteers
+  has_many :reminder_mailing_volunteers, dependent: :destroy
   accepts_nested_attributes_for :reminder_mailing_volunteers
 
   has_many :volunteers, through: :reminder_mailing_volunteers
