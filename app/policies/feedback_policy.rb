@@ -6,22 +6,6 @@ class FeedbackPolicy < ApplicationPolicy
     end
   end
 
-  def superadmin_or_volunteers_feedback?
-    superadmin? || volunteer? && of_and_from_volunteer? && in_feedbackable?
-  end
-
-  def of_and_from_volunteer?
-    user.volunteer.id == record.volunteer.id && user.id == record.author.id
-  end
-
-  def in_feedbackable?
-    if record.feedbackable.class == Assignment
-      record.feedbackable.volunteer.id == user.volunteer.id
-    else
-      record.feedbackable.volunteers.ids.include? user.volunteer.id
-    end
-  end
-
   alias_method :index?,   :superadmin_or_volunteer?
   alias_method :new?,     :superadmin_or_volunteers_feedback?
   alias_method :show?,    :superadmin_or_volunteers_feedback?

@@ -32,9 +32,11 @@ Rails.application.routes.draw do
     resources :certificates
     resources :group_offers do
       resources :feedbacks
+      resources :trial_feedbacks
     end
     resources :assignments do
       resources :feedbacks
+      resources :trial_feedbacks
     end
   end
   resources :group_assignments, only: [:show]
