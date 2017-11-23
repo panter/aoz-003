@@ -85,5 +85,13 @@ FactoryBot.define do
         :fake_availability, :fake_single_assignments
       ]
     )
+
+    factory(
+      :volunteer_seed_with_user,
+      traits: [:seed_contact, :with_language_skills, :with_journals, :faker_extra,
+               :fake_availability, :fake_single_assignments]
+    ) do
+      after(:create) { |volunteer| volunteer.update(user: create(:user_volunteer)) }
+    end
   end
 end
