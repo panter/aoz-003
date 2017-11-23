@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122145632) do
+ActiveRecord::Schema.define(version: 20171122175340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -394,6 +394,23 @@ ActiveRecord::Schema.define(version: 20171122145632) do
     t.index ["assignment_id"], name: "index_reminders_on_assignment_id"
     t.index ["deleted_at"], name: "index_reminders_on_deleted_at"
     t.index ["volunteer_id"], name: "index_reminders_on_volunteer_id"
+  end
+
+  create_table "trial_feedbacks", force: :cascade do |t|
+    t.text "body"
+    t.integer "feedbackable_id"
+    t.string "feedbackable_type"
+    t.bigint "volunteer_id"
+    t.bigint "author_id"
+    t.bigint "reviewer_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_trial_feedbacks_on_author_id"
+    t.index ["deleted_at"], name: "index_trial_feedbacks_on_deleted_at"
+    t.index ["feedbackable_id", "feedbackable_type"], name: "index_trial_feedbacks_on_feedbackable_id_and_feedbackable_type"
+    t.index ["reviewer_id"], name: "index_trial_feedbacks_on_reviewer_id"
+    t.index ["volunteer_id"], name: "index_trial_feedbacks_on_volunteer_id"
   end
 
   create_table "users", force: :cascade do |t|
