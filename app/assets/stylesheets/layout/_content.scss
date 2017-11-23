@@ -3,9 +3,11 @@
   margin-bottom: $padding-large-horizontal;
 }
 
-.dl-horizontal dt {
-  font-weight: normal;
-  text-align: left;
+.dl-horizontal {
+  dt {
+    font-weight: normal;
+    text-align: left;
+  }
 }
 
 .filters {
@@ -22,6 +24,19 @@
   ul {
     margin: 5px 0;
   }
+
+  .section-nav-ul {
+    border-top: 1px solid $gray;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 4px;
+
+    li {
+      flex: 0 0 auto;
+      margin-right: 5px;
+    }
+  }
 }
 
 .row {
@@ -35,9 +50,11 @@
   }
 }
 
-.language-skill-index span {
-  display: block;
-  margin-bottom: 3px;
+.language-skill-index {
+  span {
+    display: block;
+    margin-bottom: 3px;
+  }
 }
 
 #email_template_body {

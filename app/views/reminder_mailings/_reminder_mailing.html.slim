@@ -1,5 +1,8 @@
 tr
-  td= reminder_mailing.kind
+  td= reminder_mailing.t_enum(:kind)
   td= reminder_mailing.creator.to_label
   td= l(reminder_mailing.created_at)
   td= l(reminder_mailing.updated_at)
+  td
+    span= link_to 'Anzeigen', reminder_mailing
+    span= link_to 'Bearbeiten', edit_reminder_mailing_path(reminder_mailing)
