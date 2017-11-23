@@ -1,7 +1,6 @@
 class ClientNotificationPolicy < ApplicationPolicy
   # controller action policies
   alias_method :index?,           :superadmin?
-  alias_method :clients_index?,   :superadmin?
   alias_method :new?,             :superadmin?
   alias_method :edit?,            :superadmin?
   alias_method :create?,          :superadmin?

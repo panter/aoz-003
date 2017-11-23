@@ -10,7 +10,7 @@ h1 Klienten Wartezeit Benachrichtigungen
       th colspan=2
     tbody
       - @client_notifications.each do |notification|
-        tr class=(notification.active ? 'bg-success': '') title=(notification.active ? 'Aktiv': '')
+        tr class=('bg-success' if notification.active) title=('Aktiv' if notification.active)
           td= l(notification.created_at.to_date)
           td= boolean_glyph(notification.active)
           td= word_wrap(notification.body) if notification.body

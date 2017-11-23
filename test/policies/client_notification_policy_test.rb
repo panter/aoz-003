@@ -12,14 +12,14 @@ class ClientNotificationPolicyTest < PolicyAssertions::Test
   test 'superadmin gets actions granted' do
     assert_permit(
       superadmin, client_notification,
-      'index?', 'clients_index?', 'edit?', 'create?', 'update?', 'destroy?'
+      'index?', 'edit?', 'create?', 'update?', 'destroy?'
     )
   end
 
   test 'socialworker get no access' do
     refute_permit(
       social_worker, client_notification,
-      'index?', 'clients_index?', 'edit?', 'create?', 'update?', 'destroy?'
+      'index?', 'edit?', 'create?', 'update?', 'destroy?'
     )
   end
 end
