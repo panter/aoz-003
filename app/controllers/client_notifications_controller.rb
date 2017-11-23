@@ -18,8 +18,7 @@ class ClientNotificationsController < ApplicationController
     @client_notification.user = current_user
     authorize @client_notification
     if @client_notification.save
-      redirect_to client_notifications_path,
-        notice: t('crud.created', model: human_model_name)
+      redirect_to client_notifications_path, make_notice
     else
       render :new
     end
@@ -27,7 +26,7 @@ class ClientNotificationsController < ApplicationController
 
   def update
     if @client_notification.update(client_notification_params)
-      redirect_to client_notifications_path, notice: t('crud.updated', model: human_model_name)
+      redirect_to client_notifications_path, make_notice
     else
       render :edit
     end
@@ -35,7 +34,7 @@ class ClientNotificationsController < ApplicationController
 
   def destroy
     @client_notification.destroy
-    redirect_to client_notifications_url, notice: t('crud.destroyed', model: human_model_name)
+    redirect_to client_notifications_url, make_notice
   end
 
   private
@@ -43,10 +42,6 @@ class ClientNotificationsController < ApplicationController
   def set_client_notification
     @client_notification = ClientNotification.find(params[:id])
     authorize @client_notification
-  end
-
-  def human_model_name
-    @client_notification.class.model_name.human
   end
 
   def client_notification_params
