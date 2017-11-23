@@ -21,7 +21,13 @@ table.table.table-striped
         td = word_wrap(record.body) if record.body?
         - if policy(TrialFeedback).superadmin_priviledges?
           td= link_to record.author.full_name, record.author
-          td= link_to record.reviewer.full_name, record.reviewer if record.reviewer
+          td
+            - if record.reviewer
+              = link_to record.reviewer.full_name, record.reviewer if record.reviewer
+            - else
+              = button_to 'Überprüfen', polymorphic_path([@volunteer, record.feedbackable, record],
+                { trial_feedback: { volunteer_id: record.volunteer.id, feedbackable_id: record.feedbackable.id, id: record.id } }),
+                  { method: :put, class: 'btn btn-success btn-xs' }
         td= link_to t_action(:show), polymorphic_path([@volunteer, record.feedbackable, record])
         td= link_to t_action(:edit), edit_polymorphic_path([@volunteer, record.feedbackable, record])
         td= link_to t_action(:destroy), polymorphic_path([@volunteer, record.feedbackable, record]), confirm_deleting(record)
