@@ -4,17 +4,17 @@ h1= t_title(:show)
   table.table.table-no-border-top
     tbody
       tr
-        td Betreff
-        td= @email_template.subject
-      tr
-        td Textkörper
-        td= @email_template.body
+        td Art
+        td= t(".#{@email_template.kind}")
       tr
         td Aktiv
         td= t(@email_template.active)
       tr
-        td Art
-        td= t(".#{@email_template.kind}")
+        td Betreff
+        td= @email_template.subject
+      tr
+        td Text
+        td= @email_template.body
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
