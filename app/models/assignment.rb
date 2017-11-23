@@ -66,6 +66,10 @@ class Assignment < ApplicationRecord
     feedbacks.where(author: volunteer.user).last
   end
 
+  def last_trial_feedback
+    trial_feedbacks.last
+  end
+
   def last_hour
     hours.last
   end
