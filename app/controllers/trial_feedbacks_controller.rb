@@ -31,7 +31,7 @@ class TrialFeedbacksController < ApplicationController
   end
 
   def update
-    if @trial_feedback.update(feedback_params
+    if @trial_feedback.update(trial_feedback_params
         .merge(reviewer_id: current_user.superadmin? ? current_user.id : nil))
       redirect_to @trial_feedback.volunteer, make_notice
     else
