@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116125831) do
+ActiveRecord::Schema.define(version: 20171123143422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,6 +307,22 @@ ActiveRecord::Schema.define(version: 20171116125831) do
     t.string "languageable_type"
     t.index ["deleted_at"], name: "index_language_skills_on_deleted_at"
     t.index ["languageable_type", "languageable_id"], name: "index_language_skills_on_languageable_type_and_languageable_id"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "title"
+    t.string "category0"
+    t.string "category1"
+    t.string "category2"
+    t.string "category3"
+    t.string "attachment_file_name"
+    t.string "attachment_content_type"
+    t.integer "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_documents_on_deleted_at"
   end
 
   create_table "performance_reports", force: :cascade do |t|
