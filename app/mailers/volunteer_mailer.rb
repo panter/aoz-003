@@ -3,12 +3,14 @@ class VolunteerMailer < ApplicationMailer
   def welcome_email(volunteer, signup_email)
     @volunteer = volunteer
     @signup_email = signup_email
+    template_variables = {
+      Anrede: I18n.t("salutation.#{volunteer.salutation}"),
+      Name: "#{volunteer.contact.first_name} #{volunteer.contact.last_name}"
+    }
     subject = signup_email.subject
-    subject.gsub! '%<anrede>', t("salutation.#{volunteer.salutation}")
-    subject.gsub! '%<name>', "#{volunteer.contact.first_name} #{volunteer.contact.last_name}"
+    @subject = subject % template_variables
     body = signup_email.body
-    body.gsub! '%<anrede>', t("salutation.#{volunteer.salutation}")
-    body.gsub! '%<name>', "#{volunteer.contact.first_name} #{volunteer.contact.last_name}"
-    mail(to: @volunteer.contact.primary_email, subject: @signup_email.subject)
+    @body = body % template_variables
+    mail(to: @volunteer.contact.primary_email, subject: @subject)
   end
 end

@@ -5,7 +5,10 @@ class EmailTemplate < ApplicationRecord
   validates :kind, presence: true
 
   default_scope { order(created_at: :desc) }
-  scope :active_mail, -> { where(active: true) }
+
+  def self.active
+    where(active: true)
+  end
 
   def self.kind_collection
     kinds.keys.map(&:to_sym)
@@ -13,6 +16,6 @@ class EmailTemplate < ApplicationRecord
 
   def ensure_exactly_one_active_per_kind
     return unless active && changed.include?('active')
-    EmailTemplate.where(kind: kind, active: true).update(active: false)
+    EmailTemplate.where(kind: kind).update(active: false)
   end
 end
