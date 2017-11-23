@@ -112,6 +112,14 @@ module ApplicationHelper
     end
   end
 
+  def attachment_glyph(value)
+    if value
+      content_tag(:i, '', class: 'glyphicon glyphicon-paperclip')
+    else
+      content_tag(:i, '', class: '')
+    end
+  end
+
   def bootstrap_paginate(paginate_collection)
     tag.div class: 'text-center hidden-print' do
       will_paginate paginate_collection, renderer: BootstrapPagination::Rails

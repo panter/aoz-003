@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116125831) do
+ActiveRecord::Schema.define(version: 20171121150616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,6 +309,22 @@ ActiveRecord::Schema.define(version: 20171116125831) do
     t.index ["languageable_type", "languageable_id"], name: "index_language_skills_on_languageable_type_and_languageable_id"
   end
 
+  create_table "manuals", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "category"
+    t.string "attachment_file_name"
+    t.string "attachment_content_type"
+    t.integer "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.bigint "user_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_manuals_on_deleted_at"
+    t.index ["user_id"], name: "index_manuals_on_user_id"
+  end
+
   create_table "performance_reports", force: :cascade do |t|
     t.date "period_start"
     t.date "period_end"
@@ -488,6 +504,7 @@ ActiveRecord::Schema.define(version: 20171116125831) do
   add_foreign_key "hours", "billing_expenses"
   add_foreign_key "journals", "assignments"
   add_foreign_key "journals", "users"
+  add_foreign_key "manuals", "users"
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "volunteer_emails", "users"

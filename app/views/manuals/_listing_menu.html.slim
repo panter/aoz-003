@@ -1,0 +1,8 @@
+nav.navbar.section-navigation
+  hr
+  ul.list-inline
+    li= button_link t_title(:new), new_manual_path, 'success', dimension: 'sm'
+    li= button_link t('clear_filters'), manuals_path, 'info', dimension: 'sm'
+    / TODO: add filter for categories
+    / li= list_filter_dropdown(Manual::CATEGORIES, Manual::CATEGORIES.each {|x| puts x.to_s})
+  hr

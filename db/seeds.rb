@@ -22,6 +22,10 @@ def random_category
   Journal::CATEGORIES.sample
 end
 
+def random_manual_category
+  Manual::CATEGORIES.sample
+end
+
 def make_relatives
   Array.new(2).map do
     Relative.new do |relative|
@@ -147,4 +151,14 @@ end
 Assignment.all.each do |assignment|
   FactoryBot.create(:feedback, volunteer: assignment.volunteer, feedbackable: assignment,
     author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
+end
+
+# create Manual
+if Manual.count < 1
+  superadmin = User.find_by(email: 'superadmin@example.com')
+  [
+    3.times do
+      FactoryBot.create(:manual_seed, category: random_manual_category, user: superadmin)
+    end
+  ]
 end
