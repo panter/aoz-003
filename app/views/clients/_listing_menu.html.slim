@@ -18,8 +18,7 @@ nav.navbar.section-navigation.hidden-print
       li= button_link 'Klienten ohne Begleitung', need_accompanying_clients_url, dimension: :sm
     - if action_name == 'need_accompanying'
       li= button_link 'Klienten mit Begleitung', with_assignment_clients_url, dimension: :sm
-    - if policy(ClientNotification).clients_index?
-      li= button_link 'Wartezeit Benachrichtigungen', client_notifications_path, dimension: 'xl'
-
+    - if policy(ClientNotification).index?
+      li= button_link 'Wartezeit Benachrichtigungen', client_notifications_path, dimension: :sm
 
   hr
