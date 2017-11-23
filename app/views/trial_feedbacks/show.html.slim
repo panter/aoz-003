@@ -27,7 +27,13 @@ h1= t_title(:show)
           td= link_to @trial_feedback.author.full_name, @trial_feedback.author
         tr
           td Eingesehen von
-          td= link_to @trial_feedback.reviewer.full_name, @trial_feedback.reviewer if @trial_feedback.reviewer
+          td
+            - if @trial_feedback.reviewer
+              = link_to @trial_feedback.reviewer.full_name, @trial_feedback.reviewer if @trial_feedback.reviewer
+            - else
+              = button_to 'Überprüfen', polymorphic_path([@volunteer, @trial_feedback.feedbackable, @trial_feedback],
+                { trial_feedback: { volunteer_id: @trial_feedback.volunteer.id, feedbackable_id: @trial_feedback.feedbackable.id, id: @trial_feedback.id } }),
+                  { method: :put, class: 'btn btn-success btn-xs' }
 
 = form_navigation_btn :edit
 = bootstrap_row_col { button_link t('back'), @volunteer }

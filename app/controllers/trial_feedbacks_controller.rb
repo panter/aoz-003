@@ -20,7 +20,7 @@ class TrialFeedbacksController < ApplicationController
 
   def create
     @trial_feedback = TrialFeedback.new(trial_feedback_params.merge(author_id: current_user.id,
-      volunteer_id: @volunteer.id))
+      volunteer_id: @volunteer.id, reviewer_id: current_user.superadmin? ? current_user.id : nil))
     @trial_feedback.feedbackable = @feedbackable
     authorize @trial_feedback
     if @trial_feedback.save
@@ -63,6 +63,7 @@ class TrialFeedbacksController < ApplicationController
   end
 
   def trial_feedback_params
-    params.require(:trial_feedback).permit(:body, :volunteer_id, :group_offer_id, :assignment_id)
+    params.require(:trial_feedback).permit(:body, :volunteer_id, :group_offer_id, :assignment_id,
+      :feedbackable_id)
   end
 end
