@@ -1,20 +1,20 @@
 h1= t_title(:new)
 
-p Sie können die folgenden Variablen benützen:
+p Sie können die folgenden Platzhalter benützen:
 ul
-  li %<anrede>
-  li %<name>
-  li %<feedback-link>
-  li %<assignment-title>
-p Zum Beispeil:
-p Liebe/r %<anrede> %<name>
-p Wir bitten um Ihre %<feedback_link> für %<assignment_title>.
+  li %{Anrede}
+  li %{Name}
+  li %{feedback-link}
+  li %{assignment-title}
+p Zum Beispiel:
+p Liebe/r %{Anrede} %{Name}
+p Wir bitten um Ihre %{feedback_link} für %{assignment_title}.
 p Danke im Voraus!
 
 = render 'form'
 
 .load-templates
-  - EmailTemplate.active_mail.each do |template|
+  - EmailTemplate.active.each do |template|
     = hidden_field_tag template.kind, template.body
 
 = form_navigation_btn :back
