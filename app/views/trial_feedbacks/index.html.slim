@@ -1,0 +1,30 @@
+h1= t_title
+
+table.table.table-striped
+  thead
+    tr
+      - if policy(TrialFeedback).superadmin_priviledges?
+        th= t_model(Volunteer)
+      th= t_attr(:feedback_activity, Feedback)
+      th Text
+      - if policy(TrialFeedback).superadmin_priviledges?
+        th Erstellt von
+        th Eingesehen von
+      th colspan='3'
+
+  tbody
+    - @trial_feedbacks.each do |record|
+      tr
+        - if policy(TrialFeedback).superadmin_priviledges?
+          td= link_to record.volunteer.full_name, volunteer_path(record.volunteer)
+        td= link_to record.feedbackable.to_label, url_for(record.feedbackable)
+        td = word_wrap(record.body) if record.body?
+        - if policy(TrialFeedback).superadmin_priviledges?
+          td= link_to record.author.full_name, record.author
+          td= link_to record.reviewer.full_name, record.reviewer if record.reviewer
+          td= link_to t_action(:show), polymorphic_path([@volunteer, record.feedbackable, record])
+          td= link_to t_action(:edit), edit_polymorphic_path([@volunteer, record.feedbackable, record])
+          td= link_to t_action(:destroy), polymorphic_path([@volunteer, record.feedbackable, record]), confirm_deleting(record)
+
+= bootstrap_row_col { button_link t_title(:new, TrialFeedback), new_polymorphic_path([@volunteer, @feedbackable, TrialFeedback]) }
+= bootstrap_row_col { button_link t('back'), @volunteer }
