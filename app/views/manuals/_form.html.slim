@@ -4,15 +4,16 @@
   .row
     .col-xs-12
       = f.input :category,
+                label: 'Kategorie',
                 as: :select,
                 collection: Manual::CATEGORIES,
                 include_blank: true
     .col-xs-12
-      = f.input :title
+      = f.input :title, label: 'Titel'
     .col-xs-12
-      = f.input :description
+      = f.input :description, label: 'Beschreibung'
     .col-xs-12
-      = f.input :attachment, as: :file
+      = f.input :attachment, as: :file, label: 'Anhang'
 
   .row
     .col-xs-12
