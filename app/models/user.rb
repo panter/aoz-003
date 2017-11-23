@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :journals
   has_many :assignments, inverse_of: 'creator'
   has_many :feedbacks, inverse_of: 'author'
+  has_many :trial_feedbacks, inverse_of: 'author'
+  has_many :trial_feedbacks, inverse_of: 'reviewer'
   has_many :billing_expenses
   has_many :group_offers, inverse_of: 'creator'
 
