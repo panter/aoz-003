@@ -1,0 +1,8 @@
+= simple_form_for [@volunteer, @feedbackable, @trial_feedback] do |f|
+  = simple_error_notice f
+
+  .row
+    .col-xs-12= f.input :body
+
+  .row
+    .col-xs-12= f.button :submit
