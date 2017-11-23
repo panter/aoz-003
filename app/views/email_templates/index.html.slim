@@ -1,22 +1,22 @@
-h1 Alle E-mailvorlagen
+h1 Alle E-Mailvorlagen
 
 = form_navigation_btn :new
 
 .table-responsive
   table.table
     thead
-      th Betreff
-      th Textkörper
       th Art
       th Aktiv
+      th Betreff
+      th Text
       th
     tbody
       - @email_templates.each do |email_template|
         tr class=(email_template.active ? 'bg-success': '')
-          td = email_template.subject
-          td = word_wrap(email_template.body)
           td = t(".#{email_template.kind}")
           td = t(email_template.active)
+          td = email_template.subject
+          td = word_wrap(email_template.body)
           = render 'index_actions', subject: email_template
 
 = form_navigation_btn :new
