@@ -38,8 +38,8 @@ class GroupAssignment < ApplicationRecord
   end
 
   def to_label
-    label = "#{I18n.t('activerecord.models.group_offer')} - #{group_offer.title} - "
-    label += " - #{I18n.l(period_start)}" if period_start.present?
+    label = "Gruppenangebot - #{group_offer.title}"
+    label += " - #{group_offer.department.contact.last_name}" if group_offer.department.present?
     label
   end
 
