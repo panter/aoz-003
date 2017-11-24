@@ -22,4 +22,15 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
     )
     assert mailing_volunteer.process_template[:body].include? @assignment_probation.to_label
   end
+
+  test 'selected_string_1_as_true_setter_works' do
+    reminder_mailing = ReminderMailing.new(creator: @superadmin,
+      reminder_mailing_volunteers: [@assignment_probation])
+    mailing_volunteer = reminder_mailing.reminder_mailing_volunteers.first
+    assert_not mailing_volunteer.selected
+    mailing_volunteer.selected = '0'
+    assert_equal false, mailing_volunteer.selected
+    mailing_volunteer.selected = '1'
+    assert_equal true, mailing_volunteer.selected
+  end
 end
