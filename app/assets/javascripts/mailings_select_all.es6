@@ -1,6 +1,6 @@
 $(() => $(document).on('turbolinks:render, turbolinks:load', () => {
 
-  $('table.reminder-select tbody tr td:nth-child(n + 2)').on('click', event => {
+  $('.reminder-select .click-selecting').on('click', event => {
     event.stopPropagation();
     const row = $(event.target).closest('tr');
     const selectBox = $(`#reminder_mailing_reminder_mailing_volunteers_attributes_${row.data().index}_selected`)[0];

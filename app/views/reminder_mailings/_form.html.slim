@@ -12,18 +12,22 @@
         thead
           tr
             th
-            th Freiwilliger
             th Einsatz
+            th
         tbody
           = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
             tr data-index="#{mailing_volunteer.index}"
-              td= mailing_volunteer.input_field :selected, as: :boolean
               td
+                = mailing_volunteer.input_field :selected, as: :boolean
                 = mailing_volunteer.input_field :volunteer_id, as: :hidden
                 = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
                 = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
-                = mailing_volunteer.object.volunteer.to_s
-              td= mailing_volunteer.object.reminder_mailable.to_label
+              td.click-selecting= mailing_volunteer.object.reminder_mailable.to_label
+              td
+                - if mailing_volunteer.object.reminder_mailable.class == GroupAssignment
+                  = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable.group_offer, target: '_blank'
+                - else
+                  = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable, target: '_blank'
 
     .col-xs-12.col-md-6
       = f.input :subject
