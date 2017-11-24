@@ -29,12 +29,11 @@ module GroupAssignmentAndAssignmentCommon
       where('period_start < ? AND period_start > ?', 6.weeks.ago, 8.weeks.ago)
     }
 
+    scope :with_hours, (-> { joins(:hours) })
+
     scope :active, (-> { not_ended.started })
     scope :stay_active, (-> { active.no_end })
     scope :inactive, (-> { ended.or(no_start) })
-
-    scope :with_hours, (-> { joins(:hours) })
-
     scope :active_between, lambda { |start_date, end_date|
       no_end.start_before(end_date)
             .or(start_before(end_date).end_after(start_date))
