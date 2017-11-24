@@ -8,7 +8,7 @@ h1= t_title(:show)
         td= t(".#{@email_template.kind}")
       tr
         td Aktiv
-        td= t(@email_template.active)
+        td= boolean_glyph(@email_template.active)
       tr
         td Betreff
         td= @email_template.subject
