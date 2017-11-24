@@ -2,18 +2,18 @@
   = simple_error_notice f
   = f.input_field :kind, value: @reminder_mailing.kind, as: :hidden
 
+  = render 'form_submit_back', f: f
+
   .row
     .col-xs-12.col-md-6
-      .select-all-mailings
+      h3 Frewillige auswählen
+      - if f.error_notification.present? && f.object.errors.messages[:volunteers].present?
+        = f.error_notification message: f.object.errors.messages[:volunteers].first
+      .select-all-mailings.m-b-10
         input type='checkbox' value='' name='select-all-mailings'
         label for='select-all-mailings'
           'Alle Auswählen
       table.table.table-striped.reminder-select
-        thead
-          tr
-            th
-            th Einsatz
-            th
         tbody
           = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
             tr data-index="#{mailing_volunteer.index}"
@@ -30,7 +30,9 @@
                   = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable, target: '_blank'
 
     .col-xs-12.col-md-6
+      h3 Email Vorlage bearbeiten
       = f.input :subject
       = f.input :body
 
-      = f.button :submit, class: 'btn btn-success'
+  = render 'form_submit_back', f: f
+
