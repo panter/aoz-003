@@ -42,6 +42,6 @@ Rails.application.routes.draw do
     get :archived, on: :collection
     put :change_active_state, on: :member
   end
-
+  resources :documents
   root 'application#home'
 end

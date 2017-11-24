@@ -1,0 +1,16 @@
+= simple_form_for(@document) do |f|
+  = simple_error_notice f
+  / allow user to select category or enter it via freetext
+  - (0..3).each do |i|
+    .form-group.string.optional.document_category
+      label.string.optional.col-sm-3.control-label(for="document_category# i ")
+        = Document.human_attribute_name("category#{i}")
+        a(class='freetext glyphicon glyphicon-edit' href="#")
+      .col-sm-9
+        = f.select "category#{i}", Document.categories(i), {}, class: 'select optional form-control', style: 'display: none;'
+        = f.text_field "category#{i}", class: 'string optional form-control'
+  = f.input :title, label: 'Titel'
+  = f.input :attachment, label: 'Anhang'
+
+  .col-sm-offset-3.col-sm-9
+    = f.button :submit
