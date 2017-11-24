@@ -3,6 +3,10 @@
   margin-bottom: $padding-large-horizontal;
 }
 
+.row {
+  margin-bottom: 10px;
+}
+
 .dl-horizontal {
   dt {
     font-weight: normal;
@@ -38,10 +42,6 @@
       margin-right: 5px;
     }
   }
-}
-
-.row {
-  margin-bottom: 10px;
 }
 
 .index-action-cell {

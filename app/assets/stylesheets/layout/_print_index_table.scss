@@ -1,44 +1,51 @@
-body.clients,
-body.assignments {
-  @media print {
-    margin: 0;
-    padding: 0;
-    size: A4 landscape;
-    width: $a4-long-side;
-
-    a[href]::after {
-      content: '';
-    }
-
-    .truncate-th {
-      span {
-        width: 55px;
-        display: block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-    }
-
-    .relatives-cell {
-      span {
-        width: 80px;
-        display: block;
-      }
-    }
-
-    table {
-      max-width: $a4-long-side;
-
-      .no-wrap {
-        white-space: nowrap;
-      }
-    }
-    .container, .wrapper {
-      width: $a4-long-side;
+body {
+  &.clients,
+  &.assignments {
+    @media print {
       margin: 0;
       padding: 0;
+      size: A4 landscape;
+      width: $a4-long-side;
+
+      .container,
+      .wrapper {
+        margin: 0;
+        padding: 0;
+        width: $a4-long-side;
+      }
+
+      a {
+        &[href] {
+          &::after {
+            content: '';
+          }
+        }
+      }
+
+      .truncate-th {
+        span {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 55px;
+        }
+      }
+
+      .relatives-cell {
+        span {
+          display: block;
+          width: 80px;
+        }
+      }
+
+      table {
+        max-width: $a4-long-side;
+
+        .no-wrap {
+          white-space: nowrap;
+        }
+      }
     }
   }
 }
-
