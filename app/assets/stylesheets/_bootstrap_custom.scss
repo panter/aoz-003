@@ -5,6 +5,9 @@
  */
 
 // Core variables and mixins
+@import 'bootstrap-sprockets';
+@import 'bootstrap_overwrites';
+
 @import 'bootstrap/variables';
 @import 'bootstrap/mixins';
 
@@ -46,8 +49,8 @@
 @import 'bootstrap/close';
 
 // Components w/ JavaScript
-@import 'bootstrap/modals';
-@import 'bootstrap/tooltip';
+// @import 'bootstrap/modals';
+// @import 'bootstrap/tooltip';
 @import 'bootstrap/popovers';
 // @import 'bootstrap/carousel';
 
