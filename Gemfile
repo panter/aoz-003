@@ -64,6 +64,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'i18n_yaml_sorter'
+  gem 'letter_opener'
   gem 'listen'
   gem 'overcommit', require: false
   gem 'policy-assertions'
