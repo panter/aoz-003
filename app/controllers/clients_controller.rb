@@ -44,7 +44,11 @@ class ClientsController < ApplicationController
     @client.user = current_user
     authorize @client
     if @client.save
-      redirect_to @client, make_notice
+      if @client.user.social_worker?
+        redirect_to @client, notice: ClientNotification.active.pluck(:body).to_sentence
+      else
+        redirect_to @client, make_notice
+      end
     else
       render :new
     end
