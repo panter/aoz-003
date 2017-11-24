@@ -1,9 +1,7 @@
 @import 'utility';
 @import 'bootstrap-sprockets';
-@import 'bootstrap';
-@import 'bootstrap/variables';
+@import 'bootstrap_custom';
 @import 'layout/content';
-@import 'bootstrap_overwrites';
 
 $cert-font-family: 'Arial', sans-serif;
 $cert-font-weight: 500;

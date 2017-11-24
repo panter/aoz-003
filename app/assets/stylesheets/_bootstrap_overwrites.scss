@@ -1,3 +1,20 @@
+// Lenghts
+$font-size-base: 12px;
+$line-height-base: 1.4;
+
+$grid-gutter-width: 20px;
+$navbar-height: 40px;
+
+// Non bootstrap lenghts
+$header-height: 70px;
+$sidebar-width: 220px;
+$footer-height: 30px;
+
+$a4-short-side: 210mm;
+$a4-long-side: 297mm;
+
+
+
 // Colours
 $custom-red: #a51a0f;
 $white: #fff;
@@ -30,17 +47,3 @@ $navbar-default-bg: $white;
 
 $print-preview-shadow: 0 0 .5cm rgba(0, 0, 0, .5);
 
-// Lenghts
-$font-size-base: 12px;
-$line-height-base: 1.4;
-
-$grid-gutter-width: 20px;
-$navbar-height: 40px;
-
-// Non bootstrap lenghts
-$header-height: 70px;
-$sidebar-width: 220px;
-$footer-height: 30px;
-
-$a4-short-side: 210mm;
-$a4-long-side: 297mm;
