@@ -11,9 +11,14 @@ class ReminderMailingsController < ApplicationController
   def new_probation_period
     @assignments = Assignment.need_probation_period_reminder_mailing.distinct
     @group_assignments = GroupAssignment.need_probation_period_reminder_mailing.distinct
-    @reminder_mailing = ReminderMailing.new(
-      kind: 'probation_period', reminder_mailing_volunteers: @assignments + @group_assignments
-    )
+    @reminder_mailing = ReminderMailing.new(kind: 'probation_period',
+      reminder_mailing_volunteers: @assignments + @group_assignments)
+
+    # TODO: load email default template from not yet existint EmailTemplate Model
+    @reminder_mailing.assign_attributes({
+      subject: "Errinnerung fuer %{Einsatz}",
+      body: "Hallo %{Anrede} %{Name}\r\n%{Einsatz} gestarted am %{EinsatzStart}"
+    })
     authorize @reminder_mailing
   end
 

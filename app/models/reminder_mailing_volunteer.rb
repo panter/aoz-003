@@ -13,12 +13,12 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :probation_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
   scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
 
-  def subject
-    self.subject = reminder_mailing.subject % template_variables
-  end
-
-  def body
-    self.subject = reminder_mailing.subject % template_variables
+  def process_template
+    template_vars = template_variables
+    {
+      subject: reminder_mailing.subject % template_vars,
+      body: reminder_mailing.body % template_vars
+    }
   end
 
   private
@@ -33,10 +33,10 @@ class ReminderMailingVolunteer < ApplicationRecord
       Name: "#{volunteer.contact.first_name} #{volunteer.contact.last_name}"
     }
     if reminder_mailable.class == Assignment
-      template_vars[:Begleitung] = reminder_mailable.to_label
+      template_vars[:Einsatz] = reminder_mailable.to_label
       template_vars[:EinsatzStart] = I18n.l(reminder_mailable.period_start)
     elsif reminder_mailable.class == GroupAssignment
-      template_vars[:Gruppenangebot] = reminder_mailable.group_offer.to_label
+      template_vars[:Einsatz] = reminder_mailable.group_offer.to_label
       template_vars[:EinsatzStart] = I18n.l(reminder_mailable.period_start)
     end
     template_vars
