@@ -1,30 +1,46 @@
-h1 Erinnerungs Email Versand
-
 = render 'section_navigation'
 
-dl
+h1 #{@reminder_mailing.t_enum(:kind)} Erinnerungs-Email
+
+h2 Versand Einzelheiten
+
+dl.dl-horizontal
   dt Art
   dd= @reminder_mailing.t_enum(:kind)
-  dt Email Beispiel
-  dd
-    - example = @reminder_mailing.reminder_mailing_volunteers.sample.process_template
-    p= example[:subject]
-    div= example[:body]
   dt Erstellt am
   dd= l(@reminder_mailing.created_at.to_date)
-  - if @reminder_mailing.created_at.to_date < @reminder_mailing.updated_at.to_date
-    - if @reminder_mailing.sending_triggered
-      dt Versendet am
-    - else
-      dt Geändert am
-    dd= l(@reminder_mailing.updated_at.to_date)
-  dt
-    - if @reminder_mailing.sending_triggered
-      'Versandt an
-    - else
-      'Wird versendet an
-  dd
-    dl
-      - @reminder_mailing.reminder_mailing_volunteers.each do |mailing_volunteer|
-        dt= mailing_volunteer.volunteer.to_s
-        dd= mailing_volunteer.reminder_mailable.to_s
+  dt Status
+  - if @reminder_mailing.sending_triggered
+    dd Übermittelt
+  - else
+    dd Nicht versandt
+h3 Email Beispiel
+- example = @reminder_mailing.reminder_mailing_volunteers.sample.process_template
+h4 Betreff
+.mailing-body-preview= example[:subject]
+h4 Text
+.mailing-body-preview= markdown(example[:body])
+
+h3
+  - if @reminder_mailing.sending_triggered
+    'Versandt an
+  - else
+    'Wird versendet an
+
+table.table.table-condensed
+  thead
+    tr
+      th Freiwillige/r
+      th Einsatz
+  tbody
+    - @reminder_mailing.reminder_mailing_volunteers.each do |mailing_volunteer|
+      tr
+        td= link_to mailing_volunteer.volunteer.contact.full_name, mailing_volunteer.volunteer
+        td
+          - if mailing_volunteer.reminder_mailable.class == Assignment
+            = link_to mailing_volunteer.reminder_mailable.to_label, mailing_volunteer.reminder_mailable
+          - else
+            = link_to mailing_volunteer.reminder_mailable.group_offer.to_label, mailing_volunteer.reminder_mailable.group_offer
+
+- if !@reminder_mailing.sending_triggered
+  = bootstrap_row_col { button_link('Emails versenden', initiate_mailing_reminder_mailing_path(@reminder_mailing)) }

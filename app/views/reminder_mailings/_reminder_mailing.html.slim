@@ -1,8 +1,12 @@
 tr
   td= reminder_mailing.t_enum(:kind)
-  td= reminder_mailing.creator.to_label
-  td= l(reminder_mailing.created_at)
-  td= l(reminder_mailing.updated_at)
+  td= link_to reminder_mailing.creator.to_label, reminder_mailing.creator
   td
-    span= link_to 'Anzeigen', reminder_mailing
-    span= link_to 'Bearbeiten', edit_reminder_mailing_path(reminder_mailing)
+    - if reminder_mailing.sending_triggered
+      'Übermittelt
+    - else
+      'Nicht versandt
+  td= l(reminder_mailing.created_at.to_date)
+  td
+    = link_to 'Anzeigen', reminder_mailing, class: 'index-action-link'
+    = link_to 'Bearbeiten', edit_reminder_mailing_path(reminder_mailing), class: 'index-action-link'
