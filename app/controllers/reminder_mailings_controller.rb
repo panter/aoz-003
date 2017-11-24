@@ -10,8 +10,9 @@ class ReminderMailingsController < ApplicationController
 
   def new_probation_period
     @assignments = Assignment.need_probation_period_reminder_mailing.distinct
+    @group_assignments = GroupAssignment.need_probation_period_reminder_mailing.distinct
     @reminder_mailing = ReminderMailing.new(
-      kind: 'probation_period', reminder_mailing_volunteers: @assignments
+      kind: 'probation_period', reminder_mailing_volunteers: @assignments + @group_assignments
     )
     authorize @reminder_mailing
   end
