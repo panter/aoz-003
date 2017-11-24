@@ -13,12 +13,18 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :probation_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
   scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
 
+  def subject
+    self.subject = reminder_mailing.subject % template_variables
+  end
+
+  def body
+    self.subject = reminder_mailing.subject % template_variables
+  end
+
   private
 
   def remove_or_process_email_content
-    return destroy if selected && selected.to_i.zero?
-    self.body = reminder_mailing.body % template_variables
-    self.subject = reminder_mailing.subject % template_variables
+    destroy if selected && selected.to_i.zero?
   end
 
   def template_variables
