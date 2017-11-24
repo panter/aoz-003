@@ -51,6 +51,22 @@
   }
 }
 
+.index-action-link {
+  display: block;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:nth-child(n + 2) {
+    margin-top: 2px;
+  }
+}
+
 .language-skill-index {
   span {
     display: block;

@@ -21,12 +21,12 @@
   }
 
   .mailing-body-preview {
-    display: inline-block;
-    max-width: 100%;
     background-color: $gray-lighter;
     border: solid 1px $gray-lighter;
+    display: inline-block;
     font-family: monospace;
     font-weight: 600;
+    max-width: 100%;
     padding: 8px 15px 5px 10px;
   }
 }
