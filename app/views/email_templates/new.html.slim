@@ -15,16 +15,20 @@ p Danke im Voraus!
 
 .load-templates
   - EmailTemplate.active.each do |template|
-    = hidden_field_tag template.kind, template.body
+    = hidden_field_tag "subjects[#{template.kind}]", template.subject
+    = hidden_field_tag "bodies[#{template.kind}]", template.body
 
 = form_navigation_btn :back
 
 javascript:
   $(document).on('turbolinks:render, turbolinks:load', function() {
     $('#email_template_kind').change(function(){
+      $("#email_template_subject").text("");
       $("#email_template_body").text("");
       var kind = $("#email_template_kind").val();
-      var sth = $("input[TYPE=HIDDEN]#" +kind).val();
-      $("#email_template_body").text(sth);
+      var subject = $("input[TYPE=HIDDEN]#subjects_" +kind).val();
+      var body = $("input[TYPE=HIDDEN]#bodies_" +kind).val();
+      $("#email_template_subject").val(subject);
+      $("#email_template_body").text(body);
     });
   });
