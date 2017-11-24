@@ -390,8 +390,6 @@ ActiveRecord::Schema.define(version: 20171122175340) do
     t.bigint "reminder_mailable_id"
     t.integer "link_visits", default: 0
     t.boolean "confirmed_form", default: false
-    t.string "subject"
-    t.text "body"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
