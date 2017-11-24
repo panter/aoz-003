@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   resources :reminder_mailings, except: [:new] do
     get :new_probation_period, on: :collection
     get :new_half_year, on: :collection
+    get :initiate_mailing, on: :member
   end
 
   root 'application#home'

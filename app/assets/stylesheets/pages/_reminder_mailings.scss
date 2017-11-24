@@ -12,19 +12,21 @@
     }
   }
 
-  .reminder-select {
-    tbody {
-      td {
-        transition: background-color 600ms ease-out;
-      }
-    }
-  }
-
   .mailing-selected {
     td {
       background-color: $brand-success-lighter;
       border-bottom: 1px solid $gray-lighter;
       color: $gray-base;
     }
+  }
+
+  .mailing-body-preview {
+    display: inline-block;
+    max-width: 100%;
+    background-color: $gray-lighter;
+    border: solid 1px $gray-lighter;
+    font-family: monospace;
+    font-weight: 600;
+    padding: 8px 15px 5px 10px;
   }
 }

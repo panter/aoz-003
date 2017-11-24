@@ -1,7 +1,7 @@
 class ReminderMailingVolunteer < ApplicationRecord
-  attr_accessor :selected
+  attr_reader :selected
 
-  before_create :remove_or_process_email_content
+  before_create :remove_if_not_selected
 
   belongs_to :reminder_mailing
   belongs_to :volunteer
@@ -13,6 +13,10 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :probation_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
   scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
 
+  def selected=(value)
+    @selected = value == '1'
+  end
+
   def process_template
     template_vars = template_variables
     {
@@ -21,24 +25,30 @@ class ReminderMailingVolunteer < ApplicationRecord
     }
   end
 
+  def assignment?
+    reminder_mailable.class == Assignment
+  end
+
+  def group_assignment?
+    reminder_mailable.class == GroupAssignment
+  end
+
+  def mailable_to_label
+    if assignment?
+      reminder_mailable.to_label
+    elsif group_assignment?
+      reminder_mailable.group_offer.to_label
+    end
+  end
+
   private
 
-  def remove_or_process_email_content
-    destroy if selected && selected.to_i.zero?
+  def remove_if_not_selected
+    delete unless @selected
   end
 
   def template_variables
-    template_vars = {
-      Anrede: I18n.t("salutation.#{volunteer.salutation}"),
-      Name: "#{volunteer.contact.first_name} #{volunteer.contact.last_name}"
-    }
-    if reminder_mailable.class == Assignment
-      template_vars[:Einsatz] = reminder_mailable.to_label
-      template_vars[:EinsatzStart] = I18n.l(reminder_mailable.period_start)
-    elsif reminder_mailable.class == GroupAssignment
-      template_vars[:Einsatz] = reminder_mailable.group_offer.to_label
-      template_vars[:EinsatzStart] = I18n.l(reminder_mailable.period_start)
-    end
-    template_vars
+    { Anrede: I18n.t("salutation.#{volunteer.salutation}"), Einsatz: mailable_to_label,
+      Name: volunteer.contact.full_name, EinsatzStart: I18n.l(reminder_mailable.period_start) }
   end
 end
