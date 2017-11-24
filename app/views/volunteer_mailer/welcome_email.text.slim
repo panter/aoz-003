@@ -2,22 +2,22 @@
 - dashs = "-" * 80
 - t4 = "\t" * 4
 - t3 = "\t" * 3
-= "#{@subject}#{rn2}"
-= "#{@body}#{rn2}"
+== "#{@subject}#{rn2}"
+== "#{@body}#{rn2}"
 
 = "\r\n#{t('.submitted')}#{rn2}"
 
 - if @volunteer.contact.title.present?
   = "\r\n#{t_attr(:title, Contact)}:#{t4}#{@volunteer.contact.title.strip}\r\n"
-= "#{t_attr(:first_name, Contact)}:#{t3}#{@volunteer.contact.first_name}\r\n"
-= "#{t_attr(:last_name, Contact)}:#{t4}#{@volunteer.contact.last_name}\r\n"
+== "#{t_attr(:first_name, Contact)}:#{t3}#{@volunteer.contact.first_name}\r\n"
+== "#{t_attr(:last_name, Contact)}:#{t4}#{@volunteer.contact.last_name}\r\n"
 
 = "#{rn2}#{t('.address')}#{rn2}"
 - if @volunteer.contact.street.present?
   = "#{@volunteer.contact.street}\r\n"
 
 - if @volunteer.contact.city.present?
-  = "#{@volunteer.contact.postal_code} #{@volunteer.contact.city}\r\n"
+  == "#{@volunteer.contact.postal_code} #{@volunteer.contact.city}\r\n"
 
 = "\r\n#{t_attr(:primary_email, Contact)}:\t\t#{@volunteer.contact.primary_email}\r\n"
 
@@ -52,15 +52,15 @@
       = "\r\n"
 
 - if @volunteer.profession.present?
-  = "#{rn2}#{t_attr(:profession, Volunteer)}:#{rn2}#{@volunteer.profession}#{rn2}"
+  == "#{rn2}#{t_attr(:profession, Volunteer)}:#{rn2}#{@volunteer.profession}#{rn2}"
   = dashs
 
 - if @volunteer.education.present?
-  = "#{rn2}#{t_attr(:education, Volunteer)}:#{rn2}#{@volunteer.education}#{rn2}"
+  == "#{rn2}#{t_attr(:education, Volunteer)}:#{rn2}#{@volunteer.education}#{rn2}"
   = dashs
 
 - if @volunteer.motivation.present?
-  = "#{rn2}#{t_attr(:motivation, Volunteer)}:#{rn2}#{@volunteer.motivation}#{rn2}"
+  == "#{rn2}#{t_attr(:motivation, Volunteer)}:#{rn2}#{@volunteer.motivation}#{rn2}"
   = dashs
 
 - if @volunteer.experience.present?
@@ -68,19 +68,19 @@
   = t(@volunteer.experience)
 
 - if @volunteer.volunteer_experience_desc.present?
-  = "\r\n#{@volunteer.volunteer_experience_desc}#{rn2}"
+  == "\r\n#{@volunteer.volunteer_experience_desc}#{rn2}"
   = dashs
 
 - if @volunteer.expectations.present?
-  = "#{rn2}#{t_attr(:expectations, Volunteer)}:#{rn2}#{@volunteer.expectations}#{rn2}"
+  == "#{rn2}#{t_attr(:expectations, Volunteer)}:#{rn2}#{@volunteer.expectations}#{rn2}"
   = dashs
 
 - if @volunteer.strengths.present?
-  = "#{rn2}#{t_attr(:strengths, Volunteer)}:#{rn2}#{@volunteer.strengths}#{rn2}"
+  == "#{rn2}#{t_attr(:strengths, Volunteer)}:#{rn2}#{@volunteer.strengths}#{rn2}"
   = dashs
 
 - if @volunteer.interests.present?
-  = "#{rn2}#{t_attr(:interests, Volunteer)}:#{rn2}#{@volunteer.interests}#{rn2}"
+  == "#{rn2}#{t_attr(:interests, Volunteer)}:#{rn2}#{@volunteer.interests}#{rn2}"
   = dashs
   = rn2
 
