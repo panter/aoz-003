@@ -1,30 +1,33 @@
-.assignments.show {
-  .row {
-    margin-bottom: 0;
-  }
-
-  .wrapper > .container {
-    @media (min-width: $container-md) {
-      padding-left: $container-md / 12;
+.assignments {
+  &.show {
+    .row {
+      margin-bottom: 0;
     }
 
-    @media (min-width: $container-sm) {
-      padding-left: $container-sm / 12;
+    .wrapper > .container {
+      @media (min-width: $container-md) {
+        padding-left: $container-md / 12;
+      }
+
+      @media (min-width: $container-sm) {
+        padding-left: $container-sm / 12;
+      }
     }
   }
 }
 
-body.pdf {
-  .container {
-    padding-left: $container-sm / 12;
-  }
+body {
+  &.pdf {
+    .container {
+      padding-left: $container-sm / 12;
+    }
 
-  .col-xs-6 {
-    .row {
-      margin-bottom: 0;
+    .col-xs-6 {
+      .row {
+        margin-bottom: 0;
+      }
     }
   }
-
 }
 
 .pdf-logo-image {
@@ -43,20 +46,24 @@ body.pdf {
 
 .col-input {
   border-bottom: 1px dotted $gray-light;
-  margin-bottom: 10px;
   height: $line-height-computed;
+  margin-bottom: 10px;
 }
 
+.row-box,
+.row-bottom,
+.signature-title-row,
+.signature-row {
+  @extend .row;
+}
 
 .row-box {
-  @extend .row;
   border: 1px solid $black;
   margin-bottom: 0;
   padding-top: $padding-small-horizontal;
 }
 
 .row-bottom {
-  @extend .row;
   margin-top: 10px;
   padding-top: $padding-small-horizontal;
 
@@ -69,19 +76,16 @@ body.pdf {
 }
 
 .signature-title-row {
-  @extend .row;
-
   span {
     display: block;
     font-style: italic;
   }
 }
-.signature-row {
-  @extend .row;
 
+.signature-row {
   .col-xs-4 {
+    border-bottom: 1px $black dotted;
     margin: 45px 10px 0 10px;
     width: 30%;
-    border-bottom: 1px black dotted;
   }
 }
