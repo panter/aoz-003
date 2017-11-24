@@ -24,9 +24,7 @@ class ReminderMailingsController < ApplicationController
 
   def new_half_year
     @reminder_mailables = Assignment.started_six_months_ago + GroupAssignment.started_six_months_ago
-    @reminder_mailing = ReminderMailing.new(
-      kind: 'half_year', reminder_mailing_volunteers: @reminder_mailables
-    )
+    @reminder_mailing = ReminderMailing.new(kind: 'half_year', reminder_mailing_volunteers: @reminder_mailables)
     authorize @reminder_mailing
   end
 
