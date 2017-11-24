@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :feedbacks, only: [:new, :create]
   resources :volunteers do
     get :seeking_clients, on: :collection
+    get :need_review, on: :collection, to: 'trial_feedbacks#need_review'
     get :find_client, on: :member, to: 'assignments#find_client'
     resources :journals, except: [:show]
     resources :hours

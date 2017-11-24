@@ -13,6 +13,7 @@ class TrialFeedbackPolicy < ApplicationPolicy
   alias_method :create?,                 :superadmin_or_volunteers_feedback?
   alias_method :update?,                 :superadmin_or_volunteers_feedback?
   alias_method :destroy?,                :superadmin_or_volunteers_feedback?
+  alias_method :need_review?,            :superadmin?
 
   alias_method :superadmin_priviledges?, :superadmin?
 end

@@ -3,8 +3,9 @@ nav.navbar.section-navigation
   hr
   ul.list-inline
     li= button_link t_title(:new), new_volunteer_path, 'success', dimension: 'sm'
-    - if policy(Volunteer).destroy?
+    - if policy(Volunteer).can_manage?
       li= button_link t('seeking_clients'), seeking_clients_volunteers_url, dimension: 'sm'
+      li= button_link 'Probezeit Feedback Liste', need_review_volunteers_url, dimension: 'sm'
     li |
     li= button_link 'E-Mailvorlagen', email_templates_path, dimension: 'sm'
 
