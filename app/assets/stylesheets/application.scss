@@ -3,7 +3,7 @@
 @import 'bootstrap_overwrites';
 
 @import 'bootstrap-sprockets';
-@import 'bootstrap';
+@import 'bootstrap_custom';
 @import 'bootstrap-datepicker3';
 @import 'bootstrap/variables';
 
@@ -21,4 +21,4 @@
 @import 'pages/assignment';
 @import 'pages/certificate';
 @import 'pages/performance_report';
-@import 'pages/_reminder_mailings';
+@import 'pages/reminder_mailings';
