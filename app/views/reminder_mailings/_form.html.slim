@@ -24,7 +24,7 @@
                 = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
               td.click-selecting= mailing_volunteer.object.reminder_mailable.to_label
               td
-                - if mailing_volunteer.object.reminder_mailable.class == GroupAssignment
+                - if mailing_volunteer.object.group_assignment?
                   = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable.group_offer, target: '_blank'
                 - else
                   = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable, target: '_blank'
