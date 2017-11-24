@@ -37,7 +37,7 @@ table.table.table-condensed
       tr
         td= link_to mailing_volunteer.volunteer.contact.full_name, mailing_volunteer.volunteer
         td
-          - if mailing_volunteer.reminder_mailable.class == Assignment
+          - if mailing_volunteer.assignment?
             = link_to mailing_volunteer.reminder_mailable.to_label, mailing_volunteer.reminder_mailable
           - else
             = link_to mailing_volunteer.reminder_mailable.group_offer.to_label, mailing_volunteer.reminder_mailable.group_offer
