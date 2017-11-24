@@ -58,6 +58,9 @@ Layout/AlignHash:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/FormatStringToken:
+  EnforcedStyle: template
+
 Style/SymbolArray:
   EnforcedStyle: brackets
 
