@@ -145,6 +145,8 @@ end
 
 # create Assignment Journal
 Assignment.all.each do |assignment|
+  FactoryBot.create(:trial_feedback, volunteer: assignment.volunteer, feedbackable: assignment,
+    author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
   FactoryBot.create(:feedback, volunteer: assignment.volunteer, feedbackable: assignment,
     author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
 end

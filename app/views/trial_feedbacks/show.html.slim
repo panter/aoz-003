@@ -31,7 +31,7 @@ h1= t_title(:show)
             - if @trial_feedback.reviewer
               = link_to @trial_feedback.reviewer.full_name, @trial_feedback.reviewer if @trial_feedback.reviewer
             - else
-              = button_to 'Überprüfen', polymorphic_path([@volunteer, @trial_feedback.feedbackable, @trial_feedback],
+              = button_to 'Angeschaut', polymorphic_path([@volunteer, @trial_feedback.feedbackable, @trial_feedback],
                 { trial_feedback: { volunteer_id: @trial_feedback.volunteer.id, feedbackable_id: @trial_feedback.feedbackable.id, id: @trial_feedback.id } }),
                   { method: :put, class: 'btn btn-success btn-xs' }
 
