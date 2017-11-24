@@ -11,4 +11,10 @@ class VolunteerMailer < ApplicationMailer
     @body = signup_email.body % template_variables
     mail(to: @volunteer.contact.primary_email, subject: @subject)
   end
+
+  def probation_period_reminder(reminder_mailing_volunteer)
+    @volunteer = reminder_mailing_volunteer.volunteer
+    @subject, @body = reminder_mailing_volunteer.process_template.values_at(:subject, :body)
+    mail(to: @volunteer.contact.primary_email, subject: @subject)
+  end
 end

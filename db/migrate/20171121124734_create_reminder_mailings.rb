@@ -5,6 +5,7 @@ class CreateReminderMailings < ActiveRecord::Migration[5.1]
       t.text :body
       t.string :subject
       t.integer :kind, default: 0
+      t.boolean :sending_triggered, default: false
 
       t.datetime :deleted_at, index: true
       t.timestamps

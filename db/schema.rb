@@ -390,6 +390,7 @@ ActiveRecord::Schema.define(version: 20171122175340) do
     t.bigint "reminder_mailable_id"
     t.integer "link_visits", default: 0
     t.boolean "confirmed_form", default: false
+    t.boolean "email_sent", default: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -404,6 +405,7 @@ ActiveRecord::Schema.define(version: 20171122175340) do
     t.text "body"
     t.string "subject"
     t.integer "kind", default: 0
+    t.boolean "sending_triggered", default: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

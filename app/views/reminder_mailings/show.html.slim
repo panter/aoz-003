@@ -5,16 +5,24 @@ h1 Erinnerungs Email Versand
 dl
   dt Art
   dd= @reminder_mailing.t_enum(:kind)
-  dt Betreff
-  dd= @reminder_mailing.subject
-  dt Email Text
-  dd= @reminder_mailing.body
+  dt Email Beispiel
+  dd
+    - example = @reminder_mailing.reminder_mailing_volunteers.sample.process_template
+    p= example[:subject]
+    div= example[:body]
   dt Erstellt am
   dd= l(@reminder_mailing.created_at.to_date)
   - if @reminder_mailing.created_at.to_date < @reminder_mailing.updated_at.to_date
-    dt Geändert am
+    - if @reminder_mailing.sending_triggered
+      dt Versendet am
+    - else
+      dt Geändert am
     dd= l(@reminder_mailing.updated_at.to_date)
-  dt Versandt an
+  dt
+    - if @reminder_mailing.sending_triggered
+      'Versandt an
+    - else
+      'Wird versendet an
   dd
     dl
       - @reminder_mailing.reminder_mailing_volunteers.each do |mailing_volunteer|
