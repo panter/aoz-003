@@ -33,7 +33,7 @@ class TrialFeedbacksController < ApplicationController
   def update
     if @trial_feedback.update(trial_feedback_params
         .merge(reviewer_id: current_user.superadmin? ? current_user.id : nil))
-      redirect_to @trial_feedback.volunteer, make_notice
+      redirect_to @trial_feedback.volunteer, notice: update_notice
     else
       render :edit
     end
@@ -60,6 +60,14 @@ class TrialFeedbacksController < ApplicationController
     @feedbackable = @trial_feedback.feedbackable
     @volunteer = @trial_feedback.volunteer
     authorize @trial_feedback
+  end
+
+  def update_notice
+    if current_user.superadmin?
+      'Probezeit Feedback quittiert.'
+    else
+      'Probezeit Feedback wurde erfolgreich geändert.'
+    end
   end
 
   def trial_feedback_params
