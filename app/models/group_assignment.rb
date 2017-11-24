@@ -37,6 +37,10 @@ class GroupAssignment < ApplicationRecord
       responsible: responsible)
   end
 
+  def to_label
+    "#{group_offer.title} - #{group_offer.offer_type} - #{group_offer.department&.to_label}"
+  end
+
   private
 
   def dates_updated?

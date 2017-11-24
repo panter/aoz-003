@@ -2,24 +2,31 @@
   = simple_error_notice f
   = f.input_field :kind, value: @reminder_mailing.kind, as: :hidden
 
-  table.table.table-striped
-    thead
-      tr
-        th Auswählen
-        th Freiwilliger
-        th Einsatz
-    tbody
-      = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
-        tr
-          td= mailing_volunteer.input_field :selected, as: :boolean
-          td
-            = mailing_volunteer.input_field :volunteer_id, as: :hidden
-            = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
-            = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
-            = mailing_volunteer.object.volunteer.to_s
-          td= mailing_volunteer.object.reminder_mailable.to_s
+  .row
+    .col-xs-12.col-md-6
+      .select-all-mailings
+        input type='checkbox' value='' name='select-all-mailings'
+        label for='select-all-mailings'
+          'Alle Auswählen
+      table.table.table-striped.reminder-select
+        thead
+          tr
+            th
+            th Freiwilliger
+            th Einsatz
+        tbody
+          = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
+            tr data-index="#{mailing_volunteer.index}"
+              td= mailing_volunteer.input_field :selected, as: :boolean
+              td
+                = mailing_volunteer.input_field :volunteer_id, as: :hidden
+                = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
+                = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
+                = mailing_volunteer.object.volunteer.to_s
+              td= mailing_volunteer.object.reminder_mailable.to_label
 
-  = f.input :subject
-  = f.input :body
+    .col-xs-12.col-md-6
+      = f.input :subject
+      = f.input :body
 
-  = f.button :submit, class: 'btn btn-success'
+      = f.button :submit, class: 'btn btn-success'

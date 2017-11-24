@@ -26,7 +26,8 @@
   }
 
   .section-nav-ul {
-    border-top: 1px solid $gray;
+    border-bottom: 1px solid $gray-lighter;
+    border-top: 1px solid $gray-lighter;
     display: flex;
     flex-wrap: wrap;
     list-style: none;

@@ -1,0 +1,30 @@
+.reminder-mailings {
+  .select-all-mailings {
+    padding-left: 7px;
+
+    input {
+      margin: 0 5px 0 0;
+    }
+
+    label {
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  .reminder-select {
+    tbody {
+      td {
+        transition: background-color 600ms ease-out;
+      }
+    }
+  }
+
+  .mailing-selected {
+    td {
+      background-color: $brand-success-lighter;
+      color: $gray-base;
+      border-bottom: 1px solid $gray-lighter;
+    }
+  }
+}
