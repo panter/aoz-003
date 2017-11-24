@@ -1,0 +1,19 @@
+tr
+  - if policy(TrialFeedback).superadmin_priviledges?
+    td= link_to trial_feedback.volunteer.full_name, volunteer_path(trial_feedback.volunteer)
+  td= link_to trial_feedback.feedbackable.to_label, url_for(trial_feedback.feedbackable)
+  td = word_wrap(trial_feedback.body) if trial_feedback.body?
+  - if policy(TrialFeedback).superadmin_priviledges?
+    td= link_to trial_feedback.author.full_name, trial_feedback.author
+    td
+      - if trial_feedback.reviewer
+        = link_to trial_feedback.reviewer.full_name, trial_feedback.reviewer if trial_feedback.reviewer
+      - else
+        = button_to 'Angeschaut', polymorphic_path([trial_feedback.volunteer, trial_feedback.feedbackable, trial_feedback],
+          { trial_feedback: { volunteer_id: trial_feedback.volunteer.id, feedbackable_id: trial_feedback.feedbackable.id, id: trial_feedback.id } }),
+            { method: :put, class: 'btn btn-success btn-xs' }
+  - unless request.original_url.include?('need_review')
+    td.td.index-action-cell.hidden-print
+      span= link_to t_action(:show), polymorphic_path([trial_feedback.volunteer, trial_feedback.feedbackable, trial_feedback])
+      span= link_to t_action(:edit), edit_polymorphic_path([trial_feedback.volunteer, trial_feedback.feedbackable, trial_feedback])
+      span= link_to t_action(:destroy), polymorphic_path([trial_feedback.volunteer, trial_feedback.feedbackable, trial_feedback]), confirm_deleting(trial_feedback)

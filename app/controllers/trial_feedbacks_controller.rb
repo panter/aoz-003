@@ -1,7 +1,7 @@
 class TrialFeedbacksController < ApplicationController
   before_action :set_trial_feedback, only: [:show, :edit, :update, :destroy]
   before_action :set_feedbackable
-  before_action :set_volunteer
+  before_action :set_volunteer, except: [:need_review]
 
   def index
     authorize TrialFeedback
@@ -33,7 +33,7 @@ class TrialFeedbacksController < ApplicationController
   def update
     if @trial_feedback.update(trial_feedback_params
         .merge(reviewer_id: current_user.superadmin? ? current_user.id : nil))
-      redirect_to @trial_feedback.volunteer, notice: update_notice
+      update_redirect
     else
       render :edit
     end
@@ -42,6 +42,11 @@ class TrialFeedbacksController < ApplicationController
   def destroy
     @trial_feedback.destroy
     redirect_back(fallback_location: url_for(@feedbackable))
+  end
+
+  def need_review
+    authorize TrialFeedback
+    @need_review = TrialFeedback.need_review
   end
 
   private
@@ -67,6 +72,14 @@ class TrialFeedbacksController < ApplicationController
       'Probezeit Feedback quittiert.'
     else
       'Probezeit Feedback wurde erfolgreich geändert.'
+    end
+  end
+
+  def update_redirect
+    if request.referer.include?('need_review')
+      redirect_to need_review_volunteers_path, notice: 'Probezeit Feedback quittiert.'
+    else
+      redirect_to @trial_feedback.volunteer, notice: update_notice
     end
   end
 
