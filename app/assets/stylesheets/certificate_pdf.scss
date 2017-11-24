@@ -1,17 +1,17 @@
 @import 'utility';
-@import 'bootstrap_overwrites';
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'bootstrap/variables';
 @import 'layout/content';
-
-.row {
-  margin-bottom: 15px;
-}
+@import 'bootstrap_overwrites';
 
 $cert-font-family: 'Arial', sans-serif;
 $cert-font-weight: 500;
 $cert-font-size: 13px;
+
+.row {
+  margin-bottom: 15px;
+}
 
 html,
 .wrapper,
@@ -19,13 +19,15 @@ html,
   display: block;
   margin: 0;
   padding: 0;
-  width: 21cm;
+  width: $a4-short-side;
 }
 
 body {
   @media print {
     @include a4;
+
     display: block;
+
     .wrapper,
     .container {
       @include a4;
@@ -33,7 +35,9 @@ body {
   }
 
   @include a4;
+
   display: block;
+
   .wrapper,
   .container {
     @include a4;
@@ -42,8 +46,8 @@ body {
   .certificate,
   .text-body {
     font-family: $cert-font-family;
-    font-weight: $cert-font-weight;
     font-size: $cert-font-size;
+    font-weight: $cert-font-weight;
     line-height: 1.5;
   }
 
@@ -53,9 +57,9 @@ body {
 
   .kind-list {
     display: inline-block;
-    width: 50%;
     height: $cert-font-size * 1.5;
     overflow: visible;
+    width: 50%;
 
     input {
       margin-right: 5px;
@@ -72,25 +76,23 @@ body {
 
   .certificate {
     @include a4;
-    padding-top: 2.6cm;
-    padding-left: 2cm;
-    padding-right: 4cm;
-    padding-bottom: 2cm;
 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-
+    padding-bottom: 2cm;
+    padding-left: 2cm;
+    padding-right: 4cm;
+    padding-top: 2.6cm;
 
     .text-content {
       flex: 1 0 auto;
     }
 
     .signature {
-      width: 100%;
-      flex: 0 1 auto;
       display: flex;
+      flex: 0 1 auto;
+      width: 100%;
     }
-
   }
 }
