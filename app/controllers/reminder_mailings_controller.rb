@@ -15,10 +15,10 @@ class ReminderMailingsController < ApplicationController
       reminder_mailing_volunteers: @assignments + @group_assignments)
 
     # TODO: load email default template from not yet existint EmailTemplate Model
-    @reminder_mailing.assign_attributes({
-      subject: "Errinnerung fuer %{Einsatz}",
-      body: "Hallo %{Anrede} %{Name}\r\n\r\n\r\n\r\n%{Einsatz} gestarted am %{EinsatzStart}"
-    })
+    @reminder_mailing.assign_attributes(
+      subject: 'Errinnerung fuer %{Einsatz}',
+      body: 'Hallo %{Anrede} %{Name}\r\n\r\n\r\n\r\n%{Einsatz} gestarted am %{EinsatzStart}'
+    )
     authorize @reminder_mailing
   end
 
@@ -27,10 +27,10 @@ class ReminderMailingsController < ApplicationController
     @reminder_mailing = ReminderMailing.new(kind: 'half_year', reminder_mailing_volunteers: @reminder_mailables)
 
     # TODO: load email default template from not yet existint EmailTemplate Model
-    @reminder_mailing.assign_attributes({
-      subject: "Errinnerung fuer %{Einsatz}",
-      body: "Hallo %{Anrede} %{Name}\r\n\r\n\r\n\r\n%{Einsatz} gestarted am %{EinsatzStart}"
-    })
+    @reminder_mailing.assign_attributes(
+      subject: 'Errinnerung fuer %{Einsatz}',
+      body: 'Hallo %{Anrede} %{Name}\r\n\r\n\r\n\r\n%{Einsatz} gestarted am %{EinsatzStart}'
+    )
     authorize @reminder_mailing
   end
 

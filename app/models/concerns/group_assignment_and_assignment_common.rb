@@ -59,10 +59,6 @@ module GroupAssignmentAndAssignmentCommon
       loj_mailings.where('reminder_mailings.kind = ?', kind_number)
     }
 
-    scope :with_reminder_mailing_kind, lambda { |kind_number|
-      loj_mailings.where('reminder_mailings.kind = ?', kind_number)
-    }
-
     scope :with_half_year_reminder_mailing, lambda {
       with_reminder_mailing_kind(0)
     }
