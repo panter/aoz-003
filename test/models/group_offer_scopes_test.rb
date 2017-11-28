@@ -1,6 +1,9 @@
 require 'test_helper'
+require 'utility/group_offer_and_assignment'
 
 class GroupOfferScopesTest < ActiveSupport::TestCase
+  include GroupOfferAndAssignment
+
   test 'active' do
     group_offer_active = create :group_offer, active: true
     group_offer_not_active = create :group_offer, active: false
@@ -62,40 +65,5 @@ class GroupOfferScopesTest < ActiveSupport::TestCase
     query = GroupOffer.created_before(50.days.ago)
     assert query.include? created_before
     refute query.include? created_after
-  end
-
-  def create_group_offer_entity(title, start_date, end_date, *volunteers)
-    category = create :group_offer_category, category_name: "Category #{title}"
-    group_offer = create_group_offer(title, volunteers.size, start_date, category)
-    group_offer.update(created_at: start_date)
-    if volunteers.first.is_a?(Integer)
-      volunteers = Array.new(volunteers.first).map { create(:volunteer) }
-    end
-    group_assignments = create_group_assignments(group_offer, start_date, end_date, *volunteers)
-
-    return [group_offer, category, group_assignments] unless title
-    instance_variable_set("@category_#{title}", category)
-    instance_variable_set("@group_ass_#{title}", group_assignments)
-    [group_offer, category, group_assignments]
-  end
-
-  def create_group_assignments(group_offer, start_date, end_date, *volunteers)
-    volunteers.map do |volunteer|
-      g_assignment = GroupAssignment.new(group_offer: group_offer, volunteer: volunteer,
-        period_start: start_date, period_end: end_date)
-      g_assignment.save
-      g_assignment
-    end
-  end
-
-  def create_group_offer(title, volunteer_count, start_date, group_offer_category = nil)
-    group_offer_category ||= create :group_offer_category
-    go_title = title ? title : Faker::Simpsons.quote
-    group_offer = create :group_offer, group_offer_category: group_offer_category, title: go_title,
-      necessary_volunteers: volunteer_count
-    group_offer.update(created_at: start_date)
-    return group_offer unless title
-    instance_variable_set("@group_offer_#{title}", group_offer)
-    group_offer
   end
 end
