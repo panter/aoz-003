@@ -280,6 +280,16 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_not query.include? more_than_8_weeks
   end
 
+  test 'no_reminder_mailing' do
+    destroy_really_all(Assignment)
+    without_reminder_mailing = make_assignment(nil, 7.weeks.ago)
+    with_reminder_mailing = make_assignment(nil, 7.weeks.ago)
+    mailing = create_mailing(with_reminder_mailing)
+    query = Assignment.no_reminder_mailing
+    assert query.include? without_reminder_mailing
+    assert_not query.include? with_reminder_mailing
+  end
+
   def make_assignment(title, start_date = nil, end_date = nil, client = nil)
     assignment = create :assignment, period_start: start_date, period_end: end_date,
       client: client || create(:client)
