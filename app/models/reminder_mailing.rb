@@ -15,9 +15,11 @@ class ReminderMailing < ApplicationRecord
 
   enum kind: { half_year: 0, probation_period: 1 }
 
-  validate :no_reminder_volunteer_present, unless: :reminder_volunteer_mailings_any?
   validates :subject, presence: true
   validates :body, presence: true
+
+  validate :no_reminder_volunteer_present, unless: :reminder_volunteer_mailings_any?
+  validate :mailing_not_sent
 
   # setter generates relation to assignment/group_assignment and volunteer in one go
   def reminder_mailing_volunteers=(reminder_mailable)
@@ -42,5 +44,15 @@ class ReminderMailing < ApplicationRecord
 
   def no_reminder_volunteer_present
     errors.add(:volunteers, 'Es muss mindestens ein Freiwilliger ausgewählt sein.')
+  end
+
+  def mailing_not_sent
+    if sending_triggered
+      errors.add(:allready_sent, 'Wenn das mailing bereits versendet wurde, kann es nicht mehr '\
+        'geändert werden.')
+      false
+    else
+      true
+    end
   end
 end
