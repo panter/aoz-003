@@ -42,5 +42,12 @@ table.table.table-condensed
           - else
             = link_to mailing_volunteer.reminder_mailable.group_offer.to_label, mailing_volunteer.reminder_mailable.group_offer
 
-- if !@reminder_mailing.sending_triggered
-  = bootstrap_row_col { button_link('Emails versenden', initiate_mailing_reminder_mailing_path(@reminder_mailing)) }
+
+nav.navbar.hidden-print
+  ul.list-inline
+    - if !@reminder_mailing.sending_triggered
+      li= button_link 'Emails versenden', initiate_mailing_reminder_mailing_path(@reminder_mailing)
+      li= button_link 'Ändern', edit_reminder_mailing_path(@reminder_mailing)
+      li= button_link 'Zurück', edit_reminder_mailing_path(@reminder_mailing)
+    - else
+      li= button_link 'Zurück', reminder_mailings_path
