@@ -33,6 +33,9 @@ module GroupAssignmentAndAssignmentCommon
 
     scope :with_hours, (-> { joins(:hours) })
 
+    scope :loj_mailings, lambda {
+      left_outer_joins(:reminder_mailing_volunteers, :reminder_mailings)
+    }
     scope :active, (-> { not_ended.started })
     scope :stay_active, (-> { active.no_end })
     scope :inactive, (-> { ended.or(no_start) })
@@ -45,8 +48,7 @@ module GroupAssignmentAndAssignmentCommon
     scope :external, (-> { joins(:volunteer).merge(Volunteer.external) })
 
     scope :no_reminder_mailing, lambda {
-      left_outer_joins(:reminder_mailing_volunteers, :reminder_mailings)
-        .where('reminder_mailing_volunteers.id IS NULL')
+      loj_mailings.where('reminder_mailing_volunteers.id IS NULL')
     }
 
     scope :need_probation_period_reminder_mailing, lambda {
@@ -54,13 +56,11 @@ module GroupAssignmentAndAssignmentCommon
     }
 
     scope :with_reminder_mailing_kind, lambda { |kind_number|
-      left_outer_joins(:reminder_mailing_volunteers, :reminder_mailings)
-        .where('reminder_mailings.kind = ?', kind_number)
+      loj_mailings.where('reminder_mailings.kind = ?', kind_number)
     }
 
     scope :with_reminder_mailing_kind, lambda { |kind_number|
-      left_outer_joins(:reminder_mailing_volunteers, :reminder_mailings)
-        .where('reminder_mailings.kind = ?', kind_number)
+      loj_mailings.where('reminder_mailings.kind = ?', kind_number)
     }
 
     scope :with_half_year_reminder_mailing, lambda {
@@ -72,7 +72,7 @@ module GroupAssignmentAndAssignmentCommon
     }
 
     scope :no_half_year_reminder_mailing, lambda {
-      left_outer_joins(:reminder_mailing_volunteers, :reminder_mailings)
+      loj_mailings
         .where('reminder_mailings.kind != 1 OR reminder_mailing_volunteers.id IS NULL')
     }
 
