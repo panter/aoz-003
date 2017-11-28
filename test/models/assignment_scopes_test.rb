@@ -262,6 +262,21 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? assignment_external
   end
 
+  test 'started_ca_six_weeks_ago' do
+    Assignment.with_deleted.map(&:really_destroy!)
+    exactly_six_weeks = make_assignment(nil, 6.weeks.ago)
+    seven_weeks_ago = make_assignment(nil, 7.weeks.ago)
+    exactly_eight_weeks = make_assignment(nil, 8.weeks.ago)
+    less_than_six_weeks = make_assignment(nil, 2.weeks.ago)
+    more_than_8_weeks = make_assignment(nil, 2.years.ago)
+    query = Assignment.started_ca_six_weeks_ago
+    assert query.include? exactly_six_weeks
+    assert query.include? seven_weeks_ago
+    assert query.include? exactly_eight_weeks
+    assert_not query.include? less_than_six_weeks
+    assert_not query.include? more_than_8_weeks
+  end
+
   def make_assignment(title, start_date = nil, end_date = nil, client = nil)
     assignment = create :assignment, period_start: start_date, period_end: end_date,
       client: client || create(:client)
