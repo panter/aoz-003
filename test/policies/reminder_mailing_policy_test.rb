@@ -1,19 +1,13 @@
 require 'test_helper'
 
-class ReminderMailingPolicyTest < ActiveSupport::TestCase
+class ReminderMailingPolicyTest < PolicyAssertions::Test
+  test 'only superadmin is permitted to all actions' do
+    actions = ['index?', 'new_half_year?', 'new_probation_period?', 'show?', 'initiate_mailing?',
+               'create?', 'edit?', 'update?', 'destroy?']
+    assert_permit(create(:user), ReminderMailing, *actions)
 
-  def test_scope
-  end
-
-  def test_show
-  end
-
-  def test_create
-  end
-
-  def test_update
-  end
-
-  def test_destroy
+    refute_permit(create(:social_worker), ReminderMailing, *actions)
+    refute_permit(create(:department_manager), ReminderMailing, *actions)
+    refute_permit(create(:user_volunteer), ReminderMailing, *actions)
   end
 end
