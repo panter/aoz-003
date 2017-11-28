@@ -9,4 +9,5 @@ tr
   td= l(reminder_mailing.created_at.to_date)
   td
     = link_to 'Anzeigen', reminder_mailing, class: 'index-action-link'
-    = link_to 'Bearbeiten', edit_reminder_mailing_path(reminder_mailing), class: 'index-action-link'
+    - unless reminder_mailing.sending_triggered
+      = link_to 'Bearbeiten', edit_reminder_mailing_path(reminder_mailing), class: 'index-action-link'
