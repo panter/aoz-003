@@ -1,6 +1,9 @@
 require 'test_helper'
+require 'utility/reminder_mailing_builder'
 
 class AssignmentScopesTest < ActiveSupport::TestCase
+  include ReminderMailingBuilder
+
   def setup
     @now = Time.zone.now
     [
