@@ -1,11 +1,19 @@
 module ReminderMailingBuilder
-  def create_mailing(*mailables)
+  def create_mailing(kind, body, subject, creator, *mailables)
     mailing = ReminderMailing.new(
-      creator: create(:user), kind: 'probation_period', body: 'bogus', subject: 'bogus',
+      creator: creator, kind: kind, body: body, subject: subject,
       reminder_mailing_volunteers: mailing_volunteers(mailables))
     mailing.reminder_mailing_volunteers.map { |rmv| rmv.selected = '1' }
     mailing.save
     mailing
+  end
+
+  def create_probation_mailing(*mailables)
+    create_mailing('probation_period', 'aaa', 'aaa', create(:user), *mailables)
+  end
+
+  def create_half_year_mailing(*mailables)
+    create_mailing('half_year', 'aaa', 'aaa', create(:user), *mailables)
   end
 
   def mailing_volunteers(mailables)
