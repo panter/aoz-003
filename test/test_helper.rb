@@ -43,6 +43,10 @@ class ActiveSupport::TestCase
     end
   end
 
+  def destroy_really_all(model)
+    model.with_deleted.map(&:really_destroy!)
+  end
+
   def assert_xls_row_empty(wb, row, cols = 8)
     (1..cols).to_a.each { |column| assert_nil wb.cell(row, column) }
   end

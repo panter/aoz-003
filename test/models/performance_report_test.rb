@@ -1,6 +1,6 @@
 require 'test_helper'
 require 'ostruct'
-require 'performance_report_generator'
+require 'utility/performance_report_generator'
 
 class GroupOfferCategoryTest < ActiveSupport::TestCase
   include PerformanceReportGenerator
