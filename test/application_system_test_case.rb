@@ -63,4 +63,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
     find("[name=\"#{name}\"]").native.send_keys :down, :enter
   end
+
+  def any_checked?(selector)
+    page.find_all(selector).reduce do |a, b|
+      a.checked? || b.checked?
+    end
+  end
+
+  def all_checked?(selector)
+    page.find_all(selector).reduce do |a, b|
+      a.checked? && b.checked?
+    end
+  end
 end
