@@ -266,7 +266,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
   end
 
   test 'started_ca_six_weeks_ago' do
-    Assignment.with_deleted.map(&:really_destroy!)
+    destroy_really_all(Assignment)
     exactly_six_weeks = make_assignment(nil, 6.weeks.ago)
     seven_weeks_ago = make_assignment(nil, 7.weeks.ago)
     exactly_eight_weeks = make_assignment(nil, 8.weeks.ago)
