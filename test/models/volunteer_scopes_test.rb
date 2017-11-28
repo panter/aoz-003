@@ -1,14 +1,17 @@
 require 'test_helper'
+require 'utility/group_offer_and_assignment'
 
 class VolunteerScopesTest < ActiveSupport::TestCase
+  include GroupOfferAndAssignment
+
   def setup
     @today = Time.zone.today
     [:has_assignment, :has_multiple, :has_inactive, :group_offer_member,
      :has_active_and_inactive, :no_assignment].map { |v| make_volunteer v, acceptance: :accepted }
-    make_volunteer :active_will_take_more, take_more_assignments: true, acceptance: :accepted
-    make_volunteer :inactive_will_take_more, take_more_assignments: true, acceptance: :accepted
-    make_volunteer :resigned_inactive, acceptance: :resigned
-    make_volunteer :resigned_active, acceptance: :resigned
+    make_volunteer(:active_will_take_more, take_more_assignments: true, acceptance: :accepted)
+    make_volunteer(:inactive_will_take_more, take_more_assignments: true, acceptance: :accepted)
+    make_volunteer(:resigned_inactive, acceptance: :resigned)
+    make_volunteer(:resigned_active, acceptance: :resigned)
     group_offer = create :group_offer
     group_offer.volunteers << @group_offer_member
     create_all_assignments
@@ -16,19 +19,29 @@ class VolunteerScopesTest < ActiveSupport::TestCase
 
   def create_all_assignments
     [
-      [:start_60_days_ago, @has_assignment, @today.days_ago(60), nil],
-      [:start_in_one_month, @has_multiple, @today.next_month.end_of_month, nil],
-      [:start_7_days_ago, @has_multiple, @today.days_ago(7), nil],
-      [:end_15_days_ago, @has_multiple, @today.days_ago(30), @today.days_ago(15)],
-      [:end_future, @has_multiple, @today.days_ago(5), @today.next_month.end_of_month],
-      [:active_asignment, @has_active_and_inactive, @today - 300, nil],
-      [:inactive_asignment, @has_active_and_inactive, @today - 300, @today - 200],
-      [:end_30_days_ago, @has_inactive, @today.days_ago(60), @today.days_ago(30)],
-      [:active_asignment_for_will, @active_will_take_more, @today - 300, nil],
-      [:inactive_asignment_for_will, @inactive_will_take_more, @today - 300, @today - 200],
-      [:inactive_asignment_for_resigned, @resigned_inactive, @today - 300, @today - 200],
-      [:active_asignment_for_resigned, @resigned_active, @today - 300, nil]
-    ].map { |parameters| make_assignment(*parameters) }
+      { title: :start_60_days_ago, volunteer: @has_assignment,
+        start_date: @today.days_ago(60) },
+      { title: :start_in_one_month, volunteer: @has_multiple,
+        start_date: @today.next_month.end_of_month },
+      { title: :start_7_days_ago, volunteer: @has_multiple, start_date: @today.days_ago(7) },
+      { title: :end_15_days_ago, volunteer: @has_multiple,
+        start_date: @today.days_ago(30), end_date: @today.days_ago(15) },
+      { title: :end_future, volunteer: @has_multiple, start_date: @today.days_ago(5),
+        end_date: @today.next_month.end_of_month },
+      { title: :active_asignment, volunteer: @has_active_and_inactive, start_date: @today - 300 },
+      { title: :inactive_asignment, volunteer: @has_active_and_inactive, start_date: @today - 300,
+        end_date: @today - 200 },
+      { title: :end_30_days_ago, volunteer: @has_inactive, start_date: @today.days_ago(60),
+        end_date: @today.days_ago(30) },
+      { title: :active_asignment_for_will, volunteer: @active_will_take_more,
+        start_date: @today - 300 },
+      { title: :inactive_asignment_for_will, volunteer: @inactive_will_take_more,
+        start_date: @today - 300, end_date: @today - 200 },
+      { title: :inactive_asignment_for_resigned, volunteer: @resigned_inactive,
+        start_date: @today - 300, end_date: @today - 200 },
+      { title: :active_asignment_for_resigned, volunteer: @resigned_active,
+        start_date: @today - 300 }
+    ].each { |params| make_assignment(params) }
   end
 
   test 'created_between returns only volunteers created within date range' do
@@ -253,13 +266,14 @@ class VolunteerScopesTest < ActiveSupport::TestCase
 
   test 'with_assignment_6_months_ago' do
     started_before_no_end = create :volunteer
-    make_assignment(nil, started_before_no_end, 10.months.ago, nil)
+    make_assignment(start_date: 10.months.ago, volunteer: started_before_no_end)
     started_before_end_after = create :volunteer
-    make_assignment(nil, started_before_end_after, 10.months.ago, 2.months.ago)
+    make_assignment(start_date: 10.months.ago, end_date: 2.months.ago,
+      volunteer: started_before_end_after)
     started_after_no_end = create :volunteer
-    make_assignment(nil, started_after_no_end, 2.months.ago, nil)
+    make_assignment(start_date: 2.months.ago, volunteer: started_after_no_end)
     no_start_end_set = create :volunteer
-    make_assignment(nil, no_start_end_set, nil, nil)
+    make_assignment(volunteer: no_start_end_set)
     no_assignment = create :volunteer
     query = Volunteer.with_assignment_6_months_ago
     assert query.include? started_before_no_end
@@ -271,7 +285,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
 
   test 'active_only_returns_accepted_volunteers_that_have_an_active_assignment' do
     volunteer_will_inactive = make_volunteer nil
-    make_assignment(nil, volunteer_will_inactive, 10.days.ago, @today + 1)
+    make_assignment(volunteer: volunteer_will_inactive, start_date: 10.days.ago,
+      end_date: @today + 1)
     query = Volunteer.active
     assert query.include? volunteer_will_inactive
     assert query.include? @has_assignment
@@ -283,58 +298,5 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     travel_to(@today + 2)
     query = Volunteer.active
     refute query.include? volunteer_will_inactive
-  end
-
-  def make_volunteer(title, *attributes)
-    volunteer = if attributes.include?(acceptance: 'accepted')
-                  create :volunteer_with_user, *attributes
-                else
-                  create :volunteer, *attributes
-                end
-    return volunteer if title.nil?
-    instance_variable_set("@#{title}", volunteer)
-  end
-
-  def make_assignment(title, volunteer, start_date = nil, end_date = nil)
-    assignment = create :assignment, volunteer: volunteer, period_start: start_date,
-      period_end: end_date
-    return assignment if title.nil?
-    instance_variable_set("@#{title}", assignment)
-    assignment
-  end
-
-  def create_group_offer_entity(title, start_date, end_date, *volunteers)
-    category = create :group_offer_category, category_name: "Category #{title}"
-    group_offer = create_group_offer(title, volunteers.size, start_date, category)
-    group_offer.update(created_at: start_date)
-    if volunteers.first.is_a?(Integer)
-      volunteers = Array.new(volunteers.first).map { create(:volunteer) }
-    end
-    group_assignments = create_group_assignments(group_offer, start_date, end_date, *volunteers)
-
-    return [group_offer, category, group_assignments] unless title
-    instance_variable_set("@category_#{title}", category)
-    instance_variable_set("@group_ass_#{title}", group_assignments)
-    [group_offer, category, group_assignments]
-  end
-
-  def create_group_assignments(group_offer, start_date, end_date, *volunteers)
-    volunteers.map do |volunteer|
-      g_assignment = GroupAssignment.new(group_offer: group_offer, volunteer: volunteer,
-        period_start: start_date, period_end: end_date)
-      g_assignment.save
-      g_assignment
-    end
-  end
-
-  def create_group_offer(title, volunteer_count, start_date, group_offer_category = nil)
-    group_offer_category ||= create :group_offer_category
-    go_title = title ? title : Faker::Simpsons.quote
-    group_offer = create :group_offer, group_offer_category: group_offer_category, title: go_title,
-      necessary_volunteers: volunteer_count
-    group_offer.update(created_at: start_date)
-    return group_offer unless title
-    instance_variable_set("@group_offer_#{title}", group_offer)
-    group_offer
   end
 end

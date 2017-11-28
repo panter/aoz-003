@@ -1,6 +1,9 @@
 require 'test_helper'
+require 'utility/group_offer_and_assignment'
 
 class ClientScopesTest < ActiveSupport::TestCase
+  include GroupOfferAndAssignment
+
   def setup
     @now = Time.zone.now
     @with_assignment = create :client
@@ -8,12 +11,12 @@ class ClientScopesTest < ActiveSupport::TestCase
     @with_assignment_between_60_30_days_ago = create :client
     @no_assignment = create :client
     [
-      ['start_60_days_ago', @with_assignment, @now.days_ago(60), nil],
-      ['end_15_days_ago', @with_assignment_between_30_15_days_ago, @now.days_ago(30),
-       @now.days_ago(15)],
-      ['end_30_days_ago', @with_assignment_between_60_30_days_ago, @now.days_ago(60),
-       @now.days_ago(30)]
-    ].map { |parameters| make_assignment(*parameters) }
+      { title: 'start_60_days_ago', client: @with_assignment, start_date: @now.days_ago(60) },
+      { title: 'end_15_days_ago', client: @with_assignment_between_30_15_days_ago,
+        start_date: @now.days_ago(30), end_date: @now.days_ago(15) },
+      { title: 'end_30_days_ago', client: @with_assignment_between_60_30_days_ago,
+        start_date: @now.days_ago(60), end_date: @now.days_ago(30) }
+    ].map { |parameters| make_assignment(parameters) }
   end
 
   test 'with_assignments returns only clients that have assignments' do
@@ -59,11 +62,5 @@ class ClientScopesTest < ActiveSupport::TestCase
     assert query.include? @with_assignment_between_30_15_days_ago
     refute query.include? @no_assignment
     assert_equal 2, query.count
-  end
-
-  def make_assignment(title, client, start_date = nil, end_date = nil)
-    assignment = create :assignment, client: client, period_start: start_date,
-      period_end: end_date
-    instance_variable_set("@#{title}", assignment)
   end
 end
