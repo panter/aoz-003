@@ -284,10 +284,24 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     destroy_really_all(Assignment)
     without_reminder_mailing = make_assignment(nil, 7.weeks.ago)
     with_reminder_mailing = make_assignment(nil, 7.weeks.ago)
-    mailing = create_mailing(with_reminder_mailing)
+    create_mailing(with_reminder_mailing)
     query = Assignment.no_reminder_mailing
     assert query.include? without_reminder_mailing
     assert_not query.include? with_reminder_mailing
+  end
+
+  test 'need_probation_period_reminder_mailing' do
+    destroy_really_all(Assignment)
+    exactly_six_weeks = make_assignment(nil, 6.weeks.ago)
+    exactly_six_weeks_mailed = make_assignment(nil, 6.weeks.ago)
+    seven_weeks_ago = make_assignment(nil, 7.weeks.ago)
+    seven_weeks_ago_mailed = make_assignment(nil, 7.weeks.ago)
+    create_mailing(seven_weeks_ago_mailed, exactly_six_weeks_mailed)
+    query = Assignment.need_probation_period_reminder_mailing
+    assert query.include? exactly_six_weeks
+    assert query.include? seven_weeks_ago
+    assert_not query.include? seven_weeks_ago_mailed
+    assert_not query.include? exactly_six_weeks_mailed
   end
 
   def make_assignment(title, start_date = nil, end_date = nil, client = nil)
