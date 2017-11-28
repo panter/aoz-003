@@ -115,6 +115,15 @@ class Volunteer < ApplicationRecord
       6.weeks.ago, 8.weeks.ago)
   }
 
+  scope :with_group_assignment_6_months_ago, lambda {
+    joins(:group_assignments).where('assignments.period_start < ?', 6.months.ago)
+  }
+
+  scope :with_group_assignment_ca_6_weeks_ago, lambda {
+    joins(:group_assignments).where('assignments.period_start < ? AND assignments.period_start > ?',
+      6.weeks.ago, 8.weeks.ago)
+  }
+
   scope :with_only_inactive_assignments, lambda {
     left_outer_joins(:assignments)
       .merge(Assignment.inactive)
