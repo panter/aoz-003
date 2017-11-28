@@ -1,5 +1,5 @@
 require 'application_system_test_case'
-require 'performance_report_generator'
+require 'utility/performance_report_generator'
 
 class PerformanceReportsTest < ApplicationSystemTestCase
   include PerformanceReportGenerator
