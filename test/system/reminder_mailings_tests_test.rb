@@ -14,7 +14,7 @@ class ReminderMailingsTestsTest < ApplicationSystemTestCase
   test 'group_assignment_and_assignment_elegible_for_reminder_mailing_are_includable' do
     login_as @superadmin
     visit reminder_mailings_path
-    click_link 'Probezeit Errinnerung erstellen'
+    page.find_all('a', text: 'Probezeit Errinnerung erstellen').click
     assert page.has_text? @assignment_probation.to_label
     assert page.has_text? @group_assignment_probation.to_label
     assert page.has_link? 'Einsatz Info', href: assignment_path(@assignment_probation)
