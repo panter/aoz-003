@@ -43,14 +43,14 @@ table.table.table-striped.group-assignments-table
               change_active_state_group_offer_path(group_assignment.group_offer), method: :put, remote: :true
           - else
             td
-          td.td.index-action-cell.hidden-print
+          td.index-action-cell.hidden-print
             - if policy(TrialFeedback).index?
               span= link_to t_title(:new, TrialFeedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])
               span= link_to t_title(:index, TrialFeedback), polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])
             - else
               span=
               span=
-          td.td.index-action-cell.hidden-print
+          td.index-action-cell.hidden-print
             - if policy(Feedback).index?
               span= link_to t_title(:new, Feedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
               span= link_to t_title(:index, Feedback), polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
