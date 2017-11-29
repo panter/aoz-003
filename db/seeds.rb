@@ -4,9 +4,16 @@ include ApplicationHelper
 Faker::Config.locale = 'de'
 EMAIL_DOMAIN = '@example.com'.freeze
 
+def puts_model_counts(lead, *models)
+  puts "#{"\r\n" * 2}#{lead}\r\n#{'=' * 80}\r\n"
+  models.each do |model|
+    puts '%5o %s' % [model.count, model.to_s.pluralize]
+  end
+end
+
 def random_relation
   ['wife', 'husband', 'mother', 'father', 'daughter', 'son', 'sister', 'brother', 'aunt',
-    'uncle'].sample
+   'uncle'].sample
 end
 
 def make_relatives
@@ -24,11 +31,15 @@ FactoryBot.create(:department_manager, email: "department_manager#{EMAIL_DOMAIN}
     password: 'asdfasdf')
 FactoryBot.create(:volunteer_with_user)
           .user.update(password: 'asdfasdf', email: "volunteer#{EMAIL_DOMAIN}")
+puts_model_counts('First Users created', User, Profile, Contact, Volunteer, Client, Department)
 
 superadmin_and_social_worker = [:superadmin, :social_worker].map do |role|
   FactoryBot.create(:user, role: role, email: "#{role}#{EMAIL_DOMAIN}",
     password: 'asdfasdf')
 end
+puts_model_counts('Superadmin and SocialWorker created', User, Volunteer, Department, Client,
+  Volunteer)
+
 superadmin_and_social_worker.each do |user|
   next if user.clients.count > 1
   journals = [
@@ -43,6 +54,7 @@ superadmin_and_social_worker.each do |user|
   end
   user.save
 end
+puts_model_counts('Journal created', User, Volunteer, Client, Journal, Relative)
 
 def create_two_group_offers(group_offer_category)
   department_manager = User.find_by(role: 'department_manager')
@@ -56,6 +68,8 @@ def create_two_group_offers(group_offer_category)
       department: department,
       creator: User.find_by(role: 'superadmin'))
   ]
+  puts_model_counts('GroupOffers created', User, Volunteer, Department, Client, Volunteer,
+    GroupOffer, GroupAssignment)
 end
 
 # Create volunteers for each acceptance type
@@ -66,6 +80,7 @@ Volunteer.acceptance_collection.each do |acceptance|
     FactoryBot.create(:volunteer_seed_with_user, acceptance: acceptance)
   end
 end
+puts_model_counts('After Volunteer created', User, Volunteer, Client)
 
 # Create EmailTemplates
 if EmailTemplate.count < 1
@@ -73,14 +88,16 @@ if EmailTemplate.count < 1
   2.times do
     FactoryBot.create :email_template_seed, active: false
   end
+  FactoryBot.create :email_template_trial, active: true
+  2.times do
+    FactoryBot.create :email_template_trial, active: false
+  end
+  FactoryBot.create :email_template_half_year, active: true
+  2.times do
+    FactoryBot.create :email_template_half_year, active: false
+  end
 end
-
-puts "
-After VolunteerEmail created
-"
-puts "User: #{User.count}"
-puts "Volunteer: #{Volunteer.count}"
-puts "EmailTemplate: #{EmailTemplate.count}"
+puts_model_counts('After EmailTemplates created', User, EmailTemplate)
 
 # Create assignments
 if Assignment.count < 1
@@ -113,14 +130,7 @@ if Assignment.count < 1
       author_id: volunteer.user.id)
   end
 end
-puts "
-After Assignment created
-"
-puts "User: #{User.count}"
-puts "Volunteer: #{Volunteer.count}"
-puts "Feedback: #{Feedback.count}"
-puts "Hour: #{Hour.count}"
-puts "Assignment: #{Assignment.count}"
+puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client, Feedback)
 
 Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sample) }
      .each do |group_offer|
@@ -140,17 +150,8 @@ Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sa
   FactoryBot.create(:feedback, volunteer: volunteers.last, feedbackable: group_assignment,
     author_id: volunteers.last.user.id)
 end
-
-puts "
-After GroupAssignment created
-"
-puts "User: #{User.count}"
-puts "Volunteer: #{Volunteer.count}"
-puts "Feedback: #{Feedback.count}"
-puts "Hour: #{Hour.count}"
-puts "GroupOffer: #{GroupOffer.count}"
-puts "GroupAssignment: #{GroupAssignment.count}"
-puts "Department: #{Department.count}"
+puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
+  GroupAssignment, Department, Assignment, Client)
 
 # Create ClientNotifications
 if ClientNotification.count < 1
@@ -162,6 +163,12 @@ if ClientNotification.count < 1
     end
   ]
 end
+puts_model_counts('After ClientNotification created', User, Client, ClientNotification)
 
 # make sure the state is correct, after stuff has beeen done via FactoryBot
 Volunteer.accepted.map(&:verify_and_update_state)
+
+puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,
+  Assignment, Contact, GroupOffer, PerformanceReport, User, BillingExpense, Department,
+  GroupOfferCategory, Profile, Volunteer, Certificate, EmailTemplate, Hour, Relative, Client,
+  Feedback, Import, Reminder, ClientNotification, GroupAssignment, Journal, ReminderMailing)
