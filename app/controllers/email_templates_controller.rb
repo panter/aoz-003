@@ -3,7 +3,7 @@ class EmailTemplatesController < ApplicationController
 
   def index
     authorize EmailTemplate
-    @email_templates = EmailTemplate.all
+    @email_templates = EmailTemplate.order_by_active
   end
 
   def show; end
