@@ -14,6 +14,10 @@ class EmailTemplate < ApplicationRecord
     kinds.keys.map(&:to_sym)
   end
 
+  def self.template_variables
+    [:Anrede, :Name, :EinsatzTitel, :FeedbackLink]
+  end
+
   def ensure_exactly_one_active_per_kind
     return unless active && changed.include?('active')
     EmailTemplate.where(kind: kind).update(active: false)
