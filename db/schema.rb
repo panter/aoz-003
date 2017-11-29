@@ -398,8 +398,8 @@ ActiveRecord::Schema.define(version: 20171122175340) do
 
   create_table "trial_feedbacks", force: :cascade do |t|
     t.text "body"
-    t.bigint "feedbackable_id"
-    t.string "feedbackable_type"
+    t.integer "trial_feedbackable_id"
+    t.string "trial_feedbackable_type"
     t.bigint "volunteer_id"
     t.bigint "author_id"
     t.bigint "reviewer_id"
@@ -408,8 +408,8 @@ ActiveRecord::Schema.define(version: 20171122175340) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_trial_feedbacks_on_author_id"
     t.index ["deleted_at"], name: "index_trial_feedbacks_on_deleted_at"
-    t.index ["feedbackable_type", "feedbackable_id"], name: "index_trial_feedbacks_on_feedbackable_type_and_feedbackable_id"
     t.index ["reviewer_id"], name: "index_trial_feedbacks_on_reviewer_id"
+    t.index ["trial_feedbackable_id", "trial_feedbackable_type"], name: "trial_feedback_polymorphic_index"
     t.index ["volunteer_id"], name: "index_trial_feedbacks_on_volunteer_id"
   end
 
@@ -517,5 +517,7 @@ ActiveRecord::Schema.define(version: 20171122175340) do
   add_foreign_key "journals", "users"
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "trial_feedbacks", "users", column: "author_id"
+  add_foreign_key "volunteer_emails", "users"
   add_foreign_key "volunteers", "users"
 end

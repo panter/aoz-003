@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :trial_feedback do
-    association :feedbackable, factory: :assignment
+    association :trial_feedbackable, factory: :assignment
     volunteer
     association :author, factory: :user
     body { Faker::Lorem.paragraph }

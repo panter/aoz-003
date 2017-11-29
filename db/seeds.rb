@@ -143,9 +143,10 @@ if Assignment.count < 1
   end
 end
 
-# create Assignment Journal
+# create Assignment (Trial) Feedback
 Assignment.all.each do |assignment|
-  FactoryBot.create(:trial_feedback, volunteer: assignment.volunteer, feedbackable: assignment,
+  FactoryBot.create(:trial_feedback, volunteer: assignment.volunteer,
+    trial_feedbackable: assignment,
     author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
   FactoryBot.create(:feedback, volunteer: assignment.volunteer, feedbackable: assignment,
     author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
@@ -153,7 +154,8 @@ end
 
 # create GroupAssignment Trial Feedback
 GroupAssignment.all.each do |group_assignment|
-  FactoryBot.create(:trial_feedback, volunteer: group_assignment.volunteer, feedbackable: group_assignment.group_offer,
+  FactoryBot.create(:trial_feedback, volunteer: group_assignment.volunteer,
+    trial_feedbackable: group_assignment.group_offer,
     author_id: [User.superadmins.last.id, group_assignment.volunteer&.user&.id].compact.sample)
 end
 
