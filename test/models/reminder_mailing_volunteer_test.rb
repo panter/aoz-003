@@ -13,7 +13,7 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
       body: 'hallo %{Anrede} %{Name} %{EinsatzStart} %{Einsatz}')
     reminder_mailing.save
     mailing_volunteer = reminder_mailing.reminder_mailing_volunteers.first
-    assert mailing_volunteer.process_template[:body].include? @volunteer.contact.full_name
+    assert mailing_volunteer.process_template[:body].include? @volunteer.contact.natural_name
     assert mailing_volunteer.process_template[:subject].include?(
       I18n.t("salutation.#{@volunteer.salutation}")
     )

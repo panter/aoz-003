@@ -50,7 +50,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   def template_variables
     {
       Anrede: I18n.t("salutation.#{volunteer.salutation}"), Einsatz: mailable_to_label,
-      Name: "#{volunteer.contact.first_name} #{volunteer.contact.last_name}",
+      Name: volunteer.contact.natural_name,
       EinsatzStart: I18n.l(reminder_mailable.period_start),
       # TODO: this path will need to come with the TrialFeedback implementation
       # For now this Route doesn't exist yet, so only this comment for now
