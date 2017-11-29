@@ -4,7 +4,7 @@ class CreateTrialFeedbacks < ActiveRecord::Migration[5.1]
       t.text :body
       t.integer :feedbackable_id
       t.string :feedbackable_type
-      t.index [:feedbackable_id, :feedbackable_type]
+      t.references :feedbackable, polymorphic: true, index: true
       t.belongs_to :volunteer
       t.references :author, references: :users
       t.references :reviewer, references: :users

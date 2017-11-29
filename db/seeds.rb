@@ -151,6 +151,12 @@ Assignment.all.each do |assignment|
     author_id: [User.superadmins.last.id, assignment.volunteer&.user&.id].compact.sample)
 end
 
+# create GroupAssignment Trial Feedback
+GroupAssignment.all.each do |group_assignment|
+  FactoryBot.create(:trial_feedback, volunteer: group_assignment.volunteer, feedbackable: group_assignment.group_offer,
+    author_id: [User.superadmins.last.id, group_assignment.volunteer&.user&.id].compact.sample)
+end
+
 # Create ClientNotifications
 if ClientNotification.count < 1
   superadmin = User.find_by(email: 'superadmin@example.com')
