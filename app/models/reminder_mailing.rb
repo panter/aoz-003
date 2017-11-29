@@ -48,7 +48,7 @@ class ReminderMailing < ApplicationRecord
 
   def mailing_not_sent
     if sending_triggered && !will_save_change_to_sending_triggered?
-      errors.add(:allready_sent, 'Wenn das mailing bereits versendet wurde, kann es nicht mehr '\
+      errors.add(:already_sent, 'Wenn das mailing bereits versendet wurde, kann es nicht mehr '\
         'geändert werden.')
       false
     else
