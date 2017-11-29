@@ -14,6 +14,28 @@ class EmailTemplate < ApplicationRecord
     kinds.keys.map(&:to_sym)
   end
 
+  def self.active_as_hash
+    EmailTemplate.active.map do |templ|
+      [templ.kind, templ.template_hash]
+    end.to_h
+  end
+
+  def template_hash
+    {
+      body: body,
+      subject: subject
+    }
+  end
+
+  def self.template_varnames
+    {
+      trial: ReminderMailing::TEMPLATE_VARNAMES,
+      half_year: ReminderMailing::TEMPLATE_VARNAMES,
+      signup: EmailTemplate.template_variables,
+      assignment: EmailTemplate.template_variables
+    }
+  end
+
   def self.template_variables
     [:Anrede, :Name, :EinsatzTitel, :FeedbackLink]
   end

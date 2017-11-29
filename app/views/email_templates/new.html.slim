@@ -1,12 +1,12 @@
 h1= t_title(:new)
 
 p Sie können die folgenden Platzhalter benützen:
-ul
-  - EmailTemplate.template_variables.each do |var|
-    li= "%{#{var}}"
+ul#template-variables
+  - EmailTemplate.template_varnames[@email_template.kind.to_sym].each do |var_name|
+    li %{#{var_name}}
 p Zum Beispiel:
 p Liebe/r %{Anrede} %{Name}
-p Wir bitten um Ihre %{FeedbackLink} für %{EinsatzTitel}.
+p Wir bitten um Ihre %{FeedbackLink} für %{Einsatz}.
 p Danke im Voraus!
 
 = render 'form'
@@ -19,14 +19,27 @@ p Danke im Voraus!
 = form_navigation_btn :back
 
 javascript:
-  $(document).on('turbolinks:render, turbolinks:load', function() {
-    $('#email_template_kind').change(function(){
-      $("#email_template_subject").text("");
-      $("#email_template_body").text("");
-      var kind = $("#email_template_kind").val();
-      var subject = $("input[TYPE=HIDDEN]#subjects_" +kind).val();
-      var body = $("input[TYPE=HIDDEN]#bodies_" +kind).val();
+  $(document).on('turbolinks:render, turbolinks:load', function () {
+    var templateVarnames = #{EmailTemplate.template_varnames.to_json.html_safe}
+    var templateStrings = #{EmailTemplate.active_as_hash.to_json.html_safe}
+
+    function addVarnames(varNames) {
+      $('#template-variables li').remove();
+      $('#template-variables').append(
+        varNames.map(function (varName) {
+          return $('<li>').html('%{' + varName + '}');
+        })
+      );
+    }
+    function addTemplateStrings(subject, body) {
       $("#email_template_subject").val(subject);
       $("#email_template_body").text(body);
+    }
+    var kind = $("#email_template_kind").val();
+    addTemplateStrings(templateStrings[kind]['subject'], templateStrings[kind]['body']);
+    $('#email_template_kind').change(function () {
+      var newKind = $("#email_template_kind").val();
+      addTemplateStrings(templateStrings[newKind]['subject'], templateStrings[newKind]['body']);
+      addVarnames(templateVarnames[newKind]);
     });
   });
