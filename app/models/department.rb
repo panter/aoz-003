@@ -12,10 +12,10 @@ class Department < ApplicationRecord
   validates :contact, presence: true
 
   def to_label
-    contact.last_name
+    contact.to_s
   end
 
   def to_s
-    contact.last_name
+    contact.to_s
   end
 end
