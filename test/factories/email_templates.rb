@@ -11,9 +11,32 @@ FactoryBot.define do
 
     trait :fakered do
       subject { Faker::Hobbit.quote }
-      body { Faker::HeyArnold.quote }
+      body do
+        "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
+          '%{FeedbackLink}'
+      end
+    end
+
+    trait :trial do
+      kind { 1 }
+      body do
+        "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
+          '%{FeedbackLink}'
+      end
+      subject '%{Anrede} %{Name}'
+    end
+
+    trait :half_year do
+      kind { 3 }
+      body do
+        "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
+          '%{FeedbackLink}'
+      end
+      subject '%{Anrede} %{Name}'
     end
 
     factory :email_template_seed, traits: [:fakered]
+    factory :email_template_trial, traits: [:trial]
+    factory :email_template_half_year, traits: [:half_year]
   end
 end
