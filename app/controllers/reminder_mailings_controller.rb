@@ -38,7 +38,7 @@ class ReminderMailingsController < ApplicationController
   def edit
     if @reminder_mailing.sending_triggered
       redirect_back(fallback_location: reminder_mailing_path(@reminder_mailing),
-        notice: 'Wenn das mailing bereits versendet wurde, kann es nicht mehr geändert werden.')
+        notice: 'Wenn das Mailing bereits versendet wurde, kann es nicht mehr geändert werden.')
     end
   end
 
