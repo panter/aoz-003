@@ -59,5 +59,6 @@ class ReminderMailingVolunteer < ApplicationRecord
     # For now this Route doesn't exist yet, so only this comment for now
     # url_for(TrialFeedback.new(feedbackable: reminder_mailable, volunteer: volunteer))
     template_hash[:FeedbackLink] = ''
+    template_hash
   end
 end
