@@ -518,6 +518,5 @@ ActiveRecord::Schema.define(version: 20171122175340) do
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "trial_feedbacks", "users", column: "author_id"
-  add_foreign_key "volunteer_emails", "users"
   add_foreign_key "volunteers", "users"
 end
