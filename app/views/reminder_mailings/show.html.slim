@@ -48,6 +48,7 @@ nav.navbar.hidden-print
     - if !@reminder_mailing.sending_triggered
       li= button_link 'Emails versenden', initiate_mailing_reminder_mailing_path(@reminder_mailing)
       li= button_link 'Ändern', edit_reminder_mailing_path(@reminder_mailing)
+      li= link_to 'Löschen', reminder_mailing_path(@reminder_mailing), confirm_deleting(@reminder_mailing, 'btn btn-default')
       li= button_link 'Zurück', edit_reminder_mailing_path(@reminder_mailing)
     - else
       li= button_link 'Zurück', reminder_mailings_path
