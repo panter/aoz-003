@@ -3,7 +3,7 @@ class ReminderMailingsController < ApplicationController
 
   def index
     authorize ReminderMailing
-    @reminder_mailings = ReminderMailing.order('created_at desc').all
+    @reminder_mailings = ReminderMailing.created_desc
   end
 
   def show; end
