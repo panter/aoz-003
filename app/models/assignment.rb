@@ -15,7 +15,7 @@ class Assignment < ApplicationRecord
   has_many :hours, as: :hourable, dependent: :destroy
 
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
-  has_many :trial_feedbacks, as: :feedbackable, dependent: :destroy
+  has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
   has_many :reminders, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze

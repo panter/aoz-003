@@ -10,14 +10,14 @@ h1= t_title(:show)
       - if @trial_feedback.assignment?
         tr
           td= t_model(Assignment)
-          td= link_to @trial_feedback.feedbackable.to_label, assignment_path(@trial_feedback.feedbackable)
+          td= link_to @trial_feedback.trial_feedbackable.to_label, assignment_path(@trial_feedback.trial_feedbackable)
         tr
           td= t_model(Client)
-          td= link_to @trial_feedback.feedbackable.client.contact.full_name, client_path(@trial_feedback.feedbackable.client)
+          td= link_to @trial_feedback.trial_feedbackable.client.contact.full_name, client_path(@trial_feedback.trial_feedbackable.client)
       - else
         tr
           td= t_model(GroupOffer)
-          td= link_to @trial_feedback.feedbackable.to_label, group_offer_path(@trial_feedback.feedbackable)
+          td= link_to @trial_feedback.trial_feedbackable.to_label, group_offer_path(@trial_feedback.trial_feedbackable)
       tr
         td Text
         td= word_wrap(@trial_feedback.body) if @trial_feedback.body
@@ -31,8 +31,8 @@ h1= t_title(:show)
             - if @trial_feedback.reviewer
               = link_to @trial_feedback.reviewer.full_name, @trial_feedback.reviewer if @trial_feedback.reviewer
             - else
-              = button_to 'Angeschaut', polymorphic_path([@volunteer, @trial_feedback.feedbackable, @trial_feedback],
-                { trial_feedback: { volunteer_id: @trial_feedback.volunteer.id, feedbackable_id: @trial_feedback.feedbackable.id, id: @trial_feedback.id } }),
+              = button_to 'Angeschaut', polymorphic_path([@volunteer, @trial_feedback.trial_feedbackable, @trial_feedback],
+                { trial_feedback: { volunteer_id: @trial_feedback.volunteer.id, trial_feedbackable_id: @trial_feedback.trial_feedbackable.id, id: @trial_feedback.id } }),
                   { method: :put, class: 'btn btn-success btn-xs' }
 
 = form_navigation_btn :edit

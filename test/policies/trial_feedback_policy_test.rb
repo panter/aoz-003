@@ -24,10 +24,10 @@ class TrialFeedbackPolicyTest < PolicyAssertions::Test
     assignment = create :assignment, volunteer: @volunteer
     other_assignment = create :assignment, volunteer: @other_volunteer
     superadmin_feedback = create :trial_feedback, volunteer: @volunteer, author: @superadmin,
-      feedbackable: assignment
+      trial_feedbackable: assignment
     feedback_volunteer = create :trial_feedback, volunteer: @volunteer, author: @user_volunteer,
-      feedbackable: assignment
-    foreign_feedback = create :trial_feedback, feedbackable: other_assignment,
+      trial_feedbackable: assignment
+    foreign_feedback = create :trial_feedback, trial_feedbackable: other_assignment,
       volunteer: @other_volunteer, author: @other_volunteer.user
     refute_permit(@user_volunteer, superadmin_feedback, 'show?', 'edit?', 'update?', 'destroy?',
       'need_review?', 'superadmin_priviledges?')
@@ -43,11 +43,11 @@ class TrialFeedbackPolicyTest < PolicyAssertions::Test
     other_group_offer = create :group_offer,
       volunteers: [create(:volunteer, user: create(:user_volunteer)), @other_volunteer]
     superadmin_feedback = create :trial_feedback, volunteer: @volunteer, author: @superadmin,
-      feedbackable: group_offer
+      trial_feedbackable: group_offer
     feedback_volunteer = create :trial_feedback, volunteer: @volunteer, author: @user_volunteer,
-      feedbackable: group_offer
+      trial_feedbackable: group_offer
     foreign_feedback = create :trial_feedback, volunteer: @other_volunteer,
-      author: @other_volunteer.user, feedbackable: other_group_offer
+      author: @other_volunteer.user, trial_feedbackable: other_group_offer
     refute_permit(@user_volunteer, superadmin_feedback, 'show?', 'edit?', 'update?', 'destroy?',
       'need_review?', 'superadmin_priviledges?')
     refute_permit(@user_volunteer, foreign_feedback, 'show?', 'edit?', 'update?', 'destroy?',
