@@ -35,7 +35,11 @@ ActiveRecord::Schema.define(version: 20171201170544) do
     t.text "starting_topic"
     t.text "description"
     t.string "kind", default: "accompaniment"
+<<<<<<< HEAD
     t.datetime "submitted_at"
+=======
+    t.date "submitted_at"
+>>>>>>> replace confirmation with submitted at for assignments
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
