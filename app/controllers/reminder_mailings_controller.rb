@@ -11,14 +11,9 @@ class ReminderMailingsController < ApplicationController
   def new_probation_period
     @assignments = Assignment.need_probation_period_reminder_mailing.distinct
     @group_assignments = GroupAssignment.need_probation_period_reminder_mailing.distinct
-    @reminder_mailing = ReminderMailing.new(kind: 'probation_period',
+    @reminder_mailing = ReminderMailing.new(kind: 'probation_period', creator: current_user,
       reminder_mailing_volunteers: @assignments + @group_assignments)
-
-    # TODO: load email default template from not yet existint EmailTemplate Model
-    @reminder_mailing.assign_attributes(
-      subject: 'Errinnerung fuer %{Einsatz}',
-      body: 'Hallo %{Anrede} %{Name}\r\n\r\n\r\n\r\n%{Einsatz} gestarted am %{EinsatzStart}'
-    )
+    @reminder_mailing.assign_attributes(EmailTemplate.trial.active.first.slice(:subject, :body))
     authorize @reminder_mailing
   end
 
@@ -26,18 +21,12 @@ class ReminderMailingsController < ApplicationController
     @reminder_mailables = Assignment.started_six_months_ago + GroupAssignment.started_six_months_ago
     @reminder_mailing = ReminderMailing.new(kind: 'half_year',
       reminder_mailing_volunteers: @reminder_mailables)
-
-    # TODO: load email default template from not yet existint EmailTemplate Model
-    @reminder_mailing.assign_attributes(
-      subject: 'Errinnerung fuer %{Einsatz}',
-      body: 'Hallo %{Anrede} %{Name}\r\n\r\n\r\n\r\n%{Einsatz} gestarted am %{EinsatzStart}'
-    )
+    @reminder_mailing.assign_attributes(EmailTemplate.half_year.active.first.slice(:subject, :body))
     authorize @reminder_mailing
   end
 
   def create
-    @reminder_mailing = ReminderMailing.new(reminder_mailing_params)
-    @reminder_mailing.creator = current_user
+    @reminder_mailing = ReminderMailing.new(reminder_mailing_params.merge(creator_id: current_user.id))
     authorize @reminder_mailing
     if @reminder_mailing.save
       redirect_to @reminder_mailing, make_notice
