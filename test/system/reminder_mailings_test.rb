@@ -47,19 +47,32 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_text? 'Art Probezeit'
     assert page.has_text? 'Status Nicht versandt'
 
-    assert page.has_text?("Errinnerung fuer #{@assignment.to_label}") || page.has_text?("Errinnerung fuer #{@group_offer.to_label}")
-    assert page.has_text?(
-      "Hallo #{I18n.t("salutation.#{@assignment.volunteer.salutation}")} #{@assignment.volunteer.contact.full_name} "\
-      "#{I18n.l(@assignment.period_start)}"
-    ) || page.has_text?(
-      "Hallo #{I18n.t("salutation.#{@group_assignment.volunteer.salutation}")} #{@group_assignment.volunteer.contact.full_name} "\
-      "#{I18n.l(@group_assignment.period_start)}"
+    assert(
+      page.has_text?("Errinnerung fuer #{@assignment.to_label}") ||
+      page.has_text?("Errinnerung fuer #{@group_offer.to_label}")
     )
 
-    assert page.has_link? @assignment.volunteer.contact.full_name, href: volunteer_path(@assignment.volunteer)
+    assert(
+      page.has_text?(I18n.t("salutation.#{@assignment.volunteer.salutation}")) ||
+      page.has_text?(I18n.t("salutation.#{@group_assignment.volunteer.salutation}"))
+    )
+
+    assert(
+      page.has_text?(@assignment.volunteer.contact.natural_name) ||
+      page.has_text?(@group_assignment.volunteer.contact.natural_name)
+    )
+    assert(
+      page.has_text?(I18n.l(@assignment.period_start.to_date)) ||
+      page.has_text?(I18n.l(@group_assignment.period_start.to_date))
+    )
+
+    assert page.has_link? @assignment.volunteer.contact.full_name,
+      href: volunteer_path(@assignment.volunteer)
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
-    assert page.has_link? @group_assignment.volunteer.contact.full_name, href: volunteer_path(@assignment.volunteer)
-    assert page.has_link? @group_assignment.group_offer.to_label, href: group_offer_path(@group_assignment.group_offer)
+    assert page.has_link? @group_assignment.volunteer.contact.full_name,
+      href: volunteer_path(@assignment.volunteer)
+    assert page.has_link? @group_assignment.group_offer.to_label,
+      href: group_offer_path(@group_assignment.group_offer)
     click_link 'Emails versenden'
     assert page.has_link? ReminderMailing.order('created_at asc').last.creator.to_label
     assert page.has_text? "Übermittelt #{I18n.l(ReminderMailing.order('created_at asc').last.created_at.to_date)}"

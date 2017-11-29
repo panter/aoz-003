@@ -55,6 +55,10 @@ class Contact < ApplicationRecord
     volunteer? || client?
   end
 
+  def natural_name
+    "#{first_name} #{last_name}" unless department?
+  end
+
   def update_full_name
     self.full_name = "#{last_name}, #{first_name}"
   end
