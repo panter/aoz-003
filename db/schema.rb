@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20171201170544) do
     t.text "starting_topic"
     t.text "description"
     t.string "kind", default: "accompaniment"
-    t.boolean "confirmation", default: false
+    t.date "submitted_at"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(version: 20171201170544) do
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
     t.boolean "active", default: true
+    t.date "submitted_at"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["volunteer_id", "group_offer_id", "active"], name: "group_assignment_group_offer_volunteer", unique: true
