@@ -34,14 +34,15 @@ de:
       telephone: Telefonat
     created_at: Erstellt um
     email_templates:
-      kind: &id-kinds
+      kind: &id-kinds-template
         assignment: Begleitung
         signup: Anmeldung
         trial: Probezeit
+        half_year: Halbjährlich
       index:
-        <<: *id-kinds
+        <<: *id-kinds-template
       show:
-        <<: *id-kinds
+        <<: *id-kinds-template
     gender_request: &id-gender_requests
       all: Alle
       man: Mann
@@ -838,7 +839,7 @@ de:
         salutation: *id-salutations
         state: *id-states
       email_template:
-        kind: *id-kinds
+        kind: *id-kinds-template
       group_offer:
         group_offer_categories: Gruppenangebot Kategorien
         offer_type: *id-offer-types

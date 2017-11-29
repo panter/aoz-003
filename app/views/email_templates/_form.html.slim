@@ -1,11 +1,14 @@
 = simple_form_for(@email_template) do |f|
   = simple_error_notice f
 
+
   .row
-    .col-xs-12= f.input :kind, collection: EmailTemplate.kind_collection, label: 'Art'
+    - if action_name == 'new'
+      .col-xs-12= f.input :kind, collection: EmailTemplate.kind_collection, label: 'Art', selected: @email_template.kind
     .col-xs-12= f.input :active, label: 'Aktiv'
     .col-xs-12= f.input :subject, label: 'Betreff'
     .col-xs-12= f.input :body, label: 'Text'
 
   .row
     .col-xs-12= f.button :submit, class: 'btn btn-success'
+
