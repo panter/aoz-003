@@ -30,6 +30,14 @@ class GroupAssignment < ApplicationRecord
     where('group_assignments.period_end < ?', Time.zone.today)
   }
 
+  def started_six_months_ago?
+    period_start < 6.months.ago
+  end
+
+  def started_ca_six_weeks_ago?
+    period_start < 6.weeks.ago && period_start > 8.weeks.ago
+  end
+
   def save_group_assignment_logs
     group_assignment_logs.create!(group_offer_id: group_offer_id, volunteer_id: volunteer_id,
       group_assignment_id: id, title: group_offer.title,
