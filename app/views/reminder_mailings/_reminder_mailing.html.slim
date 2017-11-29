@@ -3,7 +3,7 @@ tr
   td= link_to reminder_mailing.creator.to_label, reminder_mailing.creator
   td
     - if reminder_mailing.sending_triggered
-      'Übermittelt
+      'Übermittelt am #{l(reminder_mailing.updated_at.to_date)}
     - else
       'Nicht versandt
   td= l(reminder_mailing.created_at.to_date)
