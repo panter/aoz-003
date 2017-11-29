@@ -1,18 +1,18 @@
 class TrialFeedbacksController < ApplicationController
   before_action :set_trial_feedback, only: [:show, :edit, :update, :destroy]
-  before_action :set_feedbackable
+  before_action :set_trial_feedbackable
   before_action :set_volunteer, except: [:need_review]
 
   def index
     authorize TrialFeedback
-    @trial_feedbacks = policy_scope(TrialFeedback).where(feedbackable: @feedbackable)
+    @trial_feedbacks = policy_scope(TrialFeedback).where(trial_feedbackable: @trial_feedbackable)
   end
 
   def show; end
 
   def new
-    @trial_feedback = TrialFeedback.new(feedbackable: @feedbackable, volunteer: @volunteer,
-      author: current_user)
+    @trial_feedback = TrialFeedback.new(trial_feedbackable: @trial_feedbackable,
+      volunteer: @volunteer, author: current_user)
     authorize @trial_feedback
   end
 
@@ -21,7 +21,7 @@ class TrialFeedbacksController < ApplicationController
   def create
     @trial_feedback = TrialFeedback.new(trial_feedback_params.merge(author_id: current_user.id,
       volunteer_id: @volunteer.id, reviewer_id: current_user.superadmin? ? current_user.id : nil))
-    @trial_feedback.feedbackable = @feedbackable
+    @trial_feedback.trial_feedbackable = @trial_feedbackable
     authorize @trial_feedback
     if @trial_feedback.save
       redirect_to @trial_feedback.volunteer, make_notice
@@ -41,7 +41,7 @@ class TrialFeedbacksController < ApplicationController
 
   def destroy
     @trial_feedback.destroy
-    redirect_back(fallback_location: url_for(@feedbackable))
+    redirect_back(fallback_location: url_for(@trial_feedbackable))
   end
 
   def need_review
@@ -51,9 +51,9 @@ class TrialFeedbacksController < ApplicationController
 
   private
 
-  def set_feedbackable
-    return @feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
-    @feedbackable = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
+  def set_trial_feedbackable
+    return @trial_feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
+    @trial_feedbackable = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
   end
 
   def set_volunteer
@@ -62,7 +62,7 @@ class TrialFeedbacksController < ApplicationController
 
   def set_trial_feedback
     @trial_feedback = TrialFeedback.find(params[:id])
-    @feedbackable = @trial_feedback.feedbackable
+    @trial_feedbackable = @trial_feedback.trial_feedbackable
     @volunteer = @trial_feedback.volunteer
     authorize @trial_feedback
   end
@@ -85,6 +85,6 @@ class TrialFeedbacksController < ApplicationController
 
   def trial_feedback_params
     params.require(:trial_feedback).permit(:body, :volunteer_id, :group_offer_id, :assignment_id,
-      :feedbackable_id)
+      :trial_feedbackable_id)
   end
 end

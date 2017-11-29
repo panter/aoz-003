@@ -17,7 +17,7 @@ class GroupOffer < ApplicationRecord
   has_many :hours, as: :hourable, dependent: :destroy
 
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
-  has_many :trial_feedbacks, as: :feedbackable, dependent: :destroy
+  has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 
   delegate :department_manager?, to: :creator
 

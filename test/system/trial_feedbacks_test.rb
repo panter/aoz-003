@@ -13,15 +13,15 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
 
   def setup_feedbacks
     @assignment_volunteer_feedback = create :trial_feedback, volunteer: @volunteer,
-      author: @user_volunteer, feedbackable: @assignment,
+      author: @user_volunteer, trial_feedbackable: @assignment,
       body: 'author_volunteer_assignment_feedback'
-    create :trial_feedback, feedbackable: @assignment,
+    create :trial_feedback, trial_feedbackable: @assignment,
       volunteer: @volunteer, author: @superadmin, body: 'author_superadmin_assignment_feedback'
-    create :trial_feedback, feedbackable: @group_offer, author: @user_volunteer,
+    create :trial_feedback, trial_feedbackable: @group_offer, author: @user_volunteer,
       volunteer: @volunteer, body: 'author_volunteer_group_offer_feedback'
-    create :trial_feedback, feedbackable: @group_offer, author: @superadmin, volunteer: @volunteer,
-      body: 'author_superadmin_group_offer_feedback'
-    create :trial_feedback, volunteer: @other_volunteer, feedbackable: @group_offer,
+    create :trial_feedback, trial_feedbackable: @group_offer, author: @superadmin,
+      volunteer: @volunteer, body: 'author_superadmin_group_offer_feedback'
+    create :trial_feedback, volunteer: @other_volunteer, trial_feedbackable: @group_offer,
       author: @superadmin, body: 'author_other_volunteer_group_offer_feedback'
   end
 
@@ -89,7 +89,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     setup_feedbacks
     other_group_offer = create :group_offer, title: 'some_other_group_offer',
       volunteers: [@volunteer, @other_volunteer]
-    create :trial_feedback, volunteer: @volunteer, feedbackable: other_group_offer,
+    create :trial_feedback, volunteer: @volunteer, trial_feedbackable: other_group_offer,
       author: @user_volunteer, body: 'same_volunteer_other_groupoffer_feedback'
     login_as @user_volunteer
     visit polymorphic_path([@volunteer, @group_offer, TrialFeedback])
@@ -108,7 +108,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
   test 'assignment_trial_feedbacks_index_contains_only_the_feedbacks_related_to_that_assignment' do
     setup_feedbacks
     other_assignment = create :assignment, volunteer: @volunteer
-    create :trial_feedback, feedbackable: other_assignment, volunteer: @volunteer,
+    create :trial_feedback, trial_feedbackable: other_assignment, volunteer: @volunteer,
       author: @user_volunteer, body: 'same_volunteer_other_assignment_feedback'
     login_as @user_volunteer
     visit polymorphic_path([@volunteer, @assignment, TrialFeedback])
