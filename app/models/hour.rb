@@ -13,6 +13,7 @@ class Hour < ApplicationRecord
   validates :meeting_date, presence: true
 
   scope :billable, (-> { where(billing_expense: nil) })
+  scope :since_last_submitted, ->(hourable) { where(hourable: hourable, submitted_at: nil) }
 
   HOUR_RANGE = (1..8).to_a
   MINUTE_RANGE = [0, 15, 30, 45].freeze
