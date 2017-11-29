@@ -28,8 +28,6 @@ nav.navbar.navbar-top.hidden-print
             li= link_to 'Gruppenangebote', group_offers_path
           - if policy(PerformanceReport).index?
             li= link_to 'Kennzahlen', performance_reports_path
-          / - if policy(Reminder).trial_end?
-          /   li = link_to 'Probezeit Erinnerungen', trial_end_reminders_path
           - if policy(ReminderMailing).index?
             li = link_to 'Errinnerungs Mailings', reminder_mailings_path
         ul.nav.navbar-nav.navbar-right
