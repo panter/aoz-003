@@ -224,7 +224,6 @@ en:
   activerecord:
     attributes:
       assignment:
-        confirmation: I have submitted my hours and feedback journal for this assignment.
         period: Period
         period_end: End date
         period_start: Start date

@@ -229,7 +229,6 @@ de:
         <<: *id-generic_keys
         agreement: Zustimmung
         client: Klient/in
-        confirmation: Ich bestätige alle Stunden eingetragen und Feedback zum Einsatz gegeben zu haben.
         created_by: Verantwortliche/r
         ended: Beendet
         first_instruction_lesson: Einführungskurs
