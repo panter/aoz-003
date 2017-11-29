@@ -18,14 +18,14 @@ tr
     td.hidden-print= link_to t_title(:edit, Assignment), edit_assignment_path(assignment)
   td.hidden-print= link_to t('download'), assignment_path(assignment, format: :pdf)
   - if policy(TrialFeedback).index?
-    td.td.index-action-cell.hidden-print
+    td.index-action-cell.hidden-print
       span= link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
       span= link_to t_title(:index, TrialFeedback), polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
   - else
       span=
       span=
   - if policy(Feedback).index?
-    td.td.index-action-cell.hidden-print
+    td.index-action-cell.hidden-print
       span= link_to t_title(:new, Feedback), new_polymorphic_path([assignment.volunteer, assignment, Feedback])
       span= link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])
   - else
