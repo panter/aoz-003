@@ -1,4 +1,6 @@
 class ReminderMailing < ApplicationRecord
+  TEMPLATE_VARNAMES = [:Anrede, :Einsatz, :Name, :EinsatzStart, :FeedbackLink].freeze
+
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
 
   # nullify on delete in order to keep sent mail links available

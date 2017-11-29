@@ -35,6 +35,16 @@ en:
     category_states: &id-category_states
       active: active
       inactive: inactive
+    email_templates:
+      kind: &id-kinds-template
+        assignment: Begleitung
+        signup: Anmeldung
+        trial: Probezeit
+        half_year: Halbjährlich
+      index:
+        <<: *id-kinds-template
+      show:
+        <<: *id-kinds-template
     gender_request: &id-gender_requests
       all: All
       man: Man
@@ -652,6 +662,8 @@ en:
           relation: *id-relations
         salutation: *id-salutations
         state: *id-states
+      email_template:
+        kind: *id-kinds-template
       group_offer:
         offer_state: *id-offer-states
         offer_type: *id-offer-types
