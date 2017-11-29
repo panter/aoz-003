@@ -4,7 +4,7 @@ class EmailTemplate < ApplicationRecord
   enum kind: { signup: 0, trial: 1, assignment: 2 }
   validates :kind, presence: true
 
-  default_scope { order(active: :desc) }
+  scope :order_by_active, -> { order(active: :desc) }
 
   def self.active
     where(active: true)
