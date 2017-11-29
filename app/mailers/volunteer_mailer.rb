@@ -7,10 +7,8 @@ class VolunteerMailer < ApplicationMailer
       Anrede: I18n.t("salutation.#{volunteer.salutation}"),
       Name: "#{volunteer.contact.first_name} #{volunteer.contact.last_name}"
     }
-    subject = signup_email.subject
-    @subject = subject % template_variables
-    body = signup_email.body
-    @body = body % template_variables
+    @subject = signup_email.subject % template_variables
+    @body = signup_email.body % template_variables
     mail(to: @volunteer.contact.primary_email, subject: @subject)
   end
 end
