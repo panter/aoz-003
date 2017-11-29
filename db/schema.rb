@@ -398,7 +398,7 @@ ActiveRecord::Schema.define(version: 20171122175340) do
 
   create_table "trial_feedbacks", force: :cascade do |t|
     t.text "body"
-    t.integer "feedbackable_id"
+    t.bigint "feedbackable_id"
     t.string "feedbackable_type"
     t.bigint "volunteer_id"
     t.bigint "author_id"
@@ -408,7 +408,7 @@ ActiveRecord::Schema.define(version: 20171122175340) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_trial_feedbacks_on_author_id"
     t.index ["deleted_at"], name: "index_trial_feedbacks_on_deleted_at"
-    t.index ["feedbackable_id", "feedbackable_type"], name: "index_trial_feedbacks_on_feedbackable_id_and_feedbackable_type"
+    t.index ["feedbackable_type", "feedbackable_id"], name: "index_trial_feedbacks_on_feedbackable_type_and_feedbackable_id"
     t.index ["reviewer_id"], name: "index_trial_feedbacks_on_reviewer_id"
     t.index ["volunteer_id"], name: "index_trial_feedbacks_on_volunteer_id"
   end
