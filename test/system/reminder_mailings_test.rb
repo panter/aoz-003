@@ -9,6 +9,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     @group_offer = create :group_offer
     @group_assignment = GroupAssignment.create(volunteer: @volunteer, period_end: nil,
       group_offer: @group_offer, period_start: 7.weeks.ago.to_date)
+    create :email_template_trial
   end
 
   test 'group_assignment_and_assignment_elegible_for_reminder_mailing_are_includable' do
