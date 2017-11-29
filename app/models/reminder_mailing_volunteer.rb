@@ -41,6 +41,8 @@ class ReminderMailingVolunteer < ApplicationRecord
     end
   end
 
+  TEMPLATE_VARNAMES = [:Anrede, :Einsatz, :Name, :EinsatzStart, :FeedbackLink].freeze
+
   private
 
   def remove_if_not_selected
@@ -48,14 +50,14 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def template_variables
-    {
-      Anrede: I18n.t("salutation.#{volunteer.salutation}"), Einsatz: mailable_to_label,
-      Name: volunteer.contact.natural_name,
-      EinsatzStart: I18n.l(reminder_mailable.period_start),
-      # TODO: this path will need to come with the TrialFeedback implementation
-      # For now this Route doesn't exist yet, so only this comment for now
-      # url_for(TrialFeedback.new(feedbackable: reminder_mailable, volunteer: volunteer))
-      FeedbackLink: ''
-    }
+    template_hash = ReminderMailing::TEMPLATE_VARNAMES.map { |varname| [varname, ''] }.to_h
+    template_hash[:Anrede] = I18n.t("salutation.#{volunteer.salutation}")
+    template_hash[:Einsatz] = mailable_to_label
+    template_hash[:Name] = volunteer.contact.natural_name
+    template_hash[:EinsatzStart] = I18n.l(reminder_mailable.period_start)
+    # TODO: this path will need to come with the TrialFeedback implementation
+    # For now this Route doesn't exist yet, so only this comment for now
+    # url_for(TrialFeedback.new(feedbackable: reminder_mailable, volunteer: volunteer))
+    template_hash[:FeedbackLink] = ''
   end
 end
