@@ -1,5 +1,4 @@
 class TrialFeedback < ApplicationRecord
-  attr_reader :trial_feedbackable_id_and_type
 
   belongs_to :volunteer
   belongs_to :author, class_name: 'User'
