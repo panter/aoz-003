@@ -63,4 +63,12 @@ class Assignment < ApplicationRecord
     label += " - #{period_start && I18n.l(period_start)}"
     label
   end
+
+  def hours_since_last_submitted
+    if submitted_at.present?
+      hours.where('created_at > ?', submitted_at)
+    else
+      hours
+    end
+  end
 end
