@@ -38,12 +38,12 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert all_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
 
-    fill_in 'Subject', with: 'Erinnerung fuer %{Einsatz}'
-    fill_in 'Body', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
+    fill_in 'Betreff', with: 'Erinnerung fuer %{Einsatz}'
+    fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
 
     page.find_all('input[type="submit"]').first.click
 
-    assert page.has_text? 'Reminder mailing was successfully created.'
+    assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
     assert page.has_text? 'Art Probezeit'
     assert page.has_text? 'Status Nicht versandt'
 
