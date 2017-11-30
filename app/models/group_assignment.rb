@@ -51,6 +51,14 @@ class GroupAssignment < ApplicationRecord
     end
   end
 
+  def feedbacks_since_last_submitted
+    if submitted_at.present?
+      group_offer.feedbacks.where('created_at > ? AND author_id = ?', submitted_at, volunteer.user.id)
+    else
+      group_offer.feedbacks.where(author_id: volunteer.user)
+    end
+  end
+
   private
 
   def dates_updated?

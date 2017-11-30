@@ -71,4 +71,12 @@ class Assignment < ApplicationRecord
       hours
     end
   end
+
+  def feedbacks_since_last_submitted
+    if submitted_at.present?
+      feedbacks.where('created_at > ? AND author_id = ?', submitted_at, volunteer.user.id)
+    else
+      feedbacks.where(author_id: volunteer.user)
+    end
+  end
 end
