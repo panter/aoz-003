@@ -377,6 +377,8 @@ de:
       reminder_mailing:
         kinds: *id-kinds-enum-values
         kind: Art
+        body: Text
+        subject: Betreff
       reminder:
         sent_at: Versandt am
       user:
@@ -482,6 +484,7 @@ de:
       profile: Profil
       relative: Verwante/r
       reminder: Erinnerung
+      reminder_mailing: Erinnerungs-Mailing
       trial_feedback: Probezeit Feedback
       user: Benutzer/in
       volunteer: Freiwillige/n

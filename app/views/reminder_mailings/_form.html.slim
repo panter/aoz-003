@@ -5,33 +5,58 @@
   = render 'form_submit_back', f: f
 
   .row
-    .col-xs-12.col-md-6
-      h3 Frewillige auswählen
-      - if f.error_notification.present? && f.object.errors.messages[:volunteers].present?
-        = f.error_notification message: f.object.errors.messages[:volunteers].first
-      .select-all-mailings.m-b-10
-        input type='checkbox' value='' name='select-all-mailings'
-        label for='select-all-mailings'
-          'Alle Auswählen
-      table.table.table-striped.reminder-select
-        tbody
-          = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
-            tr data-index="#{mailing_volunteer.index}"
-              td
-                = mailing_volunteer.input_field :selected, as: :boolean
-                = mailing_volunteer.input_field :volunteer_id, as: :hidden
-                = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
-                = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
-              td.click-selecting= mailing_volunteer.object.reminder_mailable.to_label
-              td
-                - if mailing_volunteer.object.group_assignment?
-                  = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable.group_offer, target: '_blank'
-                - else
-                  = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable, target: '_blank'
+    .col-xs-12.col-md-4
+      .panel.panel-default
+        .panel-heading
+          strong Erklärung
+        .panel-body
+          'Sie können die folgenden Platzhalter benützen:
 
-    .col-xs-12.col-md-6
-      h3 Email Vorlage bearbeiten
-      = f.input :subject
-      = f.input :body
+        ul#template-variables.list-group
+          - ReminderMailing::TEMPLATE_VARNAMES.each do |var_name|
+            li.list-group-item %{#{var_name}}
+
+        .panel-body
+          p Zum Beispiel:
+          pre
+            = "Guten Tag %{Anrede} %{Name}\r\n"
+            = "Wir bitten um Ihre Rückmeldung für:\r\n%{Einsatz}.\r\n"
+            = "Danke im Voraus!\r\n"
+          p Resultat:
+          pre
+            = "Guten Tag Frau Marie Muster\r\n"
+            = "Wir bitten um Ihre Rückmeldung für:\r\nJogakurs - Zentrum Juch\r\n"
+            = "Danke im Voraus!\r\n"
+    .col-xs-12.col-md-8
+      fieldset
+        legend Betreff
+        = f.input :subject
+      fieldset
+        legend Text
+        = f.input :body
+
+  fieldset
+    legend Frewillige auswählen
+    - if f.object.errors.include?(:volunteers)
+      = f.error_notification message: f.object.errors.messages[:volunteers].first
+    .select-all-mailings.m-b-10
+      input type='checkbox' value='' name='select-all-mailings'
+      label for='select-all-mailings'
+        'Alle Auswählen
+    table.table.table-striped.reminder-select
+      tbody
+        = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
+          tr data-index="#{mailing_volunteer.index}"
+            td
+              = mailing_volunteer.input_field :selected, as: :boolean
+              = mailing_volunteer.input_field :volunteer_id, as: :hidden
+              = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
+              = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
+            td.click-selecting= mailing_volunteer.object.reminder_mailable.to_label
+            td
+              - if mailing_volunteer.object.group_assignment?
+                = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable.group_offer, target: '_blank'
+              - else
+                = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable, target: '_blank'
 
   = render 'form_submit_back', f: f
