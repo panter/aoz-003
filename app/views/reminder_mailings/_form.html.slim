@@ -29,11 +29,15 @@
             = "Danke im Voraus!\r\n"
     .col-xs-12.col-md-8
       fieldset
-        legend Betreff
-        = f.input :subject
+        legend
+          'Betreff
+          abbr title="notwendig" *
+        = f.input :subject, label_html: { class: 'sr-only' }
       fieldset
-        legend Text
-        = f.input :body
+        legend
+          'Text
+          abbr title="notwendig" *
+        = f.input :body, label_html: { class: 'sr-only' }
 
   fieldset
     legend Frewillige auswählen
