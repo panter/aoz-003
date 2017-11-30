@@ -2,7 +2,6 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap_custom';
 @import 'layout/content';
-
 $cert-font-family: 'Arial', sans-serif;
 $cert-font-weight: 500;
 $cert-font-size: 13px;
@@ -23,7 +22,6 @@ html,
 body {
   @media print {
     @include a4;
-
     display: block;
 
     .wrapper,
@@ -33,7 +31,6 @@ body {
   }
 
   @include a4;
-
   display: block;
 
   .wrapper,
@@ -74,7 +71,6 @@ body {
 
   .certificate {
     @include a4;
-
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;

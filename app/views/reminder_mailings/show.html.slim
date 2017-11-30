@@ -11,7 +11,7 @@ dl.dl-horizontal
   dd= l(@reminder_mailing.created_at.to_date)
   dt Status
   - if @reminder_mailing.sending_triggered
-    dd Übermittelt
+    dd Übermittelt am #{l(reminder_mailing.updated_at.to_date)}
   - else
     dd Nicht versandt
 
