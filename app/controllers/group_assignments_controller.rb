@@ -1,6 +1,15 @@
 class GroupAssignmentsController < ApplicationController
   before_action :set_group_assignment
 
+  def update
+    if @group_assignment.update(group_assignment_params)
+      redirect_to last_submitted_hours_and_feedbacks_group_assignment_path,
+        notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    else
+      redirect_to last_submitted_hours_and_feedbacks_group_assignment_path
+    end
+  end
+
   def show
     respond_to do |format|
       format.pdf do
@@ -21,5 +30,9 @@ class GroupAssignmentsController < ApplicationController
   def set_group_assignment
     @group_assignment = GroupAssignment.find(params[:id])
     authorize @group_assignment
+  end
+
+  def group_assignment_params
+    params.require(:group_assignment).permit(:submitted_at)
   end
 end

@@ -73,7 +73,7 @@ class Assignment < ApplicationRecord
   end
 
   def feedbacks_since_last_submitted
-    if submitted_at.present?
+    if submitted_at.present? && volunteer.user
       feedbacks.where('created_at > ? AND author_id = ?', submitted_at, volunteer.user.id)
     else
       feedbacks.where(author_id: volunteer.user)

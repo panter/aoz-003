@@ -2,6 +2,8 @@ class GroupAssignment < ApplicationRecord
   include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
+  attr_reader :confirmation
+
   after_update :save_group_assignment_logs, if: :dates_updated?
   before_destroy :save_group_assignment_logs
 
@@ -52,7 +54,7 @@ class GroupAssignment < ApplicationRecord
   end
 
   def feedbacks_since_last_submitted
-    if submitted_at.present?
+    if submitted_at.present? && volunteer.user
       group_offer.feedbacks.where('created_at > ? AND author_id = ?', submitted_at, volunteer.user.id)
     else
       group_offer.feedbacks.where(author_id: volunteer.user)
