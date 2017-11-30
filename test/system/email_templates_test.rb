@@ -22,7 +22,7 @@ class EmailTemplatesTest < ApplicationSystemTestCase
       assert page.has_text? @other_email_template.subject
       click_link 'Edit'
     end
-    page.check('email_template_active')
+    page.check('Aktiv')
     click_button 'Update E-Mailvorlage'
     click_link 'Back'
     within 'tr.bg-success' do
