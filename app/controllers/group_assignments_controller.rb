@@ -12,8 +12,8 @@ class GroupAssignmentsController < ApplicationController
   end
 
   def last_submitted_hours_and_feedbacks
-    @last_submitted_hours = @group_assignment.last_submitted_hours
-    @last_submitted_feedbacks = @group_assignment.last_submitted_feedbacks
+    @last_submitted_hours = @group_assignment.hours_since_last_submitted
+    @last_submitted_feedbacks = @group_assignment.feedbacks_since_last_submitted
   end
 
   private
