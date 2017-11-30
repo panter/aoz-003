@@ -96,10 +96,6 @@ if EmailTemplate.count < 1
   2.times do
     FactoryBot.create :email_template_half_year, active: false
   end
-  FactoryBot.create :email_template_assignment, active: true
-  2.times do
-    FactoryBot.create :email_template_assignment, active: false
-  end
 end
 puts_model_counts('After EmailTemplates created', User, EmailTemplate)
 
