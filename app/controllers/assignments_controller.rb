@@ -72,7 +72,8 @@ class AssignmentsController < ApplicationController
   end
 
   def last_submitted_hours_and_feedbacks
-    @last_submitted_hours = @assignment.hours_since_last_submitted
+    @last_submitted_hours = @assignment.last_submitted_hours
+    @last_submitted_feedbacks = @assignment.last_submitted_feedbacks
   end
 
   private
