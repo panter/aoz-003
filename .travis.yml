@@ -5,15 +5,17 @@ cache:
   directories:
     - node_modules
     - vendor
+    - bin
+    - chromedriver
     - .rvm
 
 services: postgresql
 
 addons:
-  chrome: stable
   postgresql: "9.4"
 
 before_script:
+  - curl https://dl.google.com/linux/linux_signing_key.pub > google.gpg && sudo apt-key add google.gpg && curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome-stable_current_amd64.deb
   - bundle exec rails db:create
   - bundle exec rails db:schema:load
 
