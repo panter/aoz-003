@@ -8,10 +8,9 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap_overwrites';
 
+// Reset and dependencies
 @import 'bootstrap/variables';
 @import 'bootstrap/mixins';
-
-// Reset and dependencies
 @import 'bootstrap/normalize';
 @import 'bootstrap/print';
 @import 'bootstrap/glyphicons';
