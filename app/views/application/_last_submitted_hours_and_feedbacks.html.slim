@@ -1,23 +1,43 @@
 h1 Stunden Liste
 
-.table-responsive
-  table.table
-    thead
+table.table.table-striped
+  thead
+    tr
+      th= t_attr(:hourable, Hour)
+      th= t_attr(:meeting_date, Hour)
+      th= t_attr(:duration, Hour)
+      th= t_attr(:activity, Hour)
+      th= t_attr(:comments, Hour)
+  tbody
+    - hours.each do |record|
       tr
-        th= t_attr(:hourable, Hour)
-        th= t_attr(:meeting_date, Hour)
-        th= t_attr(:duration, Hour)
-        th= t_attr(:activity, Hour)
-        th= t_attr(:comments, Hour)
-    tbody
-      - hours.each do |record|
-        tr
-          td
-            - if record.assignment?
-              = record.hourable.client.contact.full_name
-            - else
-              = record.hourable.to_label
-          td= l(record.meeting_date)
-          td= "#{record.hours}:#{'%02i' % record.minutes}"
-          td= record.activity
-          td= record.comments
+        td
+          - if record.assignment?
+            = record.hourable.client.contact.full_name
+          - else
+            = record.hourable.to_label
+        td= l(record.meeting_date)
+        td= "#{record.hours}:#{'%02i' % record.minutes}"
+        td= record.activity
+        td= record.comments
+
+h1 Feedback Liste
+
+table.table.table-striped
+  thead
+    tr
+      th= t_attr(:feedback_activity, Feedback)
+      th= t_attr(:goals, Feedback)
+      th= t_attr(:achievements, Feedback)
+      th= t_attr(:future, Feedback)
+      th= t_attr(:comments, Feedback)
+      th= t_attr(:conversation, Feedback)
+  tbody
+    - feedbacks.each do |record|
+      tr
+        td= record.feedbackable.to_label
+        td= record.goals
+        td= record.achievements
+        td= record.future
+        td= record.comments
+        td= t(record.conversation)
