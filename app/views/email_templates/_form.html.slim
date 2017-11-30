@@ -1,14 +1,53 @@
 = simple_form_for(@email_template) do |f|
   = simple_error_notice f
 
+  .row.m-t-30
+    .col-xs-12.col-md-4
+      .panel.panel-default
+        .panel-heading
+          strong Erklärung
+        .panel-body
+          'Sie können die folgenden Platzhalter benützen:
+        ul#template-variables.list-group
+          - EmailTemplate.template_varnames[@email_template.kind.to_sym].each do |var_name|
+            li.list-group-item %{#{var_name}}
 
-  .row
+        .panel-body
+          p Zum Beispiel:
+          pre
+            = "Guten Tag %{Anrede} %{Name}\r\n"
+            = "Wir bitten um Ihre Rückmeldung für:\r\n%{Einsatz}.\r\n"
+            = "Danke im Voraus!\r\n"
+          p Resultat:
+          pre
+            = "Guten Tag Frau Marie Muster\r\n"
+            = "Wir bitten um Ihre Rückmeldung für:\r\nJogakurs - Zentrum Juch\r\n"
+            = "Danke im Voraus!\r\n"
     - if action_name == 'new'
-      .col-xs-12= f.input :kind, collection: EmailTemplate.kind_collection, label: 'Art', selected: @email_template.kind
-    .col-xs-12= f.input :active, label: 'Aktiv'
-    .col-xs-12= f.input :subject, label: 'Betreff'
-    .col-xs-12= f.input :body, label: 'Text'
+      .col-xs-4.col-md-1
+        fieldset
+          legend Aktiv
+          = f.input :active, label: false, wrapper_html: { class: 'text-center' }
+      .col-xs-8.col-md-7
+        fieldset
+          legend Art
+          = f.input :kind, collection: EmailTemplate.kind_collection, label: false, selected: @email_template.kind
+    - else
+      .col-xs-12.col-md-8
+        fieldset
+          legend Aktiv
+          = f.input :active, label: false
+    .col-xs-12.col-md-8
+      fieldset
+        legend Betreff
+        = f.input :subject, label: false
+    .col-xs-12.col-md-8
+      fieldset
+        legend Text
+        = f.input :body, label: false
 
-  .row
-    .col-xs-12= f.button :submit, class: 'btn btn-success'
+  nav.navbar
+    ul.list-inline
+      li= f.button :submit, class: 'btn btn-success'
+      li= button_link t('back'), :back
 

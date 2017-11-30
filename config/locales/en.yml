@@ -270,6 +270,8 @@ en:
       reminder_mailing:
         kinds: *id-kinds-enum-values
         kind: Art
+        body: Text
+        subject: Betreff
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-aceptance]
         additional_email_addresses: Additional email addresses
@@ -316,6 +318,7 @@ en:
       performance_report: Performance Report
       profile: Profile
       relative: Relative
+      reminder_mailing: Erinnerungs-Mailing
       reminder: Reminder
       trial_feedback: Probezeit Feedback
       user: User
