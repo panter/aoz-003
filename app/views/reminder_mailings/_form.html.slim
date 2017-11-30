@@ -31,12 +31,14 @@
       fieldset
         legend
           'Betreff
-          abbr title="notwendig" *
+          abbr title="notwendig"
+            ' *
         = f.input :subject, label_html: { class: 'sr-only' }
       fieldset
         legend
           'Text
-          abbr title="notwendig" *
+          abbr title="notwendig"
+            ' *
         = f.input :body, label_html: { class: 'sr-only' }
 
   fieldset

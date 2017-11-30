@@ -250,6 +250,11 @@ en:
         last_name: Name
         postal_code: Zip
         street: Street
+      email_template:
+        active: Aktiv
+        kind: Art
+        subject: Betreff
+        body: Text
       group_assignment:
         member: Member
         responsible: Responsible

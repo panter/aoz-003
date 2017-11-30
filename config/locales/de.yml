@@ -300,6 +300,11 @@ de:
         department_manager: Standort Betreuer
         name: Name
         user: User
+      email_template:
+        active: Aktiv
+        kind: Art
+        subject: Betreff
+        body: Text
       group_assignment:
         member: Mitglied in der Freiwilligengruppe
         period_end: Enddatum
