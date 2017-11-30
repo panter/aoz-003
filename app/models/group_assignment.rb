@@ -43,6 +43,14 @@ class GroupAssignment < ApplicationRecord
     label
   end
 
+  def hours_since_last_submitted
+    if submitted_at.present?
+      group_offer.hours.where('created_at > ? AND volunteer_id = ?', submitted_at, volunteer)
+    else
+      group_offer.hours.where(volunteer: volunteer)
+    end
+  end
+
   private
 
   def dates_updated?
