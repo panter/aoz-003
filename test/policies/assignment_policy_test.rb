@@ -45,11 +45,11 @@ class AssignmentPolicyTest < PolicyAssertions::Test
   end
 
   test 'Show: social worker cannot show assignment' do
-    refute_permit @social_worker, @assignment, 'show?'
+    refute_permit @social_worker, @assignment, 'show?', 'last_submitted_hours_and_feedbacks?'
   end
 
   test 'Show: department manager can show assignment' do
-    assert_permit @department_manager, @assignment, 'show?'
+    assert_permit @department_manager, @assignment, 'show?', 'last_submitted_hours_and_feedbacks?'
   end
 
   test 'Show: superadmin can see all assignments' do
