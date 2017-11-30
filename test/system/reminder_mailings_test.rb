@@ -15,30 +15,30 @@ class ReminderMailingsTest < ApplicationSystemTestCase
   test 'group_assignment_and_assignment_elegible_for_reminder_mailing_are_includable' do
     login_as @superadmin
     visit reminder_mailings_path
-    page.find_all('a', text: 'Probezeit Errinnerung erstellen').first.click
+    page.find_all('a', text: 'Probezeit Erinnerung erstellen').first.click
     assert page.has_text? @assignment.to_label
     assert page.has_text? @group_assignment.to_label
     assert page.has_link? 'Einsatz Info', href: assignment_path(@assignment)
     assert page.has_link? 'Einsatz Info', href: group_offer_path(@group_assignment.group_offer)
 
     # All checkboxes are not checked?
-    assert_equal false, page.find_all(
+    refute page.find_all(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]'
     ).reduce { |a, b| a.checked? || b.checked? }
 
     find('td', text: @assignment.to_label).click
     # at least one checkbox is checked?
-    assert_equal true, any_checked?(
+    assert any_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
     # not all checkboxes are checked
-    assert_equal false, all_checked?(
+    refute all_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
     find('input[name="select-all-mailings"]').click
     # All checkboxes are checked
-    assert_equal true, all_checked?(
+    assert all_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
 
-    fill_in 'Subject', with: 'Errinnerung fuer %{Einsatz}'
+    fill_in 'Subject', with: 'Erinnerung fuer %{Einsatz}'
     fill_in 'Body', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
 
     page.find_all('input[type="submit"]').first.click
@@ -48,8 +48,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_text? 'Status Nicht versandt'
 
     assert(
-      page.has_text?("Errinnerung fuer #{@assignment.to_label}") ||
-      page.has_text?("Errinnerung fuer #{@group_offer.to_label}")
+      page.has_text?("Erinnerung fuer #{@assignment.to_label}") ||
+      page.has_text?("Erinnerung fuer #{@group_offer.to_label}")
     )
 
     assert(

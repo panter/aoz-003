@@ -38,7 +38,8 @@ class ReminderMailingTest < ActiveSupport::TestCase
     end
 
     refute reminder_mailing.valid?
-    assert reminder_mailing.errors.messages[:volunteers].include? 'Es muss mindestens ein Freiwilliger ausgewählt sein.'
+    assert reminder_mailing.errors.messages[:volunteers].include?('Es muss mindestens '\
+      'ein/e Freiwillige/r ausgewählt sein.')
   end
 
   test 'with_no_reminder_mailing_with_one_volunteer_selected_is_valid' do
@@ -68,7 +69,7 @@ class ReminderMailingTest < ActiveSupport::TestCase
     assert reminder_mailing.errors.messages[:subject].include? "can't be blank"
     assert reminder_mailing.errors.messages[:body].include? "can't be blank"
     reminder_mailing.assign_attributes({
-      subject: 'Errinnerung fuer %{Einsatz}',
+      subject: 'Erinnerung fuer %{Einsatz}',
       body: 'Hallo %{Anrede} %{Name}\r\n\r\n\r\n\r\n%{Einsatz} gestarted am %{EinsatzStart}'
     })
     assert reminder_mailing.valid?

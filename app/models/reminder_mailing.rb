@@ -45,7 +45,7 @@ class ReminderMailing < ApplicationRecord
   end
 
   def no_reminder_volunteer_present
-    errors.add(:volunteers, 'Es muss mindestens ein Freiwilliger ausgewählt sein.')
+    errors.add(:volunteers, 'Es muss mindestens ein/e Freiwillige/r ausgewählt sein.')
   end
 
   def mailing_not_sent

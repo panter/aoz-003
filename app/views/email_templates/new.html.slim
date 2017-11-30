@@ -1,22 +1,6 @@
 h1= t_title(:new)
 
-p Sie können die folgenden Platzhalter benützen:
-ul#template-variables
-  - EmailTemplate.template_varnames[@email_template.kind.to_sym].each do |var_name|
-    li %{#{var_name}}
-p Zum Beispiel:
-p Liebe/r %{Anrede} %{Name}
-p Wir bitten um Ihre %{FeedbackLink} für %{Einsatz}.
-p Danke im Voraus!
-
 = render 'form'
-
-.load-templates
-  - EmailTemplate.active.each do |template|
-    = hidden_field_tag "subjects[#{template.kind}]", template.subject
-    = hidden_field_tag "bodies[#{template.kind}]", template.body
-
-= form_navigation_btn :back
 
 javascript:
   $(document).on('turbolinks:render, turbolinks:load', function () {
@@ -27,7 +11,7 @@ javascript:
       $('#template-variables li').remove();
       $('#template-variables').append(
         varNames.map(function (varName) {
-          return $('<li>').html('%{' + varName + '}');
+          return $('<li>').addClass('list-group-item').html('%{' + varName + '}');
         })
       );
     }
