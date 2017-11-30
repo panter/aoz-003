@@ -48,7 +48,7 @@ class AssignmentsController < ApplicationController
 
   def update
     if @assignment.update(assignment_params)
-      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
+      update_redirect
     else
       render :edit
     end
@@ -78,6 +78,15 @@ class AssignmentsController < ApplicationController
 
   private
 
+  def update_redirect
+    if request.referer.include?('last_submitted_hours_and_feedbacks')
+      redirect_to last_submitted_hours_and_feedbacks_assignment_path,
+        notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    else
+      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
+    end
+  end
+
   def set_client
     @client = Client.find(params[:id])
     authorize Assignment
@@ -96,6 +105,6 @@ class AssignmentsController < ApplicationController
   def assignment_params
     params.require(:assignment).permit(:client_id, :volunteer_id, :state, :period_start,
       :period_end, :performance_appraisal_review, :probation_period, :home_visit,
-      :first_instruction_lesson)
+      :first_instruction_lesson, :submitted_at)
   end
 end

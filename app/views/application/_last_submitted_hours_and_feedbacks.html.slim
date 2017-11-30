@@ -41,3 +41,14 @@ table.table.table-striped
         td= record.future
         td= record.comments
         td= t(record.conversation)
+
+
+= simple_form_for(confirmable) do |f|
+  = simple_error_notice f
+  = f.hidden_field :submitted_at, value: Time.zone.now
+
+  .row
+    .col-xs-12= f.input :confirmation, as: :boolean
+
+  .row
+    .col-xs-12= f.button :submit
