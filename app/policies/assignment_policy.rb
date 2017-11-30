@@ -21,6 +21,8 @@ class AssignmentPolicy < ApplicationPolicy
   alias_method :find_client?,    :superadmin_or_department_manager?
 
   alias_method :show?,   :admin_or_department_manager_or_volunteer_related?
+  alias_method :last_submitted_hours_and_feedbacks?,
+    :admin_or_department_manager_or_volunteer_related?
   alias_method :edit?,   :admin_or_department_manager_or_volunteer_related?
   alias_method :update?, :admin_or_department_manager_or_volunteer_related?
 

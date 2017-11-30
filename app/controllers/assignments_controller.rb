@@ -70,6 +70,10 @@ class AssignmentsController < ApplicationController
     @need_accompanying = @q.result.paginate(page: params[:page])
   end
 
+  def last_submitted_hours_and_feedbacks
+    @last_submitted_hours = @assignment.last_submitted_hours
+  end
+
   private
 
   def set_client
