@@ -14,16 +14,16 @@ dl.dl-horizontal
     dd Übermittelt am #{l(reminder_mailing.updated_at.to_date)}
   - else
     dd Nicht versandt
-
 hr
+
 h3 Email Beispiel
 - example = @reminder_mailing.reminder_mailing_volunteers.sample.process_template
 h4 Betreff
 .mailing-body-preview= example[:subject]
 h4 Text
 .mailing-body-preview= markdown(example[:body])
-
 hr
+
 h3
   - if @reminder_mailing.sending_triggered
     'Versandt an
