@@ -37,8 +37,12 @@ Rails.application.routes.draw do
       resources :trial_feedbacks
     end
   end
-  resources :group_assignments, only: [:show]
-  resources :assignments
+  resources :group_assignments, only: [:show] do
+    get :last_submitted_hours_and_feedbacks, on: :member
+  end
+  resources :assignments do
+    get :last_submitted_hours_and_feedbacks, on: :member
+  end
   resources :group_offers do
     get :archived, on: :collection
     put :change_active_state, on: :member
