@@ -6,8 +6,8 @@ cache:
     - node_modules
     - vendor
     - bin
-    - chromedriver
     - .rvm
+
 
 services: postgresql
 
