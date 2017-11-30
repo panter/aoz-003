@@ -26,25 +26,32 @@
     - if action_name == 'new'
       .col-xs-4.col-md-1
         fieldset
-          legend Aktiv
-          = f.input :active, label: false, wrapper_html: { class: 'text-center' }
+          legend
+            'Aktiv
+          = f.input :active, label_html: { class: 'sr-only' }, wrapper_html: { class: 'text-center' }
       .col-xs-8.col-md-7
         fieldset
-          legend Art
+          legend
+            'Art
           = f.input :kind, collection: EmailTemplate.kind_collection, label: false, selected: @email_template.kind
     - else
       .col-xs-12.col-md-8
         fieldset
-          legend Aktiv
-          = f.input :active, label: false
+          legend
+            'Aktiv
+          = f.input :active, label_html: { class: 'sr-only' }
     .col-xs-12.col-md-8
       fieldset
-        legend Betreff
-        = f.input :subject, label: false
+        legend
+          'Betreff
+          abbr title="notwendig" *
+        = f.input :subject, label_html: { class: 'sr-only' }
     .col-xs-12.col-md-8
       fieldset
-        legend Text
-        = f.input :body, label: false
+        legend
+          'Text
+          abbr title="notwendig" *
+        = f.input :body, label_html: { class: 'sr-only' }
 
   nav.navbar
     ul.list-inline
