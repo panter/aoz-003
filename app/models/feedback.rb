@@ -5,8 +5,6 @@ class Feedback < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :feedbackable, polymorphic: true, optional: true
 
-  scope :since_last_submitted, ->(feedbackable) { where(feedbackable: feedbackable, submitted_at: nil) }
-
   validates :comments, presence: true
 
   def assignment?
