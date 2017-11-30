@@ -1,5 +1,6 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy]
+  before_action :set_assignment, only: [:show, :edit, :update, :destroy,
+                                        :last_submitted_hours_and_feedbacks]
   before_action :set_volunteer, only: [:find_client]
   before_action :set_client, only: [:find_volunteer]
 
@@ -71,7 +72,7 @@ class AssignmentsController < ApplicationController
   end
 
   def last_submitted_hours_and_feedbacks
-    @last_submitted_hours = @assignment.last_submitted_hours
+    @last_submitted_hours = @assignment.hours_since_last_submitted
   end
 
   private
