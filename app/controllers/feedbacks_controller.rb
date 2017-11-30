@@ -43,11 +43,6 @@ class FeedbacksController < ApplicationController
     redirect_back(fallback_location: url_for(@feedbackable))
   end
 
-  def since_last_submitted
-    authorize Feedback
-    @since_last_submitted = Feedback.since_last_submitted
-  end
-
   private
 
   def set_feedbackable
