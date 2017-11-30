@@ -38,19 +38,19 @@ class ReminderMailingsController < ApplicationController
   def edit
     if @reminder_mailing.sending_triggered
       redirect_back(fallback_location: reminder_mailing_path(@reminder_mailing),
-        notice: 'Wenn das Mailing bereits versendet wurde, kann es nicht mehr geändert werden.')
+        notice: 'Wenn das Erinnerungs-Mailing bereits versendet wurde, kann es nicht mehr geändert werden.')
     end
   end
 
   def initiate_mailing
     if @reminder_mailing.sending_triggered
-      return redirect_to reminder_mailings_path, notice: 'Dieses Mailing wurde bereits versandt.'
+      return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits versandt.'
     end
     @reminder_mailing.reminder_mailing_volunteers.each do |mailing_volunteer|
       VolunteerMailer.probation_period_reminder(mailing_volunteer).deliver_later
     end
     @reminder_mailing.update(sending_triggered: true)
-    redirect_to reminder_mailings_path, notice: 'Probezeit Erinnerungsmails werden versendet.'
+    redirect_to reminder_mailings_path, notice: 'Probezeit Erinnerungs-Emails werden versendet.'
   end
 
   def update
