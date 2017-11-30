@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       resources :trial_feedbacks
     end
   end
-  resources :group_assignments, only: [:show] do
+  resources :group_assignments, only: [:update, :show] do
     get :last_submitted_hours_and_feedbacks, on: :member
   end
   resources :assignments do
