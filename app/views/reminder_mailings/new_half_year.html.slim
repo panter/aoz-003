@@ -1,3 +1,18 @@
 = render 'section_navigation'
 h1 Halbjährlichen Erinnerungs-Email Versand erstellen
+
+form method="get" action=""
+  select name="submitted_since" id="submitted_since_filter"
+    - pre_selected = params[:submitted_since].blank? ? 6.months.ago.beginning_of_month : params[:submitted_since].to_date
+    - (0..11).to_a.reverse.map { |count| Time.zone.today.months_ago(count).beginning_of_month }.each do |date|
+      option value="#{date}" selected=('selected' if pre_selected == date)
+        '#{t('date.month_names')[date.month]} #{date.year}
+
+javascript:
+  $(document).on('turbolinks:render, turbolinks:load', () => {
+      $('#submitted_since_filter').change(function(event) {
+        $(event.target).closest('form').submit();
+      });
+    });
+
 = render 'form'

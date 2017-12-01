@@ -70,6 +70,13 @@ module GroupAssignmentAndAssignmentCommon
       with_reminder_mailing_kind(1)
     }
 
+    scope :submitted_since, lambda { |date|
+      where('submitted_at < ?', date)
+        .or(
+          where('submitted_at IS NULL')
+        )
+    }
+
     scope :no_half_year_reminder_mailing, lambda {
       loj_mailings
         .where('reminder_mailings.kind != 1 OR reminder_mailing_volunteers.id IS NULL')
