@@ -1,7 +1,0 @@
-h3
-  = "#{t("salutation.#{@volunteer.salutation}")} #{@volunteer.contact.full_name}"
-
-p= t('.please_confirm', client: @reminder.assignment.client)
-p= link_to t_title(:index, Hour), volunteer_hours_url(@volunteer)
-p= link_to t_title(:index, Feedback), polymorphic_url([@reminder.volunteer, @reminder.assignment, Feedback])
-p= link_to t_title(:edit, Assignment), edit_assignment_url(@reminder.assignment)

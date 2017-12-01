@@ -171,4 +171,4 @@ Volunteer.accepted.map(&:verify_and_update_state)
 puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,
   Assignment, Contact, GroupOffer, PerformanceReport, User, BillingExpense, Department,
   GroupOfferCategory, Profile, Volunteer, Certificate, EmailTemplate, Hour, Relative, Client,
-  Feedback, Import, Reminder, ClientNotification, GroupAssignment, Journal, ReminderMailing)
+  Feedback, Import, ClientNotification, GroupAssignment, Journal, ReminderMailing)

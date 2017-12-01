@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129150205) do
+ActiveRecord::Schema.define(version: 20171201170544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -411,19 +411,6 @@ ActiveRecord::Schema.define(version: 20171129150205) do
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_reminder_mailings_on_creator_id"
     t.index ["deleted_at"], name: "index_reminder_mailings_on_deleted_at"
-  end
-
-  create_table "reminders", force: :cascade do |t|
-    t.date "sent_at"
-    t.bigint "assignment_id"
-    t.bigint "volunteer_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "kind"
-    t.index ["assignment_id"], name: "index_reminders_on_assignment_id"
-    t.index ["deleted_at"], name: "index_reminders_on_deleted_at"
-    t.index ["volunteer_id"], name: "index_reminders_on_volunteer_id"
   end
 
   create_table "trial_feedbacks", force: :cascade do |t|
