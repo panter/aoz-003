@@ -18,9 +18,6 @@ Rails.application.routes.draw do
   resources :email_templates
   resources :users
   resources :profiles, except: [:destroy, :index]
-  resources :reminders, only: [:index, :update, :destroy] do
-    get :trial_end, on: :collection
-  end
   resources :group_offer_categories, except: [:destroy]
   resources :feedbacks, only: [:new, :create]
   resources :volunteers do

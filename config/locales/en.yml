@@ -324,7 +324,6 @@ en:
       profile: Profile
       relative: Relative
       reminder_mailing: Erinnerungs-Mailing
-      reminder: Reminder
       trial_feedback: Probezeit Feedback
       user: User
       volunteer: Volunteer
@@ -626,11 +625,6 @@ en:
   registered_by: Registered by
   relatives: Family members
   remember_me: Remember me
-  reminder_mailer:
-    reminder_email:
-      please_confirm: 'Please confirm the hour report and assignment journal for %{client}.'
-      subject: "Reports' confirmation"
-  reminder_sent: 'Reminder sent to %{email}'
   remove_language: Remove language
   remove_relative: Remove family member
   reserve: Reserve
