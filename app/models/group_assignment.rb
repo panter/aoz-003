@@ -2,8 +2,6 @@ class GroupAssignment < ApplicationRecord
   include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
-  attr_reader :confirmation
-
   after_update :save_group_assignment_logs, if: :dates_updated?
   before_destroy :save_group_assignment_logs
 
