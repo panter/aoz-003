@@ -64,6 +64,13 @@ class Assignment < ApplicationRecord
     label
   end
 
+  def reminder_label
+    label = I18n.t('activerecord.models.assignment')
+    label += " - #{volunteer.contact.full_name}" if volunteer.contact.present?
+    label += " - #{period_start && I18n.l(period_start)}"
+    label
+  end
+
   def hours_since_last_submitted
     hours.since_last_submitted(submitted_at)
   end
