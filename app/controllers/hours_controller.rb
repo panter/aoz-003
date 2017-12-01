@@ -1,5 +1,5 @@
 class HoursController < ApplicationController
-  before_action :set_hour, only: [:show, :edit, :update, :destroy]
+  before_action :set_hour, only: [:show, :edit, :update, :destroy, :create_redirect]
   before_action :set_volunteer
 
   def index
@@ -11,6 +11,7 @@ class HoursController < ApplicationController
   def new
     @hour = Hour.new(volunteer: @volunteer)
     authorize @hour
+    session[:request_url] = request.referer
   end
 
   def edit; end
@@ -19,7 +20,7 @@ class HoursController < ApplicationController
     @hour = Hour.new(hour_params)
     authorize @hour
     if @hour.save
-      redirect_to @volunteer, make_notice
+      create_redirect
     else
       render :new
     end
@@ -47,6 +48,20 @@ class HoursController < ApplicationController
 
   def set_volunteer
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+  end
+
+  def create_redirect
+    hourable = @hour.hourable
+    if session[:request_url].include?('last_submitted_hours_and_feedbacks')
+      if hourable.class == Assignment
+        redirect_to last_submitted_hours_and_feedbacks_assignment_path(hourable), make_notice
+      else
+        group_assignment = hourable.group_assignments.where(volunteer: @volunteer).last
+        redirect_to last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment), make_notice
+      end
+    else
+      redirect_to @volunteer, make_notice
+    end
   end
 
   def hour_params
