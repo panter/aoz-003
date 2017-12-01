@@ -21,6 +21,8 @@ table.table.table-striped
         td= record.activity
         td= record.comments
 
+= bootstrap_row_col { button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, Hour]) }
+
 h1 Feedback Liste
 
 table.table.table-striped
@@ -42,6 +44,10 @@ table.table.table-striped
         td= record.comments
         td= t(record.conversation)
 
+- if confirmable.class == Assignment
+  = bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable, Feedback]) }
+- else
+  = bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.group_offer, Feedback]) }
 
 = simple_form_for(confirmable) do |f|
   = simple_error_notice f
