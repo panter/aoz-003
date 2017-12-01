@@ -17,7 +17,7 @@ class ReminderMailingTest < ActiveSupport::TestCase
       ])
     # pretend to set form select value
     reminder_mailing.reminder_mailing_volunteers.each do |rmv|
-      rmv.selected = '1'
+      rmv.picked = true
     end
     reminder_mailing.save
     assert reminder_mailing.users.include? @volunteer.user
@@ -26,31 +26,26 @@ class ReminderMailingTest < ActiveSupport::TestCase
     assert reminder_mailing.group_assignments.include? @group_assignment_probation
   end
 
-  test 'with_no_reminder_mailing_volunteer_selected_it_is_invalid' do
+  test 'with_no_reminder_mailing_volunteer_picked_it_is_invalid' do
     reminder_mailing = ReminderMailing.new(kind: :probation_period, body: 'aaa',
       subject: 'aaa', creator: @superadmin, reminder_mailing_volunteers: [
         @assignment_probation, @group_assignment_probation
       ])
-
-    # pretend form sent with none checked
-    reminder_mailing.reminder_mailing_volunteers.each do |rmv|
-      rmv.selected = '0'
-    end
 
     refute reminder_mailing.valid?
     assert reminder_mailing.errors.messages[:volunteers].include?('Es muss mindestens '\
       'ein/e Freiwillige/r ausgewählt sein.')
   end
 
-  test 'with_no_reminder_mailing_with_one_volunteer_selected_is_valid' do
+  test 'with_no_reminder_mailing_with_one_volunteer_picked_is_valid' do
     reminder_mailing = ReminderMailing.new(kind: :probation_period, body: 'aaa',
       subject: 'aaa', creator: @superadmin, reminder_mailing_volunteers: [
         @assignment_probation, @group_assignment_probation
       ])
 
     # pretend form sent with none checked
-    reminder_mailing.reminder_mailing_volunteers.first.selected = '0'
-    reminder_mailing.reminder_mailing_volunteers.first.selected = '1'
+    reminder_mailing.reminder_mailing_volunteers.first.picked = false
+    reminder_mailing.reminder_mailing_volunteers.first.picked = true
 
     assert reminder_mailing.valid?
   end
@@ -60,9 +55,8 @@ class ReminderMailingTest < ActiveSupport::TestCase
       subject: nil, creator: @superadmin, reminder_mailing_volunteers: [
         @assignment_probation, @group_assignment_probation
       ])
-    # pretend to set form select value
     reminder_mailing.reminder_mailing_volunteers.each do |rmv|
-      rmv.selected = '1'
+      rmv.picked = true
     end
 
     refute reminder_mailing.valid?

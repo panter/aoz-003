@@ -3,12 +3,12 @@ $(() => $(document).on('turbolinks:render, turbolinks:load', () => {
   $('.reminder-select .click-selecting').on('click', event => {
     event.stopPropagation();
     const row = $(event.target).closest('tr');
-    const selectBox = $(`#reminder_mailing_reminder_mailing_volunteers_attributes_${row.data().index}_selected`);
+    const selectBox = $(`#reminder_mailing_reminder_mailing_volunteers_attributes_${row.data().index}_picked`);
     row.toggleClass('mailing-selected', !selectBox.is(':checked'));
     selectBox.prop('checked', !selectBox.is(':checked'));
   });
 
-  const selectedBoxes = $('input.boolean[id$="_selected"]');
+  const selectedBoxes = $('input.boolean[id$="_picked"]');
   selectedBoxes.on('change', ({target}) => {
     const row = $(target).closest('tr');
     row.toggleClass('mailing-selected', target.checked);
@@ -19,4 +19,5 @@ $(() => $(document).on('turbolinks:render, turbolinks:load', () => {
     mailingRows.toggleClass('mailing-selected', target.checked);
     selectedBoxes.prop('checked', target.checked);
   });
+
 }));
