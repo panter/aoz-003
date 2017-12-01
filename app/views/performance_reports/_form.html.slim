@@ -9,4 +9,6 @@
 
     .col-xs-12= f.input :extern
 
-  = success_button(f)
+  .row
+    .col-xs-12
+      = f.button :submit, class: 'btn btn-success'
