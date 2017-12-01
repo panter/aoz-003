@@ -54,5 +54,6 @@ table.table.table-striped
   = f.hidden_field :submitted_at, value: Time.zone.now
 
   .row
-    .col-xs-12= f.button :submit, 'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.',
-      class: 'btn btn-success'
+    .col-xs-12.col-md-offset-3
+      p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
+    .col-xs-12.col-md-offset-5= f.button :submit, 'Bestätigen', class: 'btn btn-success'
