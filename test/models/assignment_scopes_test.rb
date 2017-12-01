@@ -1,11 +1,6 @@
 require 'test_helper'
-require 'utility/reminder_mailing_builder'
-require 'utility/group_offer_and_assignment'
 
 class AssignmentScopesTest < ActiveSupport::TestCase
-  include ReminderMailingBuilder
-  include GroupOfferAndAssignment
-
   def setup
     @now = Time.zone.now
     make_assignment(title: 'start_60_days_ago', start_date: @now.days_ago(60),

@@ -1,5 +1,8 @@
 require 'test_helper'
 require 'selenium/webdriver'
+require 'utility/reminder_mailing_builder'
+require 'utility/group_offer_and_assignment'
+
 
 Capybara.register_driver(:headless_chrome) do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
@@ -18,6 +21,9 @@ Capybara.register_driver(:visible_chrome) do |app|
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include ReminderMailingBuilder
+  include GroupOfferAndAssignment
+
   case ENV['driver']
   when 'visible'
     driven_by :visible_chrome
@@ -65,14 +71,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def any_checked?(selector)
-    page.find_all(selector).reduce do |a, b|
-      a.checked? || b.checked?
-    end
+    page.find_all(selector).any?(&:checked?)
   end
 
   def all_checked?(selector)
-    page.find_all(selector).reduce do |a, b|
-      a.checked? && b.checked?
-    end
+    page.find_all(selector).all?(&:checked?)
   end
 end

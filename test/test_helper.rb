@@ -2,10 +2,19 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'database_cleaner'
 require 'policy_assertions'
+require 'utility/reminder_mailing_builder'
+require 'utility/group_offer_and_assignment'
+
+class ActionMailer::TestCase
+  include ReminderMailingBuilder
+  include GroupOfferAndAssignment
+end
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
   include Warden::Test::Helpers
+  include ReminderMailingBuilder
+  include GroupOfferAndAssignment
 
   DatabaseCleaner.strategy = :transaction
 

@@ -1,9 +1,6 @@
 require 'test_helper'
-require 'utility/group_offer_and_assignment'
 
 class VolunteerScopesTest < ActiveSupport::TestCase
-  include GroupOfferAndAssignment
-
   def setup
     @today = Time.zone.today
     [:has_assignment, :has_multiple, :has_inactive, :group_offer_member,
