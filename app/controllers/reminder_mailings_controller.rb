@@ -76,7 +76,7 @@ class ReminderMailingsController < ApplicationController
   def reminder_mailing_params
     params.require(:reminder_mailing).permit(:body, :kind, :subject, :volunteers,
       reminder_mailing_volunteers_attributes: [
-        :volunteer_id, :reminder_mailable_id, :reminder_mailable_type, :selected
+        :id, :volunteer_id, :reminder_mailable_id, :reminder_mailable_type, :picked
       ])
   end
 end
