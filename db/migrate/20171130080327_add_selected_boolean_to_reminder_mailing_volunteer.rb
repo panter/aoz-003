@@ -1,5 +1,7 @@
 class AddSelectedBooleanToReminderMailingVolunteer < ActiveRecord::Migration[5.1]
   def change
-    add_column :reminder_mailing_volunteers, :picked, :boolean, default: false
+    change_table :reminder_mailing_volunteers do |t|
+      t.boolean :picked, default: false
+    end
   end
 end
