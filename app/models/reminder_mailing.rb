@@ -39,7 +39,7 @@ class ReminderMailing < ApplicationRecord
   private
 
   def remove_untoggled_volunteers
-    return unless sending_triggered?
+    return unless will_save_change_to_sending_triggered?
     reminder_mailing_volunteers.reject(&:picked?).map(&:delete)
   end
 
@@ -56,8 +56,9 @@ class ReminderMailing < ApplicationRecord
   end
 
   def mailing_not_to_change_after_sent
-    return unless sending_triggered && will_save_change_to_sending_triggered?
-    errors.add(:already_sent, 'Wenn das mailing bereits versendet wurde, kann es nicht mehr '\
-      'geändert werden.')
+    if sending_triggered && !will_save_change_to_sending_triggered?
+      errors.add(:already_sent, 'Wenn das mailing bereits versendet wurde, kann es nicht mehr '\
+        'geändert werden.')
+    end
   end
 end
