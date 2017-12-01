@@ -1,5 +1,5 @@
 class ReminderMailing < ApplicationRecord
-  before_save :remove_untoggled_volunteers
+  before_update :remove_untoggled_volunteers
 
   TEMPLATE_VARNAMES = [:Anrede, :Einsatz, :Name, :EinsatzStart, :FeedbackLink].freeze
 
@@ -23,7 +23,7 @@ class ReminderMailing < ApplicationRecord
   validates :body, presence: true
 
   validate :no_reminder_volunteer_present, unless: :reminder_volunteer_mailings_any?
-  validate :mailing_not_sent
+  validate :mailing_not_to_change_after_sent
 
   # setter generates relation to assignment/group_assignment and volunteer in one go
   def reminder_mailing_volunteers=(reminder_mailable)
@@ -39,6 +39,7 @@ class ReminderMailing < ApplicationRecord
   private
 
   def remove_untoggled_volunteers
+    return unless sending_triggered?
     reminder_mailing_volunteers.reject(&:picked?).map(&:delete)
   end
 
@@ -54,10 +55,9 @@ class ReminderMailing < ApplicationRecord
     errors.add(:volunteers, 'Es muss mindestens ein/e Freiwillige/r ausgewählt sein.')
   end
 
-  def mailing_not_sent
-    if sending_triggered && !will_save_change_to_sending_triggered?
-      errors.add(:already_sent, 'Wenn das mailing bereits versendet wurde, kann es nicht mehr '\
-        'geändert werden.')
-    end
+  def mailing_not_to_change_after_sent
+    return unless sending_triggered && will_save_change_to_sending_triggered?
+    errors.add(:already_sent, 'Wenn das mailing bereits versendet wurde, kann es nicht mehr '\
+      'geändert werden.')
   end
 end

@@ -1,8 +1,4 @@
-class MdPlainText < Redcarpet::Render::StripDown
-  def link(link, *_)
-    link
-  end
-end
+require 'redcarpet/render_strip'
 
 module MarkdownHelper
   def markdown(content)
@@ -13,6 +9,11 @@ module MarkdownHelper
     sanitize(markdown.render(content))
   end
 
+  class MdPlainText < Redcarpet::Render::StripDown
+    def link(link, *_)
+      link
+    end
+  end
   # return markdown as plain text for mailers
   def markdown_plain_text(content)
     return '' if content.blank?
