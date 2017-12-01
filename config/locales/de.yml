@@ -228,7 +228,6 @@ de:
       assignment:
         <<: *id-generic_keys
         agreement: Zustimmung
-        confirmation: Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
         client: Klient/in
         created_by: Verantwortliche/r
         ended: Beendet
@@ -306,7 +305,6 @@ de:
         subject: Betreff
         body: Text
       group_assignment:
-        confirmation: Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
         member: Mitglied in der Freiwilligengruppe
         period_end: Enddatum
         period_start: Anfangsdatum
