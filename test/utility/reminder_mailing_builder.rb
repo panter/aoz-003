@@ -3,7 +3,7 @@ module ReminderMailingBuilder
     mailing = ReminderMailing.new(
       creator: creator, kind: kind, body: body, subject: subject,
       reminder_mailing_volunteers: mailing_volunteers(mailables))
-    mailing.reminder_mailing_volunteers.map { |rmv| rmv.selected = '1' }
+    mailing.reminder_mailing_volunteers.map { |rmv| rmv.picked = true }
     mailing.save
     mailing
   end

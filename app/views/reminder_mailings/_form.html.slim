@@ -21,9 +21,11 @@
     table.table.table-striped.reminder-select
       tbody
         = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
-          tr data-index="#{mailing_volunteer.index}"
+          tr data-index="#{mailing_volunteer.index}" class="#{mailing_volunteer.object.picked && 'mailing-selected'}"
             td
-              = mailing_volunteer.input_field :selected, as: :boolean
+              = mailing_volunteer.label :picked, 'Ausgewählt', class: 'sr-only'
+              = mailing_volunteer.input_field :picked, as: :boolean
+              = mailing_volunteer.input_field :id, as: :hidden
               = mailing_volunteer.input_field :volunteer_id, as: :hidden
               = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
               = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden

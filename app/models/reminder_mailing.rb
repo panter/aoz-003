@@ -1,4 +1,6 @@
 class ReminderMailing < ApplicationRecord
+  after_save :remove_untoggled_volunteers
+
   TEMPLATE_VARNAMES = [:Anrede, :Einsatz, :Name, :EinsatzStart, :FeedbackLink].freeze
 
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
@@ -36,12 +38,16 @@ class ReminderMailing < ApplicationRecord
 
   private
 
+  def remove_untoggled_volunteers
+    reminder_mailing_volunteers.un_selected.map(&:really_destroy!)
+  end
+
   def reminder_volunteer_mailings_any?
     reminder_mailing_volunteers.ids.any? || selected_volunteers_any?
   end
 
   def selected_volunteers_any?
-    reminder_mailing_volunteers.map(&:selected).include?(true)
+    reminder_mailing_volunteers.toggled.any?
   end
 
   def no_reminder_volunteer_present
@@ -52,9 +58,6 @@ class ReminderMailing < ApplicationRecord
     if sending_triggered && !will_save_change_to_sending_triggered?
       errors.add(:already_sent, 'Wenn das mailing bereits versendet wurde, kann es nicht mehr '\
         'geändert werden.')
-      false
-    else
-      true
     end
   end
 end
