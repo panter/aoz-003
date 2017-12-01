@@ -6,40 +6,9 @@
 
   .row
     .col-xs-12.col-md-4
-      .panel.panel-default
-        .panel-heading
-          strong Anleitung
-        .panel-body
-          'Sie können die folgenden Platzhalter benützen:
-
-        ul#template-variables.list-group
-          - ReminderMailing::TEMPLATE_VARNAMES.each do |var_name|
-            li.list-group-item %{#{var_name}}
-
-        .panel-body
-          p Zum Beispiel:
-          pre
-            = "Guten Tag %{Anrede} %{Name}\r\n"
-            = "Wir bitten um Ihre Rückmeldung für:\r\n%{Einsatz}.\r\n"
-            = "Danke im Voraus!\r\n"
-          p Resultat:
-          pre
-            = "Guten Tag Frau Marie Muster\r\n"
-            = "Wir bitten um Ihre Rückmeldung für:\r\nJogakurs - Zentrum Juch\r\n"
-            = "Danke im Voraus!\r\n"
+      = render 'email_templates/explain_panel', template_varnames: ReminderMailing::TEMPLATE_VARNAMES
     .col-xs-12.col-md-8
-      fieldset
-        legend
-          'Betreff
-          abbr title="notwendig"
-            ' *
-        = f.input :subject, label_html: { class: 'sr-only' }
-      fieldset
-        legend
-          'Text
-          abbr title="notwendig"
-            ' *
-        = f.input :body, label_html: { class: 'sr-only' }
+      = render 'email_templates/subject_body_inputs', f: f
 
   fieldset
     legend Frewillige auswählen

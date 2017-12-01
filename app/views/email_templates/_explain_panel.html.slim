@@ -1,0 +1,20 @@
+.panel.panel-default
+  .panel-heading
+    strong Anleitung
+  .panel-body
+    'Sie können die folgenden Platzhalter benützen:
+  ul#template-variables.list-group
+    - template_varnames.each do |var_name|
+      li.list-group-item %{#{var_name}}
+
+  .panel-body
+    p Zum Beispiel:
+    pre
+      = "Guten Tag %{Anrede} %{Name}\r\n"
+      = "Wir bitten um Ihre Rückmeldung für:\r\n%{Einsatz}.\r\n"
+      = "Danke im Voraus!\r\n"
+    p Resultat:
+    pre
+      = "Guten Tag Frau Marie Muster\r\n"
+      = "Wir bitten um Ihre Rückmeldung für:\r\nJogakurs - Zentrum Juch\r\n"
+      = "Danke im Voraus!\r\n"

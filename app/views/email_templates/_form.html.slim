@@ -3,26 +3,7 @@
 
   .row.m-t-30
     .col-xs-12.col-md-4
-      .panel.panel-default
-        .panel-heading
-          strong Anleitung
-        .panel-body
-          'Sie können die folgenden Platzhalter benützen:
-        ul#template-variables.list-group
-          - EmailTemplate.template_varnames[@email_template.kind.to_sym].each do |var_name|
-            li.list-group-item %{#{var_name}}
-
-        .panel-body
-          p Zum Beispiel:
-          pre
-            = "Guten Tag %{Anrede} %{Name}\r\n"
-            = "Wir bitten um Ihre Rückmeldung für:\r\n%{Einsatz}.\r\n"
-            = "Danke im Voraus!\r\n"
-          p Resultat:
-          pre
-            = "Guten Tag Frau Marie Muster\r\n"
-            = "Wir bitten um Ihre Rückmeldung für:\r\nJogakurs - Zentrum Juch\r\n"
-            = "Danke im Voraus!\r\n"
+      = render 'explain_panel', template_varnames: EmailTemplate.template_varnames[@email_template.kind.to_sym]
     - if action_name == 'new'
       .col-xs-4.col-md-1
         fieldset
@@ -40,19 +21,7 @@
           = f.label :active, class: 'sr-only'
           = f.input :active, wrapper_html: { class: 'text-center' }, label: false
     .col-xs-12.col-md-8
-      fieldset
-        legend
-          'Betreff
-          abbr title="notwendig"
-            ' *
-        = f.input :subject, label_html: { class: 'sr-only' }
-    .col-xs-12.col-md-8
-      fieldset
-        legend
-          'Text
-          abbr title="notwendig"
-            ' *
-        = f.input :body, label_html: { class: 'sr-only' }
+      = render 'subject_body_inputs', f: f
 
   nav.navbar
     ul.list-inline
