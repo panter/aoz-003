@@ -1,4 +1,5 @@
 class ReminderMailingVolunteer < ApplicationRecord
+
   belongs_to :reminder_mailing
   belongs_to :volunteer
   belongs_to :reminder_mailable, polymorphic: true, optional: true
@@ -8,6 +9,8 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   scope :probation_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
   scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
+
+  scope :picked, (-> { where(picked: true) })
 
   def process_template
     template_vars = template_variables
@@ -40,14 +43,18 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def mailable_to_label
-    if assignment?
-      reminder_mailable.to_label
-    elsif group_assignment?
-      reminder_mailable.group_offer.to_label
-    end
+    base_assignment_entity.to_label
   end
 
   private
+
+  def base_assignment_entity
+    if assignment?
+      reminder_mailable
+    elsif group_assignment?
+      reminder_mailable.group_offer
+    end
+  end
 
   def anrede
     I18n.t("salutation.#{volunteer.salutation}")
@@ -73,16 +80,21 @@ class ReminderMailingVolunteer < ApplicationRecord
     end
   end
 
-  # TODO: this path will need to come with the TrialFeedback implementation
-  # For now this Route doesn't exist yet, so only this comment for now
-  # url_for(TrialFeedback.new(feedbackable: reminder_mailable, volunteer: volunteer))
-  def feedback_link
-    ''
-  end
-
   def template_variables
     ReminderMailing::TEMPLATE_VARNAMES.map do |varname|
       [varname, send(varname.to_s.underscore)]
     end.to_h
+  end
+
+  def feedback_link
+    "[Feedback Geben](#{feedback_url})"
+  end
+
+  def feedback_url
+    ActionMailer::Base.default_url_options[:protocol] || 'http://' +
+      ActionMailer::Base.default_url_options[:host] +
+      Rails.application.routes.url_helpers
+           .polymorphic_path([volunteer, base_assignment_entity, TrialFeedback], action: :new) +
+      "?rmv_id=#{id}&rm_id=#{reminder_mailing.id}"
   end
 end

@@ -43,10 +43,10 @@ class ReminderMailingsController < ApplicationController
   end
 
   def initiate_mailing
-    if @reminder_mailing.sending_triggered
+    if @reminder_mailing.sending_triggered?
       return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits versandt.'
     end
-    @reminder_mailing.reminder_mailing_volunteers.each do |mailing_volunteer|
+    @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
       VolunteerMailer.probation_period_reminder(mailing_volunteer).deliver_later
     end
     @reminder_mailing.update(sending_triggered: true)
