@@ -15,7 +15,7 @@ class ActiveSupport::TestCase
     [
       User, Volunteer, Client, ClientNotification, Contact, Profile, Journal, Assignment,
       Department, LanguageSkill, Relative, GroupOffer, GroupAssignment, Feedback, TrialFeedback,
-      BillingExpense, Certificate, GroupAssignmentLog, Hour, Import, Reminder
+      BillingExpense, Certificate, GroupAssignmentLog, Hour, Import
     ].each do |model|
       model.with_deleted.map(&:really_destroy!)
     end
