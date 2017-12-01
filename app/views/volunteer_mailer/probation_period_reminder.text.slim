@@ -1,6 +1,2 @@
-- rn2 = "\r\n\r\n"
-- dashs = "-" * 80
-- t4 = "\t" * 4
-- t3 = "\t" * 3
-== "#{@subject}#{rn2}"
-== "#{@body}#{rn2}"
+== "#{@subject} \r\n\r\n"
+== "#{markdown_plain_text(@body)} \r\n\r\n"

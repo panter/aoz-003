@@ -1,5 +1,5 @@
 class ReminderMailing < ApplicationRecord
-  after_save :remove_untoggled_volunteers
+  before_save :remove_untoggled_volunteers
 
   TEMPLATE_VARNAMES = [:Anrede, :Einsatz, :Name, :EinsatzStart, :FeedbackLink].freeze
 
@@ -39,15 +39,15 @@ class ReminderMailing < ApplicationRecord
   private
 
   def remove_untoggled_volunteers
-    reminder_mailing_volunteers.un_selected.map(&:really_destroy!)
+    reminder_mailing_volunteers.reject(&:picked?).map(&:delete)
+  end
+
+  def selected_volunteers_any?
+    reminder_mailing_volunteers.select(&:picked?).any?
   end
 
   def reminder_volunteer_mailings_any?
     reminder_mailing_volunteers.ids.any? || selected_volunteers_any?
-  end
-
-  def selected_volunteers_any?
-    reminder_mailing_volunteers.toggled.any?
   end
 
   def no_reminder_volunteer_present
