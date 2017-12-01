@@ -1,9 +1,6 @@
 require 'test_helper'
-require 'utility/group_offer_and_assignment'
 
 class GroupOfferScopesTest < ActiveSupport::TestCase
-  include GroupOfferAndAssignment
-
   test 'active' do
     group_offer_active = create :group_offer, active: true
     group_offer_not_active = create :group_offer, active: false
