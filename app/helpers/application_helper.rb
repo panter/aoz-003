@@ -7,10 +7,6 @@ module ApplicationHelper
     boostrap_row { f.error_notification } if f.error_notification.present?
   end
 
-  def success_button(f)
-    bootstrap_row_col { f.button :submit, class: 'btn btn-success' }
-  end
-
   def button_link(text, target, type = 'default', dimension: nil)
     btn_size = " btn-#{dimension}" if dimension
     link_to text, target, class: "btn btn-#{type}#{btn_size}"
@@ -94,14 +90,6 @@ module ApplicationHelper
 
   def search_parameters
     @search_parameters ||= params[:q]&.to_unsafe_hash || {}
-  end
-
-  def markdown(content)
-    return '' if content.blank?
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::XHTML, autolink: false,
-      disable_indented_code_blocks: true, filter_html: true,
-      no_images: true, no_links: true, no_styles: true, hard_wrap: true, lax_spacing: true)
-    sanitize(markdown.render(content))
   end
 
   def boolean_glyph(value)
