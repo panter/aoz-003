@@ -36,7 +36,7 @@ table.table.table-condensed
       th Freiwillige/r
       th Einsatz
   tbody
-    - @reminder_mailing.reminder_mailing_volunteers.each do |mailing_volunteer|
+    - @reminder_mailing.reminder_mailing_volunteers.select(&:picked?).each do |mailing_volunteer|
       tr
         td= link_to mailing_volunteer.volunteer.contact.full_name, mailing_volunteer.volunteer
         td

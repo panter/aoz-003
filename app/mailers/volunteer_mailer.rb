@@ -1,5 +1,7 @@
 class VolunteerMailer < ApplicationMailer
   add_template_helper(ApplicationHelper)
+  add_template_helper(MarkdownHelper)
+
   def welcome_email(volunteer, signup_email)
     @volunteer = volunteer
     @signup_email = signup_email

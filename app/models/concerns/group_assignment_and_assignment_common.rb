@@ -49,6 +49,9 @@ module GroupAssignmentAndAssignmentCommon
 
     scope :no_reminder_mailing, lambda {
       loj_mailings.where('reminder_mailing_volunteers.id IS NULL')
+                  .or(
+                    loj_mailings.where('reminder_mailing_volunteers.picked = FALSE')
+                  )
     }
 
     scope :need_probation_period_reminder_mailing, lambda {

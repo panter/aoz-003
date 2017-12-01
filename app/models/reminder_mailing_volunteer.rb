@@ -3,8 +3,6 @@ class ReminderMailingVolunteer < ApplicationRecord
   belongs_to :volunteer
   belongs_to :reminder_mailable, polymorphic: true, optional: true
 
-  scope :un_selected, (-> { where(selected: false) })
-  scope :toggled, (-> { where(selected: true) })
   scope :group_assignment, (-> { where(reminder_mailable_type: 'GroupAssignment') })
   scope :assignment, (-> { where(reminder_mailable_type: 'Assignment') })
 
