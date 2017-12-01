@@ -19,8 +19,6 @@ class GroupOffer < ApplicationRecord
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
   has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 
-  delegate :department_manager?, to: :creator
-
   validates :title, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
   validate :department_manager_has_department?, if: :department_manager?
@@ -62,6 +60,10 @@ class GroupOffer < ApplicationRecord
 
   def responsible?(volunteer)
     group_assignments.find_by(volunteer: volunteer).responsible
+  end
+
+  def department_manager?
+    creator&.department_manager?
   end
 
   def to_label
