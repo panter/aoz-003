@@ -11,7 +11,8 @@
       = render 'email_templates/subject_body_inputs', f: f
 
   fieldset
-    legend Frewillige auswählen
+    = render 'section_half_year_navigation'
+    legend Frewillige auswählenloololo
     - if f.object.errors.include?(:volunteers)
       = f.error_notification message: f.object.errors.messages[:volunteers].first
     .select-all-mailings.m-b-10
