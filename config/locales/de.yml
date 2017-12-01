@@ -384,8 +384,6 @@ de:
         kind: Art
         body: Text
         subject: Betreff
-      reminder:
-        sent_at: Versandt am
       user:
         <<: *id-generic_keys
         clients: Kunden/innen
@@ -488,7 +486,6 @@ de:
       performance_report: Kennzahlen Report
       profile: Profil
       relative: Verwante/r
-      reminder: Erinnerung
       reminder_mailing: Erinnerungs-Mailing
       trial_feedback: Probezeit Feedback
       user: Benutzer/in
@@ -782,11 +779,6 @@ de:
   registered_by: Angemeldet von
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
-  reminder_mailer:
-    reminder_email:
-      please_confirm: 'Bitte bestätigen Sie die Stundenrapporte und das Feedback zum Einsatz %{client}.'
-      subject: Rapporte bestätigen
-  reminder_sent: 'Erinnerung wurde versendet an %{email}'
   remove_language: Sprache entfernen
   remove_relative: Verwandte entfernen
   reserve: Reservieren

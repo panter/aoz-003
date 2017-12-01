@@ -3,8 +3,6 @@ class Assignment < ApplicationRecord
   include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
-  after_update :delete_reminder, if: :saved_change_to_confirmation?
-
   belongs_to :client
   accepts_nested_attributes_for :client
 
@@ -13,7 +11,6 @@ class Assignment < ApplicationRecord
 
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
   has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
-  has_many :reminders, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze
 
@@ -58,10 +55,6 @@ class Assignment < ApplicationRecord
 
   def last_hour
     hours.last
-  end
-
-  def delete_reminder
-    Reminder.where(assignment: id).destroy_all
   end
 
   def to_label

@@ -50,7 +50,6 @@ class Volunteer < ApplicationRecord
   has_many :clients, through: :assignments
 
   has_many :billing_expenses
-  has_many :reminders, dependent: :destroy
 
   has_many :group_assignments
   has_many :group_offers, through: :group_assignments
@@ -273,15 +272,15 @@ class Volunteer < ApplicationRecord
   end
 
   def group_accompaniments_all_values
-    GroupOfferCategory.active.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
+    GroupOfferCategory.active.map { |group| { title: group.category_name, value: group_offer_categories.include?(group) } }
   end
 
   def group_accompaniments_active_without_house_moving
-    GroupOfferCategory.active_without_house_moving.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
+    GroupOfferCategory.active_without_house_moving.map { |group| { title: group.category_name, value: group_offer_categories.include?(group) } }
   end
 
   def group_accompaniments_house_moving
-    GroupOfferCategory.house_moving.map {|group| {title: group.category_name, value: group_offer_categories.include?(group)}}
+    GroupOfferCategory.house_moving.map { |group| { title: group.category_name, value: group_offer_categories.include?(group) } }
   end
 
   def to_s
