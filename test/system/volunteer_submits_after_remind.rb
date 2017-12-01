@@ -19,7 +19,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert page.has_text? @assignment.client
     assert page.has_text? @assignment_feedback.comments
 
-    click_button 'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.'
+    click_button 'Bestätigen'
 
     assert page.has_text? 'Stunden Liste'
     assert page.has_text? 'Feedback Liste'
@@ -34,7 +34,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert page.has_text? @group_offer.to_label, count: 2
     assert page.has_text? @group_offer_feedback.comments
 
-    click_button 'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.'
+    click_button 'Bestätigen'
 
     assert page.has_text? 'Stunden Liste'
     assert page.has_text? 'Feedback Liste'
