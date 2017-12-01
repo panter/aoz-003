@@ -1,9 +1,6 @@
 require 'test_helper'
-require 'utility/group_offer_and_assignment'
 
 class ClientScopesTest < ActiveSupport::TestCase
-  include GroupOfferAndAssignment
-
   def setup
     @now = Time.zone.now
     @with_assignment = create :client

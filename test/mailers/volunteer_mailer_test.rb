@@ -1,11 +1,6 @@
 require 'test_helper'
-require 'utility/reminder_mailing_builder'
-require 'utility/group_offer_and_assignment'
 
 class VolunteerMailerTest < ActionMailer::TestCase
-  include ReminderMailingBuilder
-  include GroupOfferAndAssignment
-
   def setup
     @volunteer = create :volunteer, education: 'Bogus Education', woman: true
     @email_template = create :email_template
