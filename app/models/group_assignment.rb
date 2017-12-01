@@ -43,6 +43,14 @@ class GroupAssignment < ApplicationRecord
     label
   end
 
+  def reminder_label
+    label = "Gruppenangebot"
+    label += " - #{volunteer.contact.full_name}" if volunteer.contact.present?
+    label += " - #{group_offer.title}"
+    label += " - #{group_offer.department.contact.last_name}" if group_offer.department.present?
+    label
+  end
+
   def hours_since_last_submitted
     group_offer.hours.since_last_submitted(submitted_at)
   end
