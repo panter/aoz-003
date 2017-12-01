@@ -75,8 +75,9 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       href: group_offer_path(@group_assignment.group_offer)
     click_link 'Emails versenden'
     assert page.has_link? ReminderMailing.order('created_at asc').last.creator.to_label
-    assert page.has_text? "Übermittelt am "\
-      "#{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
+    assert page.has_text?(
+      "Übermittelt am #{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
       I18n.l(ReminderMailing.created_desc.first.created_at.to_date)
+    )
   end
 end
