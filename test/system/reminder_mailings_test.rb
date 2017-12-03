@@ -3,11 +3,12 @@ require 'application_system_test_case'
 class ReminderMailingsTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :user
-    @volunteer = create :volunteer_with_user
+    @volunteer_assignment = create :volunteer_with_user
     @assignment = create :assignment, period_start: 7.weeks.ago, period_end: nil,
-      volunteer: @volunteer
+      volunteer: @volunteer_assignment
     @group_offer = create :group_offer
-    @group_assignment = GroupAssignment.create(volunteer: @volunteer, period_end: nil,
+    @volunteer_group_offer = create :volunteer_with_user
+    @group_assignment = GroupAssignment.create(volunteer: @volunteer_group_offer, period_end: nil,
       group_offer: @group_offer, period_start: 7.weeks.ago.to_date)
     create :email_template_trial
   end
@@ -48,29 +49,20 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_text? 'Status Nicht versandt'
 
     assert(
-      page.has_text?("Erinnerung fuer #{@assignment.to_label}") ||
-      page.has_text?("Erinnerung fuer #{@group_offer.to_label}")
+      page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.last.process_template[:subject]) ||
+      page.has_text?(@volunteer_group_offer.reminder_mailing_volunteers.last.process_template[:subject])
     )
 
     assert(
-      page.has_text?(I18n.t("salutation.#{@assignment.volunteer.salutation}")) ||
-      page.has_text?(I18n.t("salutation.#{@group_assignment.volunteer.salutation}"))
+      page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.last.process_template[:body]) ||
+      page.has_text?(@volunteer_group_offer.reminder_mailing_volunteers.last.process_template[:body])
     )
 
-    assert(
-      page.has_text?(@assignment.volunteer.contact.natural_name) ||
-      page.has_text?(@group_assignment.volunteer.contact.natural_name)
-    )
-    assert(
-      page.has_text?(I18n.l(@assignment.period_start.to_date)) ||
-      page.has_text?(I18n.l(@group_assignment.period_start.to_date))
-    )
-
-    assert page.has_link? @assignment.volunteer.contact.full_name,
-      href: volunteer_path(@assignment.volunteer)
+    assert page.has_link? @volunteer_assignment.contact.full_name,
+      href: volunteer_path(@volunteer_assignment)
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
-    assert page.has_link? @group_assignment.volunteer.contact.full_name,
-      href: volunteer_path(@assignment.volunteer)
+    assert page.has_link? @volunteer_group_offer.contact.full_name,
+      href: volunteer_path(@volunteer_group_offer)
     assert page.has_link? @group_assignment.group_offer.to_label,
       href: group_offer_path(@group_assignment.group_offer)
     click_link 'Emails versenden'
