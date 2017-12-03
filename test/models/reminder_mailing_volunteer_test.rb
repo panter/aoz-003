@@ -20,6 +20,10 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
     assert mailing_volunteer.process_template[:body].include?(
       I18n.l(@assignment_probation.period_start)
     )
-    assert mailing_volunteer.process_template[:body].include? @assignment_probation.to_label
+    assert mailing_volunteer.process_template[:body].include?(
+      'Tandem mit ' +
+      reminder_mailing.reminder_mailing_volunteers.first.reminder_mailable.client.contact
+        .natural_name
+    )
   end
 end
