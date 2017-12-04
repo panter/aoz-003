@@ -15,8 +15,10 @@ class ApplicationController < ActionController::Base
   delegate :volunteer?, to: :current_user
 
   def after_sign_in_path_for(current_user)
-    hit_location = stored_location_for(current_user)
-    return hit_location if hit_location[/\/volunteers\/[0-9]+\/(assignments|group_assignments)\/[0-9]+\//].present?
+    location = stored_location_for(current_user)
+    if location && location[/\/volunteers\/[0-9]+\/(group_)?assignments\/[0-9]+\//].present?
+      return location
+    end
     return volunteer_path(current_user.volunteer.id) if volunteer?
     return new_profile_path if current_user.profile.blank?
     if policy(Department).manager_with_department?
