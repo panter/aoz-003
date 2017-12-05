@@ -4,6 +4,7 @@ class TrialFeedback < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :trial_feedbackable, polymorphic: true, optional: true
   belongs_to :reviewer, class_name: 'User', optional: true
+  belongs_to :marked_done_by, class_name: 'User'
 
   scope :need_review, -> { where(reviewer_id: nil) }
 

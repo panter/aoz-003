@@ -4,6 +4,7 @@ class Feedback < ApplicationRecord
   belongs_to :volunteer
   belongs_to :author, class_name: 'User'
   belongs_to :feedbackable, polymorphic: true, optional: true
+  belongs_to :marked_done_by, class_name: 'User'
 
   validates :comments, presence: true
 

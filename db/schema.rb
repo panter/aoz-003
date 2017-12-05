@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201170544) do
+ActiveRecord::Schema.define(version: 20171205150646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,9 +178,11 @@ ActiveRecord::Schema.define(version: 20171201170544) do
     t.datetime "updated_at", null: false
     t.string "feedbackable_type"
     t.bigint "feedbackable_id"
+    t.bigint "marked_done_by_id"
     t.index ["author_id"], name: "index_feedbacks_on_author_id"
     t.index ["deleted_at"], name: "index_feedbacks_on_deleted_at"
     t.index ["feedbackable_type", "feedbackable_id"], name: "index_feedbacks_on_feedbackable_type_and_feedbackable_id"
+    t.index ["marked_done_by_id"], name: "index_feedbacks_on_marked_done_by_id"
     t.index ["volunteer_id"], name: "index_feedbacks_on_volunteer_id"
   end
 
@@ -284,9 +286,11 @@ ActiveRecord::Schema.define(version: 20171201170544) do
     t.bigint "billing_expense_id"
     t.string "hourable_type"
     t.bigint "hourable_id"
+    t.bigint "marked_done_by_id"
     t.index ["billing_expense_id"], name: "index_hours_on_billing_expense_id"
     t.index ["deleted_at"], name: "index_hours_on_deleted_at"
     t.index ["hourable_type", "hourable_id"], name: "index_hours_on_hourable_type_and_hourable_id"
+    t.index ["marked_done_by_id"], name: "index_hours_on_marked_done_by_id"
     t.index ["volunteer_id"], name: "index_hours_on_volunteer_id"
   end
 
@@ -425,8 +429,10 @@ ActiveRecord::Schema.define(version: 20171201170544) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "marked_done_by_id"
     t.index ["author_id"], name: "index_trial_feedbacks_on_author_id"
     t.index ["deleted_at"], name: "index_trial_feedbacks_on_deleted_at"
+    t.index ["marked_done_by_id"], name: "index_trial_feedbacks_on_marked_done_by_id"
     t.index ["reviewer_id"], name: "index_trial_feedbacks_on_reviewer_id"
     t.index ["trial_feedbackable_id", "trial_feedbackable_type"], name: "trial_feedback_polymorphic_index"
     t.index ["volunteer_id"], name: "index_trial_feedbacks_on_volunteer_id"
