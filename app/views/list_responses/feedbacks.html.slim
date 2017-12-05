@@ -1,21 +1,24 @@
 h1 Feedbacks Übersicht
 = render 'reminder_mailings/section_navigation'
 
+= bootstrap_paginate(@feedbacks)
 
-table.table.table-striped
+table.table.table-striped.list-responses-table
   thead
     tr
-      th= t_model(Volunteer)
-      th= t_attr(:feedback_activity, Feedback)
+      th.limit-width= t_model(Volunteer)
+      th.limit-width= t_attr(:feedback_activity, Feedback)
       th Ziele
       th Erfolge
       th Zukunft
       th= t_attr(:comments, Feedback)
-      th Will Gespräch
+      th.limit-width Gespräch
+      th Alter
+      th.limit-width
 
   tbody
     - @feedbacks.each do |record|
-      tr
+      tr*{ data: { feedback_id: record.id } }
         td= link_to record.volunteer.full_name, volunteer_path(record.volunteer)
         td.index-action-cell
           a href="#{url_for(record.feedbackable)}" title="#{record.feedbackable.to_label}"
@@ -26,6 +29,12 @@ table.table.table-striped
         = td_truncate_content_modal(record.future, 'Zukunft', shorten_size: 40)
         = td_truncate_content_modal(record.comments, t_attr(:comments, Feedback), shorten_size: 40)
         td= t(record.conversation)
-        td= link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
+        td #{(Time.zone.today - record.created_at.to_date).to_i} Tage
+        td
+          = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
+          - unless record.marked_done_by
+            = button_to 'Erledigt', polymorphic_path([record.volunteer, record.feedbackable_link_target, record], action: :mark_feedback_done), { method: :put, class: 'btn btn-success btn-xs m-t-10' }
+
+= bootstrap_paginate(@feedbacks)
 
 = render 'modal_truncate'
