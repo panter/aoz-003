@@ -1,4 +1,4 @@
-$(() => $(document).on('turbolinks:render, turbolinks:load', () => {
+function mailingsSelectAll() {
 
   $('.reminder-select .click-selecting').on('click', event => {
     event.stopPropagation();
@@ -22,5 +22,4 @@ $(() => $(document).on('turbolinks:render, turbolinks:load', () => {
     mailingRows.toggleClass('mailing-selected', target.checked);
     selectedBoxes.prop('checked', target.checked);
   });
-
-}));
+}
