@@ -58,10 +58,18 @@ class Assignment < ApplicationRecord
   end
 
   def to_label
-    label = I18n.t('activerecord.models.assignment')
-    label += " - #{client.contact.full_name}" if client.contact.present?
-    label += " - #{period_start && I18n.l(period_start)}"
+    label = label_parts[0]
+    label += " - #{label_parts[1]}" if label_parts[1].present?
+    label += " - #{label_parts[2]}" if label_parts[2].present?
     label
+  end
+
+  def label_parts
+    @label_parts ||= [
+      I18n.t('activerecord.models.assignment'),
+      client.contact.full_name,
+      period_start && I18n.l(period_start)
+    ]
   end
 
   def hours_since_last_submitted
