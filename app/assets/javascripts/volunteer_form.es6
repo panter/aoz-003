@@ -1,28 +1,21 @@
-$(function() {
-  $( document ).on('turbolinks:render, turbolinks:load', function() {
-    show_rejection();
-    show_experience();
+function volunteerForm() {
+  show_rejection();
 
-    $('#volunteer_acceptance_rejected').on('change', ({target}) => {
-      show_rejection(target);
-    });
-
-    $('#volunteer_experience').on('change', ({target}) => {
-      show_experience(target);
-    });
-
-    $('.volunteer-active-checkbox-changes').on('change', ({target}) => {
-      const data = $(target).data();
-      if(target.checked) {
-        changeStateSelectToActiveVolunteer(data.state);
-        hideFormRegions(data.hide);
-      } else {
-        changeStateSelectToNonActiveVolunteer(data.state);
-        showFormRegions(data.hide);
-      }
-    });
+  $('#volunteer_acceptance_rejected').on('change', ({target}) => {
+    show_rejection(target);
   });
-});
+
+  $('.volunteer-active-checkbox-changes').on('change', ({target}) => {
+    const data = $(target).data();
+    if(target.checked) {
+      changeStateSelectToActiveVolunteer(data.state);
+      hideFormRegions(data.hide);
+    } else {
+      changeStateSelectToNonActiveVolunteer(data.state);
+      showFormRegions(data.hide);
+    }
+  });
+}
 
 const hideFormRegions = (hide) => {
   hide.forEach(cssClass => $(`.${cssClass}`).hide());
