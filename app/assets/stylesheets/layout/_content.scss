@@ -78,3 +78,38 @@
   font-family: monospace;
   min-height: 200px;
 }
+
+#navbar {
+  .main-nav {
+    li {
+      a {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .dropdown-toggle {
+    align-items: center;
+    display: flex;
+    padding: 4px 0 2px 5px;
+
+    .user-account {
+      display: inline-block;
+      flex: 0 0 auto;
+
+      span {
+        display: block;
+
+        &:last-child {
+          font-size: 10px;
+        }
+      }
+    }
+
+    .caret {
+      flex: 0 0 auto;
+      margin: 0 4px 0 0;
+    }
+  }
+}
