@@ -25,6 +25,7 @@ Rails.application.configure do
 
     config.cache_store = :null_store
   end
+  config.sass.inline_source_maps = true
 
   config.action_mailer.delivery_method = :letter_opener
 
