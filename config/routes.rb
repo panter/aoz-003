@@ -10,6 +10,11 @@ Rails.application.routes.draw do
     resources :feedbacks
     resources :trial_feedbacks
   end
+  concern :mark_doneable do
+    put :mark_feedback_done, on: :member, to: 'list_responses#mark_feedback_done'
+    put :mark_trial_feedback_done, on: :member, to: 'list_responses#mark_tryal_feedback_done'
+    put :mark_hour_done, on: :member, to: 'list_responses#mark_hour_done'
+  end
 
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
@@ -31,11 +36,30 @@ Rails.application.routes.draw do
     get :need_review, on: :collection, to: 'trial_feedbacks#need_review'
     get :find_client, on: :member, to: 'assignments#find_client'
     resources :journals, except: [:show]
-    resources :hours
+    resources :hours, concerns: :mark_doneable
     resources :billing_expenses, except: [:edit, :update]
     resources :certificates
+<<<<<<< HEAD
     resources :group_offers, concerns: :assignment_feedbacks
     resources :assignments, concerns: :assignment_feedbacks
+=======
+    resources :group_offers do
+      resources :hours, only: :show, concerns: :mark_doneable
+      resources :feedbacks, concerns: :mark_doneable
+      resources :trial_feedbacks, concerns: :mark_doneable
+    end
+    resources :assignments do
+      resources :hours, only: :show, concerns: :mark_doneable
+      resources :feedbacks, concerns: :mark_doneable
+      resources :trial_feedbacks, concerns: :mark_doneable
+    end
+  end
+  resources :group_assignments, only: [:update, :show] do
+    get :last_submitted_hours_and_feedbacks, on: :member
+  end
+  resources :assignments do
+    get :last_submitted_hours_and_feedbacks, on: :member
+>>>>>>> hoam
   end
   resources :group_assignments, only: [:show], concerns: :update_submitted_at
   resources :assignments, concerns: :update_submitted_at

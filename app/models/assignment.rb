@@ -8,8 +8,8 @@ class Assignment < ApplicationRecord
 
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
   has_many :hours, as: :hourable, dependent: :destroy
-
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
+
   has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 
   STATES = [:suggested, :active, :finished, :archived].freeze

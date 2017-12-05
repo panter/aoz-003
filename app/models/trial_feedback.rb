@@ -1,10 +1,9 @@
 class TrialFeedback < ApplicationRecord
-
   belongs_to :volunteer
   belongs_to :author, class_name: 'User'
   belongs_to :trial_feedbackable, polymorphic: true, optional: true
   belongs_to :reviewer, class_name: 'User', optional: true
-  belongs_to :marked_done_by, class_name: 'User'
+  belongs_to :marked_done_by, class_name: 'User', optional: true
 
   scope :need_review, -> { where(reviewer_id: nil) }
 
@@ -16,6 +15,11 @@ class TrialFeedback < ApplicationRecord
 
   def group_offer?
     trial_feedbackable_type == 'GroupOffer'
+  end
+
+  def trial_feedbackable_link_target
+    return trial_feedbackable if assignment?
+    trial_feedbackable.group_offer
   end
 
   def trial_feedbackable_id_and_type=(id_and_type)
