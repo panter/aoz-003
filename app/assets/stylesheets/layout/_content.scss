@@ -48,6 +48,14 @@
   span {
     display: block;
     margin-top: 5px;
+
+    &.whole-text {
+      color: $link-color;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
@@ -65,6 +73,14 @@
   &:nth-child(n + 2) {
     margin-top: 2px;
   }
+}
+
+.modal-header-sm {
+  padding: 7px 15px;
+}
+
+.modal-footer-sm {
+  padding: 7px 15px;
 }
 
 .language-skill-index {

@@ -25,6 +25,11 @@ class Feedback < ApplicationRecord
     feedbackable_type == 'GroupOffer'
   end
 
+  def feedbackable_link_target
+    return feedbackable if assignment?
+    feedbackable.group_offer
+  end
+
   def feedbackable_id_and_type=(id_and_type)
     self.feedbackable_id, self.feedbackable_type = id_and_type.split(',', 2)
   end

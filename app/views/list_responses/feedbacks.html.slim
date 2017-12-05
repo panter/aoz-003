@@ -22,11 +22,10 @@ table.table.table-striped
             - record.feedbackable.label_parts.reject(&:blank?).each do |label_part|
               span= label_part.truncate(20)
         td= record.goals
-        = render 'td_truncate_modal', modal_body: record.achievements, modal_title: 'Erfolge', shorten_size: 40
-        = render 'td_truncate_modal', modal_body: record.future, modal_title: 'Zukunft', shorten_size: 40
-        = render 'td_truncate_modal', modal_body: record.comments, modal_title: t_attr(:comments, Feedback), shorten_size: 40
+        = td_truncate_content_modal(record.achievements, 'Erfolge', shorten_size: 40)
+        = td_truncate_content_modal(record.future, 'Zukunft', shorten_size: 40)
+        = td_truncate_content_modal(record.comments, t_attr(:comments, Feedback), shorten_size: 40)
         td= t(record.conversation)
-        td
-          = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
+        td= link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
 
 = render 'modal_truncate'

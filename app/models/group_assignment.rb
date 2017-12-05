@@ -38,9 +38,17 @@ class GroupAssignment < ApplicationRecord
   end
 
   def to_label
-    label = "Gruppenangebot - #{group_offer.title}"
-    label += " - #{group_offer.department.contact.last_name}" if group_offer.department.present?
+    label = "#{label_parts[0]} - #{label_parts[1]}"
+    label += " - #{label_parts[2]}" if label_parts[2].present?
     label
+  end
+
+  def label_parts
+    @label_parts ||= [
+      'Gruppenangebot',
+      group_offer.title,
+      group_offer.department.present? && group_offer.department.contact.last_name
+    ]
   end
 
   def hours_since_last_submitted
