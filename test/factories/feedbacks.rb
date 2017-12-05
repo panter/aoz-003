@@ -1,6 +1,9 @@
 FactoryBot.define do
   factory :feedback do
-    goals { Faker::Lorem.words(4) }
+    association :feedbackable, factory: :assignment
+    volunteer
+    association :author, factory: :user
+    goals { Faker::Lorem.words(4).join(', ') }
     achievements { Faker::Lorem.sentence }
     future { Faker::Lorem.sentence }
     comments { Faker::Lorem.paragraph }

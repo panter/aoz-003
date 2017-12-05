@@ -1,0 +1,32 @@
+h1 Feedbacks Übersicht
+= render 'reminder_mailings/section_navigation'
+
+
+table.table.table-striped
+  thead
+    tr
+      th= t_model(Volunteer)
+      th= t_attr(:feedback_activity, Feedback)
+      th Ziele
+      th Erfolge
+      th Zukunft
+      th= t_attr(:comments, Feedback)
+      th Will Gespräch
+
+  tbody
+    - @feedbacks.each do |record|
+      tr
+        td= link_to record.volunteer.full_name, volunteer_path(record.volunteer)
+        td.index-action-cell
+          a href="#{url_for(record.feedbackable)}" title="#{record.feedbackable.to_label}"
+            - record.feedbackable.label_parts.reject(&:blank?).each do |label_part|
+              span= label_part.truncate(20)
+        td= record.goals
+        = render 'td_truncate_modal', modal_body: record.achievements, modal_title: 'Erfolge', shorten_size: 40
+        = render 'td_truncate_modal', modal_body: record.future, modal_title: 'Zukunft', shorten_size: 40
+        = render 'td_truncate_modal', modal_body: record.comments, modal_title: t_attr(:comments, Feedback), shorten_size: 40
+        td= t(record.conversation)
+        td
+          = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
+
+= render 'modal_truncate'
