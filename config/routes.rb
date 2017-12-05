@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users
+
   concern :update_submitted_at do
     get :last_submitted_hours_and_feedbacks, on: :member
     get :update_submitted_at, on: :member
@@ -12,9 +14,6 @@ Rails.application.routes.draw do
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
   end
-
-  devise_for :users
-
   resources :client_notifications
   resources :clients do
     resources :journals, except: [:show]
@@ -44,13 +43,14 @@ Rails.application.routes.draw do
     get :archived, on: :collection
     put :change_active_state, on: :member
   end
-
   resources :reminder_mailings, except: [:new] do
     get :new_probation_period, on: :collection
     get :new_half_year, on: :collection
     get :send_probation, on: :member
     get :send_half_year, on: :member
   end
+  get 'list_responses/feedbacks'
+  get 'list_responses/hours'
 
   root 'application#home'
 end

@@ -1,5 +1,7 @@
 nav.navbar.section-navigation.hidden-print
   ul.section-nav-ul.list-unstyled
+    li= button_link 'Feedbacks Übersicht', list_responses_feedbacks_path, dimension: :sm
+    li= button_link 'Stunden Übersicht', list_responses_hours_path, dimension: :sm
     li= button_link 'Erinnerungs-Email Übersicht', reminder_mailings_path, dimension: :sm
     li= button_link 'Probezeit Erinnerung erstellen', new_probation_period_reminder_mailings_path, dimension: :sm
     li= button_link 'Halbjahres Erinnerung erstellen', new_half_year_reminder_mailings_path, dimension: :sm
