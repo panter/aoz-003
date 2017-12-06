@@ -14,6 +14,10 @@ class Hour < ApplicationRecord
 
   scope :billable, (-> { where(billing_expense: nil) })
 
+  scope :since_last_submitted, lambda { |submitted_at|
+    where('created_at > ?', submitted_at) if submitted_at
+  }
+
   HOUR_RANGE = (1..8).to_a
   MINUTE_RANGE = [0, 15, 30, 45].freeze
 

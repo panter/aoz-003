@@ -7,6 +7,16 @@ class Feedback < ApplicationRecord
 
   validates :comments, presence: true
 
+  scope :author_volunteer, (-> { joins(:volunteer).where('author_id = volunteers.user_id') })
+
+  scope :since_last_submitted, lambda { |submitted_at|
+    if submitted_at
+      author_volunteer.where('feedbacks.created_at > ?', submitted_at)
+    else
+      author_volunteer
+    end
+  }
+
   def assignment?
     feedbackable_type == 'Assignment'
   end

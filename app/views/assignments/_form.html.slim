@@ -7,7 +7,7 @@
         = f.association :client, include_blank: true, collection: Client.need_accompanying
       - else
         = f.association :client, include_blank: true,
-          selected: params[:client_id] || (@assignment.client.id if @assignment.client.present?)
+          selected: params[:client_id] || @assignment&.client&.id
 
   .row
     .col-xs-12= f.input :period, as: :date_range_picker, label: false
@@ -17,7 +17,7 @@
         = f.association :volunteer, include_blank: true, collection: Volunteer.seeking_clients
       - else
         = f.association :volunteer, include_blank: true,
-          selected: params[:volunteer_id] || (@assignment.volunteer.id if @assignment.volunteer.present?)
+          selected: params[:volunteer_id] || @assignment&.volunteer&.id
 
   .row
     .col-xs-12= f.input :state, collection: Assignment::STATES, default: :suggested
