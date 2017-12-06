@@ -39,4 +39,18 @@ class VolunteerMailerTest < ActionMailer::TestCase
       assert_match rmv.process_template[:body], mailer.body.encoded
     end
   end
+
+  test 'half_year_mailer' do
+    _, _, group_assignments = create_group_offer_entity(
+      nil, 8.months.ago, nil, create(:volunteer_with_user), create(:volunteer_with_user)
+    )
+    assignment = make_assignment(start_date: 8.months.ago)
+    mailing = create_half_year_mailing(*group_assignments, assignment)
+    mailing.reminder_mailing_volunteers.each do |rmv|
+      mailer = VolunteerMailer.half_year_reminder(rmv).deliver
+      assert_equal rmv.process_template[:subject], mailer.subject
+      assert mailer.to.include? rmv.volunteer.contact.primary_email
+      assert_match rmv.process_template[:body], mailer.body.encoded
+    end
+  end
 end

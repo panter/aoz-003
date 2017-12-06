@@ -3,7 +3,20 @@ FactoryBot.define do
     association :creator, factory: :user_fake_email
     body { Faker::Lorem.paragraph }
     subject { Faker::Lorem.sentence }
-    kind 'probation_period'
+    # kind 'probation_period'
+
+    trait :half_year do
+      kind { 0 }
+      body { Faker::Lorem.paragraph }
+      subject { Faker::Lorem.sentence }
+    end
+
+    trait :probation_period do
+      kind { 1 }
+      body { Faker::Lorem.paragraph }
+      subject { Faker::Lorem.sentence }
+    end
+
     after(:build) do |reminder_mailing|
       volunteer = create(:volunteer_with_user)
       assignment = create(:assignment, volunteer: volunteer, period_start: 6.weeks.ago.to_date + 5)
