@@ -1,8 +1,6 @@
 class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy,
                                         :last_submitted_hours_and_feedbacks]
-  before_action :set_volunteer, only: [:find_client]
-  before_action :set_client, only: [:find_volunteer]
 
   def index
     authorize Assignment
@@ -60,12 +58,14 @@ class AssignmentsController < ApplicationController
   end
 
   def find_volunteer
+    set_client
     @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @seeking_clients = @q.result.paginate(page: params[:page])
   end
 
   def find_client
+    set_volunteer
     @q = policy_scope(Client).need_accompanying.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @need_accompanying = @q.result.paginate(page: params[:page])
