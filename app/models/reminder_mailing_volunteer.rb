@@ -80,7 +80,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def template_variables
-    ReminderMailing::TEMPLATE_VARNAMES.map do |varname|
+    @template_variables ||= ReminderMailing::TEMPLATE_VARNAMES.map do |varname|
       [varname, send(varname.to_s.underscore)]
     end.to_h
   end
