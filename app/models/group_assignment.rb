@@ -44,19 +44,11 @@ class GroupAssignment < ApplicationRecord
   end
 
   def hours_since_last_submitted
-    if submitted_at.present?
-      group_offer.hours.where('created_at > ? AND volunteer_id = ?', submitted_at, volunteer)
-    else
-      group_offer.hours.where(volunteer: volunteer)
-    end
+    group_offer.hours.since_last_submitted(submitted_at)
   end
 
   def feedbacks_since_last_submitted
-    if submitted_at.present? && volunteer.user
-      group_offer.feedbacks.where('created_at > ? AND author_id = ?', submitted_at, volunteer.user.id)
-    else
-      group_offer.feedbacks.where(author_id: volunteer.user)
-    end
+    group_offer.feedbacks.since_last_submitted(submitted_at)
   end
 
   private

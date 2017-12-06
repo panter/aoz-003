@@ -25,7 +25,7 @@ class FeedbacksController < ApplicationController
     @feedback.feedbackable = @feedbackable
     authorize @feedback
     if @feedback.save
-      create_redirect
+      redirect_to create_redirect, make_notice
     else
       render :new
     end
@@ -63,15 +63,13 @@ class FeedbacksController < ApplicationController
   end
 
   def create_redirect
-    if session[:request_url].include?('last_submitted_hours_and_feedbacks')
-      if @feedbackable.class == Assignment
-        redirect_to last_submitted_hours_and_feedbacks_assignment_path(@feedbackable), make_notice
-      else
-        group_assignment = @feedbackable.group_assignments.where(volunteer: @volunteer).last
-        redirect_to last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment), make_notice
-      end
+    if !session[:request_url].include?('last_submitted_hours_and_feedbacks')
+      @volunteer
+    elsif @feedback.assignment?
+      last_submitted_hours_and_feedbacks_assignment_path(@feedbackable)
     else
-      redirect_to @volunteer, make_notice
+      group_assignment = @feedbackable.group_assignments.where(volunteer: @volunteer).last
+      last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment)
     end
   end
 
