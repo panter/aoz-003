@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :assignment do
     client
     volunteer
-    association :creator, factory: :user
     period_start { Faker::Date.between(500.days.ago, 200.days.ago) }
     period_end { [nil, Faker::Date.between(199.days.ago, 10.days.ago)].sample }
 
@@ -29,6 +28,10 @@ FactoryBot.define do
     trait :blank_period do
       period_start { nil }
       period_end { nil }
+    end
+
+    after(:build) do |assignment|
+      assignment.creator ||= create(:user_fake_email)
     end
 
     factory :assignment_blank_period, traits: [:blank_period]
