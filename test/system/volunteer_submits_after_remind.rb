@@ -6,11 +6,11 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     @assignment = create :assignment, volunteer: @volunteer
     create :hour, hourable: @assignment, created_at: 2.days.ago
     @assignment_feedback = create :feedback, feedbackable: @assignment, author: @volunteer.user,
-      created_at: 2.days.ago, volunteer: @volunteer
+      volunteer: @volunteer
     @group_offer = create :group_offer, volunteers: [@volunteer]
     create :hour, hourable: @group_offer, volunteer: @volunteer, created_at: 2.days.ago
     @group_offer_feedback = create :feedback, feedbackable: @group_offer, author: @volunteer.user,
-      created_at: 2.days.ago, volunteer: @volunteer
+      volunteer: @volunteer
     login_as @volunteer.user
   end
 
