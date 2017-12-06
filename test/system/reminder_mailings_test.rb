@@ -17,10 +17,12 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit reminder_mailings_path
     page.find_all('a', text: 'Probezeit Erinnerung erstellen').first.click
-    assert page.has_text? @assignment.to_label
-    assert page.has_text? @group_assignment.to_label
-    assert page.has_link? 'Einsatz Info', href: assignment_path(@assignment)
-    assert page.has_link? 'Einsatz Info', href: group_offer_path(@group_assignment.group_offer)
+    assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
+    assert page.has_link? @assignment.volunteer.contact.full_name, href: volunteer_path(@assignment.volunteer)
+    assert page.has_link? @group_assignment.volunteer.contact.full_name, href: volunteer_path(@group_assignment.volunteer)
+
+    assert page.has_link? @group_assignment.to_label,
+      href: group_offer_path(@group_assignment.group_offer)
 
     # All checkboxes are not checked?
     refute page.find_all(
