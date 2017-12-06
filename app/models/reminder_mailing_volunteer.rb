@@ -35,11 +35,11 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def assignment?
-    reminder_mailable.class == Assignment
+    reminder_mailable_type == 'Assignment'
   end
 
   def group_assignment?
-    reminder_mailable.class == GroupAssignment
+    reminder_mailable_type == 'GroupAssignment'
   end
 
   def mailable_to_label
