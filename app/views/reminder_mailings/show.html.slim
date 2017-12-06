@@ -49,7 +49,7 @@ table.table.table-condensed
 nav.navbar.hidden-print
   ul.list-inline
     - if !@reminder_mailing.sending_triggered
-      li= button_link 'Emails versenden', initiate_mailing_reminder_mailing_path(@reminder_mailing)
+      li= button_link 'Emails versenden', url_for(@reminder_mailing, action: @reminder_mailing.half_year? ? :send_half_year : :send_probation )
       li= button_link 'Ändern', edit_reminder_mailing_path(@reminder_mailing)
       li= link_to 'Löschen', reminder_mailing_path(@reminder_mailing), confirm_deleting(@reminder_mailing, 'btn btn-default')
     - else
