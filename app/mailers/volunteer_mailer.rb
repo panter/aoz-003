@@ -20,4 +20,11 @@ class VolunteerMailer < ApplicationMailer
     reminder_mailing_volunteer.update(email_sent: true)
     mail(to: @volunteer.contact.primary_email, subject: @subject)
   end
+
+  def half_year_reminder(reminder_mailing_volunteer)
+    @volunteer = reminder_mailing_volunteer.volunteer
+    @subject, @body = reminder_mailing_volunteer.process_template.values_at(:subject, :body)
+    reminder_mailing_volunteer.update(email_sent: true)
+    mail(to: @volunteer.contact.primary_email, subject: @subject)
+  end
 end
