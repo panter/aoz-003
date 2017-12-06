@@ -4,32 +4,99 @@ class ReminderMailingsTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :user
     @volunteer_assignment = create :volunteer_with_user
-    @assignment = create :assignment, period_start: 7.weeks.ago, period_end: nil,
-      volunteer: @volunteer_assignment
     @group_offer = create :group_offer
     @volunteer_group_offer = create :volunteer_with_user
-    @group_assignment = GroupAssignment.create(volunteer: @volunteer_group_offer, period_end: nil,
-      group_offer: @group_offer, period_start: 7.weeks.ago.to_date)
-    create :email_template_trial
   end
 
-  test 'group_assignment_and_assignment_elegible_for_reminder_mailing_are_includable' do
+  test 'group_assignment_and_assignment_elegible_for_half_year_reminder_mailing_are_includable' do
+    assignment = create :assignment, period_start: 6.months.ago, period_end: nil,
+      volunteer: @volunteer_assignment
+    group_assignment = GroupAssignment.create(volunteer: @volunteer_group_offer, period_end: nil,
+      group_offer: @group_offer, period_start: 6.months.ago)
+    create :email_template_half_year
     login_as @superadmin
     visit reminder_mailings_path
-    page.find_all('a', text: 'Probezeit Erinnerung erstellen').first.click
-    assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
-    assert page.has_link? @assignment.volunteer.contact.full_name, href: volunteer_path(@assignment.volunteer)
-    assert page.has_link? @group_assignment.volunteer.contact.full_name, href: volunteer_path(@group_assignment.volunteer)
+    page.find_all('a', text: 'Halbjahres Erinnerung erstellen').first.click
+    assert page.has_link? assignment.to_label, href: assignment_path(assignment)
+    assert page.has_link? assignment.volunteer.contact.full_name, href: volunteer_path(assignment.volunteer)
+    assert page.has_link? group_assignment.volunteer.contact.full_name, href: volunteer_path(group_assignment.volunteer)
 
-    assert page.has_link? @group_assignment.to_label,
-      href: group_offer_path(@group_assignment.group_offer)
+    assert page.has_link? group_assignment.to_label,
+      href: group_offer_path(group_assignment.group_offer)
 
     # All checkboxes are not checked?
     refute page.find_all(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]'
     ).reduce { |a, b| a.checked? || b.checked? }
 
-    find('td', text: @assignment.to_label).click
+    find('td', text: assignment.to_label).click
+    # at least one checkbox is checked?
+    assert any_checked?(
+      'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
+    # not all checkboxes are checked
+    refute all_checked?(
+      'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
+    find('input[name="select-all-mailings"]').click
+    # All checkboxes are checked
+    assert all_checked?(
+      'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
+
+    fill_in 'Betreff', with: 'Erinnerung fuer %{Einsatz}'
+    fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
+
+    page.find_all('input[type="submit"]').first.click
+
+    assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
+    assert page.has_text? 'Art Halbjährlich'
+    assert page.has_text? 'Status Nicht versandt'
+
+    assert(
+      page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.last.process_template[:subject]) ||
+      page.has_text?(@volunteer_group_offer.reminder_mailing_volunteers.last.process_template[:subject])
+    )
+
+    assert(
+      page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.last.process_template[:body]) ||
+      page.has_text?(@volunteer_group_offer.reminder_mailing_volunteers.last.process_template[:body])
+    )
+
+    assert page.has_link? @volunteer_assignment.contact.full_name,
+      href: volunteer_path(@volunteer_assignment)
+    assert page.has_link? assignment.to_label, href: assignment_path(assignment)
+    assert page.has_link? @volunteer_group_offer.contact.full_name,
+      href: volunteer_path(@volunteer_group_offer)
+    assert page.has_link? group_assignment.group_offer.to_label,
+      href: group_offer_path(group_assignment.group_offer)
+    click_link 'Emails versenden'
+    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.to_label
+    assert page.has_text?(
+      "Übermittelt am #{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
+      I18n.l(ReminderMailing.created_desc.first.created_at.to_date)
+    )
+  end
+
+  test 'group_assignment_and_assignment_elegible_for_probation_reminder_mailing_are_includable' do
+    assignment = create :assignment, period_start: 7.weeks.ago, period_end: nil,
+      volunteer: @volunteer_assignment
+    group_assignment = GroupAssignment.create(volunteer: @volunteer_group_offer, period_end: nil,
+      group_offer: @group_offer, period_start: 7.weeks.ago.to_date)
+    create :email_template_trial
+    login_as @superadmin
+    visit reminder_mailings_path
+    page.find_all('a', text: 'Probezeit Erinnerung erstellen').first.click
+    assert page.has_link? assignment.to_label, href: assignment_path(assignment)
+    assert page.has_link? assignment.volunteer.contact.full_name, href: volunteer_path(assignment.volunteer)
+    assert page.has_link? group_assignment.volunteer.contact.full_name, href: volunteer_path(group_assignment.volunteer)
+
+    assert page.has_link? group_assignment.to_label,
+      href: group_offer_path(group_assignment.group_offer)
+
+    # All checkboxes are not checked?
+    refute page.find_all(
+      'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]'
+    ).reduce { |a, b| a.checked? || b.checked? }
+
+    find('td', text: assignment.to_label).click
     # at least one checkbox is checked?
     assert any_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
@@ -62,11 +129,11 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     assert page.has_link? @volunteer_assignment.contact.full_name,
       href: volunteer_path(@volunteer_assignment)
-    assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
+    assert page.has_link? assignment.to_label, href: assignment_path(assignment)
     assert page.has_link? @volunteer_group_offer.contact.full_name,
       href: volunteer_path(@volunteer_group_offer)
-    assert page.has_link? @group_assignment.group_offer.to_label,
-      href: group_offer_path(@group_assignment.group_offer)
+    assert page.has_link? group_assignment.group_offer.to_label,
+      href: group_offer_path(group_assignment.group_offer)
     click_link 'Emails versenden'
     assert page.has_link? ReminderMailing.order('created_at asc').last.creator.to_label
     assert page.has_text?(
