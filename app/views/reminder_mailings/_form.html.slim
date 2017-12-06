@@ -1,30 +1,32 @@
 = simple_form_for @reminder_mailing do |f|
   = simple_error_notice f
   = f.input_field :kind, value: @reminder_mailing.kind, as: :hidden
-
   fieldset
-      legend Frewillige auswählen
-      - if f.object.errors.include?(:volunteers)
-        = f.error_notification message: f.object.errors.messages[:volunteers].first
-      .select-all-mailings.m-b-10
-        input type='checkbox' value='' name='select-all-mailings'
-        label for='select-all-mailings'
-          'Alle Auswählen
-      table.table.table-striped.reminder-select
-        tbody
-          = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
-            tr data-index="#{mailing_volunteer.index}"
-              td
-                = mailing_volunteer.input_field :selected, as: :boolean
-                = mailing_volunteer.input_field :volunteer_id, as: :hidden
-                = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
-                = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
-              td.click-selecting= mailing_volunteer.object.reminder_mailable.to_label
-              td
-                - if mailing_volunteer.object.group_assignment?
-                  = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable.group_offer, target: '_blank'
-                - else
-                  = link_to 'Einsatz Info', mailing_volunteer.object.reminder_mailable, target: '_blank'
+    legend Frewillige auswählen
+    - if f.object.errors.include?(:volunteers)
+      = f.error_notification message: f.object.errors.messages[:volunteers].first
+    .select-all-mailings.m-b-10
+      input type='checkbox' value='' name='select-all-mailings'
+      label for='select-all-mailings'
+        'Alle Auswählen
+    table.table.table-striped.reminder-select
+      thead
+        tr
+          th
+          th Einsatz
+          th Freiwillige/r
+      tbody
+        = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
+          tr data-index="#{mailing_volunteer.index}" class="#{mailing_volunteer.object.picked && 'mailing-selected'}"
+            td.click-selecting
+              = mailing_volunteer.label :picked, 'Ausgewählt', class: 'sr-only'
+              = mailing_volunteer.input_field :picked, as: :boolean
+              = mailing_volunteer.input_field :id, as: :hidden
+              = mailing_volunteer.input_field :volunteer_id, as: :hidden
+              = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
+              = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
+            td.click-selecting= link_to mailing_volunteer.object.reminder_mailable.to_label, mailing_volunteer.object.base_assignment_entity, target: '_blank'
+            td.click-selecting= link_to mailing_volunteer.object.volunteer.contact.full_name, mailing_volunteer.object.volunteer, target: '_blank'
 
   .row
     .col-xs-12.col-md-4
