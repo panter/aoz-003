@@ -23,6 +23,10 @@ class ReminderMailingVolunteer < ApplicationRecord
     base_assignment_entity.to_label
   end
 
+  def base_assignment_entity
+    return reminder_mailable if assignment?
+    reminder_mailable.group_offer
+  end
 
   def process_template
     {
@@ -33,11 +37,6 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   private
 
-  def base_assignment_entity
-    if assignment?
-      reminder_mailable
-    elsif group_assignment?
-      reminder_mailable.group_offer
   def replace_ruby_template(template)
     template % template_variables
   rescue KeyError => _
