@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :client do
-    association :user
     association :contact
     salutation { ['mr', 'mrs'].sample }
 
@@ -55,6 +54,10 @@ FactoryBot.define do
       actual_activities { Faker::Lorem.sentence }
       detailed_description { Faker::Lorem.sentence }
       nationality { ISO3166::Country.codes.sample }
+    end
+
+    after(:build) do |client|
+      client.user ||= create(:user_fake_email)
     end
 
     factory :client_z, traits: [:zuerich]
