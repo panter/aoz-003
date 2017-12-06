@@ -9,9 +9,12 @@ $(() => $(document).on('turbolinks:render, turbolinks:load', () => {
   });
 
   const selectedBoxes = $('input.boolean[id$="_picked"]');
-  selectedBoxes.on('change', ({target}) => {
+  selectedBoxes.on('change', ({target, preventDefault}) => {
+    preventDefault();
+    target = $(target);
+    target.prop('checked', !target.is(':checked'));
     const row = $(target).closest('tr');
-    row.toggleClass('mailing-selected', target.checked);
+    row.toggleClass('mailing-selected', target.is(':checked'));
   });
 
   $('.select-all-mailings input[type="checkbox"]').on('change', ({target}) => {
