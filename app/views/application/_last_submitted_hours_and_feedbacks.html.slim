@@ -51,7 +51,7 @@ table.table.table-striped
 
 = simple_form_for(confirmable) do |f|
   = simple_error_notice f
-  = f.hidden_field :submitted_at, value: Time.zone.now
+  = f.hidden_field :submitted_at, value: Time.zone.now + 5.minutes
 
   .row
     .col-xs-12.col-md-offset-3
