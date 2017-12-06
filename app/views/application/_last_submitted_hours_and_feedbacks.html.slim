@@ -44,7 +44,7 @@ table.table.table-striped
         td= record.comments
         td= t(record.conversation)
 
-- if record.assignment?
+- if confirmable.class == Assignment
   = bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable, Feedback]) }
 - else
   = bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.group_offer, Feedback]) }
