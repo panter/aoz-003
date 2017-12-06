@@ -12,28 +12,6 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   scope :picked, (-> { where(picked: true) })
 
-  def process_template
-    template_vars = template_variables
-    begin
-      { subject: reminder_mailing.subject % template_vars,
-        body: reminder_mailing.body % template_vars }
-    rescue KeyError => _
-      { subject: string_replace_key_error(reminder_mailing.subject, template_vars),
-        body: string_replace_key_error(reminder_mailing.body, template_vars) }
-    end
-  end
-
-  def string_replace_key_error(string, variables)
-    string.gsub(/\%\{([\w]*)\}/) do |key_match|
-      key = key_match.remove('%{').remove('}').to_sym
-      if variables[key].present?
-        variables[key]
-      else
-        ''
-      end
-    end
-  end
-
   def assignment?
     reminder_mailable_type == 'Assignment'
   end
@@ -91,10 +69,11 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def feedback_url
-    ActionMailer::Base.default_url_options[:protocol] || 'http://' +
-      ActionMailer::Base.default_url_options[:host] +
-      Rails.application.routes.url_helpers
-           .polymorphic_path([volunteer, base_assignment_entity, TrialFeedback], action: :new) +
-      "?rmv_id=#{id}&rm_id=#{reminder_mailing.id}"
+    url_options = ActionMailer::Base.default_url_options
+    url_options[:protocol] || 'http://' + url_options[:host] +
+      Rails.application.routes.url_helpers.polymorphic_path(
+        [volunteer, base_assignment_entity, TrialFeedback],
+        action: :new, rmv_id: id, rm_id: reminder_mailing.id
+      )
   end
 end
