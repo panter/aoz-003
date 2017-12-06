@@ -20,7 +20,7 @@ class HoursController < ApplicationController
     @hour = Hour.new(hour_params)
     authorize @hour
     if @hour.save
-      create_redirect
+      redirect_to create_redirect, make_notice
     else
       render :new
     end
@@ -52,15 +52,13 @@ class HoursController < ApplicationController
 
   def create_redirect
     hourable = @hour.hourable
-    if session[:request_url].include?('last_submitted_hours_and_feedbacks')
-      if hourable.class == Assignment
-        redirect_to last_submitted_hours_and_feedbacks_assignment_path(hourable), make_notice
-      else
-        group_assignment = hourable.group_assignments.where(volunteer: @volunteer).last
-        redirect_to last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment), make_notice
-      end
+    if !session[:request_url].include?('last_submitted_hours_and_feedbacks')
+      @volunteer
+    elsif @hour.assignment?
+      last_submitted_hours_and_feedbacks_assignment_path(hourable)
     else
-      redirect_to @volunteer, make_notice
+      group_assignment = hourable.group_assignments.where(volunteer: @volunteer).last
+      last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment)
     end
   end
 
