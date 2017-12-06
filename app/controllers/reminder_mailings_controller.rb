@@ -1,5 +1,6 @@
 class ReminderMailingsController < ApplicationController
-  before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :initiate_mailing]
+  before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :send_probation,
+                                              :send_half_year]
 
   def index
     authorize ReminderMailing
@@ -52,6 +53,17 @@ class ReminderMailingsController < ApplicationController
     end
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Probezeit Erinnerungs-Emails werden versendet.'
+  end
+
+  def send_half_year
+    if @reminder_mailing.sending_triggered?
+      return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits versandt.'
+    end
+    @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
+      VolunteerMailer.half_year_reminder(mailing_volunteer).deliver_later
+    end
+    @reminder_mailing.update(sending_triggered: true)
+    redirect_to reminder_mailings_path, notice: 'Halbjahres Erinnerungs-Emails werden versendet.'
   end
 
   def update
