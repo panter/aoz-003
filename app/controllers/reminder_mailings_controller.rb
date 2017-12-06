@@ -43,7 +43,7 @@ class ReminderMailingsController < ApplicationController
     end
   end
 
-  def initiate_mailing
+  def send_probation
     if @reminder_mailing.sending_triggered?
       return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits versandt.'
     end
