@@ -1,5 +1,4 @@
 class ReminderMailingVolunteer < ApplicationRecord
-
   belongs_to :reminder_mailing
   belongs_to :volunteer
   belongs_to :reminder_mailable, polymorphic: true, optional: true
@@ -24,6 +23,14 @@ class ReminderMailingVolunteer < ApplicationRecord
     base_assignment_entity.to_label
   end
 
+
+  def process_template
+    {
+      subject: replace_ruby_template(reminder_mailing.subject),
+      body: replace_ruby_template(reminder_mailing.body)
+    }
+  end
+
   private
 
   def base_assignment_entity
@@ -31,6 +38,20 @@ class ReminderMailingVolunteer < ApplicationRecord
       reminder_mailable
     elsif group_assignment?
       reminder_mailable.group_offer
+  def replace_ruby_template(template)
+    template % template_variables
+  rescue KeyError => _
+    string_replace_key_error(template)
+  end
+
+  def string_replace_key_error(template)
+    template.gsub(/\%\{([\w]*)\}/) do |key_match|
+      key = key_match.remove('%{').remove('}').to_sym
+      if template_variables[key].present?
+        template_variables[key]
+      else
+        ''
+      end
     end
   end
 
