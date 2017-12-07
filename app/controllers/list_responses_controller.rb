@@ -13,7 +13,7 @@ class ListResponsesController < ApplicationController
     feedback = Feedback.find(params[:id])
     authorize :list_response, :mark_feedback_done?
     feedback.update(marked_done_by: current_user)
-    redirect_to list_responses_feedbacks_path, notice: 'Erfolgreich erledigt markiert'
+    redirect_to list_responses_feedbacks_path, notice: 'Erfolgreich als erledigt markiert'
   end
 
   def mark_trial_feedback_done
