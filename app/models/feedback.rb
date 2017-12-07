@@ -18,6 +18,8 @@ class Feedback < ApplicationRecord
     end
   }
 
+  scope :not_marked_done, (-> { where('marked_done_by_id IS NULL') })
+
   def assignment?
     feedbackable_type == 'Assignment'
   end
