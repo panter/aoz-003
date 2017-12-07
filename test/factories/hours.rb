@@ -8,7 +8,7 @@ FactoryBot.define do
     comments { Faker::ChuckNorris.fact }
 
     after(:build) do |hour|
-      hour.volunteer ||= hour.hourable.volunteer
+      hour.volunteer = hour.hourable.volunteer if hour.volunteer.blank?
     end
   end
 end
