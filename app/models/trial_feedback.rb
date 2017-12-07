@@ -1,4 +1,6 @@
 class TrialFeedback < ApplicationRecord
+  include NotMarkedDone
+
   belongs_to :volunteer
   belongs_to :author, class_name: 'User'
   belongs_to :trial_feedbackable, polymorphic: true, optional: true

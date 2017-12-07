@@ -72,6 +72,15 @@ class GroupOffer < ApplicationRecord
     label
   end
 
+  def label_parts
+    [
+      I18n.t('activerecord.models.group_offer'),
+      title,
+      group_offer_category.to_s,
+      department&.to_s
+    ]
+  end
+
   def full_location
     if external?
       "#{organization} #{location}"

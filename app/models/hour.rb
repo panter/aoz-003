@@ -1,4 +1,6 @@
 class Hour < ApplicationRecord
+  include NotMarkedDone
+
   attr_reader :hourable_id_and_type
 
   belongs_to :volunteer
@@ -36,11 +38,6 @@ class Hour < ApplicationRecord
 
   def self.minutes_rest
     sum(&:minutes) % 60
-  end
-
-  def hourable_link_target
-    return hourable if assignment?
-    hourable.group_offer
   end
 
   def hourable_id_and_type=(id_and_type)
