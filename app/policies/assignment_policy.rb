@@ -25,6 +25,7 @@ class AssignmentPolicy < ApplicationPolicy
     :admin_or_department_manager_or_volunteer_related?
   alias_method :edit?,   :admin_or_department_manager_or_volunteer_related?
   alias_method :update?, :admin_or_department_manager_or_volunteer_related?
+  alias_method :update_submitted_at?, :admin_or_department_manager_or_volunteer_related?
 
   alias_method :destroy?, :superadmin?
 

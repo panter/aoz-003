@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy,
-                                        :last_submitted_hours_and_feedbacks]
+                                        :last_submitted_hours_and_feedbacks, :update_submitted_at]
 
   def index
     authorize Assignment
@@ -46,7 +46,7 @@ class AssignmentsController < ApplicationController
 
   def update
     if @assignment.update(assignment_params)
-      update_redirect
+      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
     else
       render :edit
     end
@@ -76,16 +76,13 @@ class AssignmentsController < ApplicationController
     @last_submitted_feedbacks = @assignment.feedbacks_since_last_submitted
   end
 
-  private
-
-  def update_redirect
-    if request.referer.include?('last_submitted_hours_and_feedbacks')
-      redirect_to last_submitted_hours_and_feedbacks_assignment_path,
-        notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
-    else
-      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
-    end
+  def update_submitted_at
+    @assignment.update(submitted_at: Time.zone.now)
+    redirect_to last_submitted_hours_and_feedbacks_assignment_path,
+      notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
+
+  private
 
   def set_client
     @client = Client.find(params[:id])
@@ -105,6 +102,6 @@ class AssignmentsController < ApplicationController
   def assignment_params
     params.require(:assignment).permit(:client_id, :volunteer_id, :state, :period_start,
       :period_end, :performance_appraisal_review, :probation_period, :home_visit,
-      :first_instruction_lesson, :submitted_at)
+      :first_instruction_lesson)
   end
 end
