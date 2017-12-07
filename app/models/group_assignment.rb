@@ -38,9 +38,7 @@ class GroupAssignment < ApplicationRecord
   end
 
   def to_label
-    label = "#{label_parts[0]} - #{label_parts[1]}"
-    label += " - #{label_parts[2]}" if label_parts[2].present?
-    label
+    label_parts.compact.join(' - ')
   end
 
   def label_parts
