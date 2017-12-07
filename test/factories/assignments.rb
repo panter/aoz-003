@@ -32,7 +32,8 @@ FactoryBot.define do
     end
 
     after(:build) do |assignment|
-      assignment.creator ||= create(:user_fake_email)
+      assignment.creator = create(:user) if assignment.creator.blank?
+      assignment.volunteer = create(:volunteer_with_user) if assignment.volunteer.blank?
     end
 
     factory :assignment_blank_period, traits: [:blank_period]

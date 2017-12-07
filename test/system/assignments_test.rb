@@ -67,7 +67,7 @@ class AssignmentsTest < ApplicationSystemTestCase
 
   test 'creating a pdf with a user that has no profile will not crash' do
     login_as @user
-    user = create :user, profile: nil
+    user = create :user, :without_profile
     refute user.profile.present?
 
     login_as user
