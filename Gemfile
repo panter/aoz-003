@@ -13,6 +13,7 @@ gem 'axlsx', github: 'randym/axlsx', ref: '776037c0fc799bb09da8c9ea47980bd3bf296
 gem 'axlsx_rails'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
+gem 'bootstrap-will_paginate'
 gem 'cocoon'
 gem 'coffee-rails'
 gem 'countries'
@@ -44,7 +45,6 @@ gem 'uglifier'
 gem 'wicked_pdf'
 gem 'will-paginate-i18n'
 gem 'will_paginate'
-gem 'will_paginate-bootstrap'
 gem 'wkhtmltopdf-binary'
 
 group :production, :development do
