@@ -1,8 +1,6 @@
 FactoryBot.define do
   factory :user do
-    sequence :email do |n|
-      "superadmin#{n}@example.com"
-    end
+    email { "#{Time.zone.now.to_i}#{Faker::Internet.user_name}my-user@temporary-mail.com" }
     password 'asdfasdf'
     role User::SUPERADMIN
 
@@ -32,11 +30,21 @@ FactoryBot.define do
     end
 
     trait :without_profile do
+      email { Faker::Internet.email("no_profile_user#{Time.zone.now.to_i}") }
       profile {}
     end
 
     trait :fake_email do
-      email { Faker::Internet.email }
+
+    end
+
+    after(:create) do |user|
+      next unless user.email.include?('my-user@temporary-mail.com')
+      user.email = user.role + '_' + Faker::Internet.email(
+        Faker::Internet.user_name(user.profile.contact.natural_name)
+      )
+      user.profile.contact.primary_email = user.email
+      user.save
     end
 
     factory :social_worker, traits: [:social_worker]

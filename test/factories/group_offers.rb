@@ -4,6 +4,10 @@ FactoryBot.define do
     title { Faker::Lorem.sentence }
     necessary_volunteers 5
 
+    trait :with_department do
+      association :department
+    end
+
     after(:build) do |group_offer|
       if GroupOfferCategory.any?
         group_offer.group_offer_category ||= GroupOfferCategory.all.sample
