@@ -1,8 +1,7 @@
 class ListResponsesController < ApplicationController
   def feedbacks
-    authorize :list_response, :feedbacks?
-    @feedbacks = Feedback.order(created_at: :asc).where(marked_done_by_id: nil).paginate(page: params[:page])
     authorize :list_response
+    @feedbacks = Feedback.created_asc.not_marked_done.paginate(page: params[:page])
   end
 
   def hours
