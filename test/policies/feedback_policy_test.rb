@@ -36,7 +36,7 @@ class FeedbackPolicyTest < PolicyAssertions::Test
       'destroy?', 'new?', 'create?')
   end
 
-  test 'volunteer has limited access to group_offer feedbacks' do
+  test 'volunteer_has_limited_access_to_group_offer_feedbacks' do
     group_offer = create :group_offer, volunteers: [@volunteer, @other_volunteer]
     other_group_offer = create :group_offer,
       volunteers: [create(:volunteer, user: create(:user_volunteer)), @other_volunteer]
