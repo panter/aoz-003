@@ -4,9 +4,10 @@ class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
     @volunteer = create :volunteer
-    @assignment = create :assignment, volunteer: @volunteer
+    @assignment = create :assignment, volunteer: @volunteer, period_start: 9.months.ago
     @hour1 = create :hour, volunteer: @volunteer, hourable: @assignment, hours: '2', minutes: '30'
-    @group_offer = create :group_offer, volunteers: [@volunteer]
+    @group_offer = create :group_offer
+    @group_assignment = create :group_assignment, volunteer: @volunteer, period_start: 9.months.ago
     @hour2 = create :hour, hourable: @group_offer, volunteer: @volunteer, hours: '3', minutes: '30'
 
     login_as superadmin
