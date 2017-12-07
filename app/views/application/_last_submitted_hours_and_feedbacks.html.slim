@@ -49,11 +49,10 @@ table.table.table-striped
 - else
   = bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.group_offer, Feedback]) }
 
-= simple_form_for(confirmable) do |f|
-  = simple_error_notice f
-  = f.hidden_field :submitted_at, value: Time.zone.now + 5.minutes
-
-  .row
-    .col-xs-12.col-md-offset-3
-      p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
-    .col-xs-12.col-md-offset-5= f.button :submit, 'Bestätigen', class: 'btn btn-success'
+.row
+  .col-xs-12.col-md-offset-3
+    p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
+  - if confirmable.class == Assignment
+    .col-xs-12.col-md-offset-5= button_link 'Bestätigen', update_submitted_at_assignment_path(confirmable), 'success'
+  - else
+    .col-xs-12.col-md-offset-5= button_link 'Bestätigen', update_submitted_at_group_assignment_path(confirmable), 'success'
