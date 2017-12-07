@@ -1,2 +1,38 @@
 h1 Stunden Übersicht
 = render 'reminder_mailings/section_navigation'
+
+= bootstrap_paginate(@hours)
+
+table.table.table-striped.list-responses-table
+  thead
+    tr
+      th.limit-width Freiwillige/r
+      th.limit-width Einsatz
+      th Zeit
+      th Alter
+      th.limit-width
+
+  tbody
+    - @hours.each do |record|
+      tr*{ data: { hour_id: record.id } }
+        td= link_to record.volunteer.full_name, volunteer_path(record.volunteer)
+        td.index-action-cell
+          a href="#{url_for(record.hourable)}" title="#{record.hourable.to_label}"
+            - record.hourable.label_parts.compact.each do |label_part|
+              span= label_part.truncate(20)
+        td.index-action-cell
+          span
+            - total_hours = (60.0 / record.minutes * 0.1) + record.hours
+            = total_hours
+            = " Stunde"
+            - if total_hours > 1
+              = "n"
+        td #{(Time.zone.today - record.created_at.to_date).to_i} Tage
+        td
+          = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.hourable, record]), class: 'index-action-link'
+          - unless record.marked_done_by
+            = button_to 'Erledigt', polymorphic_path([record.volunteer, record.hourable, record], action: :mark_feedback_done), { method: :put, class: 'btn btn-success btn-xs m-t-10' }
+
+= bootstrap_paginate(@hours)
+
+= render 'modal_truncate'

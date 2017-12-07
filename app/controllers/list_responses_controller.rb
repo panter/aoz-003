@@ -6,7 +6,7 @@ class ListResponsesController < ApplicationController
 
   def hours
     authorize :list_response
-    @hours = Hour.all
+    @hours = Hour.created_asc.not_marked_done.paginate(page: params[:page])
   end
 
   def mark_feedback_done

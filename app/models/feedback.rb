@@ -1,4 +1,6 @@
 class Feedback < ApplicationRecord
+  include NotMarkedDone
+
   attr_reader :feedbackable_id_and_type
 
   belongs_to :volunteer
@@ -17,8 +19,6 @@ class Feedback < ApplicationRecord
       author_volunteer
     end
   }
-
-  scope :not_marked_done, (-> { where('marked_done_by_id IS NULL') })
 
   def assignment?
     feedbackable_type == 'Assignment'
