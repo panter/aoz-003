@@ -2,9 +2,11 @@ require 'application_system_test_case'
 
 class FeedbacksTest < ApplicationSystemTestCase
   def setup
-    @user_volunteer = create :user_volunteer, email: 'volunteer@example.com'
-    @volunteer = create :volunteer, user: @user_volunteer
-    @assignment = create :assignment, volunteer: @volunteer
+    @volunteer = create :volunteer_with_user
+    @volunteer.user.update(email: 'volunteer@example.com')
+    @volunteer.contact.update(primary_email: 'volunteer@example.com')
+    @user_volunteer = @volunteer.user
+    @assignment = create :assignment, volunteer: @volunteer, period_start: 7.weeks.ago
     @superadmin = create :user
     @other_volunteer = create :volunteer_with_user
     @group_offer = create :group_offer, necessary_volunteers: 2, title: 'some_group_offer',
@@ -32,7 +34,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     click_link 'volunteer@example.com'
     click_link 'Profil anzeigen'
     within '.assignments-table' do
-      click_link 'Feedback index'
+      click_link 'Feedback index', href: polymorphic_path([@volunteer, @assignment, Feedback])
     end
     refute page.has_text? 'author_superadmin_assignment_feedback'
     assert page.has_text? 'author_volunteer_assignment_feedback'
@@ -45,7 +47,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     click_link 'volunteer@example.com'
     click_link 'Profil anzeigen'
     within '.group-assignments-table' do
-      click_link 'Feedback index'
+      click_link 'Feedback index', href: polymorphic_path([@volunteer, @group_offer, Feedback])
     end
     refute page.has_text? 'author_superadmin_group_offer_feedback'
     assert page.has_text? 'author_volunteer_group_offer_feedback'
@@ -57,7 +59,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     visit polymorphic_path([@volunteer, @assignment, @assignment_volunteer_feedback])
     click_link 'Back'
     within '.assignments-table' do
-      click_link 'Feedback index'
+      click_link 'Feedback index', href: polymorphic_path([@volunteer, @assignment, Feedback])
     end
     refute page.has_text? 'author_superadmin_assignment_feedback'
     assert page.has_text? 'author_volunteer_assignment_feedback'
@@ -118,7 +120,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     assert page.has_text? 'You are not authorized to perform this action.'
   end
 
-  test 'create new assignment feedback as volunteer' do
+  test 'create_new_assignment_feedback_as_volunteer' do
     login_as @user_volunteer
     play_create_new_assignment_feedback
   end
@@ -156,7 +158,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     click_button 'Create Feedback'
     assert page.has_text? 'Feedback was successfully created.'
     within '.assignments-table' do
-      click_link 'Feedback index'
+      click_link 'Feedback index', href: polymorphic_path([@volunteer, @assignment, Feedback])
     end
     click_link 'Show'
     FEEDBACK_FORM_FILL.each do |fill_values|
@@ -175,7 +177,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     click_button 'Create Feedback'
     assert page.has_text? 'Feedback was successfully created.'
     within '.group-assignments-table' do
-      click_link 'Feedback index'
+      click_link 'Feedback index', href: polymorphic_path([@volunteer, @group_offer, Feedback])
     end
     click_link 'Show'
     FEEDBACK_FORM_FILL.each do |fill_values|
