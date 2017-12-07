@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  concern :update_submitted_at do
+    get :last_submitted_hours_and_feedbacks, on: :member
+    get :update_submitted_at, on: :member
+    put :update_submitted_at, on: :member
+  end
+  concern :assignment_feedbacks do
+    resources :feedbacks
+    resources :trial_feedbacks
+  end
+
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
   end
@@ -28,21 +38,11 @@ Rails.application.routes.draw do
     resources :hours
     resources :billing_expenses, except: [:edit, :update]
     resources :certificates
-    resources :group_offers do
-      resources :feedbacks
-      resources :trial_feedbacks
-    end
-    resources :assignments do
-      resources :feedbacks
-      resources :trial_feedbacks
-    end
+    resources :group_offers, concerns: :assignment_feedbacks
+    resources :assignments, concerns: :assignment_feedbacks
   end
-  resources :group_assignments, only: [:update, :show] do
-    get :last_submitted_hours_and_feedbacks, on: :member
-  end
-  resources :assignments do
-    get :last_submitted_hours_and_feedbacks, on: :member
-  end
+  resources :group_assignments, only: [:show], concerns: :update_submitted_at
+  resources :assignments, concerns: :update_submitted_at
   resources :group_offers do
     get :archived, on: :collection
     put :change_active_state, on: :member
