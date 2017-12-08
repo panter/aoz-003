@@ -101,8 +101,8 @@ module ApplicationHelper
   end
 
   def bootstrap_paginate(paginate_collection)
-    tag.div class: 'text-center hidden-print' do
-      will_paginate paginate_collection, renderer: WillPaginate::ActionView::LinkRenderer
+    tag.nav class: 'text-center hidden-print', aria: { label: 'Page navigation' } do
+      will_paginate paginate_collection, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-lg'
     end
   end
 end
