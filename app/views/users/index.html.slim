@@ -5,8 +5,8 @@ nav.navbar.section-navigation
   ul.list-inline
     li= button_link t_title(:new), new_user_path, dimension: 'sm'
     li |
-    li= button_link t('clear_filters'), users_path, dimension: 'sm'
     li= list_filter_dropdown(:role, User::ROLES)
+    li= button_link t('clear_filters'), users_path, dimension: 'sm'
     li |
     li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
   hr
@@ -14,7 +14,7 @@ nav.navbar.section-navigation
 table.table.table-striped
   thead
     tr
-      th= t_attr(:email)
+      th= t_attr(:full_name)
       th= sort_link @q, :role, t_attr(:role, User)
       th
   tbody
