@@ -22,14 +22,14 @@ class SessionsTest < ApplicationSystemTestCase
     click_button 'Log in'
 
     assert page.has_text? 'Signed in successfully.'
-    assert page.has_link? @user.email
+    assert page.has_link? @user.navigation_name
   end
 
   test 'sign out current user' do
     login_as @user
     visit root_path
     within 'nav' do
-      click_link @user.email
+      click_link @user.navigation_name
     end
     assert page.has_link? 'Abmelden'
     click_link 'Abmelden'
