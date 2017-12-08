@@ -15,14 +15,15 @@ nav.navbar.section-navigation
     li= button_link t('clear_filters'), volunteers_path, dimension: 'sm'
     li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
     - unless search_parameters.include? 'acceptance_eq'
-      = activeness_filter_dropdown
+      = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
     - unless search_parameters.include? 'active_eq'
       = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
-    = intern_extern_filter_dropdown
+    = boolean_toggler_filter_dropdown(:external, 'Intern/Extern', 'Extern', 'Intern')
     = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
     = boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
     = list_filter_dropdown(:group_offer_categories_id, Volunteer::GroupOfferCategory.active.all)
     = boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)
+
   hr
 
 = render 'columns', volunteers: @volunteers
