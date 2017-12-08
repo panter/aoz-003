@@ -58,7 +58,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
   end
 
   test 'social_worker_always_sees_notification_for_client_registration' do
-    ClientNotification.destroy_all
+    @client_notification.update(active: false)
     login_as @social_worker
     visit clients_path
 
