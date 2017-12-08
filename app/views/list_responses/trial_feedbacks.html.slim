@@ -1,6 +1,6 @@
 = render 'reminder_mailings/section_navigation'
 
-h1 Eingereichte Feedbacks
+h1 Eingereichte Probezeit Feedbacks
 
 nav.navbar.section-navigation.hidden-print
   ul.list-inline
@@ -9,37 +9,29 @@ nav.navbar.section-navigation.hidden-print
         { q: :marked_done_by_id_not_null, text: 'Erledigt', value: 'true' },
         { q: :marked_done_by_id_null, text: 'Nicht Erledigt', value: 'true' })
 
-= bootstrap_paginate(@feedbacks)
+= bootstrap_paginate(@trial_feedbacks)
 
 table.table.table-striped.list-responses-table
   thead
     tr
       th.limit-width= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th.limit-width Einsatz
-      th Ziele
-      th Erfolge
-      th Zukunft
-      th= t_attr(:comments, Feedback)
-      th.limit-width= sort_link @q, :conversation, 'Gespräch'
+      th Text
       th= sort_link @q, :created_at, 'Alter'
       th.limit-width
 
   tbody
-    - @feedbacks.each do |record|
+    - @trial_feedbacks.each do |record|
       tr*{ data: { feedback_id: record.id } }
         td.index-action-cell
           a href=volunteer_path(record.volunteer)
             span #{record.volunteer.contact.last_name},
             span= record.volunteer.contact.first_name
         td.index-action-cell
-          a href="#{url_for(record.feedbackable)}" title="#{record.feedbackable.to_label}"
-            - record.feedbackable.label_parts.reject(&:blank?).each do |label_part|
+          a href="#{url_for(record.trial_feedbackable)}" title="#{record.trial_feedbackable.to_label}"
+            - record.trial_feedbackable.label_parts.reject(&:blank?).each do |label_part|
               span= label_part.truncate(30)
-        td= record.goals
-        = td_truncate_content_modal(record.achievements, 'Erfolge', shorten_size: 60)
-        = td_truncate_content_modal(record.future, 'Zukunft', shorten_size: 60)
-        = td_truncate_content_modal(record.comments, t_attr(:comments, Feedback), shorten_size: 60)
-        td= t(record.conversation)
+        = td_truncate_content_modal(record.body, 'Text', shorten_size: 200)
         td.index-action-cell
           span= "#{(Time.zone.today - record.created_at.to_date).to_i} Tage"
           - if record.marked_done_by.present?
@@ -47,10 +39,10 @@ table.table.table-striped.list-responses-table
               = "Ereledigt markiert durch: "
               = link_to record.marked_done_by.email, record.marked_done_by
         td
-          = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
+          = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.trial_feedbackable_link_target, record]), class: 'index-action-link'
           - unless record.marked_done_by
-            = button_to 'Erledigt', polymorphic_path([record.volunteer, record.feedbackable_link_target, record], action: :mark_as_done), { method: :put, class: 'btn btn-success btn-xs m-t-10' }
+            = button_to 'Erledigt', polymorphic_path([record.volunteer, record.trial_feedbackable_link_target, record], action: :mark_as_done), { method: :put, class: 'btn btn-success btn-xs m-t-10' }
 
-= bootstrap_paginate(@feedbacks)
+= bootstrap_paginate(@trial_feedbacks)
 
 = render 'modal_truncate'

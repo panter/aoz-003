@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
 
   concern :assignment_feedbacks do
+    resources :hours, concerns: :mark_submitted_at
     resources :feedbacks, concerns: :mark_submitted_at
     resources :trial_feedbacks, concerns: :mark_submitted_at
   end
@@ -40,7 +41,7 @@ Rails.application.routes.draw do
     resources :billing_expenses, except: [:edit, :update]
     resources :certificates
     resources :group_offers, concerns: :assignment_feedbacks
-    resources :hours, concerns: :mark_submitted_at
+    resources :hours
     resources :journals, except: [:show]
   end
 
