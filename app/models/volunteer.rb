@@ -6,11 +6,9 @@ class Volunteer < ApplicationRecord
   include ImportRelation
   include FullBankDetails
 
-  before_validation :handle_external
+  before_validation :handle_user_with_external_change, if: :external_changed?
+  # before_validation :handle_external
   before_save :record_acceptance_changed
-  before_validation :handle_user_with_external_change,
-    if: :external_changed?,
-    unless: proc { user_id.nil? }
   after_update :copy_contact_to_user, if: :user_added?
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
@@ -69,7 +67,7 @@ class Volunteer < ApplicationRecord
 
   validates :user, absence: true,
     if: :external?,
-    unless: proc { |user| user.deleted? }
+    unless: :user_deleted?
 
   scope :created_between, lambda { |start_date, end_date|
     created_after(start_date).created_before(end_date)
@@ -168,10 +166,6 @@ class Volunteer < ApplicationRecord
     return acceptance unless accepted?
     return :active if active?
     :inactive if inactive?
-  end
-
-  def handle_external
-    contact.external = true if external
   end
 
   def assignment_kinds
@@ -303,15 +297,21 @@ class Volunteer < ApplicationRecord
     self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now if will_save_change_to_acceptance?
   end
 
+  def user_deleted?
+    user.deleted?
+  end
+
   def external_changed?
     will_save_change_to_external?
   end
 
   def handle_user_with_external_change
     if external?
-      user.destroy
+      contact.external = true
+      user&.delete
     else
-      user.restore recursive: true
+      contact.external = false
+      user.restore recursive: true if user_id.present?
     end
   end
 end
