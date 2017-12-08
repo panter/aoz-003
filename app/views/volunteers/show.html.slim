@@ -124,6 +124,12 @@ h3 Persönlicher Hintergrund
       tr
         td #{t_attr(:external)} / #{t_attr(:internal)}
         td= @volunteer.external? ? t_attr(:external) : t_attr(:internal)
+        tr
+          td= t('registered_by')
+          - if @volunteer.self_applicant?
+            td= t('volunteer_self_applicant')
+          - else
+            td= link_to @volunteer.registrar.full_name, profile_path(@volunteer.registrar)
 
 h3= t_attr(:single_accompaniment)
 .table-responsive
