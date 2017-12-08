@@ -1,12 +1,14 @@
 class ListResponsesController < ApplicationController
   def feedbacks
     authorize :list_response
-    @feedbacks = Feedback.created_asc.not_marked_done.paginate(page: params[:page])
+    @q = Feedback.created_asc.not_marked_done.author_volunteer.ransack(params[:q])
+    @feedbacks = @q.result.paginate(page: params[:page])
   end
 
   def hours
     authorize :list_response
-    @hours = Hour.created_asc.not_marked_done.paginate(page: params[:page])
+    @q = Hour.created_asc.not_marked_done.ransack(params[:q])
+    @hours = @q.result.paginate(page: params[:page])
   end
 
   def mark_feedback_done
