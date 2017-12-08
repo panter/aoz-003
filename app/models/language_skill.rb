@@ -3,7 +3,7 @@ class LanguageSkill < ApplicationRecord
 
   validates :level, presence: true
 
-  LANGUAGE_LEVELS = [:native_speaker, :fluent, :good, :basic].freeze
+  LANGUAGE_LEVELS = [:native_speaker, :basic, :fluent, :good].freeze
 
   scope :german_first, (-> { order("CASE WHEN language = 'DE' THEN 1 ELSE 2 END") })
 

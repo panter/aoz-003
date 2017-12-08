@@ -8,17 +8,12 @@ nav.navbar.section-navigation.hidden-print
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link 'Klient erfassen', new_client_path, dimension: :sm
+  ul.list-inline
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
     = list_filter_dropdown(:state, Client::STATES)
     li= button_link t('clear_filters'), clients_path, dimension: :sm
     li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: :sm
     li= link_to navigation_glyph('print'), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
-
-    - if policy(Client).need_accompanying? && ['with_assignment', 'index'].include?(action_name)
-      li= button_link 'Klienten ohne Begleitung', need_accompanying_clients_url, dimension: :sm
-    - if action_name == 'need_accompanying'
-      li= button_link 'Klienten mit Begleitung', with_assignment_clients_url, dimension: :sm
     - if policy(ClientNotification).index?
       li= button_link 'Wartezeit Benachrichtigungen', client_notifications_path, dimension: :sm
-
   hr
