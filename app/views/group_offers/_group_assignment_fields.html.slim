@@ -3,7 +3,8 @@
     - if action_name == 'edit'
       = f.association :volunteer, prompt: true, collection: @assignable
     - else
-      = f.association :volunteer, prompt: true
+      = f.association :volunteer, prompt: true, input_html: { class: 'new-group-offer-volunteer-collection' }
+
   .col-xs-12.col-md-2
     = f.input :responsible
   .col-xs-12.col-md-3
