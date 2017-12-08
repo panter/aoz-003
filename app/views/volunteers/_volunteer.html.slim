@@ -4,7 +4,7 @@ tr
     td = volunteer.contact.full_name
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
-  td = volunteer.contact.primary_email
+  td = mail_to volunteer.contact.primary_email
   td = volunteer.birth_year.year if volunteer.birth_year?
   td = volunteer.native_language&.language_name
   td = render 'language_skills/show_inline', language_skills: volunteer.foreign_languages
@@ -15,7 +15,11 @@ tr
   td = volunteer.interests
   td = t(".acceptance.#{volunteer.acceptance}")
   td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
-  td = volunteer.self_applicant? ? t('volunteer_self_applicant') : volunteer.registrar.full_name
+  - if volunteer.self_applicant?
+    td= t('volunteer_self_applicant')
+  - else
+    td= link_to volunteer.registrar.full_name, profile_path(volunteer.registrar)
+  / td = volunteer.self_applicant? ? t('volunteer_self_applicant') : link_to volunteer.registrar.full_nameprofile_path(volunteer.registrar)
   - if action_name == 'index'
     = render 'index_actions', subject: volunteer
     - if volunteer.seeking_clients?
