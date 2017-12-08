@@ -24,62 +24,50 @@ module FilterDropdownHelper
     end
   end
 
-  def activeness_filter_dropdown
+  def boolean_toggler_filter_dropdown(attribute, attr_text, on_text, off_text)
+    filter = "#{attribute}_eq"
     li_dropdown do
-      concat dropdown_toggle_link('Status' + status_toggler_text_end)
-      concat dropdown_ul(tag.li { all_link_to(:active_eq) }) { activeness_links }
+      concat dropdown_toggle_link(attr_text + bool_toggler_text_end(filter, on_text, off_text))
+      concat dropdown_ul(tag.li { all_link_to(filter) }) {
+        concat li_a_element(on_text, bool_toggle_url(filter, true), class: q_active_class(filter, 'true'))
+        concat li_a_element(off_text, bool_toggle_url(filter, false), class: q_active_class(filter, 'false'))
+      }
     end
   end
 
-  def intern_extern_filter_dropdown
-    li_dropdown do
-      concat dropdown_toggle_link('Intern/Extern' + external_toggler_text_end)
-      concat dropdown_ul(tag.li { all_link_to(:external_eq) }) { external_internal_links }
-    end
-  end
-
-  def external_internal_links
-    params_u = params.to_unsafe_hash.except('page')
-    [
-      concat(tag.li do
-        link_to('Extern ', url_for(params_u.merge(q: search_parameters.merge(external_eq: 'true'))))
-      end),
-      concat(tag.li do
-        link_to('Intern ', url_for(params_u.merge(q: search_parameters.merge(external_eq: 'false'))))
-      end)
-    ].collect
-  end
-
-  def external_toggler_text_end
-    if search_parameters['external_eq'] == 'true'
-      ': Extern '
-    elsif search_parameters['external_eq'] == 'false'
-      ': Intern '
+  def q_active_class(filter, value)
+    if q_is?(filter, value)
+      'bg-success'
     else
-      ' '
+      ''
     end
   end
 
-  def status_toggler_text_end
-    if search_parameters['active_eq'] == 'true'
-      ': Aktiv '
-    elsif search_parameters['active_eq'] == 'false'
-      ': Inaktiv '
-    else
-      ' '
-    end
+  def q_true?(filter)
+    search_parameters[filter] == 'true'
   end
 
-  def activeness_links
-    params_u = params.to_unsafe_hash.except('page')
-    [
-      tag.li do
-        link_to('Aktiv ', url_for(params_u.merge(q: search_parameters.merge(active_eq: 'true'))))
-      end,
-      tag.li do
-        link_to('Inaktiv ', url_for(params_u.merge(q: search_parameters.merge(active_eq: 'false'))))
-      end
-    ].collect { |li| concat li }
+  def q_false?(filter)
+    search_parameters[filter] == 'false'
+  end
+
+  def q_is?(filter, value)
+    search_parameters[filter] == value
+  end
+
+  def bool_toggle_url(filter, toggle = false)
+    url_for(params_except('page').merge(q: search_parameters.merge("#{filter}": toggle.to_s)))
+  end
+
+  def bool_toggler_text_end(filter, on_text, off_text)
+    return ": #{on_text} " if q_true?(filter)
+    return ": #{off_text} " if q_false?(filter)
+    ' '
+  end
+
+
+  def params_except(*key)
+    params.to_unsafe_hash.except(*key)
   end
 
   def enum_toggler_text(attribute, collection)
@@ -115,12 +103,18 @@ module FilterDropdownHelper
     end
   end
 
+  def li_a_element(text, href, *options)
+    tag.li do
+      link_to(text, href, *options)
+    end
+  end
+
   def filter_url(q_filter, bool_filter, filter_attribute, enum_value: false)
     if filter_active?(q_filter, filter_attribute, enum_value)
-      url_for(q: search_parameters.except(q_filter))
+      url_for(params_except('page').merge(q: search_parameters.except(q_filter)))
     else
       filter_parameter = { q_filter => bool_filter || enum_value || filter_attribute }
-      url_for(q: search_parameters.merge(filter_parameter))
+      url_for(params_except('page').merge(q: search_parameters.merge(filter_parameter)))
     end
   end
 
