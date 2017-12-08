@@ -31,7 +31,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     setup_feedbacks
     login_as @user_volunteer
     visit root_url
-    click_link 'volunteer@example.com'
+    click_link @user_volunteer.navigation_name
     click_link 'Profil anzeigen'
     within '.assignments-table' do
       click_link 'Feedback index', href: polymorphic_path([@volunteer, @assignment, Feedback])
@@ -44,7 +44,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     setup_feedbacks
     login_as @user_volunteer
     visit root_url
-    click_link 'volunteer@example.com'
+    click_link @user_volunteer.navigation_name
     click_link 'Profil anzeigen'
     within '.group-assignments-table' do
       click_link 'Feedback index', href: polymorphic_path([@volunteer, @group_offer, Feedback])

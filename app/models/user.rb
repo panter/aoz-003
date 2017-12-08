@@ -88,6 +88,14 @@ class User < ApplicationRecord
     end
   end
 
+  def navigation_name
+    if profile&.contact
+      "#{profile.contact.first_name} #{profile.contact.last_name}"
+    else
+      email
+    end
+  end
+
   def self.role_collection
     ROLES_FOR_USER_CREATE.map(&:to_sym)
   end
