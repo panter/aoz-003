@@ -32,6 +32,8 @@
       = f.simple_fields_for :group_assignments do |group_assignment|
         = render 'group_assignment_fields', f: group_assignment
       .col-xs-12
+        = hidden_field_tag :internals, @internals.map{|item| {id: item.id, value: item.contact.full_name}}.to_json
+        = hidden_field_tag :externals, @externals.map{|item| {id: item.id, value: item.contact.full_name}}.to_json
         = link_to_add_association 'Freiwillige hinzufügen', f, :group_assignments, class: 'btn btn-default'
 
   .row

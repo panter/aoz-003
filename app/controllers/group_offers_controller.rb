@@ -2,6 +2,7 @@ class GroupOffersController < ApplicationController
   include GroupAssignmentsAttributes
   before_action :set_group_offer, only: [:show, :edit, :update, :destroy, :change_active_state]
   before_action :set_assignable_collection, only: [:edit]
+  before_action :set_volunteer_collection
 
   def index
     authorize GroupOffer
@@ -92,6 +93,11 @@ class GroupOffersController < ApplicationController
     end
     @assignable += @group_offer.volunteers.map { |volunteer| [volunteer.contact.full_name, volunteer.id] }
     @assignable.uniq!
+  end
+
+  def set_volunteer_collection
+    @internals = Volunteer.internal
+    @externals = Volunteer.external
   end
 
   def group_offer_params
