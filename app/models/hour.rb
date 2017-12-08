@@ -21,6 +21,10 @@ class Hour < ApplicationRecord
     where('created_at > ?', submitted_at) if submitted_at
   }
 
+  scope :need_refund, lambda {
+    joins(:volunteer).where('volunteers.waive = FALSE')
+  }
+
   HOUR_RANGE = (1..8).to_a
   MINUTE_RANGE = [0, 15, 30, 45].freeze
 
