@@ -1,5 +1,5 @@
 class TrialFeedbacksController < ApplicationController
-  before_action :set_trial_feedback, only: [:show, :edit, :update, :destroy]
+  before_action :set_trial_feedback, only: [:show, :edit, :update, :destroy, :mark_as_done]
   before_action :set_trial_feedbackable
   before_action :set_volunteer, except: [:need_review]
 

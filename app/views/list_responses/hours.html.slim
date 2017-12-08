@@ -1,22 +1,25 @@
 
 = render 'reminder_mailings/section_navigation'
 
-h1 Stunden Übersicht
+h1 Eingereichte Stunden
 
 nav.navbar.section-navigation.hidden-print
   ul.list-inline
-    li= button_link 'Filter aufheben', url_for(q: search_parameters.slice(:s)), dimension: :sm
+    li= button_link 'Filter aufheben', url_for(q: { s: ['updated_at asc'] }), dimension: :sm
     = boolean_toggler_filter_dropdown(:marked_done_by, 'Spesen', 'Verzichtet', 'Auszahlung')
+    = custom_filter_dropdown('Überprüfung',
+        { q: :marked_done_by_id_not_null, text: 'Erledigt', value: 'true' },
+        { q: :marked_done_by_id_null, text: 'Nicht Erledigt', value: 'true' })
 
 = bootstrap_paginate(@hours)
 
 table.table.table-striped.list-responses-table
   thead
     tr
-      th.limit-width Freiwillige/r
+      th= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th Einsatz
-      th Zeit
-      th Alter
+      th= sort_link @q, :hours, 'Zeit'
+      th= sort_link @q, :updated_at, 'Alter'
       th.limit-width
 
   tbody
@@ -33,11 +36,16 @@ table.table.table-striped.list-responses-table
             = " Stunde"
             - if total_hours > 1
               = "n"
-        td #{(Time.zone.today - record.created_at.to_date).to_i} Tage
+        td.index-action-cell
+          span #{(Time.zone.today - record.created_at.to_date).to_i} Tage
+          - if record.marked_done_by.present?
+            span
+              = "Ereledigt markiert durch: "
+              = link_to record.marked_done_by.email, record.marked_done_by
         td
           = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.hourable, record]), class: 'index-action-link'
           - unless record.marked_done_by
-            = button_to 'Erledigt', polymorphic_path([record.volunteer, record.hourable, record], action: :mark_feedback_done), { method: :put, class: 'btn btn-success btn-xs m-t-10' }
+            = button_to 'Erledigt', polymorphic_path([record.volunteer, record.hourable, record], action: :mark_as_done), { method: :put, class: 'btn btn-success btn-xs m-t-10' }
 
 = bootstrap_paginate(@hours)
 

@@ -7,6 +7,7 @@ class TrialFeedback < ApplicationRecord
   belongs_to :reviewer, class_name: 'User', optional: true
   belongs_to :marked_done_by, class_name: 'User', optional: true
 
+  scope :author_volunteer, (-> { joins(:volunteer).where('author_id = volunteers.user_id') })
   scope :need_review, -> { where(reviewer_id: nil) }
 
   validates :body, presence: true
