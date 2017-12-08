@@ -5,8 +5,8 @@ h1 Stunden Übersicht
 
 nav.navbar.section-navigation.hidden-print
   ul.list-inline
-    li= button_link 'Filter aufheben', list_responses_hours_path, dimension: :sm
-    = boolean_toggler_filter_dropdown(:volunteer_waive, 'Spesen', 'Verzichtet', 'Auszahlung')
+    li= button_link 'Filter aufheben', url_for(q: search_parameters.slice(:s)), dimension: :sm
+    = boolean_toggler_filter_dropdown(:marked_done_by, 'Spesen', 'Verzichtet', 'Auszahlung')
 
 = bootstrap_paginate(@hours)
 

@@ -1,5 +1,5 @@
 class HoursController < ApplicationController
-  before_action :set_hour, only: [:show, :edit, :update, :destroy, :create_redirect]
+  before_action :set_hour, only: [:show, :edit, :update, :destroy, :create_redirect, :mark_as_done]
   before_action :set_volunteer
 
   def index
@@ -37,6 +37,14 @@ class HoursController < ApplicationController
   def destroy
     @hour.destroy
     redirect_to @volunteer, make_notice
+  end
+
+  def mark_as_done
+    if @hour.update(marked_done_by: current_user)
+      redirect_to list_responses_hours_path, notice: 'Stunden als erledigt markiert.'
+    else
+      redirect_to list_responses_hours_path, notice: 'Fehler: Erledigt markieren fehlgeschlagen.'
+    end
   end
 
   private
