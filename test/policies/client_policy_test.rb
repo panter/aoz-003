@@ -60,16 +60,4 @@ class ClientPolicyTest < PolicyAssertions::Test
   test 'Index: department manager cannot index clients' do
     assert_permit @department_manager, Client.first, 'index?'
   end
-
-  test 'Need accompanying: superadmin can see clients need accompanying' do
-    assert_permit @superadmin, Client.first, 'need_accompanying?'
-  end
-
-  test 'Need accompanying: social worker cannot see clients need accompanying' do
-    refute_permit @social_worker, Client.first, 'need_accompanying?'
-  end
-
-  test 'Need accompanying: department manager can see clients need accompanying' do
-    assert_permit @department_manager, Client.first, 'need_accompanying?'
-  end
 end

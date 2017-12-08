@@ -2,4 +2,31 @@ h1 Klienten/innen
 
 = render 'listing_menu'
 
-= render 'columns', clients: @clients
+= bootstrap_paginate(@clients)
+
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th= sort_link @q, :salutation, t_attr(:salutation, Client)
+        th= sort_link @q, :contact_last_name, t_attr(:full_name, Contact)
+        th= sort_link @q, :contact_city, t_attr(:city, Contact)
+        th= sort_link @q, :contact_postal_code, t_attr(:postal_code, Contact)
+        th= sort_link @q, :birth_year, t_attr(:birth_year, Client)
+        th= t_attr(:relatives, Client)
+        th= sort_link @q, :nationality, t_attr(:nationality, Client)
+        th= sort_link @q, :language_skills_language, t_attr(:language_skills, Client)
+        th.truncate-th
+          span= t_attr(:goals, Client)
+        th= t_attr(:interests, Client)
+        th.truncate-th
+          span= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
+        th.truncate-th
+          span= sort_link @q, :created_at, t_attr(:created_at, Client)
+        - if policy(Client).comments?
+          th= t_attr(:comments, Client)
+        th.hidden-print colspan='2'
+    tbody
+      = render @clients
+
+= bootstrap_paginate(@clients)
