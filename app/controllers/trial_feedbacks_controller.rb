@@ -53,6 +53,16 @@ class TrialFeedbacksController < ApplicationController
     @need_review = TrialFeedback.need_review
   end
 
+  def mark_as_done
+    if @trial_feedback.update(marked_done_by: current_user)
+      redirect_to list_responses_trial_feedbacks_path,
+        notice: 'Probezeit Feedback als erledigt markiert.'
+    else
+      redirect_to list_responses_trial_feedbacks_path,
+        notice: 'Fehler: Erledigt markieren fehlgeschlagen.'
+    end
+  end
+
   private
 
   def set_trial_feedbackable

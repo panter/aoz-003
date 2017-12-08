@@ -1,5 +1,5 @@
 class FeedbacksController < ApplicationController
-  before_action :set_feedback, only: [:show, :edit, :update, :destroy]
+  before_action :set_feedback, only: [:show, :edit, :update, :destroy, :mark_as_done]
   before_action :set_feedbackable
   before_action :set_volunteer
 
@@ -42,6 +42,14 @@ class FeedbacksController < ApplicationController
   def destroy
     @feedback.destroy
     redirect_back(fallback_location: url_for(@feedbackable))
+  end
+
+  def mark_as_done
+    if @feedback.update(marked_done_by: current_user)
+      redirect_to list_responses_feedbacks_path, notice: 'Feedback als erledigt markiert.'
+    else
+      redirect_to list_responses_feedbacks_path, notice: 'Fehler: Erledigt markieren fehlgeschlagen.'
+    end
   end
 
   private
