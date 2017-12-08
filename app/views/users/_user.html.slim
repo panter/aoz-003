@@ -1,5 +1,5 @@
 tr
-  td= link_to user.email, user
+  td= link_to user.full_name, profile_path(user.profile)
   td= t("role.#{user.role}")
   td
     - if policy(user).destroy?
