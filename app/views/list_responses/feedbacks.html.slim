@@ -1,19 +1,27 @@
-h1 Feedbacks Übersicht
 = render 'reminder_mailings/section_navigation'
+
+h1 Feedbacks Übersicht
+
+nav.navbar.section-navigation.hidden-print
+  ul.list-inline
+    li= button_link 'Filter aufheben', url_for(q: search_parameters.slice(:s)), dimension: :sm
+    = custom_filter_dropdown('Überprüfung',
+        { q: :marked_done_by_id_not_null, text: 'Erledigt', value: 'true' },
+        { q: :marked_done_by_id_null, text: 'Nicht Erledigt', value: 'true' })
 
 = bootstrap_paginate(@feedbacks)
 
 table.table.table-striped.list-responses-table
   thead
     tr
-      th.limit-width Freiwillige/r
+      th.limit-width= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th.limit-width Einsatz
       th Ziele
       th Erfolge
       th Zukunft
       th= t_attr(:comments, Feedback)
-      th.limit-width Gespräch
-      th Alter
+      th.limit-width= sort_link @q, :conversation, 'Gespräch'
+      th= sort_link @q, :created_at, 'Alter'
       th.limit-width
 
   tbody
@@ -32,7 +40,12 @@ table.table.table-striped.list-responses-table
         = td_truncate_content_modal(record.future, 'Zukunft', shorten_size: 60)
         = td_truncate_content_modal(record.comments, t_attr(:comments, Feedback), shorten_size: 60)
         td= t(record.conversation)
-        td #{(Time.zone.today - record.created_at.to_date).to_i} Tage
+        td.index-action-cell
+          span= "#{(Time.zone.today - record.created_at.to_date).to_i} Tage"
+          - if record.marked_done_by.present?
+            span
+              = "Ereledigt markiert durch: "
+              = link_to record.marked_done_by.email, record.marked_done_by
         td
           = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
           - unless record.marked_done_by

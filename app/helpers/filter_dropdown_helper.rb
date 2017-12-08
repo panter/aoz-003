@@ -35,6 +35,29 @@ module FilterDropdownHelper
     end
   end
 
+  def custom_filter_dropdown(name, *filters)
+    filter_keys = filters.map { |filter| filter[:q] }
+    li_dropdown do
+      concat dropdown_toggle_link(name + custom_text_end(filters))
+      concat dropdown_ul(tag.li { all_link_to(filter_keys) }) {
+        filters.map do |filter|
+          concat li_a_element(filter[:text],
+            custom_filter_url(filter[:q], filter[:value], *filter_keys.reject { |key| key == filter[:q] }),
+            class: q_active_class(filter[:q], filter[:value]))
+        end
+      }
+    end
+  end
+
+  def custom_text_end(filters)
+    search_keys = search_parameters.keys
+    in_search = filters.find do |filter|
+      search_keys.include? filter[:q].to_s
+    end
+    return ": #{in_search[:text]}" if in_search.present?
+    ' '
+  end
+
   def q_active_class(filter, value)
     if q_is?(filter, value)
       'bg-success'
@@ -53,6 +76,10 @@ module FilterDropdownHelper
 
   def q_is?(filter, value)
     search_parameters[filter] == value
+  end
+
+  def custom_filter_url(filter, value, *excludes)
+    url_for(params_except('page').merge(q: search_parameters.except(*excludes).merge("#{filter}": value.to_s)))
   end
 
   def bool_toggle_url(filter, toggle = false)
