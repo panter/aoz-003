@@ -60,8 +60,8 @@ class ProfilesTest < ApplicationSystemTestCase
     @user_without_profile.reload
 
     within '#menu' do
-      assert page.has_link? @user_without_profile.email
-      click_link @user_without_profile.email
+      assert page.has_link? @user_without_profile.navigation_name
+      click_link @user_without_profile.navigation_name
       assert page.has_link? 'Profil anzeigen'
       click_link 'Profil anzeigen'
     end
