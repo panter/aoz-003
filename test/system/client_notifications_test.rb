@@ -57,6 +57,27 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     assert page.has_text? @client_notification.body
   end
 
+  test 'social_worker_always_sees_notification_for_client_registration' do
+    ClientNotification.destroy_all
+    login_as @social_worker
+    visit clients_path
+
+    click_link 'Klient erfassen'
+    select('Mrs.', from: 'Salutation')
+    fill_in 'First name', with: 'asdf'
+    fill_in 'Last name', with: 'asdf'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
+    fill_in 'Primary phone', with: '0123456789'
+    within '#languages' do
+      choose('Basic')
+    end
+    click_button 'Create Client'
+    assert page.has_text? 'Client was successfully created.'
+  end
+
   test 'social worker does not see notification button on clients index' do
     login_as @social_worker
     visit clients_path
