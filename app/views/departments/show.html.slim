@@ -13,7 +13,7 @@
   h2= t_attr(:associated_users)
   ul
     - @department.user.each do |user|
-      li= link_to user.to_label, profile_link(user)
+      li= link_to user.profile.contact.natural_name, profile_path(user.profile)
 
 - if @department.group_offers.active.any?
   h2.m-b-20= t('group_offers', count: 2)
