@@ -90,33 +90,21 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
     click_link 'Feedback Eingang', href: list_responses_trial_feedbacks_path(
       q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
     )
-    click_link 'Erledigt', href: polymorphic_path(
+    mark_done_path = polymorphic_path(
       [@assignment_pendent.volunteer, @assignment_pendent, @assignment_fb_pendent],
       action: :mark_as_done
     )
+    find("a[href^=\"#{mark_done_path}\"]").click
     assert page.has_text? 'Feedback als erledigt markiert.'
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.trial_feedbackable.to_label
 
-    click_link 'Filter aufheben'
-    visit current_url
-    assert page.has_text? 'Ereledigt markiert durch: '
-    refute page.has_link? 'Erledigt', href: polymorphic_path(
-      [@assignment_pendent.volunteer, @assignment_pendent, @assignment_fb_pendent],
-      action: :mark_as_done
-    )
-
-    click_link 'Erledigt', href: polymorphic_path(
+    mark_done_path = polymorphic_path(
       [@group_assignment_pendent.volunteer, @group_assignment_pendent.group_offer,
        @group_assignment_fb_pendent], action: :mark_as_done
     )
+    find("a[href^=\"#{mark_done_path}\"]").click
     assert page.has_text? 'Feedback als erledigt markiert.'
-    click_link 'Filter aufheben'
-    visit current_url
-    refute page.has_link? 'Erledigt', href: polymorphic_path(
-      [@group_assignment_pendent.volunteer, @group_assignment_pendent.group_offer,
-       @group_assignment_fb_pendent], action: :mark_as_done
-    )
   end
 
   test 'truncate_modal_shows_all_text' do
