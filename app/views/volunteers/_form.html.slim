@@ -64,8 +64,8 @@ fieldset
   .col-xs-12
     = f.input :motivation
   .col-xs-12
-    = f.input :experience
-  .col-xs-12
+    = checkbox_toggle_collapse(f, :experience, 'experience-desc')
+  .col-xs-12.collapse#experience-desc
     = f.input :volunteer_experience_desc
 
 h3= t('volunteer_engagement_type_will')
