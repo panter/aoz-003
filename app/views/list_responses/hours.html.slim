@@ -6,7 +6,7 @@ h1 Eingereichte Stunden
 nav.navbar.section-navigation.hidden-print
   ul.list-inline
     li= button_link 'Filter aufheben', url_for(q: { s: ['updated_at asc'] }), dimension: :sm
-    = boolean_toggler_filter_dropdown(:marked_done_by, 'Spesen', 'Verzichtet', 'Auszahlung')
+    = boolean_toggler_filter_dropdown(:volunteer_waive, 'Spesen', 'Verzichtet', 'Auszahlung')
     = custom_filter_dropdown('Überprüfung',
         { q: :marked_done_by_id_not_null, text: 'Erledigt', value: 'true' },
         { q: :marked_done_by_id_null, text: 'Nicht Erledigt', value: 'true' })
