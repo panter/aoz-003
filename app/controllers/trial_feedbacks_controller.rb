@@ -54,18 +54,11 @@ class TrialFeedbacksController < ApplicationController
   end
 
   def mark_as_done
+    redirect_path = list_responses_trial_feedbacks_path(params.to_unsafe_hash.slice(:q))
     if @trial_feedback.update(marked_done_by: current_user)
-      redirect_to(
-        list_responses_trial_feedbacks_path(q: { marked_done_by_id_null: 'true',
-                                                 s: 'updated_at asc' }),
-        notice: 'Probezeit Feedback als erledigt markiert.'
-      )
+      redirect_to(redirect_path, notice: 'Probezeit Feedback als erledigt markiert.')
     else
-      redirect_to(
-        list_responses_trial_feedbacks_path(q: { marked_done_by_id_null: 'true',
-                                                 s: 'updated_at asc' }),
-        notice: 'Fehler: Erledigt markieren fehlgeschlagen.'
-      )
+      redirect_to(redirect_path, notice: 'Fehler: Erledigt markieren fehlgeschlagen.')
     end
   end
 
