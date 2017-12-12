@@ -121,4 +121,55 @@ class ListResponseHoursTest < ApplicationSystemTestCase
        @group_assignment_hour_pendent], action: :mark_as_done
     )
   end
+
+  test 'hour_waive_filter_works' do
+    assignment_waive = create(:assignment, volunteer: create(:volunteer_with_user, waive: true))
+    assignment_hour_waive = create :hour, hourable: assignment_waive,
+      volunteer: assignment_waive.volunteer, hours: Faker::Number.between(1, 8),
+      minutes: [0, 15, 30, 45].sample
+    click_link 'Stunden Eingang', href: list_responses_hours_path(
+      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+    )
+    click_link 'Spesen'
+    click_link 'Verzichtet'
+    visit current_url
+
+    assert page.has_link? assignment_waive.volunteer.contact.full_name
+    assert page.has_link? assignment_hour_waive.hourable.to_label
+    assert page.has_text?(
+      (60.0 / assignment_hour_waive.minutes * 0.1) + assignment_hour_waive.hours
+    )
+
+    refute page.has_link? @assignment_pendent.volunteer.contact.full_name
+    refute page.has_link? @assignment_hour_pendent.hourable.to_label
+    refute page.has_text?(
+      (60.0 / @assignment_hour_pendent.minutes * 0.1) + @assignment_hour_pendent.hours
+    )
+    refute page.has_link? @group_assignment_pendent.volunteer.contact.full_name
+    refute page.has_link? @group_assignment_hour_pendent.hourable.to_label
+    refute page.has_text?(
+      (60.0 / @group_assignment_hour_pendent.minutes * 0.1) + @group_assignment_hour_pendent.hours
+    )
+
+    click_link 'Spesen: Verzichtet'
+    click_link 'Auszahlung'
+    visit current_url
+
+    refute page.has_link? assignment_waive.volunteer.contact.full_name
+    refute page.has_link? assignment_hour_waive.hourable.to_label
+    refute page.has_text?(
+      (60.0 / assignment_hour_waive.minutes * 0.1) + assignment_hour_waive.hours
+    )
+
+    assert page.has_link? @assignment_pendent.volunteer.contact.full_name
+    assert page.has_link? @assignment_hour_pendent.hourable.to_label
+    assert page.has_text?(
+      (60.0 / @assignment_hour_pendent.minutes * 0.1) + @assignment_hour_pendent.hours
+    )
+    assert page.has_link? @group_assignment_pendent.volunteer.contact.full_name
+    assert page.has_link? @group_assignment_hour_pendent.hourable.to_label
+    assert page.has_text?(
+      (60.0 / @group_assignment_hour_pendent.minutes * 0.1) + @group_assignment_hour_pendent.hours
+    )
+  end
 end
