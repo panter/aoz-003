@@ -15,6 +15,10 @@ function volunteerForm() {
       showFormRegions(data.hide);
     }
   });
+
+  $('.checkbox-toggle-collapse').on('change', ({target}) => (
+    $(`#${$(target).data().collapse}`).toggleClass('collapse', !$(target).is(':checked'))
+  ));
 }
 
 const hideFormRegions = (hide) => {
@@ -41,8 +45,4 @@ const show_rejection = (target) => {
     return $('.volunteer_rejection_type, .volunteer_rejection_text').show();
   }
   $('.volunteer_rejection_type, .volunteer_rejection_text').hide();
-}
-
-const show_experience = (target) => {
-  $('.volunteer_volunteer_experience_desc').toggle();
 }

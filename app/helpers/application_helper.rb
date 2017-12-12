@@ -73,6 +73,10 @@ module ApplicationHelper
     }, class: html_class }
   end
 
+  def checkbox_toggle_collapse(f, field, target_id)
+    f.input field, input_html: { class: 'checkbox-toggle-collapse', data: { collapse: target_id } }
+  end
+
   def nationality_name(nationality)
     return '' if nationality.blank?
     c = ISO3166::Country[nationality]
