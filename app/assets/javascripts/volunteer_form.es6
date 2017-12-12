@@ -1,9 +1,7 @@
 function volunteerForm() {
   show_rejection();
 
-  $('#volunteer_acceptance_rejected').on('change', ({target}) => {
-    show_rejection(target);
-  });
+  $('#volunteer_acceptance_rejected').on('change', ({target}) => show_rejection(target));
 
   $('.volunteer-active-checkbox-changes').on('change', ({target}) => {
     const data = $(target).data();
@@ -17,7 +15,7 @@ function volunteerForm() {
   });
 
   $('.checkbox-toggle-collapse').on('change', ({target}) => (
-    $(`#${$(target).data().collapse}`).toggleClass('collapse', !$(target).is(':checked'))
+    $($(target).data().collapse).toggleClass('collapse', !$(target).is(':checked'))
   ));
 }
 
