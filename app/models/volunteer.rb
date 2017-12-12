@@ -298,7 +298,7 @@ class Volunteer < ApplicationRecord
   end
 
   def user_deleted?
-    user.deleted?
+    user&.deleted?
   end
 
   def external_changed?

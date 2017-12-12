@@ -19,7 +19,7 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'external volunteer can have no user' do
-    external_volunteer = create :volunteer, external: true
+    external_volunteer = create :volunteer_external
     volunteer_user = create :user_volunteer
     external_volunteer.user = volunteer_user
     assert external_volunteer.invalid?

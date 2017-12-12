@@ -41,7 +41,11 @@ FactoryBot.define do
     end
 
     trait :external do
-      external true
+      external { true }
+    end
+
+    trait :internal do
+      external { false }
     end
 
     trait :zuerich do
@@ -76,6 +80,7 @@ FactoryBot.define do
       end
     end
     factory :volunteer_external, traits: [:external]
+    factory :volunteer_internal, traits: [:internal]
     factory :volunteer_z, traits: [:zuerich]
 
     factory(

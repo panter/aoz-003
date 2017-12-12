@@ -246,16 +246,16 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   test 'external' do
-    external = create :volunteer, external: true
-    internal = create :volunteer, external: false
+    external = create :volunteer_external
+    internal = create :volunteer_internal
     query = Volunteer.external
     assert query.include? external
     refute query.include? internal
   end
 
   test 'internal' do
-    external = create :volunteer, external: true
-    internal = create :volunteer, external: false
+    external = create :volunteer_external
+    internal = create :volunteer_internal
     query = Volunteer.internal
     refute query.include? external
     assert query.include? internal
