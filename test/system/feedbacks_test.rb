@@ -53,11 +53,10 @@ class FeedbacksTest < ApplicationSystemTestCase
     assert page.has_text? 'author_volunteer_group_offer_feedback'
   end
 
-  test 'assignment feedback index contains only the feedbacks of one assignment' do
+  test 'assignment_feedback_index_contains_only_the_feedbacks_of_one_assignment' do
     setup_feedbacks
     login_as @user_volunteer
-    visit polymorphic_path([@volunteer, @assignment, @assignment_volunteer_feedback])
-    click_link 'Back'
+    visit volunteer_path(@user_volunteer.volunteer)
     within '.assignments-table' do
       click_link 'Feedback index', href: polymorphic_path([@volunteer, @assignment, Feedback])
     end
