@@ -107,6 +107,9 @@ module ApplicationHelper
     elsif value == 'print'
       content_tag(:span, content_tag(:span, 'Print', class: 'sr-only'),
         class: 'glyphicon glyphicon-print')
+    elsif value == 'delete'
+      content_tag(:span, content_tag(:span, 'Delete', class: 'sr-only'),
+        class: 'glyphicon glyphicon-trash')
     end
   end
 
