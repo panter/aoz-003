@@ -4,4 +4,4 @@ fieldset
     = f.simple_fields_for :relatives do |relative|
       = render 'relatives/fields', f: relative, relative: relative
     .links
-      = link_to_add_polymorphic_association t('add_relative'), f, :relatives, class: 'btn btn-success'
+      = link_to_add_polymorphic_association t('add_relative'), f, :relatives, class: 'btn btn-default'

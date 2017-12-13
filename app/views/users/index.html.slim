@@ -3,7 +3,7 @@ h1 Benutzer/innen
 nav.navbar.section-navigation
   hr
   ul.list-inline
-    li= button_link t_title(:new), new_user_path, 'success', dimension: 'sm'
+    li= button_link t_title(:new), new_user_path, dimension: 'sm'
     li |
     li= button_link t('clear_filters'), users_path, dimension: 'sm'
     li= list_filter_dropdown(:role, User::ROLES)

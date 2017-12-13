@@ -6,4 +6,4 @@
   .col-xs-12
     = simple_form_for(@volunteer, url: volunteer_applications_path) do |f|
       = render 'volunteers/form', f: f
-      = f.button :submit, t('submit_application'), class: 'btn btn-success'
+      = f.button :submit, t('submit_application')

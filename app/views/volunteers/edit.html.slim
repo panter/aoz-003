@@ -3,9 +3,9 @@ h1= t_title(:edit)
 = simple_form_for(@volunteer) do |f|
   = render 'volunteers/form', f: f, volunteer: @volunteer
   - if current_user.volunteer?
-    = f.button :submit, t('update_profile'), class: 'btn btn-success'
+    = f.button :submit, t('update_profile')
   - else
-    = f.button :submit, class: 'btn btn-success'
+    = f.button :submit
 
 - unless current_user.volunteer?
   = form_navigation_btn :back

@@ -8,7 +8,7 @@
   = f.input :hours, include_blank: true
 
 
-  button.btn.btn-primary(data-toggle='collapse' data-target='#additionalEdit' type='button'  aria-expanded='false' aria-controls='additionalEdit')
+  button.btn.btn-default(data-toggle='collapse' data-target='#additionalEdit' type='button'  aria-expanded='false' aria-controls='additionalEdit')
     = t('.edit_more_fields')
   hr
   #additionalEdit.collapse
@@ -30,4 +30,4 @@
 
   ul.list-inline
     li= button_link t_action(:back), volunteer_path(@volunteer)
-    li= f.button :submit, class: 'btn btn-success'
+    li= f.button :submit
