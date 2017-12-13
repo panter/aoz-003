@@ -1,14 +1,14 @@
 class ListResponsesController < ApplicationController
   def feedbacks
     authorize :list_response
-    @q = Feedback.created_asc.author_volunteer.ransack(params[:q])
+    @q = Feedback.created_asc.author_volunteer(params[:q]).ransack(params[:q])
     @q.sorts = ['updated_at asc'] if @q.sorts.empty?
     @feedbacks = @q.result.paginate(page: params[:page])
   end
 
   def trial_feedbacks
     authorize :list_response
-    @q = TrialFeedback.created_asc.author_volunteer.ransack(params[:q])
+    @q = TrialFeedback.created_asc.author_volunteer(params[:q]).ransack(params[:q])
     @q.sorts = ['updated_at asc'] if @q.sorts.empty?
     @trial_feedbacks = @q.result.paginate(page: params[:page])
   end

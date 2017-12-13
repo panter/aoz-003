@@ -8,6 +8,9 @@ nav.navbar.section-navigation.hidden-print
     = custom_filter_dropdown('Überprüfung',
         { q: :reviewer_id_not_null, text: 'Erledigt', value: 'true' },
         { q: :reviewer_id_null, text: 'Nicht Erledigt', value: 'true' })
+    = custom_filter_dropdown('Autor',
+        { q: :author_volunteer, text: 'Freiwillige/r', value: 'true' },
+        { q: :author_volunteer, text: 'AOZ', value: 'false' })
 
 = bootstrap_paginate(@trial_feedbacks)
 
@@ -19,7 +22,6 @@ table.table.table-striped.list-responses-table
       th Text
       th= sort_link @q, :created_at, 'Alter'
       th.limit-width
-
   tbody
     - @trial_feedbacks.each do |record|
       tr*{ data: { feedback_id: record.id } }
