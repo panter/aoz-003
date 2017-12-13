@@ -58,6 +58,11 @@ FactoryBot.define do
 
     after(:build) do |client|
       client.user ||= create(:user_fake_email)
+      if client.salutation == 'mrs'
+        client.contact.first_name = FactoryHelper::Name.female_first_name
+      elsif client.salutation == 'mr'
+        client.contact.first_name = FactoryHelper::Name.male_first_name
+      end
     end
 
     factory :client_z, traits: [:zuerich]

@@ -281,6 +281,16 @@ class Volunteer < ApplicationRecord
     contact.full_name
   end
 
+  def freiwillig_gendered
+    if salutation == 'mrs'
+      'Freiwillige'
+    elsif salutation == 'mr'
+      'Freiwilliger'
+    else
+      'Freiwillige/r'
+    end
+  end
+
   private
 
   def user_added?

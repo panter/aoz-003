@@ -19,6 +19,7 @@ table.table.table-striped.list-responses-table
     tr
       th.limit-width= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th.limit-width Einsatz
+      th= sort_link @q, :author_profile_contact_full_name, 'Autor/in'
       th Ziele
       th Erfolge
       th Zukunft
@@ -38,6 +39,11 @@ table.table.table-striped.list-responses-table
           a href="#{url_for(record.feedbackable)}" title="#{record.feedbackable.to_label}"
             - record.feedbackable.label_parts.reject(&:blank?).each do |label_part|
               span= label_part.truncate(30)
+        td
+          - if record.author.volunteer?
+            = link_to record.volunteer.freiwillig_gendered, record.volunteer
+          - else
+            = link_to record.author.profile.contact.natural_name, record.author
         td= record.goals
         = td_truncate_content_modal(record.achievements, 'Erfolge', shorten_size: 60)
         = td_truncate_content_modal(record.future, 'Zukunft', shorten_size: 60)
