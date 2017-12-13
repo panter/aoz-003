@@ -88,10 +88,6 @@ class User < ApplicationRecord
     end
   end
 
-  def navigation_name
-    profile&.contact&.natural_name || email
-  end
-
   def self.role_collection
     ROLES_FOR_USER_CREATE.map(&:to_sym)
   end

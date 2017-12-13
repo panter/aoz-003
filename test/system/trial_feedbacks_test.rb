@@ -51,7 +51,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     setup_feedbacks
     login_as @user_volunteer
     visit root_url
-    click_link @user_volunteer.navigation_name
+    click_link @user_volunteer.full_name
     click_link 'Profil anzeigen'
     within '.assignments-table' do
       click_link 'Probezeit Feedback index'
@@ -64,7 +64,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     setup_feedbacks
     login_as @user_volunteer
     visit root_url
-    click_link @user_volunteer.navigation_name
+    click_link @user_volunteer.full_name
     click_link 'Profil anzeigen'
     within '.group-assignments-table' do
       click_link 'Probezeit Feedback index'
