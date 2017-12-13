@@ -146,4 +146,8 @@ module ApplicationHelper
       concat tag.span('Ganzer Text', class: 'whole-text')
     end
   end
+
+  def default_list_response_query
+    { author_volunteer: 'true', reviewer_id_null: 'true', s: 'updated_at asc' }
+  end
 end
