@@ -616,7 +616,6 @@ en:
         <<: *id-assignment-report
         total: Total number of assigned clients
   profile_updated: Profile was successfully updated.
-  registered_by: Registered by
   relatives: Family members
   remember_me: Remember me
   reserve: Reserve
