@@ -61,7 +61,7 @@
   nav.navbar.section-navigation
     hr
     ul.list-inline
-      li= f.button :submit, class: 'btn btn-success'
+      li= f.button :submit
       - if action_name == 'edit' && policy(Client).destroy?
         li= link_to navigation_glyph('delete'), url_for(@client), confirm_deleting(@client, 'btn btn-default')
       li

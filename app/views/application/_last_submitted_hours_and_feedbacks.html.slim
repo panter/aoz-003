@@ -53,6 +53,6 @@ table.table.table-striped
   .col-xs-12.text-center
     p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
   - if confirmable.class == Assignment
-    .col-xs-12.text-center= button_link 'Bestätigen', update_submitted_at_assignment_path(confirmable), 'success'
+    .col-xs-12.text-center= button_link 'Bestätigen', update_submitted_at_assignment_path(confirmable)
   - else
-    .col-xs-12.text-center= button_link 'Bestätigen', update_submitted_at_group_assignment_path(confirmable), 'success'
+    .col-xs-12.text-center= button_link 'Bestätigen', update_submitted_at_group_assignment_path(confirmable)

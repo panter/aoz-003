@@ -92,8 +92,6 @@ de:
         activated: Gruppenangebot wurde erfolgreich aktiviert.
         deactivated: Gruppenangebot wurde erfolgreich archiviert.
         no-change: Gruppenangebot konnte nicht aktualisiert werden.
-      group_assignment_fields:
-        remove_volunteer: Freiwillige entfernen
       group_offers_block:
         activate: Aktivieren
         active: Aktiv
