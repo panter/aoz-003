@@ -57,13 +57,6 @@ class AssignmentsController < ApplicationController
     redirect_to assignments_url, make_notice
   end
 
-  def find_volunteer
-    set_client
-    @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @seeking_clients = @q.result.paginate(page: params[:page])
-  end
-
   def find_client
     set_volunteer
     @q = policy_scope(Client).need_accompanying.ransack(params[:q])

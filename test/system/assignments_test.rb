@@ -25,27 +25,6 @@ class AssignmentsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'assign unassigned client - client side' do
-    login_as @user
-    visit clients_path
-    within '.section-navigation' do
-      click_link 'State'
-      click_link 'Registered'
-    end
-    click_link 'Find volunteer'
-    click_link 'Reserve'
-    page.find('#assignment_period_start').click
-    page.find('.month', text: 'Jan').click
-    page.find_all('.day', exact_text: '1').first.click
-    click_button 'Create Assignment'
-    assert page.has_text? @client.contact.full_name
-    assert page.has_text? @volunteer.contact.full_name
-    visit client_path(@client)
-    assert page.has_text? 'Reserved'
-    visit volunteer_path(@volunteer)
-    assert page.has_text? 'Active'
-  end
-
   # Travis GFYS
   # test 'assign unassigned client - volunteer side' do
   #   login_as @user

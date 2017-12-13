@@ -713,7 +713,6 @@ de:
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   "false": Nein
   find_client: Klient/in finden
-  find_volunteer: Freiwillige finden
   forgot_password: Passwort vergessen?
   get_back: Wir werden uns bald bei Ihnen melden.
   helpers:
