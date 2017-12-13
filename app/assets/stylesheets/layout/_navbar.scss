@@ -13,3 +13,11 @@
     height: 100%;
   }
 }
+
+#menu {
+  .dropdown-toggle {
+    span {
+      display: block;
+    }
+  }
+}
