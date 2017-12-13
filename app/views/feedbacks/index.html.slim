@@ -35,4 +35,4 @@ table.table.table-striped
         td= link_to t_action(:destroy), polymorphic_path([@volunteer, record.feedbackable, record]), confirm_deleting(record)
 
 = bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([@volunteer, @feedbackable, Feedback]) }
-= bootstrap_row_col { button_link t('back'), @volunteer }
+= bootstrap_row_col { button_link navigation_glyph('back'), @volunteer }

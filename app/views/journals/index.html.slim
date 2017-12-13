@@ -19,4 +19,4 @@ h1= t_title(:index, Journal)
               td= link_to t_action(:edit), url_for([@journaled, record]) + '/edit'
 = form_navigation_btn :new
 .row
-  .col-xs-12= button_link t('back'), @journaled
+  .col-xs-12= button_link navigation_glyph('back'), @journaled
