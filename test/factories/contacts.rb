@@ -18,12 +18,12 @@ FactoryBot.define do
     end
 
     trait :female_name do
-      first_name { FactoryHelper::Name.female_first_name }
+      first_name { I18n.t('faker.name.female_first_name', locale: :en).sample }
       last_name { Faker::Name.last_name }
     end
 
     trait :male_name do
-      first_name { FactoryHelper::Name.male_first_name }
+      first_name { I18n.t('faker.name.male_first_name', locale: :en).sample }
       last_name { Faker::Name.last_name }
     end
 

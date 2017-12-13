@@ -76,9 +76,9 @@ FactoryBot.define do
 
     after(:build) do |volunteer|
       if volunteer.salutation == 'mrs'
-        volunteer.contact.first_name = FactoryHelper::Name.female_first_name
+        volunteer.contact.first_name = I18n.t('faker.name.female_first_name', locale: :en).sample
       elsif volunteer.salutation == 'mr'
-        volunteer.contact.first_name = FactoryHelper::Name.male_first_name
+        volunteer.contact.first_name = I18n.t('faker.name.male_first_name', locale: :en).sample
       end
     end
 
