@@ -556,7 +556,6 @@ en:
         other: '%{count} errors prohibited this %{resource} from being saved:'
   "false": "No"
   find_client: Find client
-  find_volunteer: Find volunteer
   forgot_password: Forgot your password?
   get_back: We will soon get back to you.
   helpers:
