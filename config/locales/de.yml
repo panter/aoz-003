@@ -549,7 +549,6 @@ de:
     when: Tag / Zeit
     zurich: Zürich
   available_volunteers: Verfügbare Freiwillige
-  back: Zurück
   billing_expense_pdf:
     <<: *id-generic_keys
     account: Konto
