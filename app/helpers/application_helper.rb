@@ -112,6 +112,10 @@ module ApplicationHelper
     end
   end
 
+  def navigation_fa_icon(value)
+    content_tag(:span, content_tag(:span, 'xlsx', class: 'sr-only'), class: 'fa fa-file-excel-o') if value == 'xlsx'
+  end
+
   def bootstrap_paginate(paginate_collection)
     will_paginate paginate_collection, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer,
       class: 'pagination-lg text-center hidden-print', 'aria-label': 'Pagination'

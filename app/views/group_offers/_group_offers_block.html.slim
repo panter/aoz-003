@@ -8,7 +8,7 @@ nav.navbar.section-navigation#filters
         = button_link t('.archived'), archived_group_offers_path, dimension: 'sm'
       - else
         = button_link t('.active'), group_offers_path, dimension: 'sm'
-    li= button_link t('export_xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+    li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
   hr
   ul.list-inline
     li= button_link t('clear_filters'), group_offers_path, dimension: 'sm'

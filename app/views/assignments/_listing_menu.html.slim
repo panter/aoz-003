@@ -4,7 +4,7 @@ nav.navbar.section-navigation.hidden-print
     li= button_link 'Begleitung erfassen', new_assignment_path, dimension: :sm
     = list_filter_dropdown(:state, Assignment::STATES)
     li= button_link t('clear_filters'), assignments_path, dimension: :sm
-    li= button_link t('export_xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: :sm
+    li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: :sm
     li= link_to navigation_glyph('print'), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
 
   hr
