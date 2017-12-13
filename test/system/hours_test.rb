@@ -18,7 +18,7 @@ class HoursTest < ApplicationSystemTestCase
       period_start: 7.weeks.ago
     login_as @user_volunteer1
     visit root_url
-    click_link @user_volunteer1.navigation_name
+    click_link @user_volunteer1.full_name
     click_link 'Profil anzeigen'
   end
 
