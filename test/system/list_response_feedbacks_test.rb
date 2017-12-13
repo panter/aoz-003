@@ -82,20 +82,18 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
 
   test 'marking_feedback_done_works' do
     click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
-    mark_done_path = polymorphic_path(
-      [@assignment_pendent.volunteer, @assignment_pendent, @assignment_fb_pendent],
-      action: :mark_as_done
-    )
-    find("a[href^=\"#{mark_done_path}\"]").click
+    within 'tbody' do
+      click_link 'Angeschaut', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
+        assignments\/#{@assignment_pendent.id}\/feedbacks\/#{@assignment_fb_pendent.id}\/.*/x
+    end
     assert page.has_text? 'Feedback als angeschaut markiert.'
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.feedbackable.to_label
-
-    mark_done_path = polymorphic_path(
-      [@group_assignment_pendent.volunteer, @group_assignment_pendent.group_offer,
-       @group_assignment_fb_pendent], action: :mark_as_done
-    )
-    find("a[href^=\"#{mark_done_path}\"]").click
+    within 'tbody' do
+      click_link 'Angeschaut', href: /.*\/volunteers\/#{@group_assignment_pendent.volunteer.id}\/
+        group_offers\/#{@group_assignment_pendent.id}\/feedbacks
+        \/#{@group_assignment_fb_pendent.id}\/.*/x
+    end
     assert page.has_text? 'Feedback als angeschaut markiert.'
   end
 
