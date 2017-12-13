@@ -1,5 +1,5 @@
 tr
-  td= link_to user.navigation_name, profile_path(user.profile)
+  td= link_to user.full_name, profile_path(user)
   td= t("role.#{user.role}")
   td
     - if policy(user).destroy?
