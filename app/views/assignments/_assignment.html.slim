@@ -11,9 +11,9 @@ tr
   td= l(assignment.period_end) if assignment.period_end
   td
     - if policy(User).show?
-      = link_to assignment.creator.navigation_name, profile_path(assignment.creator) if assignment.creator.present?
+      = link_to assignment.creator.full_name, profile_path(assignment.creator) if assignment.creator.present?
     - else
-      = assignment.creator.navigation_name
+      = assignment.creator.full_name
   = render 'index_actions', subject: assignment
   - if current_user.volunteer == assignment.volunteer
     td.hidden-print= link_to t_title(:edit, Assignment), edit_assignment_path(assignment)
