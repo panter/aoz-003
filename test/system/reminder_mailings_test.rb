@@ -68,7 +68,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_link? group_assignment.group_offer.to_label,
       href: group_offer_path(group_assignment.group_offer)
     click_link 'Emails versenden'
-    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.to_label
+    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.full_name,
+                          href: profile_path(ReminderMailing.order('created_at asc').last.creator.profile)
     assert page.has_text?(
       "Übermittelt am #{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
       I18n.l(ReminderMailing.created_desc.first.created_at.to_date)
@@ -135,7 +136,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_link? group_assignment.group_offer.to_label,
       href: group_offer_path(group_assignment.group_offer)
     click_link 'Emails versenden'
-    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.to_label
+    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.full_name,
+                          href: profile_path(ReminderMailing.order('created_at asc').last.creator.profile)
     assert page.has_text?(
       "Übermittelt am #{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
       I18n.l(ReminderMailing.created_desc.first.created_at.to_date)

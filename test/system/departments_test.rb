@@ -62,7 +62,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'department@aoz.ch'
     assert page.has_text? '0441234567'
     assocable_users.each do |user|
-      assert page.has_link? user.to_label
+      assert page.has_link? user.full_name, href: profile_path(user.profile)
     end
     assert page.has_link? 'Edit'
     assert page.has_link? 'Back'

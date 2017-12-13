@@ -54,6 +54,11 @@ class ClientsTest < ApplicationSystemTestCase
 
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
+
+    @superadmin.clients.each do |client|
+      assert page.has_link? client.user.full_name, href: profile_path(client.user)
+      assert page.has_link? client.contact.primary_email
+    end
   end
 
   test 'new client form with preselected fields' do
