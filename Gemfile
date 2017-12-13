@@ -61,7 +61,6 @@ group :development, :test do
   gem 'capybara-selenium'
   gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem 'factory-helper'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'i18n_yaml_sorter'
