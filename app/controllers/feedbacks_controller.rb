@@ -46,7 +46,7 @@ class FeedbacksController < ApplicationController
 
   def mark_as_done
     redirect_path = list_responses_feedbacks_path(params.to_unsafe_hash.slice(:q))
-    if @feedback.update(marked_done_by: current_user)
+    if @feedback.update(reviewer: current_user)
       redirect_to(redirect_path, notice: 'Feedback als erledigt markiert.')
     else
       redirect_to(redirect_path, notice: 'Fehler: Erledigt markieren fehlgeschlagen.')

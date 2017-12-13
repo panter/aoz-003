@@ -41,7 +41,7 @@ class HoursController < ApplicationController
 
   def mark_as_done
     redirect_path = list_responses_hours_path(params.to_unsafe_hash.slice(:q))
-    if @hour.update(marked_done_by: current_user)
+    if @hour.update(reviewer: current_user)
       redirect_to(redirect_path, notice: 'Stunden als erledigt markiert.')
     else
       redirect_to(redirect_path, notice: 'Fehler: Erledigt markieren fehlgeschlagen.')

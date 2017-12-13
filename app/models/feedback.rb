@@ -1,24 +1,15 @@
 class Feedback < ApplicationRecord
-  include NotMarkedDone
+  include FeedbackTrialFeedbackCommon
 
   attr_reader :feedbackable_id_and_type
 
   belongs_to :volunteer
   belongs_to :author, class_name: 'User'
   belongs_to :feedbackable, polymorphic: true, optional: true
-  belongs_to :marked_done_by, class_name: 'User', optional: true
 
   validates :comments, presence: true
 
-  scope :author_volunteer, (-> { joins(:volunteer).where('author_id = volunteers.user_id') })
-
-  scope :since_last_submitted, lambda { |submitted_at|
-    if submitted_at
-      author_volunteer.where('feedbacks.created_at > ?', submitted_at)
-    else
-      author_volunteer
-    end
-  }
+  scope :submitted_before, ->(submitted_at) { where('feedbacks.created_at > ?', submitted_at) }
 
   def assignment?
     feedbackable_type == 'Assignment'

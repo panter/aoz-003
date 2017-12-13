@@ -12,7 +12,7 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
     @assignment_done = create(:assignment)
     @assignment_fb_done = create :trial_feedback, trial_feedbackable: @assignment_done,
       volunteer: @assignment_done.volunteer, author: @assignment_done.volunteer.user,
-      marked_done_by: @superadmin
+      reviewer: @superadmin
 
     @group_assignment_pendent = create :group_assignment
     @group_assignment_fb_pendent = create :trial_feedback, volunteer: @group_assignment_pendent.volunteer,
@@ -24,14 +24,14 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
     @group_assignment_done = create :group_assignment
     @group_assignment_fb_done = create :trial_feedback, volunteer: @group_assignment_done.volunteer,
       trial_feedbackable: @group_assignment_done, author: @group_assignment_done.volunteer.user,
-      marked_done_by: @superadmin
+      reviewer: @superadmin
     login_as @superadmin
     visit reminder_mailings_path
   end
 
   test 'feedbacks list contains only relevant records' do
     click_link 'Probezeit Feedback Eingang', href: list_responses_trial_feedbacks_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     assert page.has_link? @assignment_pendent.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_pendent.trial_feedbackable.to_label
@@ -53,7 +53,7 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
 
   test 'feedbacks list without filter shows marked done feedback' do
     click_link 'Feedback Eingang', href: list_responses_trial_feedbacks_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     click_link 'Filter aufheben'
     visit current_url
@@ -66,11 +66,11 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
 
   test 'feedbacks list with filter erledigt shows only marked done' do
     click_link 'Feedback Eingang', href: list_responses_trial_feedbacks_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     click_link 'Überprüfung: Nicht Erledigt'
     click_link 'Erledigt', href: list_responses_trial_feedbacks_path(
-      q: { marked_done_by_id_not_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_not_null: 'true', s: 'updated_at asc' }
     )
     visit current_url
     # not marked done should now be filtered
@@ -88,7 +88,7 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
 
   test 'marking_feedback_done_works' do
     click_link 'Feedback Eingang', href: list_responses_trial_feedbacks_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     mark_done_path = polymorphic_path(
       [@assignment_pendent.volunteer, @assignment_pendent, @assignment_fb_pendent],
@@ -110,9 +110,9 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
   test 'truncate_modal_shows_all_text' do
     body = Faker::Lorem.paragraph(50)
     @assignment_fb_pendent.update(body: body)
-    @group_assignment_fb_pendent.update(marked_done_by: @superadmin)
+    @group_assignment_fb_pendent.update(reviewer: @superadmin)
     click_link 'Feedback Eingang', href: list_responses_trial_feedbacks_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     page.find('td', text: body.truncate(200)).click
     wait_for_ajax
