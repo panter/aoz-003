@@ -95,7 +95,7 @@ class ListResponseHoursTest < ApplicationSystemTestCase
     refute page.has_link? @assignment_hour_pendent.hourable.to_label
     within 'tbody' do
       click_link 'Angeschaut', href: /.*\/volunteers\/#{@group_assignment_pendent.volunteer.id}\/
-        group_offers\/#{@group_assignment_pendent.id}\/hours
+        group_offers\/#{@group_assignment_pendent.group_offer.id}\/hours
         \/#{@group_assignment_hour_pendent.id}\/.*/x
     end
     assert page.has_text? 'Stunden als angeschaut markiert.'

@@ -92,7 +92,7 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
     refute page.has_link? @assignment_fb_pendent.trial_feedbackable.to_label
     within 'tbody' do
       click_link 'Angeschaut', href: /.*\/volunteers\/#{@group_assignment_pendent.volunteer.id}\/
-        group_offers\/#{@group_assignment_pendent.id}\/trial_feedbacks
+        group_offers\/#{@group_assignment_pendent.group_offer.id}\/trial_feedbacks
         \/#{@group_assignment_fb_pendent.id}\/.*/x
     end
     assert page.has_text? 'Feedback als angeschaut markiert.'
