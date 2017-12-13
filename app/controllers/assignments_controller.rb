@@ -5,7 +5,7 @@ class AssignmentsController < ApplicationController
   def index
     authorize Assignment
     @q = policy_scope(Assignment).ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @q.sorts = ['period_start desc'] if @q.sorts.empty?
     @assignments = @q.result
     respond_to do |format|
       format.xlsx

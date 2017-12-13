@@ -7,7 +7,8 @@ tr
   - if action_name == 'index'
     td = link_to assignment.volunteer, assignment.volunteer
   td= t("simple_form.options.assignment.state.#{assignment.state}") if assignment.state.present?
-  td= l(assignment.created_at, format: :date_only)
+  td= l(assignment.period_start) if assignment.period_start
+  td= l(assignment.period_end) if assignment.period_end
   td
     - if policy(User).show?
       = link_to assignment.creator.navigation_name, profile_path(assignment.creator) if assignment.creator.present?
