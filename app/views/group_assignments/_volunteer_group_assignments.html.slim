@@ -35,7 +35,7 @@ table.table.table-striped.group-assignments-table
           - else
             td
           - if policy(GroupOffer).destroy?
-            td= link_to navigation_glyph('delete'), group_offer_path(group_assignment.group_offer), confirm_deleting(group_assignment.group_offer)
+            td= link_to t_action(:delete), group_offer_path(group_assignment.group_offer), confirm_deleting(group_assignment.group_offer)
           - else
             td
           - if policy(group_assignment.group_offer).change_active_state?
