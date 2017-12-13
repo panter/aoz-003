@@ -9,7 +9,7 @@ class ListResponseHoursTest < ApplicationSystemTestCase
       minutes: [0, 15, 30, 45].sample
     @assignment_done = create(:assignment)
     @assignment_hour_done = create :hour, hourable: @assignment_done,
-      volunteer: @assignment_done.volunteer, marked_done_by: @superadmin,
+      volunteer: @assignment_done.volunteer, reviewer: @superadmin,
       hours: Faker::Number.between(1, 8),
       minutes: [0, 15, 30, 45].sample
 
@@ -19,7 +19,7 @@ class ListResponseHoursTest < ApplicationSystemTestCase
       minutes: [0, 15, 30, 45].sample
     @group_assignment_done = create :group_assignment
     @group_assignment_hour_done = create :hour, hourable: @group_assignment_done.group_offer,
-      volunteer: @group_assignment_done.volunteer, marked_done_by: @superadmin,
+      volunteer: @group_assignment_done.volunteer, reviewer: @superadmin,
       hours: Faker::Number.between(1, 8),
       minutes: [0, 15, 30, 45].sample
     login_as @superadmin
@@ -28,7 +28,7 @@ class ListResponseHoursTest < ApplicationSystemTestCase
 
   test 'hours_list_contains_only_relevant_records' do
     click_link 'Stunden Eingang', href: list_responses_hours_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     assert page.has_link? @assignment_pendent.volunteer.contact.full_name
     assert page.has_link? @assignment_hour_pendent.hourable.to_label
@@ -50,7 +50,7 @@ class ListResponseHoursTest < ApplicationSystemTestCase
 
   test 'hours list without filter shows marked done feedback' do
     click_link 'Stunden Eingang', href: list_responses_hours_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     click_link 'Filter aufheben'
     visit current_url
@@ -69,11 +69,11 @@ class ListResponseHoursTest < ApplicationSystemTestCase
 
   test 'hours list with filter erledigt shows only marked done' do
     click_link 'Stunden Eingang', href: list_responses_hours_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     click_link 'Überprüfung: Nicht Erledigt'
     click_link 'Erledigt', href: list_responses_hours_path(
-      q: { marked_done_by_id_not_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_not_null: 'true', s: 'updated_at asc' }
     )
     visit current_url
     # not marked done should now be filtered
@@ -91,7 +91,7 @@ class ListResponseHoursTest < ApplicationSystemTestCase
 
   test 'marking_hours_done_works' do
     click_link 'Stunden Eingang', href: list_responses_hours_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     mark_done_path = polymorphic_path(
       [@assignment_pendent.volunteer, @assignment_pendent, @assignment_hour_pendent],
@@ -115,7 +115,7 @@ class ListResponseHoursTest < ApplicationSystemTestCase
       volunteer: assignment_waive.volunteer, hours: Faker::Number.between(1, 8),
       minutes: [0, 15, 30, 45].sample
     click_link 'Stunden Eingang', href: list_responses_hours_path(
-      q: { marked_done_by_id_null: 'true', s: 'updated_at asc' }
+      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
     )
     click_link 'Spesen'
     click_link 'Verzichtet'

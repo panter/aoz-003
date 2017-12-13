@@ -17,9 +17,9 @@ class User < ApplicationRecord
   has_many :billing_expenses
   has_many :group_offers, inverse_of: 'creator'
   has_many :reminder_mailings, inverse_of: 'creator'
-  has_many :marked_done_feedbacks, class_name: 'Feedback', foreign_key: 'marked_done_by_id'
-  has_many :marked_done_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'marked_done_by_id'
-  has_many :marked_done_hours, class_name: 'Hour', foreign_key: 'marked_done_by_id'
+  has_many :reviewed_feedbacks, class_name: 'Feedback', foreign_key: 'reviewer_id'
+  has_many :reviewed_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'reviewer_id'
+  has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id'
 
   has_and_belongs_to_many :department
 

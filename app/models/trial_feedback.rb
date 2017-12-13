@@ -1,16 +1,15 @@
 class TrialFeedback < ApplicationRecord
-  include NotMarkedDone
+  include FeedbackTrialFeedbackCommon
 
   belongs_to :volunteer
   belongs_to :author, class_name: 'User'
   belongs_to :trial_feedbackable, polymorphic: true, optional: true
-  belongs_to :reviewer, class_name: 'User', optional: true
-  belongs_to :marked_done_by, class_name: 'User', optional: true
-
-  scope :author_volunteer, (-> { joins(:volunteer).where('author_id = volunteers.user_id') })
-  scope :need_review, -> { where(reviewer_id: nil) }
 
   validates :body, presence: true
+
+  scope :submitted_before, lambda { |submitted_at|
+    where('trial_feedbacks.created_at > ?', submitted_at)
+  }
 
   def assignment?
     trial_feedbackable_type == 'Assignment'
