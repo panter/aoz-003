@@ -1,8 +1,9 @@
 nav.navbar.section-navigation.hidden-print
   ul.section-nav-ul.list-unstyled
-    li= button_link 'Feedback Eingang', list_responses_feedbacks_path(q: default_list_response_query), dimension: :sm
-    li= button_link 'Probezeit Feedback Eingang', list_responses_trial_feedbacks_path(q: default_list_response_query), dimension: :sm
-    li= button_link 'Stunden Eingang', list_responses_hours_path(q: default_list_response_query), dimension: :sm
-    li= button_link 'Erinnerungs-Email Übersicht', reminder_mailings_path, dimension: :sm
-    li= button_link 'Probezeit Erinnerung erstellen', new_probation_period_reminder_mailings_path, dimension: :sm
-    li= button_link 'Halbjahres Erinnerung erstellen', new_half_year_reminder_mailings_path, dimension: :sm
+    li= section_nav_button('feedbacks', 'Feedback Eingang', list_responses_feedbacks_path(q: default_list_response_query))
+    li= section_nav_button('trial_feedbacks', 'Probezeit Feedback Eingang', list_responses_trial_feedbacks_path(q: default_list_response_query))
+    li= section_nav_button('hours', 'Stunden Eingang', list_responses_hours_path(q: default_list_response_query))
+    li
+    li= section_nav_button('new_probation_period', 'Probezeit Erinnerung erstellen', new_probation_period_reminder_mailings_path)
+    li= section_nav_button('new_half_year', 'Halbjahres Erinnerung erstellen', new_half_year_reminder_mailings_path)
+    li= section_nav_button('index', 'Versandte Erinnerungen', reminder_mailings_path)

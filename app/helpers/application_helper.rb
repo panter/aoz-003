@@ -150,4 +150,10 @@ module ApplicationHelper
   def default_list_response_query
     { author_volunteer: 'true', reviewer_id_null: 'true', s: 'updated_at asc' }
   end
+
+  def section_nav_button(actions_name, text, url)
+    link_to_unless(action_name == actions_name, text, url, class: 'btn btn-default btn-sm') do
+      link_to(text, url, class: 'btn btn-sm btn-section-active')
+    end
+  end
 end

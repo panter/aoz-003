@@ -129,3 +129,9 @@
     }
   }
 }
+
+.btn-section-active {
+  background-color: lighten($brand-success, 25%);
+  border-color: lighten($gray-base, 80%);
+  color: $dark;
+}
