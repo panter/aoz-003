@@ -17,6 +17,6 @@ h1= t('.volunteers_certificates', name: @volunteer.contact.full_name)
           td= link_to certificate.user.full_name, certificate.user
           td= link_to t_action(:show), volunteer_certificate_path(certificate.volunteer, certificate)
           td= link_to t_action(:edit), edit_volunteer_certificate_path(certificate.volunteer, certificate)
-          td= link_to t_action(:destroy), volunteer_certificate_path(certificate.volunteer, certificate), confirm_deleting(certificate)
+          td= link_to navigation_glyph('delete'), volunteer_certificate_path(certificate.volunteer, certificate), confirm_deleting(certificate)
 
 
