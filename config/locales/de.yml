@@ -605,7 +605,6 @@ de:
       destroy: Löschen
       send: Senden
       download: Herunterladen
-      print: Drucken
     c_action:
       create: '%{model} wurde erfolgreich erstellt.'
       destroy: '%{model} wurde erfolgreich gelöscht.'

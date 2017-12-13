@@ -449,7 +449,6 @@ en:
       destroy: Delete
       download: Download
       send: Send
-      print: Print
     c_action:
       create: '%{model} was successfully created.'
       destroy: '%{model} was successfully deleted.'
