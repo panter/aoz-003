@@ -18,7 +18,9 @@ class HoursTest < ApplicationSystemTestCase
       period_start: 7.weeks.ago
     login_as @user_volunteer1
     visit root_url
-    click_link @user_volunteer1.full_name
+    within '.navbar-top' do
+      click_link I18n.t("role.#{@user_volunteer1.role}"), href: '#'
+    end
     click_link 'Profil anzeigen'
   end
 
