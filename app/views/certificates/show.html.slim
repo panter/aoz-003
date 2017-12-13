@@ -3,8 +3,8 @@
   nav.navbar.section-navigation
     ul.list-inline
       li= button_link t_title(:edit), edit_volunteer_certificate_path(@volunteer, @certificate)
-      li= button_link navigation_glyph('print'), volunteer_certificate_path(@volunteer, @certificate, print: true), 'success'
-      li= button_link t_action(:download), volunteer_certificate_path(@volunteer, @certificate, format: :pdf), 'warning'
+      li= button_link navigation_glyph('print'), volunteer_certificate_path(@volunteer, @certificate, print: true)
+      li= button_link t_action(:download), volunteer_certificate_path(@volunteer, @certificate, format: :pdf)
       li= button_link t('.back_to_volunteer'), volunteer_path(@volunteer)
   hr
 
