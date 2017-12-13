@@ -81,7 +81,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     within '.table-striped' do
       click_link 'Show'
     end
-    assert page.has_text? @client.contact.full_name
+    assert page.has_text? @client.contact.last_name
   end
 
   test 'volunteer can not see new assignment button' do
