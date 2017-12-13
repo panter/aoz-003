@@ -27,7 +27,7 @@ module ApplicationHelper
 
   def make_nav_button(action)
     if action == :back
-      text = t('back')
+      text = navigation_glyph('back')
       action = :index if action == :back
     else
       text = t_title(action)
@@ -97,6 +97,13 @@ module ApplicationHelper
       content_tag(:i, '', class: 'glyphicon glyphicon-ok text-success')
     else
       content_tag(:i, '', class: 'glyphicon glyphicon-remove text-danger')
+    end
+  end
+
+  def navigation_glyph(value)
+    if value == 'back'
+      content_tag(:span, content_tag(:span, 'Back', class: 'sr-only'),
+        class: 'glyphicon glyphicon-arrow-left')
     end
   end
 
