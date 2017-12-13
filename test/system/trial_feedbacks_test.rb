@@ -51,7 +51,9 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     setup_feedbacks
     login_as @user_volunteer
     visit root_url
-    click_link @user_volunteer.full_name
+    within '.navbar-top' do
+      click_link I18n.t("role.#{@user_volunteer.role}"), href: '#'
+    end
     click_link 'Profil anzeigen'
     within '.assignments-table' do
       click_link 'Probezeit Feedback index'
@@ -64,7 +66,9 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     setup_feedbacks
     login_as @user_volunteer
     visit root_url
-    click_link @user_volunteer.full_name
+    within '.navbar-top' do
+      click_link I18n.t("role.#{@user_volunteer.role}"), href: '#'
+    end
     click_link 'Profil anzeigen'
     within '.group-assignments-table' do
       click_link 'Probezeit Feedback index'
