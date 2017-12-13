@@ -29,10 +29,8 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     visit reminder_mailings_path
   end
 
-  test 'feedbacks list contains only relevant records' do
-    click_link 'Feedback Eingang', href: list_responses_feedbacks_path(
-      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
-    )
+  test 'feedbacks_list_contains_only_relevant_records' do
+    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
     assert page.has_link? @assignment_pendent.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_pendent.feedbackable.to_label
     assert page.has_link? @group_assignment_pendent.volunteer.contact.last_name
@@ -52,9 +50,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks list without filter shows marked done feedback' do
-    click_link 'Feedback Eingang', href: list_responses_feedbacks_path(
-      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
-    )
+    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
     click_link 'Filter aufheben'
     visit current_url
     # marked done shoud now be displayed
@@ -65,13 +61,11 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks list with filter erledigt shows only marked done' do
-    click_link 'Feedback Eingang', href: list_responses_feedbacks_path(
-      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
-    )
-    click_link 'Überprüfung: Nicht Erledigt'
-    click_link 'Erledigt', href: list_responses_feedbacks_path(
-      q: { reviewer_id_not_null: 'true', s: 'updated_at asc' }
-    )
+    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link 'Geprüft: Ungesehen'
+    within 'li.dropdown.open' do
+      click_link 'Angeschaut'
+    end
     visit current_url
     # not marked done should now be filtered
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
@@ -87,15 +81,13 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'marking_feedback_done_works' do
-    click_link 'Feedback Eingang', href: list_responses_feedbacks_path(
-      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
-    )
+    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
     mark_done_path = polymorphic_path(
       [@assignment_pendent.volunteer, @assignment_pendent, @assignment_fb_pendent],
       action: :mark_as_done
     )
     find("a[href^=\"#{mark_done_path}\"]").click
-    assert page.has_text? 'Feedback als erledigt markiert.'
+    assert page.has_text? 'Feedback als angeschaut markiert.'
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.feedbackable.to_label
 
@@ -104,7 +96,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
        @group_assignment_fb_pendent], action: :mark_as_done
     )
     find("a[href^=\"#{mark_done_path}\"]").click
-    assert page.has_text? 'Feedback als erledigt markiert.'
+    assert page.has_text? 'Feedback als angeschaut markiert.'
   end
 
   test 'truncate_modal_shows_all_text' do
@@ -113,9 +105,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     future = Faker::Lorem.paragraph(20)
     @assignment_fb_pendent.update(comments: comments, achievements: achievements, future: future)
     @group_assignment_fb_pendent.update(reviewer: @superadmin)
-    click_link 'Feedback Eingang', href: list_responses_feedbacks_path(
-      q: { reviewer_id_null: 'true', s: 'updated_at asc' }
-    )
+    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
     page.find('td', text: comments.truncate(60)).click
     wait_for_ajax
     assert page.has_text? comments
