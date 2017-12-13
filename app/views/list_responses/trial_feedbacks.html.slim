@@ -19,6 +19,7 @@ table.table.table-striped.list-responses-table
     tr
       th.limit-width= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th.limit-width Einsatz
+      th= sort_link @q, :author_profile_contact_full_name, 'Autor/in'
       th Text
       th= sort_link @q, :created_at, 'Alter'
       th.limit-width
@@ -33,6 +34,11 @@ table.table.table-striped.list-responses-table
           a href="#{url_for(record.trial_feedbackable)}" title="#{record.trial_feedbackable.to_label}"
             - record.trial_feedbackable.label_parts.reject(&:blank?).each do |label_part|
               span= label_part.truncate(30)
+        td
+          - if record.author_id == record.volunteer.user_id
+            = link_to record.volunteer.freiwillig_gendered, record.volunteer
+          - else
+            = link_to record.author.profile.contact.natural_name, record.author
         = td_truncate_content_modal(record.body, 'Text', shorten_size: 500)
         td.index-action-cell
           span= "#{(Time.zone.today - record.created_at.to_date).to_i} Tage"

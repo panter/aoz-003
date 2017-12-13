@@ -127,7 +127,9 @@ if Assignment.count < 1
     FactoryBot.create(:hour, volunteer: volunteer, hourable: assignment,
       meeting_date: Faker::Date.between(assignment.period_start + 1, 2.days.ago))
     FactoryBot.create(:feedback, volunteer: volunteer, feedbackable: assignment,
-      author_id: volunteer.user.id)
+      author: volunteer.user)
+    FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
+      trial_feedbackable: assignment)
   end
 end
 puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client, Feedback)

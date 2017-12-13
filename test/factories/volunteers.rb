@@ -74,6 +74,14 @@ FactoryBot.define do
       weekend { [true, false].sample }
     end
 
+    after(:build) do |volunteer|
+      if volunteer.salutation == 'mrs'
+        volunteer.contact.first_name = FactoryHelper::Name.female_first_name
+      elsif volunteer.salutation == 'mr'
+        volunteer.contact.first_name = FactoryHelper::Name.male_first_name
+      end
+    end
+
     factory :volunteer_with_user do
       after(:create) do |volunteer|
         volunteer.update(user: create(:user_volunteer))

@@ -17,6 +17,16 @@ FactoryBot.define do
       last_name { Faker::Name.last_name }
     end
 
+    trait :female_name do
+      first_name { FactoryHelper::Name.female_first_name }
+      last_name { Faker::Name.last_name }
+    end
+
+    trait :male_name do
+      first_name { FactoryHelper::Name.male_first_name }
+      last_name { Faker::Name.last_name }
+    end
+
     trait :faker_email do
       primary_email { Faker::Internet.email }
     end
