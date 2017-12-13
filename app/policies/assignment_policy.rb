@@ -17,7 +17,6 @@ class AssignmentPolicy < ApplicationPolicy
   alias_method :index?,          :superadmin_or_department_manager?
   alias_method :new?,            :superadmin_or_department_manager?
   alias_method :create?,         :superadmin_or_department_manager?
-  alias_method :find_volunteer?, :superadmin_or_department_manager?
   alias_method :find_client?,    :superadmin_or_department_manager?
 
   alias_method :show?,   :admin_or_department_manager_or_volunteer_related?

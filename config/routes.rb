@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
   resources :client_notifications
   resources :clients do
-    get :find_volunteer, on: :member, to: 'assignments#find_volunteer'
     resources :journals, except: [:show]
     get :search, on: :collection
   end

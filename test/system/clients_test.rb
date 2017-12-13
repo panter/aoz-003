@@ -167,9 +167,9 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
     assert page.has_text? 'unassigned_goals unassigned_interests  unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} without_assignment Show Edit Find volunteer"
+      "#{I18n.l(without_assignment.created_at.to_date)} without_assignment Show Edit"
     assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Edit Show Assignment"
+      "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Edit"
   end
 
   test 'can_delete_a_client_through_edit' do
@@ -229,9 +229,9 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
     assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} Show Find volunteer"
+      "#{I18n.l(without_assignment.created_at.to_date)} Show"
     assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} Show Show Assignment"
+      "#{I18n.l(with_assignment.created_at.to_date)} Show"
     refute page.has_text? superadmins_client.contact.full_name
   end
 
