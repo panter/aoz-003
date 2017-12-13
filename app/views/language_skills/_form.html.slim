@@ -5,4 +5,4 @@
       = f.simple_fields_for :language_skills do |language|
         = render 'language_skills/fields', f: language, speaker: speaker
       .links
-        = link_to_add_polymorphic_association 'Sprache hinzufügen', f, :language_skills, class: 'btn btn-success'
+        = link_to_add_polymorphic_association 'Sprache hinzufügen', f, :language_skills, class: 'btn btn-default'
