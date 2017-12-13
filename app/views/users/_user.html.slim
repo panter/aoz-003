@@ -3,4 +3,4 @@ tr
   td= t("role.#{user.role}")
   td
     - if policy(user).destroy?
-      = link_to navigation_glyph('delete'), user, data: { confirm: t('are_you_sure_delete_user', email: user.email)}, method: :delete
+      = link_to t_action(:delete), user, data: { confirm: t('are_you_sure_delete_user', email: user.email)}, method: :delete
