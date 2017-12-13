@@ -20,7 +20,3 @@ tr
   - if policy(Client).comments?
     td= client.comments
   = render 'index_actions', subject: client
-  - if client.assignment.nil?
-    td.hidden-print= button_link t('find_volunteer'), find_volunteer_client_path(id: client)
-  - else
-    td.hidden-print= button_link t_title(:show, Assignment), assignment_path(client.assignment)
