@@ -47,7 +47,7 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_text? 'Profile was successfully created.'
   end
 
-  test 'when profile created it can be displayed' do
+  test 'when_profile_created_it_can_be_displayed' do
     visit new_user_session_path
     fill_in 'Email', with: @user_without_profile.email
     fill_in 'Password', with: 'asdfasdf'
@@ -59,12 +59,10 @@ class ProfilesTest < ApplicationSystemTestCase
     click_button 'Create Profile'
     @user_without_profile.reload
 
-    within '#menu' do
-      assert page.has_link? @user_without_profile.full_name
-      click_link @user_without_profile.full_name
-      assert page.has_link? 'Profil anzeigen'
-      click_link 'Profil anzeigen'
+    within '.navbar-top' do
+      click_link I18n.t("role.#{@user_without_profile.role}"), href: '#'
     end
+    click_link 'Profil anzeigen'
     assert page.has_text? @user_without_profile.profile.contact.first_name
     assert page.has_text? @user_without_profile.profile.contact.last_name
   end
