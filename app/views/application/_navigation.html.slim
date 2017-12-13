@@ -33,7 +33,7 @@ nav.navbar.navbar-top.hidden-print
         ul.nav.navbar-nav.navbar-right
           li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
-              span= current_user.navigation_name
+              span= current_user.full_name
               span= t("role.#{current_user.role}")
               span.caret
             ul.dropdown-menu
