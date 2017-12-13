@@ -85,19 +85,19 @@ class ListResponseHoursTest < ApplicationSystemTestCase
 
   test 'marking_hours_done_works' do
     click_link 'Stunden Eingang'
-    mark_done_path = polymorphic_path(
-      [@assignment_pendent.volunteer, @assignment_pendent, @assignment_hour_pendent],
-      action: :mark_as_done
-    )
-    find("a[href^=\"#{mark_done_path}\"]").click
+    within 'tbody' do
+      click_link 'Angeschaut', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
+        assignments\/#{@assignment_pendent.id}\/hours
+        \/#{@assignment_hour_pendent.id}\/.*/x
+    end
     assert page.has_text? 'Stunden als angeschaut markiert.'
     refute page.has_link? @assignment_pendent.volunteer.contact.full_name
     refute page.has_link? @assignment_hour_pendent.hourable.to_label
-    mark_done_path = polymorphic_path(
-      [@group_assignment_pendent.volunteer, @group_assignment_pendent.group_offer,
-       @group_assignment_hour_pendent], action: :mark_as_done
-    )
-    find("a[href^=\"#{mark_done_path}\"]").click
+    within 'tbody' do
+      click_link 'Angeschaut', href: /.*\/volunteers\/#{@group_assignment_pendent.volunteer.id}\/
+        group_offers\/#{@group_assignment_pendent.id}\/hours
+        \/#{@group_assignment_hour_pendent.id}\/.*/x
+    end
     assert page.has_text? 'Stunden als angeschaut markiert.'
   end
 
