@@ -92,8 +92,6 @@ en:
         activated: Group offer was successfully activated.
         deactivated: Group offer was successfully deactivated.
         no-change: Group offer could not be upadated.
-      group_assignment_fields:
-        remove_volunteer: Remove volunteer
       group_offers_block:
         activate: Activate
         active: Active
@@ -622,8 +620,6 @@ en:
   registered_by: Registered by
   relatives: Family members
   remember_me: Remember me
-  remove_language: Remove language
-  remove_relative: Remove family member
   reserve: Reserve
   seeking_clients: Looking for clients
   show_my_profile: My profile

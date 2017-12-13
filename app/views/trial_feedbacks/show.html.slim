@@ -33,7 +33,7 @@ h1= t_title(:show)
             - else
               = button_to 'Angeschaut', polymorphic_path([@volunteer, @trial_feedback.trial_feedbackable, @trial_feedback],
                 { trial_feedback: { volunteer_id: @trial_feedback.volunteer.id, trial_feedbackable_id: @trial_feedback.trial_feedbackable.id, id: @trial_feedback.id } }),
-                  { method: :put, class: 'btn btn-success btn-xs' }
+                  { method: :put, class: 'btn btn-default btn-xs' }
 
 = form_navigation_btn :edit
 = bootstrap_row_col { button_link navigation_glyph('back'), @volunteer }

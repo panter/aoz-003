@@ -6,7 +6,7 @@
 #journalBlock.collapse
   .row
     .col-xs-12
-      = button_link t('add_journal_entry'), url_for([journaled_for, Journal]) + '/new', 'success'
+      = button_link t('add_journal_entry'), url_for([journaled_for, Journal]) + '/new'
 
   - if journaled_for.journals.any?
     .table-responsive

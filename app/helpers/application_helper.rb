@@ -33,8 +33,7 @@ module ApplicationHelper
       text = t_title(action)
     end
     button_link(text,
-      { controller: controller_name, action: action, id: action == :index || params[:id] },
-      action == :new ? 'success' : 'default')
+      controller: controller_name, action: action, id: action == :index || params[:id])
   end
 
   def bootstrap_col(cols = 12, md_cols = nil)
