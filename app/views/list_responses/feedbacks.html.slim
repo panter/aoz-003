@@ -5,9 +5,9 @@ h1 Eingereichte Feedbacks
 nav.navbar.section-navigation.hidden-print
   ul.list-inline
     li= button_link 'Filter aufheben', url_for(q: { s: ['updated_at asc'] }), dimension: :sm
-    = custom_filter_dropdown('Überprüfung',
-        { q: :reviewer_id_not_null, text: 'Erledigt', value: 'true' },
-        { q: :reviewer_id_null, text: 'Nicht Erledigt', value: 'true' })
+    = custom_filter_dropdown('Geprüft',
+        { q: :reviewer_id_not_null, text: 'Angeschaut', value: 'true' },
+        { q: :reviewer_id_null, text: 'Ungesehen', value: 'true' })
     = custom_filter_dropdown('Autor',
         { q: :author_volunteer, text: 'Freiwillige/r', value: 'true' },
         { q: :author_volunteer, text: 'AOZ', value: 'false' })
@@ -53,12 +53,13 @@ table.table.table-striped.list-responses-table
           span= "#{(Time.zone.today - record.created_at.to_date).to_i} Tage"
           - if record.reviewer.present?
             span
-              = "Ereledigt markiert durch: "
+              = "Angeschaut von: "
               = link_to record.reviewer.email, record.reviewer
         td
-          = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
-          - unless record.reviewer
-            = link_to 'Erledigt', polymorphic_path([record.volunteer, record.feedbackable_link_target, record], action: :mark_as_done, q: search_parameters), { method: :put, class: 'btn btn-success btn-xs m-t-10' }
+          - if record.reviewer.present?
+            = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable_link_target, record]), class: 'index-action-link'
+          - else
+            = link_to 'Angeschaut', polymorphic_path([record.volunteer, record.feedbackable_link_target, record], action: :mark_as_done, q: search_parameters), { method: :put, class: 'btn btn-success btn-xs m-t-10' }
 
 = bootstrap_paginate(@feedbacks)
 
