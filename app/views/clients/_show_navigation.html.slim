@@ -8,4 +8,4 @@ nav.navbar.section-navigation
     li= button_link navigation_glyph('back'), clients_path
     - if policy(Journal).index?
       ul.list-inline.pull-right
-        li= button_link 'Journal', polymorphic_path([@client, Journal])
+        li= button_link 'Journal', polymorphic_path([@client, Journal]), 'primary'

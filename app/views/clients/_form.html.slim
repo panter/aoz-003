@@ -28,7 +28,7 @@
         - else
           = render 'language_skills/fields', f: language, speaker: @client
       .links
-        = link_to_add_polymorphic_association 'Sprache hinzufügen', f, :language_skills, class: 'btn btn-success'
+        = link_to_add_polymorphic_association 'Sprache hinzufügen', f, :language_skills, class: 'btn btn-default'
 
   = render 'relatives/form', f: f, relative: @client
 
