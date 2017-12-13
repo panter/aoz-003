@@ -8,7 +8,7 @@ nav.navbar.section-navigation
     li= button_link t('clear_filters'), users_path, dimension: 'sm'
     li= list_filter_dropdown(:role, User::ROLES)
     li |
-    li= button_link 'Excel Export', url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+    li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
   hr
 
 table.table.table-striped
