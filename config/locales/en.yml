@@ -100,7 +100,7 @@ en:
         group_offer_categories: Group offer categories
       form:
         location_external: Location (for external group offers)
-        organization_external: Organization (for external group offers)
+        organization_external: Organisation (for external group offers)
       index: &id-help-texts
         necessary_volunteers: '%{amount} necessary volunteers'
         offer_of: Offer from
@@ -371,7 +371,7 @@ en:
     last_name: Name
     mobile: Handy
     nationality: Nationalität
-    organization: Organization
+    organization: Organisation
     place: Einsatzort
     postal_code: PLZ
     responsible_title: Verantwortliche Person in der AOZ
