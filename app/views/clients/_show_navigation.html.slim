@@ -4,7 +4,7 @@ nav.navbar.section-navigation
       li= button_link t_action(:edit), edit_client_path(@client), 'success'
     li= button_link navigation_glyph('print'), client_path(@client, print: true)
     - if policy(Client).destroy?
-      li= link_to t_action(:destroy), @client, confirm_deleting(@client, 'btn btn-default')
+      li= link_to navigation_glyph('delete'), @client, confirm_deleting(@client, 'btn btn-default')
     li= button_link navigation_glyph('back'), clients_path
     - if policy(Journal).index?
       ul.list-inline.pull-right

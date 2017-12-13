@@ -6,4 +6,4 @@
     .col-xs-12= f.input :body
     .col-xs-12= f.button :submit
     - if action_name == 'edit'
-      .col-xs-12.m-t-10= link_to t_action(:destroy), url_for([@journaled, @journal]), confirm_deleting(@journal, 'btn btn-default')
+      .col-xs-12.m-t-10= link_to navigation_glyph('delete'), url_for([@journaled, @journal]), confirm_deleting(@journal, 'btn btn-default')
