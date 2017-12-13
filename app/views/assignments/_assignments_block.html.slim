@@ -8,7 +8,8 @@
         - if action_name == 'index'
           th= sort_link @q, :volunteer_contact_last_name, 'Frewillige/r'
         th= sort_link @q, :state, t_attr(:state, Assignment)
-        th= sort_link @q, :created_at, t_attr(:created_at, Assignment)
+        th= sort_link @q, :period_start, t_attr(:period_start, Assignment)
+        th= sort_link @q, :period_end, t_attr(:period_end, Assignment)
         th= sort_link @q, :creator_email, t_attr(:created_by)
         th.hidden-print colspan='4'
 
