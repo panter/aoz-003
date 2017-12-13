@@ -83,6 +83,8 @@ class User < ApplicationRecord
   def full_name
     if profile&.contact
       "#{profile.contact.last_name}, #{profile.contact.first_name}"
+    elsif volunteer?
+      volunteer.contact.full_name
     else
       email
     end

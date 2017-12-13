@@ -120,4 +120,14 @@ module ApplicationHelper
     will_paginate paginate_collection, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer,
       class: 'pagination-lg text-center hidden-print', 'aria-label': 'Pagination'
   end
+
+  def profile_link(user)
+    if user.profile
+      profile_path(user.profile)
+    elsif user.volunteer?
+      volunteer_path(user.volunteer)
+    else
+      user_path(user)
+    end
+  end
 end
