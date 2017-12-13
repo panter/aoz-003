@@ -54,6 +54,7 @@ de:
       birth_year: Jahrgang
       city: Ort
       created_at: Erstellt am
+      created_by: Angemeldet von
       email: Email
       first_name: Vorname
       full_name: Name
@@ -227,7 +228,6 @@ de:
         <<: *id-generic_keys
         agreement: Zustimmung
         client: Klient/in
-        created_by: Verantwortliche/r
         ended: Beendet
         first_instruction_lesson: Einführungskurs
         home_visit: Hausbesuch
@@ -252,6 +252,7 @@ de:
         <<: *id-generic_keys
         amount: Betrag
         assignment: Begleitung
+        created_by: Verantwortliche/r
       certificate:
         <<: *id-generic_keys
         assignment: Einsatz
@@ -772,7 +773,6 @@ de:
         <<: *id-assignment-report
         total: Anzahl Begleitete
   profile_updated: Profil wurde erfolgreich aktualisiert.
-  registered_by: Angemeldet von
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
   reserve: Reservieren
