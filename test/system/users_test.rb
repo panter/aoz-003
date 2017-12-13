@@ -117,10 +117,10 @@ class UsersTest < ApplicationSystemTestCase
 
     visit users_path
 
-    assert page.has_link? @user.full_name
-    assert page.has_link? department_manager.full_name
-    assert page.has_link? social_worker.full_name
-    assert page.has_link? user_volunteer.full_name
+    assert page.has_link? @user.navigation_name
+    assert page.has_link? department_manager.navigation_name
+    assert page.has_link? social_worker.navigation_name
+    assert page.has_link? user_volunteer.navigation_name
 
     within '.section-navigation' do
       click_link 'Role'
@@ -128,10 +128,10 @@ class UsersTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_link? @user.full_name
-      refute page.has_link? department_manager.full_name
-      refute page.has_link? social_worker.full_name
-      refute page.has_link? user_volunteer.full_name
+      assert page.has_link? @user.navigation_name
+      refute page.has_link? department_manager.navigation_name
+      refute page.has_link? social_worker.navigation_name
+      refute page.has_link? user_volunteer.navigation_name
     end
 
     within '.section-navigation' do
@@ -140,10 +140,10 @@ class UsersTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      refute page.has_link? @user.full_name
-      refute page.has_link? department_manager.full_name
-      refute page.has_link? social_worker.full_name
-      assert page.has_link? user_volunteer.full_name
+      refute page.has_link? @user.navigation_name
+      refute page.has_link? department_manager.navigation_name
+      refute page.has_link? social_worker.navigation_name
+      assert page.has_link? user_volunteer.navigation_name
     end
   end
 end
