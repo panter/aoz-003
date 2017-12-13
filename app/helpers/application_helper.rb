@@ -104,6 +104,9 @@ module ApplicationHelper
     if value == 'back'
       content_tag(:span, content_tag(:span, 'Back', class: 'sr-only'),
         class: 'glyphicon glyphicon-arrow-left')
+    elsif value == 'print'
+      content_tag(:span, content_tag(:span, 'Print', class: 'sr-only'),
+        class: 'glyphicon glyphicon-print')
     end
   end
 
