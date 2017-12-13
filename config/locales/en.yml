@@ -392,7 +392,6 @@ en:
     when: Tag / Zeit
     zurich: Zürich
   available_volunteers: Available volunteers
-  back: Back
   billing_expense_pdf:
     account: Konto
     amount: Betrag
