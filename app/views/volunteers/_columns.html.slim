@@ -20,7 +20,7 @@
         th= sort_link @q, :interests
         th= sort_link @q, :acceptance
         th= sort_link @q, :external
-        th= t('registered_by')
+        th= t_attr(:created_by)
         th colspan=(action_name == 'index' ? '4' : '2')
 
     tbody
