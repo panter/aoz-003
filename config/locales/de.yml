@@ -710,7 +710,6 @@ de:
       not_saved:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
-  export_xlsx: Liste als XLSX exportieren
   "false": Nein
   find_client: Klient/in finden
   find_volunteer: Freiwillige finden
