@@ -1,5 +1,5 @@
 class ReminderMailingsController < ApplicationController
-  before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :send_probation,
+  before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :send_trial_period,
                                               :send_half_year]
 
   def index
@@ -9,10 +9,10 @@ class ReminderMailingsController < ApplicationController
 
   def show; end
 
-  def new_probation_period
-    @assignments = Assignment.need_probation_period_reminder_mailing.distinct
-    @group_assignments = GroupAssignment.need_probation_period_reminder_mailing.distinct
-    @reminder_mailing = ReminderMailing.new(kind: 'probation_period', creator: current_user,
+  def new_trial_period
+    @assignments = Assignment.need_trial_period_reminder_mailing.distinct
+    @group_assignments = GroupAssignment.need_trial_period_reminder_mailing.distinct
+    @reminder_mailing = ReminderMailing.new(kind: 'trial_period', creator: current_user,
       reminder_mailing_volunteers: @assignments + @group_assignments)
     @reminder_mailing.assign_attributes(EmailTemplate.trial.active.first.slice(:subject, :body))
     authorize @reminder_mailing
@@ -44,12 +44,12 @@ class ReminderMailingsController < ApplicationController
     end
   end
 
-  def send_probation
+  def send_trial_period
     if @reminder_mailing.sending_triggered?
       return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits versandt.'
     end
     @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
-      VolunteerMailer.probation_period_reminder(mailing_volunteer).deliver_later
+      VolunteerMailer.trial_period_reminder(mailing_volunteer).deliver_later
     end
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Probezeit Erinnerungs-Emails werden versendet.'

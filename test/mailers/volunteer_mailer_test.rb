@@ -26,14 +26,14 @@ class VolunteerMailerTest < ActionMailer::TestCase
     assert_match 'Woman', mail_body
   end
 
-  test 'probation_period_mailer' do
+  test 'trial_period_mailer' do
     _, _, group_assignments = create_group_offer_entity(
       nil, 7.weeks.ago, nil, create(:volunteer_with_user), create(:volunteer_with_user)
     )
     assignment = make_assignment(start_date: 7.weeks.ago)
     mailing = create_probation_mailing(*group_assignments, assignment)
     mailing.reminder_mailing_volunteers.each do |rmv|
-      mailer = VolunteerMailer.probation_period_reminder(rmv).deliver
+      mailer = VolunteerMailer.trial_period_reminder(rmv).deliver
       assert_equal rmv.process_template[:subject], mailer.subject
       assert mailer.to.include? rmv.volunteer.contact.primary_email
       assert_match rmv.process_template[:body], mailer.body.encoded

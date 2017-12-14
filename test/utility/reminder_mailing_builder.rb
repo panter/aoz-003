@@ -9,7 +9,7 @@ module ReminderMailingBuilder
   end
 
   def create_probation_mailing(*mailables)
-    create_mailing('probation_period', 'aaa', 'aaa', create(:user), *mailables)
+    create_mailing('trial_period', 'aaa', 'aaa', create(:user), *mailables)
   end
 
   def create_half_year_mailing(*mailables)
