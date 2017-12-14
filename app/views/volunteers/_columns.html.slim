@@ -21,7 +21,7 @@
         th= sort_link @q, :acceptance
         th= sort_link @q, :external
         th= t_attr(:created_by)
-        th colspan=(action_name == 'index' ? '4' : '2')
+        th colspan=(action_index? ? '4' : '2')
 
     tbody
       = render volunteers
