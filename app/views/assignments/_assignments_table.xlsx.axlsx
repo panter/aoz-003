@@ -37,8 +37,8 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
   sheet.add_row(
     [
       'id',                   # 0
-      'Klient/in',            # 1
-      'Freiwillige/r',        # 2
+      'Freiwillige/r',        # 1
+      'Klient/in',            # 2
       t_attr(:period_start),  # 3
       t_attr(:period_end),    # 4
       t_attr(:state),         # 5
@@ -53,8 +53,8 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
     sheet.add_row(
       [
         assignment.id,                                                 # 0
-        assignment.client.contact.full_name,                           # 1
-        assignment.volunteer.contact.full_name,                        # 2
+        assignment.volunteer.contact.full_name,                        # 1
+        assignment.client.contact.full_name,                           # 2
         assignment.period_start,                                       # 3
         assignment.period_end,                                         # 4
         t("simple_form.options.assignment.state.#{assignment.state}"), # 5

@@ -16,11 +16,11 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
     assignment = create :assignment, period_start: 3.months.ago, period_end: 2.days.ago
     wb = get_xls_from_response(assignments_url(format: :xlsx))
 
-    assert_xls_cols_equal(wb, 1, 0, 'id', 'Klient/in', 'Freiwillige/r', 'Start date', 'End date',
+    assert_xls_cols_equal(wb, 1, 0, 'id', 'Freiwillige/r', 'Klient/in', 'Start date', 'End date',
       'State', 'Created at', 'Updated at')
 
-    assert_xls_cols_equal(wb, 2, 0, assignment.id, assignment.client.contact.full_name,
-      assignment.volunteer.contact.full_name, assignment.period_start, assignment.period_end,
+    assert_xls_cols_equal(wb, 2, 0, assignment.id, assignment.volunteer.contact.full_name,
+      assignment.client.contact.full_name, assignment.period_start, assignment.period_end,
       I18n.t("simple_form.options.assignment.state.#{assignment.state}"))
     assert_equal assignment.created_at.to_date, wb.cell(2, 7).to_date
     assert_equal assignment.updated_at.to_date, wb.cell(2, 8).to_date
