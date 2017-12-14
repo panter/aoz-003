@@ -51,6 +51,10 @@ class GroupAssignment < ApplicationRecord
     ]
   end
 
+  def polymorph_url_target
+    group_offer
+  end
+
   def hours_since_last_submitted
     group_offer.hours.since_last_submitted(submitted_at)
   end
