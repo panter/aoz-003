@@ -127,4 +127,18 @@ class DepartmentsTest < ApplicationSystemTestCase
       assert page.has_link? volunteer.full_name
     end
   end
+
+  test 'department with department manager without profile has valid link on show' do
+    department = create :department
+    department_manager_no_profile = create :user, :without_profile, :department_manager
+    login_as @superadmin
+    visit edit_department_path(department)
+    page.check(department_manager_no_profile.email.to_s)
+    click_button 'Update Department'
+
+    visit department_path(department)
+    assert page.has_link? department_manager_no_profile.email
+    click_link department_manager_no_profile.email
+    assert page.has_text? department_manager_no_profile.email
+  end
 end
