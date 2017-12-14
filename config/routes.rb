@@ -7,13 +7,12 @@ Rails.application.routes.draw do
     put :update_submitted_at, on: :member
   end
 
-<<<<<<< HEAD
   concern :mark_submitted_at do
     put :mark_as_done, on: :member
-=======
+  end
+
   concern :hours_resources do
     resources :hours
->>>>>>> fixing routes and use of referer as redirect as redirect back url and others:
   end
 
   concern :assignment_feedbacks do
