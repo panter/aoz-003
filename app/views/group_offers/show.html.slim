@@ -75,6 +75,8 @@ h1= @group_offer.title
       thead
         tr
           th= t_attr(:volunteer, GroupAssignment)
+          - if params[:format] == 'pdf'
+            th Freiwillige Mailadresse
           th= t_attr(:role, GroupAssignment)
           th= t_attr(:period_start, GroupAssignment)
           th= t_attr(:period_end, GroupAssignment)
@@ -82,9 +84,10 @@ h1= @group_offer.title
         - @group_offer.group_assignments.each do |group_assignment|
           - if group_assignment.volunteer
             tr
-              td
-                - if policy(Volunteer).show?
-                  = link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
+              - if policy(Volunteer).show?
+                td= link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
+                - if params[:format] == 'pdf'
+                  td= group_assignment.volunteer.contact.primary_email
                 - else
                   = group_assignment.volunteer
               td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
