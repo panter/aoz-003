@@ -59,6 +59,10 @@ class GroupAssignment < ApplicationRecord
     group_offer.feedbacks.since_last_submitted(submitted_at)
   end
 
+  def polymorph_url_object
+    group_offer
+  end
+
   private
 
   def dates_updated?

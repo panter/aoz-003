@@ -57,6 +57,10 @@ class Assignment < ApplicationRecord
     hours.last
   end
 
+  def polymorph_url_object
+    self
+  end
+
   def to_label
     label_parts.compact.join(' - ')
   end

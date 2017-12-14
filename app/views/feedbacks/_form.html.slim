@@ -1,5 +1,5 @@
 - if @feedbackable.present?
-  = simple_form_for [@volunteer, @feedbackable, @feedback] do |f|
+  = simple_form_for([@volunteer, @feedbackable, @feedback], url: polymorphic_path([@volunteer, @feedbackable, @feedback], last_submitted: params[:last_submitted])) do |f|
     = simple_error_notice f
 
     = render 'main_fields', f: f

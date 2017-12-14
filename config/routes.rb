@@ -7,8 +7,13 @@ Rails.application.routes.draw do
     put :update_submitted_at, on: :member
   end
 
+<<<<<<< HEAD
   concern :mark_submitted_at do
     put :mark_as_done, on: :member
+=======
+  concern :hours_resources do
+    resources :hours
+>>>>>>> fixing routes and use of referer as redirect as redirect back url and others:
   end
 
   concern :assignment_feedbacks do
@@ -37,14 +42,16 @@ Rails.application.routes.draw do
   resources :volunteers do
     get :find_client, on: :member, to: 'assignments#find_client'
     get :seeking_clients, on: :collection
-    resources :assignments, concerns: :assignment_feedbacks
     resources :billing_expenses, except: [:edit, :update]
     resources :certificates
+    resources :group_assignments, concerns: :hours_resources
     resources :group_offers, concerns: :assignment_feedbacks
     resources :hours
     resources :journals, except: [:show]
+    resources :assignments, concerns: [:assignment_feedbacks, :hours_resources]
   end
-
+  resources :group_assignments, only: [:show], concerns: [:update_submitted_at, :hours_resources]
+  resources :assignments, concerns: :update_submitted_at
   resources :group_offers do
     get :archived, on: :collection
     put :change_active_state, on: :member

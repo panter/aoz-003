@@ -10,14 +10,15 @@ class HoursController < ApplicationController
 
   def new
     @hour = Hour.new(volunteer: @volunteer)
+    @hour.hourable = find_hourable
     authorize @hour
-    session[:request_url] = request.referer
   end
 
   def edit; end
 
   def create
     @hour = Hour.new(hour_params)
+    @hour.hourable = find_hourable
     authorize @hour
     if @hour.save
       redirect_to create_redirect, make_notice
@@ -50,6 +51,10 @@ class HoursController < ApplicationController
 
   private
 
+  def find_hourable
+    Assignment.find_by(id: params[:assignment_id]) || GroupAssignment.find_by(id: params[:group_assignment_id])
+  end
+
   def set_hour
     @hour = Hour.find(params[:id])
     authorize @hour
@@ -60,15 +65,8 @@ class HoursController < ApplicationController
   end
 
   def create_redirect
-    hourable = @hour.hourable
-    if !session[:request_url].include?('last_submitted_hours_and_feedbacks')
-      @volunteer
-    elsif @hour.assignment?
-      last_submitted_hours_and_feedbacks_assignment_path(hourable)
-    else
-      group_assignment = hourable.group_assignments.where(volunteer: @volunteer).last
-      last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment)
-    end
+    return @volunteer unless params[:last_submitted]
+    polymorphic_path(@hour.hourable, action: :last_submitted_hours_and_feedbacks)
   end
 
   def hour_params
