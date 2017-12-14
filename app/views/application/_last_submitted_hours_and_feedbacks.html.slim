@@ -45,10 +45,5 @@ table.table.table-striped
 
 = bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], last_submitted: true) }
 
-.row
-  .col-xs-12.text-center
-    p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
-  - if confirmable.class == Assignment
-    .col-xs-12.text-center= button_link 'Bestätigen', update_submitted_at_assignment_path(confirmable)
-  - else
-    .col-xs-12.text-center= button_link 'Bestätigen', update_submitted_at_group_assignment_path(confirmable)
+p.text-center Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
+p.text-center= button_link 'Bestätigen', polymorphic_path(confirmable, action: :update_submitted_at)
