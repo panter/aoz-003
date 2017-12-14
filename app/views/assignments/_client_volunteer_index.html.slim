@@ -1,6 +1,8 @@
 table.table.table-striped.assignments-table
   thead
     tr
+      - if controller_name == 'clients'
+        th= t_model(Volunteer)
       th= t_model(Client)
       th= t_attr(:state, Assignment)
       th= t_attr(:period_start, Assignment)
