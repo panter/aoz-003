@@ -1,11 +1,11 @@
 h1 Zuletzt übermittelte Stunden und Feedbacks
 
-h2 Stunden
-
+h2.m-b-20 Einsatz
+p= link_to confirmable.to_label, polymorphic_path([confirmable.volunteer, confirmable]), target: '_blank'
+h3 Stunden
 table.table.table-striped
   thead
     tr
-      th= t_attr(:hourable, Hour)
       th= t_attr(:meeting_date, Hour)
       th= t_attr(:duration, Hour)
       th= t_attr(:activity, Hour)
@@ -13,11 +13,6 @@ table.table.table-striped
   tbody
     - hours.each do |record|
       tr
-        td
-          - if record.assignment?
-            = record.hourable.client.contact.full_name
-          - else
-            = record.hourable.to_label
         td= l(record.meeting_date)
         td= "#{record.hours}:#{'%02i' % record.minutes}"
         td= record.activity
@@ -25,12 +20,11 @@ table.table.table-striped
 
 = bootstrap_row_col { button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], last_submitted: true) }
 
-h2 Feedback Liste
 
+h3 Feedbacks
 table.table.table-striped
   thead
     tr
-      th Einsatz
       th Ziele
       th Erreichtes
       th Fortsetzen, und wenn ja wie
@@ -43,7 +37,6 @@ table.table.table-striped
   tbody
     - feedbacks.each do |record|
       tr
-        td= record.feedbackable.to_label
         td= record.goals
         td= record.achievements
         td= record.future
