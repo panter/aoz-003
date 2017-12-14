@@ -1,11 +1,10 @@
 tr
+  td = link_to assignment.volunteer, assignment.volunteer if action_index?
   td
     - if policy(Client).show?
       = link_to assignment.client, assignment.client
     - else
       = assignment.client
-  - if action_name == 'index'
-    td = link_to assignment.volunteer, assignment.volunteer
   td= t("simple_form.options.assignment.state.#{assignment.state}") if assignment.state.present?
   td= l(assignment.period_start) if assignment.period_start
   td= l(assignment.period_end) if assignment.period_end
