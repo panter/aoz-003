@@ -35,7 +35,11 @@ table.table.table-striped
       th Erreichtes
       th Fortsetzen, und wenn ja wie
       th= t_attr(:comments, Feedback)
-      th= t_attr(:conversation, Feedback)
+      th
+        - if current_user.volunteer?
+          'Wünsche Gespräch mit Freiwillgenverantwortilchen
+        - else
+          'Wünscht Gespräch
   tbody
     - feedbacks.each do |record|
       tr
