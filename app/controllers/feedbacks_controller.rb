@@ -13,7 +13,6 @@ class FeedbacksController < ApplicationController
   def new
     @feedback = Feedback.new(feedbackable: @feedbackable, volunteer: @volunteer,
       author: current_user)
-    session[:request_url] = request.referer
     authorize @feedback
   end
 
@@ -72,14 +71,8 @@ class FeedbacksController < ApplicationController
   end
 
   def create_redirect
-    if !session[:request_url].include?('last_submitted_hours_and_feedbacks')
-      @volunteer
-    elsif @feedback.assignment?
-      last_submitted_hours_and_feedbacks_assignment_path(@feedbackable)
-    else
-      group_assignment = @feedbackable.group_assignments.where(volunteer: @volunteer).last
-      last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment)
-    end
+    return @volunteer unless params[:last_submitted]
+    polymorphic_path(@feedback.feedbackable_link_target, action: :last_submitted_hours_and_feedbacks)
   end
 
   def feedback_params

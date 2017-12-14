@@ -1,11 +1,14 @@
-= simple_form_for [@volunteer, @hour] do |f|
+= simple_form_for([@volunteer, @hour.hourable, @hour], url:  polymorphic_path([@volunteer, @hour.hourable, @hour], last_submitted: params[:last_submitted])) do |f|
   = simple_error_notice f
   = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
 
-  .row
-    .col-xs-12
-      = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection
-
+  - if @hour.hourable.present?
+    h3 Einsatz
+    p.m-b-20= @hour.hourable.to_label
+  - else
+    .row
+      .col-xs-12
+        = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection
 
   .row
     .col-xs-12
