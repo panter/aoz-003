@@ -17,7 +17,7 @@ dl.dl-horizontal
 hr
 
 h3 Email Beispiel
-- example = @reminder_mailing.reminder_mailing_volunteers.sample.process_template
+- example = @reminder_mailing.reminder_mailing_volunteers.select(&:picked?).sample.process_template
 h4 Betreff
 .mailing-body-preview= example[:subject]
 h4 Text
@@ -49,7 +49,7 @@ table.table.table-condensed
 nav.navbar.hidden-print
   ul.list-inline
     - if !@reminder_mailing.sending_triggered
-      li= button_link 'Emails versenden', polymorphic_path(@reminder_mailing, action: @reminder_mailing.half_year? ? :send_half_year : :send_probation)
+      li= button_link 'Emails versenden', polymorphic_path(@reminder_mailing, action: @reminder_mailing.half_year? ? :send_half_year : :send_trial_period)
       li= button_link 'Ändern', edit_reminder_mailing_path(@reminder_mailing)
       li= link_to 'Löschen', reminder_mailing_path(@reminder_mailing), confirm_deleting(@reminder_mailing, 'btn btn-default')
     - else

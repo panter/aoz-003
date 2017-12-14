@@ -3,7 +3,7 @@ FactoryBot.define do
     association :creator, factory: :user_fake_email
     body { Faker::Lorem.paragraph }
     subject { Faker::Lorem.sentence }
-    # kind 'probation_period'
+    # kind 'trial_period'
 
     trait :half_year do
       kind { 0 }
@@ -11,7 +11,7 @@ FactoryBot.define do
       subject { Faker::Lorem.sentence }
     end
 
-    trait :probation_period do
+    trait :trial_period do
       kind { 1 }
       body { Faker::Lorem.paragraph }
       subject { Faker::Lorem.sentence }

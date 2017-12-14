@@ -11,7 +11,7 @@ class ReminderMailingTest < ActiveSupport::TestCase
   end
 
   test 'reminder_mailing_has_right_relations' do
-    reminder_mailing = ReminderMailing.new(kind: :probation_period, body: 'aaa',
+    reminder_mailing = ReminderMailing.new(kind: :trial_period, body: 'aaa',
       subject: 'aaa', creator: @superadmin, reminder_mailing_volunteers: [
         @assignment_probation, @group_assignment_probation
       ])
@@ -27,7 +27,7 @@ class ReminderMailingTest < ActiveSupport::TestCase
   end
 
   test 'with_no_reminder_mailing_volunteer_picked_it_is_invalid' do
-    reminder_mailing = ReminderMailing.new(kind: :probation_period, body: 'aaa',
+    reminder_mailing = ReminderMailing.new(kind: :trial_period, body: 'aaa',
       subject: 'aaa', creator: @superadmin, reminder_mailing_volunteers: [
         @assignment_probation, @group_assignment_probation
       ])
@@ -38,7 +38,7 @@ class ReminderMailingTest < ActiveSupport::TestCase
   end
 
   test 'with_no_reminder_mailing_with_one_volunteer_picked_is_valid' do
-    reminder_mailing = ReminderMailing.new(kind: :probation_period, body: 'aaa',
+    reminder_mailing = ReminderMailing.new(kind: :trial_period, body: 'aaa',
       subject: 'aaa', creator: @superadmin, reminder_mailing_volunteers: [
         @assignment_probation, @group_assignment_probation
       ])
@@ -51,7 +51,7 @@ class ReminderMailingTest < ActiveSupport::TestCase
   end
 
   test 'reminder_mailing_needs_to_have_subject_and_body' do
-    reminder_mailing = ReminderMailing.new(kind: :probation_period, body: nil,
+    reminder_mailing = ReminderMailing.new(kind: :trial_period, body: nil,
       subject: nil, creator: @superadmin, reminder_mailing_volunteers: [
         @assignment_probation, @group_assignment_probation
       ])

@@ -3,7 +3,7 @@ de:
   aaa_injectable: &id-injectables
     reminder_mailings:
       kinds: &id-kinds-enum-values
-        probation_period: Probezeit
+        trial_period: Probezeit
         half_year: Halbjährlich
     age_request: &id-age_requests
       age_middle: 36 - 50
@@ -236,7 +236,7 @@ de:
         period: Zeitraum
         period_end: Einsatzende
         period_start: Einsatzbeginn
-        probation_period: Probezeit
+        trial_period: Probezeit
         volunteer: Freiwillige
       feedback:
         achievements: Was konnte in den letzten Monaten erreicht werden?

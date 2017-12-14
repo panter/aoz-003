@@ -290,14 +290,14 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_not query.include? with_reminder_mailing
   end
 
-  test 'need_probation_period_reminder_mailing' do
+  test 'need_trial_period_reminder_mailing' do
     destroy_really_all(Assignment)
     exactly_six_weeks = make_assignment(start_date: 6.weeks.ago)
     exactly_six_weeks_mailed = make_assignment(start_date: 6.weeks.ago)
     seven_weeks_ago = make_assignment(start_date: 7.weeks.ago)
     seven_weeks_ago_mailed = make_assignment(start_date: 7.weeks.ago)
     create_probation_mailing(seven_weeks_ago_mailed, exactly_six_weeks_mailed)
-    query = Assignment.need_probation_period_reminder_mailing
+    query = Assignment.need_trial_period_reminder_mailing
     assert query.include? exactly_six_weeks
     assert query.include? seven_weeks_ago
     assert_not query.include? seven_weeks_ago_mailed
@@ -316,13 +316,13 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_not query.include? with_no_mailing
   end
 
-  test 'with_probation_period_reminder_mailing' do
+  test 'with_trial_period_reminder_mailing' do
     with_probation_mailing = make_assignment(start_date: 7.weeks.ago)
     create_probation_mailing(with_probation_mailing)
     with_half_year_mailing = make_assignment(start_date: 7.months.ago)
     create_half_year_mailing(with_half_year_mailing)
     with_no_mailing = make_assignment(start_date: 7.weeks.ago)
-    query = Assignment.with_probation_period_reminder_mailing
+    query = Assignment.with_trial_period_reminder_mailing
     assert query.include? with_probation_mailing
     assert_not query.include? with_half_year_mailing
     assert_not query.include? with_no_mailing

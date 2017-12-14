@@ -54,7 +54,7 @@ module GroupAssignmentAndAssignmentCommon
                   )
     }
 
-    scope :need_probation_period_reminder_mailing, lambda {
+    scope :need_trial_period_reminder_mailing, lambda {
       started_ca_six_weeks_ago.no_reminder_mailing
     }
 
@@ -66,7 +66,7 @@ module GroupAssignmentAndAssignmentCommon
       with_reminder_mailing_kind(0)
     }
 
-    scope :with_probation_period_reminder_mailing, lambda {
+    scope :with_trial_period_reminder_mailing, lambda {
       with_reminder_mailing_kind(1)
     }
 

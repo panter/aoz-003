@@ -1,9 +1,9 @@
 class ReminderMailingPolicy < ApplicationPolicy
   alias_method :index?,                :superadmin?
   alias_method :new_half_year?,        :superadmin?
-  alias_method :new_probation_period?, :superadmin?
+  alias_method :new_trial_period?,     :superadmin?
   alias_method :show?,                 :superadmin?
-  alias_method :send_probation?,       :superadmin?
+  alias_method :send_trial_period?,    :superadmin?
   alias_method :send_half_year?,       :superadmin?
   alias_method :create?,               :superadmin?
   alias_method :edit?,                 :superadmin?

@@ -14,7 +14,7 @@ class VolunteerMailer < ApplicationMailer
     mail(to: @volunteer.contact.primary_email, subject: @subject)
   end
 
-  def probation_period_reminder(reminder_mailing_volunteer)
+  def trial_period_reminder(reminder_mailing_volunteer)
     @volunteer = reminder_mailing_volunteer.volunteer
     @subject, @body = reminder_mailing_volunteer.process_template.values_at(:subject, :body)
     reminder_mailing_volunteer.update(email_sent: true)

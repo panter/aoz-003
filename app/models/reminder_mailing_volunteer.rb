@@ -6,7 +6,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :group_assignment, (-> { where(reminder_mailable_type: 'GroupAssignment') })
   scope :assignment, (-> { where(reminder_mailable_type: 'Assignment') })
 
-  scope :probation_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
+  scope :trial_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
   scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
 
   scope :picked, (-> { where(picked: true) })
@@ -91,14 +91,14 @@ class ReminderMailingVolunteer < ApplicationRecord
   def feedback_url
     if reminder_mailing.half_year?
       half_year_url
-    elsif reminder_mailing.probation_period?
-      probation_period_url
+    elsif reminder_mailing.trial_period?
+      trial_period_url
     else
       half_year_url
     end
   end
 
-  def probation_period_url
+  def trial_period_url
     host_url + Rails.application.routes.url_helpers.polymorphic_path(
       [volunteer, reminder_mailable, TrialFeedback],
       action: :new, rmv_id: id, rm_id: reminder_mailing.id

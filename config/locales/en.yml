@@ -3,7 +3,7 @@ en:
   aaa_injectable: &id-injectables
     reminder_mailings:
       kinds: &id-kinds-enum-values
-        probation_period: Probezeit
+        trial_period: Probezeit
         half_year: Halbjährlich
     age_request: &id-age_requests
       age_middle: 36 - 50
