@@ -63,6 +63,14 @@ class GroupAssignment < ApplicationRecord
     group_offer
   end
 
+  def assignment?
+    false
+  end
+
+  def group_assignment?
+    true
+  end
+
   private
 
   def dates_updated?
