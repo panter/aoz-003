@@ -75,4 +75,8 @@ h1= @client.contact.full_name
 h3 Wann sind Sie verfügbar?
 = render 'availability/show', available: @client
 
+- if @client.assignment
+  h3#assignments Begleitungen
+  = render 'assignments/client_volunteer_index', assignments: @client.assignment
+
 = render 'show_navigation'
