@@ -146,4 +146,31 @@ class UsersTest < ApplicationSystemTestCase
       assert page.has_link? user_volunteer.full_name
     end
   end
+
+  test 'user index has valid links for users without profile' do
+    superadmin_no_profile = create :user, :without_profile
+    department_manager_no_profile = create :user, :without_profile, :department_manager
+    social_worker_no_profile = create :user, :without_profile, :social_worker
+    volunteer_no_profile = create :user_volunteer
+
+    visit users_path
+    assert page.has_link? superadmin_no_profile.email
+    click_link superadmin_no_profile.email
+    assert page.has_text? 'Role Superadmin'
+
+    visit users_path
+    assert page.has_link? department_manager_no_profile.email
+    click_link department_manager_no_profile.email
+    assert page.has_text? 'Role Department manager'
+
+    visit users_path
+    assert page.has_link? social_worker_no_profile.email
+    click_link social_worker_no_profile.email
+    assert page.has_text? 'Role Social worker'
+
+    visit users_path
+    assert page.has_link? volunteer_no_profile.full_name
+    click_link volunteer_no_profile.full_name
+    assert page.has_text? volunteer_no_profile.full_name
+  end
 end
