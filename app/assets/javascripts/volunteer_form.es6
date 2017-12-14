@@ -14,9 +14,11 @@ function volunteerForm() {
     }
   });
 
-  $('.checkbox-toggle-collapse').on('change', ({target}) => (
-    $($(target).data().collapse).toggleClass('collapse', !$(target).is(':checked'))
-  ));
+  $('.checkbox-toggle-collapse').on('change', ({target}) => {
+    const data = $(target).data();
+    const checked = $(target).is(':checked');
+    $(data.collapse).toggleClass('collapse', data.checkShows ? !checked : checked );
+  });
 }
 
 const hideFormRegions = (hide) => {
