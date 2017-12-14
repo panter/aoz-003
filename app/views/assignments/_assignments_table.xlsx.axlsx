@@ -14,36 +14,39 @@ cell_types = [
   :integer, # 0
   :string,  # 1
   :string,  # 2
-  :date,    # 3
+  :string,  # 3
   :date,    # 4
-  :string,  # 5
-  :time,    # 6
-  :time     # 7
+  :date,    # 5
+  :string,  # 6
+  :time,    # 7
+  :time     # 8
 ]
 
 cell_styles = [
   standard_format,  # 0
   standard_format,  # 1
   standard_format,  # 2
-  date_format,      # 3
+  standard_format,  # 3
   date_format,      # 4
-  standard_format,  # 5
-  date_time_format, # 6
-  date_time_format  # 7
+  date_format,      # 5
+  standard_format,  # 6
+  date_time_format, # 7
+  date_time_format  # 8
 ]
 
 wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
   # add header row
   sheet.add_row(
     [
-      'id',                   # 0
-      'Freiwillige/r',        # 1
-      'Klient/in',            # 2
-      t_attr(:period_start),  # 3
-      t_attr(:period_end),    # 4
-      t_attr(:state),         # 5
-      t_attr(:created_at),    # 6
-      t_attr(:updated_at)     # 7
+      'id',                         # 0
+      'Freiwillige/r',              # 1
+      'Freiwillige/r Mailadresse',  # 2
+      'Klient/in',                  # 3
+      t_attr(:period_start),        # 4
+      t_attr(:period_end),          # 5
+      t_attr(:state),               # 6
+      t_attr(:created_at),          # 7
+      t_attr(:updated_at)           # 8
     ],
     type: :string, style: col_header
   )
@@ -54,12 +57,13 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
       [
         assignment.id,                                                 # 0
         assignment.volunteer.contact.full_name,                        # 1
-        assignment.client.contact.full_name,                           # 2
-        assignment.period_start,                                       # 3
-        assignment.period_end,                                         # 4
-        t("simple_form.options.assignment.state.#{assignment.state}"), # 5
-        assignment.created_at.localtime,                               # 6
-        assignment.updated_at.localtime                                # 7
+        assignment.volunteer.contact.primary_email,                    # 2
+        assignment.client.contact.full_name,                           # 3
+        assignment.period_start,                                       # 4
+        assignment.period_end,                                         # 5
+        t("simple_form.options.assignment.state.#{assignment.state}"), # 6
+        assignment.created_at.localtime,                               # 7
+        assignment.updated_at.localtime                                # 8
       ],
       types: cell_types, style: cell_styles
     )
