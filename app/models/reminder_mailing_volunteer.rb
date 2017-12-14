@@ -89,11 +89,17 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def feedback_url
-    url_options = ActionMailer::Base.default_url_options
-    url_options[:protocol] || 'http://' + url_options[:host] +
-      Rails.application.routes.url_helpers.polymorphic_path(
-        [volunteer, base_assignment_entity, TrialFeedback],
-        action: :new, rmv_id: id, rm_id: reminder_mailing.id
-      )
+    host_url + Rails.application.routes.url_helpers.polymorphic_path(
+      reminder_mailable, action: :last_submitted_hours_and_feedbacks,
+      rmv_id: id, rm_id: reminder_mailing.id
+    )
+  end
+
+  def host_url
+    if Rails.env.production?
+      "https://#{ENV['DEVISE_EMAIL_DOMAIN'] || 'https://staging.aoz-freiwillige.ch'}"
+    else
+      'http://localhost:3000'
+    end
   end
 end
