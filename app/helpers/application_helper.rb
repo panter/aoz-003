@@ -73,12 +73,19 @@ module ApplicationHelper
     }, class: html_class }
   end
 
-  def checkbox_toggle_collapse(f, field, collapse_selector, label_html: nil)
-    f.input(
-      field,
-      input_html: { class: 'checkbox-toggle-collapse', data: { collapse: collapse_selector } },
-      label_html: label_html
-    )
+  def checkbox_toggle_collapse(f, field, collapse_selector, check_shows: true, label_html: nil)
+    f.input(field,
+      input_html: { data: { collapse: collapse_selector, check_shows: check_shows },
+                    class: 'checkbox-toggle-collapse' },
+      label_html: label_html)
+  end
+
+  def single_field_fieldset(f, field, input_html: nil, fieldset_html: nil, legend_html: nil)
+    tag.fieldset(fieldset_html) do
+      concat tag.legend(legend_html) { t("simple_form.labels.#{f.object.class.name.underscore}.#{field}") }
+      concat f.label(field, class: 'sr-only')
+      concat f.input(field, label: false, input_html: input_html)
+    end
   end
 
   def nationality_name(nationality)
