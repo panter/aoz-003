@@ -73,8 +73,12 @@ module ApplicationHelper
     }, class: html_class }
   end
 
-  def checkbox_toggle_collapse(f, field, collapse_selector)
-    f.input field, input_html: { class: 'checkbox-toggle-collapse', data: { collapse: collapse_selector } }
+  def checkbox_toggle_collapse(f, field, collapse_selector, label_html: nil)
+    f.input(
+      field,
+      input_html: { class: 'checkbox-toggle-collapse', data: { collapse: collapse_selector } },
+      label_html: label_html
+    )
   end
 
   def nationality_name(nationality)
