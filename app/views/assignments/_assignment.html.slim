@@ -1,5 +1,6 @@
 tr
-  td = link_to assignment.volunteer, assignment.volunteer if action_index?
+  - if action_index? || controller_name == 'clients'
+    td = link_to assignment.volunteer, assignment.volunteer
   td
     - if policy(Client).show?
       = link_to assignment.client, assignment.client
