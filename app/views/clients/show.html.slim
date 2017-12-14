@@ -65,7 +65,7 @@ h1= @client.contact.full_name
 
       tr
         td= t('registered_by')
-        td= link_to @client.user.full_name, profile_path(@client.user)
+        td= link_to @client.user.full_name if @client.user.profile.present?, profile_path(@client.user.profile)
 
       - if policy(Client).comments?
         tr
