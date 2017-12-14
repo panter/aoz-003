@@ -19,7 +19,6 @@ tr
     td= t('volunteer_self_applicant')
   - else
     td= link_to volunteer.registrar.full_name, profile_path(volunteer.registrar)
-  / td = volunteer.self_applicant? ? t('volunteer_self_applicant') : link_to volunteer.registrar.full_nameprofile_path(volunteer.registrar)
   - if action_name == 'index'
     = render 'index_actions', subject: volunteer
     - if volunteer.seeking_clients?
