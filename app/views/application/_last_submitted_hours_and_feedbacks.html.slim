@@ -13,12 +13,12 @@ table.table.table-striped
   tbody
     - hours.each do |record|
       tr
-        td= l(record.meeting_date)
+        td= l(record.meeting_date) if record.meeting_date?
         td= "#{record.hours}:#{'%02i' % record.minutes}"
         td= record.activity
         td= record.comments
 
-= bootstrap_row_col { button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], last_submitted: true) }
+p= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], last_submitted: true)
 
 
 h3 Feedbacks
@@ -43,7 +43,7 @@ table.table.table-striped
         td= record.comments
         td= t(record.conversation)
 
-= bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], last_submitted: true) }
+p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], last_submitted: true)
 
-p.text-center Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
+p.text-center Ich bestätige, dass ich alle mein e Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
 p.text-center= button_link 'Bestätigen', polymorphic_path(confirmable, action: :update_submitted_at)
