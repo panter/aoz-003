@@ -14,6 +14,10 @@ class GroupAssignmentsController < ApplicationController
   def last_submitted_hours_and_feedbacks
     @last_submitted_hours = @group_assignment.hours_since_last_submitted
     @last_submitted_feedbacks = @group_assignment.feedbacks_since_last_submitted
+    return if params[:rmv_id].blank?
+    rmv = ReminderMailingVolunteer.find(params[:rmv_id].to_i)
+    return if rmv.reminder_mailable != @group_assignment || rmv.volunteer.user != current_user
+    rmv.update(link_visits: rmv.link_visits + 1)
   end
 
   def update_submitted_at

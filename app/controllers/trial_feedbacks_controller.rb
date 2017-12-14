@@ -15,10 +15,10 @@ class TrialFeedbacksController < ApplicationController
     @trial_feedback = TrialFeedback.new(trial_feedbackable: @trial_feedbackable,
       volunteer: @volunteer, author: current_user)
     authorize @trial_feedback
-    if params[:rmv_id].present?
-      rmv = ReminderMailingVolunteer.find(params[:rmv_id].to_i)
-      rmv.update(link_visits: rmv.link_visits + 1) if rmv.volunteer.user == current_user
-    end
+    return if params[:rmv_id].blank?
+    rmv = ReminderMailingVolunteer.find(params[:rmv_id].to_i)
+    return if rmv.reminder_mailable != @trial_feedbackable || rmv.volunteer.user != current_user
+    rmv.update(link_visits: rmv.link_visits + 1)
   end
 
   def edit; end
