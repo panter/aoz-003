@@ -89,8 +89,26 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def feedback_url
+    if reminder_mailing.half_year?
+      half_year_url
+    elsif reminder_mailing.probation_period?
+      probation_period_url
+    else
+      half_year_url
+    end
+  end
+
+  def probation_period_url
     host_url + Rails.application.routes.url_helpers.polymorphic_path(
-      reminder_mailable, action: :last_submitted_hours_and_feedbacks,
+      [volunteer, reminder_mailable, TrialFeedback],
+      action: :new, rmv_id: id, rm_id: reminder_mailing.id
+    )
+  end
+
+  def half_year_url
+    host_url + Rails.application.routes.url_helpers.polymorphic_path(
+      reminder_mailable,
+      action: :last_submitted_hours_and_feedbacks,
       rmv_id: id, rm_id: reminder_mailing.id
     )
   end
