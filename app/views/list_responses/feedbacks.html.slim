@@ -45,9 +45,9 @@ table.table.table-striped.list-responses-table
           - else
             = link_to record.author.profile.contact.natural_name, record.author.profile
         td= record.goals
-        = td_truncate_content_modal(record.achievements, 'Erfolge', shorten_size: 60)
-        = td_truncate_content_modal(record.future, 'Zukunft', shorten_size: 60)
-        = td_truncate_content_modal(record.comments, t_attr(:comments, Feedback), shorten_size: 60)
+        = td_truncate_content_modal(record.achievements, 'Erfolge', shorten_size: 300)
+        = td_truncate_content_modal(record.future, 'Zukunft', shorten_size: 300)
+        = td_truncate_content_modal(record.comments, t_attr(:comments, Feedback), shorten_size: 300)
         td= t(record.conversation)
         td.index-action-cell
           span= "#{(Time.zone.today - record.created_at.to_date).to_i} Tage"
