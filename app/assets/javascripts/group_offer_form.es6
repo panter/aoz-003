@@ -1,6 +1,10 @@
 $(function() {
   $( document ).on('turbolinks:render, turbolinks:load', function() {
+    $('#add_volunteers').prop('disabled', true).attr('disabled', true);
+    $('#add_volunteers_text').show();
     $('input:radio[name="group_offer[volunteer_state]"]').on('change', ({target}) => {
+      $('#add_volunteers').prop('disabled', false).attr('disabled', false);
+      $('#add_volunteers_text').hide();
       populate_dropdowns(target);
     });
 
