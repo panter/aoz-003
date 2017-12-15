@@ -14,16 +14,19 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
       volunteer: @assignment_done.volunteer, author: @assignment_done.volunteer.user,
       reviewer: @superadmin
 
-    @group_assignment_pendent = create :group_assignment
+    @group_offer_pendent = create :group_offer
+    @group_assignment_pendent = create :group_assignment, group_offer: @group_offer_pendent
     @group_assignment_fb_pendent = create :feedback, volunteer: @group_assignment_pendent.volunteer,
-      feedbackable: @group_assignment_pendent, author: @group_assignment_pendent.volunteer.user
-    @group_assignment_superadmin = create :group_assignment
+      feedbackable: @group_offer_pendent,
+      author: @group_assignment_pendent.volunteer.user
+    @group_offer_superadmin = create :group_offer
+    @group_assignment_superadmin = create :group_assignment, group_offer: @group_offer_superadmin
     @group_assignment_fb_superadmin = create :feedback, author: @superadmin,
-      volunteer: @group_assignment_superadmin.volunteer,
-      feedbackable: @group_assignment_superadmin
-    @group_assignment_done = create :group_assignment
+      volunteer: @group_assignment_superadmin.volunteer, feedbackable: @group_offer_superadmin
+    @group_offer_done = create :group_offer
+    @group_assignment_done = create :group_assignment, group_offer: @group_offer_done
     @group_assignment_fb_done = create :feedback, volunteer: @group_assignment_done.volunteer,
-      feedbackable: @group_assignment_done, author: @group_assignment_done.volunteer.user,
+      feedbackable: @group_offer_done, author: @group_assignment_done.volunteer.user,
       reviewer: @superadmin
     login_as @superadmin
     visit reminder_mailings_path
