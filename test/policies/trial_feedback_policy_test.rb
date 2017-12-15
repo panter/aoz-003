@@ -10,14 +10,14 @@ class TrialFeedbackPolicyTest < PolicyAssertions::Test
 
   test 'superadmin can use all actions' do
     assert_permit(create(:user), TrialFeedback, 'new?', 'create?', 'index?', 'show?', 'edit?',
-      'update?', 'destroy?', 'need_review?', 'superadmin_priviledges?')
+      'update?', 'destroy?', 'superadmin_priviledges?')
   end
 
   test 'social worker and department manager have no access' do
     refute_permit(create(:social_worker), TrialFeedback, 'new?', 'create?', 'index?', 'show?',
-      'edit?', 'update?', 'destroy?', 'need_review?', 'superadmin_priviledges?')
+      'edit?', 'update?', 'destroy?', 'superadmin_priviledges?')
     refute_permit(create(:department_manager), TrialFeedback, 'new?', 'create?', 'index?',
-      'show?', 'edit?', 'update?', 'destroy?', 'need_review?', 'superadmin_priviledges?')
+      'show?', 'edit?', 'update?', 'destroy?', 'superadmin_priviledges?')
   end
 
   test 'volunteer has limited access to assignment feedbacks' do
@@ -30,12 +30,12 @@ class TrialFeedbackPolicyTest < PolicyAssertions::Test
     foreign_feedback = create :trial_feedback, trial_feedbackable: other_assignment,
       volunteer: @other_volunteer, author: @other_volunteer.user
     refute_permit(@user_volunteer, superadmin_feedback, 'show?', 'edit?', 'update?', 'destroy?',
-      'need_review?', 'superadmin_priviledges?')
+      'superadmin_priviledges?')
     refute_permit(@user_volunteer, foreign_feedback, 'show?', 'edit?', 'update?', 'destroy?',
-      'new?', 'create?', 'need_review?', 'superadmin_priviledges?')
+      'new?', 'create?', 'superadmin_priviledges?')
     assert_permit(@user_volunteer, feedback_volunteer, 'index?', 'show?', 'edit?', 'update?',
       'destroy?', 'new?', 'create?')
-    refute_permit(@user_volunteer, feedback_volunteer, 'need_review?', 'superadmin_priviledges?')
+    refute_permit(@user_volunteer, feedback_volunteer, 'superadmin_priviledges?')
   end
 
   test 'volunteer has limited access to group_offer feedbacks' do
@@ -49,11 +49,11 @@ class TrialFeedbackPolicyTest < PolicyAssertions::Test
     foreign_feedback = create :trial_feedback, volunteer: @other_volunteer,
       author: @other_volunteer.user, trial_feedbackable: other_group_offer
     refute_permit(@user_volunteer, superadmin_feedback, 'show?', 'edit?', 'update?', 'destroy?',
-      'need_review?', 'superadmin_priviledges?')
+      'superadmin_priviledges?')
     refute_permit(@user_volunteer, foreign_feedback, 'show?', 'edit?', 'update?', 'destroy?',
-      'new?', 'create?', 'need_review?', 'superadmin_priviledges?')
+      'new?', 'create?', 'superadmin_priviledges?')
     assert_permit(@user_volunteer, feedback_volunteer, 'index?', 'show?', 'edit?', 'update?',
       'destroy?', 'new?', 'create?')
-    refute_permit(@user_volunteer, feedback_volunteer, 'need_review?', 'superadmin_priviledges?')
+    refute_permit(@user_volunteer, feedback_volunteer, 'superadmin_priviledges?')
   end
 end

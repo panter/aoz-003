@@ -104,15 +104,15 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     @assignment_fb_pendent.update(comments: comments, achievements: achievements, future: future)
     @group_assignment_fb_pendent.update(reviewer: @superadmin)
     click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
-    page.find('td', text: comments.truncate(60)).click
+    page.find('td', text: comments.truncate(300)).click
     wait_for_ajax
     assert page.has_text? comments
     click_button 'Schliessen'
-    page.find('td', text: future.truncate(60)).click
+    page.find('td', text: future.truncate(300)).click
     wait_for_ajax
     assert page.has_text? future
     click_button 'Schliessen'
-    page.find('td', text: achievements.truncate(60)).click
+    page.find('td', text: achievements.truncate(300)).click
     wait_for_ajax
     assert page.has_text? achievements
     click_button 'Schliessen'
