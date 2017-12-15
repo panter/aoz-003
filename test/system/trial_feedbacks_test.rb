@@ -25,28 +25,6 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
       author: @superadmin, body: 'author_other_volunteer_group_offer_feedback'
   end
 
-  test 'superadmin_can_see_all_trial_feedbacks_and_review' do
-    setup_feedbacks
-    login_as @superadmin
-    visit need_review_volunteers_url
-
-    assert page.has_text? 'author_volunteer_assignment_feedback'
-    assert page.has_text? 'author_superadmin_assignment_feedback'
-    assert page.has_text? 'author_volunteer_group_offer_feedback'
-    assert page.has_text? 'author_superadmin_group_offer_feedback'
-    assert page.has_text? 'author_other_volunteer_group_offer_feedback'
-
-    click_button('Angeschaut', match: :first)
-    click_button('Angeschaut', match: :first)
-
-    assert page.has_text? 'Probezeit Feedback quittiert.'
-    refute page.has_text? 'author_volunteer_assignment_feedback'
-    refute page.has_text? 'author_superadmin_assignment_feedback'
-    assert page.has_text? 'author_volunteer_group_offer_feedback'
-    assert page.has_text? 'author_superadmin_group_offer_feedback'
-    assert page.has_text? 'author_other_volunteer_group_offer_feedback'
-  end
-
   test 'volunteer_can_see_assignment_trial_feedbacks_index' do
     setup_feedbacks
     login_as @user_volunteer
