@@ -7,7 +7,6 @@ class Volunteer < ApplicationRecord
   include FullBankDetails
 
   before_validation :handle_user_with_external_change, if: :external_changed?
-  # before_validation :handle_external
   before_save :record_acceptance_changed
   after_update :copy_contact_to_user, if: :user_added?
 
