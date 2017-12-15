@@ -1,7 +1,6 @@
 class TrialFeedbacksController < ApplicationController
   before_action :set_trial_feedback, only: [:show, :edit, :update, :destroy, :mark_as_done]
   before_action :set_trial_feedbackable
-  before_action :set_volunteer, except: [:need_review]
 
   def index
     authorize TrialFeedback
@@ -48,11 +47,6 @@ class TrialFeedbacksController < ApplicationController
     redirect_back(fallback_location: url_for(@trial_feedbackable))
   end
 
-  def need_review
-    authorize TrialFeedback
-    @need_review = TrialFeedback.need_review
-  end
-
   def mark_as_done
     redirect_path = list_responses_trial_feedbacks_path(params.to_unsafe_hash.slice(:q))
     if @trial_feedback.update(reviewer: current_user)
@@ -67,10 +61,6 @@ class TrialFeedbacksController < ApplicationController
   def set_trial_feedbackable
     return @trial_feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
     @trial_feedbackable = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
-  end
-
-  def set_volunteer
-    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
   end
 
   def set_trial_feedback

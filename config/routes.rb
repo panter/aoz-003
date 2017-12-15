@@ -35,7 +35,6 @@ Rails.application.routes.draw do
 
   resources :volunteers do
     get :find_client, on: :member, to: 'assignments#find_client'
-    get :need_review, on: :collection, to: 'trial_feedbacks#need_review'
     get :seeking_clients, on: :collection
     resources :assignments, concerns: :assignment_feedbacks
     resources :billing_expenses, except: [:edit, :update]
