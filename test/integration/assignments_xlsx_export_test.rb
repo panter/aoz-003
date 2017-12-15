@@ -21,7 +21,7 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
 
     assert_xls_cols_equal(wb, 2, 0, assignment.id,
       assignment.volunteer.contact.full_name, assignment.volunteer.contact.primary_email,
-      assignment.period_start, assignment.period_end, assignment.client.contact.full_name,
+      assignment.client.contact.full_name, assignment.period_start, assignment.period_end,
       I18n.t("simple_form.options.assignment.state.#{assignment.state}"))
     assert_equal assignment.created_at.to_date, wb.cell(2, 8).to_date
     assert_equal assignment.updated_at.to_date, wb.cell(2, 9).to_date
