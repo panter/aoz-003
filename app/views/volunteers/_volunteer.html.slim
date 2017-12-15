@@ -18,7 +18,7 @@ tr
   - if volunteer.self_applicant?
     td= t('volunteer_self_applicant')
   - else
-    td= link_to volunteer.registrar.full_name, profile_path(volunteer.registrar.profile)
+    td= link_to volunteer.registrar.full_name, url_for(volunteer.registrar.profile || volunteer.registrar)
   - if action_index?
     = render 'index_actions', subject: volunteer
     - if volunteer.seeking_clients?

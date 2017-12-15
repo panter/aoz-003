@@ -64,8 +64,8 @@ h1= @client.contact.full_name
         td= @client.competent_authority
 
       tr
-        td= t('registered_by')
-        td= link_to @client.user.full_name if @client.user.profile.present?, profile_path(@client.user.profile)
+        td= t_attr(:created_by)
+        td= link_to @client.user.full_name, url_for(@client.user.profile || @client.user
 
       - if policy(Client).comments?
         tr
