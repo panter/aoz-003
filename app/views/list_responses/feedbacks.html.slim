@@ -41,9 +41,9 @@ table.table.table-striped.list-responses-table
               span= label_part.truncate(30)
         td
           - if record.author.volunteer?
-            = link_to record.volunteer.freiwillig_gendered, record.volunteer
+            = link_to record.volunteer.contact.full_name, record.volunteer
           - else
-            = link_to record.author.profile.contact.natural_name, record.author
+            = link_to record.author.profile.contact.natural_name, record.author.profile
         td= record.goals
         = td_truncate_content_modal(record.achievements, 'Erfolge', shorten_size: 60)
         = td_truncate_content_modal(record.future, 'Zukunft', shorten_size: 60)
