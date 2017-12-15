@@ -1,5 +1,6 @@
 class TrialFeedbacksController < ApplicationController
   before_action :set_trial_feedback, only: [:show, :edit, :update, :destroy, :mark_as_done]
+  before_action :set_volunteer
   before_action :set_trial_feedbackable
 
   def index
@@ -10,6 +11,7 @@ class TrialFeedbacksController < ApplicationController
   def show; end
 
   def new
+    set_volunteer
     @trial_feedback = TrialFeedback.new(trial_feedbackable: @trial_feedbackable,
       volunteer: @volunteer, author: current_user)
     authorize @trial_feedback
@@ -57,6 +59,10 @@ class TrialFeedbacksController < ApplicationController
   end
 
   private
+
+  def set_volunteer
+    @volunteer ||= Volunteer.find_by(id: params[:volunteer_id])
+  end
 
   def set_trial_feedbackable
     return @trial_feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
