@@ -59,7 +59,7 @@ table.table.table-striped.list-responses-table
           - if record.reviewer.present?
             = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable, record]), class: 'index-action-link'
           - else
-            = link_to 'Angeschaut', polymorphic_path([record.volunteer, record.feedbackable_link_target, record], action: :mark_as_done, q: search_parameters), { method: :put, class: 'btn btn-default btn-xs m-t-10' }
+            = link_to 'Angeschaut', polymorphic_path([record.volunteer, record.feedbackable, record], action: :mark_as_done, q: search_parameters), { method: :put, class: 'btn btn-default btn-xs m-t-10' }
 
 = bootstrap_paginate(@feedbacks)
 
