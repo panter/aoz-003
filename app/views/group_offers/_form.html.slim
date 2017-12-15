@@ -34,7 +34,8 @@
       .col-xs-12
         = hidden_field_tag :internals, @internals.map{|item| {id: item.id, value: item.contact.full_name}}.to_json
         = hidden_field_tag :externals, @externals.map{|item| {id: item.id, value: item.contact.full_name}}.to_json
-        = link_to_add_association 'Freiwillige hinzufügen', f, :group_assignments, class: 'btn btn-default'
+        p#add_volunteers_text Um Freiwillige hinzufügen können müssen zuerst 'Interne oder externe Freiwillige' ausgewählt werden.
+        = link_to_add_association 'Freiwillige hinzufügen', f, :group_assignments, class: 'btn btn-default', id: 'add_volunteers'
 
   .row
     .col-xs-12
