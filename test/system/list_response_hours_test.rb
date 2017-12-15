@@ -31,12 +31,12 @@ class ListResponseHoursTest < ApplicationSystemTestCase
     assert page.has_link? @assignment_pendent.volunteer.contact.full_name
     assert page.has_link? @assignment_hour_pendent.hourable.to_label
     assert page.has_text?(
-      (60.0 / @assignment_hour_pendent.minutes * 0.1) + @assignment_hour_pendent.hours
+      @assignment_hour_pendent.hours + (@assignment_hour_pendent.minutes/60.0)
     )
     assert page.has_link? @group_assignment_pendent.volunteer.contact.full_name
     assert page.has_link? @group_assignment_hour_pendent.hourable.to_label
     assert page.has_text?(
-      (60.0 / @group_assignment_hour_pendent.minutes * 0.1) + @group_assignment_hour_pendent.hours
+      @group_assignment_hour_pendent.hours + (@group_assignment_hour_pendent.minutes/60.0)
     )
 
     # marked done shoudn't be displayed
@@ -54,12 +54,12 @@ class ListResponseHoursTest < ApplicationSystemTestCase
     assert page.has_link? @assignment_done.volunteer.contact.full_name
     assert page.has_link? @assignment_hour_done.hourable.to_label
     assert page.has_text?(
-      (60.0 / @assignment_hour_done.minutes * 0.1) + @assignment_hour_done.hours
+      @assignment_hour_done.hours + (@assignment_hour_done.minutes/60.0)
     )
     assert page.has_link? @group_assignment_done.volunteer.contact.full_name
     assert page.has_link? @group_assignment_hour_done.hourable.to_label
     assert page.has_text?(
-      (60.0 / @group_assignment_hour_done.minutes * 0.1) + @group_assignment_hour_done.hours
+      @group_assignment_hour_done.hours + (@group_assignment_hour_done.minutes/60.0)
     )
   end
 
@@ -114,7 +114,7 @@ class ListResponseHoursTest < ApplicationSystemTestCase
     assert page.has_link? assignment_waive.volunteer.contact.full_name
     assert page.has_link? assignment_hour_waive.hourable.to_label
     assert page.has_text?(
-      (60.0 / assignment_hour_waive.minutes * 0.1) + assignment_hour_waive.hours
+      assignment_hour_waive.hours + (assignment_hour_waive.minutes/60.0)
     )
 
     refute page.has_link? @assignment_pendent.volunteer.contact.full_name
