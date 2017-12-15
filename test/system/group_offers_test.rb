@@ -208,4 +208,27 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_button 'Create Group offer'
     assert page.has_text? 'Group offer was successfully created.'
   end
+
+  test 'internal_external_volunteers_load_different_lists' do
+    internal = create :volunteer_internal
+    external = create :volunteer_external
+    login_as create(:user)
+    visit new_group_offer_path
+    select(@group_offer_category, from: 'Group offer category')
+    fill_in 'Title', with: 'Title'
+
+    page.choose('Internal volunteer')
+    click_link 'Freiwillige hinzufügen'
+    select_values = page.find_all('#volunteers .group_offer_group_assignments_volunteer select')
+                        .map(&:value).map(&:to_i)
+    assert select_values.include? internal.id
+    refute select_values.include? external.id
+
+    page.choose('External volunteer')
+    click_link 'Freiwillige hinzufügen'
+    select_values = page.find_all('#volunteers .group_offer_group_assignments_volunteer select')
+                        .map(&:value).map(&:to_i)
+    refute select_values.include? internal.id
+    assert select_values.include? external.id
+  end
 end
