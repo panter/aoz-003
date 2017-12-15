@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   resources :clients do
     resources :journals, except: [:show]
+    get :search, on: :collection
   end
 
   resources :volunteers do
