@@ -20,7 +20,7 @@ module FeedbackTrialFeedbackCommon
 
     scope :since_last_submitted, lambda { |submitted_at|
       if submitted_at
-        author_volunteer.submitted_before(submitted_before)
+        author_volunteer.submitted_before(submitted_at)
       else
         author_volunteer
       end
