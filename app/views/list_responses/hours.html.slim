@@ -30,7 +30,7 @@ table.table.table-striped.list-responses-table
             = record.hourable.to_label
         td.index-action-cell
           span
-            - total_hours = (60.0 / record.minutes * 0.1) + record.hours
+            - total_hours = record.hours + (record.minutes/60.0)
             = total_hours
             = " Stunde"
             - if total_hours > 1
