@@ -27,7 +27,7 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_field? 'Text body', text: 'Die **AOZ** ist ein Unternehmen der Stadt Zürich und'
     assert page.has_field? 'Hours', with: 2
     click_button 'Edit more fields'
-    assert page.has_field? 'Assignment', checked: true
+    assert page.has_field? 'Tandem', checked: true
     assert page.has_field? 'Name', with: @volunteer.contact.full_name
     assert page.find_field('Street').value.include? @volunteer.contact.street
     assert page.find_field('City').value.include? @volunteer.contact.city
@@ -42,7 +42,7 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_link? 'Print'
   end
 
-  test 'Updating certificate with custom values' do
+  test 'updating_certificate_with_custom_values' do
     login_as @user
     visit new_volunteer_certificate_path(@volunteer)
     click_button 'Create Certificate'
@@ -53,7 +53,7 @@ class CertificatesTest < ApplicationSystemTestCase
     fill_in 'Text body', with: '**Bold** or not *bold*, that is this tests Question?<br>***both***'
     assert page.has_text? 'Edit Certificate'
     click_button 'Edit more fields'
-    assert page.has_field? 'Assignment', checked: true
+    assert page.has_field? 'Tandem', checked: true
     fill_in 'Hours', with: 555
     fill_in 'Name', with: 'This bogus test name'
     fill_in 'Institution', with: 'The Testology Institute'
