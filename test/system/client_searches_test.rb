@@ -26,7 +26,7 @@ class ClientSearchesTest < ApplicationSystemTestCase
       check_items: [@clients.first[0].contact.full_name, @clients.first[1].contact.full_name]
   end
 
-  test 'suggestionsgs search triggers the search correctly' do
+  test 'suggestions search triggers the search correctly' do
     fill_autocomplete 'q[contact_full_name_cont]', with: 'aaa'
     click_button 'Suchen'
     visit current_url
