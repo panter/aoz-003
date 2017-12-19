@@ -1,6 +1,7 @@
 require 'application_system_test_case'
 
 class ClientsTest < ApplicationSystemTestCase
+
   setup do
     @superadmin = create :user, email: 'superadmin@example.com'
     @department_manager = create :department_manager, email: 'department@example.com'
@@ -54,9 +55,8 @@ class ClientsTest < ApplicationSystemTestCase
 
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
-
     @superadmin.clients.each do |client|
-      assert page.has_link? client.user.full_name, href: profile_path(client.user.profile)
+      assert page.has_link? client.user.full_name, href: /profiles\/#{client.user.profile.id}/
       assert page.has_link? client.contact.primary_email
     end
   end

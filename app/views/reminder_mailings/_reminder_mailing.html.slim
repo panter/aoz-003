@@ -1,6 +1,6 @@
 tr
   td= reminder_mailing.t_enum(:kind)
-  td= link_to reminder_mailing.creator.full_name, profile_path(reminder_mailing.creator.profile)
+  td= link_to reminder_mailing.creator.full_name, profile_link(reminder_mailing.creator)
   td
     - if reminder_mailing.sending_triggered
       'Übermittelt am #{l(reminder_mailing.updated_at.to_date)}
