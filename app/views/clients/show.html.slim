@@ -65,7 +65,7 @@ h1= @client.contact.full_name
 
       tr
         td= t_attr(:created_by)
-        td= link_to @client.user.full_name, url_for(@client.user.profile || @client.user)
+        td= link_to @client.user.full_name, profile_link(@client.user)
 
       - if policy(Client).comments?
         tr

@@ -130,7 +130,7 @@ h3 Persönlicher Hintergrund
           - if @volunteer.self_applicant?
             = t('volunteer_self_applicant')
           - else
-            = link_to @volunteer.registrar.full_name, url_for(@volunteer.registrar.profile || @volunteer.registrar)
+            = link_to @volunteer.registrar.full_name, profile_link(@volunteer.registrar)
 
 h3= t_attr(:single_accompaniment)
 .table-responsive
