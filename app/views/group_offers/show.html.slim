@@ -91,7 +91,6 @@ h1= @group_offer.title
                     = group_assignment.volunteer.contact.primary_email
                   - else
                     = group_assignment.volunteer
-                  = group_assignment.volunteer
               td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
               td= l(group_assignment.period_start) if group_assignment.period_start
               td= l(group_assignment.period_end) if group_assignment.period_end
