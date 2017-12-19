@@ -13,10 +13,14 @@
   hr
   #additionalEdit.collapse
     h4= t('.assignment_kinds')
-    = f.simple_fields_for :assignment_kinds do |fk|
-      .row
-        - @certificate.assignment_kinds.each do |kind, value|
-          .col-xs-2= fk.input kind, label: "#{t("assignment_kinds.#{kind}")}", as: :boolean, input_html: { checked: value }
+    = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.assignment_kinds['done'], include_blank: false, input_html: { checked: true }
+
+    button.btn.btn-default(data-toggle='collapse' data-target='#additional-kinds' type='button'  aria-expanded='false' aria-controls='additionalEdit')
+      'Manuell Einsatzkategorien hinzufügen
+    #additional-kinds.collapse
+      h5 Zusätzliche Einsatzarten
+      = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.assignment_kinds['available'], include_blank: false, input_html: { checked: false }
+
 
 
     h4= t('.volunteers_contact_data')
