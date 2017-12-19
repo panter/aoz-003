@@ -175,26 +175,6 @@ class Volunteer < ApplicationRecord
     contact.external = true if external
   end
 
-  def assignment_categories_done
-    {
-      done: assignment_kinds_done,
-    }
-  end
-
-  def assignment_kinds_done
-    @kinds ||= create_assignments_kinds
-  end
-
-  def create_assignments_kinds
-    kinds = categories_from_group_assignments.map do |goc|
-      [goc.category_name, goc.id]
-    end + categories_from_group_assignment_log.map do |goc|
-      [goc.category_name, goc.id]
-    end
-    kinds.push(['Tandem', 0]) if assignments.any?
-    kinds.uniq
-  end
-
   def assignment_start_dates
     assignments.where.not(period_start: nil).pluck(:period_start)
   end
@@ -311,7 +291,32 @@ class Volunteer < ApplicationRecord
     end
   end
 
+  def assignment_categories_done
+    {
+      done: assignment_kinds_done,
+      available: [['Tandem', 0]] + GroupOfferCategory.available_categories(kinds_done_ids)
+    }
+  end
+
   private
+
+  def assignment_kinds_done
+    @kinds ||= create_assignments_kinds
+  end
+
+  def kinds_done_ids
+    assignment_kinds_done.map { |k| k[1] }
+  end
+
+  def create_assignments_kinds
+    kinds = categories_from_group_assignments.map do |goc|
+      [goc.category_name, goc.id]
+    end + categories_from_group_assignment_log.map do |goc|
+      [goc.category_name, goc.id]
+    end
+    kinds.push(['Tandem', 0]) if assignments.any?
+    kinds.uniq
+  end
 
   def user_added?
     saved_change_to_attribute?(:user_id)
