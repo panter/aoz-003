@@ -1,6 +1,12 @@
 h1 Freiwillige
 nav.navbar.section-navigation
   hr
+
+  ul.list-unstyled
+    li.li-search-form
+      = search_form_for @q do |f|
+        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_volunteers_path }, autofocus: true
+        = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link t_title(:new), new_volunteer_path, dimension: 'sm'
     - if policy(Volunteer).can_manage?
