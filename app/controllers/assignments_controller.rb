@@ -16,6 +16,15 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def search
+    authorize Assignment
+    @q = policy_scope(Assignment).ransack volunteer_contact_full_name_cont: params[:term]
+    @assignments = @q.result distinct: true
+    respond_to do |format|
+      format.json
+    end
+  end
+
   def show
     respond_to do |format|
       format.html
@@ -99,6 +108,6 @@ class AssignmentsController < ApplicationController
   def assignment_params
     params.require(:assignment).permit(:client_id, :volunteer_id, :state, :period_start,
       :period_end, :performance_appraisal_review, :probation_period, :home_visit,
-      :first_instruction_lesson)
+      :first_instruction_lesson, :term)
   end
 end
