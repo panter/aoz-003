@@ -3,7 +3,7 @@ class Certificate < ApplicationRecord
   belongs_to :user, -> { with_deleted }
 
   def build_values
-    self.assignment_kinds ||= volunteer.assignment_kinds
+    self.assignment_kinds ||= volunteer.assignment_categories_done
     self.text_body ||= default_text_body
     self.function ||= DEFAULT_FUNCTION
     self.hours ||= volunteer.hours.total_hours
@@ -20,13 +20,6 @@ class Certificate < ApplicationRecord
       street: volunteer.contact.full_street,
       city: volunteer.contact.full_city
     }
-  end
-
-  def assignment_kinds=(value)
-    super(value.to_h.map do |key, bool|
-      bool = bool.to_i == 1 if bool.is_a? String
-      [key.to_sym, bool]
-    end.to_h)
   end
 
   DEFAULT_INSTITUTION = "**AOZ** Zürich, Flüelastrasse 32, 8047 Zürich  \r\n"\

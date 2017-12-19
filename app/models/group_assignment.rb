@@ -8,6 +8,7 @@ class GroupAssignment < ApplicationRecord
   belongs_to :group_offer
 
   has_many :group_assignment_logs
+  has_one :group_offer_category, through: :group_offer
 
   delegate :title, to: :group_offer
 

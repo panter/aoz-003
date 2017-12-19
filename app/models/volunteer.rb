@@ -25,8 +25,6 @@ class Volunteer < ApplicationRecord
   has_one :department, through: :registrar
 
   has_many :departments, through: :group_offers
-
-  has_many :assignments, dependent: :destroy
   has_many :clients, through: :assignments
 
   has_many :hours, dependent: :destroy
@@ -49,8 +47,14 @@ class Volunteer < ApplicationRecord
   has_many :billing_expenses
 
   has_many :group_assignments
-  has_many :group_offers, through: :group_assignments
   has_many :group_assignment_logs
+
+  has_many :group_offers, through: :group_assignments
+  # categories done in group offers
+  has_many :categories_from_group_assignments, through: :group_offers, source: :group_offer_category
+  has_many :categories_from_group_assignment_log, through: :group_assignment_logs, source: :group_offer_category
+
+  # chosen by volunteer (interested in)
   has_and_belongs_to_many :group_offer_categories
 
   has_many :reminder_mailing_volunteers, dependent: :delete_all
@@ -167,11 +171,28 @@ class Volunteer < ApplicationRecord
     :inactive if inactive?
   end
 
-  def assignment_kinds
+  def handle_external
+    contact.external = true if external
+  end
+
+  def assignment_categories_done
     {
-      group_offer: group_offers.any?,
-      assignment: assignments.any?
+      done: assignment_kinds_done,
     }
+  end
+
+  def assignment_kinds_done
+    @kinds ||= create_assignments_kinds
+  end
+
+  def create_assignments_kinds
+    kinds = categories_from_group_assignments.map do |goc|
+      [goc.category_name, goc.id]
+    end + categories_from_group_assignment_log.map do |goc|
+      [goc.category_name, goc.id]
+    end
+    kinds.push(['Tandem', 0]) if assignments.any?
+    kinds.uniq
   end
 
   def assignment_start_dates

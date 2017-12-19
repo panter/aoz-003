@@ -27,9 +27,7 @@ class CertificatesController < ApplicationController
   def edit; end
 
   def create
-    @certificate = Certificate.new(certificate_params.except(:assignment_kinds).merge(volunteer: @volunteer,
-      user_id: current_user.id))
-    @certificate.assignment_kinds = certificate_params.to_unsafe_h[:assignment_kinds]
+    @certificate = Certificate.new(prepare_params)
     authorize @certificate
     if @certificate.save
       redirect_to volunteer_certificate_path(@volunteer, @certificate)
@@ -39,7 +37,7 @@ class CertificatesController < ApplicationController
   end
 
   def update
-    if @certificate.update(certificate_params.except(:assignment_kinds)) && @certificate.update(assignment_kinds: certificate_params.to_unsafe_h[:assignment_kinds])
+    if @certificate.update(prepare_params)
       redirect_to volunteer_certificate_path(@volunteer, @certificate)
     else
       render :edit
@@ -52,6 +50,25 @@ class CertificatesController < ApplicationController
   end
 
   private
+
+  def prepare_params
+    certificate_params
+      .except(:assignment_kinds).merge(volunteer: @volunteer, user_id: current_user.id,
+        assignment_kinds: { done: kinds_done_filter, available: kinds_available_filter })
+  end
+
+  def kinds_available_filter
+    @kinds_available ||= GroupOfferCategory.where.not(id: kinds_done_filter
+      .map { |done| done[1] }).map { |goc| [goc.category_name, goc.id] }
+  end
+
+  def kinds_done_filter
+    @kinds_done ||= @volunteer.assignment_categories_done[:done].select do |name, id|
+      certificate_params[:assignment_kinds].reject(&:blank?).map(&:to_i).include? id
+    end + @volunteer.assignment_categories_done[:available].select do |name, id|
+      certificate_params[:assignment_kinds].reject(&:blank?).map(&:to_i).include? id
+    end
+  end
 
   def set_certificate
     @certificate = Certificate.find(params[:id])
@@ -66,8 +83,7 @@ class CertificatesController < ApplicationController
   def certificate_params
     params.require(:certificate).permit(
       :duration, :duration_end, :duration_start, :hours, :minutes, :text_body, :institution,
-      :function, :volunteer_id, volunteer_contact: [:name, :street, :city],
-      assignment_kinds: [:group_offer, :assignment]
+      :function, :volunteer_id, volunteer_contact: [:name, :street, :city], assignment_kinds: []
     )
   end
 end
