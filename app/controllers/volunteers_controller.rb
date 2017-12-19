@@ -18,6 +18,15 @@ class VolunteersController < ApplicationController
     end
   end
 
+  def search
+    authorize Volunteer
+    @q = policy_scope(Volunteer).ransack contact_full_name_cont: params[:term]
+    @volunteers = @q.result distinct: true
+    respond_to do |format|
+      format.json
+    end
+  end
+
   def show; end
 
   def new

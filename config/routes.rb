@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   end
 
   resources :volunteers do
+    get :search, on: :collection
     get :find_client, on: :member, to: 'assignments#find_client'
     get :seeking_clients, on: :collection
     resources :billing_expenses, except: [:edit, :update]
