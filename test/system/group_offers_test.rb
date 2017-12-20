@@ -233,7 +233,7 @@ class GroupOffersTest < ApplicationSystemTestCase
   end
 
   test 'group_offers_on_edit_have_only_internal_or_external_volunteers' do
-    internal = create :volunteer_internal
+    internal = create :volunteer_with_user, :internal
     external = create :volunteer_external
     internal_group_offer = create :group_offer, volunteer_state: 'internal_volunteer'
     external_group_offer = create :group_offer, volunteer_state: 'external_volunteer'
