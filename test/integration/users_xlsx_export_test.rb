@@ -9,6 +9,9 @@ class UsersXlsxExportTest < ActionDispatch::IntegrationTest
     @social_worker = create :social_worker
     @department_manager = create :department_manager
     @volunteer = create :volunteer_with_user
+    User.with_deleted
+        .where.not(id: [@volunteer.user.id, @department_manager.id, @social_worker.id, @superadmin.id])
+        .map(&:really_destroy!)
   end
 
   def assert_user_xls_row(wb, subject_user, row)
