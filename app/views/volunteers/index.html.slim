@@ -14,7 +14,7 @@ nav.navbar.section-navigation
     li= button_link t('clear_filters'), volunteers_path, dimension: 'sm'
     li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
     - unless search_parameters.include? 'acceptance_eq'
-      = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
+      = boolean_toggler_filter_dropdown(:active, 'Einsatz', 'Aktiv', 'Inaktiv')
     - unless search_parameters.include? 'active_eq'
       = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
     = boolean_toggler_filter_dropdown(:external, 'Intern/Extern', 'Extern', 'Intern')
