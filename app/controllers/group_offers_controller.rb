@@ -88,11 +88,20 @@ class GroupOffersController < ApplicationController
   end
 
   def set_assignable_collection
-    @assignable = VolunteerPolicy::Scope.new(current_user, Volunteer).resolve.map do |volunteer|
-      [volunteer.contact.full_name, volunteer.id]
-    end
+    set_volunteer_collection
+    @assignable = if @group_offer.volunteer_state == 'internal_volunteer'
+                    define_assignables(@internals)
+                  else
+                    define_assignables(@externals)
+                  end
     @assignable += @group_offer.volunteers.map { |volunteer| [volunteer.contact.full_name, volunteer.id] }
     @assignable.uniq!
+  end
+
+  def define_assignables(volunteers)
+    VolunteerPolicy::Scope.new(current_user, volunteers).resolve.map do |volunteer|
+      [volunteer.contact.full_name, volunteer.id]
+    end
   end
 
   def set_volunteer_collection
