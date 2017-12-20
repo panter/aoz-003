@@ -160,7 +160,7 @@ de:
       rejected: Abgelehnt
       reserved: Reserviert
       resigned: Abgemeldet
-      undecided: Nicht entschieden
+      undecided: Angemeldet
     updated_at: Geändert um
     volunteer_applications: &id-volunteers-by-actions
       feedback:
@@ -176,11 +176,11 @@ de:
         rejected: Abgelehnt
         reject: Ablehnen
         rejected_at: Abgelehnt am
-        resigned: Ausgetreten/Archiviert
+        resigned: Beendet
         resign: Austreten
-        resigned_at: Ausgetreten am
-        undecided: Nicht entschieden
-        undecided_at: Nicht entscheidet am
+        resigned_at: Beendet am
+        undecided: Angemeldet
+        undecided_at: Angemeldet am
       create: &id-volunteers-create
         <<: *id-availability
         acceptance: *id-volunteer-acceptance
@@ -404,7 +404,7 @@ de:
         bank_details: Name der Bank / IBAN
         doc_sent: Dossier Freiwillige engagiert verschickt
         education: Ausbildung
-        ended: ausgetreten
+        ended: Beendet
         evaluation: Abschlussevaluation erhalten
         expectations: Erwartungen
         experience: Erfahrung
@@ -767,7 +767,7 @@ de:
       volunteers:
         active_total: Total aktive Freiwillige per Zeitraumende
         new: Anzahl neue Freiwillige
-        resigned: Anzahl ausgetretene Freiwillige
+        resigned: Anzahl beendete Freiwillige
         total: Anzahl Freiwillige insgesamt
       zh_assignments:
         <<: *id-assignment-report
