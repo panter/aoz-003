@@ -155,6 +155,7 @@ de:
       contacted: Kontaktiert
       finished: Abgeschlossen
       inactive: Inaktiv
+      invited: Eingeladen
       interested: Interessiert
       registered: Registriert
       rejected: Abgelehnt
@@ -171,6 +172,8 @@ de:
         accepted: Akzeptiert
         accept: Akzeptieren
         accepted_at: Akzeptiert am
+        invited: Eingeladen
+        invited_at: Eingeladen am
         registered: Registriert
         registered_at: Registriert am
         rejected: Abgelehnt

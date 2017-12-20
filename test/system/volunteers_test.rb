@@ -147,6 +147,7 @@ class VolunteersTest < ApplicationSystemTestCase
     within 'tbody' do
       assert page.has_text? 'Accepted'
       assert page.has_text? 'Undecided'
+      assert page.has_text? 'Eingeladen'
       assert page.has_text? 'Rejected'
       assert page.has_text? 'Resigned'
     end

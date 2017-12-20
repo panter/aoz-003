@@ -154,6 +154,7 @@ en:
       finished: Finished
       inactive: Looking for new engagement
       interested: Interested
+      invited: Eingeladen
       registered: Registered
       rejected: Rejected
       reserved: Reserved
@@ -168,6 +169,7 @@ en:
         accepted: Accepted
         accept: Accept
         accepted_at: Accepted at
+        invited: Eingeladen
         registered: Registered
         registered_at: Registered at
         rejected: Rejected
