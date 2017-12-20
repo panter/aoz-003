@@ -231,4 +231,22 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute select_values.include? internal.id
     assert select_values.include? external.id
   end
+
+  test 'group_offers_on_edit_have_only_internal_or_external_volunteers' do
+    internal = create :volunteer_internal
+    external = create :volunteer_external
+    internal_group_offer = create :group_offer, volunteer_state: 'internal_volunteer'
+    external_group_offer = create :group_offer, volunteer_state: 'external_volunteer'
+    login_as create(:user)
+
+    visit edit_group_offer_path(internal_group_offer)
+    click_link 'Freiwillige hinzufügen'
+    assert page.has_select?('Volunteer', text: internal.full_name)
+    refute page.has_select?('Volunteer', text: external.full_name)
+
+    visit edit_group_offer_path(external_group_offer)
+    click_link 'Freiwillige hinzufügen'
+    refute page.has_select?('Volunteer', text: internal.full_name)
+    assert page.has_select?('Volunteer', text: external.full_name)
+  end
 end
