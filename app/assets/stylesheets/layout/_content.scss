@@ -135,3 +135,13 @@
   border-color: lighten($gray-base, 80%);
   color: $dark;
 }
+
+// # TODO remove when button gets the change status functionality
+td.button-acceptance a {
+  pointer-events: none;
+}
+
+.btn-basic {
+  background-color: lighten($gray-base, 80%);
+  color: $white;
+}
