@@ -4,6 +4,9 @@ function groupOfferForm() {
   } else {
     $('#add_volunteers_text').hide();
   }
+  if ($('input:radio[name="group_offer[volunteer_state]"]').is(':checked')){
+    $('input:radio[name="group_offer[volunteer_state]"]').attr('disabled', true);
+  }
 
   $('input:radio[name="group_offer[volunteer_state]"]').on('change', ({target}) => {
     $('#add_volunteers').prop('disabled', false).attr('disabled', false);
