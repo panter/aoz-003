@@ -1,22 +1,20 @@
-$(function() {
-  $( document ).on('turbolinks:render, turbolinks:load', function() {
-    if (window.location.href.indexOf('new') > 0) {
-      $('#add_volunteers').prop('disabled', true).attr('disabled', true);
-    } else {
-      $('#add_volunteers_text').hide();
-    }
+function groupOfferForm() {
+  if (window.location.href.indexOf('new') > 0) {
+    $('#add_volunteers').prop('disabled', true).attr('disabled', true);
+  } else {
+    $('#add_volunteers_text').hide();
+  }
 
-    $('input:radio[name="group_offer[volunteer_state]"]').on('change', ({target}) => {
-      $('#add_volunteers').prop('disabled', false).attr('disabled', false);
-      $('#add_volunteers_text').hide();
-      populate_dropdowns(target);
-    });
-
-    $(document).on('cocoon:after-insert', function(e, insertedItem) {
-      populate_dropdowns('input:radio[name="group_offer[volunteer_state]"]:checked');
-    });
+  $('input:radio[name="group_offer[volunteer_state]"]').on('change', ({target}) => {
+    $('#add_volunteers').prop('disabled', false).attr('disabled', false);
+    $('#add_volunteers_text').hide();
+    populate_dropdowns(target);
   });
-});
+
+  $(document).on('cocoon:after-insert', function(e, insertedItem) {
+    populate_dropdowns('input:radio[name="group_offer[volunteer_state]"]:checked');
+  });
+}
 
 const populate_dropdowns = (target) => {
   var selectInternals = $('.new-group-offer-volunteer-collection');

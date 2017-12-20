@@ -4,4 +4,5 @@ $(() => $(document).on('turbolinks:render, turbolinks:load', () => {
   conditionalField();
   mailingsSelectAll();
   volunteerForm();
+  groupOfferForm();
 }));
