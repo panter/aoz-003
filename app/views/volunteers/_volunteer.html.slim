@@ -13,7 +13,8 @@ tr
   td = "#{volunteer.working_percent}%" if volunteer.working_percent.present?
   td = volunteer.expectations
   td = volunteer.interests
-  td = t(".acceptance.#{volunteer.acceptance}")
+  td.button-acceptance = link_to t(".acceptance.#{volunteer.acceptance}"), '#',
+    class: button_acceptance_class(t(".acceptance.#{volunteer.acceptance}"))
   td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
   td
     - if volunteer.self_applicant?
