@@ -63,9 +63,9 @@ class CertificatesController < ApplicationController
   end
 
   def kinds_done_filter
-    @kinds_done ||= @volunteer.assignment_categories_done[:done].select do |name, id|
+    @kinds_done ||= @volunteer.assignment_categories_done.select do |name, id|
       certificate_params[:assignment_kinds].reject(&:blank?).map(&:to_i).include? id
-    end + @volunteer.assignment_categories_done[:available].select do |name, id|
+    end + @volunteer.assignment_categories_available.select do |name, id|
       certificate_params[:assignment_kinds].reject(&:blank?).map(&:to_i).include? id
     end
   end
