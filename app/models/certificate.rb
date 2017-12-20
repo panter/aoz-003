@@ -3,7 +3,8 @@ class Certificate < ApplicationRecord
   belongs_to :user, -> { with_deleted }
 
   def build_values
-    self.assignment_kinds ||= volunteer.assignment_categories_done
+    self.assignment_kinds ||= { done: volunteer.assignment_categories_done,
+                                available: volunteer.assignment_categories_available }
     self.text_body ||= default_text_body
     self.function ||= DEFAULT_FUNCTION
     self.hours ||= volunteer.hours.total_hours

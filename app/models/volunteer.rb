@@ -292,20 +292,17 @@ class Volunteer < ApplicationRecord
   end
 
   def assignment_categories_done
-    {
-      done: assignment_kinds_done,
-      available: [['Tandem', 0]] + GroupOfferCategory.available_categories(kinds_done_ids)
-    }
+    @kinds ||= create_assignments_kinds
+  end
+
+  def assignment_categories_available
+    @available ||= [['Tandem', 0]] + GroupOfferCategory.available_categories(kinds_done_ids)
   end
 
   private
 
-  def assignment_kinds_done
-    @kinds ||= create_assignments_kinds
-  end
-
   def kinds_done_ids
-    assignment_kinds_done.map { |k| k[1] }
+    assignment_categories_done.map { |k| k[1] }
   end
 
   def create_assignments_kinds
