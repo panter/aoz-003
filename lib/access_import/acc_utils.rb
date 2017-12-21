@@ -81,7 +81,7 @@ module AccUtils
     sprachen.map do |sprache|
       [
         (Time.now.to_f * 1000).to_i,
-        { language: sprache[:language][:lang], level: sprache[:kenntnisstufe_ve] || 'basic' }
+        { language: sprache[:language][:lang], level: sprache[:kenntnisstufe_ve].presence || 'basic' }
       ]
     end.to_h
   end
