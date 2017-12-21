@@ -27,11 +27,11 @@ class AccessImport
   end
 
   def make_clients
-    @client_transformer.import_all(@import_user)
+    @client_transformer.import_all
   end
 
   def make_volunteers
-    @volunteer_transform.import_all(@import_user)
+    @volunteer_transform.import_all
   end
 
   def make_assignments
