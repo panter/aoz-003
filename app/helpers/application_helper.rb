@@ -12,17 +12,6 @@ module ApplicationHelper
     link_to text, target, class: "btn btn-#{type}#{btn_size}"
   end
 
-  def button_acceptance_class(text)
-    state = case text
-            when 'Angemeldet' then 'success'
-            when 'Eingeladen' then 'warning'
-            when 'Akzeptiert' then 'danger'
-            when 'Abgelehnt' then 'info'
-            else 'basic'
-            end
-    "btn btn-xs btn-#{state}"
-  end
-
   def link_to_add_polymorphic_association(*args)
     name, f, association, html_options = *args
     html_options[:partial] = "#{association}/fields"

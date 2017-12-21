@@ -14,7 +14,7 @@ tr
   td = volunteer.expectations
   td = volunteer.interests
   td.button-acceptance = link_to t(".acceptance.#{volunteer.acceptance}"), '#',
-    class: button_acceptance_class(t(".acceptance.#{volunteer.acceptance}"))
+    class: "btn btn-xs btn-acceptance-#{volunteer.acceptance}"
   td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
   td
     - if volunteer.self_applicant?

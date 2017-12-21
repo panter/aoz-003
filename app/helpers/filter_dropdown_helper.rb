@@ -118,20 +118,9 @@ module FilterDropdownHelper
     end
   end
 
-  def active_filter_link_class(filter_attribute)
-    state = case filter_attribute
-            when 'undecided' then 'success'
-            when 'invited' then 'warning'
-            when 'accepted' then 'danger'
-            when 'rejected' then 'info'
-            else 'basic'
-            end
-    "bg-#{state}"
-  end
-
   def list_filter_link(q_filter, filter_attribute, bool_filter: false, enum_value: false)
     link_class = if q_filter == :acceptance_eq && filter_active?(q_filter, filter_attribute, enum_value)
-                   active_filter_link_class(filter_attribute)
+                   "bg-#{filter_attribute}"
                  elsif filter_active?(q_filter, filter_attribute, enum_value)
                    'bg-success'
                  end

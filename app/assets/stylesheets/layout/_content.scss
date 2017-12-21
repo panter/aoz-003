@@ -141,11 +141,44 @@ td.button-acceptance a {
   pointer-events: none;
 }
 
-.btn-basic {
+.btn-acceptance-undecided {
+  @extend .btn-success;
+}
+
+.btn-acceptance-invited {
+  @extend .btn-warning;
+}
+
+.btn-acceptance-accepted {
+  @extend .btn-danger;
+}
+
+.btn-acceptance-rejected {
+  @extend .btn-info;
+}
+
+.btn-acceptance-resigned {
+  @extend .btn;
   background-color: lighten($gray-base, 80%);
   color: $white;
 }
 
-.bg-basic {
+.bg-undecided {
+  @extend .bg-success;
+}
+
+.bg-invited {
+  @extend .bg-warning;
+}
+
+.bg-accepted {
+  @extend .bg-danger;
+}
+
+.bg-rejected {
+  @extend .bg-info;
+}
+
+.bg-resigned {
   background-color: lighten($gray-base, 80%);
 }
