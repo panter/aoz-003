@@ -31,7 +31,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     within '.section-navigation' do
       click_link 'Acceptance'
-      assert page.find('a.bg-success', text: 'Undecided').present?
+      assert page.find('a.bg-undecided', text: 'Undecided').present?
       click_link 'All'
     end
     visit current_url
