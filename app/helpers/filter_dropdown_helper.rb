@@ -118,8 +118,26 @@ module FilterDropdownHelper
     end
   end
 
+  def active_filter_link_class(q_filter, filter_attribute, enum_value)
+    if filter_active?(q_filter, filter_attribute, enum_value) && q_filter == :acceptance_eq
+      if filter_attribute == 'undecided'
+        'bg-success'
+      elsif filter_attribute == 'invited'
+        'bg-warning'
+      elsif filter_attribute == 'accepted'
+        'bg-danger'
+      elsif filter_attribute == 'rejected'
+        'bg-info'
+      else
+        'bg-basic'
+      end
+    elsif filter_active?(q_filter, filter_attribute, enum_value)
+      'bg-success'
+    end
+  end
+
   def list_filter_link(q_filter, filter_attribute, bool_filter: false, enum_value: false)
-    link_class = 'bg-success' if filter_active?(q_filter, filter_attribute, enum_value)
+    link_class = active_filter_link_class(q_filter, filter_attribute, enum_value)
     tag.li do
       link_to(
         filter_url(q_filter, bool_filter, filter_attribute, enum_value: enum_value),
