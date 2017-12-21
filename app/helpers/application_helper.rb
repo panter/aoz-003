@@ -13,17 +13,14 @@ module ApplicationHelper
   end
 
   def button_acceptance_class(text)
-    if text == 'Angemeldet'
-      'btn btn-success btn-xs'
-    elsif text == 'Eingeladen'
-      'btn btn-warning btn-xs'
-    elsif text == 'Akzeptiert'
-      'btn btn-danger btn-xs'
-    elsif text == 'Abgelehnt'
-      'btn btn-info btn-xs'
-    else
-      'btn btn-basic btn-xs'
-    end
+    state = case text
+            when 'Angemeldet' then 'success'
+            when 'Eingeladen' then 'warning'
+            when 'Akzeptiert' then 'danger'
+            when 'Abgelehnt' then 'info'
+            else 'basic'
+            end
+    "btn btn-xs btn-#{state}"
   end
 
   def link_to_add_polymorphic_association(*args)

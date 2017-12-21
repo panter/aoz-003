@@ -15,7 +15,7 @@ class Volunteer < ApplicationRecord
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
 
-  enum acceptance: { undecided: 0, invited: 1, accepted: 2, rejected: 3, resigned: 4 }
+  enum acceptance: { undecided: 0, invited: 4, accepted: 1, rejected: 2, resigned: 3 }
 
   # User with role: 'volunteer'
   belongs_to :user, -> { with_deleted }, optional: true
