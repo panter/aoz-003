@@ -1,5 +1,5 @@
 class JournalTransform < Transformer
-  def prepare_attributes(journal, person, assignment, user)
+  def prepare_attributes(journal, person, assignment)
     {
       body: journal[:m_Text],
       journalable: person,
@@ -7,7 +7,7 @@ class JournalTransform < Transformer
       created_at: journal[:d_ErfDatum],
       updated_at: journal[:d_MutDatum],
       category: CATEGORY_MAP[journal[:fk_JournalKategorie]],
-      user: user,
+      user: @ac_import.import_user,
       import_attributes: access_import(
         :tbl_Journal, journal[:pk_Journal], journal: journal
       )

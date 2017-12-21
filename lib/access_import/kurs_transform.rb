@@ -1,0 +1,45 @@
+class KursTransform < Transformer
+  # could be needed relations
+
+  def prepare_attributes(kurs, group_offer_category)
+    {
+      title: kurs[:t_KursBezeichnung],
+      description: kurs[:m_Beschreibung],
+      location: kurs[:t_Ort],
+      schedule_details: kurs[:t_Zeitraum],
+      group_offer_category: group_offer_category,
+      creator: @ac_import.import_user,
+      import_attributes: access_import(:tbl_Kurse, kurs[:pk_Kurs], kurs: kurs)
+    }
+  end
+
+  def get_or_create_by_import(kurs_id, kurs = nil)
+    kurs ||= @kurse.find(kurs_id)
+    group_offer = Import.get_imported(GroupOffer, kurs_id)
+    return group_offer if group_offer.present?
+    group_offer_category = @ac_import.kursart_transform.get_or_create_by_import(kurs[:fk_Kursart])
+    group_offer = GroupOffer.new(prepare_attributes(kurs, group_offer_category))
+    group_offer.group_assignments = fetch_group_assignments(kurs_id)
+    group_offer.save!
+    group_offer
+  end
+
+  def fetch_group_assignments(kurs_id)
+    group_assignments = @ac_import.group_assignment_transform.import_all(
+      einsaetze: @freiwilligen_einsaetze.where_kurs(kurs_id)
+    )
+    volunteer_ids = group_assignments.map(&:volunteer_id).uniq
+    return group_assignments if volunteer_ids.size == group_assignments.size
+    volunteer_ids.map do |volunteer_id|
+      group_assignments.find { |group_assignment| group_assignment.volunteer_id == volunteer_id }
+    end
+  end
+
+  def import_all
+    @kurse.all.each do |key, kurs|
+      get_or_create_by_import(
+        key, kurs
+      )
+    end
+  end
+end

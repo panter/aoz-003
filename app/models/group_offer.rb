@@ -1,4 +1,6 @@
 class GroupOffer < ApplicationRecord
+  include ImportRelation
+
   TARGET_GROUP = [:women, :men, :children, :teenagers, :unaccompanied, :all].freeze
   DURATION = [:long_term, :regular, :short_term].freeze
   OFFER_TYPES = [:internal_offer, :external_offer].freeze

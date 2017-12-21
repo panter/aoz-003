@@ -1,4 +1,6 @@
 class GroupOfferCategory < ApplicationRecord
+  include ImportRelation
+
   has_many :group_offers
   has_and_belongs_to_many :volunteers
 
