@@ -1,4 +1,5 @@
 class GroupAssignment < ApplicationRecord
+  include ImportRelation
   include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 

@@ -34,9 +34,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze" ADD CONSTRAINT "tbl_FreiwilligenEin
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze" ADD CONSTRAINT "tbl_FreiwilligenEinsätze_fk_Kostenträger_fkey" FOREIGN KEY ("fk_Kostenträger") REFERENCES "tbl_Kostenträger"("pk_Kostenträger");
 
-UPDATE "tbl_FreiwilligenEinsätze" SET "fk_Kurs" = NULL
-	WHERE "fk_Kurs" IN (
-		SELECT "tbl_FreiwilligenEinsätze"."fk_Kurs" FROM "tbl_FreiwilligenEinsätze"	LEFT OUTER JOIN "tbl_Kurse" ON "tbl_Kurse"."pk_Kurs" = "tbl_FreiwilligenEinsätze"."fk_Begleitete" WHERE "tbl_Kurse"."pk_Kurs" IS NULL AND "tbl_FreiwilligenEinsätze"."fk_Kurs" IS NOT NULL);
+UPDATE "tbl_FreiwilligenEinsätze" SET "fk_Kurs" = NULL WHERE "fk_Kurs" = 0;
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze" ADD CONSTRAINT "tbl_FreiwilligenEinsätze_fk_Kurs_fkey" FOREIGN KEY ("fk_Kurs") REFERENCES "tbl_Kurse"("pk_Kurs");
 
@@ -142,7 +140,7 @@ ALTER TABLE ONLY "tbl_Veranstaltungen" ADD CONSTRAINT "tbl_Veranstaltungen_fk_Fr
 UPDATE "tbl_Veranstaltungsteilnehmer" SET "fk_Veranstaltung" = NULL WHERE "fk_Veranstaltung" IN (
   SELECT "tbl_Veranstaltungsteilnehmer"."fk_Veranstaltung" FROM "tbl_Veranstaltungsteilnehmer" LEFT OUTER JOIN "tbl_Veranstaltungen" ON "tbl_Veranstaltungen"."pk_Veranstaltung" = "tbl_Veranstaltungsteilnehmer"."fk_Veranstaltung" WHERE "tbl_Veranstaltungen"."pk_Veranstaltung" IS NULL AND "tbl_Veranstaltungsteilnehmer"."fk_Veranstaltung" IS NOT NULL);
 
-ALTER TABLE ONLY "tbl_Veranstaltungsteilnehmer" ADD CONSTRAINT "tbl_Veranstaltungsteilnehmer_fk_Veranstaltung_fkey" FOREIGN KEY ("fk_Veranstaltung") REFERENCES "tbl_Veranstaltung"("pk_Veranstaltung");
+ALTER TABLE ONLY "tbl_Veranstaltungsteilnehmer" ADD CONSTRAINT "tbl_Veranstaltungsteilnehmer_fk_Veranstaltung_fkey" FOREIGN KEY ("fk_Veranstaltung") REFERENCES "tbl_Veranstaltungen"("pk_Veranstaltung");
 
 UPDATE "tbl_VerfahrensHistory" SET "fk_FamilienRolle" = NULL WHERE "fk_FamilienRolle" IN (
   SELECT "tbl_VerfahrensHistory"."fk_FamilienRolle" FROM "tbl_VerfahrensHistory" LEFT OUTER JOIN "tbl_FamilienRollen" ON "tbl_FamilienRollen"."pk_FamilienRolle" = "tbl_VerfahrensHistory"."fk_FamilienRolle"

@@ -8,6 +8,7 @@ class AssignmentTransform < Transformer
       period_end: fw_einsatz[:d_EinsatzBis],
       performance_appraisal_review: fw_einsatz[:d_Standortgespräch],
       probation_period: fw_einsatz[:d_Probezeit],
+      creator: @ac_import.import_user,
       home_visit: fw_einsatz[:d_Hausbesuch],
       first_instruction_lesson: fw_einsatz[:d_ErstUnterricht],
       short_description: fw_einsatz[:t_Kurzbezeichnung],

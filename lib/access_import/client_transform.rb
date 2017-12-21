@@ -12,12 +12,41 @@ class ClientTransform < Transformer
       language_skills_attributes: language_skills_attributes(haupt_person[:sprachen]),
       contact_attributes: contact_attributes(haupt_person),
       relatives_attributes: relatives_attrs(relatives),
+      user: @ac_import.import_user,
       import_attributes: access_import(
         :tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle], personen_rolle: personen_rolle,
         haupt_person: haupt_person, familien_rolle: familien_rolle, begleitet: begleitet,
         relatives: relatives && relatives
       )
     }
+  end
+
+  def get_or_create_by_import(personen_rollen_id)
+    client = Import.get_imported(Client, personen_rollen_id)
+    return client if client.present?
+    personen_rolle = @personen_rolle.find(personen_rollen_id)
+    client_attributes = prepare_attributes(personen_rolle)
+    client = Client.new(client_attributes)
+    client = personen_rollen_create_update_conversion(client, personen_rolle)
+    client.state = handle_client_state(personen_rolle)
+    client.save!
+    client
+  end
+
+  def import_all
+    @personen_rolle.all_clients.each do |key, personen_rolle|
+      get_or_create_by_import(key, personen_rolle)
+    end
+  end
+
+  def handle_client_state(personen_rolle)
+    if personen_rolle[:d_Rollenende]
+      Client::FINISHED
+    elsif personen_rolle[:d_Rollenende].nil?
+      Client::ACTIVE
+    else
+      Client::REGISTERED
+    end
   end
 
   def comments(begleitet, personen_rolle, haupt_person)

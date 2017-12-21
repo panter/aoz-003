@@ -20,25 +20,25 @@ class PersonenRolle < Accessor
   }.freeze
 
   def all_volunteers
-    all.select do |_id, personen_rolle|
+    all.select do |_, personen_rolle|
       personen_rolle[:z_Rolle] == ACCESS_ROLES.volunteer
     end
   end
 
   def all_clients
-    all.select do |_id, personen_rolle|
+    all.select do |_, personen_rolle|
       personen_rolle[:z_Rolle] == ACCESS_ROLES.client
     end
   end
 
   def all_animators
-    all.select do |_id, personen_rolle|
+    all.select do |_, personen_rolle|
       personen_rolle[:z_Rolle] == ACCESS_ROLES.animator
     end
   end
 
   def all_participants
-    all.select do |_id, personen_rolle|
+    all.select do |_, personen_rolle|
       personen_rolle[:z_Rolle] == ACCESS_ROLES.participant
     end
   end

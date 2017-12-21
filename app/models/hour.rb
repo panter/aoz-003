@@ -1,4 +1,5 @@
 class Hour < ApplicationRecord
+  include ImportRelation
   include ReviewsCommon
 
   attr_reader :hourable_id_and_type
