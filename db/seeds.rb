@@ -112,6 +112,7 @@ if Assignment.count < 1
       period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago),
       period_end: nil
     )
+    volunteer.update(acceptance: 'accepted')
   end
   # half_year assignments
   Array.new(3).map { FactoryBot.create(:volunteer_seed_with_user) }
@@ -130,6 +131,7 @@ if Assignment.count < 1
       author: volunteer.user)
     FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
       trial_feedbackable: assignment)
+    volunteer.update(acceptance: 'accepted')
   end
 end
 puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client, Feedback)
@@ -137,7 +139,9 @@ puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, A
 Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sample) }
      .each do |group_offer|
   volunteers = Array.new(2).map { FactoryBot.create(:volunteer_seed_with_user) }
-
+  volunteers.each do |volunteer|
+    volunteer.update(acceptance: 'accepted')
+  end
   group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
     period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago), period_end: nil)
   FactoryBot.create(:hour, volunteer: volunteers.first, hourable: group_assignment.group_offer,
