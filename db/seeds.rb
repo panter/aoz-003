@@ -1,4 +1,3 @@
-
 include ApplicationHelper
 
 Faker::Config.locale = 'de'
@@ -82,6 +81,12 @@ Volunteer.acceptance_collection.each do |acceptance|
 end
 puts_model_counts('After Volunteer created', User, Volunteer, Client)
 
+# Create clients for each acceptance type
+Client.acceptance_collection.each do |acceptance|
+  FactoryBot.create(:client, acceptance: acceptance, user: User.superadmins.first)
+end
+puts_model_counts('After Client created', User, Volunteer, Client)
+
 # Create EmailTemplates
 if EmailTemplate.count < 1
   FactoryBot.create :email_template_seed, active: true
@@ -107,7 +112,7 @@ if Assignment.count < 1
     FactoryBot.create(
       :assignment,
       volunteer: volunteer,
-      client: FactoryBot.create(:client, state: Client::ACTIVE, user: User.superadmins.first),
+      client: FactoryBot.create(:client, acceptance: 'accepted', user: User.superadmins.first),
       creator: User.superadmins.first,
       period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago),
       period_end: nil
@@ -119,7 +124,7 @@ if Assignment.count < 1
     assignment = FactoryBot.create(
       :assignment,
       volunteer: volunteer,
-      client: FactoryBot.create(:client, state: Client::ACTIVE, user: User.superadmins.first),
+      client: FactoryBot.create(:client, acceptance: 'accepted', user: User.superadmins.first),
       creator: User.superadmins.first,
       period_start: Faker::Date.between(6.months.ago, 12.months.ago),
       period_end: nil

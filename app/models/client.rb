@@ -5,12 +5,7 @@ class Client < ApplicationRecord
   include ZuerichScopes
   include ImportRelation
 
-  REGISTERED = 'registered'.freeze
-  RESERVED = 'reserved'.freeze
-  ACTIVE = 'active'.freeze
-  FINISHED = 'finished'.freeze
-  REJECTED = 'rejected'.freeze
-  STATES = [REGISTERED, RESERVED, ACTIVE, FINISHED, REJECTED].freeze
+  enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
 
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
@@ -32,7 +27,6 @@ class Client < ApplicationRecord
   accepts_nested_attributes_for :journals, allow_destroy: true
 
   validates :salutation, presence: true
-  validates :state, inclusion: { in: STATES }
 
   scope :need_accompanying, lambda {
     includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
@@ -60,6 +54,10 @@ class Client < ApplicationRecord
       .where('assignments.state = ? OR assignments.state = ?', 'suggested', 'active')
   }
 
+  def self.acceptance_collection
+    acceptances.keys.map(&:to_sym)
+  end
+
   def to_s
     contact.full_name
   end
@@ -73,10 +71,6 @@ class Client < ApplicationRecord
       [I18nData.languages(I18n.locale)['DE'], 'DE'],
       [I18nData.languages(I18n.locale)['EN'], 'EN']
     ]
-  end
-
-  def self.state_collection
-    STATES.map(&:to_sym)
   end
 
   def german_missing?

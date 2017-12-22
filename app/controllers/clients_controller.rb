@@ -78,7 +78,7 @@ class ClientsController < ApplicationController
     params.require(:client).permit(
       :gender_request, :age_request, :other_request, :birth_year,
       :salutation, :nationality, :entry_date, :permit, :goals, :education, :interests,
-      :state, :comments, :involved_authority, :competent_authority, :actual_activities,
+      :acceptance, :comments, :involved_authority, :competent_authority, :actual_activities,
       language_skills_attributes, relatives_attributes, contact_attributes,
       availability_attributes
     )

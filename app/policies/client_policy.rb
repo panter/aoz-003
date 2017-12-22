@@ -18,6 +18,6 @@ class ClientPolicy < ApplicationPolicy
   alias_method :destroy?,  :superadmin?
 
   # suplementary policies
-  alias_method :comments?, :superadmin?
-  alias_method :state?,    :superadmin?
+  alias_method :comments?,   :superadmin?
+  alias_method :acceptance?, :superadmin?
 end

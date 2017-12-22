@@ -1,7 +1,6 @@
 require 'application_system_test_case'
 
 class ClientsTest < ApplicationSystemTestCase
-
   setup do
     @superadmin = create :user, email: 'superadmin@example.com'
     @department_manager = create :department_manager, email: 'department@example.com'
@@ -46,7 +45,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Education', with: 'asdfasdf'
     fill_in 'Actual activities', with: 'asdfasdf'
     fill_in 'Interests', with: 'asdfasdf'
-    select('Active', from: 'State')
+    select('Angemeldet', from: 'Acceptance')
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
     fill_in 'Involved authority', with: 'asdfasdf'
@@ -165,16 +164,16 @@ class ClientsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'superadmin sees all required features in index' do
+  test 'superadmin_sees_all_required_features_in_index' do
     with_assignment, without_assignment = create_clients_for_index_text_check
     login_as @superadmin
     visit clients_path
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
     assert page.has_text? 'unassigned_goals unassigned_interests  unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} without_assignment Show Edit"
+      "#{I18n.l(without_assignment.created_at.to_date)} Angemeldet without_assignment Show Edit"
     assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Edit"
+      "#{I18n.l(with_assignment.created_at.to_date)} Angemeldet with_assignment Show Edit"
   end
 
   test 'can_delete_a_client_through_edit' do
@@ -224,7 +223,7 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_link? 'Delete'
   end
 
-  test 'department manager sees his scoped client index correctly' do
+  test 'department_manager_sees_his_scoped_client_index_correctly' do
     superadmins_client = create :client, user: @superadmin
     with_assignment, without_assignment = create_clients_for_index_text_check
     with_assignment.update(user: @department_manager)
@@ -234,9 +233,9 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
     assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} Show"
+      "#{I18n.l(without_assignment.created_at.to_date)} Angemeldet Show"
     assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} Show"
+      "#{I18n.l(with_assignment.created_at.to_date)} Angemeldet Show"
     refute page.has_text? superadmins_client.contact.full_name
   end
 
