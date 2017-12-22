@@ -29,7 +29,7 @@ class Client < ApplicationRecord
   validates :salutation, presence: true
 
   scope :need_accompanying, lambda {
-    includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
+    accepted.includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
   }
 
   scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
@@ -54,6 +54,14 @@ class Client < ApplicationRecord
       .where('assignments.state = ? OR assignments.state = ?', 'suggested', 'active')
   }
 
+  scope :active, lambda {
+    accepted.with_active_assignment
+  }
+
+  scope :inactive, lambda {
+    accepted.need_accompanying
+  }
+
   def self.acceptance_collection
     acceptances.keys.map(&:to_sym)
   end
@@ -75,5 +83,24 @@ class Client < ApplicationRecord
 
   def german_missing?
     language_skills.german.blank?
+  end
+
+  def with_active_assignment?
+    return assignment.active? unless assignment.nil?
+    false
+  end
+
+  def active?
+    accepted? && with_active_assignment?
+  end
+
+  def state
+    return acceptance unless accepted?
+    return :active if active?
+    :inactive unless active?
+  end
+
+  def verify_and_update_state
+    update(active: active?)
   end
 end
