@@ -11,6 +11,7 @@ nav.navbar.section-navigation.hidden-print
   ul.list-inline
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
     = enum_filter_dropdown(:acceptance, Client.acceptances)
+    = boolean_toggler_filter_dropdown(:active, 'Tandem', 'Aktiv', 'Inaktiv')
     li= button_link t('clear_filters'), clients_path, dimension: :sm
     li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: :sm
     li= link_to navigation_glyph('print'), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }

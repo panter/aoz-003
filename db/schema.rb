@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20171221153738) do
     t.text "detailed_description"
     t.string "entry_date"
     t.integer "acceptance", default: 0
+    t.boolean "active", default: false
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
