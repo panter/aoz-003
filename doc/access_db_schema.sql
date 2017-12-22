@@ -15,14 +15,14 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -35,7 +35,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: tbl_Ausbildungen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Ausbildungen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Ausbildungen" (
@@ -52,7 +52,7 @@ CREATE TABLE "tbl_Ausbildungen" (
 ALTER TABLE "tbl_Ausbildungen" OWNER TO kaspi;
 
 --
--- Name: tbl_Ausbildungen_pk_Ausbildung_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Ausbildungen_pk_Ausbildung_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Ausbildungen_pk_Ausbildung_seq"
@@ -67,14 +67,14 @@ CREATE SEQUENCE "tbl_Ausbildungen_pk_Ausbildung_seq"
 ALTER TABLE "tbl_Ausbildungen_pk_Ausbildung_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Ausbildungen_pk_Ausbildung_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Ausbildungen_pk_Ausbildung_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Ausbildungen_pk_Ausbildung_seq" OWNED BY "tbl_Ausbildungen"."pk_Ausbildung";
 
 
 --
--- Name: tbl_AusbildungsTypen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_AusbildungsTypen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_AusbildungsTypen" (
@@ -88,7 +88,7 @@ CREATE TABLE "tbl_AusbildungsTypen" (
 ALTER TABLE "tbl_AusbildungsTypen" OWNER TO kaspi;
 
 --
--- Name: tbl_AusbildungsTypen_pk_AusbildungsTyp_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_AusbildungsTypen_pk_AusbildungsTyp_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_AusbildungsTypen_pk_AusbildungsTyp_seq"
@@ -103,14 +103,14 @@ CREATE SEQUENCE "tbl_AusbildungsTypen_pk_AusbildungsTyp_seq"
 ALTER TABLE "tbl_AusbildungsTypen_pk_AusbildungsTyp_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_AusbildungsTypen_pk_AusbildungsTyp_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_AusbildungsTypen_pk_AusbildungsTyp_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_AusbildungsTypen_pk_AusbildungsTyp_seq" OWNED BY "tbl_AusbildungsTypen"."pk_AusbildungsTyp";
 
 
 --
--- Name: tbl_AuswVorlagen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_AuswVorlagen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_AuswVorlagen" (
@@ -125,7 +125,7 @@ CREATE TABLE "tbl_AuswVorlagen" (
 ALTER TABLE "tbl_AuswVorlagen" OWNER TO kaspi;
 
 --
--- Name: tbl_AuswVorlagen_pk_Vorlage_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_AuswVorlagen_pk_Vorlage_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_AuswVorlagen_pk_Vorlage_seq"
@@ -140,14 +140,14 @@ CREATE SEQUENCE "tbl_AuswVorlagen_pk_Vorlage_seq"
 ALTER TABLE "tbl_AuswVorlagen_pk_Vorlage_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_AuswVorlagen_pk_Vorlage_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_AuswVorlagen_pk_Vorlage_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_AuswVorlagen_pk_Vorlage_seq" OWNED BY "tbl_AuswVorlagen"."pk_Vorlage";
 
 
 --
--- Name: tbl_Begleitete; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Begleitete; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Begleitete" (
@@ -167,7 +167,7 @@ CREATE TABLE "tbl_Begleitete" (
 ALTER TABLE "tbl_Begleitete" OWNER TO kaspi;
 
 --
--- Name: tbl_Begleitete_pk_Begleitete_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Begleitete_pk_Begleitete_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Begleitete_pk_Begleitete_seq"
@@ -182,14 +182,14 @@ CREATE SEQUENCE "tbl_Begleitete_pk_Begleitete_seq"
 ALTER TABLE "tbl_Begleitete_pk_Begleitete_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Begleitete_pk_Begleitete_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Begleitete_pk_Begleitete_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Begleitete_pk_Begleitete_seq" OWNED BY "tbl_Begleitete"."pk_Begleitete";
 
 
 --
--- Name: tbl_EinsatzOrte; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrte; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_EinsatzOrte" (
@@ -206,7 +206,7 @@ CREATE TABLE "tbl_EinsatzOrte" (
 ALTER TABLE "tbl_EinsatzOrte" OWNER TO kaspi;
 
 --
--- Name: tbl_EinsatzOrteProEinsatzFunktion; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrteProEinsatzFunktion; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_EinsatzOrteProEinsatzFunktion" (
@@ -221,7 +221,7 @@ CREATE TABLE "tbl_EinsatzOrteProEinsatzFunktion" (
 ALTER TABLE "tbl_EinsatzOrteProEinsatzFunktion" OWNER TO kaspi;
 
 --
--- Name: tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq"
@@ -236,14 +236,14 @@ CREATE SEQUENCE "tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq
 ALTER TABLE "tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq" OWNED BY "tbl_EinsatzOrteProEinsatzFunktion"."pk_EinsatzOrtProEinsatzFunktion";
 
 
 --
--- Name: tbl_EinsatzOrte_pk_EinsatzOrt_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrte_pk_EinsatzOrt_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_EinsatzOrte_pk_EinsatzOrt_seq"
@@ -258,14 +258,14 @@ CREATE SEQUENCE "tbl_EinsatzOrte_pk_EinsatzOrt_seq"
 ALTER TABLE "tbl_EinsatzOrte_pk_EinsatzOrt_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_EinsatzOrte_pk_EinsatzOrt_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrte_pk_EinsatzOrt_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_EinsatzOrte_pk_EinsatzOrt_seq" OWNED BY "tbl_EinsatzOrte"."pk_EinsatzOrt";
 
 
 --
--- Name: tbl_FallStelleProTeilnehmer; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_FallStelleProTeilnehmer; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_FallStelleProTeilnehmer" (
@@ -282,7 +282,7 @@ CREATE TABLE "tbl_FallStelleProTeilnehmer" (
 ALTER TABLE "tbl_FallStelleProTeilnehmer" OWNER TO kaspi;
 
 --
--- Name: tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq"
@@ -297,14 +297,14 @@ CREATE SEQUENCE "tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq"
 ALTER TABLE "tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq" OWNED BY "tbl_FallStelleProTeilnehmer"."pk_FallStelleProTeilnehmer";
 
 
 --
--- Name: tbl_FallStellen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_FallStellen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_FallStellen" (
@@ -327,7 +327,7 @@ CREATE TABLE "tbl_FallStellen" (
 ALTER TABLE "tbl_FallStellen" OWNER TO kaspi;
 
 --
--- Name: tbl_FallStellen_pk_FallStelle_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_FallStellen_pk_FallStelle_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_FallStellen_pk_FallStelle_seq"
@@ -342,14 +342,14 @@ CREATE SEQUENCE "tbl_FallStellen_pk_FallStelle_seq"
 ALTER TABLE "tbl_FallStellen_pk_FallStelle_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_FallStellen_pk_FallStelle_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_FallStellen_pk_FallStelle_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_FallStellen_pk_FallStelle_seq" OWNED BY "tbl_FallStellen"."pk_FallStelle";
 
 
 --
--- Name: tbl_FamilienRollen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_FamilienRollen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_FamilienRollen" (
@@ -363,7 +363,7 @@ CREATE TABLE "tbl_FamilienRollen" (
 ALTER TABLE "tbl_FamilienRollen" OWNER TO kaspi;
 
 --
--- Name: tbl_FamilienRollen_pk_FamilienRolle_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_FamilienRollen_pk_FamilienRolle_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_FamilienRollen_pk_FamilienRolle_seq"
@@ -378,14 +378,14 @@ CREATE SEQUENCE "tbl_FamilienRollen_pk_FamilienRolle_seq"
 ALTER TABLE "tbl_FamilienRollen_pk_FamilienRolle_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_FamilienRollen_pk_FamilienRolle_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_FamilienRollen_pk_FamilienRolle_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_FamilienRollen_pk_FamilienRolle_seq" OWNED BY "tbl_FamilienRollen"."pk_FamilienRolle";
 
 
 --
--- Name: tbl_FreiwilligenEinsätze; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_FreiwilligenEinsätze" (
@@ -425,7 +425,7 @@ CREATE TABLE "tbl_FreiwilligenEinsätze" (
 ALTER TABLE "tbl_FreiwilligenEinsätze" OWNER TO kaspi;
 
 --
--- Name: tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq"
@@ -440,14 +440,14 @@ CREATE SEQUENCE "tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq"
 ALTER TABLE "tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq" OWNED BY "tbl_FreiwilligenEinsätze"."pk_FreiwilligenEinsatz";
 
 
 --
--- Name: tbl_FreiwilligenEntschädigung; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEntschädigung; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_FreiwilligenEntschädigung" (
@@ -475,7 +475,7 @@ CREATE TABLE "tbl_FreiwilligenEntschädigung" (
 ALTER TABLE "tbl_FreiwilligenEntschädigung" OWNER TO kaspi;
 
 --
--- Name: tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq"
@@ -490,14 +490,14 @@ CREATE SEQUENCE "tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq
 ALTER TABLE "tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq" OWNED BY "tbl_FreiwilligenEntschädigung"."pk_FreiwilligenEntschädigung";
 
 
 --
--- Name: tbl_FreiwilligenFunktionen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenFunktionen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_FreiwilligenFunktionen" (
@@ -514,7 +514,7 @@ CREATE TABLE "tbl_FreiwilligenFunktionen" (
 ALTER TABLE "tbl_FreiwilligenFunktionen" OWNER TO kaspi;
 
 --
--- Name: tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq"
@@ -529,14 +529,14 @@ CREATE SEQUENCE "tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq"
 ALTER TABLE "tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq" OWNED BY "tbl_FreiwilligenFunktionen"."pk_FreiwilligenFunktion";
 
 
 --
--- Name: tbl_FreiwilligenVeranstaltungen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenVeranstaltungen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_FreiwilligenVeranstaltungen" (
@@ -552,7 +552,7 @@ CREATE TABLE "tbl_FreiwilligenVeranstaltungen" (
 ALTER TABLE "tbl_FreiwilligenVeranstaltungen" OWNER TO kaspi;
 
 --
--- Name: tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq"
@@ -567,14 +567,14 @@ CREATE SEQUENCE "tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq
 ALTER TABLE "tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq" OWNED BY "tbl_FreiwilligenVeranstaltungen"."pk_FreiwilligenVeranstaltung";
 
 
 --
--- Name: tbl_Hauptpersonen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Hauptpersonen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Hauptpersonen" (
@@ -607,7 +607,7 @@ CREATE TABLE "tbl_Hauptpersonen" (
 ALTER TABLE "tbl_Hauptpersonen" OWNER TO kaspi;
 
 --
--- Name: tbl_Hauptpersonen_pk_Hauptperson_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Hauptpersonen_pk_Hauptperson_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Hauptpersonen_pk_Hauptperson_seq"
@@ -622,14 +622,14 @@ CREATE SEQUENCE "tbl_Hauptpersonen_pk_Hauptperson_seq"
 ALTER TABLE "tbl_Hauptpersonen_pk_Hauptperson_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Hauptpersonen_pk_Hauptperson_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Hauptpersonen_pk_Hauptperson_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Hauptpersonen_pk_Hauptperson_seq" OWNED BY "tbl_Hauptpersonen"."pk_Hauptperson";
 
 
 --
--- Name: tbl_Journal; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Journal; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Journal" (
@@ -650,7 +650,7 @@ CREATE TABLE "tbl_Journal" (
 ALTER TABLE "tbl_Journal" OWNER TO kaspi;
 
 --
--- Name: tbl_JournalKategorien; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_JournalKategorien; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_JournalKategorien" (
@@ -664,7 +664,7 @@ CREATE TABLE "tbl_JournalKategorien" (
 ALTER TABLE "tbl_JournalKategorien" OWNER TO kaspi;
 
 --
--- Name: tbl_JournalKategorien_pk_JournalKategorie_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_JournalKategorien_pk_JournalKategorie_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_JournalKategorien_pk_JournalKategorie_seq"
@@ -679,14 +679,14 @@ CREATE SEQUENCE "tbl_JournalKategorien_pk_JournalKategorie_seq"
 ALTER TABLE "tbl_JournalKategorien_pk_JournalKategorie_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_JournalKategorien_pk_JournalKategorie_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_JournalKategorien_pk_JournalKategorie_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_JournalKategorien_pk_JournalKategorie_seq" OWNED BY "tbl_JournalKategorien"."pk_JournalKategorie";
 
 
 --
--- Name: tbl_Journal_pk_Journal_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Journal_pk_Journal_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Journal_pk_Journal_seq"
@@ -701,14 +701,14 @@ CREATE SEQUENCE "tbl_Journal_pk_Journal_seq"
 ALTER TABLE "tbl_Journal_pk_Journal_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Journal_pk_Journal_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Journal_pk_Journal_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Journal_pk_Journal_seq" OWNED BY "tbl_Journal"."pk_Journal";
 
 
 --
--- Name: tbl_Kantone; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Kantone; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Kantone" (
@@ -723,7 +723,7 @@ CREATE TABLE "tbl_Kantone" (
 ALTER TABLE "tbl_Kantone" OWNER TO kaspi;
 
 --
--- Name: tbl_Kantone_pk_Kanton_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Kantone_pk_Kanton_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Kantone_pk_Kanton_seq"
@@ -738,14 +738,14 @@ CREATE SEQUENCE "tbl_Kantone_pk_Kanton_seq"
 ALTER TABLE "tbl_Kantone_pk_Kanton_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Kantone_pk_Kanton_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Kantone_pk_Kanton_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Kantone_pk_Kanton_seq" OWNED BY "tbl_Kantone"."pk_Kanton";
 
 
 --
--- Name: tbl_KontaktPersonen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_KontaktPersonen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_KontaktPersonen" (
@@ -767,7 +767,7 @@ CREATE TABLE "tbl_KontaktPersonen" (
 ALTER TABLE "tbl_KontaktPersonen" OWNER TO kaspi;
 
 --
--- Name: tbl_KontaktPersonen_pk_Kontaktperson_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_KontaktPersonen_pk_Kontaktperson_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_KontaktPersonen_pk_Kontaktperson_seq"
@@ -782,14 +782,14 @@ CREATE SEQUENCE "tbl_KontaktPersonen_pk_Kontaktperson_seq"
 ALTER TABLE "tbl_KontaktPersonen_pk_Kontaktperson_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_KontaktPersonen_pk_Kontaktperson_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_KontaktPersonen_pk_Kontaktperson_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_KontaktPersonen_pk_Kontaktperson_seq" OWNED BY "tbl_KontaktPersonen"."pk_Kontaktperson";
 
 
 --
--- Name: tbl_Kontoangaben; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Kontoangaben; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Kontoangaben" (
@@ -811,7 +811,7 @@ CREATE TABLE "tbl_Kontoangaben" (
 ALTER TABLE "tbl_Kontoangaben" OWNER TO kaspi;
 
 --
--- Name: tbl_Kontoangaben_pk_Kontoangabe_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Kontoangaben_pk_Kontoangabe_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Kontoangaben_pk_Kontoangabe_seq"
@@ -826,14 +826,14 @@ CREATE SEQUENCE "tbl_Kontoangaben_pk_Kontoangabe_seq"
 ALTER TABLE "tbl_Kontoangaben_pk_Kontoangabe_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Kontoangaben_pk_Kontoangabe_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Kontoangaben_pk_Kontoangabe_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Kontoangaben_pk_Kontoangabe_seq" OWNED BY "tbl_Kontoangaben"."pk_Kontoangabe";
 
 
 --
--- Name: tbl_Kostenträger; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Kostenträger; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Kostenträger" (
@@ -849,7 +849,7 @@ CREATE TABLE "tbl_Kostenträger" (
 ALTER TABLE "tbl_Kostenträger" OWNER TO kaspi;
 
 --
--- Name: tbl_Kostenträger_pk_Kostenträger_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Kostenträger_pk_Kostenträger_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Kostenträger_pk_Kostenträger_seq"
@@ -864,14 +864,14 @@ CREATE SEQUENCE "tbl_Kostenträger_pk_Kostenträger_seq"
 ALTER TABLE "tbl_Kostenträger_pk_Kostenträger_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Kostenträger_pk_Kostenträger_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Kostenträger_pk_Kostenträger_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Kostenträger_pk_Kostenträger_seq" OWNED BY "tbl_Kostenträger"."pk_Kostenträger";
 
 
 --
--- Name: tbl_Kursarten; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Kursarten; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Kursarten" (
@@ -887,7 +887,7 @@ CREATE TABLE "tbl_Kursarten" (
 ALTER TABLE "tbl_Kursarten" OWNER TO kaspi;
 
 --
--- Name: tbl_Kursarten_pk_Kursart_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Kursarten_pk_Kursart_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Kursarten_pk_Kursart_seq"
@@ -902,14 +902,14 @@ CREATE SEQUENCE "tbl_Kursarten_pk_Kursart_seq"
 ALTER TABLE "tbl_Kursarten_pk_Kursart_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Kursarten_pk_Kursart_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Kursarten_pk_Kursart_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Kursarten_pk_Kursart_seq" OWNED BY "tbl_Kursarten"."pk_Kursart";
 
 
 --
--- Name: tbl_Kurse; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Kurse; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Kurse" (
@@ -929,7 +929,7 @@ CREATE TABLE "tbl_Kurse" (
 ALTER TABLE "tbl_Kurse" OWNER TO kaspi;
 
 --
--- Name: tbl_Kurse_pk_Kurs_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Kurse_pk_Kurs_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Kurse_pk_Kurs_seq"
@@ -944,14 +944,14 @@ CREATE SEQUENCE "tbl_Kurse_pk_Kurs_seq"
 ALTER TABLE "tbl_Kurse_pk_Kurs_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Kurse_pk_Kurs_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Kurse_pk_Kurs_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Kurse_pk_Kurs_seq" OWNED BY "tbl_Kurse"."pk_Kurs";
 
 
 --
--- Name: tbl_Kurspräsenzen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Kurspräsenzen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Kurspräsenzen" (
@@ -969,7 +969,7 @@ CREATE TABLE "tbl_Kurspräsenzen" (
 ALTER TABLE "tbl_Kurspräsenzen" OWNER TO kaspi;
 
 --
--- Name: tbl_Kurspräsenzen_pk_Kurspräsenz_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Kurspräsenzen_pk_Kurspräsenz_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Kurspräsenzen_pk_Kurspräsenz_seq"
@@ -984,14 +984,14 @@ CREATE SEQUENCE "tbl_Kurspräsenzen_pk_Kurspräsenz_seq"
 ALTER TABLE "tbl_Kurspräsenzen_pk_Kurspräsenz_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Kurspräsenzen_pk_Kurspräsenz_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Kurspräsenzen_pk_Kurspräsenz_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Kurspräsenzen_pk_Kurspräsenz_seq" OWNED BY "tbl_Kurspräsenzen"."pk_Kurspräsenz";
 
 
 --
--- Name: tbl_Kursteilnehmer; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Kursteilnehmer; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Kursteilnehmer" (
@@ -1007,7 +1007,7 @@ CREATE TABLE "tbl_Kursteilnehmer" (
 ALTER TABLE "tbl_Kursteilnehmer" OWNER TO kaspi;
 
 --
--- Name: tbl_Kursteilnehmer_pk_Kursteilnehmer_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Kursteilnehmer_pk_Kursteilnehmer_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Kursteilnehmer_pk_Kursteilnehmer_seq"
@@ -1022,14 +1022,14 @@ CREATE SEQUENCE "tbl_Kursteilnehmer_pk_Kursteilnehmer_seq"
 ALTER TABLE "tbl_Kursteilnehmer_pk_Kursteilnehmer_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Kursteilnehmer_pk_Kursteilnehmer_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Kursteilnehmer_pk_Kursteilnehmer_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Kursteilnehmer_pk_Kursteilnehmer_seq" OWNED BY "tbl_Kursteilnehmer"."pk_Kursteilnehmer";
 
 
 --
--- Name: tbl_Lehrmittel; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Lehrmittel; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Lehrmittel" (
@@ -1045,7 +1045,7 @@ CREATE TABLE "tbl_Lehrmittel" (
 ALTER TABLE "tbl_Lehrmittel" OWNER TO kaspi;
 
 --
--- Name: tbl_Lehrmittel_pk_Lehrmittel_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Lehrmittel_pk_Lehrmittel_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Lehrmittel_pk_Lehrmittel_seq"
@@ -1060,14 +1060,14 @@ CREATE SEQUENCE "tbl_Lehrmittel_pk_Lehrmittel_seq"
 ALTER TABLE "tbl_Lehrmittel_pk_Lehrmittel_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Lehrmittel_pk_Lehrmittel_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Lehrmittel_pk_Lehrmittel_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Lehrmittel_pk_Lehrmittel_seq" OWNED BY "tbl_Lehrmittel"."pk_Lehrmittel";
 
 
 --
--- Name: tbl_Länder; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Länder; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Länder" (
@@ -1082,7 +1082,7 @@ CREATE TABLE "tbl_Länder" (
 ALTER TABLE "tbl_Länder" OWNER TO kaspi;
 
 --
--- Name: tbl_Länder_pk_Land_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Länder_pk_Land_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Länder_pk_Land_seq"
@@ -1097,14 +1097,14 @@ CREATE SEQUENCE "tbl_Länder_pk_Land_seq"
 ALTER TABLE "tbl_Länder_pk_Land_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Länder_pk_Land_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Länder_pk_Land_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Länder_pk_Land_seq" OWNED BY "tbl_Länder"."pk_Land";
 
 
 --
--- Name: tbl_ParameterT; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterT; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_ParameterT" (
@@ -1120,7 +1120,7 @@ CREATE TABLE "tbl_ParameterT" (
 ALTER TABLE "tbl_ParameterT" OWNER TO kaspi;
 
 --
--- Name: tbl_ParameterT_pk_Parameter_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterT_pk_Parameter_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_ParameterT_pk_Parameter_seq"
@@ -1135,14 +1135,14 @@ CREATE SEQUENCE "tbl_ParameterT_pk_Parameter_seq"
 ALTER TABLE "tbl_ParameterT_pk_Parameter_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_ParameterT_pk_Parameter_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterT_pk_Parameter_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_ParameterT_pk_Parameter_seq" OWNED BY "tbl_ParameterT"."pk_Parameter";
 
 
 --
--- Name: tbl_ParameterZ; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterZ; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_ParameterZ" (
@@ -1158,7 +1158,7 @@ CREATE TABLE "tbl_ParameterZ" (
 ALTER TABLE "tbl_ParameterZ" OWNER TO kaspi;
 
 --
--- Name: tbl_ParameterZ_pk_Parameter_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterZ_pk_Parameter_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_ParameterZ_pk_Parameter_seq"
@@ -1173,14 +1173,14 @@ CREATE SEQUENCE "tbl_ParameterZ_pk_Parameter_seq"
 ALTER TABLE "tbl_ParameterZ_pk_Parameter_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_ParameterZ_pk_Parameter_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterZ_pk_Parameter_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_ParameterZ_pk_Parameter_seq" OWNED BY "tbl_ParameterZ"."pk_Parameter";
 
 
 --
--- Name: tbl_Personenrollen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Personenrollen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Personenrollen" (
@@ -1205,7 +1205,7 @@ CREATE TABLE "tbl_Personenrollen" (
 ALTER TABLE "tbl_Personenrollen" OWNER TO kaspi;
 
 --
--- Name: tbl_Personenrollen_pk_PersonenRolle_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Personenrollen_pk_PersonenRolle_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Personenrollen_pk_PersonenRolle_seq"
@@ -1220,14 +1220,14 @@ CREATE SEQUENCE "tbl_Personenrollen_pk_PersonenRolle_seq"
 ALTER TABLE "tbl_Personenrollen_pk_PersonenRolle_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Personenrollen_pk_PersonenRolle_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Personenrollen_pk_PersonenRolle_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Personenrollen_pk_PersonenRolle_seq" OWNED BY "tbl_Personenrollen"."pk_PersonenRolle";
 
 
 --
--- Name: tbl_PlzOrt; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_PlzOrt; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_PlzOrt" (
@@ -1245,7 +1245,7 @@ CREATE TABLE "tbl_PlzOrt" (
 ALTER TABLE "tbl_PlzOrt" OWNER TO kaspi;
 
 --
--- Name: tbl_PlzOrt_pk_PlzOrt_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_PlzOrt_pk_PlzOrt_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_PlzOrt_pk_PlzOrt_seq"
@@ -1260,14 +1260,14 @@ CREATE SEQUENCE "tbl_PlzOrt_pk_PlzOrt_seq"
 ALTER TABLE "tbl_PlzOrt_pk_PlzOrt_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_PlzOrt_pk_PlzOrt_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_PlzOrt_pk_PlzOrt_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_PlzOrt_pk_PlzOrt_seq" OWNED BY "tbl_PlzOrt"."pk_PlzOrt";
 
 
 --
--- Name: tbl_Rollen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Rollen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Rollen" (
@@ -1282,7 +1282,7 @@ CREATE TABLE "tbl_Rollen" (
 ALTER TABLE "tbl_Rollen" OWNER TO kaspi;
 
 --
--- Name: tbl_Rollen_pk_Rolle_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Rollen_pk_Rolle_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Rollen_pk_Rolle_seq"
@@ -1297,14 +1297,14 @@ CREATE SEQUENCE "tbl_Rollen_pk_Rolle_seq"
 ALTER TABLE "tbl_Rollen_pk_Rolle_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Rollen_pk_Rolle_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Rollen_pk_Rolle_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Rollen_pk_Rolle_seq" OWNED BY "tbl_Rollen"."pk_Rolle";
 
 
 --
--- Name: tbl_Semester; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Semester; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Semester" (
@@ -1317,7 +1317,7 @@ CREATE TABLE "tbl_Semester" (
 ALTER TABLE "tbl_Semester" OWNER TO kaspi;
 
 --
--- Name: tbl_Semester_pk_Semester_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Semester_pk_Semester_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Semester_pk_Semester_seq"
@@ -1332,14 +1332,14 @@ CREATE SEQUENCE "tbl_Semester_pk_Semester_seq"
 ALTER TABLE "tbl_Semester_pk_Semester_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Semester_pk_Semester_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Semester_pk_Semester_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Semester_pk_Semester_seq" OWNED BY "tbl_Semester"."pk_Semester";
 
 
 --
--- Name: tbl_Spesenansätze; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Spesenansätze; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Spesenansätze" (
@@ -1357,7 +1357,7 @@ CREATE TABLE "tbl_Spesenansätze" (
 ALTER TABLE "tbl_Spesenansätze" OWNER TO kaspi;
 
 --
--- Name: tbl_Spesenansätze_pk_Spesenansatz_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Spesenansätze_pk_Spesenansatz_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Spesenansätze_pk_Spesenansatz_seq"
@@ -1372,14 +1372,14 @@ CREATE SEQUENCE "tbl_Spesenansätze_pk_Spesenansatz_seq"
 ALTER TABLE "tbl_Spesenansätze_pk_Spesenansatz_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Spesenansätze_pk_Spesenansatz_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Spesenansätze_pk_Spesenansatz_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Spesenansätze_pk_Spesenansatz_seq" OWNED BY "tbl_Spesenansätze"."pk_Spesenansatz";
 
 
 --
--- Name: tbl_SpracheProHauptperson; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_SpracheProHauptperson" (
@@ -1398,7 +1398,7 @@ CREATE TABLE "tbl_SpracheProHauptperson" (
 ALTER TABLE "tbl_SpracheProHauptperson" OWNER TO kaspi;
 
 --
--- Name: tbl_SpracheProHauptperson_pk_SpracheProPerson_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson_pk_SpracheProPerson_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_SpracheProHauptperson_pk_SpracheProPerson_seq"
@@ -1413,14 +1413,14 @@ CREATE SEQUENCE "tbl_SpracheProHauptperson_pk_SpracheProPerson_seq"
 ALTER TABLE "tbl_SpracheProHauptperson_pk_SpracheProPerson_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_SpracheProHauptperson_pk_SpracheProPerson_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson_pk_SpracheProPerson_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_SpracheProHauptperson_pk_SpracheProPerson_seq" OWNED BY "tbl_SpracheProHauptperson"."pk_SpracheProPerson";
 
 
 --
--- Name: tbl_Sprachen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Sprachen" (
@@ -1434,7 +1434,7 @@ CREATE TABLE "tbl_Sprachen" (
 ALTER TABLE "tbl_Sprachen" OWNER TO kaspi;
 
 --
--- Name: tbl_Sprachen_pk_Sprache_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachen_pk_Sprache_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Sprachen_pk_Sprache_seq"
@@ -1449,14 +1449,14 @@ CREATE SEQUENCE "tbl_Sprachen_pk_Sprache_seq"
 ALTER TABLE "tbl_Sprachen_pk_Sprache_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Sprachen_pk_Sprache_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachen_pk_Sprache_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Sprachen_pk_Sprache_seq" OWNED BY "tbl_Sprachen"."pk_Sprache";
 
 
 --
--- Name: tbl_Sprachkenntnisse; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachkenntnisse; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Sprachkenntnisse" (
@@ -1471,7 +1471,7 @@ CREATE TABLE "tbl_Sprachkenntnisse" (
 ALTER TABLE "tbl_Sprachkenntnisse" OWNER TO kaspi;
 
 --
--- Name: tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq"
@@ -1486,14 +1486,14 @@ CREATE SEQUENCE "tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq"
 ALTER TABLE "tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq" OWNED BY "tbl_Sprachkenntnisse"."pk_Sprachkenntnis";
 
 
 --
--- Name: tbl_Stundenerfassung; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Stundenerfassung; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Stundenerfassung" (
@@ -1514,7 +1514,7 @@ CREATE TABLE "tbl_Stundenerfassung" (
 ALTER TABLE "tbl_Stundenerfassung" OWNER TO kaspi;
 
 --
--- Name: tbl_Stundenerfassung_pk_Stundenerfassung_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Stundenerfassung_pk_Stundenerfassung_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Stundenerfassung_pk_Stundenerfassung_seq"
@@ -1529,14 +1529,14 @@ CREATE SEQUENCE "tbl_Stundenerfassung_pk_Stundenerfassung_seq"
 ALTER TABLE "tbl_Stundenerfassung_pk_Stundenerfassung_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Stundenerfassung_pk_Stundenerfassung_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Stundenerfassung_pk_Stundenerfassung_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Stundenerfassung_pk_Stundenerfassung_seq" OWNED BY "tbl_Stundenerfassung"."pk_Stundenerfassung";
 
 
 --
--- Name: tbl_Veranstaltungen; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungen; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Veranstaltungen" (
@@ -1555,7 +1555,7 @@ CREATE TABLE "tbl_Veranstaltungen" (
 ALTER TABLE "tbl_Veranstaltungen" OWNER TO kaspi;
 
 --
--- Name: tbl_Veranstaltungen_pk_Veranstaltung_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungen_pk_Veranstaltung_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Veranstaltungen_pk_Veranstaltung_seq"
@@ -1570,14 +1570,14 @@ CREATE SEQUENCE "tbl_Veranstaltungen_pk_Veranstaltung_seq"
 ALTER TABLE "tbl_Veranstaltungen_pk_Veranstaltung_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Veranstaltungen_pk_Veranstaltung_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungen_pk_Veranstaltung_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Veranstaltungen_pk_Veranstaltung_seq" OWNED BY "tbl_Veranstaltungen"."pk_Veranstaltung";
 
 
 --
--- Name: tbl_Veranstaltungsteilnehmer; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungsteilnehmer; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Veranstaltungsteilnehmer" (
@@ -1593,7 +1593,7 @@ CREATE TABLE "tbl_Veranstaltungsteilnehmer" (
 ALTER TABLE "tbl_Veranstaltungsteilnehmer" OWNER TO kaspi;
 
 --
--- Name: tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq"
@@ -1608,14 +1608,14 @@ CREATE SEQUENCE "tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq"
 ALTER TABLE "tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq" OWNED BY "tbl_Veranstaltungsteilnehmer"."pk_Veranstaltungsteilnehmer";
 
 
 --
--- Name: tbl_VerfahrensHistory; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_VerfahrensHistory; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_VerfahrensHistory" (
@@ -1633,7 +1633,7 @@ CREATE TABLE "tbl_VerfahrensHistory" (
 ALTER TABLE "tbl_VerfahrensHistory" OWNER TO kaspi;
 
 --
--- Name: tbl_VerfahrensHistory_pk_VerfahrensHistory_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_VerfahrensHistory_pk_VerfahrensHistory_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_VerfahrensHistory_pk_VerfahrensHistory_seq"
@@ -1648,14 +1648,14 @@ CREATE SEQUENCE "tbl_VerfahrensHistory_pk_VerfahrensHistory_seq"
 ALTER TABLE "tbl_VerfahrensHistory_pk_VerfahrensHistory_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_VerfahrensHistory_pk_VerfahrensHistory_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_VerfahrensHistory_pk_VerfahrensHistory_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_VerfahrensHistory_pk_VerfahrensHistory_seq" OWNED BY "tbl_VerfahrensHistory"."pk_VerfahrensHistory";
 
 
 --
--- Name: tbl_Verfahrensstati; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_Verfahrensstati; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_Verfahrensstati" (
@@ -1672,7 +1672,7 @@ CREATE TABLE "tbl_Verfahrensstati" (
 ALTER TABLE "tbl_Verfahrensstati" OWNER TO kaspi;
 
 --
--- Name: tbl_Verfahrensstati_pk_Verfahrensstatus_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_Verfahrensstati_pk_Verfahrensstatus_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_Verfahrensstati_pk_Verfahrensstatus_seq"
@@ -1687,14 +1687,14 @@ CREATE SEQUENCE "tbl_Verfahrensstati_pk_Verfahrensstatus_seq"
 ALTER TABLE "tbl_Verfahrensstati_pk_Verfahrensstatus_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_Verfahrensstati_pk_Verfahrensstatus_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_Verfahrensstati_pk_Verfahrensstatus_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_Verfahrensstati_pk_Verfahrensstatus_seq" OWNED BY "tbl_Verfahrensstati"."pk_Verfahrensstatus";
 
 
 --
--- Name: tbl_VersionData; Type: TABLE; Schema: public; Owner: kaspi
+-- Name: tbl_VersionData; Type: TABLE; Schema: public
 --
 
 CREATE TABLE "tbl_VersionData" (
@@ -1710,7 +1710,7 @@ CREATE TABLE "tbl_VersionData" (
 ALTER TABLE "tbl_VersionData" OWNER TO kaspi;
 
 --
--- Name: tbl_VersionData_pk_VersionD_seq; Type: SEQUENCE; Schema: public; Owner: kaspi
+-- Name: tbl_VersionData_pk_VersionD_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE "tbl_VersionData_pk_VersionD_seq"
@@ -1725,308 +1725,308 @@ CREATE SEQUENCE "tbl_VersionData_pk_VersionD_seq"
 ALTER TABLE "tbl_VersionData_pk_VersionD_seq" OWNER TO kaspi;
 
 --
--- Name: tbl_VersionData_pk_VersionD_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: kaspi
+-- Name: tbl_VersionData_pk_VersionD_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE "tbl_VersionData_pk_VersionD_seq" OWNED BY "tbl_VersionData"."pk_VersionD";
 
 
 --
--- Name: tbl_Ausbildungen pk_Ausbildung; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Ausbildungen pk_Ausbildung; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Ausbildungen" ALTER COLUMN "pk_Ausbildung" SET DEFAULT nextval('"tbl_Ausbildungen_pk_Ausbildung_seq"'::regclass);
 
 
 --
--- Name: tbl_AusbildungsTypen pk_AusbildungsTyp; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_AusbildungsTypen pk_AusbildungsTyp; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_AusbildungsTypen" ALTER COLUMN "pk_AusbildungsTyp" SET DEFAULT nextval('"tbl_AusbildungsTypen_pk_AusbildungsTyp_seq"'::regclass);
 
 
 --
--- Name: tbl_AuswVorlagen pk_Vorlage; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_AuswVorlagen pk_Vorlage; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_AuswVorlagen" ALTER COLUMN "pk_Vorlage" SET DEFAULT nextval('"tbl_AuswVorlagen_pk_Vorlage_seq"'::regclass);
 
 
 --
--- Name: tbl_Begleitete pk_Begleitete; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Begleitete pk_Begleitete; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Begleitete" ALTER COLUMN "pk_Begleitete" SET DEFAULT nextval('"tbl_Begleitete_pk_Begleitete_seq"'::regclass);
 
 
 --
--- Name: tbl_EinsatzOrte pk_EinsatzOrt; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrte pk_EinsatzOrt; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_EinsatzOrte" ALTER COLUMN "pk_EinsatzOrt" SET DEFAULT nextval('"tbl_EinsatzOrte_pk_EinsatzOrt_seq"'::regclass);
 
 
 --
--- Name: tbl_EinsatzOrteProEinsatzFunktion pk_EinsatzOrtProEinsatzFunktion; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrteProEinsatzFunktion pk_EinsatzOrtProEinsatzFunktion; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_EinsatzOrteProEinsatzFunktion" ALTER COLUMN "pk_EinsatzOrtProEinsatzFunktion" SET DEFAULT nextval('"tbl_EinsatzOrteProEinsatzFunk_pk_EinsatzOrtProEinsatzFunkti_seq"'::regclass);
 
 
 --
--- Name: tbl_FallStelleProTeilnehmer pk_FallStelleProTeilnehmer; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_FallStelleProTeilnehmer pk_FallStelleProTeilnehmer; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer" ALTER COLUMN "pk_FallStelleProTeilnehmer" SET DEFAULT nextval('"tbl_FallStelleProTeilnehmer_pk_FallStelleProTeilnehmer_seq"'::regclass);
 
 
 --
--- Name: tbl_FallStellen pk_FallStelle; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_FallStellen pk_FallStelle; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FallStellen" ALTER COLUMN "pk_FallStelle" SET DEFAULT nextval('"tbl_FallStellen_pk_FallStelle_seq"'::regclass);
 
 
 --
--- Name: tbl_FamilienRollen pk_FamilienRolle; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_FamilienRollen pk_FamilienRolle; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FamilienRollen" ALTER COLUMN "pk_FamilienRolle" SET DEFAULT nextval('"tbl_FamilienRollen_pk_FamilienRolle_seq"'::regclass);
 
 
 --
--- Name: tbl_FreiwilligenEinsätze pk_FreiwilligenEinsatz; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze pk_FreiwilligenEinsatz; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze" ALTER COLUMN "pk_FreiwilligenEinsatz" SET DEFAULT nextval('"tbl_FreiwilligenEinsätze_pk_FreiwilligenEinsatz_seq"'::regclass);
 
 
 --
--- Name: tbl_FreiwilligenEntschädigung pk_FreiwilligenEntschädigung; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEntschädigung pk_FreiwilligenEntschädigung; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEntschädigung" ALTER COLUMN "pk_FreiwilligenEntschädigung" SET DEFAULT nextval('"tbl_FreiwilligenEntschädigun_pk_FreiwilligenEntschädigung_seq"'::regclass);
 
 
 --
--- Name: tbl_FreiwilligenFunktionen pk_FreiwilligenFunktion; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenFunktionen pk_FreiwilligenFunktion; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenFunktionen" ALTER COLUMN "pk_FreiwilligenFunktion" SET DEFAULT nextval('"tbl_FreiwilligenFunktionen_pk_FreiwilligenFunktion_seq"'::regclass);
 
 
 --
--- Name: tbl_FreiwilligenVeranstaltungen pk_FreiwilligenVeranstaltung; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenVeranstaltungen pk_FreiwilligenVeranstaltung; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenVeranstaltungen" ALTER COLUMN "pk_FreiwilligenVeranstaltung" SET DEFAULT nextval('"tbl_FreiwilligenVeranstaltunge_pk_FreiwilligenVeranstaltung_seq"'::regclass);
 
 
 --
--- Name: tbl_Hauptpersonen pk_Hauptperson; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Hauptpersonen pk_Hauptperson; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Hauptpersonen" ALTER COLUMN "pk_Hauptperson" SET DEFAULT nextval('"tbl_Hauptpersonen_pk_Hauptperson_seq"'::regclass);
 
 
 --
--- Name: tbl_Journal pk_Journal; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Journal pk_Journal; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Journal" ALTER COLUMN "pk_Journal" SET DEFAULT nextval('"tbl_Journal_pk_Journal_seq"'::regclass);
 
 
 --
--- Name: tbl_JournalKategorien pk_JournalKategorie; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_JournalKategorien pk_JournalKategorie; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_JournalKategorien" ALTER COLUMN "pk_JournalKategorie" SET DEFAULT nextval('"tbl_JournalKategorien_pk_JournalKategorie_seq"'::regclass);
 
 
 --
--- Name: tbl_Kantone pk_Kanton; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Kantone pk_Kanton; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kantone" ALTER COLUMN "pk_Kanton" SET DEFAULT nextval('"tbl_Kantone_pk_Kanton_seq"'::regclass);
 
 
 --
--- Name: tbl_KontaktPersonen pk_Kontaktperson; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_KontaktPersonen pk_Kontaktperson; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_KontaktPersonen" ALTER COLUMN "pk_Kontaktperson" SET DEFAULT nextval('"tbl_KontaktPersonen_pk_Kontaktperson_seq"'::regclass);
 
 
 --
--- Name: tbl_Kontoangaben pk_Kontoangabe; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Kontoangaben pk_Kontoangabe; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kontoangaben" ALTER COLUMN "pk_Kontoangabe" SET DEFAULT nextval('"tbl_Kontoangaben_pk_Kontoangabe_seq"'::regclass);
 
 
 --
--- Name: tbl_Kostenträger pk_Kostenträger; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Kostenträger pk_Kostenträger; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kostenträger" ALTER COLUMN "pk_Kostenträger" SET DEFAULT nextval('"tbl_Kostenträger_pk_Kostenträger_seq"'::regclass);
 
 
 --
--- Name: tbl_Kursarten pk_Kursart; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Kursarten pk_Kursart; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kursarten" ALTER COLUMN "pk_Kursart" SET DEFAULT nextval('"tbl_Kursarten_pk_Kursart_seq"'::regclass);
 
 
 --
--- Name: tbl_Kurse pk_Kurs; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Kurse pk_Kurs; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kurse" ALTER COLUMN "pk_Kurs" SET DEFAULT nextval('"tbl_Kurse_pk_Kurs_seq"'::regclass);
 
 
 --
--- Name: tbl_Kurspräsenzen pk_Kurspräsenz; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Kurspräsenzen pk_Kurspräsenz; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kurspräsenzen" ALTER COLUMN "pk_Kurspräsenz" SET DEFAULT nextval('"tbl_Kurspräsenzen_pk_Kurspräsenz_seq"'::regclass);
 
 
 --
--- Name: tbl_Kursteilnehmer pk_Kursteilnehmer; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Kursteilnehmer pk_Kursteilnehmer; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kursteilnehmer" ALTER COLUMN "pk_Kursteilnehmer" SET DEFAULT nextval('"tbl_Kursteilnehmer_pk_Kursteilnehmer_seq"'::regclass);
 
 
 --
--- Name: tbl_Lehrmittel pk_Lehrmittel; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Lehrmittel pk_Lehrmittel; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Lehrmittel" ALTER COLUMN "pk_Lehrmittel" SET DEFAULT nextval('"tbl_Lehrmittel_pk_Lehrmittel_seq"'::regclass);
 
 
 --
--- Name: tbl_Länder pk_Land; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Länder pk_Land; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Länder" ALTER COLUMN "pk_Land" SET DEFAULT nextval('"tbl_Länder_pk_Land_seq"'::regclass);
 
 
 --
--- Name: tbl_ParameterT pk_Parameter; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterT pk_Parameter; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_ParameterT" ALTER COLUMN "pk_Parameter" SET DEFAULT nextval('"tbl_ParameterT_pk_Parameter_seq"'::regclass);
 
 
 --
--- Name: tbl_ParameterZ pk_Parameter; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterZ pk_Parameter; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_ParameterZ" ALTER COLUMN "pk_Parameter" SET DEFAULT nextval('"tbl_ParameterZ_pk_Parameter_seq"'::regclass);
 
 
 --
--- Name: tbl_Personenrollen pk_PersonenRolle; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Personenrollen pk_PersonenRolle; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Personenrollen" ALTER COLUMN "pk_PersonenRolle" SET DEFAULT nextval('"tbl_Personenrollen_pk_PersonenRolle_seq"'::regclass);
 
 
 --
--- Name: tbl_PlzOrt pk_PlzOrt; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_PlzOrt pk_PlzOrt; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_PlzOrt" ALTER COLUMN "pk_PlzOrt" SET DEFAULT nextval('"tbl_PlzOrt_pk_PlzOrt_seq"'::regclass);
 
 
 --
--- Name: tbl_Rollen pk_Rolle; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Rollen pk_Rolle; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Rollen" ALTER COLUMN "pk_Rolle" SET DEFAULT nextval('"tbl_Rollen_pk_Rolle_seq"'::regclass);
 
 
 --
--- Name: tbl_Semester pk_Semester; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Semester pk_Semester; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Semester" ALTER COLUMN "pk_Semester" SET DEFAULT nextval('"tbl_Semester_pk_Semester_seq"'::regclass);
 
 
 --
--- Name: tbl_Spesenansätze pk_Spesenansatz; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Spesenansätze pk_Spesenansatz; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Spesenansätze" ALTER COLUMN "pk_Spesenansatz" SET DEFAULT nextval('"tbl_Spesenansätze_pk_Spesenansatz_seq"'::regclass);
 
 
 --
--- Name: tbl_SpracheProHauptperson pk_SpracheProPerson; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson pk_SpracheProPerson; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_SpracheProHauptperson" ALTER COLUMN "pk_SpracheProPerson" SET DEFAULT nextval('"tbl_SpracheProHauptperson_pk_SpracheProPerson_seq"'::regclass);
 
 
 --
--- Name: tbl_Sprachen pk_Sprache; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachen pk_Sprache; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Sprachen" ALTER COLUMN "pk_Sprache" SET DEFAULT nextval('"tbl_Sprachen_pk_Sprache_seq"'::regclass);
 
 
 --
--- Name: tbl_Sprachkenntnisse pk_Sprachkenntnis; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachkenntnisse pk_Sprachkenntnis; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Sprachkenntnisse" ALTER COLUMN "pk_Sprachkenntnis" SET DEFAULT nextval('"tbl_Sprachkenntnisse_pk_Sprachkenntnis_seq"'::regclass);
 
 
 --
--- Name: tbl_Stundenerfassung pk_Stundenerfassung; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Stundenerfassung pk_Stundenerfassung; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Stundenerfassung" ALTER COLUMN "pk_Stundenerfassung" SET DEFAULT nextval('"tbl_Stundenerfassung_pk_Stundenerfassung_seq"'::regclass);
 
 
 --
--- Name: tbl_Veranstaltungen pk_Veranstaltung; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungen pk_Veranstaltung; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Veranstaltungen" ALTER COLUMN "pk_Veranstaltung" SET DEFAULT nextval('"tbl_Veranstaltungen_pk_Veranstaltung_seq"'::regclass);
 
 
 --
--- Name: tbl_Veranstaltungsteilnehmer pk_Veranstaltungsteilnehmer; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungsteilnehmer pk_Veranstaltungsteilnehmer; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Veranstaltungsteilnehmer" ALTER COLUMN "pk_Veranstaltungsteilnehmer" SET DEFAULT nextval('"tbl_Veranstaltungsteilnehmer_pk_Veranstaltungsteilnehmer_seq"'::regclass);
 
 
 --
--- Name: tbl_VerfahrensHistory pk_VerfahrensHistory; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_VerfahrensHistory pk_VerfahrensHistory; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_VerfahrensHistory" ALTER COLUMN "pk_VerfahrensHistory" SET DEFAULT nextval('"tbl_VerfahrensHistory_pk_VerfahrensHistory_seq"'::regclass);
 
 
 --
--- Name: tbl_Verfahrensstati pk_Verfahrensstatus; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_Verfahrensstati pk_Verfahrensstatus; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Verfahrensstati" ALTER COLUMN "pk_Verfahrensstatus" SET DEFAULT nextval('"tbl_Verfahrensstati_pk_Verfahrensstatus_seq"'::regclass);
 
 
 --
--- Name: tbl_VersionData pk_VersionD; Type: DEFAULT; Schema: public; Owner: kaspi
+-- Name: tbl_VersionData pk_VersionD; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_VersionData" ALTER COLUMN "pk_VersionD" SET DEFAULT nextval('"tbl_VersionData_pk_VersionD_seq"'::regclass);
 
 
 --
--- Name: tbl_Ausbildungen tbl_Ausbildungen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Ausbildungen tbl_Ausbildungen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Ausbildungen"
@@ -2034,7 +2034,7 @@ ALTER TABLE ONLY "tbl_Ausbildungen"
 
 
 --
--- Name: tbl_AusbildungsTypen tbl_AusbildungsTypen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_AusbildungsTypen tbl_AusbildungsTypen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_AusbildungsTypen"
@@ -2042,7 +2042,7 @@ ALTER TABLE ONLY "tbl_AusbildungsTypen"
 
 
 --
--- Name: tbl_AuswVorlagen tbl_AuswVorlagen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_AuswVorlagen tbl_AuswVorlagen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_AuswVorlagen"
@@ -2050,7 +2050,7 @@ ALTER TABLE ONLY "tbl_AuswVorlagen"
 
 
 --
--- Name: tbl_Begleitete tbl_Begleitete_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Begleitete tbl_Begleitete_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Begleitete"
@@ -2058,7 +2058,7 @@ ALTER TABLE ONLY "tbl_Begleitete"
 
 
 --
--- Name: tbl_EinsatzOrteProEinsatzFunktion tbl_EinsatzOrteProEinsatzFunktion_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrteProEinsatzFunktion tbl_EinsatzOrteProEinsatzFunktion_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_EinsatzOrteProEinsatzFunktion"
@@ -2066,7 +2066,7 @@ ALTER TABLE ONLY "tbl_EinsatzOrteProEinsatzFunktion"
 
 
 --
--- Name: tbl_EinsatzOrte tbl_EinsatzOrte_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrte tbl_EinsatzOrte_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_EinsatzOrte"
@@ -2074,7 +2074,7 @@ ALTER TABLE ONLY "tbl_EinsatzOrte"
 
 
 --
--- Name: tbl_FallStelleProTeilnehmer tbl_FallStelleProTeilnehmer_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FallStelleProTeilnehmer tbl_FallStelleProTeilnehmer_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer"
@@ -2082,7 +2082,7 @@ ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer"
 
 
 --
--- Name: tbl_FallStellen tbl_FallStellen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FallStellen tbl_FallStellen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FallStellen"
@@ -2090,7 +2090,7 @@ ALTER TABLE ONLY "tbl_FallStellen"
 
 
 --
--- Name: tbl_FamilienRollen tbl_FamilienRollen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FamilienRollen tbl_FamilienRollen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FamilienRollen"
@@ -2098,7 +2098,7 @@ ALTER TABLE ONLY "tbl_FamilienRollen"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2106,7 +2106,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEntschädigung tbl_FreiwilligenEntschädigung_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEntschädigung tbl_FreiwilligenEntschädigung_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEntschädigung"
@@ -2114,7 +2114,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEntschädigung"
 
 
 --
--- Name: tbl_FreiwilligenFunktionen tbl_FreiwilligenFunktionen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenFunktionen tbl_FreiwilligenFunktionen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenFunktionen"
@@ -2122,7 +2122,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenFunktionen"
 
 
 --
--- Name: tbl_FreiwilligenVeranstaltungen tbl_FreiwilligenVeranstaltungen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenVeranstaltungen tbl_FreiwilligenVeranstaltungen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenVeranstaltungen"
@@ -2130,7 +2130,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenVeranstaltungen"
 
 
 --
--- Name: tbl_Hauptpersonen tbl_Hauptpersonen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Hauptpersonen tbl_Hauptpersonen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Hauptpersonen"
@@ -2138,7 +2138,7 @@ ALTER TABLE ONLY "tbl_Hauptpersonen"
 
 
 --
--- Name: tbl_JournalKategorien tbl_JournalKategorien_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_JournalKategorien tbl_JournalKategorien_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_JournalKategorien"
@@ -2146,7 +2146,7 @@ ALTER TABLE ONLY "tbl_JournalKategorien"
 
 
 --
--- Name: tbl_Journal tbl_Journal_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Journal tbl_Journal_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Journal"
@@ -2154,7 +2154,7 @@ ALTER TABLE ONLY "tbl_Journal"
 
 
 --
--- Name: tbl_Kantone tbl_Kantone_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kantone tbl_Kantone_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kantone"
@@ -2162,7 +2162,7 @@ ALTER TABLE ONLY "tbl_Kantone"
 
 
 --
--- Name: tbl_KontaktPersonen tbl_KontaktPersonen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_KontaktPersonen tbl_KontaktPersonen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_KontaktPersonen"
@@ -2170,7 +2170,7 @@ ALTER TABLE ONLY "tbl_KontaktPersonen"
 
 
 --
--- Name: tbl_Kontoangaben tbl_Kontoangaben_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kontoangaben tbl_Kontoangaben_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kontoangaben"
@@ -2178,7 +2178,7 @@ ALTER TABLE ONLY "tbl_Kontoangaben"
 
 
 --
--- Name: tbl_Kostenträger tbl_Kostenträger_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kostenträger tbl_Kostenträger_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kostenträger"
@@ -2186,7 +2186,7 @@ ALTER TABLE ONLY "tbl_Kostenträger"
 
 
 --
--- Name: tbl_Kursarten tbl_Kursarten_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kursarten tbl_Kursarten_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kursarten"
@@ -2194,7 +2194,7 @@ ALTER TABLE ONLY "tbl_Kursarten"
 
 
 --
--- Name: tbl_Kurse tbl_Kurse_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kurse tbl_Kurse_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kurse"
@@ -2202,7 +2202,7 @@ ALTER TABLE ONLY "tbl_Kurse"
 
 
 --
--- Name: tbl_Kurspräsenzen tbl_Kurspräsenzen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kurspräsenzen tbl_Kurspräsenzen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kurspräsenzen"
@@ -2210,7 +2210,7 @@ ALTER TABLE ONLY "tbl_Kurspräsenzen"
 
 
 --
--- Name: tbl_Kursteilnehmer tbl_Kursteilnehmer_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kursteilnehmer tbl_Kursteilnehmer_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kursteilnehmer"
@@ -2218,7 +2218,7 @@ ALTER TABLE ONLY "tbl_Kursteilnehmer"
 
 
 --
--- Name: tbl_Lehrmittel tbl_Lehrmittel_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Lehrmittel tbl_Lehrmittel_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Lehrmittel"
@@ -2226,7 +2226,7 @@ ALTER TABLE ONLY "tbl_Lehrmittel"
 
 
 --
--- Name: tbl_Länder tbl_Länder_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Länder tbl_Länder_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Länder"
@@ -2234,7 +2234,7 @@ ALTER TABLE ONLY "tbl_Länder"
 
 
 --
--- Name: tbl_ParameterT tbl_ParameterT_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterT tbl_ParameterT_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_ParameterT"
@@ -2242,7 +2242,7 @@ ALTER TABLE ONLY "tbl_ParameterT"
 
 
 --
--- Name: tbl_ParameterZ tbl_ParameterZ_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_ParameterZ tbl_ParameterZ_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_ParameterZ"
@@ -2250,7 +2250,7 @@ ALTER TABLE ONLY "tbl_ParameterZ"
 
 
 --
--- Name: tbl_Personenrollen tbl_Personenrollen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Personenrollen tbl_Personenrollen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Personenrollen"
@@ -2258,7 +2258,7 @@ ALTER TABLE ONLY "tbl_Personenrollen"
 
 
 --
--- Name: tbl_PlzOrt tbl_PlzOrt_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_PlzOrt tbl_PlzOrt_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_PlzOrt"
@@ -2266,7 +2266,7 @@ ALTER TABLE ONLY "tbl_PlzOrt"
 
 
 --
--- Name: tbl_Rollen tbl_Rollen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Rollen tbl_Rollen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Rollen"
@@ -2274,7 +2274,7 @@ ALTER TABLE ONLY "tbl_Rollen"
 
 
 --
--- Name: tbl_Semester tbl_Semester_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Semester tbl_Semester_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Semester"
@@ -2282,7 +2282,7 @@ ALTER TABLE ONLY "tbl_Semester"
 
 
 --
--- Name: tbl_Spesenansätze tbl_Spesenansätze_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Spesenansätze tbl_Spesenansätze_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Spesenansätze"
@@ -2290,7 +2290,7 @@ ALTER TABLE ONLY "tbl_Spesenansätze"
 
 
 --
--- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_SpracheProHauptperson"
@@ -2298,7 +2298,7 @@ ALTER TABLE ONLY "tbl_SpracheProHauptperson"
 
 
 --
--- Name: tbl_Sprachen tbl_Sprachen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachen tbl_Sprachen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Sprachen"
@@ -2306,7 +2306,7 @@ ALTER TABLE ONLY "tbl_Sprachen"
 
 
 --
--- Name: tbl_Sprachkenntnisse tbl_Sprachkenntnisse_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Sprachkenntnisse tbl_Sprachkenntnisse_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Sprachkenntnisse"
@@ -2314,7 +2314,7 @@ ALTER TABLE ONLY "tbl_Sprachkenntnisse"
 
 
 --
--- Name: tbl_Stundenerfassung tbl_Stundenerfassung_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Stundenerfassung tbl_Stundenerfassung_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Stundenerfassung"
@@ -2322,7 +2322,7 @@ ALTER TABLE ONLY "tbl_Stundenerfassung"
 
 
 --
--- Name: tbl_Veranstaltungen tbl_Veranstaltungen_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungen tbl_Veranstaltungen_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Veranstaltungen"
@@ -2330,7 +2330,7 @@ ALTER TABLE ONLY "tbl_Veranstaltungen"
 
 
 --
--- Name: tbl_Veranstaltungsteilnehmer tbl_Veranstaltungsteilnehmer_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungsteilnehmer tbl_Veranstaltungsteilnehmer_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Veranstaltungsteilnehmer"
@@ -2338,7 +2338,7 @@ ALTER TABLE ONLY "tbl_Veranstaltungsteilnehmer"
 
 
 --
--- Name: tbl_VerfahrensHistory tbl_VerfahrensHistory_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_VerfahrensHistory tbl_VerfahrensHistory_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_VerfahrensHistory"
@@ -2346,7 +2346,7 @@ ALTER TABLE ONLY "tbl_VerfahrensHistory"
 
 
 --
--- Name: tbl_Verfahrensstati tbl_Verfahrensstati_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Verfahrensstati tbl_Verfahrensstati_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Verfahrensstati"
@@ -2354,7 +2354,7 @@ ALTER TABLE ONLY "tbl_Verfahrensstati"
 
 
 --
--- Name: tbl_VersionData tbl_VersionData_pkey; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_VersionData tbl_VersionData_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_VersionData"
@@ -2362,7 +2362,7 @@ ALTER TABLE ONLY "tbl_VersionData"
 
 
 --
--- Name: tbl_VersionData tbl_VersionData_z_VersionsnummerD_key; Type: CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_VersionData tbl_VersionData_z_VersionsnummerD_key; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_VersionData"
@@ -2370,14 +2370,14 @@ ALTER TABLE ONLY "tbl_VersionData"
 
 
 --
--- Name: tbl_Kontoangaben_z_ClearingNummer; Type: INDEX; Schema: public; Owner: kaspi
+-- Name: tbl_Kontoangaben_z_ClearingNummer; Type: INDEX; Schema: public
 --
 
 CREATE INDEX "tbl_Kontoangaben_z_ClearingNummer" ON "tbl_Kontoangaben" USING btree ("z_ClearingNummer");
 
 
 --
--- Name: tbl_Ausbildungen tbl_Ausbildungen_fk_AusbildungsTyp_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Ausbildungen tbl_Ausbildungen_fk_AusbildungsTyp_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Ausbildungen"
@@ -2385,7 +2385,7 @@ ALTER TABLE ONLY "tbl_Ausbildungen"
 
 
 --
--- Name: tbl_Ausbildungen tbl_Ausbildungen_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Ausbildungen tbl_Ausbildungen_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Ausbildungen"
@@ -2393,7 +2393,7 @@ ALTER TABLE ONLY "tbl_Ausbildungen"
 
 
 --
--- Name: tbl_Begleitete tbl_Begleitete_fk_FamilienRolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Begleitete tbl_Begleitete_fk_FamilienRolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Begleitete"
@@ -2401,7 +2401,7 @@ ALTER TABLE ONLY "tbl_Begleitete"
 
 
 --
--- Name: tbl_Begleitete tbl_Begleitete_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Begleitete tbl_Begleitete_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Begleitete"
@@ -2409,7 +2409,7 @@ ALTER TABLE ONLY "tbl_Begleitete"
 
 
 --
--- Name: tbl_EinsatzOrteProEinsatzFunktion tbl_EinsatzOrteProEinsatzFunktion_fk_EinsatzFunktion_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrteProEinsatzFunktion tbl_EinsatzOrteProEinsatzFunktion_fk_EinsatzFunktion_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_EinsatzOrteProEinsatzFunktion"
@@ -2417,7 +2417,7 @@ ALTER TABLE ONLY "tbl_EinsatzOrteProEinsatzFunktion"
 
 
 --
--- Name: tbl_EinsatzOrteProEinsatzFunktion tbl_EinsatzOrteProEinsatzFunktion_fk_EinsatzOrt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrteProEinsatzFunktion tbl_EinsatzOrteProEinsatzFunktion_fk_EinsatzOrt_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_EinsatzOrteProEinsatzFunktion"
@@ -2425,7 +2425,7 @@ ALTER TABLE ONLY "tbl_EinsatzOrteProEinsatzFunktion"
 
 
 --
--- Name: tbl_EinsatzOrte tbl_EinsatzOrte_fk_PlzOrt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_EinsatzOrte tbl_EinsatzOrte_fk_PlzOrt_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_EinsatzOrte"
@@ -2433,7 +2433,7 @@ ALTER TABLE ONLY "tbl_EinsatzOrte"
 
 
 --
--- Name: tbl_FallStelleProTeilnehmer tbl_FallStelleProTeilnehmer_fk_Fallstelle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FallStelleProTeilnehmer tbl_FallStelleProTeilnehmer_fk_Fallstelle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer"
@@ -2441,7 +2441,7 @@ ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer"
 
 
 --
--- Name: tbl_FallStelleProTeilnehmer tbl_FallStelleProTeilnehmer_fk_Kontaktperson_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FallStelleProTeilnehmer tbl_FallStelleProTeilnehmer_fk_Kontaktperson_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer"
@@ -2449,7 +2449,7 @@ ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer"
 
 
 --
--- Name: tbl_FallStelleProTeilnehmer tbl_FallStelleProTeilnehmer_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FallStelleProTeilnehmer tbl_FallStelleProTeilnehmer_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer"
@@ -2457,7 +2457,7 @@ ALTER TABLE ONLY "tbl_FallStelleProTeilnehmer"
 
 
 --
--- Name: tbl_FallStellen tbl_FallStellen_fk_PLZ_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FallStellen tbl_FallStellen_fk_PLZ_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FallStellen"
@@ -2465,7 +2465,7 @@ ALTER TABLE ONLY "tbl_FallStellen"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Begleitete_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Begleitete_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2473,7 +2473,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_EinsatzOrt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_EinsatzOrt_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2481,7 +2481,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_FreiwilligenFunktion_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_FreiwilligenFunktion_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2489,7 +2489,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Kostenträger_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Kostenträger_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2497,7 +2497,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Kurs_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Kurs_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2505,7 +2505,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Lehrmittel_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Lehrmittel_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2513,7 +2513,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2521,7 +2521,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Semester_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEinsätze tbl_FreiwilligenEinsätze_fk_Semester_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
@@ -2529,7 +2529,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEinsätze"
 
 
 --
--- Name: tbl_FreiwilligenEntschädigung tbl_FreiwilligenEntschädigung_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEntschädigung tbl_FreiwilligenEntschädigung_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEntschädigung"
@@ -2537,7 +2537,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEntschädigung"
 
 
 --
--- Name: tbl_FreiwilligenEntschädigung tbl_FreiwilligenEntschädigung_fk_Semester_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenEntschädigung tbl_FreiwilligenEntschädigung_fk_Semester_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenEntschädigung"
@@ -2545,7 +2545,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenEntschädigung"
 
 
 --
--- Name: tbl_FreiwilligenFunktionen tbl_FreiwilligenFunktionen_fk_Rolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_FreiwilligenFunktionen tbl_FreiwilligenFunktionen_fk_Rolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_FreiwilligenFunktionen"
@@ -2553,7 +2553,7 @@ ALTER TABLE ONLY "tbl_FreiwilligenFunktionen"
 
 
 --
--- Name: tbl_Hauptpersonen tbl_Hauptpersonen_fk_PLZ_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Hauptpersonen tbl_Hauptpersonen_fk_PLZ_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Hauptpersonen"
@@ -2561,7 +2561,7 @@ ALTER TABLE ONLY "tbl_Hauptpersonen"
 
 
 --
--- Name: tbl_Journal tbl_Journal_fk_FreiwilligenEinsatz_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Journal tbl_Journal_fk_FreiwilligenEinsatz_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Journal"
@@ -2569,7 +2569,7 @@ ALTER TABLE ONLY "tbl_Journal"
 
 
 --
--- Name: tbl_Journal tbl_Journal_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Journal tbl_Journal_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Journal"
@@ -2577,7 +2577,7 @@ ALTER TABLE ONLY "tbl_Journal"
 
 
 --
--- Name: tbl_Journal tbl_Journal_fk_JournalKategorie_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Journal tbl_Journal_fk_JournalKategorie_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Journal"
@@ -2585,7 +2585,7 @@ ALTER TABLE ONLY "tbl_Journal"
 
 
 --
--- Name: tbl_KontaktPersonen tbl_KontaktPersonen_fk_FallStelle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_KontaktPersonen tbl_KontaktPersonen_fk_FallStelle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_KontaktPersonen"
@@ -2593,7 +2593,7 @@ ALTER TABLE ONLY "tbl_KontaktPersonen"
 
 
 --
--- Name: tbl_Kontoangaben tbl_Kontoangaben_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kontoangaben tbl_Kontoangaben_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kontoangaben"
@@ -2601,7 +2601,7 @@ ALTER TABLE ONLY "tbl_Kontoangaben"
 
 
 --
--- Name: tbl_Kontoangaben tbl_Kontoangaben_fk_PlzOrt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kontoangaben tbl_Kontoangaben_fk_PlzOrt_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kontoangaben"
@@ -2609,7 +2609,7 @@ ALTER TABLE ONLY "tbl_Kontoangaben"
 
 
 --
--- Name: tbl_Kurse tbl_Kurse_fk_Kursart_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kurse tbl_Kurse_fk_Kursart_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kurse"
@@ -2617,7 +2617,7 @@ ALTER TABLE ONLY "tbl_Kurse"
 
 
 --
--- Name: tbl_Kurspräsenzen tbl_Kurspräsenzen_fk_Begleitete_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kurspräsenzen tbl_Kurspräsenzen_fk_Begleitete_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kurspräsenzen"
@@ -2625,7 +2625,7 @@ ALTER TABLE ONLY "tbl_Kurspräsenzen"
 
 
 --
--- Name: tbl_Kurspräsenzen tbl_Kurspräsenzen_fk_Kurs_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kurspräsenzen tbl_Kurspräsenzen_fk_Kurs_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kurspräsenzen"
@@ -2633,7 +2633,7 @@ ALTER TABLE ONLY "tbl_Kurspräsenzen"
 
 
 --
--- Name: tbl_Kurspräsenzen tbl_Kurspräsenzen_fk_Kursteilnehmer_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kurspräsenzen tbl_Kurspräsenzen_fk_Kursteilnehmer_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kurspräsenzen"
@@ -2641,7 +2641,7 @@ ALTER TABLE ONLY "tbl_Kurspräsenzen"
 
 
 --
--- Name: tbl_Kursteilnehmer tbl_Kursteilnehmer_fk_Begleitete_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kursteilnehmer tbl_Kursteilnehmer_fk_Begleitete_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kursteilnehmer"
@@ -2649,7 +2649,7 @@ ALTER TABLE ONLY "tbl_Kursteilnehmer"
 
 
 --
--- Name: tbl_Kursteilnehmer tbl_Kursteilnehmer_fk_Kurs_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Kursteilnehmer tbl_Kursteilnehmer_fk_Kurs_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Kursteilnehmer"
@@ -2657,7 +2657,7 @@ ALTER TABLE ONLY "tbl_Kursteilnehmer"
 
 
 --
--- Name: tbl_Personenrollen tbl_Personenrollen_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Personenrollen tbl_Personenrollen_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Personenrollen"
@@ -2665,7 +2665,7 @@ ALTER TABLE ONLY "tbl_Personenrollen"
 
 
 --
--- Name: tbl_Personenrollen tbl_Personenrollen_fk_Kostenträger_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Personenrollen tbl_Personenrollen_fk_Kostenträger_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Personenrollen"
@@ -2673,7 +2673,7 @@ ALTER TABLE ONLY "tbl_Personenrollen"
 
 
 --
--- Name: tbl_Personenrollen tbl_Personenrollen_z_Rolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Personenrollen tbl_Personenrollen_z_Rolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Personenrollen"
@@ -2681,7 +2681,7 @@ ALTER TABLE ONLY "tbl_Personenrollen"
 
 
 --
--- Name: tbl_PlzOrt tbl_PlzOrt_fk_Land_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_PlzOrt tbl_PlzOrt_fk_Land_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_PlzOrt"
@@ -2689,7 +2689,7 @@ ALTER TABLE ONLY "tbl_PlzOrt"
 
 
 --
--- Name: tbl_Semester tbl_Semester_fk_Rolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Semester tbl_Semester_fk_Rolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Semester"
@@ -2697,7 +2697,7 @@ ALTER TABLE ONLY "tbl_Semester"
 
 
 --
--- Name: tbl_Spesenansätze tbl_Spesenansätze_fk_Personenrolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Spesenansätze tbl_Spesenansätze_fk_Personenrolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Spesenansätze"
@@ -2705,7 +2705,7 @@ ALTER TABLE ONLY "tbl_Spesenansätze"
 
 
 --
--- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_SpracheProHauptperson"
@@ -2713,7 +2713,7 @@ ALTER TABLE ONLY "tbl_SpracheProHauptperson"
 
 
 --
--- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_KenntnisstufeLe_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_KenntnisstufeLe_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_SpracheProHauptperson"
@@ -2721,7 +2721,7 @@ ALTER TABLE ONLY "tbl_SpracheProHauptperson"
 
 
 --
--- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_KenntnisstufeSc_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_KenntnisstufeSc_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_SpracheProHauptperson"
@@ -2729,7 +2729,7 @@ ALTER TABLE ONLY "tbl_SpracheProHauptperson"
 
 
 --
--- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_KenntnisstufeSp_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_KenntnisstufeSp_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_SpracheProHauptperson"
@@ -2737,7 +2737,7 @@ ALTER TABLE ONLY "tbl_SpracheProHauptperson"
 
 
 --
--- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_KenntnisstufeVe_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_KenntnisstufeVe_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_SpracheProHauptperson"
@@ -2745,7 +2745,7 @@ ALTER TABLE ONLY "tbl_SpracheProHauptperson"
 
 
 --
--- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_Sprache_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_SpracheProHauptperson tbl_SpracheProHauptperson_fk_Sprache_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_SpracheProHauptperson"
@@ -2753,7 +2753,7 @@ ALTER TABLE ONLY "tbl_SpracheProHauptperson"
 
 
 --
--- Name: tbl_Stundenerfassung tbl_Stundenerfassung_fk_FreiwilligenEinsatz_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Stundenerfassung tbl_Stundenerfassung_fk_FreiwilligenEinsatz_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Stundenerfassung"
@@ -2761,7 +2761,7 @@ ALTER TABLE ONLY "tbl_Stundenerfassung"
 
 
 --
--- Name: tbl_Stundenerfassung tbl_Stundenerfassung_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Stundenerfassung tbl_Stundenerfassung_fk_PersonenRolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Stundenerfassung"
@@ -2769,7 +2769,7 @@ ALTER TABLE ONLY "tbl_Stundenerfassung"
 
 
 --
--- Name: tbl_Stundenerfassung tbl_Stundenerfassung_fk_Semester_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Stundenerfassung tbl_Stundenerfassung_fk_Semester_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Stundenerfassung"
@@ -2777,7 +2777,7 @@ ALTER TABLE ONLY "tbl_Stundenerfassung"
 
 
 --
--- Name: tbl_Veranstaltungen tbl_Veranstaltungen_fk_FreiwilligenVeranstaltung_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungen tbl_Veranstaltungen_fk_FreiwilligenVeranstaltung_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Veranstaltungen"
@@ -2785,7 +2785,7 @@ ALTER TABLE ONLY "tbl_Veranstaltungen"
 
 
 --
--- Name: tbl_Veranstaltungsteilnehmer tbl_Veranstaltungsteilnehmer_fk_Veranstaltung_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_Veranstaltungsteilnehmer tbl_Veranstaltungsteilnehmer_fk_Veranstaltung_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_Veranstaltungsteilnehmer"
@@ -2793,7 +2793,7 @@ ALTER TABLE ONLY "tbl_Veranstaltungsteilnehmer"
 
 
 --
--- Name: tbl_VerfahrensHistory tbl_VerfahrensHistory_fk_FamilienRolle_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_VerfahrensHistory tbl_VerfahrensHistory_fk_FamilienRolle_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_VerfahrensHistory"
@@ -2801,7 +2801,7 @@ ALTER TABLE ONLY "tbl_VerfahrensHistory"
 
 
 --
--- Name: tbl_VerfahrensHistory tbl_VerfahrensHistory_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_VerfahrensHistory tbl_VerfahrensHistory_fk_Hauptperson_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_VerfahrensHistory"
@@ -2809,7 +2809,7 @@ ALTER TABLE ONLY "tbl_VerfahrensHistory"
 
 
 --
--- Name: tbl_VerfahrensHistory tbl_VerfahrensHistory_fk_VerfahrensStatus_fkey; Type: FK CONSTRAINT; Schema: public; Owner: kaspi
+-- Name: tbl_VerfahrensHistory tbl_VerfahrensHistory_fk_VerfahrensStatus_fkey; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY "tbl_VerfahrensHistory"
