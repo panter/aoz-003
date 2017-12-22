@@ -22,6 +22,29 @@ class AssignmentTransform < Transformer
     }
   end
 
+  def get_or_create_by_import(einsatz_id, fw_einsatz = nil)
+    assignment = Import.get_imported(Assignment, einsatz_id)
+    return assignment if assignment.present?
+    volunteer = @ac_import.volunteer_transform.get_or_create_by_import(fw_einsatz[:fk_PersonenRolle])
+    begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
+    client = @ac_import.client_transform.get_or_create_by_import(begleitet[:fk_PersonenRolle])
+    parameters = prepare_attributes(fw_einsatz, client, volunteer, begleitet)
+    assignment = Assignment.new(parameters)
+    assignment.created_at = fw_einsatz[:d_EinsatzVon] || Time.zone.now
+    assignment.save!
+    assignment.delete if assignment.period_end.present? && assignment.period_end < 8.months.ago
+  end
+
+  def import_multiple(freiwilligen_einsaetze)
+    freiwilligen_einsaetze.map do |key, fw_einsatz|
+      get_or_create_by_import(key, fw_einsatz)
+    end
+  end
+
+  def import_all(freiwilligen_einsaetze = nil)
+    import_multiple(freiwilligen_einsaetze || @freiwilligen_einsaetze.where_begleitung)
+  end
+
   def map_assignment_state(from_date, to_date)
     return 'suggested' if from_date > now
     return 'active' if from_date < now && to_date.nil? || to_date > now

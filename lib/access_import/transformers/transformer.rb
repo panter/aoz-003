@@ -1,4 +1,5 @@
 require 'acc_utils'
+require 'ostruct'
 
 class Transformer
   include AccUtils

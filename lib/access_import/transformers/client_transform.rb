@@ -21,10 +21,10 @@ class ClientTransform < Transformer
     }
   end
 
-  def get_or_create_by_import(personen_rollen_id)
+  def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
     client = Import.get_imported(Client, personen_rollen_id)
     return client if client.present?
-    personen_rolle = @personen_rolle.find(personen_rollen_id)
+    personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     client_attributes = prepare_attributes(personen_rolle)
     client = Client.new(client_attributes)
     client = personen_rollen_create_update_conversion(client, personen_rolle)
