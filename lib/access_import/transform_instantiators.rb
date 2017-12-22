@@ -16,6 +16,10 @@ module TransformInstantiators
     @einsatz_transform ||= EinsatzTransform.new(self, @freiwilligen_einsaetze, @personen_rolle)
   end
 
+  def group_offer_transform
+    @group_offer_transform ||= GroupOfferTransform.new(self, @freiwilligen_einsaetze, @rollen)
+  end
+
   def group_assignment_transform
     @group_assignment_transform ||= GroupAssignmentTransform.new(self, @begleitete,
       @freiwilligen_einsaetze, @personen_rolle, @haupt_person)

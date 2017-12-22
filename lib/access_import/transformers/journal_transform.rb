@@ -39,9 +39,9 @@ class JournalTransform < Transformer
     person = Import.find_by_hauptperson(access_journal[:fk_Hauptperson])&.importable
     return person if person.present?
     personen_rolle = @personen_rolle.find_by_hauptperson(access_journal[:fk_Hauptperson])
-    if personen_rolle[:z_Rolle].to_i == PERSONEN_ROLLEN.freiwillig
+    if personen_rolle[:z_Rolle].to_i == EINSATZ_ROLLEN.freiwillige
       @ac_import.volunteer_transform.get_or_create_by_import(access_journal[:fk_Hauptperson], personen_rolle)
-    elsif personen_rolle[:z_Rolle].to_i == PERSONEN_ROLLEN.begleitet
+    elsif personen_rolle[:z_Rolle].to_i == EINSATZ_ROLLEN.begleitete
       @ac_import.client_transform.get_or_create_by_import(access_journal[:fk_Hauptperson], personen_rolle)
     end
   end

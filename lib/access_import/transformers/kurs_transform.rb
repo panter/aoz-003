@@ -14,14 +14,29 @@ class KursTransform < Transformer
   end
 
   def get_or_create_by_import(kurs_id, kurs = nil)
-    kurs ||= @kurse.find(kurs_id)
     group_offer = Import.get_imported(GroupOffer, kurs_id)
     return group_offer if group_offer.present?
+    kurs ||= @kurse.find(kurs_id)
     group_offer_category = @ac_import.kursart_transform.get_or_create_by_import(kurs[:fk_Kursart])
     group_offer = GroupOffer.new(prepare_attributes(kurs, group_offer_category))
     group_offer.group_assignments = fetch_group_assignments(kurs_id)
+    group_offer.department = find_group_offer_department(group_offer.group_assignments)
     group_offer.save!
     group_offer
+  end
+
+  def find_group_offer_department(group_assignments)
+    return if einsatz_ort_ids(group_assignments).compact.blank?
+    binding.pry if einsatz_ort_ids(group_assignments).compact.uniq.size > 1
+    @ac_import.department_transform.get_or_create_by_import(
+      einsatz_ort_ids(group_assignments).compact.uniq.first
+    )
+  end
+
+  def einsatz_ort_ids(group_assignments)
+    @einsatz_ort_ids ||= group_assignments.map do |group_assignment|
+      group_assignment.import.store['freiwilligen_einsatz']['fk_EinsatzOrt']
+    end
   end
 
   def fetch_group_assignments(kurs_id)
@@ -35,11 +50,13 @@ class KursTransform < Transformer
     end
   end
 
-  def import_all
-    @kurse.all.each do |key, kurs|
-      get_or_create_by_import(
-        key, kurs
-      )
+  def import_multiple(kurse)
+    kurse.map do |key, kurs|
+      get_or_create_by_import(key, kurs)
     end
+  end
+
+  def import_all(kurse = nil)
+    import_multiple(kurse || @kurse.all)
   end
 end

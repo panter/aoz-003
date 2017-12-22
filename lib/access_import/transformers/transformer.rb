@@ -16,4 +16,13 @@ class Transformer
     model_record.updated_at = personen_rolle[:d_MutDatum]
     model_record
   end
+
+  FREIWILLIGEN_FUNKTION = {
+    1 => 'Begleitung',
+    2 => 'Kurs',
+    3 => 'Animation F',
+    4 => 'Kurzeinsatz',
+    5 => 'Andere',
+    6 => 'Animation A'
+  }.freeze
 end

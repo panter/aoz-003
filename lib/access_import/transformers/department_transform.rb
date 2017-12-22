@@ -17,6 +17,7 @@ class DepartmentTransform < Transformer
   def get_or_create_by_import(einsatz_ort_id, einsatz_ort = nil)
     department = Import.get_imported(Department, einsatz_ort_id)
     return department if department.present?
+    einsatz_ort ||= @einsatz_orte.find(einsatz_ort_id)
     parameters = prepare_attributes(einsatz_ort)
     department = Department.new(parameters)
     department.updated_at = einsatz_ort[:d_MutDatum]
