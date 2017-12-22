@@ -2,6 +2,7 @@ class GroupAssignment < ApplicationRecord
   include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
+  after_save :update_group_offer_search_field
   after_update :save_group_assignment_logs, if: :dates_updated?
   before_destroy :save_group_assignment_logs
 
@@ -80,5 +81,9 @@ class GroupAssignment < ApplicationRecord
 
   def dates_updated?
     saved_change_to_period_start? || saved_change_to_period_end?
+  end
+
+  def update_group_offer_search_field
+    group_offer.update_search_volunteers
   end
 end

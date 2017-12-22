@@ -15,6 +15,15 @@ class GroupOffersController < ApplicationController
     end
   end
 
+  def search
+    authorize GroupOffer
+    @q = policy_scope(GroupOffer).ransack search_volunteer_cont: params[:term]
+    @group_offers = @q.result distinct: true
+    respond_to do |format|
+      format.json
+    end
+  end
+
   def show
     respond_to do |format|
       format.html
@@ -113,7 +122,7 @@ class GroupOffersController < ApplicationController
     params.require(:group_offer).permit(:title, :offer_type, :offer_state, :volunteer_state,
       :necessary_volunteers, :description, :women, :men, :children, :teenagers, :unaccompanied,
       :all, :long_term, :regular, :short_term, :workday, :weekend, :morning, :afternoon, :evening,
-      :flexible, :schedule_details, :department_id, :organization, :location,
+      :flexible, :schedule_details, :department_id, :organization, :location, :term,
       :group_offer_category_id, group_assignments_attributes)
   end
 end
