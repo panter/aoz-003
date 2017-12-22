@@ -95,10 +95,6 @@ class User < ApplicationRecord
     end
   end
 
-  def update_search_users
-    update(search_user: full_name)
-  end
-
   def self.role_collection
     ROLES_FOR_USER_CREATE.map(&:to_sym)
   end
