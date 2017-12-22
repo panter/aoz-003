@@ -21,6 +21,8 @@ class GroupOffer < ApplicationRecord
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
   has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 
+  has_many :volunteer_contacts, through: :volunteers, source: :contact
+
   validates :title, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
   validate :department_manager_has_department?, if: :department_manager?
@@ -101,6 +103,10 @@ class GroupOffer < ApplicationRecord
         "#{volunteer} (#{I18n.t('activerecord.attributes.group_assignment.member')})"
       end
     end.compact.join(', ')
+  end
+
+  def update_search_volunteers
+    update(search_volunteer: volunteer_contacts.pluck(:full_name).join(', '))
   end
 
   private

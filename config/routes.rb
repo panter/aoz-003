@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   end
   resources :group_assignments, only: [:show], concerns: [:update_submitted_at, :hours_resources]
   resources :assignments, concerns: :update_submitted_at
-  resources :group_offers do
+  resources :group_offers, concerns: :search do
     get :archived, on: :collection
     put :change_active_state, on: :member
   end
