@@ -25,4 +25,7 @@ class Transformer
     5 => 'Andere',
     6 => 'Animation A'
   }.freeze
+
+
+  EINSATZ_ROLLEN = OpenStruct.new(freiwillige: 1, begleitete: 2, animator: 3, teilnehmende: 4)
 end
