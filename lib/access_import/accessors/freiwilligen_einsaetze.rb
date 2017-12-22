@@ -41,6 +41,12 @@ class FreiwilligenEinsaetze < Accessor
     end
   end
 
+  def where_andere
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.andere.id
+    end
+  end
+
   def where_begleitete(begleitet_id)
     all.select do |_key, fw_einsatz|
       fw_einsatz[:fk_Begleitete] == begleitet_id.to_i
