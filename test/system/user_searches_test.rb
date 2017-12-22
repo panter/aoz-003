@@ -36,12 +36,12 @@ class UserSearchesTest < ApplicationSystemTestCase
       check_item: [@superadmin.full_name, @social_worker.full_name]
   end
 
-  test 'suggestions search triggers the search correctly' do
-    fill_autocomplete 'q[full_name_cont]', with: 'Whi'
-    within 'tbody' do
-      assert page.has_text?(@superadmin.full_name || @social_worker.full_name)
-      assert_equal 1, find_all('tr').size
-    end
-  end
+  # test 'suggestions search triggers the search correctly' do
+  #   fill_autocomplete 'q[full_name_cont]', with: 'Whi'
+  #   within 'tbody' do
+  #     assert page.has_text?(@superadmin.full_name || @social_worker.full_name)
+  #     assert_equal 1, find_all('tr').size
+  #   end
+  # end
 end
 
