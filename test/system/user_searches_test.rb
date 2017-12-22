@@ -31,17 +31,11 @@ class UserSearchesTest < ApplicationSystemTestCase
     refute page.has_text? 'Department manager'
   end
 
+  # with this test we check if the suggestions are correct, we don't check what happens in the body section,
+  # because travis selects somehow the first  suggestion and then we run into errors.
   test 'enter_search_text_brings_suggestions' do
     fill_autocomplete 'q[full_name_cont]', with: 'Whi', items_expected: 2,
       check_item: [@superadmin.full_name, @social_worker.full_name]
   end
-
-  # test 'suggestions search triggers the search correctly' do
-  #   fill_autocomplete 'q[full_name_cont]', with: 'Whi'
-  #   within 'tbody' do
-  #     assert page.has_text?(@superadmin.full_name || @social_worker.full_name)
-  #     assert_equal 1, find_all('tr').size
-  #   end
-  # end
 end
 
