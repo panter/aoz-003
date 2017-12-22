@@ -1,6 +1,8 @@
 require 'securerandom'
 
 class AccessImport
+  include TransformInstantiators
+
   attr_reader :acdb
   attr_reader :import_user
 
