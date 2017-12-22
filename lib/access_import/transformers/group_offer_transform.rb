@@ -60,7 +60,6 @@ class GroupOfferTransform < Transformer
 
   def find_group_offer_department(group_assignments)
     return if einsatz_ort_ids(group_assignments).compact.blank?
-    binding.pry if einsatz_ort_ids(group_assignments).compact.uniq.size > 1
     @ac_import.department_transform.get_or_create_by_import(
       einsatz_ort_ids(group_assignments).compact.uniq.first
     )
