@@ -32,7 +32,23 @@ class GroupOfferTransform < Transformer
       location = group_assignments.first.import.store['freiwilligen_einsatz']['t_EinsatzOrt']
       discription = group_assignments.map { |ga| ga.import.store['freiwilligen_einsatz']['m_Beschreibung'] }.join(";\n")
       title = group_assignments.first.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
+      return handle_has_group_offer(group_assignments) if group_assignments.map(&:id).compact.any?
       get_or_create_by_import(group_assignments, location: location, discription: discription, title: title)
+    end
+  end
+
+  def handle_has_group_offer(group_assignments)
+    group_assignment_ids = group_assignments.map(&:id)
+    group_offer_ids = group_assignments.map(&:group_offer_id)
+    if group_assignment_ids.size == group_assignment_ids.compact.size && group_offer_ids.uniq.size == 1
+      group_assignments.first.group_offer
+    elsif group_assignment_ids.size > group_assignment_ids.compact.size? && group_offer_ids.compact.uniq.size == 1
+      group_offer = group_assignments.find { |ga| ga.group_offer_id.present? }.group_offer
+      group_assignments.each do |ga|
+        ga.group_offer = group_offer
+        ga.save
+      end
+      group_offer
     end
   end
 
