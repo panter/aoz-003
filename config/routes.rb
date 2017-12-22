@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  resources :users do
+    collection do
+      match 'search' => 'users#search', via: :get, as: :search
+    end
+  end
+
   concern :update_submitted_at do
     get :last_submitted_hours_and_feedbacks, on: :member
     get :update_submitted_at, on: :member

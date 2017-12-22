@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
 
+  ransack_alias :full_name, :profile_contact_full_name_or_volunteer_contact_full_name_or_email
+
   has_many :certificates
   has_many :clients
   has_many :journals
@@ -91,6 +93,10 @@ class User < ApplicationRecord
     else
       email
     end
+  end
+
+  def update_search_users
+    update(search_user: full_name)
   end
 
   def self.role_collection
