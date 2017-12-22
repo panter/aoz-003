@@ -46,9 +46,20 @@ class AccessImport
 
   def make_group_offers
     puts 'Importing GroupOffers'
+    puts '... from Kurse'
     kurs_transform.import_all
+    display_stats(GroupOffer)
+    display_stats(GroupAssignment)
+    puts '... from Animation f'
     group_offer_transform.import_all
+    display_stats(GroupOffer)
+    display_stats(GroupAssignment)
+    puts '... from Kurzeinsatz'
     group_offer_transform.import_all(@freiwilligen_einsaetze.where_kurzeinsatz)
+    display_stats(GroupOffer)
+    display_stats(GroupAssignment)
+    puts '... from Andere'
+    group_offer_transform.import_all(@freiwilligen_einsaetze.where_andere)
     display_stats(GroupOffer)
     display_stats(GroupAssignment)
   end
