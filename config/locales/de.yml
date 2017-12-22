@@ -5,6 +5,10 @@ de:
       kinds: &id-kinds-enum-values
         trial_period: Probezeit
         half_year: Halbjährlich
+    acceptance: &id-client-acceptance
+      accepted: Angemeldet
+      rejected: Abgelehnt
+      resigned: Beendet
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: egal
@@ -32,6 +36,11 @@ de:
       email: E-Mail
       feedback: Rückmeldung
       telephone: Telefonat
+    clients:
+      client:
+        acceptance: *id-client-acceptance
+      show:
+        acceptance: *id-client-acceptance
     created_at: Erstellt um
     email_templates:
       kind: &id-kinds-template
@@ -270,6 +279,7 @@ de:
         zip_city: PLZ/Ort
       client:
         <<: *id-generic_keys
+        acceptance: Affirmation
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
         city: Stadt
@@ -821,6 +831,7 @@ de:
         assignment_kinds:
           <<: *id-assignment-kinds
       client:
+        acceptance: *id-client-acceptance
         age_request: *id-age_requests
         gender_request: *id-gender_requests
         language_skills:

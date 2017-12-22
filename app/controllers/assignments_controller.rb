@@ -46,7 +46,6 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.new(assignment_params.merge(creator_id: current_user.id))
     authorize @assignment
     if @assignment.save
-      @assignment.client.update(state: Client::RESERVED)
       redirect_to assignments_url, make_notice
     else
       render :new
@@ -62,7 +61,6 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
-    @assignment.destroy.client.update(state: Client::REGISTERED)
     redirect_to assignments_url, make_notice
   end
 

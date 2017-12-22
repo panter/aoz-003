@@ -47,8 +47,8 @@
 
   fieldset
     legend Interne Kriterien
-    - if policy(Client).state?
-      = f.input :state, collection: Client.state_collection, include_blank: false
+    - if policy(Client).acceptance?
+      = f.input :acceptance, collection: Client.acceptance_collection, include_blank: false
     = f.input :involved_authority
     = f.input :competent_authority
     - if policy(Client).comments?
