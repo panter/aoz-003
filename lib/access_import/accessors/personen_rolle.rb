@@ -19,6 +19,12 @@ class PersonenRolle < Accessor
     4 => 'Participant'
   }.freeze
 
+  def find_by_hauptperson(hauptperson_id)
+    all.find do |_, personen_rolle|
+      personen_rolle[:fk_Hauptperson] == hauptperson_id
+    end.last
+  end
+
   def all_volunteers
     all.select do |_, personen_rolle|
       personen_rolle[:z_Rolle] == ACCESS_ROLES.volunteer

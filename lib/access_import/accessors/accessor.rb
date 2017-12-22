@@ -25,6 +25,9 @@ class Accessor
 
   ACCESS_ROLES = OpenStruct.new(volunteer: 1, client: 2, animator: 3, participant: 4).freeze
 
+  EINSATZ_ROLLEN = OpenStruct.new(freiwillige: 1, begleitete: 2, animator: 3, teilnehmende: 4)
+
+
   FREIWILLIGEN_FUNKTION_BY_NAME = OpenStruct.new(
     begleitung: OpenStruct.new(id: 1, bezeichnung: 'Begleitung', rolle: 'Freiwillige/r'),
     kurs: OpenStruct.new(id: 2, bezeichnung: 'Kurs', rolle: 'Freiwillige/r'),

@@ -1,4 +1,5 @@
 require 'securerandom'
+require 'ostruct'
 
 class AccessImport
   include TransformInstantiators
@@ -6,7 +7,8 @@ class AccessImport
   attr_reader :acdb
   attr_reader :import_user
 
-  EMAIL = 'aoz_access_importer@example.com'.freeze
+  IMPORT_USER_EMAIL = 'aoz_access_importer@example.com'.freeze
+  IMPORT_USER_NAME = 'AOZ Import'.freeze
 
   def initialize(path)
     ObjectSpace.define_finalizer(self, self.class.finalize)
@@ -19,63 +21,42 @@ class AccessImport
   end
 
   def make_departments
-    @einsatz_orte.all.each do |key, einsatz_ort|
-      next if Import.exists?(importable_type: 'Department', access_id: key)
-      parameters = department_transform.prepare_attributes(einsatz_ort)
-      department = Department.new(parameters)
-      department.updated_at = einsatz_ort[:d_MutDatum]
-      department.save!
-    end
+    puts 'Importing Departments'
+    department_transform.import_all
+    display_stats(Department)
   end
 
   def make_clients
-    @client_transformer.import_all
+    puts 'Importing Clients'
+    client_transform.import_all
+    display_stats(Client)
   end
 
   def make_volunteers
-    @volunteer_transform.import_all
+    puts 'Importing Volunteers'
+    volunteer_transform.import_all
+    display_stats(Volunteer)
   end
 
   def make_assignments
-    records_before = Assignment.count
-    @freiwilligen_einsaetze.where_begleitung.each do |key, fw_einsatz|
-      next if Import.exists?(importable_type: 'Assignment', access_id: key)
-      volunteer = volunteer_transform.get_or_create_by_import(fw_einsatz[:fk_PersonenRolle])
-      # volunteer = Import.get_imported(Volunteer, fw_einsatz[:fk_PersonenRolle])
-      begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
-      client = client_transform.get_or_create_by_import(begleitet[:fk_PersonenRolle])
-      # client = Import.get_imported(Client, begleitet[:fk_PersonenRolle])
-      parameters = assignment_transform.prepare_attributes(fw_einsatz, client, volunteer, begleitet)
-      assignment = Assignment.new(parameters)
-      assignment.created_at = fw_einsatz[:d_EinsatzVon] || Time.zone.now
-      assignment.save!
-      assignment.delete if assignment.period_end.present? && assignment.period_end < 8.months.ago
-      puts format('-- Access Assignment %d imported to Assignment.id %d', key, assignment.id)
-    end
-    puts format('Imported %d new Assignments from MS Access Database.',
-      Assignment.count - records_before)
+    puts 'Importing Assignments'
+    assignment_transform.import_all
+    display_stats(Assignment)
   end
 
   def make_group_offers
+    puts 'Importing GroupOffers'
     kurs_transform.import_all
+    group_offer_transform.import_all
+    group_offer_transform.import_all(@freiwilligen_einsaetze.where_kurzeinsatz)
+    display_stats(GroupOffer)
+    display_stats(GroupAssignment)
   end
 
   def make_journal
-    records_before = Journal.count
-    @journale.all.each do |key, acc_journal|
-      next if Import.exists?(importable_type: 'Journal', access_id: key)
-      person_import = Import.find_by_hauptperson(acc_journal[:fk_Hauptperson])
-      next unless person_import
-      person = person_import&.importable
-      if acc_journal[:fk_FreiwilligenEinsatz]&.positive?
-        assignment = Import.get_imported(Assignment, acc_journal[:fk_FreiwilligenEinsatz])
-      end
-      local_journal = Journal.new(journal_transform.prepare_attributes(acc_journal, person, assignment))
-      local_journal.save!
-      puts format('Imported Access Journal %d to Journal.id %d', key, local_journal.id)
-    end
-    puts format('Imported %d new %s from MS Access Database.',
-      Assignment.count - records_before, Assignment.name)
+    puts 'Importing Journals'
+    journal_transform.import_all
+    display_stats(Journal)
   end
 
   def instantiate_all_accessors
@@ -87,43 +68,24 @@ class AccessImport
       end
   end
 
-  def assignment_transform
-    @assignment_transform ||= AssignmentTransform.new(self, @begleitete)
+  def display_stats(model)
+    puts stat_text(model)
   end
 
-  def client_transform
-    @client_transform ||= ClientTransform.new(self, @begleitete, @haupt_person, @familien_rollen,
-      @personen_rolle)
+  def stat_text(model)
+    "Imported #{Import.where(importable_type: model.name)&.count} #{model.name.pluralize}."
   end
 
-  def department_transform
-    @department_transform ||= DepartmentTransform.new(self)
+  def overall_stats
+    puts "Overall imported #{Import.count} records"
+    puts imported_stat_texts.join("\n")
   end
 
-  def einsatz_transform
-    @einsatz_transform ||= EinsatzTransform.new(self, @freiwilligen_einsaetze, @personen_rolle)
-  end
-
-  def group_assignment_transform
-    @group_assignment_transform ||= GroupAssignmentTransform.new(self, @begleitete,
-      @freiwilligen_einsaetze, @personen_rolle, @haupt_person)
-  end
-
-  def journal_transform
-    @journal_transform ||= JournalTransform.new(self)
-  end
-
-  def kurs_transform
-    @kurs_transform ||= KursTransform.new(self, @kurse, @begleitete, @haupt_person, @familien_rollen,
-      @personen_rolle, @kursarten, @freiwilligen_einsaetze, @einsatz_orte)
-  end
-
-  def kursart_transform
-    @kursart_transform ||= KursartTransform.new(self, @kursarten)
-  end
-
-  def volunteer_transform
-    @volunteer_transform ||= VolunteerTransform.new(self, @haupt_person, @personen_rolle)
+  def imported_stat_texts
+    [Assignment, Client, Department, GroupAssignment, GroupOfferCategory, GroupOffer, Hour, Journal,
+     Volunteer].map do |model|
+      stat_text(model)
+    end
   end
 
   def make_class_variables(*accessors)
@@ -134,12 +96,12 @@ class AccessImport
   end
 
   def create_or_fetch_import_user
-    return User.find_by(email: EMAIL) if User.exists?(email: EMAIL)
-    return User.deleted.find_by(email: EMAIL).restore if User.deleted.exists?(email: EMAIL)
-    import_user = FactoryBot.create :user, email: EMAIL, password: SecureRandom.hex(60)
-    import_user.profile.contact.first_name = 'AOZ Import'
-    import_user.profile.contact.last_name = 'AOZ Import'
-    import_user.profile.contact.primary_email = EMAIL
+    return User.find_by(email: IMPORT_USER_EMAIL) if User.exists?(email: IMPORT_USER_EMAIL)
+    return User.deleted.find_by(email: IMPORT_USER_EMAIL).restore if User.deleted.exists?(email: IMPORT_USER_EMAIL)
+    import_user = FactoryBot.create :user, email: IMPORT_USER_EMAIL, password: SecureRandom.hex(60)
+    import_user.profile.contact.first_name = IMPORT_USER_NAME
+    import_user.profile.contact.last_name = IMPORT_USER_NAME
+    import_user.profile.contact.primary_email = IMPORT_USER_EMAIL
     import_user.save!
     import_user
   end

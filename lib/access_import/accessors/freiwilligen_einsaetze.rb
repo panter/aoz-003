@@ -23,6 +23,24 @@ class FreiwilligenEinsaetze < Accessor
     end
   end
 
+  def where_kurs
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.kurs.id
+    end
+  end
+
+  def where_animation_f
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.animation_f.id
+    end
+  end
+
+  def where_kurzeinsatz
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.kurzeinsatz.id
+    end
+  end
+
   def where_begleitete(begleitet_id)
     all.select do |_key, fw_einsatz|
       fw_einsatz[:fk_Begleitete] == begleitet_id.to_i
