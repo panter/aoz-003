@@ -19,13 +19,19 @@ class ClientTest < ActiveSupport::TestCase
     assert_equal [@client], result.to_a
   end
 
-  test 'a client with an assignment should not show up in without assignment' do
-    @volunteer = create :volunteer
-    @user = create :user
-    @client.create_assignment!(volunteer: @volunteer, creator: @user, period_start: 10.days.ago,
-      period_end: nil)
+  test 'a client with an active assignment should not show up in need accompanying' do
+    @client.create_assignment!(volunteer: create(:volunteer), creator: create(:user),
+      period_start: 10.days.ago, period_end: nil)
     result = Client.need_accompanying
     assert_equal [], result.to_a
+  end
+
+  test 'a client with an inactive assignment should show up in need accompanying' do
+    client = create :client
+    client.create_assignment!(volunteer: create(:volunteer), creator: create(:user),
+      period_start: 10.days.ago, period_end: 2.days.ago)
+    result = Client.need_accompanying
+    assert_equal [@client, client], result.to_a
   end
 
   test 'contact relation is build automaticly' do
