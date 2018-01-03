@@ -1,6 +1,88 @@
 h1= t_title
 
-= render 'group_offers_block', group_offers: @group_offers
+nav.navbar.section-navigation#filters
+  hr
+  ul.list-unstyled
+    li.li-search-form
+      = search_form_for @q do |f|
+        = f.search_field :search_volunteer_cont, class: 'search-field', data: { autocomplete: search_group_offers_path }, autofocus: true
+        = f.submit 'Suchen', class: 'search-submit'
+  ul.list-inline
+    li= button_link t_title(:new), new_group_offer_path, dimension: 'sm'
+    li= button_link t('.group_offer_categories'), group_offer_categories_path, dimension: 'sm'
+    li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+  hr
+  ul.list-inline
+    li= button_link t('clear_filters'), group_offers_path, dimension: 'sm'
+    = list_filter_dropdown(:department_id, Department.all)
+    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Archiviert')
+    = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
+    = list_filter_dropdown(:group_offer_category_id, GroupOfferCategory.all)
+  hr
+
+table.table.table-striped
+  thead
+    tr
+      th Aktiv
+      th= t_attr(:title)
+      th= sort_link @q, :location
+      th= t_attr(:availability)
+      th= t_attr(:target_group)
+      th= t_attr(:duration)
+      th= sort_link @q, :offer_state
+      th= t_attr(:volunteers)
+      th= sort_link @q, :group_offer_category, t_attr(:group_offer_category)
+      th colspan=(policy(GroupOffer).destroy? ? '5' : '4')
+
+  tbody
+    - @group_offers.each do |offer|
+      tr
+        td= t("#{offer.active?}")
+        td= offer.title
+        td
+          - if offer.external? && offer.organization?
+            = offer.organization
+            br
+            = offer.location
+          - if !offer.external? && offer.department
+            = offer.department.contact.last_name
+        td
+          - availability_collection.each do |availability|
+            - if offer[availability]
+              = t("availability.#{availability}")
+              br
+        td
+          - if offer.all?
+            = t_attr(:all)
+          - else
+            - GroupOffer::TARGET_GROUP.each do |target|
+              - if offer[target]
+                = t_attr(target)
+                br
+        td
+          - GroupOffer::DURATION.each do |duration|
+            - if offer[duration]
+              = t_attr(duration)
+              br
+        td= t("offer_state.#{offer.offer_state}") if offer.offer_state?
+        td
+          - offer.volunteers.each do |volunteer|
+            = link_to volunteer, volunteer_path(volunteer)
+            - if offer.responsible?(volunteer)
+              br
+              = t_attr(:responsible, GroupAssignment)
+            - else
+              br
+              = t_attr(:member, GroupAssignment)
+            br
+        td= offer.group_offer_category.category_name
+        td= link_to t_action(:show), group_offer_path(offer)
+        td= link_to t('download'), group_offer_path(offer, format: :pdf)
+        td= link_to t_action(:edit), edit_group_offer_path(offer)
+        - if policy(GroupOffer).destroy?
+          td= link_to t_action(:delete), group_offer_path(offer), confirm_deleting(offer)
+        td= link_to "#{ offer.active? ? t('.deactivate') : t('.activate') }",
+          change_active_state_group_offer_path(offer), method: :put, remote: :true
 
 nav.navbar.section-navigation
   ul.list-inline

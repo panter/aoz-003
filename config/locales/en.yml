@@ -95,22 +95,17 @@ en:
     group_offers:
       other: Group offers
       one: Group offer
-      archived:
-        title: Archived group offers
       change_active_state:
         activated: Group offer was successfully activated.
         deactivated: Group offer was successfully deactivated.
         no-change: Group offer could not be upadated.
-      group_offers_block:
-        activate: Activate
-        active: Active
-        archived: Archived
-        deactivate: Deactivate
-        group_offer_categories: Group offer categories
       form:
         location_external: Location (for external group offers)
         organization_external: Organisation (for external group offers)
       index: &id-help-texts
+        activate: Activate
+        deactivate: Deactivate
+        group_offer_categories: Group offer categories
         necessary_volunteers: '%{amount} necessary volunteers'
         offer_of: Offer from
       show: *id-help-texts
