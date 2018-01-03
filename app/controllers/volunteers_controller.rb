@@ -11,7 +11,7 @@ class VolunteersController < ApplicationController
     @q = policy_scope(Volunteer).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @volunteers = @q.result
-    activeness_filter
+    activity_filter
     respond_to do |format|
       format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
@@ -77,13 +77,9 @@ class VolunteersController < ApplicationController
 
   private
 
-  def activeness_filter
+  def activity_filter
     return unless params[:q] && params[:q][:active_eq]
-    if params[:q][:active_eq] == 'true'
-      @volunteers = @volunteers.active
-    elsif params[:q][:active_eq] == 'false'
-      @volunteers = @volunteers.inactive
-    end
+    @volunteers = params[:q][:active_eq] == 'true' ? @volunteers.active : @volunteers.inactive
   end
 
   def handle_volunteer_update
