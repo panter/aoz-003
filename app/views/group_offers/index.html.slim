@@ -5,7 +5,9 @@ nav.navbar.section-navigation#filters
   ul.list-unstyled
     li.li-search-form
       = search_form_for @q do |f|
-        = f.search_field :search_volunteer_cont, class: 'search-field', data: { autocomplete: search_group_offers_path }, autofocus: true
+        = f.search_field :search_volunteer_cont, class: 'search-field',
+          data: { autocomplete: search_group_offers_path }, autofocus: true,
+          placeholder: 'Nach Freiwillige suchen'
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link t_title(:new), new_group_offer_path, dimension: 'sm'

@@ -3,7 +3,8 @@ nav.navbar.section-navigation.hidden-print
   ul.list-unstyled
     li.li-search-form
       = search_form_for @q do |f|
-        = f.search_field :volunteer_contact_full_name_cont, class: 'search-field', data: { autocomplete: search_assignments_path }, autofocus: true
+        = f.search_field :volunteer_contact_full_name_cont, class: 'search-field',
+          data: { autocomplete: search_assignments_path }, autofocus: true, placeholder: 'Nach Freiwillige suchen'
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link 'Begleitung erfassen', new_assignment_path, dimension: :sm
