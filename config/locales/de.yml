@@ -100,7 +100,7 @@ de:
       other: Gruppenangebote
       change_active_state:
         activated: Gruppenangebot wurde erfolgreich aktiviert.
-        deactivated: Gruppenangebot wurde erfolgreich archiviert.
+        deactivated: Gruppenangebot wurde erfolgreich deaktiviert.
         no-change: Gruppenangebot konnte nicht aktualisiert werden.
       index: &id-help-texts
         activate: Aktivieren
