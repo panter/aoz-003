@@ -2,7 +2,8 @@ require 'test_helper'
 
 class AssignmentScopesTest < ActiveSupport::TestCase
   def setup
-    @now = Time.zone.now
+    @now = Time.zone.today
+    make_assignment(title: 'starts_today', start_date: @now)
     make_assignment(title: 'start_60_days_ago', start_date: @now.days_ago(60),
       client: create(:client, :zuerich))
     make_assignment(title: 'start_in_one_month', start_date: @now.next_month.end_of_month)
@@ -17,16 +18,18 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'no_end returns only with no end date set' do
     query = Assignment.no_end
+    assert query.include? @starts_today
     assert query.include? @start_60_days_ago
     assert query.include? @start_in_one_month
     assert query.include? @start_7_days_ago
     refute query.include? @end_30_days_ago
     refute query.include? @end_future
-    assert_equal 3, query.count
+    assert_equal 4, query.count
   end
 
   test 'has_end returns only with end date set' do
     query = Assignment.has_end
+    refute query.include? @starts_today
     refute query.include? @start_60_days_ago
     refute query.include? @start_7_days_ago
     refute query.include? @start_in_one_month
@@ -38,6 +41,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'end_in_past returns only with end_date in past' do
     query = Assignment.ended
+    refute query.include? @starts_today
     refute query.include? @start_60_days_ago
     refute query.include? @start_in_one_month
     refute query.include? @start_7_days_ago
@@ -49,6 +53,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'end_before returns only ended before parameter' do
     query = Assignment.end_before(@now.days_ago(20))
+    refute query.include? @starts_today
     refute query.include? @start_60_days_ago
     refute query.include? @end_15_days_ago
     refute query.include? @end_future
@@ -60,6 +65,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'end_after returns only ended after parameter' do
     query = Assignment.end_after(@now.days_ago(20))
+    refute query.include? @starts_today
     refute query.include? @start_60_days_ago
     refute query.include? @end_30_days_ago
     refute query.include? @start_in_one_month
@@ -70,6 +76,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'end_within returns only ended between range' do
     query = Assignment.end_within(@now.days_ago(20)..@now.days_ago(10))
+    refute query.include? @starts_today
     refute query.include? @start_60_days_ago
     refute query.include? @end_30_days_ago
     assert query.include? @end_15_days_ago
@@ -79,6 +86,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'end_in_future returns only ending in the future' do
     query = Assignment.end_in_future
+    refute query.include? @starts_today
     refute query.include? @start_60_days_ago
     refute query.include? @end_30_days_ago
     refute query.include? @end_15_days_ago
@@ -88,25 +96,29 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'not_ended returns only with no ending or ending in future' do
     query = Assignment.not_ended
+    assert query.include? @starts_today
     assert query.include? @start_60_days_ago
     refute query.include? @end_30_days_ago
     refute query.include? @end_15_days_ago
     assert query.include? @end_future
-    assert_equal 4, query.count
+    assert_equal 5, query.count
   end
 
-  test 'started returns only with start date in past' do
+  test 'started returns only with start date in past or today' do
     query = Assignment.started
+    assert query.include? @starts_today
     assert query.include? @start_60_days_ago
+    assert query.include? @start_7_days_ago
     assert query.include? @end_30_days_ago
     assert query.include? @end_15_days_ago
     assert query.include? @end_future
     refute query.include? @start_in_one_month
-    assert_equal 5, query.count
+    assert_equal 6, query.count
   end
 
   test 'start_before returns only with start date before given date' do
     query = Assignment.start_before(@now.days_ago(31))
+    refute query.include? @starts_today
     assert query.include? @start_60_days_ago
     assert query.include? @end_30_days_ago
     refute query.include? @end_15_days_ago
@@ -117,16 +129,18 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'start_after returns only with start date after given date' do
     query = Assignment.start_after(@now.days_ago(29))
+    assert query.include? @starts_today
     refute query.include? @start_60_days_ago
     refute query.include? @end_30_days_ago
     refute query.include? @end_15_days_ago
     assert query.include? @end_future
     assert query.include? @start_in_one_month
-    assert_equal 3, query.count
+    assert_equal 4, query.count
   end
 
   test 'start_within returns only with start date after given date' do
     query = Assignment.start_within(@now.days_ago(32)..@now.days_ago(12))
+    refute query.include? @starts_today
     refute query.include? @start_60_days_ago
     refute query.include? @end_30_days_ago
     assert query.include? @end_15_days_ago
@@ -137,12 +151,13 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'active returns only started and not ended' do
     query = Assignment.active
+    assert query.include? @starts_today
     assert query.include? @start_60_days_ago
     refute query.include? @end_30_days_ago
     refute query.include? @end_15_days_ago
     assert query.include? @end_future
     refute query.include? @start_in_one_month
-    assert_equal 3, query.count
+    assert_equal 4, query.count
   end
 
   test 'inactive' do
