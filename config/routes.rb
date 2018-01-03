@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     resources :journals, except: [:show]
   end
 
-  resources :volunteers, concerns: :search  do
+  resources :volunteers, concerns: :search do
     get :find_client, on: :member, to: 'assignments#find_client'
     get :seeking_clients, on: :collection
     resources :billing_expenses, except: [:edit, :update]
@@ -61,7 +61,6 @@ Rails.application.routes.draw do
   resources :group_assignments, only: [:show], concerns: [:update_submitted_at, :hours_resources]
   resources :assignments, concerns: :update_submitted_at
   resources :group_offers, concerns: :search do
-    get :archived, on: :collection
     put :change_active_state, on: :member
   end
 

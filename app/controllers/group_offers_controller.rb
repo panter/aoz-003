@@ -6,7 +6,7 @@ class GroupOffersController < ApplicationController
 
   def index
     authorize GroupOffer
-    @q = policy_scope(GroupOffer.active).ransack(params[:q])
+    @q = policy_scope(GroupOffer).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @group_offers = @q.result
     respond_to do |format|
@@ -67,23 +67,10 @@ class GroupOffersController < ApplicationController
     redirect_to group_offers_url, make_notice
   end
 
-  def archived
-    authorize GroupOffer
-    @q = policy_scope(GroupOffer.archived).ransack(params[:q])
-    @archived = @q.result
-    respond_to do |format|
-      format.xlsx { render xlsx: 'index', locals: { group_offers: @archived } }
-      format.html
-    end
-  end
-
   def change_active_state
     if @group_offer.update(active: !@group_offer.active)
-      if @group_offer.active?
-        redirect_to group_offers_url, notice: t('.activated')
-      else
-        redirect_to archived_group_offers_url, notice: t('.deactivated')
-      end
+      redirect_to group_offers_url,
+        notice: @group_offer.active? ? t('.activated') : t('.deactivated')
     else
       redirect_to group_offers_url, notice: t('.no-change')
     end

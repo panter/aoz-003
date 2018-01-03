@@ -23,7 +23,6 @@ class GroupOfferPolicy < ApplicationPolicy
   alias_method :show?,                :superadmin_or_departments_offer_or_volunteer_included?
   alias_method :edit?,                :superadmin_or_departments_offer?
   alias_method :update?,              :superadmin_or_departments_offer?
-  alias_method :archived?,            :superadmin_or_department_manager?
   alias_method :change_active_state?, :superadmin_or_departments_offer?
 
   alias_method :destroy?, :superadmin?

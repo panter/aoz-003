@@ -98,19 +98,14 @@ de:
     group_offers:
       one: Gruppenangebot
       other: Gruppenangebote
-      archived:
-        title: Archivierte Gruppenangebote
       change_active_state:
         activated: Gruppenangebot wurde erfolgreich aktiviert.
         deactivated: Gruppenangebot wurde erfolgreich archiviert.
         no-change: Gruppenangebot konnte nicht aktualisiert werden.
-      group_offers_block:
+      index: &id-help-texts
         activate: Aktivieren
-        active: Aktiv
-        archived: Archiviert
         deactivate: Deaktivieren
         group_offer_categories: Gruppenangebot Kategorien
-      index: &id-help-texts
         necessary_volunteers: 'Benötigt %{amount} Freiwillige'
         offer_of: Angebot von
       show: *id-help-texts
