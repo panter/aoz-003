@@ -30,7 +30,7 @@ class Assignment < ApplicationRecord
   }
   scope :started, lambda {
     where(
-      'assignments.period_start < ? AND assignments.period_start IS NOT NULL',
+      'assignments.period_start <= ? AND assignments.period_start IS NOT NULL',
       Time.zone.today
     )
   }
