@@ -3,8 +3,6 @@ class Assignment < ApplicationRecord
   include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
-  after_save :update_client_state, if: :state_relevant_change?
-
   belongs_to :client
   accepts_nested_attributes_for :client
 

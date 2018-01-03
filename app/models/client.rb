@@ -43,10 +43,13 @@ class Client < ApplicationRecord
     with_assignment.merge(Assignment.active_between(start_date, end_date))
   }
 
-  scope :with_inactive_assignment, (-> { with_assignment.merge(Assignment.ended) })
+  scope :with_inactive_assignment, lambda {
+    left_outer_joins(:assignment)
+      .where('assignments.period_end < ?', Time.zone.today)
+  }
 
   scope :without_assignment, lambda {
-    left_outer_joins(:assignment).where(assignments: { id: nil })
+    left_outer_joins(:assignment).where('assignments.id is NULL')
   }
 
   scope :with_suggested_active_assignment, lambda {
@@ -59,7 +62,7 @@ class Client < ApplicationRecord
   }
 
   scope :inactive, lambda {
-    accepted.need_accompanying
+    accepted.without_assignment.or(with_inactive_assignment)
   }
 
   def self.acceptance_collection
@@ -83,24 +86,5 @@ class Client < ApplicationRecord
 
   def german_missing?
     language_skills.german.blank?
-  end
-
-  def with_active_assignment?
-    return assignment.active? unless assignment.nil?
-    false
-  end
-
-  def active?
-    accepted? && with_active_assignment?
-  end
-
-  def state
-    return acceptance unless accepted?
-    return :active if active?
-    :inactive unless active?
-  end
-
-  def verify_and_update_state
-    update(active: active?)
   end
 end
