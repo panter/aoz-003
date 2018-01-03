@@ -87,4 +87,13 @@ class Client < ApplicationRecord
   def german_missing?
     language_skills.german.blank?
   end
+
+  def with_active_assignment?
+    return assignment.active? unless assignment.nil?
+    false
+  end
+
+  def active?
+    accepted? && with_active_assignment?
+  end
 end

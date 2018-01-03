@@ -54,6 +54,9 @@ h1= @client.contact.full_name
         tr
           td= t_attr(:acceptance)
           td= t(".acceptance.#{@client.acceptance}")
+        tr
+          td Tandem
+          td= t("#{@client.active?}")
 
       tr
         td= t_attr(:involved_authority)
