@@ -10,7 +10,7 @@ class ClientsController < ApplicationController
     @q = policy_scope(Client).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @clients = @q.result
-    activeness_filter
+    activity_filter
     respond_to do |format|
       format.xlsx
       format.html do
@@ -70,13 +70,9 @@ class ClientsController < ApplicationController
 
   private
 
-  def activeness_filter
+  def activity_filter
     return unless params[:q] && params[:q][:active_eq]
-    if params[:q][:active_eq] == 'true'
-      @clients = @clients.active
-    elsif params[:q][:active_eq] == 'false'
-      @clients = @clients.inactive
-    end
+    @clients = params[:q][:active_eq] == 'true' ? @clients.active : @clients.inactive
   end
 
   def set_client
