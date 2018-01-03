@@ -94,7 +94,6 @@ ActiveRecord::Schema.define(version: 20171221153738) do
     t.text "goals"
     t.text "education"
     t.text "interests"
-    t.string "state", default: "registered"
     t.text "comments"
     t.text "competent_authority"
     t.text "involved_authority"
