@@ -29,7 +29,7 @@ class Client < ApplicationRecord
   validates :salutation, presence: true
 
   scope :need_accompanying, lambda {
-    accepted.includes(:assignment).where(assignments: { client_id: nil }).order(created_at: :asc)
+    inactive.order(created_at: :asc)
   }
 
   scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
