@@ -10,7 +10,7 @@ nav.navbar.section-navigation#filters
     li= button_link t('.group_offer_categories'), group_offer_categories_path, dimension: 'sm'
     li
       - if action_name == 'index'
-        = button_link t('.archived'), archived_group_offers_path, dimension: 'sm'
+        = button_link t('.inactive'), inactive_group_offers_path, dimension: 'sm'
       - else
         = button_link t('.active'), group_offers_path, dimension: 'sm'
     li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'

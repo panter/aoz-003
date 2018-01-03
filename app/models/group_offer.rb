@@ -29,7 +29,7 @@ class GroupOffer < ApplicationRecord
   validates :department, presence: true, if: :department_manager?
 
   scope :active, (-> { where(active: true) })
-  scope :archived, (-> { where(active: false) })
+  scope :inactive, (-> { where(active: false) })
 
   scope :in_department, (-> { where.not(department_id: nil) })
 

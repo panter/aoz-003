@@ -48,12 +48,12 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? 'must exist'
   end
 
-  test 'archived group offers are not indexed' do
+  test 'inactive group offers are not indexed' do
     group_offer = create :group_offer, active: false
     login_as create(:user)
     visit group_offers_path
     refute page.has_text? group_offer.title
-    visit archived_group_offers_path
+    visit inactive_group_offers_path
     assert page.has_text? group_offer.title
   end
 
@@ -75,7 +75,7 @@ class GroupOffersTest < ApplicationSystemTestCase
   test 'group offer can be activated' do
     group_offer = create :group_offer, active: false
     login_as create(:user)
-    visit archived_group_offers_path
+    visit inactive_group_offers_path
     assert page.has_text? group_offer.title
     assert page.has_link? 'Activate'
     click_link 'Activate'
@@ -83,7 +83,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? group_offer.title
     assert page.has_link? 'Deactivate'
     refute page.has_link? 'Activate'
-    visit archived_group_offers_path
+    visit inactive_group_offers_path
     refute page.has_text? group_offer.title
   end
 
