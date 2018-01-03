@@ -92,8 +92,4 @@ class Assignment < ApplicationRecord
   def group_assignment?
     false
   end
-
-  def update_client_state
-    client.verify_and_update_state
-  end
 end
