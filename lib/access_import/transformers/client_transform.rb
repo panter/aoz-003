@@ -28,7 +28,7 @@ class ClientTransform < Transformer
     client_attributes = prepare_attributes(personen_rolle)
     client = Client.new(client_attributes)
     client = personen_rollen_create_update_conversion(client, personen_rolle)
-    client.state = handle_client_state(personen_rolle)
+    client.acceptance = handle_client_acceptance(personen_rolle)
     client.save!
     client
   end
@@ -39,14 +39,9 @@ class ClientTransform < Transformer
     end
   end
 
-  def handle_client_state(personen_rolle)
-    if personen_rolle[:d_Rollenende]
-      Client::FINISHED
-    elsif personen_rolle[:d_Rollenende].nil?
-      Client::ACTIVE
-    else
-      Client::REGISTERED
-    end
+  def handle_client_acceptance(personen_rolle)
+    return 'resigned' if personen_rolle[:d_Rollenende]
+    'accepted'
   end
 
   def comments(begleitet, personen_rolle, haupt_person)
