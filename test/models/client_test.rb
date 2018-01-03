@@ -34,7 +34,7 @@ class ClientTest < ActiveSupport::TestCase
     assert_equal [@client, client], result.to_a
   end
 
-  test 'contact relation is build automaticly' do
+  test 'contact relation is build automatically' do
     new_client = Client.new
     assert new_client.contact.present?
   end

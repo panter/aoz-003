@@ -9,7 +9,7 @@ class VolunteerTest < ActiveSupport::TestCase
     assert @volunteer.valid?
   end
 
-  test 'contact relation is built automaticly' do
+  test 'contact relation is built automatically' do
     new_volunteer = Volunteer.new
     assert new_volunteer.contact.present?
   end
