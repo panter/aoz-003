@@ -1,5 +1,8 @@
 nav.navbar.section-navigation
   ul.list-inline
+    - if policy(Client).acceptance?
+      li.button-acceptance = link_to t(".acceptance.#{@client.acceptance}"), '#',
+        class: "btn btn-acceptance-#{@client.acceptance}"
     - if policy(@client).edit?
       li= button_link t_action(:edit), edit_client_path(@client)
     li= button_link navigation_glyph('print'), client_path(@client, print: true)

@@ -41,6 +41,8 @@ de:
         acceptance: *id-client-acceptance
       show:
         acceptance: *id-client-acceptance
+      show_navigation:
+        acceptance: *id-client-acceptance
     created_at: Erstellt um
     email_templates:
       kind: &id-kinds-template
