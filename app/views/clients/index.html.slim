@@ -23,7 +23,8 @@ h1 Klienten/innen
           span= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
         th.truncate-th
           span= sort_link @q, :created_at, t_attr(:created_at, Client)
-        th= sort_link @q, :acceptance, t_attr(:acceptance)
+        - if policy(Client).acceptance?
+          th= sort_link @q, :acceptance, t_attr(:acceptance)
         - if policy(Client).comments?
           th= t_attr(:comments, Client)
         th.hidden-print colspan='2'

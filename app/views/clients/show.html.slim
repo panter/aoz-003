@@ -50,14 +50,6 @@ h1= @client.contact.full_name
         td= t_attr(:interests)
         td= @client.interests
 
-      - if policy(Client).acceptance?
-        tr
-          td= t_attr(:acceptance)
-          td= t(".acceptance.#{@client.acceptance}")
-        tr
-          td Aktives Tandem
-          td= t("#{@client.active?}")
-
       tr
         td= t_attr(:involved_authority)
         td= @client.involved_authority

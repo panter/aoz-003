@@ -17,8 +17,9 @@ tr
   td= client.interests
   td= client.competent_authority
   td.no-wrap= l(client.created_at.to_date)
-  td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
-    class: "btn btn-xs btn-acceptance-#{client.acceptance}"
+  - if policy(Client).acceptance?
+    td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
+      class: "btn btn-xs btn-acceptance-#{client.acceptance}"
   - if policy(Client).comments?
     td= client.comments
   = render 'index_actions', subject: client
