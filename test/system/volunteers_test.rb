@@ -138,8 +138,8 @@ class VolunteersTest < ApplicationSystemTestCase
     click_button 'Update Volunteer'
 
     visit volunteer_path(volunteer)
-    assert page.has_content? 'Reason for rejection Other'
-    assert page.has_content? 'Explanation for rejection Explanation'
+    assert page.has_content? 'Reason for rejection: Other'
+    assert page.has_content? 'Explanation for rejection: Explanation'
   end
 
   test 'thead acceptance filter dropdown can switch to all' do

@@ -1,4 +1,9 @@
 h1= @volunteer.contact.full_name
+- if @volunteer.rejected?
+  - if @volunteer.rejection_type.present?
+    h4= "#{t_attr(:rejection_type)}: #{t("rejection_type.#{@volunteer.rejection_type}")}"
+  - if @volunteer.rejection_text.present?
+    h4= "#{t_attr(:rejection_text)}: #{@volunteer.rejection_text}"
 
 nav.navbar.section-navigation
   ul.list-inline
@@ -101,21 +106,6 @@ h3 Persönlicher Hintergrund
       tr
         td= t_attr(:interests)
         td= @volunteer.interests
-      - if policy(Volunteer).acceptance?
-        tr
-          td= t_attr(:acceptance)
-          td= t(".acceptance.#{@volunteer.acceptance}")
-      - if policy(Volunteer).state?
-        tr
-          td= t_attr(:state)
-          td= t("state.#{@volunteer.state}")
-        - if @volunteer.rejected?
-          tr
-            td= t_attr(:rejection_type)
-            td= t("rejection_type.#{@volunteer.rejection_type}") if @volunteer.rejection_type.present?
-          tr
-            td= t_attr(:rejection_text)
-            td= @volunteer.rejection_text
       - if @volunteer.internal?
         tr
           td= t_attr(:bank_details)
