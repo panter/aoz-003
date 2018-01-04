@@ -31,5 +31,4 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :can_manage?, :superadmin?
   alias_method :acceptance?, :superadmin?
   alias_method :checklist?,  :superadmin?
-  alias_method :state?,      :superadmin?
 end
