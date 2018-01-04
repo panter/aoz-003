@@ -6,7 +6,6 @@ tr
       = link_to assignment.client, assignment.client
     - else
       = assignment.client
-  td= t("simple_form.options.assignment.state.#{assignment.state}") if assignment.state.present?
   td= l(assignment.period_start) if assignment.period_start
   td= l(assignment.period_end) if assignment.period_end
   td

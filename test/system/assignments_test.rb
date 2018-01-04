@@ -8,7 +8,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     @volunteer = create :volunteer_with_user, take_more_assignments: true
   end
 
-  test 'new assignment form with preselected fields' do
+  test 'new_assignment_form' do
     login_as @user
     visit new_assignment_path
     select @client.contact.full_name, from: 'Client'
@@ -19,7 +19,6 @@ class AssignmentsTest < ApplicationSystemTestCase
     click_button 'Create Assignment'
     assert page.has_text? 'Assignment was successfully created.'
     within '.table-striped' do
-      assert page.has_text? 'Suggested'
       assert page.has_link? @volunteer.contact.full_name
       assert page.has_link? @client.contact.full_name
     end

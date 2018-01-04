@@ -642,12 +642,6 @@ en:
         external: Register the volunteer as external?
     "no": 'No'
     options:
-      assignment:
-        state:
-          active: Active
-          archived: Archived
-          finished: Finished
-          suggested: Suggested
       client:
         acceptance: *id-client-acceptance
         age_request: *id-age_requests

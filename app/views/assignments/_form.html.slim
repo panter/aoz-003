@@ -20,7 +20,4 @@
           selected: params[:volunteer_id] || @assignment&.volunteer&.id
 
   .row
-    .col-xs-12= f.input :state, collection: Assignment::STATES, default: :suggested
-
-  .row
     .col-xs-12= f.button :submit

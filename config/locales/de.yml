@@ -822,12 +822,6 @@ de:
         external: Als externen Freiwilligen registrieren?
     "no": 'Nein'
     options:
-      assignment:
-        state:
-          active: Aktiv
-          archived: Archiviert
-          finished: Abgeschlossen
-          suggested: Vorgeschlagen
       certificate:
         assignment_kinds:
           <<: *id-assignment-kinds

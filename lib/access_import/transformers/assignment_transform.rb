@@ -1,7 +1,6 @@
 class AssignmentTransform < Transformer
   def prepare_attributes(fw_einsatz, client, volunteer, begleitet)
     {
-      state: map_assignment_state(fw_einsatz[:d_EinsatzVon], fw_einsatz[:d_EinsatzBis]),
       client: client,
       volunteer: volunteer,
       period_start: fw_einsatz[:d_EinsatzVon],
@@ -43,12 +42,5 @@ class AssignmentTransform < Transformer
 
   def import_all(freiwilligen_einsaetze = nil)
     import_multiple(freiwilligen_einsaetze || @freiwilligen_einsaetze.where_begleitung)
-  end
-
-  def map_assignment_state(from_date, to_date)
-    return 'suggested' if from_date > now
-    return 'active' if from_date < now && to_date.nil? || to_date > now
-    return 'archived' if to_date < now.years_ago(3)
-    'finished'
   end
 end

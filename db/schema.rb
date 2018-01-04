@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20180110083748) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state", default: "suggested"
     t.bigint "creator_id"
     t.date "period_start"
     t.date "period_end"
