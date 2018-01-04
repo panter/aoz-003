@@ -19,8 +19,9 @@ nav.navbar.section-navigation
   ul.list-inline
     li= button_link t('clear_filters'), volunteers_path, dimension: 'sm'
     li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
-    = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
-    = boolean_toggler_filter_dropdown(:active, 'Einsatz', 'Aktiv', 'Inaktiv')
+    - if policy(Volunteer).acceptance?
+      = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
+      = boolean_toggler_filter_dropdown(:active, 'Einsatz', 'Aktiv', 'Inaktiv')
     = boolean_toggler_filter_dropdown(:external, 'Intern/Extern', 'Extern', 'Intern')
     = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
     = boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
