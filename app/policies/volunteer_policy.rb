@@ -17,7 +17,6 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :create?,          :user_managing_volunteer?
 
   alias_method :destroy?,         :superadmin?
-  alias_method :index_xls?,       :superadmin?
 
   def volunteer_managing_or_volunteers_profile?
     user_managing_volunteer? || user_owns_record?
