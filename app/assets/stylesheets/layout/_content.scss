@@ -137,7 +137,8 @@
 }
 
 // # TODO remove when button gets the change status functionality
-td.button-acceptance a {
+td.button-acceptance a,
+li.button-acceptance a {
   pointer-events: none;
 }
 
