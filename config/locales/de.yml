@@ -716,7 +716,6 @@ de:
         one: 'Konnte %{resource} nicht speichern: ein Fehler.'
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   "false": Nein
-  find_client: Klient/in finden
   forgot_password: Passwort vergessen?
   get_back: Wir werden uns bald bei Ihnen melden.
   helpers:
