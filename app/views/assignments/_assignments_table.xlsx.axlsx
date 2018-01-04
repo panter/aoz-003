@@ -7,8 +7,6 @@ col_header = wb.styles.add_style(
 )
 standard_format = wb.styles.add_style alignment: { horizontal: :left }, width: :auto_fit
 date_format = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
-date_time_format = wb.styles.add_style(alignment: { horizontal: :center }, format_code: 'dd.mm.yyyy HH:MM',
-  with: :auto_fit)
 
 cell_types = [
   :integer, # 0
@@ -17,9 +15,8 @@ cell_types = [
   :string,  # 3
   :date,    # 4
   :date,    # 5
-  :string,  # 6
-  :time,    # 7
-  :time     # 8
+  :date,    # 6
+  :date     # 7
 ]
 
 cell_styles = [
@@ -29,9 +26,8 @@ cell_styles = [
   standard_format,  # 3
   date_format,      # 4
   date_format,      # 5
-  standard_format,  # 6
-  date_time_format, # 7
-  date_time_format  # 8
+  date_format,      # 6
+  date_format       # 7
 ]
 
 wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
@@ -44,9 +40,8 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
       'Klient/in',                  # 3
       t_attr(:period_start),        # 4
       t_attr(:period_end),          # 5
-      t_attr(:state),               # 6
-      t_attr(:created_at),          # 7
-      t_attr(:updated_at)           # 8
+      t_attr(:created_at),          # 6
+      t_attr(:updated_at)           # 7
     ],
     type: :string, style: col_header
   )
@@ -61,9 +56,8 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
         assignment.client.contact.full_name,                           # 3
         assignment.period_start,                                       # 4
         assignment.period_end,                                         # 5
-        t("simple_form.options.assignment.state.#{assignment.state}"), # 6
-        assignment.created_at.localtime,                               # 7
-        assignment.updated_at.localtime                                # 8
+        assignment.created_at.to_date,                                 # 6
+        assignment.updated_at.to_date                                  # 7
       ],
       types: cell_types, style: cell_styles
     )

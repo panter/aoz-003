@@ -12,9 +12,6 @@ class Assignment < ApplicationRecord
 
   has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 
-  # TODO: needs to be removed
-  STATES = [:suggested, :active, :finished, :archived].freeze
-
   has_one :import, as: :importable, dependent: :destroy
   accepts_nested_attributes_for :import, allow_destroy: true
 
