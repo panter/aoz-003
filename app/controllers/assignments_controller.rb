@@ -7,6 +7,7 @@ class AssignmentsController < ApplicationController
     @q = policy_scope(Assignment).ransack(params[:q])
     @q.sorts = ['period_start desc'] if @q.sorts.empty?
     @assignments = @q.result
+    activity_filter
     respond_to do |format|
       format.xlsx
       format.html do
@@ -87,6 +88,11 @@ class AssignmentsController < ApplicationController
   end
 
   private
+
+  def activity_filter
+    return unless params[:q] && params[:q][:active_eq]
+    @assignments = params[:q][:active_eq] == 'true' ? @assignments.active : @assignments.inactive
+  end
 
   def set_client
     @client = Client.find(params[:id])
