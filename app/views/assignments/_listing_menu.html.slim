@@ -7,8 +7,7 @@ nav.navbar.section-navigation.hidden-print
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link 'Begleitung erfassen', new_assignment_path, dimension: :sm
-    /to be replaced
-    /= list_filter_dropdown(:state, Assignment::STATES)
+    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
     li= button_link t('clear_filters'), assignments_path, dimension: :sm
     li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: :sm
     li= link_to navigation_glyph('print'), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
