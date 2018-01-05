@@ -20,22 +20,6 @@ class Assignment < ApplicationRecord
   scope :created_before, ->(max_time) { where('assignments.created_at < ?', max_time) }
   scope :created_after, ->(min_time) { where('assignments.created_at > ?', min_time) }
 
-  scope :active, lambda {
-    started.where(
-      'assignments.period_end > ? OR assignments.period_end IS NULL',
-      Time.zone.today
-    )
-  }
-  scope :started, lambda {
-    where(
-      'assignments.period_start <= ? AND assignments.period_start IS NOT NULL',
-      Time.zone.today
-    )
-  }
-  scope :ended, lambda {
-    where('assignments.period_end < ?', Time.zone.today)
-  }
-
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
   scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })
 

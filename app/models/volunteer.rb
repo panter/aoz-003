@@ -101,7 +101,9 @@ class Volunteer < ApplicationRecord
   scope :without_group_offer, lambda {
     left_outer_joins(:group_offers).where(group_offers: { id: nil })
   }
-  scope :without_active_assignment, (-> { joins(:assignments).merge(Assignment.ended) })
+  scope :without_active_assignment, lambda {
+    joins(:assignments).where('assignments.period_end <= ?', Time.zone.today)
+  }
   scope :not_in_any_group_offer, lambda {
     left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })
   }
