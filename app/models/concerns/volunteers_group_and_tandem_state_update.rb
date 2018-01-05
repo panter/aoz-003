@@ -5,7 +5,7 @@ module VolunteersGroupAndTandemStateUpdate
     after_save :update_volunteer_state, if: :state_relevant_change?
 
     def ended?
-      period_end.present? && period_end < Time.zone.today
+      period_end.present? && period_end <= Time.zone.today
     end
 
     def will_end?
