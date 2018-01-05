@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ClientActivenessFilterTest < ActionDispatch::IntegrationTest
+class ClientActivityFilterTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
     @client_accepted = create :client, acceptance: 'accepted'

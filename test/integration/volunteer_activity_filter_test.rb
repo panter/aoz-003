@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class VolunteerActivenessFilterTest < ActionDispatch::IntegrationTest
+class VolunteerActivityFilterTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
     @volunteer_undecided = create :volunteer, acceptance: 'undecided'
