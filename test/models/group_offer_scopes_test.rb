@@ -9,12 +9,12 @@ class GroupOfferScopesTest < ActiveSupport::TestCase
     refute query.include? group_offer_not_active
   end
 
-  test 'archived' do
+  test 'inactive' do
     group_offer_active = create :group_offer, active: true
-    group_offer_not_active = create :group_offer, active: false
-    query = GroupOffer.archived
+    group_offer_inactive = create :group_offer, active: false
+    query = GroupOffer.inactive
     refute query.include? group_offer_active
-    assert query.include? group_offer_not_active
+    assert query.include? group_offer_inactive
   end
 
   test 'in_department' do
