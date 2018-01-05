@@ -193,40 +193,22 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     refute query.include? created_after
   end
 
-  test 'zurich' do
+  test 'zurich_not_zurich' do
     assignment_zurich = make_assignment(client: create(:client_z))
-    assignment_not_zurich = make_assignment(client: create(:client))
-    query = Assignment.zurich
-    assert query.include? assignment_zurich
-    refute query.include? assignment_not_zurich
+    zurich = Assignment.zurich
+    not_zurich = Assignment.not_zurich
+    assert_equal 1, zurich.count
+    assert zurich.include? assignment_zurich
+    assert_equal 10, not_zurich.count
   end
 
-  test 'not_zurich' do
-    assignment_zurich = make_assignment(client: create(:client_z))
-    assignment_not_zurich = make_assignment(client: create(:client))
-    query = Assignment.not_zurich
-    refute query.include? assignment_zurich
-    assert query.include? assignment_not_zurich
-  end
-
-  test 'internal' do
-    assignment_internal = make_assignment
-    assignment_internal.update(volunteer: create(:volunteer))
-    assignment_external = make_assignment
-    assignment_external.update(volunteer: create(:volunteer_external))
-    query = Assignment.internal
-    assert query.include? assignment_internal
-    refute query.include? assignment_external
-  end
-
-  test 'external' do
-    assignment_internal = make_assignment
-    assignment_internal.update(volunteer: create(:volunteer))
-    assignment_external = make_assignment
-    assignment_external.update(volunteer: create(:volunteer_external))
-    query = Assignment.external
-    refute query.include? assignment_internal
-    assert query.include? assignment_external
+  test 'internal_external' do
+    assignment_external = make_assignment(volunteer: create(:volunteer_external))
+    internal = Assignment.internal
+    external = Assignment.external
+    assert_equal 10, internal.count
+    assert external.include? assignment_external
+    assert_equal 1, external.count
   end
 
   test 'started_ca_six_weeks_ago' do
