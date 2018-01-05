@@ -8,7 +8,7 @@ class GroupOffersController < ApplicationController
     authorize GroupOffer
     @q = policy_scope(GroupOffer).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @group_offers = @q.result
+    @group_offers = @q.result.reorder(active: :desc)
     respond_to do |format|
       format.xlsx { render xlsx: 'index', locals: { group_offers: @group_offers } }
       format.html
