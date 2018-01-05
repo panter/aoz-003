@@ -53,11 +53,6 @@ class Client < ApplicationRecord
     left_outer_joins(:assignment).where('assignments.id is NULL')
   }
 
-  scope :with_suggested_active_assignment, lambda {
-    joins(:assignment)
-      .where('assignments.state = ? OR assignments.state = ?', 'suggested', 'active')
-  }
-
   scope :active, lambda {
     accepted.with_active_assignment
   }
