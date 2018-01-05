@@ -13,17 +13,16 @@ module VolunteersGroupAndTandemStateUpdate
     end
 
     def started?
-      period_start.present? && period_start < Time.zone.today
+      period_start.present? && period_start <= Time.zone.today
     end
 
     def will_start?
       period_start.present? && period_start > Time.zone.today
     end
 
-    def ongoing?
-      !ended? && started?
+    def active?
+      started? && !ended?
     end
-    alias :active? :ongoing?
 
     def inactive?
       period_start.blank? || ended? || will_start?
