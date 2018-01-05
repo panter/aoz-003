@@ -98,16 +98,16 @@ de:
     group_offers:
       one: Gruppenangebot
       other: Gruppenangebote
-      archived:
-        title: Archivierte Gruppenangebote
+      inactive:
+        title: Inaktive Gruppenangebote
       change_active_state:
         activated: Gruppenangebot wurde erfolgreich aktiviert.
-        deactivated: Gruppenangebot wurde erfolgreich archiviert.
+        deactivated: Gruppenangebot wurde erfolgreich deaktiviert.
         no-change: Gruppenangebot konnte nicht aktualisiert werden.
       group_offers_block:
         activate: Aktivieren
-        active: Aktiv
-        archived: Archiviert
+        active: Aktive
+        inactive: Inaktive
         deactivate: Deaktivieren
         group_offer_categories: Gruppenangebot Kategorien
       index: &id-help-texts

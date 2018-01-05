@@ -67,12 +67,12 @@ class GroupOffersController < ApplicationController
     redirect_to group_offers_url, make_notice
   end
 
-  def archived
+  def inactive
     authorize GroupOffer
-    @q = policy_scope(GroupOffer.archived).ransack(params[:q])
-    @archived = @q.result
+    @q = policy_scope(GroupOffer.inactive).ransack(params[:q])
+    @inactive = @q.result
     respond_to do |format|
-      format.xlsx { render xlsx: 'index', locals: { group_offers: @archived } }
+      format.xlsx { render xlsx: 'index', locals: { group_offers: @inactive } }
       format.html
     end
   end
@@ -82,7 +82,7 @@ class GroupOffersController < ApplicationController
       if @group_offer.active?
         redirect_to group_offers_url, notice: t('.activated')
       else
-        redirect_to archived_group_offers_url, notice: t('.deactivated')
+        redirect_to inactive_group_offers_url, notice: t('.deactivated')
       end
     else
       redirect_to group_offers_url, notice: t('.no-change')

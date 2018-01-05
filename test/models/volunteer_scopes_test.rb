@@ -228,11 +228,11 @@ class VolunteerScopesTest < ActiveSupport::TestCase
       group_assignments: [
         GroupAssignment.create(group_offer: create(:group_offer, active: true))
       ]
-    with_archived = create :volunteer,
+    with_inactive = create :volunteer,
       group_assignments: [
         GroupAssignment.create(group_offer: create(:group_offer, active: false))
       ]
-    with_active_and_archived = create :volunteer,
+    with_active_and_inactive = create :volunteer,
       group_assignments: [
         GroupAssignment.create(group_offer: create(:group_offer, active: true)),
         GroupAssignment.create(group_offer: create(:group_offer, active: false))
@@ -240,8 +240,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     without_group_offers = create :volunteer
     query = Volunteer.without_group_offer
     refute query.include? with_active
-    refute query.include? with_active_and_archived
-    refute query.include? with_archived
+    refute query.include? with_active_and_inactive
+    refute query.include? with_inactive
     assert query.include? without_group_offers
   end
 
