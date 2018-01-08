@@ -15,7 +15,7 @@ nav.navbar.section-navigation#filters
   ul.list-inline
     li= button_link t('clear_filters'), group_offers_path, dimension: 'sm'
     = list_filter_dropdown(:department_id, Department.all)
-    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
+    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Beendet')
     = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
     = list_filter_dropdown(:group_offer_category_id, GroupOfferCategory.all)
   hr
