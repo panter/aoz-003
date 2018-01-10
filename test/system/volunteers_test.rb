@@ -208,13 +208,34 @@ class VolunteersTest < ApplicationSystemTestCase
   test 'department_manager_can_see_volunteer_index_and_only_seeking_clients_volunteers' do
     department_manager = create :department_manager
     login_as department_manager
-    play_user_index_volunteer_display
+
+    volunteer_seeks = create :volunteer_with_user
+    create :assignment, period_start: 500.days.ago, period_end: 200.days.ago,
+      volunteer: volunteer_seeks
+    volunteer_not_seeking = create :volunteer_with_user
+    create :assignment, period_start: 10.days.ago, period_end: nil,
+      volunteer: volunteer_not_seeking
+    visit volunteers_path
+    assert page.has_text? volunteer_seeks.contact.full_name
+    refute page.has_text? volunteer_not_seeking.contact.full_name
   end
 
-  test 'social_worker_can_see_volunteer_index_and_only_seeking_clients_volunteers' do
+  test 'social_worker_can_see_volunteer_index' do
     social_worker = create :social_worker
     login_as social_worker
-    play_user_index_volunteer_display
+
+    visit volunteers_path
+
+    assert page.has_text? 'Freiwillige'
+  end
+
+  test 'social_worker_cant_see_volunteer_seeking_clients' do
+    social_worker = create :social_worker
+    login_as social_worker
+
+    visit seeking_clients_volunteers_path
+
+    assert page.has_text? 'You are not authorized to perform this action.'
   end
 
   test 'accepted at creation volunteer gets invited' do
@@ -251,17 +272,5 @@ class VolunteersTest < ApplicationSystemTestCase
     visit volunteer_path(volunteer)
     assert page.has_text? group_offer.title
     refute page.has_link? group_offer.title
-  end
-
-  def play_user_index_volunteer_display
-    volunteer_seeks = create :volunteer_with_user
-    create :assignment, period_start: 500.days.ago, period_end: 200.days.ago,
-      volunteer: volunteer_seeks
-    volunteer_not_seeking = create :volunteer_with_user
-    create :assignment, period_start: 10.days.ago, period_end: nil,
-      volunteer: volunteer_not_seeking
-    visit volunteers_path
-    assert page.has_text? volunteer_seeks.contact.full_name
-    refute page.has_text? volunteer_not_seeking.contact.full_name
   end
 end
