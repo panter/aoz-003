@@ -14,7 +14,7 @@ class ReminderMailingsController < ApplicationController
     @group_assignments = GroupAssignment.need_trial_period_reminder_mailing.distinct
     @reminder_mailing = ReminderMailing.new(kind: 'trial_period', creator: current_user,
       reminder_mailing_volunteers: @assignments + @group_assignments)
-    if EmailTemplate.half_year.active.any?
+    if EmailTemplate.trial.active.any?
       @reminder_mailing.assign_attributes(EmailTemplate.trial.active.first.slice(:subject, :body))
     else
       redirect_to new_email_template_path,

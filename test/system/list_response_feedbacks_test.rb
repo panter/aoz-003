@@ -120,4 +120,11 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     assert page.has_text? achievements
     click_button 'Schliessen'
   end
+
+  test 'Creating new trial feedback reminder if no active mail template redirect to creating one' do
+    ClientNotification.destroy_all
+    click_link 'Halbjahres Erinnerung erstellen'
+    assert page.has_text? 'Sie müssen eine aktive E-Mailvorlage haben, bevor Sie eine Halbjahres Erinnerung erstellen können.'
+    assert_equal current_path, new_email_template_path
+  end
 end

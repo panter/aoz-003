@@ -111,4 +111,11 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
     assert page.has_text? body
     click_button 'Schliessen'
   end
+
+  test 'Creating new trial feedback reminder if no active mail template redirect to creating one' do
+    ClientNotification.destroy_all
+    click_link 'Probezeit Erinnerung erstellen'
+    assert page.has_text? 'Sie müssen eine aktive E-Mailvorlage haben, bevor Sie eine Probezeit Erinnerung erstellen können.'
+    assert_equal current_path, new_email_template_path
+  end
 end
