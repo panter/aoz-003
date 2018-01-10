@@ -55,12 +55,14 @@ h1= @client.contact.full_name
         td= @client.involved_authority
 
       tr
-        td Kostenträger
-        td= t("cost_unit.#{@client.cost_unit}")
-
-      tr
         td= t_attr(:competent_authority)
         td= @client.competent_authority
+
+      tr
+        td Kostenträger
+        td
+          - if @client.cost_unit?
+            = t("cost_unit.#{@client.cost_unit}")
 
       tr
         td= t_attr(:created_by)
