@@ -21,11 +21,11 @@ module VolunteersGroupAndTandemStateUpdate
     end
 
     def active?
-      started? && !ended?
+      !ended? && started? || period_start.blank? && will_end?
     end
 
     def inactive?
-      period_start.blank? || ended? || will_start?
+      ended? || period_start.blank? && period_end.blank? || will_start?
     end
 
     def state_relevant_change?
