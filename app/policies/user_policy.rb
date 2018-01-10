@@ -8,7 +8,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   alias_method :index?,   :superadmin?
-  alias_method :search?,  :superadmin?
   alias_method :new?,     :superadmin?
   alias_method :create?,  :superadmin?
 

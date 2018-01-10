@@ -4,7 +4,9 @@ nav.navbar.section-navigation.hidden-print
   ul.list-unstyled
     li.li-search-form
       = search_form_for @q do |f|
-        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_clients_path }, autofocus: true
+        = f.hidden_field :salutation_eq
+        = f.hidden_field :acceptance_eq
+        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: clients_path }, autofocus: true
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link 'Klient erfassen', new_client_path, dimension: :sm

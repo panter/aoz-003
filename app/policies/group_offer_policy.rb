@@ -17,7 +17,6 @@ class GroupOfferPolicy < ApplicationPolicy
 
   # controller action policies
   alias_method :index?,               :superadmin_or_department_manager_has_department?
-  alias_method :search?,              :superadmin_or_department_manager_has_department?
   alias_method :new?,                 :superadmin_or_department_manager_has_department?
   alias_method :create?,              :superadmin_or_department_manager_has_department?
   alias_method :show?,                :superadmin_or_departments_offer_or_volunteer_included?

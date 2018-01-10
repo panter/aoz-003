@@ -9,7 +9,6 @@ class ClientPolicy < ApplicationPolicy
 
   # controller action policies
   alias_method :index?,    :user_managing_volunteer?
-  alias_method :search?,   :user_managing_volunteer?
   alias_method :new?,      :user_managing_volunteer?
   alias_method :create?,   :user_managing_volunteer?
   alias_method :show?,     :user_managing_volunteer?

@@ -10,18 +10,10 @@ class UsersController < ApplicationController
     @users = @q.result
     respond_to do |format|
       format.html
+      format.json
       format.xlsx do
         render xlsx: 'index', filename: xlsx_filename
       end
-    end
-  end
-
-  def search
-    authorize User
-    @q = User.ransack full_name_cont: params[:term]
-    @users = @q.result distinct: true
-    respond_to do |format|
-      format.json
     end
   end
 

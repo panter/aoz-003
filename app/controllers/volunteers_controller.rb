@@ -13,17 +13,9 @@ class VolunteersController < ApplicationController
     @volunteers = @q.result
     activity_filter
     respond_to do |format|
+      format.json
       format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
-    end
-  end
-
-  def search
-    authorize Volunteer
-    @q = policy_scope(Volunteer).ransack contact_full_name_cont: params[:term]
-    @volunteers = @q.result distinct: true
-    respond_to do |format|
-      format.json
     end
   end
 

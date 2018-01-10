@@ -12,7 +12,6 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :index?,           :superadmin_or_department_manager_or_social_worker?
   alias_method :seeking_clients?, :superadmin_or_department_manager?
 
-  alias_method :search?,          :user_managing_volunteer?
   alias_method :new?,             :user_managing_volunteer?
   alias_method :create?,          :user_managing_volunteer?
 
