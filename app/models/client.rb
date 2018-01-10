@@ -6,6 +6,7 @@ class Client < ApplicationRecord
   include ImportRelation
 
   enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
+  enum cost_unit: { city: 0, municipality: 1, canton: 2 }
 
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
@@ -67,6 +68,10 @@ class Client < ApplicationRecord
 
   def self.acceptance_collection
     acceptances.keys.map(&:to_sym)
+  end
+
+  def self.cost_unit_collection
+    cost_units.keys.map(&:to_sym)
   end
 
   def to_s
