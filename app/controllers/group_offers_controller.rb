@@ -10,17 +10,9 @@ class GroupOffersController < ApplicationController
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @group_offers = @q.result.reorder(active: :desc)
     respond_to do |format|
+      format.json
       format.xlsx { render xlsx: 'index', locals: { group_offers: @group_offers } }
       format.html
-    end
-  end
-
-  def search
-    authorize GroupOffer
-    @q = policy_scope(GroupOffer).ransack search_volunteer_cont: params[:term]
-    @group_offers = @q.result distinct: true
-    respond_to do |format|
-      format.json
     end
   end
 

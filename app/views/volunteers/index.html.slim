@@ -5,7 +5,23 @@ nav.navbar.section-navigation
   ul.list-unstyled
     li.li-search-form
       = search_form_for @q do |f|
-        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_volunteers_path }, autofocus: true
+        = f.hidden_field :acceptance_eq
+        = f.hidden_field :active_eq
+        = f.hidden_field :external_eq
+        = f.hidden_field :salutation_eq
+        = f.hidden_field :man_eq
+        = f.hidden_field :woman_eq
+        = f.hidden_field :family_eq
+        = f.hidden_field :kid_eq
+        = f.hidden_field :unaccompanied_eq
+        = f.hidden_field :group_offer_categories_id_eq
+        = f.hidden_field :flexible_eq
+        = f.hidden_field :morning_eq
+        = f.hidden_field :afternoon_eq
+        = f.hidden_field :evening_eq
+        = f.hidden_field :workday_eq
+        = f.hidden_field :weekend_eq
+        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: volunteers_path }, autofocus: true
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link t_title(:new), new_volunteer_path, dimension: 'sm'

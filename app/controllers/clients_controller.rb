@@ -12,19 +12,11 @@ class ClientsController < ApplicationController
     @clients = @q.result
     activity_filter
     respond_to do |format|
+      format.json
       format.xlsx
       format.html do
         @clients = @clients.paginate(page: params[:page], per_page: params[:print] && @clients.size)
       end
-    end
-  end
-
-  def search
-    authorize Client
-    @q = policy_scope(Client).ransack contact_full_name_cont: params[:term]
-    @clients = @q.result distinct: true
-    respond_to do |format|
-      format.json
     end
   end
 

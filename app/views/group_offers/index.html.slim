@@ -5,8 +5,12 @@ nav.navbar.section-navigation#filters
   ul.list-unstyled
     li.li-search-form
       = search_form_for @q do |f|
+        = f.hidden_field :department_id_eq
+        = f.hidden_field :active_eq
+        = f.hidden_field :offer_state_eq
+        = f.hidden_field :group_offer_category_id_eq
         = f.search_field :search_volunteer_cont, class: 'search-field',
-          data: { autocomplete: search_group_offers_path }, autofocus: true,
+          data: { autocomplete: group_offers_path }, autofocus: true,
           placeholder: 'Nach Freiwillige suchen'
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline

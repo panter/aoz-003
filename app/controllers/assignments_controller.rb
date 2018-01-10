@@ -9,20 +9,12 @@ class AssignmentsController < ApplicationController
     @assignments = @q.result
     activity_filter
     respond_to do |format|
+      format.json
       format.xlsx
       format.html do
         @assignments = @assignments.paginate(page: params[:page],
           per_page: params[:print] && @assignments.size)
       end
-    end
-  end
-
-  def search
-    authorize Assignment
-    @q = policy_scope(Assignment).ransack volunteer_contact_full_name_cont: params[:term]
-    @assignments = @q.result distinct: true
-    respond_to do |format|
-      format.json
     end
   end
 
