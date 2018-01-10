@@ -14,7 +14,13 @@ class ReminderMailingsController < ApplicationController
     @group_assignments = GroupAssignment.need_trial_period_reminder_mailing.distinct
     @reminder_mailing = ReminderMailing.new(kind: 'trial_period', creator: current_user,
       reminder_mailing_volunteers: @assignments + @group_assignments)
-    @reminder_mailing.assign_attributes(EmailTemplate.trial.active.first.slice(:subject, :body))
+    if EmailTemplate.half_year.active.any?
+      @reminder_mailing.assign_attributes(EmailTemplate.trial.active.first.slice(:subject, :body))
+    else
+      redirect_to new_email_template_path,
+      notice: 'Sie müssen eine aktive E-Mailvorlage haben,
+      bevor Sie eine Probezeit Erinnerung erstellen können.'
+    end
     authorize @reminder_mailing
   end
 
@@ -23,7 +29,13 @@ class ReminderMailingsController < ApplicationController
     @reminder_mailables += GroupAssignment.submitted_since(params[:submitted_since]&.to_date)
     @reminder_mailing = ReminderMailing.new(kind: 'half_year',
       reminder_mailing_volunteers: @reminder_mailables)
-    @reminder_mailing.assign_attributes(EmailTemplate.half_year.active.first.slice(:subject, :body))
+    if EmailTemplate.half_year.active.any?
+      @reminder_mailing.assign_attributes(EmailTemplate.half_year.active.first.slice(:subject, :body))
+    else
+      redirect_to new_email_template_path,
+      notice: 'Sie müssen eine aktive E-Mailvorlage haben,
+      bevor Sie eine Halbjahres Erinnerung erstellen können.'
+    end
     authorize @reminder_mailing
   end
 
