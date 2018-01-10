@@ -51,6 +51,7 @@
       = f.input :acceptance, collection: Client.acceptance_collection, include_blank: false
     = f.input :involved_authority
     = f.input :competent_authority
+    = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true
     - if policy(Client).comments?
       = f.input :comments
 
