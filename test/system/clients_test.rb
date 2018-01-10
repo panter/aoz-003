@@ -49,6 +49,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
     fill_in 'Involved authority', with: 'asdfasdf'
+    select("Gemeinde", from: "Cost unit")
     page.check('client_evening')
     fill_in 'Detailed Description', with: 'After 7'
 
