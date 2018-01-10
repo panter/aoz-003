@@ -44,6 +44,10 @@ de:
       show_navigation:
         acceptance: *id-client-acceptance
     created_at: Erstellt um
+    cost_unit: &id-client-cost-units
+      city: Stadt
+      municipality: Gemeinde
+      canton: Kanton
     email_templates:
       kind: &id-kinds-template
         assignment: Begleitung
@@ -279,6 +283,7 @@ de:
         acceptance: Affirmation
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
+        cost_unit: Kostenträger
         city: Stadt
         comments: Bemerkungen
         competent_authority: Anmeldende Stelle
@@ -829,6 +834,7 @@ de:
       client:
         acceptance: *id-client-acceptance
         age_request: *id-age_requests
+        cost_unit: *id-client-cost-units
         gender_request: *id-gender_requests
         language_skills:
           level: *id-lang-levels

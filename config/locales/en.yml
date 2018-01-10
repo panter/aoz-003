@@ -44,6 +44,10 @@ en:
         acceptance: *id-client-acceptance
       show:
         acceptance: *id-client-acceptance
+    cost_unit: &id-client-cost-unit
+      city: Stadt
+      municipality: Gemeinde
+      canton: Kanton
     email_templates:
       kind: &id-kinds-template
         assignment: Begleitung
