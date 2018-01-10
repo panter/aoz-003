@@ -85,7 +85,7 @@ class ClientsController < ApplicationController
       :gender_request, :age_request, :other_request, :birth_year,
       :salutation, :nationality, :entry_date, :permit, :goals, :education, :interests,
       :acceptance, :comments, :involved_authority, :competent_authority, :actual_activities,
-      language_skills_attributes, relatives_attributes, contact_attributes,
+      :cost_unit, language_skills_attributes, relatives_attributes, contact_attributes,
       availability_attributes
     )
   end
