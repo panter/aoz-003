@@ -40,7 +40,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_equal 6, query.count
   end
 
-  test 'end_in_past returns only with end_date in past or today' do
+  test 'ended returns only with end_date in past or today' do
     query = Assignment.ended
     assert query.include? @started_60_days_ago_ended_30_days_ago
     assert query.include? @started_30_days_ago_ended_15_days_ago
