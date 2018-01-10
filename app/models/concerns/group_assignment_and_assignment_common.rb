@@ -37,7 +37,7 @@ module GroupAssignmentAndAssignmentCommon
     scope :loj_mailings, lambda {
       left_outer_joins(:reminder_mailing_volunteers, :reminder_mailings)
     }
-    scope :active, (-> { not_ended.started })
+    scope :active, (-> { not_ended.started.or(no_start.end_in_future) })
     scope :stay_active, (-> { active.no_end })
     scope :inactive, (-> { ended.or(no_start.no_end).or(will_start) })
     scope :active_between, lambda { |start_date, end_date|
