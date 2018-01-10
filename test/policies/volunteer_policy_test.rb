@@ -34,9 +34,16 @@ class VolunteerPolicyTest < PolicyAssertions::Test
   end
 
   test 'Index: only Superadmins, Department managers and Social workers can index Volunteers' do
-    assert_permit @superadmin, Volunteer, 'index?', 'seeking_clients?'
-    assert_permit @department_manager, Volunteer, 'index?', 'seeking_clients?'
-    assert_permit @social_worker, Volunteer, 'index?', 'seeking_clients?'
-    refute_permit @volunteer_seeks.user, Volunteer, 'index?', 'seeking_clients?'
+    assert_permit @superadmin, Volunteer, 'index?'
+    assert_permit @department_manager, Volunteer, 'index?'
+    assert_permit @social_worker, Volunteer, 'index?'
+    refute_permit @volunteer_seeks.user, Volunteer, 'index?'
+  end
+
+  test 'Index: only Superadmins and  Department managers can seeking_clients Volunteers' do
+    assert_permit @superadmin, Volunteer, 'seeking_clients?'
+    assert_permit @department_manager, Volunteer, 'seeking_clients?'
+    refute_permit @social_worker, Volunteer, 'seeking_clients?'
+    refute_permit @volunteer_seeks.user, Volunteer, 'seeking_clients?'
   end
 end

@@ -2,7 +2,7 @@ class VolunteerPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
-      return scope.seeking_clients.distinct if department_manager_or_social_worker?
+      return scope.seeking_clients.distinct if department_manager?
       none
     end
     alias :seeking_clients :resolve
@@ -10,7 +10,7 @@ class VolunteerPolicy < ApplicationPolicy
 
   # controller action policies
   alias_method :index?,           :superadmin_or_department_manager_or_social_worker?
-  alias_method :seeking_clients?, :superadmin_or_department_manager_or_social_worker?
+  alias_method :seeking_clients?, :superadmin_or_department_manager?
 
   alias_method :search?,          :user_managing_volunteer?
   alias_method :new?,             :user_managing_volunteer?
