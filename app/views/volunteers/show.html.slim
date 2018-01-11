@@ -11,7 +11,7 @@ nav.navbar.section-navigation
       li.button-acceptance = link_to t(".acceptance.#{@volunteer.acceptance}"), '#',
         class: "btn btn-acceptance-#{@volunteer.acceptance}"
     - if policy(Volunteer).can_manage?
-      li= render 'journals/journal_block', journaled_for: @volunteer
+      = render 'journals/journal_block', journaled_for: @volunteer
       ul.list-inline
         - if @volunteer.seeking_clients?
           li= button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
