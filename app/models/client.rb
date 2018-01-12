@@ -14,7 +14,7 @@ class Client < ApplicationRecord
   SALUTATIONS = [:mrs, :mr, :family].freeze
 
   belongs_to :user, -> { with_deleted }
-  has_one :involved_authority, through: :users
+  belongs_to :involved_authority, class_name: 'User', required: false
 
   has_one :assignment, dependent: :destroy
   has_one :volunteer, through: :assignments
