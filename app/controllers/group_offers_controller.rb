@@ -3,6 +3,7 @@ class GroupOffersController < ApplicationController
   before_action :set_group_offer, only: [:show, :edit, :update, :destroy, :change_active_state]
   before_action :set_assignable_collection, only: [:edit]
   before_action :set_volunteer_collection
+  before_action :set_department_manager_collection
 
   def index
     authorize GroupOffer
@@ -35,8 +36,11 @@ class GroupOffersController < ApplicationController
   end
 
   def new
-    @group_offer = GroupOffer.new(creator: current_user)
-    @group_offer.department = current_user.department.first if current_user.department_manager?
+    @group_offer = GroupOffer.new
+    if current_user.department_manager?
+      @group_offer.creator = current_user
+      @group_offer.department = current_user.department.first
+    end
     authorize @group_offer
   end
 
@@ -44,8 +48,10 @@ class GroupOffersController < ApplicationController
 
   def create
     @group_offer = GroupOffer.new(group_offer_params)
-    @group_offer.creator = current_user
-    @group_offer.department ||= current_user.department.first if current_user.department_manager?
+    if current_user.department_manager?
+      @group_offer.creator ||= current_user
+      @group_offer.department ||= current_user.department.first
+    end
     authorize @group_offer
     if @group_offer.save
       redirect_to @group_offer, make_notice
@@ -90,7 +96,9 @@ class GroupOffersController < ApplicationController
                   else
                     define_assignables(@externals)
                   end
-    @assignable += @group_offer.volunteers.map { |volunteer| [volunteer.contact.full_name, volunteer.id] }
+    @assignable += @group_offer.volunteers.map do |volunteer|
+      [volunteer.contact.full_name, volunteer.id]
+    end
     @assignable.uniq!
   end
 
@@ -105,11 +113,15 @@ class GroupOffersController < ApplicationController
     @externals = Volunteer.external
   end
 
+  def set_department_manager_collection
+    @department_managers = User.department_managers
+  end
+
   def group_offer_params
     params.require(:group_offer).permit(:title, :offer_type, :offer_state, :volunteer_state,
       :necessary_volunteers, :description, :women, :men, :children, :teenagers, :unaccompanied,
       :all, :long_term, :regular, :short_term, :workday, :weekend, :morning, :afternoon, :evening,
-      :flexible, :schedule_details, :department_id, :organization, :location,
+      :flexible, :schedule_details, :department_id, :creator_id, :organization, :location,
       :group_offer_category_id, group_assignments_attributes)
   end
 end
