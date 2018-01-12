@@ -54,6 +54,7 @@ de:
         signup: Anmeldung
         trial: Probezeit
         half_year: Halbjährlich
+        termination: Beendigung
       index:
         <<: *id-kinds-template
       show:
