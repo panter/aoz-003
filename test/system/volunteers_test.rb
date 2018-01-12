@@ -202,7 +202,9 @@ class VolunteersTest < ApplicationSystemTestCase
     volunteer = create :volunteer
     create :assignment, volunteer: volunteer
     visit volunteer_path(volunteer)
-    refute page.has_link? 'Journal'
+    within '.assignments-table' do
+      refute page.has_link? 'Journal'
+    end
   end
 
   test 'department_manager_can_see_volunteer_index_and_only_seeking_clients_volunteers' do
