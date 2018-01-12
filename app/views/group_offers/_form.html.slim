@@ -10,11 +10,14 @@
 
   - if policy(GroupOffer).supervisor_privileges?
     .row
-      .col-xs-12.col-md-4
+      .col-xs-12.col-md-6
         = f.association :department
-      .col-xs-12.col-md-4
+      .col-xs-12.col-md-6
+        = f.association :creator, label: 'Verantwortliche/r', collection: @department_managers
+    .row
+      .col-xs-12.col-md-6
         = f.input :organization, label: t('.organization_external')
-      .col-xs-12.col-md-4
+      .col-xs-12.col-md-6
         = f.input :location, label: t('.location_external')
 
   .row

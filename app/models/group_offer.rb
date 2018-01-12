@@ -10,7 +10,7 @@ class GroupOffer < ApplicationRecord
 
   belongs_to :department, optional: true
   belongs_to :group_offer_category
-  belongs_to :creator, -> { with_deleted }, class_name: 'User'
+  belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true
 
   has_many :group_assignments, dependent: :destroy
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
@@ -113,8 +113,9 @@ class GroupOffer < ApplicationRecord
 
   def department_manager_has_department?
     if creator.department.blank?
-      errors.add(:creator_no_department, "#{I18n.t('role.department_manager')} müssen einem Standort zugeteilt sein, "\
-        "bevor sie #{I18n.t('group_offers', count: 2)} erfassen können.")
+      errors.add(:creator_no_department, "#{I18n.t('role.department_manager')} "\
+        'müssen einem Standort zugeteilt sein, bevor sie '\
+        "#{I18n.t('group_offers', count: 2)} erfassen können.")
     elsif !creator.department.include?(department)
       errors.add(:creator_wrong_department, 'Nicht der richtige Standort.')
     end

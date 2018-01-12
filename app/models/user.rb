@@ -40,6 +40,7 @@ class User < ApplicationRecord
 
   scope :department_assocable, (-> { where(role: CAN_MANAGE_DEPARTMENT) })
   scope :superadmins, (-> { where(role: SUPERADMIN) })
+  scope :department_managers, (-> { where(role: DEPARTMENT_MANAGER) })
 
   def superadmin?
     role == SUPERADMIN
@@ -74,15 +75,7 @@ class User < ApplicationRecord
   end
 
   def to_s
-    email
-  end
-
-  def to_label
-    if profile&.contact
-      "#{full_name} #{email}"
-    else
-      email
-    end
+    full_name
   end
 
   def full_name
