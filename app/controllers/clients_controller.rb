@@ -4,6 +4,8 @@ class ClientsController < ApplicationController
   include ContactAttributes
 
   before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_assignable_collection, only: [:edit]
+  before_action :set_user_collection
 
   def index
     authorize Client
@@ -80,11 +82,33 @@ class ClientsController < ApplicationController
     authorize @client
   end
 
+  def set_assignable_collection
+    set_involved_authority_collection
+    @involvable_authority = if @client.user == 'superadmin'
+                            define_assignables(@current_superadmin)
+                          else
+                            define_assignables(@involved_social_worker)
+                          end
+    @involvable_authority += @client.user.map { |client| [client.user.contact.full_name, client.user.id] }
+    @involvable_authority.uniq!
+  end
+
+  def define_assignables(users)
+    UserPolicy::Scope.new(current_user, users).resolve.map do |user|
+      [user.contact.full_name, user.id]
+    end
+  end
+
+  def set_user_collection
+    @current_superadmin = current_user
+    @involved_social_worker = User.social_worker
+  end
+
   def client_params
     params.require(:client).permit(
       :gender_request, :age_request, :other_request, :birth_year,
       :salutation, :nationality, :entry_date, :permit, :goals, :education, :interests,
-      :acceptance, :comments, :involved_authority, :competent_authority, :actual_activities,
+      :acceptance, :comments, :involved_authority_id, :competent_authority, :actual_activities,
       :cost_unit, language_skills_attributes, relatives_attributes, contact_attributes,
       availability_attributes
     )
