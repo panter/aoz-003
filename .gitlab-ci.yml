@@ -26,7 +26,7 @@ test:
   - bundle exec rails test
 
 test:system:
-  image: 'nbulai/ruby-chromedriver:latest'
+  image: "andistaub/ruby-chromedriver:latest"
   stage: test
   script:
   - bundle exec rails test:system
