@@ -10,7 +10,6 @@ class HoursController < ApplicationController
 
   def new
     @hour = Hour.new(volunteer: @volunteer)
-    @hour.hourable = find_hourable
     authorize @hour
   end
 
@@ -18,7 +17,6 @@ class HoursController < ApplicationController
 
   def create
     @hour = Hour.new(hour_params)
-    @hour.hourable = find_hourable
     authorize @hour
     if @hour.save
       redirect_to create_redirect, make_notice
@@ -50,10 +48,6 @@ class HoursController < ApplicationController
   end
 
   private
-
-  def find_hourable
-    Assignment.find_by(id: params[:assignment_id]) || GroupAssignment.find_by(id: params[:group_assignment_id])
-  end
 
   def set_hour
     @hour = Hour.find(params[:id])
