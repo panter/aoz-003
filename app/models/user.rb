@@ -13,6 +13,7 @@ class User < ApplicationRecord
 
   has_many :certificates
   has_many :clients
+  has_one :involved_authority, class_name: 'Client'
   has_many :journals
   has_many :assignments, inverse_of: 'creator'
   has_many :feedbacks, inverse_of: 'author'
@@ -51,6 +52,7 @@ class User < ApplicationRecord
   scope :department_assocable, (-> { where(role: CAN_MANAGE_DEPARTMENT) })
   scope :superadmins, (-> { where(role: SUPERADMIN) })
   scope :department_managers, (-> { where(role: DEPARTMENT_MANAGER) })
+  scope :social_workers, (-> { where(role: SOCIAL_WORKER) })
 
   def superadmin?
     role == SUPERADMIN
