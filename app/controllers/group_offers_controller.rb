@@ -39,7 +39,7 @@ class GroupOffersController < ApplicationController
     @group_offer = GroupOffer.new
     if current_user.department_manager?
       @group_offer.creator = current_user
-      @group_offer.department = current_user.department.first
+      @group_offer.department = current_user.department.first if current_user.department.first?
     end
     authorize @group_offer
   end
@@ -50,7 +50,7 @@ class GroupOffersController < ApplicationController
     @group_offer = GroupOffer.new(group_offer_params)
     if current_user.department_manager?
       @group_offer.creator ||= current_user
-      @group_offer.department ||= current_user.department.first
+      @group_offer.department ||= current_user.department.first if current_user.department.first?
     end
     authorize @group_offer
     if @group_offer.save
