@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180110083748) do
+ActiveRecord::Schema.define(version: 20180112094402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 20180110083748) do
     t.text "interests"
     t.text "comments"
     t.text "competent_authority"
-    t.text "involved_authority"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -114,7 +113,9 @@ ActiveRecord::Schema.define(version: 20180110083748) do
     t.string "entry_date"
     t.integer "acceptance", default: 0
     t.integer "cost_unit"
+    t.bigint "involved_authority_id"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
+    t.index ["involved_authority_id"], name: "index_clients_on_involved_authority_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
@@ -534,6 +535,7 @@ ActiveRecord::Schema.define(version: 20180110083748) do
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "client_notifications", "users"
   add_foreign_key "clients", "users"
+  add_foreign_key "clients", "users", column: "involved_authority_id"
   add_foreign_key "feedbacks", "users", column: "author_id"
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"
