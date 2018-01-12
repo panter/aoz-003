@@ -52,7 +52,7 @@ h1= @client.contact.full_name
 
       tr
         td= t_attr(:involved_authority)
-        td= @client.involved_authority
+        td= link_to @client.involved_authority.full_name, profile_link(@client.involved_authority)
 
       tr
         td= t_attr(:competent_authority)
