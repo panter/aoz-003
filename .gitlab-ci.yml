@@ -1,0 +1,29 @@
+stages:
+  - test
+
+image: 'nbulai/ruby-chromedriver:latest'
+
+services:
+  - postgres:9.4
+
+cache:
+  paths:
+    - vendor/ruby
+
+variables:
+  RAILS_ENV: test
+  POSTGRES_DB: denteo_test
+  DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
+
+before_script:
+  - apt-get update -yq
+  - gem install bundler  --no-ri --no-rdoc
+  - bundle install -j $(nproc) --path vendor
+
+test:
+  stage: test
+  script:
+  - bundle exec rails db:schema:load
+  - bundle exec rails test
+  - bundle exec rails test:system
+
