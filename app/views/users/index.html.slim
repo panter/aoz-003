@@ -5,7 +5,9 @@ nav.navbar.section-navigation
   ul.list-unstyled
     li.li-search-form
       = search_form_for @q do |f|
-        = f.search_field :full_name_cont, class: 'search-field', data: { autocomplete: search_users_path }, autofocus: true
+        = f.search_field :full_name_cont, class: 'search-field',
+          data: { autocomplete: search_users_path }, autofocus: true,
+          placeholder: 'Nach Benutzer/innen Name oder E-Mail suchen'
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link t_title(:new), new_user_path, dimension: 'sm'
