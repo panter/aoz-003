@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   end
 
   resources :reminder_mailings, except: [:new] do
+    get :new_termination, on: :member
     get :new_trial_period, on: :collection
     get :new_half_year, on: :collection
     get :send_trial_period, on: :member

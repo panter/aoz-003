@@ -17,7 +17,7 @@ class ReminderMailing < ApplicationRecord
   has_many :group_assignments, through: :reminder_mailing_volunteers, source: :reminder_mailable,
     source_type: 'GroupAssignment'
 
-  enum kind: { half_year: 0, trial_period: 1 }
+  enum kind: { half_year: 0, trial_period: 1, termination: 2 }
 
   validates :subject, presence: true
   validates :body, presence: true

@@ -60,8 +60,14 @@ class AssignmentsController < ApplicationController
   end
 
   def update
+    period_end_was = @assignment.period_end
+
     if @assignment.update(assignment_params)
-      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
+      if period_end_was.blank? && assignment_params[:period_end].present?
+        redirect_to new_termination_reminder_mailing_url(params: { id: @assignment.volunteer})
+      else
+        redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
+      end
     else
       render :edit
     end
