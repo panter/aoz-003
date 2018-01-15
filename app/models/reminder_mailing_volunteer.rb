@@ -8,6 +8,7 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   scope :trial_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
   scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
+  scope :termination, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 2') })
 
   scope :picked, (-> { where(picked: true) })
 
