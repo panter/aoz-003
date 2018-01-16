@@ -52,7 +52,7 @@ class HoursController < ApplicationController
   private
 
   def find_hourable
-    return unless params[:assignment_id] && params[:group_assignment_id]
+    return unless params[:assignment_id] || params[:group_assignment_id]
     Assignment.find_by(id: params[:assignment_id]) || GroupAssignment.find_by(id: params[:group_assignment_id])
   end
 
