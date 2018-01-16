@@ -64,7 +64,7 @@ class AssignmentsController < ApplicationController
 
     if @assignment.update(assignment_params)
       if period_end_was.blank? && assignment_params[:period_end].present?
-        redirect_to new_termination_reminder_mailing_url(params: { id: @assignment.volunteer})
+        redirect_to polymorphic_path([@assignment, ReminderMailing], action: :new_termination)
       else
         redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
       end

@@ -33,7 +33,7 @@ class EmailTemplate < ApplicationRecord
       half_year: ReminderMailing::TEMPLATE_VARNAMES,
       signup: EmailTemplate.template_variables,
       assignment: EmailTemplate.template_variables,
-      termination: EmailTemplate.template_variables
+      termination: ReminderMailing::TEMPLATE_VARNAMES
     }
   end
 

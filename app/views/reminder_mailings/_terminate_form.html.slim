@@ -1,0 +1,24 @@
+= simple_form_for @reminder_mailing do |f|
+  = simple_error_notice f
+  = f.input_field :kind, value: @reminder_mailing.kind, as: :hidden
+  = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
+    = mailing_volunteer.label :picked, 'Ausgewählt', class: 'sr-only'
+    = mailing_volunteer.input_field :picked, as: :hidden, value: 1
+    = mailing_volunteer.input_field :id, as: :hidden
+    = mailing_volunteer.input_field :volunteer_id, as: :hidden
+    = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
+    = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
+
+    h3 Freiwillige/r
+    p= link_to mailing_volunteer.object.volunteer.contact.full_name, volunteer_path(mailing_volunteer.object.volunteer)
+
+    h3 Einsatz
+    p= link_to mailing_volunteer.object.reminder_mailable.to_label, polymorphic_path(mailing_volunteer.object.reminder_mailable)
+
+  .row
+    .col-xs-12.col-md-4
+      = render 'email_templates/explain_panel', template_varnames: ReminderMailing::TEMPLATE_VARNAMES
+    .col-xs-12.col-md-8
+      = render 'email_templates/subject_body_inputs', f: f
+
+  = render 'form_submit_back', f: f

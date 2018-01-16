@@ -40,11 +40,10 @@ class ReminderMailingsController < ApplicationController
   end
 
   def new_termination
-    @terminate_mailables = Assignment.&.to_date)
-    @terminate_mailing = ReminderMailing.new(kind: 'termination',
-      reminder_mailing_volunteers: @terminate_mailables)
+    @reminder_mailing = ReminderMailing.new(kind: 'termination',
+      reminder_mailing_volunteers: [Assignment.find(params[:assignment_id])])
     if EmailTemplate.termination.active.any?
-      @terminate_mailing.assign_attributes(EmailTemplate.terminate_mailing.active.first.slice(:subject, :body))
+      @reminder_mailing.assign_attributes(EmailTemplate.termination.active.first.slice(:subject, :body))
     else
       redirect_to new_email_template_path,
       notice: 'Sie müssen eine aktive E-Mailvorlage haben,
@@ -96,9 +95,7 @@ class ReminderMailingsController < ApplicationController
     if @reminder_mailing.sending_triggered?
       return redirect_to reminder_mailings_path, notice: 'Dieses Beendigungs-Mailing wurde bereits versandt.'
     end
-    @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
-      VolunteerMailer.termination_email(mailing_volunteer).deliver_later
-    end
+    VolunteerMailer.termination_email(@reminder_mailing).deliver_later
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Beendigungs-Email wird versendet.'
   end
