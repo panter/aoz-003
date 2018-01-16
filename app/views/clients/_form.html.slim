@@ -49,7 +49,10 @@
     legend Interne Kriterien
     - if policy(Client).acceptance?
       = f.input :acceptance, collection: Client.acceptance_collection, include_blank: false
-      = f.association :involved_authority, collection: User.social_workers
+    - if current_user.social_worker?
+      = f.input :involved_authority_id, as: :hidden
+    - else
+      = f.association :involved_authority, collection: User.social_workers, include_blank: false
 
     = f.input :competent_authority
     = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true

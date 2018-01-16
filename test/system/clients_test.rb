@@ -294,4 +294,28 @@ class ClientsTest < ApplicationSystemTestCase
     without_assignment.update(created_at: 4.days.ago)
     [with_assignment, without_assignment]
   end
+
+  test 'If social worker registers a client, she is automatically the involved authority' do
+    login_as @social_worker
+    visit new_client_path
+
+    within '#languages' do
+      choose('Basic')
+    end
+    select('Mrs.', from: 'Salutation')
+    fill_in 'First name', with: 'Client'
+    fill_in 'Last name', with: "doesn't matter"
+    fill_in 'Primary email', with: 'client@aoz.com'
+    fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    refute page.has_select? 'Involved authority'
+
+    click_button 'Create Client'
+    @social_worker.clients.each do |client|
+      assert_equal client.involved_authority.full_name, @social_worker.full_name
+      assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
+    end
+  end
 end

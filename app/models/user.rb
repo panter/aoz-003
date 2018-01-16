@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   has_many :certificates
   has_many :clients
-  has_one :involved_authority, class_name: 'Client'
+  has_one  :involved_authority, class_name: 'Client'
   has_many :journals
   has_many :assignments, inverse_of: 'creator'
   has_many :feedbacks, inverse_of: 'author'
