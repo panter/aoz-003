@@ -18,7 +18,7 @@ class HoursController < ApplicationController
 
   def create
     @hour = Hour.new(hour_params)
-    @hour.hourable = find_hourable
+    @hour.hourable ||= find_hourable
     authorize @hour
     if @hour.save
       redirect_to create_redirect, make_notice
