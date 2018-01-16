@@ -14,6 +14,7 @@ class Hour < ApplicationRecord
   validates :minutes, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :meeting_date, presence: true
+  validates :hourable, presence: true
 
   scope :billable, (-> { where(billing_expense: nil) })
 
