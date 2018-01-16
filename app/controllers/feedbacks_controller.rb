@@ -71,8 +71,8 @@ class FeedbacksController < ApplicationController
   end
 
   def create_redirect
-    return @volunteer unless params[:last_submitted]
-    polymorphic_path(@feedback.feedbackable_link_target, action: :last_submitted_hours_and_feedbacks)
+    return @volunteer unless params[:redirect_to]
+    polymorphic_path(@feedback.feedbackable_link_target, action: params[:redirect_to].to_sym)
   end
 
   def feedback_params

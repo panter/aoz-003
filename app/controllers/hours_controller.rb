@@ -66,13 +66,8 @@ class HoursController < ApplicationController
   end
 
   def create_redirect
-    if params[:redirect_to] == 'last_submitted'
-      polymorphic_path(@hour.hourable, action: :last_submitted_hours_and_feedbacks)
-    elsif params[:redirect_to] == 'finished'
-      finish_assignment_path(@hour.hourable)
-    else
-      @volunteer
-    end
+    return @volunteer unless params[:redirect_to]
+    polymorphic_path(@hour.hourable, action: params[:redirect_to]&.to_sym)
   end
 
   def hour_params
