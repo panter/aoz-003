@@ -37,7 +37,12 @@ Rails.application.routes.draw do
   resources :group_offer_categories, except: [:destroy]
   resources :feedbacks, only: [:new, :create]
   resources :group_assignments, only: [:show], concerns: :update_submitted_at
-  resources :assignments, concerns: [:update_submitted_at, :search]
+  resources :assignments, concerns: [:update_submitted_at, :search] do
+    member do
+      get :finish
+      patch :update_termination_submitted_at
+    end
+  end
 
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection

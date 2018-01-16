@@ -1,6 +1,8 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy,
-                                        :last_submitted_hours_and_feedbacks, :update_submitted_at]
+  before_action :set_assignment, only: [
+    :show, :edit, :update, :destroy, :finish, :update_termination_submitted_at,
+    :last_submitted_hours_and_feedbacks, :update_submitted_at
+  ]
 
   def index
     authorize Assignment
@@ -87,6 +89,13 @@ class AssignmentsController < ApplicationController
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
 
+  def finish; end
+
+  def update_termination_submitted_at
+    @assignment.update(termination_submitted_at: Time.zone.now)
+    redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
+  end
+
   private
 
   def activity_filter
@@ -110,7 +119,10 @@ class AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:client_id, :volunteer_id, :period_start, :period_end,
-      :performance_appraisal_review, :probation_period, :home_visit, :first_instruction_lesson)
+    params.require(:assignment).permit(
+      :client_id, :volunteer_id, :period_start, :period_end,
+      :performance_appraisal_review, :probation_period, :home_visit,
+      :first_instruction_lesson, :termination_submitted_at
+    )
   end
 end

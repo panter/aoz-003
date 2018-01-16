@@ -18,6 +18,10 @@ class AssignmentPolicy < ApplicationPolicy
   alias_method :search?,         :superadmin_or_department_manager?
   alias_method :new?,            :superadmin_or_department_manager?
   alias_method :create?,         :superadmin_or_department_manager?
+  alias_method :finish?,         :superadmin_or_department_manager?
+  alias_method :update_termination_submitted_at?,
+    :superadmin_or_department_manager?
+
   alias_method :find_client?,    :superadmin_or_department_manager?
 
   alias_method :show?,   :admin_or_department_manager_or_volunteer_related?
