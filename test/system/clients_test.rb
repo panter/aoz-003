@@ -4,6 +4,7 @@ class ClientsTest < ApplicationSystemTestCase
   setup do
     @superadmin = create :user, email: 'superadmin@example.com'
     @department_manager = create :department_manager, email: 'department@example.com'
+    @social_worker = create :social_worker
   end
 
   test 'new client form' do
@@ -48,14 +49,16 @@ class ClientsTest < ApplicationSystemTestCase
     select('Angemeldet', from: 'Acceptance')
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
-    fill_in 'Involved authority', with: 'asdfasdf'
+    select('social_worker', from: 'Involved authority')
     select('Gemeinde', from: 'Cost unit')
     page.check('client_evening')
     fill_in 'Detailed Description', with: 'After 7'
 
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
+    assert page.has_text? @social_worker.full_name
     @superadmin.clients.each do |client|
+      assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
       assert page.has_link? client.user.full_name, href: /profiles\/#{client.user.profile.id}/
       assert page.has_link? client.contact.primary_email
     end
