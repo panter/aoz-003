@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20180115145819) do
     t.text "description"
     t.string "kind", default: "accompaniment"
     t.datetime "submitted_at"
-    t.datetime "termination_submitted_at"
+    t.datetime "terminated_at"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"

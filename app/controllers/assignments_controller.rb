@@ -1,8 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, only: [
-    :show, :edit, :update, :destroy, :finish, :update_termination_submitted_at,
-    :last_submitted_hours_and_feedbacks, :update_submitted_at
-  ]
+  before_action :set_assignment, except: [:index, :search]
 
   def index
     authorize Assignment
@@ -89,11 +86,16 @@ class AssignmentsController < ApplicationController
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
 
-  def finish; end
+  def terminate; end
 
-  def update_termination_submitted_at
-    @assignment.update(termination_submitted_at: Time.zone.now)
-    redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
+  def update_terminated_at
+    @assignment.volunteer.update(waive: assignment_params[:waive] == '1')
+    @assignment.terminated_at = Time.zone.now
+    if @assignment.save
+      redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
+    else
+      redirect_back(fallback_location: terminate_assignment_path(@assignment))
+    end
   end
 
   private
@@ -120,9 +122,10 @@ class AssignmentsController < ApplicationController
 
   def assignment_params
     params.require(:assignment).permit(
-      :client_id, :volunteer_id, :period_start, :period_end,
+      :client_id, :volunteer_id, :period_start, :period_end, :waive,
       :performance_appraisal_review, :probation_period, :home_visit,
-      :first_instruction_lesson, :termination_submitted_at
+      :first_instruction_lesson, :termination_submitted_at, :terminated_at,
+      volunteer_attributes: [:waive]
     )
   end
 end

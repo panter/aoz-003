@@ -32,15 +32,15 @@ Rails.application.routes.draw do
   end
 
   resources :client_notifications, :departments, :performance_reports, :email_templates, :users
-
   resources :profiles, except: [:destroy, :index]
   resources :group_offer_categories, except: [:destroy]
   resources :feedbacks, only: [:new, :create]
-  resources :group_assignments, only: [:show], concerns: :update_submitted_at
+  resources :group_assignments, only: [:show], concerns: [:update_submitted_at, :hours_resources]
+
   resources :assignments, concerns: [:update_submitted_at, :search] do
     member do
-      get :finish
-      patch :update_termination_submitted_at
+      get :terminate
+      patch :update_terminated_at
     end
   end
 
@@ -63,8 +63,7 @@ Rails.application.routes.draw do
     resources :journals, except: [:show]
     resources :assignments, concerns: [:assignment_feedbacks, :hours_resources]
   end
-  resources :group_assignments, only: [:show], concerns: [:update_submitted_at, :hours_resources]
-  resources :assignments, concerns: :update_submitted_at
+
   resources :group_offers, concerns: :search do
     put :change_active_state, on: :member
   end
