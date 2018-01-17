@@ -92,7 +92,7 @@ class ReminderMailingVolunteer < ApplicationRecord
     end.to_h
   end
 
-  def email_creator
+  def email_absender
     "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:#{reminder_mailing.creator.email})"
   end
 
