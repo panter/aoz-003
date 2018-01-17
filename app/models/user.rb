@@ -18,7 +18,7 @@ class User < ApplicationRecord
   has_many :assignments, inverse_of: 'creator'
   has_many :feedbacks, inverse_of: 'author'
   has_many :billing_expenses
-  has_many :group_offers, inverse_of: 'creator'
+  has_many :group_offers, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :reminder_mailings, inverse_of: 'creator'
   has_many :reviewed_feedbacks, class_name: 'Feedback', foreign_key: 'reviewer_id'
   has_many :reviewed_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'reviewer_id'

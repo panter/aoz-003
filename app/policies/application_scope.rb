@@ -41,4 +41,8 @@ class ApplicationScope
   def resolve_department
     scope.where(department: user.department)
   end
+
+  def resolve_creator
+    scope.where(creator: user)
+  end
 end
