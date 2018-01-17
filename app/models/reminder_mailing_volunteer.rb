@@ -13,6 +13,17 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   scope :picked, (-> { where(picked: true) })
 
+  scope :termination, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = ?', 2) })
+
+  scope :termination_for, ->(mailable) { termination.where(reminder_mailable: mailable) }
+
+  def mark_process_submitted(user, terminate_parent_mailing: false)
+    update(process_submitted_by: user, process_submitted_at: Time.zone.now)
+    if terminate_parent_mailing
+      reminder_mailing.update(obsolete: true)
+    end
+  end
+
   def assignment?
     reminder_mailable_type == 'Assignment'
   end

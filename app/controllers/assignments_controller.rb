@@ -18,7 +18,7 @@ class AssignmentsController < ApplicationController
 
   def terminated_index
     authorize Assignment
-    @q = policy_scope(Assignment).has_end.ransack(params[:q])
+    @q = policy_scope(Assignment).termination_not_verified.ransack(params[:q])
     @q.sorts = ['period_end asc'] if @q.sorts.empty?
     @assignments = @q.result
   end
@@ -100,6 +100,9 @@ class AssignmentsController < ApplicationController
     @assignment.termination_submitted_at = Time.zone.now
     @assignment.termination_submitted_by = current_user
     if @assignment.save
+      ReminderMailingVolunteer.termination_for(@assignment).map do |rmv|
+        rmv.mark_process_submitted(current_user, terminate_parent_mailing: true)
+      end
       redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
     else
       redirect_back(fallback_location: terminate_assignment_path(@assignment))
