@@ -313,9 +313,9 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_select? 'Involved authority'
 
     click_button 'Create Client'
-    @social_worker.clients.each do |client|
-      assert_equal client.involved_authority.full_name, @social_worker.full_name
-      assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
-    end
+
+    login_as @superadmin
+    visit client_path(Client.last)
+    assert page.has_link? @social_worker.full_name, count: 2
   end
 end
