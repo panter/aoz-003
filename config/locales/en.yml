@@ -5,6 +5,7 @@ en:
       kinds: &id-kinds-enum-values
         trial_period: Probezeit
         half_year: Halbjährlich
+        termination: Beendigung
     acceptance: &id-client-acceptance
       accepted: Angemeldet
       rejected: Abgelehnt

@@ -48,6 +48,7 @@ Rails.application.routes.draw do
 
     resources :reminder_mailings do
       get :new_termination, on: :collection
+      get :send_termination, on: :member
     end
   end
 

@@ -9,11 +9,16 @@
     = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
     = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
 
-    h3 Freiwillige/r
-    p= link_to mailing_volunteer.object.volunteer.contact.full_name, volunteer_path(mailing_volunteer.object.volunteer)
-
-    h3 Einsatz
-    p= link_to mailing_volunteer.object.reminder_mailable.to_label, polymorphic_path(mailing_volunteer.object.reminder_mailable)
+    table.table.table-condensed
+      thead
+        tr
+          th Freiwillige/r
+          th Einsatz
+      tbody
+        tr
+          td= link_to mailing_volunteer.object.volunteer.contact.full_name, volunteer_path(mailing_volunteer.object.volunteer)
+          td=link_to mailing_volunteer.object.reminder_mailable.to_label, polymorphic_path(mailing_volunteer.object.reminder_mailable)
+    hr
 
   .row
     .col-xs-12.col-md-4
@@ -22,3 +27,5 @@
       = render 'email_templates/subject_body_inputs', f: f
 
   = render 'form_submit_back', f: f
+
+
