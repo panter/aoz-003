@@ -10,7 +10,7 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
   test 'template variables are substituted' do
     reminder_mailing = ReminderMailing.new(kind: :trial_period, creator: @superadmin,
       subject: 'hallo %{Anrede} %{Name}', reminder_mailing_volunteers: [@assignment_probation],
-      body: 'hallo %{Anrede} %{Name} %{EinsatzStart} %{Einsatz}')
+      body: 'hallo %{Anrede} %{Name} %{EinsatzStart} %{Einsatz} %{EmailAbsender}')
     reminder_mailing.save
     mailing_volunteer = reminder_mailing.reminder_mailing_volunteers.first
     assert mailing_volunteer.process_template[:body].include? @volunteer.contact.natural_name
@@ -24,6 +24,9 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
       'Tandem mit ' +
       reminder_mailing.reminder_mailing_volunteers.first.reminder_mailable.client.contact
         .natural_name
+    )
+    assert mailing_volunteer.process_template[:body].include?(
+      reminder_mailing.reminder_mailing_volunteers.first.reminder_mailable.creator.profile.contact.natural_name
     )
   end
 

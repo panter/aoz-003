@@ -143,4 +143,44 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       I18n.l(ReminderMailing.created_desc.first.created_at.to_date)
     )
   end
+
+  test 'assignment elegible for termination reminder mailing are includable' do
+    @assignment = create :assignment, period_start: 7.weeks.ago, period_end: nil,
+      volunteer: @volunteer_assignment
+    create :email_template_termination
+    login_as @superadmin
+    visit edit_assignment_path(@assignment)
+
+    page.find('#assignment_period_end').click
+    page.find('.month', text: 'Jan').click
+    page.find_all('.day', exact_text: '17').first.click
+    click_button 'Update Assignment'
+
+    assert page.has_current_path? new_termination_assignment_reminder_mailings_path(@assignment)
+    assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
+    assert page.has_link? @volunteer_assignment.contact.full_name, href: volunteer_path(@volunteer_assignment)
+
+    fill_in 'Betreff', with: 'Erinnerung fuer Beendigung des Einsatzes: %{Einsatz}'
+    fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
+
+    page.find_all('input[type="submit"]').first.click
+
+    assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
+    assert page.has_text? 'Art Beendigung'
+    assert page.has_text? 'Status Nicht versandt'
+
+    assert page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.first.process_template[:subject])
+    assert page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.last.process_template[:body])
+
+    assert page.has_link? @volunteer_assignment.contact.full_name,
+      href: volunteer_path(@volunteer_assignment)
+    assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
+    click_link 'Emails versenden'
+    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.full_name,
+                          href: /profiles\/#{ReminderMailing.order('created_at asc').last.creator.profile.id}/
+    assert page.has_text?(
+      "Übermittelt am #{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
+      I18n.l(ReminderMailing.created_desc.first.created_at.to_date)
+    )
+  end
 end

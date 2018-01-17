@@ -54,17 +54,12 @@ class VolunteerMailerTest < ActionMailer::TestCase
     end
   end
 
-  # test 'volunteer termination with confirmation data is sent correctly' do
-  #   # FIXME: Problem with umlauts, but only in tests. Test doesn't recognize
-  #   # email encoded utf-8 umlauts
-  #   mailer = VolunteerMailer.termination(@volunteer, @email_template).deliver
-  #   assert_equal @email_template.subject, mailer.subject
-  #   assert_equal [@volunteer.contact.primary_email], mailer.to
-  #   # needs to be changed
-  #   # assert_equal ['info@aoz-freiwillige.ch'], mailer.from
-
-  #   mail_body = mailer.body.encoded
-  #   assert_match @volunteer.contact.first_name, mail_body
-  #   assert_match @volunteer.contact.last_name, mail_body
-  # end
+  test 'volunteer termination with confirmation data is sent correctly' do
+    assignment = make_assignment(start_date: 8.months.ago, end_date: 2.days.ago)
+    mailing = create_termination_mailing(assignment)
+    mailer = VolunteerMailer.termination_mail(mailing).deliver
+    assert_equal mailing.process_template[:subject], mailer.subject
+    assert mailer.to.include? mailing.volunteer.contact.primary_email
+    assert_match mailing.process_template[:body], mailer.body.encoded
+  end
 end
