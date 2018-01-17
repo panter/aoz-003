@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, except: [:index, :search]
+  before_action :set_assignment, except: [:index, :search, :new, :create]
 
   def index
     authorize Assignment

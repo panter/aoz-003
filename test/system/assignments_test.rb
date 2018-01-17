@@ -46,7 +46,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   #   assert page.has_text? 'Active'
   # end
 
-  test 'creating a pdf with a user that has no profile will not crash' do
+  test 'creating_a_pdf_with_a_user_that_has_no_profile_will_not_crash' do
     login_as @user
     user = create :user, :without_profile
     refute user.profile.present?
