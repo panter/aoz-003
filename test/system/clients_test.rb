@@ -49,7 +49,7 @@ class ClientsTest < ApplicationSystemTestCase
     select('Angemeldet', from: 'Acceptance')
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
-    select('social_worker', from: 'Involved authority')
+    select @social_worker.full_name, from: 'Involved authority'
     select('Gemeinde', from: 'Cost unit')
     page.check('client_evening')
     fill_in 'Detailed Description', with: 'After 7'
