@@ -3,7 +3,7 @@ h1= t_title(:show)
 .table-responsive.m-t-30.m-b-20
   table.table.table-no-border-top
     tbody
-      - if policy(TrialFeedback).superadmin_priviledges?
+      - if policy(TrialFeedback).superadmin_privileges?
         tr
           td= t_model(Volunteer)
           td= link_to @trial_feedback.volunteer.contact.full_name, volunteer_path(@trial_feedback.volunteer)
@@ -21,7 +21,7 @@ h1= t_title(:show)
       tr
         td Text
         td= word_wrap(@trial_feedback.body) if @trial_feedback.body
-      - if policy(TrialFeedback).superadmin_priviledges?
+      - if policy(TrialFeedback).superadmin_privileges?
         tr
           td Erstellt von
           td= link_to @trial_feedback.author.full_name, @trial_feedback.author

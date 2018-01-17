@@ -4,6 +4,7 @@ class ClientsController < ApplicationController
   include ContactAttributes
 
   before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_social_worker_collection
 
   def index
     authorize Client
@@ -43,6 +44,7 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
     @client.user = current_user
+    @client.involved_authority ||= current_user if current_user.social_worker?
     authorize @client
     if @client.save
       if @client.user.social_worker? && ClientNotification.active.any?
@@ -80,11 +82,15 @@ class ClientsController < ApplicationController
     authorize @client
   end
 
+  def set_social_worker_collection
+    @social_workers = User.social_workers
+  end
+
   def client_params
     params.require(:client).permit(
       :gender_request, :age_request, :other_request, :birth_year,
       :salutation, :nationality, :entry_date, :permit, :goals, :education, :interests,
-      :acceptance, :comments, :involved_authority, :competent_authority, :actual_activities,
+      :acceptance, :comments, :involved_authority_id, :competent_authority, :actual_activities,
       :cost_unit, language_skills_attributes, relatives_attributes, contact_attributes,
       availability_attributes
     )

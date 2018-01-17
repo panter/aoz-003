@@ -103,7 +103,6 @@ ActiveRecord::Schema.define(version: 20180117100622) do
     t.text "interests"
     t.text "comments"
     t.text "competent_authority"
-    t.text "involved_authority"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -122,7 +121,9 @@ ActiveRecord::Schema.define(version: 20180117100622) do
     t.string "entry_date"
     t.integer "acceptance", default: 0
     t.integer "cost_unit"
+    t.bigint "involved_authority_id"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
+    t.index ["involved_authority_id"], name: "index_clients_on_involved_authority_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 

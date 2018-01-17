@@ -4,6 +4,7 @@ class ClientsTest < ApplicationSystemTestCase
   setup do
     @superadmin = create :user, email: 'superadmin@example.com'
     @department_manager = create :department_manager, email: 'department@example.com'
+    @social_worker = create :social_worker
   end
 
   test 'new client form' do
@@ -48,14 +49,16 @@ class ClientsTest < ApplicationSystemTestCase
     select('Angemeldet', from: 'Acceptance')
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
-    fill_in 'Involved authority', with: 'asdfasdf'
+    select @social_worker.full_name, from: 'Involved authority'
     select('Gemeinde', from: 'Cost unit')
     page.check('client_evening')
     fill_in 'Detailed Description', with: 'After 7'
 
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
+    assert page.has_text? @social_worker.full_name
     @superadmin.clients.each do |client|
+      assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
       assert page.has_link? client.user.full_name, href: /profiles\/#{client.user.profile.id}/
       assert page.has_link? client.contact.primary_email
     end
@@ -290,5 +293,29 @@ class ClientsTest < ApplicationSystemTestCase
                                 goals: 'unassigned_goals', interests: 'unassigned_interests'
     without_assignment.update(created_at: 4.days.ago)
     [with_assignment, without_assignment]
+  end
+
+  test 'If social worker registers a client, she is automatically the involved authority' do
+    login_as @social_worker
+    visit new_client_path
+
+    within '#languages' do
+      choose('Basic')
+    end
+    select('Mrs.', from: 'Salutation')
+    fill_in 'First name', with: 'Client'
+    fill_in 'Last name', with: "doesn't matter"
+    fill_in 'Primary email', with: 'client@aoz.com'
+    fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    refute page.has_select? 'Involved authority'
+
+    click_button 'Create Client'
+
+    login_as @superadmin
+    visit client_path(Client.last)
+    assert page.has_link? @social_worker.full_name, count: 2
   end
 end

@@ -47,12 +47,13 @@
 
   fieldset
     legend Interne Kriterien
-    - if policy(Client).acceptance?
+    - if policy(Client).superadmin_privileges?
       = f.input :acceptance, collection: Client.acceptance_collection, include_blank: false
-    = f.input :involved_authority
+      = f.association :involved_authority, collection: @social_workers
+
     = f.input :competent_authority
     = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true
-    - if policy(Client).comments?
+    - if policy(Client).superadmin_privileges?
       = f.input :comments
 
   fieldset
