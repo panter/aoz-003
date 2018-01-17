@@ -83,13 +83,13 @@ class AssignmentsController < ApplicationController
   end
 
   def terminate
-    if @assignment.period_end.blank?
-      redirect_back(fallback_location: @assignment.volunteer, notice: 'Für diesen Einsatz wurde noch keine Ende definiert.')
-    end
+    return if @assignment.period_end.present?
+    redirect_back(fallback_location: @assignment.volunteer,
+      notice: 'Für diesen Einsatz wurde noch keine Ende definiert.')
   end
 
   def update_terminated_at
-    @assignment.volunteer.update(waive: assignment_params[:volunteer_attributes][:waive] == '1')
+    @assignment.volunteer.waive = assignment_params[:volunteer_attributes][:waive] == '1'
     @assignment.termination_submitted_at = Time.zone.now
     @assignment.termination_submitted_by = current_user
     if @assignment.save

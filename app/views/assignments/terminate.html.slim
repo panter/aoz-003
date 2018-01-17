@@ -6,7 +6,6 @@ p= button_link t_title(:new, Hour), new_polymorphic_path([@assignment.volunteer,
 = render 'last_submitted_feedbacks', feedbacks: @assignment.feedbacks, confirmable: @assignment
 p= button_link t_title(:new, Feedback), new_polymorphic_path([@assignment.volunteer, @assignment.polymorph_url_object, Feedback], redirect_to: :terminate)
 
-
 h2 Beendigung Abschliessen
 
 = simple_form_for(@assignment, url: update_terminated_at_assignment_path, method: :put) do |f|
@@ -14,4 +13,3 @@ h2 Beendigung Abschliessen
     = volunteer.input :waive
 
   .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher das Sie alle daten eingetragen haben?' }
-
