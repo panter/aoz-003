@@ -1,0 +1,32 @@
+h1 Beendete Begleitungen
+
+nav.navbar.section-navigation.hidden-print
+  hr
+  ul.list-inline
+    li= button_link 'Alle Begleitungen', assignments_path, dimension: :sm
+    = boolean_toggler_filter_dropdown(:termination_verified_by, 'Quitiert', 'Quitiert', 'Nicht quitiert')
+
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th= sort_link @q, :volunteer_contact_last_name, 'Frewillige/r'
+        th= sort_link @q, :client_contact_last_name, 'Klient/in'
+        th= sort_link @q, :period_start, t_attr(:period_start, Assignment)
+        th= sort_link @q, :period_end, t_attr(:period_end, Assignment)
+        th= sort_link @q, :creator_email, t_attr(:created_by)
+        th.hidden-print colspan='2'
+
+    tbody
+      - @assignments.each do |assignment|
+        tr
+          td= link_to assignment.volunteer.contact.full_name, volunteer_path(assignment.volunteer)
+          td= link_to assignment.client.contact.full_name, client_path(assignment.client)
+          td= l(assignment.period_start) if assignment.period_start
+          td= l(assignment.period_end) if assignment.period_end
+          td= link_to assignment.creator.full_name, profile_link(assignment.creator)
+          td.index-action-cell= link_to 'Beendigungsformular', terminate_assignment_path(assignment), class: 'index-action-link'
+          td= link_to 'Quittieren', verify_termination_assignment_path(assignment), class: 'btn btn-sm btn-default', data: { method: 'PATCH'}
+
+
+

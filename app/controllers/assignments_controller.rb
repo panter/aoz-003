@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, except: [:index, :search, :new, :create]
+  before_action :set_assignment, except: [:index, :terminated_index, :search, :new, :create]
 
   def index
     authorize Assignment
@@ -14,6 +14,13 @@ class AssignmentsController < ApplicationController
           per_page: params[:print] && @assignments.size)
       end
     end
+  end
+
+  def terminated_index
+    authorize Assignment
+    @q = policy_scope(Assignment).has_end.ransack(params[:q])
+    @q.sorts = ['period_end asc'] if @q.sorts.empty?
+    @assignments = @q.result
   end
 
   def search
@@ -98,6 +105,8 @@ class AssignmentsController < ApplicationController
       redirect_back(fallback_location: terminate_assignment_path(@assignment))
     end
   end
+
+  def verify_termination; end
 
   private
 

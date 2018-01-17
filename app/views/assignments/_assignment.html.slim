@@ -19,8 +19,6 @@ tr
       = link_to t_action(:edit), edit_polymorphic_path(assignment), class: 'index-action-link'
     - if policy(assignment).destroy?
       = link_to t_action(:delete), assignment, confirm_deleting(assignment).merge(class: 'index-action-link')
-    - if policy(assignment).terminate?
-      = link_to 'Begleitung beenden', terminate_assignment_path(assignment), class: 'index-action-link'
   td.hidden-print= link_to t('download'), assignment_path(assignment, format: :pdf)
   - if policy(TrialFeedback).index?
     td.index-action-cell.hidden-print
