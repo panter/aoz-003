@@ -24,11 +24,11 @@ class User < ApplicationRecord
   has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id'
 
   # assignment termination relations
-  has_many :assignment_period_end_set_by, class_name: 'Assignment', inverse_of: 'period_end_set_by'
-  has_many :assignment_termination_submitted_by, class_name: 'Assignment',
-    inverse_of: 'termination_submitted_by'
-  has_many :assignment_termination_verified_by, class_name: 'Assignment',
-    inverse_of: 'termination_verified_by'
+  has_many :assignment_period_ends_set, class_name: 'Assignment', foreign_key: 'period_end_set_by'
+  has_many :assignment_terminations_submitted, class_name: 'Assignment',
+    foreign_key: 'termination_submitted_by'
+  has_many :assignment_terminations_verified, class_name: 'Assignment',
+    foreign_key: 'termination_verified_by'
 
   # Mailing process done relation
   has_many :process_submitted_by, class_name: 'ReminderMailingVolunteer'
