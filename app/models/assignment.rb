@@ -7,6 +7,12 @@ class Assignment < ApplicationRecord
   accepts_nested_attributes_for :client
 
   belongs_to :creator, -> { with_deleted }, class_name: 'User'
+
+  # termination record relations
+  belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :termination_submitted_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true
+
   has_many :hours, as: :hourable, dependent: :destroy
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
 

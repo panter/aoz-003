@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180115145819) do
+ActiveRecord::Schema.define(version: 20180117100622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,9 +35,16 @@ ActiveRecord::Schema.define(version: 20180115145819) do
     t.text "description"
     t.string "kind", default: "accompaniment"
     t.datetime "submitted_at"
-    t.datetime "terminated_at"
+    t.bigint "period_end_set_by_id"
+    t.datetime "termination_submitted_at"
+    t.bigint "termination_submitted_by_id"
+    t.datetime "termination_verified_at"
+    t.bigint "termination_verified_by_id"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
+    t.index ["period_end_set_by_id"], name: "index_assignments_on_period_end_set_by_id"
+    t.index ["termination_submitted_by_id"], name: "index_assignments_on_termination_submitted_by_id"
+    t.index ["termination_verified_by_id"], name: "index_assignments_on_termination_verified_by_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
   end
 
@@ -395,14 +402,16 @@ ActiveRecord::Schema.define(version: 20180115145819) do
     t.bigint "reminder_mailing_id"
     t.string "reminder_mailable_type"
     t.bigint "reminder_mailable_id"
-    t.integer "link_visits", default: 0
     t.boolean "confirmed_form", default: false
     t.boolean "email_sent", default: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "picked", default: false
+    t.datetime "process_submitted_at"
+    t.bigint "process_submitted_by_id"
     t.index ["deleted_at"], name: "index_reminder_mailing_volunteers_on_deleted_at"
+    t.index ["process_submitted_by_id"], name: "index_reminder_mailing_volunteers_on_process_submitted_by_id"
     t.index ["reminder_mailable_type", "reminder_mailable_id"], name: "reminder_mailable_index"
     t.index ["reminder_mailing_id"], name: "index_reminder_mailing_volunteers_on_reminder_mailing_id"
     t.index ["volunteer_id"], name: "index_reminder_mailing_volunteers_on_volunteer_id"
@@ -417,6 +426,7 @@ ActiveRecord::Schema.define(version: 20180115145819) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "obsolete", default: false
     t.index ["creator_id"], name: "index_reminder_mailings_on_creator_id"
     t.index ["deleted_at"], name: "index_reminder_mailings_on_deleted_at"
   end

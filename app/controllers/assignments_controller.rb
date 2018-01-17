@@ -94,7 +94,8 @@ class AssignmentsController < ApplicationController
 
   def update_terminated_at
     @assignment.volunteer.update(waive: assignment_params[:waive] == '1')
-    @assignment.terminated_at = Time.zone.now
+    @assignment.termination_submitted_at = Time.zone.now
+    @assignment.termination_submitted_by = current_user
     if @assignment.save
       redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
     else
