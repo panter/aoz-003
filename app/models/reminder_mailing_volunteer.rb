@@ -3,6 +3,8 @@ class ReminderMailingVolunteer < ApplicationRecord
   belongs_to :volunteer
   belongs_to :reminder_mailable, polymorphic: true, optional: true
 
+  belongs_to :process_submitted_by, class_name: 'User', optional: true
+
   scope :group_assignment, (-> { where(reminder_mailable_type: 'GroupAssignment') })
   scope :assignment, (-> { where(reminder_mailable_type: 'Assignment') })
 
@@ -46,11 +48,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   def string_replace_key_error(template)
     template.gsub(/\%\{([\w]*)\}/) do |key_match|
       key = key_match.remove('%{').remove('}').to_sym
-      if template_variables[key].present?
-        template_variables[key]
-      else
-        ''
-      end
+      template_variables[key].presence || ''
     end
   end
 
@@ -92,7 +90,8 @@ class ReminderMailingVolunteer < ApplicationRecord
     if reminder_mailing.half_year?
       make_polymorphic_path(reminder_mailable, :last_submitted_hours_and_feedbacks)
     elsif reminder_mailing.trial_period?
-      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_target, TrialFeedback], :new)
+      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_target, TrialFeedback],
+        :new)
     end
   end
 

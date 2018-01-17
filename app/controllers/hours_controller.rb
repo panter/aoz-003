@@ -53,7 +53,8 @@ class HoursController < ApplicationController
 
   def find_hourable
     return unless params[:assignment_id] || params[:group_assignment_id]
-    Assignment.find_by(id: params[:assignment_id]) || GroupAssignment.find_by(id: params[:group_assignment_id])
+    Assignment.find_by(id: params[:assignment_id]) ||
+      GroupAssignment.find_by(id: params[:group_assignment_id])
   end
 
   def set_hour
@@ -66,8 +67,8 @@ class HoursController < ApplicationController
   end
 
   def create_redirect
-    return @volunteer unless params[:last_submitted]
-    polymorphic_path(@hour.hourable, action: :last_submitted_hours_and_feedbacks)
+    return @volunteer unless params[:redirect_to]
+    polymorphic_path(@hour.hourable, action: params[:redirect_to]&.to_sym)
   end
 
   def hour_params

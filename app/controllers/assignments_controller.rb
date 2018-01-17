@@ -1,6 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy,
-                                        :last_submitted_hours_and_feedbacks, :update_submitted_at]
+  before_action :set_assignment, except: [:index, :search, :new, :create]
 
   def index
     authorize Assignment
@@ -75,16 +74,29 @@ class AssignmentsController < ApplicationController
   def last_submitted_hours_and_feedbacks
     @last_submitted_hours = @assignment.hours_since_last_submitted
     @last_submitted_feedbacks = @assignment.feedbacks_since_last_submitted
-    return if params[:rmv_id].blank?
-    rmv = ReminderMailingVolunteer.find(params[:rmv_id].to_i)
-    return if rmv.reminder_mailable != @assignment || rmv.volunteer.user != current_user
-    rmv.update(link_visits: rmv.link_visits + 1)
   end
 
   def update_submitted_at
     @assignment.update(submitted_at: Time.zone.now)
     redirect_to last_submitted_hours_and_feedbacks_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+  end
+
+  def terminate
+    return if @assignment.period_end.present?
+    redirect_back(fallback_location: @assignment.volunteer,
+      notice: 'Für diesen Einsatz wurde noch keine Ende definiert.')
+  end
+
+  def update_terminated_at
+    @assignment.volunteer.waive = assignment_params[:volunteer_attributes][:waive] == '1'
+    @assignment.termination_submitted_at = Time.zone.now
+    @assignment.termination_submitted_by = current_user
+    if @assignment.save
+      redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
+    else
+      redirect_back(fallback_location: terminate_assignment_path(@assignment))
+    end
   end
 
   private
@@ -110,7 +122,11 @@ class AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:client_id, :volunteer_id, :period_start, :period_end,
-      :performance_appraisal_review, :probation_period, :home_visit, :first_instruction_lesson)
+    params.require(:assignment).permit(
+      :client_id, :volunteer_id, :period_start, :period_end, :waive,
+      :performance_appraisal_review, :probation_period, :home_visit,
+      :first_instruction_lesson, :termination_submitted_at, :terminated_at,
+      volunteer_attributes: [:waive]
+    )
   end
 end

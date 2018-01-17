@@ -1,0 +1,15 @@
+h1= "Begleitung endet am #{l(@assignment.period_end)}"
+
+= render 'last_submitted_hours', hours: @assignment.hours, confirmable: @assignment
+p= button_link t_title(:new, Hour), new_polymorphic_path([@assignment.volunteer, @assignment, Hour], redirect_to: :terminate)
+
+= render 'last_submitted_feedbacks', feedbacks: @assignment.feedbacks, confirmable: @assignment
+p= button_link t_title(:new, Feedback), new_polymorphic_path([@assignment.volunteer, @assignment.polymorph_url_object, Feedback], redirect_to: :terminate)
+
+h2 Beendigung Abschliessen
+
+= simple_form_for(@assignment, url: update_terminated_at_assignment_path, method: :put) do |f|
+  = f.simple_fields_for(:volunteer) do |volunteer|
+    = volunteer.input :waive
+
+  .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher das Sie alle daten eingetragen haben?' }
