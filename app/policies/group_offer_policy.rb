@@ -29,5 +29,4 @@ class GroupOfferPolicy < ApplicationPolicy
 
   # supplemental policies
   alias_method :supervisor_privileges?, :superadmin?
-  alias_method :department?, :superadmin?
 end

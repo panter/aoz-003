@@ -1,7 +1,6 @@
 class GroupOffersController < ApplicationController
   include GroupAssignmentsAttributes
   before_action :set_group_offer, only: [:show, :edit, :update, :destroy, :change_active_state]
-  before_action :set_assignable_collection, only: [:edit]
   before_action :set_volunteer_collection
   before_action :set_department_manager_collection
 
@@ -36,17 +35,18 @@ class GroupOffersController < ApplicationController
   end
 
   def new
-    @group_offer = GroupOffer.new(creator: current_user)
-    @group_offer.department = current_user.department.first if current_user.department.first
+    @group_offer = GroupOffer.new
     authorize @group_offer
   end
 
-  def edit; end
+  def edit
+    set_assignable_collection
+  end
 
   def create
     @group_offer = GroupOffer.new(group_offer_params)
     @group_offer.creator ||= current_user
-    @group_offer.department ||= current_user.department.first if current_user.department.first
+    @group_offer.department ||= current_user.department&.first
     authorize @group_offer
     if @group_offer.save
       redirect_to @group_offer, make_notice

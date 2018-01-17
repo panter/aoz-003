@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class GroupOffersTest < ApplicationSystemTestCase
   def setup
-    @department_manager = create :department_manager, :with_department
+    @department_manager = create :department_manager
     @group_offer_category = create :group_offer_category
   end
 
