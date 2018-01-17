@@ -89,7 +89,7 @@ class AssignmentsController < ApplicationController
   end
 
   def update_terminated_at
-    @assignment.volunteer.update(waive: assignment_params[:waive] == '1')
+    @assignment.volunteer.update(waive: assignment_params[:volunteer_attributes][:waive] == '1')
     @assignment.termination_submitted_at = Time.zone.now
     @assignment.termination_submitted_by = current_user
     if @assignment.save
