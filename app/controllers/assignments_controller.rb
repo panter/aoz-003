@@ -86,7 +86,11 @@ class AssignmentsController < ApplicationController
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
 
-  def terminate; end
+  def terminate
+    if @assignment.period_end.blank?
+      redirect_back(fallback_location: @assignment.volunteer, notice: 'Für diesen Einsatz wurde noch keine Ende definiert.')
+    end
+  end
 
   def update_terminated_at
     @assignment.volunteer.update(waive: assignment_params[:waive] == '1')
