@@ -65,7 +65,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     assert_equal @volunteer.user, @assignment.termination_submitted_by
   end
 
-  test 'superadmin_submitting_termination_sets_termination_submitted_at_and_termination_submitted_by' do
+  test 'superadmin_submitting_termination_sets_termination_submitted_at_and_termination_submitt' do
     @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
