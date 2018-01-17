@@ -546,7 +546,6 @@ ActiveRecord::Schema.define(version: 20180117100622) do
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "client_notifications", "users"
   add_foreign_key "clients", "users"
-  add_foreign_key "clients", "users", column: "involved_authority_id"
   add_foreign_key "feedbacks", "users", column: "author_id"
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"

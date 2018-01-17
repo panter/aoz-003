@@ -33,9 +33,7 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new(user: current_user)
     @client.language_skills << LanguageSkill.new(language: 'DE')
-    if current_user.social_worker?
-      @client.involved_authority = current_user
-    end
+    @client.involved_authority = current_user if current_user.social_worker?
     authorize @client
   end
 

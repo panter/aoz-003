@@ -1,6 +1,8 @@
 class ChangeInvolvedAuthorityOnClient < ActiveRecord::Migration[5.1]
   def change
-    remove_column :clients, :involved_authority
-    add_reference :clients, :involved_authority, index: true, foreign_key: { to_table: :users }
+    change_table :clients do |t|
+      t.remove :involved_authority
+      t.belongs_to :involved_authority, references: :users, index: true
+    end
   end
 end
