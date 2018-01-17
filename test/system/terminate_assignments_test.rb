@@ -62,7 +62,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     end
     @assignment.reload
     assert @assignment.termination_submitted_at.present?
-    assert @assignment.termination_submitted_by == @volunteer.user
+    assert_equal @volunteer.user, @assignment.termination_submitted_by
   end
 
   test 'superadmin_submitting_termination_sets_termination_submitted_at_and_termination_submitted_by' do
@@ -74,7 +74,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     end
     @assignment.reload
     assert @assignment.termination_submitted_at.present?
-    assert @assignment.termination_submitted_by == @superadmin
+    assert_equal @superadmin, @assignment.termination_submitted_by
   end
 
   test 'department_manager_submitting_termination_sets_termination_submitted' do
@@ -86,7 +86,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     end
     @assignment.reload
     assert @assignment.termination_submitted_at.present?
-    assert @assignment.termination_submitted_by == @department_manager
+    assert_equal @department_manager, @assignment.termination_submitted_by
   end
 
   test 'volunteer_expenses_waive_field_matches_and_updates_volunteer_waive_field' do
