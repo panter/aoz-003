@@ -319,10 +319,10 @@ de:
         subject: Betreff
         body: Text
       group_assignment:
-        member: Mitglied in der Freiwilligengruppe
+        member: Mitglied
         period_end: Enddatum
         period_start: Anfangsdatum
-        responsible: Verantwortliche/r für die Freiwilligengruppe
+        responsible: Verantwortliche/r
         role: Rolle
         volunteer: Freiwillige
       group_offer:
