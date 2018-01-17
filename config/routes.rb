@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   resources :assignments, concerns: [:update_submitted_at, :search] do
     member do
       get :terminate
-      patch :update_terminated_at
+      put :update_terminated_at
     end
   end
 
