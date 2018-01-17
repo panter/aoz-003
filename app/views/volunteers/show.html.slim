@@ -6,12 +6,13 @@ h1= @volunteer.contact.full_name
     h4= "#{t_attr(:rejection_text)}: #{@volunteer.rejection_text}"
 
 nav.navbar.section-navigation
+  ul.list-inline.pull-right
+    - if policy(Volunteer).can_manage?
+        li= button_link 'Journal', polymorphic_path([@volunteer, Journal]), 'primary'
   ul.list-inline
     - if policy(Volunteer).acceptance?
       li.button-acceptance = link_to t(".acceptance.#{@volunteer.acceptance}"), '#',
         class: "btn btn-acceptance-#{@volunteer.acceptance}"
-    - if policy(Volunteer).can_manage?
-      li= render 'journals/journal_block', journaled_for: @volunteer
       ul.list-inline
         - if @volunteer.seeking_clients?
           li= button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
