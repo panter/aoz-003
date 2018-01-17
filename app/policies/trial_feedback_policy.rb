@@ -16,5 +16,5 @@ class TrialFeedbackPolicy < ApplicationPolicy
   alias_method :destroy?,      :superadmin_or_volunteers_trial_feedback?
   alias_method :mark_as_done?, :superadmin?
 
-  alias_method :superadmin_priviledges?, :superadmin?
+  alias_method :superadmin_privileges?, :superadmin?
 end
