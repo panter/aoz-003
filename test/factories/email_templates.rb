@@ -27,7 +27,7 @@ FactoryBot.define do
     end
 
     trait :half_year do
-      kind { 2 }
+      kind { 3 }
       body do
         "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
           '%{FeedbackLink}'
@@ -36,7 +36,7 @@ FactoryBot.define do
     end
 
     trait :termination do
-      kind { 3 }
+      kind { 2 }
       body do
         "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n"
       end

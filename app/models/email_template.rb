@@ -1,7 +1,7 @@
 class EmailTemplate < ApplicationRecord
   before_save :ensure_exactly_one_active_per_kind
 
-  enum kind: { signup: 0, trial: 1, half_year: 2, termination: 3 }
+  enum kind: { signup: 0, trial: 1, half_year: 3, termination: 2 }
   validates :kind, presence: true
 
   scope :order_by_active, -> { order(active: :desc) }

@@ -61,7 +61,7 @@ class AssignmentsController < ApplicationController
 
   def update
     if @assignment.update(assignment_params)
-      if @assignment.saved_change_to_attribute?(:period_end, from: nil)
+      if @assignment.saved_change_to_period_end?(from: nil)
         redirect_to polymorphic_path([@assignment, ReminderMailing], action: :new_termination)
       else
         redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)

@@ -26,7 +26,7 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
         .natural_name
     )
     assert mailing_volunteer.process_template[:body].include?(
-      reminder_mailing.reminder_mailing_volunteers.first.reminder_mailable.creator.profile.contact.natural_name
+      "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:#{reminder_mailing.creator.email})"
     )
   end
 

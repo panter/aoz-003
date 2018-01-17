@@ -71,7 +71,9 @@ Rails.application.routes.draw do
     resources :journals, except: [:show]
     resources :assignments, concerns: [:assignment_feedbacks, :hours_resources]
   end
+
   resources :group_assignments, only: [:show], concerns: [:update_submitted_at, :hours_resources]
+
   resources :group_offers, concerns: :search do
     put :change_active_state, on: :member
   end

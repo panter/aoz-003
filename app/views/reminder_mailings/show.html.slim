@@ -52,7 +52,7 @@ nav.navbar.hidden-print
       li
         - if @reminder_mailing.half_year?
           = button_link 'Emails versenden', send_half_year_reminder_mailing_path(@reminder_mailing)
-        - if @reminder_mailing.trial_period?
+        - elsif @reminder_mailing.trial_period?
           = button_link 'Emails versenden', send_trial_period_reminder_mailing_path(@reminder_mailing)
         - else
           = button_link 'Emails versenden', send_termination_assignment_reminder_mailing_path(@reminder_mailing)

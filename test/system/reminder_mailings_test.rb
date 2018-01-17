@@ -44,7 +44,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     fill_in 'Betreff', with: 'Erinnerung fuer %{Einsatz}'
     fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
 
-    page.find_all('input[type="submit"]').first.click
+    first('input[type="submit"]').click
 
     assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
     assert page.has_text? 'Art Halbjährlich'
@@ -68,12 +68,11 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_link? group_assignment.group_offer.to_label,
       href: group_offer_path(group_assignment.group_offer)
     click_link 'Emails versenden'
-    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.full_name,
-                          href: /profiles\/#{ReminderMailing.order('created_at asc').last.creator.profile.id}/
-    assert page.has_text?(
-      "Übermittelt am #{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
-      I18n.l(ReminderMailing.created_desc.first.created_at.to_date)
-    )
+    creator = ReminderMailing.order('created_at asc').last.creator
+    assert page.has_link? creator.full_name,  href: profile_path(creator)
+
+    first_mailing = ReminderMailing.created_desc.first
+    assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
   end
 
   test 'group_assignment_and_assignment_elegible_for_probation_reminder_mailing_are_includable' do
@@ -112,7 +111,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     fill_in 'Betreff', with: 'Erinnerung fuer %{Einsatz}'
     fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
 
-    page.find_all('input[type="submit"]').first.click
+    first('input[type="submit"]').click
 
     assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
     assert page.has_text? 'Art Probezeit'
@@ -136,12 +135,11 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_link? group_assignment.group_offer.to_label,
       href: group_offer_path(group_assignment.group_offer)
     click_link 'Emails versenden'
-    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.full_name,
-                          href: /profiles\/#{ReminderMailing.order('created_at asc').last.creator.profile.id}/
-    assert page.has_text?(
-      "Übermittelt am #{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
-      I18n.l(ReminderMailing.created_desc.first.created_at.to_date)
-    )
+    creator = ReminderMailing.order('created_at asc').last.creator
+    assert page.has_link? creator.full_name,  href: profile_path(creator)
+
+    first_mailing = ReminderMailing.created_desc.first
+    assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
   end
 
   test 'assignment elegible for termination reminder mailing are includable' do
@@ -153,7 +151,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     page.find('#assignment_period_end').click
     page.find('.month', text: 'Jan').click
-    page.find_all('.day', exact_text: '17').first.click
+    first('.day',  exact_text: '17').click
     click_button 'Update Assignment'
 
     assert page.has_current_path? new_termination_assignment_reminder_mailings_path(@assignment)
@@ -163,7 +161,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     fill_in 'Betreff', with: 'Erinnerung fuer Beendigung des Einsatzes: %{Einsatz}'
     fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
 
-    page.find_all('input[type="submit"]').first.click
+    first('input[type="submit"]').click
 
     assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
     assert page.has_text? 'Art Beendigung'
@@ -176,11 +174,10 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       href: volunteer_path(@volunteer_assignment)
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
     click_link 'Emails versenden'
-    assert page.has_link? ReminderMailing.order('created_at asc').last.creator.full_name,
-                          href: /profiles\/#{ReminderMailing.order('created_at asc').last.creator.profile.id}/
-    assert page.has_text?(
-      "Übermittelt am #{I18n.l(ReminderMailing.created_desc.first.updated_at.to_date)}  " +
-      I18n.l(ReminderMailing.created_desc.first.created_at.to_date)
-    )
+    creator = ReminderMailing.order('created_at asc').last.creator
+    assert page.has_link? creator.full_name,  href: profile_path(creator)
+
+    first_mailing = ReminderMailing.created_desc.first
+    assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
   end
 end
