@@ -40,7 +40,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     visit departments_path
     click_link 'New Department'
     assocable_users.each do |u|
-      check u.to_label
+      check u.to_s
     end
     fill_in 'Name', with: 'Bogus Hog Department'
     fill_in 'Street', with: 'bogus street 999'

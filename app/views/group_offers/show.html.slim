@@ -25,6 +25,9 @@ h1= @group_offer.title
             - else
               = @group_offer.department
       tr
+        td Verantwortliche/r
+        td= link_to @group_offer.creator, profile_link(@group_offer.creator) if @group_offer.creator
+      tr
         td= t_attr(:offer_state)
         td= t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
       tr

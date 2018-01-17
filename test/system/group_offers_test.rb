@@ -2,11 +2,11 @@ require 'application_system_test_case'
 
 class GroupOffersTest < ApplicationSystemTestCase
   def setup
-    @department = create :department
+    @department_manager = create :department_manager
     @group_offer_category = create :group_offer_category
   end
 
-  test 'new group offer form' do
+  test 'new_group_offer_form' do
     login_as create(:user)
     visit new_group_offer_path
 
@@ -15,7 +15,8 @@ class GroupOffersTest < ApplicationSystemTestCase
     page.choose('group_offer_offer_state_full')
     page.choose('group_offer_volunteer_state_internal_volunteer')
     select @group_offer_category.category_name, from: 'Group offer category'
-    select @department.contact.last_name, from: 'Department'
+    select @department_manager.department.first, from: 'Department'
+    select @department_manager, from: 'Verantwortliche/r'
     select '2', from: 'Necessary volunteers'
     fill_in 'Description', with: 'asdf'
     page.check('group_offer_all')
@@ -36,7 +37,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     select @group_offer_category.category_name, from: 'Group offer category'
     click_button 'Create Group offer'
     assert page.has_text? 'Group offer was successfully created.'
-    assert page.has_text? department_manager.department.first.contact.last_name
+    assert page.has_link? department_manager.department.first.contact.last_name
   end
 
   test 'category for a group offer is required' do

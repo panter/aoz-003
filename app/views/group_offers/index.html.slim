@@ -28,13 +28,14 @@ table.table.table-striped
       th Aktiv
       th= t_attr(:title)
       th= sort_link @q, :location
+      th Verantwortliche/r
       th= t_attr(:availability)
       th= t_attr(:target_group)
       th= t_attr(:duration)
       th= sort_link @q, :offer_state
       th= t_attr(:volunteers)
       th= sort_link @q, :group_offer_category, t_attr(:group_offer_category)
-      th colspan=(policy(GroupOffer).destroy? ? '5' : '4')
+      th
 
   tbody
     - @group_offers.each do |offer|
@@ -48,6 +49,9 @@ table.table.table-striped
             = offer.location
           - if !offer.external? && offer.department
             = offer.department.contact.last_name
+        td
+          - if offer.creator
+            =link_to offer.creator.full_name, profile_link(offer.creator)
         td
           - availability_collection.each do |availability|
             - if offer[availability]
@@ -78,13 +82,14 @@ table.table.table-striped
               = t_attr(:member, GroupAssignment)
             br
         td= offer.group_offer_category.category_name
-        td= link_to t_action(:show), group_offer_path(offer)
-        td= link_to t('download'), group_offer_path(offer, format: :pdf)
-        td= link_to t_action(:edit), edit_group_offer_path(offer)
-        - if policy(GroupOffer).destroy?
-          td= link_to t_action(:delete), group_offer_path(offer), confirm_deleting(offer)
-        td= link_to "#{ offer.active? ? t('.deactivate') : t('.activate') }",
-          change_active_state_group_offer_path(offer), method: :put, remote: :true
+        td.index-action-cell.hidden-print
+          span= link_to t_action(:show), group_offer_path(offer)
+          span= link_to t('download'), group_offer_path(offer, format: :pdf)
+          span= link_to t_action(:edit), edit_group_offer_path(offer)
+          - if policy(GroupOffer).destroy?
+            span= link_to t_action(:delete), group_offer_path(offer), confirm_deleting(offer)
+          span= link_to "#{ offer.active? ? t('.deactivate') : t('.activate') }",
+            change_active_state_group_offer_path(offer), method: :put, remote: :true
 
 nav.navbar.section-navigation
   ul.list-inline

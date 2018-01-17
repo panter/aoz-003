@@ -10,7 +10,7 @@ class GroupOffer < ApplicationRecord
 
   belongs_to :department, optional: true
   belongs_to :group_offer_category
-  belongs_to :creator, -> { with_deleted }, class_name: 'User'
+  belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true
 
   has_many :group_assignments, dependent: :destroy
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
@@ -25,8 +25,6 @@ class GroupOffer < ApplicationRecord
 
   validates :title, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
-  validate :department_manager_has_department?, if: :department_manager?
-  validates :department, presence: true, if: :department_manager?
 
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
@@ -66,10 +64,6 @@ class GroupOffer < ApplicationRecord
     group_assignments.find_by(volunteer: volunteer).responsible
   end
 
-  def department_manager?
-    creator&.department_manager?
-  end
-
   def to_label
     label = "#{I18n.t('activerecord.models.group_offer')} - #{title} - #{group_offer_category}"
     label += " - #{department}" if department_id?
@@ -107,16 +101,5 @@ class GroupOffer < ApplicationRecord
 
   def update_search_volunteers
     update(search_volunteer: volunteer_contacts.pluck(:full_name).join(', '))
-  end
-
-  private
-
-  def department_manager_has_department?
-    if creator.department.blank?
-      errors.add(:creator_no_department, "#{I18n.t('role.department_manager')} müssen einem Standort zugeteilt sein, "\
-        "bevor sie #{I18n.t('group_offers', count: 2)} erfassen können.")
-    elsif !creator.department.include?(department)
-      errors.add(:creator_wrong_department, 'Nicht der richtige Standort.')
-    end
   end
 end
