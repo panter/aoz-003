@@ -36,11 +36,8 @@ class GroupOffersController < ApplicationController
   end
 
   def new
-    @group_offer = GroupOffer.new
-    if current_user.department_manager?
-      @group_offer.creator = current_user
-      @group_offer.department = current_user.department.first if current_user.department.first?
-    end
+    @group_offer = GroupOffer.new(creator: current_user)
+    @group_offer.department = current_user.department.first if current_user.department.first
     authorize @group_offer
   end
 
@@ -48,10 +45,8 @@ class GroupOffersController < ApplicationController
 
   def create
     @group_offer = GroupOffer.new(group_offer_params)
-    if current_user.department_manager?
-      @group_offer.creator ||= current_user
-      @group_offer.department ||= current_user.department.first if current_user.department.first?
-    end
+    @group_offer.creator ||= current_user
+    @group_offer.department ||= current_user.department.first if current_user.department.first
     authorize @group_offer
     if @group_offer.save
       redirect_to @group_offer, make_notice
