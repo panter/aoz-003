@@ -34,4 +34,11 @@ class Assignment < ApplicationRecord
   def feedbacks_since_last_submitted
     feedbacks.since_last_submitted(submitted_at)
   end
+
+  def log_self
+    log = AssignmentLog.new(attributes.except('id', 'created_at', 'updated_at'))
+    log.assignment = self
+    delete if log.save
+    log
+  end
 end

@@ -42,7 +42,9 @@ class Volunteer < ApplicationRecord
   accepts_nested_attributes_for :journals, allow_destroy: true
 
   has_many :assignments, dependent: :destroy
+  has_many :assignment_logs, dependent: :destroy
   has_many :clients, through: :assignments
+  has_many :clients_log, through: :assignments_log
 
   has_many :billing_expenses
 

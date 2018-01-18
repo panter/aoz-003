@@ -17,6 +17,8 @@ class Client < ApplicationRecord
   belongs_to :involved_authority, class_name: 'User', optional: true
 
   has_one :assignment, dependent: :destroy
+  has_many :assignment_log, dependent: :destroy
+
   has_one :volunteer, through: :assignments
 
   has_one :contact, as: :contactable, dependent: :destroy
