@@ -14,6 +14,10 @@ module FilterDropdownHelper
     dropdown_list_filter(attribute_group, filter_links, *q_filters)
   end
 
+  # Creates a filter dropdown for an enum attribute
+  # Params:
+  # attribute  - the model attribute name as string or symbol
+  # collection - what the rails model returns on enum all (eg. enum attribute :kind -> Model.kinds)
   def enum_filter_dropdown(attribute, collection)
     filter_links = collection.map do |option|
       list_filter_link("#{attribute}_eq".to_sym, option[0], enum_value: option[1])
@@ -24,6 +28,12 @@ module FilterDropdownHelper
     end
   end
 
+  # Creates a filter dropdown that filters a boolean attribute to either true or false
+  # Params:
+  # attribute - the model attribute name as string or symbol
+  # attr_text - the text displayed for the dropdown title
+  # on_text   - text for filtering true
+  # off_text  - text for filtering false
   def boolean_toggler_filter_dropdown(attribute, attr_text, on_text, off_text)
     filter = "#{attribute}_eq"
     li_dropdown do
@@ -35,6 +45,13 @@ module FilterDropdownHelper
     end
   end
 
+  # Creates a dropdown with multiple fully customizable filters
+  # Params:
+  # name    - the displayed filter group name
+  # filters - rest parameters of n hashes
+  #           :q     - symbol defining the Ransack filter (eg. attribute_eq)
+  #           :value - string passed to the Ransack filter in this link (eg. true)
+  #           :text  - string for frontend display
   def custom_filter_dropdown(name, *filters)
     filter_keys = filters.map { |filter| filter[:q] }
     li_dropdown do
