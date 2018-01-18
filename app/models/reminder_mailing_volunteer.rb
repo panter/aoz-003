@@ -13,15 +13,13 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   scope :picked, (-> { where(picked: true) })
 
-  # TODO waits for enum to exist from other not yet merged feature story
+  # TODO: waits for enum to exist from other not yet merged feature story
   scope :termination, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = ?', 2) })
   scope :termination_for, ->(mailable) { termination.where(reminder_mailable: mailable) }
 
   def mark_process_submitted(user, terminate_parent_mailing: false)
     update(process_submitted_by: user, process_submitted_at: Time.zone.now)
-    if terminate_parent_mailing
-      reminder_mailing.update(obsolete: true)
-    end
+    reminder_mailing.update(obsolete: true) if terminate_parent_mailing
   end
 
   def assignment?

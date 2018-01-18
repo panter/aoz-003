@@ -39,8 +39,10 @@ module FilterDropdownHelper
     li_dropdown do
       concat dropdown_toggle_link(attr_text + bool_toggler_text_end(filter, on_text, off_text))
       concat dropdown_ul(tag.li { all_link_to(filter) }) {
-        concat li_a_element(on_text, bool_toggle_url(filter, true), class: q_active_class(filter, 'true'))
-        concat li_a_element(off_text, bool_toggle_url(filter, false), class: q_active_class(filter, 'false'))
+        concat li_a_element(on_text, bool_toggle_url(filter, true),
+          class: q_active_class(filter, 'true'))
+        concat li_a_element(off_text, bool_toggle_url(filter, false),
+          class: q_active_class(filter, 'false'))
       }
     end
   end
@@ -58,8 +60,9 @@ module FilterDropdownHelper
       concat dropdown_toggle_link(name + custom_text_end(filters))
       concat dropdown_ul(tag.li { all_link_to(filter_keys) }) {
         filters.map do |filter|
-          concat li_a_element(filter[:text],
-            custom_filter_url(filter[:q], filter[:value], *filter_keys.reject { |key| key == filter[:q] }),
+          concat li_a_element(filter[:text], custom_filter_url(
+              filter[:q], filter[:value], *filter_keys.reject { |key| key == filter[:q] }
+          ),
             class: q_active_class(filter[:q], filter[:value]))
         end
       }
@@ -96,7 +99,8 @@ module FilterDropdownHelper
   end
 
   def custom_filter_url(filter, value, *excludes)
-    url_for(params_except('page').merge(q: search_parameters.except(*excludes).merge("#{filter}": value.to_s)))
+    url_for(params_except('page')
+      .merge(q: search_parameters.except(*excludes).merge("#{filter}": value.to_s)))
   end
 
   def bool_toggle_url(filter, toggle = false)
@@ -109,14 +113,14 @@ module FilterDropdownHelper
     ' '
   end
 
-
   def params_except(*key)
     params.to_unsafe_hash.except(*key)
   end
 
   def enum_toggler_text(attribute, collection)
     if filter_active?("#{attribute}_eq".to_sym, '', search_parameters["#{attribute}_eq"])
-      "#{t_attr(attribute)}: " + collection.invert[search_parameters["#{attribute}_eq"].to_i].humanize
+      "#{t_attr(attribute)}: " +
+        collection.invert[search_parameters["#{attribute}_eq"].to_i].humanize
     else
       "#{t_attr(attribute)} "
     end
@@ -136,18 +140,21 @@ module FilterDropdownHelper
   end
 
   def list_filter_link(q_filter, filter_attribute, bool_filter: false, enum_value: false)
-    link_class = if q_filter == :acceptance_eq && filter_active?(q_filter, filter_attribute, enum_value)
-                   "bg-#{filter_attribute}"
-                 elsif filter_active?(q_filter, filter_attribute, enum_value)
-                   'bg-success'
-                 end
     tag.li do
       link_to(
         filter_url(q_filter, bool_filter, filter_attribute, enum_value: enum_value),
-        class: link_class
+        class: list_filter_link_class(q_filter, filter_attribute, enum_value)
       ) do
         translate_value(filter_attribute, q_filter)
       end
+    end
+  end
+
+  def list_filter_link_class(q_filter, filter_attribute, enum_value)
+    if q_filter == :acceptance_eq && filter_active?(q_filter, filter_attribute, enum_value)
+      "bg-#{filter_attribute}"
+    elsif filter_active?(q_filter, filter_attribute, enum_value)
+      'bg-success'
     end
   end
 
@@ -197,12 +204,15 @@ module FilterDropdownHelper
 
   def toggler_text(attribute, q_filter)
     return t_attr(attribute) if q_filter.size > 1 || search_parameters[q_filter[0]].nil?
-    '%s: %s' % [t_attr(attribute), translate_value(search_parameters[q_filter[0]], q_filter)]
+    '%{att}: %{val}' % {
+      att: t_attr(attribute),
+      val: translate_value(search_parameters[q_filter[0]], q_filter)
+    }
   end
 
   def dropdown_toggler_options
-    { class: 'dropdown-toggle btn btn-default btn-sm', role: 'button', href: '#', data: { toggle: 'dropdown' },
-      aria: { expanded: 'false', haspopup: 'true' } }
+    { class: 'dropdown-toggle btn btn-default btn-sm', role: 'button', href: '#',
+      data: { toggle: 'dropdown' }, aria: { expanded: 'false', haspopup: 'true' } }
   end
 
   def translate_value(filter_attribute, q_filter)

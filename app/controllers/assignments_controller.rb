@@ -97,22 +97,25 @@ class AssignmentsController < ApplicationController
 
   def update_terminated_at
     @assignment.volunteer.waive = assignment_params[:volunteer_attributes][:waive] == '1'
-    @assignment.termination_submitted_at = Time.zone.now
-    @assignment.termination_submitted_by = current_user
-    if @assignment.save
-      ReminderMailingVolunteer.termination_for(@assignment).map do |rmv|
-        rmv.mark_process_submitted(current_user, terminate_parent_mailing: true)
-      end
+    @assignment.assign_attributes(termination_submitted_at: Time.zone.now,
+      termination_submitted_by: current_user)
+    if @assignment.save && terminate_reminder_mailing
       redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
     else
       redirect_back(fallback_location: terminate_assignment_path(@assignment))
     end
   end
 
-  # TODO Verify termination action to be done in other story
+  # TODO: Verify termination action to be done in other story
   def verify_termination; end
 
   private
+
+  def terminate_reminder_mailing
+    ReminderMailingVolunteer.termination_for(@assignment).map do |rmv|
+      rmv.mark_process_submitted(current_user, terminate_parent_mailing: true)
+    end
+  end
 
   def activity_filter
     return unless params[:q] && params[:q][:active_eq]
