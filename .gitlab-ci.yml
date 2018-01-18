@@ -14,19 +14,13 @@ variables:
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
 
 before_script:
-  - apt-get update -yq
-  - gem install bundler  --no-ri --no-rdoc
+  - gem install bundler --no-ri --no-rdoc
   - bundle install -j $(nproc) --path vendor
   - bundle exec rails db:schema:load
 
 test:
-  stage: test
-  image: ruby:2.4.2
-  script:
-  - bundle exec rails test
-
-test:system:
   image: "andistaub/ruby-chromedriver:latest"
   stage: test
   script:
-  - bundle exec rails test:system
+    - bundle exec rails test:system
+    - bundle exec rails test

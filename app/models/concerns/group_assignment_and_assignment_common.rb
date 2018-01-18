@@ -72,10 +72,10 @@ module GroupAssignmentAndAssignmentCommon
     }
 
     scope :submitted_since, lambda { |date|
-      where('submitted_at < ?', date)
-        .or(
-          where('submitted_at IS NULL')
-        )
+      started.where('submitted_at < ?', date)
+             .or(
+               started.where('submitted_at IS NULL')
+             )
     }
 
     scope :no_half_year_reminder_mailing, lambda {
