@@ -55,8 +55,8 @@ class FeedbacksController < ApplicationController
   private
 
   def set_feedbackable
-    return @feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
-    @feedbackable = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
+    @feedbackable = Assignment.find_by(id: params[:assignment_id]) ||
+      GroupOffer.find_by(id: params[:group_offer_id])
   end
 
   def set_volunteer
