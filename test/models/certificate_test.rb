@@ -10,4 +10,19 @@ class CertificateTest < ActiveSupport::TestCase
     certificate.volunteer = create :volunteer_with_user
     assert certificate.valid?
   end
+
+  test 'no duplicates in collection_for_additional_kinds' do
+    user = create :user
+    volunteer = create :volunteer, :with_assignment
+
+    certificate = Certificate.new(user: user, volunteer: volunteer)
+    certificate.build_values
+
+    tandem = ["Tandem", 0]
+
+    assert certificate.assignment_kinds['done'].include?(tandem)
+    assert certificate.assignment_kinds['available'].include?(tandem)
+
+    refute certificate.collection_for_additional_kinds.include?(tandem)
+  end
 end
