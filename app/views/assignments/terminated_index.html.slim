@@ -4,6 +4,9 @@ nav.navbar.section-navigation.hidden-print
   hr
   ul.list-inline
     li= button_link 'Alle Begleitungen', assignments_path, dimension: :sm
+    li= button_link 'Filter aufheben',
+      terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' }),
+      dimension: :sm
     = custom_filter_dropdown('Ende Bestätigt',
       { q: :termination_submitted_by_id_not_null, text: 'Bestätigt', value: 'true' },
       { q: :termination_submitted_by_id_null, text: 'Unbestätigt', value: 'true' })
