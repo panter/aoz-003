@@ -110,8 +110,12 @@ class AssignmentsController < ApplicationController
     end
   end
 
-  # TODO: Verify termination action to be done in other story
-  def verify_termination; end
+  def verify_termination
+    @assignment.assign_attributes(termination_verified_at: Time.zone.now,
+      termination_verified_by: current_user)
+    @assignment.save
+    redirect_back(fallback_location: terminated_index_assignments_path)
+  end
 
   private
 
