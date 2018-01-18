@@ -35,4 +35,12 @@ module AssignmentCommon
       ]
     end
   end
+
+  def assignment?
+    true
+  end
+
+  def group_assignment?
+    false
+  end
 end

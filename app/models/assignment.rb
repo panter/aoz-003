@@ -38,12 +38,4 @@ class Assignment < ApplicationRecord
   def feedbacks_since_last_submitted
     feedbacks.since_last_submitted(submitted_at)
   end
-
-  def assignment?
-    true
-  end
-
-  def group_assignment?
-    false
-  end
 end
