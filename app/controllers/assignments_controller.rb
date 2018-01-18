@@ -116,7 +116,8 @@ class AssignmentsController < ApplicationController
       redirect_to terminated_index_assignments_path,
         notice: 'Der Einsatz wurde erfolgreich quittiert.'
     else
-      redirect_to terminated_index_assignments_path, notice: 'Versuchen Sie bitte noch einmal.'
+      redirect_to terminated_index_assignments_path,
+        notice: 'Fehler: Quittiert markieren fehlgeschlagen.'
     end
   end
 
