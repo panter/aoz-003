@@ -69,7 +69,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       href: group_offer_path(group_assignment.group_offer)
     click_link 'Emails versenden'
     creator = ReminderMailing.order('created_at asc').last.creator
-    assert page.has_link? creator.full_name,  href: profile_path(creator)
+    assert page.has_link? creator.full_name
 
     first_mailing = ReminderMailing.created_desc.first
     assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
@@ -136,7 +136,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       href: group_offer_path(group_assignment.group_offer)
     click_link 'Emails versenden'
     creator = ReminderMailing.order('created_at asc').last.creator
-    assert page.has_link? creator.full_name,  href: profile_path(creator)
+    assert page.has_link? creator.full_name
 
     first_mailing = ReminderMailing.created_desc.first
     assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
@@ -175,7 +175,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
     click_link 'Emails versenden'
     creator = ReminderMailing.order('created_at asc').last.creator
-    assert page.has_link? creator.full_name,  href: profile_path(creator)
+    assert page.has_link? creator.full_name
 
     first_mailing = ReminderMailing.created_desc.first
     assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
