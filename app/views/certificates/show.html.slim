@@ -5,7 +5,8 @@
       li= button_link t_title(:edit), edit_volunteer_certificate_path(@volunteer, @certificate)
       li= button_link navigation_glyph('print'), volunteer_certificate_path(@volunteer, @certificate, print: true)
       li= button_link t_action(:download), volunteer_certificate_path(@volunteer, @certificate, format: :pdf)
-      li= button_link t('.back_to_volunteer'), volunteer_path(@volunteer)
+      li= link_to navigation_glyph('delete'), volunteer_certificate_path(@volunteer, @certificate), confirm_deleting(@certificate, 'btn btn-danger')
+      li= form_navigation_btn :back, with_row: false
   hr
 
 .certificate
