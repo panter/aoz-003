@@ -23,6 +23,10 @@ class Certificate < ApplicationRecord
     }
   end
 
+  def collection_for_additional_kinds
+    assignment_kinds['available'] - assignment_kinds['done']
+  end
+
   DEFAULT_INSTITUTION = "**AOZ** Zürich, Flüelastrasse 32, 8047 Zürich  \r\n"\
     '044 415 67 35, info@aoz-freiwillige.ch'.freeze
 

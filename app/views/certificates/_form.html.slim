@@ -22,7 +22,8 @@
       #additional-kinds.collapse
         h4 Zusätzliche Einsatzarten
         = f.label :assignment_kinds, class: 'sr-only'
-        = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.assignment_kinds['available'], include_blank: false, label: false, input_html: { checked: false }
+        = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.collection_for_additional_kinds,
+          include_blank: false, label: false, input_html: { checked: false }
 
 
 
