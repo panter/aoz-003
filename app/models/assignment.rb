@@ -2,6 +2,10 @@ class Assignment < ApplicationRecord
   include AssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
+  has_many :hours, as: :hourable
+  has_many :feedbacks, as: :feedbackable
+  has_many :trial_feedbacks, as: :trial_feedbackable
+
   validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
 
   scope :created_before, ->(max_time) { where('assignments.created_at < ?', max_time) }
