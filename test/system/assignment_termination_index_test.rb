@@ -4,17 +4,13 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   setup do
     @superadmin = create :user
     @volunteer = create :volunteer_with_user
-    @not_ended = create :assignment, period_start: 3.weeks.ago, period_end: nil,
-      volunteer: @volunteer
-    @un_submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
-      volunteer: @volunteer
+    @not_ended = create :assignment, period_start: 3.weeks.ago, period_end: nil
+    @un_submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago
     @submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
-      termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user,
-      volunteer: @volunteer
+      termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user
     @verified = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
       termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user,
-      termination_verified_at: 2.days.ago, termination_verified_by: @superadmin,
-      volunteer: @volunteer
+      termination_verified_at: 2.days.ago, termination_verified_by: @superadmin
     login_as @superadmin
   end
 
@@ -83,5 +79,13 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
     assert page.has_link? 'Beendigungsformular', href: /assignments\/#{@un_submitted.id}\/terminate/
     assert page.has_link? 'Beendigungsformular', href: /assignments\/#{@submitted.id}\/terminate/
+  end
+
+  test 'there_is_correct_links_to_creating_certificates' do
+    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    assert page.has_link? 'Dossier Freiwillig engagiert erstellen',
+      href: /\/volunteers\/#{@un_submitted.volunteer.id}\/certificates\/new/
+    assert page.has_link? 'Dossier Freiwillig engagiert erstellen',
+      href: /\/volunteers\/#{@submitted.volunteer.id}\/certificates\/new/
   end
 end
