@@ -17,9 +17,10 @@ class Client < ApplicationRecord
   belongs_to :involved_authority, class_name: 'User', optional: true
 
   has_one :assignment, dependent: :destroy
-  has_many :assignment_log, dependent: :destroy
+  has_many :assignment_logs
 
   has_one :volunteer, through: :assignments
+  has_many :volunteer_logs, through: :assignment_logs
 
   has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
