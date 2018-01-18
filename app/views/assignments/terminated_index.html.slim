@@ -37,7 +37,11 @@ nav.navbar.section-navigation.hidden-print
             = link_to 'Beendigungsformular', terminate_assignment_path(assignment), class: 'index-action-link'
             = link_to 'Dossier Freiwillig engagiert erstellen', new_volunteer_certificate_path(assignment.volunteer), class: 'index-action-link'
             = link_to 'Freiwillige/n beenden', '#', class: 'index-action-link'
-          td= link_to 'Quittieren', verify_termination_assignment_path(assignment), class: 'btn btn-sm btn-default', data: { method: 'PATCH'}
+          td
+            - if assignment.termination_verified_by.blank?
+              = link_to 'Beendigung Quittieren', verify_termination_assignment_path(assignment),
+                class: 'btn btn-default',
+                data: { method: 'PATCH'}
 
 
 
