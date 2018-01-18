@@ -109,6 +109,7 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  # TODO Verify termination action to be done in other story
   def verify_termination; end
 
   private
