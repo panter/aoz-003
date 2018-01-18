@@ -18,7 +18,7 @@ class AssignmentsController < ApplicationController
 
   def terminated_index
     authorize Assignment
-    @q = policy_scope(Assignment).termination_not_verified.ransack(params[:q])
+    @q = policy_scope(Assignment).has_end.ransack(params[:q])
     @q.sorts = ['period_end asc'] if @q.sorts.empty?
     @assignments = @q.result
   end
