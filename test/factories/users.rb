@@ -18,6 +18,10 @@ FactoryBot.define do
       role User::DEPARTMENT_MANAGER
     end
 
+    trait :department_manager_without_department do
+      role User::DEPARTMENT_MANAGER
+    end
+
     trait :with_clients do
       client_amt = 5
       clients do |client|
@@ -49,6 +53,7 @@ FactoryBot.define do
 
     factory :social_worker, traits: [:social_worker]
     factory :department_manager, traits: [:department_manager, :with_department]
+    factory :department_manager_without_department, traits: [:department_manager_without_department]
     factory :user_volunteer, traits: [:volunteer]
     factory :user_fake_email, traits: [:fake_email]
   end
