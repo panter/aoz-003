@@ -27,10 +27,6 @@ class Assignment < ApplicationRecord
     self
   end
 
-  def polymorph_url_target
-    self
-  end
-
   def hours_since_last_submitted
     hours.since_last_submitted(submitted_at)
   end
