@@ -1,6 +1,6 @@
 class ReminderMailingsController < ApplicationController
   before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :send_trial_period,
-                                              :send_half_year]
+                                              :send_half_year, :send_termination]
 
   def index
     authorize ReminderMailing
@@ -35,6 +35,19 @@ class ReminderMailingsController < ApplicationController
       redirect_to new_email_template_path,
       notice: 'Sie müssen eine aktive E-Mailvorlage haben,
       bevor Sie eine Halbjahres Erinnerung erstellen können.'
+    end
+    authorize @reminder_mailing
+  end
+
+  def new_termination
+    @reminder_mailing = ReminderMailing.new(kind: 'termination',
+      reminder_mailing_volunteers: [Assignment.find(params[:assignment_id])])
+    if EmailTemplate.termination.active.any?
+      @reminder_mailing.assign_attributes(EmailTemplate.termination.active.first.slice(:subject, :body))
+    else
+      redirect_to new_email_template_path,
+      notice: 'Sie müssen eine aktive E-Mailvorlage haben,
+      bevor Sie eine Beendigungs E-Mail erstellen können.'
     end
     authorize @reminder_mailing
   end
@@ -76,6 +89,15 @@ class ReminderMailingsController < ApplicationController
     end
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Halbjahres Erinnerungs-Emails werden versendet.'
+  end
+
+  def send_termination
+    if @reminder_mailing.sending_triggered?
+      return redirect_to reminder_mailings_path, notice: 'Dieses Beendigungs-Mailing wurde bereits versandt.'
+    end
+    VolunteerMailer.termination_email(@reminder_mailing).deliver_later
+    @reminder_mailing.update(sending_triggered: true)
+    redirect_to reminder_mailings_path, notice: 'Beendigungs-Email wird versendet.'
   end
 
   def update

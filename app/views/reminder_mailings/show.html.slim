@@ -49,7 +49,13 @@ table.table.table-condensed
 nav.navbar.hidden-print
   ul.list-inline
     - if !@reminder_mailing.sending_triggered
-      li= button_link 'Emails versenden', polymorphic_path(@reminder_mailing, action: @reminder_mailing.half_year? ? :send_half_year : :send_trial_period)
+      li
+        - if @reminder_mailing.half_year?
+          = button_link 'Emails versenden', send_half_year_reminder_mailing_path(@reminder_mailing)
+        - elsif @reminder_mailing.trial_period?
+          = button_link 'Emails versenden', send_trial_period_reminder_mailing_path(@reminder_mailing)
+        - else
+          = button_link 'Emails versenden', send_termination_assignment_reminder_mailing_path(@reminder_mailing)
       li= button_link 'Ändern', edit_reminder_mailing_path(@reminder_mailing)
       li= link_to 'Löschen', reminder_mailing_path(@reminder_mailing), confirm_deleting(@reminder_mailing, 'btn btn-default')
     - else

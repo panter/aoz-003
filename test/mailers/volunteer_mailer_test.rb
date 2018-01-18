@@ -53,4 +53,15 @@ class VolunteerMailerTest < ActionMailer::TestCase
       assert_match rmv.process_template[:body], mailer.body.encoded
     end
   end
+
+  test 'volunteer termination with confirmation data is sent correctly' do
+    assignment = make_assignment(start_date: 8.months.ago, end_date: 2.days.ago)
+    mailing = create_termination_mailing(assignment)
+    mailing.reminder_mailing_volunteers do |rmv|
+      mailer = VolunteerMailer.termination_mail(rmv).deliver
+      assert_equal rmv.process_template[:subject], mailer.subject
+      assert mailer.to.include? rmv.volunteer.contact.primary_email
+      assert_match rmv.process_template[:body], mailer.body.encoded
+    end
+  end
 end

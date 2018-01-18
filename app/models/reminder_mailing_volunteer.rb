@@ -10,6 +10,7 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   scope :trial_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
   scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
+  scope :termination, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 2') })
 
   scope :picked, (-> { where(picked: true) })
 
@@ -91,6 +92,10 @@ class ReminderMailingVolunteer < ApplicationRecord
     end.to_h
   end
 
+  def email_absender
+    "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:#{reminder_mailing.creator.email})"
+  end
+
   def feedback_link
     "[Feedback Geben](#{feedback_url})"
   end
@@ -99,8 +104,9 @@ class ReminderMailingVolunteer < ApplicationRecord
     if reminder_mailing.half_year?
       make_polymorphic_path(reminder_mailable, :last_submitted_hours_and_feedbacks)
     elsif reminder_mailing.trial_period?
-      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_target, TrialFeedback],
-        :new)
+      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_target, TrialFeedback], :new)
+    elsif reminder_mailing.termination?
+      make_polymorphic_path([reminder_mailable.polymorph_url_target], :terminate)
     end
   end
 

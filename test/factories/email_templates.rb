@@ -35,8 +35,17 @@ FactoryBot.define do
       subject '%{Anrede} %{Name}'
     end
 
+    trait :termination do
+      kind { 2 }
+      body do
+        "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n"
+      end
+      subject '%{Anrede} %{Name}'
+    end
+
     factory :email_template_seed, traits: [:fakered]
     factory :email_template_trial, traits: [:trial]
     factory :email_template_half_year, traits: [:half_year]
+    factory :email_template_termination, traits: [:termination]
   end
 end
