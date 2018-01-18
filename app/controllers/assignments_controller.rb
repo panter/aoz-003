@@ -113,8 +113,8 @@ class AssignmentsController < ApplicationController
   def verify_termination
     @assignment.update(termination_verified_at: Time.zone.now,
       termination_verified_by: current_user)
-    redirect_to terminated_index_assignments_path,
-      notice: 'Der Einsatz wurde erfolgreich quittiert.'
+    redirect_back(fallback_location: terminated_index_assignments_path)
+    flash[:notice] = 'Der Einsatz wurde erfolgreich quittiert.'
   end
 
   private
