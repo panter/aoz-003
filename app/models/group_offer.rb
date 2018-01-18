@@ -16,8 +16,8 @@ class GroupOffer < ApplicationRecord
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
 
   has_many :volunteers, through: :group_assignments
-  has_many :hours, as: :hourable, dependent: :destroy
 
+  has_many :hours, as: :hourable, dependent: :destroy
   has_many :feedbacks, as: :feedbackable, dependent: :destroy
   has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 

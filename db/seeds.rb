@@ -150,14 +150,14 @@ Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sa
     period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago), period_end: nil)
   FactoryBot.create(:hour, volunteer: volunteers.first, hourable: group_assignment.group_offer,
     meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
-  FactoryBot.create(:feedback, volunteer: volunteers.first, feedbackable: group_assignment,
-    author_id: volunteers.first.user.id)
+  FactoryBot.create(:trial_feedback, volunteer: volunteers.first,
+    trial_feedbackable: group_assignment.group_offer, author_id: volunteers.first.user.id)
 
   group_assignment = GroupAssignment.create(volunteer: volunteers.last, group_offer: group_offer,
     period_start: Faker::Date.between(6.months.ago, 12.months.ago), period_end: nil)
   FactoryBot.create(:hour, volunteer: volunteers.last, hourable: group_assignment.group_offer,
     meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
-  FactoryBot.create(:feedback, volunteer: volunteers.last, feedbackable: group_assignment,
+  FactoryBot.create(:feedback, volunteer: volunteers.last, feedbackable: group_assignment.group_offer,
     author_id: volunteers.last.user.id)
 end
 puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,

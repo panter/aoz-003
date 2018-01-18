@@ -3,31 +3,41 @@ require 'application_system_test_case'
 class ListResponseFeedbacksTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :user
-    @assignment_pendent = create(:assignment)
-    @assignment_fb_pendent = create :feedback, volunteer: @assignment_pendent.volunteer,
-      feedbackable: @assignment_pendent, author: @assignment_pendent.volunteer.user
-    @assignment_superadmin = create(:assignment)
-    @assignment_fb_superadmin = create :feedback, volunteer: @assignment_superadmin.volunteer,
-      feedbackable: @assignment_superadmin, author: @superadmin
-    @assignment_done = create(:assignment)
-    @assignment_fb_done = create :feedback, feedbackable: @assignment_done,
-      volunteer: @assignment_done.volunteer, author: @assignment_done.volunteer.user,
-      reviewer: @superadmin
 
-    @group_offer_pendent = create :group_offer
-    @group_assignment_pendent = create :group_assignment, group_offer: @group_offer_pendent
-    @group_assignment_fb_pendent = create :feedback, volunteer: @group_assignment_pendent.volunteer,
-      feedbackable: @group_offer_pendent,
-      author: @group_assignment_pendent.volunteer.user
-    @group_offer_superadmin = create :group_offer
-    @group_assignment_superadmin = create :group_assignment, group_offer: @group_offer_superadmin
-    @group_assignment_fb_superadmin = create :feedback, author: @superadmin,
-      volunteer: @group_assignment_superadmin.volunteer, feedbackable: @group_offer_superadmin
-    @group_offer_done = create :group_offer
-    @group_assignment_done = create :group_assignment, group_offer: @group_offer_done
-    @group_assignment_fb_done = create :feedback, volunteer: @group_assignment_done.volunteer,
-      feedbackable: @group_offer_done, author: @group_assignment_done.volunteer.user,
-      reviewer: @superadmin
+    # Assignments
+    @assignment_pendent = create(:assignment)
+    @assignment_fb_pendent = create(:feedback, feedbackable: @assignment_pendent,
+      volunteer: @assignment_pendent.volunteer, author: @assignment_pendent.volunteer.user)
+
+    @assignment_superadmin = create(:assignment)
+    @assignment_fb_superadmin = create(:feedback, feedbackable: @assignment_superadmin,
+      volunteer: @assignment_superadmin.volunteer, author: @superadmin)
+
+    @assignment_done = create(:assignment)
+    @assignment_fb_done = create(:feedback, feedbackable: @assignment_done,
+      volunteer: @assignment_done.volunteer, author: @assignment_done.volunteer.user,
+      reviewer: @superadmin)
+
+    # Group Offers
+    @group_offer_pendent = create(:group_offer)
+    @group_assignment_pendent = create(:group_assignment, group_offer: @group_offer_pendent)
+    @group_assignment_fb_pendent = create(:feedback, feedbackable: @group_offer_pendent,
+      volunteer: @group_assignment_pendent.volunteer, author: @group_assignment_pendent.volunteer.user)
+    @group_assignment_fb_pendent.update(feedbackable: @group_offer_pendent)
+
+    @group_offer_superadmin = create(:group_offer)
+    @group_assignment_superadmin = create(:group_assignment, group_offer: @group_offer_superadmin)
+    @group_assignment_fb_superadmin = create(:feedback, feedbackable: @group_offer_superadmin,
+      author: @superadmin, volunteer: @group_assignment_superadmin.volunteer)
+    @group_assignment_fb_pendent.update(feedbackable: @group_offer_superadmin)
+
+    @group_offer_done = create(:group_offer)
+    @group_assignment_done = create(:group_assignment, group_offer: @group_offer_done)
+    @group_assignment_fb_done = create(:feedback, feedbackable: @group_offer_done,
+      volunteer: @group_assignment_done.volunteer, author: @group_assignment_done.volunteer.user,
+      reviewer: @superadmin)
+    @group_assignment_fb_pendent.update(feedbackable: @group_offer_done)
+
     login_as @superadmin
     visit reminder_mailings_path
   end
@@ -37,19 +47,16 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     assert page.has_link? @assignment_pendent.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_pendent.feedbackable.to_label
     assert page.has_link? @group_assignment_pendent.volunteer.contact.last_name
-    assert page.has_link? @group_assignment_fb_pendent.feedbackable.to_label
 
     # marked done shoudn't be displayed
     refute page.has_link? @assignment_done.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_done.feedbackable.to_label
     refute page.has_link? @group_assignment_done.volunteer.contact.last_name
-    refute page.has_link? @group_assignment_fb_done.feedbackable.to_label
 
     # feedback not by volunteer shouldn't be displayed
     refute page.has_link? @assignment_superadmin.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_superadmin.feedbackable.to_label
     refute page.has_link? @group_assignment_superadmin.volunteer.contact.last_name
-    refute page.has_link? @group_assignment_fb_superadmin.feedbackable.to_label
   end
 
   test 'feedbacks list without filter shows marked done feedback' do
@@ -63,7 +70,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     assert page.has_link? @group_assignment_fb_done.feedbackable.to_label
   end
 
-  test 'feedbacks list with filter erledigt shows only marked done' do
+  test 'feedbacks_list_with_filter_erledigt_shows_only_marked_done' do
     click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
     click_link 'Geprüft: Ungesehen'
     within 'li.dropdown.open' do
@@ -74,13 +81,11 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.feedbackable.to_label
     refute page.has_link? @group_assignment_pendent.volunteer.contact.last_name
-    refute page.has_link? @group_assignment_fb_pendent.feedbackable.to_label
 
     # marked done shoud be displayed
     assert page.has_link? @assignment_done.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_done.feedbackable.to_label
     assert page.has_link? @group_assignment_done.volunteer.contact.last_name
-    assert page.has_link? @group_assignment_fb_done.feedbackable.to_label
   end
 
   test 'marking_feedback_done_works' do
@@ -93,11 +98,11 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.feedbackable.to_label
     within 'tbody' do
-      click_link 'Angeschaut', href: /.*\/volunteers\/#{@group_assignment_pendent.volunteer.id}\/
-        group_offers\/#{@group_assignment_pendent.group_offer.id}\/feedbacks
-        \/#{@group_assignment_fb_pendent.id}\/.*/x
+      click_link 'Angeschaut', href: /feedbacks\/#{@group_assignment_fb_pendent.id}/x
     end
     assert page.has_text? 'Feedback als angeschaut markiert.'
+    @group_assignment_fb_pendent.reload
+    assert_equal @superadmin, @group_assignment_fb_pendent.reviewer
   end
 
   test 'truncate_modal_shows_all_text' do
