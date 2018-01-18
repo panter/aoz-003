@@ -10,7 +10,7 @@ nav.navbar.section-navigation.hidden-print
     = custom_filter_dropdown('Ende Bestätigt',
       { q: :termination_submitted_by_id_not_null, text: 'Bestätigt', value: 'true' },
       { q: :termination_submitted_by_id_null, text: 'Unbestätigt', value: 'true' })
-    = custom_filter_dropdown('Quitiert',
+    = custom_filter_dropdown('Quittiert',
       { q: :termination_verified_by_id_not_null, text: 'Quittiert', value: 'true' },
       { q: :termination_verified_by_id_null, text: 'Unquittiert', value: 'true' })
 

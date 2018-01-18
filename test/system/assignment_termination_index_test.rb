@@ -50,7 +50,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'filtering_for_only_verified' do
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
-    click_link 'Quitiert: Unquittiert'
+    click_link 'Quittiert: Unquittiert'
     click_link exact_text: 'Quittiert'
     visit current_url
     refute page.has_text? termination_index_table_text(@un_submitted)
@@ -61,7 +61,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   test 'clear_filter_link_is_working_correctly' do
     visit assignments_path
     click_link 'Beendete Begleitungen'
-    click_link 'Quitiert: Unquittiert'
+    click_link 'Quittiert: Unquittiert'
     click_link exact_text: 'Quittiert'
     visit current_url
     click_link 'Ende Bestätigt'
