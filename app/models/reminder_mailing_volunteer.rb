@@ -70,7 +70,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def einsatz_start
-    I18n.l(reminder_mailable.period_start, locale: :de)
+    I18n.l(reminder_mailable.period_start, locale: :de) if reminder_mailable.period_start
   end
 
   def einsatz
