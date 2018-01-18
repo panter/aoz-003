@@ -78,4 +78,10 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     refute page.has_text? termination_index_table_text(@not_ended)
     refute page.has_text? termination_index_table_text(@verified)
   end
+
+  test 'there_is_correct_links_to_the_termination_forms' do
+    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    assert page.has_link? 'Beendigungsformular', href: /assignments\/#{@un_submitted.id}\/terminate/
+    assert page.has_link? 'Beendigungsformular', href: /assignments\/#{@submitted.id}\/terminate/
+  end
 end
