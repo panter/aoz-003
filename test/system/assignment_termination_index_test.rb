@@ -4,31 +4,34 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   setup do
     @superadmin = create :user
     @volunteer = create :volunteer_with_user
-    @not_ended = create :assignment, period_start: 3.weeks.ago, period_end: nil
-    @un_submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago
+    @not_ended = create :assignment, period_start: 3.weeks.ago, period_end: nil,
+      volunteer: @volunteer
+    @un_submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
+      volunteer: @volunteer
     @submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
-      termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user
+      termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user,
+      volunteer: @volunteer
     @verified = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
       termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user,
-      termination_verified_at: 2.days.ago, termination_verified_by: @superadmin
-
+      termination_verified_at: 2.days.ago, termination_verified_by: @superadmin,
+      volunteer: @volunteer
     login_as @superadmin
   end
 
-  test 'visiting termination index displays correct assignments' do
+  def termination_index_table_text(assignment)
+    row_text = "#{assignment.volunteer.contact.full_name} "\
+        "#{assignment.client.contact.full_name} #{I18n.l(assignment.period_start)} "
+    row_text += I18n.l(assignment.period_end) if assignment.period_end.present?
+    row_text
+  end
+
+  test 'visiting_termination_index_displays_correct_assignments' do
     visit assignments_path
     click_link 'Beendete Begleitungen'
-    assert page.has_text? "#{@un_submitted.volunteer.contact.full_name} "\
-      "#{@un_submitted.client.contact.full_name} #{I18n.l(@un_submitted.period_start)} "\
-      "#{I18n.l(@un_submitted.period_end)}"
-    assert page.has_text? "#{@submitted.volunteer.contact.full_name} "\
-      "#{@submitted.client.contact.full_name} #{I18n.l(@submitted.period_start)} "\
-      "#{I18n.l(@submitted.period_end)}"
-    refute page.has_text? "#{@not_ended.volunteer.contact.full_name} "\
-      "#{@not_ended.client.contact.full_name} #{I18n.l(@not_ended.period_start)} "
-    refute page.has_text? "#{@verified.volunteer.contact.full_name} "\
-      "#{@verified.client.contact.full_name} #{I18n.l(@verified.period_start)} "\
-      "#{I18n.l(@verified.period_end)}"
+    assert page.has_text? termination_index_table_text(@un_submitted)
+    assert page.has_text? termination_index_table_text(@submitted)
+    refute page.has_text? termination_index_table_text(@not_ended)
+    refute page.has_text? termination_index_table_text(@verified)
   end
 
   test 'filtering_submitted_terminations' do
@@ -36,12 +39,8 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Bestätigt'
     visit current_url
-    refute page.has_text? "#{@un_submitted.volunteer.contact.full_name} "\
-      "#{@un_submitted.client.contact.full_name} #{I18n.l(@un_submitted.period_start)} "\
-      "#{I18n.l(@un_submitted.period_end)}"
-    assert page.has_text? "#{@submitted.volunteer.contact.full_name} "\
-      "#{@submitted.client.contact.full_name} #{I18n.l(@submitted.period_start)} "\
-      "#{I18n.l(@submitted.period_end)}"
+    refute page.has_text? termination_index_table_text(@un_submitted)
+    assert page.has_text? termination_index_table_text(@submitted)
   end
 
   test 'filtering_not_submitted_terminations' do
@@ -49,12 +48,8 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Unbestätigt'
     visit current_url
-    assert page.has_text? "#{@un_submitted.volunteer.contact.full_name} "\
-      "#{@un_submitted.client.contact.full_name} #{I18n.l(@un_submitted.period_start)} "\
-      "#{I18n.l(@un_submitted.period_end)}"
-    refute page.has_text? "#{@submitted.volunteer.contact.full_name} "\
-      "#{@submitted.client.contact.full_name} #{I18n.l(@submitted.period_start)} "\
-      "#{I18n.l(@submitted.period_end)}"
+    assert page.has_text? termination_index_table_text(@un_submitted)
+    refute page.has_text? termination_index_table_text(@submitted)
   end
 
   test 'filtering_for_only_verified' do
@@ -62,14 +57,25 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Quitiert: Unquittiert'
     click_link exact_text: 'Quittiert'
     visit current_url
-    refute page.has_text? "#{@un_submitted.volunteer.contact.full_name} "\
-      "#{@un_submitted.client.contact.full_name} #{I18n.l(@un_submitted.period_start)} "\
-      "#{I18n.l(@un_submitted.period_end)}"
-    refute page.has_text? "#{@submitted.volunteer.contact.full_name} "\
-      "#{@submitted.client.contact.full_name} #{I18n.l(@submitted.period_start)} "\
-      "#{I18n.l(@submitted.period_end)}"
-    assert page.has_text? "#{@verified.volunteer.contact.full_name} "\
-      "#{@verified.client.contact.full_name} #{I18n.l(@verified.period_start)} "\
-      "#{I18n.l(@verified.period_end)}"
+    refute page.has_text? termination_index_table_text(@un_submitted)
+    refute page.has_text? termination_index_table_text(@submitted)
+    assert page.has_text? termination_index_table_text(@verified)
+  end
+
+  test 'clear_filter_link_is_working_correctly' do
+    visit assignments_path
+    click_link 'Beendete Begleitungen'
+    click_link 'Quitiert: Unquittiert'
+    click_link exact_text: 'Quittiert'
+    visit current_url
+    click_link 'Ende Bestätigt'
+    click_link exact_text: 'Bestätigt'
+    visit current_url
+    click_link 'Filter aufheben'
+    visit current_url
+    assert page.has_text? termination_index_table_text(@un_submitted)
+    assert page.has_text? termination_index_table_text(@submitted)
+    refute page.has_text? termination_index_table_text(@not_ended)
+    refute page.has_text? termination_index_table_text(@verified)
   end
 end

@@ -44,7 +44,4 @@ nav.navbar.section-navigation.hidden-print
             - if assignment.termination_verified_by.blank?
               = link_to 'Beendigung Quittieren', verify_termination_assignment_path(assignment),
                 class: 'btn btn-default',
-                data: { method: 'PATCH'}
-
-
-
+                data: { method: 'PATCH' }
