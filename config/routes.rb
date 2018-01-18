@@ -41,7 +41,9 @@ Rails.application.routes.draw do
     member do
       get :terminate
       put :update_terminated_at
+      patch :verify_termination
     end
+    get :terminated_index, on: :collection
   end
 
   resources :volunteer_applications, only: [:new, :create] do

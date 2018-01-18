@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, except: [:index, :search, :new, :create]
+  before_action :set_assignment, except: [:index, :terminated_index, :search, :new, :create]
 
   def index
     authorize Assignment
@@ -14,6 +14,13 @@ class AssignmentsController < ApplicationController
           per_page: params[:print] && @assignments.size)
       end
     end
+  end
+
+  def terminated_index
+    authorize Assignment
+    @q = policy_scope(Assignment).has_end.ransack(params[:q])
+    @q.sorts = ['period_end asc'] if @q.sorts.empty?
+    @assignments = @q.result
   end
 
   def search
@@ -90,16 +97,25 @@ class AssignmentsController < ApplicationController
 
   def update_terminated_at
     @assignment.volunteer.waive = assignment_params[:volunteer_attributes][:waive] == '1'
-    @assignment.termination_submitted_at = Time.zone.now
-    @assignment.termination_submitted_by = current_user
-    if @assignment.save
+    @assignment.assign_attributes(termination_submitted_at: Time.zone.now,
+      termination_submitted_by: current_user)
+    if @assignment.save && terminate_reminder_mailing
       redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
     else
       redirect_back(fallback_location: terminate_assignment_path(@assignment))
     end
   end
 
+  # TODO: Verify termination action to be done in other story
+  def verify_termination; end
+
   private
+
+  def terminate_reminder_mailing
+    ReminderMailingVolunteer.termination_for(@assignment).map do |rmv|
+      rmv.mark_process_submitted(current_user, terminate_parent_mailing: true)
+    end
+  end
 
   def activity_filter
     return unless params[:q] && params[:q][:active_eq]
