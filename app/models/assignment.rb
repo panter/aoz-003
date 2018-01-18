@@ -2,9 +2,12 @@ class Assignment < ApplicationRecord
   include AssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
+  before_destroy :create_log_of_self
+
   has_many :hours, as: :hourable
   has_many :feedbacks, as: :feedbackable
   has_many :trial_feedbacks, as: :trial_feedbackable
+  has_one :assignment_log
 
   validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
 
@@ -35,10 +38,9 @@ class Assignment < ApplicationRecord
     feedbacks.since_last_submitted(submitted_at)
   end
 
-  def log_self
+  def create_log_of_self
     log = AssignmentLog.new(attributes.except('id', 'created_at', 'updated_at'))
     log.assignment = self
-    delete if log.save
-    log
+    log.save
   end
 end

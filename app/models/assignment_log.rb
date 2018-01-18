@@ -1,7 +1,7 @@
 class AssignmentLog < ApplicationRecord
   include AssignmentCommon
 
-  has_one :assignment, -> { with_deleted }, dependent: :nullify
+  belongs_to :assignment, -> { with_deleted }
 
   has_many :hours, as: :hourable, dependent: :destroy
   has_many :feedbacks, as: :feedbackables, dependent: :destroy
