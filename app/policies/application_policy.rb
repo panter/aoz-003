@@ -35,12 +35,13 @@ class ApplicationPolicy
     superadmin? || department_manager? || social_worker?
   end
 
-  def departments_offer?
-    department_manager? && user.department.include?(record.department)
+  def department_manager_offer?
+    department_manager? &&
+      (user.department.include?(record.department) || user.group_offers.include?(record))
   end
 
-  def superadmin_or_departments_offer?
-    superadmin? || departments_offer?
+  def superadmin_or_department_manager_offer?
+    superadmin? || department_manager_offer?
   end
 
   def show?
@@ -100,7 +101,7 @@ class ApplicationPolicy
   end
 
   def superadmin_or_departments_offer_or_volunteer_included?
-    superadmin_or_departments_offer? || volunteer_included?
+    superadmin_or_department_manager_offer? || volunteer_included?
   end
 
   def superadmin_or_volunteers_entry?

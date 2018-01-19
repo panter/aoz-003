@@ -43,6 +43,19 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     assert page.has_link? volunteer.contact.full_name
   end
 
+  test 'has_no_department_but_can_edit_group_offer_of_their_responsbility' do
+    department_manager_without_department = create :department_manager_without_department
+    group_offer = create :group_offer, creator: department_manager_without_department
+    login_as department_manager_without_department
+    visit group_offers_path
+    assert page.has_text? group_offer.title
+    click_link 'Edit'
+    fill_in 'Title', with: 'new title'
+    click_button 'Update Group offer'
+    assert page.has_text? 'Group offer was successfully updated.'
+    assert page.has_text? 'new title'
+  end
+
   test 'department manager has no destroy and feedback links on volunteer show' do
     volunteer = create :volunteer
     group_offer = create :group_offer, volunteers: [volunteer],
