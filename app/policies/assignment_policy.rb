@@ -30,7 +30,8 @@ class AssignmentPolicy < ApplicationPolicy
   alias_method :last_submitted_hours_and_feedbacks?,
     :admin_or_department_manager_or_volunteer_related?
 
-  alias_method :destroy?, :superadmin?
+  alias_method :destroy?,              :superadmin?
+  alias_method :verify_termination?,   :superadmin?
 
   # supplemental policies
   alias_method :supervisor?, :superadmin_or_department_manager?

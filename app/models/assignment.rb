@@ -29,10 +29,10 @@ class Assignment < ApplicationRecord
   scope :zurich, (-> { joins(:client).merge(Client.zurich) })
   scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })
 
-  scope :termination_not_submitted, (-> { has_end.where(termination_submitted_by_id: nil) })
-  scope :termination_submitted, (-> { has_end.where.not(termination_submitted_by_id: nil) })
-  scope :termination_not_verified, (-> { has_end.where(termination_verified_by_id: nil) })
-  scope :termination_verified, (-> { has_end.where.not(termination_verified_by_id: nil) })
+  scope :termination_not_submitted, (-> { ended.where(termination_submitted_by_id: nil) })
+  scope :termination_submitted, (-> { ended.where.not(termination_submitted_by_id: nil) })
+  scope :termination_not_verified, (-> { ended.where(termination_verified_by_id: nil) })
+  scope :termination_verified, (-> { ended.where.not(termination_verified_by_id: nil) })
 
   def creator
     super || User.deleted.find_by(id: creator_id)

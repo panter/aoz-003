@@ -18,8 +18,8 @@ class AssignmentsController < ApplicationController
 
   def terminated_index
     authorize Assignment
-    @q = policy_scope(Assignment).has_end.ransack(params[:q])
-    @q.sorts = ['period_end asc'] if @q.sorts.empty?
+    @q = policy_scope(Assignment).ended.ransack(params[:q])
+    @q.sorts = ['termination_verified_at desc'] if @q.sorts.empty?
     @assignments = @q.result
   end
 
@@ -110,8 +110,12 @@ class AssignmentsController < ApplicationController
     end
   end
 
-  # TODO: Verify termination action to be done in other story
-  def verify_termination; end
+  def verify_termination
+    @assignment.update(termination_verified_at: Time.zone.now,
+      termination_verified_by: current_user)
+    redirect_back(fallback_location: terminated_index_assignments_path)
+    flash[:notice] = 'Der Einsatz wurde erfolgreich quittiert.'
+  end
 
   private
 
