@@ -64,6 +64,10 @@ class ApplicationPolicy
     record.class != Class && record.user_id == user.id
   end
 
+  def user_owns_registration?
+    record.class != Class && record.registrar_id == user.id
+  end
+
   def volunteers_entry?
     volunteer? && record.author_id == user.id
   end
@@ -82,6 +86,10 @@ class ApplicationPolicy
 
   def superadmin_or_department_managers_record?
     superadmin? || department_manager? && user_owns_record?
+  end
+
+  def superadmin_or_department_managers_registration?
+    superadmin? || department_manager? && user_owns_registration?
   end
 
   def superadmin_or_user_in_records_related?
