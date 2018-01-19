@@ -107,7 +107,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'assignment_quittieren_creates_a_assignment_log_record_from_assignment' do
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
-    click_link 'Beendigung Quittieren', href: /assignments\/#{@submitted.id}\/verify_termination/
+    click_link 'Beendigung Quittieren', href: verify_termination_assignment_path(@submitted.id)
     assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
     assert_equal @submitted, AssignmentLog.find_by(assignment_id: @submitted.id).assignment
   end
