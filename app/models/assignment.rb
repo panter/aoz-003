@@ -46,12 +46,16 @@ class Assignment < ApplicationRecord
     ended? && termination_submitted_by.present?
   end
 
+  def verify_termination(user)
+    update(termination_verified_by: user, termination_verified_at: Time.zone.now)
+    create_log_of_self
+  end
+
   def create_log_of_self
     return false if running? # prevent deleteing of running assignment
     log = AssignmentLog.new(attributes.except('id', 'created_at', 'updated_at'))
     log.assignment = self
     log.save
-    log
   end
 
   private
