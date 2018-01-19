@@ -28,10 +28,6 @@ class ApplicationPolicy
   end
 
   def superadmin_or_department_manager_or_social_worker?
-    superadmin_or_department_manager? || social_worker?
-  end
-
-  def user_managing_volunteer?
     superadmin? || department_manager? || social_worker?
   end
 
@@ -84,6 +80,10 @@ class ApplicationPolicy
     superadmin? || user_owns_record?
   end
 
+  def superadmin_or_department_managers_record?
+    superadmin? || department_manager? && user_owns_record?
+  end
+
   def superadmin_or_user_in_records_related?
     superadmin? || record.user_ids.include?(user.id)
   end
@@ -106,10 +106,6 @@ class ApplicationPolicy
 
   def superadmin_or_volunteers_entry?
     superadmin? || volunteers_entry?
-  end
-
-  def superadmin_or_social_workers_record?
-    superadmin? || social_worker? && user_owns_record?
   end
 
   def superadmin_or_volunteers_feedback?

@@ -8,14 +8,15 @@ class ClientPolicy < ApplicationPolicy
   end
 
   # controller action policies
-  alias_method :index?,    :user_managing_volunteer?
-  alias_method :search?,   :user_managing_volunteer?
-  alias_method :new?,      :user_managing_volunteer?
-  alias_method :create?,   :user_managing_volunteer?
-  alias_method :show?,     :user_managing_volunteer?
-  alias_method :edit?,     :superadmin_or_social_workers_record?
-  alias_method :update?,   :superadmin_or_social_workers_record?
-  alias_method :destroy?,  :superadmin?
+  alias_method :index?,       :superadmin_or_department_manager_or_social_worker?
+  alias_method :search?,      :superadmin_or_department_manager_or_social_worker?
+  alias_method :new?,         :superadmin_or_department_manager_or_social_worker?
+  alias_method :create?,      :superadmin_or_department_manager_or_social_worker?
+  alias_method :show?,        :superadmin_or_department_manager_or_social_worker?
+  alias_method :edit?,        :superadmin_or_record_owner?
+  alias_method :update?,      :superadmin_or_record_owner?
+  alias_method :termination?, :superadmin_or_department_managers_record?
+  alias_method :destroy?,     :superadmin?
 
   # suplementary policies
   alias_method :superadmin_privileges?, :superadmin?
