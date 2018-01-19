@@ -430,9 +430,7 @@ en:
       back_to_volunteer: Back to volunteer
     edit: &id-certificates-form
       group_offer: Group Offer
-      assignment_kinds: Assignment types
       edit_more_fields: Edit more fields
-      volunteers_contact_data: Volunteers address
     form: *id-certificates-form
     index:
       volunteers_certificates: "%{name}'s Certificates"
