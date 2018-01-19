@@ -15,7 +15,6 @@ module AssignmentCommon
     belongs_to :termination_submitted_by, -> { with_deleted }, class_name: 'User', optional: true
     belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true
 
-
     scope :zurich, (-> { joins(:client).merge(Client.zurich) })
     scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })
 
