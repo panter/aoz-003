@@ -173,7 +173,7 @@ h3= t('.availability')
 
 - if @volunteer.assignments.any?
   h3#assignments Begleitungen
-  = render 'assignments/client_volunteer_index', assignments: @volunteer.assignments
+  = render 'assignments/client_volunteer_index', assignments: @volunteer.assignments.unterminated
 
 - if @volunteer.assignment_logs.any?
   h3 Archivierte Begleitungen
