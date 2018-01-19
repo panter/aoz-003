@@ -27,9 +27,6 @@ class Volunteer < ApplicationRecord
   has_many :departments, through: :group_offers
   has_many :clients, through: :assignments
 
-  has_many :assignment_logs
-  has_many :client_logs, through: :assignment_logs
-
   has_many :hours, dependent: :destroy
   has_many :feedbacks, dependent: :destroy
 
@@ -47,7 +44,7 @@ class Volunteer < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :assignment_logs, dependent: :destroy
   has_many :clients, through: :assignments
-  has_many :clients_log, through: :assignments_log
+  has_many :client_logs, through: :assignment_logs
 
   has_many :billing_expenses
 

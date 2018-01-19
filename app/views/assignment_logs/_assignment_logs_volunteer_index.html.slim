@@ -10,7 +10,7 @@ table.table.table-striped.assignment-logs-table
       tr
         td
           - if policy(Client).show?
-            = link_to assignment.client, assignment.client
+            = link_to assignment.client.contact.full_name, assignment.client
           - else
             = assignment.client
         td= l(assignment.period_start) if assignment.period_start

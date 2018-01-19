@@ -52,7 +52,7 @@ class Assignment < ApplicationRecord
   end
 
   def create_log_of_self
-    return false if running? # prevent deleteing of running assignment
+    return false if running? # prevent deleting of running assignment
     log = AssignmentLog.new(attributes.except('id', 'created_at', 'updated_at'))
     log.assignment = self
     log.save
