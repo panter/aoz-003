@@ -90,5 +90,17 @@ module GroupAssignmentAndAssignmentCommon
     def started_ca_six_weeks_ago?
       period_start < 6.weeks.ago && period_start > 8.weeks.ago
     end
+
+    def running?
+      period_start.present? && period_end.blank?
+    end
+
+    def started?
+      period_start.present? && period_start < Time.zone.today
+    end
+
+    def ended?
+      period_start.present? && period_end.present? && period_end < Time.zone.today
+    end
   end
 end

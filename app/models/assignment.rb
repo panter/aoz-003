@@ -38,6 +38,13 @@ class Assignment < ApplicationRecord
     feedbacks.since_last_submitted(submitted_at)
   end
 
+  def terminated?
+    termination_verifiable? && termination_verified_by.present?
+  end
+
+  def termination_verifiable?
+    ended? && termination_submitted_by.present?
+  end
 
   private
 
