@@ -20,7 +20,7 @@
     .row
       .col-xs-3= t_attr(:assignment)
       .col-xs-7
-        - @certificate.assignment_kinds['done'].each do |kind_name, _|
+        - @certificate.assignment_kinds['done'].uniq.each do |kind_name, _|
           span.kind-list
             input*{ type: 'checkbox', checked: true } onclick='return false;'
             = kind_name

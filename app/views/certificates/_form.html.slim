@@ -10,9 +10,9 @@
   hr
   #additionalEdit.collapse
     fieldset
-      legend= t('.assignment_kinds')
+      legend Einsatz Arten
       = f.label :assignment_kinds, class: 'sr-only'
-      = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.assignment_kinds['done'], include_blank: false, label: false, input_html: { checked: true }
+      = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.assignment_kinds['done'].uniq, include_blank: false, label: false, input_html: { checked: true }
 
       button.btn.btn-default(data-toggle='collapse' data-target='#additional-kinds' type='button'  aria-expanded='false' aria-controls='additionalEdit')
         'Manuell Einsatzkategorien hinzufügen
@@ -22,7 +22,7 @@
         = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.collection_for_additional_kinds,
           include_blank: false, label: false, input_html: { checked: false }
 
-    h4= t('.volunteers_contact_data')
+    h4 Kontaktangaben des Freiwilligen
     = f.simple_fields_for :volunteer_contact do |fvc|
       = fvc.input :name, label: t_attr(:name), input_html: { value: @certificate.volunteer_contact['name'] }
       = fvc.input :street, label: t_attr(:street), input_html: { value: @certificate.volunteer_contact['street'] }
