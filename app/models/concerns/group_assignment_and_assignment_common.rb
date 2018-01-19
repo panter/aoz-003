@@ -96,11 +96,11 @@ module GroupAssignmentAndAssignmentCommon
     end
 
     def started?
-      period_start.present? && period_start < Time.zone.today
+      period_start.present? && period_start <= Time.zone.today
     end
 
     def ended?
-      period_start.present? && period_end.present? && period_end < Time.zone.today
+      period_start.present? && period_end.present? && period_end <= Time.zone.today
     end
   end
 end
