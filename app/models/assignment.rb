@@ -2,7 +2,7 @@ class Assignment < ApplicationRecord
   include AssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
-  before_destroy :create_log_of_self
+  before_destroy :create_log_of_self_and_delete_self
 
   has_many :hours, as: :hourable
   has_many :feedbacks, as: :feedbackable
@@ -38,9 +38,14 @@ class Assignment < ApplicationRecord
     feedbacks.since_last_submitted(submitted_at)
   end
 
-  def create_log_of_self
+
+  private
+
+  def create_log_of_self_and_delete_self
+    return false if running? # prevent deleteing of running assignment
     log = AssignmentLog.new(attributes.except('id', 'created_at', 'updated_at'))
     log.assignment = self
     log.save
+    delete
   end
 end
