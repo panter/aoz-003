@@ -21,13 +21,11 @@ class ActiveSupport::TestCase
   def before_setup
     # FIXME: make sure all users are deleted, sometimes records stick around
     # when tests are aborted
-    [
-      User, Volunteer, Client, ClientNotification, Contact, Profile, Journal, Assignment,
-      Department, LanguageSkill, Relative, GroupOffer, GroupAssignment, Feedback, TrialFeedback,
-      BillingExpense, Certificate, GroupAssignmentLog, Hour, Import
-    ].each do |model|
-      model.with_deleted.map(&:really_destroy!)
-    end
+    really_destroy_with_deleted(
+      User, Volunteer, Client, ClientNotification, Contact, Profile, Journal, AssignmentLog,
+      Assignment, Department, LanguageSkill, Relative, GroupOffer, GroupAssignment, Feedback,
+      TrialFeedback, BillingExpense, Certificate, GroupAssignmentLog, Hour, Import
+    )
 
     super
     DatabaseCleaner.start
@@ -52,8 +50,10 @@ class ActiveSupport::TestCase
     end
   end
 
-  def destroy_really_all(model)
-    model.with_deleted.map(&:really_destroy!)
+  def really_destroy_with_deleted(*models)
+    models.each do |model|
+      model.with_deleted.map(&:really_destroy!)
+    end
   end
 
   def assert_xls_row_empty(wb, row, cols = 8)

@@ -42,7 +42,9 @@ class Volunteer < ApplicationRecord
   accepts_nested_attributes_for :journals, allow_destroy: true
 
   has_many :assignments, dependent: :destroy
+  has_many :assignment_logs, dependent: :destroy
   has_many :clients, through: :assignments
+  has_many :client_logs, through: :assignment_logs
 
   has_many :billing_expenses
 
@@ -52,7 +54,8 @@ class Volunteer < ApplicationRecord
   has_many :group_offers, through: :group_assignments
   # categories done in group offers
   has_many :categories_from_group_assignments, through: :group_offers, source: :group_offer_category
-  has_many :categories_from_group_assignment_log, through: :group_assignment_logs, source: :group_offer_category
+  has_many :categories_from_group_assignment_log, through: :group_assignment_logs,
+    source: :group_offer_category
 
   # chosen by volunteer (interested in)
   has_and_belongs_to_many :group_offer_categories

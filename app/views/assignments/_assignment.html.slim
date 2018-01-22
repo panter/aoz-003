@@ -17,7 +17,7 @@ tr
     = link_to t_action(:show), assignment, class: 'index-action-link'
     - if policy(assignment).edit?
       = link_to t_action(:edit), edit_polymorphic_path(assignment), class: 'index-action-link'
-    - if policy(assignment).destroy?
+    - if policy(assignment).destroy? && controller_name != 'volunteers'
       = link_to t_action(:delete), assignment, confirm_deleting(assignment).merge(class: 'index-action-link')
   td.hidden-print= link_to t('download'), assignment_path(assignment, format: :pdf)
   - if policy(TrialFeedback).index?

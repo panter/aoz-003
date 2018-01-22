@@ -80,7 +80,7 @@ class ReminderMailingVolunteer < ApplicationRecord
     elsif group_assignment?
       einsatz_text = "Gruppenangebot #{reminder_mailable.group_offer.title}"
       if reminder_mailable.group_offer.department.present?
-        einsatz_text += " (#{reminder_mailable.group_offer.department.to_s})"
+        einsatz_text += " (#{reminder_mailable.group_offer.department})"
       end
       einsatz_text
     end
@@ -104,9 +104,9 @@ class ReminderMailingVolunteer < ApplicationRecord
     if reminder_mailing.half_year?
       make_polymorphic_path(reminder_mailable, :last_submitted_hours_and_feedbacks)
     elsif reminder_mailing.trial_period?
-      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_target, TrialFeedback], :new)
+      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_object, TrialFeedback], :new)
     elsif reminder_mailing.termination?
-      make_polymorphic_path([reminder_mailable.polymorph_url_target], :terminate)
+      make_polymorphic_path([reminder_mailable.polymorph_url_object], :terminate)
     end
   end
 

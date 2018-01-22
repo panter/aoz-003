@@ -10,10 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117100622) do
+ActiveRecord::Schema.define(version: 20180118122547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignment_logs", force: :cascade do |t|
+    t.bigint "assignment_id"
+    t.bigint "volunteer_id"
+    t.bigint "client_id"
+    t.bigint "creator_id"
+    t.bigint "period_end_set_by_id"
+    t.bigint "termination_submitted_by_id"
+    t.bigint "termination_verified_by_id"
+    t.date "period_start"
+    t.date "period_end"
+    t.datetime "performance_appraisal_review"
+    t.datetime "probation_period"
+    t.datetime "home_visit"
+    t.datetime "first_instruction_lesson"
+    t.datetime "progress_meeting"
+    t.string "short_description"
+    t.text "goals"
+    t.text "starting_topic"
+    t.text "description"
+    t.string "kind", default: "accompaniment"
+    t.datetime "submitted_at"
+    t.datetime "termination_submitted_at"
+    t.datetime "termination_verified_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_assignment_logs_on_assignment_id"
+    t.index ["client_id"], name: "index_assignment_logs_on_client_id"
+    t.index ["creator_id"], name: "index_assignment_logs_on_creator_id"
+    t.index ["deleted_at"], name: "index_assignment_logs_on_deleted_at"
+    t.index ["period_end_set_by_id"], name: "index_assignment_logs_on_period_end_set_by_id"
+    t.index ["termination_submitted_by_id"], name: "index_assignment_logs_on_termination_submitted_by_id"
+    t.index ["termination_verified_by_id"], name: "index_assignment_logs_on_termination_verified_by_id"
+    t.index ["volunteer_id"], name: "index_assignment_logs_on_volunteer_id"
+  end
 
   create_table "assignments", force: :cascade do |t|
     t.bigint "client_id"
@@ -539,6 +575,9 @@ ActiveRecord::Schema.define(version: 20180117100622) do
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 
+  add_foreign_key "assignment_logs", "assignments"
+  add_foreign_key "assignment_logs", "clients"
+  add_foreign_key "assignment_logs", "volunteers"
   add_foreign_key "assignments", "clients"
   add_foreign_key "assignments", "users", column: "creator_id"
   add_foreign_key "assignments", "volunteers"
