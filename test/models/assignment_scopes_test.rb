@@ -218,7 +218,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
   end
 
   test 'started_ca_six_weeks_ago' do
-    destroy_really_all(Assignment)
     exactly_six_weeks = make_assignment(start_date: 6.weeks.ago)
     seven_weeks_ago = make_assignment(start_date: 7.weeks.ago)
     exactly_eight_weeks = make_assignment(start_date: 8.weeks.ago)
@@ -233,7 +232,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
   end
 
   test 'no_reminder_mailing' do
-    destroy_really_all(Assignment)
     without_reminder_mailing = make_assignment(start_date: 7.weeks.ago)
     with_reminder_mailing = make_assignment(start_date: 7.weeks.ago)
     create_probation_mailing(with_reminder_mailing)
@@ -243,7 +241,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
   end
 
   test 'need_trial_period_reminder_mailing' do
-    destroy_really_all(Assignment)
     exactly_six_weeks = make_assignment(start_date: 6.weeks.ago)
     exactly_six_weeks_mailed = make_assignment(start_date: 6.weeks.ago)
     seven_weeks_ago = make_assignment(start_date: 7.weeks.ago)
