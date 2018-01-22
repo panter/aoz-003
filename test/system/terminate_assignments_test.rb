@@ -65,6 +65,18 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     assert_equal @volunteer.user, @assignment.termination_submitted_by
   end
 
+  test 'termination triggers notification email to creator' do
+    @assignment.update(period_end: 2.days.ago)
+    login_as @volunteer.user
+    visit terminate_assignment_path(@assignment)
+    page.accept_confirm do
+      click_button 'Einsatz wird hiermit abgeschlossen'
+    end
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal @department_manager.email, mail['to'].to_s
+  end
+
   test 'superadmin_submitting_termination_sets_termination_submitted_at_and_termination_submitt' do
     @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
