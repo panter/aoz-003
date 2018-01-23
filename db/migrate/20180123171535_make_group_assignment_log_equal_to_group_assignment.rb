@@ -6,4 +6,10 @@ class MakeGroupAssignmentLogEqualToGroupAssignment < ActiveRecord::Migration[5.1
       t.timestamps
     end
   end
+
+  def up
+    GroupAssignmentLog.where(created_at: nil).map do |gal|
+      gal.update(created_at: Time.zone.now)
+    end
+  end
 end
