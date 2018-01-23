@@ -1,4 +1,5 @@
-h1= @group_offer.title
+h1 Gruppenangebot
+h2= @group_offer.title
 
 .table-responsive
   table.table.table-no-border-top
@@ -73,6 +74,7 @@ h1= @group_offer.title
         td= @group_offer.schedule_details
 
 - if @group_offer.group_assignments.any?
+  h2 Aktuelle Gruppeneinsätze
   .table-responsive
     table.table.table-no-border-top
       thead
@@ -83,7 +85,7 @@ h1= @group_offer.title
           th= t_attr(:role, GroupAssignment)
           th= t_attr(:period_start, GroupAssignment)
           th= t_attr(:period_end, GroupAssignment)
-          th Aktionen
+          th.hidden-print Aktionen
       tbody
         - @group_offer.group_assignments.each do |group_assignment|
           - if group_assignment.volunteer
@@ -95,10 +97,35 @@ h1= @group_offer.title
               td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
               td= l(group_assignment.period_start) if group_assignment.period_start
               td= l(group_assignment.period_end) if group_assignment.period_end
-              td.index-action-cell
-                span= link_to 'Bearbeiten', edit_group_assignment_path(group_assignment)
-                span= link_to 'Heute beenden', set_end_today_group_assignment_path(group_assignment), data: { method: 'PUT' }
-                span= link_to 'Beendigungsformular an Freiwillige/n', polymorphic_path([group_assignment, ReminderMailing], action: :new_termination)
+              td.index-action-cell.hidden-print
+                span= link_to_if(policy(GroupAssignment).edit?, 'Bearbeiten', edit_group_assignment_path(group_assignment), class: 'index-action-link')
+                = link_to_if(policy(GroupAssignment).set_end_today?, 'Heute beenden',
+                  set_end_today_group_assignment_path(group_assignment),
+                  data: { method: 'PUT' }, class: 'index-action-link')
+                = link_to_if(policy(GroupAssignment).terminate?, 'Beendigungsformular an Freiwillige/n',
+                  polymorphic_path([group_assignment, ReminderMailing], action: :new_termination),
+                  class: 'index-action-link')
+
+- if @group_offer.group_assignment_logs.any?
+  h2 Archivierte Gruppeneinsätze
+  .table-responsive.log-table.m-b-20
+    table.table.table-no-border-top
+      thead
+        tr
+          th Freiwillige/r
+          th Funktion
+          th Anfangsdatum
+          th Enddatum
+          th Archiviert am
+      tbody
+        - @group_offer.group_assignment_logs.each do |ga_log|
+          tr
+            td= link_to_if(policy(Volunteer).show?, ga_log.volunteer.contact.full_name,
+              volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
+            td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
+            td= l(ga_log.period_start) if ga_log.period_start
+            td= l(ga_log.period_end) if ga_log.period_end
+            td= l(ga_log.created_at)
 
 - unless params[:format] == 'pdf'
   = form_navigation_btn :edit
