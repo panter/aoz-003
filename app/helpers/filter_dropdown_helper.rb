@@ -70,23 +70,24 @@ module FilterDropdownHelper
   end
 
   def custom_text_end(filters)
-    if custom_text_filter_in_search(filters).blank?
+    in_search = custom_text_filter_in_search(filters)
+    if in_search.blank?
       ''
-    elsif custom_text_filter_in_search(filters).size == 1
-      ": #{custom_text_filter_in_search(filters).first[:text]}"
+    elsif in_search.size == 1
+      ": #{in_search.first[:text]}"
     else
-      ": #{custom_text_filter_value_in_search[:text]}"
+      ": #{custom_text_filter_value_in_search(in_search)[:text]}"
     end
   end
 
   def custom_text_filter_in_search(filters)
-    @filters_in_search ||= filters.find_all do |filter|
+    filters.find_all do |filter|
       search_parameters.keys.include? filter[:q].to_s
     end
   end
 
-  def custom_text_filter_value_in_search
-    @filters_in_search.find do |filter|
+  def custom_text_filter_value_in_search(in_search)
+    in_search.find do |filter|
       filter[:value].to_s == search_parameters[filter[:q].to_s]
     end
   end
