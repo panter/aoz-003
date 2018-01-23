@@ -56,6 +56,7 @@ nav.navbar.hidden-print
           = button_link 'Emails versenden', send_trial_period_reminder_mailing_path(@reminder_mailing)
         - else
           = button_link 'Emails versenden', send_termination_assignment_reminder_mailing_path(@reminder_mailing)
+          li= button_link navigation_glyph('back'), terminated_index_assignments_path
       li= button_link 'Ändern', edit_reminder_mailing_path(@reminder_mailing)
       li= link_to 'Löschen', reminder_mailing_path(@reminder_mailing), confirm_deleting(@reminder_mailing, 'btn btn-default')
     - else
