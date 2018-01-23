@@ -51,17 +51,15 @@ h2= @group_offer.title
           - if @group_offer.all?
             = t_attr(:all)
           - else
-            - GroupOffer::TARGET_GROUP.each do |target|
-              - if @group_offer[target]
-                = t_attr(target)
-                br
+            - GroupOffer::TARGET_GROUP.find_all { |group| @group_offer[group] }.each do |target|
+              = t_attr(target)
+              br
       tr
         td= t_attr(:duration)
         td
-          - GroupOffer::DURATION.each do |duration|
-            - if @group_offer[duration]
-              = t_attr(duration)
-              br
+          - GroupOffer::DURATION.find_all { |duration| @group_offer[duration]  }.each do |duration|
+            = t_attr(duration)
+            br
       tr
         td= t_attr(:availability)
         td
