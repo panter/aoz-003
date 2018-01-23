@@ -81,7 +81,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'filter by department, state and category' do
+  test 'filter_by_department_state_and_category' do
     within '.section-navigation#filters' do
       click_link 'Offer state'
       click_link 'Open'
@@ -114,7 +114,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       refute page.has_text? @part_d2.title
     end
     within '.section-navigation#filters' do
-      click_link 'Group offer category'
+      click_link 'Kategorie'
       click_link @c2.to_s
     end
     visit current_url
