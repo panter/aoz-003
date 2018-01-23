@@ -73,7 +73,7 @@ h2= @group_offer.title
 
 - if @group_offer.group_assignments.any?
   h2 Aktuelle Gruppeneinsätze
-  .table-responsive
+  .table-responsive.assignments-table
     table.table.table-no-border-top
       thead
         tr
@@ -89,7 +89,7 @@ h2= @group_offer.title
           - if group_assignment.volunteer
             tr
               td
-                = link_to_if(policy(Volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer)) { group_assignment.volunteer.contact.full_name }
+                = link_to_if(policy(Volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
               - if params[:format] == 'pdf'
                 td= group_assignment.volunteer.contact.primary_email
               td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
@@ -97,12 +97,12 @@ h2= @group_offer.title
               td= l(group_assignment.period_end) if group_assignment.period_end
               td.index-action-cell.hidden-print
                 span= link_to_if(policy(GroupAssignment).edit?, 'Bearbeiten', edit_group_assignment_path(group_assignment), class: 'index-action-link')
-                = link_to_if(policy(GroupAssignment).set_end_today?, 'Heute beenden',
+                = link_to_if(group_assignment.period_end.blank? && policy(GroupAssignment).set_end_today?, 'Heute beenden',
                   set_end_today_group_assignment_path(group_assignment),
-                  data: { method: 'PUT' }, class: 'index-action-link')
-                = link_to_if(policy(GroupAssignment).terminate?, 'Beendigungsformular an Freiwillige/n',
+                  data: { method: 'PUT' }, class: 'index-action-link') { '' }
+                = link_to_if(group_assignment.period_end.present? && policy(GroupAssignment).terminate?, 'Beendigungsformular an Freiwillige/n',
                   polymorphic_path([group_assignment, ReminderMailing], action: :new_termination),
-                  class: 'index-action-link')
+                  class: 'index-action-link') { '' }
 
 - if @group_offer.group_assignment_logs.any?
   h2 Archivierte Gruppeneinsätze
@@ -116,7 +116,7 @@ h2= @group_offer.title
           th Enddatum
           th Archiviert am
       tbody
-        - @group_offer.group_assignment_logs.each do |ga_log|
+        - @group_offer.group_assignment_logs.order('created_at desc').each do |ga_log|
           tr
             td= link_to_if(policy(Volunteer).show?, ga_log.volunteer.contact.full_name,
               volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
