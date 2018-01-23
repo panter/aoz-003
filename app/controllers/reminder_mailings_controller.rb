@@ -41,7 +41,7 @@ class ReminderMailingsController < ApplicationController
 
   def new_termination
     @reminder_mailing = ReminderMailing.new(kind: 'termination',
-      reminder_mailing_volunteers: [Assignment.find(params[:assignment_id])])
+      reminder_mailing_volunteers: [find_termination_mailable])
     if EmailTemplate.termination.active.any?
       @reminder_mailing.assign_attributes(EmailTemplate.termination.active.first.slice(:subject, :body))
     else
@@ -114,6 +114,11 @@ class ReminderMailingsController < ApplicationController
   end
 
   private
+
+  def find_termination_mailable
+    Assignment.find_by(id: params[:assignment_id]) ||
+      GroupAssignment.find_by(id: params[:group_assignment_id])
+  end
 
   def set_reminder_mailing
     @reminder_mailing = ReminderMailing.find(params[:id])
