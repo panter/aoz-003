@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/activerecord-hackery/ransack.git
-  revision: 724d020442dad60a1a6d9e00bbae7681350c9fb1
+  revision: be077384c750b86d6975011231b0b8c5aec89b29
   specs:
     ransack (1.8.4)
       actionpack (>= 3.0)
@@ -336,7 +336,7 @@ GEM
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
-    sass (3.5.3)
+    sass (3.5.5)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -464,7 +464,7 @@ DEPENDENCIES
   panter-rails-deploy
   paperclip
   paranoia
-  pg
+  pg (~> 0.21)
   policy-assertions
   pry-byebug
   pry-rails
