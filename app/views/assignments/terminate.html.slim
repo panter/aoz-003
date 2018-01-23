@@ -1,15 +1,63 @@
-h1= "Begleitung endet am #{l(@assignment.period_end)}"
 
+h1 Evaluation nach Abschluss einer Begleitung
+p.lead im Rahmen von TransFair Freiwilligenarbeit
+
+p.text-bigger-1
+  - if @assignment.period_end > Time.zone.today
+    = "Die Begleitung endet am #{l(@assignment.period_end)}"
+  - else
+    = "Die Begleitung wurde am #{l(@assignment.period_end)} beendet"
+
+h2.m-b-20 Einsatz Details
+
+dl.dl-horizontal
+  dt
+    - if @assignment.volunteer.salutation == 'mrs'
+      'Die Freiwillige:
+    - else
+      'Der Freiwillige:
+  dd= link_to @assignment.volunteer.contact.natural_name, @assignment.volunteer, target: '_blank'
+  dt
+    - if @assignment.client.salutation == 'mrs'
+      'Die Klientin:
+    - elsif @assignment.client.salutation == 'family'
+      'Die Klienten:
+    - else
+      'Der Klient:
+  dd= link_to @assignment.client.contact.natural_name, @assignment.client, target: '_blank'
+  dt Einsatz dauer:
+  dd= "#{l(@assignment.period_start)} bis #{l(@assignment.period_end)}"
+hr
+h2 Bisher eingetragene Stunden und Feedbacks
 = render 'last_submitted_hours', hours: @assignment.hours, confirmable: @assignment
 p= button_link t_title(:new, Hour), new_polymorphic_path([@assignment.volunteer, @assignment, Hour], redirect_to: :terminate)
 
 = render 'last_submitted_feedbacks', feedbacks: @assignment.feedbacks, confirmable: @assignment
 p= button_link t_title(:new, Feedback), new_polymorphic_path([@assignment.volunteer, @assignment.polymorph_url_object, Feedback], redirect_to: :terminate)
+hr
 
-h2 Beendigung Abschliessen
+a.btn.btn-default.btn-lg aria-controls='submit-termination-form' aria-expanded='false' data-toggle='collapse' href='#submit-termination-form' role='button'
+  'Beendigung Abschliessen
 
-= simple_form_for(@assignment, url: update_terminated_at_assignment_path, method: :put) do |f|
-  = f.simple_fields_for(:volunteer) do |volunteer|
-    = volunteer.input :waive
+#submit-termination-form.collapse
+  = simple_form_for(@assignment, url: update_terminated_at_assignment_path, method: :put) do |f|
+    fieldset
+      label.m-b-20.text-bigger-2 Rückmeldungen zur Beendigung des Einsatzes
+      = f.input :term_feedback_activities
+      = f.input :term_feedback_success
+      = f.input :term_feedback_problems
+      = f.input :term_feedback_transfair
 
-  .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher das Sie alle daten eingetragen haben?' }
+    fieldset
+      label.text-bigger-2 Spesen
+      = f.simple_fields_for(:volunteer) do |volunteer|
+        = volunteer.input :waive
+
+    hr
+
+    p.text-bigger-2
+      em Im Namen der AOZ danken wir Ihnen ganz herzlich für Ihr Feedback und für Ihr Engagement im Rahmen der Freiwilligenarbeit TransFair.
+    p.text-bigger-2
+      em Das TransFair-Team
+
+    .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher das Sie alle daten eingetragen haben?' }

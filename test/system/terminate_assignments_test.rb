@@ -13,11 +13,11 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
       author: @volunteer.user
   end
 
-  test 'volunteer termination submit form displays existing hours and feedbacks' do
+  test 'volunteer_termination_submit_form_displays_existing_hours_and_feedbacks' do
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    assert page.has_text? "Begleitung endet am #{I18n.l(@assignment.period_end)}"
+    assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
     assert page.has_text? "#{I18n.l(@hour.meeting_date)} #{@hour.hours}:#{'%02i' % @hour.minutes} "\
       "#{@hour.activity} #{@hour.comments}"
     assert page.has_text? "#{@feedback.goals} #{@feedback.achievements} #{@feedback.future} "\
@@ -37,7 +37,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     fill_in 'Activity', with: 'my_tryout_activity_hour_thingie'
     fill_in 'Comments', with: 'my_tryout_commment_hour_thingie'
     click_button 'Create Hour report'
-    assert page.has_text? "Begleitung endet am #{I18n.l(@assignment.period_end)}"
+    assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
     assert page.has_text? 'my_tryout_activity_hour_thingie'
     assert page.has_text? 'my_tryout_commment_hour_thingie'
   end
@@ -49,7 +49,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     click_link 'New Feedback'
     fill_in 'Comments', with: 'my_tryout_feedback_comment_text_to_find'
     click_button 'Create Feedback'
-    assert page.has_text? "Begleitung endet am #{I18n.l(@assignment.period_end)}"
+    assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
     assert page.has_text? 'my_tryout_feedback_comment_text_to_find'
   end
 
@@ -57,6 +57,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
+    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
@@ -69,6 +70,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
+    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
@@ -81,6 +83,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
+    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
@@ -93,6 +96,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @department_manager
     visit terminate_assignment_path(@assignment)
+    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
@@ -105,6 +109,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
+    click_link 'Beendigung Abschliessen'
     refute page.find_field('I waived the compensation of my expenses.').checked?
     page.check('assignment_volunteer_attributes_waive')
     page.accept_confirm do
