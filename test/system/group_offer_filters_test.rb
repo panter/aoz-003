@@ -62,12 +62,15 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'filter by category' do
+  test 'filter_by_category' do
     within '.section-navigation#filters' do
-      click_link 'Group offer category'
+      click_link 'Kategorie'
       click_link @c1.to_s
     end
     visit current_url
+    within '.section-navigation#filters' do
+      assert page.has_link? "Kategorie: #{@c1.to_s}"
+    end
     within 'tbody' do
       assert page.has_text? @open_d1.title
       refute page.has_text? @full_d1.title
