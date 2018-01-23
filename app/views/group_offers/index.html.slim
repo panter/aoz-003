@@ -81,7 +81,7 @@ table.table.table-striped
               br
               = t_attr(:member, GroupAssignment)
             br
-        td= offer.group_offer_category.category_name
+        td= link_to offer.group_offer_category.category_name, url_for(q: search_parameters.merge(group_offer_category_id_eq: offer.group_offer_category.id))
         td.index-action-cell.hidden-print
           span= link_to t_action(:show), group_offer_path(offer)
           span= link_to t('download'), group_offer_path(offer, format: :pdf)
