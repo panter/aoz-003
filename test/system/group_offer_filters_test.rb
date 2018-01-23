@@ -32,7 +32,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
 
   test 'filter by department' do
     within '.section-navigation#filters' do
-      click_link 'Department'
+      click_link 'Standort'
       click_link @d1.to_s
     end
     visit current_url
@@ -88,7 +88,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
     visit current_url
     within '.section-navigation#filters' do
-      click_link 'Department'
+      click_link 'Standort'
       click_link @d1.to_s
     end
     visit current_url
