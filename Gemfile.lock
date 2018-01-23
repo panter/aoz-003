@@ -427,7 +427,6 @@ PLATFORMS
 
 DEPENDENCIES
   autocomplete_rails
-  autoprefixer-rails
   awesome_print
   axlsx!
   axlsx_rails
