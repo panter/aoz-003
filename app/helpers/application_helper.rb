@@ -115,20 +115,30 @@ module ApplicationHelper
   end
 
   def navigation_glyph(value)
-    if value == 'back'
-      content_tag(:span, content_tag(:span, 'Back', class: 'sr-only'),
-        class: 'glyphicon glyphicon-arrow-left')
-    elsif value == 'print'
-      content_tag(:span, content_tag(:span, 'Print', class: 'sr-only'),
-        class: 'glyphicon glyphicon-print')
-    elsif value == 'delete'
-      content_tag(:span, content_tag(:span, 'Delete', class: 'sr-only'),
-        class: 'glyphicon glyphicon-trash')
+    if value.to_s == 'back'
+      glyph_span('Back', 'arrow-left')
+    elsif value.to_s == 'print'
+      glyph_span('Print', 'print')
+    elsif value.to_s == 'delete'
+      glyph_span('Delete', 'trash')
     end
   end
 
+  def glyph_span(sr_text, type)
+    tag.span(class: "glyphicon glyphicon-#{type}") do
+      tag.span(sr_text, class: 'sr-only')
+    end
+  end
+
+  # TODO: This function needs to be fixed, because its parameter is rubbish
   def navigation_fa_icon(value)
-    content_tag(:span, content_tag(:span, 'xlsx', class: 'sr-only'), class: 'fa fa-file-excel-o') if value == 'xlsx'
+    fa_span('xlsx', 'file-excel-o') if value == 'xlsx'
+  end
+
+  def fa_span(sr_text, type)
+    tag.span(class: "fa fa-#{type}") do
+      tag.span(sr_text, class: 'sr-only')
+    end
   end
 
   def bootstrap_paginate(paginate_collection)
