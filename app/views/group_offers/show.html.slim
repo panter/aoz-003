@@ -87,10 +87,11 @@ h1= @group_offer.title
         - @group_offer.group_assignments.each do |group_assignment|
           - if group_assignment.volunteer
             tr
-              - if policy(Volunteer).show?
-                td= link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
-                - if params[:format] == 'pdf'
-                  td= group_assignment.volunteer.contact.primary_email
+              td
+                - if policy(Volunteer).show?
+                  = link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
+              - if params[:format] == 'pdf'
+                td= group_assignment.volunteer.contact.primary_email
               td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
               td= l(group_assignment.period_start) if group_assignment.period_start
               td= l(group_assignment.period_end) if group_assignment.period_end
