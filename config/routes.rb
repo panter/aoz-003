@@ -31,13 +31,30 @@ Rails.application.routes.draw do
     resources :trial_feedbacks, concerns: :mark_submitted_at
   end
 
+  concern :termination_mailing do
+    resources :reminder_mailings do
+      get :new_termination, on: :collection
+      get :send_termination, on: :member
+    end
+  end
+
   resources :client_notifications, :departments, :performance_reports, :email_templates, :users
   resources :profiles, except: [:destroy, :index]
   resources :group_offer_categories, except: [:destroy]
   resources :feedbacks, only: [:new, :create]
-  resources :group_assignments, only: [:show], concerns: [:update_submitted_at, :hours_resources]
+  resources :group_assignments, only: [:show, :edit, :update],
+    concerns: [:update_submitted_at, :hours_resources, :termination_mailing] do
 
-  resources :assignments, concerns: [:update_submitted_at, :search] do
+    put :set_end_today, on: :member
+
+    member do
+      get :terminate
+      put :update_terminated_at
+      patch :verify_termination
+    end
+  end
+
+  resources :assignments, concerns: [:update_submitted_at, :search, :termination_mailing] do
     member do
       get :terminate
       put :update_terminated_at
@@ -45,11 +62,6 @@ Rails.application.routes.draw do
     end
 
     get :terminated_index, on: :collection
-
-    resources :reminder_mailings do
-      get :new_termination, on: :collection
-      get :send_termination, on: :member
-    end
   end
 
   resources :volunteer_applications, only: [:new, :create] do
