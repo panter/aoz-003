@@ -96,6 +96,30 @@
   padding-right: 30px;
 }
 
+.text-bigger-1 {
+  font-size: 110%;
+}
+
+.text-bigger-2 {
+  font-size: 120%;
+}
+
+.text-bigger-3 {
+  font-size: 130%;
+}
+
+.text-smaller-1 {
+  font-size: 90%;
+}
+
+.text-smaller-2 {
+  font-size: 80%;
+}
+
+.text-smaller-3 {
+  font-size: 70%;
+}
+
 @mixin a4 {
   background: $white;
   height: $a4-long-side;
