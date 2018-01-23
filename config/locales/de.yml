@@ -253,6 +253,10 @@ de:
         period_start: Einsatzbeginn
         trial_period: Probezeit
         volunteer: Freiwillige
+        term_feedback_activities: 'Endfeedback: Hauptaktivitäten'
+        term_feedback_success: 'Endfeedback: Erfolge'
+        term_feedback_problems: 'Endfeedback: Probleme'
+        term_feedback_transfair: 'Endfeedback: TransFair'
       feedback:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
@@ -795,6 +799,11 @@ de:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
     labels:
+      assignment:
+        term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
+        term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
+        term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
+        term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
       reminder_mailing:
         kind: Art
       defaults:
@@ -867,6 +876,9 @@ de:
           resigned: Beendet
     placeholders:
     hints:
+      assignment:
+        volunteer:
+          waive: Einstellung im Freiwilligenprofil
       volunteer:
         external: Externe Freiwillige stehen nicht in direkter Verbindung mit der AOZ.
     required:
