@@ -1,18 +1,12 @@
 class GroupAssignment < ApplicationRecord
-  include ImportRelation
-  include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
+  include GroupAssignmentCommon
 
   after_save :update_group_offer_search_field
   after_update :save_group_assignment_logs, if: :dates_updated?
-  before_destroy :save_group_assignment_logs
-
-  belongs_to :group_offer
+  before_destroy :create_log_of_self_and_delete_self
 
   has_many :group_assignment_logs
-  has_one :group_offer_category, through: :group_offer
-
-  delegate :title, to: :group_offer
 
   validates :volunteer, uniqueness: {
     scope: :group_offer,
@@ -20,26 +14,17 @@ class GroupAssignment < ApplicationRecord
   }
 
   def save_group_assignment_logs
-    group_assignment_logs.create!(group_offer_id: group_offer_id, volunteer_id: volunteer_id,
-      group_assignment_id: id, title: group_offer.title,
-      period_start: period_start_before_last_save, period_end: period_end_before_last_save,
-      responsible: responsible)
+    create_log_of_self(period_start_before_last_save, period_end_before_last_save)
   end
 
-  def to_label
-    label_parts.compact.join(' - ')
-  end
-
-  def label_parts
-    @label_parts ||= [
-      'Gruppenangebot',
-      group_offer.title,
-      group_offer.department.present? && group_offer.department.contact.last_name
-    ]
-  end
-
-  def polymorph_url_target
-    group_offer
+  def create_log_of_self(start_date = nil, end_date = nil)
+    start_date ||= period_start
+    end_date ||= period_end
+    GroupAssignmentLog.create!(
+      attributes.except('id', 'created_at', 'updated_at')
+        .merge(title: group_offer.title, group_assignment_id: id, period_start: start_date,
+               period_end: end_date)
+    )
   end
 
   def hours_since_last_submitted
@@ -63,6 +48,10 @@ class GroupAssignment < ApplicationRecord
   end
 
   private
+
+  def create_log_of_self_and_delete_self
+    delete if create_log_of_self && !running?
+  end
 
   def dates_updated?
     saved_change_to_period_start? || saved_change_to_period_end?
