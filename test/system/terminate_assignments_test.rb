@@ -17,6 +17,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
+    click_link 'Beendigung Abschliessen'
     assert page.has_text? "Begleitung endet am #{I18n.l(@assignment.period_end)}"
     assert page.has_text? "#{I18n.l(@hour.meeting_date)} #{@hour.hours}:#{'%02i' % @hour.minutes} "\
       "#{@hour.activity} #{@hour.comments}"
@@ -93,6 +94,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @department_manager
     visit terminate_assignment_path(@assignment)
+    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
