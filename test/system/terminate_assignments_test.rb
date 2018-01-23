@@ -70,6 +70,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
+    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
