@@ -9,6 +9,10 @@
 
   = f.input :period, as: :date_range_picker, label: false
 
+  fieldset
+    label Rolle
+    = f.input :responsible
+  hr
   = f.button :submit
   p.m-t-10= button_link navigation_glyph(:back), @group_assignment.group_offer
 

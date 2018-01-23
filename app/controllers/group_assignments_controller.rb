@@ -52,6 +52,6 @@ class GroupAssignmentsController < ApplicationController
   end
 
   def group_assignment_params
-    params.require(:group_assignment).permit(:period_start, :period_end)
+    params.require(:group_assignment).permit(:period_start, :period_end, :responsible)
   end
 end

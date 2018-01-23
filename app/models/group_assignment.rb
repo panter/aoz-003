@@ -17,11 +17,9 @@ class GroupAssignment < ApplicationRecord
     create_log_of_self(period_start_before_last_save, period_end_before_last_save)
   end
 
-  def create_log_of_self(start_date = nil, end_date = nil)
-    start_date ||= period_start
-    end_date ||= period_end
+  def create_log_of_self(start_date = period_start, end_date = period_end)
     GroupAssignmentLog.create!(
-      attributes.except('id', 'created_at', 'updated_at')
+      attributes.except('id', 'created_at', 'updated_at', 'active')
         .merge(title: group_offer.title, group_assignment_id: id, period_start: start_date,
                period_end: end_date)
     )

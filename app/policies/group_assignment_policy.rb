@@ -7,4 +7,6 @@ class GroupAssignmentPolicy < ApplicationPolicy
   alias_method :edit?,          :superadmin_or_department_manager?
   alias_method :update?,        :superadmin_or_department_manager?
   alias_method :set_end_today?, :superadmin_or_department_manager?
+
+  alias_method :terminate?,     :superadmin_or_department_manager?
 end
