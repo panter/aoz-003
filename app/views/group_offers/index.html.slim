@@ -19,7 +19,7 @@ nav.navbar.section-navigation#filters
     = list_filter_dropdown(:department_id, Department.all)
     = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Beendet')
     = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
-    = list_filter_dropdown(:group_offer_category_id, GroupOfferCategory.all)
+    = custom_filter_dropdown('Kategorie', *GroupOfferCategory.all.map { |cat| { q: :group_offer_category_id_eq, text: cat.category_name, value: cat.id } })
   hr
 
 table.table.table-striped
