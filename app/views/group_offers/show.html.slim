@@ -88,8 +88,7 @@ h1= @group_offer.title
           - if group_assignment.volunteer
             tr
               td
-                - if policy(Volunteer).show?
-                  = link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
+                = link_to_if(policy(Volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer)) { group_assignment.volunteer.contact.full_name }
               - if params[:format] == 'pdf'
                 td= group_assignment.volunteer.contact.primary_email
               td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
