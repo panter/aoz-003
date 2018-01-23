@@ -61,12 +61,10 @@ class AssignmentsController < ApplicationController
 
   def update
     if @assignment.update(assignment_params)
-      if @assignment.saved_change_to_period_end?(from: nil)
-        if @assignment.ended?
-          redirect_to terminated_index_assignments_path
-        else
-          redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
-        end
+      if @assignment.saved_change_to_period_end?(from: nil) && @assignment.ended?
+        redirect_to terminated_index_assignments_path
+      else
+        redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
       end
     else
       render :edit
