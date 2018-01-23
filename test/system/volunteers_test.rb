@@ -175,7 +175,7 @@ class VolunteersTest < ApplicationSystemTestCase
     refute page.has_text? 'If you have any experiences with voluntary work, please describe here.'
   end
 
-  test 'volunteer pagination' do
+  test 'volunteer_pagination' do
     Volunteer.with_deleted.map(&:really_destroy!)
     second_page_volunteers = (1..20).to_a.map do
       volunteer = create :volunteer

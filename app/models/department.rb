@@ -11,6 +11,16 @@ class Department < ApplicationRecord
 
   validates :contact, presence: true
 
+  scope :with_group_offer, lambda {
+    joins(:group_offers).where('group_offers.department_id IS NOT NULL')
+  }
+
+  def self.filterable
+    with_group_offer.uniq.map do |department|
+      { q: :department_id_eq, text: department.to_s, value: department.id }
+    end
+  end
+
   def to_s
     contact.to_s
   end

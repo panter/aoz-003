@@ -25,7 +25,7 @@ nav.navbar.section-navigation
     = boolean_toggler_filter_dropdown(:external, 'Intern/Extern', 'Extern', 'Intern')
     = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
     = boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
-    = list_filter_dropdown(:group_offer_categories_id, Volunteer::GroupOfferCategory.active.all)
+    = custom_filter_dropdown(t_attr(:group_offer_categories_id, Volunteer), *GroupOfferCategory.filterable_volunteer)
     = boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)
 
   hr
