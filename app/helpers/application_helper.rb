@@ -114,13 +114,13 @@ module ApplicationHelper
     end
   end
 
-  def navigation_glyph(value = :back)
+  def navigation_glyph(icon_type = :back)
     translate_glyph = {
       back: { text: 'Back', glyph: 'arrow-left' },
       print: { text: 'Print', glyph: 'print' },
       delete: { text: 'Delete', glyph: 'trash' }
     }
-    glyph_span(translate_glyph[value.to_sym])
+    glyph_span(translate_glyph[icon_type.to_sym])
   end
 
   def glyph_span(text: 'Back', glyph: 'arrow-left')
@@ -129,14 +129,16 @@ module ApplicationHelper
     end
   end
 
-  # TODO: This function needs to be fixed, because its parameter is rubbish
-  def navigation_fa_icon(value)
-    fa_span('xlsx', 'file-excel-o') if value == 'xlsx'
+  def navigation_fa_icon(icon_type = :xlsx)
+    translate_fa = {
+      xlsx: { text: 'Excel sheet', fa_type: 'file-excel-o' }
+    }
+    fa_span(translate_fa[icon_type.to_sym])
   end
 
-  def fa_span(sr_text, type)
-    tag.span(class: "fa fa-#{type}") do
-      tag.span(sr_text, class: 'sr-only')
+  def fa_span(text: 'xlsx', fa_type: 'file-excel-o')
+    tag.span(class: "fa fa-#{fa_type}") do
+      tag.span(text, class: 'sr-only')
     end
   end
 
