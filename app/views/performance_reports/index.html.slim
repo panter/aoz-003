@@ -31,7 +31,7 @@ nav.navbar.section-navigation
           td= t(performance_report.extern)
           td = link_to t_action(:show), performance_report
           td = link_to t_action(:edit), edit_performance_report_path(performance_report)
-          td = link_to navigation_glyph('delete'), performance_report, confirm_deleting(performance_report)
+          td = link_to navigation_glyph(:delete), performance_report, confirm_deleting(performance_report)
 
 nav.navbar.section-navigation
   hr

@@ -27,7 +27,7 @@ module ApplicationHelper
 
   def make_nav_button(action)
     if action == :back
-      text = navigation_glyph('back')
+      text = navigation_glyph(:back)
       action = :index if action == :back
     else
       text = t_title(action)
@@ -114,19 +114,18 @@ module ApplicationHelper
     end
   end
 
-  def navigation_glyph(value)
-    if value.to_s == 'back'
-      glyph_span('Back', 'arrow-left')
-    elsif value.to_s == 'print'
-      glyph_span('Print', 'print')
-    elsif value.to_s == 'delete'
-      glyph_span('Delete', 'trash')
-    end
+  def navigation_glyph(value = :back)
+    translate_glyph = {
+      back: { text: 'Back', glyph: 'arrow-left' },
+      print: { text: 'Print', glyph: 'print' },
+      delete: { text: 'Delete', glyph: 'trash' }
+    }
+    glyph_span(translate_glyph[value.to_sym])
   end
 
-  def glyph_span(sr_text, type)
-    tag.span(class: "glyphicon glyphicon-#{type}") do
-      tag.span(sr_text, class: 'sr-only')
+  def glyph_span(text: 'Back', glyph: 'arrow-left')
+    tag.span(class: "glyphicon glyphicon-#{glyph}") do
+      tag.span(text, class: 'sr-only')
     end
   end
 
