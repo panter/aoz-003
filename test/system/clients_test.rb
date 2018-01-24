@@ -214,8 +214,8 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? client_social_worker
     refute page.has_text? client
     assert page.has_link? 'Show'
-    refute page.has_link? 'Edit'
-    refute page.has_link? 'Löschen'
+    assert page.has_link? 'Edit', href: edit_client_path(client_department_manager)
+    refute page.has_link? 'Edit', href: edit_client_path(client_social_worker)
 
     login_as social_worker
     visit clients_path
@@ -223,8 +223,8 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? client_department_manager
     refute page.has_text? client
     assert page.has_link? 'Show'
-    assert page.has_link? 'Edit'
-    refute page.has_link? 'Löschen'
+    refute page.has_link? 'Edit', href: edit_client_path(client_department_manager)
+    assert page.has_link? 'Edit', href: edit_client_path(client_social_worker)
   end
 
   test 'department_manager_sees_his_scoped_client_index_correctly' do

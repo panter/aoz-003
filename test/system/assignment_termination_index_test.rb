@@ -124,6 +124,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     # Assignment has an end-date, reminder mailing was created, but not sent
     click_link 'Nicht versandt', href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
     click_link 'Email versenden'
+    wait_for_ajax
     assert page.has_text? 'Beendigungs-Email wird versendet.'
 
     # Assignment has an end-date, reminder mailing was created and was sent
