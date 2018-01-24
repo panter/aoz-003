@@ -28,37 +28,39 @@ dl.dl-horizontal
   dt Einsatz dauer:
   dd= "#{l(@assignment.period_start)} bis #{l(@assignment.period_end)}"
 hr
-h2 Bisher eingetragene Stunden und Feedbacks
+
+h2 Bisherige Einträge
+
+h3 Stunden
 = render 'last_submitted_hours', hours: @assignment.hours, confirmable: @assignment
 p= button_link t_title(:new, Hour), new_polymorphic_path([@assignment.volunteer, @assignment, Hour], redirect_to: :terminate)
 
+h3 Bisheriges Feedback
 = render 'last_submitted_feedbacks', feedbacks: @assignment.feedbacks, confirmable: @assignment
 p= button_link t_title(:new, Feedback), new_polymorphic_path([@assignment.volunteer, @assignment.polymorph_url_object, Feedback], redirect_to: :terminate)
 hr
 
-a.btn.btn-default.btn-lg aria-controls='submit-termination-form' aria-expanded='false' data-toggle='collapse' href='#submit-termination-form' role='button'
-  'Beendigung Abschliessen
+h2.m-b-20 Beendigung Abschliessen
 
-#submit-termination-form.collapse
-  = simple_form_for(@assignment, url: update_terminated_at_assignment_path, method: :put) do |f|
-    fieldset
-      label.m-b-20.text-bigger-2 Rückmeldungen zur Beendigung des Einsatzes
-      = f.input :term_feedback_activities
-      = f.input :term_feedback_success
-      = f.input :term_feedback_problems
-      = f.input :term_feedback_transfair
+= simple_form_for(@assignment, url: update_terminated_at_assignment_path, method: :put) do |f|
+  fieldset
+    label.m-b-10.text-bigger-3 Rückmeldungen zur Beendigung des Einsatzes
+    = f.input :term_feedback_activities
+    = f.input :term_feedback_success
+    = f.input :term_feedback_problems
+    = f.input :term_feedback_transfair
 
-    fieldset
-      label.text-bigger-2 Spesen
-      = f.simple_fields_for(:volunteer) do |volunteer|
-        = volunteer.input :waive
-        i Einstellung im Freiwilligenprofil
+  fieldset
+    label.text-bigger-2 Spesen
+    = f.simple_fields_for(:volunteer) do |volunteer|
+      = volunteer.input :waive
+      i Einstellung im Freiwilligenprofil
 
-    hr
+  hr
 
-    p.text-bigger-2
-      em Im Namen der AOZ danken wir Ihnen ganz herzlich für Ihr Feedback und für Ihr Engagement im Rahmen der Freiwilligenarbeit TransFair.
-    p.text-bigger-2
-      em Das TransFair-Team
+  p.text-bigger-2
+    em Im Namen der AOZ danken wir Ihnen ganz herzlich für Ihr Feedback und für Ihr Engagement im Rahmen der Freiwilligenarbeit TransFair.
+  p.text-bigger-2
+    em Das TransFair-Team
 
-    .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher das Sie alle daten eingetragen haben?' }
+  .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher das Sie alle daten eingetragen haben?' }

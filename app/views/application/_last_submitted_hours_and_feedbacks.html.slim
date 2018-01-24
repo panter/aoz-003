@@ -3,9 +3,11 @@ h1 Zuletzt übermittelte Stunden und Feedbacks
 h2.m-b-20 Einsatz
 p= link_to confirmable.to_label, polymorphic_path([confirmable.volunteer, confirmable]), target: '_blank'
 
+h3 Stunden
 = render 'last_submitted_hours', hours: hours, confirmable: confirmable
 p= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: :last_submitted_hours_and_feedbacks)
 
+h3 Feedbacks
 = render 'last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
 p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: :last_submitted_hours_and_feedbacks)
 
