@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180123171535) do
+=======
+ActiveRecord::Schema.define(version: 20180124125446) do
+>>>>>>> add termination feedback fields to group assignment and group_assignment_logs
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
