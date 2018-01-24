@@ -86,7 +86,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_text? 'Group offers log'
 
     visit edit_group_offer_path(group_offer)
-    click_link 'Delete'
+    click_link 'Löschen'
     click_button 'Update Group offer'
 
     visit volunteer_path(volunteer)

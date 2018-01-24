@@ -148,7 +148,7 @@ class ClientsTest < ApplicationSystemTestCase
     visit client_path(client)
 
     page.accept_confirm do
-      first('a', text: 'Delete').click
+      first('a', text: 'Löschen').click
     end
 
     assert page.has_text? 'Client was successfully deleted.'
@@ -189,7 +189,7 @@ class ClientsTest < ApplicationSystemTestCase
 
     visit edit_client_path(client)
     page.accept_confirm do
-      click_link 'Delete'
+      click_link 'Löschen'
     end
 
     assert page.has_text? 'Client was successfully deleted.'
@@ -206,7 +206,7 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert page.has_link? 'Show', count: 3
     assert page.has_link? 'Edit', count: 3
-    refute page.has_link? 'Delete'
+    refute page.has_link? 'Löschen'
 
     login_as @department_manager
     visit clients_path
@@ -214,8 +214,8 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? client_social_worker
     refute page.has_text? client
     assert page.has_link? 'Show'
-    assert page.has_link? 'Edit'
-    refute page.has_link? 'Delete'
+    refute page.has_link? 'Edit'
+    refute page.has_link? 'Löschen'
 
     login_as social_worker
     visit clients_path
@@ -224,7 +224,7 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? client
     assert page.has_link? 'Show'
     assert page.has_link? 'Edit'
-    refute page.has_link? 'Delete'
+    refute page.has_link? 'Löschen'
   end
 
   test 'department_manager_sees_his_scoped_client_index_correctly' do

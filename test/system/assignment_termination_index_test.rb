@@ -112,14 +112,14 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     assert_equal @submitted, AssignmentLog.find_by(assignment_id: @submitted.id).assignment
   end
 
-  test 'there is correct links on email status column' do
+  test 'there_is_correct_links_on_email_status_column' do
     create :email_template_termination
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
 
     # Assignment has an end-date, but no reminder mailing was created
     click_link 'Beendigungs Email erstellen', href: new_termination_assignment_reminder_mailings_path(@un_submitted)
     click_button 'Erstellen und Vorschau anzeigen'
-    click_link 'Back'
+    click_link 'Zurück'
 
     # Assignment has an end-date, reminder mailing was created, but not sent
     click_link 'Nicht versandt', href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)

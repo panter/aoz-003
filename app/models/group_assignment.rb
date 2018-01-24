@@ -8,6 +8,8 @@ class GroupAssignment < ApplicationRecord
 
   has_many :group_assignment_logs
 
+  delegate :title, to: :group_offer
+
   validates :volunteer, uniqueness: {
     scope: :group_offer,
     message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
