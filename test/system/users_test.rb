@@ -69,14 +69,14 @@ class UsersTest < ApplicationSystemTestCase
     create :user, role: 'social_worker'
     visit users_path
 
-    assert page.has_link? 'Löschen'
+    assert page.has_link? 'Delete'
   end
 
   test "superadmin can't destroy superadmin" do
     create :user, role: 'superadmin'
     visit users_path
 
-    assert_not page.has_link? 'Löschen'
+    assert_not page.has_link? 'Delete'
   end
 
   test 'accepted volunteer becomes a user' do
