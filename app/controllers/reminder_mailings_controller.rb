@@ -17,9 +17,8 @@ class ReminderMailingsController < ApplicationController
     if EmailTemplate.trial.active.any?
       @reminder_mailing.assign_attributes(EmailTemplate.trial.active.first.slice(:subject, :body))
     else
-      redirect_to new_email_template_path,
-      notice: 'Sie müssen eine aktive E-Mailvorlage haben,
-      bevor Sie eine Probezeit Erinnerung erstellen können.'
+      redirect_to new_email_template_path, notice: 'Sie müssen eine aktive E-Mailvorlage haben,'\
+        "\r\nbevor Sie eine Probezeit Erinnerung erstellen können."
     end
     authorize @reminder_mailing
   end
@@ -30,11 +29,12 @@ class ReminderMailingsController < ApplicationController
     @reminder_mailing = ReminderMailing.new(kind: 'half_year',
       reminder_mailing_volunteers: @reminder_mailables)
     if EmailTemplate.half_year.active.any?
-      @reminder_mailing.assign_attributes(EmailTemplate.half_year.active.first.slice(:subject, :body))
+      @reminder_mailing.assign_attributes(EmailTemplate.half_year.active.first
+        .slice(:subject, :body))
     else
       redirect_to new_email_template_path,
-      notice: 'Sie müssen eine aktive E-Mailvorlage haben,
-      bevor Sie eine Halbjahres Erinnerung erstellen können.'
+        notice: 'Sie müssen eine aktive E-Mailvorlage haben,
+        bevor Sie eine Halbjahres Erinnerung erstellen können.'
     end
     authorize @reminder_mailing
   end
@@ -43,17 +43,20 @@ class ReminderMailingsController < ApplicationController
     @reminder_mailing = ReminderMailing.new(kind: 'termination',
       reminder_mailing_volunteers: [find_termination_mailable])
     if EmailTemplate.termination.active.any?
-      @reminder_mailing.assign_attributes(EmailTemplate.termination.active.first.slice(:subject, :body))
+      @reminder_mailing.assign_attributes(EmailTemplate.termination.active.first
+        .slice(:subject, :body))
     else
       redirect_to new_email_template_path,
-      notice: 'Sie müssen eine aktive E-Mailvorlage haben,
-      bevor Sie eine Beendigungs E-Mail erstellen können.'
+        notice: 'Sie müssen eine aktive E-Mailvorlage haben,
+        bevor Sie eine Beendigungs E-Mail erstellen können.'
     end
     authorize @reminder_mailing
   end
 
   def create
-    @reminder_mailing = ReminderMailing.new(reminder_mailing_params.merge(creator_id: current_user.id))
+    @reminder_mailing = ReminderMailing.new(
+      reminder_mailing_params.merge(creator_id: current_user.id)
+    )
     authorize @reminder_mailing
     if @reminder_mailing.save
       redirect_to @reminder_mailing, make_notice
@@ -63,15 +66,15 @@ class ReminderMailingsController < ApplicationController
   end
 
   def edit
-    if @reminder_mailing.sending_triggered
-      redirect_back(fallback_location: reminder_mailing_path(@reminder_mailing),
-        notice: 'Wenn das Erinnerungs-Mailing bereits versendet wurde, kann es nicht mehr geändert werden.')
-    end
+    return unless @reminder_mailing.sending_triggered
+    redirect_back(fallback_location: reminder_mailing_path(@reminder_mailing), notice: 'Wenn das'\
+      ' Erinnerungs-Mailing bereits versendet wurde, kann es nicht mehr geändert werden.')
   end
 
   def send_trial_period
     if @reminder_mailing.sending_triggered?
-      return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits versandt.'
+      return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits'\
+        ' versandt.'
     end
     @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
       VolunteerMailer.trial_period_reminder(mailing_volunteer).deliver_later
@@ -82,7 +85,8 @@ class ReminderMailingsController < ApplicationController
 
   def send_half_year
     if @reminder_mailing.sending_triggered?
-      return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits versandt.'
+      return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits'\
+        ' versandt.'
     end
     @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
       VolunteerMailer.half_year_reminder(mailing_volunteer).deliver_later
@@ -93,7 +97,8 @@ class ReminderMailingsController < ApplicationController
 
   def send_termination
     if @reminder_mailing.sending_triggered?
-      return redirect_to reminder_mailings_path, notice: 'Dieses Beendigungs-Mailing wurde bereits versandt.'
+      return redirect_to reminder_mailings_path, notice: 'Dieses Beendigungs-Mailing wurde bereits'\
+        ' versandt.'
     end
     VolunteerMailer.termination_email(@reminder_mailing).deliver_later
     @reminder_mailing.update(sending_triggered: true)

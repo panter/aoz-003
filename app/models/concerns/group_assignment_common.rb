@@ -10,7 +10,6 @@ module GroupAssignmentCommon
     has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
     has_one :group_offer_category, through: :group_offer
 
-
     delegate :title, to: :group_offer
 
     def to_label
