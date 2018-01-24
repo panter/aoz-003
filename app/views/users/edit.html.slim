@@ -5,4 +5,4 @@
 = render 'form', user: @user
 
 - if policy(User).index?
-  = bootstrap_row_col { button_link(navigation_glyph('back'), users_path) }
+  = bootstrap_row_col { button_link(navigation_glyph(:back), users_path) }

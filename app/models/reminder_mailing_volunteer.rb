@@ -93,7 +93,8 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def email_absender
-    "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:#{reminder_mailing.creator.email})"
+    "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:"\
+      "#{reminder_mailing.creator.email})"
   end
 
   def feedback_link
@@ -104,16 +105,15 @@ class ReminderMailingVolunteer < ApplicationRecord
     if reminder_mailing.half_year?
       make_polymorphic_path(reminder_mailable, :last_submitted_hours_and_feedbacks)
     elsif reminder_mailing.trial_period?
-      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_object, TrialFeedback], :new)
+      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_object, TrialFeedback],
+        :new)
     elsif reminder_mailing.termination?
-      make_polymorphic_path([reminder_mailable.polymorph_url_object], :terminate)
+      make_polymorphic_path([reminder_mailable], :terminate)
     end
   end
 
   def make_polymorphic_path(path_array, action)
-    host_url + Rails.application.routes.url_helpers.polymorphic_path(
-      path_array, action: action, rmv_id: id, rm_id: reminder_mailing.id
-    )
+    host_url + Rails.application.routes.url_helpers.polymorphic_path(path_array, action: action)
   end
 
   def host_url

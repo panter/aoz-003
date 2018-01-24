@@ -59,7 +59,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     setup_feedbacks
     login_as @user_volunteer
     visit polymorphic_path([@volunteer, @assignment, @assignment_volunteer_feedback])
-    click_link 'Back'
+    click_link 'Zurück'
     within '.assignments-table' do
       click_link 'Probezeit Feedback index'
     end

@@ -13,7 +13,7 @@ nav.navbar.section-navigation.hidden-print
     li= button_link t('clear_filters'), assignments_path, dimension: :sm
     li= button_link 'Beendete Begleitungen',
       terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' }), dimension: :sm
-    li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: :sm
-    li= link_to navigation_glyph('print'), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
+    li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: :sm
+    li= link_to navigation_glyph(:print), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
 
   hr

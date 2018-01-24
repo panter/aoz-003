@@ -25,11 +25,19 @@ class User < ApplicationRecord
   has_many :reviewed_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'reviewer_id'
   has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id'
 
-  # assignment termination relations
+  # Assignment termination relations
   has_many :assignment_period_ends_set, class_name: 'Assignment', foreign_key: 'period_end_set_by'
   has_many :assignment_terminations_submitted, class_name: 'Assignment',
     foreign_key: 'termination_submitted_by'
   has_many :assignment_terminations_verified, class_name: 'Assignment',
+    foreign_key: 'termination_verified_by'
+
+  # GroupAssignment termination relations
+  has_many :group_assignment_period_ends_set, class_name: 'GroupAssignment',
+    foreign_key: 'period_end_set_by'
+  has_many :group_assignment_terminations_submitted, class_name: 'GroupAssignment',
+    foreign_key: 'termination_submitted_by'
+  has_many :group_assignment_terminations_verified, class_name: 'GroupAssignment',
     foreign_key: 'termination_verified_by'
 
   # Mailing process done relation

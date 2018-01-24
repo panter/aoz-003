@@ -1,4 +1,5 @@
-h1= @group_offer.title
+h1 Gruppenangebot
+h2= @group_offer.title
 
 .table-responsive
   table.table.table-no-border-top
@@ -50,17 +51,15 @@ h1= @group_offer.title
           - if @group_offer.all?
             = t_attr(:all)
           - else
-            - GroupOffer::TARGET_GROUP.each do |target|
-              - if @group_offer[target]
-                = t_attr(target)
-                br
+            - GroupOffer::TARGET_GROUP.find_all { |group| @group_offer[group] }.each do |target|
+              = t_attr(target)
+              br
       tr
         td= t_attr(:duration)
         td
-          - GroupOffer::DURATION.each do |duration|
-            - if @group_offer[duration]
-              = t_attr(duration)
-              br
+          - GroupOffer::DURATION.find_all { |duration| @group_offer[duration]  }.each do |duration|
+            = t_attr(duration)
+            br
       tr
         td= t_attr(:availability)
         td
@@ -73,7 +72,8 @@ h1= @group_offer.title
         td= @group_offer.schedule_details
 
 - if @group_offer.group_assignments.any?
-  .table-responsive
+  h2 Aktuelle Gruppeneinsätze
+  .table-responsive.assignments-table
     table.table.table-no-border-top
       thead
         tr
@@ -83,17 +83,47 @@ h1= @group_offer.title
           th= t_attr(:role, GroupAssignment)
           th= t_attr(:period_start, GroupAssignment)
           th= t_attr(:period_end, GroupAssignment)
+          th.hidden-print Aktionen
       tbody
         - @group_offer.group_assignments.each do |group_assignment|
           - if group_assignment.volunteer
             tr
-              - if policy(Volunteer).show?
-                td= link_to group_assignment.volunteer, volunteer_path(group_assignment.volunteer)
-                - if params[:format] == 'pdf'
-                  td= group_assignment.volunteer.contact.primary_email
+              td
+                = link_to_if(policy(Volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
+              - if params[:format] == 'pdf'
+                td= group_assignment.volunteer.contact.primary_email
               td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
               td= l(group_assignment.period_start) if group_assignment.period_start
               td= l(group_assignment.period_end) if group_assignment.period_end
+              td.index-action-cell.hidden-print
+                span= link_to_if(policy(GroupAssignment).edit?, 'Bearbeiten', edit_group_assignment_path(group_assignment), class: 'index-action-link')
+                = link_to_if(group_assignment.period_end.blank? && policy(GroupAssignment).set_end_today?, 'Heute beenden',
+                  set_end_today_group_assignment_path(group_assignment),
+                  data: { method: 'PUT' }, class: 'index-action-link') { '' }
+                = link_to_if(group_assignment.period_end.present? && policy(GroupAssignment).terminate?, 'Beendigungsformular an Freiwillige/n',
+                  polymorphic_path([group_assignment, ReminderMailing], action: :new_termination),
+                  class: 'index-action-link') { '' }
+
+- if @group_offer.group_assignment_logs.any?
+  h2 Archivierte Gruppeneinsätze
+  .table-responsive.log-table.m-b-20
+    table.table.table-no-border-top
+      thead
+        tr
+          th Freiwillige/r
+          th Funktion
+          th Anfangsdatum
+          th Enddatum
+          th Archiviert am
+      tbody
+        - @group_offer.group_assignment_logs.order('created_at desc').each do |ga_log|
+          tr
+            td= link_to_if(policy(Volunteer).show?, ga_log.volunteer.contact.full_name,
+              volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
+            td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
+            td= l(ga_log.period_start) if ga_log.period_start
+            td= l(ga_log.period_end) if ga_log.period_end
+            td= l(ga_log.created_at)
 
 - unless params[:format] == 'pdf'
   = form_navigation_btn :edit

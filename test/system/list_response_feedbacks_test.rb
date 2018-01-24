@@ -120,10 +120,10 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     wait_for_ajax
     assert page.has_text? future
     click_button 'Schliessen'
+    wait_for_ajax
     page.find('td', text: achievements.truncate(300)).click
     wait_for_ajax
     assert page.has_text? achievements
-    click_button 'Schliessen'
   end
 
   test 'Creating new trial feedback reminder if no active mail template redirect to creating one' do

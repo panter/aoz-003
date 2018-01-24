@@ -57,7 +57,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
@@ -70,7 +69,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
@@ -83,7 +81,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
-    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
@@ -96,7 +93,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @department_manager
     visit terminate_assignment_path(@assignment)
-    click_link 'Beendigung Abschliessen'
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
@@ -109,7 +105,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    click_link 'Beendigung Abschliessen'
     refute page.find_field('I waived the compensation of my expenses.').checked?
     page.check('assignment_volunteer_attributes_waive')
     page.accept_confirm do

@@ -11,6 +11,24 @@ class GroupAssignmentsController < ApplicationController
     end
   end
 
+  def edit; end
+
+  def update
+    if @group_assignment.update(group_assignment_params)
+      redirect_to @group_assignment.group_offer, make_notice
+    else
+      render :edit
+    end
+  end
+
+  def set_end_today
+    if @group_assignment.update(period_end: Time.zone.today)
+      redirect_to @group_assignment.group_offer, notice: 'Einsatzende erfolgreich gesetzt.'
+    else
+      redirect_to @group_assignment.group_offer, notice: 'Einsatzende konnte nicht gesetzt werden.'
+    end
+  end
+
   def last_submitted_hours_and_feedbacks
     @last_submitted_hours = @group_assignment.hours_since_last_submitted
     @last_submitted_feedbacks = @group_assignment.feedbacks_since_last_submitted
@@ -31,5 +49,9 @@ class GroupAssignmentsController < ApplicationController
   def set_group_assignment
     @group_assignment = GroupAssignment.find(params[:id])
     authorize @group_assignment
+  end
+
+  def group_assignment_params
+    params.require(:group_assignment).permit(:period_start, :period_end, :responsible)
   end
 end

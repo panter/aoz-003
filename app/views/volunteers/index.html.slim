@@ -18,7 +18,7 @@ nav.navbar.section-navigation
 
   ul.list-inline
     li= button_link t('clear_filters'), volunteers_path, dimension: 'sm'
-    li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+    li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
     - if policy(Volunteer).superadmin_privileges?
       = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
       = boolean_toggler_filter_dropdown(:active, 'Einsatz', 'Aktiv', 'Inaktiv')

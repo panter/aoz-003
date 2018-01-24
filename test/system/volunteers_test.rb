@@ -176,7 +176,7 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'volunteer_pagination' do
-    Volunteer.with_deleted.map(&:really_destroy!)
+    really_destroy_with_deleted(Volunteer)
     second_page_volunteers = (1..20).to_a.map do
       volunteer = create :volunteer
       volunteer.update created_at: 10.days.ago
@@ -191,10 +191,12 @@ class VolunteersTest < ApplicationSystemTestCase
     end
     visit volunteers_path
     first(:link, '2').click
+    visit current_url
 
     assert page.has_css? '.pagination'
-    second_page_volunteers.each do |volunteer|
-      assert page.has_text? volunteer.contact.last_name
+    Volunteer.order('created_at desc').paginate(page: 2).each do |volunteer|
+      assert page.has_text? "#{volunteer.contact.full_name} #{volunteer.contact.city}"\
+        " #{volunteer.contact.postal_code}"
     end
   end
 

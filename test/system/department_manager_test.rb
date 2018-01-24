@@ -61,7 +61,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     visit volunteer_path(volunteer)
     assert page.has_link? group_offer.title
     assert page.has_link? assignment.client.contact.full_name
-    refute page.has_link? 'Delete'
+    refute page.has_link? 'Löschen'
     refute page.has_link? 'New Feedback'
     refute page.has_link? 'Feedback index'
   end

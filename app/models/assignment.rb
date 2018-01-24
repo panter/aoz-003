@@ -53,15 +53,14 @@ class Assignment < ApplicationRecord
 
   def create_log_of_self
     return false if running? # prevent deleting of running assignment
-    log = AssignmentLog.new(attributes.except('id', 'created_at', 'updated_at'))
-    log.assignment = self
-    log.save
+    AssignmentLog.create(
+      attributes.except('id', 'created_at', 'updated_at').merge(assignment_id: id)
+    )
   end
 
   private
 
   def create_log_of_self_and_delete_self
-    create_log_of_self
-    delete
+    delete if create_log_of_self
   end
 end

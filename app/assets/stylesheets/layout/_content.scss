@@ -183,3 +183,8 @@ li.button-acceptance a {
 .bg-resigned {
   background-color: lighten($gray-base, 80%);
 }
+
+.log-table {
+  max-height: 150px;
+  overflow-y: auto;
+}

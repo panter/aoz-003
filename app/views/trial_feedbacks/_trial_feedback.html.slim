@@ -16,4 +16,4 @@ tr
     td.index-action-cell.hidden-print
       span= link_to t_action(:show), polymorphic_path([trial_feedback.volunteer, trial_feedback.trial_feedbackable, trial_feedback])
       span= link_to t_action(:edit), edit_polymorphic_path([trial_feedback.volunteer, trial_feedback.trial_feedbackable, trial_feedback])
-      span= link_to navigation_glyph('delete'), polymorphic_path([trial_feedback.volunteer, trial_feedback.trial_feedbackable, trial_feedback]), confirm_deleting(trial_feedback)
+      span= link_to navigation_glyph(:delete), polymorphic_path([trial_feedback.volunteer, trial_feedback.trial_feedbackable, trial_feedback]), confirm_deleting(trial_feedback)

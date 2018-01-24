@@ -36,7 +36,7 @@ class JournalsTest < ApplicationSystemTestCase
     first('a', text: 'Edit').click
     assert page.has_text? 'Edit Journal'
     page.accept_confirm do
-      first('a', text: 'Delete').click
+      first('a', text: 'Löschen').click
     end
     assert page.has_text? 'Journal was successfully deleted.'
     click_link 'Journal'
