@@ -22,11 +22,8 @@ class VolunteerPolicyTest < PolicyAssertions::Test
 
   test 'social_worker_has_limited_access' do
     social_worker = create :social_worker
-    social_worker_volunteer = create :volunteer, registrar: social_worker
     assert_permit(social_worker, Volunteer, *@actions[0..3], *@actions[6..8])
-    refute_permit(social_worker, social_worker_volunteer, *@actions[4..5])
-    refute_permit(social_worker, create(:volunteer), *@actions[4..5])
-    refute_permit(social_worker, Volunteer, *@actions[-2..-1])
+    refute_permit(social_worker, Volunteer, *@actions[4..5], *@actions[-2..-1])
   end
 
   test 'volunteer_has_limited_access' do
