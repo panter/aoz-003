@@ -54,6 +54,7 @@ group :production, :development do
 end
 
 group :development, :test do
+  gem 'minitest', '~> 5.10.3'
   gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_callers'
