@@ -875,10 +875,6 @@ de:
           registered: Interessiert
           resigned: Beendet
     placeholders:
-    hints:
-      assignment:
-        volunteer:
-          waive: Einstellung im Freiwilligenprofil
       volunteer:
         external: Externe Freiwillige stehen nicht in direkter Verbindung mit der AOZ.
     required:
