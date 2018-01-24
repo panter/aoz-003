@@ -1,5 +1,10 @@
 class GroupAssignmentsController < ApplicationController
-  before_action :set_group_assignment
+  before_action :set_group_assignment, except: [:index]
+
+  def index
+    authorize GroupAssignment
+    @group_assignments = GroupAssignment.all
+  end
 
   def show
     respond_to do |format|
