@@ -23,9 +23,9 @@ class GroupAssignmentsController < ApplicationController
 
   def set_end_today
     if @group_assignment.update(period_end: Time.zone.today)
-      redirect_to @group_assignment.group_offer, notice: 'Ende erfolgreich gesetzt.'
+      redirect_to @group_assignment.group_offer, notice: 'Einsatzende erfolgreich gesetzt.'
     else
-      redirect_to @group_assignment.group_offer, notice: 'Ende Konte nicht gesetzt werden.'
+      redirect_to @group_assignment.group_offer, notice: 'Einsatzende konnte nicht gesetzt werden.'
     end
   end
 
