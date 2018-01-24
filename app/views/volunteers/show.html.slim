@@ -7,10 +7,10 @@ h1= @volunteer.contact.full_name
 
 nav.navbar.section-navigation
   ul.list-inline.pull-right
-    - if policy(Volunteer).can_manage?
+    - if policy(Volunteer).superadmin_privileges?
         li= button_link 'Journal', polymorphic_path([@volunteer, Journal]), 'primary'
   ul.list-inline
-    - if policy(Volunteer).acceptance?
+    - if policy(Volunteer).superadmin_privileges?
       li.button-acceptance = link_to t(".acceptance.#{@volunteer.acceptance}"), '#',
         class: "btn btn-acceptance-#{@volunteer.acceptance}"
       ul.list-inline
@@ -36,7 +36,7 @@ nav.navbar.section-navigation
     li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
     li= form_navigation_btn :back, with_row: false unless current_user.volunteer?
 
-- if policy(Volunteer).checklist?
+- if policy(Volunteer).superadmin_privileges?
   h3= t('checklist')
   .table-responsive
     table.table.table-no-border-top

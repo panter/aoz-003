@@ -13,6 +13,7 @@ class User < ApplicationRecord
 
   has_many :certificates
   has_many :clients
+  has_many :volunteers, inverse_of: 'registrar', foreign_key: 'registrar_id'
   has_many :involved_authorities, class_name: 'Client'
   has_many :journals
   has_many :assignments, inverse_of: 'creator', foreign_key: 'creator_id'

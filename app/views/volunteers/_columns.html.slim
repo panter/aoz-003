@@ -18,7 +18,7 @@
         th= sort_link @q, :working_percent
         th= sort_link @q, :expectations
         th= sort_link @q, :interests
-        - if policy(Volunteer).acceptance?
+        - if policy(Volunteer).superadmin_privileges?
           th= sort_link @q, :acceptance
         th= sort_link @q, :external
         th= t_attr(:created_by)

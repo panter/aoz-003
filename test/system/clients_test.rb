@@ -214,7 +214,7 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? client_social_worker
     refute page.has_text? client
     assert page.has_link? 'Show'
-    refute page.has_link? 'Edit'
+    assert page.has_link? 'Edit'
     refute page.has_link? 'Delete'
 
     login_as social_worker

@@ -2,62 +2,27 @@ require 'test_helper'
 
 class ClientPolicyTest < PolicyAssertions::Test
   def setup
-    @superadmin = create :user, :with_clients, role: 'superadmin'
-    @social_worker = create :user, :with_clients, role: 'social_worker'
-    @department_manager = create :department_manager
+    @actions = ['index?', 'search?', 'new?', 'create?', 'show?', 'edit?', 'update?', 'termination?',
+                'destroy?', 'superadmin_privileges?']
   end
 
-  test 'Create: superadmin can create' do
-    assert_permit @superadmin, Client, 'new?', 'create?'
+  test 'superadmin_can_use_all_actions' do
+    assert_permit(create(:user), Client, *@actions)
   end
 
-  test 'Create: department manager can create' do
-    assert_permit @department_manager, Client, 'new?', 'create?'
+  test 'department_manager_has_limited_access' do
+    department_manager = create :department_manager, :with_clients
+    assert_permit(department_manager, Client, *@actions[0..4])
+    assert_permit(department_manager, Client.first, *@actions[5..7])
+    refute_permit(department_manager, create(:client), *@actions[5..7])
+    refute_permit(department_manager, Client, *@actions[-2..-1])
   end
 
-  test 'Destroy: superadmin can destroy' do
-    assert_permit @superadmin, Client.first, 'destroy?'
-  end
-
-  test 'Destroy: social worker cannot destroy' do
-    refute_permit @social_worker, Client.first, 'destroy?'
-  end
-
-  test 'Destroy: department manager cannot destroy' do
-    refute_permit @department_manager, Client.first, 'destroy?'
-  end
-
-  test 'Update: superadmin can update her client' do
-    assert_permit @superadmin, @superadmin.clients.first, 'update?', 'edit?'
-  end
-
-  test 'Update: superadmin can update others client' do
-    assert_permit @superadmin, @social_worker.clients.first, 'update?', 'edit?'
-  end
-
-  test 'Update: social worker can update her client' do
-    assert_permit @social_worker, @social_worker.clients.first, 'update?', 'edit?'
-  end
-
-  test 'Update: social worker cannot update others client' do
-    refute_permit @social_worker, @superadmin.clients.first, 'update?', 'edit?'
-  end
-
-  test 'Update: department manager cannot update clients' do
-    refute_permit @department_manager, Client.first, 'update?', 'edit?'
-  end
-
-  test 'Show: department manager can show clients' do
-    assert_permit @department_manager, Client.first, 'show?'
-  end
-
-  test 'Show: superadmin can see all clients' do
-    Client.all.each do |client|
-      assert_permit @superadmin, client, 'show?'
-    end
-  end
-
-  test 'Index: department manager cannot index clients' do
-    assert_permit @department_manager, Client.first, 'index?'
+  test 'social_worker_has_limited_access' do
+    social_worker = create :social_worker, :with_clients
+    assert_permit(social_worker, Client, *@actions[0..4])
+    assert_permit(social_worker, Client.first, *@actions[5..6])
+    refute_permit(social_worker, create(:client), *@actions[5..6])
+    refute_permit(social_worker, Client, *@actions[-3..-1])
   end
 end

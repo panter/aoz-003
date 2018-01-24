@@ -8,26 +8,22 @@ class VolunteerPolicy < ApplicationPolicy
     alias :seeking_clients :resolve
   end
 
-  # controller action policies
-  alias_method :index?,           :superadmin_or_department_manager_or_social_worker?
-  alias_method :seeking_clients?, :superadmin_or_department_manager?
-
-  alias_method :search?,          :user_managing_volunteer?
-  alias_method :new?,             :user_managing_volunteer?
-  alias_method :create?,          :user_managing_volunteer?
-
-  alias_method :destroy?,         :superadmin?
-
   def volunteer_managing_or_volunteers_profile?
-    user_managing_volunteer? || user_owns_record?
+    superadmin_or_department_manager_or_social_worker? || user_owns_record?
   end
 
-  alias_method :show?,   :volunteer_managing_or_volunteers_profile?
-  alias_method :edit?,   :volunteer_managing_or_volunteers_profile?
-  alias_method :update?, :volunteer_managing_or_volunteers_profile?
+  # controller action policies
+  alias_method :index?,           :superadmin_or_department_manager_or_social_worker?
+  alias_method :search?,          :superadmin_or_department_manager_or_social_worker?
+  alias_method :new?,             :superadmin_or_department_manager_or_social_worker?
+  alias_method :create?,          :superadmin_or_department_manager_or_social_worker?
+  alias_method :seeking_clients?, :superadmin_or_department_manager?
+  alias_method :termination?,     :superadmin_or_department_managers_registration?
+  alias_method :show?,            :volunteer_managing_or_volunteers_profile?
+  alias_method :edit?,            :volunteer_managing_or_volunteers_profile?
+  alias_method :update?,          :volunteer_managing_or_volunteers_profile?
+  alias_method :destroy?,         :superadmin?
 
-  # suplementary policies
-  alias_method :can_manage?, :superadmin?
-  alias_method :acceptance?, :superadmin?
-  alias_method :checklist?,  :superadmin?
+  # supplementary policies
+  alias_method :superadmin_privileges?, :superadmin?
 end
