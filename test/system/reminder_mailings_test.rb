@@ -154,7 +154,11 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     first('.day',  exact_text: '17').click
     click_button 'Update Assignment'
 
-    assert page.has_current_path? new_termination_assignment_reminder_mailings_path(@assignment)
+    assert page.has_current_path? terminated_index_assignments_path
+    within '.table-responsive' do
+      click_link 'Beendigungs Email erstellen', href: new_termination_assignment_reminder_mailings_path(@assignment)
+    end
+
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
     assert page.has_link? @volunteer_assignment.contact.full_name, href: volunteer_path(@volunteer_assignment)
 
@@ -173,7 +177,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_link? @volunteer_assignment.contact.full_name,
       href: volunteer_path(@volunteer_assignment)
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
-    click_link 'Emails versenden'
+    click_link 'Email versenden'
     creator = ReminderMailing.order('created_at asc').last.creator
     assert page.has_link? creator.full_name
 
