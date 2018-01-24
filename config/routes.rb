@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   resources :profiles, except: [:destroy, :index]
   resources :group_offer_categories, except: [:destroy]
   resources :feedbacks, only: [:new, :create]
-  resources :group_assignments, only: [:show, :edit, :update],
+  resources :group_assignments, only: [:index, :show, :edit, :update],
     concerns: [:update_submitted_at, :hours_resources, :termination_mailing] do
 
     put :set_end_today, on: :member
