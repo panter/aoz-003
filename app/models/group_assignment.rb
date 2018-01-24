@@ -10,6 +10,9 @@ class GroupAssignment < ApplicationRecord
 
   delegate :title, to: :group_offer
 
+  has_many :hours, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
+  has_many :feedbacks, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
+
   validates :volunteer, uniqueness: {
     scope: :group_offer,
     message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
