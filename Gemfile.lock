@@ -263,7 +263,7 @@ GEM
       activerecord (>= 4.0, < 5.2)
     parser (2.4.0.2)
       ast (~> 2.3)
-    pg (1.0.0)
+    pg (0.21.0)
     policy-assertions (0.1.1)
       activesupport (>= 3.0.0)
       pundit (>= 1.0.0)
@@ -464,7 +464,7 @@ DEPENDENCIES
   panter-rails-deploy
   paperclip
   paranoia
-  pg
+  pg (~> 0.21)
   policy-assertions
   pry-byebug
   pry-rails
