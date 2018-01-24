@@ -248,12 +248,20 @@ ActiveRecord::Schema.define(version: 20180123171535) do
     t.date "period_end"
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
+    t.bigint "period_end_set_by_id"
+    t.bigint "termination_submitted_by_id"
+    t.bigint "termination_verified_by_id"
+    t.datetime "termination_submitted_at"
+    t.datetime "termination_verified_at"
     t.datetime "submitted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
     t.index ["group_assignment_id"], name: "index_group_assignment_logs_on_group_assignment_id"
     t.index ["group_offer_id"], name: "index_group_assignment_logs_on_group_offer_id"
+    t.index ["period_end_set_by_id"], name: "index_group_assignment_logs_on_period_end_set_by_id"
+    t.index ["termination_submitted_by_id"], name: "index_group_assignment_logs_on_termination_submitted_by_id"
+    t.index ["termination_verified_by_id"], name: "index_group_assignment_logs_on_termination_verified_by_id"
     t.index ["title"], name: "index_group_assignment_logs_on_title"
     t.index ["volunteer_id"], name: "index_group_assignment_logs_on_volunteer_id"
   end
@@ -267,8 +275,16 @@ ActiveRecord::Schema.define(version: 20180123171535) do
     t.datetime "deleted_at"
     t.boolean "active", default: true
     t.datetime "submitted_at"
+    t.bigint "period_end_set_by_id"
+    t.bigint "termination_submitted_by_id"
+    t.bigint "termination_verified_by_id"
+    t.datetime "termination_submitted_at"
+    t.datetime "termination_verified_at"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
+    t.index ["period_end_set_by_id"], name: "index_group_assignments_on_period_end_set_by_id"
+    t.index ["termination_submitted_by_id"], name: "index_group_assignments_on_termination_submitted_by_id"
+    t.index ["termination_verified_by_id"], name: "index_group_assignments_on_termination_verified_by_id"
     t.index ["volunteer_id", "group_offer_id", "active"], name: "group_assignment_group_offer_volunteer", unique: true
     t.index ["volunteer_id"], name: "index_group_assignments_on_volunteer_id"
   end
