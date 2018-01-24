@@ -228,7 +228,7 @@ GEM
     mimemagic (0.3.2)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.11.1)
+    minitest (5.10.3)
     money (6.10.1)
       i18n (>= 0.6.4, < 1.0)
     multi_json (1.13.1)
@@ -459,6 +459,7 @@ DEPENDENCIES
   letter_opener
   listen
   mdb
+  minitest (~> 5.10.3)
   overcommit
   panter-rails-deploy
   paperclip
