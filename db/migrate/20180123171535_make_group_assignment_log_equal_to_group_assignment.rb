@@ -16,13 +16,11 @@ class MakeGroupAssignmentLogEqualToGroupAssignment < ActiveRecord::Migration[5.1
       t.datetime :termination_submitted_at
       t.datetime :termination_verified_at
       t.datetime :submitted_at
-      t.timestamps
     end
-  end
 
-  def up
-    GroupAssignmentLog.where(created_at: nil).map do |gal|
-      gal.update(created_at: Time.zone.now)
-    end
+    add_timestamps :group_assignment_logs, null: true
+    GroupAssignmentLog.update_all(created_at: Time.zone.now, updated_at: Time.zone.now)
+    change_column_null :group_assignment_logs, :created_at, false
+    change_column_null :group_assignment_logs, :updated_at, false
   end
 end
