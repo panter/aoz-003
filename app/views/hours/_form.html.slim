@@ -1,4 +1,4 @@
-= simple_form_for([@volunteer, @hour.hourable, @hour], url: polymorphic_path([@volunteer, @hour.hourable, @hour], redirect_to: params[:redirect_to])) do |f|
+= simple_form_for(*@simple_form_for_params) do |f|
   = simple_error_notice f
   = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
 
