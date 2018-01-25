@@ -8,6 +8,9 @@ class GroupAssignment < ApplicationRecord
 
   has_many :group_assignment_logs
 
+  has_many :hours, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
+  has_many :feedbacks, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
+
   delegate :title, to: :group_offer
 
   validates :volunteer, uniqueness: {

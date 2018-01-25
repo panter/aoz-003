@@ -63,7 +63,7 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment.assign_attributes(group_assignment_params.except(:volunteer_attributes)
       .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
     if @group_assignment.save && terminate_reminder_mailing
-      redirect_to @group_assignment.group_offer,
+      redirect_to @group_assignment.volunteer,
         notice: 'Der Gruppeneinsatz ist hiermit abgeschlossen.'
     else
       redirect_back(fallback_location: terminate_group_assignment_path(@group_assignment))

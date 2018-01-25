@@ -19,7 +19,7 @@ dl.dl-horizontal
     = " - #{@group_assignment.group_offer_category.category_name}" if @group_assignment.group_offer_category.present?
     - if @group_assignment.department.present?
       = ' - '
-      = link_to_if(policy(Department).show?, @group_assignment.department.to_s,
+      = link_to_if(policy(Department).index?, @group_assignment.department.to_s,
         @group_assignment.department, target: '_blank')
   dt Einsatz dauer:
   dd= "#{l(@group_assignment.period_start)} bis #{l(@group_assignment.period_end)}"

@@ -9,8 +9,7 @@ class HoursController < ApplicationController
   def show; end
 
   def new
-    @hour = Hour.new(volunteer: @volunteer)
-    @hour.hourable = find_hourable || find_hourable_submit_form
+    @hour = Hour.new(volunteer: @volunteer, hourable: find_hourable)
     authorize @hour
     @simple_form_for_params = [
       [@volunteer, @hour.hourable, @hour],
@@ -57,14 +56,12 @@ class HoursController < ApplicationController
   private
 
   def find_hourable
-    return false unless params[:assignment_id] || params[:group_assignment_id]
     Assignment.find_by(id: params[:assignment_id]) ||
-      GroupAssignment.find_by(id: params[:group_assignment_id])
+      GroupOffer.find_by(id: params[:group_offer_id])
   end
 
   def find_hourable_submit_form
-    return @hour.hourable if @hour.hourable&.assignment?
-    GroupAssignment.find_by(id: params[:group_assignment])
+    GroupAssignment.find_by(id: params[:group_assignment]) || find_hourable
   end
 
   def set_hour
