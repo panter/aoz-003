@@ -60,9 +60,14 @@ class AssignmentsController < ApplicationController
   end
 
   def update
-    if @assignment.update(assignment_params)
+    @assignment.assign_attributes(assignment_params)
+    if @assignment.will_save_change_to_period_end?
+      @assignment.period_end_set_by = current_user
+    end
+    if @assignment.save
       if @assignment.saved_change_to_period_end?(from: nil) && @assignment.ended?
-        redirect_to terminated_index_assignments_path
+        redirect_to terminated_index_assignments_path,
+          notice: 'Die Einsatzbeendung wurde initiiert.'
       else
         redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
       end
@@ -152,7 +157,8 @@ class AssignmentsController < ApplicationController
       :client_id, :volunteer_id, :period_start, :period_end, :waive,
       :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
-      volunteer_attributes: [:waive]
+      :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
+      :term_feedback_transfair, volunteer_attributes: [:waive]
     )
   end
 end

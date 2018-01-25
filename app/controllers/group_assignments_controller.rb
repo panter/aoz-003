@@ -21,13 +21,13 @@ class GroupAssignmentsController < ApplicationController
   def edit; end
 
   def update
-    if @group_assignment.update(group_assignment_params)
-      if @group_assignment.saved_change_to_period_end? && @group_assignment.ended?
-        redirect_to terminated_index_group_assignments_path,
-          notice: 'Einsatzende wurde erfolgreich gesetzt.'
-      else
-        redirect_to @group_assignment.group_offer, make_notice
-      end
+    @group_assignment.assign_attributes(group_assignment_params)
+    if @group_assignment.will_save_change_to_period_end? && @group_assignment.ended?
+      @group_assignment.period_end_set_by = current_user
+      period_end_set_notice = { notice: 'Einsatzende wurde erfolgreich gesetzt.' }
+    end
+    if @group_assignment.save
+      redirect_to @group_assignment.group_offer, period_end_set_notice || make_notice
     else
       render :edit
     end
