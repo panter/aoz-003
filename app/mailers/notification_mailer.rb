@@ -3,6 +3,6 @@ class NotificationMailer < ApplicationMailer
     @assignment = assignment
     @subject = "Beendigung des Einsatzes bestätigt durch #{assignment.termination_submitted_by.email}"
 
-    mail(to: assignment.creator.email, subject: @subject)
+    mail(to: assignment.period_end_set_by.email, subject: @subject)
   end
 end
