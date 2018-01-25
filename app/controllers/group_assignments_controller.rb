@@ -1,9 +1,11 @@
 class GroupAssignmentsController < ApplicationController
-  before_action :set_group_assignment, except: [:index]
+  before_action :set_group_assignment, except: [:terminated_index]
 
-  def index
+  def terminated_index
     authorize GroupAssignment
-    @group_assignments = GroupAssignment.all
+    @q = policy_scope(GroupAssignment).ended.ransack(params[:q])
+    @q.sorts = ['updated_at desc'] if @q.sorts.empty?
+    @group_assignments = @q.result
   end
 
   def show

@@ -1,0 +1,61 @@
+h1 Beendete Gruppen Begleitungen
+
+nav.navbar.section-navigation.hidden-print
+  hr
+  ul.list-inline
+    li= button_link 'Zurück zu Gruppenangeboten', group_offers_path, dimension: :sm
+    li= button_link 'Filter aufheben',
+      terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }), dimension: :sm
+    = custom_filter_dropdown('Ende Bestätigt',
+      { q: :termination_submitted_by_id_not_null, text: 'Bestätigt', value: 'true' },
+      { q: :termination_submitted_by_id_null, text: 'Unbestätigt', value: 'true' })
+    - if policy(GroupAssignment).verify_termination?
+      = custom_filter_dropdown('Quittiert',
+        { q: :termination_verified_by_id_not_null, text: 'Quittiert', value: 'true' },
+        { q: :termination_verified_by_id_null, text: 'Unquittiert', value: 'true' })
+
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th= sort_link @q, :volunteer_contact_last_name, 'Frewillige/r'
+        th= sort_link @q, :title, 'Bezeichnung'
+        th= sort_link @q, :period_start, t_attr(:period_start, GroupAssignment)
+        th= sort_link @q, :period_end, t_attr(:period_end, GroupAssignment)
+        th Email Status
+        th Bestätigt
+        th colspan=(policy(GroupAssignment).verify_termination? ? '3' : '2') Aktionen
+
+    tbody
+      - @group_assignments.each do |assignment|
+        tr
+          td= link_to assignment.volunteer.contact.full_name, volunteer_path(assignment.volunteer)
+          td= link_to assignment.title
+          td= l(assignment.period_start) if assignment.period_start
+          td= l(assignment.period_end) if assignment.period_end
+          td
+            - if assignment.reminder_mailings.termination.blank?
+              = link_to 'Beendigungs Email erstellen', new_termination_group_assignment_reminder_mailings_path(assignment), class: 'index-action-link'
+            - elsif assignment.reminder_mailings.termination.first.sending_triggered
+              = link_to "Übermittelt am #{l(assignment.reminder_mailings.termination.last.updated_at.to_date)}",
+                reminder_mailing_path(assignment.reminder_mailings.termination.last), class: 'index-action-link'
+            - else
+              = link_to 'Nicht versandt', reminder_mailing_path(assignment.reminder_mailings.termination.last), class: 'index-action-link'
+          td= boolean_glyph(assignment.termination_submitted_by.present?)
+          td.index-action-cell
+            = link_to 'Anzeigen', group_offer_path(assignment.group_offer), class: 'index-action-link'
+            = link_to 'Bearbeiten', edit_group_assignment_path(assignment), class: 'index-action-link'
+          td.index-action-cell
+            = link_to 'Beendigungsformular', terminate_group_assignment_path(assignment), class: 'index-action-link'
+            = link_to 'Dossier Freiwillig engagiert erstellen', new_volunteer_certificate_path(assignment.volunteer), class: 'index-action-link'
+            = link_to 'Freiwillige/n beenden', '#', class: 'index-action-link'
+            - if policy(GroupAssignment).verify_termination?
+              td
+                - if assignment.termination_verified_by.blank?
+                  = link_to 'Beendigung Quittieren', verify_termination_group_assignment_path(assignment),
+                    class: 'btn btn-default',
+                    data: { method: 'PATCH' }
+                - else
+                  = "Quittiert von "
+                  = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
+                  = " am #{l(assignment.termination_verified_at.to_date)}"
