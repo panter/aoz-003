@@ -45,7 +45,8 @@
 }
 
 .index-action-cell {
-  span {
+  span,
+  a {
     display: block;
     margin-top: 5px;
 
@@ -55,6 +56,19 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:nth-child(n + 2) {
+      margin-top: 2px;
     }
   }
 }

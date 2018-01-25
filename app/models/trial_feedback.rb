@@ -19,11 +19,6 @@ class TrialFeedback < ApplicationRecord
     trial_feedbackable_type == 'GroupOffer'
   end
 
-  def trial_feedbackable_link_target
-    return trial_feedbackable if assignment?
-    trial_feedbackable.group_offer
-  end
-
   def trial_feedbackable_id_and_type=(id_and_type)
     self.trial_feedbackable_id, self.trial_feedbackable_type = id_and_type.split(',', 2)
   end

@@ -10,6 +10,10 @@ module GroupAssignmentCommon
     has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
     has_one :group_offer_category, through: :group_offer
 
+    has_many :hours, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
+    has_many :feedbacks, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
+    has_one :department, through: :group_offer
+
     # termination record relations
     belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true
     belongs_to :termination_submitted_by, -> { with_deleted }, class_name: 'User', optional: true

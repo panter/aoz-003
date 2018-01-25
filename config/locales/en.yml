@@ -1,6 +1,16 @@
 ---
 en:
   aaa_injectable: &id-injectables
+    termination_attributes: &id-termination-attrs
+      term_feedback_activities: 'Endfeedback: Hauptaktivitäten'
+      term_feedback_success: 'Endfeedback: Erfolge'
+      term_feedback_problems: 'Endfeedback: Probleme'
+      term_feedback_transfair: 'Endfeedback: TransFair'
+    termination_feedback_questions: &id-termination-feedback-quests
+      term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
+      term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
+      term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
+      term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
     reminder_mailings:
       kinds: &id-kinds-enum-values
         trial_period: Probezeit
@@ -234,6 +244,7 @@ en:
   activerecord:
     attributes:
       assignment:
+        <<: *id-termination-attrs
         period: Period
         period_end: End date
         period_start: Start date
@@ -269,6 +280,7 @@ en:
         subject: Betreff
         body: Text
       group_assignment:
+        <<: *id-termination-attrs
         member: Member
         responsible: Responsible
       hour:
@@ -637,10 +649,9 @@ en:
       default_message: 'Please review the problems below:'
     labels:
       assignment:
-        term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
-        term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
-        term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
-        term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
+        <<: *id-termination-feedback-quests
+      group_assignment:
+        <<: *id-termination-feedback-quests
       volunteer:
         expectations: What do you expect from a person who would accompany you / your volunteer work?
         experience: Please check this field if you already have some experience with voluntary work.
