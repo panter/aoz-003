@@ -19,10 +19,10 @@ module GroupAssignmentCommon
     belongs_to :termination_submitted_by, -> { with_deleted }, class_name: 'User', optional: true
     belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true
 
-    scope :termination_submitted, (-> { where.not(termination_submitted_by_id: nil) })
-    scope :termination_not_submitted, (-> { where(termination_submitted_by_id: nil) })
-    scope :unterminated, (-> { where(termination_verified_by_id: nil) })
-    scope :terminated, (-> { where.not(termination_verified_by_id: nil) })
+    scope :termination_submitted, (-> { where('termination_submitted_by_id IS NOT NULL') })
+    scope :termination_not_submitted, (-> { where('termination_submitted_by_id IS NULL') })
+    scope :unterminated, (-> { where('termination_verified_by_id IS NULL') })
+    scope :terminated, (-> { where('termination_verified_by_id IS NOT NULL') })
 
     def to_label
       label_parts.compact.join(' - ')
