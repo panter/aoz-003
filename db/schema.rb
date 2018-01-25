@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180123171535) do
+ActiveRecord::Schema.define(version: 20180124125446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,6 +256,10 @@ ActiveRecord::Schema.define(version: 20180123171535) do
     t.datetime "submitted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "term_feedback_activities"
+    t.text "term_feedback_success"
+    t.text "term_feedback_problems"
+    t.text "term_feedback_transfair"
     t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
     t.index ["group_assignment_id"], name: "index_group_assignment_logs_on_group_assignment_id"
     t.index ["group_offer_id"], name: "index_group_assignment_logs_on_group_offer_id"
@@ -280,6 +284,10 @@ ActiveRecord::Schema.define(version: 20180123171535) do
     t.bigint "termination_verified_by_id"
     t.datetime "termination_submitted_at"
     t.datetime "termination_verified_at"
+    t.text "term_feedback_activities"
+    t.text "term_feedback_success"
+    t.text "term_feedback_problems"
+    t.text "term_feedback_transfair"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["period_end_set_by_id"], name: "index_group_assignments_on_period_end_set_by_id"
