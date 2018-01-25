@@ -117,7 +117,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
 
     # Assignment has an end-date, but no reminder mailing was created
-    click_link 'Beendigungs Email erstellen',
+    click_link 'beendigungs_email_erstellen',
       href: new_termination_assignment_reminder_mailings_path(@un_submitted)
     click_button 'Erstellen und Vorschau anzeigen'
     click_link 'Zurück'
@@ -130,8 +130,8 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     # Assignment has an end-date, reminder mailing was created and was sent
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
     @un_submitted.reload
-    mailing = @un_submitted.reminder_mailings.termination.last
-    assert page.has_link? "Übermittelt am #{I18n.l(mailing.updated_at.to_date)}",
-      href: reminder_mailing_path(mailing)
+    assert page.has_link? "Quittiert von #{@un_submitted.termination_verified_by.full_name} am"\
+      " #{l(@un_submitted.termination_verified_at.to_date)}",
+      href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
   end
 end
