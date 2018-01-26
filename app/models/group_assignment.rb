@@ -52,7 +52,6 @@ class GroupAssignment < ApplicationRecord
 
   def verify_termination(user)
     update(termination_verified_by: user, termination_verified_at: Time.zone.now)
-    create_log_of_self
   end
 
   private
