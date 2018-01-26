@@ -96,16 +96,16 @@ h2= @group_offer.title
               td= l(group_assignment.period_start) if group_assignment.period_start
               td= l(group_assignment.period_end) if group_assignment.period_end
               td.index-action-cell.hidden-print
-                = link_to_if(policy(GroupAssignment).edit?, 'Bearbeiten', edit_group_assignment_path(group_assignment)) { '' }
+                = link_to_if(policy(group_assignment).edit?, 'Bearbeiten', edit_group_assignment_path(group_assignment)) { '' }
                 - if group_assignment.period_end.blank?
-                  = link_to_if(policy(GroupAssignment).set_end_today?, 'Heute beenden',
+                  = link_to_if(policy(group_assignment).set_end_today?, 'Heute beenden',
                     set_end_today_group_assignment_path(group_assignment),
                     data: { method: 'PUT' }) { '' }
                 - elsif group_assignment.termination_submitted_by_id.blank?
-                  = link_to_if(policy(GroupAssignment).terminate?, 'Beendigungsformular an Freiwillige/n mailen',
+                  = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular an Freiwillige/n mailen',
                     polymorphic_path([group_assignment, ReminderMailing], action: :new_termination),
                     class: 'index-action-link')
-                  = link_to_if(policy(GroupAssignment).terminate?, 'Beendigungsformular ausfüllen',
+                  = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular ausfüllen',
                     polymorphic_path(group_assignment, action: :terminate))
               td
                 - if group_assignment.period_end.present? && policy(GroupAssignment).verify_termination?

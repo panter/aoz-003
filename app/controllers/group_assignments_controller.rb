@@ -71,8 +71,8 @@ class GroupAssignmentsController < ApplicationController
   end
 
   def verify_termination
-    @assignment.verify_termination(current_user)
-    redirect_back(fallback_location: terminated_index_assignments_path)
+    @group_assignment.verify_termination(current_user)
+    redirect_back(fallback_location: terminated_index_group_assignments_path)
     flash[:notice] = 'Der Gruppeneinsatz wurde erfolgreich quittiert.'
   end
 
