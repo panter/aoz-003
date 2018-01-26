@@ -121,7 +121,8 @@ class AssignmentsController < ApplicationController
 
   def create_update_redirect
     if @assignment.saved_change_to_period_end?(from: nil)
-      redirect_to terminated_index_assignments_path, notice: 'Die Einsatzbeendung wurde initiiert.'
+      redirect_to terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' }),
+        notice: 'Die Einsatzbeendung wurde initiiert.'
     else
       redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
     end

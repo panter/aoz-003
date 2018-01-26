@@ -2,7 +2,7 @@ h1 Evaluation nach Abschluss eines Gruppeneinsatzes
 p.lead im Rahmen von TransFair Freiwilligenarbeit
 
 p.text-bigger-1
-  - if @group_assignment.period_end > Time.zone.today
+  - if @group_assignment.ended?
     = "Der Einsatz endet am #{l(@group_assignment.period_end)}"
   - else
     = "Der Einsatz wurde am #{l(@group_assignment.period_end)} beendet"
