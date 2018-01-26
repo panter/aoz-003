@@ -50,6 +50,11 @@ class GroupAssignment < ApplicationRecord
     true
   end
 
+  def verify_termination(user)
+    update(termination_verified_by: user, termination_verified_at: Time.zone.now)
+    create_log_of_self
+  end
+
   private
 
   def handle_archive_after_update_or_destroy
