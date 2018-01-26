@@ -145,8 +145,8 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     query = GroupAssignment.termination_not_submitted
     assert query.include? started_no_end
     assert query.include? started_with_end
-    assert query.include? submitted
-    assert query.include? verified
+    refute query.include? submitted
+    refute query.include? verified
   end
 
   test 'unterminated scope test' do
