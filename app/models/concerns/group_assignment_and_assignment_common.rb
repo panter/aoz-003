@@ -21,6 +21,7 @@ module GroupAssignmentAndAssignmentCommon
     scope :end_in_future, (-> { where("#{model_name.plural}.period_end > ?", Time.zone.today) })
     scope :not_ended, (-> { no_end.or(end_in_future) })
 
+    scope :have_start, (-> { where.not(period_start: nil) })
     scope :no_start, (-> { where(period_start: nil) })
     scope :started, (-> { where("#{model_name.plural}.period_start <= ?", Time.zone.today) })
     scope :will_start, (-> { where("#{model_name.plural}.period_start > ?", Time.zone.today) })

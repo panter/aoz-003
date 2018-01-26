@@ -18,6 +18,8 @@ class GroupAssignment < ApplicationRecord
     message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
   }
 
+  scope :running, (-> { no_end.have_start })
+
   def save_group_assignment_logs
     create_log_of_self(period_start_before_last_save, period_end_before_last_save)
   end
