@@ -108,6 +108,15 @@ class GroupAssignmentsController < ApplicationController
     authorize @group_assignment
   end
 
+  def create_update_redirect
+    if @group_assignment.saved_change_to_period_end?(from: nil)
+      redirect_to terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }),
+        notice: 'Die Einsatzbeendung wurde initiiert.'
+    else
+      redirect_to @group_assignment.group_offer, make_notice
+    end
+  end
+
   def group_assignment_params
     params.require(:group_assignment).permit(
       :period_start, :period_end, :termination_submitted_at, :terminated_at, :responsible,
