@@ -111,6 +111,92 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     refute query.include? started_before_ended_before
   end
 
+  test 'termination_submitted_scope_test' do
+    superadmin = create :user
+    started_no_end = create_group_assignments 100.days.ago, nil
+    started_with_end = create_group_assignments 100.days.ago, 2.days.ago
+    started_with_end.update(period_end_set_by: superadmin)
+    submitted = create_group_assignments 100.days.ago, 2.days.ago
+    submitted.update(period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: superadmin)
+    verified = create_group_assignments 100.days.ago, 2.days.ago
+    verified.update(period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: superadmin, termination_verified_at: 2.days.ago,
+      termination_verified_by: superadmin)
+    query = GroupAssignment.termination_submitted
+    refute query.include? started_no_end
+    refute query.include? started_with_end
+    assert query.include? submitted
+    refute query.include? verified
+  end
+
+  test 'termination_not_submitted scope test' do
+    superadmin = create :user
+    started_no_end = create_group_assignments 100.days.ago, nil
+    started_with_end = create_group_assignments 100.days.ago, 2.days.ago
+    started_with_end.update(period_end_set_by: superadmin)
+    submitted = create_group_assignments 100.days.ago, 2.days.ago
+    submitted.update(period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: superadmin)
+    verified = create_group_assignments 100.days.ago, 2.days.ago
+    verified.update(period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: superadmin, termination_verified_at: 2.days.ago,
+      termination_verified_by: superadmin)
+    query = GroupAssignment.termination_not_submitted
+    assert query.include? started_no_end
+    assert query.include? started_with_end
+    refute query.include? submitted
+    refute query.include? verified
+  end
+
+  test 'unterminated scope test' do
+    superadmin = create :user
+    started_no_end = create_group_assignments 100.days.ago, nil
+    started_with_end = create_group_assignments 100.days.ago, 2.days.ago
+    started_with_end.update(period_end_set_by: superadmin)
+    submitted = create_group_assignments 100.days.ago, 2.days.ago
+    submitted.update(period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: superadmin)
+    verified = create_group_assignments 100.days.ago, 2.days.ago
+    verified.update(period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: superadmin, termination_verified_at: 2.days.ago,
+      termination_verified_by: superadmin)
+    query = GroupAssignment.unterminated
+    assert query.include? started_no_end
+    assert query.include? started_with_end
+    assert query.include? submitted
+    refute query.include? verified
+    query_deleted = GroupAssignment.with_deleted.unterminated
+    assert query_deleted.include? started_no_end
+    assert query_deleted.include? started_with_end
+    assert query_deleted.include? submitted
+    refute query_deleted.include? verified
+  end
+
+  test 'terminated scope test' do
+    superadmin = create :user
+    started_no_end = create_group_assignments 100.days.ago, nil
+    started_with_end = create_group_assignments 100.days.ago, 2.days.ago
+    started_with_end.update(period_end_set_by: superadmin)
+    submitted = create_group_assignments 100.days.ago, 2.days.ago
+    submitted.update(period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: superadmin)
+    verified = create_group_assignments 100.days.ago, 2.days.ago
+    verified.update(period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: superadmin, termination_verified_at: 2.days.ago,
+      termination_verified_by: superadmin)
+    query = GroupAssignment.terminated
+    refute query.include? started_no_end
+    refute query.include? started_with_end
+    refute query.include? submitted
+    refute query.include? verified
+    query_deleted = GroupAssignment.with_deleted.terminated
+    refute query_deleted.include? started_no_end
+    refute query_deleted.include? started_with_end
+    refute query_deleted.include? submitted
+    assert query_deleted.include? verified
+  end
+
   def create_group_assignments(start_date = nil, end_date = nil)
     volunteer = create :volunteer
     volunteer.contact.update(first_name: Faker::Name.first_name)

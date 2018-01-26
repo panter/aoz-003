@@ -142,7 +142,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
   end
 
-  test 'assignment elegible for termination reminder mailing are includable' do
+  test 'assignment_elegible_for_termination_reminder_mailing_are_includable' do
     @assignment = create :assignment, period_start: 7.weeks.ago, period_end: nil,
       volunteer: @volunteer_assignment
     create :email_template_termination
@@ -154,7 +154,9 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     first('.day',  exact_text: '17').click
     click_button 'Update Assignment'
 
-    assert page.has_current_path? terminated_index_assignments_path
+    assert page.has_current_path? terminated_index_assignments_path(
+      q: { termination_verified_by_id_null: 'true' }
+    )
     within '.table-responsive' do
       click_link 'Beendigungs Email erstellen', href: new_termination_assignment_reminder_mailings_path(@assignment)
     end

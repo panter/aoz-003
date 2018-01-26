@@ -58,6 +58,10 @@ class GroupOffer < ApplicationRecord
     false
   end
 
+  def assignment?
+    false
+  end
+
   def external?
     offer_type == EXTERNAL_OFFER
   end

@@ -52,11 +52,9 @@ nav.navbar.section-navigation.hidden-print
             = link_to 'Freiwillige/n beenden', '#', class: 'index-action-link'
             - if policy(Assignment).verify_termination?
               td
-                - if assignment.termination_verified_by.blank?
-                  = link_to 'Beendigung Quittieren', verify_termination_assignment_path(assignment),
-                    class: 'btn btn-default',
-                    data: { method: 'PATCH' }
-                - else
-                  = "Quittiert von "
-                  = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
-                  = " am #{l(assignment.termination_verified_at.to_date)}"
+                = link_to_if(assignment.termination_verified_by.blank?, 'Beendigung Quittieren',
+                  verify_termination_assignment_path(assignment), class: 'btn btn-default',
+                  data: { method: 'PATCH' }) do
+                    = "Quittiert von "
+                    = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
+                    = " am #{l(assignment.termination_verified_at.to_date)}"

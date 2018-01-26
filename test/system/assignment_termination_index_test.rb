@@ -5,12 +5,15 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     @superadmin = create :user
     @volunteer = create :volunteer_with_user
     @not_ended = create :assignment, period_start: 3.weeks.ago, period_end: nil
-    @un_submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago
+    @un_submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
+      period_end_set_by: @superadmin
     @submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
-      termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user
+      termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user,
+      period_end_set_by: @superadmin
     @verified = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
       termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer.user,
-      termination_verified_at: 2.days.ago, termination_verified_by: @superadmin
+      period_end_set_by: @superadmin, termination_verified_at: 2.days.ago,
+      termination_verified_by: @superadmin
     login_as @superadmin
   end
 
@@ -126,12 +129,20 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Nicht versandt', href: reminder_mailing_path(@un_submitted.reminder_mailings
       .termination.last)
     click_link 'Email versenden'
+    assert page.has_text? 'Beendigungs-Email wird versendet.'
 
     # Assignment has an end-date, reminder mailing was created and was sent
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
     @un_submitted.reload
-    mailing = @un_submitted.reminder_mailings.termination.last
-    assert page.has_link? "Übermittelt am #{I18n.l(mailing.updated_at.to_date)}",
-      href: reminder_mailing_path(mailing)
+    assert page.has_link? 'Übermittelt am ',
+      href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
+
+    click_link 'Beendigung Quittieren', href: /assignments\/#{@un_submitted.id}\/verify_termination/
+    assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
+
+    visit terminated_index_assignments_path(q: { termination_verified_by_id_not_null: 'true' })
+    @un_submitted.reload
+    assert page.has_text? "Quittiert von #{@un_submitted.termination_verified_by.full_name} am"\
+      " #{I18n.l(@un_submitted.termination_verified_at.to_date)}"
   end
 end

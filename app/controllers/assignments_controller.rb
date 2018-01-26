@@ -60,12 +60,10 @@ class AssignmentsController < ApplicationController
   end
 
   def update
-    if @assignment.update(assignment_params)
-      if @assignment.saved_change_to_period_end?(from: nil) && @assignment.ended?
-        redirect_to terminated_index_assignments_path
-      else
-        redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
-      end
+    @assignment.assign_attributes(assignment_params)
+    @assignment.period_end_set_by = current_user if @assignment.will_save_change_to_period_end?
+    if @assignment.save
+      create_update_redirect
     else
       render :edit
     end
@@ -121,6 +119,15 @@ class AssignmentsController < ApplicationController
 
   private
 
+  def create_update_redirect
+    if @assignment.saved_change_to_period_end?(from: nil)
+      redirect_to terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' }),
+        notice: 'Die Einsatzbeendung wurde initiiert.'
+    else
+      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
+    end
+  end
+
   def terminate_reminder_mailing
     ReminderMailingVolunteer.termination_for(@assignment).map do |rmv|
       rmv.mark_process_submitted(current_user, terminate_parent_mailing: true)
@@ -152,7 +159,8 @@ class AssignmentsController < ApplicationController
       :client_id, :volunteer_id, :period_start, :period_end, :waive,
       :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
-      volunteer_attributes: [:waive]
+      :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
+      :term_feedback_transfair, volunteer_attributes: [:waive]
     )
   end
 end

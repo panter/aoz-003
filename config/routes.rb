@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
-
-  resources :users do
-    collection do
-      match 'search' => 'users#search', via: :get, as: :search
-    end
-  end
+  # Route Concerns
+  #
 
   concern :update_submitted_at do
     get :last_submitted_hours_and_feedbacks, on: :member
@@ -31,20 +26,7 @@ Rails.application.routes.draw do
     resources :trial_feedbacks, concerns: :mark_submitted_at
   end
 
-  concern :termination_mailing do
-    resources :reminder_mailings do
-      get :new_termination, on: :collection
-      get :send_termination, on: :member
-    end
-  end
-
-  resources :client_notifications, :departments, :performance_reports, :email_templates, :users
-  resources :profiles, except: [:destroy, :index]
-  resources :group_offer_categories, except: [:destroy]
-  resources :feedbacks, only: [:new, :create]
-  resources :group_assignments, only: [:show, :edit, :update],
-    concerns: [:update_submitted_at, :hours_resources, :termination_mailing] do
-
+  concern :termination_actions do
     put :set_end_today, on: :member
 
     member do
@@ -54,24 +36,55 @@ Rails.application.routes.draw do
     end
 
     get :terminated_index, on: :collection
+
+    resources :reminder_mailings do
+      get :new_termination, on: :collection
+      get :send_termination, on: :member
+    end
   end
 
-  resources :assignments, concerns: [:update_submitted_at, :search, :termination_mailing] do
-    member do
-      get :terminate
-      put :update_terminated_at
-      patch :verify_termination
-    end
+  # Resource and other Routes
+  #
 
-    get :terminated_index, on: :collection
+  devise_for :users
+  resources :users do
+    collection do
+      match 'search' => 'users#search', via: :get, as: :search
+    end
+  end
+
+  resources :assignments, concerns: [:update_submitted_at, :search, :termination_actions]
+  resources :client_notifications, :departments, :performance_reports, :email_templates, :users
+
+  resources :clients, concerns: :search do
+    resources :journals, except: [:show]
+  end
+
+  resources :feedbacks, only: [:new, :create]
+  resources :group_assignments, only: [:show, :edit, :update],
+    concerns: [:update_submitted_at, :hours_resources, :termination_actions]
+
+  resources :group_offer_categories, except: [:destroy]
+
+  resources :group_offers, concerns: :search do
+    put :change_active_state, on: :member
+  end
+
+  get 'list_responses/hours', to: 'list_responses#hours'
+  get 'list_responses/feedbacks', to: 'list_responses#feedbacks'
+  get 'list_responses/trial_feedbacks', to: 'list_responses#trial_feedbacks'
+
+  resources :profiles, except: [:destroy, :index]
+
+  resources :reminder_mailings, except: [:new] do
+    get :new_trial_period, on: :collection
+    get :new_half_year, on: :collection
+    get :send_trial_period, on: :member
+    get :send_half_year, on: :member
   end
 
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
-  end
-
-  resources :clients, concerns: :search do
-    resources :journals, except: [:show]
   end
 
   resources :volunteers, concerns: :search do
@@ -85,23 +98,6 @@ Rails.application.routes.draw do
     resources :journals, except: [:show]
     resources :assignments, concerns: [:assignment_feedbacks, :hours_resources]
   end
-
-  resources :group_assignments, only: [:show], concerns: [:update_submitted_at, :hours_resources]
-
-  resources :group_offers, concerns: :search do
-    put :change_active_state, on: :member
-  end
-
-  resources :reminder_mailings, except: [:new] do
-    get :new_trial_period, on: :collection
-    get :new_half_year, on: :collection
-    get :send_trial_period, on: :member
-    get :send_half_year, on: :member
-  end
-
-  get 'list_responses/hours', to: 'list_responses#hours'
-  get 'list_responses/feedbacks', to: 'list_responses#feedbacks'
-  get 'list_responses/trial_feedbacks', to: 'list_responses#trial_feedbacks'
 
   root 'application#home'
 end
