@@ -36,7 +36,6 @@ Rails.application.routes.draw do
     end
 
     get :terminated_index, on: :collection
-  end
 
     resources :reminder_mailings do
       get :new_termination, on: :collection
@@ -54,9 +53,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :assignments, concerns: [:update_submitted_at, :search, :termination_actions] do
-    get :terminated_index, on: :collection
-  end
+  resources :assignments, concerns: [:update_submitted_at, :search, :termination_actions]
   resources :client_notifications, :departments, :performance_reports, :email_templates, :users
 
   resources :clients, concerns: :search do
