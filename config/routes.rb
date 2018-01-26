@@ -68,6 +68,8 @@ Rails.application.routes.draw do
 
   resources :group_offers, concerns: :search do
     put :change_active_state, on: :member
+    get :initiate_termination, on: :member
+    put :initiate_termination, on: :member, to: 'group_offers#submit_initiate_termination'
   end
 
   get 'list_responses/hours', to: 'list_responses#hours'

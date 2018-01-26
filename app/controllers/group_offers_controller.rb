@@ -1,6 +1,6 @@
 class GroupOffersController < ApplicationController
   include GroupAssignmentsAttributes
-  before_action :set_group_offer, only: [:show, :edit, :update, :destroy, :change_active_state]
+  before_action :set_group_offer, except: [:index, :search, :new, :create]
   before_action :set_volunteer_collection
   before_action :set_department_manager_collection
 
@@ -76,6 +76,10 @@ class GroupOffersController < ApplicationController
       redirect_to group_offers_url, notice: t('.no-change')
     end
   end
+
+  def initiate_termination; end
+
+  def submit_initiate_termination; end
 
   private
 
