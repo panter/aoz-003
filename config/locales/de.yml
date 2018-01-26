@@ -908,7 +908,6 @@ de:
   volunteer_application: Freiwilligen Anmeldung
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
   volunteer_created_invite_sent: 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an %{email} verschickt.'
-  volunteer_destroyed: Freiwillige/r wurde erfolgreich gelöscht.
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:

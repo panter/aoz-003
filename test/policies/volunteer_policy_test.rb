@@ -2,8 +2,8 @@ require 'test_helper'
 
 class VolunteerPolicyTest < PolicyAssertions::Test
   def setup
-    @actions = ['index?', 'search?', 'new?', 'create?', 'seeking_clients?', 'termination?', 'show?',
-                'edit?', 'update?', 'destroy?', 'superadmin_privileges?']
+    @actions = ['index?', 'search?', 'new?', 'create?', 'seeking_clients?', 'terminate?', 'show?',
+                'edit?', 'update?', 'superadmin_privileges?']
   end
 
   test 'superadmin_can_use_all_actions' do

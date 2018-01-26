@@ -4,7 +4,7 @@ class VolunteersController < ApplicationController
   include ContactAttributes
   include VolunteerAttributes
 
-  before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
+  before_action :set_volunteer, only: [:show, :edit, :update, :terminate]
 
   def index
     authorize Volunteer
@@ -12,6 +12,7 @@ class VolunteersController < ApplicationController
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @volunteers = @q.result
     activity_filter
+    not_resigned
     respond_to do |format|
       format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
@@ -63,9 +64,15 @@ class VolunteersController < ApplicationController
     end
   end
 
-  def destroy
-    @volunteer.destroy
-    redirect_back fallback_location: volunteers_url, notice: t('volunteer_destroyed')
+  def terminate
+    if @volunteer.not_terminatable?
+      redirect_to volunteer_path(@volunteer, anchor: 'assignments'),
+        notice: 'Freiwillige/r hat noch nicht beendete Einsätze.'
+    else
+      @volunteer.update(acceptance: :resigned, resigned_at: Time.zone.now)
+      redirect_back fallback_location: volunteers_url,
+        notice: 'Freiwillige/r wurde erfolgreich beendet.'
+    end
   end
 
   def seeking_clients
@@ -76,6 +83,11 @@ class VolunteersController < ApplicationController
   end
 
   private
+
+  def not_resigned
+    return if params[:q]
+    @volunteers = @volunteers.where.not(acceptance: :resigned)
+  end
 
   def activity_filter
     return unless params[:q] && params[:q][:active_eq]

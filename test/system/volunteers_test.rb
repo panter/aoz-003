@@ -142,17 +142,6 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_content? 'Explanation for rejection: Explanation'
   end
 
-  test 'thead acceptance filter dropdown can switch to all' do
-    visit volunteers_path
-    within 'tbody' do
-      assert page.has_text? 'Accepted'
-      assert page.has_text? 'Undecided'
-      assert page.has_text? 'Eingeladen'
-      assert page.has_text? 'Rejected'
-      assert page.has_text? 'Resigned'
-    end
-  end
-
   test 'volunteer form has working_percent field' do
     visit edit_volunteer_path(Volunteer.first)
     assert page.has_field? 'Employment rate'

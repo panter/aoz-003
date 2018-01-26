@@ -18,11 +18,10 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :new?,             :superadmin_or_department_manager_or_social_worker?
   alias_method :create?,          :superadmin_or_department_manager_or_social_worker?
   alias_method :seeking_clients?, :superadmin_or_department_manager?
-  alias_method :termination?,     :superadmin_or_department_managers_registration?
+  alias_method :terminate?,       :superadmin_or_department_managers_registration?
   alias_method :show?,            :volunteer_managing_or_volunteers_profile?
   alias_method :edit?,            :volunteer_managing_or_volunteers_profile?
   alias_method :update?,          :volunteer_managing_or_volunteers_profile?
-  alias_method :destroy?,         :superadmin?
 
   # supplementary policies
   alias_method :superadmin_privileges?, :superadmin?
