@@ -23,7 +23,8 @@ class GroupAssignmentsController < ApplicationController
   def update
     if @group_assignment.update(group_assignment_params)
       if @group_assignment.saved_change_to_period_end? && @group_assignment.ended?
-        redirect_to terminated_index_group_assignments_path, notice: 'Einsatzende erfolgreich gesetzt.'
+        redirect_to terminated_index_group_assignments_path,
+          notice: 'Einsatzende wurde erfolgreich gesetzt.'
       else
         redirect_to @group_assignment.group_offer, make_notice
       end
@@ -34,7 +35,8 @@ class GroupAssignmentsController < ApplicationController
 
   def set_end_today
     if @group_assignment.update(period_end: Time.zone.today)
-      redirect_to terminated_index_group_assignments_path, notice: 'Einsatzende erfolgreich gesetzt.'
+      redirect_to terminated_index_group_assignments_path,
+        notice: 'Einsatzende wurde erfolgreich gesetzt.'
     else
       redirect_to @group_assignment.group_offer, notice: 'Einsatzende konnte nicht gesetzt werden.'
     end
