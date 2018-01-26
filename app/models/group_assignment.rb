@@ -24,6 +24,15 @@ class GroupAssignment < ApplicationRecord
     create_log_of_self(period_start_before_last_save, period_end_before_last_save)
   end
 
+  def termination_verifiable?
+    ended? && termination_submitted_by.present?
+  end
+
+  def verify_termination(user)
+    update(termination_verified_by: user, termination_verified_at: Time.zone.now)
+    create_log_of_self
+  end
+
   def create_log_of_self(start_date = period_start, end_date = period_end)
     GroupAssignmentLog.create!(
       attributes.except('id', 'created_at', 'updated_at', 'active')
