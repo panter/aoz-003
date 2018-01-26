@@ -31,8 +31,9 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     login_as @superadmin
     visit group_offer_path(@group_offer)
     click_link 'Heute beenden', href: set_end_today_group_assignment_path(@ga1)
-    assert page.has_text? 'Einsatzende erfolgreich gesetzt.'
+    assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     @ga1.reload
+    visit group_offer_path(@group_offer)
     within '.assignments-table' do
       assert page.has_text? "#{@ga1.volunteer.contact.full_name} "\
         "#{@ga1.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga1.period_start)}"\

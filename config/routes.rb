@@ -52,6 +52,8 @@ Rails.application.routes.draw do
       put :update_terminated_at
       patch :verify_termination
     end
+
+    get :terminated_index, on: :collection
   end
 
   resources :assignments, concerns: [:update_submitted_at, :search, :termination_mailing] do

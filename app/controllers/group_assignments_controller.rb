@@ -1,5 +1,12 @@
 class GroupAssignmentsController < ApplicationController
-  before_action :set_group_assignment
+  before_action :set_group_assignment, except: [:terminated_index]
+
+  def terminated_index
+    authorize GroupAssignment
+    @q = policy_scope(GroupAssignment).ended.ransack(params[:q])
+    @q.sorts = ['updated_at desc'] if @q.sorts.empty?
+    @group_assignments = @q.result
+  end
 
   def show
     respond_to do |format|
@@ -15,7 +22,12 @@ class GroupAssignmentsController < ApplicationController
 
   def update
     if @group_assignment.update(group_assignment_params)
-      redirect_to @group_assignment.group_offer, make_notice
+      if @group_assignment.saved_change_to_period_end? && @group_assignment.ended?
+        redirect_to terminated_index_group_assignments_path,
+          notice: 'Einsatzende wurde erfolgreich gesetzt.'
+      else
+        redirect_to @group_assignment.group_offer, make_notice
+      end
     else
       render :edit
     end
@@ -23,7 +35,8 @@ class GroupAssignmentsController < ApplicationController
 
   def set_end_today
     if @group_assignment.update(period_end: Time.zone.today)
-      redirect_to @group_assignment.group_offer, notice: 'Einsatzende erfolgreich gesetzt.'
+      redirect_to terminated_index_group_assignments_path,
+        notice: 'Einsatzende wurde erfolgreich gesetzt.'
     else
       redirect_to @group_assignment.group_offer, notice: 'Einsatzende konnte nicht gesetzt werden.'
     end
@@ -43,6 +56,8 @@ class GroupAssignmentsController < ApplicationController
     redirect_to last_submitted_hours_and_feedbacks_group_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
+
+  def verify_termination; end
 
   private
 

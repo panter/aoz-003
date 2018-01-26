@@ -20,6 +20,8 @@ nav.navbar.section-navigation#filters
     = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Beendet')
     = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
     = custom_filter_dropdown('Kategorie', *GroupOfferCategory.filterable_group_offer)
+    = button_link 'Beendete Begleitungen',
+      terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }), dimension: :sm
   hr
 
 table.table.table-striped
