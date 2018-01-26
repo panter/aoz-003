@@ -21,7 +21,7 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
   test 'volunteer_can_use_group_assignment_terminate_form' do
     login_as @volunteer.user
     visit terminate_group_assignment_path(@group_assignment)
-    assert page.has_text? "Der Einsatz wurde am #{I18n.l(@group_assignment.period_end)} beendet"
+    assert page.has_text?(/Der Einsatz (wurde|endet) am #{I18n.l(@group_assignment.period_end)}/)
     assert page.has_text? "Die Freiwillige: #{@volunteer.contact.natural_name}"
     assert page.has_text? "Das Gruppenangebot #{@group_offer.title} -
       #{@group_offer.group_offer_category.category_name}"
