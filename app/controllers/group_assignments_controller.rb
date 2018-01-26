@@ -35,7 +35,8 @@ class GroupAssignmentsController < ApplicationController
 
   def set_end_today
     if @group_assignment.update(period_end: Time.zone.today, period_end_set_by: current_user)
-      redirect_to @group_assignment.group_offer, notice: 'Einsatzende wurde erfolgreich gesetzt.'
+      redirect_to polymorphic_path(@group_assignment.group_offer, action: params[:redirect_to]),
+        notice: 'Einsatzende wurde erfolgreich gesetzt.'
     else
       redirect_to @group_assignment.group_offer, notice: 'Einsatzende konnte nicht gesetzt werden.'
     end

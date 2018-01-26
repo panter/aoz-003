@@ -1,4 +1,20 @@
 h1 Gruppenangebot Beenden
 
-= simple_form_for(@group_offer, url: initiate_termination_group_offer_path(@group_offer)) do |f|
-  = f.input :period_end, as: :date_picker
+= simple_form_for(@group_offer, method: :put, url: submit_initiate_termination_group_offer_path(@group_offer)) do |f|
+
+  - if @group_offer.group_assignments.running.any?
+    h2 Noch nicht beendete Gruppeneinsätze
+    = render 'group_assignments_index', group_assignments: @group_offer.group_assignments.running,
+      redirect_to_action: :initiate_termination
+
+  h2 class=('disabled-title' if @group_offer.group_assignments.running.any?) Enddatum für das Gruppenangebot setzen
+  - if @group_offer.group_assignments.running.any?
+    p.text-danger.text-bigger-1 Um das Gruppenangebot zu beenden, müssen erst alle zugehörigen Gruppeneinsätze beendet sein.
+
+  = f.input :period_end, as: :date_picker, disabled: @group_offer.group_assignments.running.any?
+  p.text-info.m-b-10.text-bigger-1
+    em Die Voreinstellung für das Enddatum kann auf ein beliebiges Datum angepasst werden
+
+  hr
+
+  = f.button :submit, disabled: @group_offer.group_assignments.running.any?

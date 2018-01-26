@@ -77,9 +77,17 @@ class GroupOffersController < ApplicationController
     end
   end
 
-  def initiate_termination; end
+  def initiate_termination
+    @group_offer.period_end = Time.zone.today
+  end
 
-  def submit_initiate_termination; end
+  def submit_initiate_termination
+    if @group_offer.update(period_end: group_offer_params[:period_end], period_end_set_by: current_user)
+      redirect_to group_offers_path, notice: 'Gruppenangebots beendigung erfolgreich eingeleitet.'
+    else
+      render :initiate_termination
+    end
+  end
 
   private
 
@@ -121,6 +129,6 @@ class GroupOffersController < ApplicationController
       :necessary_volunteers, :description, :women, :men, :children, :teenagers, :unaccompanied,
       :all, :long_term, :regular, :short_term, :workday, :weekend, :morning, :afternoon, :evening,
       :flexible, :schedule_details, :department_id, :creator_id, :organization, :location,
-      :group_offer_category_id, group_assignments_attributes)
+      :group_offer_category_id, :period_end, group_assignments_attributes)
   end
 end
