@@ -89,6 +89,16 @@ class GroupOffersController < ApplicationController
     end
   end
 
+  def end_all_assignments
+    @group_offer.group_assignments.running.each do |group_assignment|
+      group_assignment.update(
+        period_end: group_offer_params['group_assignments_attributes']['0']['period_end'],
+        period_end_set_by: current_user
+      )
+    end
+    redirect_to initiate_termination_group_offer_path(@group_offer), notice: 'Gruppeneinsätze wurden beendet.'
+  end
+
   private
 
   def set_group_offer
@@ -128,7 +138,7 @@ class GroupOffersController < ApplicationController
     params.require(:group_offer).permit(:title, :offer_type, :offer_state, :volunteer_state,
       :necessary_volunteers, :description, :women, :men, :children, :teenagers, :unaccompanied,
       :all, :long_term, :regular, :short_term, :workday, :weekend, :morning, :afternoon, :evening,
-      :flexible, :schedule_details, :department_id, :creator_id, :organization, :location,
-      :group_offer_category_id, :period_end, group_assignments_attributes)
+      :flexible, :schedule_details, :department_id, :creator_id, :organization, :location, :period_end,
+      :group_offer_category_id, group_assignments_attributes)
   end
 end
