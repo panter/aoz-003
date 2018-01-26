@@ -61,16 +61,9 @@ class AssignmentsController < ApplicationController
 
   def update
     @assignment.assign_attributes(assignment_params)
-    if @assignment.will_save_change_to_period_end?
-      @assignment.period_end_set_by = current_user
-    end
+    @assignment.period_end_set_by = current_user if @assignment.will_save_change_to_period_end?
     if @assignment.save
-      if @assignment.saved_change_to_period_end?(from: nil) && @assignment.ended?
-        redirect_to terminated_index_assignments_path,
-          notice: 'Die Einsatzbeendung wurde initiiert.'
-      else
-        redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
-      end
+      create_update_redirect
     else
       render :edit
     end
@@ -125,6 +118,14 @@ class AssignmentsController < ApplicationController
   end
 
   private
+
+  def create_update_redirect
+    if @assignment.saved_change_to_period_end?(from: nil)
+      redirect_to terminated_index_assignments_path, notice: 'Die Einsatzbeendung wurde initiiert.'
+    else
+      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
+    end
+  end
 
   def terminate_reminder_mailing
     ReminderMailingVolunteer.termination_for(@assignment).map do |rmv|
