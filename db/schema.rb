@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124125446) do
+ActiveRecord::Schema.define(version: 20180126101119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -348,10 +348,17 @@ ActiveRecord::Schema.define(version: 20180124125446) do
     t.boolean "active", default: true
     t.bigint "creator_id"
     t.string "search_volunteer"
+    t.bigint "period_end_set_by_id"
+    t.bigint "termination_verified_by_id"
+    t.date "period_start"
+    t.date "period_end"
+    t.datetime "termination_verified_at"
     t.index ["creator_id"], name: "index_group_offers_on_creator_id"
     t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
     t.index ["department_id"], name: "index_group_offers_on_department_id"
     t.index ["group_offer_category_id"], name: "index_group_offers_on_group_offer_category_id"
+    t.index ["period_end_set_by_id"], name: "index_group_offers_on_period_end_set_by_id"
+    t.index ["termination_verified_by_id"], name: "index_group_offers_on_termination_verified_by_id"
   end
 
   create_table "hours", force: :cascade do |t|

@@ -12,6 +12,10 @@ class GroupOffer < ApplicationRecord
   belongs_to :group_offer_category
   belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true
 
+  # termination record relations
+  belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true
+
   has_many :group_assignments, dependent: :destroy
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
 
