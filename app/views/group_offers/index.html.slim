@@ -93,11 +93,10 @@ table.table.table-striped
           = link_to t_action(:show), group_offer_path(offer)
           = link_to t('download'), group_offer_path(offer, format: :pdf)
           = link_to t_action(:edit), edit_group_offer_path(offer)
-          - if policy(GroupOffer).destroy?
-            = link_to t_action(:delete), group_offer_path(offer), confirm_deleting(offer)
-          = link_to "#{ offer.active? ? t('.deactivate') : t('.activate') }",
-            change_active_state_group_offer_path(offer), method: :put, remote: :true
-          = link_to_if(policy(GroupOffer).initiate_termination?, 'Beenden', initiate_termination_group_offer_path(offer)) { '' }
+          - if offer.period_end.blank?
+            = link_to "#{ offer.active? ? t('.deactivate') : t('.activate') }",
+              change_active_state_group_offer_path(offer), method: :put, remote: :true
+            = link_to_if(policy(GroupOffer).initiate_termination?, 'Beenden', initiate_termination_group_offer_path(offer)) { '' }
 
 
 nav.navbar.section-navigation

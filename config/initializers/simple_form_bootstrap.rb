@@ -112,14 +112,17 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :date_picker, tag: 'div', class: 'form-group date form_datetime input-date-picker', error_class: 'has-error' do |b|
+  config.wrappers :date_picker, tag: 'div', class: 'input-group date form_datetime input-date-picker', error_class: 'has-error' do |b|
     b.use :html5
+    b.use :placeholder
     b.optional :readonly
     b.use :label, class: 'control-label'
-    b.use :input, class: 'input-sm form-control', data: { provide: 'datepicker' }
+
+    b.use :input, class: 'form-control', data: { provide: 'datepicker' }
     b.use :error, wrap_with: { tag: 'span', class: 'help-block' }
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
+
 
   config.wrappers :date_picker_inline, tag: 'div', class: 'date form_datetime input-date-picker field-wrapper-inline', error_class: 'has-error' do |b|
     b.use :html5
