@@ -17,7 +17,7 @@ class GroupAssignmentArchiveTest < ActiveSupport::TestCase
     assert_equal group_assignment, group_assignment.group_assignment_logs.first.group_assignment
   end
 
-  test 'terminateing_group_assignment_creates_log_and_deletes_self' do
+  test 'terminating_group_assignment_creates_log_and_deletes_self' do
     superadmin = create :user
     group_assignment = create :group_assignment, period_start: 100.days.ago, period_end: 3.days.ago,
       period_end_set_by: superadmin, termination_submitted_at: 2.days.ago,
