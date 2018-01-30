@@ -23,4 +23,4 @@ h2 class=('disabled-title' if @group_offer.group_assignments.running.any?) Endda
   p.text-info.m-b-10.m-t-10.text-bigger-1
     em Die Voreinstellung für das Enddatum kann auf ein beliebiges Datum angepasst werden
   hr
-  input.btn.btn-default type='submit' name='commit' value='Gruppenangebots Ende setzen' data-disable-with='Gruppenangebot aktualisieren'
+  input.btn.btn-default*{ disabled: @group_offer.group_assignments.running.any? } type='submit' name='commit' value='Gruppenangebots Ende setzen' data-disable-with='Gruppenangebot aktualisieren'
