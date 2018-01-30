@@ -18,11 +18,6 @@ module AssignmentCommon
     scope :zurich, (-> { joins(:client).merge(Client.zurich) })
     scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })
 
-    scope :termination_submitted, (-> { where.not(termination_submitted_by_id: nil) })
-    scope :termination_not_submitted, (-> { where(termination_submitted_by_id: nil) })
-    scope :unterminated, (-> { where(termination_verified_by_id: nil) })
-    scope :terminated, (-> { where.not(termination_verified_by_id: nil) })
-
     def creator
       super || User.deleted.find_by(id: creator_id)
     end

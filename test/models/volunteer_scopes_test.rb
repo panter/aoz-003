@@ -280,6 +280,35 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? no_assignment
   end
 
+  test 'with_assignment_ca_6_weeks_ago' do
+    started_before_no_end = create :volunteer
+    make_assignment(start_date: 9.weeks.ago, volunteer: started_before_no_end)
+    started_before_end_after = create :volunteer
+    make_assignment(start_date: 10.months.ago, end_date: Time.zone.today + 10,
+      volunteer: started_before_end_after)
+    started_five_weeks_ago = create :volunteer
+    make_assignment(start_date: 5.weeks.ago, volunteer: started_five_weeks_ago)
+    started_six_weeks_ago = create :volunteer
+    make_assignment(start_date: 6.weeks.ago, volunteer: started_six_weeks_ago)
+    started_seven_weeks_ago = create :volunteer
+    make_assignment(start_date: 7.weeks.ago, volunteer: started_seven_weeks_ago)
+    started_eight_weeks_ago = create :volunteer
+    make_assignment(start_date: 8.weeks.ago, volunteer: started_eight_weeks_ago)
+    no_start_end_set = create :volunteer
+    make_assignment(volunteer: no_start_end_set)
+    no_assignment = create :volunteer
+
+    query = Volunteer.with_assignment_ca_6_weeks_ago
+    refute query.include? started_before_no_end
+    refute query.include? started_before_end_after
+    refute query.include? started_five_weeks_ago
+    assert query.include? started_six_weeks_ago
+    assert query.include? started_seven_weeks_ago
+    assert query.include? started_eight_weeks_ago
+    refute query.include? no_start_end_set
+    refute query.include? no_assignment
+  end
+
   test 'active_only_returns_accepted_volunteers_that_have_an_active_assignment' do
     volunteer_will_inactive = make_volunteer nil
     make_assignment(volunteer: volunteer_will_inactive, start_date: 10.days.ago,

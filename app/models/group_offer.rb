@@ -41,8 +41,6 @@ class GroupOffer < ApplicationRecord
     group_assignments.active_between(start_date, end_date).any?
   end
 
-  scope :created_before, ->(date) { where('created_at < ?', date) }
-
   def all_group_assignments_ended_within?(date_range)
     ended_within = group_assignments.end_within(date_range).ids
     not_end_before = group_assignments.end_after(date_range.last).ids

@@ -38,7 +38,6 @@ class GroupOfferScopesTest < ActiveSupport::TestCase
     started_before_end_before, _rest = create_group_offer_entity(nil, 100.days.ago, 50.days.ago, 1)
 
     query = GroupOffer.active_group_assignments_between(45.days.ago, 30.days.ago)
-
     assert query.include? started_within_no_end
     assert query.include? started_within_end_within
     assert query.include? started_within_end_after

@@ -7,9 +7,6 @@ class TrialFeedback < ApplicationRecord
 
   validates :body, presence: true
 
-  scope :submitted_before, lambda { |submitted_at|
-    where('trial_feedbacks.created_at > ?', submitted_at)
-  }
 
   def assignment?
     trial_feedbackable_type == 'Assignment'

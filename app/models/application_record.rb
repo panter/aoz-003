@@ -8,6 +8,18 @@ class ApplicationRecord < ActiveRecord::Base
   scope :updated_desc, (-> { order('updated_at desc') })
   scope :updated_asc, (-> { order('updated_at asc') })
 
+  scope :created_before, ->(max_time) { where("#{model_name.plural}.created_at < ?", max_time) }
+  scope :created_after, ->(min_time) { where("#{model_name.plural}.created_at > ?", min_time) }
+  scope :created_between, lambda { |start_date, end_date|
+    created_after(start_date).created_before(end_date)
+  }
+
+  scope :updated_before, ->(max_time) { where("#{model_name.plural}.updated_at < ?", max_time) }
+  scope :updated_after, ->(min_time) { where("#{model_name.plural}.updated_at > ?", min_time) }
+  scope :updated_between, lambda { |start_date, end_date|
+    updated_after(start_date).updated_before(end_date)
+  }
+
   # translate enum fields value
   def t_enum(enum_field)
     I18n.t("activerecord.attributes.#{model_name.i18n_key}."\

@@ -15,8 +15,17 @@ module FeedbackTrialFeedbackCommon
       end
     }
 
-    scope :author_isnt_volunteer, (-> { joins(:volunteer).where('author_id != volunteers.user_id') })
-    scope :author_is_volunteer, (-> { joins(:volunteer).where('author_id = volunteers.user_id') })
+    scope :submitted_before, lambda { |submitted_at|
+      created_before(submitted_at)
+    }
+
+    scope :author_isnt_volunteer, lambda {
+      joins(:volunteer).where("#{model_name.plural}.author_id != volunteers.user_id")
+    }
+
+    scope :author_is_volunteer, lambda {
+      joins(:volunteer).where("#{model_name.plural}.author_id = volunteers.user_id")
+    }
 
     scope :since_last_submitted, lambda { |submitted_at|
       if submitted_at
