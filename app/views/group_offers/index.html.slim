@@ -96,7 +96,7 @@ table.table.table-striped
           - if offer.period_end.blank?
             = link_to "#{ offer.active? ? t('.deactivate') : t('.activate') }",
               change_active_state_group_offer_path(offer), method: :put, remote: :true
-            = link_to_if(policy(GroupOffer).initiate_termination?, 'Beenden', initiate_termination_group_offer_path(offer)) { '' }
+            = link_to_if(policy(offer).initiate_termination?, 'Beenden', initiate_termination_group_offer_path(offer)) { '' }
 
 
 nav.navbar.section-navigation
