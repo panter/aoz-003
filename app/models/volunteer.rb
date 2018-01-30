@@ -328,7 +328,8 @@ class Volunteer < ApplicationRecord
   end
 
   def record_acceptance_changed
-    self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now if will_save_change_to_acceptance?
+    return unless will_save_change_to_acceptance?
+    self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now
   end
 
   def user_deleted?
