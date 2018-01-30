@@ -77,7 +77,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'there_is_correct_links_to_creating_certificates' do
     visit terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' })
-    assert page.has_link? 'Dossier Freiwillig engagiert erstellen',
+    refute page.has_link? 'Dossier Freiwillig engagiert erstellen',
       href: new_volunteer_certificate_path(@un_submitted.volunteer.id)
     assert page.has_link? 'Dossier Freiwillig engagiert erstellen',
       href: new_volunteer_certificate_path(@submitted.volunteer.id)

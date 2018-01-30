@@ -34,22 +34,23 @@ nav.navbar.section-navigation.hidden-print
           td= link_to assignment.client.contact.full_name, client_path(assignment.client)
           td= l(assignment.period_start) if assignment.period_start
           td= l(assignment.period_end) if assignment.period_end
-          td
+          td.index-action-cell
             - if assignment.reminder_mailings.termination.blank?
-              = link_to 'Beendigungs Email erstellen', new_termination_assignment_reminder_mailings_path(assignment), class: 'index-action-link'
+              = link_to 'Beendigungs Email erstellen', new_termination_assignment_reminder_mailings_path(assignment)
             - elsif assignment.reminder_mailings.termination.first.sending_triggered
               = link_to "Übermittelt am #{l(assignment.reminder_mailings.termination.last.updated_at.to_date)}",
-                reminder_mailing_path(assignment.reminder_mailings.termination.last), class: 'index-action-link'
+                reminder_mailing_path(assignment.reminder_mailings.termination.last)
             - else
-              = link_to 'Nicht versandt', reminder_mailing_path(assignment.reminder_mailings.termination.last), class: 'index-action-link'
+              = link_to 'Nicht versandt', reminder_mailing_path(assignment.reminder_mailings.termination.last)
           td= boolean_glyph(assignment.termination_submitted_by.present?)
           td.index-action-cell
-            = link_to 'Anzeigen', assignment_path(assignment), class: 'index-action-link'
-            = link_to 'Bearbeiten', edit_assignment_path(assignment), class: 'index-action-link'
+            = link_to 'Anzeigen', assignment_path(assignment)
+            = link_to 'Bearbeiten', edit_assignment_path(assignment)
           td.index-action-cell
-            = link_to 'Beendigungsformular', terminate_assignment_path(assignment), class: 'index-action-link'
-            = link_to 'Dossier Freiwillig engagiert erstellen', new_volunteer_certificate_path(assignment.volunteer), class: 'index-action-link'
-            = link_to 'Freiwillige/n beenden', '#', class: 'index-action-link'
+            = link_to 'Beendigungsformular', terminate_assignment_path(assignment)
+            = link_to_if(assignment.termination_submitted_by.present?, 'Dossier Freiwillig engagiert erstellen',
+              new_volunteer_certificate_path(assignment.volunteer)) { '' }
+            = link_to 'Freiwillige/n beenden', '#'
             - if policy(Assignment).verify_termination?
               td
                 = link_to_if(assignment.termination_verified_by.blank?, 'Beendigung Quittieren',

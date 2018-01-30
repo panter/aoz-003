@@ -102,7 +102,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'there_is_correct_links_to_creating_certificates' do
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
-    assert page.has_link? 'Dossier Freiwillig engagiert erstellen',
+    refute page.has_link? 'Dossier Freiwillig engagiert erstellen',
       href: /\/volunteers\/#{@un_submitted.volunteer.id}\/certificates\/new/
     assert page.has_link? 'Dossier Freiwillig engagiert erstellen',
       href: /\/volunteers\/#{@submitted.volunteer.id}\/certificates\/new/
