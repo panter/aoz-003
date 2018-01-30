@@ -78,10 +78,10 @@ class GroupAssignmentsController < ApplicationController
 
   private
 
-  def create_redirect_to(notice_text = make_notice[:notice])
+  def create_redirect_to(notice_text = nil)
     redirect_to(
-      polymorphic_path(@group_assignment.group_offer, action: params[:redirect_to].to_sym),
-      notice: notice_text
+      polymorphic_path(@group_assignment.group_offer, action: params[:redirect_to]),
+      notice: notice_text || make_notice[:notice]
     )
   end
 
