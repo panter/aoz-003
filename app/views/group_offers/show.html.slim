@@ -103,8 +103,7 @@ h2= @group_offer.title
                     data: { method: 'PUT' }) { '' }
                 - elsif group_assignment.termination_submitted_by_id.blank?
                   = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular an Freiwillige/n mailen',
-                    polymorphic_path([group_assignment, ReminderMailing], action: :new_termination),
-                    class: 'index-action-link')
+                    polymorphic_path([group_assignment, ReminderMailing], action: :new_termination))
                   = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular ausfüllen',
                     polymorphic_path(group_assignment, action: :terminate))
               td
