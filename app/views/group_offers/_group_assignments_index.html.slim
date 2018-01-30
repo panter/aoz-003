@@ -19,7 +19,7 @@
           td= l(group_assignment.period_start) if group_assignment.period_start
           td= l(group_assignment.period_end) if group_assignment.period_end
           td.index-action-cell.hidden-print
-            = link_to_if(policy(group_assignment).edit?, 'Bearbeiten', edit_group_assignment_path(group_assignment)) { '' }
+            = link_to_if(policy(group_assignment).edit?, 'Bearbeiten', edit_group_assignment_path(group_assignment, redirect_to: redirect_to_action)) { '' }
             - if group_assignment.period_end.blank?
               = link_to_if(policy(group_assignment).set_end_today?, 'Heute beenden',
                 set_end_today_group_assignment_path(group_assignment, redirect_to: redirect_to_action),

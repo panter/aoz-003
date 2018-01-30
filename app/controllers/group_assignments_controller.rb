@@ -24,10 +24,10 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment.assign_attributes(group_assignment_params)
     if @group_assignment.will_save_change_to_period_end? && @group_assignment.ended?
       @group_assignment.period_end_set_by = current_user
-      period_end_set_notice = { notice: 'Einsatzende wurde erfolgreich gesetzt.' }
+      period_end_set_notice = 'Einsatzende wurde erfolgreich gesetzt.'
     end
     if @group_assignment.save
-      redirect_to @group_assignment.group_offer, period_end_set_notice || make_notice
+      create_redirect_to(period_end_set_notice)
     else
       render :edit
     end
@@ -35,10 +35,9 @@ class GroupAssignmentsController < ApplicationController
 
   def set_end_today
     if @group_assignment.update(period_end: Time.zone.today, period_end_set_by: current_user)
-      redirect_to polymorphic_path(@group_assignment.group_offer, action: params[:redirect_to]),
-        notice: 'Einsatzende wurde erfolgreich gesetzt.'
+      create_redirect_to('Einsatzende wurde erfolgreich gesetzt.')
     else
-      redirect_to @group_assignment.group_offer, notice: 'Einsatzende konnte nicht gesetzt werden.'
+      create_redirect_to('Einsatzende konnte nicht gesetzt werden.')
     end
   end
 
@@ -79,6 +78,13 @@ class GroupAssignmentsController < ApplicationController
 
   private
 
+  def create_redirect_to(notice_text = make_notice[:notice])
+    redirect_to(
+      polymorphic_path(@group_assignment.group_offer, action: params[:redirect_to].to_sym),
+      notice: notice_text
+    )
+  end
+
   def waive_param_true?
     group_assignment_params[:volunteer_attributes][:waive] == '1'
   end
@@ -98,7 +104,7 @@ class GroupAssignmentsController < ApplicationController
   def group_assignment_params
     params.require(:group_assignment).permit(
       :period_start, :period_end, :termination_submitted_at, :terminated_at, :responsible,
-      :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
+      :term_feedback_activities, :term_feedback_problems, :term_feedback_success, :redirect_to,
       :term_feedback_transfair, volunteer_attributes: [:waive]
     )
   end
