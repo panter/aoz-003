@@ -48,7 +48,7 @@ class Volunteer < ApplicationRecord
 
   has_many :billing_expenses
 
-  has_many :group_assignments
+  has_many :group_assignments, dependent: :delete_all
   has_many :group_assignment_logs
 
   has_many :group_offers, through: :group_assignments

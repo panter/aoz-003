@@ -140,12 +140,14 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? title
   end
 
-  test 'deleting volunteer does not crash group offer show' do
+  test 'deleting_volunteer_does_not_crash_group_offer_show' do
     login_as create(:user)
     volunteer1 = create :volunteer
     volunteer2 = create :volunteer
-    group_offer = create :group_offer, volunteers: [volunteer1, volunteer2]
-
+    group_offer = create :group_offer
+    [volunteer1, volunteer2].map do |volunteer|
+      create(:group_assignment, volunteer: volunteer, group_offer: group_offer)
+    end
     visit group_offer_path(group_offer)
     assert page.has_link? volunteer1.contact.full_name
     assert page.has_link? volunteer2.contact.full_name
@@ -153,8 +155,8 @@ class GroupOffersTest < ApplicationSystemTestCase
     Volunteer.find(volunteer1.id).destroy
 
     visit group_offer_path(group_offer)
-    refute page.has_link? volunteer1.contact.full_name
     assert page.has_link? volunteer2.contact.full_name
+    refute page.has_link? volunteer1.contact.full_name
   end
 
   test 'department_manager_has_group_assignment_select_dropdowns_in_edit_form_filled' do

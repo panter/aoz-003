@@ -12,7 +12,7 @@
       - group_assignments.each do |group_assignment|
         tr
           td
-            = link_to_if(policy(Volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
+            = link_to_if(policy(group_assignment.volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
           - if params[:format] == 'pdf'
             td= group_assignment.volunteer.contact.primary_email
           td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
