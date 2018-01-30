@@ -82,7 +82,8 @@ class GroupOffersController < ApplicationController
   end
 
   def submit_initiate_termination
-    if @group_offer.update(period_end: group_offer_params[:period_end], period_end_set_by: current_user)
+    if @group_offer.update(period_end: group_offer_params[:period_end],
+      period_end_set_by: current_user)
       redirect_to group_offers_path, notice: 'Gruppenangebots beendigung erfolgreich eingeleitet.'
     else
       render :initiate_termination
@@ -96,7 +97,8 @@ class GroupOffersController < ApplicationController
         period_end_set_by: current_user
       )
     end
-    redirect_to initiate_termination_group_offer_path(@group_offer), notice: 'Gruppeneinsätze wurden beendet.'
+    redirect_to initiate_termination_group_offer_path(@group_offer),
+      notice: 'Gruppeneinsätze wurden beendet.'
   end
 
   private
@@ -135,10 +137,12 @@ class GroupOffersController < ApplicationController
   end
 
   def group_offer_params
-    params.require(:group_offer).permit(:title, :offer_type, :offer_state, :volunteer_state,
-      :necessary_volunteers, :description, :women, :men, :children, :teenagers, :unaccompanied,
-      :all, :long_term, :regular, :short_term, :workday, :weekend, :morning, :afternoon, :evening,
-      :flexible, :schedule_details, :department_id, :creator_id, :organization, :location, :period_end,
-      :group_offer_category_id, group_assignments_attributes)
+    params.require(:group_offer).permit(
+      :title, :offer_type, :offer_state, :volunteer_state, :necessary_volunteers, :description,
+      :women, :men, :children, :teenagers, :unaccompanied, :all, :long_term, :regular,
+      :short_term, :workday, :weekend, :morning, :afternoon, :evening, :flexible, :schedule_details,
+      :department_id, :creator_id, :organization, :location, :period_end, :group_offer_category_id,
+      group_assignments_attributes
+    )
   end
 end

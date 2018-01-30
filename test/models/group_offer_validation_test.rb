@@ -5,7 +5,7 @@ class GroupOfferValidationTest < ActiveSupport::TestCase
     group_offer = create :group_offer
     group_assignment1 = create :group_assignment, period_start: 1.year.ago, period_end: nil,
       group_offer: group_offer
-    group_assignment2 = create :group_assignment, period_start: 6.months.ago, period_end: nil,
+    create :group_assignment, period_start: 6.months.ago, period_end: nil,
       group_offer: group_offer
     group_offer.period_end = Time.zone.now
     refute group_offer.valid?

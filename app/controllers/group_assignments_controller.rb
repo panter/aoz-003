@@ -60,7 +60,7 @@ class GroupAssignmentsController < ApplicationController
   def terminate; end
 
   def update_terminated_at
-    @group_assignment.volunteer.waive = group_assignment_params[:volunteer_attributes][:waive] == '1'
+    @group_assignment.volunteer.waive = waive_param_true?
     @group_assignment.assign_attributes(group_assignment_params.except(:volunteer_attributes)
       .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
     if @group_assignment.save && terminate_reminder_mailing
@@ -78,6 +78,10 @@ class GroupAssignmentsController < ApplicationController
   end
 
   private
+
+  def waive_param_true?
+    group_assignment_params[:volunteer_attributes][:waive] == '1'
+  end
 
   def terminate_reminder_mailing
     ReminderMailingVolunteer.termination_for(@group_assignment).map do |rmv|
