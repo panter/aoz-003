@@ -33,11 +33,10 @@ class GroupOffer < ApplicationRecord
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
   validates :period_end, absence: {
     message: lambda { |object, _|
-               'Dieses Gruppenangebot kann noch nicht beendet werden, da es noch '\
-                 "#{object.group_assignments.running.count} laufende Gruppeneinsätze hat."
-             }
-  },
-    if: :running_assignments?
+              'Dieses Gruppenangebot kann noch nicht beendet werden, da es noch '\
+                "#{object.group_assignments.running.count} laufende Gruppeneinsätze hat."
+            }
+  }, if: :running_assignments?
 
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
@@ -50,6 +49,10 @@ class GroupOffer < ApplicationRecord
 
   def active_group_assignments_between?(start_date, end_date)
     group_assignments.active_between(start_date, end_date).any?
+  end
+
+  def endable?
+    group_assignments.have_start.any? || group_assignment_logs.any?
   end
 
   def all_group_assignments_ended_within?(date_range)
