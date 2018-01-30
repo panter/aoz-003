@@ -62,7 +62,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_link? 'Deactivate'
   end
 
-  test 'group offer can be activated' do
+  test 'group_offer_can_be_activated' do
     group_offer = create :group_offer, active: false
     login_as create(:user)
     visit group_offers_path
