@@ -11,9 +11,6 @@ class Assignment < ApplicationRecord
 
   validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
 
-  scope :created_before, ->(max_time) { where('assignments.created_at < ?', max_time) }
-  scope :created_after, ->(min_time) { where('assignments.created_at > ?', min_time) }
-
   def last_feedback
     feedbacks.where(author: volunteer.user).last
   end

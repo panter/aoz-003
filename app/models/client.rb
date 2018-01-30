@@ -37,9 +37,6 @@ class Client < ApplicationRecord
     inactive.order(created_at: :asc)
   }
 
-  scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
-  scope :created_before, ->(max_time) { where('clients.created_at < ?', max_time) }
-  scope :created_after, ->(min_time) { where('clients.created_at > ?', min_time) }
 
   scope :with_assignment, (-> { joins(:assignment) })
   scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })

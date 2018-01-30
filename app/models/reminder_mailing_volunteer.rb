@@ -8,14 +8,12 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :group_assignment, (-> { where(reminder_mailable_type: 'GroupAssignment') })
   scope :assignment, (-> { where(reminder_mailable_type: 'Assignment') })
 
-  scope :trial_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
-  scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
-  scope :termination, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 2') })
-
   scope :picked, (-> { where(picked: true) })
 
-  # TODO: waits for enum to exist from other not yet merged feature story
-  scope :termination, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = ?', 2) })
+  scope :kind, ->(kind) { joins(:reminder_mailing).where('reminder_mailings.kind = ?', kind) }
+  scope :trial_period, (-> { kind(0) })
+  scope :half_year, (-> { kind(1) })
+  scope :termination, (-> { kind(2) })
   scope :termination_for, ->(mailable) { termination.where(reminder_mailable: mailable) }
 
   def mark_process_submitted(user, terminate_parent_mailing: false)

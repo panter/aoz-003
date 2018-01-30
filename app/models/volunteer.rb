@@ -75,14 +75,6 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: :user_deleted?
 
-  scope :created_between, lambda { |start_date, end_date|
-    created_after(start_date).created_before(end_date)
-  }
-  scope :created_before, ->(max_time) { where('volunteers.created_at < ?', max_time) }
-  scope :created_after, ->(min_time) { where('volunteers.created_at > ?', min_time) }
-  scope :created_between, lambda { |start_date, end_date|
-    created_before(end_date).created_after(start_date)
-  }
 
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
@@ -105,7 +97,7 @@ class Volunteer < ApplicationRecord
     left_outer_joins(:group_offers).where(group_offers: { id: nil })
   }
   scope :without_active_assignment, lambda {
-    joins(:assignments).where('assignments.period_end <= ?', Time.zone.today)
+    joins(:assignments).merge(Assignment.ended)
   }
   scope :not_in_any_group_offer, lambda {
     left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })
@@ -115,12 +107,11 @@ class Volunteer < ApplicationRecord
   scope :internal, (-> { where(external: false) })
 
   scope :with_assignment_6_months_ago, lambda {
-    joins(:assignments).where('assignments.period_start < ?', 6.months.ago)
+    joins(:assignments).merge(Assignment.start_before(6.months.ago))
   }
 
   scope :with_assignment_ca_6_weeks_ago, lambda {
-    joins(:assignments).where('assignments.period_start < ? AND assignments.period_start > ?',
-      6.weeks.ago, 8.weeks.ago)
+    joins(:assignments).merge(Assignment.started_ca_six_weeks_ago)
   }
 
   scope :with_only_inactive_assignments, lambda {
