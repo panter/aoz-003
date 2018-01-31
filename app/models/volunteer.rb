@@ -17,6 +17,7 @@ class Volunteer < ApplicationRecord
 
   enum acceptance: { undecided: 0, invited: 4, accepted: 1, rejected: 2, resigned: 3 }
 
+<<<<<<< HEAD
   has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
 
@@ -25,6 +26,14 @@ class Volunteer < ApplicationRecord
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
   belongs_to :registrar, class_name: 'User', foreign_key: 'registrar_id', optional: true
+=======
+  # User with role: 'volunteer'
+  belongs_to :user, -> { with_deleted }, optional: true, inverse_of: :volunteer
+
+  # User that registered the volunteer, in case not self registered
+  belongs_to :registrar, optional: true, class_name: 'User', foreign_key: 'registrar_id',
+    inverse_of: :volunteers
+>>>>>>> make rubocop happier
   has_one :department, through: :registrar
 
   has_many :departments, through: :group_offers
@@ -35,7 +44,17 @@ class Volunteer < ApplicationRecord
 
   has_many :certificates
 
+<<<<<<< HEAD
   has_many :journals, as: :journalable, dependent: :destroy
+=======
+  has_one :contact, as: :contactable, dependent: :destroy, inverse_of: :contactable
+  accepts_nested_attributes_for :contact
+
+  delegate :primary_email, to: :contact
+  delegate :full_name, to: :contact
+
+  has_many :journals, as: :journalable, dependent: :destroy, inverse_of: :journalable
+>>>>>>> make rubocop happier
   accepts_nested_attributes_for :journals, allow_destroy: true
 
   has_many :assignments, dependent: :destroy
@@ -76,9 +95,6 @@ class Volunteer < ApplicationRecord
   validates :user, absence: true,
     if: :external?,
     unless: :user_deleted?
-
-  # Scopes
-  #
 
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })

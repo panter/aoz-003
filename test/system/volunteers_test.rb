@@ -166,7 +166,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'volunteer_pagination' do
     really_destroy_with_deleted(Volunteer)
-    second_page_volunteers = (1..20).to_a.map do
+    (1..20).to_a.map do
       volunteer = create :volunteer
       volunteer.update created_at: 10.days.ago
       volunteer.contact.update(
