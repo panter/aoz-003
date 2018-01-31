@@ -31,7 +31,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
   end
 
   test 'can see a group offer volunteer and return to the group offer' do
-    volunteer = create :volunteer
+    volunteer = create :volunteer, registrar: @department_manager
     group_offer = create :group_offer, volunteers: [volunteer],
       department: @department_manager.department.first
     visit volunteer_path(volunteer)
@@ -53,8 +53,8 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     assert page.has_text? 'new title'
   end
 
-  test 'department manager has no destroy and feedback links on volunteer show' do
-    volunteer = create :volunteer
+  test 'department_manager_has_no_destroy_and_feedback_links_on_volunteer_show' do
+    volunteer = create :volunteer, registrar: @department_manager
     group_offer = create :group_offer, volunteers: [volunteer],
       department: @department_manager.department.first
     assignment = create :assignment, volunteer: volunteer

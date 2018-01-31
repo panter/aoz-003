@@ -198,28 +198,23 @@ class VolunteersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'department_manager_can_see_volunteer_index_and_only_seeking_clients_volunteers' do
+  test 'department_manager_can_see_volunteer_index_and_only_her_own_volunteers' do
     department_manager = create :department_manager
     login_as department_manager
+    volunteer_department_manager = create :volunteer, registrar: department_manager
+    other_volunteer = create :volunteer
 
-    volunteer_seeks = create :volunteer_with_user
-    create :assignment, period_start: 500.days.ago, period_end: 200.days.ago,
-      volunteer: volunteer_seeks
-    volunteer_not_seeking = create :volunteer_with_user
-    create :assignment, period_start: 10.days.ago, period_end: nil,
-      volunteer: volunteer_not_seeking
     visit volunteers_path
-    assert page.has_text? volunteer_seeks.contact.full_name
-    refute page.has_text? volunteer_not_seeking.contact.full_name
+    assert page.has_text? volunteer_department_manager.contact.full_name
+    refute page.has_text? other_volunteer.contact.full_name
   end
 
-  test 'social_worker_can_see_volunteer_index' do
-    social_worker = create :social_worker
-    login_as social_worker
+  test 'social_worker_cannot_see_volunteer_index' do
+    login_as create(:social_worker)
 
     visit volunteers_path
 
-    assert page.has_text? 'Freiwillige'
+    assert page.has_text? 'You are not authorized to perform this action.'
   end
 
   test 'social_worker_cant_see_volunteer_seeking_clients' do
@@ -259,9 +254,10 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'department manager has no link to group offer of not their own' do
-    volunteer = create :volunteer
+    department_manager = create :department_manager
+    volunteer = create :volunteer, registrar: department_manager
     group_offer = create :group_offer, volunteers: [volunteer]
-    login_as create :department_manager
+    login_as department_manager
     visit volunteer_path(volunteer)
     assert page.has_text? group_offer.title
     refute page.has_link? group_offer.title
