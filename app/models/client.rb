@@ -39,7 +39,7 @@ class Client < ApplicationRecord
   validates :acceptance, exclusion: {
     in: ['resigned'],
     message: 'Klient/in kann nicht beendet werden, solange noch ein laufendes Tandem existiert.'
-  }, unless: :terminateable?
+  }, unless: :terminatable?
 
   scope :with_assignment, (-> { joins(:assignment) })
   scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })
@@ -69,7 +69,7 @@ class Client < ApplicationRecord
     accepted.without_assignment.or(with_inactive_assignment)
   }
 
-  def terminateable?
+  def terminatable?
     assignment.blank? || assignment.ending? || assignment.no_period?
   end
 

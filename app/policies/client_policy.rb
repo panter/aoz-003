@@ -22,9 +22,9 @@ class ClientPolicy < ApplicationPolicy
   alias_method :superadmin_privileges?, :superadmin?
 
   def acceptance_collection
-    if superadmin?
+    if superadmin_or_department_managers_record?
       Client.acceptance_collection
-    elsif department_managers_record?
+    else
       Client.acceptance_collection_restricted
     end
   end
