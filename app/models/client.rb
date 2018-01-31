@@ -5,8 +5,6 @@ class Client < ApplicationRecord
   include ZuerichScopes
   include ImportRelation
 
-  ransackable_scopes [:active, :inactive]
-
   before_update :record_acceptance_change, if: :going_to_change_to_resigned?
 
   enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
@@ -110,12 +108,10 @@ class Client < ApplicationRecord
     language_skills.german.blank?
   end
 
-  # allow ransack to use the scopes
-  def self.ransackable_scopes(_auth_object = nil)
+  # allow ransack to use defined scopes
+  def self.ransackable_scopes(auth_object = nil)
     ['active', 'inactive']
   end
-
-  private_class_method :ransackable_scopes
 
   private
 
