@@ -49,6 +49,8 @@ class User < ApplicationRecord
   has_many :group_offer_terminations_verified, class_name: 'GroupOffer',
     foreign_key: 'termination_verified_by_id', inverse_of: 'termination_verified_by'
 
+  has_many :resigned_clients, class_name: 'Client', foreign_key: 'resigned_by_id'
+
   # Mailing process done relation
   has_many :process_submitted_by, class_name: 'ReminderMailingVolunteer'
 

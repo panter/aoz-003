@@ -5,6 +5,8 @@ class Client < ApplicationRecord
   include ZuerichScopes
   include ImportRelation
 
+  before_update :record_acceptance_change, if: :going_to_change_to_resigned?
+
   enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
   enum cost_unit: { city: 0, municipality: 1, canton: 2 }
 
@@ -15,6 +17,7 @@ class Client < ApplicationRecord
 
   belongs_to :user, -> { with_deleted }
   belongs_to :involved_authority, class_name: 'User', optional: true
+  belongs_to :resigned_by, class_name: 'User', optional: true
 
   has_one :assignment, dependent: :destroy
   has_many :assignment_logs
@@ -33,13 +36,16 @@ class Client < ApplicationRecord
 
   validates :salutation, presence: true
 
-  scope :need_accompanying, lambda {
-    inactive.order(created_at: :asc)
-  }
-
+  validates :acceptance, exclusion: {
+    in: ['resigned'], message: 'Klient kann nicht beendet werden, solange noch ein laufendes Tandem existiert.'
+  }, unless: :terminateable?
 
   scope :with_assignment, (-> { joins(:assignment) })
   scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })
+
+  scope :need_accompanying, lambda {
+    inactive.order(created_at: :asc)
+  }
 
   scope :with_active_assignment_between, lambda { |start_date, end_date|
     with_assignment.merge(Assignment.active_between(start_date, end_date))
@@ -61,6 +67,18 @@ class Client < ApplicationRecord
   scope :inactive, lambda {
     accepted.without_assignment.or(with_inactive_assignment)
   }
+
+  def terminateable?
+    assignment.blank? || assignment.ending? || assignment.no_period?
+  end
+
+  def self.acceptences_restricted
+    acceptances.except('resigned')
+  end
+
+  def self.acceptance_collection_restricted
+    acceptences_restricted.keys.map(&:to_sym)
+  end
 
   def self.acceptance_collection
     acceptances.keys.map(&:to_sym)
@@ -87,5 +105,15 @@ class Client < ApplicationRecord
 
   def german_missing?
     language_skills.german.blank?
+  end
+
+  private
+
+  def going_to_change_to_resigned?
+    will_save_change_to_acceptance?(to: 'resigned')
+  end
+
+  def record_acceptance_change
+    self.resigned_on = Time.zone.today
   end
 end

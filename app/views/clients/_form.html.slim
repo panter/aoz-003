@@ -47,8 +47,9 @@
 
   fieldset
     legend Interne Kriterien
+    - if policy(@client).set_resigned?
+      = f.input :acceptance, collection: policy(@client).acceptance_collection, include_blank: false
     - if policy(Client).superadmin_privileges?
-      = f.input :acceptance, collection: Client.acceptance_collection, include_blank: false
       = f.association :involved_authority, collection: @social_workers
 
     = f.input :competent_authority

@@ -3,7 +3,7 @@ class ClientsController < ApplicationController
   include NestedAttributes
   include ContactAttributes
 
-  before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_client, only: [:show, :edit, :update, :destroy, :set_resigned]
   before_action :set_social_worker_collection
 
   def index
@@ -62,6 +62,15 @@ class ClientsController < ApplicationController
       redirect_to @client, make_notice
     else
       render :edit
+    end
+  end
+
+  def set_resigned
+    if @client.update(acceptance: 'resigned')
+      redirect_to @client, notice: 'Der klient wurde erfolgreich beendet.'
+    else
+      redirect_back(fallback_location: client_path(@client),
+        notice: 'Der Klient konnte nicht beendet werden.')
     end
   end
 

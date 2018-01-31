@@ -1,13 +1,13 @@
 nav.navbar.section-navigation
   ul.list-inline
     - if policy(Client).superadmin_privileges?
-      li.button-acceptance = link_to t(".acceptance.#{@client.acceptance}"), '#',
+      li.button-acceptance = link_to t_attr(@client.acceptance, Client), '#',
         class: "btn btn-acceptance-#{@client.acceptance}"
     - if policy(@client).edit?
       li= button_link t_action(:edit), edit_client_path(@client)
     li= button_link navigation_glyph(:print), client_path(@client, print: true)
-    - if policy(Client).destroy?
-      li= link_to navigation_glyph(:delete), @client, confirm_deleting(@client, 'btn btn-default')
+    - if !@client.resigned? && policy(@client).set_resigned?
+      li= link_to 'Beenden', set_resigned_client_path(@client), class: 'btn btn-default', data: { method: 'PATCH' }
     li= button_link navigation_glyph(:back), clients_path
     - if policy(Journal).index?
       ul.list-inline.pull-right
