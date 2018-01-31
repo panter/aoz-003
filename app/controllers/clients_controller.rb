@@ -70,8 +70,12 @@ class ClientsController < ApplicationController
     if @client.update(acceptance: 'resigned', resigned_by: current_user)
       redirect_to @client, notice: 'Der klient wurde erfolgreich beendet.'
     else
-      redirect_back(fallback_location: client_path(@client),
-        notice: 'Der Klient konnte nicht beendet werden.')
+      redirect_back(fallback_location: client_path(@client), notice: {
+                      message: 'Beenden fehlgeschlagen.',
+                      model_message: @client.errors.messages[:acceptance].first,
+                      action_link: { text: 'Begleitung bearbeiten',
+                                   path: edit_assignment_path(@client.assignment) }
+                    })
     end
   end
 

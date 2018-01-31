@@ -1,5 +1,16 @@
 - if notice.present? || alert.present?
-  .alert.alert-warning.alert-dismissible role='alert'
-    button.close aria-label='Close' data-dismiss='alert' type='button'
-      span aria-hidden='true'  &times;
-    = notice || alert
+  - if notice.is_a? String
+    .alert.alert-warning.alert-dismissible role='alert'
+      button.close aria-label='Close' data-dismiss='alert' type='button'
+        span aria-hidden='true'  &times;
+      = notice || alert
+  - else
+    .alert.alert-danger.alert-dismissible role='alert'
+      button.close aria-label='Close' data-dismiss='alert' type='button' X
+      h4= notice['message']
+      - if notice['model_message'].present?
+        p=  notice['model_message']
+      p
+        button.btn.btn-default.m-r-10 aria-label='Close' data-dismiss='alert' type='button' Abbrechen
+        - if notice['action_link'].present?
+          = link_to(notice['action_link']['text'], notice['action_link']['path'], target: '_blank', class: 'btn btn-default')

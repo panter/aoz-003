@@ -7,7 +7,7 @@ nav.navbar.section-navigation
       li= button_link t_action(:edit), edit_client_path(@client)
     li= button_link navigation_glyph(:print), client_path(@client, print: true)
     - if !@client.resigned? && policy(@client).set_resigned?
-      li= link_to 'Beenden', set_resigned_client_path(@client), class: 'btn btn-default', data: { method: 'PATCH' }
+      li= link_to 'Beenden', set_resigned_client_path(@client), class: 'btn btn-default', method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }
     li= button_link navigation_glyph(:back), clients_path
     - if policy(Journal).index?
       ul.list-inline.pull-right

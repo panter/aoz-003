@@ -39,7 +39,8 @@ class Client < ApplicationRecord
   validates :salutation, presence: true
 
   validates :acceptance, exclusion: {
-    in: ['resigned'], message: 'Klient kann nicht beendet werden, solange noch ein laufendes Tandem existiert.'
+    in: ['resigned'],
+    message: 'Klient/in kann nicht beendet werden, solange noch ein laufendes Tandem existiert.'
   }, unless: :terminateable?
 
   scope :with_assignment, (-> { joins(:assignment) })
@@ -112,7 +113,7 @@ class Client < ApplicationRecord
   private
 
   # allow ransack to use the scopes
-  def self.ransackable_scopes(auth_object = nil)
+  def self.ransackable_scopes(_auth_object = nil)
     ['active', 'inactive']
   end
 
