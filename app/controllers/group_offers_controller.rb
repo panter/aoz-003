@@ -84,7 +84,7 @@ class GroupOffersController < ApplicationController
   def submit_initiate_termination
     if @group_offer.update(period_end: group_offer_params[:period_end],
       period_end_set_by: current_user)
-      redirect_to group_offers_path, notice: 'Gruppenangebots beendigung erfolgreich eingeleitet.'
+      redirect_to group_offers_path, notice: 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
     else
       render :initiate_termination
     end

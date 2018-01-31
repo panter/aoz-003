@@ -73,7 +73,7 @@ h2= @group_offer.title
 
 - if @group_offer.group_assignments.any?
   h2 Aktuelle Gruppeneinsätze
-  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments
+  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments, redirect_to_action: :show
 
 - if @group_offer.group_assignment_logs.any?
   h2 Archivierte Gruppeneinsätze

@@ -104,7 +104,11 @@ module GroupAssignmentAndAssignmentCommon
     end
 
     def ended?
-      period_start.present? && period_end.present? && period_end <= Time.zone.today
+      ending? && period_end <= Time.zone.today
+    end
+
+    def ending?
+      period_start.present? && period_end.present?
     end
   end
 end

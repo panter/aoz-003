@@ -51,7 +51,7 @@ class GroupOffer < ApplicationRecord
     group_assignments.active_between(start_date, end_date).any?
   end
 
-  def endable?
+  def terminatable?
     group_assignments.have_start.any? || group_assignment_logs.any?
   end
 
