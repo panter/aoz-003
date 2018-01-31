@@ -57,15 +57,17 @@ class ClientsController < ApplicationController
   end
 
   def update
-    if @client.update(client_params)
-      redirect_to @client, make_notice
+    @client.assign_attributes(client_params)
+    @client.resigned_by = current_user if @client.will_save_change_to_acceptance?(to: 'resigned')
+    if @client.save
+      redirect_to @client, create_update_redirect_notice
     else
       render :edit
     end
   end
 
   def set_resigned
-    if @client.update(acceptance: 'resigned')
+    if @client.update(acceptance: 'resigned', resigned_by: current_user)
       redirect_to @client, notice: 'Der klient wurde erfolgreich beendet.'
     else
       redirect_back(fallback_location: client_path(@client),
@@ -89,6 +91,13 @@ class ClientsController < ApplicationController
       filters.merge(acceptance_not_eq: 2)
     end
   end
+
+  def create_update_redirect_notice
+    if @client.saved_change_to_acceptance?(to: 'resigned')
+      { notice: 'Klient/in wurde erfolgreich beendet.' }
+    else
+      make_notice
+    end
   end
 
   def set_client
