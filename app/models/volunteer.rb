@@ -188,11 +188,11 @@ class Volunteer < ApplicationRecord
   end
 
   def with_not_terminated_assignments?
-    assignments.unterminated.any? || assignments.termination_not_submitted.any?
+    assignments.any? && (assignments.unterminated.any? || assignments.termination_not_submitted.any?)
   end
 
   def with_not_terminated_group_assignments?
-    group_assignments.unterminated.any? || group_assignments.not_submitted.any?
+    group_assignments.any? && (group_assignments.unterminated.any? || group_assignments.not_submitted.any?)
   end
 
   def not_terminatable?

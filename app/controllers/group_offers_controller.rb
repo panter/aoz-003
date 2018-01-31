@@ -128,8 +128,8 @@ class GroupOffersController < ApplicationController
   end
 
   def set_volunteer_collection
-    @internals = Volunteer.internal.not_resigned
-    @externals = Volunteer.external.not_resigned
+    @internals = Volunteer.accepted.internal.not_resigned
+    @externals = Volunteer.accepted.external.not_resigned
   end
 
   def set_department_manager_collection
