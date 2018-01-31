@@ -128,6 +128,7 @@ class Volunteer < ApplicationRecord
 
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
+  scope :not_resigned, (-> { where.not(acceptance: :resigned) })
 
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).merge(Assignment.start_before(6.months.ago))

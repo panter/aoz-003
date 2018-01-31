@@ -86,7 +86,7 @@ class VolunteersController < ApplicationController
 
   def not_resigned
     return if params[:q]
-    @volunteers = @volunteers.where.not(acceptance: :resigned)
+    @volunteers = @volunteers.not_resigned
   end
 
   def activity_filter
