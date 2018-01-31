@@ -46,11 +46,7 @@ class ClientsController < ApplicationController
     @client.involved_authority ||= current_user if current_user.social_worker?
     authorize @client
     if @client.save
-      if @client.user.social_worker? && ClientNotification.active.any?
-        redirect_to @client, notice: ClientNotification.active.pluck(:body).to_sentence
-      else
-        redirect_to @client, make_notice
-      end
+      redirect_to @client, create_success_notice
     else
       render :new
     end
@@ -81,6 +77,12 @@ class ClientsController < ApplicationController
 
   private
 
+  def create_success_notice
+    if @client.user.social_worker? && ClientNotification.active.any?
+      { notice: ClientNotification.active.pluck(:body).to_sentence }
+    else
+      make_notice
+    end
   end
 
   def create_update_redirect_notice
