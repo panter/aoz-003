@@ -74,7 +74,7 @@ class ClientsController < ApplicationController
                       message: 'Beenden fehlgeschlagen.',
                       model_message: @client.errors.messages[:acceptance].first,
                       action_link: { text: 'Begleitung bearbeiten',
-                                   path: edit_assignment_path(@client.assignment) }
+                                     path: edit_assignment_path(@client.assignment) }
                     })
     end
   end

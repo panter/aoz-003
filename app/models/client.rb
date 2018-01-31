@@ -110,12 +110,14 @@ class Client < ApplicationRecord
     language_skills.german.blank?
   end
 
-  private
-
   # allow ransack to use the scopes
   def self.ransackable_scopes(_auth_object = nil)
     ['active', 'inactive']
   end
+
+  private_class_method :ransackable_scopes
+
+  private
 
   def going_to_change_to_resigned?
     will_save_change_to_acceptance?(to: 'resigned')
