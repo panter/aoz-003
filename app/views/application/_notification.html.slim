@@ -1,6 +1,5 @@
 - if notice.present? || alert.present? || @custom_notice.present?
-  - notice = @custom_notice.stringify_keys if @custom_notice.present?
-  - notice['action_link'].stringify_keys! if @custom_notice[:action_link].present?
+  - notice = @custom_notice if @custom_notice.present?
   - if notice.is_a? String
     .alert.alert-warning.alert-dismissible role='alert'
       button.close aria-label='Close' data-dismiss='alert' type='button'

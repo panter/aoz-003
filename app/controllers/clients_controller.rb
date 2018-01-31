@@ -62,7 +62,10 @@ class ClientsController < ApplicationController
     if @client.save
       redirect_to @client, create_update_redirect_notice
     else
-      @custom_notice = resigned_fail_notice if @client.errors.messages[:acceptance].present?
+      if @client.errors.messages[:acceptance].present?
+        @custom_notice = resigned_fail_notice.stringify_keys
+        @custom_notice['action_link'].stringify_keys!
+      end
       render :edit
     end
   end
@@ -78,6 +81,16 @@ class ClientsController < ApplicationController
 
   private
 
+  end
+
+  def create_update_redirect_notice
+    if @client.saved_change_to_acceptance?(to: :resigned)
+      { notice: 'Klient/in wurde erfolgreich beendet.' }
+    else
+      make_notice
+    end
+  end
+
   def resigned_fail_notice
     {
       message: 'Beenden fehlgeschlagen.', model_message: @client.errors.messages[:acceptance].first,
@@ -92,14 +105,6 @@ class ClientsController < ApplicationController
       filters.except(:acceptance_not_eq)
     else
       filters.merge(acceptance_not_eq: 2)
-    end
-  end
-
-  def create_update_redirect_notice
-    if @client.saved_change_to_acceptance?(to: 'resigned')
-      { notice: 'Klient/in wurde erfolgreich beendet.' }
-    else
-      make_notice
     end
   end
 
