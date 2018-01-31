@@ -15,7 +15,7 @@ nav.navbar.navbar-top.hidden-print
           - if policy(User).index?
             li= link_to 'Benutzer/innen', users_path
           - if policy(Client).index?
-            li= link_to 'Klienten/innen', clients_path(q: { acceptance_not_eq: 2 })
+            li= link_to 'Klienten/innen', clients_path
           - if policy(Volunteer).index?
             li= link_to 'Freiwillige', volunteers_path
           - if policy(Department).manager_with_department?
