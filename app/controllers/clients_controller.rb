@@ -3,8 +3,8 @@ class ClientsController < ApplicationController
   include NestedAttributes
   include ContactAttributes
 
-  before_action :set_client, only: [:show, :edit, :update, :destroy, :set_resigned]
-  before_action :set_social_worker_collection
+  before_action :set_client, only: [:show, :edit, :update, :set_resigned]
+  before_action :set_social_worker_collection, only: [:new, :edit]
 
   def index
     authorize Client
@@ -67,8 +67,9 @@ class ClientsController < ApplicationController
   end
 
   def set_resigned
-    if @client.update(acceptance: 'resigned', resigned_by: current_user)
-      redirect_to @client, notice: 'Der klient wurde erfolgreich beendet.'
+    if @client.update(acceptance: :resigned, resigned_by: current_user)
+      redirect_back(fallback_location: client_path(@client),
+        notice: 'Klient/in wurde erfolgreich beendet.')
     else
       redirect_back(fallback_location: client_path(@client), notice: {
                       message: 'Beenden fehlgeschlagen.',
