@@ -45,8 +45,7 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     within '.log-table' do
       assert page.has_text? "#{@ga1.volunteer.contact.full_name} "\
         "#{@ga1.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga1.period_start)} "
-      assert page.has_text? I18n.l(@ga1.group_assignment_logs.first.created_at)
-      refute page.has_text? I18n.l(@ga1.period_end)
+      assert page.has_text? I18n.l(@ga1.period_end)
     end
   end
 

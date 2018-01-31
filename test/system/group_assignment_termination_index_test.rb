@@ -80,7 +80,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     page.find_all('a', text: 'Beendigung Quittieren').first.click
     click_link 'Beendigung Quittieren'
 
-    assert page.has_text? 'Beendete Begleitungen'
+    assert page.has_text? 'Beendete Gruppen Begleitungen'
     refute page.has_text? termination_index_table_text(@un_submitted)
     refute page.has_text? termination_index_table_text(@submitted)
     refute page.has_text? termination_index_table_text(@verified)
@@ -118,9 +118,9 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
   end
 
   test 'group_assignment_quittieren_creates_a_group_assignment_log_record_from_group_assignment' do
-    visit terminated_index_group:assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' })
     click_link 'Beendigung Quittieren', href: verify_termination_group_assignment_path(@submitted.id)
-    assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
+    assert page.has_text? 'Der Gruppeneinsatz wurde erfolgreich quittiert.'
     assert_equal @submitted, GroupAssignmentLog.find_by(group_assignment_id: @submitted.id).group_assignment
   end
 
@@ -147,9 +147,9 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
       href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
 
     click_link 'Beendigung Quittieren', href: /group_assignments\/#{@un_submitted.id}\/verify_termination/
-    assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
+    assert page.has_text? 'Der Gruppeneinsatz wurde erfolgreich quittiert.'
 
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_not_null: 'true' })
+    visit terminated_index_group_assignments_path(q: { termination_verified_by_id_not_null: 'true' })
     @un_submitted.reload
     assert page.has_text? "Quittiert von #{@un_submitted.termination_verified_by.full_name} am"\
       " #{I18n.l(@un_submitted.termination_verified_at.to_date)}"

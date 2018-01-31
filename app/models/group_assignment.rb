@@ -3,8 +3,8 @@ class GroupAssignment < ApplicationRecord
   include GroupAssignmentCommon
 
   after_save :update_group_offer_search_field
-  after_update :handle_archive_after_update_or_destroy, if: :dates_updated_or_termination_verified?
-  before_destroy :handle_archive_after_update_or_destroy
+  after_update :save_group_assignment_logs, if: :dates_updated?
+  before_destroy :create_log_of_self_and_delete_self
 
   has_many :group_assignment_logs
 
@@ -34,6 +34,7 @@ class GroupAssignment < ApplicationRecord
   end
 
   def create_log_of_self(start_date = period_start, end_date = period_end)
+    return false if running? # prevent deleting of running group assignment
     GroupAssignmentLog.create!(
       attributes.except('id', 'created_at', 'updated_at', 'active')
         .merge(title: group_offer.title, group_assignment_id: id, period_start: start_date,
@@ -67,17 +68,12 @@ class GroupAssignment < ApplicationRecord
 
   private
 
-  def handle_archive_after_update_or_destroy
-    if !saved_change_to_termination_verified_by_id?(from: nil)
-      create_log_of_self(period_start_before_last_save, period_end_before_last_save)
-    elsif create_log_of_self && !running?
-      delete
-    end
+  def create_log_of_self_and_delete_self
+    delete if create_log_of_self
   end
 
-  def dates_updated_or_termination_verified?
-    saved_change_to_period_start? || saved_change_to_period_end? ||
-      saved_change_to_termination_verified_by_id?(from: nil)
+  def dates_updated?
+    saved_change_to_period_start? || saved_change_to_period_end?
   end
 
   def update_group_offer_search_field

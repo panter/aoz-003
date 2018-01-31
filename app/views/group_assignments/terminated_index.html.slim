@@ -5,7 +5,8 @@ nav.navbar.section-navigation.hidden-print
   ul.list-inline
     li= button_link 'Zurück zu Gruppenangeboten', group_offers_path, dimension: :sm
     li= button_link 'Filter aufheben',
-      terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }), dimension: :sm
+      terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }),
+      dimension: :sm
     = custom_filter_dropdown('Ende Bestätigt',
       { q: :termination_submitted_by_id_not_null, text: 'Bestätigt', value: 'true' },
       { q: :termination_submitted_by_id_null, text: 'Unbestätigt', value: 'true' })
@@ -52,11 +53,9 @@ nav.navbar.section-navigation.hidden-print
             = link_to 'Freiwillige/n beenden', '#'
             - if policy(GroupAssignment).verify_termination?
               td
-                - if assignment.termination_verified_by.blank?
-                  = link_to 'Beendigung Quittieren', verify_termination_group_assignment_path(assignment),
-                    class: 'btn btn-default',
-                    data: { method: 'PATCH' }
-                - else
-                  = "Quittiert von "
-                  = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
-                  = " am #{l(assignment.termination_verified_at.to_date)}"
+                = link_to_if(assignment.termination_verified_by.blank?, 'Beendigung Quittieren',
+                  verify_termination_group_assignment_path(assignment), class: 'btn btn-default',
+                  data: { method: 'PATCH' }) do
+                    = "Quittiert von "
+                    = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
+                    = " am #{l(assignment.termination_verified_at.to_date)}"
