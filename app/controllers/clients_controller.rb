@@ -58,10 +58,11 @@ class ClientsController < ApplicationController
 
   def update
     @client.assign_attributes(client_params)
-    @client.resigned_by = current_user if @client.will_save_change_to_acceptance?(to: 'resigned')
+    @client.resigned_by = current_user if @client.will_save_change_to_acceptance?(to: :resigned)
     if @client.save
       redirect_to @client, create_update_redirect_notice
     else
+      @custom_notice = resigned_fail_notice if @client.errors.messages[:acceptance].present?
       render :edit
     end
   end
@@ -71,16 +72,18 @@ class ClientsController < ApplicationController
       redirect_back(fallback_location: client_path(@client),
         notice: 'Klient/in wurde erfolgreich beendet.')
     else
-      redirect_back(fallback_location: client_path(@client), notice: {
-                      message: 'Beenden fehlgeschlagen.',
-                      model_message: @client.errors.messages[:acceptance].first,
-                      action_link: { text: 'Begleitung bearbeiten',
-                                     path: edit_assignment_path(@client.assignment) }
-                    })
+      redirect_back(fallback_location: client_path(@client), notice: resigned_fail_notice)
     end
   end
 
   private
+
+  def resigned_fail_notice
+    {
+      message: 'Beenden fehlgeschlagen.', model_message: @client.errors.messages[:acceptance].first,
+      action_link: { text: 'Begleitung bearbeiten', path: edit_assignment_path(@client.assignment) }
+    }
+  end
 
   def default_filter
     return { acceptance_not_eq: 2 } if params[:q].blank?
