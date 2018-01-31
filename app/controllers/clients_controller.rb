@@ -79,11 +79,6 @@ class ClientsController < ApplicationController
     end
   end
 
-  def destroy
-    @client.destroy
-    redirect_to clients_url, make_notice
-  end
-
   private
 
   def default_filter

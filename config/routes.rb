@@ -56,7 +56,7 @@ Rails.application.routes.draw do
   resources :assignments, concerns: [:update_submitted_at, :search, :termination_actions]
   resources :client_notifications, :departments, :performance_reports, :email_templates, :users
 
-  resources :clients, concerns: :search do
+  resources :clients, except: [:destroy], concerns: :search do
     resources :journals, except: [:show]
     patch :set_resigned, on: :member
   end
