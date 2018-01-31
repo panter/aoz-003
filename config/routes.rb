@@ -58,7 +58,7 @@ Rails.application.routes.draw do
 
   resources :clients, except: [:destroy], concerns: :search do
     resources :journals, except: [:show]
-    patch :set_resigned, on: :member
+    patch :set_terminated, on: :member
   end
 
   resources :feedbacks, only: [:new, :create]
