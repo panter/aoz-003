@@ -84,8 +84,12 @@ class ApplicationPolicy
     superadmin? || user_owns_record?
   end
 
+  def department_managers_record?
+    department_manager? && user_owns_record?
+  end
+
   def superadmin_or_department_managers_record?
-    superadmin? || department_manager? && user_owns_record?
+    superadmin? || department_managers_record?
   end
 
   def superadmin_or_department_managers_registration?

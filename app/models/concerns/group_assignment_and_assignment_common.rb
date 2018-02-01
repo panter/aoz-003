@@ -30,7 +30,9 @@ module GroupAssignmentAndAssignmentCommon
     scope :start_after, ->(date) { where("#{model_name.plural}.period_start > ?", date) }
     scope :start_at_or_after, ->(date) { where("#{model_name.plural}.period_start >= ?", date) }
     scope :start_within, ->(date_range) { where(period_start: date_range) }
-    scope :started_six_months_ago, (-> { where("#{model_name.plural}.period_start < ?", 6.months.ago) })
+    scope :started_six_months_ago, lambda {
+      where("#{model_name.plural}.period_start < ?", 6.months.ago)
+    }
     scope :started_ca_six_weeks_ago, lambda {
       start_at_or_after(8.weeks.ago).start_at_or_before(6.weeks.ago)
     }
@@ -103,12 +105,16 @@ module GroupAssignmentAndAssignmentCommon
       period_start.present? && period_start <= Time.zone.today
     end
 
+    def ending?
+      period_start.present? && period_end.present?
+    end
+
     def ended?
       ending? && period_end <= Time.zone.today
     end
 
-    def ending?
-      period_start.present? && period_end.present?
+    def no_period?
+      period_start.blank? && period_end.blank?
     end
   end
 end

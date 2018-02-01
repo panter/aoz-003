@@ -22,4 +22,9 @@ tr
     td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
       class: "btn btn-xs btn-acceptance-#{client.acceptance}"
     td= client.comments
-  = render 'index_actions', subject: client
+  td.index-action-cell.hidden-print
+    = link_to t_action(:show), client_path(client)
+    - if policy(client).edit?
+      = link_to t_action(:edit), edit_client_path(client)
+    - if policy(client).set_terminated?
+      = link_to 'Beenden', set_terminated_client_path(client), method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }

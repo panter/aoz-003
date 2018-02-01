@@ -1,0 +1,9 @@
+.alert.alert-danger.alert-dismissible role='alert'
+  = notification_close_button
+  h4= notice['message']
+  - if notice['model_message'].present?
+    p=  notice['model_message']
+  p
+    = notification_close_button('Abbrechen')
+    - if notice['action_link'].present?
+      = link_to(notice['action_link']['text'], notice['action_link']['path'], target: '_blank', class: 'btn btn-default')

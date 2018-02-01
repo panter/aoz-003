@@ -142,18 +142,6 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? 'Fluent'
   end
 
-  test 'superadmin_can_delete_client' do
-    login_as @superadmin
-    client = create :client
-    visit client_path(client)
-
-    page.accept_confirm do
-      first('a', text: 'Löschen').click
-    end
-
-    assert page.has_text? 'Client was successfully deleted.'
-  end
-
   test 'client_pagination' do
     login_as @superadmin
     70.times do
@@ -183,22 +171,6 @@ class ClientsTest < ApplicationSystemTestCase
       "#{I18n.l(with_assignment.created_at.to_date)} Angemeldet with_assignment Show Edit"
   end
 
-  test 'can_delete_a_client_through_edit' do
-    client = create :client
-    login_as @superadmin
-
-    visit clients_path
-    assert page.has_text? client
-
-    visit edit_client_path(client)
-    page.accept_confirm do
-      click_link 'Löschen'
-    end
-
-    assert page.has_text? 'Client was successfully deleted.'
-    refute page.has_text? client
-  end
-
   test 'all_needed_actions_are_available_in_the_index' do
     client = create :client
     social_worker = create :social_worker
@@ -209,7 +181,6 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert page.has_link? 'Show', count: 3
     assert page.has_link? 'Edit', count: 3
-    refute page.has_link? 'Löschen'
 
     login_as @department_manager
     visit clients_path

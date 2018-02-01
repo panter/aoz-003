@@ -82,7 +82,7 @@ end
 puts_model_counts('After Volunteer created', User, Volunteer, Client)
 
 # Create clients for each acceptance type
-Client.acceptance_collection.each do |acceptance|
+Client.acceptance_collection_restricted.each do |acceptance|
   FactoryBot.create(:client, acceptance: acceptance, user: User.superadmins.first)
 end
 puts_model_counts('After Client created', User, Volunteer, Client)
