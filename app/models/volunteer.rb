@@ -187,16 +187,22 @@ class Volunteer < ApplicationRecord
     accepted? && assignments.active.blank? && group_assignments.active.blank?
   end
 
-  def with_not_terminated_assignments?
-    assignments.any? && (assignments.unterminated.any? || assignments.termination_not_submitted.any?)
+  def unterminated_assignments?
+    assignments.each do |assignment|
+      return false unless assignment.terminated?
+    end
   end
 
-  def with_not_terminated_group_assignments?
-    group_assignments.any? && (group_assignments.unterminated.any? || group_assignments.not_submitted.any?)
+  def unterminated_group_assignments?
+    group_assignments.each do |group_assignment|
+      return false if group_assignment.termination_verified_by.blank?
+    end
   end
 
-  def not_terminatable?
-    accepted? && (with_not_terminated_assignments? || with_not_terminated_group_assignments?)
+  def terminatable?
+    return unterminated_assignments? if assignments.any?
+    return unterminated_group_assignments? if group_assignments.any?
+    true
   end
 
   def state

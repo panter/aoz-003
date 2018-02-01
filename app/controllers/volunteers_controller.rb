@@ -65,13 +65,13 @@ class VolunteersController < ApplicationController
   end
 
   def terminate
-    if @volunteer.not_terminatable?
-      redirect_to volunteer_path(@volunteer, anchor: 'assignments'),
-        notice: 'Freiwillige/r hat noch nicht beendete Einsätze.'
-    else
+    if @volunteer.terminatable?
       @volunteer.update(acceptance: :resigned, resigned_at: Time.zone.now)
       redirect_back fallback_location: volunteers_url,
         notice: 'Freiwillige/r wurde erfolgreich beendet.'
+    else
+      redirect_to volunteer_path(@volunteer, anchor: 'assignments'),
+        notice: 'Freiwillige/r hat noch nicht beendete Einsätze.'
     end
   end
 
