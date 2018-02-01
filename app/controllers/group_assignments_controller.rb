@@ -76,13 +76,12 @@ class GroupAssignmentsController < ApplicationController
   private
 
   def handle_period_end
-    if @group_assignment.will_save_change_to_period_end?(from: nil) && @group_assignment.ending?
-      @group_assignment.period_end_set_by = current_user
-      [
-        'Einsatzende wurde erfolgreich gesetzt.',
-        params[:redirect_to] || :terminated_group_assignments_index
-      ]
-    end
+    return unless @group_assignment.will_save_change_to_period_end?(from: nil)
+    @group_assignment.period_end_set_by = current_user
+    [
+      'Einsatzende wurde erfolgreich gesetzt.',
+      params[:redirect_to] || :terminated_group_assignments_index
+    ]
   end
 
   def create_redirect_to(notice_text = nil, action: nil)
