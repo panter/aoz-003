@@ -69,6 +69,7 @@ class VolunteersController < ApplicationController
       @volunteer.update(acceptance: :resigned, resigned_at: Time.zone.now)
       redirect_back fallback_location: volunteers_url,
         notice: 'Freiwillige/r wurde erfolgreich beendet.'
+      @volunteer.user.destroy
     else
       redirect_to volunteer_path(@volunteer, anchor: 'assignments'),
         notice: 'Freiwillige/r hat noch nicht beendete Einsätze.'

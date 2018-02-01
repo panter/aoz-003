@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   before_validation :assign_primary_email, if: :profile
 
-  has_one :volunteer, dependent: :destroy, inverse_of: 'user'
+  has_one :volunteer, dependent: :nullify, inverse_of: 'user'
 
   has_one :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
