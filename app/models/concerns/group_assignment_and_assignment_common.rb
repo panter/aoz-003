@@ -116,5 +116,9 @@ module GroupAssignmentAndAssignmentCommon
     def ending?
       period_start.present? && period_end.present?
     end
+
+    def no_period?
+      period_start.blank? && period_end.blank?
+    end
   end
 end
