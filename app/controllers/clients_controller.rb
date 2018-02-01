@@ -58,10 +58,7 @@ class ClientsController < ApplicationController
     if @client.save
       redirect_to @client, create_update_redirect_notice
     else
-      if @client.errors.messages[:acceptance].present?
-        @custom_notice = resigned_fail_notice.stringify_keys
-        @custom_notice['action_link'].stringify_keys!
-      end
+      @custom_notice = resigned_fail_notice if @client.errors.messages[:acceptance].present?
       render :edit
     end
   end

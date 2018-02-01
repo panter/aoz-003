@@ -1,17 +1,10 @@
-- if notice.present? || alert.present? || @custom_notice.present?
-  - notice = @custom_notice if @custom_notice.present?
+- if alert.present?
+    = notification_warning_bubble(alert)
+- elsif notice.present?
   - if notice.is_a? String
-    .alert.alert-warning.alert-dismissible role='alert'
-      button.close aria-label='Close' data-dismiss='alert' type='button'
-        span aria-hidden='true'  &times;
-      = notice || alert
+    = notification_warning_bubble(notice)
   - elsif notice.is_a? Hash
-    .alert.alert-danger.alert-dismissible role='alert'
-      button.close aria-label='Close' data-dismiss='alert' type='button' X
-      h4= notice['message']
-      - if notice['model_message'].present?
-        p=  notice['model_message']
-      p
-        button.btn.btn-default.m-r-10 aria-label='Close' data-dismiss='alert' type='button' Abbrechen
-        - if notice['action_link'].present?
-          = link_to(notice['action_link']['text'], notice['action_link']['path'], target: '_blank', class: 'btn btn-default')
+    = render 'notification_alert_with_action', notice: notice
+- elsif @custom_notice.present?
+  - @custom_notice[:action_link].stringify_keys!
+  = render 'notification_alert_with_action', notice: @custom_notice.stringify_keys
