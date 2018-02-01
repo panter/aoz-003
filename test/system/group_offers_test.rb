@@ -96,7 +96,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_link? 'Download'
   end
 
-  test 'modifying volunteer dates creates log entry' do
+  test 'modifying volunteer dates does not create a log entry' do
     login_as create(:user)
     volunteer = create :volunteer
     group_offer = create :group_offer, volunteers: [volunteer]
@@ -105,20 +105,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? 'Active group offers'
     assert page.has_link? group_offer.title
     refute page.has_text? 'Group offers log'
-
-    group_offer.group_assignments.last.update(period_start: 7.months.ago, period_end: 2.months.ago)
-
-    visit volunteer_path(volunteer)
-    assert page.has_text? 'Active group offers'
-    assert page.has_text? 'Group offers log'
-    assert page.has_link? group_offer.title, count: 2
-
-    group_offer.group_assignments.last.update(period_end: 3.months.ago)
-
-    visit volunteer_path(volunteer)
-    assert page.has_text? 'Active group offers'
-    assert page.has_text? 'Group offers log'
-    assert page.has_link? group_offer.title, count: 3
   end
 
   test 'deleting group offer creates log and does not crash volunteer show' do

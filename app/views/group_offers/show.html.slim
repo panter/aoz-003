@@ -75,7 +75,7 @@ h2= @group_offer.title
   h2 Aktuelle Gruppeneinsätze
   = render 'group_assignments_index', group_assignments: @group_offer.group_assignments, redirect_to_action: :show
 
-- if @group_offer.group_assignments.ended.any?
+- if @group_offer.group_assignment_logs.any?
   h2 Archivierte Gruppeneinsätze
   .table-responsive.log-table.m-b-20
     table.table.table-no-border-top
@@ -85,22 +85,22 @@ h2= @group_offer.title
           th Funktion
           th Anfangsdatum
           th Enddatum
-          th Beendet
-          th Archiviert am
+          th Begleitung Beendet
+          th Archiviert
       tbody
-        - @group_offer.group_assignments.ended.each do |ga|
+        - @group_offer.group_assignment_logs.order('created_at asc').each do |ga_log|
           tr
-            td= link_to_if(policy(Volunteer).show?, ga.volunteer.contact.full_name,
-              volunteer_path(ga.volunteer)) { ga.volunteer.contact.full_name }
-            td= ga.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
-            td= l(ga.period_start) if ga.period_start
-            td= l(ga.period_end) if ga.period_end
-            td= ga.termination_verified_by.blank? ? boolean_glyph(false) : boolean_glyph(true)
+            td= link_to_if(policy(Volunteer).show?, ga_log.volunteer.contact.full_name,
+              volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
+            td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
+            td= l(ga_log.period_start) if ga_log.period_start
+            td= l(ga_log.period_end) if ga_log.period_end
+            td= l(ga_log.period_end_set_by.updated_at)
             td
-              - if ga.termination_verified_by.present?
                 = "Quittiert von "
-                = link_to ga.termination_verified_by.full_name, profile_link(ga.termination_verified_by)
-                = " am #{l(ga.termination_verified_at.to_date)}"
+                = link_to ga_log.termination_verified_by.full_name, profile_link(ga_log.termination_verified_by)
+                = " am #{l(ga_log.termination_verified_at.to_date)}"
+
 
 - unless params[:format] == 'pdf'
   = form_navigation_btn :edit
