@@ -25,7 +25,6 @@ nav.navbar.section-navigation
               = f.button :submit
           - if @volunteer.billing_expenses.any?
             li= button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
-        - if @volunteer.internal_and_started_assignments?
           li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
           - if @volunteer.certificates.size == 1
             li= button_link t('.show_certificate'), volunteer_certificate_path(@volunteer, @volunteer.certificates.first)

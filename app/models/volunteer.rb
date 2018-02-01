@@ -255,8 +255,16 @@ class Volunteer < ApplicationRecord
     assignments.started.size.positive?
   end
 
+  def assignment_logs_started?
+    assignment_logs.started.size.positive?
+  end
+
   def group_assignment_started?
     group_assignments.started.size.positive?
+  end
+
+  def group_assignment_logs_started?
+    group_assignment_logs.started.size.positive?
   end
 
   def external?
@@ -268,7 +276,7 @@ class Volunteer < ApplicationRecord
   end
 
   def internal_and_started_assignments?
-    internal? && (assignment_started? || group_assignment_started?)
+    internal? && (assignment_started? || assignment_logs_started? || group_assignment_started? || group_assignment_logs_started?)
   end
 
   def self_applicant?
