@@ -60,6 +60,7 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment.assign_attributes(group_assignment_params.except(:volunteer_attributes)
       .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
     if @group_assignment.save && terminate_reminder_mailing
+      NotificationMailer.termination_submitted(@group_assignment).deliver_now
       redirect_to @group_assignment.volunteer,
         notice: 'Der Gruppeneinsatz ist hiermit abgeschlossen.'
     else
@@ -100,7 +101,6 @@ class GroupAssignmentsController < ApplicationController
     ReminderMailingVolunteer.termination_for(@group_assignment).map do |rmv|
       rmv.mark_process_submitted(current_user, terminate_parent_mailing: true)
     end
-    NotificationMailer.termination_submitted(@group_assignment).deliver_now
   end
 
   def set_group_assignment
