@@ -1,6 +1,6 @@
 class NotificationMailer < ApplicationMailer
   def termination_submitted(assignment)
-    @assignment || @group_assignment = assignment
+    @assignment = @group_assignment = assignment
     @subject = 'Beendigung des Einsatzes bestätigt durch ' +
       assignment.termination_submitted_by.email
 

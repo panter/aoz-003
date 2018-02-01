@@ -104,6 +104,7 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
   end
 
   test 'termination triggers notification email to creator' do
+    ActionMailer::Base.deliveries.clear
     @group_assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_group_assignment_path(@group_assignment)
