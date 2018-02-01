@@ -14,31 +14,40 @@ class User < ApplicationRecord
   has_many :certificates
   has_many :clients
   has_many :volunteers, inverse_of: 'registrar', foreign_key: 'registrar_id'
-  has_many :involved_authorities, class_name: 'Client'
+  has_many :involved_authorities, class_name: 'Client', foreign_key: 'involved_authority_id',
+    inverse_of: 'involved_authority'
   has_many :journals
   has_many :assignments, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :feedbacks, inverse_of: 'author', foreign_key: 'author_id'
   has_many :billing_expenses
   has_many :group_offers, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :reminder_mailings, inverse_of: 'creator', foreign_key: 'creator_id'
-  has_many :reviewed_feedbacks, class_name: 'Feedback', foreign_key: 'reviewer_id'
-  has_many :reviewed_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'reviewer_id'
-  has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id'
+  has_many :reviewed_feedbacks, class_name: 'Feedback', foreign_key: 'reviewer_id',
+    inverse_of: 'reviewer'
+  has_many :reviewed_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'reviewer_id',
+    inverse_of: 'reviewer'
+  has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id', inverse_of: 'reviewer'
 
   # Assignment termination relations
-  has_many :assignment_period_ends_set, class_name: 'Assignment', foreign_key: 'period_end_set_by'
+  has_many :assignment_period_ends_set, class_name: 'Assignment',
+    foreign_key: 'period_end_set_by_id', inverse_of: 'period_end_set_by'
   has_many :assignment_terminations_submitted, class_name: 'Assignment',
-    foreign_key: 'termination_submitted_by'
+    foreign_key: 'termination_submitted_by_id', inverse_of: 'termination_submitted_by'
   has_many :assignment_terminations_verified, class_name: 'Assignment',
-    foreign_key: 'termination_verified_by'
+    foreign_key: 'termination_verified_by_id', inverse_of: 'termination_verified_by'
 
   # GroupAssignment termination relations
   has_many :group_assignment_period_ends_set, class_name: 'GroupAssignment',
-    foreign_key: 'period_end_set_by'
+    foreign_key: 'period_end_set_by_id', inverse_of: 'period_end_set_by'
   has_many :group_assignment_terminations_submitted, class_name: 'GroupAssignment',
-    foreign_key: 'termination_submitted_by'
+    foreign_key: 'termination_submitted_by_id', inverse_of: 'termination_submitted_by'
   has_many :group_assignment_terminations_verified, class_name: 'GroupAssignment',
-    foreign_key: 'termination_verified_by'
+    foreign_key: 'termination_verified_by', inverse_of: 'termination_verified_by'
+
+  has_many :group_offer_period_ends_set, class_name: 'GroupOffer',
+    foreign_key: 'period_end_set_by_id', inverse_of: 'period_end_set_by'
+  has_many :group_offer_terminations_verified, class_name: 'GroupOffer',
+    foreign_key: 'termination_verified_by_id', inverse_of: 'termination_verified_by'
 
   # Mailing process done relation
   has_many :process_submitted_by, class_name: 'ReminderMailingVolunteer'

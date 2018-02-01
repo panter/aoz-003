@@ -48,7 +48,7 @@ class Volunteer < ApplicationRecord
 
   has_many :billing_expenses
 
-  has_many :group_assignments
+  has_many :group_assignments, dependent: :delete_all
   has_many :group_assignment_logs
 
   has_many :group_offers, through: :group_assignments
@@ -328,7 +328,8 @@ class Volunteer < ApplicationRecord
   end
 
   def record_acceptance_changed
-    self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now if will_save_change_to_acceptance?
+    return unless will_save_change_to_acceptance?
+    self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now
   end
 
   def user_deleted?

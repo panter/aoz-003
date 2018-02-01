@@ -56,12 +56,16 @@ module FilterDropdownHelper
   #           :text  - string for frontend display
   def custom_filter_dropdown(name, *filters)
     filter_keys = filters.map { |filter| filter[:q] }
+    filter_keys += filters.map { |filter| filter[:qs] }
     li_dropdown do
       concat dropdown_toggle_link(name + custom_text_end(filters))
       concat dropdown_ul(tag.li { all_link_to(filter_keys) }) {
         filters.map do |filter|
           concat li_a_element(filter[:text], custom_filter_url(
-              filter[:q], filter[:value], *filter_keys.reject { |key| key == filter[:q] }
+              filter[:q],
+              filter[:qs],
+              filter[:value],
+              *filter_keys.reject { |key| key == filter[:q] }.reject { |key| filter[:qs]&.include? key }
           ),
             class: q_active_class(filter[:q], filter[:value]))
         end
@@ -112,9 +116,10 @@ module FilterDropdownHelper
     search_parameters[filter] == value
   end
 
-  def custom_filter_url(filter, value, *excludes)
-    url_for(params_except('page')
-      .merge(q: search_parameters.except(*excludes).merge("#{filter}": value.to_s)))
+  def custom_filter_url(filter, multi_qs, value, *excludes)
+    q_values = search_parameters.except(*excludes).merge("#{filter}": value.to_s)
+    q_values = q_values.merge(multi_qs.map { |q| [q, value.to_s] }.to_h) if multi_qs
+    url_for(params_except('page').merge(q: q_values))
   end
 
   def bool_toggle_url(filter, toggle = false)

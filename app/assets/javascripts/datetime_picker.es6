@@ -6,7 +6,20 @@ function dateTimePicker() {
     clearBtn: true,
     language: 'de',
     autoclose: true,
-    todayHighlight: true
+    todayHighlight: true,
+    daysOfWeekHighlighted: [0,6],
+    immediateUpdates: true
+  });
+
+  const datepickersSingle = $('.input-date-picker input').datepicker({
+    format: 'yyyy-mm-dd',
+    todayBtn: true,
+    clearBtn: true,
+    language: 'de',
+    autoclose: true,
+    todayHighlight: true,
+    daysOfWeekHighlighted: [0,6],
+    immediateUpdates: true
   });
   $('#performance_report_period_years li a').each((index, element) => {
     $(element).bind('click', (event) => {

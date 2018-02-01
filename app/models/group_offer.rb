@@ -10,7 +10,14 @@ class GroupOffer < ApplicationRecord
 
   belongs_to :department, optional: true
   belongs_to :group_offer_category
-  belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true,
+    inverse_of: 'group_offers'
+
+  # termination record relations
+  belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true,
+    inverse_of: 'group_offer_period_ends_set'
+  belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true,
+    inverse_of: 'group_offer_terminations_verified'
 
   has_many :group_assignments, dependent: :destroy
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
@@ -19,14 +26,21 @@ class GroupOffer < ApplicationRecord
   has_many :volunteers, through: :group_assignments
   has_many :volunteer_logs, through: :group_assignment_logs
 
-  has_many :hours, as: :hourable, dependent: :destroy
-  has_many :feedbacks, as: :feedbackable, dependent: :destroy
-  has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
+  has_many :hours, as: :hourable, dependent: :destroy, inverse_of: :hourable
+  has_many :feedbacks, as: :feedbackable, dependent: :destroy, inverse_of: :feedbackable
+  has_many :trial_feedbacks, as: :trial_feedbackable, inverse_of: :trial_feedbackable,
+    dependent: :destroy
 
   has_many :volunteer_contacts, through: :volunteers, source: :contact
 
   validates :title, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
+  validates :period_end, absence: {
+    message: lambda { |object, _|
+               'Dieses Gruppenangebot kann noch nicht beendet werden, da es noch '\
+                 "#{object.group_assignments.running.count} laufende Gruppeneinsätze hat."
+             }
+  }, if: :running_assignments?
 
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
@@ -39,6 +53,10 @@ class GroupOffer < ApplicationRecord
 
   def active_group_assignments_between?(start_date, end_date)
     group_assignments.active_between(start_date, end_date).any?
+  end
+
+  def terminatable?
+    group_assignments.have_start.any? || group_assignment_logs.any?
   end
 
   def all_group_assignments_ended_within?(date_range)
@@ -105,5 +123,11 @@ class GroupOffer < ApplicationRecord
 
   def update_search_volunteers
     update(search_volunteer: volunteer_contacts.pluck(:full_name).join(', '))
+  end
+
+  private
+
+  def running_assignments?
+    group_assignments.running.any?
   end
 end

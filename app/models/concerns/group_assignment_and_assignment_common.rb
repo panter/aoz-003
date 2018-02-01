@@ -21,6 +21,7 @@ module GroupAssignmentAndAssignmentCommon
     scope :end_in_future, (-> { where("#{model_name.plural}.period_end > ?", Time.zone.today) })
     scope :not_ended, (-> { no_end.or(end_in_future) })
 
+    scope :have_start, (-> { where.not(period_start: nil) })
     scope :no_start, (-> { where(period_start: nil) })
     scope :started, (-> { where("#{model_name.plural}.period_start <= ?", Time.zone.today) })
     scope :will_start, (-> { where("#{model_name.plural}.period_start > ?", Time.zone.today) })
@@ -33,6 +34,7 @@ module GroupAssignmentAndAssignmentCommon
     scope :started_ca_six_weeks_ago, lambda {
       start_at_or_after(8.weeks.ago).start_at_or_before(6.weeks.ago)
     }
+    scope :no_start_and_end, (-> { no_start.no_end })
 
     scope :with_hours, (-> { joins(:hours) })
 
@@ -41,7 +43,7 @@ module GroupAssignmentAndAssignmentCommon
     }
     scope :active, (-> { not_ended.started.or(no_start.end_in_future) })
     scope :stay_active, (-> { active.no_end })
-    scope :inactive, (-> { ended.or(no_start.no_end).or(will_start) })
+    scope :inactive, (-> { ended.or(no_start_and_end).or(will_start) })
     scope :active_between, lambda { |start_date, end_date|
       no_end.start_before(end_date)
             .or(start_before(end_date).end_after(start_date))
@@ -102,7 +104,11 @@ module GroupAssignmentAndAssignmentCommon
     end
 
     def ended?
-      period_start.present? && period_end.present? && period_end <= Time.zone.today
+      ending? && period_end <= Time.zone.today
+    end
+
+    def ending?
+      period_start.present? && period_end.present?
     end
   end
 end

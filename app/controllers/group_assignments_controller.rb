@@ -22,12 +22,9 @@ class GroupAssignmentsController < ApplicationController
 
   def update
     @group_assignment.assign_attributes(group_assignment_params)
-    if @group_assignment.will_save_change_to_period_end? && @group_assignment.ended?
-      @group_assignment.period_end_set_by = current_user
-      period_end_set_notice = { notice: 'Einsatzende wurde erfolgreich gesetzt.' }
-    end
+    period_end_set_notice, redirect_action = handle_period_end
     if @group_assignment.save
-      redirect_to @group_assignment.group_offer, period_end_set_notice || make_notice
+      create_redirect_to(period_end_set_notice, action: redirect_action)
     else
       render :edit
     end
@@ -35,9 +32,9 @@ class GroupAssignmentsController < ApplicationController
 
   def set_end_today
     if @group_assignment.update(period_end: Time.zone.today, period_end_set_by: current_user)
-      redirect_to @group_assignment.group_offer, notice: 'Einsatzende wurde erfolgreich gesetzt.'
+      create_redirect_to('Einsatzende wurde erfolgreich gesetzt.')
     else
-      redirect_to @group_assignment.group_offer, notice: 'Einsatzende konnte nicht gesetzt werden.'
+      create_redirect_to('Einsatzende konnte nicht gesetzt werden.')
     end
   end
 
@@ -59,7 +56,7 @@ class GroupAssignmentsController < ApplicationController
   def terminate; end
 
   def update_terminated_at
-    @group_assignment.volunteer.waive = group_assignment_params[:volunteer_attributes][:waive] == '1'
+    @group_assignment.volunteer.waive = waive_param_true?
     @group_assignment.assign_attributes(group_assignment_params.except(:volunteer_attributes)
       .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
     if @group_assignment.save && terminate_reminder_mailing
@@ -78,6 +75,27 @@ class GroupAssignmentsController < ApplicationController
 
   private
 
+  def handle_period_end
+    return unless @group_assignment.will_save_change_to_period_end?(from: nil)
+    @group_assignment.period_end_set_by = current_user
+    [
+      'Einsatzende wurde erfolgreich gesetzt.',
+      params[:redirect_to] || :terminated_group_assignments_index
+    ]
+  end
+
+  def create_redirect_to(notice_text = nil, action: nil)
+    action ||= params[:redirect_to] unless params[:redirect_to] == 'show'
+    redirect_to(
+      polymorphic_path(@group_assignment.group_offer, action: action),
+      notice: notice_text || make_notice[:notice]
+    )
+  end
+
+  def waive_param_true?
+    group_assignment_params[:volunteer_attributes][:waive] == '1'
+  end
+
   def terminate_reminder_mailing
     ReminderMailingVolunteer.termination_for(@group_assignment).map do |rmv|
       rmv.mark_process_submitted(current_user, terminate_parent_mailing: true)
@@ -93,7 +111,7 @@ class GroupAssignmentsController < ApplicationController
   def group_assignment_params
     params.require(:group_assignment).permit(
       :period_start, :period_end, :termination_submitted_at, :terminated_at, :responsible,
-      :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
+      :term_feedback_activities, :term_feedback_problems, :term_feedback_success, :redirect_to,
       :term_feedback_transfair, volunteer_attributes: [:waive]
     )
   end

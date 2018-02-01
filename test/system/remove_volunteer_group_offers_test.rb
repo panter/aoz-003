@@ -16,21 +16,21 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     within '.assignments-table' do
       assert page.has_text? "#{@ga1.volunteer.contact.full_name} "\
         "#{@ga1.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga1.period_start)}"
-      assert page.has_link? 'Bearbeiten', href: edit_group_assignment_path(@ga1)
-      assert page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga1)
+      assert page.has_link? 'Bearbeiten', href: edit_group_assignment_path(@ga1, redirect_to: :show)
+      assert page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga1, redirect_to: :show)
       refute page.has_link? 'Beendigungsformular an Freiwillige/n',
         href: polymorphic_path([@ga1, ReminderMailing], action: :new_termination)
       assert page.has_text? "#{@ga2.volunteer.contact.full_name} "\
         "#{@ga2.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga2.period_start)}"
-      assert page.has_link? 'Bearbeiten', href: edit_group_assignment_path(@ga2)
-      assert page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga2)
+      assert page.has_link? 'Bearbeiten', href: edit_group_assignment_path(@ga2, redirect_to: :show)
+      assert page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga2, redirect_to: :show)
     end
   end
 
   test 'setting_period_end_with_today_shortcut' do
     login_as @superadmin
     visit group_offer_path(@group_offer)
-    click_link 'Heute beenden', href: set_end_today_group_assignment_path(@ga1)
+    click_link 'Heute beenden', href: set_end_today_group_assignment_path(@ga1, redirect_to: :show)
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     @ga1.reload
     visit group_offer_path(@group_offer)
@@ -38,7 +38,7 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
       assert page.has_text? "#{@ga1.volunteer.contact.full_name} "\
         "#{@ga1.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga1.period_start)}"\
         " #{I18n.l(@ga1.period_end)} "
-      refute page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga1)
+      refute page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga1, redirect_to: :show)
       assert page.has_link? 'Beendigungsformular an Freiwillige/n',
         href: polymorphic_path([@ga1, ReminderMailing], action: :new_termination)
     end
@@ -55,7 +55,7 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     visit group_offer_path(@group_offer)
     within '.assignments-table' do
       assert page.has_text? 'Responsible'
-      click_link 'Bearbeiten', href: edit_group_assignment_path(@ga1)
+      click_link 'Bearbeiten', href: edit_group_assignment_path(@ga1, redirect_to: :show)
     end
     uncheck 'Responsible'
     click_button 'Update Group assignment'

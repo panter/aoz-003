@@ -73,44 +73,7 @@ h2= @group_offer.title
 
 - if @group_offer.group_assignments.any?
   h2 Aktuelle Gruppeneinsätze
-  .table-responsive.assignments-table
-    table.table.table-no-border-top
-      thead
-        tr
-          th= t_attr(:volunteer, GroupAssignment)
-          - if params[:format] == 'pdf'
-            th Freiwillige Mailadresse
-          th= t_attr(:role, GroupAssignment)
-          th= t_attr(:period_start, GroupAssignment)
-          th= t_attr(:period_end, GroupAssignment)
-          th.hidden-print colspan=2 Aktionen
-      tbody
-        - @group_offer.group_assignments.each do |group_assignment|
-          - if group_assignment.volunteer
-            tr
-              td
-                = link_to_if(policy(Volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
-              - if params[:format] == 'pdf'
-                td= group_assignment.volunteer.contact.primary_email
-              td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
-              td= l(group_assignment.period_start) if group_assignment.period_start
-              td= l(group_assignment.period_end) if group_assignment.period_end
-              td.index-action-cell.hidden-print
-                = link_to_if(policy(group_assignment).edit?, 'Bearbeiten', edit_group_assignment_path(group_assignment)) { '' }
-                - if group_assignment.period_end.blank?
-                  = link_to_if(policy(group_assignment).set_end_today?, 'Heute beenden',
-                    set_end_today_group_assignment_path(group_assignment),
-                    data: { method: 'PUT' }) { '' }
-                - elsif group_assignment.termination_submitted_by_id.blank?
-                  = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular an Freiwillige/n mailen',
-                    polymorphic_path([group_assignment, ReminderMailing], action: :new_termination))
-                  = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular ausfüllen',
-                    polymorphic_path(group_assignment, action: :terminate))
-              td
-                - if group_assignment.period_end.present? && policy(GroupAssignment).verify_termination?
-                  = link_to_if(group_assignment.termination_verified_by.blank?, 'Beendigung Quittieren',
-                    verify_termination_group_assignment_path(group_assignment), class: 'btn btn-default',
-                    data: { method: 'PATCH' }) { '' }
+  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments, redirect_to_action: :show
 
 - if @group_offer.group_assignment_logs.any?
   h2 Archivierte Gruppeneinsätze
