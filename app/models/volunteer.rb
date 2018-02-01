@@ -195,7 +195,7 @@ class Volunteer < ApplicationRecord
 
   def unterminated_group_assignments?
     group_assignments.each do |group_assignment|
-      return false if group_assignment.termination_verified_by.blank?
+      return false unless group_assignment.terminated?
     end
   end
 
