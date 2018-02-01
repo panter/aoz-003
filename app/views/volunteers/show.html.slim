@@ -13,7 +13,7 @@ nav.navbar.section-navigation
     - if policy(@volunteer).terminate?
       li.button-acceptance = link_to t(".acceptance.#{@volunteer.acceptance}"), '#',
         class: "btn btn-acceptance-#{@volunteer.acceptance}"
-      li= button_link 'Beenden', terminate_volunteer_path(@volunteer) unless @volunteer.resigned?
+      li= link_to 'Beenden', terminate_volunteer_path(@volunteer), class: 'btn btn-default', method: :put unless @volunteer.resigned?
     - if policy(Volunteer).superadmin_privileges?
       ul.list-inline
         - if @volunteer.seeking_clients?
