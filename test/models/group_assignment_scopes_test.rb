@@ -127,7 +127,7 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     refute query.include? started_no_end
     refute query.include? started_with_end
     assert query.include? submitted
-    refute query.include? verified
+    assert query.include? verified
   end
 
   test 'termination_not_submitted scope test' do
@@ -189,7 +189,7 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     refute query.include? started_no_end
     refute query.include? started_with_end
     refute query.include? submitted
-    refute query.include? verified
+    assert query.include? verified
     query_deleted = GroupAssignment.with_deleted.terminated
     refute query_deleted.include? started_no_end
     refute query_deleted.include? started_with_end

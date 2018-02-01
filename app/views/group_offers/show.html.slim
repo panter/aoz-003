@@ -85,24 +85,22 @@ h2= @group_offer.title
           th Funktion
           th Anfangsdatum
           th Enddatum
-          th Beendet
-          th Archiviert am
+          th Begleitung Beendet
+          th Archiviert
       tbody
-        - @group_offer.group_assignment_logs.order('created_at desc').each do |ga_log|
+        - @group_offer.group_assignment_logs.order('created_at asc').each do |ga_log|
           tr
             td= link_to_if(policy(Volunteer).show?, ga_log.volunteer.contact.full_name,
               volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
             td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
             td= l(ga_log.period_start) if ga_log.period_start
             td= l(ga_log.period_end) if ga_log.period_end
+            td= l(ga_log.period_end_set_by.updated_at)
             td
-              - if ga_log.termination_verified_by.blank?
-                = boolean_glyph(false)
-              - else
                 = "Quittiert von "
                 = link_to ga_log.termination_verified_by.full_name, profile_link(ga_log.termination_verified_by)
                 = " am #{l(ga_log.termination_verified_at.to_date)}"
-            td= l(ga_log.created_at)
+
 
 - unless params[:format] == 'pdf'
   = form_navigation_btn :edit
