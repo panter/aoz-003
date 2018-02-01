@@ -70,7 +70,7 @@ class Client < ApplicationRecord
   }
 
   def terminatable?
-    assignment.blank? || assignment.ending? || assignment.no_period?
+    assignment.blank? || assignment.ended? || assignment.no_period?
   end
 
   def self.acceptences_restricted
