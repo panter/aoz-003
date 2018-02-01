@@ -154,17 +154,20 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? 'Client was successfully deleted.'
   end
 
-  test 'client pagination' do
+  test 'client_pagination' do
     login_as @superadmin
     70.times do
       create :client
     end
     visit clients_path
     first(:link, '2').click
-
-    assert page.has_css? '.pagination'
     Client.order('created_at desc').paginate(page: 2).each do |client|
-      assert page.has_text? client.contact.last_name
+      assert page.has_text? client.contact.full_name
+    end
+
+    within page.first('.pagination') do
+      assert page.has_link? '1', href: clients_path(page: 1)
+      assert page.has_link? 'Previous', href: clients_path(page: 1)
     end
   end
 
