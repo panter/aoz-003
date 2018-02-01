@@ -60,18 +60,20 @@ class ActiveSupport::TestCase
     (1..cols).to_a.each { |column| assert_nil wb.cell(row, column) }
   end
 
-  def controllers_action_list(controller = nil)
-    controller ||= self.class.name.remove('PolicyTest').underscore.pluralize
-    controller_routes = Rails.application.routes.routes.find_all do |route|
-      route.defaults[:controller] == controller.to_s
-    end
-    acts = controller_routes.map { |route| route.defaults[:action] }.uniq
-    acts.map { |action| [action.to_sym, "#{action}?"] }.to_h
+  def controllers_action_list(controller_name = nil)
+    controller_name ||= self.class.name.remove('PolicyTest').underscore.pluralize
+    Rails
+      .application.routes.routes
+      .find_all { |route| route.defaults[:controller] == controller_name.to_s }
+      .map { |route| route.defaults[:action] }.uniq
+      .map { |action| [action.to_sym, "#{action}?"] }.to_h
   end
 
   def actions_list(*choices)
     if choices.any?
-      controllers_action_list.values_at(*choices)
+      controllers_action_list.values_at(
+        *choices.map { |choice| choice.to_s.remove(/\?$/).to_sym }
+      )
     else
       controllers_action_list
     end
