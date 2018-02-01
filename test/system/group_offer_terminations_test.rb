@@ -36,7 +36,7 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     assert page.has_text? 'Gruppeneinsätze wurden beendet.'
     assert page.has_field? 'Period end', with: Time.zone.today.to_s
     click_button 'Gruppenangebots Ende setzen'
-    assert page.has_text? 'Gruppenangebots beendigung erfolgreich eingeleitet.'
+    assert page.has_text? 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
   end
 
   test 'setting_period_end_to_group_assignment_single_works' do
@@ -57,6 +57,6 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     refute page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     click_button 'Gruppenangebots Ende setzen'
-    assert page.has_text? 'Gruppenangebots beendigung erfolgreich eingeleitet.'
+    assert page.has_text? 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
   end
 end
