@@ -40,7 +40,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     within 'tbody' do
       assert page.has_text? @accepted_mrs_same_age_old
       assert page.has_text? @accepted_mr_no_matter_age_old
-      assert page.has_text? @resigned_mrs_same_age_middle
+      refute page.has_text? @resigned_mrs_same_age_middle
       assert page.has_text? @rejected_mr_no_matter_age_middle
     end
   end
@@ -79,7 +79,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     within 'tbody' do
       assert page.has_text? @accepted_mrs_same_age_old
       assert page.has_text? @accepted_mr_no_matter_age_old
-      assert page.has_text? @resigned_mrs_same_age_middle
+      refute page.has_text? @resigned_mrs_same_age_middle
       assert page.has_text? @rejected_mr_no_matter_age_middle
     end
   end
@@ -123,7 +123,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     within 'tbody' do
       assert page.has_text? @accepted_mrs_same_age_old
       assert page.has_text? @accepted_mr_no_matter_age_old
-      assert page.has_text? @resigned_mrs_same_age_middle
+      refute page.has_text? @resigned_mrs_same_age_middle
       assert page.has_text? @rejected_mr_no_matter_age_middle
     end
   end
