@@ -42,11 +42,6 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
       assert page.has_link? 'Beendigungsformular an Freiwillige/n',
         href: polymorphic_path([@ga1, ReminderMailing], action: :new_termination)
     end
-    within '.log-table' do
-      assert page.has_text? "#{@ga1.volunteer.contact.full_name} "\
-        "#{@ga1.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga1.period_start)} "
-      assert page.has_text? I18n.l(@ga1.period_end)
-    end
   end
 
   test 'changing_volunteer_to_member_works' do
