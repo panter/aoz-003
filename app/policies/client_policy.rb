@@ -15,7 +15,6 @@ class ClientPolicy < ApplicationPolicy
   alias_method :show?,         :superadmin_or_department_manager_or_social_worker?
   alias_method :edit?,         :superadmin_or_record_owner?
   alias_method :update?,       :superadmin_or_record_owner?
-  alias_method :termination?,  :superadmin_or_department_managers_record?
   alias_method :set_terminated?, :superadmin_or_department_managers_record?
 
   # suplementary policies
