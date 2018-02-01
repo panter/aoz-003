@@ -102,4 +102,16 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
       assert page.has_text? 'my_newly_added_feedback_comment_text'
     end
   end
+
+  test 'termination triggers notification email to creator' do
+    @group_assignment.update(period_end: 2.days.ago)
+    login_as @volunteer.user
+    visit terminate_group_assignment_path(@group_assignment)
+    page.accept_confirm do
+      click_button 'Einsatz wird hiermit abgeschlossen'
+    end
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal @superadmin.email, mail['to'].to_s
+  end
 end
