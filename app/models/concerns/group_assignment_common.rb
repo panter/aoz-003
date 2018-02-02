@@ -13,9 +13,10 @@ module GroupAssignmentCommon
     has_one :department, through: :group_offer
 
     # termination record relations
-    belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true
-    belongs_to :termination_submitted_by, -> { with_deleted }, class_name: 'User', optional: true
-    belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true
+    belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true,
+      inverse_of: 'group_offer_period_ends_set'
+    belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true,
+      inverse_of: 'group_offer_terminations_verified'
 
     def to_label
       label_parts.compact.join(' - ')

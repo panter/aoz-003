@@ -3,7 +3,8 @@ class ReminderMailingVolunteer < ApplicationRecord
   belongs_to :volunteer
   belongs_to :reminder_mailable, polymorphic: true, optional: true
 
-  belongs_to :process_submitted_by, class_name: 'User', optional: true
+  belongs_to :process_submitted_by, -> { with_deleted }, class_name: 'User',
+    inverse_of: 'mailing_volunteer_processes_submitted', optional: true
 
   scope :group_assignment, (-> { where(reminder_mailable_type: 'GroupAssignment') })
   scope :assignment, (-> { where(reminder_mailable_type: 'Assignment') })

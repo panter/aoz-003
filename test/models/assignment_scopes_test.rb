@@ -67,7 +67,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
   end
 
   test 'end_within returns only ended between range' do
-    query = Assignment.end_within(@now.days_ago(20)..@now.days_ago(10))
+    query = Assignment.end_within(@now.days_ago(20), @now.days_ago(10))
     assert query.include? @started_30_days_ago_ended_15_days_ago
     assert_equal 1, query.count
   end

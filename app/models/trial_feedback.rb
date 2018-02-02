@@ -2,7 +2,11 @@ class TrialFeedback < ApplicationRecord
   include FeedbackTrialFeedbackCommon
 
   belongs_to :volunteer
-  belongs_to :author, class_name: 'User'
+  belongs_to :author, class_name: 'User', inverse_of: 'trial_feedbacks',
+    foreign_key: 'author_id'
+
+  belongs_to :reviewer, class_name: 'User', foreign_key: 'reviewer_id',
+    inverse_of: 'reviewed_trial_feedbacks'
   belongs_to :trial_feedbackable, polymorphic: true, optional: true
 
   validates :body, presence: true

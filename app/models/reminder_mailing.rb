@@ -3,7 +3,7 @@ class ReminderMailing < ApplicationRecord
 
   TEMPLATE_VARNAMES = [:Anrede, :Einsatz, :Name, :EinsatzStart, :FeedbackLink, :EmailAbsender].freeze
 
-  belongs_to :creator, -> { with_deleted }, class_name: 'User'
+  belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'reminder_mailings'
 
   # nullify on delete in order to keep sent mail links available
   has_many :reminder_mailing_volunteers, dependent: :delete_all
@@ -16,6 +16,7 @@ class ReminderMailing < ApplicationRecord
     source_type: 'Assignment'
   has_many :group_assignments, through: :reminder_mailing_volunteers, source: :reminder_mailable,
     source_type: 'GroupAssignment'
+  has_many :process_submitters, through: :reminder_mailing_volunteers, source: :process_submitted_by
 
   enum kind: { half_year: 0, trial_period: 1, termination: 2 }
 

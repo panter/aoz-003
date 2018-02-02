@@ -2,23 +2,47 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
   acts_as_paranoid
 
+  scope :field_nil, ->(field) { where(field.to_sym => nil) }
+  scope :field_not_nil, ->(field) { where.not(field.to_sym => nil) }
+
+  scope :date_before, ->(field, date) { where("#{model_name.plural}.#{field} < ?", date) }
+  scope :date_at_or_before, ->(field, date) { where("#{model_name.plural}.#{field} <= ?", date) }
+  scope :date_after, ->(field, date) { where("#{model_name.plural}.#{field} > ?", date) }
+  scope :date_at_or_after, ->(field, date) { where("#{model_name.plural}.#{field} >= ?", date) }
+
+  scope :date_between, lambda { |field, start_date, end_date|
+    date_before(field, end_date).date_after(field, start_date)
+  }
+
+  scope :date_between_inclusion, lambda { |field, start_date, end_date|
+    date_at_or_before(field, end_date).date_at_or_after(field, start_date)
+  }
+
+  scope :date_between_inc_start, lambda { |field, start_date, end_date|
+    date_before(field, end_date).date_at_or_after(field, start_date)
+  }
+
+  scope :date_between_inc_end, lambda { |field, start_date, end_date|
+    date_at_or_before(field, end_date).date_after(field, start_date)
+  }
+
+  scope :created_before, ->(max_time) { date_before(:created_at, max_time) }
+  scope :created_after, ->(min_time) { date_after(:created_at, min_time) }
+  scope :created_between, lambda { |start_date, end_date|
+    date_between(:created_at, start_date, end_date)
+  }
+
+  scope :updated_before, ->(max_time) { date_before(:updated_at, max_time) }
+  scope :updated_after, ->(min_time) { date_after(:updated_at, min_time) }
+  scope :updated_between, lambda { |start_date, end_date|
+    date_between(:updated_at, start_date, end_date)
+  }
+
   # order scopes
   scope :created_desc, (-> { order('created_at desc') })
   scope :created_asc, (-> { order('created_at asc') })
   scope :updated_desc, (-> { order('updated_at desc') })
   scope :updated_asc, (-> { order('updated_at asc') })
-
-  scope :created_before, ->(max_time) { where("#{model_name.plural}.created_at < ?", max_time) }
-  scope :created_after, ->(min_time) { where("#{model_name.plural}.created_at > ?", min_time) }
-  scope :created_between, lambda { |start_date, end_date|
-    created_after(start_date).created_before(end_date)
-  }
-
-  scope :updated_before, ->(max_time) { where("#{model_name.plural}.updated_at < ?", max_time) }
-  scope :updated_after, ->(min_time) { where("#{model_name.plural}.updated_at > ?", min_time) }
-  scope :updated_between, lambda { |start_date, end_date|
-    updated_after(start_date).updated_before(end_date)
-  }
 
   # translate enum fields value
   def t_enum(enum_field)

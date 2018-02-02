@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :journals
   has_many :assignments, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :feedbacks, inverse_of: 'author', foreign_key: 'author_id'
+  has_many :trial_feedbacks, inverse_of: 'author', foreign_key: 'author_id'
   has_many :billing_expenses
   has_many :group_offers, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :reminder_mailings, inverse_of: 'creator', foreign_key: 'creator_id'
@@ -52,7 +53,11 @@ class User < ApplicationRecord
   has_many :resigned_clients, class_name: 'Client', foreign_key: 'resigned_by_id'
 
   # Mailing process done relation
-  has_many :process_submitted_by, class_name: 'ReminderMailingVolunteer'
+  has_many :mailing_volunteer_processes_submitted, class_name: 'ReminderMailingVolunteer',
+    inverse_of: 'process_submitted_by', foreign_key: 'process_submitted_by_id'
+
+  has_many :mailing_processes_submitted, through: :mailing_volunteer_processes_submitted,
+    source: :process_submitted_by
 
   has_and_belongs_to_many :department
 

@@ -87,6 +87,9 @@ class Volunteer < ApplicationRecord
   scope :with_active_assignments_between, lambda { |start_date, end_date|
     joins(:assignments).merge(Assignment.active_between(start_date, end_date))
   }
+  scope :with_terminated_assignments_between, lambda { |start_date, end_date|
+    joins(:assignments).merge(Assignment.terminated_between(start_date, end_date))
+  }
   scope :with_active_group_assignments_between, lambda { |start_date, end_date|
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
   }
@@ -123,11 +126,13 @@ class Volunteer < ApplicationRecord
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
-    where('activeness_might_end IS NULL OR activeness_might_end > ?', Time.zone.today)
+    where('volunteers.activeness_might_end IS NULL OR volunteers.activeness_might_end > ?',
+      Time.zone.today)
   }
   scope :activeness_ended, lambda {
     where(active: true)
-      .where('activeness_might_end IS NOT NULL AND activeness_might_end < ?', Time.zone.today)
+      .where('volunteers.activeness_might_end IS NOT NULL AND volunteers.activeness_might_end < ?',
+        Time.zone.today)
   }
   scope :active, lambda {
     activeness_not_ended.where(active: true)

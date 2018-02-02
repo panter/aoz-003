@@ -10,31 +10,37 @@ module GroupAssignmentAndAssignmentCommon
     has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
     has_many :reminder_mailings, through: :reminder_mailing_volunteers
 
-    scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+    scope :no_end, (-> { field_nil(:period_end) })
+    scope :has_end, (-> { field_not_nil(:period_end) })
+    scope :end_before, ->(date) { date_before(:period_end, date) }
+    scope :end_at_or_before, ->(date) { date_at_or_before(:period_end, date) }
+    scope :end_after, ->(date) { date_after(:period_end, date) }
+    scope :end_at_or_after, ->(date) { date_at_or_after(:period_end, date) }
 
-    scope :no_end, (-> { where(period_end: nil) })
-    scope :has_end, (-> { where.not(period_end: nil) })
-    scope :end_before, ->(date) { where("#{model_name.plural}.period_end < ?", date) }
-    scope :end_after, ->(date) { where("#{model_name.plural}.period_end > ?", date) }
-    scope :end_within, ->(date_range) { where(period_end: date_range) }
-    scope :ended, (-> { where("#{model_name.plural}.period_end <= ?", Time.zone.today) })
-    scope :end_in_future, (-> { where("#{model_name.plural}.period_end > ?", Time.zone.today) })
+    scope :end_within, lambda { |start_date, end_date|
+      date_between_inclusion(:period_end, start_date, end_date)
+    }
+
+    scope :ended, (-> { date_at_or_before(:period_end, Time.zone.today) })
+    scope :end_in_future, (-> { date_after(:period_end, Time.zone.today) })
     scope :not_ended, (-> { no_end.or(end_in_future) })
 
-    scope :have_start, (-> { where.not(period_start: nil) })
-    scope :no_start, (-> { where(period_start: nil) })
-    scope :started, (-> { where("#{model_name.plural}.period_start <= ?", Time.zone.today) })
-    scope :will_start, (-> { where("#{model_name.plural}.period_start > ?", Time.zone.today) })
-    scope :start_before, ->(date) { where("#{model_name.plural}.period_start < ?", date) }
-    scope :start_at_or_before, ->(date) { where("#{model_name.plural}.period_start <= ?", date) }
-    scope :start_after, ->(date) { where("#{model_name.plural}.period_start > ?", date) }
-    scope :start_at_or_after, ->(date) { where("#{model_name.plural}.period_start >= ?", date) }
-    scope :start_within, ->(date_range) { where(period_start: date_range) }
-    scope :started_six_months_ago, lambda {
-      where("#{model_name.plural}.period_start < ?", 6.months.ago)
+    scope :have_start, (-> { field_not_nil(:period_start) })
+    scope :no_start, (-> { field_nil(:period_start) })
+    scope :started, (-> { date_at_or_before(Time.zone.today) })
+    scope :will_start, (-> { date_after(Time.zone.today) })
+    scope :start_before, ->(date) { date_before(:period_start, date) }
+    scope :start_at_or_before, ->(date) { date_at_or_before(:period_start, date) }
+    scope :start_after, ->(date) { date_after(:period_start, date) }
+    scope :start_at_or_after, ->(date) { date_at_or_after(:period_start, date) }
+
+    scope :start_within, lambda { |start_date, end_date|
+      date_between_inclusion(:period_start, start_date, end_date)
     }
+
+    scope :started_six_months_ago, (-> { date_at_or_before(:period_start, 6.months.ago) })
     scope :started_ca_six_weeks_ago, lambda {
-      start_at_or_after(8.weeks.ago).start_at_or_before(6.weeks.ago)
+      date_at_or_after(:period_start, 8.weeks.ago).date_at_or_before(:period_start, 6.weeks.ago)
     }
     scope :no_start_and_end, (-> { no_start.no_end })
 

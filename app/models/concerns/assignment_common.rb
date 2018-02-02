@@ -11,9 +11,12 @@ module AssignmentCommon
     belongs_to :creator, -> { with_deleted }, class_name: 'User'
 
     # termination record relations
-    belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true
-    belongs_to :termination_submitted_by, -> { with_deleted }, class_name: 'User', optional: true
-    belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true
+    belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User',
+      inverse_of: 'assignment_period_ends_set', foreign_key: 'period_end_set_by_id', optional: true
+    belongs_to :termination_submitted_by, -> { with_deleted }, class_name: 'User',
+      inverse_of: 'assignment_terminations_submitted', optional: true
+    belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User',
+      inverse_of: 'assignment_terminations_verified', optional: true
 
     scope :zurich, (-> { joins(:client).merge(Client.zurich) })
     scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })
