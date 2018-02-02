@@ -9,7 +9,7 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     started_within_no_end = create_group_assignments 40.days.ago, nil
     started_within_ended_within = create_group_assignments 40.days.ago, 35.days.ago
     started_within_ended_after = create_group_assignments 40.days.ago, 20.days.ago
-    query = GroupAssignment.start_within(45.days.ago..30.days.ago)
+    query = GroupAssignment.start_within(45.days.ago, 30.days.ago)
     assert query.include? started_within_no_end
     assert query.include? started_within_ended_within
     assert query.include? started_within_ended_after

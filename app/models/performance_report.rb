@@ -61,8 +61,8 @@ class PerformanceReport < ApplicationRecord
     assignments = zurich ? assignments.zurich : assignments.not_zurich
     assignments = extern ? assignments.external : assignments.internal
     {
-      ended: assignments.end_within(period_start..period_end).count,
-      new: assignments.start_within(period_start..period_end).count,
+      ended: assignments.end_within(period_start, period_end).count,
+      new: assignments.start_within(period_start, period_end).count,
       active: assignments.active_between(period_start, period_end).count,
       total: assignments.count
     }
@@ -74,10 +74,10 @@ class PerformanceReport < ApplicationRecord
       group_offer.active_group_assignments_between?(period_start, period_end)
     end.grep(true)
     ended = group_offers.map do |group_offer|
-      group_offer.all_group_assignments_ended_within?(period_start..period_end)
+      group_offer.all_group_assignments_ended_within?(period_start, period_end)
     end.grep(true)
     new_group_offers = group_offers.map do |group_offer|
-      group_offer.all_group_assignments_started_within?(period_start..period_end)
+      group_offer.all_group_assignments_started_within?(period_start, period_end)
     end.grep(true)
     {
       active: active.size,
