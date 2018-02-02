@@ -140,12 +140,24 @@ if Assignment.count < 1
     FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
       trial_feedbackable: assignment)
   end
+  # ended Assignments
+  Array.new(3).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
+       .each do |volunteer|
+    FactoryBot.create(
+      :assignment,
+      volunteer: volunteer,
+      client: FactoryBot.create(:client, acceptance: 'accepted', user: User.superadmins.first),
+      creator: User.superadmins.first,
+      period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago),
+      period_end: Faker::Date.between(1.week.ago, 3.days.ago)
+    )
+  end
 end
 puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client, Feedback)
 
 Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sample) }
      .each do |group_offer|
-  volunteers = Array.new(2).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
+  volunteers = Array.new(4).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
   group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
     period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago), period_end: nil)
   FactoryBot.create(:hour, volunteer: volunteers.first, hourable: group_assignment.group_offer,
@@ -153,17 +165,36 @@ Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sa
   FactoryBot.create(:trial_feedback, volunteer: volunteers.first,
     trial_feedbackable: group_assignment.group_offer, author_id: volunteers.first.user.id)
 
-  group_assignment = GroupAssignment.create(volunteer: volunteers.last, group_offer: group_offer,
+  group_assignment = GroupAssignment.create(volunteer: volunteers.second, group_offer: group_offer,
     period_start: Faker::Date.between(6.months.ago, 12.months.ago), period_end: nil)
-  FactoryBot.create(:hour, volunteer: volunteers.last, hourable: group_assignment.group_offer,
+  FactoryBot.create(:hour, volunteer: volunteers.second, hourable: group_assignment.group_offer,
     meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
-  FactoryBot.create(:feedback, volunteer: volunteers.last, feedbackable: group_assignment.group_offer,
-    author_id: volunteers.last.user.id)
+  FactoryBot.create(:feedback, volunteer: volunteers.second, feedbackable: group_assignment.group_offer,
+    author_id: volunteers.second.user.id)
+
+  # ended GroupAssignments
+  group_assignment = GroupAssignment.create(volunteer: volunteers.third, group_offer: group_offer,
+    period_start: Faker::Date.between(6.months.ago, 12.months.ago),
+    period_end: Faker::Date.between(1.week.ago, 3.days.ago)
+    )
+  FactoryBot.create(:hour, volunteer: volunteers.third, hourable: group_assignment.group_offer,
+    meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
+  FactoryBot.create(:feedback, volunteer: volunteers.third, feedbackable: group_assignment.group_offer,
+    author_id: volunteers.third.user.id)
+
+  group_assignment = GroupAssignment.create(volunteer: volunteers.fourth, group_offer: group_offer,
+    period_start: Faker::Date.between(6.months.ago, 12.months.ago),
+    period_end: Faker::Date.between(1.week.ago, 3.days.ago)
+    )
+  FactoryBot.create(:hour, volunteer: volunteers.fourth, hourable: group_assignment.group_offer,
+    meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
+  FactoryBot.create(:feedback, volunteer: volunteers.fourth, feedbackable: group_assignment.group_offer,
+    author_id: volunteers.fourth.user.id)
 end
 puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
   GroupAssignment, Department, Assignment, Client)
 
-# Create ClientNotifications
+# create ClientNotifications
 if ClientNotification.count < 1
   superadmin = User.find_by(email: 'superadmin@example.com')
   [
