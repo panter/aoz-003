@@ -13,7 +13,7 @@ module NotificationHelper
       if text.present?
         concat text
       else
-        tag.span('&times;', aria: { hidden: 'true' })
+        tag.span('x', aria: { hidden: 'true' })
       end
     end
   end
