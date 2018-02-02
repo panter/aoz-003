@@ -14,11 +14,11 @@ class PerformanceReport < ApplicationRecord
     if period_all_year.end == period_end && period_all_year.begin == period_start
       self.year = period_start.year
     end
-    binding.pry
     self.report_content = {
       volunteers: volunteer_performance,
-      # clients: client_performance,
-      # assignments: assignment_performance
+      clients: client_performance,
+      assignments: assignment_performance,
+      group_offers: group_offer_performance
     }
   end
 
@@ -43,7 +43,7 @@ class PerformanceReport < ApplicationRecord
       active_group_assignment: group_active.size,
       active_both: active_both.size,
       created: volunteers.created_after(periods.first).count,
-      # resigned: volunteers.resigned_between(*periods).count,
+      resigned: volunteers.resigned_between(*periods).count,
       inactive: volunteers.where.not(id: assignment_active + group_active).distinct.count
     }
   end
@@ -102,11 +102,12 @@ class PerformanceReport < ApplicationRecord
 
   def group_offer_performance
     group_offers = GroupOffer.created_before(periods.last)
-    group_assignments = GroupAssignment.where(group_offer_id: group_offers.ids)
+    group_assignments = GroupAssignment.created_before(periods.last)
+                                       .where(group_offer_id: group_offers.ids)
     active_ga = group_assignments.active_between(*periods)
     started_ga = group_assignments.start_within(*periods)
     ended_ga = group_assignments.end_within(*periods)
-    # created_ga = group_assignments.created_between(*periods)
+    created_ga = group_assignments.created_between(*periods)
     hours = Hour.from_group_offers(group_offers.ids)
     feedbacks = Feedback.created_between(*periods).from_group_offers(group_offers.ids)
     {
@@ -114,14 +115,15 @@ class PerformanceReport < ApplicationRecord
       created: group_offers.created_after(periods.first).count,
       ended: group_offers.end_within(*periods).count,
       termination_verified: group_offers.termination_verified_between(*periods).count,
-      # created_assignments: created_ga.pluck(:group_offer_id).uniq.size,
+      created_assignments: created_ga.pluck(:group_offer_id).uniq.size,
       started_assignments: started_ga.pluck(:group_offer_id).uniq.size,
       active_assignments: active_ga.pluck(:group_offer_id).uniq.size,
       ended_assignments: ended_ga.pluck(:group_offer_id).uniq.size,
       hour_report_count: hours.count,
       hours: hours.sum(:hours) + (hours.sum(:minutes) / 60),
       feedback_count: feedbacks.count,
-      in_departments: group_offers.where.not(department_id: nil).count
+      in_departments: group_offers.where.not(department_id: nil).count,
+      not_in_departments: group_offers.where(department_id: nil).count
     }
   end
 end
