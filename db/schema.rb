@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130140401) do
+ActiveRecord::Schema.define(version: 20180202110148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,6 +291,8 @@ ActiveRecord::Schema.define(version: 20180130140401) do
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
     t.text "term_feedback_transfair"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["period_end_set_by_id"], name: "index_group_assignments_on_period_end_set_by_id"
