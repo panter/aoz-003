@@ -101,10 +101,8 @@ class AssignmentsController < ApplicationController
     @assignment.volunteer.waive = assignment_params[:volunteer_attributes][:waive] == '1'
     @assignment.assign_attributes(termination_submitted_at: Time.zone.now,
       termination_submitted_by: current_user)
-
     if @assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@assignment).deliver_now
-
       redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
     else
       redirect_back(fallback_location: terminate_assignment_path(@assignment))
