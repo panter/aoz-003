@@ -71,7 +71,7 @@ def create_two_group_offers(group_offer_category)
     GroupOffer, GroupAssignment)
 end
 
-# Create volunteers for each acceptance type
+# create Volunteers for each acceptance type
 Volunteer.acceptance_collection.each do |acceptance|
   if ['undecided', 'rejected'].include?(acceptance)
     FactoryBot.create(:volunteer_seed, acceptance: acceptance, user_id: nil)
@@ -81,13 +81,13 @@ Volunteer.acceptance_collection.each do |acceptance|
 end
 puts_model_counts('After Volunteer created', User, Volunteer, Client)
 
-# Create clients for each acceptance type
+# create Clients for each acceptance type
 Client.acceptance_collection_restricted.each do |acceptance|
   FactoryBot.create(:client, acceptance: acceptance, user: User.superadmins.first)
 end
 puts_model_counts('After Client created', User, Volunteer, Client)
 
-# Create EmailTemplates
+# create EmailTemplates
 if EmailTemplate.count < 1
   FactoryBot.create :email_template_seed, active: true
   2.times do
@@ -108,9 +108,9 @@ if EmailTemplate.count < 1
 end
 puts_model_counts('After EmailTemplates created', User, EmailTemplate)
 
-# Create assignments
+# create Assignments
 if Assignment.count < 1
-  # probezeit assignments
+  # trial Assignments
   Array.new(3).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
        .each do |volunteer|
     FactoryBot.create(
@@ -122,7 +122,7 @@ if Assignment.count < 1
       period_end: nil
     )
   end
-  # half_year assignments
+  # half_year Assignments
   Array.new(3).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
        .each do |volunteer|
     assignment = FactoryBot.create(
@@ -206,7 +206,7 @@ if ClientNotification.count < 1
 end
 puts_model_counts('After ClientNotification created', User, Client, ClientNotification)
 
-# make sure the state is correct, after stuff has beeen done via FactoryBot
+# make sure the state is correct, after stuff has been done via FactoryBot
 Volunteer.accepted.map(&:verify_and_update_state)
 
 puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,
