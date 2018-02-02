@@ -82,18 +82,18 @@ class PerformanceReport < ApplicationRecord
     hours = Hour.date_between(:meeting_date, *periods).from_assignments(assignments.ids)
     feedbacks = Feedback.created_between(*periods).from_assignments(assignments.ids)
     {
+      all: assignments.count,
       created: assignments.created_between(*periods).count,
       started: assignments.start_within(*periods).count,
       active: assignments.active_between(*periods).count,
+      ended: assignments.end_within(*periods).count,
       probations_ended: assignments.date_between(:probation_period, *periods).count,
       performance_appraisal_reviews: assignments.date_between(:performance_appraisal_review, *periods).count,
       home_visits: assignments.date_between(:home_visit, *periods).count,
       first_instruction_lessons: assignments.date_between(:first_instruction_lesson, *periods).count,
       progress_meetings: assignments.date_between(:progress_meeting, *periods).count,
-      ended: assignments.end_within(*periods).count,
       termination_submitted: assignments.termination_submitted_between(*periods).count,
       termination_verified: assignments.termination_verified_between(*periods).count,
-      all: assignments.count,
       hour_report_count: hours.count,
       hours: hours.sum(:hours) + (hours.sum(:minutes) / 60),
       feedback_count: feedbacks.count
@@ -123,7 +123,7 @@ class PerformanceReport < ApplicationRecord
       hours: hours.sum(:hours) + (hours.sum(:minutes) / 60),
       feedback_count: feedbacks.count,
       in_departments: group_offers.where.not(department_id: nil).count,
-      not_in_departments: group_offers.where(department_id: nil).count
+      outside_departments: group_offers.where(department_id: nil).count
     }
   end
 end
