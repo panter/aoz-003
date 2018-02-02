@@ -95,7 +95,7 @@ h2= @group_offer.title
             td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
             td= l(ga_log.period_start) if ga_log.period_start
             td= l(ga_log.period_end) if ga_log.period_end
-            td= l(ga_log.period_end_set_by.updated_at)
+            td= l(ga_log.created_at)
             td
                 = "Quittiert von "
                 = link_to ga_log.termination_verified_by.full_name, profile_link(ga_log.termination_verified_by)
