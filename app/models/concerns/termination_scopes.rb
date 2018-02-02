@@ -13,8 +13,8 @@ module TerminationScopes
       date_at_or_after(:termination_submitted_at, time)
     }
 
-    scope :termination_submitted_between, lambda { |time|
-      date_between_inclusion(:termination_submitted_at, time)
+    scope :termination_submitted_between, lambda { |start_date, end_date|
+      date_between_inclusion(:termination_submitted_at, start_date, end_date)
     }
 
     scope :unterminated, (-> { field_nil(:termination_verified_by_id) })

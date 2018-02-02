@@ -11,7 +11,13 @@ class Feedback < ApplicationRecord
 
   validates :comments, presence: true
 
-  scope :submitted_before, ->(submitted_at) { where('feedbacks.created_at > ?', submitted_at) }
+  scope :from_assignments, lambda { |assignment_ids|
+    where(feedbackable_type: 'Assignment').where(feedbackable_id: assignment_ids)
+  }
+
+  scope :from_group_offers, lambda { |group_offer_ids|
+    where(feedbackable_type: 'GroupOffer').where(feedbackable_id: group_offer_ids)
+  }
 
   def assignment?
     feedbackable_type == 'Assignment'
