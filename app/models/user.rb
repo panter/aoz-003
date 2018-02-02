@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   before_validation :assign_primary_email, if: :profile
 
-  has_one :volunteer, dependent: :destroy
+  has_one :volunteer, dependent: :destroy, inverse_of: 'user'
 
   has_one :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
@@ -12,16 +12,27 @@ class User < ApplicationRecord
   ransack_alias :full_name, :profile_contact_full_name_or_volunteer_contact_full_name_or_email
 
   has_many :certificates
-  has_many :clients
+  has_many :clients, inverse_of: 'user', foreign_key: 'user_id'
   has_many :volunteers, inverse_of: 'registrar', foreign_key: 'registrar_id'
   has_many :involved_authorities, class_name: 'Client', foreign_key: 'involved_authority_id',
     inverse_of: 'involved_authority'
-  has_many :journals
+  has_many :journals, inverse_of: 'user'
+
   has_many :assignments, inverse_of: 'creator', foreign_key: 'creator_id'
+  has_many :assignment_clients, through: :assignments, source: :client
+  has_many :assignment_volunteers, through: :assignments, source: :volunteer
+
   has_many :feedbacks, inverse_of: 'author', foreign_key: 'author_id'
   has_many :trial_feedbacks, inverse_of: 'author', foreign_key: 'author_id'
   has_many :billing_expenses
+
   has_many :group_offers, inverse_of: 'creator', foreign_key: 'creator_id'
+  has_many :group_offer_group_assignments, through: :group_offers, inverse_of: 'group_assignments'
+  has_many :group_offer_group_assignment_logs, through: :group_offers,
+    inverse_of: 'group_assignment_logs'
+  has_many :group_offer_volunteers, through: :group_offer_group_assignments, source: :volunteer,
+    inverse_of: 'volunteer'
+
   has_many :reminder_mailings, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :reviewed_feedbacks, class_name: 'Feedback', foreign_key: 'reviewer_id',
     inverse_of: 'reviewer'
@@ -50,7 +61,8 @@ class User < ApplicationRecord
   has_many :group_offer_terminations_verified, class_name: 'GroupOffer',
     foreign_key: 'termination_verified_by_id', inverse_of: 'termination_verified_by'
 
-  has_many :resigned_clients, class_name: 'Client', foreign_key: 'resigned_by_id'
+  has_many :resigned_clients, class_name: 'Client', foreign_key: 'resigned_by_id',
+    inverse_of: 'resigned_by'
 
   # Mailing process done relation
   has_many :mailing_volunteer_processes_submitted, class_name: 'ReminderMailingVolunteer',

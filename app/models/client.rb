@@ -15,14 +15,18 @@ class Client < ApplicationRecord
   PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
   SALUTATIONS = [:mrs, :mr, :family].freeze
 
-  belongs_to :user, -> { with_deleted }
-  belongs_to :involved_authority, class_name: 'User', optional: true
-  belongs_to :resigned_by, class_name: 'User', optional: true
+  belongs_to :user, -> { with_deleted }, inverse_of: 'clients'
+  belongs_to :resigned_by, class_name: 'User', inverse_of: 'resigned_clients',
+    optional: true
+  belongs_to :involved_authority, class_name: 'User',
+    inverse_of: 'involved_authorities', optional: true
+  has_many :manager_departments, through: :user, source: :departments
+  has_one :assignment_creator_departments, through: :assignment, source: :creator
 
   has_one :assignment, dependent: :destroy
   has_many :assignment_logs
 
-  has_one :volunteer, through: :assignments
+  has_one :volunteer, through: :assignment
   has_many :volunteer_logs, through: :assignment_logs
 
   has_one :contact, as: :contactable, dependent: :destroy

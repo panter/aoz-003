@@ -17,11 +17,14 @@ class Volunteer < ApplicationRecord
 
   enum acceptance: { undecided: 0, invited: 4, accepted: 1, rejected: 2, resigned: 3 }
 
-  # User with role: 'volunteer'
-  belongs_to :user, -> { with_deleted }, optional: true
+  has_one :contact, as: :contactable, dependent: :destroy
+  accepts_nested_attributes_for :contact
 
-  # User that registered the volunteer, in case not self registered
-  belongs_to :registrar, optional: true, class_name: 'User', foreign_key: 'registrar_id'
+  delegate :primary_email, to: :contact
+  delegate :full_name, to: :contact
+
+  belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
+  belongs_to :registrar, class_name: 'User', foreign_key: 'registrar_id', optional: true
   has_one :department, through: :registrar
 
   has_many :departments, through: :group_offers
@@ -31,12 +34,6 @@ class Volunteer < ApplicationRecord
   has_many :feedbacks, dependent: :destroy
 
   has_many :certificates
-
-  has_one :contact, as: :contactable, dependent: :destroy
-  accepts_nested_attributes_for :contact
-
-  delegate :primary_email, to: :contact
-  delegate :full_name, to: :contact
 
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
@@ -62,8 +59,13 @@ class Volunteer < ApplicationRecord
 
   has_many :reminder_mailing_volunteers, dependent: :delete_all
   has_many :reminder_mailings, through: :reminder_mailing_volunteers
+  has_many :reminded_assignments, through: :reminder_mailing_volunteers,
+    source: :reminder_mailable, inverse_of: 'reminder_mailable'
 
   has_attached_file :avatar, styles: { thumb: '100x100#' }
+
+  # Validations
+  #
 
   validates :contact, presence: true
   validates :salutation, presence: true
@@ -75,6 +77,8 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: :user_deleted?
 
+  # Scopes
+  #
 
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })

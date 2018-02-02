@@ -11,7 +11,6 @@ class TrialFeedback < ApplicationRecord
 
   validates :body, presence: true
 
-
   def assignment?
     trial_feedbackable_type == 'Assignment'
   end

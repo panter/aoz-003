@@ -123,7 +123,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
   end
 
   test 'start_within returns only with start date after given date' do
-    query = Assignment.start_within(@now.days_ago(32)..@now.days_ago(12))
+    query = Assignment.start_within(@now.days_ago(32), @now.days_ago(12))
     assert query.include? @started_30_days_ago_ended_15_days_ago
     assert_equal 1, query.count
   end

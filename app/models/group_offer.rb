@@ -1,5 +1,6 @@
 class GroupOffer < ApplicationRecord
   include ImportRelation
+  include TerminationScopes
 
   TARGET_GROUP = [:women, :men, :children, :teenagers, :unaccompanied, :all].freeze
   DURATION = [:long_term, :regular, :short_term].freeze
@@ -55,6 +56,25 @@ class GroupOffer < ApplicationRecord
     joins(:group_assignments).merge(GroupAssignment.end_within(start_date, end_date))
   }
 
+  scope :no_end, (-> { field_nil(:period_end) })
+  scope :has_end, (-> { field_not_nil(:period_end) })
+  scope :end_before, ->(date) { date_before(:period_end, date) }
+  scope :end_at_or_before, ->(date) { date_at_or_before(:period_end, date) }
+  scope :end_after, ->(date) { date_after(:period_end, date) }
+  scope :end_at_or_after, ->(date) { date_at_or_after(:period_end, date) }
+
+  scope :end_within, lambda { |start_date, end_date|
+    date_between_inclusion(:period_end, start_date, end_date)
+  }
+
+  scope :active_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
+  }
+
+  scope :ended_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.end_within(start_date, end_date))
+  }
+
   def active_group_assignments_between?(start_date, end_date)
     group_assignments.active_between(start_date, end_date).any?
   end
@@ -71,8 +91,8 @@ class GroupOffer < ApplicationRecord
   end
 
   def all_group_assignments_started_within?(start_date, end_date)
-    started_within = group_assignments.start_within(date_range)
-    started_before = group_assignments.start_before(date_range.first)
+    started_within = group_assignments.start_within(start_date, end_date)
+    started_before = group_assignments.start_before(start_date)
     return true if started_within.size == group_assignments.size
     return true unless started_before.any?
     false

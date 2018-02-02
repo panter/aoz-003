@@ -2,8 +2,6 @@ class Hour < ApplicationRecord
   include ImportRelation
   include ReviewsCommon
 
-  attr_reader :hourable_id_and_type
-
   belongs_to :volunteer
 
   belongs_to :hourable, polymorphic: true, optional: true

@@ -8,7 +8,7 @@ module AssignmentCommon
     belongs_to :client
     accepts_nested_attributes_for :client
 
-    belongs_to :creator, -> { with_deleted }, class_name: 'User'
+    belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'assignments'
 
     # termination record relations
     belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User',

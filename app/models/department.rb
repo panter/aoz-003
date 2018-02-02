@@ -23,7 +23,5 @@ class Department < ApplicationRecord
     end
   end
 
-  def to_s
-    contact.to_s
-  end
+  delegate :to_s, to: :contact
 end
