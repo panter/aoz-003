@@ -6,7 +6,7 @@ class TrialFeedback < ApplicationRecord
     foreign_key: 'author_id'
 
   belongs_to :reviewer, class_name: 'User', foreign_key: 'reviewer_id',
-    inverse_of: 'reviewed_trial_feedbacks'
+    inverse_of: 'reviewed_trial_feedbacks', optional: true
   belongs_to :trial_feedbackable, polymorphic: true, optional: true
 
   validates :body, presence: true

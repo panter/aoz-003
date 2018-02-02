@@ -27,8 +27,8 @@ module GroupAssignmentAndAssignmentCommon
 
     scope :have_start, (-> { field_not_nil(:period_start) })
     scope :no_start, (-> { field_nil(:period_start) })
-    scope :started, (-> { date_at_or_before(Time.zone.today) })
-    scope :will_start, (-> { date_after(Time.zone.today) })
+    scope :started, (-> { date_at_or_before(:period_start, Time.zone.today) })
+    scope :will_start, (-> { date_after(:period_start, Time.zone.today) })
     scope :start_before, ->(date) { date_before(:period_start, date) }
     scope :start_at_or_before, ->(date) { date_at_or_before(:period_start, date) }
     scope :start_after, ->(date) { date_after(:period_start, date) }

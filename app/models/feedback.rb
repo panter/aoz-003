@@ -6,7 +6,7 @@ class Feedback < ApplicationRecord
   belongs_to :volunteer
   belongs_to :author, class_name: 'User', inverse_of: 'feedbacks'
   belongs_to :reviewer, class_name: 'User', foreign_key: 'reviewer_id',
-    inverse_of: 'reviewed_feedbacks'
+    inverse_of: 'reviewed_feedbacks', optional: true
   belongs_to :feedbackable, polymorphic: true, optional: true
 
   validates :comments, presence: true

@@ -9,7 +9,7 @@ class Hour < ApplicationRecord
   belongs_to :hourable, polymorphic: true, optional: true
 
   belongs_to :reviewer, class_name: 'User', foreign_key: 'reviewer_id',
-    inverse_of: 'reviewed_hours'
+    inverse_of: 'reviewed_hours', optional: true
 
   belongs_to :billing_expense, optional: true
   belongs_to :certificate, optional: true
