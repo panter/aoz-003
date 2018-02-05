@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202181149) do
+ActiveRecord::Schema.define(version: 20180205203826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -437,8 +437,6 @@ ActiveRecord::Schema.define(version: 20180202181149) do
     t.integer "year"
     t.bigint "user_id"
     t.jsonb "report_content"
-    t.boolean "extern", default: false
-    t.string "scope"
     t.string "title"
     t.text "comment"
     t.datetime "deleted_at"

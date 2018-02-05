@@ -22,13 +22,6 @@ class PerformanceReport < ApplicationRecord
     }
   end
 
-  def flatten_results(results)
-    results.first[1].values
-           .zip(*results.values.slice(1..-1).map(&:values))
-           .each_with_index.map { |val, index| [results.first[1].keys[index], val] }
-           .to_h
-  end
-
   def volunteer_performance
     volunteers = Volunteer.created_before(periods.last)
     {

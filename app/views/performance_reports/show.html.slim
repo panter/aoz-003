@@ -6,17 +6,6 @@ h1
   h3= t_attr(:comment)
   p= @performance_report.comment
 
-- if @performance_report.extern || @performance_report.scope.present?
-  h3= t('.selection_criteria')
-  - if @performance_report.extern
-    p
-      strong= "#{t_attr(:extern)}: "
-      = t(@performance_report.extern)
-  - if @performance_report.scope?
-    p
-      strong= "#{t_attr(:scope)}: "
-      = @performance_report.scope
-
 hr
 - if @performance_report.year?
   h2= t('.title_year', year: @performance_report.year)
