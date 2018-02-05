@@ -22,6 +22,13 @@ class PerformanceReport < ApplicationRecord
     }
   end
 
+  def flatten_results(results)
+    results.first[1].values
+           .zip(*results.values.slice(1..-1).map(&:values))
+           .each_with_index.map { |val, index| [results.first[1].keys[index], val] }
+           .to_h
+  end
+
   def volunteer_performance
     volunteers = Volunteer.created_before(periods.last)
     {
@@ -47,23 +54,23 @@ class PerformanceReport < ApplicationRecord
       active_assignment: assignment_active.size,
       active_group_assignment: group_active.size,
       active_both: active_both.size,
-      only_assignment_active: only_assignment_active,
-      only_group_active: only_group_active,
+      only_assignment_active: only_assignment_active.size,
+      only_group_active: only_group_active.size,
       created: volunteers.created_after(periods.first).count,
       resigned: volunteers.resigned_between(*periods).count,
       inactive: volunteers.where.not(id: assignment_active + group_active).distinct.count,
-      total_hour_records: hours.count,
-      total_hours: hours.sum(:hours) + (hours.sum(:minutes) / 60),
       assignment_hour_records: hours.assignment.count,
       assignment_hours: hours.assignment.sum(:hours) + (hours.assignment.sum(:minutes) / 60),
       group_offer_hour_records: hours.group_offer.count,
       group_offer_hours: hours.group_offer.sum(:hours) + (hours.group_offer.sum(:minutes) / 60),
-      total_feedbacks: feedbacks.count,
+      total_hour_records: hours.count,
+      total_hours: hours.sum(:hours) + (hours.sum(:minutes) / 60),
       assignment_feedbacks: feedbacks.assignment.count,
       group_offer_feedbacks: feedbacks.group_offer.count,
-      total_trial_feedbacks: trial_feedbacks.count,
+      total_feedbacks: feedbacks.count,
       assignment_trial_feedbacks: trial_feedbacks.assignment.count,
       group_offer_trial_feedbacks: trial_feedbacks.group_offer.count,
+      total_trial_feedbacks: trial_feedbacks.count
     }
   end
 
@@ -71,8 +78,8 @@ class PerformanceReport < ApplicationRecord
     clients = Client.created_before(periods.last)
     {
       all: clients_stats(clients),
-      zurich: clients_stats(clients),
-      not_zurich: clients_stats(clients)
+      zurich: clients_stats(clients.zurich),
+      not_zurich: clients_stats(clients.not_zurich)
     }
   end
 
@@ -100,6 +107,7 @@ class PerformanceReport < ApplicationRecord
   def assignments_stats(assignments)
     hours = Hour.date_between(:meeting_date, *periods).from_assignments(assignments.ids)
     feedbacks = Feedback.created_between(*periods).from_assignments(assignments.ids)
+    trial_feedbacks = TrialFeedback.created_between(*periods).from_assignments(assignments.ids)
     {
       all: assignments.count,
       created: assignments.created_between(*periods).count,
@@ -115,12 +123,21 @@ class PerformanceReport < ApplicationRecord
       termination_verified: assignments.termination_verified_between(*periods).count,
       hour_report_count: hours.count,
       hours: hours.sum(:hours) + (hours.sum(:minutes) / 60),
-      feedback_count: feedbacks.count
+      feedback_count: feedbacks.count,
+      trial_feedback_count: trial_feedbacks.count
     }
   end
 
   def group_offer_performance
     group_offers = GroupOffer.created_before(periods.last)
+    {
+      all: group_offer_stats(group_offers),
+      in_departments: group_offer_stats(group_offers.where.not(department_id: nil)),
+      outside_departments: group_offer_stats(group_offers.where(department_id: nil))
+    }
+  end
+
+  def group_offer_stats(group_offers)
     group_assignments = GroupAssignment.created_before(periods.last)
                                        .where(group_offer_id: group_offers.ids)
     active_ga = group_assignments.active_between(*periods)
@@ -138,11 +155,14 @@ class PerformanceReport < ApplicationRecord
       started_assignments: started_ga.pluck(:group_offer_id).uniq.size,
       active_assignments: active_ga.pluck(:group_offer_id).uniq.size,
       ended_assignments: ended_ga.pluck(:group_offer_id).uniq.size,
+      total_assignments: group_assignments.count,
+      total_created_assignments: created_ga.count,
+      total_started_assignments: started_ga.count,
+      total_active_assignments: active_ga.count,
+      total_ended_assignments: ended_ga.count,
       hour_report_count: hours.count,
       hours: hours.sum(:hours) + (hours.sum(:minutes) / 60),
-      feedback_count: feedbacks.count,
-      in_departments: group_offers.where.not(department_id: nil).count,
-      outside_departments: group_offers.where(department_id: nil).count
+      feedback_count: feedbacks.count
     }
   end
 end

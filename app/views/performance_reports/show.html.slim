@@ -24,102 +24,279 @@ hr
   h2= t('.title_range', start: l(@performance_report.period_start, format: :default), end: l(@performance_report.period_end, format: :default))
 
 h3 Freiwillige
-- @report_content['volunteers'].each do |category_key, category|
-  h4= t(".volunteers.categories.#{category_key}")
+table.table.table-striped.table-bordered
+  htead
+    tr
+      th
+      - column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
+      - column_order.each do |category_key|
+        th= t(".volunteers.categories.#{category_key}")
+  tbody
+    tr
+      td= t('.volunteers.values.created')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['created']
+    tr
+      td= t('.volunteers.values.inactive')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['inactive']
+    tr
+      td= t('.volunteers.values.resigned')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['resigned']
+    tr.active
+      td= t('.volunteers.values.total')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['total']
 
-  table.table
-    tbody
-  - category.each do |numbers_key, number|
-        tr
-          td= t(".volunteers.numbers.#{numbers_key}")
-          td= number
-/ h4 Alle
-/ table.table
-/   tbody
-/     tr
-/       td Total
-/       td= @report_content['volunteers']['all']['total']
-/     tr
-/       td Aktive Tandem
-/       td= @report_content['volunteers']['all']['total']
-/     tr
-/       td= t('.volunteers.resigned')
-/       td
-/     tr.active
-/       td= t('.volunteers.active_total')
-/       td= @report_content['global']['volunteers']['active']
+    tr
+      td= t('.volunteers.values.only_assignment_active')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['only_assignment_active']
+    tr
+      td= t('.volunteers.values.active_group_assignment')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['active_group_assignment']
+    tr
+      td= t('.volunteers.values.only_group_active')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['only_group_active']
+    tr
+      td= t('.volunteers.values.active_both')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['active_both']
+    tr.active
+      td= t('.volunteers.values.active_assignment')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['active_assignment']
 
-/     tr
-/       td= t('.clients.total')
-/       td= @report_content['global']['clients']['total']
-/     tr
-/       td= t('.clients.new')
-/       td= @report_content['global']['clients']['new']
-/     tr
-/       td= t('.clients.resigned')
-/       td
-/     tr.active
-/       td= t('.clients.active_total')
-/       td= @report_content['global']['clients']['active']
+    tr
+      td= t('.volunteers.values.assignment_hour_records')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['assignment_hour_records']
+    tr
+      td= t('.volunteers.values.assignment_hours')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['assignment_hours']
+    tr
+      td= t('.volunteers.values.group_offer_hour_records')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['group_offer_hour_records']
+    tr
+      td= t('.volunteers.values.group_offer_hours')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['group_offer_hours']
+    tr
+      td= t('.volunteers.values.total_hour_records')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['total_hour_records']
+    tr.active
+      td= t('.volunteers.values.total_hours')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['total_hours']
 
+    tr
+      td= t('.volunteers.values.assignment_feedbacks')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['assignment_feedbacks']
+    tr
+      td= t('.volunteers.values.group_offer_feedbacks')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['group_offer_feedbacks']
+    tr.active
+      td= t('.volunteers.values.total_feedbacks')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['total_feedbacks']
+    tr
+      td= t('.volunteers.values.assignment_trial_feedbacks')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['assignment_trial_feedbacks']
+    tr
+      td= t('.volunteers.values.group_offer_trial_feedbacks')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['group_offer_trial_feedbacks']
+    tr.active
+      td= t('.volunteers.values.total_trial_feedbacks')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['total_trial_feedbacks']
 
-/ h3= t_attr(:zuerich)
-/ table.table
-/   tbody
-/     tr
-/       td= t('.volunteers.total')
-/       td= @report_content['zuerich']['volunteers']['total']
-/     tr
-/       td= t('.volunteers.new')
-/       td= @report_content['zuerich']['volunteers']['new']
-/     tr
-/       td= t('.volunteers.resigned')
-/       td
-/     tr.active
-/       td= t('.volunteers.active_total')
-/       td= @report_content['zuerich']['volunteers']['active']
+h3 Klienten
+table.table.table-striped.table-bordered
+  htead
+    tr
+      th
+      - column_order = ['zurich', 'not_zurich', 'all']
+      - column_order.each do |category_key|
+        th= t(".clients.categories.#{category_key}")
+  tbody
+    tr
+      td= t('.clients.values.created')
+      - column_order.each do |category_key|
+        td= @report_content['clients'][category_key]['created']
+    tr
+      td= t('.clients.values.inactive')
+      - column_order.each do |category_key|
+        td= @report_content['clients'][category_key]['inactive']
+    tr
+      td= t('.clients.values.resigned')
+      - column_order.each do |category_key|
+        td= @report_content['clients'][category_key]['resigned']
+    tr
+      td= t('.clients.values.total')
+      - column_order.each do |category_key|
+        td= @report_content['clients'][category_key]['total']
+    tr
+      td= t('.clients.values.active_assignment')
+      - column_order.each do |category_key|
+        td= @report_content['clients'][category_key]['active_assignment']
 
-/     tr
-/       td= t('.clients.total')
-/       td= @report_content['zuerich']['clients']['total']
-/     tr
-/       td= t('.clients.new')
-/       td= @report_content['zuerich']['clients']['new']
-/     tr
-/       td= t('.clients.resigned')
-/       td
-/     tr.active
-/       td= t('.clients.active_total')
-/       td= @report_content['zuerich']['clients']['active']
+h3 Begleitungen
+table.table.table-striped.table-bordered
+  htead
+    tr
+      th
+      - column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
+      - column_order.each do |category_key|
+        th= t(".assignments.categories.#{category_key}")
+  tbody
+    tr
+      td= t('.assignments.values.created')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['created']
+    tr
+      td= t('.assignments.values.started')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['started']
+    tr
+      td= t('.assignments.values.active')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['active']
+    tr
+      td= t('.assignments.values.ended')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['ended']
+    tr.active
+      td= t('.assignments.values.all')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['all']
 
-/     tr
-/       td= t('.zh_assignments.total')
-/       td= @report_content['zuerich']['assignments']['total']
-/     tr
-/       td= t('.zh_assignments.new')
-/       td= @report_content['zuerich']['assignments']['new']
-/     tr
-/       td= t('.zh_assignments.resigned')
-/       td= @report_content['zuerich']['assignments']['ended']
-/     tr.active
-/       td= t('.assignments.active_total')
-/       td= @report_content['zuerich']['assignments']['active']
+    tr
+      td= t('.assignments.values.hour_report_count')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['hour_report_count']
+    tr.active
+      td= t('.assignments.values.hours')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['hours']
 
-/ h3= t('group_offers', count: 2)
-/ table.table
-/   tbody
-/     tr
-/       td= t('.groups.total')
-/       td= @report_content['group_offers']['total']
-/     tr
-/       td= t('.groups.new')
-/       td= @report_content['group_offers']['new']
-/     tr
-/       td= t('.groups.resigned')
-/       td= @report_content['group_offers']['ended']
-/     tr.active
-/       td= t('.groups.active_total')
-/       td= @report_content['group_offers']['active']
+    tr.active
+      td= t('.assignments.values.feedback_count')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['feedback_count']
+
+    tr
+      td= t('.assignments.values.first_instruction_lessons')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['first_instruction_lessons']
+    tr
+      td= t('.assignments.values.probations_ended')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['probations_ended']
+    tr.active
+      td= t('.assignments.values.trial_feedback_count')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['trial_feedback_count']
+
+    tr
+      td= t('.assignments.values.performance_appraisal_reviews')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['performance_appraisal_reviews']
+    tr
+      td= t('.assignments.values.home_visits')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['home_visits']
+    tr
+      td= t('.assignments.values.progress_meetings')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['progress_meetings']
+    tr
+      td= t('.assignments.values.termination_submitted')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['termination_submitted']
+    tr
+      td= t('.assignments.values.termination_verified')
+      - column_order.each do |category_key|
+        td= @report_content['assignments'][category_key]['termination_verified']
+
+h3 Gruppenangebote
+table.table.table-striped.table-bordered
+  htead
+    tr
+      th
+      - column_order = ['in_departments', 'outside_departments', 'all']
+      - column_order.each do |category_key|
+        th= t(".assignments.categories.#{category_key}")
+  tbody
+    tr
+      td= t('.group_offers.values.created')
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['created']
+    tr
+      td= t('.group_offers.values.ended')
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['ended']
+    tr.active
+      td= t('.group_offers.values.all')
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['all']
+    tr
+      td Mit neu erstellten Gruppeneinsätzen
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['created_assignments']
+    tr
+      td Mit gestarteten Gruppeneinsätzen
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['started_assignments']
+    tr
+      td Mit beendeten Gruppeneinsätzen
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['ended_assignments']
+    tr.active
+      td Mit aktiven Gruppeneinsätzen
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['active_assignments']
+    tr
+      td Anzahl erstellte Gruppeneinsätze
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['total_created_assignments']
+    tr
+      td Anzahl gestartete Gruppeneinsätze
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['total_started_assignments']
+    tr
+      td Anzahl aktive Gruppeneinsätze
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['total_active_assignments']
+    tr
+      td Anzahl Beendeter Gruppeneinsätze
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['total_ended_assignments']
+    tr.active
+      td Gruppeneinsätze Total
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['total_assignments']
+    tr
+      td= t('.group_offers.values.hour_report_count')
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['hour_report_count']
+    tr.active
+      td= t('.group_offers.values.hours')
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['hours']
+    tr.active
+      td= t('.group_offers.values.feedback_count')
+      - column_order.each do |category_key|
+        td= @report_content['group_offers'][category_key]['feedback_count']
 
 hr
 
