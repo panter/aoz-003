@@ -37,11 +37,15 @@ class PerformanceReport < ApplicationRecord
     assignment_active = volunteers.with_active_assignments_between(*periods).distinct.ids
     group_active = volunteers.with_active_group_assignments_between(*periods).distinct.ids
     active_both = assignment_active & group_active
+    only_group_active = group_active - active_both
+    only_assignment_active = assignment_active - active_both
     {
       total: volunteers.count,
       active_assignment: assignment_active.size,
       active_group_assignment: group_active.size,
       active_both: active_both.size,
+      only_group_active: only_group_active,
+      only_assignment_active: only_assignment_active,
       created: volunteers.created_after(periods.first).count,
       resigned: volunteers.resigned_between(*periods).count,
       inactive: volunteers.where.not(id: assignment_active + group_active).distinct.count
