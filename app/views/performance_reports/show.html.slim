@@ -23,105 +23,103 @@ hr
 - else
   h2= t('.title_range', start: l(@performance_report.period_start, format: :default), end: l(@performance_report.period_end, format: :default))
 
-h3= t_attr(:global)
-table.table
-  tbody
-    tr
-      td= t('.volunteers.total')
-      td= @report_content['global']['volunteers']['total']
-    tr
-      td= t('.volunteers.new')
-      td= @report_content['global']['volunteers']['new']
-    tr
-      td= t('.volunteers.resigned')
-      td
-    tr.active
-      td= t('.volunteers.active_total')
-      td= @report_content['global']['volunteers']['active']
+h3 Freiwillige
+- @report_content['volunteers'].each do |category_key, category|
+  h4= t(".volunteers.categories.#{category_key}")
 
-    tr
-      td= t('.clients.total')
-      td= @report_content['global']['clients']['total']
-    tr
-      td= t('.clients.new')
-      td= @report_content['global']['clients']['new']
-    tr
-      td= t('.clients.resigned')
-      td
-    tr.active
-      td= t('.clients.active_total')
-      td= @report_content['global']['clients']['active']
+  table.table
+    tbody
+  - category.each do |numbers_key, number|
+        tr
+          td= t(".volunteers.numbers.#{numbers_key}")
+          td= number
+/ h4 Alle
+/ table.table
+/   tbody
+/     tr
+/       td Total
+/       td= @report_content['volunteers']['all']['total']
+/     tr
+/       td Aktive Tandem
+/       td= @report_content['volunteers']['all']['total']
+/     tr
+/       td= t('.volunteers.resigned')
+/       td
+/     tr.active
+/       td= t('.volunteers.active_total')
+/       td= @report_content['global']['volunteers']['active']
 
-    tr
-      td= t('.assignments.total')
-      td= @report_content['global']['assignments']['total']
-    tr
-      td= t('.assignments.new')
-      td= @report_content['global']['assignments']['new']
-    tr
-      td= t('.assignments.resigned')
-      td= @report_content['global']['assignments']['ended']
-    tr.active
-      td= t('.assignments.active_total')
-      td= @report_content['global']['assignments']['active']
+/     tr
+/       td= t('.clients.total')
+/       td= @report_content['global']['clients']['total']
+/     tr
+/       td= t('.clients.new')
+/       td= @report_content['global']['clients']['new']
+/     tr
+/       td= t('.clients.resigned')
+/       td
+/     tr.active
+/       td= t('.clients.active_total')
+/       td= @report_content['global']['clients']['active']
 
-h3= t_attr(:zuerich)
-table.table
-  tbody
-    tr
-      td= t('.volunteers.total')
-      td= @report_content['zuerich']['volunteers']['total']
-    tr
-      td= t('.volunteers.new')
-      td= @report_content['zuerich']['volunteers']['new']
-    tr
-      td= t('.volunteers.resigned')
-      td
-    tr.active
-      td= t('.volunteers.active_total')
-      td= @report_content['zuerich']['volunteers']['active']
 
-    tr
-      td= t('.clients.total')
-      td= @report_content['zuerich']['clients']['total']
-    tr
-      td= t('.clients.new')
-      td= @report_content['zuerich']['clients']['new']
-    tr
-      td= t('.clients.resigned')
-      td
-    tr.active
-      td= t('.clients.active_total')
-      td= @report_content['zuerich']['clients']['active']
+/ h3= t_attr(:zuerich)
+/ table.table
+/   tbody
+/     tr
+/       td= t('.volunteers.total')
+/       td= @report_content['zuerich']['volunteers']['total']
+/     tr
+/       td= t('.volunteers.new')
+/       td= @report_content['zuerich']['volunteers']['new']
+/     tr
+/       td= t('.volunteers.resigned')
+/       td
+/     tr.active
+/       td= t('.volunteers.active_total')
+/       td= @report_content['zuerich']['volunteers']['active']
 
-    tr
-      td= t('.zh_assignments.total')
-      td= @report_content['zuerich']['assignments']['total']
-    tr
-      td= t('.zh_assignments.new')
-      td= @report_content['zuerich']['assignments']['new']
-    tr
-      td= t('.zh_assignments.resigned')
-      td= @report_content['zuerich']['assignments']['ended']
-    tr.active
-      td= t('.assignments.active_total')
-      td= @report_content['zuerich']['assignments']['active']
+/     tr
+/       td= t('.clients.total')
+/       td= @report_content['zuerich']['clients']['total']
+/     tr
+/       td= t('.clients.new')
+/       td= @report_content['zuerich']['clients']['new']
+/     tr
+/       td= t('.clients.resigned')
+/       td
+/     tr.active
+/       td= t('.clients.active_total')
+/       td= @report_content['zuerich']['clients']['active']
 
-h3= t('group_offers', count: 2)
-table.table
-  tbody
-    tr
-      td= t('.groups.total')
-      td= @report_content['group_offers']['total']
-    tr
-      td= t('.groups.new')
-      td= @report_content['group_offers']['new']
-    tr
-      td= t('.groups.resigned')
-      td= @report_content['group_offers']['ended']
-    tr.active
-      td= t('.groups.active_total')
-      td= @report_content['group_offers']['active']
+/     tr
+/       td= t('.zh_assignments.total')
+/       td= @report_content['zuerich']['assignments']['total']
+/     tr
+/       td= t('.zh_assignments.new')
+/       td= @report_content['zuerich']['assignments']['new']
+/     tr
+/       td= t('.zh_assignments.resigned')
+/       td= @report_content['zuerich']['assignments']['ended']
+/     tr.active
+/       td= t('.assignments.active_total')
+/       td= @report_content['zuerich']['assignments']['active']
+
+/ h3= t('group_offers', count: 2)
+/ table.table
+/   tbody
+/     tr
+/       td= t('.groups.total')
+/       td= @report_content['group_offers']['total']
+/     tr
+/       td= t('.groups.new')
+/       td= @report_content['group_offers']['new']
+/     tr
+/       td= t('.groups.resigned')
+/       td= @report_content['group_offers']['ended']
+/     tr.active
+/       td= t('.groups.active_total')
+/       td= @report_content['group_offers']['active']
 
 hr
 
