@@ -65,10 +65,14 @@ table.table.table-striped.table-bordered
       td= t('.volunteers.values.active_both')
       - column_order.each do |category_key|
         td= @report_content['volunteers'][category_key]['active_both']
-    tr.active
+    tr
       td= t('.volunteers.values.active_assignment')
       - column_order.each do |category_key|
         td= @report_content['volunteers'][category_key]['active_assignment']
+    tr.active
+      td Total Akiv
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['active_total']
 
     tr
       td= t('.volunteers.values.assignment_hour_records')
