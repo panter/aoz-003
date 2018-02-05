@@ -16,7 +16,7 @@ module FeedbackTrialFeedbackCommon
     }
 
     scope :submitted_before, lambda { |submitted_at|
-      created_before(submitted_at)
+      created_after(submitted_at)
     }
 
     scope :author_isnt_volunteer, lambda {

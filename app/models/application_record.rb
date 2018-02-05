@@ -27,7 +27,9 @@ class ApplicationRecord < ActiveRecord::Base
   }
 
   scope :created_before, ->(max_time) { date_before(:created_at, max_time) }
+  scope :created_at_or_before, ->(max_time) { date_at_or_before(:created_at, max_time) }
   scope :created_after, ->(min_time) { date_after(:created_at, min_time) }
+  scope :created_at_or_after, ->(min_time) { date_at_or_after(:created_at, min_time) }
   scope :created_between, lambda { |start_date, end_date|
     date_between(:created_at, start_date, end_date)
   }
