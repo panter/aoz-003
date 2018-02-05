@@ -39,6 +39,9 @@ class PerformanceReport < ApplicationRecord
     active_both = assignment_active & group_active
     only_group_active = group_active - active_both
     only_assignment_active = assignment_active - active_both
+    hours = Hour.date_between(:meeting_date, *periods).where(volunteer_id: volunteers.ids)
+    feedbacks = Feedback.created_between(*periods).where(volunteer_id: volunteers.ids)
+    trial_feedbacks = TrialFeedback.created_between(*periods).where(volunteer_id: volunteers.ids)
     {
       total: volunteers.count,
       active_assignment: assignment_active.size,
@@ -48,7 +51,19 @@ class PerformanceReport < ApplicationRecord
       only_assignment_active: only_assignment_active,
       created: volunteers.created_after(periods.first).count,
       resigned: volunteers.resigned_between(*periods).count,
-      inactive: volunteers.where.not(id: assignment_active + group_active).distinct.count
+      inactive: volunteers.where.not(id: assignment_active + group_active).distinct.count,
+      total_hour_records: hours.count,
+      total_hours: hours.sum(:hours) + (hours.sum(:minutes) / 60),
+      assignment_hour_records: hours.assignment.count,
+      assignment_hours: hours.assignment.sum(:hours) + (hours.assignment.sum(:minutes) / 60),
+      group_offer_hour_records: hours.group_offer.count,
+      group_offer_hours: hours.group_offer.sum(:hours) + (hours.group_offer.sum(:minutes) / 60),
+      total_feedbacks: feedbacks.count,
+      assignment_feedbacks: feedbacks.assignment.count,
+      group_offer_feedbacks: feedbacks.group_offer.count,
+      total_trial_feedbacks: trial_feedbacks.count,
+      assignment_trial_feedbacks: trial_feedbacks.assignment.count,
+      group_offer_trial_feedbacks: trial_feedbacks.group_offer.count,
     }
   end
 

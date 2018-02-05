@@ -11,12 +11,13 @@ class Feedback < ApplicationRecord
 
   validates :comments, presence: true
 
+  scope :assignment, (-> { where(feedbackable_type: 'Assignment') })
+  scope :group_offer, (-> { where(feedbackable_type: 'GroupOffer') })
   scope :from_assignments, lambda { |assignment_ids|
-    where(feedbackable_type: 'Assignment').where(feedbackable_id: assignment_ids)
+    assignment.where(feedbackable_id: assignment_ids)
   }
-
   scope :from_group_offers, lambda { |group_offer_ids|
-    where(feedbackable_type: 'GroupOffer').where(feedbackable_id: group_offer_ids)
+    group_offer.where(feedbackable_id: group_offer_ids)
   }
 
   def assignment?
