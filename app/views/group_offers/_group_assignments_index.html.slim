@@ -9,7 +9,7 @@
         th= t_attr(:period_end, GroupAssignment)
         th.hidden-print colspan=2 Aktionen
     tbody
-      - group_assignments.each do |group_assignment|
+      - group_assignments.unterminated.each do |group_assignment|
         tr
           td
             = link_to_if(policy(group_assignment.volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
