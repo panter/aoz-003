@@ -4,7 +4,7 @@ class BillingExpense < ApplicationRecord
   before_validation :compute_amount
 
   belongs_to :volunteer
-  belongs_to :user, -> { with_deleted }
+  belongs_to :user, -> { with_deleted }, inverse_of: 'billing_expenses'
   has_many :hours
 
   default_scope { order(created_at: :desc) }

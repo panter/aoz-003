@@ -1,5 +1,6 @@
 class GroupOffer < ApplicationRecord
   include ImportRelation
+  include TerminationScopes
 
   TARGET_GROUP = [:women, :men, :children, :teenagers, :unaccompanied, :all].freeze
   DURATION = [:long_term, :regular, :short_term].freeze
@@ -45,10 +46,33 @@ class GroupOffer < ApplicationRecord
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
 
-  scope :in_department, (-> { where.not(department_id: nil) })
+  scope :in_department, (-> { field_not_nil(:department_id) })
 
   scope :active_group_assignments_between, lambda { |start_date, end_date|
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
+  }
+
+  scope :ended_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.end_within(start_date, end_date))
+  }
+
+  scope :no_end, (-> { field_nil(:period_end) })
+  scope :has_end, (-> { field_not_nil(:period_end) })
+  scope :end_before, ->(date) { date_before(:period_end, date) }
+  scope :end_at_or_before, ->(date) { date_at_or_before(:period_end, date) }
+  scope :end_after, ->(date) { date_after(:period_end, date) }
+  scope :end_at_or_after, ->(date) { date_at_or_after(:period_end, date) }
+
+  scope :end_within, lambda { |start_date, end_date|
+    date_between_inclusion(:period_end, start_date, end_date)
+  }
+
+  scope :active_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
+  }
+
+  scope :ended_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.end_within(start_date, end_date))
   }
 
   def active_group_assignments_between?(start_date, end_date)
@@ -59,16 +83,16 @@ class GroupOffer < ApplicationRecord
     group_assignments.have_start.any? || group_assignment_logs.any?
   end
 
-  def all_group_assignments_ended_within?(date_range)
-    ended_within = group_assignments.end_within(date_range).ids
-    not_end_before = group_assignments.end_after(date_range.last).ids
-    not_end_before += group_assignments.no_end.ids if date_range.last >= Time.zone.today
+  def all_group_assignments_ended_within?(start_date, end_date)
+    ended_within = group_assignments.end_within(start_date, end_date).ids
+    not_end_before = group_assignments.end_after(end_date).ids
+    not_end_before += group_assignments.no_end.ids if end_date >= Time.zone.today
     ended_within.any? && not_end_before.blank?
   end
 
-  def all_group_assignments_started_within?(date_range)
-    started_within = group_assignments.start_within(date_range)
-    started_before = group_assignments.start_before(date_range.first)
+  def all_group_assignments_started_within?(start_date, end_date)
+    started_within = group_assignments.start_within(start_date, end_date)
+    started_before = group_assignments.start_before(start_date)
     return true if started_within.size == group_assignments.size
     return true unless started_before.any?
     false

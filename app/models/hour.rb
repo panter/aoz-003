@@ -2,11 +2,12 @@ class Hour < ApplicationRecord
   include ImportRelation
   include ReviewsCommon
 
-  attr_reader :hourable_id_and_type
-
   belongs_to :volunteer
 
   belongs_to :hourable, polymorphic: true, optional: true
+
+  belongs_to :reviewer, class_name: 'User', foreign_key: 'reviewer_id',
+    inverse_of: 'reviewed_hours', optional: true
 
   belongs_to :billing_expense, optional: true
   belongs_to :certificate, optional: true
