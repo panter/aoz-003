@@ -26,42 +26,127 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     ).slice(:id, :report_content).values
 
     visit performance_report_path(report_id)
+    volunteers, clients, assignments, group_offers = this_year_report.values_at('volunteers',
+      'clients', 'assignments', 'group_offers')
 
-    assert page.has_text? 'Global'
-    assert page.has_text? "Total number of volunteers	#{this_year_report['global']['volunteers']['total']}"
-    assert page.has_text? "Number of new volunteers	#{this_year_report['global']['volunteers']['new']}"
-    assert page.has_text? "Total active volunteers by the end of the period	#{this_year_report['global']['volunteers']['active']}"
+    # Volunteers section
+    column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
+    assert page.has_text? 'Erstellt ' + row_numbers(volunteers, column_order, :created)
+    assert page.has_text? 'Inaktiv ' + row_numbers(volunteers, column_order, :inactive)
+    assert page.has_text? 'Beendet ' + row_numbers(volunteers, column_order, :resigned)
+    assert page.has_text? 'Gesammt ' + row_numbers(volunteers, column_order, :total)
 
-    assert page.has_text? "Total number of clients	#{this_year_report['global']['clients']['total']}"
-    assert page.has_text? "Number of new clients	#{this_year_report['global']['clients']['new']}"
-    assert page.has_text? "Total number of active clients by the end of the period	   #{this_year_report['global']['clients']['active']}"
+    assert page.has_text? 'Nur in Tandem aktiv ' +
+      row_numbers(volunteers, column_order, :only_assignment_active)
+    assert page.has_text? 'Mit aktivem Gruppeneinsatz ' +
+      row_numbers(volunteers, column_order, :active_group_assignment)
+    assert page.has_text? 'Nur in Gruppenangebot aktiv ' +
+      row_numbers(volunteers, column_order, :only_group_active)
+    assert page.has_text? 'Aktiv in Gruppeneinsatz und Tandem ' +
+      row_numbers(volunteers, column_order, :active_both)
+    assert page.has_text? 'Total mit aktivem Tandem ' +
+      row_numbers(volunteers, column_order, :active_assignment)
+    assert page.has_text? 'Total Akiv ' + row_numbers(volunteers, column_order, :active_total)
 
-    assert page.has_text? "Total number of assignments	#{this_year_report['global']['assignments']['total']}"
-    assert page.has_text? "Number of new assignments	#{this_year_report['global']['assignments']['new']}"
-    assert page.has_text? "Number of finished assignments	#{this_year_report['global']['assignments']['ended']}"
-    assert page.has_text? "Total number of active assignments by the end of the period #{this_year_report['global']['assignments']['active']}"
+    assert page.has_text? 'Tandem-Stundenberichte ' +
+      row_numbers(volunteers, column_order, :assignment_hour_records)
+    assert page.has_text? 'Tandem-Stunden ' +
+      row_numbers(volunteers, column_order, :assignment_hours)
+    assert page.has_text? 'Gruppenangebots-Stundenberichte ' +
+      row_numbers(volunteers, column_order, :group_offer_hour_records)
+    assert page.has_text? 'Gruppenangebots-Stunden ' +
+      row_numbers(volunteers, column_order, :group_offer_hours)
+    assert page.has_text? 'Eingereichte Stundenberichte ' +
+      row_numbers(volunteers, column_order, :total_hour_records)
+    assert page.has_text? 'Stunden total ' + row_numbers(volunteers, column_order, :total_hours)
 
+    assert page.has_text? 'Tandem-Feedbacks ' +
+      row_numbers(volunteers, column_order, :assignment_feedbacks)
+    assert page.has_text? 'Gruppenangebots-Feedbacks ' +
+      row_numbers(volunteers, column_order, :group_offer_feedbacks)
+    assert page.has_text? 'Total Feedbacks ' +
+      row_numbers(volunteers, column_order, :total_feedbacks)
 
-    assert page.has_text? "Zuerich"
-    assert page.has_text? "Total number of volunteers	#{this_year_report['zuerich']['volunteers']['total']}"
-    assert page.has_text? "Number of new volunteers	#{this_year_report['zuerich']['volunteers']['new']}"
-    assert page.has_text? "Number of resigned volunteers"
-    assert page.has_text? "Total active volunteers by the end of the period	#{this_year_report['zuerich']['volunteers']['active']}"
+    assert page.has_text? 'Tandem-Probezeit-Feedbacks ' +
+      row_numbers(volunteers, column_order, :assignment_trial_feedbacks)
+    assert page.has_text? 'Gruppenangebots-Probezeit-Feedbacks ' +
+      row_numbers(volunteers, column_order, :group_offer_trial_feedbacks)
+    assert page.has_text? 'Total Probezeit-Feedbacks ' +
+      row_numbers(volunteers, column_order, :total_trial_feedbacks)
 
-    assert page.has_text? "Total number of clients	#{this_year_report['zuerich']['clients']['total']}"
-    assert page.has_text? "Number of new clients	#{this_year_report['zuerich']['clients']['new']}"
-    assert page.has_text? "Number of finished clients"
-    assert page.has_text? "Total number of active clients by the end of the period	#{this_year_report['zuerich']['clients']['active']}"
+    # Clients section
+    column_order = ['zurich', 'not_zurich', 'all']
+    assert page.has_text? 'Erstellt ' + row_numbers(clients, column_order, :created)
+    assert page.has_text? 'Inaktiv ' + row_numbers(clients, column_order, :inactive)
+    assert page.has_text? 'Beendet ' + row_numbers(clients, column_order, :resigned)
+    assert page.has_text? 'Gesammt ' + row_numbers(clients, column_order, :total)
+    assert page.has_text? 'Total mit aktivem Tandem ' +
+      row_numbers(clients, column_order, :active_assignment)
 
-    assert page.has_text? "Total number of assigned clients	#{this_year_report['zuerich']['assignments']['total']}"
-    assert page.has_text? "Number of new assignments	#{this_year_report['zuerich']['assignments']['new']}"
-    assert page.has_text? "Number of finished assignments	#{this_year_report['zuerich']['assignments']['ended']}"
-    assert page.has_text? "Total number of active assignments by the end of the period	#{this_year_report['zuerich']['assignments']['active']}"
+    # Assignment section
+    column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
+    assert page.has_text? 'Erstellt ' + row_numbers(assignments, column_order, :created)
+    assert page.has_text? 'Begonnen ' + row_numbers(assignments, column_order, :started)
+    assert page.has_text? 'Aktiv ' + row_numbers(assignments, column_order, :active)
+    assert page.has_text? 'Beendet ' + row_numbers(assignments, column_order, :ended)
+    assert page.has_text? 'Alle ' + row_numbers(assignments, column_order, :all)
 
-    assert page.has_text? "Group offers"
-    assert page.has_text? "Total number of groups (Courses, Animations, Others)	#{this_year_report['group_offers']['total']}"
-    assert page.has_text? "Number of new groups (Courses, Animations, Others)	#{this_year_report['group_offers']['new']}"
-    assert page.has_text? "Number of finished groups (Courses, Animations, Others)	#{this_year_report['group_offers']['ended']}"
-    assert page.has_text? "Total number of active groups by the end of the period	#{this_year_report['group_offers']['active']}"
+    assert page.has_text? 'Anzahl Stundenrapporte ' +
+      row_numbers(assignments, column_order, :hour_report_count)
+    assert page.has_text? 'Stunden ' + row_numbers(assignments, column_order, :hours)
+    assert page.has_text? 'Anzahl Feedbacks ' +
+      row_numbers(assignments, column_order, :feedback_count)
+    assert page.has_text? 'Einführungskurse ' +
+      row_numbers(assignments, column_order, :first_instruction_lessons)
+    assert page.has_text? 'Probezeiten abgeschlossen ' +
+      row_numbers(assignments, column_order, :probations_ended)
+    assert page.has_text? 'Anzahl Probezeitfeedbacks ' +
+      row_numbers(assignments, column_order, :trial_feedback_count)
+
+    assert page.has_text? 'Standortgespräche ' +
+      row_numbers(assignments, column_order, :performance_appraisal_reviews)
+    assert page.has_text? 'Hausbesuche ' + row_numbers(assignments, column_order, :home_visits)
+    assert page.has_text? 'Fortschrittsmeetings ' +
+      row_numbers(assignments, column_order, :progress_meetings)
+    assert page.has_text? 'Beendigung bestätigt ' +
+      row_numbers(assignments, column_order, :termination_submitted)
+    assert page.has_text? 'Beendigung quittiert ' +
+      row_numbers(assignments, column_order, :termination_verified)
+
+    # Group Offer section
+    column_order = ['in_departments', 'outside_departments', 'all']
+    assert page.has_text? 'Erstellt ' + row_numbers(group_offers, column_order, :created)
+    assert page.has_text? 'Beendet ' + row_numbers(group_offers, column_order, :ended)
+    assert page.has_text? 'Alle ' + row_numbers(group_offers, column_order, :all)
+
+    assert page.has_text? 'Mit neu erstellten Gruppeneinsätzen ' +
+      row_numbers(group_offers, column_order, :created_assignments)
+    assert page.has_text? 'Mit gestarteten Gruppeneinsätzen ' +
+      row_numbers(group_offers, column_order, :started_assignments)
+    assert page.has_text? 'Mit beendeten Gruppeneinsätzen ' +
+      row_numbers(group_offers, column_order, :ended_assignments)
+    assert page.has_text? 'Mit aktiven Gruppeneinsätzen ' +
+      row_numbers(group_offers, column_order, :active_assignments)
+
+    assert page.has_text? 'Anzahl erstellte Gruppeneinsätze ' +
+      row_numbers(group_offers, column_order, :total_created_assignments)
+    assert page.has_text? 'Anzahl gestartete Gruppeneinsätze ' +
+      row_numbers(group_offers, column_order, :total_started_assignments)
+    assert page.has_text? 'Anzahl aktive Gruppeneinsätze ' +
+      row_numbers(group_offers, column_order, :total_active_assignments)
+    assert page.has_text? 'Anzahl Beendeter Gruppeneinsätze ' +
+      row_numbers(group_offers, column_order, :total_ended_assignments)
+    assert page.has_text? 'Gruppeneinsätze Total ' +
+      row_numbers(group_offers, column_order, :total_assignments)
+
+    assert page.has_text? 'Anzahl Stundenrapporte ' +
+      row_numbers(group_offers, column_order, :hour_report_count)
+    assert page.has_text? 'Stunden ' + row_numbers(group_offers, column_order, :hours)
+    assert page.has_text? 'Anzahl Feedbacks ' +
+      row_numbers(group_offers, column_order, :feedback_count)
+  end
+
+  def row_numbers(entity, column_order, key)
+    entity.values_at(*column_order).map { |val| val[key.to_s] }.join(' ')
   end
 end
