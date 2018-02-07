@@ -42,4 +42,10 @@ class VolunteerTest < ActiveSupport::TestCase
     volunteer.update(external: false)
     refute volunteer.user.deleted?
   end
+
+  test 'when an internal volunteer gets terminated, user gets softdeleted' do
+    volunteer = create :volunteer_with_user, external: false
+    assert volunteer.valid?
+    volunteer.update
+  end
 end

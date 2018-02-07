@@ -171,15 +171,11 @@ class Volunteer < ApplicationRecord
   end
 
   def unterminated_assignments?
-    assignments.each do |assignment|
-      return false unless assignment.terminated?
-    end
+    assignments.unterminated.any?
   end
 
   def unterminated_group_assignments?
-    group_assignments.each do |group_assignment|
-      return false unless group_assignment.terminated?
-    end
+    group_assignments.unterminated.any?
   end
 
   def terminatable?
@@ -235,19 +231,19 @@ class Volunteer < ApplicationRecord
   end
 
   def assignment_started?
-    assignments.started.size.positive?
+    assignments.started.any?
   end
 
   def assignment_logs_started?
-    assignment_logs.started.size.positive?
+    assignment_logs.started.any?
   end
 
   def group_assignment_started?
-    group_assignments.started.size.positive?
+    group_assignments.started.any?
   end
 
   def group_assignment_logs_started?
-    group_assignment_logs.started.size.positive?
+    group_assignment_logs.started.any?
   end
 
   def external?
@@ -259,7 +255,7 @@ class Volunteer < ApplicationRecord
   end
 
   def internal_and_started_assignments?
-    internal? && (assignment_started? || assignment_logs_started? || group_assignment_started? || group_assignment_logs_started?)
+    internal? && (assignment_started? || group_assignment_started?)
   end
 
   def self_applicant?
@@ -383,5 +379,10 @@ class Volunteer < ApplicationRecord
       contact.external = false
       user.restore recursive: true if user_id.present?
     end
+  end
+
+  # allow ransack to use defined scopes
+  def self.ransackable_scopes(auth_object = nil)
+    ['active', 'inactive', 'not_resigned']
   end
 end

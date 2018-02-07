@@ -8,11 +8,9 @@ class VolunteersController < ApplicationController
 
   def index
     authorize Volunteer
-    @q = policy_scope(Volunteer).ransack(params[:q])
+    @q = policy_scope(Volunteer).ransack(default_filter)
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @volunteers = @q.result
-    activity_filter
-    not_resigned
     respond_to do |format|
       format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
@@ -90,9 +88,14 @@ class VolunteersController < ApplicationController
     @volunteers = @volunteers.not_resigned
   end
 
-  def activity_filter
-    return unless params[:q] && params[:q][:active_eq]
-    @volunteers = params[:q][:active_eq] == 'true' ? @volunteers.active : @volunteers.inactive
+  def default_filter
+    return { acceptance_not_eq: 3 } if params[:q].blank?
+    filters = params.to_unsafe_hash[:q]
+    if filters[:acceptance_eq].present? || filters[:contact_full_name_cont].present?
+      filters.except(:acceptance_not_eq)
+    else
+      filters.merge(acceptance_not_eq: 3)
+    end
   end
 
   def handle_volunteer_update
