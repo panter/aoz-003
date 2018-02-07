@@ -54,5 +54,10 @@ module GroupAssignmentAndAssignmentCommon
       loj_mailings
         .where('reminder_mailings.kind != 1 OR reminder_mailing_volunteers.id IS NULL')
     }
+
+    def termination_feedback_submitted?
+      termination_submitted_by.present? &&
+      (term_feedback_activities.present? || term_feedback_success.present? || term_feedback_problems.present? || term_feedback_transfair.present?)
+    end
   end
 end

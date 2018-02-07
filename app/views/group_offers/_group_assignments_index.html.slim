@@ -30,6 +30,9 @@
                 class: 'index-action-link')
               = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular ausfüllen',
                 polymorphic_path(group_assignment, action: :terminate))
+            - else
+              = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular',
+                polymorphic_path(group_assignment, action: :terminate))
           td
             - if group_assignment.period_end.present? && policy(GroupAssignment).verify_termination?
               = link_to_if(group_assignment.termination_verified_by.blank?, 'Beendigung Quittieren',
