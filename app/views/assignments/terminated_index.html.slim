@@ -41,7 +41,7 @@ nav.navbar.section-navigation.hidden-print
               = link_to "Übermittelt am #{l(assignment.reminder_mailings.termination.last.updated_at.to_date)}",
                 reminder_mailing_path(assignment.reminder_mailings.termination.last)
             - else
-              = link_to 'Nicht versandt', reminder_mailing_path(assignment.reminder_mailings.termination.last)
+              = link_to 'Beendigungs Email senden', reminder_mailing_path(assignment.reminder_mailings.termination.last)
           td= boolean_glyph(assignment.termination_submitted_by.present?)
           td.index-action-cell
             = link_to 'Anzeigen', assignment_path(assignment)
