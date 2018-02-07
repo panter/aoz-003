@@ -48,8 +48,11 @@ nav.navbar.section-navigation.hidden-print
             = link_to 'Bearbeiten', edit_group_assignment_path(assignment)
           td.index-action-cell.hidden-print
             = link_to 'Beendigungsformular', terminate_group_assignment_path(assignment)
-            = link_to_if(assignment.termination_submitted_by.present?, 'Dossier Freiwillig engagiert erstellen',
-              new_volunteer_certificate_path(assignment.volunteer)) { '' }
+            - if assignment.termination_submitted_by.present?
+              - if assignment.volunteer.certificates.blank?
+                = link_to 'Dossier Freiwillig Engagiert erstellen', new_volunteer_certificate_path(assignment.volunteer)
+              - else
+                = link_to 'Dossier Freiwillig Engagiert', volunteer_certificate_path(assignment.volunteer, assignment.volunteer.certificates.last)
             = link_to 'Freiwillige/n beenden', '#'
             - if policy(GroupAssignment).verify_termination?
               td
