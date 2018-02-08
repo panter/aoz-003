@@ -71,7 +71,7 @@ h2= @group_offer.title
         td= t_attr(:schedule_details)
         td= @group_offer.schedule_details
 
-- if @group_offer.group_assignments.any?
+- if @group_offer.group_assignments.unterminated.any?
   h2 Aktuelle Gruppeneinsätze
   = render 'group_assignments_index', group_assignments: @group_offer.group_assignments, redirect_to_action: :show
 

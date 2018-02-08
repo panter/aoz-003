@@ -9,7 +9,7 @@
         th= t_attr(:period_end, GroupAssignment)
         th.hidden-print colspan=2 Aktionen
     tbody
-      - group_assignments.each do |group_assignment|
+      - group_assignments.unterminated.each do |group_assignment|
         tr
           td
             = link_to_if(policy(group_assignment.volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
@@ -29,6 +29,9 @@
                 polymorphic_path([group_assignment, ReminderMailing], action: :new_termination),
                 class: 'index-action-link')
               = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular ausfüllen',
+                polymorphic_path(group_assignment, action: :terminate))
+            - else
+              = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular',
                 polymorphic_path(group_assignment, action: :terminate))
           td
             - if group_assignment.period_end.present? && policy(GroupAssignment).verify_termination?

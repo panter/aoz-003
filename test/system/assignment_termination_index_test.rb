@@ -102,9 +102,9 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'there_is_correct_links_to_creating_certificates' do
     visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
-    refute page.has_link? 'Dossier Freiwillig engagiert erstellen',
+    refute page.has_link? 'Dossier Freiwillig Engagiert erstellen',
       href: /\/volunteers\/#{@un_submitted.volunteer.id}\/certificates\/new/
-    assert page.has_link? 'Dossier Freiwillig engagiert erstellen',
+    assert page.has_link? 'Dossier Freiwillig Engagiert erstellen',
       href: /\/volunteers\/#{@submitted.volunteer.id}\/certificates\/new/
   end
 
@@ -126,7 +126,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Zurück'
 
     # Assignment has an end-date, reminder mailing was created, but not sent
-    click_link 'Nicht versandt', href: reminder_mailing_path(@un_submitted.reminder_mailings
+    click_link 'Beendigungs Email senden', href: reminder_mailing_path(@un_submitted.reminder_mailings
       .termination.last)
     click_link 'Email versenden'
     assert page.has_text? 'Beendigungs-Email wird versendet.'
