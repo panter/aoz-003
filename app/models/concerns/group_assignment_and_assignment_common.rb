@@ -57,7 +57,7 @@ module GroupAssignmentAndAssignmentCommon
 
     def termination_feedback_submitted?
       termination_submitted_by.present? &&
-      (term_feedback_activities.present? || term_feedback_success.present? || term_feedback_problems.present? || term_feedback_transfair.present?)
+        [term_feedback_activities, term_feedback_success, term_feedback_problems, term_feedback_transfair].any?
     end
   end
 end
