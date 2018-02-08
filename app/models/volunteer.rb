@@ -17,7 +17,7 @@ class Volunteer < ApplicationRecord
 
   enum acceptance: { undecided: 0, invited: 4, accepted: 1, rejected: 2, resigned: 3 }
 
-  has_one :contact, as: :contactable, dependent: :destroy, inverse_of: :contactable
+  has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
 
   delegate :primary_email, to: :contact
@@ -37,7 +37,7 @@ class Volunteer < ApplicationRecord
 
   has_many :certificates
 
-  has_many :journals, as: :journalable, dependent: :destroy, inverse_of: :journalable
+  has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
 
   has_many :assignments, dependent: :destroy
@@ -139,7 +139,7 @@ class Volunteer < ApplicationRecord
         Time.zone.today)
   }
   scope :active, lambda {
-    activeness_not_ended.where(active: true)
+    accepted.activeness_not_ended.where(active: true)
   }
 
   scope :inactive, lambda {
@@ -179,9 +179,7 @@ class Volunteer < ApplicationRecord
   end
 
   def terminatable?
-    return unterminated_assignments? if assignments.any?
-    return unterminated_group_assignments? if group_assignments.any?
-    true
+    (unterminated_assignments? || unterminated_group_assignments?)
   end
 
   def state
@@ -332,6 +330,10 @@ class Volunteer < ApplicationRecord
     @available ||= [['Tandem', 0]] + GroupOfferCategory.available_categories(kinds_done_ids)
   end
 
+  def self.ransackable_scopes(auth_object = nil)
+    ['active', 'inactive', 'not_resigned']
+  end
+
   private
 
   def kinds_done_ids
@@ -379,10 +381,5 @@ class Volunteer < ApplicationRecord
       contact.external = false
       user.restore recursive: true if user_id.present?
     end
-  end
-
-  # allow ransack to use defined scopes
-  def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'not_resigned']
   end
 end
