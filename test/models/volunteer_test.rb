@@ -44,9 +44,12 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'when an internal volunteer gets terminated will be marked as resigned' do
-    # TO-DO after terminate method was moved to model
-    # volunteer = create :volunteer_with_user, external: false
-    # assert volunteer.valid?
-    # volunteer.update
+    volunteer = create :volunteer_with_user, external: false
+    assert volunteer.valid?
+    volunteer.terminate!
+    volunteer.reload
+    assert volunteer.resigned?
+    refute volunteer.active?
+    refute volunteer.user.present?
   end
 end

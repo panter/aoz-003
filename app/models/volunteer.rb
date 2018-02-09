@@ -334,6 +334,13 @@ class Volunteer < ApplicationRecord
     ['active', 'inactive', 'not_resigned']
   end
 
+  def terminate!
+    self.class.transaction do
+      update(acceptance: :resigned, resigned_at: Time.zone.now)
+      user.destroy
+    end
+  end
+
   private
 
   def kinds_done_ids
