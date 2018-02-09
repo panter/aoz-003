@@ -179,7 +179,7 @@ class Volunteer < ApplicationRecord
   end
 
   def terminatable?
-    (unterminated_assignments? || unterminated_group_assignments?)
+    !(unterminated_assignments? || unterminated_group_assignments?)
   end
 
   def state

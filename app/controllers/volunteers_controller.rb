@@ -69,8 +69,7 @@ class VolunteersController < ApplicationController
       redirect_back fallback_location: volunteers_url,
         notice: 'Freiwillige/r wurde erfolgreich beendet.'
     else
-      redirect_to volunteer_path(@volunteer, anchor: 'assignments'),
-        notice: 'Freiwillige/r hat noch nicht beendete Einsätze.'
+      redirect_back(fallback_location: volunteer_path(@volunteer), notice: resigned_fail_notice)
     end
   end
 
@@ -86,6 +85,14 @@ class VolunteersController < ApplicationController
   def not_resigned
     return if params[:q]
     @volunteers = @volunteers.not_resigned
+  end
+
+  def resigned_fail_notice
+    {
+      message: 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.',
+      model_message: @volunteer.errors.messages[:acceptance].first,
+      action_link: { text: 'Begleitung bearbeiten', path: volunteer_path(@volunteer, anchor: 'assignments') }
+    }
   end
 
   def default_filter
