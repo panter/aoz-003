@@ -2,7 +2,7 @@ td.index-action-cell.hidden-print
   span= link_to t_action(:show), subject
   - if policy(subject).edit?
     span= link_to t_action(:edit), edit_polymorphic_path(subject)
-  - if policy(subject.class).destroy? && controller_name != 'clients' && subject.class != Volunteer
+  - if policy(subject.class).destroy? && controller_name != 'clients'
     span= link_to t_action(:delete), subject, confirm_deleting(subject)
   - if subject.class == Volunteer && policy(Volunteer).terminate? && !subject.resigned?
     span= link_to 'Beenden', terminate_volunteer_path(subject), method: :put
