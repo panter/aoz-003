@@ -35,14 +35,6 @@ class Assignment < ApplicationRecord
     feedbacks.since_last_submitted(submitted_at)
   end
 
-  def terminated?
-    termination_verifiable? && termination_verified_by.present?
-  end
-
-  def termination_verifiable?
-    ended? && termination_submitted_by.present?
-  end
-
   def verify_termination(user)
     update(termination_verified_by: user, termination_verified_at: Time.zone.now)
     create_log_of_self

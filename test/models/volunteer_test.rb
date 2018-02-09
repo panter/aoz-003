@@ -42,4 +42,14 @@ class VolunteerTest < ActiveSupport::TestCase
     volunteer.update(external: false)
     refute volunteer.user.deleted?
   end
+
+  test 'when an internal volunteer gets terminated will be marked as resigned' do
+    volunteer = create :volunteer_with_user, external: false
+    assert volunteer.valid?
+    volunteer.terminate!
+    volunteer.reload
+    assert volunteer.resigned?
+    refute volunteer.active?
+    refute volunteer.user.present?
+  end
 end

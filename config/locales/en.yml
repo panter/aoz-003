@@ -728,7 +728,6 @@ en:
   volunteer_availability: What times are you available for voluntary engagement?
   volunteer_created: Volunteer was successfully created.
   volunteer_created_invite_sent: 'Volunteer was successfully created. Invitation sent to %{email}.'
-  volunteer_destroyed: Volunteer was successfully deleted.
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
     welcome_email:

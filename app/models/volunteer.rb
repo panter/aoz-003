@@ -24,7 +24,9 @@ class Volunteer < ApplicationRecord
   delegate :full_name, to: :contact
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
-  belongs_to :registrar, class_name: 'User', foreign_key: 'registrar_id', optional: true
+  belongs_to :registrar, class_name: 'User', foreign_key: 'registrar_id', optional: true,
+    inverse_of: :volunteers
+
   has_one :department, through: :registrar
 
   has_many :departments, through: :group_offers
@@ -77,9 +79,6 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: :user_deleted?
 
-  # Scopes
-  #
-
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
@@ -112,6 +111,7 @@ class Volunteer < ApplicationRecord
 
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
+  scope :not_resigned, (-> { where.not(acceptance: :resigned) })
 
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).merge(Assignment.start_before(6.months.ago))
@@ -139,7 +139,7 @@ class Volunteer < ApplicationRecord
         Time.zone.today)
   }
   scope :active, lambda {
-    activeness_not_ended.where(active: true)
+    accepted.activeness_not_ended.where(active: true)
   }
 
   scope :inactive, lambda {
@@ -168,6 +168,18 @@ class Volunteer < ApplicationRecord
 
   def inactive?
     accepted? && assignments.active.blank? && group_assignments.active.blank?
+  end
+
+  def unterminated_assignments?
+    assignments.unterminated.any?
+  end
+
+  def unterminated_group_assignments?
+    group_assignments.unterminated.any?
+  end
+
+  def terminatable?
+    !(unterminated_assignments? || unterminated_group_assignments?)
   end
 
   def state
@@ -217,11 +229,19 @@ class Volunteer < ApplicationRecord
   end
 
   def assignment_started?
-    assignments.started.size.positive?
+    assignments.started.any?
+  end
+
+  def assignment_logs_started?
+    assignment_logs.started.any?
   end
 
   def group_assignment_started?
-    group_assignments.started.size.positive?
+    group_assignments.started.any?
+  end
+
+  def group_assignment_logs_started?
+    group_assignment_logs.started.any?
   end
 
   def external?
@@ -308,6 +328,17 @@ class Volunteer < ApplicationRecord
 
   def assignment_categories_available
     @available ||= [['Tandem', 0]] + GroupOfferCategory.available_categories(kinds_done_ids)
+  end
+
+  def self.ransackable_scopes(auth_object = nil)
+    ['active', 'inactive', 'not_resigned']
+  end
+
+  def terminate!
+    self.class.transaction do
+      update(acceptance: :resigned, resigned_at: Time.zone.now)
+      user.destroy
+    end
   end
 
   private

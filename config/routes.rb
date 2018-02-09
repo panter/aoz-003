@@ -91,7 +91,8 @@ Rails.application.routes.draw do
     get :thanks, on: :collection
   end
 
-  resources :volunteers, concerns: :search do
+  resources :volunteers, except: [:destroy], concerns: :search do
+    put :terminate, on: :member
     get :find_client, on: :member, to: 'assignments#find_client'
     get :seeking_clients, on: :collection
     resources :billing_expenses, except: [:edit, :update]

@@ -4,14 +4,14 @@ class VolunteersController < ApplicationController
   include ContactAttributes
   include VolunteerAttributes
 
-  before_action :set_volunteer, only: [:show, :edit, :update, :destroy]
+  before_action :set_volunteer, only: [:show, :edit, :update, :terminate]
 
   def index
     authorize Volunteer
-    @q = policy_scope(Volunteer).ransack(params[:q])
+    @q = policy_scope(Volunteer).ransack(default_filter)
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @volunteers = @q.result
-    activity_filter
+    @volunteers = activity_filter
     respond_to do |format|
       format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
@@ -41,7 +41,7 @@ class VolunteersController < ApplicationController
     @volunteer.registrar = current_user
     authorize @volunteer
     if @volunteer.save
-      if @volunteer.acceptance == 'accepted'
+      if @volunteer.accepted?
         invite_volunteer_user
         redirect_to @volunteer, notice: t('volunteer_created_invite_sent',
           email: @volunteer.primary_email)
@@ -63,9 +63,14 @@ class VolunteersController < ApplicationController
     end
   end
 
-  def destroy
-    @volunteer.destroy
-    redirect_back fallback_location: volunteers_url, notice: t('volunteer_destroyed')
+  def terminate
+    if @volunteer.terminatable?
+      @volunteer.terminate!
+      redirect_back fallback_location: volunteers_url,
+        notice: 'Freiwillige/r wurde erfolgreich beendet.'
+    else
+      redirect_back(fallback_location: volunteer_path(@volunteer), notice: resigned_fail_notice)
+    end
   end
 
   def seeking_clients
@@ -77,9 +82,32 @@ class VolunteersController < ApplicationController
 
   private
 
+  def not_resigned
+    return if params[:q]
+    @volunteers = @volunteers.not_resigned
+  end
+
+  def resigned_fail_notice
+    {
+      message: 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.',
+      model_message: @volunteer.errors.messages[:acceptance].first,
+      action_link: { text: 'Begleitung bearbeiten', path: volunteer_path(@volunteer, anchor: 'assignments') }
+    }
+  end
+
+  def default_filter
+    return { acceptance_not_eq: Volunteer.acceptances[:resigned] } if params[:q].blank?
+    filters = params.to_unsafe_hash[:q]
+    if filters[:acceptance_eq].present? || filters[:contact_full_name_cont].present?
+      filters.except(:acceptance_not_eq)
+    else
+      filters.merge(acceptance_not_eq: Volunteer.acceptances[:resigned])
+    end
+  end
+
   def activity_filter
-    return unless params[:q] && params[:q][:active_eq]
-    @volunteers = params[:q][:active_eq] == 'true' ? @volunteers.active : @volunteers.inactive
+    return @volunteers unless params[:q] && params[:q][:active_eq]
+    params[:q][:active_eq] == 'true' ? @volunteers.active : @volunteers.inactive
   end
 
   def handle_volunteer_update

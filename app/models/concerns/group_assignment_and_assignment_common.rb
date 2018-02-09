@@ -59,5 +59,13 @@ module GroupAssignmentAndAssignmentCommon
       termination_submitted_by.present? &&
         [term_feedback_activities, term_feedback_success, term_feedback_problems, term_feedback_transfair].any?
     end
+
+    def termination_verifiable?
+      ended? && termination_submitted_by.present?
+    end
+
+    def terminated?
+      termination_verifiable? && termination_verified_by.present?
+    end
   end
 end

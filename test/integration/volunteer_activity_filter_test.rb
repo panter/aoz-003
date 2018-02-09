@@ -4,6 +4,7 @@ class VolunteerActivityFilterTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
     @volunteer_undecided = create :volunteer, acceptance: 'undecided'
+    @volunteer_invited = create :volunteer_with_user, acceptance: 'invited'
     @volunteer_active = create :volunteer_with_user
     create :assignment_active, volunteer: @volunteer_active
     @volunteer_resigned = create :volunteer_with_user, acceptance: 'resigned'
@@ -19,6 +20,7 @@ class VolunteerActivityFilterTest < ActionDispatch::IntegrationTest
     refute response.body.include? @volunteer_inactive.full_name
     refute response.body.include? @volunteer_resigned.full_name
     refute response.body.include? @volunteer_undecided.full_name
+    refute response.body.include? @volunteer_invited.full_name
   end
 
   test 'Volunteer state inactive filter returns inactive volunteer' do
@@ -27,5 +29,7 @@ class VolunteerActivityFilterTest < ActionDispatch::IntegrationTest
     assert response.body.include? @volunteer_inactive.full_name
     refute response.body.include? @volunteer_resigned.full_name
     refute response.body.include? @volunteer_undecided.full_name
+    refute response.body.include? @volunteer_invited.full_name
   end
 end
+

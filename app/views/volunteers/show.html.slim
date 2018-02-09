@@ -10,9 +10,11 @@ nav.navbar.section-navigation
     - if policy(Volunteer).superadmin_privileges?
         li= button_link 'Journal', polymorphic_path([@volunteer, Journal]), 'primary'
   ul.list-inline
-    - if policy(Volunteer).superadmin_privileges?
+    - if policy(@volunteer).terminate?
       li.button-acceptance = link_to t(".acceptance.#{@volunteer.acceptance}"), '#',
         class: "btn btn-acceptance-#{@volunteer.acceptance}"
+      li= link_to 'Beenden', terminate_volunteer_path(@volunteer), class: 'btn btn-default', method: :put unless @volunteer.resigned?
+    - if policy(Volunteer).superadmin_privileges?
       ul.list-inline
         - if @volunteer.seeking_clients?
           li= button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
@@ -23,7 +25,6 @@ nav.navbar.section-navigation
               = f.button :submit
           - if @volunteer.billing_expenses.any?
             li= button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
-        - if @volunteer.internal_and_started_assignments?
           li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
           - if @volunteer.certificates.size == 1
             li= button_link t('.show_certificate'), volunteer_certificate_path(@volunteer, @volunteer.certificates.first)
