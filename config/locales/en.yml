@@ -616,6 +616,7 @@ en:
       outside_departments: Ausserhalb Standorten
     values: &id-performance-value-descs
       total: Gesammt
+      active_total: Total Akiv
       active_assignment: Total mit aktivem Tandem
       active_group_assignment: Mit aktivem Gruppeneinsatz
       active_both: Aktiv in Gruppeneinsatz und Tandem
@@ -684,7 +685,17 @@ en:
         total: Total number of groups (Courses, Animations, Others)
       group_offers:
         categories: *id-performance-scope-categories
-        values: *id-performance-value-descs
+        values:
+          <<: *id-performance-value-descs
+          created_assignments: Mit neu erstellten Gruppeneinsätzen
+          started_assignments: Mit gestarteten Gruppeneinsätzen
+          ended_assignments: Mit beendeten Gruppeneinsätzen
+          active_assignments: Mit aktiven Gruppeneinsätzen
+          total_created_assignments: Anzahl erstellte Gruppeneinsätze
+          total_started_assignments: Anzahl gestartete Gruppeneinsätze
+          total_active_assignments: Anzahl aktive Gruppeneinsätze
+          total_ended_assignments: Anzahl Beendeter Gruppeneinsätze
+          total_assignments: Gruppeneinsätze Total
       selection_criteria: Selection Criteria
       title_range: 'Performance report of the period from "%{start} to %{end}"'
       title_year: 'Performance report of the calendar year %{year}'
