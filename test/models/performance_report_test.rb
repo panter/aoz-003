@@ -66,7 +66,7 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
 
   test 'volunteer_zurich_internal_external' do
     volunteer_zurich_this_year = create :volunteer_with_user, :zuerich
-    volunteer_zurich_this_year.update(created_at: @this_periods.first)
+    volunteer_zurich_this_year.update(created_at: @this_dates.first + 2)
 
     # Last year still all zero
     refresh_reports
