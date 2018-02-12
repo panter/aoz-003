@@ -108,88 +108,119 @@ if EmailTemplate.count < 1
 end
 puts_model_counts('After EmailTemplates created', User, EmailTemplate)
 
+def assignment_generator(creator, create_day, start_date = nil, end_date = nil, terminated_at: nil, volunteer: nil)
+  volunteer ||= FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted')
+  volunteer.update(created_at: create_day, updated_at: create_day + 1)
+  client = FactoryBot.create(:client, acceptance: 'accepted', user: creator)
+  client.update(created_at: create_day - 5)
+  start_date ||= Faker::Date.between(create_day, create_day + 50)
+  assignment = FactoryBot.create(:assignment, volunteer: volunteer, period_start: start_date,
+    period_end: end_date, creator: creator,
+    client: FactoryBot.create(:client, acceptance: 'accepted', user: creator))
+  assignment.update(created_at: create_day)
+  if terminated_at.present?
+    assignment.update(period_end_set_by: creator, termination_submitted_by: assignment.volunteer.user,
+      termination_submitted_at: Faker::Date.between(end_date, terminated_at), termination_verified_by: creator,
+      termination_verified_at: terminated_at)
+  end
+  assignment
+end
+
+def gemerate_feedback_and_hours(creator, hourable, start_date, end_date = nil, volunteer: nil)
+  volunteer = volunteer || hourable.volunteer
+  end_date = end_date&.to_date || 2.days.ago.to_date
+  start_date = start_date.to_date
+  meeting_date = Faker::Date.between(start_date + 1, end_date).to_date
+  hour = FactoryBot.create(:hour, volunteer: volunteer, hourable: hourable, meeting_date: meeting_date)
+  hour.update(created_at: meeting_date + 1)
+  feedback = FactoryBot.create(:feedback, volunteer: volunteer, feedbackable: hourable,
+    author: volunteer.user)
+  feedback.update(created_at: Faker::Date.between(start_date + 1, end_date - 1))
+  trial_feedback = FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
+    trial_feedbackable: hourable)
+  trial_feedback.update(created_at: Faker::Date.between(start_date + 6*7, start_date + 8*7))
+end
+
+
 # create Assignments
 if Assignment.count < 1
   # trial Assignments
-  Array.new(3).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
-       .each do |volunteer|
-    FactoryBot.create(
-      :assignment,
-      volunteer: volunteer,
-      client: FactoryBot.create(:client, acceptance: 'accepted', user: User.superadmins.first),
-      creator: User.superadmins.first,
-      period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago),
-      period_end: nil
-    )
+  creator = User.superadmins.first
+  3.times do
+    start_date = Faker::Date.between(6.weeks.ago, 8.weeks.ago).to_date
+    assignment = assignment_generator(creator, start_date - 2, start_date)
+    gemerate_feedback_and_hours(creator, assignment, start_date)
   end
   # half_year Assignments
-  Array.new(3).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
-       .each do |volunteer|
-    assignment = FactoryBot.create(
-      :assignment,
-      volunteer: volunteer,
-      client: FactoryBot.create(:client, acceptance: 'accepted', user: User.superadmins.first),
-      creator: User.superadmins.first,
-      period_start: Faker::Date.between(6.months.ago, 12.months.ago),
-      period_end: nil
-    )
-    FactoryBot.create(:hour, volunteer: volunteer, hourable: assignment,
-      meeting_date: Faker::Date.between(assignment.period_start + 1, 2.days.ago))
-    FactoryBot.create(:feedback, volunteer: volunteer, feedbackable: assignment,
-      author: volunteer.user)
-    FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
-      trial_feedbackable: assignment)
+  3.times do
+    start_date = Faker::Date.between(6.months.ago, 12.months.ago).to_date
+    assignment = assignment_generator(creator, start_date - 2, start_date)
+    gemerate_feedback_and_hours(creator, assignment, start_date)
   end
   # ended Assignments
-  Array.new(3).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
-       .each do |volunteer|
-    FactoryBot.create(
-      :assignment,
-      volunteer: volunteer,
-      client: FactoryBot.create(:client, acceptance: 'accepted', user: User.superadmins.first),
-      creator: User.superadmins.first,
-      period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago),
-      period_end: Faker::Date.between(1.week.ago, 3.days.ago)
-    )
+  2.times do
+    start_date = Faker::Date.between(1.year.ago, 2.years.ago).to_date
+    end_date = Faker::Date.between(start_date + 100, 2.days.ago).to_date
+    assignment = assignment_generator(creator, start_date - 10, start_date, end_date,
+      terminated_at: end_date + 10)
+    gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 10)
+  end
+
+  # Generate last year assignment for performance report
+  2.times do
+    create_day = 1.year.ago.to_date + 2
+    start_date = Faker::Date.between(create_day, create_day + 50).to_date
+    end_date = Faker::Date.between(create_day + 100, 1.year.ago.end_of_year.to_date - 2).to_date
+    assignment = assignment_generator(creator, start_date - 10, start_date, end_date,
+      terminated_at: end_date + 10)
+    gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 10)
+  end
+
+  # started last year, ends this year
+  create_day = 1.year.ago.beginning_of_year.to_date + 10
+  start_date = Faker::Date.between(create_day, create_day + 50).to_date
+  end_date = Faker::Date.between(Time.zone.now.beginning_of_year.to_date + 2, 3.days.ago).to_date
+  assignment = assignment_generator(creator, create_day, start_date, end_date,
+    terminated_at: end_date + 3)
+  gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 3)
+
+  3.times do
+    create_day = 2.years.ago.beginning_of_year.to_date + 10
+    start_date = Faker::Date.between(create_day, create_day + 50)
+    end_date = Faker::Date.between(create_day + 100, 2.years.ago.end_of_year.to_date - 2)
+    assignment = assignment_generator(creator, create_day, start_date, end_date,
+      terminated_at: end_date + 3)
+    gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 3)
   end
 end
-puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client, Feedback)
+puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client,
+  TrialFeedback)
 
 Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sample) }
      .each do |group_offer|
+  creator = User.superadmins.first
   volunteers = Array.new(4).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
+  start_date = Faker::Date.between(6.weeks.ago, 8.weeks.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
-    period_start: Faker::Date.between(6.weeks.ago, 8.weeks.ago), period_end: nil)
-  FactoryBot.create(:hour, volunteer: volunteers.first, hourable: group_assignment.group_offer,
-    meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
-  FactoryBot.create(:trial_feedback, volunteer: volunteers.first,
-    trial_feedbackable: group_assignment.group_offer, author_id: volunteers.first.user.id)
+    period_start: start_date, period_end: nil)
+  gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.first)
 
+  start_date = Faker::Date.between(6.months.ago, 12.months.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.second, group_offer: group_offer,
-    period_start: Faker::Date.between(6.months.ago, 12.months.ago), period_end: nil)
-  FactoryBot.create(:hour, volunteer: volunteers.second, hourable: group_assignment.group_offer,
-    meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
-  FactoryBot.create(:feedback, volunteer: volunteers.second, feedbackable: group_assignment.group_offer,
-    author_id: volunteers.second.user.id)
+    period_start: start_date, period_end: nil)
+  gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.second)
 
   # ended GroupAssignments
+  start_date = Faker::Date.between(6.months.ago, 12.months.ago)
+  end_date = Faker::Date.between(1.week.ago, 3.days.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.third, group_offer: group_offer,
-    period_start: Faker::Date.between(6.months.ago, 12.months.ago),
-    period_end: Faker::Date.between(1.week.ago, 3.days.ago)
-    )
-  FactoryBot.create(:hour, volunteer: volunteers.third, hourable: group_assignment.group_offer,
-    meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
-  FactoryBot.create(:feedback, volunteer: volunteers.third, feedbackable: group_assignment.group_offer,
-    author_id: volunteers.third.user.id)
+    period_start: start_date, period_end: end_date)
+  gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.third)
 
   group_assignment = GroupAssignment.create(volunteer: volunteers.fourth, group_offer: group_offer,
     period_start: Faker::Date.between(6.months.ago, 12.months.ago),
-    period_end: Faker::Date.between(1.week.ago, 3.days.ago)
-    )
-  FactoryBot.create(:hour, volunteer: volunteers.fourth, hourable: group_assignment.group_offer,
-    meeting_date: Faker::Date.between(group_assignment.period_start + 1, 2.days.ago))
-  FactoryBot.create(:feedback, volunteer: volunteers.fourth, feedbackable: group_assignment.group_offer,
-    author_id: volunteers.fourth.user.id)
+    period_end: Faker::Date.between(1.week.ago, 3.days.ago))
+  gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.fourth)
 end
 puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
   GroupAssignment, Department, Assignment, Client)
