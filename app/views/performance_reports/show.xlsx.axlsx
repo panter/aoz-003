@@ -1,0 +1,97 @@
+wb = xlsx_package.workbook
+
+col_header = col_header = wb.styles.add_style(
+  bg_color: 'FFDFDEDF',
+  b: true,
+  alignment: { horizontal: :center, vertical: :center },
+  border: { color: '00', edges: [:bottom], style: :thin})
+
+number_cell_style = wb.styles.add_style(alignment: { horizontal: :center }, width: :auto_fit)
+
+wb.add_worksheet(name: 'Freiwillige') do |sheet|
+  volunteers = @report_content['volunteers']
+  column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
+
+  header_row = column_order.map do |category_key|
+    t(".volunteers.categories.#{category_key}")
+  end.unshift('')
+  sheet.add_row header_row, style: col_header
+
+  cell_types = Array.new(column_order.size).map { :integer }.unshift(:string)
+  cell_styles = Array.new(column_order.size).map { number_cell_style }.unshift(nil)
+  [
+    :created, :inactive, :resigned, :total, :only_assignment_active, :active_group_assignment,
+    :only_group_active, :active_both, :active_assignment, :active_total, :assignment_hour_records,
+    :assignment_hours, :group_offer_hour_records, :group_offer_hours, :total_hour_records,
+    :total_hours, :assignment_feedbacks, :group_offer_feedbacks, :total_feedbacks,
+    :assignment_trial_feedbacks, :group_offer_trial_feedbacks, :total_trial_feedbacks
+  ].each do |row_key|
+    row = [t(".volunteers.values.#{row_key}")] +
+      column_order.map { |col| volunteers[col][row_key.to_s] }
+    sheet.add_row row, types: cell_types, style: cell_styles
+  end
+end
+
+wb.add_worksheet(name: 'Klienten') do |sheet|
+  clients = @report_content['clients']
+  column_order = ['zurich', 'not_zurich', 'all']
+
+  header_row = column_order.map do |category_key|
+    t(".clients.categories.#{category_key}")
+  end.unshift('')
+  sheet.add_row header_row, style: col_header
+
+  cell_types = Array.new(column_order.size).map { :integer }.unshift(:string)
+  cell_styles = Array.new(column_order.size).map { number_cell_style }.unshift(nil)
+  [:created, :inactive, :resigned, :total, :active_assignment].each do |row_key|
+    row = [t(".clients.values.#{row_key}")] +
+      column_order.map { |col| clients[col][row_key.to_s] }
+    sheet.add_row row, types: cell_types, style: cell_styles
+  end
+end
+
+wb.add_worksheet(name: 'Begleitungen') do |sheet|
+  assignments = @report_content['assignments']
+  column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
+
+  header_row = column_order.map do |category_key|
+    t(".assignments.categories.#{category_key}")
+  end.unshift('')
+  sheet.add_row header_row, style: col_header
+
+  cell_types = Array.new(column_order.size).map { :integer }.unshift(:string)
+  cell_styles = Array.new(column_order.size).map { number_cell_style }.unshift(nil)
+  [
+    :created, :started, :active, :ended, :all, :hour_report_count, :hours, :feedback_count,
+    :first_instruction_lessons, :probations_ended, :trial_feedback_count,
+    :performance_appraisal_reviews, :home_visits, :progress_meetings, :termination_submitted,
+    :termination_verified
+  ].each do |row_key|
+    row = [t(".assignments.values.#{row_key}")] +
+      column_order.map { |col| assignments[col][row_key.to_s] }
+    sheet.add_row row, types: cell_types, style: cell_styles
+  end
+end
+
+wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
+  group_offers = @report_content['group_offers']
+  column_order = ['in_departments', 'outside_departments', 'all']
+
+  header_row = column_order.map do |category_key|
+    t(".group_offers.categories.#{category_key}")
+  end.unshift('')
+  sheet.add_row header_row, style: col_header
+
+  cell_types = Array.new(column_order.size).map { :integer }.unshift(:string)
+  cell_styles = Array.new(column_order.size).map { number_cell_style }.unshift(nil)
+  [
+    :created, :ended, :all, :created_assignments, :started_assignments, :ended_assignments,
+    :active_assignments, :total_created_assignments, :total_started_assignments,
+    :total_active_assignments, :total_ended_assignments, :total_assignments, :hour_report_count,
+    :hours, :feedback_count
+  ].each do |row_key|
+    row = [t(".group_offers.values.#{row_key}")] +
+      column_order.map { |col| group_offers[col][row_key.to_s] }
+    sheet.add_row row, types: cell_types, style: cell_styles
+  end
+end

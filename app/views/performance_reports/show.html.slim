@@ -12,6 +12,10 @@ hr
 - else
   h2= t('.title_range', start: l(@performance_report.period_start, format: :default), end: l(@performance_report.period_end, format: :default))
 
+p.hidden-print
+  = 'Herunterladen: '
+  = button_link(navigation_fa_icon, url_for(format: :xlsx))
+
 h3 Freiwillige
 table.table.table-striped.table-bordered
   htead
@@ -243,39 +247,39 @@ table.table.table-striped.table-bordered
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['all']
     tr
-      td Mit neu erstellten Gruppeneinsätzen
+      td= t('.group_offers.values.created_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['created_assignments']
     tr
-      td Mit gestarteten Gruppeneinsätzen
+      td= t('.group_offers.values.started_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['started_assignments']
     tr
-      td Mit beendeten Gruppeneinsätzen
+      td= t('.group_offers.values.ended_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['ended_assignments']
     tr.active
-      td Mit aktiven Gruppeneinsätzen
+      td= t('.group_offers.values.active_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['active_assignments']
     tr
-      td Anzahl erstellte Gruppeneinsätze
+      td= t('.group_offers.values.total_created_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['total_created_assignments']
     tr
-      td Anzahl gestartete Gruppeneinsätze
+      td= t('.group_offers.values.total_started_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['total_started_assignments']
     tr
-      td Anzahl aktive Gruppeneinsätze
+      td= t('.group_offers.values.total_active_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['total_active_assignments']
     tr
-      td Anzahl Beendeter Gruppeneinsätze
+      td= t('.group_offers.values.total_ended_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['total_ended_assignments']
     tr.active
-      td Gruppeneinsätze Total
+      td= t('.group_offers.values.total_assignments')
       - column_order.each do |category_key|
         td= @report_content['group_offers'][category_key]['total_assignments']
     tr
@@ -293,5 +297,5 @@ table.table.table-striped.table-bordered
 
 hr
 
-= form_navigation_btn :edit
-= form_navigation_btn :back
+= form_navigation_btn :edit, add_class: 'hidden-print'
+= form_navigation_btn :back, add_class: 'hidden-print'

@@ -29,8 +29,10 @@ module ApplicationHelper
     end
   end
 
-  def boostrap_row
-    content_tag :div, class: 'row' do
+  def boostrap_row(add_class = nil)
+    row_class = 'row'
+    row_class += " #{add_class}" if add_class.present?
+    content_tag :div, class: row_class do
       yield
     end
   end
