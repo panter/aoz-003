@@ -12,11 +12,11 @@ class PerformanceReportsTest < ApplicationSystemTestCase
 
   test 'create new report' do
     two_years_ago = Time.zone.now.years_ago(2).year
-    first(:link, 'Create new report').click
+    first(:link, 'Neuen Report erstellen').click
     click_link two_years_ago.to_s
     click_button 'Create Performance Report'
     assert page.has_text? 'Performance Report was successfully created.'
-    assert page.has_text? "Performance report of the calendar year #{two_years_ago}"
+    assert page.has_text? "Kennzahlen des Kalenderjahrs #{two_years_ago}"
   end
 
   test 'performance report data displayed' do
@@ -51,14 +51,14 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     assert page.has_text? 'Tandem-Stundenberichte ' +
       row_numbers(volunteers, column_order, :assignment_hour_records)
     assert page.has_text? 'Tandem-Stunden ' +
-      row_numbers(volunteers, column_order, :assignment_hours)
+      row_numbers(volunteers, column_order, :assignment_hours, hours: true)
     assert page.has_text? 'Gruppenangebots-Stundenberichte ' +
       row_numbers(volunteers, column_order, :group_offer_hour_records)
     assert page.has_text? 'Gruppenangebots-Stunden ' +
-      row_numbers(volunteers, column_order, :group_offer_hours)
+      row_numbers(volunteers, column_order, :group_offer_hours, hours: true)
     assert page.has_text? 'Eingereichte Stundenberichte ' +
       row_numbers(volunteers, column_order, :total_hour_records)
-    assert page.has_text? 'Stunden total ' + row_numbers(volunteers, column_order, :total_hours)
+    assert page.has_text? 'Stunden total ' + row_numbers(volunteers, column_order, :total_hours, hours: true)
 
     assert page.has_text? 'Tandem-Feedbacks ' +
       row_numbers(volunteers, column_order, :assignment_feedbacks)
@@ -93,7 +93,7 @@ class PerformanceReportsTest < ApplicationSystemTestCase
 
     assert page.has_text? 'Anzahl Stundenrapporte ' +
       row_numbers(assignments, column_order, :hour_report_count)
-    assert page.has_text? 'Stunden ' + row_numbers(assignments, column_order, :hours)
+    assert page.has_text? 'Stunden ' + row_numbers(assignments, column_order, :hours, hours: true)
     assert page.has_text? 'Anzahl Feedbacks ' +
       row_numbers(assignments, column_order, :feedback_count)
     assert page.has_text? 'Einführungskurse ' +
@@ -141,12 +141,16 @@ class PerformanceReportsTest < ApplicationSystemTestCase
 
     assert page.has_text? 'Anzahl Stundenrapporte ' +
       row_numbers(group_offers, column_order, :hour_report_count)
-    assert page.has_text? 'Stunden ' + row_numbers(group_offers, column_order, :hours)
+    assert page.has_text? 'Stunden ' + row_numbers(group_offers, column_order, :hours, hours: true)
     assert page.has_text? 'Anzahl Feedbacks ' +
       row_numbers(group_offers, column_order, :feedback_count)
   end
 
-  def row_numbers(entity, column_order, key)
-    entity.values_at(*column_order).map { |val| val[key.to_s] }.join(' ')
+  def row_numbers(entity, column_order, key, hours: nil)
+    if hours
+      entity.values_at(*column_order).map { |val| '%g' % ('%.1f' % val[key.to_s]) }.join(' ')
+    else
+      entity.values_at(*column_order).map { |val| val[key.to_s] }.join(' ')
+    end
   end
 end

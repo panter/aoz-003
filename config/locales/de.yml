@@ -993,7 +993,6 @@ de:
   will_paginate:
     next_label: Weiter
     previous_label: Zurück
----
 en:
   aaa_injectable: &id-injectables
     termination_attributes: &id-termination-attrs
@@ -1600,7 +1599,8 @@ en:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
     contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
     title: Fachstelle Freiwilligenarbeit
-  performance_reports: *id-performance-reports-de-keys
+  performance_reports:
+    <<: *id-performance-reports-de-keys
   profile_updated: Profile was successfully updated.
   relatives: Family members
   remember_me: Remember me
