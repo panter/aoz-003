@@ -58,6 +58,7 @@ class Client < ApplicationRecord
 
   scope :with_inactive_assignment, lambda {
     left_outer_joins(:assignment)
+      .accepted
       .where('assignments.period_end < ?', Time.zone.today)
   }
 
