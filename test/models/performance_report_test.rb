@@ -24,12 +24,12 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
   end
 
   def type_of_values(content)
-    content.values.map(&:values).flatten.map(&:values).flatten.uniq
+    content.values.flat_map(&:values).flat_map(&:values).uniq
   end
 
   test 'no_nothing_reports_have_all_zero_values' do
-    assert_equal([0], type_of_values(@this_year.report_content))
-    assert_equal([0], type_of_values(@last_year.report_content))
+    assert_equal([0, 0.0], type_of_values(@this_year.report_content))
+    assert_equal([0, 0.0], type_of_values(@last_year.report_content))
   end
 
   VOLUNTEER_ZERO = {
@@ -63,11 +63,11 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
 
     # Last year still all zero
     @last_year.generate_report
-    assert_equal([0], type_of_values(@last_year.report_content))
+    assert_equal([0, 0.0], type_of_values(@last_year.report_content))
 
     # this year 0 and 1
     @this_year.generate_report
-    assert_equal([0, 1], type_of_values(@this_year.report_content).sort)
+    assert_equal([0, 0.0, 1], type_of_values(@this_year.report_content).sort)
 
     expected_influenced = VOLUNTEER_ZERO.merge(
       total: 1, created: 1, inactive: 1
@@ -77,8 +77,8 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     assert_equal(expected_influenced, @this_year.report_content['volunteers']['zurich'])
     assert_equal(expected_influenced, @this_year.report_content['volunteers']['internal'])
 
-    assert_equal([0], @this_year.report_content['volunteers']['not_zurich'].values.uniq)
-    assert_equal([0], @this_year.report_content['volunteers']['external'].values.uniq)
+    assert_equal([0, 0.0], @this_year.report_content['volunteers']['not_zurich'].values.uniq)
+    assert_equal([0, 0.0], @this_year.report_content['volunteers']['external'].values.uniq)
 
     volunteer_zurich_this_year.update(external: true)
     @this_year.generate_report
@@ -86,8 +86,8 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     assert_equal(expected_influenced, @this_year.report_content['volunteers']['zurich'])
     assert_equal(expected_influenced, @this_year.report_content['volunteers']['external'])
 
-    assert_equal([0], @this_year.report_content['volunteers']['not_zurich'].values.uniq)
-    assert_equal([0], @this_year.report_content['volunteers']['internal'].values.uniq)
+    assert_equal([0, 0.0], @this_year.report_content['volunteers']['not_zurich'].values.uniq)
+    assert_equal([0, 0.0], @this_year.report_content['volunteers']['internal'].values.uniq)
 
     volunteer_zurich_this_year.update(external: false)
     volunteer_zurich_this_year.contact.update(postal_code: 3000, city: 'Bern')
@@ -96,8 +96,8 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     assert_equal(expected_influenced, @this_year.report_content['volunteers']['not_zurich'])
     assert_equal(expected_influenced, @this_year.report_content['volunteers']['internal'])
 
-    assert_equal([0], @this_year.report_content['volunteers']['zurich'].values.uniq)
-    assert_equal([0], @this_year.report_content['volunteers']['external'].values.uniq)
+    assert_equal([0, 0.0], @this_year.report_content['volunteers']['zurich'].values.uniq)
+    assert_equal([0, 0.0], @this_year.report_content['volunteers']['external'].values.uniq)
   end
 
   test 'volunteer_active_inactive' do
@@ -107,9 +107,9 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     volunteer_zurich_last_year.update(created_at: @last_periods.first.to_date + 10)
 
     @this_year.generate_report
-    assert_equal([0, 1, 2], type_of_values(@this_year.report_content).sort)
+    assert_equal([0, 0.0, 1, 2], type_of_values(@this_year.report_content).sort)
     @last_year.generate_report
-    assert_equal([0, 1], type_of_values(@last_year.report_content).sort)
+    assert_equal([0, 0.0, 1], type_of_values(@last_year.report_content).sort)
 
     expected_influenced_last_year = VOLUNTEER_ZERO.merge(
       total: 1, created: 1, inactive: 1
@@ -122,14 +122,14 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     assert_equal(expected_influenced_this_year, @this_year.report_content['volunteers']['all'])
     assert_equal(expected_influenced_this_year, @this_year.report_content['volunteers']['zurich'])
     assert_equal(expected_influenced_this_year, @this_year.report_content['volunteers']['internal'])
-    assert_equal([0], @this_year.report_content['volunteers']['not_zurich'].values.uniq)
-    assert_equal([0], @this_year.report_content['volunteers']['external'].values.uniq)
+    assert_equal([0, 0.0], @this_year.report_content['volunteers']['not_zurich'].values.uniq)
+    assert_equal([0, 0.0], @this_year.report_content['volunteers']['external'].values.uniq)
 
     assert_equal(expected_influenced_last_year, @last_year.report_content['volunteers']['all'])
     assert_equal(expected_influenced_last_year, @last_year.report_content['volunteers']['zurich'])
     assert_equal(expected_influenced_last_year, @last_year.report_content['volunteers']['internal'])
-    assert_equal([0], @last_year.report_content['volunteers']['not_zurich'].values.uniq)
-    assert_equal([0], @last_year.report_content['volunteers']['external'].values.uniq)
+    assert_equal([0, 0.0], @last_year.report_content['volunteers']['not_zurich'].values.uniq)
+    assert_equal([0, 0.0], @last_year.report_content['volunteers']['external'].values.uniq)
 
     create(:assignment, volunteer: volunteer_zurich_this_year, period_start: 2.days.ago,
       period_end: nil)
