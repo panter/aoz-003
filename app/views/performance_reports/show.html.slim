@@ -70,7 +70,7 @@ table.table.table-striped.table-bordered
     tr
       td= t('.volunteers.values.assignment_hours')
       - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['assignment_hours']
+        td= '%g' % ('%.1f' % @report_content['volunteers'][category_key]['assignment_hours'])
     tr
       td= t('.volunteers.values.group_offer_hour_records')
       - column_order.each do |category_key|
@@ -78,7 +78,7 @@ table.table.table-striped.table-bordered
     tr
       td= t('.volunteers.values.group_offer_hours')
       - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['group_offer_hours']
+        td= '%g' % ('%.1f' % @report_content['volunteers'][category_key]['group_offer_hours'])
     tr
       td= t('.volunteers.values.total_hour_records')
       - column_order.each do |category_key|
@@ -86,7 +86,7 @@ table.table.table-striped.table-bordered
     tr.active
       td= t('.volunteers.values.total_hours')
       - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['total_hours']
+        td= '%g' % ('%.1f' % @report_content['volunteers'][category_key]['total_hours'])
 
     tr
       td= t('.volunteers.values.assignment_feedbacks')
@@ -180,7 +180,7 @@ table.table.table-striped.table-bordered
     tr.active
       td= t('.assignments.values.hours')
       - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['hours']
+        td= '%g' % ('%.1f' % @report_content['assignments'][category_key]['hours'])
 
     tr.active
       td= t('.assignments.values.feedback_count')
@@ -285,7 +285,7 @@ table.table.table-striped.table-bordered
     tr.active
       td= t('.group_offers.values.hours')
       - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['hours']
+        td= '%g' % ('%.1f' % @report_content['group_offers'][category_key]['hours'])
     tr.active
       td= t('.group_offers.values.feedback_count')
       - column_order.each do |category_key|
