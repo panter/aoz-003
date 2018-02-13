@@ -27,6 +27,15 @@ class Hour < ApplicationRecord
     joins(:volunteer).where('volunteers.waive = FALSE')
   }
 
+  scope :assignment, (-> { where(hourable_type: 'Assignment') })
+  scope :group_offer, (-> { where(hourable_type: 'GroupOffer') })
+  scope :from_assignments, lambda { |assignment_ids|
+    assignment.where(hourable_id: assignment_ids)
+  }
+  scope :from_group_offers, lambda { |group_offer_ids|
+    group_offer.where(hourable_id: group_offer_ids)
+  }
+
   HOUR_RANGE = (1..8).to_a
   MINUTE_RANGE = [0, 15, 30, 45].freeze
 

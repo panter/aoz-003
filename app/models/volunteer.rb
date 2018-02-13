@@ -7,7 +7,7 @@ class Volunteer < ApplicationRecord
   include FullBankDetails
 
   before_validation :handle_user_with_external_change, if: :external_changed?
-  before_save :record_acceptance_changed
+  before_save :record_acceptance_changed, if: :will_save_change_to_acceptance?
   after_update :copy_contact_to_user, if: :user_added?
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
@@ -83,30 +83,35 @@ class Volunteer < ApplicationRecord
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
+
   scope :without_group_assignments, lambda {
     left_outer_joins(:group_assignments).where(group_assignments: { id: nil })
+  }
+
+  scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
+
+  scope :without_group_offer, lambda {
+    left_outer_joins(:group_offers).where(group_offers: { id: nil })
+  }
+
+  scope :without_active_assignment, lambda {
+    joins(:assignments).merge(Assignment.ended)
+  }
+
+  scope :not_in_any_group_offer, lambda {
+    left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })
   }
 
   scope :with_active_assignments_between, lambda { |start_date, end_date|
     joins(:assignments).merge(Assignment.active_between(start_date, end_date))
   }
+
   scope :with_terminated_assignments_between, lambda { |start_date, end_date|
     joins(:assignments).merge(Assignment.terminated_between(start_date, end_date))
   }
+
   scope :with_active_group_assignments_between, lambda { |start_date, end_date|
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
-  }
-
-  scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
-  scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
-  scope :without_group_offer, lambda {
-    left_outer_joins(:group_offers).where(group_offers: { id: nil })
-  }
-  scope :without_active_assignment, lambda {
-    joins(:assignments).merge(Assignment.ended)
-  }
-  scope :not_in_any_group_offer, lambda {
-    left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })
   }
 
   scope :external, (-> { where(external: true) })
@@ -150,6 +155,14 @@ class Volunteer < ApplicationRecord
   }
   scope :seeking_clients_will_take_more, lambda {
     seeking_clients.or(accepted.will_take_more_assignments)
+  }
+
+  scope :resigned_between, lambda { |start_date, end_date|
+    date_between_inclusion(:resigned_at, start_date, end_date)
+  }
+
+  scope :accpted_between, lambda { |start_date, end_date|
+    date_between_inclusion(:accepted_at, start_date, end_date)
   }
 
   def verify_and_update_state
@@ -368,8 +381,7 @@ class Volunteer < ApplicationRecord
   end
 
   def record_acceptance_changed
-    return unless will_save_change_to_acceptance?
-    self["#{acceptance_change_to_be_saved[1]}_at".to_sym] = Time.zone.now
+    self["#{acceptance}_at".to_sym] = Time.zone.now
   end
 
   def user_deleted?

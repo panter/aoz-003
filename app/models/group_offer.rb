@@ -56,6 +56,10 @@ class GroupOffer < ApplicationRecord
     joins(:group_assignments).merge(GroupAssignment.end_within(start_date, end_date))
   }
 
+  scope :started_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.start_within(start_date, end_date))
+  }
+
   scope :no_end, (-> { field_nil(:period_end) })
   scope :has_end, (-> { field_not_nil(:period_end) })
   scope :end_before, ->(date) { date_before(:period_end, date) }
@@ -65,14 +69,6 @@ class GroupOffer < ApplicationRecord
 
   scope :end_within, lambda { |start_date, end_date|
     date_between_inclusion(:period_end, start_date, end_date)
-  }
-
-  scope :active_group_assignments_between, lambda { |start_date, end_date|
-    joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
-  }
-
-  scope :ended_group_assignments_between, lambda { |start_date, end_date|
-    joins(:group_assignments).merge(GroupAssignment.end_within(start_date, end_date))
   }
 
   def active_group_assignments_between?(start_date, end_date)

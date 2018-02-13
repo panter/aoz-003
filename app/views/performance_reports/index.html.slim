@@ -12,9 +12,7 @@ nav.navbar.section-navigation
       tr
         th= t_attr(:created_at)
         th= t_attr(:period)
-        th= t_attr(:scope)
-        th= t_attr(:extern)
-        th colspan='3'
+        th colspan='4'
 
     tbody
       - @performance_reports.each do |performance_report|
@@ -27,9 +25,8 @@ nav.navbar.section-navigation
               = l(performance_report.period_start.to_date, format: :default)
               = " - "
               = l(performance_report.period_end.to_date, format: :default)
-          td= performance_report.scope
-          td= t(performance_report.extern)
           td = link_to t_action(:show), performance_report
+          td = link_to 'Excel downloaden', performance_report_path(performance_report, format: :xlsx)
           td = link_to t_action(:edit), edit_performance_report_path(performance_report)
           td = link_to navigation_glyph(:delete), performance_report, confirm_deleting(performance_report)
 

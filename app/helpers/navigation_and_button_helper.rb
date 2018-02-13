@@ -1,8 +1,9 @@
 module NavigationAndButtonHelper
-  def form_navigation_btn(action, cols: 12, with_row: true, md_cols: nil, with_col: false)
+  def form_navigation_btn(action, cols: 12, with_row: true, md_cols: nil, with_col: false,
+    add_class: nil)
     button = make_nav_button(action)
     button = bootstrap_col(cols, md_cols) { button } if with_col || with_row
-    button = boostrap_row { button } if with_row
+    button = boostrap_row(add_class) { button } if with_row
     button
   end
 

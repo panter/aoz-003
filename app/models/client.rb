@@ -5,7 +5,7 @@ class Client < ApplicationRecord
   include ZuerichScopes
   include ImportRelation
 
-  before_update :record_acceptance_change, if: :going_to_change_to_resigned?
+  before_update :record_acceptance_change, if: :will_save_change_to_acceptance?
 
   enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
   enum cost_unit: { city: 0, municipality: 1, canton: 2 }
@@ -58,6 +58,7 @@ class Client < ApplicationRecord
 
   scope :with_inactive_assignment, lambda {
     left_outer_joins(:assignment)
+      .accepted
       .where('assignments.period_end < ?', Time.zone.today)
   }
 
@@ -71,6 +72,14 @@ class Client < ApplicationRecord
 
   scope :inactive, lambda {
     accepted.without_assignment.or(with_inactive_assignment)
+  }
+
+  scope :resigned_between, lambda { |start_date, end_date|
+    date_between(:resigned_at, start_date, end_date)
+  }
+
+  scope :resigned_between, lambda { |start_date, end_date|
+    date_between(:resigned_at, start_date, end_date)
   }
 
   def terminatable?
@@ -119,11 +128,7 @@ class Client < ApplicationRecord
 
   private
 
-  def going_to_change_to_resigned?
-    will_save_change_to_acceptance?(to: 'resigned')
-  end
-
   def record_acceptance_change
-    self.resigned_on = Time.zone.today
+    self["#{acceptance}_at".to_sym] = Time.zone.now
   end
 end

@@ -11,6 +11,15 @@ class TrialFeedback < ApplicationRecord
 
   validates :body, presence: true
 
+  scope :assignment, (-> { where(trial_feedbackable_type: 'Assignment') })
+  scope :group_offer, (-> { where(trial_feedbackable_type: 'GroupOffer') })
+  scope :from_assignments, lambda { |assignment_ids|
+    assignment.where(trial_feedbackable_id: assignment_ids)
+  }
+  scope :from_group_offers, lambda { |group_offer_ids|
+    group_offer.where(trial_feedbackable_id: group_offer_ids)
+  }
+
   def assignment?
     trial_feedbackable_type == 'Assignment'
   end
