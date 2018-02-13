@@ -1,6 +1,7 @@
 module TransformInstantiators
   def assignment_transform
-    @assignment_transform ||= AssignmentTransform.new(self, @begleitete, @freiwilligen_einsaetze)
+    @assignment_transform ||= AssignmentTransform.new(self, @begleitete, @freiwilligen_einsaetze,
+      @personen_rolle)
   end
 
   def client_transform
@@ -40,5 +41,14 @@ module TransformInstantiators
 
   def volunteer_transform
     @volunteer_transform ||= VolunteerTransform.new(self, @haupt_person, @personen_rolle)
+  end
+
+  def billing_expense_transform
+    @billing_expense_transform ||= BillingExpenseTransform.new(self, @haupt_person, @personen_rolle)
+  end
+
+  def hour_transform
+    @hour_transform ||= HourTransform.new(self, @haupt_person, @personen_rolle, @stundenerfassung,
+      @freiwilligen_einsaetze)
   end
 end

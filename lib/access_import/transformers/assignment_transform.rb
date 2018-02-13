@@ -36,7 +36,9 @@ class AssignmentTransform < Transformer
   def get_or_create_by_import(einsatz_id, fw_einsatz = nil)
     assignment = Import.get_imported(Assignment, einsatz_id)
     return assignment if assignment.present?
-    volunteer = @ac_import.volunteer_transform.get_or_create_by_import(fw_einsatz[:fk_PersonenRolle])
+    freiwilliger = @personen_rolle.find(einsatz_id)
+    return if freiwilliger.blank?
+    volunteer = @ac_import.volunteer_transform.get_or_create_by_import(fw_einsatz[:fk_PersonenRolle], freiwilliger)
     begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
     client = @ac_import.client_transform.get_or_create_by_import(begleitet[:fk_PersonenRolle])
     parameters = prepare_attributes(fw_einsatz, client, volunteer, begleitet)

@@ -70,6 +70,18 @@ class AccessImport
     display_stats(Journal)
   end
 
+  def make_hours
+    puts 'Importing Hours'
+    hour_transform.import_all
+    display_stats(Hour)
+  end
+
+  def make_billings
+    puts 'Importing BillingExpenses'
+
+    display_stats(BillingExpense, Volunteer)
+  end
+
   def instantiate_all_accessors
     Dir['lib/access_import/accessors/*.rb']
       .map { |file| File.basename(file, '.*') }

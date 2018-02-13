@@ -19,7 +19,9 @@ class JournalTransform < Transformer
     return journal if journal.present?
     local_journal = Journal.new(
       prepare_attributes(
-        access_journal, fetch_or_import_person(access_journal), fetch_or_import_assignment(access_journal)
+        access_journal,
+        fetch_or_import_person(access_journal),
+        fetch_or_import_assignment(access_journal)
       )
     )
     local_journal.save!
