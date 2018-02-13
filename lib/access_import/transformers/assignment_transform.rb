@@ -1,23 +1,35 @@
 class AssignmentTransform < Transformer
   def prepare_attributes(fw_einsatz, client, volunteer, begleitet)
     {
+      creator: @ac_import.import_user,
       client: client,
       volunteer: volunteer,
       period_start: fw_einsatz[:d_EinsatzVon],
       period_end: fw_einsatz[:d_EinsatzBis],
       performance_appraisal_review: fw_einsatz[:d_Standortgespräch],
       probation_period: fw_einsatz[:d_Probezeit],
-      creator: @ac_import.import_user,
       home_visit: fw_einsatz[:d_Hausbesuch],
       first_instruction_lesson: fw_einsatz[:d_ErstUnterricht],
+      progress_meeting: fw_einsatz[:d_Standortgespräch],
       short_description: fw_einsatz[:t_Kurzbezeichnung],
+      description: fw_einsatz[:m_Beschreibung],
       goals: fw_einsatz[:m_Zielsetzung],
       starting_topic: fw_einsatz[:m_Einstiegsthematik],
-      description: fw_einsatz[:m_Beschreibung],
       import_attributes: access_import(
         :tbl_FreiwilligenEinsätze, fw_einsatz[:pk_FreiwilligenEinsatz], fw_einsatz: fw_einsatz,
         begleitet: begleitet
       )
+    }.merge(handle_terminated(fw_einsatz))
+  end
+
+  def handle_terminated(fw_einsatz)
+    return {} if fw_einsatz[:d_EinsatzBis].blank?
+    {
+      period_end_set_by: @ac_import.import_user,
+      termination_submitted_by: @ac_import.import_user,
+      termination_verified_by: @ac_import.import_user,
+      termination_submitted_at: fw_einsatz[:d_EinsatzBis],
+      termination_verified_at: fw_einsatz[:d_EinsatzBis]
     }
   end
 
@@ -28,10 +40,8 @@ class AssignmentTransform < Transformer
     begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
     client = @ac_import.client_transform.get_or_create_by_import(begleitet[:fk_PersonenRolle])
     parameters = prepare_attributes(fw_einsatz, client, volunteer, begleitet)
-    assignment = Assignment.new(parameters)
-    assignment.created_at = fw_einsatz[:d_EinsatzVon] || Time.zone.now
-    assignment.save!
-    assignment.delete if assignment.period_end.present? && assignment.period_end < 8.months.ago
+    assignment = Assignment.create(parameters)
+    assignment.update(updated_at: fw_einsatz[:d_MutDatum], created_at: fw_einsatz[:d_EinsatzVon])
   end
 
   def import_multiple(freiwilligen_einsaetze)
