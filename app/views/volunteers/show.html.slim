@@ -182,7 +182,7 @@ h3= t('.availability')
 
 - if @volunteer.group_assignments.any?
   h3#assignments= t('.group_assignments')
-  = render 'group_assignments/volunteer_group_assignments', group_assignments: @volunteer.group_assignments, editable: true
+  = render 'group_assignments/volunteer_group_assignments', group_assignments: @volunteer.group_assignments.unterminated, editable: true
 
 - if @volunteer.group_assignment_logs.any?
   h3= t('.old_group_assignments')
