@@ -3,11 +3,23 @@ class GroupAssignmentTransform < Transformer
 
   def prepare_attributes(einsatz, volunteer)
     {
-      period_end: einsatz[:d_EinsatzBis],
       period_start: einsatz[:d_EinsatzVon],
+      period_end: einsatz[:d_EinsatzBis],
       volunteer: volunteer,
       import_attributes: access_import(:tbl_FreiwilligenEinsätze, einsatz[:pk_FreiwilligenEinsatz],
         freiwilligen_einsatz: einsatz)
+    }.merge(termination_attributes(einsatz))
+  end
+
+  def termination_attributes(einsatz)
+    return {} if einsatz[:d_EinsatzBis].blank?
+    {
+      period_end_set_by: @ac_import.import_user,
+      termination_submitted_by: @ac_import.import_user,
+      termination_verified_by: @ac_import.import_user,
+      termination_submitted_at: einsatz[:d_EinsatzBis],
+      termination_verified_at: einsatz[:d_EinsatzBis],
+      active: false
     }
   end
 

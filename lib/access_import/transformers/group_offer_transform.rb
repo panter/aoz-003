@@ -23,6 +23,19 @@ class GroupOfferTransform < Transformer
     group_offer.group_assignments = group_assignments
     group_offer.department = find_group_offer_department(group_offer.group_assignments)
     group_offer.save!
+    handle_termination_and_update(group_offer)
+  end
+
+  def handle_termination_and_update(group_offer)
+    if group_offer.group_assignments.unterminated.blank?
+      end_time = group_offer.group_assignments.maximum(:period_end)
+      group_offer.assign_attributes(period_end: end_time, termination_verified_at: end_time,
+        period_end_set_by: @ac_import.import_user, termination_verified_by: @ac_import.import_user)
+    end
+    start_time = group_offer.group_assignments.minimum(:period_start)
+    group_offer.assign_attributes(updated_at: group_offer.group_assignments.maximum(:updated_at),
+      created_at: start_time, period_start: start_time)
+    group_offer.save!
     group_offer
   end
 
