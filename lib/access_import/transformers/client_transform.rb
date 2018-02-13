@@ -4,31 +4,44 @@ class ClientTransform < Transformer
     begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
     familien_rolle = @familien_rollen.find(begleitet[:fk_FamilienRolle])
     {
+      user: @ac_import.import_user,
+      nationality: haupt_person[:nationality],
       salutation: haupt_person[:salutation],
-      comments: comments(begleitet, personen_rolle, haupt_person),
+      contact_attributes: contact_attributes(haupt_person),
+      language_skills_attributes: language_skills_attributes(haupt_person[:sprachen]),
       birth_year: haupt_person[:d_Geburtsdatum],
       entry_date: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
-      nationality: haupt_person[:nationality],
-      language_skills_attributes: language_skills_attributes(haupt_person[:sprachen]),
-      contact_attributes: contact_attributes(haupt_person),
+      comments: comments(begleitet, personen_rolle, haupt_person),
       relatives_attributes: relatives_attrs(relatives),
-      user: @ac_import.import_user,
       import_attributes: access_import(
         :tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle], personen_rolle: personen_rolle,
         haupt_person: haupt_person, familien_rolle: familien_rolle, begleitet: begleitet,
         relatives: relatives && relatives
       )
-    }
+    }.merge(handle_acceptance_state(personen_rolle))
+  end
+
+  def handle_acceptance_state(personen_rolle)
+    if personen_rolle[:d_Rollenende].blank? && personen_rolle[:d_Rollenbeginn].blank?
+      { acceptance: :accepted }
+    elsif personen_rolle[:d_Rollenende].blank?
+      { acceptance: :accepted,
+        accepted_at: personen_rolle[:d_Rollenbeginn] }
+    else
+      { acceptance: :resigned,
+        accepted_at: personen_rolle[:d_Rollenbeginn],
+        resigned_at: personen_rolle[:d_Rollenende] }
+    end
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
     client = Import.get_imported(Client, personen_rollen_id)
     return client if client.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
-    client_attributes = prepare_attributes(personen_rolle)
-    client = Client.new(client_attributes)
-    client = personen_rollen_create_update_conversion(client, personen_rolle)
-    client.acceptance = handle_client_acceptance(personen_rolle)
+    client = Client.create(prepare_attributes(personen_rolle))
+    client.resigned_at = personen_rolle[:d_Rollenende] if client.resigned?
+    client.assign_values(created_at: personen_rolle[:d_Rollenbeginn],
+      updated_at: personen_rolle[:d_MutDatum])
     client.save!
     client
   end
