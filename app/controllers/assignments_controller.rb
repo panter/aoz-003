@@ -19,8 +19,7 @@ class AssignmentsController < ApplicationController
   def terminated_index
     authorize Assignment
     @q = policy_scope(Assignment).ended.ransack(params[:q])
-    @q.sorts = ['updated_at desc'] if @q.sorts.empty?
-    @assignments = @q.result
+    @assignments = @q.result.paginate(page: params[:page])
   end
 
   def search
