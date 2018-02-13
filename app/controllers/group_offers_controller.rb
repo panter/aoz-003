@@ -12,7 +12,7 @@ class GroupOffersController < ApplicationController
     @group_offers = @q.result.reorder(active: :desc)
     respond_to do |format|
       format.xlsx { render xlsx: 'index', locals: { group_offers: @group_offers } }
-      format.html
+      format.html { @group_offers = @group_offers.paginate(page: params[:page]) }
     end
   end
 

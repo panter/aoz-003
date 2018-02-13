@@ -46,10 +46,10 @@ class AccessImport
 
   def make_group_offers
     puts 'Importing GroupOffers'
-    puts '... from Kurse'
-    kurs_transform.import_all
-    display_stats(GroupOffer)
-    display_stats(GroupAssignment)
+    # puts '... from Kurse'
+    # kurs_transform.import_all
+    # display_stats(GroupOffer)
+    # display_stats(GroupAssignment)
     puts '... from Animation f'
     group_offer_transform.import_all
     display_stats(GroupOffer)
