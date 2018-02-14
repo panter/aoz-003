@@ -40,7 +40,7 @@ module AccessImportTransformers
   end
 
   def volunteer_transform
-    @volunteer_transform ||= VolunteerTransform.new(self, @haupt_person, @personen_rolle)
+    @volunteer_transform ||= VolunteerTransform.new(self, @haupt_person, @personen_rolle, @kontoangaben)
   end
 
   def billing_expense_transform

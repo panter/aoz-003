@@ -13,6 +13,7 @@ module AccessImportSetup
     @sprache_pro_hauptperson.add_other_accessors(@sprachen, @sprach_kenntnisse)
     @einsatz_orte.add_other_accessors(@plz)
     @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson)
+    @kontoangaben.add_other_accessors(@plz)
   end
 
   def instantiate_all_accessors
