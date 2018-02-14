@@ -44,7 +44,8 @@ module AccessImportTransformers
   end
 
   def billing_expense_transform
-    @billing_expense_transform ||= BillingExpenseTransform.new(self, @haupt_person, @personen_rolle)
+    @billing_expense_transform ||= BillingExpenseTransform.new(self, @haupt_person, @personen_rolle,
+      @freiwilligen_entschaedigung)
   end
 
   def hour_transform
