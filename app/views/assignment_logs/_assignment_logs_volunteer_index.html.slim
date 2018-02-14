@@ -5,6 +5,7 @@ table.table.table-striped.assignment-logs-table
       th= t_attr(:period_start, Assignment)
       th= t_attr(:period_end, Assignment)
       th= t_attr(:created_by)
+      th colspan=2
   tbody
     - assignment_logs.each do |assignment|
       tr
@@ -20,3 +21,20 @@ table.table.table-striped.assignment-logs-table
             = link_to assignment.creator.full_name, profile_path(assignment.creator)
           - else
             = assignment.creator.full_name
+        td
+          - if assignment.assignment && policy(assignment.assignment).show?
+            = link_to t_action(:show), assignment.assignment
+        td.index-action-cell.hidden-print
+          span
+          - if policy(TrialFeedback).index?
+            = link_to t_title(:index, TrialFeedback), polymorphic_path([assignment.assignment.volunteer, assignment.assignment, TrialFeedback])
+          - if policy(Feedback).index?
+            = link_to t_title(:index, Feedback), polymorphic_path([assignment.assignment.volunteer, assignment.assignment, Feedback])
+          - if policy(Assignment).verify_termination?
+            = link_to 'Beendigungsformular', terminate_assignment_path(assignment)
+            td.index-action-cell.hidden-print
+              span
+                = "Quittiert von "
+                = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
+                = " am #{l(assignment.termination_verified_at.to_date)}"
+
