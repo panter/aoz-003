@@ -1,4 +1,4 @@
-module TransformInstantiators
+module AccessImportTransformers
   def assignment_transform
     @assignment_transform ||= AssignmentTransform.new(self, @begleitete, @freiwilligen_einsaetze,
       @personen_rolle)

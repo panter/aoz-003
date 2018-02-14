@@ -9,7 +9,7 @@ namespace :access do
       @acimport.make_clients
       @acimport.make_volunteers
       @acimport.make_hours
-      # @acimport.make_journal
+      @acimport.make_journal
       @acimport.overall_stats
     else
       warn 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
