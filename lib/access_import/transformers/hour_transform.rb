@@ -4,7 +4,10 @@ class HourTransform < Transformer
       hourable: hourable,
       volunteer: get_volunteer(erfassung),
       hours: erfassung[:z_Stundenzahl],
-      meeting_date: erfassung[:d_MutDatum]
+      meeting_date: erfassung[:d_MutDatum],
+      import_attributes: access_import(
+        :tbl_Stundenerfassung, erfassung[:pk_Stundenerfassung], erfassung: erfassung
+      )
     }
   end
 
@@ -33,7 +36,7 @@ class HourTransform < Transformer
     if einsatz[:fk_FreiwilligenFunktion] == 1
       get_assignment(erfassung[:fk_FreiwilligenEinsatz], einsatz)
     else
-      get_group_assignment(erfassung[:fk_FreiwilligenEinsatz])
+      get_group_assignment(erfassung[:fk_FreiwilligenEinsatz]).group_offer
     end
   end
 

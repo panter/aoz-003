@@ -24,7 +24,7 @@ class Volunteer < ApplicationRecord
   delegate :full_name, to: :contact
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
-  belongs_to :registrar, class_name: 'User', foreign_key: 'registrar_id', optional: true,
+  belongs_to :registrar, -> { with_deleted }, class_name: 'User', foreign_key: 'registrar_id', optional: true,
     inverse_of: :volunteers
 
   has_one :department, through: :registrar

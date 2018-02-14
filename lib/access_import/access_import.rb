@@ -26,7 +26,7 @@ class AccessImport
   def make_assignments
     puts 'Importing Assignments'
     assignment_transform.import_all
-    display_stats(Assignment)
+    display_stats(Assignment, Volunteer, Client)
   end
 
   def make_group_offers
@@ -63,7 +63,7 @@ class AccessImport
 
   def make_billing_expenses
     puts 'Importing BillingExpenses'
-
+    billing_expense_transform.import_all
     display_stats(BillingExpense, Volunteer)
   end
 

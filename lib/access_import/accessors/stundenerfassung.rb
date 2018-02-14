@@ -11,8 +11,8 @@ class Stundenerfassung < Accessor
   end
 
   def where_personen_rolle(pr_id)
-    all.select do |_key, stunden_erfassung|
+    all.find_all do |_key, stunden_erfassung|
       stunden_erfassung[:fk_PersonenRolle] == pr_id.to_i
-    end
+    end.to_h
   end
 end
