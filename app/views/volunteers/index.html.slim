@@ -27,6 +27,7 @@ nav.navbar.section-navigation
     = boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
     = custom_filter_dropdown(t_attr(:group_offer_categories_id, Volunteer), *GroupOfferCategory.filterable_volunteer)
     = boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)
+    = boolean_toggler_filter_dropdown(:intro_course, 'Einführungskurs', 'Besucht', 'Ausstehend')
 
   hr
 
