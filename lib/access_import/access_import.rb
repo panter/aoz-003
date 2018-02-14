@@ -61,7 +61,7 @@ class AccessImport
     display_stats(Hour)
   end
 
-  def make_billings
+  def make_billing_expenses
     puts 'Importing BillingExpenses'
 
     display_stats(BillingExpense, Volunteer)

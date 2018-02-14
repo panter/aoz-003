@@ -9,7 +9,7 @@ module AccessImportSetup
     ObjectSpace.define_finalizer(self, self.class.finalize)
     @import_user = create_or_fetch_import_user
     @acdb = Mdb.open(path)
-    make_class_variables(*instantiate_all_accessors)
+    setup_class_variables(*instantiate_all_accessors)
     @sprache_pro_hauptperson.add_other_accessors(@sprachen, @sprach_kenntnisse)
     @einsatz_orte.add_other_accessors(@plz)
     @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson)
@@ -38,8 +38,10 @@ module AccessImportSetup
   # Shell Output
   #
 
-  def display_stats(model)
-    puts stat_text(model)
+  def display_stats(*models)
+    models.each do |model|
+      puts stat_text(model)
+    end
   end
 
   def stat_text(model)
@@ -58,7 +60,7 @@ module AccessImportSetup
     end
   end
 
-  def make_class_variables(*accessors)
+  def setup_class_variables(*accessors)
     accessors.each do |accessor|
       class_eval { attr_reader accessor.class.name.underscore.to_sym }
       instance_variable_set("@#{accessor.class.name.underscore}", accessor)
