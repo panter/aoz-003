@@ -34,10 +34,17 @@ class BillingExpenseTransform < Transformer
   end
 
   def get_hours(entschaedigung)
-
+    return @hours if @hours.presence
+    # trigger import, but drop result, in order to have active record query result
+    @ac_import.hour_transform.import_all(
+      @stundenerfassung.where_personen_rolle(entschaedigung[:fk_PersonenRolle])
+    )
+    # get hours as active record query
+    @hours = Hour.where(volunteer: get_volunteer(entschaedigung))
   end
 
   def get_volunteer(entschaedigung)
-
+    @volunteer ||= @ac_import.volunteer_transform
+                             .get_or_create_by_import(entschaedigung[:fk_PersonenRolle])
   end
 end

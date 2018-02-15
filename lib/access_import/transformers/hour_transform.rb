@@ -24,10 +24,14 @@ class HourTransform < Transformer
     hour
   end
 
-  def import_all
-    @stundenerfassung.all.each do |key, erfassung|
+  def import_multiple(erfassungen)
+    erfassungen.map do |key, erfassung|
       get_or_create_by_import(key, erfassung)
     end
+  end
+
+  def import_all(erfassungen = nil)
+    import_multiple(erfassungen || @stundenerfassung.all)
   end
 
   def get_hourable(erfassung)

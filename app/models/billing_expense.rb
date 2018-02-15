@@ -1,4 +1,5 @@
 class BillingExpense < ApplicationRecord
+  include ImportRelation
   include FullBankDetails
 
   attr_accessor :skip_validation_for_import
