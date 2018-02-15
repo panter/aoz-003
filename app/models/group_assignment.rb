@@ -10,8 +10,6 @@ class GroupAssignment < ApplicationRecord
   has_many :hours, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
   has_many :feedbacks, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
 
-  belongs_to :group_offer, -> { with_deleted }
-
   delegate :title, to: :group_offer
 
   validates :volunteer, uniqueness: {
