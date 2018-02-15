@@ -10,7 +10,7 @@ class AssignmentFiltersTest < ApplicationSystemTestCase
 
   test 'filter by activity' do
     assert page.has_link? @assignment_active.client.contact.full_name
-    assert page.has_link? @assignment_inactive.client.contact.full_name
+    refute page.has_link? @assignment_inactive.client.contact.full_name
     within '.section-navigation' do
       click_link 'Status'
       click_link 'Aktiv'
@@ -36,7 +36,7 @@ class AssignmentFiltersTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert page.has_link? @assignment_active.client.contact.full_name
-      assert page.has_link? @assignment_inactive.client.contact.full_name
+      refute page.has_link? @assignment_inactive.client.contact.full_name
     end
   end
 end
