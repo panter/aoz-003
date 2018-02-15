@@ -47,6 +47,11 @@ class Assignment < ApplicationRecord
     )
   end
 
+  # allow ransack to use defined scopes
+  def self.ransackable_scopes(auth_object = nil)
+    ['active', 'inactive', 'active_or_not_yet_active']
+  end
+
   private
 
   def create_log_of_self_and_delete_self

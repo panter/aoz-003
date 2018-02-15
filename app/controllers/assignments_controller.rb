@@ -1,12 +1,12 @@
 class AssignmentsController < ApplicationController
   before_action :set_assignment, except: [:index, :terminated_index, :search, :new, :create, :find_client]
+  before_action :default_filter, only: [:index, :terminated_index]
 
   def index
     authorize Assignment
     @q = policy_scope(Assignment).ransack(params[:q])
     @q.sorts = ['period_start desc'] if @q.sorts.empty?
     @assignments = @q.result
-    activity_filter
     respond_to do |format|
       format.xlsx
       format.html do
@@ -128,6 +128,15 @@ class AssignmentsController < ApplicationController
   def terminate_reminder_mailing
     ReminderMailingVolunteer.termination_for(@assignment).map do |rmv|
       rmv.mark_process_submitted(current_user, terminate_parent_mailing: true)
+    end
+  end
+
+  def default_filter
+    return if params[:q].presence
+    if action_name == 'index'
+      params.merge!(q: { active_or_not_yet_active: 'true' }).permit!
+    else
+      params.merge!(q: { termination_verified_by_id_null: 'true' }).permit!
     end
   end
 

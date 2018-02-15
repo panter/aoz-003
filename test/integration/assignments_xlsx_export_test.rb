@@ -13,7 +13,7 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
   end
 
   test 'xlsx files columns and cells are correct' do
-    assignment = create :assignment, period_start: 3.months.ago, period_end: 2.days.ago
+    assignment = create :assignment, period_start: 3.months.ago, period_end: nil
     wb = get_xls_from_response(assignments_url(format: :xlsx))
 
     assert_xls_cols_equal(wb, 1, 0, 'id', 'Freiwillige/r', 'Freiwillige/r Mailadresse',

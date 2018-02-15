@@ -37,6 +37,7 @@ module PeriodStartEndScopesAndMethods
     scope :no_start_and_end, (-> { no_start.no_end })
 
     scope :active, (-> { not_ended.started.or(no_start.end_in_future) })
+    scope :active_or_not_yet_active, (-> { active.or(no_start.no_end) })
     scope :stay_active, (-> { active.no_end })
     scope :inactive, (-> { ended.or(no_start_and_end).or(will_start) })
 
