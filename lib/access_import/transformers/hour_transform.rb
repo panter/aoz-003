@@ -10,7 +10,8 @@ class HourTransform < Transformer
   end
 
   def get_or_create_by_import(erfassung_id, erfassung = nil)
-    return @entity if get_import_entity(:hour, erfassung_id).present?
+    hour = get_import_entity(:hour, erfassung_id)
+    return hour if hour.present?
     erfassung ||= @stundenerfassung.find(erfassung_id)
     hourable = get_hourable(erfassung)
     return if hourable.blank? || hourable.deleted?

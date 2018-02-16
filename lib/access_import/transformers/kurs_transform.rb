@@ -14,7 +14,8 @@ class KursTransform < Transformer
   end
 
   def get_or_create_by_import(kurs_id, kurs = nil)
-    return @entity if get_import_entity(:group_offer, kurs_id).present?
+    group_offer = get_import_entity(:group_offer, kurs_id)
+    return group_offer if group_offer.present?
     kurs ||= @kurse.find(kurs_id)
     group_offer_category = @ac_import.kursart_transform.get_or_create_by_import(kurs[:fk_Kursart])
     group_offer = GroupOffer.new(prepare_attributes(kurs, group_offer_category))

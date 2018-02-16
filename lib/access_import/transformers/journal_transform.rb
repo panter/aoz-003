@@ -12,13 +12,13 @@ class JournalTransform < Transformer
   end
 
   def get_or_create_by_import(access_journal_id, access_journal = nil)
-    return @entity if get_import_entity(:fk_JournalKategorie, access_journal_id).present?
+    local_journal = get_import_entity(:fk_JournalKategorie, access_journal_id)
+    return local_journal if local_journal.present?
     access_journal ||= @journale.find(access_journal_id)
     person = fetch_or_import_person(access_journal)
     return if person.blank?
     assignment = fetch_or_import_assignment(access_journal)
     local_journal = Journal.create!(prepare_attributes(access_journal, person, assignment))
-    local_journal.delete if person.deleted? || assignment.terminated?
     update_timestamps(local_journal, access_journal[:d_ErfDatum], access_journal[:d_MutDatum])
   end
 

@@ -11,7 +11,8 @@ class BillingExpenseTransform < Transformer
   end
 
   def get_or_create_by_import(entschaedigung_id, entschaedigung = nil)
-    return @entity if get_import_entity(:billing_expense, entschaedigung_id).present?
+    billing_expense = get_import_entity(:billing_expense, entschaedigung_id)
+    return billing_expense if billing_expense.present?
     entschaedigung ||= @freiwilligen_entschaedigung.find(entschaedigung_id)
     volunteer = get_volunteer(entschaedigung[:fk_PersonenRolle])
     return if volunteer.blank?
@@ -42,6 +43,6 @@ class BillingExpenseTransform < Transformer
 
   def get_dummy_hour_hourable(volunteer)
     Assignment.with_deleted.find_by(volunteer: volunteer) ||
-      GroupAssignment.with_deleted.find_by(volunteer: volunteer).group_offer
+      GroupAssignment.with_deleted.find_by(volunteer: volunteer)&.group_offer
   end
 end

@@ -26,7 +26,8 @@ class VolunteerTransform < Transformer
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
-    return @entity if get_import_entity(:volunteer, personen_rollen_id).present?
+    volunteer = get_import_entity(:volunteer, personen_rollen_id)
+    return volunteer if volunteer.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     volunteer = Volunteer.create!(prepare_attributes(personen_rolle))
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])

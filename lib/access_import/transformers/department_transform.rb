@@ -13,7 +13,8 @@ class DepartmentTransform < Transformer
   end
 
   def get_or_create_by_import(einsatz_ort_id, einsatz_ort = nil)
-    return @entity if get_import_entity(:department, einsatz_ort_id).present?
+    department = get_import_entity(:department, einsatz_ort_id)
+    return department if department.present?
     einsatz_ort ||= @einsatz_orte.find(einsatz_ort_id)
     department = Department.create!(prepare_attributes(einsatz_ort))
     update_timestamps(department, einsatz_ort[:d_MutDatum])

@@ -70,12 +70,13 @@ class AccessImport
   end
 
   def terminate_clients
-    Client.merge(:import).where.not(resigned_at: nil).map do |client|
+    Client.merge(:import).where.not(resigned_at: nil).each do |client|
       client.resigned!
       client.update(updated_at: client.import.store['personen_rolle']['d_MutDatum'],
         resigned_at: client.import.store['personen_rolle']['d_Rollenende'])
     end
-    Volunteer.merge(:import).where.not(resigned_at: nil).map do |volunteer|
+
+    Volunteer.merge(:import).where.not(resigned_at: nil).each do |volunteer|
       volunteer.resigned!
       volunteer.update(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
         resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
