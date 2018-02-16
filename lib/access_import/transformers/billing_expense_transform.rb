@@ -1,11 +1,11 @@
 class BillingExpenseTransform < Transformer
-  def prepare_attributes(entschaedigung)
+  def prepare_attributes(entschaedigung, volunteer)
     {
-      hours: get_hours(entschaedigung),
-      volunteer: get_volunteer(entschaedigung),
+      volunteer: volunteer,
       amount: entschaedigung[:z_Betrag],
       user: @ac_import.import_user,
       bank: entschaedigung[:t_Empfängerkonto],
+      iban: volunteer.iban,
       import_attributes: access_import(
         :tbl_FreiwilligenEntschädigung, entschaedigung[:pk_FreiwilligenEntschädigung],
         entschaedigung: entschaedigung
@@ -17,10 +17,17 @@ class BillingExpenseTransform < Transformer
     billing_expense = Import.get_imported(BillingExpense, entschaedigung_id)
     return billing_expense if billing_expense.present?
     entschaedigung ||= @freiwilligen_entschaedigung.find(entschaedigung_id)
-    binding.pry
-    billing_expense = BillingExpense.new(prepare_attributes(entschaedigung))
+    volunteer = get_volunteer(entschaedigung[:fk_PersonenRolle])
+    return if volunteer.blank?
+    billing_expense = BillingExpense.new(prepare_attributes(entschaedigung, volunteer))
     billing_expense.skip_validation_for_import = true
     billing_expense.save!
+    if entschaedigung[:z_Stunden].positive?
+      Hour.create(volunteer: volunteer, hourable: volunteer.assignments&.last || volunteer.group_offers&.last,
+        billing_expense: billing_expense, hours: entschaedigung[:z_Stunden], meeting_date: entschaedigung[:d_Datum])
+    end
+    billing_expense.update(updated_at: entschaedigung[:d_Datum], created_at: entschaedigung[:d_Datum])
+    billing_expense
   end
 
   def import_multiple(entschaedigungen)
@@ -33,18 +40,7 @@ class BillingExpenseTransform < Transformer
     import_multiple(entschaedigungen || @freiwilligen_entschaedigung.all)
   end
 
-  def get_hours(entschaedigung)
-    return @hours if @hours.presence
-    # trigger import, but drop result, in order to have active record query result
-    @ac_import.hour_transform.import_all(
-      @stundenerfassung.where_personen_rolle(entschaedigung[:fk_PersonenRolle])
-    )
-    # get hours as active record query
-    @hours = Hour.where(volunteer: get_volunteer(entschaedigung))
-  end
-
-  def get_volunteer(entschaedigung)
-    @volunteer ||= @ac_import.volunteer_transform
-                             .get_or_create_by_import(entschaedigung[:fk_PersonenRolle])
+  def get_volunteer(personen_rollen_id)
+    @ac_import.volunteer_transform.get_or_create_by_import(personen_rollen_id)
   end
 end
