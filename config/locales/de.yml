@@ -70,6 +70,18 @@ de:
         <<: *id-kinds-template
       show:
         <<: *id-kinds-template
+    events:
+      kind: &id-kinds-event
+        intro_course: Einführungsveranstaltung
+        professional_training: Weiterbildung
+        professional_event: Fachveranstaltung
+        theme_exchange: Erfahrungsaustausch/ Themenabend
+        volunteering: Freiwilligenanlass
+        german_class_managers: Treffen Deutschkursleitende
+      index:
+        <<: *id-kinds-event
+      show:
+        <<: *id-kinds-event
     gender_request: &id-gender_requests
       all: Alle
       man: Mann
@@ -509,6 +521,7 @@ de:
       contact: Kontakt
       department: Standort
       email_template: E-Mailvorlage
+      event: Veranstaltung
       group_assignment: Begleitung
       group_offer: Gruppenangebot
       group_offer_category: Gruppenangebot Kategorie
@@ -932,6 +945,8 @@ de:
         state: *id-states
       email_template:
         kind: *id-kinds-template
+      event:
+        kind: *id-kinds-event
       group_offer:
         group_offer_categories: Gruppenangebot Kategorien
         offer_type: *id-offer-types
@@ -1064,6 +1079,18 @@ en:
         <<: *id-kinds-template
       show:
         <<: *id-kinds-template
+    events:
+      kind: &id-kinds-event
+        intro_course: Einführungsveranstaltung
+        professional_training: Weiterbildung
+        professional_event: Fachveranstaltung
+        theme_exchange: Erfahrungsaustausch/ Themenabend
+        volunteering: Freiwilligenanlass
+        german_class_managers: Treffen Deutschkursleitende
+      index:
+        <<: *id-kinds-event
+      show:
+        <<: *id-kinds-event
     gender_request: &id-gender_requests
       all: All
       man: Man
@@ -1333,6 +1360,7 @@ en:
       client_notification: Klienten Wartezeit Benachrichtigung
       contact: Contact
       department: Department
+      event: Veranstaltung
       email_template: E-Mailvorlage
       group_offer: Group offer
       group_offer_category: Group offer category
@@ -1643,6 +1671,8 @@ en:
         state: *id-states
       email_template:
         kind: *id-kinds-template
+      event:
+        kind: *id-kinds-event
       group_offer:
         offer_state: *id-offer-states
         offer_type: *id-offer-types

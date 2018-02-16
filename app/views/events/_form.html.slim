@@ -1,0 +1,26 @@
+= simple_form_for(@event) do |f|
+  = simple_error_notice f
+
+  .row
+    .col-xs-12
+      = f.input :kind, collection: Event.kind_collection, selected: @event.kind, label: 'Art', include_blank: true
+  .row
+    .col-xs-12
+      = f.input :title, label: 'Titel'
+  .row
+    .col-xs-12.col-md-4
+      = f.association :department, label: 'Standort'
+    .col-xs-12.col-md-4
+      = f.input :date, as: :date_picker, wrapper: :date_picker, label: 'Datum'
+    .col-xs-12.col-md-2
+      = f.input :start_time, as: :time, label: 'Startzeit'
+    .col-xs-12.col-md-2
+      = f.input :end_time, as: :time, label: 'Endzeit'
+  .row
+    .col-xs-12
+      = f.input :description, label: 'Beschreibung'
+
+  nav.navbar
+    ul.list-inline
+      li= f.button :submit
+      li= button_link navigation_glyph(:back), :back
