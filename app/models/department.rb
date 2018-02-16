@@ -7,6 +7,7 @@ class Department < ApplicationRecord
 
   has_and_belongs_to_many :user, -> { with_deleted }
 
+  has_many :events, dependent: :destroy
   has_many :group_offers, dependent: :destroy
   has_many :volunteers_group_offer, through: :group_offers, source: :volunteers
   has_many :volunteers_registrar, through: :user, source: :volunteers
