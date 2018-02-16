@@ -34,8 +34,7 @@ class AssignmentTransform < Transformer
   end
 
   def get_or_create_by_import(einsatz_id, fw_einsatz = nil)
-    assignment = Import.get_imported(Assignment, einsatz_id)
-    return assignment if assignment.present?
+    return @entity if get_import_entity(:assignment, einsatz_id).present?
     freiwilliger = @personen_rolle.find(einsatz_id)
     return if freiwilliger.blank?
     volunteer ||= @ac_import.volunteer_transform.get_or_create_by_import(

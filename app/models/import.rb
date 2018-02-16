@@ -14,7 +14,7 @@ class Import < ApplicationRecord
   scope :volunteer, (-> { polymorph_model(:volunteer) })
 
   def self.get_imported(entity, access_id)
-    find_by(importable_type: entity.name, access_id: access_id)&.importable
+    find_by(importable_type: entity, access_id: access_id)&.importable
   end
 
   def self.find_by_hauptperson(hauptperson_id)

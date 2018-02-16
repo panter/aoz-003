@@ -35,8 +35,7 @@ class ClientTransform < Transformer
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
-    client = Import.get_imported(Client, personen_rollen_id)
-    return client if client.present?
+    return @entity if get_import_entity(:client, personen_rollen_id).present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     client = Client.create(prepare_attributes(personen_rolle))
     client.resigned_at = personen_rolle[:d_Rollenende] if client.resigned?

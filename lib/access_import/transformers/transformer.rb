@@ -11,6 +11,10 @@ class Transformer
     end
   end
 
+  def get_import_entity(class_name, access_record_id)
+    @entity ||= Import.get_imported(class_name.to_s.singularize.classify, access_record_id)
+  end
+
   def personen_rollen_create_update_conversion(model_record, personen_rolle)
     model_record.created_at = personen_rolle[:d_Rollenbeginn]
     model_record.updated_at = personen_rolle[:d_MutDatum]

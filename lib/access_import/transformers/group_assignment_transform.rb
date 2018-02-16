@@ -24,9 +24,8 @@ class GroupAssignmentTransform < Transformer
   end
 
   def get_or_create_by_import(einsatz_id, einsatz: nil, group_offer: nil, volunteer: nil)
+    return @entity if get_import_entity(:group_assignment, einsatz_id).present?
     einsatz ||= @freiwilligen_einsaetze.find(einsatz_id)
-    group_assignment = Import.get_imported(GroupAssignment, einsatz_id)
-    return group_assignment if group_assignment.present?
     volunteer ||= @ac_import.volunteer_transform.get_or_create_by_import(einsatz[:fk_PersonenRolle])
     group_assignment = GroupAssignment.new(prepare_attributes(einsatz, volunteer))
     return group_assignment if group_offer.blank?

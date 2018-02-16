@@ -14,8 +14,7 @@ class BillingExpenseTransform < Transformer
   end
 
   def get_or_create_by_import(entschaedigung_id, entschaedigung = nil)
-    billing_expense = Import.get_imported(BillingExpense, entschaedigung_id)
-    return billing_expense if billing_expense.present?
+    return @entity if get_import_entity(:billing_expense, entschaedigung_id).present?
     entschaedigung ||= @freiwilligen_entschaedigung.find(entschaedigung_id)
     volunteer = get_volunteer(entschaedigung[:fk_PersonenRolle])
     return if volunteer.blank?

@@ -12,8 +12,7 @@ class HourTransform < Transformer
   end
 
   def get_or_create_by_import(erfassung_id, erfassung = nil)
-    hour = Import.get_imported(Hour, erfassung_id)
-    return hour if hour.present?
+    return @entity if get_import_entity(:hour, erfassung_id).present?
     erfassung ||= @stundenerfassung.find(erfassung_id)
     hourable = get_hourable(erfassung)
     volunteer = get_volunteer(erfassung)

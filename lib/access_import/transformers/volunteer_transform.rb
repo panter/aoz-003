@@ -28,8 +28,7 @@ class VolunteerTransform < Transformer
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
-    volunteer = Import.get_imported(Volunteer, personen_rollen_id)
-    return volunteer if volunteer.present?
+    return @entity if get_import_entity(:volunteer, personen_rollen_id).present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     volunteer_attributes = prepare_attributes(personen_rolle)
     volunteer = Volunteer.new(volunteer_attributes)
