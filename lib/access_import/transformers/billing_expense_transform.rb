@@ -25,8 +25,7 @@ class BillingExpenseTransform < Transformer
       Hour.create(volunteer: volunteer, hourable: volunteer.assignments&.last || volunteer.group_offers&.last,
         billing_expense: billing_expense, hours: entschaedigung[:z_Stunden], meeting_date: entschaedigung[:d_Datum])
     end
-    billing_expense.update(updated_at: entschaedigung[:d_Datum], created_at: entschaedigung[:d_Datum])
-    billing_expense
+    update_timestamps(billing_expense, entschaedigung[:d_Datum])
   end
 
   def import_multiple(entschaedigungen)

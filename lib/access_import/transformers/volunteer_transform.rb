@@ -30,12 +30,8 @@ class VolunteerTransform < Transformer
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
     return @entity if get_import_entity(:volunteer, personen_rollen_id).present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
-    volunteer_attributes = prepare_attributes(personen_rolle)
-    volunteer = Volunteer.new(volunteer_attributes)
-    volunteer = personen_rollen_create_update_conversion(volunteer, personen_rolle)
-    volunteer.acceptance = handle_volunteer_state(personen_rolle)
-    volunteer.save!
-    volunteer
+    volunteer = Volunteer.create!(prepare_attributes(personen_rolle))
+    handle_volunteer_state(volunteer, personen_rolle)
   end
 
   def import_multiple(personen_rollen)
@@ -52,6 +48,7 @@ class VolunteerTransform < Transformer
     return :resigned if personen_rolle[:d_Rollenende]
     return :accepted if personen_rolle[:d_Rollenende].nil?
     :undecided
+    update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
   def konto_angaben(haupt_person_id = nil)

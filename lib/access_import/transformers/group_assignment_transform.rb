@@ -31,7 +31,7 @@ class GroupAssignmentTransform < Transformer
     return group_assignment if group_offer.blank?
     group_assignment.group_offer = group_offer
     group_assignment.save!
-    group_assignment
+    update_timestamps(group_assignment, einsatz[:d_EinsatzVon], einsatz[:d_MutDatum])
   end
 
   def import_multiple(einsaetze, group_offer: nil)

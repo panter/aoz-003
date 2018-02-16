@@ -17,11 +17,8 @@ class DepartmentTransform < Transformer
   def get_or_create_by_import(einsatz_ort_id, einsatz_ort = nil)
     return @entity if get_import_entity(:department, einsatz_ort_id).present?
     einsatz_ort ||= @einsatz_orte.find(einsatz_ort_id)
-    parameters = prepare_attributes(einsatz_ort)
-    department = Department.new(parameters)
-    department.updated_at = einsatz_ort[:d_MutDatum]
-    department.save!
-    department
+    department = Department.create!(prepare_attributes(einsatz_ort))
+    update_timestamps(department, einsatz_ort[:d_MutDatum])
   end
 
   def import_multiple(einsatz_orte)

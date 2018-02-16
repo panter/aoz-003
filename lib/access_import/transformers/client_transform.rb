@@ -39,10 +39,7 @@ class ClientTransform < Transformer
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     client = Client.create(prepare_attributes(personen_rolle))
     client.resigned_at = personen_rolle[:d_Rollenende] if client.resigned?
-    client.assign_attributes(created_at: personen_rolle[:d_Rollenbeginn],
-      updated_at: personen_rolle[:d_MutDatum])
-    client.save!
-    client
+    update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
   def import_all

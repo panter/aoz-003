@@ -17,10 +17,8 @@ class HourTransform < Transformer
     hourable = get_hourable(erfassung)
     volunteer = get_volunteer(erfassung)
     return if hourable.blank? || volunteer.blank?
-    hour = Hour.new(prepare_attributes(erfassung, hourable, volunteer))
-    hour.save
-    hour.update(created_at: hour.meeting_date, updated_at: hour.meeting_date)
-    hour
+    hour = Hour.create(prepare_attributes(erfassung, hourable, volunteer))
+    update_timestamps(hour, hour.meeting_date)
   end
 
   def import_multiple(erfassungen)

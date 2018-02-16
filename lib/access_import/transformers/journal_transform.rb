@@ -26,6 +26,7 @@ class JournalTransform < Transformer
     )
     local_journal.save!
     local_journal
+    update_timestamps(local_journal, access_journal[:d_ErfDatum], access_journal[:d_MutDatum])
   end
 
   def fetch_or_import_assignment(access_journal)

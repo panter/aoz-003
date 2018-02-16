@@ -15,6 +15,13 @@ class Transformer
     @entity ||= Import.get_imported(class_name.to_s.singularize.classify, access_record_id)
   end
 
+
+
+  def update_timestamps(record, date, updated_date = nil)
+    record.update(created_at: date, updated_at: updated_date || date)
+    record
+  end
+
   def personen_rollen_create_update_conversion(model_record, personen_rolle)
     model_record.created_at = personen_rolle[:d_Rollenbeginn]
     model_record.updated_at = personen_rolle[:d_MutDatum]

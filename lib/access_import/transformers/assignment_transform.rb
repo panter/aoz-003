@@ -44,7 +44,7 @@ class AssignmentTransform < Transformer
     client = @ac_import.client_transform.get_or_create_by_import(begleitet[:fk_PersonenRolle])
     parameters = prepare_attributes(fw_einsatz, client, volunteer, begleitet)
     assignment = Assignment.create(parameters)
-    assignment.update(updated_at: fw_einsatz[:d_MutDatum], created_at: fw_einsatz[:d_EinsatzVon])
+    update_timestamps(assignment, fw_einsatz[:d_MutDatum])
   end
 
   def import_multiple(freiwilligen_einsaetze)

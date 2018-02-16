@@ -12,8 +12,7 @@ class KursartTransform < Transformer
     return @entity if get_import_entity(:group_offer_category, kursart_id).present?
     kursart ||= @kursarten.find(kursart_id)
     group_offer_category = GroupOfferCategory.create!(prepare_attributes(kursart))
-    group_offer_category.update(created_at: kursart[:d_MutDatum], updated_at: kursart[:d_MutDatum])
-    group_offer_category
+    update_timestamps(group_offer_category, kursart[:d_MutDatum])
   end
 
   def import_all
