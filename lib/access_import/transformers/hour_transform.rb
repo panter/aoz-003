@@ -18,7 +18,6 @@ class HourTransform < Transformer
     volunteer = get_volunteer(erfassung)
     return if volunteer.blank? || volunteer.deleted?
     hour = Hour.create(prepare_attributes(erfassung, hourable, volunteer))
-    binding.pry if hour.hourable_id.blank?
     update_timestamps(hour, hour.meeting_date)
   end
 

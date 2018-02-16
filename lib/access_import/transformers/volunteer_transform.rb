@@ -17,7 +17,8 @@ class VolunteerTransform < Transformer
       nationality: haupt_person[:nationality],
       accepted_at: personen_rolle[:d_Rollenbeginn],
       resigned_at: personen_rolle[:d_Rollenende],
-      registrar: @ac_import.import_user
+      registrar: @ac_import.import_user,
+      acceptance: :accepted
     }.merge(prepare_kontoangaben(personen_rolle[:fk_Hauptperson]))
       .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(contact_attributes(haupt_person.merge(email: import_time_email)))
