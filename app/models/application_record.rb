@@ -46,6 +46,8 @@ class ApplicationRecord < ActiveRecord::Base
   scope :updated_desc, (-> { order('updated_at desc') })
   scope :updated_asc, (-> { order('updated_at asc') })
 
+  scope :polymorph_model, ->(model) { where("#{model_name}able_type = ?", model.to_s.classify) }
+
   # translate enum fields value
   def t_enum(enum_field)
     I18n.t("activerecord.attributes.#{model_name.i18n_key}."\
