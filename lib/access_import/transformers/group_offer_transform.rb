@@ -13,54 +13,58 @@ class GroupOfferTransform < Transformer
   end
 
   def get_or_create_by_import(group_assignments, *group_offer_fields)
-    group_offer_category = GroupOfferCategory.find_or_create_by(
-      category_name: FREIWILLIGEN_FUNKTION[
-        group_assignments.first.import.store['freiwilligen_einsatz']['fk_FreiwilligenFunktion']
-      ]
+    group_offer = GroupOffer.new(
+      prepare_attributes(create_category(group_assignments), *group_offer_fields)
     )
-    group_offer = GroupOffer.new(prepare_attributes(group_offer_category, *group_offer_fields))
-    group_offer.group_assignments = group_assignments
-    group_offer.department = find_group_offer_department(group_offer.group_assignments)
+    group_offer.department = find_group_offer_department(group_assignments)
+    group_offer.group_assignments = filter_non_unique_volunteer(group_assignments)
     group_offer.save!
     handle_termination_and_update(group_offer)
   end
 
+  def import_multiple(fw_einsaetze)
+    group_assignments = @ac_import.group_assignment_transform.import_all(einsaetze: fw_einsaetze)
+    grouped_group_assignments(group_assignments).map do |_group_offer_title, group_assignments|
+      location = group_assignments.first.import.store['freiwilligen_einsatz']['t_EinsatzOrt']
+      discription = group_assignments.map do |group_assignment|
+        group_assignment.import.store['freiwilligen_einsatz']['m_Beschreibung']
+      end.join(";\n")
+      group_offer_assignments = group_assignments.find_all { |ga| ga.group_offer_id.blank? }
+      next if group_offer_assignments.blank?
+      title = group_offer_assignments.first.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
+      get_or_create_by_import(group_offer_assignments, location: location, discription: discription,
+        title: title)
+    end
+  end
+
+  def import_all(fw_einsaetze = nil)
+    import_multiple(fw_einsaetze || @freiwilligen_einsaetze.where_animation_f)
+  end
+
+  def create_category(group_assignments)
+    GroupOfferCategory.find_or_create_by(category_name: FREIWILLIGEN_FUNKTION[
+        group_assignments.first.import.store['freiwilligen_einsatz']['fk_FreiwilligenFunktion']
+      ])
+  end
+
   def handle_termination_and_update(group_offer)
-    if group_offer.group_assignments.unterminated.blank?
+    if group_offer.group_assignments.any? && group_offer.group_assignments.unterminated.blank?
       end_time = group_offer.group_assignments.maximum(:period_end)
       group_offer.assign_attributes(period_end: end_time, termination_verified_at: end_time,
         period_end_set_by: @ac_import.import_user, termination_verified_by: @ac_import.import_user)
     end
-    start_time = group_offer.group_assignments.minimum(:period_start)
-    group_offer.assign_attributes(updated_at: group_offer.group_assignments.maximum(:updated_at),
-      created_at: start_time, period_start: start_time)
-    group_offer.save!
-    group_offer
-  end
-
-  def import_multiple(fw_einsaetze)
-    group_assignments = @ac_import.group_assignment_transform.import_all(einsaetze: fw_einsaetze)
-    grouped_group_assignments(group_assignments).map do |group_offer_title, group_assignments|
-      location = group_assignments.first.import.store['freiwilligen_einsatz']['t_EinsatzOrt']
-      discription = group_assignments.map { |ga| ga.import.store['freiwilligen_einsatz']['m_Beschreibung'] }.join(";\n")
-      title = group_assignments.first.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
-      return handle_has_group_offer(group_assignments) if group_assignments.map(&:id).compact.any?
-      get_or_create_by_import(group_assignments, location: location, discription: discription, title: title)
+    group_offer.group_assignments.each do |ga|
+      ga.update(updated_at: ga.import.store['freiwilligen_einsatz']['d_MutDatum'])
     end
+    start_time = group_offer.group_assignments.minimum(:period_start)
+    group_offer.period_start = start_time
+    update_timestamps(group_offer, start_time, group_offer.group_assignments.maximum(:updated_at))
   end
 
-  def handle_has_group_offer(group_assignments)
-    group_assignment_ids = group_assignments.map(&:id)
-    group_offer_ids = group_assignments.map(&:group_offer_id)
-    if group_assignment_ids.size == group_assignment_ids.compact.size && group_offer_ids.uniq.size == 1
-      group_assignments.first.group_offer
-    elsif group_assignment_ids.size > group_assignment_ids.compact.size? && group_offer_ids.compact.uniq.size == 1
-      group_offer = group_assignments.find { |ga| ga.group_offer_id.present? }.group_offer
-      group_assignments.each do |ga|
-        ga.group_offer = group_offer
-        ga.save
-      end
-      group_offer
+  def filter_non_unique_volunteer(group_assignments)
+    return group_assignments if group_assignments.size < 2
+    group_assignments.group_by(&:volunteer).flat_map do |_, g_assignments|
+      g_assignments.sort_by(&:updated_at).last
     end
   end
 
@@ -81,10 +85,5 @@ class GroupOfferTransform < Transformer
     @einsatz_ort_ids ||= group_assignments.map do |group_assignment|
       group_assignment.import.store['freiwilligen_einsatz']['fk_EinsatzOrt']
     end
-  end
-
-
-  def import_all(fw_einsaetze = nil)
-    import_multiple(fw_einsaetze || @freiwilligen_einsaetze.where_animation_f)
   end
 end
