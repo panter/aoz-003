@@ -4,12 +4,11 @@ namespace :access do
     if ENV['file'].present?
       @acimport = AccessImport.new(ENV['file'])
       @acimport.make_departments
+      @acimport.make_volunteers
+      @acimport.make_clients
       @acimport.make_assignments
       @acimport.make_group_offers
-      @acimport.make_clients
-      @acimport.make_volunteers
       @acimport.make_hours
-      @acimport.make_journal
       @acimport.make_billing_expenses
       @acimport.overall_stats
     else

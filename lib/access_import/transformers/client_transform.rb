@@ -64,15 +64,11 @@ class ClientTransform < Transformer
     begleitet = begleitete.select do |_key, beg|
       beg[:fk_FamilienRolle] == 2 # Hauptperson
     end
-    if begleitet.size == 1
-      return [begleitet.first[1], begleitete.except(begleitet.first[0])]
-    end
+    return [begleitet.first[1], begleitete.except(begleitet.first[0])] if begleitet.size == 1
     begleitet = begleitete.select do |_key, beg|
       beg[:t_Vorname] == haupt_person[:t_Vorname]
     end
-    if begleitet.size == 1
-      return [begleitet.first[1], begleitete.except(begleitet.first[0])]
-    end
+    return [begleitet.first[1], begleitete.except(begleitet.first[0])] if begleitet.size == 1
     begleitet = begleitete.select do |_key, beg|
       haupt_person[:t_Vorname].include? beg[:t_Vorname]
     end
