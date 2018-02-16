@@ -12,7 +12,7 @@ class Transformer
   end
 
   def get_import_entity(class_name, access_record_id)
-    @entity ||= Import.get_imported(class_name.to_s.singularize.classify, access_record_id)
+    @entity ||= Import.with_deleted.get_imported(class_name.to_s.singularize.classify, access_record_id)
   end
 
   def import_time_email
@@ -20,6 +20,7 @@ class Transformer
   end
 
   def update_timestamps(record, date, updated_date = nil)
+    return record if date.blank?
     record.update(created_at: date, updated_at: updated_date || date)
     record
   end

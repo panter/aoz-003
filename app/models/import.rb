@@ -18,6 +18,6 @@ class Import < ApplicationRecord
   end
 
   def self.find_by_hauptperson(hauptperson_id)
-    find_by('store @> ?', { haupt_person: { pk_Hauptperson: hauptperson_id } }.to_json)
+    with_deleted.find_by('store @> ?', { haupt_person: { pk_Hauptperson: hauptperson_id } }.to_json)
   end
 end

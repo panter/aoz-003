@@ -7,7 +7,9 @@ class Assignment < ApplicationRecord
   has_many :trial_feedbacks, as: :trial_feedbackable
   has_one :assignment_log
 
-  validates :client_id, uniqueness: { scope: :volunteer_id, message: I18n.t('assignment_exists') }
+  validates :client_id, uniqueness: {
+    scope: :volunteer_id, message: I18n.t('assignment_exists')
+  }
 
   def last_feedback
     feedbacks.where(author: volunteer.user).last

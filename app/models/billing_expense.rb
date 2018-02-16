@@ -2,9 +2,9 @@ class BillingExpense < ApplicationRecord
   include ImportRelation
   include FullBankDetails
 
-  attr_accessor :skip_validation_for_import
+  attr_accessor :import_mode
 
-  before_validation :compute_amount, unless: :import?
+  before_validation :compute_amount, unless: :import_mode
 
   belongs_to :volunteer, -> { with_deleted }, inverse_of: 'billing_expenses'
   belongs_to :user, -> { with_deleted }, inverse_of: 'billing_expenses'
@@ -14,7 +14,7 @@ class BillingExpense < ApplicationRecord
 
   AMOUNT = [50, 100, 150].freeze
 
-  validates :amount, inclusion: { in: AMOUNT }, unless: :import?
+  validates :amount, inclusion: { in: AMOUNT }, unless: :import_mode
 
   private
 
@@ -29,9 +29,5 @@ class BillingExpense < ApplicationRecord
     else
       self.amount = 0
     end
-  end
-
-  def import?
-    @skip_validation_for_import
   end
 end

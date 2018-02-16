@@ -18,6 +18,7 @@ class JournalTransform < Transformer
     return if person.blank?
     assignment = fetch_or_import_assignment(access_journal)
     local_journal = Journal.create!(prepare_attributes(access_journal, person, assignment))
+    local_journal.delete if person.deleted? || assignment.terminated?
     update_timestamps(local_journal, access_journal[:d_ErfDatum], access_journal[:d_MutDatum])
   end
 

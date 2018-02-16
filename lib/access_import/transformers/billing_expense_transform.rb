@@ -16,11 +16,12 @@ class BillingExpenseTransform < Transformer
     volunteer = get_volunteer(entschaedigung[:fk_PersonenRolle])
     return if volunteer.blank?
     billing_expense = BillingExpense.new(prepare_attributes(entschaedigung, volunteer))
-    billing_expense.skip_validation_for_import = true
+    billing_expense.import_mode = true
     billing_expense.save!
     if entschaedigung[:z_Stunden].positive?
-      Hour.create(volunteer: volunteer, hourable: volunteer.assignments&.last || volunteer.group_offers&.last,
-        billing_expense: billing_expense, hours: entschaedigung[:z_Stunden], meeting_date: entschaedigung[:d_Datum])
+      Hour.create(volunteer: volunteer, meeting_date: entschaedigung[:d_Datum],
+        hourable: get_dummy_hour_hourable(volunteer),
+        billing_expense: billing_expense, hours: entschaedigung[:z_Stunden])
     end
     update_timestamps(billing_expense, entschaedigung[:d_Datum])
   end
@@ -37,5 +38,10 @@ class BillingExpenseTransform < Transformer
 
   def get_volunteer(personen_rollen_id)
     @ac_import.volunteer_transform.get_or_create_by_import(personen_rollen_id)
+  end
+
+  def get_dummy_hour_hourable(volunteer)
+    Assignment.with_deleted.find_by(volunteer: volunteer) ||
+      GroupAssignment.with_deleted.find_by(volunteer: volunteer).group_offer
   end
 end

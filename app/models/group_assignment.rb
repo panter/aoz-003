@@ -2,6 +2,8 @@ class GroupAssignment < ApplicationRecord
   include VolunteersGroupAndTandemStateUpdate
   include GroupAssignmentCommon
 
+  attr_accessor :skip_volunteer_unique_validation
+
   after_save :update_group_offer_search_field
 
   has_many :group_assignment_logs
@@ -13,8 +15,9 @@ class GroupAssignment < ApplicationRecord
 
   validates :volunteer, uniqueness: {
     scope: :group_offer,
+    condition: (-> { unterminated }),
     message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
-  }
+  }, unless: :skip_volunteer_unique_validation
 
   scope :running, (-> { no_end.have_start })
 
@@ -53,6 +56,12 @@ class GroupAssignment < ApplicationRecord
 
   def group_assignment?
     true
+  end
+
+  def import_terminate(user, date)
+    update(termination_submitted_at: date, termination_submitted_by: user,
+      termination_verified_at: date, termination_verified_by: user, period_end_set_by: user,
+      period_end: period_end || date)
   end
 
   private

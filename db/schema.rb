@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180213120647) do
+ActiveRecord::Schema.define(version: 20180216165632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -349,7 +349,6 @@ ActiveRecord::Schema.define(version: 20180213120647) do
     t.date "period_end"
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
-    t.boolean "active", default: true
     t.datetime "submitted_at"
     t.bigint "period_end_set_by_id"
     t.bigint "termination_submitted_by_id"
@@ -362,7 +361,6 @@ ActiveRecord::Schema.define(version: 20180213120647) do
     t.text "term_feedback_transfair"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["active"], name: "index_group_assignments_on_active"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["period_end"], name: "index_group_assignments_on_period_end"
@@ -374,7 +372,6 @@ ActiveRecord::Schema.define(version: 20180213120647) do
     t.index ["termination_submitted_by_id"], name: "index_group_assignments_on_termination_submitted_by_id"
     t.index ["termination_verified_at"], name: "index_group_assignments_on_termination_verified_at"
     t.index ["termination_verified_by_id"], name: "index_group_assignments_on_termination_verified_by_id"
-    t.index ["volunteer_id", "group_offer_id", "active"], name: "group_assignment_group_offer_volunteer", unique: true
     t.index ["volunteer_id"], name: "index_group_assignments_on_volunteer_id"
   end
 

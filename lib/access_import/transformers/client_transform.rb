@@ -11,7 +11,7 @@ class ClientTransform < Transformer
       entry_date: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
       comments: comments(begleitet, personen_rolle, haupt_person),
       relatives_attributes: relatives_attrs(relatives)
-    }.merge(handle_acceptance_state(personen_rolle)).merge(contact_attributes(haupt_person))
+    }.merge(contact_attributes(haupt_person))
       .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
         personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,
@@ -20,13 +20,11 @@ class ClientTransform < Transformer
 
   def handle_acceptance_state(personen_rolle)
     if personen_rolle[:d_Rollenende].blank? && personen_rolle[:d_Rollenbeginn].blank?
-      { acceptance: :accepted }
+      {}
     elsif personen_rolle[:d_Rollenende].blank?
-      { acceptance: :accepted,
-        accepted_at: personen_rolle[:d_Rollenbeginn] }
+      { accepted_at: personen_rolle[:d_Rollenbeginn] }
     else
-      { acceptance: :resigned,
-        accepted_at: personen_rolle[:d_Rollenbeginn],
+      { accepted_at: personen_rolle[:d_Rollenbeginn],
         resigned_at: personen_rolle[:d_Rollenende] }
     end
   end
@@ -35,7 +33,7 @@ class ClientTransform < Transformer
     return @entity if get_import_entity(:client, personen_rollen_id).present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     client = Client.create(prepare_attributes(personen_rolle))
-    client.resigned_at = personen_rolle[:d_Rollenende] if client.resigned?
+    handle_acceptance_state(personen_rolle)
     update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 

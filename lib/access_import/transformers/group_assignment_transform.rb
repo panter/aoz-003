@@ -5,10 +5,12 @@ class GroupAssignmentTransform < Transformer
     {
       period_start: einsatz[:d_EinsatzVon],
       period_end: einsatz[:d_EinsatzBis],
-      volunteer: volunteer,
-      import_attributes: access_import(:tbl_FreiwilligenEinsätze, einsatz[:pk_FreiwilligenEinsatz],
-        freiwilligen_einsatz: einsatz)
+      created_at: einsatz[:d_EinsatzVon],
+      updated_at: einsatz[:d_MutDatum],
+      volunteer: volunteer
     }.merge(termination_attributes(einsatz))
+      .merge(import_attributes(:tbl_FreiwilligenEinsätze, einsatz[:pk_FreiwilligenEinsatz],
+        freiwilligen_einsatz: einsatz))
   end
 
   def termination_attributes(einsatz)
@@ -18,8 +20,7 @@ class GroupAssignmentTransform < Transformer
       termination_submitted_by: @ac_import.import_user,
       termination_verified_by: @ac_import.import_user,
       termination_submitted_at: einsatz[:d_EinsatzBis],
-      termination_verified_at: einsatz[:d_EinsatzBis],
-      active: false
+      termination_verified_at: einsatz[:d_EinsatzBis]
     }
   end
 
@@ -31,6 +32,7 @@ class GroupAssignmentTransform < Transformer
     return group_assignment if group_offer.blank?
     group_assignment.group_offer = group_offer
     group_assignment.save!
+    # group_assignment.import_terminate(@ac_import.import_user, einsatz[:d_EinsatzBis]) if group_assignment.terminated?
     update_timestamps(group_assignment, einsatz[:d_EinsatzVon], einsatz[:d_MutDatum])
   end
 

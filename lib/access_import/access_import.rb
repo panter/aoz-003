@@ -69,6 +69,19 @@ class AccessImport
     display_stats(BillingExpense, Hour)
   end
 
+  def terminate_clients
+    Client.merge(:import).where.not(resigned_at: nil).map do |client|
+      client.resigned!
+      client.update(updated_at: client.import.store['personen_rolle']['d_MutDatum'],
+        resigned_at: client.import.store['personen_rolle']['d_Rollenende'])
+    end
+    Volunteer.merge(:import).where.not(resigned_at: nil).map do |volunteer|
+      volunteer.resigned!
+      volunteer.update(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
+        resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
+    end
+  end
+
   def self.finalize
     proc { User.find_by(email: EMAIL).delete }
   end

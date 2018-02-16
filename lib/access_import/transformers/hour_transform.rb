@@ -13,9 +13,11 @@ class HourTransform < Transformer
     return @entity if get_import_entity(:hour, erfassung_id).present?
     erfassung ||= @stundenerfassung.find(erfassung_id)
     hourable = get_hourable(erfassung)
+    return if hourable.blank? || hourable.deleted?
     volunteer = get_volunteer(erfassung)
-    return if hourable.blank? || volunteer.blank?
+    return if volunteer.blank? || volunteer.deleted?
     hour = Hour.create(prepare_attributes(erfassung, hourable, volunteer))
+    binding.pry if hour.hourable_id.blank?
     update_timestamps(hour, hour.meeting_date)
   end
 
@@ -43,7 +45,7 @@ class HourTransform < Transformer
   def mark_hours_unbillable(volunteer)
     billing_expense = BillingExpense.new(volunteer: volunteer, user: @ac_import.import_user,
       hours: volunteer.hours, iban: volunteer.iban, bank: volunteer.bank, amount: 0)
-    billing_expense.skip_validation_for_import = true
+    billing_expense.import_mode = true
     billing_expense.save!
     billing_expense.update(created_at: billing_expense.hours.maximum(:created_at),
       updated_at: billing_expense.hours.maximum(:created_at))

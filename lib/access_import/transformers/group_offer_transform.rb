@@ -54,7 +54,7 @@ class GroupOfferTransform < Transformer
         period_end_set_by: @ac_import.import_user, termination_verified_by: @ac_import.import_user)
     end
     group_offer.group_assignments.each do |ga|
-      ga.update(updated_at: ga.import.store['freiwilligen_einsatz']['d_MutDatum'])
+      ga.assign_attributes(updated_at: ga.import.store['freiwilligen_einsatz']['d_MutDatum'])
     end
     start_time = group_offer.group_assignments.minimum(:period_start)
     group_offer.period_start = start_time
@@ -64,8 +64,13 @@ class GroupOfferTransform < Transformer
   def filter_non_unique_volunteer(group_assignments)
     return group_assignments if group_assignments.size < 2
     group_assignments.group_by(&:volunteer).flat_map do |_, g_assignments|
-      g_assignments.sort_by(&:updated_at).last
-    end
+      not_terminated = g_assignments.find_all { |ga| !ga.terminated? } .sort_by(&:updated_at)
+      [not_terminated.pop] + g_assignments.find_all(&:terminated?) +
+        not_terminated.map do |ga|
+          ga.import_terminate(@ac_import.import_user, ga.period_end || Time.zone.now)
+          ga
+        end
+    end.compact
   end
 
   def grouped_group_assignments(group_assignments)

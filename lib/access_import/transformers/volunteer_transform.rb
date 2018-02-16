@@ -16,6 +16,7 @@ class VolunteerTransform < Transformer
       birth_year: haupt_person[:d_Geburtsdatum],
       nationality: haupt_person[:nationality],
       accepted_at: personen_rolle[:d_Rollenbeginn],
+      resigned_at: personen_rolle[:d_Rollenende],
       registrar: @ac_import.import_user
     }.merge(prepare_kontoangaben(personen_rolle[:fk_Hauptperson]))
       .merge(language_skills_attributes(haupt_person[:sprachen]))
@@ -28,7 +29,7 @@ class VolunteerTransform < Transformer
     return @entity if get_import_entity(:volunteer, personen_rollen_id).present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     volunteer = Volunteer.create!(prepare_attributes(personen_rolle))
-    handle_volunteer_state(volunteer, personen_rolle)
+    update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
   def import_multiple(personen_rollen)
@@ -39,15 +40,6 @@ class VolunteerTransform < Transformer
 
   def import_all(personen_rollen = nil)
     import_multiple(personen_rollen || @personen_rolle.all_volunteers)
-  end
-
-  def handle_volunteer_state(volunteer, personen_rolle)
-    period_end = personen_rolle[:d_Rollenende]
-    if period_end.present?
-      volunteer.resigned!
-      volunteer.update(resigned_at: period_end)
-    end
-    update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
   def konto_angaben(haupt_person_id = nil)
