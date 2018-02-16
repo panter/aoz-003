@@ -4,11 +4,9 @@ class HourTransform < Transformer
       hourable: hourable,
       volunteer: volunteer,
       hours: erfassung[:z_Stundenzahl],
-      meeting_date: erfassung[:d_MutDatum],
-      import_attributes: access_import(
-        :tbl_Stundenerfassung, erfassung[:pk_Stundenerfassung], erfassung: erfassung
-      )
-    }
+      meeting_date: erfassung[:d_MutDatum]
+    }.merge(import_attributes(:tbl_Stundenerfassung, erfassung[:pk_Stundenerfassung],
+      erfassung: erfassung))
   end
 
   def get_or_create_by_import(erfassung_id, erfassung = nil)

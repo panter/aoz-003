@@ -5,12 +5,9 @@ class BillingExpenseTransform < Transformer
       amount: entschaedigung[:z_Betrag],
       user: @ac_import.import_user,
       bank: entschaedigung[:t_Empfängerkonto],
-      iban: volunteer.iban,
-      import_attributes: access_import(
-        :tbl_FreiwilligenEntschädigung, entschaedigung[:pk_FreiwilligenEntschädigung],
-        entschaedigung: entschaedigung
-      )
-    }
+      iban: volunteer.iban
+    }.merge(import_attributes(:tbl_FreiwilligenEntschädigung,
+      entschaedigung[:pk_FreiwilligenEntschädigung], entschaedigung: entschaedigung))
   end
 
   def get_or_create_by_import(entschaedigung_id, entschaedigung = nil)

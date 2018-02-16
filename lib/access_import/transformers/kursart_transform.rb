@@ -3,9 +3,8 @@ class KursartTransform < Transformer
 
   def prepare_attributes(kursart)
     {
-      category_name: kursart[:t_Bezeichnung],
-      import_attributes: access_import(:tbl_Kursarten, kursart[:pk_Kursart], kursart: kursart)
-    }
+      category_name: kursart[:t_Bezeichnung]
+    }.merge(import_attributes(:tbl_Kursarten, kursart[:pk_Kursart], kursart: kursart))
   end
 
   def get_or_create_by_import(kursart_id, kursart = nil)

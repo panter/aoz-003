@@ -8,9 +8,8 @@ class GroupOfferTransform < Transformer
       location: group_offer_fields[:location],
       schedule_details: nil,
       group_offer_category: group_offer_category,
-      creator: @ac_import.import_user,
-      import_attributes: access_import(:no_table_reference, nil, kurs: nil)
-    }
+      creator: @ac_import.import_user
+    }.merge(import_attributes(:no_table_reference, nil, kurs: nil))
   end
 
   def get_or_create_by_import(group_assignments, *group_offer_fields)

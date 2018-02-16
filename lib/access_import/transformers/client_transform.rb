@@ -7,18 +7,15 @@ class ClientTransform < Transformer
       user: @ac_import.import_user,
       nationality: haupt_person[:nationality],
       salutation: haupt_person[:salutation],
-      contact_attributes: contact_attributes(haupt_person),
-      language_skills_attributes: language_skills_attributes(haupt_person[:sprachen]),
       birth_year: haupt_person[:d_Geburtsdatum],
       entry_date: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
       comments: comments(begleitet, personen_rolle, haupt_person),
-      relatives_attributes: relatives_attrs(relatives),
-      import_attributes: access_import(
-        :tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle], personen_rolle: personen_rolle,
-        haupt_person: haupt_person, familien_rolle: familien_rolle, begleitet: begleitet,
-        relatives: relatives && relatives
-      )
-    }.merge(handle_acceptance_state(personen_rolle))
+      relatives_attributes: relatives_attrs(relatives)
+    }.merge(handle_acceptance_state(personen_rolle)).merge(contact_attributes(haupt_person))
+      .merge(language_skills_attributes(haupt_person[:sprachen]))
+      .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
+        personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,
+        begleitet: begleitet, relatives: relatives && relatives))
   end
 
   def handle_acceptance_state(personen_rolle)

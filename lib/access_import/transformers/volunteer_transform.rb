@@ -15,16 +15,13 @@ class VolunteerTransform < Transformer
       salutation: haupt_person[:salutation],
       birth_year: haupt_person[:d_Geburtsdatum],
       nationality: haupt_person[:nationality],
-      language_skills_attributes: language_skills_attributes(haupt_person[:sprachen]),
-      contact_attributes: contact_attributes(
-        haupt_person.merge(email: "importiert#{Time.zone.now.to_f}@example.com")
-      ),
-      registrar: @ac_import.import_user,
-      import_attributes: access_import(
-        :tbl_Personenrollen, personen_rolle[:pk_PersonenRolle], personen_rolle: personen_rolle,
-        haupt_person: haupt_person.merge(email: original_email)
-      )
+      accepted_at: personen_rolle[:d_Rollenbeginn],
+      registrar: @ac_import.import_user
     }.merge(prepare_kontoangaben(personen_rolle[:fk_Hauptperson]))
+      .merge(language_skills_attributes(haupt_person[:sprachen]))
+      .merge(contact_attributes(haupt_person.merge(email: import_time_email)))
+      .merge(import_attributes(:tbl_Personenrollen, personen_rolle[:pk_PersonenRolle],
+        personen_rolle: personen_rolle,haupt_person: haupt_person.merge(email: original_email)))
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)

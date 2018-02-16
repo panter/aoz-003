@@ -15,7 +15,9 @@ class Transformer
     @entity ||= Import.get_imported(class_name.to_s.singularize.classify, access_record_id)
   end
 
-
+  def import_time_email
+    "importiert#{Time.zone.now.to_f}@example.com"
+  end
 
   def update_timestamps(record, date, updated_date = nil)
     record.update(created_at: date, updated_at: updated_date || date)
@@ -36,7 +38,6 @@ class Transformer
     5 => 'Andere',
     6 => 'Animation A'
   }.freeze
-
 
   EINSATZ_ROLLEN = OpenStruct.new(freiwillige: 1, begleitete: 2, animator: 3, teilnehmende: 4)
 end
