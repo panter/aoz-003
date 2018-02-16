@@ -8,11 +8,11 @@ namespace :access do
       @acimport.make_clients
       @acimport.make_assignments
       @acimport.make_group_offers
-      @acimport.make_hours
       @acimport.make_billing_expenses
       @acimport.make_journal
       @acimport.terminate_clients
       @acimport.overall_stats
+      @acimport.make_hours
     else
       warn 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
     end
