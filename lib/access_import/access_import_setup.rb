@@ -27,7 +27,9 @@ module AccessImportSetup
 
   def create_or_fetch_import_user
     return User.find_by(email: IMPORT_USER_EMAIL) if User.exists?(email: IMPORT_USER_EMAIL)
-    return User.deleted.find_by(email: IMPORT_USER_EMAIL).restore if User.deleted.exists?(email: IMPORT_USER_EMAIL)
+    if User.deleted.exists?(email: IMPORT_USER_EMAIL)
+      return User.deleted.find_by(email: IMPORT_USER_EMAIL).restore
+    end
     import_user = FactoryBot.create :user, email: IMPORT_USER_EMAIL, password: SecureRandom.hex(60)
     import_user.profile.contact.first_name = IMPORT_USER_NAME
     import_user.profile.contact.last_name = IMPORT_USER_NAME
@@ -39,9 +41,17 @@ module AccessImportSetup
   # Shell Output
   #
 
+  def shell_message(message)
+    puts message
+  end
+
+  def start_message(import_model)
+    shell_message "Start Importing #{import_model.to_s.classify.pluralize}"
+  end
+
   def display_stats(*models)
     models.each do |model|
-      puts stat_text(model)
+      shell_message stat_text(model)
     end
   end
 
@@ -50,8 +60,8 @@ module AccessImportSetup
   end
 
   def overall_stats
-    puts "Overall imported #{Import.count} records"
-    puts imported_stat_texts.join("\n")
+    shell_message "Overall imported #{Import.count} records"
+    shell_message imported_stat_texts.join("\n")
   end
 
   def imported_stat_texts

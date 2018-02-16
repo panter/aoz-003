@@ -6,65 +6,67 @@ class AccessImport
   include AccessImportTransformers
 
   def make_departments
-    puts 'Importing Departments'
+    start_message(:department)
     department_transform.import_all
     display_stats(Department)
   end
 
   def make_clients
-    puts 'Importing Clients'
+    start_message(:client)
     client_transform.import_all
     display_stats(Client)
   end
 
   def make_volunteers
-    puts 'Importing Volunteers'
+    start_message(:volunteer)
     volunteer_transform.import_all
+
     display_stats(Volunteer)
   end
 
   def make_assignments
-    puts 'Importing Assignments'
+    start_message(:assignment)
     assignment_transform.import_all
     display_stats(Assignment, Volunteer, Client)
   end
 
   def make_group_offers
-    puts 'Importing GroupOffers'
-    # puts '... from Kurse'
+    start_message(:group_offer)
+
+    # TODO: Need to find out if this import is really needed, and then fix it,
+    #       because it possibly doesn't work propperly
+    #
+    # shell_message '... from Kurse'
     # kurs_transform.import_all
-    # display_stats(GroupOffer)
-    # display_stats(GroupAssignment)
-    puts '... from Animation f'
+    # display_stats(GroupOffer, GroupAssignment)
+
+    shell_message '... from Animation f'
     group_offer_transform.import_all
-    display_stats(GroupOffer)
-    display_stats(GroupAssignment)
-    puts '... from Kurzeinsatz'
+    display_stats(GroupOffer, GroupAssignment)
+    shell_message '... from Kurzeinsatz'
     group_offer_transform.import_all(@freiwilligen_einsaetze.where_kurzeinsatz)
-    display_stats(GroupOffer)
-    display_stats(GroupAssignment)
-    puts '... from Andere'
+    display_stats(GroupOffer, GroupAssignment)
+    shell_message '... from Andere'
     group_offer_transform.import_all(@freiwilligen_einsaetze.where_andere)
-    display_stats(GroupOffer)
-    display_stats(GroupAssignment)
+    display_stats(GroupOffer, GroupAssignment)
   end
 
   def make_journal
-    puts 'Importing Journals'
+    start_message(:journal)
     journal_transform.import_all
     display_stats(Journal)
   end
 
   def make_hours
-    puts 'Importing Hours'
+    start_message(:hour)
     hour_transform.import_all
     display_stats(Hour)
   end
 
   def make_billing_expenses
-    puts 'Importing BillingExpenses'
+    start_message(:billing_expense)
     billing_expense_transform.import_all
-    display_stats(BillingExpense, Volunteer)
+    display_stats(BillingExpense, Hour)
   end
 
   def self.finalize

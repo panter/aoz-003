@@ -32,8 +32,8 @@ module AccessImportTransformers
   end
 
   def kurs_transform
-    @kurs_transform ||= KursTransform.new(self, @kurse, @begleitete, @haupt_person, @familien_rollen,
-      @personen_rolle, @kursarten, @freiwilligen_einsaetze, @einsatz_orte)
+    @kurs_transform ||= KursTransform.new(self, @kurse, @begleitete, @haupt_person,
+      @familien_rollen, @personen_rolle, @kursarten, @freiwilligen_einsaetze, @einsatz_orte)
   end
 
   def kursart_transform
