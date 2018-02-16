@@ -3,7 +3,7 @@
 
   .row
     .col-xs-12
-      = f.input :kind, collection: Event.kind_collection, selected: @event.kind, label: 'Art', include_blank: true
+      = f.input :kind, collection: Event.kind_collection, label: 'Art', include_blank: false
   .row
     .col-xs-12
       = f.input :title, label: 'Titel'
@@ -13,9 +13,9 @@
     .col-xs-12.col-md-4
       = f.input :date, as: :date_picker, wrapper: :date_picker, label: 'Datum'
     .col-xs-12.col-md-2
-      = f.input :start_time, as: :time, label: 'Startzeit'
+      = f.input :start_time, as: :time, label: 'Startzeit', include_blank: true
     .col-xs-12.col-md-2
-      = f.input :end_time, as: :time, label: 'Endzeit'
+      = f.input :end_time, as: :time, label: 'Endzeit', include_blank: true
   .row
     .col-xs-12
       = f.input :description, label: 'Beschreibung'

@@ -14,9 +14,11 @@ h1 Veranstaltungen
     tbody
       - @events.each do |event|
         tr
-          td= t(".#{event.kind}")
-          td= l(event.date.to_date)
-          td= "#{(event.start_time.strftime('%H:%M'))} - #{(event.end_time.strftime('%H:%M'))}"
+          td= t(".#{event.kind}") if event.kind
+          td= l(event.date.to_date) if event.date
+          td
+            = "#{(event.start_time.strftime('%H:%M'))} - " if event.start_time
+            = "#{(event.end_time.strftime('%H:%M'))}" if event.end_time
           td= event.title if event.title
           td= event.department.contact.last_name if event.department
           td.index-action-cell.hidden-print

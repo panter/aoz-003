@@ -19,7 +19,7 @@ class EventsTest < ApplicationSystemTestCase
     click_button 'Create Veranstaltung'
 
     assert page.has_text? 'Titel asdf'
-    assert page.has_text? 'Beschreibung asdg'
-    assert page.has_link? 'Event Department'
+    assert page.has_text? 'Beschreibung asdf'
+    assert page.has_text? 'Event Department'
   end
 end

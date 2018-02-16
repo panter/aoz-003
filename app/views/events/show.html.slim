@@ -9,10 +9,12 @@ h2= @event.title if @event.title
         td= t(".#{@event.kind}") if @event.kind
       tr
         td Datum
-        td= l(@event.date.to_date)
+        td= l(@event.date.to_date) if @event.date
       tr
         td Zeit
-        td= "#{(@event.start_time.strftime('%H:%M'))} - #{(@event.end_time.strftime('%H:%M'))}"
+        td
+          = "#{(@event.start_time.strftime('%H:%M'))} - " if @event.start_time
+          = "#{(@event.end_time.strftime('%H:%M'))}" if @event.end_time
       tr
         td Departement
         td= @event.department.contact.last_name if @event.department
