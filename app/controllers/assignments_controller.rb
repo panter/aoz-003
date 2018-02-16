@@ -97,9 +97,9 @@ class AssignmentsController < ApplicationController
   end
 
   def update_terminated_at
-    @assignment.volunteer.waive = assignment_params[:volunteer_attributes][:waive] == '1'
-    @assignment.assign_attributes(termination_submitted_at: Time.zone.now,
-      termination_submitted_by: current_user)
+    @assignment.volunteer.waive = waive_param_true?
+    @assignment.assign_attributes(assignment_params.except(:volunteer_attributes)
+      .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
     if @assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@assignment).deliver_now
       redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
@@ -123,6 +123,10 @@ class AssignmentsController < ApplicationController
     else
       redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
     end
+  end
+
+  def waive_param_true?
+    assignment_params[:volunteer_attributes][:waive] == '1'
   end
 
   def terminate_reminder_mailing

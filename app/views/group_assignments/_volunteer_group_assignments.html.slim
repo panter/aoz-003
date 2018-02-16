@@ -35,9 +35,6 @@ table.table.table-striped.group-assignments-table
             - if policy(group_assignment.group_offer).edit?
               = link_to t_action(:edit), edit_group_offer_path(group_assignment.group_offer)
           td
-            - if policy(GroupOffer).destroy?
-              = link_to t_action(:delete), group_offer_path(group_assignment.group_offer), confirm_deleting(group_assignment.group_offer)
-          td
             - if policy(group_assignment.group_offer).change_active_state?
               = link_to "#{ group_assignment.group_offer.active? ? t('.deactivate') : t('.activate') }",
                 change_active_state_group_offer_path(group_assignment.group_offer), method: :put, remote: :true

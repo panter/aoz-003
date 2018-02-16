@@ -75,27 +75,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_link? 'Activate'
   end
 
-  test 'deleting volunteer from group offer creates log entry without an agreement' do
-    login_as create(:user)
-    volunteer = create :volunteer
-    group_offer = create :group_offer, volunteers: [volunteer]
-
-    visit volunteer_path(volunteer)
-    assert page.has_text? 'Active group offers'
-    assert page.has_link? group_offer.title
-    refute page.has_text? 'Group offers log'
-
-    visit edit_group_offer_path(group_offer)
-    click_link 'Löschen'
-    click_button 'Update Group offer'
-
-    visit volunteer_path(volunteer)
-    refute page.has_text? 'Active group offers'
-    assert page.has_text? 'Group offers log'
-    assert page.has_link? group_offer.title
-    refute page.has_link? 'Download'
-  end
-
   test 'modifying volunteer dates does not create a log entry' do
     login_as create(:user)
     volunteer = create :volunteer
@@ -105,25 +84,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? 'Active group offers'
     assert page.has_link? group_offer.title
     refute page.has_text? 'Group offers log'
-  end
-
-  test 'deleting group offer creates log and does not crash volunteer show' do
-    login_as create(:user)
-    volunteer = create :volunteer
-    group_offer = create :group_offer, volunteers: [volunteer]
-    title = group_offer.title
-
-    visit volunteer_path(volunteer)
-    assert page.has_text? 'Active group offers'
-    assert page.has_link? group_offer.title
-    refute page.has_text? 'Group offers log'
-
-    GroupOffer.last.destroy
-
-    visit volunteer_path(volunteer)
-    refute page.has_text? 'Active group offers'
-    assert page.has_text? 'Group offers log'
-    assert page.has_text? title
   end
 
   test 'deleting_volunteer_does_not_crash_group_offer_show' do
