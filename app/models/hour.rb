@@ -9,7 +9,7 @@ class Hour < ApplicationRecord
   belongs_to :reviewer, -> { with_deleted }, class_name: 'User', foreign_key: 'reviewer_id',
     inverse_of: 'reviewed_hours', optional: true
 
-  belongs_to :billing_expense, optional: true
+  belongs_to :billing_expense, -> { with_deleted }, optional: true, inverse_of: 'hours'
   belongs_to :certificate, optional: true
 
   validates :minutes, presence: true, numericality: { greater_than_or_equal_to: 0 }

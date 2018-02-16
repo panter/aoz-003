@@ -27,7 +27,8 @@ module AccessImportTransformers
   end
 
   def journal_transform
-    @journal_transform ||= JournalTransform.new(self, @freiwilligen_einsaetze, @journale, @personen_rolle, @haupt_person)
+    @journal_transform ||= JournalTransform.new(self, @freiwilligen_einsaetze, @journale,
+      @personen_rolle, @haupt_person)
   end
 
   def kurs_transform
@@ -40,7 +41,8 @@ module AccessImportTransformers
   end
 
   def volunteer_transform
-    @volunteer_transform ||= VolunteerTransform.new(self, @haupt_person, @personen_rolle, @kontoangaben)
+    @volunteer_transform ||= VolunteerTransform.new(self, @haupt_person, @personen_rolle,
+      @kontoangaben, @stundenerfassung)
   end
 
   def billing_expense_transform
