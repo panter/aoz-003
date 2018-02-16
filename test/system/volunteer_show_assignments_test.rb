@@ -7,7 +7,9 @@ class VolunteerShowAssignmentsTest < ApplicationSystemTestCase
     @assignment = create :assignment, volunteer: @volunteer, period_start: 2.weeks.ago,
       period_end: nil, creator: @superadmin
     @assignment_log = create :assignment, volunteer: @volunteer, period_start: 2.weeks.ago,
-      period_end: 2.days.ago, creator: @superadmin
+      period_end: 2.days.ago, creator: @superadmin, termination_submitted_at: 2.days.ago,
+      termination_submitted_by: @volunteer.user, period_end_set_by: @superadmin,
+      termination_verified_at: 2.days.ago, termination_verified_by: @superadmin
     @assignment_log.destroy
   end
 
