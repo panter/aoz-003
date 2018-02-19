@@ -1,6 +1,8 @@
 require 'acc_utils'
 require 'ostruct'
 
+# Transformer creates Rails records from Access records
+#
 class Transformer
   include AccUtils
 

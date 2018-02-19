@@ -1,3 +1,5 @@
+# sort of singleton instance methods for the transformers
+#
 module AccessImportTransformers
   def assignment_transform
     @assignment_transform ||= AssignmentTransform.new(self, @begleitete, @freiwilligen_einsaetze,

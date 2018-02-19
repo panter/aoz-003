@@ -10,7 +10,9 @@ class ClientTransform < Transformer
       birth_year: haupt_person[:d_Geburtsdatum],
       entry_date: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
       comments: comments(begleitet, personen_rolle, haupt_person),
-      relatives_attributes: relatives_attrs(relatives)
+      relatives_attributes: relatives_attrs(relatives),
+      accepted_at: personen_rolle[:d_Rollenbeginn],
+      resigned_at: personen_rolle[:d_Rollenende]
     }.merge(contact_attributes(haupt_person))
       .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
@@ -18,23 +20,11 @@ class ClientTransform < Transformer
         begleitet: begleitet, relatives: relatives && relatives))
   end
 
-  def handle_acceptance_state(personen_rolle)
-    if personen_rolle[:d_Rollenende].blank? && personen_rolle[:d_Rollenbeginn].blank?
-      {}
-    elsif personen_rolle[:d_Rollenende].blank?
-      { accepted_at: personen_rolle[:d_Rollenbeginn] }
-    else
-      { accepted_at: personen_rolle[:d_Rollenbeginn],
-        resigned_at: personen_rolle[:d_Rollenende] }
-    end
-  end
-
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
     client = get_import_entity(:client, personen_rollen_id)
     return client if client.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     client = Client.create(prepare_attributes(personen_rolle))
-    handle_acceptance_state(personen_rolle)
     update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 

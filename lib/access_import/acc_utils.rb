@@ -8,6 +8,9 @@ module AccUtils
     end.to_h
   end
 
+  # normalize hash keys from access db
+  # they can be with uppercase and special chars
+  #
   def down_hkeys(row)
     row.transform_keys { |key| key.to_s.underscore.to_sym }
   end

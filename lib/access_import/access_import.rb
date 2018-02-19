@@ -69,21 +69,28 @@ class AccessImport
     display_stats(BillingExpense, Hour)
   end
 
-  def terminate_clients
-    Client.field_not_nil(:resigned_at).each do |client|
+  # Terminate Client and Volunteer at the very end, so their termination won't block
+  # other related records import
+  #
+  def run_acceptance_termination_on_clients_and_volunteers
+    terminated_clients = Client.field_not_nil(:resigned_at).map do |client|
       client.resigned!
       client.update(updated_at: client.import.store['personen_rolle']['d_MutDatum'],
-        resigned_at: client.import.store['personen_rolle']['d_Rollenende'])
+        resigned_at: client.import.store['personen_rolle']['d_Rollenende'],
+        resigned_by: @import_user)
+      client
     end
-
-    Volunteer.field_not_nil(:resigned_at).each do |volunteer|
+    terminated_volunteers = Volunteer.field_not_nil(:resigned_at).map do |volunteer|
       volunteer.resigned!
       volunteer.update(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
         resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
+      volunteer
     end
+    [terminated_clients, terminated_volunteers]
   end
 
+  # Clean up after imports finished
   def self.finalize
-    proc { User.find_by(email: EMAIL).delete }
+    proc { User.find_by(email: EMAIL).delete } # Remove the import user with softdelete
   end
 end

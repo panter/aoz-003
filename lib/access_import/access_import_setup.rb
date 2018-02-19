@@ -25,6 +25,15 @@ module AccessImportSetup
       end
   end
 
+  def setup_class_variables(*accessors)
+    accessors.each do |accessor|
+      class_eval { attr_reader accessor.class.name.underscore.to_sym }
+      instance_variable_set("@#{accessor.class.name.underscore}", accessor)
+    end
+  end
+
+  # Create Import user, needed for creating records that depend on a creator user
+  #
   def create_or_fetch_import_user
     return User.find_by(email: IMPORT_USER_EMAIL) if User.exists?(email: IMPORT_USER_EMAIL)
     if User.deleted.exists?(email: IMPORT_USER_EMAIL)
@@ -38,7 +47,7 @@ module AccessImportSetup
     import_user
   end
 
-  # Shell Output
+  # Shell Output methods
   #
 
   def shell_message(message)
@@ -49,6 +58,7 @@ module AccessImportSetup
     shell_message "Start Importing #{import_model.to_s.classify.pluralize}"
   end
 
+  # display amount of imports for models
   def display_stats(*models)
     models.each do |model|
       shell_message stat_text(model)
@@ -68,13 +78,6 @@ module AccessImportSetup
     [Assignment, Client, Department, GroupAssignment, GroupOfferCategory, GroupOffer, Hour, Journal,
      Volunteer].map do |model|
       stat_text(model)
-    end
-  end
-
-  def setup_class_variables(*accessors)
-    accessors.each do |accessor|
-      class_eval { attr_reader accessor.class.name.underscore.to_sym }
-      instance_variable_set("@#{accessor.class.name.underscore}", accessor)
     end
   end
 end

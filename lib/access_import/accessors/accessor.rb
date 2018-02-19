@@ -1,9 +1,14 @@
 require 'access_import/acc_utils'
 require 'ostruct'
 
+# Accessor normalizes and prepares Access tables and records to hashes
+#
 class Accessor
   include AccUtils
 
+  # Adds the instantiating Access Import instnace plus needed other Accessors as
+  # class variables
+  #
   def initialize(acdb, *other_accessors)
     add_other_accessors(*other_accessors) if other_accessors.any?
     @acdb = acdb
