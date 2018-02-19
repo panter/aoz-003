@@ -48,14 +48,21 @@ gem 'will-paginate-i18n'
 gem 'will_paginate'
 gem 'wkhtmltopdf-binary'
 
+group :development do
+  gem 'awesome_print'
+  gem 'i18n_yaml_sorter'
+  gem 'letter_opener'
+  gem 'overcommit', require: false
+  gem 'rubocop', require: false
+  gem 'scss_lint', require: false
+end
+
 group :production, :development do
   gem 'mdb'
   gem 'panter-rails-deploy'
 end
 
 group :development, :test do
-  gem 'minitest', '~> 5.10.3'
-  gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'capybara'
@@ -64,15 +71,11 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'i18n_yaml_sorter'
-  gem 'letter_opener'
   gem 'listen'
-  gem 'overcommit', require: false
+  gem 'minitest', '~> 5.10.3'
   gem 'policy-assertions'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rubocop', require: false
-  gem 'scss_lint', require: false
   gem 'selenium-webdriver'
   gem 'spring'
 end
