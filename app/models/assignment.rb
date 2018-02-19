@@ -2,8 +2,6 @@ class Assignment < ApplicationRecord
   include AssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
-  before_destroy :create_log_of_self_and_delete_self
-
   has_many :hours, as: :hourable
   has_many :feedbacks, as: :feedbackable
   has_many :trial_feedbacks, as: :trial_feedbackable
@@ -41,7 +39,6 @@ class Assignment < ApplicationRecord
   end
 
   def create_log_of_self
-    return false if running? # prevent deleting of running assignment
     AssignmentLog.create(
       attributes.except('id', 'created_at', 'updated_at').merge(assignment_id: id)
     )
@@ -50,11 +47,5 @@ class Assignment < ApplicationRecord
   # allow ransack to use defined scopes
   def self.ransackable_scopes(auth_object = nil)
     ['active', 'inactive', 'active_or_not_yet_active']
-  end
-
-  private
-
-  def create_log_of_self_and_delete_self
-    delete if create_log_of_self
   end
 end
