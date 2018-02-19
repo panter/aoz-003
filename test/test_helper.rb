@@ -69,13 +69,15 @@ class ActiveSupport::TestCase
       .map { |action| [action.to_sym, "#{action}?"] }.to_h
   end
 
-  def actions_list(*choices)
+  def actions_list(*choices, except: nil)
     if choices.any?
       controllers_action_list.values_at(
         *choices.map { |choice| choice.to_s.remove(/\?$/).to_sym }
       )
+    elsif except.present?
+      controllers_action_list.except(*except).values
     else
-      controllers_action_list
+      controllers_action_list.values
     end
   end
 end

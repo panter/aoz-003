@@ -2,7 +2,7 @@ require 'test_helper'
 
 class VolunteerPolicyTest < PolicyAssertions::Test
   test 'superadmin_can_use_all_actions' do
-    assert_permit(create(:user), Volunteer, 'superadmin_privileges?', *actions_list.values)
+    assert_permit(create(:user), Volunteer, 'superadmin_privileges?', *actions_list)
   end
 
   test 'department_manager_has_limited_access' do
@@ -19,7 +19,7 @@ class VolunteerPolicyTest < PolicyAssertions::Test
   end
 
   test 'social_worker_has_no_access' do
-    refute_permit(create(:social_worker), Volunteer, *actions_list.values)
+    refute_permit(create(:social_worker), Volunteer, *actions_list)
   end
 
   test 'volunteer_has_limited_access' do

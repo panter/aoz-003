@@ -63,11 +63,6 @@ class GroupOffersController < ApplicationController
     end
   end
 
-  def destroy
-    @group_offer.destroy
-    redirect_to group_offers_url, make_notice
-  end
-
   def change_active_state
     if @group_offer.update(active: !@group_offer.active)
       redirect_to group_offers_url,

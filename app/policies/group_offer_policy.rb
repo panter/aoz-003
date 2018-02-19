@@ -30,8 +30,6 @@ class GroupOfferPolicy < ApplicationPolicy
   alias_method :submit_initiate_termination?, :superadmin_or_department_manager_offer?
   alias_method :end_all_assignments?,         :superadmin_or_department_manager_offer?
 
-  alias_method :destroy?, :superadmin?
-
   # supplemental policies
   alias_method :supervisor_privileges?, :superadmin?
 end

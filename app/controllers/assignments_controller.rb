@@ -68,10 +68,6 @@ class AssignmentsController < ApplicationController
     end
   end
 
-  def destroy
-    redirect_to assignments_url, make_notice
-  end
-
   def find_client
     set_volunteer
     @q = policy_scope(Client).need_accompanying.ransack(params[:q])

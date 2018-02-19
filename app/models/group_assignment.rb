@@ -3,7 +3,6 @@ class GroupAssignment < ApplicationRecord
   include GroupAssignmentCommon
 
   after_save :update_group_offer_search_field
-  before_destroy :create_log_of_self_and_delete_self
 
   has_many :group_assignment_logs
 
@@ -29,7 +28,6 @@ class GroupAssignment < ApplicationRecord
   end
 
   def create_log_of_self(start_date = period_start, end_date = period_end)
-    return false if running? # prevent deleting of running group assignment
     GroupAssignmentLog.create(
       attributes.except('id', 'created_at', 'updated_at', 'active')
         .merge(title: group_offer.title, group_assignment_id: id, period_start: start_date,
@@ -58,10 +56,6 @@ class GroupAssignment < ApplicationRecord
   end
 
   private
-
-  def create_log_of_self_and_delete_self
-    delete if create_log_of_self
-  end
 
   def update_group_offer_search_field
     group_offer.update_search_volunteers
