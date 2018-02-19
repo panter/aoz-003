@@ -67,7 +67,7 @@ Rails.application.routes.draw do
 
   resources :group_offer_categories, except: [:destroy]
 
-  resources :group_offers, concerns: :search do
+  resources :group_offers, except: [:destroy], concerns: :search do
     put :change_active_state, on: :member
     get :initiate_termination, on: :member
     put :submit_initiate_termination, on: :member
@@ -99,8 +99,8 @@ Rails.application.routes.draw do
     resources :assignments, except: [:destroy], concerns: [:assignment_feedbacks, :hours_resources]
     resources :billing_expenses, except: [:edit, :update]
     resources :certificates
-    resources :group_offers, concerns: :assignment_feedbacks
     resources :group_assignments, except: [:destroy], concerns: :hours_resources
+    resources :group_offers, except: [:destroy], concerns: :assignment_feedbacks
     resources :hours
     resources :journals, except: [:show]
   end
