@@ -99,7 +99,7 @@ Rails.application.routes.draw do
     resources :assignments, except: [:destroy], concerns: [:assignment_feedbacks, :hours_resources]
     resources :billing_expenses, except: [:edit, :update]
     resources :certificates
-    resources :group_assignments, except: [:destroy], concerns: :hours_resources
+    resources :group_assignments, only: [:show, :edit, :update], concerns: :hours_resources
     resources :group_offers, except: [:destroy], concerns: :assignment_feedbacks
     resources :hours
     resources :journals, except: [:show]
