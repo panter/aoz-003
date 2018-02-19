@@ -33,7 +33,6 @@ class GroupAssignmentTransform < Transformer
     return group_assignment if group_offer.blank?
     group_assignment.group_offer = group_offer
     group_assignment.save!
-    # group_assignment.import_terminate(@ac_import.import_user, einsatz[:d_EinsatzBis]) if group_assignment.terminated?
     update_timestamps(group_assignment, einsatz[:d_EinsatzVon], einsatz[:d_MutDatum])
   end
 

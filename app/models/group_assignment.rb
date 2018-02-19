@@ -2,8 +2,6 @@ class GroupAssignment < ApplicationRecord
   include VolunteersGroupAndTandemStateUpdate
   include GroupAssignmentCommon
 
-  attr_accessor :skip_volunteer_unique_validation
-
   after_save :update_group_offer_search_field
 
   has_many :group_assignment_logs
@@ -15,9 +13,8 @@ class GroupAssignment < ApplicationRecord
 
   validates :volunteer, uniqueness: {
     scope: :group_offer,
-    condition: (-> { unterminated }),
     message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
-  }, unless: :skip_volunteer_unique_validation
+  }
 
   scope :running, (-> { no_end.have_start })
 

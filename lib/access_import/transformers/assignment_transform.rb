@@ -44,8 +44,7 @@ class AssignmentTransform < Transformer
     return if client.blank?
     parameters = prepare_attributes(fw_einsatz, client, volunteer, begleitet)
     assignment = Assignment.new(parameters)
-    assignment.skip_client_unique_validation = true
-    assignment.save!
+    assignment.save!(validate: false)
     update_timestamps(assignment, fw_einsatz[:d_MutDatum])
   end
 

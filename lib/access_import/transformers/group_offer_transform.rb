@@ -64,7 +64,7 @@ class GroupOfferTransform < Transformer
   def filter_non_unique_volunteer(group_assignments)
     return group_assignments if group_assignments.size < 2
     group_assignments.group_by(&:volunteer).flat_map do |_, g_assignments|
-      not_terminated = g_assignments.find_all { |ga| !ga.terminated? } .sort_by(&:updated_at)
+      not_terminated = g_assignments.find_all { |ga| !ga.terminated? }.sort_by(&:updated_at)
       [not_terminated.pop] + g_assignments.find_all(&:terminated?) +
         not_terminated.map do |ga|
           ga.import_terminate(@ac_import.import_user, ga.period_end || Time.zone.now)
