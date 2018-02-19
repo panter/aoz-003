@@ -41,6 +41,11 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def set_default_filter(filters)
+    return if params[:q].presence
+    params.merge!(q: filters).permit!
+  end
+
   private
 
   def storable_location?
