@@ -564,7 +564,6 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     all: 0,
     created: 0,
     ended: 0,
-    termination_verified: 0,
     created_assignments: 0,
     started_assignments: 0,
     active_assignments: 0,

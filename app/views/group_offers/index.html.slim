@@ -20,9 +20,7 @@ nav.navbar.section-navigation#filters
     = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Deaktiviert')
     = custom_filter_dropdown('Beendet',
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
-      { q: :period_end_not_null, text: 'Beendung initiert', value: 'true'},
-      { q: :termination_verified_by_id_blank, qs: [:period_end_not_null], text: 'Unquitiert', value: 'true'},
-      { q: :termination_verified_by_id_not_null, text: 'Beendet', value: 'true'})
+      { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
     = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
     = custom_filter_dropdown('Kategorie', *GroupOfferCategory.filterable_group_offer)
     = button_link 'Beendete Begleitungen',

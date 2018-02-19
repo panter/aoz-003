@@ -145,7 +145,6 @@ class PerformanceReport < ApplicationRecord
       all: group_offers.count,
       created: group_offers.created_after(periods.first).count,
       ended: group_offers.end_within(*periods).count,
-      termination_verified: group_offers.termination_verified_between(*periods).count,
       created_assignments: created_ga.pluck(:group_offer_id).uniq.size,
       started_assignments: started_ga.pluck(:group_offer_id).uniq.size,
       active_assignments: active_ga.pluck(:group_offer_id).uniq.size,
