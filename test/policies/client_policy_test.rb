@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ClientPolicyTest < PolicyAssertions::Test
   test 'superadmin_can_use_all_actions' do
-    assert_permit(create(:user), Client, 'superadmin_privileges?', *actions_list.values)
+    assert_permit(create(:user), Client, 'superadmin_privileges?', *actions_list)
   end
 
   test 'department_manager_has_limited_access' do
