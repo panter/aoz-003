@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   def show; end
 
   def new
-    @event = Event.new(creator_id: current_user)
+    @event = Event.new(creator: current_user)
     authorize @event
   end
 
@@ -26,7 +26,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event.assign_attributes(event_params)
+    @event.update(event_params)
     if @event.update(event_params)
       redirect_to @event, make_notice
     else
