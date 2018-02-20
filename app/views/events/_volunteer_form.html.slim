@@ -1,0 +1,30 @@
+= simple_form_for @event do |f|
+  = simple_error_notice f
+  = f.input_field :kind, value: @event.kind, as: :hidden
+  fieldset
+    legend Frewillige auswählen
+    - if f.object.errors.include?(:volunteers)
+      = f.error_notification message: f.object.errors.messages[:volunteers].first
+    .select-all-mailings.m-b-10
+      input type='checkbox' value='' name='select-all-mailings'
+      label for='select-all-mailings'
+        'Alle Auswählen
+    table.table.table-striped.reminder-select
+      thead
+        tr
+          th
+          th Veranstaltung
+          th Freiwillige/r
+      tbody
+        = f.simple_fields_for :event_volunteers do |event_volunteer|
+          tr data-index="#{event_volunteers.index}" class="#{event_volunteers.object.picked && 'mailing-selected'}"
+            td.click-selecting
+              = event_volunteer.label :picked, 'Ausgewählt', class: 'sr-only'
+              = event_volunteer.input_field :picked, as: :boolean
+              = event_volunteer.input_field :id, as: :hidden
+              = event_volunteer.input_field :volunteer_id, as: :hidden
+              = event_volunteer.input_field :reminder_mailable_id, as: :hidden
+              = event_volunteer.input_field :reminder_mailable_type, as: :hidden
+            td.click-selecting= link_to event_volunteer.object.reminder_mailable.to_label, event_volunteer.object.base_assignment_entity, target: '_blank'
+            td.click-selecting= link_to event_volunteer.object.volunteer.contact.full_name, event_volunteer.object.volunteer, target: '_blank'
+

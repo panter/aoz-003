@@ -28,5 +28,7 @@ h2= @event.title if @event.title
           = link_to @event.creator.full_name, profile_link(@event.creator)
           = " am #{l(@event.created_at.to_date)}"
 
+= render 'volunteer_form'
+
 = form_navigation_btn :edit
 = form_navigation_btn :back
