@@ -168,6 +168,10 @@ class Volunteer < ApplicationRecord
     date_between_inclusion(:accepted_at, start_date, end_date)
   }
 
+  scope :needs_intro_course, lambda {
+    accepted.internal.where(intro_course: false)
+  }
+
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)
   end

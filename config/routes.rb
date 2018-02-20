@@ -61,7 +61,9 @@ Rails.application.routes.draw do
     patch :set_terminated, on: :member
   end
 
-  resources :events
+  resources :events do
+    resources :event_volunteers
+  end
 
   resources :feedbacks, only: [:new, :create]
   resources :group_assignments, only: [:show, :edit, :update],

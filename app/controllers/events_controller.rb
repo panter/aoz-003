@@ -1,12 +1,16 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  # before_action :set_volunteer_collection
 
   def index
     authorize Event
     @events = Event.all
   end
 
-  def show; end
+  def show
+    @volunteers = Volunteer.needs_intro_course
+    @event_volunteer = EventVolunteer.new(event: @event)
+  end
 
   def new
     @event = Event.new(creator: current_user)
@@ -45,6 +49,10 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     authorize @event
   end
+
+  # def set_volunteer_collection
+  #   @volunteers = Volunteer.needs_intro_course
+  # end
 
   def event_params
     params.require(:event).permit(
