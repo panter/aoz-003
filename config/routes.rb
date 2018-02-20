@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     patch :set_terminated, on: :member
   end
 
+  resources :events
+
   resources :feedbacks, only: [:new, :create]
   resources :group_assignments, only: [:show, :edit, :update],
     concerns: [:update_submitted_at, :hours_resources, :termination_actions]

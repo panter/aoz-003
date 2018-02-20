@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   ransack_alias :full_name, :profile_contact_full_name_or_volunteer_contact_full_name_or_email
 
+  has_many :events, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :certificates
   has_many :clients, inverse_of: 'user', foreign_key: 'user_id'
   has_many :volunteers, inverse_of: 'registrar', foreign_key: 'registrar_id'
