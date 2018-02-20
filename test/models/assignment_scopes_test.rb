@@ -61,8 +61,8 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @no_start_ends_tomorrow
   end
 
-  test 'end_within returns only ended between range' do
-    query = Assignment.end_within(@now.days_ago(20), @now.days_ago(10))
+  test 'end_within_returns_only_ended_between_range' do
+    query = Assignment.end_within(@now.days_ago(10), @now.days_ago(20))
     assert query.include? @started_30_days_ago_ended_15_days_ago
   end
 
@@ -112,7 +112,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
   end
 
   test 'start_within returns only with start date after given date' do
-    query = Assignment.start_within(@now.days_ago(32), @now.days_ago(12))
+    query = Assignment.start_within(@now.days_ago(12), @now.days_ago(32))
     assert query.include? @started_30_days_ago_ended_15_days_ago
   end
 

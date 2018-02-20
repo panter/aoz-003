@@ -31,9 +31,7 @@ module PeriodStartEndScopesAndMethods
     }
 
     scope :started_six_months_ago, (-> { date_at_or_before(:period_start, 6.months.ago) })
-    scope :started_ca_six_weeks_ago, lambda {
-      date_at_or_after(:period_start, 8.weeks.ago).date_at_or_before(:period_start, 6.weeks.ago)
-    }
+    scope :started_ca_six_weeks_ago, (-> { start_within(6.weeks.ago.to_date, 8.weeks.ago.to_date) })
     scope :no_start_and_end, (-> { no_start.no_end })
 
     scope :active, (-> { not_ended.started.or(no_start.end_in_future) })

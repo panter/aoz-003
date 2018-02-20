@@ -15,7 +15,8 @@ class ApplicationRecord < ActiveRecord::Base
   }
 
   scope :date_between_inclusion, lambda { |field, start_date, end_date|
-    date_at_or_before(field, end_date).date_at_or_after(field, start_date)
+    start_date, end_date = end_date, start_date if start_date < end_date
+    where("#{model_name.plural}.#{field} BETWEEN ? AND ?", end_date, start_date)
   }
 
   scope :date_between_inc_start, lambda { |field, start_date, end_date|
