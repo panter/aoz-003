@@ -7,42 +7,42 @@ class JournalTransform < Transformer
       created_at: journal[:d_ErfDatum],
       updated_at: journal[:d_MutDatum],
       category: CATEGORY_MAP[journal[:fk_JournalKategorie]],
-      user: @ac_import.import_user,
-      import_attributes: access_import(
-        :tbl_Journal, journal[:pk_Journal], journal: journal
-      )
-    }
+      user: @ac_import.import_user
+    }.merge(import_attributes(:tbl_Journal, journal[:pk_Journal], journal: journal))
   end
 
   def get_or_create_by_import(access_journal_id, access_journal = nil)
-    journal = Import.get_imported(Journal, access_journal_id)
-    return journal if journal.present?
-    local_journal = Journal.new(
-      prepare_attributes(
-        access_journal, fetch_or_import_person(access_journal), fetch_or_import_assignment(access_journal)
-      )
-    )
-    local_journal.save!
-    local_journal
+    local_journal = get_import_entity(:fk_JournalKategorie, access_journal_id)
+    return local_journal if local_journal.present?
+    access_journal ||= @journale.find(access_journal_id)
+    person = fetch_or_import_person(access_journal)
+    return if person.blank?
+    assignment = fetch_or_import_assignment(access_journal)
+    local_journal = Journal.create!(prepare_attributes(access_journal, person, assignment))
+    update_timestamps(local_journal, access_journal[:d_ErfDatum], access_journal[:d_MutDatum])
   end
 
   def fetch_or_import_assignment(access_journal)
     return unless access_journal[:fk_FreiwilligenEinsatz]&.positive?
     fw_einsatz = @freiwilligen_einsaetze.find(access_journal[:fk_FreiwilligenEinsatz])
-    return if fw_einsatz.blank? || fw_einsatz[:fk_FreiwilligenFunktion].to_i != 1
+    return if fw_einsatz.blank? || fw_einsatz[:fk_FreiwilligenFunktion] != 1
     @ac_import.assignment_transform.get_or_create_by_import(
-      access_journal[:fk_FreiwilligenEinsatz].to_i, fw_einsatz
+      access_journal[:fk_FreiwilligenEinsatz], fw_einsatz
     )
   end
 
   def fetch_or_import_person(access_journal)
+    # person could be either Volunteer or Client
     person = Import.find_by_hauptperson(access_journal[:fk_Hauptperson])&.importable
     return person if person.present?
-    personen_rolle = @personen_rolle.find_by_hauptperson(access_journal[:fk_Hauptperson])
-    if personen_rolle[:z_Rolle].to_i == EINSATZ_ROLLEN.freiwillige
-      @ac_import.volunteer_transform.get_or_create_by_import(access_journal[:fk_Hauptperson], personen_rolle)
-    elsif personen_rolle[:z_Rolle].to_i == EINSATZ_ROLLEN.begleitete
-      @ac_import.client_transform.get_or_create_by_import(access_journal[:fk_Hauptperson], personen_rolle)
+    personen_rolle = @personen_rolle.find(access_journal[:fk_Hauptperson])
+    return if personen_rolle.blank?
+    if personen_rolle[:z_Rolle] == EINSATZ_ROLLEN.freiwillige
+      @ac_import.volunteer_transform.get_or_create_by_import(access_journal[:fk_Hauptperson],
+        personen_rolle)
+    elsif personen_rolle[:z_Rolle] == EINSATZ_ROLLEN.begleitete
+      @ac_import.client_transform.get_or_create_by_import(access_journal[:fk_Hauptperson],
+        personen_rolle)
     end
   end
 

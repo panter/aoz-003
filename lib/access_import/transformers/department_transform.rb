@@ -7,22 +7,17 @@ class DepartmentTransform < Transformer
         extended: einsatz_ort[:t_Adresse2],
         postal_code: einsatz_ort[:postal_code],
         city: einsatz_ort[:city]
-      },
-      import_attributes: access_import(
-        :tbl_EinsatzOrte, einsatz_ort[:pk_EinsatzOrt], einsatz_ort: einsatz_ort
-      )
-    }
+      }
+    }.merge(import_attributes(:tbl_EinsatzOrte, einsatz_ort[:pk_EinsatzOrt],
+      einsatz_ort: einsatz_ort))
   end
 
   def get_or_create_by_import(einsatz_ort_id, einsatz_ort = nil)
-    department = Import.get_imported(Department, einsatz_ort_id)
+    department = get_import_entity(:department, einsatz_ort_id)
     return department if department.present?
     einsatz_ort ||= @einsatz_orte.find(einsatz_ort_id)
-    parameters = prepare_attributes(einsatz_ort)
-    department = Department.new(parameters)
-    department.updated_at = einsatz_ort[:d_MutDatum]
-    department.save!
-    department
+    department = Department.create!(prepare_attributes(einsatz_ort))
+    update_timestamps(department, einsatz_ort[:d_MutDatum])
   end
 
   def import_multiple(einsatz_orte)

@@ -27,6 +27,8 @@ nav.navbar.section-navigation#filters
       terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }), dimension: :sm
   hr
 
+= bootstrap_paginate(@group_offers)
+
 table.table.table-striped
   thead
     tr
@@ -97,6 +99,7 @@ table.table.table-striped
             = link_to_if(policy(offer).initiate_termination? && offer.terminatable?,
               'Beenden', initiate_termination_group_offer_path(offer)) { '' }
 
+= bootstrap_paginate(@group_offers)
 
 nav.navbar.section-navigation
   ul.list-inline

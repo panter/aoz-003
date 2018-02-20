@@ -1,36 +1,31 @@
 class ClientTransform < Transformer
   def prepare_attributes(personen_rolle)
-    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson])
+    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
     familien_rolle = @familien_rollen.find(begleitet[:fk_FamilienRolle])
     {
+      user: @ac_import.import_user,
+      nationality: haupt_person[:nationality],
       salutation: haupt_person[:salutation],
-      comments: comments(begleitet, personen_rolle, haupt_person),
       birth_year: haupt_person[:d_Geburtsdatum],
       entry_date: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
-      nationality: haupt_person[:nationality],
-      language_skills_attributes: language_skills_attributes(haupt_person[:sprachen]),
-      contact_attributes: contact_attributes(haupt_person),
+      comments: comments(begleitet, personen_rolle, haupt_person),
       relatives_attributes: relatives_attrs(relatives),
-      user: @ac_import.import_user,
-      import_attributes: access_import(
-        :tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle], personen_rolle: personen_rolle,
-        haupt_person: haupt_person, familien_rolle: familien_rolle, begleitet: begleitet,
-        relatives: relatives && relatives
-      )
-    }
+      accepted_at: personen_rolle[:d_Rollenbeginn],
+      resigned_at: personen_rolle[:d_Rollenende]
+    }.merge(contact_attributes(haupt_person))
+      .merge(language_skills_attributes(haupt_person[:sprachen]))
+      .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
+        personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,
+        begleitet: begleitet, relatives: relatives && relatives))
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
-    client = Import.get_imported(Client, personen_rollen_id)
+    client = get_import_entity(:client, personen_rollen_id)
     return client if client.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
-    client_attributes = prepare_attributes(personen_rolle)
-    client = Client.new(client_attributes)
-    client = personen_rollen_create_update_conversion(client, personen_rolle)
-    client.acceptance = handle_client_acceptance(personen_rolle)
-    client.save!
-    client
+    client = Client.create(prepare_attributes(personen_rolle))
+    update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
   def import_all
@@ -58,15 +53,11 @@ class ClientTransform < Transformer
     begleitet = begleitete.select do |_key, beg|
       beg[:fk_FamilienRolle] == 2 # Hauptperson
     end
-    if begleitet.size == 1
-      return [begleitet.first[1], begleitete.except(begleitet.first[0])]
-    end
+    return [begleitet.first[1], begleitete.except(begleitet.first[0])] if begleitet.size == 1
     begleitet = begleitete.select do |_key, beg|
       beg[:t_Vorname] == haupt_person[:t_Vorname]
     end
-    if begleitet.size == 1
-      return [begleitet.first[1], begleitete.except(begleitet.first[0])]
-    end
+    return [begleitet.first[1], begleitete.except(begleitet.first[0])] if begleitet.size == 1
     begleitet = begleitete.select do |_key, beg|
       haupt_person[:t_Vorname].include? beg[:t_Vorname]
     end

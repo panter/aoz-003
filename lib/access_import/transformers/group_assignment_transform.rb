@@ -3,24 +3,37 @@ class GroupAssignmentTransform < Transformer
 
   def prepare_attributes(einsatz, volunteer)
     {
-      period_end: einsatz[:d_EinsatzBis],
       period_start: einsatz[:d_EinsatzVon],
-      volunteer: volunteer,
-      import_attributes: access_import(:tbl_FreiwilligenEinsätze, einsatz[:pk_FreiwilligenEinsatz],
-        freiwilligen_einsatz: einsatz)
+      period_end: einsatz[:d_EinsatzBis],
+      created_at: einsatz[:d_EinsatzVon],
+      updated_at: einsatz[:d_MutDatum],
+      volunteer: volunteer
+    }.merge(termination_attributes(einsatz))
+      .merge(import_attributes(:tbl_FreiwilligenEinsätze, einsatz[:pk_FreiwilligenEinsatz],
+        freiwilligen_einsatz: einsatz))
+  end
+
+  def termination_attributes(einsatz)
+    return {} if einsatz[:d_EinsatzBis].blank?
+    {
+      period_end_set_by: @ac_import.import_user,
+      termination_submitted_by: @ac_import.import_user,
+      termination_verified_by: @ac_import.import_user,
+      termination_submitted_at: einsatz[:d_EinsatzBis],
+      termination_verified_at: einsatz[:d_EinsatzBis]
     }
   end
 
-  def get_or_create_by_import(einsatz_id, einsatz: nil, group_offer: nil)
-    einsatz ||= @freiwilligen_einsaetze.find(einsatz_id)
-    group_assignment = Import.get_imported(GroupAssignment, einsatz_id)
+  def get_or_create_by_import(einsatz_id, einsatz: nil, group_offer: nil, volunteer: nil)
+    group_assignment = get_import_entity(:group_assignment, einsatz_id)
     return group_assignment if group_assignment.present?
-    volunteer = @ac_import.volunteer_transform.get_or_create_by_import(einsatz[:fk_PersonenRolle])
+    einsatz ||= @freiwilligen_einsaetze.find(einsatz_id)
+    volunteer ||= @ac_import.volunteer_transform.get_or_create_by_import(einsatz[:fk_PersonenRolle])
     group_assignment = GroupAssignment.new(prepare_attributes(einsatz, volunteer))
     return group_assignment if group_offer.blank?
     group_assignment.group_offer = group_offer
     group_assignment.save!
-    group_assignment
+    update_timestamps(group_assignment, einsatz[:d_EinsatzVon], einsatz[:d_MutDatum])
   end
 
   def import_multiple(einsaetze, group_offer: nil)

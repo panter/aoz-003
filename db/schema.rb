@@ -49,8 +49,13 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.index ["client_id"], name: "index_assignment_logs_on_client_id"
     t.index ["creator_id"], name: "index_assignment_logs_on_creator_id"
     t.index ["deleted_at"], name: "index_assignment_logs_on_deleted_at"
+    t.index ["period_end"], name: "index_assignment_logs_on_period_end"
     t.index ["period_end_set_by_id"], name: "index_assignment_logs_on_period_end_set_by_id"
+    t.index ["period_start"], name: "index_assignment_logs_on_period_start"
+    t.index ["submitted_at"], name: "index_assignment_logs_on_submitted_at"
+    t.index ["termination_submitted_at"], name: "index_assignment_logs_on_termination_submitted_at"
     t.index ["termination_submitted_by_id"], name: "index_assignment_logs_on_termination_submitted_by_id"
+    t.index ["termination_verified_at"], name: "index_assignment_logs_on_termination_verified_at"
     t.index ["termination_verified_by_id"], name: "index_assignment_logs_on_termination_verified_by_id"
     t.index ["volunteer_id"], name: "index_assignment_logs_on_volunteer_id"
   end
@@ -86,8 +91,13 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.text "term_feedback_transfair"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
+    t.index ["period_end"], name: "index_assignments_on_period_end"
     t.index ["period_end_set_by_id"], name: "index_assignments_on_period_end_set_by_id"
+    t.index ["period_start"], name: "index_assignments_on_period_start"
+    t.index ["submitted_at"], name: "index_assignments_on_submitted_at"
+    t.index ["termination_submitted_at"], name: "index_assignments_on_termination_submitted_at"
     t.index ["termination_submitted_by_id"], name: "index_assignments_on_termination_submitted_by_id"
+    t.index ["termination_verified_at"], name: "index_assignments_on_termination_verified_at"
     t.index ["termination_verified_by_id"], name: "index_assignments_on_termination_verified_by_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
   end
@@ -170,9 +180,16 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.datetime "resigned_at"
     t.datetime "accepted_at"
     t.datetime "rejected_at"
+    t.index ["acceptance"], name: "index_clients_on_acceptance"
+    t.index ["accepted_at"], name: "index_clients_on_accepted_at"
+    t.index ["birth_year"], name: "index_clients_on_birth_year"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["involved_authority_id"], name: "index_clients_on_involved_authority_id"
+    t.index ["nationality"], name: "index_clients_on_nationality"
+    t.index ["rejected_at"], name: "index_clients_on_rejected_at"
+    t.index ["resigned_at"], name: "index_clients_on_resigned_at"
     t.index ["resigned_by_id"], name: "index_clients_on_resigned_by_id"
+    t.index ["salutation"], name: "index_clients_on_salutation"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
@@ -196,7 +213,9 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.string "full_name"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
     t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
+    t.index ["external"], name: "index_contacts_on_external"
     t.index ["full_name"], name: "index_contacts_on_full_name"
+    t.index ["postal_code"], name: "index_contacts_on_postal_code"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -299,7 +318,6 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.date "period_end"
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
-    t.boolean "active", default: true
     t.datetime "submitted_at"
     t.bigint "period_end_set_by_id"
     t.bigint "termination_submitted_by_id"
@@ -314,10 +332,14 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
+    t.index ["period_end"], name: "index_group_assignments_on_period_end"
     t.index ["period_end_set_by_id"], name: "index_group_assignments_on_period_end_set_by_id"
+    t.index ["period_start"], name: "index_group_assignments_on_period_start"
+    t.index ["submitted_at"], name: "index_group_assignments_on_submitted_at"
+    t.index ["termination_submitted_at"], name: "index_group_assignments_on_termination_submitted_at"
     t.index ["termination_submitted_by_id"], name: "index_group_assignments_on_termination_submitted_by_id"
+    t.index ["termination_verified_at"], name: "index_group_assignments_on_termination_verified_at"
     t.index ["termination_verified_by_id"], name: "index_group_assignments_on_termination_verified_by_id"
-    t.index ["volunteer_id", "group_offer_id", "active"], name: "group_assignment_group_offer_volunteer", unique: true
     t.index ["volunteer_id"], name: "index_group_assignments_on_volunteer_id"
   end
 
@@ -379,7 +401,10 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
     t.index ["department_id"], name: "index_group_offers_on_department_id"
     t.index ["group_offer_category_id"], name: "index_group_offers_on_group_offer_category_id"
+    t.index ["period_end"], name: "index_group_offers_on_period_end"
     t.index ["period_end_set_by_id"], name: "index_group_offers_on_period_end_set_by_id"
+    t.index ["period_start"], name: "index_group_offers_on_period_start"
+    t.index ["search_volunteer"], name: "index_group_offers_on_search_volunteer"
   end
 
   create_table "hours", force: :cascade do |t|
@@ -399,6 +424,7 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.index ["billing_expense_id"], name: "index_hours_on_billing_expense_id"
     t.index ["deleted_at"], name: "index_hours_on_deleted_at"
     t.index ["hourable_type", "hourable_id"], name: "index_hours_on_hourable_type_and_hourable_id"
+    t.index ["meeting_date"], name: "index_hours_on_meeting_date"
     t.index ["reviewer_id"], name: "index_hours_on_reviewer_id"
     t.index ["volunteer_id"], name: "index_hours_on_volunteer_id"
   end
@@ -632,7 +658,19 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.boolean "active", default: false
     t.date "activeness_might_end"
     t.datetime "invited_at"
+    t.index ["acceptance"], name: "index_volunteers_on_acceptance"
+    t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
+    t.index ["active"], name: "index_volunteers_on_active"
+    t.index ["activeness_might_end"], name: "index_volunteers_on_activeness_might_end"
+    t.index ["birth_year"], name: "index_volunteers_on_birth_year"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
+    t.index ["external"], name: "index_volunteers_on_external"
+    t.index ["invited_at"], name: "index_volunteers_on_invited_at"
+    t.index ["nationality"], name: "index_volunteers_on_nationality"
+    t.index ["rejected_at"], name: "index_volunteers_on_rejected_at"
+    t.index ["resigned_at"], name: "index_volunteers_on_resigned_at"
+    t.index ["salutation"], name: "index_volunteers_on_salutation"
+    t.index ["undecided_at"], name: "index_volunteers_on_undecided_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 

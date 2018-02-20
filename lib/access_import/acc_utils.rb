@@ -8,6 +8,9 @@ module AccUtils
     end.to_h
   end
 
+  # normalize hash keys from access db
+  # they can be with uppercase and special chars
+  #
   def down_hkeys(row)
     row.transform_keys { |key| key.to_s.underscore.to_sym }
   end
@@ -56,7 +59,7 @@ module AccUtils
   end
 
   def contact_attributes(haupt_person)
-    {
+    { contact_attributes: {
       first_name:      haupt_person[:t_Vorname] || 'unbekannt',
       last_name:       haupt_person[:t_Nachname] || 'unbekannt',
       street:          haupt_person[:t_Adresszeile1] || 'unbekannt',
@@ -66,23 +69,33 @@ module AccUtils
       primary_email:   haupt_person[:email],
       primary_phone:   haupt_person[:t_Telefon1] || '000 000 00 00',
       secondary_phone: haupt_person[:t_Telefon2]
-    }
+    } }
   end
 
-  def access_import(main_entity_name, main_access_id, related_rows)
+  def import_attributes(access_name, access_id, related_records)
+    { import_attributes: access_import(access_name, access_id, related_records) }
+  end
+
+  def access_import(access_name, access_id, related_records)
     {
-      access_id: main_access_id,
-      base_origin_entity: main_entity_name.to_s,
-      store: related_rows
+      access_id: access_id,
+      base_origin_entity: access_name.to_s,
+      store: related_records
     }
   end
 
   def language_skills_attributes(sprachen)
+    { language_skills_attributes: map_sprachen_to_language_skills(sprachen) }
+  end
+
+  def map_sprachen_to_language_skills(sprachen)
+    return {} if sprachen.blank?
     sprachen.map do |sprache|
-      [
-        (Time.now.to_f * 1000).to_i,
-        { language: sprache[:language][:lang], level: sprache[:kenntnisstufe_ve].presence || 'basic' }
-      ]
+      [(Time.now.to_f * 1000).to_i,
+       {
+         language: sprache[:language][:lang],
+         level: sprache[:kenntnisstufe_ve].presence || 'basic'
+       }]
     end.to_h
   end
 

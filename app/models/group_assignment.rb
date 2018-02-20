@@ -55,6 +55,12 @@ class GroupAssignment < ApplicationRecord
     true
   end
 
+  def import_terminate(user, date)
+    update(termination_submitted_at: date, termination_submitted_by: user,
+      termination_verified_at: date, termination_verified_by: user, period_end_set_by: user,
+      period_end: period_end || date)
+  end
+
   private
 
   def update_group_offer_search_field

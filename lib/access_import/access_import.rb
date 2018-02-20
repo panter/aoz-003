@@ -2,122 +2,92 @@ require 'securerandom'
 require 'ostruct'
 
 class AccessImport
-  include TransformInstantiators
-
-  attr_reader :acdb
-  attr_reader :import_user
-
-  IMPORT_USER_EMAIL = 'aoz_access_importer@example.com'.freeze
-  IMPORT_USER_NAME = 'AOZ Import'.freeze
-
-  def initialize(path)
-    ObjectSpace.define_finalizer(self, self.class.finalize)
-    @import_user = create_or_fetch_import_user
-    @acdb = Mdb.open(path)
-    make_class_variables(*instantiate_all_accessors)
-    @sprache_pro_hauptperson.add_other_accessors(@sprachen, @sprach_kenntnisse)
-    @einsatz_orte.add_other_accessors(@plz)
-    @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson)
-  end
+  include AccessImportSetup
+  include AccessImportTransformers
 
   def make_departments
-    puts 'Importing Departments'
+    start_message(:department)
     department_transform.import_all
     display_stats(Department)
   end
 
   def make_clients
-    puts 'Importing Clients'
+    start_message(:client)
     client_transform.import_all
     display_stats(Client)
   end
 
   def make_volunteers
-    puts 'Importing Volunteers'
+    start_message(:volunteer)
     volunteer_transform.import_all
+
     display_stats(Volunteer)
   end
 
   def make_assignments
-    puts 'Importing Assignments'
+    start_message(:assignment)
     assignment_transform.import_all
-    display_stats(Assignment)
+    display_stats(Assignment, Volunteer, Client)
   end
 
   def make_group_offers
-    puts 'Importing GroupOffers'
-    puts '... from Kurse'
-    kurs_transform.import_all
-    display_stats(GroupOffer)
-    display_stats(GroupAssignment)
-    puts '... from Animation f'
+    start_message(:group_offer)
+
+    # TODO: Need to find out if this import is really needed, and then fix it,
+    #       because it possibly doesn't work propperly
+    #
+    # shell_message '... from Kurse'
+    # kurs_transform.import_all
+    # display_stats(GroupOffer, GroupAssignment)
+
+    shell_message '... from Animation f'
     group_offer_transform.import_all
-    display_stats(GroupOffer)
-    display_stats(GroupAssignment)
-    puts '... from Kurzeinsatz'
+    display_stats(GroupOffer, GroupAssignment)
+    shell_message '... from Kurzeinsatz'
     group_offer_transform.import_all(@freiwilligen_einsaetze.where_kurzeinsatz)
-    display_stats(GroupOffer)
-    display_stats(GroupAssignment)
-    puts '... from Andere'
+    display_stats(GroupOffer, GroupAssignment)
+    shell_message '... from Andere'
     group_offer_transform.import_all(@freiwilligen_einsaetze.where_andere)
-    display_stats(GroupOffer)
-    display_stats(GroupAssignment)
+    display_stats(GroupOffer, GroupAssignment)
   end
 
   def make_journal
-    puts 'Importing Journals'
+    start_message(:journal)
     journal_transform.import_all
     display_stats(Journal)
   end
 
-  def instantiate_all_accessors
-    Dir['lib/access_import/accessors/*.rb']
-      .map { |file| File.basename(file, '.*') }
-      .reject { |name| name == 'accessor' }
-      .map do |name|
-        name.camelize.constantize.new(@acdb)
-      end
+  def make_hours
+    start_message(:hour)
+    hour_transform.import_all
+    display_stats(Hour)
   end
 
-  def display_stats(model)
-    puts stat_text(model)
+  def make_billing_expenses
+    start_message(:billing_expense)
+    billing_expense_transform.import_all
+    display_stats(BillingExpense, Hour)
   end
 
-  def stat_text(model)
-    "Imported #{Import.where(importable_type: model.name)&.count} #{model.name.pluralize}."
-  end
-
-  def overall_stats
-    puts "Overall imported #{Import.count} records"
-    puts imported_stat_texts.join("\n")
-  end
-
-  def imported_stat_texts
-    [Assignment, Client, Department, GroupAssignment, GroupOfferCategory, GroupOffer, Hour, Journal,
-     Volunteer].map do |model|
-      stat_text(model)
+  # Terminate Client and Volunteer at the very end, so their termination won't block
+  # other related records import
+  #
+  def run_acceptance_termination_on_clients_and_volunteers
+    terminated_clients = Client.field_not_nil(:resigned_at).each do |client|
+      client.resigned!
+      client.update(updated_at: client.import.store['personen_rolle']['d_MutDatum'],
+        resigned_at: client.import.store['personen_rolle']['d_Rollenende'],
+        resigned_by: @import_user)
+    end
+    terminated_volunteers = Volunteer.field_not_nil(:resigned_at).each do |volunteer|
+      volunteer.resigned!
+      volunteer.update(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
+        resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
     end
   end
 
-  def make_class_variables(*accessors)
-    accessors.each do |accessor|
-      class_eval { attr_reader accessor.class.name.underscore.to_sym }
-      instance_variable_set("@#{accessor.class.name.underscore}", accessor)
-    end
-  end
-
-  def create_or_fetch_import_user
-    return User.find_by(email: IMPORT_USER_EMAIL) if User.exists?(email: IMPORT_USER_EMAIL)
-    return User.deleted.find_by(email: IMPORT_USER_EMAIL).restore if User.deleted.exists?(email: IMPORT_USER_EMAIL)
-    import_user = FactoryBot.create :user, email: IMPORT_USER_EMAIL, password: SecureRandom.hex(60)
-    import_user.profile.contact.first_name = IMPORT_USER_NAME
-    import_user.profile.contact.last_name = IMPORT_USER_NAME
-    import_user.profile.contact.primary_email = IMPORT_USER_EMAIL
-    import_user.save!
-    import_user
-  end
-
+  # Clean up after imports finished
   def self.finalize
-    proc { User.find_by(email: EMAIL).delete }
+    proc { User.find_by(email: EMAIL).delete } # Remove the import user with softdelete
   end
 end

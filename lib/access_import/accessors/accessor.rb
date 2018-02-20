@@ -1,9 +1,14 @@
 require 'access_import/acc_utils'
 require 'ostruct'
 
+# Accessor normalizes and prepares Access tables and records to hashes
+#
 class Accessor
   include AccUtils
 
+  # Adds the instantiating Access Import instnace plus needed other Accessors as
+  # class variables
+  #
   def initialize(acdb, *other_accessors)
     add_other_accessors(*other_accessors) if other_accessors.any?
     @acdb = acdb
@@ -24,7 +29,6 @@ class Accessor
   end
 
   ACCESS_ROLES = OpenStruct.new(volunteer: 1, client: 2, animator: 3, participant: 4).freeze
-
 
   FREIWILLIGEN_FUNKTION_BY_NAME = OpenStruct.new(
     begleitung: OpenStruct.new(id: 1, bezeichnung: 'Begleitung', rolle: 'Freiwillige/r'),
