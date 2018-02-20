@@ -64,6 +64,9 @@ class Volunteer < ApplicationRecord
   has_many :reminded_assignments, through: :reminder_mailing_volunteers,
     source: :reminder_mailable, inverse_of: 'reminder_mailable'
 
+  has_many :event_volunteers, dependent: :delete_all
+  has_many :events, through: :event_volunteers
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   # Validations
