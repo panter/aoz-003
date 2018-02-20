@@ -16,7 +16,7 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
   test 'xlsx files columns and cells are correct' do
     client = create :client, entry_date: 'Feb. 2014', birth_year: 30.years.ago.to_date,
       education: 'educati', created_at: 2.days.ago, nationality: 'IT'
-    client.update(created_at: 2.days.ago, updated_at: 2.days.ago)
+    client.update(created_at: 2.days.ago.to_date, updated_at: 2.days.ago.to_date)
 
     Client.with_deleted.where.not(id: client.id).map(&:really_destroy!)
     wb = get_xls_from_response(clients_url(format: :xlsx))
@@ -32,8 +32,8 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
       client.contact.primary_phone, client.contact.secondary_phone, client.contact.primary_email,
       client.birth_year&.year, nationality_name(client.nationality), client.education,
       client.entry_date, I18n.t(".acceptance.#{client.acceptance}"))
-    assert_equal client.created_at.in_time_zone('Zurich').to_date, wb.cell(2, 17).to_date
-    assert_equal client.updated_at.in_time_zone('Zurich').to_date, wb.cell(2, 18).to_date
+    assert_equal 2.days.ago.to_date, wb.cell(2, 17).to_date
+    assert_equal 2.days.ago.to_date, wb.cell(2, 18).to_date
   end
 
   test 'clients xls export is not paginated' do
