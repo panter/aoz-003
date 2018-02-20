@@ -1,6 +1,6 @@
 class ClientTransform < Transformer
   def prepare_attributes(personen_rolle)
-    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson])
+    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
     familien_rolle = @familien_rollen.find(begleitet[:fk_FamilienRolle])
     {

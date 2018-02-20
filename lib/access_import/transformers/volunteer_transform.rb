@@ -9,7 +9,7 @@ class VolunteerTransform < Transformer
   # stunden_erfassungen = @stundenerfassung.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
   #
   def prepare_attributes(personen_rolle)
-    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson])
+    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     original_email = haupt_person[:email]
     {
       salutation: haupt_person[:salutation],
@@ -24,14 +24,15 @@ class VolunteerTransform < Transformer
       .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(contact_attributes(haupt_person.merge(email: import_time_email)))
       .merge(import_attributes(:tbl_Personenrollen, personen_rolle[:pk_PersonenRolle],
-        personen_rolle: personen_rolle,haupt_person: haupt_person.merge(email: original_email)))
+        personen_rolle: personen_rolle, haupt_person: haupt_person.merge(email: original_email)))
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
     volunteer = get_import_entity(:volunteer, personen_rollen_id)
     return volunteer if volunteer.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
-    volunteer = Volunteer.create!(prepare_attributes(personen_rolle))
+    volunteer = Volunteer.new(prepare_attributes(personen_rolle))
+    volunteer.save!(validate: false)
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 

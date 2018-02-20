@@ -18,7 +18,7 @@ class GroupOfferTransform < Transformer
     )
     group_offer.department = find_group_offer_department(group_assignments)
     group_offer.group_assignments = filter_non_unique_volunteer(group_assignments)
-    group_offer.save!
+    group_offer.save!(validate: false)
     handle_termination_and_update(group_offer)
   end
 
@@ -50,8 +50,8 @@ class GroupOfferTransform < Transformer
   def handle_termination_and_update(group_offer)
     if group_offer.group_assignments.any? && group_offer.group_assignments.unterminated.blank?
       end_time = group_offer.group_assignments.maximum(:period_end)
-      group_offer.assign_attributes(period_end: end_time, termination_verified_at: end_time,
-        period_end_set_by: @ac_import.import_user, termination_verified_by: @ac_import.import_user)
+      group_offer.assign_attributes(period_end: end_time,
+        period_end_set_by: @ac_import.import_user)
     end
     group_offer.group_assignments.each do |ga|
       ga.assign_attributes(updated_at: ga.import.store['freiwilligen_einsatz']['d_MutDatum'])

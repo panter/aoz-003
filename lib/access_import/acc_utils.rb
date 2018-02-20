@@ -89,6 +89,7 @@ module AccUtils
   end
 
   def map_sprachen_to_language_skills(sprachen)
+    return {} if sprachen.blank?
     sprachen.map do |sprache|
       [(Time.now.to_f * 1000).to_i,
        {
