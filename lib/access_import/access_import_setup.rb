@@ -35,16 +35,14 @@ module AccessImportSetup
   # Create Import user, needed for creating records that depend on a creator user
   #
   def create_or_fetch_import_user
-    return User.find_by(email: IMPORT_USER_EMAIL) if User.exists?(email: IMPORT_USER_EMAIL)
-    if User.deleted.exists?(email: IMPORT_USER_EMAIL)
-      return User.deleted.find_by(email: IMPORT_USER_EMAIL).restore
+    if User.with_deleted.exists?(email: IMPORT_USER_EMAIL)
+      return User.with_deleted.find_by(email: IMPORT_USER_EMAIL).restore
     end
-    import_user = FactoryBot.create :user, email: IMPORT_USER_EMAIL, password: SecureRandom.hex(60)
-    import_user.profile.contact.first_name = IMPORT_USER_NAME
-    import_user.profile.contact.last_name = IMPORT_USER_NAME
-    import_user.profile.contact.primary_email = IMPORT_USER_EMAIL
-    import_user.save!
-    import_user
+    user = User.create!(email: IMPORT_USER_EMAIL, password: SecureRandom.hex(60), role: 'superadmin')
+    user.profile = Profile.new(contact: Contact.new(first_name: IMPORT_USER_NAME,
+      last_name: IMPORT_USER_NAME, primary_email: IMPORT_USER_EMAIL))
+    user.save!
+    user
   end
 
   # Shell Output methods
