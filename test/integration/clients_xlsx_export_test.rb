@@ -32,8 +32,8 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
       client.contact.primary_phone, client.contact.secondary_phone, client.contact.primary_email,
       client.birth_year&.year, nationality_name(client.nationality), client.education,
       client.entry_date, I18n.t(".acceptance.#{client.acceptance}"))
-    assert_equal client.created_at.to_date, wb.cell(2, 17).to_date
-    assert_equal client.updated_at.to_date, wb.cell(2, 18).to_date
+    assert_equal client.created_at.in_time_zone('Zurich').to_date, wb.cell(2, 17).to_date
+    assert_equal client.updated_at.in_time_zone('Zurich').to_date, wb.cell(2, 18).to_date
   end
 
   test 'clients xls export is not paginated' do
