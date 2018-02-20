@@ -16,6 +16,7 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
   test 'xlsx files columns and cells are correct' do
     client = create :client, entry_date: 'Feb. 2014', birth_year: 30.years.ago.to_date,
       education: 'educati', created_at: 2.days.ago, nationality: 'IT'
+    client.update(created_at: 2.days.ago, updated_at: 2.days.ago)
 
     Client.with_deleted.where.not(id: client.id).map(&:really_destroy!)
     wb = get_xls_from_response(clients_url(format: :xlsx))
