@@ -93,8 +93,8 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
       client.education,                     # 13
       client.entry_date,                    # 14
       t("acceptance.#{client.acceptance}"), # 15
-      client.created_at.localtime,          # 16
-      client.updated_at.localtime           # 17
+      client.created_at.in_time_zone,       # 16
+      client.updated_at.in_time_zone        # 17
     ]
     sheet.add_row body_row, types: cell_types, style: cell_styles
   end

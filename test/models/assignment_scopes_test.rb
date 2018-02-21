@@ -27,7 +27,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @started_60_days_ago_no_end
     assert query.include? @starts_in_one_month_no_end
     assert query.include? @no_start_no_end
-    assert_equal 4, query.count
   end
 
   test 'has_end returns only with end date set' do
@@ -39,7 +38,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @started_yesterday_ends_tomorrow
     assert query.include? @no_start_ends_today
     assert query.include? @no_start_ends_tomorrow
-    assert_equal 7, query.count
   end
 
   test 'ended returns only with end_date in past or today' do
@@ -47,14 +45,12 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @started_60_days_ago_ended_30_days_ago
     assert query.include? @started_30_days_ago_ended_15_days_ago
     assert query.include? @no_start_ends_today
-    assert_equal 3, query.count
   end
 
   test 'end_before returns only ended before parameter' do
     query = Assignment.end_before(@now)
     assert query.include? @started_60_days_ago_ended_30_days_ago
     assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert_equal 2, query.count
   end
 
   test 'end_after returns only ended after parameter' do
@@ -63,13 +59,11 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @starts_tomorrow_ends_next_month
     assert query.include? @started_yesterday_ends_tomorrow
     assert query.include? @no_start_ends_tomorrow
-    assert_equal 4, query.count
   end
 
-  test 'end_within returns only ended between range' do
-    query = Assignment.end_within(@now.days_ago(20), @now.days_ago(10))
+  test 'end_within_returns_only_ended_between_range' do
+    query = Assignment.end_within(@now.days_ago(10), @now.days_ago(20))
     assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert_equal 1, query.count
   end
 
   test 'end_in_future returns only ending in the future' do
@@ -78,7 +72,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @starts_tomorrow_ends_next_month
     assert query.include? @started_yesterday_ends_tomorrow
     assert query.include? @no_start_ends_tomorrow
-    assert_equal 4, query.count
   end
 
   test 'not_ended returns only with no ending or ending in future' do
@@ -91,7 +84,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @started_yesterday_ends_tomorrow
     assert query.include? @no_start_ends_tomorrow
     assert query.include? @no_start_no_end
-    assert_equal 8, query.count
   end
 
   test 'started returns only with start date in past or today' do
@@ -102,7 +94,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @started_60_days_ago_ended_30_days_ago
     assert query.include? @started_30_days_ago_ended_15_days_ago
     assert query.include? @started_yesterday_ends_tomorrow
-    assert_equal 6, query.count
   end
 
   test 'start_before returns only with start date before given date' do
@@ -112,20 +103,17 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @started_60_days_ago_ended_30_days_ago
     assert query.include? @started_30_days_ago_ended_15_days_ago
     assert query.include? @started_yesterday_ends_tomorrow
-    assert_equal 5, query.count
   end
 
   test 'start_after returns only with start date after given date' do
     query = Assignment.start_after(@now)
     assert query.include? @starts_in_one_month_no_end
     assert query.include? @starts_tomorrow_ends_next_month
-    assert_equal 2, query.count
   end
 
   test 'start_within returns only with start date after given date' do
-    query = Assignment.start_within(@now.days_ago(32), @now.days_ago(12))
+    query = Assignment.start_within(@now.days_ago(12), @now.days_ago(32))
     assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert_equal 1, query.count
   end
 
   test 'active returns only started and not ended or not ended with no start date' do
@@ -135,7 +123,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @started_7_days_ago_ends_in_2_months
     assert query.include? @started_yesterday_ends_tomorrow
     assert query.include? @no_start_ends_tomorrow
-    assert_equal 5, query.count
   end
 
   test 'inactive returns not started, will start, ended, end today, without dates' do
@@ -146,7 +133,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @starts_tomorrow_ends_next_month
     assert query.include? @no_start_ends_today
     assert query.include? @no_start_no_end
-    assert_equal 6, query.count
   end
 
   test 'active_between returns only started and not ended between start and end date' do
@@ -155,14 +141,12 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? @started_7_days_ago_ends_in_2_months
     assert query.include? @started_60_days_ago_ended_30_days_ago
     assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert_equal 4, query.count
   end
 
   test 'will_start returns only assignments that will start in future' do
     query = Assignment.will_start
     assert query.include? @starts_in_one_month_no_end
     assert query.include? @starts_tomorrow_ends_next_month
-    assert_equal 2, query.count
   end
 
   test 'created_between' do
