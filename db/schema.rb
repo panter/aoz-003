@@ -245,10 +245,11 @@ ActiveRecord::Schema.define(version: 20180220151701) do
   create_table "event_volunteers", force: :cascade do |t|
     t.bigint "volunteer_id"
     t.bigint "event_id"
-    t.boolean "picked", default: false
+    t.bigint "creator_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_event_volunteers_on_creator_id"
     t.index ["deleted_at"], name: "index_event_volunteers_on_deleted_at"
     t.index ["event_id"], name: "index_event_volunteers_on_event_id"
     t.index ["volunteer_id"], name: "index_event_volunteers_on_volunteer_id"

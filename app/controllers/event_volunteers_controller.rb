@@ -3,9 +3,9 @@ class EventVolunteersController < ApplicationController
 
   def create
     authorize EventVolunteer
-    @event.event_volunteers << EventVolunteer.new(event_volunteer_params.merge(event_id: params[:event_id]))
+    @event.event_volunteers << EventVolunteer.new(event_volunteer_params.merge(event_id: params[:event_id], creator_id: current_user.id))
     if @event.save
-      redirect_to @event, make_notice
+      redirect_to @event, notice: 'Teilnehmer/in erfolgreich hinzugefügt.'
     else
       render 'events/show'
     end
@@ -14,7 +14,7 @@ class EventVolunteersController < ApplicationController
   def destroy
     event_volunteer = @event.event_volunteers.find(params[:id])
     if event_volunteer.delete && @event.reload
-      redirect_to @event, notice: 'Teilnehmende erfolgreich hinzugefügt.'
+      redirect_to @event, notice: 'Teilnehmer/in erfolgreich gelöscht.'
     else
       redirect_to @event, notice: 'Löschen fehlgeschlagen.'
     end
@@ -28,6 +28,6 @@ class EventVolunteersController < ApplicationController
   end
 
   def event_volunteer_params
-    params.require(:event_volunteer).permit(:volunteer_id)
+    params.require(:event_volunteer).permit(:volunteer_id, :creator_id)
   end
 end
