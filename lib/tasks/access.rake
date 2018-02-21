@@ -1,5 +1,5 @@
 namespace :access do
-  desc 'TODO'
+  desc 'Imports all from Access db given'
   task import: :environment do
     if ENV['file'].present?
       @acimport = AccessImport.new(ENV['file'])
@@ -24,5 +24,15 @@ namespace :access do
       .joins(:import)
       .created_before('2018-05-01')
       .update_all(intro_course: true)
+  end
+
+  desc 'Test imports'
+  task test: :environment do
+    if ENV['file'].present?
+      Rake::Task['access:import'].invoke
+      Rails::TestUnit::Runner.rake_run(['lib/access_import_test'])
+    else
+      warn 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
+    end
   end
 end
