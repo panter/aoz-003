@@ -9,6 +9,5 @@ FactoryBot.define do
     trait :with_department do
       association :department
     end
-
   end
 end
