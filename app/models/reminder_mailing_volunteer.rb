@@ -92,8 +92,13 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def email_absender
-    "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:"\
+    "[#{reminder_mailing_creator_name}](mailto:"\
       "#{reminder_mailing.creator.email})"
+  end
+
+  def reminder_mailing_creator_name
+    reminder_mailing.creator.profile&.contact&.natural_name ||
+      reminder_mailing.creator.email
   end
 
   def feedback_link
