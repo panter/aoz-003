@@ -24,7 +24,8 @@ class ActiveSupport::TestCase
     really_destroy_with_deleted(
       User, Volunteer, Client, ClientNotification, Contact, Profile, Journal, AssignmentLog,
       Assignment, Department, LanguageSkill, Relative, GroupOffer, GroupAssignment, Feedback,
-      TrialFeedback, BillingExpense, Certificate, GroupAssignmentLog, Hour, Import, Event
+      TrialFeedback, BillingExpense, Certificate, GroupAssignmentLog, Hour, Import, Event,
+      EventVolunteer
     )
 
     super
