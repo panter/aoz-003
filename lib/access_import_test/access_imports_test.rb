@@ -4,13 +4,31 @@ class AccessImportsTest < ActiveSupport::TestCase
   test 'active_volunteers' do
     active_xls = extract_xlsx('ListeAktiveFreiwillige')
     found_active_volunteers = find_all_volunteers_in_xls(active_xls)
-    binding.pry
+    found_active_volunteers.each do |row_number, result|
+      found = result[:found]
+      row = result[:row]
+
+      assert_equal empty_str_nil(row[:first_name]), found.contact.first_name
+      assert_equal empty_str_nil(row[:last_name]), found.contact.last_name
+      assert_equal empty_str_nil(row[:city]), found.contact.city
+      assert_equal empty_str_nil(row[:street]), found.contact.street
+      assert_equal empty_str_nil(row[:extended]), found.contact.extended
+      assert_equal empty_str_nil(row[:secondary_phone]), found.contact.secondary_phone
+      assert_equal row[:waive] == 'Ja', found.waive,
+        "#{row_number}: #{row[:waive]} and here is #{found.waive}, volunteer_id: #{found.id}"
+      assert_nil found.resigned_at
+    end
+  end
+
+  def empty_str_nil(str)
+    return if str.empty?
+    str
   end
 
   test 'active_clients' do
-    active_xls = extract_xlsx('ListeAktiveBegleitete')
-    found_active_clients = find_all_clients_in_xls(active_xls)
-    binding.pry
+    # active_xls = extract_xlsx('ListeAktiveBegleitete')
+    # found_active_clients = find_all_clients_in_xls(active_xls)
+    # binding.pry
   end
 
   def find_all_volunteers_in_xls(xls)
