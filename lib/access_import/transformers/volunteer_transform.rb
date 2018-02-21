@@ -19,7 +19,8 @@ class VolunteerTransform < Transformer
       resigned_at: personen_rolle[:d_Rollenende],
       registrar: @ac_import.import_user,
       acceptance: :accepted,
-      intro_course: true
+      intro_course: true,
+      waive: personen_rolle[:b_SpesenVerzicht] == 1
     }.merge(prepare_kontoangaben(personen_rolle[:fk_Hauptperson]))
       .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(contact_attributes(haupt_person.merge(email: import_time_email)))

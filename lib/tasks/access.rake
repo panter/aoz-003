@@ -29,7 +29,7 @@ namespace :access do
   desc 'Test imports'
   task test: :environment do
     if ENV['file'].present?
-      Rake::Task['access:import'].invoke
+      Rake::Task['access:import'].invoke unless ENV['skip_import'].present?
       Rails::TestUnit::Runner.rake_run(['lib/access_import_test'])
     else
       warn 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
