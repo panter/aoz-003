@@ -18,7 +18,7 @@ class Client < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: 'clients'
   belongs_to :resigned_by, class_name: 'User', inverse_of: 'resigned_clients',
     optional: true
-  belongs_to :involved_authority, class_name: 'User',
+  belongs_to :involved_authority, -> { with_deleted }, class_name: 'User',
     inverse_of: 'involved_authorities', optional: true
   has_many :manager_departments, through: :user, source: :departments
   has_one :assignment_creator_departments, through: :assignment, source: :creator

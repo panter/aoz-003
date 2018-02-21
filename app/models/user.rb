@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_one :volunteer, dependent: :nullify, inverse_of: 'user'
 
-  has_one :profile, dependent: :destroy
+  has_one :profile, -> { with_deleted }, dependent: :destroy
   accepts_nested_attributes_for :profile
 
   ransack_alias :full_name, :profile_contact_full_name_or_volunteer_contact_full_name_or_email

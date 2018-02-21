@@ -1,7 +1,7 @@
 class ReminderMailingVolunteer < ApplicationRecord
   belongs_to :reminder_mailing
   belongs_to :volunteer
-  belongs_to :reminder_mailable, polymorphic: true, optional: true
+  belongs_to :reminder_mailable, -> { with_deleted }, polymorphic: true, optional: true
 
   belongs_to :process_submitted_by, -> { with_deleted }, class_name: 'User',
     inverse_of: 'mailing_volunteer_processes_submitted', optional: true
