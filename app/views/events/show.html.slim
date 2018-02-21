@@ -28,32 +28,11 @@ h2= @event.title if @event.title
           = link_to @event.creator.full_name, profile_link(@event.creator)
           = " am #{l(@event.created_at.to_date)}"
 
-h3 Teilnehmer
+h3 Teilnehmende
+= render 'event_volunteers/form'
 
-h4 Neue Teilnehmer hinzufügen
-= simple_form_for(@event_volunteer, url: polymorphic_path([@event, @event_volunteer])) do |f|
-  = simple_error_notice f
-
-  .row
-    .col-xs-12
-      = f.association :volunteer, collection: @volunteers
-  .row
-    .col-xs-12
-      = f.button :submit
-
-h4 Eingeladene Teilnehmer
-.table-responsive
-  table.table.table-no-border-top
-    tbody
-      - @event.event_volunteers.each do |event_volunteer|
-        tr
-          td Name
-          td= event_volunteer.volunteer.full_name
-          td= link_to 'Löschen', polymorphic_path([@event, event_volunteer]), data: { method: 'DELETE' }
-
-
-
-
+- if @event.event_volunteers.any?
+  = render 'event_volunteers/show'
 
 = form_navigation_btn :edit
 = form_navigation_btn :back
