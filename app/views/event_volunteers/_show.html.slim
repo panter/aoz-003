@@ -5,5 +5,5 @@ h4 Eingeladene Teilnehmende
       - @event.event_volunteers.each do |event_volunteer|
         tr
           td Name
-          td= event_volunteer.volunteer.full_name
+          td= link_to event_volunteer.volunteer.full_name, volunteer_path(event_volunteer.volunteer)
           td= link_to 'Löschen', polymorphic_path([@event, event_volunteer]), data: { method: 'DELETE' }
