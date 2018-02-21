@@ -73,17 +73,26 @@ class AccessImport
   # other related records import
   #
   def run_acceptance_termination_on_clients_and_volunteers
-    terminated_clients = Client.field_not_nil(:resigned_at).each do |client|
+    Client.field_not_nil(:resigned_at).each do |client|
       client.resigned!
       client.update(updated_at: client.import.store['personen_rolle']['d_MutDatum'],
         resigned_at: client.import.store['personen_rolle']['d_Rollenende'],
         resigned_by: @import_user)
     end
-    terminated_volunteers = Volunteer.field_not_nil(:resigned_at).each do |volunteer|
+
+    Volunteer.field_not_nil(:resigned_at).each do |volunteer|
       volunteer.resigned!
       volunteer.update(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
         resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
     end
+
+    Volunteer.joins(:import)
+             .where('imports.store @> ?', { haupt_person: { email: nil } }.to_json)
+             .each do |volunteer|
+               volunteer.resigned!
+               volunteer.update(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
+                 resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
+             end
   end
 
   # Clean up after imports finished
