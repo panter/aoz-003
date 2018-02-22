@@ -76,21 +76,18 @@ class AccessImport
     Client.joins(:import).field_not_nil(:resigned_at).or(
       Client.joins(:import).where('imports.store @> ?', { personen_rolle: { pk_PersonenRolle: 1666 } }.to_json)
     ).find_each do |client|
-      client.resigned!
-      client.update(updated_at: client.import.store['personen_rolle']['d_MutDatum'],
-        resigned_at: client.import.store['personen_rolle']['d_Rollenende'],
-        resigned_by: @import_user)
+      client.update_all(acceptance: :resigned, resigned_by: @import_user,
+        updated_at: client.import.store['personen_rolle']['d_MutDatum'],
+        resigned_at: client.import.store['personen_rolle']['d_Rollenende'])
     end
 
     Volunteer.joins(:import).field_not_nil(:resigned_at).or(
       Volunteer.joins(:import)
                .where('imports.store @> ?', { haupt_person: { email: nil } }.to_json)
     ).find_each do |volunteer|
-      volunteer.acceptance = :resigned
-      volunteer.save!(validate: false)
-      volunteer.assign_attributes(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
+      volunteer.update_all(acceptance: :resigned,
+        updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
         resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
-      volunteer.save!(validate: false)
     end
   end
 
