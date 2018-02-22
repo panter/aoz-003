@@ -1,7 +1,7 @@
 class ReminderMailingVolunteer < ApplicationRecord
   belongs_to :reminder_mailing
   belongs_to :volunteer
-  belongs_to :reminder_mailable, polymorphic: true, optional: true
+  belongs_to :reminder_mailable, -> { with_deleted }, polymorphic: true, optional: true
 
   belongs_to :process_submitted_by, -> { with_deleted }, class_name: 'User',
     inverse_of: 'mailing_volunteer_processes_submitted', optional: true
@@ -92,8 +92,13 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def email_absender
-    "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:"\
+    "[#{reminder_mailing_creator_name}](mailto:"\
       "#{reminder_mailing.creator.email})"
+  end
+
+  def reminder_mailing_creator_name
+    reminder_mailing.creator.profile&.contact&.natural_name ||
+      reminder_mailing.creator.email
   end
 
   def feedback_link

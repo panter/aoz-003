@@ -11,8 +11,9 @@ class UserSearchesTest < ApplicationSystemTestCase
     @social_worker = create :user, role: 'social_worker'
     @social_worker.profile.contact.update(first_name: 'Skyler', last_name: 'White')
 
-    @department_manager = create :user, role: 'department_manager', email: 'better_call_saul@good.man'
-    @department_manager.profile.destroy
+    @department_manager = create :user, role: 'department_manager',
+      email: 'better_call_saul@good.man'
+    @department_manager.profile.really_destroy!
 
     login_as @superadmin
     visit users_path

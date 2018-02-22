@@ -1,7 +1,7 @@
 class Profile < ApplicationRecord
   include BuildContactRelation
 
-  has_one :contact, as: :contactable
+  has_one :contact, -> { with_deleted }, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
 
   belongs_to :user, -> { with_deleted }
