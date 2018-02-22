@@ -89,9 +89,11 @@ class AccessImport
     Volunteer.joins(:import)
              .where('imports.store @> ?', { haupt_person: { email: nil } }.to_json)
              .each do |volunteer|
-               volunteer.resigned!
-               volunteer.update(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
+               volunteer.acceptance = :resigned
+               volunteer.save!(validate: false)
+               volunteer.assign_attributes(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
                  resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
+               volunteer.save!(validate: false)
              end
   end
 

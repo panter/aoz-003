@@ -13,15 +13,18 @@ class AccessImportsTest < ActiveSupport::TestCase
       assert_equal empty_str_nil(row[:city]), found.contact.city
       assert_equal empty_str_nil(row[:street]), found.contact.street
       assert_equal empty_str_nil(row[:extended]), found.contact.extended
-      assert_equal empty_str_nil(row[:secondary_phone]), found.contact.secondary_phone
+      assert_equal empty_str_nil(row[:secondary_phone]), found.contact.secondary_phone&.strip
+      assert_equal anrede_to_salutation(row[:anrede]), found.salutation,
+        "Salutation on #{found.id} is #{found.salutation} where it should be #{row[:anrede]}"
       assert_equal row[:waive] == 'Ja', found.waive,
         "#{row_number}: #{row[:waive]} and here is #{found.waive}, volunteer_id: #{found.id}"
       assert_nil found.resigned_at
     end
 
-    active_volunteers_ids = found_active_volunteers.map { |_, hash| hash[:found].id }
-    Volunteer.where.not(id: active_volunteers_ids).each do |volunteer|
-      assert volunteer.resigned?
+    active_volunteer_ids = found_active_volunteers.map { |_, hash| hash[:found].id }
+    Volunteer.joins(:import).where.not(id: active_volunteer_ids).each do |volunteer|
+      assert volunteer.resigned?, "Volunteer(id: #{volunteer.id}, full_name: "\
+        "#{volunteer.contact.full_name}) not resigned, but it should have been"
     end
   end
 
@@ -30,10 +33,40 @@ class AccessImportsTest < ActiveSupport::TestCase
     str
   end
 
+  def anrede_to_salutation(anrede)
+    case anrede
+    when 'Herr'
+      'mr'
+    when 'Frau'
+      'mrs'
+    when '<neutral>'
+      'mr'
+    end
+  end
+
   test 'active_clients' do
-    # active_xls = extract_xlsx('ListeAktiveBegleitete')
-    # found_active_clients = find_all_clients_in_xls(active_xls)
-    # binding.pry
+    active_xls = extract_xlsx('ListeAktiveBegleitete')
+    found_active_clients = find_all_clients_in_xls(active_xls)
+    found_active_clients.each do |row_number, result|
+      found = result[:found]
+      row = result[:row]
+
+      assert_equal empty_str_nil(row[:first_name]), found.contact.first_name
+      assert_equal empty_str_nil(row[:last_name]), found.contact.last_name
+      assert_equal empty_str_nil(row[:city]), found.contact.city
+      assert_equal empty_str_nil(row[:street]), found.contact.street
+      assert_equal empty_str_nil(row[:extended]), found.contact.extended
+      assert_equal empty_str_nil(row[:secondary_phone]), found.contact.secondary_phone&.strip
+      assert_equal empty_str_nil(row[:entry_date]), found.contact.entry_date
+      assert_equal anrede_to_salutation(row[:anrede]), found.salutation
+      assert_nil found.resigned_at
+    end
+
+    active_client_ids = found_active_clients.map { |_, hash| hash[:found].id }
+    Client.joins(:import).where.not(id: active_client_ids).each do |client|
+      assert client.resigned?, "Client(id: #{client.id}, full_name: "\
+        "#{client.contact.full_name}) not resigned, but it should have been"
+    end
   end
 
   def find_all_volunteers_in_xls(xls)
