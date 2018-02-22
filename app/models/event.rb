@@ -1,7 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :department, optional: true
-  belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true,
-    inverse_of: 'events'
+  belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'events'
 
   has_many :event_volunteers, dependent: :delete_all
   accepts_nested_attributes_for :event_volunteers

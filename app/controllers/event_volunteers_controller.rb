@@ -3,7 +3,9 @@ class EventVolunteersController < ApplicationController
 
   def create
     authorize EventVolunteer
-    @event.event_volunteers << EventVolunteer.new(event_volunteer_params.merge(event_id: params[:event_id], creator_id: current_user.id))
+    @event.event_volunteers << EventVolunteer.new(
+      event_volunteer_params.merge(event_id: params[:event_id], creator_id: current_user.id)
+    )
     if @event.save
       update_volunteer_intro_course_as_true
       redirect_to @event, notice: 'Teilnehmer/in erfolgreich hinzugefügt.'

@@ -12,7 +12,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new(creator: current_user)
+    @event = Event.new
     authorize @event
   end
 
