@@ -18,6 +18,11 @@ class AccessImportsTest < ActiveSupport::TestCase
         "#{row_number}: #{row[:waive]} and here is #{found.waive}, volunteer_id: #{found.id}"
       assert_nil found.resigned_at
     end
+
+    active_volunteers_ids = found_active_volunteers.map { |_, hash| hash[:found].id }
+    Volunteer.where.not(id: active_volunteers_ids).each do |volunteer|
+      assert volunteer.resigned?
+    end
   end
 
   def empty_str_nil(str)
