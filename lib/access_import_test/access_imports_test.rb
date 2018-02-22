@@ -24,7 +24,6 @@ class AccessImportsTest < ActiveSupport::TestCase
 
     active_client_ids = found_active_clients.map { |_, hash| hash[:found].id }
     Client.where.not(id: active_client_ids).each do |client|
-      binding.pry unless client.resigned?
       assert client.resigned?, "Client(id: #{client.id}, full_name: "\
         "#{client.contact.full_name}) not resigned, but it should have been"
     end
