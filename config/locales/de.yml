@@ -982,6 +982,7 @@ de:
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
+      time: "%H:%M"
       date_only: "%d.%m.%Y"
       devise:
         mailer:
@@ -1707,6 +1708,7 @@ en:
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
+      time: "%H:%M"
       date_only: "%d.%m.%Y"
       devise:
         mailer:

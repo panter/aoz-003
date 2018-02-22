@@ -1,0 +1,31 @@
+wb = xlsx_package.workbook
+wb.use_shared_strings = true
+
+col_header = wb.styles.add_style(
+  bg_color: 'FFDFDEDF',
+  b: true,
+  alignment: { wrap_text: true, horizontal: :left, vertical: :top },
+  border: { color: '00', edges: [:left, :right, :top, :bottom], style: :thin },
+  width: 200
+)
+
+
+standard_format = wb.styles.add_style alignment: { wrap_text: true, horizontal: :left, vertical: :top}, width: 200
+date_format = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
+time_format = wb.styles.add_style format_code: 'hh:mm', width: :auto_fit
+
+wb.add_worksheet(name: 'Veranstaltung') do |sheet|
+  sheet.add_row(['Titel', event.title], types: :string, style: [col_header, standard_format])
+  sheet.add_row(['Art', t(".#{@event.kind}")], types: :string, style: [col_header, standard_format])
+  sheet.add_row(['Ort', event.department.contact.last_name], types: :string, style: [col_header, standard_format])
+  sheet.add_row(['Startzeit', l(event.start_time, format: :time)], types: :string, style: [col_header, time_format])
+  sheet.add_row(['Endzeit', l(event.end_time, format: :time)], types: :string, style: [col_header, time_format])
+  sheet.add_row(['Datum', l(event.date)], types: :string, style: [col_header, date_format])
+  sheet.add_row(['Beschreibung', event.description], types: :string, style: [col_header, standard_format], height: 200)
+  sheet.add_row
+  sheet.add_row
+  sheet.add_row
+  sheet.add_row(['Teilnehmerliste'], types: :string, style: col_header)
+  sheet.add_row(['Teilnehmeranzahl', 9], types: [:string, :integer], style: [col_header, standard_format])
+  sheet.add_row(['Name', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Jahrgang'], types: :string, style: col_header)
+end
