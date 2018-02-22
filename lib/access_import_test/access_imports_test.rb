@@ -41,7 +41,7 @@ class AccessImportsTest < ActiveSupport::TestCase
     assert_equal anrede_to_salutation(row[:anrede]), found.salutation,
       "Salutation on #{found.id} is #{found.salutation} where it should be #{row[:anrede]}"
     if found.is_a?(Client)
-      assert_with_message(row[:entry_date]&.to_s, found.entry_date&.strip)
+      assert_with_message(row[:entry_date]&.to_date&.to_s, found.entry_date&.strip)
     else
       assert_equal row[:waive] == 'Ja', found.waive,
         "#{row[:waive]} and here is #{found.waive}, volunteer_id: #{found.id}"

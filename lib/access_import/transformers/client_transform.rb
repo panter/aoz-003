@@ -7,7 +7,7 @@ class ClientTransform < Transformer
       nationality: haupt_person[:nationality],
       salutation: haupt_person[:salutation],
       birth_year: haupt_person[:d_Geburtsdatum],
-      entry_date: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
+      entry_date: haupt_person[:d_EintrittCH] && Date.parse(haupt_person[:d_EintrittCH]).to_date.to_s,
       comments: comments(begleitet, personen_rolle, haupt_person),
       relatives_attributes: relatives_attrs(relatives),
       accepted_at: personen_rolle[:d_Rollenbeginn],
