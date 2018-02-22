@@ -9,7 +9,7 @@ class AccessImportsTest < ActiveSupport::TestCase
     end
 
     active_volunteer_ids = found_active_volunteers.map { |_, hash| hash[:found].id }
-    Volunteer.joins(:import).where.not(id: active_volunteer_ids).each do |volunteer|
+    Volunteer.where.not(id: active_volunteer_ids).each do |volunteer|
       assert volunteer.resigned?, "Volunteer(id: #{volunteer.id}, full_name: "\
         "#{volunteer.contact.full_name}) not resigned, but it should have been"
     end
@@ -23,7 +23,7 @@ class AccessImportsTest < ActiveSupport::TestCase
     end
 
     active_client_ids = found_active_clients.map { |_, hash| hash[:found].id }
-    Client.joins(:import).where.not(id: active_client_ids).each do |client|
+    Client.where.not(id: active_client_ids).each do |client|
       binding.pry unless client.resigned?
       assert client.resigned?, "Client(id: #{client.id}, full_name: "\
         "#{client.contact.full_name}) not resigned, but it should have been"

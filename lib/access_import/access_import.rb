@@ -73,28 +73,25 @@ class AccessImport
   # other related records import
   #
   def run_acceptance_termination_on_clients_and_volunteers
-    Client.field_not_nil(:resigned_at).each do |client|
+    Client.joins(:import).field_not_nil(:resigned_at).or(
+      Client.joins(:import).where('imports.store @> ?', { personen_rolle: { pk_PersonenRolle: 1666 } }.to_json)
+    ).each do |client|
       client.resigned!
       client.update(updated_at: client.import.store['personen_rolle']['d_MutDatum'],
         resigned_at: client.import.store['personen_rolle']['d_Rollenende'],
         resigned_by: @import_user)
     end
 
-    Volunteer.field_not_nil(:resigned_at).each do |volunteer|
-      volunteer.resigned!
-      volunteer.update(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
+    Volunteer.joins(:import).field_not_nil(:resigned_at).or(
+      Volunteer.joins(:import)
+               .where('imports.store @> ?', { haupt_person: { email: nil } }.to_json)
+    ).each do |volunteer|
+      volunteer.acceptance = :resigned
+      volunteer.save!(validate: false)
+      volunteer.assign_attributes(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
         resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
+      volunteer.save!(validate: false)
     end
-
-    Volunteer.joins(:import)
-             .where('imports.store @> ?', { haupt_person: { email: nil } }.to_json)
-             .each do |volunteer|
-               volunteer.acceptance = :resigned
-               volunteer.save!(validate: false)
-               volunteer.assign_attributes(updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
-                 resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
-               volunteer.save!(validate: false)
-             end
   end
 
   # Clean up after imports finished
