@@ -186,4 +186,21 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     first_mailing = ReminderMailing.created_desc.first
     assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
   end
+
+  test 'termination_mailing_for_group_assignment_termination_is_sent' do
+    group_assignment = create :group_assignment, period_start: 2.months.ago, period_end: 2.days.ago,
+      period_end_set_by: @superadmin
+    termination_reminder = create :reminder_mailing, kind: :termination,
+      reminder_mailing_volunteers: [group_assignment],
+      body: '%{Anrede} %{Name} %{FeedbackLink} %{Einsatz} %{EinsatzTitel} %{EmailAbsender} '\
+            '%{EinsatzStart}'
+    login_as @superadmin
+    visit polymorphic_path([group_assignment, termination_reminder], action: :send_termination)
+
+    assert page.has_text? 'Beendigungs-Email wird versendet.'
+
+    termination_reminder.reload
+    assert termination_reminder.sending_triggered, 'Sending on the mailer was not triggered'
+    mailing_volunteer = termination_reminder.reminder_mailing_volunteers.first
+  end
 end
