@@ -26,8 +26,7 @@ class ClientTransform < Transformer
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     client = Client.create!(prepare_attributes(personen_rolle, haupt_person))
     if haupt_person == {} # handle access db inconsistencies
-      client.update_columns(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende],
-        resigned_by: @import_user)
+      client.update_columns(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende])
     end
     update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
