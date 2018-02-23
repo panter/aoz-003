@@ -5,7 +5,7 @@ class EventVolunteerTest < ActiveSupport::TestCase
     @volunteer = create :volunteer_with_user, intro_course: false
     @event = create :event, kind: :intro_course
 
-    @event_volunteer = EventVolunteer.create!(volunteer: @volunteer, event: @event, creator: create(:user))
+    @event_volunteer = create :event_volunteer, volunteer: @volunteer, event: @event, creator: create(:user)
   end
 
   test 'adding volunteer to event marks intro course true' do

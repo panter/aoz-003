@@ -11,7 +11,7 @@ class EventVolunteer < ApplicationRecord
   private
 
   def set_volunteer_intro_course_true
-    volunteer.intro_course = true
+    volunteer.update(intro_course: true)
   end
 
   def set_volunteer_intro_course_false

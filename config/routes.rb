@@ -62,7 +62,7 @@ Rails.application.routes.draw do
   end
 
   resources :events do
-    resources :event_volunteers
+    resources :event_volunteers, only: [:create, :destroy]
   end
 
   resources :feedbacks, only: [:new, :create]

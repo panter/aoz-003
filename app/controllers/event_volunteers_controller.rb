@@ -15,7 +15,7 @@ class EventVolunteersController < ApplicationController
 
   def destroy
     @event_volunteer = @event.event_volunteers.find(params[:id])
-    if @event_volunteer.delete
+    if @event_volunteer.destroy
       redirect_to @event, notice: 'Teilnehmer/in erfolgreich gelöscht.'
     else
       redirect_to @event, notice: 'Löschen fehlgeschlagen.'

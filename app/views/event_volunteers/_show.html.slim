@@ -6,4 +6,4 @@ h4 Eingeladene Teilnehmende
         tr
           td Name
           td= link_to event_volunteer.volunteer.full_name, volunteer_path(event_volunteer.volunteer)
-          td= link_to 'Löschen', polymorphic_path([@event, event_volunteer]), data: { method: 'DELETE' }
+          td= link_to 'Löschen', polymorphic_path([@event, event_volunteer]), method: :delete
