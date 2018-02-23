@@ -21,7 +21,7 @@ dl.dl-horizontal
       = ' - '
       = link_to_if(policy(Department).index?, @group_assignment.department.to_s,
         @group_assignment.department, target: '_blank')
-  dt Einsatz dauer:
+  dt Einsatzdauer:
   dd= "#{l(@group_assignment.period_start)} bis #{l(@group_assignment.period_end)}" if @group_assignment.period_start.present?
 hr
 
