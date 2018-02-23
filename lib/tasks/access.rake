@@ -22,7 +22,7 @@ namespace :access do
   task intro_true: :environment do
     Volunteer
       .joins(:import)
-      .created_before(Date.parse('2018-05-01').to_date)
+      .created_before('2018-05-01')
       .update_all(intro_course: true)
   end
 end
