@@ -28,6 +28,9 @@ namespace :access do
 
   desc 'Test imports'
   task test: :environment do
+    if Rails.env.production?
+      abort 'This task should never be executed on a Production instance'
+    end
     Rake::Task['access:import'].invoke if ENV['file'].present?
     if Import.blank?
       warn 'No access file set!'
