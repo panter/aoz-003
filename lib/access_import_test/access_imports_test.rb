@@ -30,25 +30,21 @@ class AccessImportsTest < ActiveSupport::TestCase
   end
 
   def assert_basic_values(row, found)
-    assert_with_message(empty_str_nil(row[:first_name]), found.contact.first_name)
-    assert_with_message(empty_str_nil(row[:last_name]), found.contact.last_name)
-    assert_with_message(empty_str_nil(row[:city]), found.contact.city)
-    assert_with_message(empty_str_nil(row[:street]), found.contact.street)
-    assert_with_message(empty_str_nil(row[:extended]), found.contact.extended)
-    assert_with_message(empty_str_nil(row[:secondary_phone]), found.contact.secondary_phone&.strip)
+    assert_equal row[:first_name].to_s, found.contact.first_name.to_s
+    assert_equal row[:last_name].to_s, found.contact.last_name.to_s
+    assert_equal row[:city].to_s, found.contact.city.to_s
+    assert_equal row[:street].to_s, found.contact.street.to_s
+    assert_equal row[:extended].to_s, found.contact.extended.to_s
+    assert_equal row[:secondary_phone].to_s, found.contact.secondary_phone&.strip.to_s
     assert_nil found.resigned_at
-    assert_equal anrede_to_salutation(row[:anrede]), found.salutation,
+    assert_equal anrede_to_salutation(row[:anrede]).to_s, found.salutation.to_s,
       "Salutation on #{found.id} is #{found.salutation} where it should be #{row[:anrede]}"
     if found.is_a?(Client)
-      assert_with_message(row[:entry_date]&.to_date&.to_s, found.entry_date&.strip)
+      assert_equal row[:entry_date]&.to_date.to_s, found.entry_date.to_s.strip
     else
       assert_equal row[:waive] == 'Ja', found.waive,
         "#{row[:waive]} and here is #{found.waive}, volunteer_id: #{found.id}"
     end
-  end
-
-  def assert_with_message(expected, value)
-    assert expected == value, "Expected: #{expected}, but got: #{value}"
   end
 
   def find_all_from_xls(xls, query)
@@ -101,11 +97,6 @@ class AccessImportsTest < ActiveSupport::TestCase
     found, query = narrow_query(query, 'birth_year = ?', hash[:birth_year])
     return [false, query] unless found
     query
-  end
-
-  def empty_str_nil(str)
-    return if str.empty?
-    str
   end
 
   def anrede_to_salutation(anrede)
