@@ -27,14 +27,8 @@ class BillingExpenseTransform < Transformer
     update_timestamps(billing_expense, entschaedigung[:d_Datum])
   end
 
-  def import_multiple(entschaedigungen)
-    entschaedigungen.map do |key, entschaedigung|
-      get_or_create_by_import(key, entschaedigung)
-    end
-  end
-
-  def import_all(entschaedigungen = nil)
-    import_multiple(entschaedigungen || @freiwilligen_entschaedigung.all)
+  def default_all
+    @freiwilligen_entschaedigung.all
   end
 
   def get_volunteer(personen_rollen_id)

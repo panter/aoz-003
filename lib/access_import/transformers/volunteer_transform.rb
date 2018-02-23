@@ -37,14 +37,8 @@ class VolunteerTransform < Transformer
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
-  def import_multiple(personen_rollen)
-    personen_rollen.map do |key, personen_rolle|
-      get_or_create_by_import(key, personen_rolle)
-    end
-  end
-
-  def import_all(personen_rollen = nil)
-    import_multiple(personen_rollen || @personen_rolle.all_volunteers)
+  def default_all
+    @personen_rolle.all_volunteers
   end
 
   def konto_angaben(haupt_person_id = nil)

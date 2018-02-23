@@ -23,8 +23,18 @@ class Transformer
 
   def update_timestamps(record, date, updated_date = nil)
     return record if date.blank?
-    record.update(created_at: date, updated_at: updated_date || date)
+    record.update_columns(created_at: date, updated_at: updated_date || date)
     record
+  end
+
+  def import_multiple(access_entities)
+    access_entities.map do |key, row|
+      get_or_create_by_import(key, row)
+    end
+  end
+
+  def import_all(access_entities = nil)
+    import_multiple(access_entities || default_all)
   end
 
   def personen_rollen_create_update_conversion(model_record, personen_rolle)

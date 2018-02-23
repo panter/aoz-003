@@ -37,8 +37,8 @@ class GroupOfferTransform < Transformer
     end
   end
 
-  def import_all(fw_einsaetze = nil)
-    import_multiple(fw_einsaetze || @freiwilligen_einsaetze.where_animation_f)
+  def default_all
+    @freiwilligen_einsaetze.where_animation_f
   end
 
   def create_category(group_assignments)

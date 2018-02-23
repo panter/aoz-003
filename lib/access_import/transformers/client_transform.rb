@@ -34,15 +34,8 @@ class ClientTransform < Transformer
     update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
-  def import_all
-    @personen_rolle.all_clients.each do |key, personen_rolle|
-      get_or_create_by_import(key, personen_rolle)
-    end
-  end
-
-  def handle_client_acceptance(personen_rolle)
-    return 'resigned' if personen_rolle[:d_Rollenende]
-    'accepted'
+  def default_all
+    @personen_rolle.all_clients
   end
 
   def comments(begleitet, personen_rolle, haupt_person)

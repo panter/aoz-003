@@ -49,13 +49,7 @@ class KursTransform < Transformer
     end
   end
 
-  def import_multiple(kurse)
-    kurse.map do |key, kurs|
-      get_or_create_by_import(key, kurs)
-    end
-  end
-
-  def import_all(kurse = nil)
-    import_multiple(kurse || @kurse.all)
+  def default_all
+    @kurse.all
   end
 end

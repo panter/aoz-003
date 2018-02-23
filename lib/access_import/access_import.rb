@@ -75,11 +75,7 @@ class AccessImport
   def run_acceptance_termination_on_clients_and_volunteers
     Client.joins(:import).field_not_nil(:resigned_at).or(
       Client.joins(:import).where('imports.store @> ?', { personen_rolle: { pk_PersonenRolle: 1666 } }.to_json)
-    ).find_each do |client|
-      client.update_all(acceptance: :resigned, resigned_by: @import_user,
-        updated_at: client.import.store['personen_rolle']['d_MutDatum'],
-        resigned_at: client.import.store['personen_rolle']['d_Rollenende'])
-    end
+    ).update_all(acceptance: :resigned, resigned_by: @import_user)
 
     Volunteer.joins(:import).field_not_nil(:resigned_at).or(
       Volunteer.joins(:import)
