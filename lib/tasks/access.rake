@@ -17,4 +17,12 @@ namespace :access do
       warn 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
     end
   end
+
+  desc 'Set all Volunteers that where imported and created before May 2018 to intro_course = true'
+  task intro_true: :environment do
+    Volunteer
+      .joins(:import)
+      .created_before(Date.parse('2018-05-01').to_date)
+      .update_all(intro_course: true)
+  end
 end
