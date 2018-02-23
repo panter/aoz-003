@@ -80,11 +80,7 @@ class AccessImport
     Volunteer.joins(:import).field_not_nil(:resigned_at).or(
       Volunteer.joins(:import)
                .where('imports.store @> ?', { haupt_person: { email: nil } }.to_json)
-    ).find_each do |volunteer|
-      volunteer.update_all(acceptance: :resigned,
-        updated_at: volunteer.import.store['personen_rolle']['d_MutDatum'],
-        resigned_at: volunteer.import.store['personen_rolle']['d_Rollenende'])
-    end
+    ).update_all(acceptance: :resigned)
   end
 
   # Clean up after imports finished
