@@ -25,7 +25,7 @@ dl.dl-horizontal
     - else
       'Der Klient:
   dd= link_to @assignment.client.contact.natural_name, @assignment.client, target: '_blank'
-  dt Einsatz dauer:
+  dt Einsatzdauer:
   dd= "#{l(@assignment.period_start)} bis #{l(@assignment.period_end)}"
 hr
 
