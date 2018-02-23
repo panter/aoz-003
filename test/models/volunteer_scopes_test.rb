@@ -228,11 +228,11 @@ class VolunteerScopesTest < ActiveSupport::TestCase
       group_assignments: [
         GroupAssignment.create(group_offer: create(:group_offer, active: true))
       ]
-    with_archived = create :volunteer,
+    with_inactive = create :volunteer,
       group_assignments: [
         GroupAssignment.create(group_offer: create(:group_offer, active: false))
       ]
-    with_active_and_archived = create :volunteer,
+    with_active_and_inactive = create :volunteer,
       group_assignments: [
         GroupAssignment.create(group_offer: create(:group_offer, active: true)),
         GroupAssignment.create(group_offer: create(:group_offer, active: false))
@@ -240,8 +240,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     without_group_offers = create :volunteer
     query = Volunteer.without_group_offer
     refute query.include? with_active
-    refute query.include? with_active_and_archived
-    refute query.include? with_archived
+    refute query.include? with_active_and_inactive
+    refute query.include? with_inactive
     assert query.include? without_group_offers
   end
 
@@ -276,6 +276,35 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? started_before_no_end
     assert query.include? started_before_end_after
     refute query.include? started_after_no_end
+    refute query.include? no_start_end_set
+    refute query.include? no_assignment
+  end
+
+  test 'with_assignment_ca_6_weeks_ago' do
+    started_before_no_end = create :volunteer
+    make_assignment(start_date: 9.weeks.ago, volunteer: started_before_no_end)
+    started_before_end_after = create :volunteer
+    make_assignment(start_date: 10.months.ago, end_date: Time.zone.today + 10,
+      volunteer: started_before_end_after)
+    started_five_weeks_ago = create :volunteer
+    make_assignment(start_date: 5.weeks.ago, volunteer: started_five_weeks_ago)
+    started_six_weeks_ago = create :volunteer
+    make_assignment(start_date: 6.weeks.ago, volunteer: started_six_weeks_ago)
+    started_seven_weeks_ago = create :volunteer
+    make_assignment(start_date: 7.weeks.ago, volunteer: started_seven_weeks_ago)
+    started_eight_weeks_ago = create :volunteer
+    make_assignment(start_date: 8.weeks.ago, volunteer: started_eight_weeks_ago)
+    no_start_end_set = create :volunteer
+    make_assignment(volunteer: no_start_end_set)
+    no_assignment = create :volunteer
+
+    query = Volunteer.with_assignment_ca_6_weeks_ago
+    refute query.include? started_before_no_end
+    refute query.include? started_before_end_after
+    refute query.include? started_five_weeks_ago
+    assert query.include? started_six_weeks_ago
+    assert query.include? started_seven_weeks_ago
+    assert query.include? started_eight_weeks_ago
     refute query.include? no_start_end_set
     refute query.include? no_assignment
   end

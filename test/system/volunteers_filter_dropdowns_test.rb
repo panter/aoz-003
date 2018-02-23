@@ -31,7 +31,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     within '.section-navigation' do
       click_link 'Acceptance'
-      assert page.find('a.bg-success', text: 'Undecided').present?
+      assert page.find('a.bg-undecided', text: 'Undecided').present?
       click_link 'All'
     end
     visit current_url
@@ -155,6 +155,36 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       assert page.has_text? @volunteer1
       assert page.has_text? @volunteer2
       assert page.has_text? @volunteer1
+    end
+  end
+
+  test 'thead_acceptance_filter_dropdown_by_default_excludes_resigned' do
+    visit volunteers_path
+    within 'tbody' do
+      assert page.has_text? 'Accepted'
+      assert page.has_text? 'Undecided'
+      assert page.has_text? 'Eingeladen'
+      assert page.has_text? 'Rejected'
+      refute page.has_text? 'Resigned'
+    end
+  end
+
+  test 'choosing_acceptance_resigned_works' do
+    visit volunteers_path
+    within 'tbody' do
+      refute page.has_text? 'Resigned'
+    end
+    within '.section-navigation' do
+      click_link 'Acceptance'
+      click_link 'Resigned'
+    end
+    visit current_url
+    within 'tbody' do
+      refute page.has_text? 'Accepted'
+      refute page.has_text? 'Undecided'
+      refute page.has_text? 'Eingeladen'
+      refute page.has_text? 'Rejected'
+      assert page.has_text? 'Resigned'
     end
   end
 end

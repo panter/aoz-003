@@ -41,9 +41,9 @@ table.table.table-striped.list-responses-table
             span
               = "Angeschaut von: "
               = link_to record.reviewer.email, record.reviewer
-        td
+        td.index-action-cell.hidden-print
           - if record.reviewer.present?
-            = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.hourable, record]), class: 'index-action-link'
+            = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.hourable, record])
           - else
             = link_to 'Angeschaut', polymorphic_path([record.volunteer, record.hourable, record], action: :mark_as_done, q: search_parameters), { method: :put, class: 'btn btn-default btn-xs m-t-10' }
 

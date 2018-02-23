@@ -27,7 +27,7 @@ h1= t_title(:index, BillingExpense)
               td= record.user.profile.contact.full_name
               td= link_to t_action(:show), volunteer_billing_expense_path(@volunteer, record)
               td= link_to t('download'), volunteer_billing_expense_path(@volunteer, record, format: :pdf)
-              td= link_to navigation_glyph('delete'), volunteer_billing_expense_path(@volunteer, record), confirm_deleting(record)
+              td= link_to navigation_glyph(:delete), volunteer_billing_expense_path(@volunteer, record), confirm_deleting(record)
 .row
   .col-xs-12
     = simple_form_for [@volunteer, BillingExpense.new] do |f|
@@ -35,4 +35,4 @@ h1= t_title(:index, BillingExpense)
       = f.button :submit
 .row
   .col-xs-12
-    = button_link navigation_glyph('back'), @volunteer
+    = button_link navigation_glyph(:back), @volunteer

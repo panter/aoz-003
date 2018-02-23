@@ -9,12 +9,12 @@ class GroupOfferScopesTest < ActiveSupport::TestCase
     refute query.include? group_offer_not_active
   end
 
-  test 'archived' do
+  test 'inactive' do
     group_offer_active = create :group_offer, active: true
-    group_offer_not_active = create :group_offer, active: false
-    query = GroupOffer.archived
+    group_offer_inactive = create :group_offer, active: false
+    query = GroupOffer.inactive
     refute query.include? group_offer_active
-    assert query.include? group_offer_not_active
+    assert query.include? group_offer_inactive
   end
 
   test 'in_department' do
@@ -38,7 +38,6 @@ class GroupOfferScopesTest < ActiveSupport::TestCase
     started_before_end_before, _rest = create_group_offer_entity(nil, 100.days.ago, 50.days.ago, 1)
 
     query = GroupOffer.active_group_assignments_between(45.days.ago, 30.days.ago)
-
     assert query.include? started_within_no_end
     assert query.include? started_within_end_within
     assert query.include? started_within_end_after

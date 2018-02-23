@@ -8,9 +8,7 @@ class FreiwilligenEntschaedigung < Accessor
       :z_Semesterjahr, :z_Jahr, :z_Einsätze, :z_Stunden, :z_Betrag, :z_Spesen, :z_KST, :z_AOZKonto)
     rec = parse_float_fields(rec, :z_Total)
     rec[:semester] = rec[:fk_Semester]
-    parse_datetime_fields(rec, :d_MutDatum, :d_Datum).except(
-      :fk_Semester
-    )
+    parse_datetime_fields(rec, :d_MutDatum, :d_Datum).except(:fk_Semester)
   end
 
   def where_personen_rolle(pr_id)

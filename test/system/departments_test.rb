@@ -30,7 +30,7 @@ class DepartmentsTest < ApplicationSystemTestCase
       assert page.has_text? d.contact.last_name
       assert page.has_link? 'Show', href: department_path(d.id)
       assert page.has_link? 'Edit', href: edit_department_path(d.id)
-      assert page.has_link? 'Delete', href: department_path(d.id)
+      assert page.has_link? 'Löschen', href: department_path(d.id)
     end
   end
 
@@ -40,7 +40,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     visit departments_path
     click_link 'New Department'
     assocable_users.each do |u|
-      check u.to_label
+      check u.to_s
     end
     fill_in 'Name', with: 'Bogus Hog Department'
     fill_in 'Street', with: 'bogus street 999'
@@ -62,10 +62,10 @@ class DepartmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'department@aoz.ch'
     assert page.has_text? '0441234567'
     assocable_users.each do |user|
-      assert page.has_link? user.to_label
+      assert page.has_link? user.full_name, href: /profiles\/#{user.profile.id}/
     end
     assert page.has_link? 'Edit'
-    assert page.has_link? 'Back'
+    assert page.has_link? 'Zurück'
   end
 
   test 'As Department Manager there is a link in the Navbar to his department' do

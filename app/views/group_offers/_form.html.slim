@@ -1,65 +1,54 @@
 = simple_form_for(@group_offer) do |f|
   = simple_error_notice f
-  - unless policy(GroupOffer).department?
-    = f.hidden_field :department_id
+
   .row
-    .col-xs-12
-      = f.input :title
-    .col-xs-12
-      = f.association :group_offer_category, label_method: :category_name
+    .col-xs-12= f.input :title
+    .col-xs-12= f.association :group_offer_category, label_method: :category_name
 
   - if policy(GroupOffer).supervisor_privileges?
     .row
-      .col-xs-12.col-md-4
-        = f.association :department
-      .col-xs-12.col-md-4
-        = f.input :organization, label: t('.organization_external')
-      .col-xs-12.col-md-4
-        = f.input :location, label: t('.location_external')
+      .col-xs-12.col-md-6= f.association :department
+      .col-xs-12.col-md-6= f.association :creator, label: 'Verantwortliche/r', collection: @department_managers
+    .row
+      .col-xs-12.col-md-6= f.input :organization, label: t('.organization_external')
+      .col-xs-12.col-md-6= f.input :location, label: t('.location_external')
 
   .row
-    .col-xs-12.col-md-3
-      = f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons
-    .col-xs-12.col-md-3
-      = f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
-    .col-xs-12.col-md-3
-      = f.input :volunteer_state, collection: GroupOffer::VOLUNTEER_STATES, as: :radio_buttons
-    .col-xs-12.col-md-3
-      = f.input :necessary_volunteers, collection: 1..10
+    .col-xs-12.col-md-3= f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons
+    .col-xs-12.col-md-3= f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
+    .col-xs-12.col-md-3= f.input :volunteer_state, collection: GroupOffer::VOLUNTEER_STATES, as: :radio_buttons
+    .col-xs-12.col-md-3= f.input :necessary_volunteers, collection: 1..10
 
   .row
     #volunteers
       = f.simple_fields_for :group_assignments do |group_assignment|
         = render 'group_assignment_fields', f: group_assignment
       .col-xs-12
-        = link_to_add_association 'Freiwillige hinzufügen', f, :group_assignments, class: 'btn btn-default'
+        = hidden_field_tag :internals, @internals.map{|item| {id: item.id, value: item.contact.full_name}}.to_json
+        = hidden_field_tag :externals, @externals.map{|item| {id: item.id, value: item.contact.full_name}}.to_json
+        p#add_volunteers_text Um Freiwillige hinzufügen können müssen zuerst 'Interne oder externe Freiwillige' ausgewählt werden.
+        = link_to_add_association 'Freiwillige hinzufügen', f, :group_assignments, class: 'btn btn-default', id: 'add_volunteers'
 
   .row
-    .col-xs-12
-      = f.input :description
+    .col-xs-12= f.input :description
 
   h3= t_attr(:target_group)
   .row
     - GroupOffer::TARGET_GROUP.each do |target|
-      .col-xs-6.col-md-3
-        = f.input target, label: t_attr("#{target}")
+      .col-xs-6.col-md-3= f.input target, label: t_attr("#{target}")
 
   h3= t_attr(:duration)
   .row
     - GroupOffer::DURATION.each do |duration|
-      .col-xs-6.col-md-3
-        = f.input duration, label: t_attr("#{duration}")
+      .col-xs-6.col-md-3= f.input duration, label: t_attr("#{duration}")
 
   h3= t_attr(:availability)
   .row
     - availability_collection.each do |availability|
-      .col-xs-6.col-md-3
-        = f.input availability, label: t("availability.#{availability}")
+      .col-xs-6.col-md-3= f.input availability, label: t("availability.#{availability}")
 
   .row
-    .col-xs-12
-      = f.input :schedule_details
+    .col-xs-12= f.input :schedule_details
 
   .row
-    .col-xs-12
-      = f.button :submit
+    .col-xs-12= f.button :submit

@@ -1,9 +1,15 @@
 h1 Freiwillige
 nav.navbar.section-navigation
   hr
+
+  ul.list-unstyled
+    li.li-search-form
+      = search_form_for @q do |f|
+        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_volunteers_path }, autofocus: true
+        = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link t_title(:new), new_volunteer_path, dimension: 'sm'
-    - if policy(Volunteer).can_manage?
+    - if policy(Volunteer).superadmin_privileges?
       li= button_link t('seeking_clients'), seeking_clients_volunteers_url, dimension: 'sm'
     li |
     li= button_link 'E-Mailvorlagen', email_templates_path, dimension: 'sm'
@@ -12,16 +18,16 @@ nav.navbar.section-navigation
 
   ul.list-inline
     li= button_link t('clear_filters'), volunteers_path, dimension: 'sm'
-    li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
-    - unless search_parameters.include? 'acceptance_eq'
-      = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
-    - unless search_parameters.include? 'active_eq'
+    li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+    - if policy(Volunteer).show_acceptance?
       = enum_filter_dropdown(:acceptance, Volunteer.acceptances)
+      = boolean_toggler_filter_dropdown(:active, 'Einsatz', 'Aktiv', 'Inaktiv')
     = boolean_toggler_filter_dropdown(:external, 'Intern/Extern', 'Extern', 'Intern')
     = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
     = boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
-    = list_filter_dropdown(:group_offer_categories_id, Volunteer::GroupOfferCategory.active.all)
+    = custom_filter_dropdown(t_attr(:group_offer_categories_id, Volunteer), *GroupOfferCategory.filterable_volunteer)
     = boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)
+    = boolean_toggler_filter_dropdown(:intro_course, 'Einführungskurs', 'Besucht', 'Ausstehend')
 
   hr
 

@@ -9,7 +9,7 @@ class VolunteerTest < ActiveSupport::TestCase
     assert @volunteer.valid?
   end
 
-  test 'contact relation is built automaticly' do
+  test 'contact relation is built automatically' do
     new_volunteer = Volunteer.new
     assert new_volunteer.contact.present?
   end
@@ -41,5 +41,15 @@ class VolunteerTest < ActiveSupport::TestCase
     volunteer.reload
     volunteer.update(external: false)
     refute volunteer.user.deleted?
+  end
+
+  test 'when an internal volunteer gets terminated will be marked as resigned' do
+    volunteer = create :volunteer_with_user, external: false
+    assert volunteer.valid?
+    volunteer.terminate!
+    volunteer.reload
+    assert volunteer.resigned?
+    refute volunteer.active?
+    refute volunteer.user.present?
   end
 end

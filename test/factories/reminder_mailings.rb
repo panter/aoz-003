@@ -16,6 +16,12 @@ FactoryBot.define do
       subject { Faker::Lorem.sentence }
     end
 
+    trait :termination do
+      kind { 2 }
+      body { Faker::Lorem.paragraph }
+      subject { Faker::Lorem.sentence }
+    end
+
     after(:build) do |reminder_mailing|
       volunteer = create(:volunteer_with_user)
       assignment = create(:assignment, volunteer: volunteer, period_start: 6.weeks.ago.to_date + 5)

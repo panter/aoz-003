@@ -2,6 +2,7 @@ require 'test_helper'
 
 class ClientTest < ActiveSupport::TestCase
   def setup
+    # client is by default accepted
     @client = create :client, :with_relatives, :with_language_skills
   end
 
@@ -14,21 +15,26 @@ class ClientTest < ActiveSupport::TestCase
     refute client.valid?
   end
 
-  test 'clients need accompanying' do
+  test 'a client without assignment should show up in need accompanying' do
     result = Client.need_accompanying
     assert_equal [@client], result.to_a
   end
 
-  test 'a client with an assignment should not show up in without assignment' do
-    @volunteer = create :volunteer
-    @user = create :user
-    @client.create_assignment!(volunteer: @volunteer, creator: @user, period_start: 10.days.ago,
-      period_end: nil)
+  test 'a client with an active assignment should not show up in need accompanying' do
+    create :assignment_active, client: @client
     result = Client.need_accompanying
     assert_equal [], result.to_a
   end
 
-  test 'contact relation is build automaticly' do
+  test 'a client with an inactive assignment should show up in need accompanying' do
+    client = create :client
+    create :assignment_inactive, client: client
+    result = Client.need_accompanying
+    assert result.include? @client
+    assert result.include? client
+  end
+
+  test 'contact relation is build automatically' do
     new_client = Client.new
     assert new_client.contact.present?
   end

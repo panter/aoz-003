@@ -1,0 +1,8 @@
+<%= @subject %>
+
+- if @assignment
+  Zur Übersicht der beendeten Einsätzen:
+  <%= url_for(terminated_index_assignments_url) %>
+- else
+  Zur Übersicht der beendeten Gruppeneinsätzen:
+  <%= url_for(terminated_index_group_assignments_url) %>

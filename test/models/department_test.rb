@@ -9,7 +9,7 @@ class DepartmentTest < ActiveSupport::TestCase
     assert @department.valid?
   end
 
-  test 'contact relation is build automaticly' do
+  test 'contact relation is build automatically' do
     new_department = Department.new
     assert new_department.contact.present?
   end

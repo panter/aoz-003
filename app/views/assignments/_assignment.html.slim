@@ -6,7 +6,6 @@ tr
       = link_to assignment.client, assignment.client
     - else
       = assignment.client
-  td= t("simple_form.options.assignment.state.#{assignment.state}") if assignment.state.present?
   td= l(assignment.period_start) if assignment.period_start
   td= l(assignment.period_end) if assignment.period_end
   td
@@ -14,15 +13,16 @@ tr
       = link_to assignment.creator.full_name, profile_path(assignment.creator)
     - else
       = assignment.creator.full_name
-  = render 'index_actions', subject: assignment
-  - if current_user.volunteer == assignment.volunteer
-    td.hidden-print= link_to t_title(:edit, Assignment), edit_assignment_path(assignment)
-  td.hidden-print= link_to t('download'), assignment_path(assignment, format: :pdf)
+  td.index-action-cell
+    = link_to t_action(:show), assignment
+    - if policy(assignment).edit?
+      = link_to t_action(:edit), edit_polymorphic_path(assignment)
+  td.index-action-cell.hidden-print= link_to t('download'), assignment_path(assignment, format: :pdf)
   - if policy(TrialFeedback).index?
     td.index-action-cell.hidden-print
-      span= link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
+      = link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
       span= link_to t_title(:index, TrialFeedback), polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
   - if policy(Feedback).index?
     td.index-action-cell.hidden-print
-      span= link_to t_title(:new, Feedback), new_polymorphic_path([assignment.volunteer, assignment, Feedback])
-      span= link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])
+      = link_to t_title(:new, Feedback), new_polymorphic_path([assignment.volunteer, assignment, Feedback])
+      = link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])

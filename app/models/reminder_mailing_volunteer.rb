@@ -1,15 +1,26 @@
 class ReminderMailingVolunteer < ApplicationRecord
   belongs_to :reminder_mailing
   belongs_to :volunteer
-  belongs_to :reminder_mailable, polymorphic: true, optional: true
+  belongs_to :reminder_mailable, -> { with_deleted }, polymorphic: true, optional: true
+
+  belongs_to :process_submitted_by, -> { with_deleted }, class_name: 'User',
+    inverse_of: 'mailing_volunteer_processes_submitted', optional: true
 
   scope :group_assignment, (-> { where(reminder_mailable_type: 'GroupAssignment') })
   scope :assignment, (-> { where(reminder_mailable_type: 'Assignment') })
 
-  scope :trial_period, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 0') })
-  scope :half_year, (-> { joins(:reminder_mailing).where('reminder_mailings.kind = 1') })
-
   scope :picked, (-> { where(picked: true) })
+
+  scope :kind, ->(kind) { joins(:reminder_mailing).where('reminder_mailings.kind = ?', kind) }
+  scope :trial_period, (-> { kind(0) })
+  scope :half_year, (-> { kind(1) })
+  scope :termination, (-> { kind(2) })
+  scope :termination_for, ->(mailable) { termination.where(reminder_mailable: mailable) }
+
+  def mark_process_submitted(user, terminate_parent_mailing: false)
+    update(process_submitted_by: user, process_submitted_at: Time.zone.now)
+    reminder_mailing.update(obsolete: true) if terminate_parent_mailing
+  end
 
   def assignment?
     reminder_mailable_type == 'Assignment'
@@ -46,11 +57,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   def string_replace_key_error(template)
     template.gsub(/\%\{([\w]*)\}/) do |key_match|
       key = key_match.remove('%{').remove('}').to_sym
-      if template_variables[key].present?
-        template_variables[key]
-      else
-        ''
-      end
+      template_variables[key].presence || ''
     end
   end
 
@@ -63,7 +70,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def einsatz_start
-    I18n.l(reminder_mailable.period_start, locale: :de)
+    I18n.l(reminder_mailable.period_start, locale: :de) if reminder_mailable.period_start
   end
 
   def einsatz
@@ -72,7 +79,7 @@ class ReminderMailingVolunteer < ApplicationRecord
     elsif group_assignment?
       einsatz_text = "Gruppenangebot #{reminder_mailable.group_offer.title}"
       if reminder_mailable.group_offer.department.present?
-        einsatz_text += " (#{reminder_mailable.group_offer.department.to_label})"
+        einsatz_text += " (#{reminder_mailable.group_offer.department})"
       end
       einsatz_text
     end
@@ -84,6 +91,16 @@ class ReminderMailingVolunteer < ApplicationRecord
     end.to_h
   end
 
+  def email_absender
+    "[#{reminder_mailing_creator_name}](mailto:"\
+      "#{reminder_mailing.creator.email})"
+  end
+
+  def reminder_mailing_creator_name
+    reminder_mailing.creator.profile&.contact&.natural_name ||
+      reminder_mailing.creator.email
+  end
+
   def feedback_link
     "[Feedback Geben](#{feedback_url})"
   end
@@ -92,14 +109,15 @@ class ReminderMailingVolunteer < ApplicationRecord
     if reminder_mailing.half_year?
       make_polymorphic_path(reminder_mailable, :last_submitted_hours_and_feedbacks)
     elsif reminder_mailing.trial_period?
-      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_target, TrialFeedback], :new)
+      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_object, TrialFeedback],
+        :new)
+    elsif reminder_mailing.termination?
+      make_polymorphic_path([reminder_mailable], :terminate)
     end
   end
 
   def make_polymorphic_path(path_array, action)
-    host_url + Rails.application.routes.url_helpers.polymorphic_path(
-      path_array, action: action, rmv_id: id, rm_id: reminder_mailing.id
-    )
+    host_url + Rails.application.routes.url_helpers.polymorphic_path(path_array, action: action)
   end
 
   def host_url

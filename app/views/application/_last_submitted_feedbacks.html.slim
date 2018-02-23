@@ -1,0 +1,20 @@
+table.table.table-striped.feedbacks-table
+  thead
+    tr
+      th Ziele
+      th Erreichtes
+      th Fortsetzen, und wenn ja wie
+      th= t_attr(:comments, Feedback)
+      th
+        - if current_user.volunteer?
+          'Wünsche Gespräch mit Freiwillgenverantwortilchen
+        - else
+          'Wünscht Gespräch
+  tbody
+    - feedbacks.each do |record|
+      tr
+        td= record.goals
+        td= record.achievements
+        td= record.future
+        td= record.comments
+        td= t(record.conversation)

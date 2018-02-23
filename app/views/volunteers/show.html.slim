@@ -1,9 +1,20 @@
 h1= @volunteer.contact.full_name
+- if @volunteer.rejected?
+  - if @volunteer.rejection_type.present?
+    h4= "#{t_attr(:rejection_type)}: #{t("rejection_type.#{@volunteer.rejection_type}")}"
+  - if @volunteer.rejection_text.present?
+    h4= "#{t_attr(:rejection_text)}: #{@volunteer.rejection_text}"
 
 nav.navbar.section-navigation
+  ul.list-inline.pull-right
+    - if policy(Volunteer).superadmin_privileges?
+        li= button_link 'Journal', polymorphic_path([@volunteer, Journal]), 'primary'
   ul.list-inline
-    - if policy(Volunteer).can_manage?
-      li= render 'journals/journal_block', journaled_for: @volunteer
+    - if policy(@volunteer).terminate?
+      li.button-acceptance = link_to t(".acceptance.#{@volunteer.acceptance}"), '#',
+        class: "btn btn-acceptance-#{@volunteer.acceptance}"
+      li= link_to 'Beenden', terminate_volunteer_path(@volunteer), class: 'btn btn-default', method: :put unless @volunteer.resigned?
+    - if policy(Volunteer).superadmin_privileges?
       ul.list-inline
         - if @volunteer.seeking_clients?
           li= button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
@@ -14,7 +25,6 @@ nav.navbar.section-navigation
               = f.button :submit
           - if @volunteer.billing_expenses.any?
             li= button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
-        - if @volunteer.internal_and_started_assignments?
           li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
           - if @volunteer.certificates.size == 1
             li= button_link t('.show_certificate'), volunteer_certificate_path(@volunteer, @volunteer.certificates.first)
@@ -27,7 +37,7 @@ nav.navbar.section-navigation
     li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
     li= form_navigation_btn :back, with_row: false unless current_user.volunteer?
 
-- if policy(Volunteer).checklist?
+- if policy(Volunteer).superadmin_privileges?
   h3= t('checklist')
   .table-responsive
     table.table.table-no-border-top
@@ -98,21 +108,6 @@ h3 Persönlicher Hintergrund
       tr
         td= t_attr(:interests)
         td= @volunteer.interests
-      - if policy(Volunteer).acceptance?
-        tr
-          td= t_attr(:acceptance)
-          td= t(".acceptance.#{@volunteer.acceptance}")
-      - if policy(Volunteer).state?
-        tr
-          td= t_attr(:state)
-          td= t("state.#{@volunteer.state}")
-        - if @volunteer.rejected?
-          tr
-            td= t_attr(:rejection_type)
-            td= t("rejection_type.#{@volunteer.rejection_type}") if @volunteer.rejection_type.present?
-          tr
-            td= t_attr(:rejection_text)
-            td= @volunteer.rejection_text
       - if @volunteer.internal?
         tr
           td= t_attr(:bank_details)
@@ -124,6 +119,13 @@ h3 Persönlicher Hintergrund
       tr
         td #{t_attr(:external)} / #{t_attr(:internal)}
         td= @volunteer.external? ? t_attr(:external) : t_attr(:internal)
+      tr
+        td= t_attr(:registered_by)
+        td
+          - if @volunteer.self_applicant?
+            = t('volunteer_self_applicant')
+          - else
+            = link_to @volunteer.registrar.full_name, profile_link(@volunteer.registrar)
 
 h3= t_attr(:single_accompaniment)
 .table-responsive
@@ -170,17 +172,21 @@ h3= t_attr(:group_accompaniment)
 h3= t('.availability')
 = render 'availability/show', available: @volunteer
 
-- if @volunteer.assignments.any?
-  h3#assignments Begleitungen
-  = render 'assignments/client_volunteer_index', assignments: @volunteer.assignments
+- if @volunteer.assignments.unterminated.any?
+  h3#assignments Aktuelle Begleitungen
+  = render 'assignments/client_volunteer_index', assignments: @volunteer.assignments.unterminated
 
-- if @volunteer.group_assignments.any?
+- if @volunteer.assignment_logs.any?
+  h3 Archivierte Begleitungen
+  = render 'assignment_logs/assignment_logs_volunteer_index', assignment_logs: @volunteer.assignment_logs
+
+- if @volunteer.group_assignments.unterminated.any?
   h3#assignments= t('.group_assignments')
-  = render 'group_assignments/volunteer_group_assignments', group_assignments: @volunteer.group_assignments, editable: true
+  = render 'group_assignments/volunteer_group_assignments', group_assignments: @volunteer.group_assignments.unterminated, editable: true
 
 - if @volunteer.group_assignment_logs.any?
   h3= t('.old_group_assignments')
-  = render 'group_assignments/volunteer_group_assignments', group_assignments: @volunteer.group_assignment_logs, editable: false
+  = render 'group_assignments/volunteer_group_assignments_logs', group_assignment_logs: @volunteer.group_assignment_logs
 
 nav.navbar.section-navigation
   ul.list-inline

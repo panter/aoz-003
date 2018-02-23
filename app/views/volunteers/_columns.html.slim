@@ -18,7 +18,8 @@
         th= sort_link @q, :working_percent
         th= sort_link @q, :expectations
         th= sort_link @q, :interests
-        th= sort_link @q, :acceptance
+        - if policy(Volunteer).show_acceptance?
+          th= sort_link @q, :acceptance
         th= sort_link @q, :external
         th= t_attr(:created_by)
         th colspan=(action_index? ? '4' : '2')

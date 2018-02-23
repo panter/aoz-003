@@ -47,11 +47,14 @@
 
   fieldset
     legend Interne Kriterien
-    - if policy(Client).state?
-      = f.input :state, collection: Client.state_collection, include_blank: false
-    = f.input :involved_authority
+    - if policy(@client).set_terminated?
+      = f.input :acceptance, collection: policy(@client).acceptance_collection, include_blank: false
+    - if policy(Client).superadmin_privileges?
+      = f.association :involved_authority, collection: @social_workers
+
     = f.input :competent_authority
-    - if policy(Client).comments?
+    = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true
+    - if policy(Client).superadmin_privileges?
       = f.input :comments
 
   fieldset
@@ -63,6 +66,6 @@
     ul.list-inline
       li= f.button :submit
       - if action_name == 'edit' && policy(Client).destroy?
-        li= link_to navigation_glyph('delete'), url_for(@client), confirm_deleting(@client, 'btn btn-default')
+        li= link_to navigation_glyph(:delete), url_for(@client), confirm_deleting(@client, 'btn btn-default')
       li
       li= button_link 'Zurück', f.object

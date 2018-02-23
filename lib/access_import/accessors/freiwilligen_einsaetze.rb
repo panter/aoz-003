@@ -8,7 +8,7 @@ class FreiwilligenEinsaetze < Accessor
       :fk_Kostenträger, :fk_EinsatzOrt, :fk_Begleitete, :fk_Kurs, :fk_Semester, :fk_Lehrmittel, :z_FamilienBegleitung)
     rec = parse_float_fields(rec, :z_Spesen)
     rec[:fk_FreiwilligenFunktion] = 0 unless rec[:fk_FreiwilligenFunktion]
-    rec[:funktion] = FREIWILLIGEN_FUNKTIONEN[rec[:fk_FreiwilligenFunktion]]
+    rec[:funktion] = freiwilligen_funktion(rec[:fk_FreiwilligenFunktion]).bezeichnung
     rec[:lehrmittel] = LEHRMITTEL[rec[:fk_Lehrmittel]] if rec[:fk_Lehrmittel]
     rec[:semester] = SEMESTER[rec[:fk_Semester]] if rec[:fk_Semester]
     rec = parse_boolean_fields(rec, :b_Probezeitbericht, :b_LP1, :b_LP2, :b_Bücher)
@@ -17,9 +17,33 @@ class FreiwilligenEinsaetze < Accessor
       .except(:fk_Lehrmittel, :fk_Semester)
   end
 
-  def where_volunteer
+  def where_begleitung
     all.select do |_key, fw_einsatz|
-      fw_einsatz[:fk_FreiwilligenFunktion] == ACCESS_ROLES.volunteer
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.begleitung.id
+    end
+  end
+
+  def where_kurs
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.kurs.id
+    end
+  end
+
+  def where_animation_f
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.animation_f.id
+    end
+  end
+
+  def where_kurzeinsatz
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.kurzeinsatz.id
+    end
+  end
+
+  def where_andere
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_FreiwilligenFunktion] == FREIWILLIGEN_FUNKTION_BY_NAME.andere.id
     end
   end
 
@@ -38,6 +62,12 @@ class FreiwilligenEinsaetze < Accessor
   def where_personen_rolle(personen_rolle_id)
     all.select do |_key, fw_einsatz|
       fw_einsatz[:fk_PersonenRolle] == personen_rolle_id.to_i
+    end
+  end
+
+  def where_kurs(kurs_id)
+    all.select do |_key, fw_einsatz|
+      fw_einsatz[:fk_Kurs] == kurs_id.to_i
     end
   end
 end

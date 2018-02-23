@@ -3,7 +3,8 @@ class Certificate < ApplicationRecord
   belongs_to :user, -> { with_deleted }
 
   def build_values
-    self.assignment_kinds ||= volunteer.assignment_kinds
+    self.assignment_kinds ||= { done: volunteer.assignment_categories_done,
+                                available: volunteer.assignment_categories_available }
     self.text_body ||= default_text_body
     self.function ||= DEFAULT_FUNCTION
     self.hours ||= volunteer.hours.total_hours
@@ -22,11 +23,8 @@ class Certificate < ApplicationRecord
     }
   end
 
-  def assignment_kinds=(value)
-    super(value.to_h.map do |key, bool|
-      bool = bool.to_i == 1 if bool.is_a? String
-      [key.to_sym, bool]
-    end.to_h)
+  def collection_for_additional_kinds
+    assignment_kinds['available'] - assignment_kinds['done']
   end
 
   DEFAULT_INSTITUTION = "**AOZ** Zürich, Flüelastrasse 32, 8047 Zürich  \r\n"\

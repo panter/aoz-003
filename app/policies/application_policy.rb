@@ -28,19 +28,16 @@ class ApplicationPolicy
   end
 
   def superadmin_or_department_manager_or_social_worker?
-    superadmin_or_department_manager? || social_worker?
-  end
-
-  def user_managing_volunteer?
     superadmin? || department_manager? || social_worker?
   end
 
-  def departments_offer?
-    department_manager? && user.department.include?(record.department)
+  def department_manager_offer?
+    department_manager? &&
+      (user.department.include?(record.department) || user.group_offers.include?(record))
   end
 
-  def superadmin_or_departments_offer?
-    superadmin? || departments_offer?
+  def superadmin_or_department_manager_offer?
+    superadmin? || department_manager_offer?
   end
 
   def show?
@@ -67,6 +64,10 @@ class ApplicationPolicy
     record.class != Class && record.user_id == user.id
   end
 
+  def user_owns_registration?
+    record.class != Class && record.registrar_id == user.id
+  end
+
   def volunteers_entry?
     volunteer? && record.author_id == user.id
   end
@@ -83,6 +84,18 @@ class ApplicationPolicy
     superadmin? || user_owns_record?
   end
 
+  def department_managers_record?
+    department_manager? && user_owns_record?
+  end
+
+  def superadmin_or_department_managers_record?
+    superadmin? || department_managers_record?
+  end
+
+  def superadmin_or_department_managers_registration?
+    superadmin? || department_manager? && user_owns_registration?
+  end
+
   def superadmin_or_user_in_records_related?
     superadmin? || record.user_ids.include?(user.id)
   end
@@ -95,20 +108,32 @@ class ApplicationPolicy
     superadmin? || volunteer_related?
   end
 
-  def admin_or_department_manager_or_volunteer_related?
-    superadmin_or_department_manager? || volunteer_related?
+  def superadmin_or_department_manager_creation?
+    superadmin? || department_manager_creation?
+  end
+
+  def assignment_creator?
+    record.assignment? && record.creator_id == user.id
+  end
+
+  def group_assignment_creator?
+    record.group_assignment? && record.group_offer.creator_id == user.id
+  end
+
+  def department_manager_creation?
+    department_manager? && (assignment_creator? || group_assignment_creator?)
+  end
+
+  def superadmin_or_department_manager_creation_or_volunteer_related?
+    superadmin_or_department_manager_creation? || volunteer_related?
   end
 
   def superadmin_or_departments_offer_or_volunteer_included?
-    superadmin_or_departments_offer? || volunteer_included?
+    superadmin_or_department_manager_offer? || volunteer_included?
   end
 
   def superadmin_or_volunteers_entry?
     superadmin? || volunteers_entry?
-  end
-
-  def superadmin_or_social_workers_record?
-    superadmin? || social_worker? && user_owns_record?
   end
 
   def superadmin_or_volunteers_feedback?

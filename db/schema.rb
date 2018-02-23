@@ -10,10 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213092014) do
+ActiveRecord::Schema.define(version: 20180219131415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignment_logs", force: :cascade do |t|
+    t.bigint "assignment_id"
+    t.bigint "volunteer_id"
+    t.bigint "client_id"
+    t.bigint "creator_id"
+    t.bigint "period_end_set_by_id"
+    t.bigint "termination_submitted_by_id"
+    t.bigint "termination_verified_by_id"
+    t.date "period_start"
+    t.date "period_end"
+    t.datetime "performance_appraisal_review"
+    t.datetime "probation_period"
+    t.datetime "home_visit"
+    t.datetime "first_instruction_lesson"
+    t.datetime "progress_meeting"
+    t.string "short_description"
+    t.text "goals"
+    t.text "starting_topic"
+    t.text "description"
+    t.string "kind", default: "accompaniment"
+    t.datetime "submitted_at"
+    t.datetime "termination_submitted_at"
+    t.datetime "termination_verified_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "term_feedback_activities"
+    t.text "term_feedback_success"
+    t.text "term_feedback_problems"
+    t.text "term_feedback_transfair"
+    t.index ["assignment_id"], name: "index_assignment_logs_on_assignment_id"
+    t.index ["client_id"], name: "index_assignment_logs_on_client_id"
+    t.index ["creator_id"], name: "index_assignment_logs_on_creator_id"
+    t.index ["deleted_at"], name: "index_assignment_logs_on_deleted_at"
+    t.index ["period_end"], name: "index_assignment_logs_on_period_end"
+    t.index ["period_end_set_by_id"], name: "index_assignment_logs_on_period_end_set_by_id"
+    t.index ["period_start"], name: "index_assignment_logs_on_period_start"
+    t.index ["submitted_at"], name: "index_assignment_logs_on_submitted_at"
+    t.index ["termination_submitted_at"], name: "index_assignment_logs_on_termination_submitted_at"
+    t.index ["termination_submitted_by_id"], name: "index_assignment_logs_on_termination_submitted_by_id"
+    t.index ["termination_verified_at"], name: "index_assignment_logs_on_termination_verified_at"
+    t.index ["termination_verified_by_id"], name: "index_assignment_logs_on_termination_verified_by_id"
+    t.index ["volunteer_id"], name: "index_assignment_logs_on_volunteer_id"
+  end
 
   create_table "assignments", force: :cascade do |t|
     t.bigint "client_id"
@@ -21,7 +66,6 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state", default: "suggested"
     t.bigint "creator_id"
     t.date "period_start"
     t.date "period_end"
@@ -36,8 +80,25 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.text "description"
     t.string "kind", default: "accompaniment"
     t.datetime "submitted_at"
+    t.bigint "period_end_set_by_id"
+    t.datetime "termination_submitted_at"
+    t.bigint "termination_submitted_by_id"
+    t.datetime "termination_verified_at"
+    t.bigint "termination_verified_by_id"
+    t.text "term_feedback_activities"
+    t.text "term_feedback_success"
+    t.text "term_feedback_problems"
+    t.text "term_feedback_transfair"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
+    t.index ["period_end"], name: "index_assignments_on_period_end"
+    t.index ["period_end_set_by_id"], name: "index_assignments_on_period_end_set_by_id"
+    t.index ["period_start"], name: "index_assignments_on_period_start"
+    t.index ["submitted_at"], name: "index_assignments_on_submitted_at"
+    t.index ["termination_submitted_at"], name: "index_assignments_on_termination_submitted_at"
+    t.index ["termination_submitted_by_id"], name: "index_assignments_on_termination_submitted_by_id"
+    t.index ["termination_verified_at"], name: "index_assignments_on_termination_verified_at"
+    t.index ["termination_verified_by_id"], name: "index_assignments_on_termination_verified_by_id"
     t.index ["volunteer_id"], name: "index_assignments_on_volunteer_id"
   end
 
@@ -94,10 +155,8 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.text "goals"
     t.text "education"
     t.text "interests"
-    t.string "state", default: "registered"
     t.text "comments"
     t.text "competent_authority"
-    t.text "involved_authority"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -114,7 +173,23 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.boolean "weekend", default: false
     t.text "detailed_description"
     t.string "entry_date"
+    t.integer "acceptance", default: 0
+    t.integer "cost_unit"
+    t.bigint "involved_authority_id"
+    t.bigint "resigned_by_id"
+    t.datetime "resigned_at"
+    t.datetime "accepted_at"
+    t.datetime "rejected_at"
+    t.index ["acceptance"], name: "index_clients_on_acceptance"
+    t.index ["accepted_at"], name: "index_clients_on_accepted_at"
+    t.index ["birth_year"], name: "index_clients_on_birth_year"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
+    t.index ["involved_authority_id"], name: "index_clients_on_involved_authority_id"
+    t.index ["nationality"], name: "index_clients_on_nationality"
+    t.index ["rejected_at"], name: "index_clients_on_rejected_at"
+    t.index ["resigned_at"], name: "index_clients_on_resigned_at"
+    t.index ["resigned_by_id"], name: "index_clients_on_resigned_by_id"
+    t.index ["salutation"], name: "index_clients_on_salutation"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
@@ -138,7 +213,9 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.string "full_name"
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id"
     t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
+    t.index ["external"], name: "index_contacts_on_external"
     t.index ["full_name"], name: "index_contacts_on_full_name"
+    t.index ["postal_code"], name: "index_contacts_on_postal_code"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -163,6 +240,23 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_email_templates_on_deleted_at"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer "kind", default: 0
+    t.date "date"
+    t.time "start_time"
+    t.time "end_time"
+    t.string "title"
+    t.text "description"
+    t.bigint "department_id"
+    t.bigint "creator_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_events_on_creator_id"
+    t.index ["deleted_at"], name: "index_events_on_deleted_at"
+    t.index ["department_id"], name: "index_events_on_department_id"
   end
 
   create_table "feedbacks", force: :cascade do |t|
@@ -195,9 +289,24 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.date "period_end"
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
+    t.bigint "period_end_set_by_id"
+    t.bigint "termination_submitted_by_id"
+    t.bigint "termination_verified_by_id"
+    t.datetime "termination_submitted_at"
+    t.datetime "termination_verified_at"
+    t.datetime "submitted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "term_feedback_activities"
+    t.text "term_feedback_success"
+    t.text "term_feedback_problems"
+    t.text "term_feedback_transfair"
     t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
     t.index ["group_assignment_id"], name: "index_group_assignment_logs_on_group_assignment_id"
     t.index ["group_offer_id"], name: "index_group_assignment_logs_on_group_offer_id"
+    t.index ["period_end_set_by_id"], name: "index_group_assignment_logs_on_period_end_set_by_id"
+    t.index ["termination_submitted_by_id"], name: "index_group_assignment_logs_on_termination_submitted_by_id"
+    t.index ["termination_verified_by_id"], name: "index_group_assignment_logs_on_termination_verified_by_id"
     t.index ["title"], name: "index_group_assignment_logs_on_title"
     t.index ["volunteer_id"], name: "index_group_assignment_logs_on_volunteer_id"
   end
@@ -209,11 +318,28 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.date "period_end"
     t.boolean "responsible", default: false
     t.datetime "deleted_at"
-    t.boolean "active", default: true
     t.datetime "submitted_at"
+    t.bigint "period_end_set_by_id"
+    t.bigint "termination_submitted_by_id"
+    t.bigint "termination_verified_by_id"
+    t.datetime "termination_submitted_at"
+    t.datetime "termination_verified_at"
+    t.text "term_feedback_activities"
+    t.text "term_feedback_success"
+    t.text "term_feedback_problems"
+    t.text "term_feedback_transfair"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
-    t.index ["volunteer_id", "group_offer_id", "active"], name: "group_assignment_group_offer_volunteer", unique: true
+    t.index ["period_end"], name: "index_group_assignments_on_period_end"
+    t.index ["period_end_set_by_id"], name: "index_group_assignments_on_period_end_set_by_id"
+    t.index ["period_start"], name: "index_group_assignments_on_period_start"
+    t.index ["submitted_at"], name: "index_group_assignments_on_submitted_at"
+    t.index ["termination_submitted_at"], name: "index_group_assignments_on_termination_submitted_at"
+    t.index ["termination_submitted_by_id"], name: "index_group_assignments_on_termination_submitted_by_id"
+    t.index ["termination_verified_at"], name: "index_group_assignments_on_termination_verified_at"
+    t.index ["termination_verified_by_id"], name: "index_group_assignments_on_termination_verified_by_id"
     t.index ["volunteer_id"], name: "index_group_assignments_on_volunteer_id"
   end
 
@@ -267,10 +393,18 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.bigint "group_offer_category_id", null: false
     t.boolean "active", default: true
     t.bigint "creator_id"
+    t.string "search_volunteer"
+    t.bigint "period_end_set_by_id"
+    t.date "period_start"
+    t.date "period_end"
     t.index ["creator_id"], name: "index_group_offers_on_creator_id"
     t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
     t.index ["department_id"], name: "index_group_offers_on_department_id"
     t.index ["group_offer_category_id"], name: "index_group_offers_on_group_offer_category_id"
+    t.index ["period_end"], name: "index_group_offers_on_period_end"
+    t.index ["period_end_set_by_id"], name: "index_group_offers_on_period_end_set_by_id"
+    t.index ["period_start"], name: "index_group_offers_on_period_start"
+    t.index ["search_volunteer"], name: "index_group_offers_on_search_volunteer"
   end
 
   create_table "hours", force: :cascade do |t|
@@ -290,6 +424,7 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.index ["billing_expense_id"], name: "index_hours_on_billing_expense_id"
     t.index ["deleted_at"], name: "index_hours_on_deleted_at"
     t.index ["hourable_type", "hourable_id"], name: "index_hours_on_hourable_type_and_hourable_id"
+    t.index ["meeting_date"], name: "index_hours_on_meeting_date"
     t.index ["reviewer_id"], name: "index_hours_on_reviewer_id"
     t.index ["volunteer_id"], name: "index_hours_on_volunteer_id"
   end
@@ -342,8 +477,6 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.integer "year"
     t.bigint "user_id"
     t.jsonb "report_content"
-    t.boolean "extern", default: false
-    t.string "scope"
     t.string "title"
     t.text "comment"
     t.datetime "deleted_at"
@@ -393,14 +526,16 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.bigint "reminder_mailing_id"
     t.string "reminder_mailable_type"
     t.bigint "reminder_mailable_id"
-    t.integer "link_visits", default: 0
     t.boolean "confirmed_form", default: false
     t.boolean "email_sent", default: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "picked", default: false
+    t.datetime "process_submitted_at"
+    t.bigint "process_submitted_by_id"
     t.index ["deleted_at"], name: "index_reminder_mailing_volunteers_on_deleted_at"
+    t.index ["process_submitted_by_id"], name: "index_reminder_mailing_volunteers_on_process_submitted_by_id"
     t.index ["reminder_mailable_type", "reminder_mailable_id"], name: "reminder_mailable_index"
     t.index ["reminder_mailing_id"], name: "index_reminder_mailing_volunteers_on_reminder_mailing_id"
     t.index ["volunteer_id"], name: "index_reminder_mailing_volunteers_on_volunteer_id"
@@ -415,6 +550,7 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "obsolete", default: false
     t.index ["creator_id"], name: "index_reminder_mailings_on_creator_id"
     t.index ["deleted_at"], name: "index_reminder_mailings_on_deleted_at"
   end
@@ -521,10 +657,26 @@ ActiveRecord::Schema.define(version: 20171213092014) do
     t.boolean "take_more_assignments", default: false
     t.boolean "active", default: false
     t.date "activeness_might_end"
+    t.datetime "invited_at"
+    t.index ["acceptance"], name: "index_volunteers_on_acceptance"
+    t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
+    t.index ["active"], name: "index_volunteers_on_active"
+    t.index ["activeness_might_end"], name: "index_volunteers_on_activeness_might_end"
+    t.index ["birth_year"], name: "index_volunteers_on_birth_year"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
+    t.index ["external"], name: "index_volunteers_on_external"
+    t.index ["invited_at"], name: "index_volunteers_on_invited_at"
+    t.index ["nationality"], name: "index_volunteers_on_nationality"
+    t.index ["rejected_at"], name: "index_volunteers_on_rejected_at"
+    t.index ["resigned_at"], name: "index_volunteers_on_resigned_at"
+    t.index ["salutation"], name: "index_volunteers_on_salutation"
+    t.index ["undecided_at"], name: "index_volunteers_on_undecided_at"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 
+  add_foreign_key "assignment_logs", "assignments"
+  add_foreign_key "assignment_logs", "clients"
+  add_foreign_key "assignment_logs", "volunteers"
   add_foreign_key "assignments", "clients"
   add_foreign_key "assignments", "users", column: "creator_id"
   add_foreign_key "assignments", "volunteers"

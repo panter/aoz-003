@@ -1,5 +1,10 @@
-- if notice.present? || alert.present?
-  .alert.alert-warning.alert-dismissible role='alert'
-    button.close aria-label='Close' data-dismiss='alert' type='button'
-      span aria-hidden='true'  &times;
-    = notice || alert
+- if alert.present?
+    = notification_warning_bubble(alert)
+- elsif notice.present?
+  - if notice.is_a? String
+    = notification_warning_bubble(notice)
+  - elsif notice.is_a? Hash
+    = render 'notification_alert_with_action', notice: notice
+- elsif @custom_notice.present?
+  - @custom_notice[:action_link].stringify_keys!
+  = render 'notification_alert_with_action', notice: @custom_notice.stringify_keys

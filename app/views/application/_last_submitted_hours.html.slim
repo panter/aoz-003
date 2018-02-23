@@ -1,0 +1,14 @@
+table.table.table-striped.hours-table
+  thead
+    tr
+      th= t_attr(:meeting_date, Hour)
+      th= t_attr(:duration, Hour)
+      th= t_attr(:activity, Hour)
+      th= t_attr(:comments, Hour)
+  tbody
+    - hours.each do |record|
+      tr
+        td= l(record.meeting_date) if record.meeting_date?
+        td= "#{record.hours}:#{'%02i' % record.minutes}"
+        td= record.activity
+        td= record.comments

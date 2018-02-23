@@ -1,13 +1,13 @@
 class GroupAssignment < ApplicationRecord
-  include GroupAssignmentAndAssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
+  include GroupAssignmentCommon
 
-  after_update :save_group_assignment_logs, if: :dates_updated?
-  before_destroy :save_group_assignment_logs
-
-  belongs_to :group_offer
+  after_save :update_group_offer_search_field
 
   has_many :group_assignment_logs
+
+  has_many :hours, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
+  has_many :feedbacks, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
 
   delegate :title, to: :group_offer
 
@@ -16,43 +16,23 @@ class GroupAssignment < ApplicationRecord
     message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
   }
 
-  scope :active, lambda {
-    started.where(
-      'group_assignments.period_end > ? OR group_assignments.period_end IS NULL',
-      Time.zone.today
+  scope :running, (-> { no_end.have_start })
+
+  def termination_verifiable?
+    ended? && termination_submitted_by.present?
+  end
+
+  def verify_termination(user)
+    update(termination_verified_by: user, termination_verified_at: Time.zone.now)
+    create_log_of_self
+  end
+
+  def create_log_of_self(start_date = period_start, end_date = period_end)
+    GroupAssignmentLog.create(
+      attributes.except('id', 'created_at', 'updated_at', 'active')
+        .merge(title: group_offer.title, group_assignment_id: id, period_start: start_date,
+               period_end: end_date)
     )
-  }
-  scope :started, lambda {
-    where(
-      'group_assignments.period_start < ? AND group_assignments.period_start IS NOT NULL',
-      Time.zone.today
-    )
-  }
-  scope :ended, lambda {
-    where('group_assignments.period_end < ?', Time.zone.today)
-  }
-
-  def save_group_assignment_logs
-    group_assignment_logs.create!(group_offer_id: group_offer_id, volunteer_id: volunteer_id,
-      group_assignment_id: id, title: group_offer.title,
-      period_start: period_start_before_last_save, period_end: period_end_before_last_save,
-      responsible: responsible)
-  end
-
-  def to_label
-    label_parts.compact.join(' - ')
-  end
-
-  def label_parts
-    @label_parts ||= [
-      'Gruppenangebot',
-      group_offer.title,
-      group_offer.department.present? && group_offer.department.contact.last_name
-    ]
-  end
-
-  def polymorph_url_target
-    group_offer
   end
 
   def hours_since_last_submitted
@@ -75,9 +55,15 @@ class GroupAssignment < ApplicationRecord
     true
   end
 
+  def import_terminate(user, date)
+    update(termination_submitted_at: date, termination_submitted_by: user,
+      termination_verified_at: date, termination_verified_by: user, period_end_set_by: user,
+      period_end: period_end || date)
+  end
+
   private
 
-  def dates_updated?
-    saved_change_to_period_start? || saved_change_to_period_end?
+  def update_group_offer_search_field
+    group_offer.update_search_volunteers
   end
 end

@@ -26,13 +26,6 @@ module PerformanceReportGenerator
     create_group_offer_entity(:last_year,  @year_ago, @year_ago.end_of_year - 2, @v_last_year_z, @v_last_year_g)
   end
 
-  def extract_results(report)
-    accessible = OpenStruct.new(report.report_content)
-    accessible.global = OpenStruct.new(accessible.global)
-    accessible.zuerich = OpenStruct.new(accessible.zuerich)
-    accessible
-  end
-
   def create_assignment_entity(title, volunteer, client, start_date, end_date = nil)
     volunteer = create volunteer
     volunteer.update(created_at: start_date)

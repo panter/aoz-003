@@ -48,9 +48,7 @@ Metrics/AbcSize:
     - 'test/*'
 
 Metrics/BlockLength:
-  Exclude:
-    - 'test/system/*'
-    - 'db/seeds.rb'
+  Exclude: ['test/system/*', 'db/seeds.rb', 'config/routes.rb']
 
 Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit

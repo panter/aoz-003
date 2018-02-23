@@ -4,7 +4,7 @@ tr
     td = volunteer.contact.full_name
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
-  td = volunteer.contact.primary_email
+  td = mail_to volunteer.contact.primary_email
   td = volunteer.birth_year.year if volunteer.birth_year?
   td = volunteer.native_language&.language_name
   td = render 'language_skills/show_inline', language_skills: volunteer.foreign_languages
@@ -13,16 +13,21 @@ tr
   td = "#{volunteer.working_percent}%" if volunteer.working_percent.present?
   td = volunteer.expectations
   td = volunteer.interests
-  td = t(".acceptance.#{volunteer.acceptance}")
+  - if policy(Volunteer).show_acceptance?
+    td.button-acceptance = link_to t(".acceptance.#{volunteer.acceptance}"), '#',
+      class: "btn btn-xs btn-acceptance-#{volunteer.acceptance}"
   td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
-  td = volunteer.self_applicant? ? t('volunteer_self_applicant') : volunteer.registrar.full_name
-  - if action_name == 'index'
-    = render 'index_actions', subject: volunteer
-    - if volunteer.seeking_clients?
-      td= button_link t('find_client'), find_client_volunteer_path(id: volunteer)
-    - elsif volunteer.assignments.any? || volunteer.group_assignments.any?
-      td= button_link t('.show_assignments'), volunteer_path(volunteer, anchor: 'assignments')
+  td
+    - if volunteer.self_applicant?
+      = t('volunteer_self_applicant')
     - else
-      td= t('not_assignable')
-  - if action_name == 'seeking_clients'
-    td = button_link t('find_client'), find_client_volunteer_path(id: volunteer)
+      = link_to volunteer.registrar.full_name, profile_link(volunteer.registrar)
+  - if action_index?
+    td= render 'index_actions', subject: volunteer
+  td
+    - if volunteer.seeking_clients?
+      = button_link 'Klient/in finden', find_client_volunteer_path(id: volunteer)
+    - elsif volunteer.assignments.any? || volunteer.group_assignments.any?
+      = button_link t('.show_assignments'), volunteer_path(volunteer, anchor: 'assignments')
+    - else
+      = t('not_assignable')

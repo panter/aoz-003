@@ -45,7 +45,8 @@
 }
 
 .index-action-cell {
-  span {
+  span,
+  a {
     display: block;
     margin-top: 5px;
 
@@ -56,22 +57,18 @@
         text-decoration: underline;
       }
     }
-  }
-}
 
-.index-action-link {
-  display: block;
+    &:first-child {
+      margin-top: 0;
+    }
 
-  &:first-child {
-    margin-top: 0;
-  }
+    &:last-child {
+      margin-bottom: 0;
+    }
 
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  &:nth-child(n + 2) {
-    margin-top: 2px;
+    &:nth-child(n + 2) {
+      margin-top: 2px;
+    }
   }
 }
 
@@ -134,4 +131,61 @@
   background-color: lighten($brand-success, 25%);
   border-color: lighten($gray-base, 80%);
   color: $dark;
+}
+
+// # TODO remove when button gets the change status functionality
+td.button-acceptance a,
+li.button-acceptance a {
+  pointer-events: none;
+}
+
+.btn-acceptance-undecided {
+  @extend .btn-success;
+}
+
+.btn-acceptance-invited {
+  @extend .btn-warning;
+}
+
+.btn-acceptance-accepted {
+  @extend .btn-danger;
+}
+
+.btn-acceptance-rejected {
+  @extend .btn-info;
+}
+
+.btn-acceptance-resigned {
+  @extend .btn;
+  background-color: lighten($gray-base, 80%);
+  color: $white;
+}
+
+.bg-undecided {
+  @extend .bg-success;
+}
+
+.bg-invited {
+  @extend .bg-warning;
+}
+
+.bg-accepted {
+  @extend .bg-danger;
+}
+
+.bg-rejected {
+  @extend .bg-info;
+}
+
+.bg-resigned {
+  background-color: lighten($gray-base, 80%);
+}
+
+.log-table {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.disabled-title {
+  color: $gray-light;
 }

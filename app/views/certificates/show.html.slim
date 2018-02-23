@@ -3,9 +3,10 @@
   nav.navbar.section-navigation
     ul.list-inline
       li= button_link t_title(:edit), edit_volunteer_certificate_path(@volunteer, @certificate)
-      li= button_link navigation_glyph('print'), volunteer_certificate_path(@volunteer, @certificate, print: true)
+      li= button_link navigation_glyph(:print), volunteer_certificate_path(@volunteer, @certificate, print: true)
       li= button_link t_action(:download), volunteer_certificate_path(@volunteer, @certificate, format: :pdf)
-      li= button_link t('.back_to_volunteer'), volunteer_path(@volunteer)
+      li= link_to navigation_glyph(:delete), volunteer_certificate_path(@volunteer, @certificate), confirm_deleting(@certificate, 'btn btn-default')
+      li= form_navigation_btn :back, with_row: false
   hr
 
 .certificate
@@ -28,12 +29,12 @@
       dd= @certificate.function
 
     dl
-      dt= t_attr(:assignment)
+      dt Einsatzkategorien
       dd
-        - @certificate.assignment_kinds.each do |kind, value|
+        - @certificate.assignment_kinds['done'].uniq.each do |kind_name, _|
           span.kind-list
-            input*{ type: 'checkbox', checked: value } onclick='return false;'
-            = "#{t("assignment_kinds.#{kind}")}"
+            input*{ type: 'checkbox', checked: true } onclick='return false;'
+            = kind_name
     dl
       dt= t_attr(:duration)
       dd= "#{l(@certificate.duration_start, default: '')} #{t('to')} #{l(@certificate.duration_end, default: '')}"

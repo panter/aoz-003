@@ -1,4 +1,7 @@
 class GroupOffer < ApplicationRecord
+  include ImportRelation
+  include TerminationScopes
+
   TARGET_GROUP = [:women, :men, :children, :teenagers, :unaccompanied, :all].freeze
   DURATION = [:long_term, :regular, :short_term].freeze
   OFFER_TYPES = [:internal_offer, :external_offer].freeze
@@ -8,49 +11,90 @@ class GroupOffer < ApplicationRecord
 
   belongs_to :department, optional: true
   belongs_to :group_offer_category
-  belongs_to :creator, -> { with_deleted }, class_name: 'User'
+  belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true,
+    inverse_of: 'group_offers'
+
+  # termination record relations
+  belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true,
+    inverse_of: 'group_offer_period_ends_set'
+  belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true,
+    inverse_of: 'group_offer_terminations_verified'
 
   has_many :group_assignments, dependent: :destroy
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
 
+  has_many :group_assignment_logs
   has_many :volunteers, through: :group_assignments
-  has_many :hours, as: :hourable, dependent: :destroy
+  has_many :volunteer_logs, through: :group_assignment_logs
 
-  has_many :feedbacks, as: :feedbackable, dependent: :destroy
-  has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
+  has_many :hours, as: :hourable, dependent: :destroy, inverse_of: :hourable
+  has_many :feedbacks, as: :feedbackable, dependent: :destroy, inverse_of: :feedbackable
+  has_many :trial_feedbacks, as: :trial_feedbackable, inverse_of: :trial_feedbackable,
+    dependent: :destroy
+
+  has_many :volunteer_contacts, through: :volunteers, source: :contact
 
   validates :title, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
-  validate :department_manager_has_department?, if: :department_manager?
-  validates :department, presence: true, if: :department_manager?
+  validates :period_end, absence: {
+    message: lambda { |object, _|
+               'Dieses Gruppenangebot kann noch nicht beendet werden, da es noch '\
+                 "#{object.group_assignments.running.count} laufende Gruppeneinsätze hat."
+             }
+  }, if: :running_assignments?
 
   scope :active, (-> { where(active: true) })
-  scope :archived, (-> { where(active: false) })
+  scope :inactive, (-> { where(active: false) })
 
-  scope :in_department, (-> { where.not(department_id: nil) })
+  scope :in_department, (-> { field_not_nil(:department_id) })
 
   scope :active_group_assignments_between, lambda { |start_date, end_date|
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
+  }
+
+  scope :ended_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.end_within(start_date, end_date))
+  }
+
+  scope :started_group_assignments_between, lambda { |start_date, end_date|
+    joins(:group_assignments).merge(GroupAssignment.start_within(start_date, end_date))
+  }
+
+  scope :no_end, (-> { field_nil(:period_end) })
+  scope :has_end, (-> { field_not_nil(:period_end) })
+  scope :end_before, ->(date) { date_before(:period_end, date) }
+  scope :end_at_or_before, ->(date) { date_at_or_before(:period_end, date) }
+  scope :end_after, ->(date) { date_after(:period_end, date) }
+  scope :end_at_or_after, ->(date) { date_at_or_after(:period_end, date) }
+
+  scope :end_within, lambda { |start_date, end_date|
+    date_between_inclusion(:period_end, start_date, end_date)
   }
 
   def active_group_assignments_between?(start_date, end_date)
     group_assignments.active_between(start_date, end_date).any?
   end
 
-  scope :created_before, ->(date) { where('created_at < ?', date) }
+  def terminatable?
+    group_assignments.have_start.any? || group_assignment_logs.any?
+  end
 
-  def all_group_assignments_ended_within?(date_range)
-    ended_within = group_assignments.end_within(date_range).ids
-    not_end_before = group_assignments.end_after(date_range.last).ids
-    not_end_before += group_assignments.no_end.ids if date_range.last >= Time.zone.today
+  def all_group_assignments_ended_within?(start_date, end_date)
+    ended_within = group_assignments.end_within(start_date, end_date).ids
+    not_end_before = group_assignments.end_after(end_date).ids
+    not_end_before += group_assignments.no_end.ids if end_date >= Time.zone.today
     ended_within.any? && not_end_before.blank?
   end
 
-  def all_group_assignments_started_within?(date_range)
-    started_within = group_assignments.start_within(date_range)
-    started_before = group_assignments.start_before(date_range.first)
+  def all_group_assignments_started_within?(start_date, end_date)
+    started_within = group_assignments.start_within(start_date, end_date)
+    started_before = group_assignments.start_before(start_date)
     return true if started_within.size == group_assignments.size
     return true unless started_before.any?
+    false
+  end
+
+  def assignment?
     false
   end
 
@@ -60,10 +104,6 @@ class GroupOffer < ApplicationRecord
 
   def responsible?(volunteer)
     group_assignments.find_by(volunteer: volunteer).responsible
-  end
-
-  def department_manager?
-    creator&.department_manager?
   end
 
   def to_label
@@ -101,14 +141,13 @@ class GroupOffer < ApplicationRecord
     end.compact.join(', ')
   end
 
+  def update_search_volunteers
+    update(search_volunteer: volunteer_contacts.pluck(:full_name).join(', '))
+  end
+
   private
 
-  def department_manager_has_department?
-    if creator.department.blank?
-      errors.add(:creator_no_department, "#{I18n.t('role.department_manager')} müssen einem Standort zugeteilt sein, "\
-        "bevor sie #{I18n.t('group_offers', count: 2)} erfassen können.")
-    elsif !creator.department.include?(department)
-      errors.add(:creator_wrong_department, 'Nicht der richtige Standort.')
-    end
+  def running_assignments?
+    group_assignments.running.any?
   end
 end

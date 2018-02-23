@@ -14,6 +14,10 @@ module FilterDropdownHelper
     dropdown_list_filter(attribute_group, filter_links, *q_filters)
   end
 
+  # Creates a filter dropdown for an enum attribute
+  # Params:
+  # attribute  - the model attribute name as string or symbol
+  # collection - what the rails model returns on enum all (eg. enum attribute :kind -> Model.kinds)
   def enum_filter_dropdown(attribute, collection)
     filter_links = collection.map do |option|
       list_filter_link("#{attribute}_eq".to_sym, option[0], enum_value: option[1])
@@ -24,25 +28,45 @@ module FilterDropdownHelper
     end
   end
 
+  # Creates a filter dropdown that filters a boolean attribute to either true or false
+  # Params:
+  # attribute - the model attribute name as string or symbol
+  # attr_text - the text displayed for the dropdown title
+  # on_text   - text for filtering true
+  # off_text  - text for filtering false
   def boolean_toggler_filter_dropdown(attribute, attr_text, on_text, off_text)
     filter = "#{attribute}_eq"
     li_dropdown do
       concat dropdown_toggle_link(attr_text + bool_toggler_text_end(filter, on_text, off_text))
       concat dropdown_ul(tag.li { all_link_to(filter) }) {
-        concat li_a_element(on_text, bool_toggle_url(filter, true), class: q_active_class(filter, 'true'))
-        concat li_a_element(off_text, bool_toggle_url(filter, false), class: q_active_class(filter, 'false'))
+        concat li_a_element(on_text, bool_toggle_url(filter, true),
+          class: q_active_class(filter, 'true'))
+        concat li_a_element(off_text, bool_toggle_url(filter, false),
+          class: q_active_class(filter, 'false'))
       }
     end
   end
 
+  # Creates a dropdown with multiple fully customizable filters
+  # Params:
+  # name    - the displayed filter group name
+  # filters - rest parameters of n hashes
+  #           :q     - symbol defining the Ransack filter (eg. attribute_eq)
+  #           :value - string passed to the Ransack filter in this link (eg. true)
+  #           :text  - string for frontend display
   def custom_filter_dropdown(name, *filters)
     filter_keys = filters.map { |filter| filter[:q] }
+    filter_keys += filters.map { |filter| filter[:qs] }
     li_dropdown do
       concat dropdown_toggle_link(name + custom_text_end(filters))
       concat dropdown_ul(tag.li { all_link_to(filter_keys) }) {
         filters.map do |filter|
-          concat li_a_element(filter[:text],
-            custom_filter_url(filter[:q], filter[:value], *filter_keys.reject { |key| key == filter[:q] }),
+          concat li_a_element(filter[:text], custom_filter_url(
+              filter[:q],
+              filter[:qs],
+              filter[:value],
+              *filter_keys.reject { |key| key == filter[:q] }.reject { |key| filter[:qs]&.include? key }
+          ),
             class: q_active_class(filter[:q], filter[:value]))
         end
       }
@@ -50,12 +74,26 @@ module FilterDropdownHelper
   end
 
   def custom_text_end(filters)
-    search_keys = search_parameters.keys
-    in_search = filters.find do |filter|
-      search_keys.include? filter[:q].to_s
+    in_search = custom_text_filter_in_search(filters)
+    if in_search.blank?
+      ''
+    elsif in_search.size == 1
+      ": #{in_search.first[:text]}"
+    else
+      ": #{custom_text_filter_value_in_search(in_search)[:text]}"
     end
-    return ": #{in_search[:text]}" if in_search.present?
-    ' '
+  end
+
+  def custom_text_filter_in_search(filters)
+    filters.find_all do |filter|
+      search_parameters.keys.include? filter[:q].to_s
+    end
+  end
+
+  def custom_text_filter_value_in_search(in_search)
+    in_search.find do |filter|
+      filter[:value].to_s == search_parameters[filter[:q].to_s]
+    end
   end
 
   def q_active_class(filter, value)
@@ -78,8 +116,10 @@ module FilterDropdownHelper
     search_parameters[filter] == value
   end
 
-  def custom_filter_url(filter, value, *excludes)
-    url_for(params_except('page').merge(q: search_parameters.except(*excludes).merge("#{filter}": value.to_s)))
+  def custom_filter_url(filter, multi_qs, value, *excludes)
+    q_values = search_parameters.except(*excludes).merge("#{filter}": value.to_s)
+    q_values = q_values.merge(multi_qs.map { |q| [q, value.to_s] }.to_h) if multi_qs
+    url_for(params_except('page').merge(q: q_values))
   end
 
   def bool_toggle_url(filter, toggle = false)
@@ -92,14 +132,14 @@ module FilterDropdownHelper
     ' '
   end
 
-
   def params_except(*key)
     params.to_unsafe_hash.except(*key)
   end
 
   def enum_toggler_text(attribute, collection)
     if filter_active?("#{attribute}_eq".to_sym, '', search_parameters["#{attribute}_eq"])
-      "#{t_attr(attribute)}: " + collection.invert[search_parameters["#{attribute}_eq"].to_i].humanize
+      "#{t_attr(attribute)}: " +
+        collection.invert[search_parameters["#{attribute}_eq"].to_i].humanize
     else
       "#{t_attr(attribute)} "
     end
@@ -119,14 +159,21 @@ module FilterDropdownHelper
   end
 
   def list_filter_link(q_filter, filter_attribute, bool_filter: false, enum_value: false)
-    link_class = 'bg-success' if filter_active?(q_filter, filter_attribute, enum_value)
     tag.li do
       link_to(
         filter_url(q_filter, bool_filter, filter_attribute, enum_value: enum_value),
-        class: link_class
+        class: list_filter_link_class(q_filter, filter_attribute, enum_value)
       ) do
         translate_value(filter_attribute, q_filter)
       end
+    end
+  end
+
+  def list_filter_link_class(q_filter, filter_attribute, enum_value)
+    if q_filter == :acceptance_eq && filter_active?(q_filter, filter_attribute, enum_value)
+      "bg-#{filter_attribute}"
+    elsif filter_active?(q_filter, filter_attribute, enum_value)
+      'bg-success'
     end
   end
 
@@ -176,12 +223,15 @@ module FilterDropdownHelper
 
   def toggler_text(attribute, q_filter)
     return t_attr(attribute) if q_filter.size > 1 || search_parameters[q_filter[0]].nil?
-    '%s: %s' % [t_attr(attribute), translate_value(search_parameters[q_filter[0]], q_filter)]
+    '%{att}: %{val}' % {
+      att: t_attr(attribute),
+      val: translate_value(search_parameters[q_filter[0]], q_filter)
+    }
   end
 
   def dropdown_toggler_options
-    { class: 'dropdown-toggle btn btn-default btn-sm', role: 'button', href: '#', data: { toggle: 'dropdown' },
-      aria: { expanded: 'false', haspopup: 'true' } }
+    { class: 'dropdown-toggle btn btn-default btn-sm', role: 'button', href: '#',
+      data: { toggle: 'dropdown' }, aria: { expanded: 'false', haspopup: 'true' } }
   end
 
   def translate_value(filter_attribute, q_filter)

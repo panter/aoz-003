@@ -24,7 +24,7 @@ class EmailTemplatesTest < ApplicationSystemTestCase
     end
     page.check('Aktiv')
     click_button 'Update E-Mailvorlage'
-    click_link 'Back'
+    click_link 'Zurück'
     within 'tr.bg-success' do
       refute page.has_text? @email_template.subject
       assert page.has_text? @other_email_template.subject

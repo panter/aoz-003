@@ -1,0 +1,32 @@
+h1 Veranstaltung
+h2= @event.title if @event.title
+
+.table-responsive
+  table.table.table-no-border-top
+    tbody
+      tr
+        td Art
+        td= t(".#{@event.kind}") if @event.kind
+      tr
+        td Datum
+        td= l(@event.date.to_date) if @event.date
+      tr
+        td Zeit
+        td
+          = "#{(@event.start_time.strftime('%H:%M'))} - " if @event.start_time
+          = "#{(@event.end_time.strftime('%H:%M'))}" if @event.end_time
+      tr
+        td Departement
+        td= @event.department.contact.last_name if @event.department
+      tr
+        td Beschreibung
+        td= word_wrap(@event.description) if @event.description
+      tr
+        td Erstellt von
+        td
+          = "Erstellt von "
+          = link_to @event.creator.full_name, profile_link(@event.creator)
+          = " am #{l(@event.created_at.to_date)}"
+
+= form_navigation_btn :edit
+= form_navigation_btn :back

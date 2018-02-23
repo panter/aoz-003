@@ -8,7 +8,7 @@ end
 gem 'rails', '~> 5.1'
 
 gem 'autocomplete_rails'
-gem 'autoprefixer-rails'
+# gem 'autoprefixer-rails'  # Exclude Autoprefixer temporary, because of bug in autoprefixer
 gem 'axlsx', github: 'randym/axlsx', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
 gem 'axlsx_rails'
 gem 'bootstrap-datepicker-rails'
@@ -30,7 +30,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'paperclip'
 gem 'paranoia'
-gem 'pg'
+gem 'pg', '~> 0.21'
 gem 'puma'
 gem 'pundit'
 gem 'rails-i18n'
@@ -48,13 +48,21 @@ gem 'will-paginate-i18n'
 gem 'will_paginate'
 gem 'wkhtmltopdf-binary'
 
+group :development do
+  gem 'awesome_print'
+  gem 'i18n_yaml_sorter'
+  gem 'letter_opener'
+  gem 'overcommit', require: false
+  gem 'rubocop', require: false
+  gem 'scss_lint', require: false
+end
+
 group :production, :development do
   gem 'mdb'
   gem 'panter-rails-deploy'
 end
 
 group :development, :test do
-  gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'capybara'
@@ -63,15 +71,11 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'i18n_yaml_sorter'
-  gem 'letter_opener'
   gem 'listen'
-  gem 'overcommit', require: false
+  gem 'minitest', '~> 5.10.3'
   gem 'policy-assertions'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rubocop', require: false
-  gem 'scss_lint', require: false
   gem 'selenium-webdriver'
   gem 'spring'
 end

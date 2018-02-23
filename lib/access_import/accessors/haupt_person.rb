@@ -16,7 +16,7 @@ class HauptPerson < Accessor
   end
 
   def handle_plz(fk_plz)
-    if fk_plz && fk_plz.positive?
+    if fk_plz&.positive?
       @plz.find(fk_plz).values_at(:t_Ort, :t_PLZ)
     else
       ['', '']

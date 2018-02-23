@@ -1,15 +1,13 @@
 .nested-fields.group-assignment-fields
   .col-xs-12.col-md-3
     - if action_name == 'edit'
-      = f.association :volunteer, prompt: true, collection: @assignable
+      = f.association :volunteer, collection: @assignable
     - else
-      = f.association :volunteer, prompt: true
-  .col-xs-12.col-md-2
-    = f.input :responsible
-  .col-xs-12.col-md-3
-    = f.input :period_start, include_blank: true
-  .col-xs-12.col-md-3
-    = f.input :period_end, include_blank: true
+      = f.association :volunteer, input_html: { class: 'new-group-offer-volunteer-collection' }
+
+  .col-xs-12.col-md-2= f.input :responsible
+  .col-xs-12.col-md-3= f.input :period_start, include_blank: true
+  .col-xs-12.col-md-3= f.input :period_end, include_blank: true
   .col-xs-12.col-md-1
     br
-    = link_to_remove_association navigation_glyph('delete'), f, class: 'btn btn-default'
+    = link_to_remove_association navigation_glyph(:delete), f, class: 'btn btn-default'

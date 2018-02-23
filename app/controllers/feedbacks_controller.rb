@@ -14,6 +14,11 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.new(feedbackable: @feedbackable, volunteer: @volunteer,
       author: current_user)
     authorize @feedback
+    @simple_form_for_params = [
+      [@volunteer, @feedbackable, @feedback],
+      { url: polymorphic_path([@volunteer, @feedbackable, @feedback],
+        redirect_to: params[:redirect_to], group_assignment: params[:group_assignment]) }
+    ]
   end
 
   def edit; end
@@ -55,8 +60,13 @@ class FeedbacksController < ApplicationController
   private
 
   def set_feedbackable
-    return @feedbackable = Assignment.find(params[:assignment_id]) if params[:assignment_id]
-    @feedbackable = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
+    @feedbackable = Assignment.find_by(id: params[:assignment_id]) ||
+      GroupOffer.find_by(id: params[:group_offer_id])
+  end
+
+  def find_feedbackable_submit_form
+    return @feedbackable if @feedbackable.assignment?
+    GroupAssignment.find_by(id: params[:group_assignment])
   end
 
   def set_volunteer
@@ -71,8 +81,8 @@ class FeedbacksController < ApplicationController
   end
 
   def create_redirect
-    return @volunteer unless params[:last_submitted]
-    polymorphic_path(@feedback.feedbackable_link_target, action: :last_submitted_hours_and_feedbacks)
+    return @volunteer unless params[:redirect_to]
+    polymorphic_path(find_feedbackable_submit_form, action: params[:redirect_to].to_sym)
   end
 
   def feedback_params

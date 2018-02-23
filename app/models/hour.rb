@@ -1,18 +1,21 @@
 class Hour < ApplicationRecord
+  include ImportRelation
   include ReviewsCommon
 
-  attr_reader :hourable_id_and_type
-
-  belongs_to :volunteer
+  belongs_to :volunteer, -> { with_deleted }, inverse_of: 'hours'
 
   belongs_to :hourable, polymorphic: true, optional: true
 
-  belongs_to :billing_expense, optional: true
+  belongs_to :reviewer, -> { with_deleted }, class_name: 'User', foreign_key: 'reviewer_id',
+    inverse_of: 'reviewed_hours', optional: true
+
+  belongs_to :billing_expense, -> { with_deleted }, optional: true, inverse_of: 'hours'
   belongs_to :certificate, optional: true
 
   validates :minutes, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :meeting_date, presence: true
+  validates :hourable, presence: true
 
   scope :billable, (-> { where(billing_expense: nil) })
 
@@ -22,6 +25,15 @@ class Hour < ApplicationRecord
 
   scope :need_refund, lambda {
     joins(:volunteer).where('volunteers.waive = FALSE')
+  }
+
+  scope :assignment, (-> { where(hourable_type: 'Assignment') })
+  scope :group_offer, (-> { where(hourable_type: 'GroupOffer') })
+  scope :from_assignments, lambda { |assignment_ids|
+    assignment.where(hourable_id: assignment_ids)
+  }
+  scope :from_group_offers, lambda { |group_offer_ids|
+    group_offer.where(hourable_id: group_offer_ids)
   }
 
   HOUR_RANGE = (1..8).to_a

@@ -32,7 +32,7 @@ table.table.table-striped
               = link_to record.author.full_name, record.author
         td= link_to t_action(:show), polymorphic_path([@volunteer, record.feedbackable, record])
         td= link_to t_action(:edit), edit_polymorphic_path([@volunteer, record.feedbackable, record])
-        td= link_to navigation_glyph('delete'), polymorphic_path([@volunteer, record.feedbackable, record]), confirm_deleting(record)
+        td= link_to navigation_glyph(:delete), polymorphic_path([@volunteer, record.feedbackable, record]), confirm_deleting(record)
 
 = bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([@volunteer, @feedbackable, Feedback]) }
-= bootstrap_row_col { button_link navigation_glyph('back'), @volunteer }
+= bootstrap_row_col { button_link navigation_glyph(:back), @volunteer }

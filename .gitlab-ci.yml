@@ -1,0 +1,26 @@
+stages:
+  - test
+
+services:
+  - postgres:9.4
+
+cache:
+  paths:
+    - vendor/ruby
+
+variables:
+  RAILS_ENV: test
+  POSTGRES_DB: aoz_test
+  DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
+
+before_script:
+  - gem install bundler --no-ri --no-rdoc
+  - bundle install -j $(nproc) --path vendor
+  - bundle exec rails db:schema:load
+
+test:
+  image: "andistaub/ruby-chromedriver:latest"
+  stage: test
+  script:
+    - bundle exec rails test:system
+    - bundle exec rails test

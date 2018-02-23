@@ -32,7 +32,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
 
   test 'filter by department' do
     within '.section-navigation#filters' do
-      click_link 'Department'
+      click_link 'Standort'
       click_link @d1.to_s
     end
     visit current_url
@@ -62,12 +62,15 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'filter by category' do
+  test 'filter_by_category' do
     within '.section-navigation#filters' do
-      click_link 'Group offer category'
+      click_link 'Kategorie'
       click_link @c1.to_s
     end
     visit current_url
+    within '.section-navigation#filters' do
+      assert page.has_link? "Kategorie: #{@c1.to_s}"
+    end
     within 'tbody' do
       assert page.has_text? @open_d1.title
       refute page.has_text? @full_d1.title
@@ -78,14 +81,14 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'filter by department, state and category' do
+  test 'filter_by_department_state_and_category' do
     within '.section-navigation#filters' do
       click_link 'Offer state'
       click_link 'Open'
     end
     visit current_url
     within '.section-navigation#filters' do
-      click_link 'Department'
+      click_link 'Standort'
       click_link @d1.to_s
     end
     visit current_url
@@ -111,7 +114,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       refute page.has_text? @part_d2.title
     end
     within '.section-navigation#filters' do
-      click_link 'Group offer category'
+      click_link 'Kategorie'
       click_link @c2.to_s
     end
     visit current_url

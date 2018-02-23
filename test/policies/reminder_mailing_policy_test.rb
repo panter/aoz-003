@@ -2,8 +2,9 @@ require 'test_helper'
 
 class ReminderMailingPolicyTest < PolicyAssertions::Test
   test 'only superadmin is permitted to all actions' do
-    actions = ['index?', 'new_half_year?', 'new_trial_period?', 'show?', 'send_trial_period?',
-               'send_half_year?', 'create?', 'edit?', 'update?', 'destroy?']
+    actions = ['index?', 'new_half_year?', 'new_trial_period?', 'new_termination?', 'show?',
+               'send_trial_period?', 'send_half_year?', 'send_termination?', 'create?',
+               'edit?', 'update?', 'destroy?']
     assert_permit(create(:user), ReminderMailing, *actions)
 
     refute_permit(create(:social_worker), ReminderMailing, *actions)

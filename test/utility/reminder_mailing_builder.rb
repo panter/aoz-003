@@ -16,6 +16,10 @@ module ReminderMailingBuilder
     create_mailing('half_year', 'aaa', 'aaa', create(:user), *mailables)
   end
 
+  def create_termination_mailing(*mailables)
+    create_mailing('termination', 'aaa', 'aaa', create(:user), *mailables)
+  end
+
   def mailing_volunteers(mailables)
     mailables.each do |mailable|
       ReminderMailingVolunteer.new(volunteer: mailable.volunteer,

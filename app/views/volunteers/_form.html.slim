@@ -1,19 +1,19 @@
 = simple_error_notice f
 
-- if policy(Volunteer).can_manage?
+- if policy(Volunteer).superadmin_privileges?
   = f.input :external, input_html: { data: { state: { remove: ['contacted', 'resigned', 'inactive', 'rejected'], selected: 'accepted' }, hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
   fieldset
     legend= t('.acceptance.management')
     = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance), as: :radio_buttons, include_blank: false, selected: @volunteer.acceptance.to_i
     - unless @volunteer.undecided?
       ul.list-unstyled
-        - @volunteer.slice(:accepted_at, :undecided_at, :rejected_at, :resigned_at).compact.each do |key, value|
+        - @volunteer.slice(:invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at).compact.each do |key, value|
           li #{t_attr(key)} #{l(value)}
 
   = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
   = f.input :rejection_text
 
-- if policy(Volunteer).can_manage?
+- if policy(Volunteer).superadmin_privileges?
   fieldset.checklist
     legend= t('checklist')
     ul.list-inline
@@ -105,5 +105,5 @@ fieldset
 = single_field_fieldset(f, :strengths)
 = single_field_fieldset(f, :interests)
 
-h3= policy(@volunteer).can_manage? ? t('.availability') : t('.availability_question')
+h3= policy(@volunteer).superadmin_privileges? ? t('.availability') : t('.availability_question')
 = render 'availability/form', f: f

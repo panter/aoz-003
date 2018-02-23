@@ -68,4 +68,30 @@ class ReminderMailingTest < ActiveSupport::TestCase
     })
     assert reminder_mailing.valid?
   end
+
+  test 'reminder_mailing_with_deleted_user_will_not_crash_views' do
+    mailing_creator = create :user
+    group_assignment = create(:group_assignment, group_offer: create(:group_offer),
+      period_start: 2.months.ago, period_end: Time.zone.today, period_end_set_by: mailing_creator)
+    reminder_mailing = create :reminder_mailing, kind: :termination, creator: mailing_creator,
+      reminder_mailing_volunteers: [group_assignment], body: '%{EmailAbsender}'
+    mailing_volunteer = reminder_mailing.reminder_mailing_volunteers.first
+    mailing_body = mailing_volunteer.process_template[:body]
+    assert(mailing_body.include?(mailing_creator.email),
+      "#{mailing_creator.email} not found in #{mailing_body}")
+    assert(mailing_body.include?(mailing_creator.profile.contact.natural_name),
+      "#{mailing_creator.profile.contact.natural_name} not found in #{mailing_body}")
+    mailing_creator.destroy
+    reminder_mailing.reload
+    mailing_volunteer.reload
+    group_assignment.reload
+    assert reminder_mailing.creator.deleted?, 'mailing creator should be deleted?'
+    assert reminder_mailing.creator.profile.deleted?, 'creator profile should be deleted?'
+    assert reminder_mailing.creator.profile.contact.deleted?, 'creator contact should be deleted?'
+    mailing_body = mailing_volunteer.process_template[:body]
+    assert(mailing_body.include?(mailing_creator.email),
+      "#{mailing_creator.email} not found in #{mailing_body}")
+    assert(mailing_body.include?(mailing_creator.profile.contact.natural_name),
+      "#{mailing_creator.profile.contact.natural_name} not found in #{mailing_body}")
+  end
 end

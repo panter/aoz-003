@@ -10,10 +10,14 @@ nav.navbar.section-navigation.hidden-print
     li= button_link 'Klient erfassen', new_client_path, dimension: :sm
   ul.list-inline
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
-    = list_filter_dropdown(:state, Client::STATES)
+    - if policy(Client).superadmin_privileges?
+      = enum_filter_dropdown(:acceptance, Client.acceptances)
+      = custom_filter_dropdown('Tandem',
+        { q: :active, text: 'Aktiv', value: 'true' },
+        { q: :inactive, text: 'Inaktiv', value: 'true' })
     li= button_link t('clear_filters'), clients_path, dimension: :sm
-    li= button_link navigation_fa_icon('xlsx'), url_for(format: :xlsx, q: search_parameters), dimension: :sm
-    li= link_to navigation_glyph('print'), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
+    li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: :sm
+    li= link_to navigation_glyph(:print), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
     - if policy(ClientNotification).index?
       li= button_link 'Wartezeit Benachrichtigungen', client_notifications_path, dimension: :sm
   hr

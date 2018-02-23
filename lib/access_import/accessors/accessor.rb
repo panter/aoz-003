@@ -1,9 +1,14 @@
 require 'access_import/acc_utils'
 require 'ostruct'
 
+# Accessor normalizes and prepares Access tables and records to hashes
+#
 class Accessor
   include AccUtils
 
+  # Adds the instantiating Access Import instnace plus needed other Accessors as
+  # class variables
+  #
   def initialize(acdb, *other_accessors)
     add_other_accessors(*other_accessors) if other_accessors.any?
     @acdb = acdb
@@ -25,20 +30,24 @@ class Accessor
 
   ACCESS_ROLES = OpenStruct.new(volunteer: 1, client: 2, animator: 3, participant: 4).freeze
 
+  FREIWILLIGEN_FUNKTION_BY_NAME = OpenStruct.new(
+    begleitung: OpenStruct.new(id: 1, bezeichnung: 'Begleitung', rolle: 'Freiwillige/r'),
+    kurs: OpenStruct.new(id: 2, bezeichnung: 'Kurs', rolle: 'Freiwillige/r'),
+    animation_f: OpenStruct.new(id: 3, bezeichnung: 'Animation F', rolle: 'Freiwillige/r'),
+    kurzeinsatz: OpenStruct.new(id: 4, bezeichnung: 'Kurzeinsatz', rolle: 'Freiwillige/r'),
+    andere: OpenStruct.new(id: 5, bezeichnung: 'Andere', rolle: 'Freiwillige/r'),
+    animation_a: OpenStruct.new(id: 6, bezeichnung: 'Animation A', rolle: 'Animator/in')
+  ).freeze
+
+  def freiwilligen_funktion(id)
+    FREIWILLIGEN_FUNKTION_BY_NAME.to_h.find { |funktion| funktion[1].id == id }.last
+  end
+
   SEMESTER = {
     1 => { semester: 'Frühling / Sommer', rolle: 'Animator/in' },
     2 => { semester: 'Herbst / Winter', rolle: 'Animator/in' },
     3 => { semester: '1. Halbjahr', rolle: 'Freiwillige/r' },
     4 => { semester: '2. Halbjahr', rolle: 'Freiwillige/r' }
-  }.freeze
-
-  FREIWILLIGEN_FUNKTIONEN = {
-    1 => 'Begleitung',
-    2 => 'Kurs',
-    3 => 'Animation F',
-    4 => 'Kurzeinsatz',
-    5 => 'Andere',
-    6 => 'Animation A'
   }.freeze
 
   LEHRMITTEL = {

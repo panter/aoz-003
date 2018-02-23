@@ -22,3 +22,4 @@ public/system
 *.mdb
 *.accdb
 *.vbs
+db/bare_db_dump.sql

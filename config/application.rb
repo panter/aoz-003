@@ -11,7 +11,7 @@ module Aoz
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
-    config.timezone = 'CET'
+    config.time_zone = 'Zurich'
 
     config.autoload_paths += Dir[config.root.join('lib/access_import/**/')]
     config.autoload_paths += Dir[config.root.join('lib/access_import/accessors/**/')]

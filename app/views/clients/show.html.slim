@@ -50,24 +50,26 @@ h1= @client.contact.full_name
         td= t_attr(:interests)
         td= @client.interests
 
-      - if policy(Client).state?
+      - if policy(Client).superadmin_privileges?
         tr
-          td= t_attr(:state)
-          td= t("state.#{@client.state}")
-
-      tr
-        td= t_attr(:involved_authority)
-        td= @client.involved_authority
+          td= t_attr(:involved_authority)
+          td= link_to @client.involved_authority.full_name, profile_link(@client.involved_authority) if @client.involved_authority
 
       tr
         td= t_attr(:competent_authority)
         td= @client.competent_authority
 
       tr
-        td= t_attr(:created_by)
-        td= link_to @client.user.full_name, user_path(@client.user)
+        td Kostenträger
+        td
+          - if @client.cost_unit?
+            = t("cost_unit.#{@client.cost_unit}")
 
-      - if policy(Client).comments?
+      tr
+        td= t_attr(:created_by)
+        td= link_to @client.user.full_name, profile_link(@client.user)
+
+      - if policy(Client).superadmin_privileges?
         tr
           td= t_attr(:comments)
           td= @client.comments

@@ -138,18 +138,8 @@ class VolunteersTest < ApplicationSystemTestCase
     click_button 'Update Volunteer'
 
     visit volunteer_path(volunteer)
-    assert page.has_content? 'Reason for rejection Other'
-    assert page.has_content? 'Explanation for rejection Explanation'
-  end
-
-  test 'thead acceptance filter dropdown can switch to all' do
-    visit volunteers_path
-    within 'tbody' do
-      assert page.has_text? 'Accepted'
-      assert page.has_text? 'Undecided'
-      assert page.has_text? 'Rejected'
-      assert page.has_text? 'Resigned'
-    end
+    assert page.has_content? 'Reason for rejection: Other'
+    assert page.has_content? 'Explanation for rejection: Explanation'
   end
 
   test 'volunteer form has working_percent field' do
@@ -174,9 +164,9 @@ class VolunteersTest < ApplicationSystemTestCase
     refute page.has_text? 'If you have any experiences with voluntary work, please describe here.'
   end
 
-  test 'volunteer pagination' do
-    Volunteer.with_deleted.map(&:really_destroy!)
-    second_page_volunteers = (1..20).to_a.map do
+  test 'volunteer_pagination' do
+    really_destroy_with_deleted(Volunteer)
+    (1..20).to_a.map do
       volunteer = create :volunteer
       volunteer.update created_at: 10.days.ago
       volunteer.contact.update(
@@ -190,10 +180,12 @@ class VolunteersTest < ApplicationSystemTestCase
     end
     visit volunteers_path
     first(:link, '2').click
+    visit current_url
 
     assert page.has_css? '.pagination'
-    second_page_volunteers.each do |volunteer|
-      assert page.has_text? volunteer.contact.last_name
+    Volunteer.order('created_at desc').paginate(page: 2).each do |volunteer|
+      assert page.has_text? "#{volunteer.contact.full_name} #{volunteer.contact.city}"\
+        " #{volunteer.contact.postal_code}"
     end
   end
 
@@ -201,19 +193,37 @@ class VolunteersTest < ApplicationSystemTestCase
     volunteer = create :volunteer
     create :assignment, volunteer: volunteer
     visit volunteer_path(volunteer)
-    refute page.has_link? 'Journal'
+    within '.assignments-table' do
+      refute page.has_link? 'Journal'
+    end
   end
 
-  test 'department_manager_can_see_volunteer_index_and_only_seeking_clients_volunteers' do
+  test 'department_manager_can_see_volunteer_index_and_only_her_own_volunteers' do
     department_manager = create :department_manager
     login_as department_manager
-    play_user_index_volunteer_display
+    volunteer_department_manager = create :volunteer, registrar: department_manager
+    other_volunteer = create :volunteer
+
+    visit volunteers_path
+    assert page.has_text? volunteer_department_manager.contact.full_name
+    refute page.has_text? other_volunteer.contact.full_name
   end
 
-  test 'social_worker_can_see_volunteer_index_and_only_seeking_clients_volunteers' do
+  test 'social_worker_cannot_see_volunteer_index' do
+    login_as create(:social_worker)
+
+    visit volunteers_path
+
+    assert page.has_text? 'You are not authorized to perform this action.'
+  end
+
+  test 'social_worker_cant_see_volunteer_seeking_clients' do
     social_worker = create :social_worker
     login_as social_worker
-    play_user_index_volunteer_display
+
+    visit seeking_clients_volunteers_path
+
+    assert page.has_text? 'You are not authorized to perform this action.'
   end
 
   test 'accepted at creation volunteer gets invited' do
@@ -244,23 +254,12 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'department manager has no link to group offer of not their own' do
-    volunteer = create :volunteer
+    department_manager = create :department_manager
+    volunteer = create :volunteer, registrar: department_manager
     group_offer = create :group_offer, volunteers: [volunteer]
-    login_as create :department_manager
+    login_as department_manager
     visit volunteer_path(volunteer)
     assert page.has_text? group_offer.title
     refute page.has_link? group_offer.title
-  end
-
-  def play_user_index_volunteer_display
-    volunteer_seeks = create :volunteer_with_user
-    create :assignment, period_start: 500.days.ago, period_end: 200.days.ago,
-      volunteer: volunteer_seeks
-    volunteer_not_seeking = create :volunteer_with_user
-    create :assignment, period_start: 10.days.ago, period_end: nil,
-      volunteer: volunteer_not_seeking
-    visit volunteers_path
-    assert page.has_text? volunteer_seeks.contact.full_name
-    refute page.has_text? volunteer_not_seeking.contact.full_name
   end
 end

@@ -4,6 +4,7 @@ class ClientsTest < ApplicationSystemTestCase
   setup do
     @superadmin = create :user, email: 'superadmin@example.com'
     @department_manager = create :department_manager, email: 'department@example.com'
+    @social_worker = create :social_worker
   end
 
   test 'new client form' do
@@ -45,15 +46,22 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Education', with: 'asdfasdf'
     fill_in 'Actual activities', with: 'asdfasdf'
     fill_in 'Interests', with: 'asdfasdf'
-    select('Active', from: 'State')
+    select('Angemeldet', from: 'Acceptance')
     fill_in 'Comments', with: 'asdfasdf'
     fill_in 'Competent authority', with: 'asdfasdf'
-    fill_in 'Involved authority', with: 'asdfasdf'
+    select @social_worker.full_name, from: 'Involved authority'
+    select('Gemeinde', from: 'Cost unit')
     page.check('client_evening')
     fill_in 'Detailed Description', with: 'After 7'
 
     click_button 'Create Client'
     assert page.has_text? 'Client was successfully created.'
+    assert page.has_text? @social_worker.full_name
+    @superadmin.clients.each do |client|
+      assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
+      assert page.has_link? client.user.full_name, href: /profiles\/#{client.user.profile.id}/
+      assert page.has_link? client.contact.primary_email
+    end
   end
 
   test 'new client form with preselected fields' do
@@ -134,58 +142,33 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? 'Fluent'
   end
 
-  test 'superadmin_can_delete_client' do
-    login_as @superadmin
-    client = create :client
-    visit client_path(client)
-
-    page.accept_confirm do
-      first('a', text: 'Delete').click
-    end
-
-    assert page.has_text? 'Client was successfully deleted.'
-  end
-
-  test 'client pagination' do
+  test 'client_pagination' do
     login_as @superadmin
     70.times do
       create :client
     end
     visit clients_path
     first(:link, '2').click
-
-    assert page.has_css? '.pagination'
     Client.order('created_at desc').paginate(page: 2).each do |client|
-      assert page.has_text? client.contact.last_name
+      assert page.has_text? client.contact.full_name
+    end
+
+    within page.first('.pagination') do
+      assert page.has_link? '1', href: clients_path(page: 1)
+      assert page.has_link? 'Previous', href: clients_path(page: 1)
     end
   end
 
-  test 'superadmin sees all required features in index' do
+  test 'superadmin_sees_all_required_features_in_index' do
     with_assignment, without_assignment = create_clients_for_index_text_check
     login_as @superadmin
     visit clients_path
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
     assert page.has_text? 'unassigned_goals unassigned_interests  unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} without_assignment Show Edit"
+      "#{I18n.l(without_assignment.created_at.to_date)} Angemeldet without_assignment Show Edit"
     assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} with_assignment Show Edit"
-  end
-
-  test 'can_delete_a_client_through_edit' do
-    client = create :client
-    login_as @superadmin
-
-    visit clients_path
-    assert page.has_text? client
-
-    visit edit_client_path(client)
-    page.accept_confirm do
-      click_link 'Delete'
-    end
-
-    assert page.has_text? 'Client was successfully deleted.'
-    refute page.has_text? client
+      "#{I18n.l(with_assignment.created_at.to_date)} Angemeldet with_assignment Show Edit"
   end
 
   test 'all_needed_actions_are_available_in_the_index' do
@@ -198,7 +181,6 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert page.has_link? 'Show', count: 3
     assert page.has_link? 'Edit', count: 3
-    refute page.has_link? 'Delete'
 
     login_as @department_manager
     visit clients_path
@@ -206,8 +188,8 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? client_social_worker
     refute page.has_text? client
     assert page.has_link? 'Show'
-    refute page.has_link? 'Edit'
-    refute page.has_link? 'Delete'
+    assert page.has_link? 'Edit', href: edit_client_path(client_department_manager)
+    refute page.has_link? 'Edit', href: edit_client_path(client_social_worker)
 
     login_as social_worker
     visit clients_path
@@ -215,11 +197,11 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? client_department_manager
     refute page.has_text? client
     assert page.has_link? 'Show'
-    assert page.has_link? 'Edit'
-    refute page.has_link? 'Delete'
+    refute page.has_link? 'Edit', href: edit_client_path(client_department_manager)
+    assert page.has_link? 'Edit', href: edit_client_path(client_social_worker)
   end
 
-  test 'department manager sees his scoped client index correctly' do
+  test 'department_manager_sees_his_scoped_client_index_correctly' do
     superadmins_client = create :client, user: @superadmin
     with_assignment, without_assignment = create_clients_for_index_text_check
     with_assignment.update(user: @department_manager)
@@ -285,5 +267,29 @@ class ClientsTest < ApplicationSystemTestCase
                                 goals: 'unassigned_goals', interests: 'unassigned_interests'
     without_assignment.update(created_at: 4.days.ago)
     [with_assignment, without_assignment]
+  end
+
+  test 'If social worker registers a client, she is automatically the involved authority' do
+    login_as @social_worker
+    visit new_client_path
+
+    within '#languages' do
+      choose('Basic')
+    end
+    select('Mrs.', from: 'Salutation')
+    fill_in 'First name', with: 'Client'
+    fill_in 'Last name', with: "doesn't matter"
+    fill_in 'Primary email', with: 'client@aoz.com'
+    fill_in 'Primary phone', with: '0123456789'
+    fill_in 'Street', with: 'Sihlstrasse 131'
+    fill_in 'Zip', with: '8002'
+    fill_in 'City', with: 'Zürich'
+    refute page.has_select? 'Involved authority'
+
+    click_button 'Create Client'
+
+    login_as @superadmin
+    visit client_path(Client.last)
+    assert page.has_link? @social_worker.full_name, count: 2
   end
 end
