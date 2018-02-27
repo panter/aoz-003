@@ -142,10 +142,14 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     assert page.has_link? 'Übermittelt am ',
       href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
 
-    click_link 'Beendigung Quittieren', href: /assignments\/#{@un_submitted.id}\/verify_termination/
+    click_link 'Beendigung Quittieren', href: /#{@un_submitted.id}\/verify_termination/
     assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
 
     visit terminated_index_assignments_path
+    click_link 'Quittiert: Unquittiert'
+    click_link 'Quittiert', href: /termination_verified_by_id_not_null/
+    visit current_url
+
     @un_submitted.reload
     assert page.has_text? "Quittiert von #{@un_submitted.termination_verified_by.full_name} am"\
       " #{I18n.l(@un_submitted.termination_verified_at.to_date)}"
