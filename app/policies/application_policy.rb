@@ -61,7 +61,7 @@ class ApplicationPolicy
   end
 
   def record_present?
-    record.class != Class
+    record.is_a? ApplicationRecord
   end
 
   def user_owns_record?
