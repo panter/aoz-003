@@ -1,4 +1,6 @@
 class Contact < ApplicationRecord
+  attr_accessor :validate_email_format
+
   before_save :update_full_name, if: :full_name_changed?, unless: :department?
 
   belongs_to :contactable, polymorphic: true, optional: true
@@ -6,6 +8,9 @@ class Contact < ApplicationRecord
   validates :last_name, presence: true, if: :validate_last_name?
   validates :first_name, presence: true, if: :validate_first_name?
   validates :primary_email, presence: true, if: :needs_primary_email?
+
+  validates :primary_email, format: { with: Devise.email_regexp }, if: :validate_email_format
+
   validates :primary_phone, presence: true, if: :needs_primary_phone?
   validates :street, :postal_code, :city, presence: true, if: :needs_address?
 
