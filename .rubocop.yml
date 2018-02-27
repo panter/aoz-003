@@ -25,6 +25,8 @@ Style/FrozenStringLiteralComment:
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 Style/FormatString:
   EnforcedStyle: percent

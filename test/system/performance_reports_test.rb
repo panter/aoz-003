@@ -74,6 +74,11 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     assert page.has_text? 'Total Probezeit-Feedbacks ' +
       row_numbers(volunteers, column_order, :total_trial_feedbacks)
 
+    assert page.has_text? 'Besuchte Einführungskurse ' +
+      row_numbers(volunteers, column_order, :intro_course_events)
+    assert page.has_text? 'Total besuchte Veranstaltungen ' +
+      row_numbers(volunteers, column_order, :total_events)
+
     # Clients section
     column_order = ['zurich', 'not_zurich', 'all']
     assert page.has_text? 'Erstellt ' + row_numbers(clients, column_order, :created)

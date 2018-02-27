@@ -2,15 +2,10 @@ require 'test_helper'
 require 'ostruct'
 require 'utility/performance_report_generator'
 
-class GroupOfferCategoryTest < ActiveSupport::TestCase
+class PerformanceReportTest < ActiveSupport::TestCase
   include PerformanceReportGenerator
 
   def setup
-    DatabaseCleaner.clean
-    DatabaseCleaner.start
-
-    really_destroy_with_deleted(Hour, Feedback, TrialFeedback, Assignment, Client, GroupAssignment,
-      GroupOffer, Department, User)
     @today = Time.zone.today
     @this_periods = [@today.beginning_of_year, @today.end_of_year]
     @this_dates = @this_periods.map(&:to_date)
@@ -61,7 +56,9 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
     total_feedbacks: 0,
     assignment_trial_feedbacks: 0,
     group_offer_trial_feedbacks: 0,
-    total_trial_feedbacks: 0
+    total_trial_feedbacks: 0,
+    intro_course_events: 0,
+    total_events: 0
   }.stringify_keys.freeze
 
   test 'volunteer_zurich_internal_external' do
@@ -184,6 +181,30 @@ class GroupOfferCategoryTest < ActiveSupport::TestCase
       inactive: 1, only_assignment_active: 0
     ).stringify_keys!
     refresh_reports
+
+    assert_equal(expected_influenced_this_year, @this_year.report_content['volunteers']['all'])
+    assert_equal(expected_influenced_last_year, @last_year.report_content['volunteers']['all'])
+
+    # events
+
+    intro_event_this_year = create :event, kind: :intro_course, date: @this_periods.first
+    intro_event_last_year = create :event, kind: :intro_course, date: @last_periods.first
+    other_event_this_year = create :event, kind: :professional_training, date: @this_periods.first
+
+    create :event_volunteer, event: intro_event_this_year, volunteer: volunteer_zurich_this_year
+    create :event_volunteer, event: intro_event_this_year, volunteer: volunteer_zurich_this_year2
+    create :event_volunteer, event: intro_event_last_year, volunteer: volunteer_zurich_last_year
+    create :event_volunteer, event: other_event_this_year, volunteer: volunteer_zurich_this_year
+
+    refresh_reports
+
+    expected_influenced_this_year.merge!(
+      intro_course_events: 2, total_events: 3
+    ).stringify_keys!
+
+    expected_influenced_last_year.merge!(
+      intro_course_events: 1, total_events: 1
+    ).stringify_keys!
 
     assert_equal(expected_influenced_this_year, @this_year.report_content['volunteers']['all'])
     assert_equal(expected_influenced_last_year, @last_year.report_content['volunteers']['all'])
