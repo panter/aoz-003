@@ -64,6 +64,9 @@ class Volunteer < ApplicationRecord
   has_many :reminded_assignments, through: :reminder_mailing_volunteers,
     source: :reminder_mailable, inverse_of: 'reminder_mailable'
 
+  has_many :event_volunteers, dependent: :delete_all
+  has_many :events, through: :event_volunteers
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   # Validations
@@ -163,6 +166,10 @@ class Volunteer < ApplicationRecord
 
   scope :accpted_between, lambda { |start_date, end_date|
     date_between_inclusion(:accepted_at, start_date, end_date)
+  }
+
+  scope :needs_intro_course, lambda {
+    accepted.internal.where(intro_course: false)
   }
 
   def verify_and_update_state

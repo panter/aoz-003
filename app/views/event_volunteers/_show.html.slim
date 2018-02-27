@@ -1,0 +1,9 @@
+h4 Eingeladene Teilnehmende
+.table-responsive.event-volunteers-table
+  table.table.table-no-border-top
+    tbody
+      - @event.event_volunteers.each do |event_volunteer|
+        tr
+          td Name
+          td= link_to event_volunteer.volunteer.full_name, volunteer_path(event_volunteer.volunteer)
+          td= link_to 'Löschen', polymorphic_path([@event, event_volunteer]), method: :delete

@@ -1,15 +1,18 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, except: [:index, :new, :create]
 
   def index
     authorize Event
     @events = Event.all
   end
 
-  def show; end
+  def show
+    @volunteers = Volunteer.needs_intro_course
+    @event_volunteer = EventVolunteer.new(event: @event)
+  end
 
   def new
-    @event = Event.new(creator: current_user)
+    @event = Event.new
     authorize @event
   end
 

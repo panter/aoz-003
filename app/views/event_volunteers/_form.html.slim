@@ -1,0 +1,10 @@
+h4 Neue Teilnehmende hinzufügen
+= simple_form_for(@event_volunteer, url: url_for([@event, @event_volunteer])) do |f|
+  = simple_error_notice f
+
+  .row
+    .col-xs-12
+      = f.association :volunteer, collection: @volunteers, label: false
+  .row
+    .col-xs-12
+      = f.button :submit, 'Teilnehmer/in hinzufügen'
