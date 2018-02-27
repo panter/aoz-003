@@ -65,21 +65,21 @@ end
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_callers'
-  gem 'capybara'
-  gem 'capybara-selenium'
-  gem 'chromedriver-helper'
-  gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'listen'
-  gem 'minitest', '~> 5.10.3'
-  gem 'policy-assertions'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'selenium-webdriver'
   gem 'spring'
 end
 
 group :test do
+  gem 'capybara'
+  gem 'capybara-selenium'
+  gem 'chromedriver-helper'
+  gem 'database_cleaner'
+  gem 'minitest', '~> 5.10.3'
+  gem 'policy-assertions'
   gem 'roo', '~> 2.7.0'
+  gem 'selenium-webdriver'
 end

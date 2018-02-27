@@ -2,6 +2,7 @@ require 'application_system_test_case'
 
 class TrialFeedbacksTest < ApplicationSystemTestCase
   def setup
+    use_rack_driver
     @user_volunteer = create :user_volunteer, email: 'volunteer@example.com'
     @volunteer = create :volunteer, user: @user_volunteer
     @assignment = create :assignment, volunteer: @volunteer

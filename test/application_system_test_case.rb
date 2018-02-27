@@ -3,32 +3,49 @@ require 'selenium/webdriver'
 require 'utility/reminder_mailing_builder'
 require 'utility/group_offer_and_assignment'
 
-
-Capybara.register_driver(:headless_chrome) do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu no-sandbox] }
-  )
-
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    desired_capabilities: capabilities
-  )
+Capybara.register_driver :chrome_headless do |app|
+  chrome_options = { chromeOptions: { args: %w[headless disable-gpu no-sandbox] } }
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chrome_options)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
 end
 
-Capybara.register_driver(:visible_chrome) do |app|
+Capybara.register_driver :visible_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara.register_driver :rack do |app|
+  Capybara::RackTest::Driver.new(app, headers: { 'HTTP_USER_AGENT' => 'Capybara' })
+end
+
+def driver_selected_by_env_var
+  if ENV['driver'] == 'visible'
+    :visible_chrome
+  else
+    :chrome_headless
+  end
+end
+
+Capybara.configure do |config|
+  config.default_driver = driver_selected_by_env_var
+  config.default_max_wait_time = 5
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include ReminderMailingBuilder
   include GroupOfferAndAssignment
 
-  case ENV['driver']
-  when 'visible'
-    driven_by :visible_chrome
-  else
-    driven_by :headless_chrome
+  driven_by driver_selected_by_env_var
+
+  def use_rack_driver
+    Capybara.current_driver = :rack
+  end
+
+  def use_default_driver
+    Capybara.use_default_driver
+  end
+
+  def teardown
+    use_default_driver
   end
 
   def scroll_to_element(element)

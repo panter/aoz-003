@@ -34,7 +34,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   end
 
   test 'filtering_submitted_terminations' do
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_assignments_path
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Bestätigt'
     visit current_url
@@ -43,7 +43,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   end
 
   test 'filtering_not_submitted_terminations' do
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_assignments_path
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Unbestätigt'
     visit current_url
@@ -52,7 +52,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   end
 
   test 'filtering_for_only_verified' do
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_assignments_path
     click_link 'Quittiert: Unquittiert'
     click_link exact_text: 'Quittiert'
     visit current_url
@@ -95,13 +95,13 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   end
 
   test 'there_is_correct_links_to_the_termination_forms' do
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_assignments_path
     assert page.has_link? 'Beendigungsformular', href: /assignments\/#{@un_submitted.id}\/terminate/
     assert page.has_link? 'Beendigungsformular', href: /assignments\/#{@submitted.id}\/terminate/
   end
 
   test 'there_is_correct_links_to_creating_certificates' do
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_assignments_path
     refute page.has_link? 'Dossier Freiwillig Engagiert erstellen',
       href: /\/volunteers\/#{@un_submitted.volunteer.id}\/certificates\/new/
     assert page.has_link? 'Dossier Freiwillig Engagiert erstellen',
@@ -109,7 +109,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   end
 
   test 'assignment_quittieren_creates_a_assignment_log_record_from_assignment' do
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_assignments_path
     click_link 'Beendigung Quittieren', href: verify_termination_assignment_path(@submitted.id)
     assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
     assert_equal @submitted, AssignmentLog.find_by(assignment_id: @submitted.id).assignment
@@ -117,7 +117,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'there_is_correct_links_on_email_status_column' do
     create :email_template_termination
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_assignments_path
 
     # Assignment has an end-date, but no reminder mailing was created
     click_link 'Beendigungs Email erstellen',
@@ -137,15 +137,19 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     # assert page.has_text? 'Beendigungs-Email wird versendet.'
 
     # Assignment has an end-date, reminder mailing was created and was sent
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' })
+    visit terminated_index_assignments_path
     @un_submitted.reload
     assert page.has_link? 'Übermittelt am ',
       href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
 
-    click_link 'Beendigung Quittieren', href: /assignments\/#{@un_submitted.id}\/verify_termination/
+    click_link 'Beendigung Quittieren', href: /#{@un_submitted.id}\/verify_termination/
     assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
 
-    visit terminated_index_assignments_path(q: { termination_verified_by_id_not_null: 'true' })
+    visit terminated_index_assignments_path
+    click_link 'Quittiert: Unquittiert'
+    click_link 'Quittiert', href: /termination_verified_by_id_not_null/
+    visit current_url
+
     @un_submitted.reload
     assert page.has_text? "Quittiert von #{@un_submitted.termination_verified_by.full_name} am"\
       " #{I18n.l(@un_submitted.termination_verified_at.to_date)}"
