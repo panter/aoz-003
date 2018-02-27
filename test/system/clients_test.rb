@@ -172,6 +172,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'all_needed_actions_are_available_in_the_index' do
+    use_rack_driver
     client = create :client
     social_worker = create :social_worker
     client_department_manager = create :client, user: @department_manager
