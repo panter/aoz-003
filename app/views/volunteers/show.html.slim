@@ -38,20 +38,9 @@ nav.navbar.section-navigation
     li= form_navigation_btn :back, with_row: false unless current_user.volunteer?
 
 - if policy(Volunteer).superadmin_privileges?
-  - if @volunteer.accepted? && @volunteer.import.present?
-    - if @volunteer.user.present?
-      h2.small Importiert
-      p.text-warning Dieses Freiwilligenprofil wurde von Access importiert. Ein Useraccount wurde bereits erstellt.
-    - if @volunteer.user.blank? && @volunteer.import.store['haupt_person']['email'].present?
-      h2.small Import
-      p.text-warning Dieses Freiwilligenprofil wurde von Access importiert.
-      h3 User Account erstellen
-      p
-        'Für die Emailadresse
-        = mail_to "#{@volunteer.import.store['haupt_person']['email']}", @volunteer.import.store['haupt_person']['email']
-        = ' einen '
-        = link_to "Account erstellen",
-            account_volunteer_path(@volunteer), method: :put, class: 'btn btn-default btn-xs'
+  - if @volunteer.import.present?
+    = render 'import_acount_invite', volunteer: @volunteer
+
 
   h2.small= t('checklist')
   .table-responsive

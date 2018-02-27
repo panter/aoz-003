@@ -1,0 +1,17 @@
+h2.small Importiert
+p.text-warning Dieses Freiwilligenprofil wurde von Access importiert.
+- if volunteer.user.present?
+  p.text-warning Ein Useraccount wurde bereits erstellt.
+- elsif volunteer.user.blank? && volunteer.accepted?
+  h3.small User Account erstellen
+  - if volunteer.import.store['haupt_person']['email'].present?
+    p
+      'Für die Emailadresse
+      = mail_to "#{volunteer.import.store['haupt_person']['email']}", volunteer.import.store['haupt_person']['email']
+      = ' einen '
+      = link_to "Account erstellen",
+          account_volunteer_path(volunteer), method: :put, class: 'btn btn-default btn-xs'
+
+  - else
+    = simple_form_for(volunteer, url: account_volunteer_path(volunteer)) do |f|
+      = f.simple_fields_for(:contact) |c|
