@@ -5,7 +5,7 @@ class HauptPerson < Accessor
 
   def sanitize_record(rec)
     rec[:t_Geschlecht] = map_gender(rec[:t_Geschlecht])
-    rec = parse_date_fields(rec, :d_EintrittCH, :d_Geburtsdatum)
+    rec = parse_date_fields(rec, :d_Geburtsdatum)
     rec = parse_int_fields(rec, :b_KlientAOZ, :fk_Land, :pk_Hauptperson, :fk_PLZ)
     rec[:salutation] = salutation(rec[:t_Anrede], rec[:t_Geschlecht])
     rec[:city], rec[:postal_code] = handle_plz(rec[:fk_PLZ])

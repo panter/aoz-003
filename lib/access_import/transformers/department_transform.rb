@@ -20,13 +20,7 @@ class DepartmentTransform < Transformer
     update_timestamps(department, einsatz_ort[:d_MutDatum])
   end
 
-  def import_multiple(einsatz_orte)
-    einsatz_orte.map do |key, einsatz_ort|
-      get_or_create_by_import(key, einsatz_ort)
-    end
-  end
-
-  def import_all(einsatz_orte = nil)
-    import_multiple(einsatz_orte || @einsatz_orte.all)
+  def default_all
+    @einsatz_orte.all
   end
 end

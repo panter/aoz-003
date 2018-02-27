@@ -23,22 +23,23 @@ class GroupOfferTransform < Transformer
   end
 
   def import_multiple(fw_einsaetze)
-    group_assignments = @ac_import.group_assignment_transform.import_all(einsaetze: fw_einsaetze)
-    grouped_group_assignments(group_assignments).map do |_group_offer_title, group_assignments|
+    fetched_gas = @ac_import.group_assignment_transform.import_all(einsaetze: fw_einsaetze)
+    grouped_group_assignments(fetched_gas).map do |_, group_assignments|
       location = group_assignments.first.import.store['freiwilligen_einsatz']['t_EinsatzOrt']
-      discription = group_assignments.map do |group_assignment|
-        group_assignment.import.store['freiwilligen_einsatz']['m_Beschreibung']
-      end.join(";\n")
-      group_offer_assignments = group_assignments.find_all { |ga| ga.group_offer_id.blank? }
-      next if group_offer_assignments.blank?
-      title = group_offer_assignments.first.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
-      get_or_create_by_import(group_offer_assignments, location: location, discription: discription,
-        title: title)
+      offers_assignments = group_assignments.find_all { |ga| ga.group_offer_id.blank? }
+      next if offers_assignments.blank?
+      title = offers_assignments.first.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
+      get_or_create_by_import(
+        offers_assignments, location: location, title: title,
+        discription: group_assignments
+                       .map { |ga| ga.import.store['freiwilligen_einsatz']['m_Beschreibung'] }
+                       .join(";\n")
+      )
     end
   end
 
-  def import_all(fw_einsaetze = nil)
-    import_multiple(fw_einsaetze || @freiwilligen_einsaetze.where_animation_f)
+  def default_all
+    @freiwilligen_einsaetze.where_animation_f
   end
 
   def create_category(group_assignments)

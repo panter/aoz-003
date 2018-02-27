@@ -32,8 +32,8 @@ class HourTransform < Transformer
     import_multiple(@stundenerfassung.where_personen_rolle(personen_rolle_id))
   end
 
-  def import_all(erfassungen = nil)
-    import_multiple(erfassungen || @stundenerfassung.all)
+  def default_all
+    @stundenerfassung.all
   end
 
   def bind_imported_hours_to_dummy_billing_expense
