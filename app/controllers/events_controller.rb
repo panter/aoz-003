@@ -11,7 +11,7 @@ class EventsController < ApplicationController
     @event_volunteer = EventVolunteer.new(event: @event)
     respond_to do |format|
       format.html
-      format.xlsx { render xlsx: 'show', locals: { event: @event } }
+      format.xlsx
     end
   end
 
