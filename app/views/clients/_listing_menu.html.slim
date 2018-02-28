@@ -11,7 +11,7 @@ nav.navbar.section-navigation.hidden-print
   ul.list-inline
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
     - if policy(Client).superadmin_privileges?
-      = enum_filter_dropdown(:acceptance, Client.acceptances)
+      = custom_filter_dropdown 'Affirmation', *Client.acceptance_filters
       = custom_filter_dropdown('Tandem',
         { q: :active, text: 'Aktiv', value: 'true' },
         { q: :inactive, text: 'Inaktiv', value: 'true' })

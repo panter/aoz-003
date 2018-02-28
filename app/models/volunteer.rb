@@ -120,6 +120,7 @@ class Volunteer < ApplicationRecord
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
   scope :not_resigned, (-> { where.not(acceptance: :resigned) })
+  scope :acceptance_scope, ->(scope) { public_send(scope) }
 
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).merge(Assignment.start_before(6.months.ago))
@@ -288,6 +289,17 @@ class Volunteer < ApplicationRecord
     acceptances.keys.map(&:to_sym)
   end
 
+  def self.acceptance_filters
+    scopes = [:not_resigned] + acceptances.keys
+    scopes.map do |scope|
+      {
+        q: :acceptance_scope,
+        value: scope,
+        text: I18n.t("volunteers.acceptance.#{scope}")
+      }
+    end
+  end
+
   def self.first_languages
     ['DE', 'EN', 'FR', 'ES', 'IT', 'AR'].map do |lang|
       [I18nData.languages(I18n.locale)[lang], lang]
@@ -351,7 +363,7 @@ class Volunteer < ApplicationRecord
   end
 
   def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'not_resigned']
+    ['active', 'inactive', 'not_resigned', 'acceptance_scope']
   end
 
   def terminate!
