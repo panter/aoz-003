@@ -76,4 +76,39 @@ class EventsTest < ApplicationSystemTestCase
       assert page.has_text? @volunteer2.full_name
     end
   end
+
+  test 'superadmin can only see volunteers past events on its profile' do
+    @event_volunteer = create :event_volunteer
+    @event.update(event_volunteers: [@event_volunteer], date: 7.days.ago)
+
+    visit volunteer_path(@event_volunteer.volunteer)
+    click_button 'Veranstaltungen'
+
+    within '.volunteer-events-table' do
+      assert page.has_text? @event.title
+      assert page.has_text? 'Einführungsveranstaltung'
+      assert page.has_text? 'Event Department'
+      assert page.has_text? @event.end_time.strftime('%H:%M')
+      assert page.has_text? @event.start_time.strftime('%H:%M')
+      assert page.has_text? @event.date.strftime('%Y-%m-%d')
+      assert page.has_link? 'Show'
+    end
+  end
+
+  test 'future events are not shown on a volunteers profile' do
+    @event_volunteer = create :event_volunteer
+    @event.update(event_volunteers: [@event_volunteer], date: 7.days.from_now)
+
+    visit volunteer_path(@event_volunteer.volunteer)
+    refute page.has_button? 'Veranstaltungen'
+  end
+
+  test 'volunteer does not see own events on its profile' do
+    @event_volunteer = create :event_volunteer
+    @event.update(event_volunteers: [@event_volunteer])
+
+    login_as @event_volunteer
+    visit volunteer_path(@event_volunteer.volunteer)
+    refute page.has_button? 'Veranstaltungen'
+  end
 end
