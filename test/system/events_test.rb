@@ -111,4 +111,24 @@ class EventsTest < ApplicationSystemTestCase
     visit volunteer_path(@event_volunteer.volunteer)
     refute page.has_button? 'Veranstaltungen'
   end
+
+  test 'event pagination' do
+    really_destroy_with_deleted(Event)
+    (1..20).to_a.map do
+      event = create :event
+      event.update(title: 'second_page')
+      event
+    end
+    20.times do
+      create :event
+    end
+    visit events_path
+    first(:link, '2').click
+    visit current_url
+
+    assert page.has_css? '.pagination'
+    Event.order('date desc').paginate(page: 2).each do |event|
+      assert page.has_text? "#{event.title}"
+    end
+  end
 end

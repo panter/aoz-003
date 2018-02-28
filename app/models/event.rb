@@ -13,6 +13,8 @@ class Event < ApplicationRecord
     volunteering: 4, german_class_managers: 5
   }
 
+  scope :date_desc, (-> { order('date desc') })
+
   def self.kind_collection
     kinds.keys.map(&:to_sym)
   end
