@@ -1,19 +1,21 @@
-button.btn.btn-default(data-toggle='collapse' data-target='#events' type='button'  aria-expanded='false' aria-controls='events')
-      = 'Veranstaltungen'
-hr
-#events.collapse
-  .table-responsive
+button.btn.btn-default(data-toggle='collapse' data-target='#volunteer-events' type='button'  aria-expanded='false' aria-controls='events')
+  'Veranstaltungen
+#volunteer-events.collapse
+  .table-responsive.volunteer-events-table
     table.table
       thead
-        th Art
-        th Datum
-        th Zeit
-        th Titel
-        th Departement
-        th
+        tr
+          th Titel
+          th Art
+          th Datum
+          th Zeit
+          th Titel
+          th Departement
+          th
       tbody
-        - events.each do |event|
+        - events.past.each do |event|
           tr
+            td= event.title if event.title
             td= t(".#{event.kind}") if event.kind
             td= l(event.date.to_date) if event.date
             td
@@ -23,3 +25,4 @@ hr
             td= event.department.contact.last_name if event.department
             td.index-action-cell.hidden-print
               span= link_to t_action(:show), event_path(event)
+hr

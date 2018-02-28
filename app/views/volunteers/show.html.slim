@@ -192,8 +192,7 @@ h2.small= t('.availability')
   h2.small= t('.old_group_assignments')
   = render 'group_assignments/volunteer_group_assignments_logs', group_assignment_logs: @volunteer.group_assignment_logs
 
-- if @volunteer.events.any?
-  h3#events Veranstaltungen
+- if policy(Event).show? && @volunteer.events.past.any?
   = render 'events/volunteer_events', events: @volunteer.events
 
 nav.navbar.section-navigation

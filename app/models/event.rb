@@ -16,4 +16,6 @@ class Event < ApplicationRecord
   def self.kind_collection
     kinds.keys.map(&:to_sym)
   end
+
+  scope :past, (-> { date_before(:date, Time.zone.today) })
 end
