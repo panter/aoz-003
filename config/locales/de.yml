@@ -82,6 +82,8 @@ de:
         <<: *id-kinds-event
       show:
         <<: *id-kinds-event
+      volunteer_events:
+        <<: *id-kinds-event
     gender_request: &id-gender_requests
       all: Alle
       man: Mann
@@ -1093,6 +1095,8 @@ en:
       index:
         <<: *id-kinds-event
       show:
+        <<: *id-kinds-event
+      volunteer_events:
         <<: *id-kinds-event
     gender_request: &id-gender_requests
       all: All
