@@ -114,17 +114,20 @@ class EventsTest < ApplicationSystemTestCase
 
   test 'event pagination' do
     really_destroy_with_deleted(Event)
+
     Event.per_page.times do
-      event = create :event
-      event.update(title: 'first_page')
+      create :event, title: 'first_page', date: 1.day.ago
+      create :event, title: 'second_page', date: 1.week.ago
     end
-    Event.per_page.times do
-      create :event
-    end
+
     visit events_path
+
     assert page.has_text? 'first_page'
+    refute page.has_text? 'second_page'
 
     first(:link, '2').click
+
+    assert page.has_text? 'second_page'
     refute page.has_text? 'first_page'
   end
 end
