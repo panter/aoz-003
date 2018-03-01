@@ -9,7 +9,7 @@ class SessionsTest < ApplicationSystemTestCase
     visit root_path
 
     assert page.has_current_path? new_user_session_path
-    assert page.has_text? 'You need to sign in or sign up before continuing.'
+    assert page.has_text? 'Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.'
   end
 
   test 'sign in with valid credentials' do
@@ -18,10 +18,10 @@ class SessionsTest < ApplicationSystemTestCase
     assert page.has_field? 'Email'
 
     fill_in 'Email', with: @user.email
-    fill_in 'Password', with: 'asdfasdf'
-    click_button 'Log in'
+    fill_in 'Passwort', with: 'asdfasdf'
+    click_button 'Anmelden'
 
-    assert page.has_text? 'Signed in successfully.'
+    assert page.has_text? 'Erfolgreich angemeldet.'
     within '.navbar-top' do
       assert page.has_link? I18n.t("role.#{@user.role}"), href: '#'
     end
@@ -37,6 +37,6 @@ class SessionsTest < ApplicationSystemTestCase
     click_link 'Abmelden'
 
     assert page.has_current_path? new_user_session_path
-    assert page.has_text? 'You need to sign in or sign up before continuing.'
+    assert page.has_text? 'Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.'
   end
 end

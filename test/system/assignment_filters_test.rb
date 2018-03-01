@@ -31,7 +31,7 @@ class AssignmentFiltersTest < ApplicationSystemTestCase
     end
     within '.section-navigation' do
       click_link 'Status: Inaktiv'
-      click_link 'All'
+      click_link 'Alle'
     end
     visit current_url
     within 'tbody' do

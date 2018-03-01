@@ -60,8 +60,8 @@ class ReminderMailingTest < ActiveSupport::TestCase
     end
 
     refute reminder_mailing.valid?
-    assert reminder_mailing.errors.messages[:subject].include? "can't be blank"
-    assert reminder_mailing.errors.messages[:body].include? "can't be blank"
+    assert_equal ['darf nicht leer sein'], reminder_mailing.errors[:subject]
+    assert_equal ['darf nicht leer sein'], reminder_mailing.errors[:body]
     reminder_mailing.assign_attributes({
       subject: 'Erinnerung fuer %{Einsatz}',
       body: 'Hallo %{Anrede} %{Name}\r\n\r\n\r\n\r\n%{Einsatz} gestarted am %{EinsatzStart}'

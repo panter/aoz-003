@@ -10,9 +10,9 @@ FactoryBot.define do
     active true
 
     trait :fakered do
-      subject { Faker::Hobbit.quote }
+      subject { FFaker::Lorem.sentence }
       body do
-        "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
+        "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
           '%{FeedbackLink}'
       end
     end
@@ -20,7 +20,7 @@ FactoryBot.define do
     trait :trial do
       kind { 1 }
       body do
-        "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
+        "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
           '%{FeedbackLink}'
       end
       subject '%{Anrede} %{Name}'
@@ -29,7 +29,7 @@ FactoryBot.define do
     trait :half_year do
       kind { 3 }
       body do
-        "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
+        "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
           '%{FeedbackLink}'
       end
       subject '%{Anrede} %{Name}'
@@ -38,7 +38,7 @@ FactoryBot.define do
     trait :termination do
       kind { 2 }
       body do
-        "%{Anrede} %{Name}\r\n\r\n#{Faker::HeyArnold.quote}\r\n\r\n"
+        "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}\r\n\r\n"
       end
       subject '%{Anrede} %{Name}'
     end

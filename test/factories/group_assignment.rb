@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :group_assignment do
-    period_start { Faker::Date.between(200.days.ago, 5.days.ago) }
+    period_start { FFaker::Time.between(200.days.ago, 5.days.ago) }
     period_end { nil }
 
     trait :leading do

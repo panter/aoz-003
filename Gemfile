@@ -66,7 +66,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'factory_bot_rails'
-  gem 'faker'
+  gem 'ffaker'
   gem 'listen'
   gem 'pry-byebug'
   gem 'pry-rails'

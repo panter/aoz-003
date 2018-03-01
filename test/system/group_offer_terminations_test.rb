@@ -18,12 +18,12 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     click_link 'Beenden', href: initiate_termination_group_offer_path(@group_offer)
     assert page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     assert page.has_text? "#{@group_assignment1.volunteer.full_name} "\
-      "Member #{I18n.l(@group_assignment1.period_start)}"
+      "Mitglied #{I18n.l(@group_assignment1.period_start)}"
     assert page.has_text? "#{@group_assignment2.volunteer.full_name} "\
-      "Responsible #{I18n.l(@group_assignment2.period_start)}"
+      "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
     assert page.has_text? 'Um das Gruppenangebot zu beenden, müssen erst alle zugehörigen '\
       'Gruppeneinsätze beendet sein.'
-    assert page.has_field? 'Period end', disabled: true
+    assert page.has_field? 'Angebotsenddatum', disabled: true
     assert page.has_button? 'Gruppenangebots Ende setzen', disabled: true
   end
 
@@ -34,7 +34,7 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
       with: Time.zone.today.to_s
     click_button 'Jetzt alle Einsätze auf Enddatum beenden'
     assert page.has_text? 'Gruppeneinsätze wurden beendet.'
-    assert page.has_field? 'Period end', with: Time.zone.today.to_s
+    assert page.has_field? 'Angebotsenddatum', with: Time.zone.today.to_s
     click_button 'Gruppenangebots Ende setzen'
     assert page.has_text? 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
   end
@@ -49,11 +49,11 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     refute page.has_text? "#{@group_assignment1.volunteer.full_name} "\
       "Member #{I18n.l(@group_assignment1.period_start)}"
     assert page.has_text? "#{@group_assignment2.volunteer.full_name} "\
-      "Responsible #{I18n.l(@group_assignment2.period_start)}"
+      "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
     click_link 'Bearbeiten', href: edit_group_assignment_path(@group_assignment2,
       redirect_to: :initiate_termination)
     fill_in id: 'group_assignment_period_end', with: Time.zone.today.to_s
-    click_button 'Update Group assignment'
+    click_button 'Begleitung aktualisieren'
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     refute page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     click_button 'Gruppenangebots Ende setzen'

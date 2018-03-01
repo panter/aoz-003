@@ -15,10 +15,10 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
     mailing_volunteer = reminder_mailing.reminder_mailing_volunteers.first
     assert mailing_volunteer.process_template[:body].include? @volunteer.contact.natural_name
     assert mailing_volunteer.process_template[:subject].include?(
-      I18n.t("salutation.#{@volunteer.salutation}", locale: :de)
+      I18n.t("salutation.#{@volunteer.salutation}")
     )
     assert mailing_volunteer.process_template[:body].include?(
-      I18n.l(@assignment_probation.period_start, locale: :de)
+      I18n.l(@assignment_probation.period_start)
     )
     assert mailing_volunteer.process_template[:body].include?(
       'Tandem mit ' +

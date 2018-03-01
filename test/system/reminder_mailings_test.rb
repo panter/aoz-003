@@ -46,7 +46,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     first('input[type="submit"]').click
 
-    assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
+    assert page.has_text? 'Erinnerungs-Mailing wurde erfolgreich erstellt.'
     assert page.has_text? 'Art Halbjährlich'
     assert page.has_text? 'Status Nicht versandt'
 
@@ -113,7 +113,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     first('input[type="submit"]').click
 
-    assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
+    assert page.has_text? 'Erinnerungs-Mailing wurde erfolgreich erstellt.'
     assert page.has_text? 'Art Probezeit'
     assert page.has_text? 'Status Nicht versandt'
 
@@ -152,7 +152,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     page.find('#assignment_period_end').click
     page.find('.month', text: 'Jan').click
     first('.day',  exact_text: '17').click
-    click_button 'Update Assignment'
+    click_button 'Begleitung aktualisieren'
 
     assert page.has_current_path? terminated_index_assignments_path(
       q: { termination_verified_by_id_null: 'true' }
@@ -169,7 +169,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     first('input[type="submit"]').click
 
-    assert page.has_text? 'Erinnerungs-Mailing was successfully created.'
+    assert page.has_text? 'Erinnerungs-Mailing wurde erfolgreich erstellt.'
     assert page.has_text? 'Art Beendigung'
     assert page.has_text? 'Status Nicht versandt'
 

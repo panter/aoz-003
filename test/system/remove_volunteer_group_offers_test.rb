@@ -15,13 +15,13 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     visit group_offer_path(@group_offer)
     within '.assignments-table' do
       assert page.has_text? "#{@ga1.volunteer.contact.full_name} "\
-        "#{@ga1.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga1.period_start)}"
+        "#{@ga1.responsible ? 'Verantwortliche/r' : 'Mitglied'} #{I18n.l(@ga1.period_start)}"
       assert page.has_link? 'Bearbeiten', href: edit_group_assignment_path(@ga1, redirect_to: :show)
       assert page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga1, redirect_to: :show)
       refute page.has_link? 'Beendigungsformular an Freiwillige/n',
         href: polymorphic_path([@ga1, ReminderMailing], action: :new_termination)
       assert page.has_text? "#{@ga2.volunteer.contact.full_name} "\
-        "#{@ga2.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga2.period_start)}"
+        "#{@ga2.responsible ? 'Verantwortliche/r' : 'Mitglied'} #{I18n.l(@ga2.period_start)}"
       assert page.has_link? 'Bearbeiten', href: edit_group_assignment_path(@ga2, redirect_to: :show)
       assert page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga2, redirect_to: :show)
     end
@@ -36,7 +36,7 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     visit group_offer_path(@group_offer)
     within '.assignments-table' do
       assert page.has_text? "#{@ga1.volunteer.contact.full_name} "\
-        "#{@ga1.responsible ? 'Responsible' : 'Member'} #{I18n.l(@ga1.period_start)}"\
+        "#{@ga1.responsible ? 'Verantwortliche/r' : 'Mitglied'} #{I18n.l(@ga1.period_start)}"\
         " #{I18n.l(@ga1.period_end)} "
       refute page.has_link? 'Heute beenden', href: set_end_today_group_assignment_path(@ga1, redirect_to: :show)
       assert page.has_link? 'Beendigungsformular an Freiwillige/n',
@@ -48,14 +48,14 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     login_as @superadmin
     visit group_offer_path(@group_offer)
     within '.assignments-table' do
-      assert page.has_text? 'Responsible'
+      assert page.has_text? 'Verantwortliche/r'
       click_link 'Bearbeiten', href: edit_group_assignment_path(@ga1, redirect_to: :show)
     end
-    uncheck 'Responsible'
-    click_button 'Update Group assignment'
-    assert page.has_text? 'Group assignment was successfully updated.'
+    uncheck 'Verantwortliche/r'
+    click_button 'Begleitung aktualisieren'
+    assert page.has_text? 'Begleitung wurde erfolgreich geändert.'
     within '.assignments-table' do
-      refute page.has_text? 'Responsible'
+      refute page.has_text? 'Verantwortliche/r'
     end
   end
 end

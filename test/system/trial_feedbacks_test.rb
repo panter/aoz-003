@@ -35,7 +35,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     end
     click_link 'Profil anzeigen'
     within '.assignments-table' do
-      click_link 'Probezeit Feedback index'
+      click_link 'Probezeit Feedback Liste'
     end
     refute page.has_text? 'author_superadmin_assignment_feedback'
     assert page.has_text? 'author_volunteer_assignment_feedback'
@@ -50,7 +50,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     end
     click_link 'Profil anzeigen'
     within '.group-assignments-table' do
-      click_link 'Probezeit Feedback index'
+      click_link 'Probezeit Feedback Liste'
     end
     refute page.has_text? 'author_superadmin_group_offer_feedback'
     assert page.has_text? 'author_volunteer_group_offer_feedback'
@@ -62,7 +62,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     visit polymorphic_path([@volunteer, @assignment, @assignment_volunteer_feedback])
     click_link 'Zurück'
     within '.assignments-table' do
-      click_link 'Probezeit Feedback index'
+      click_link 'Probezeit Feedback Liste'
     end
     refute page.has_text? 'author_superadmin_assignment_feedback'
     assert page.has_text? 'author_volunteer_assignment_feedback'
@@ -110,7 +110,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
       volunteer: create(:volunteer, user: create(:user_volunteer))
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_assignment, TrialFeedback])
-    assert page.has_text? 'You are not authorized to perform this action.'
+    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
   end
 
   test 'volunteer_can_create_only_their_trial_feedbacks_on_group_offer' do
@@ -121,7 +121,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
       ]
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_group_offer, TrialFeedback])
-    assert page.has_text? 'You are not authorized to perform this action.'
+    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
   end
 
   test 'create_new_assignment_trial_feedback_as_volunteer' do
@@ -147,30 +147,30 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
   def play_create_new_assignment_feedback
     visit volunteer_path(@volunteer)
     within '.assignments-table' do
-      click_link 'New Probezeit Feedback'
+      click_link 'Probezeit Feedback erfassen'
     end
     fill_in 'Text', with: 'Probezeit assignment feedback text'
-    click_button 'Create Probezeit Feedback'
-    assert page.has_text? 'Probezeit Feedback was successfully created.'
+    click_button 'Probezeit Feedback erfassen'
+    assert page.has_text? 'Probezeit Feedback wurde erfolgreich erstellt.'
     within '.assignments-table' do
-      click_link 'Probezeit Feedback index'
+      click_link 'Probezeit Feedback Liste'
     end
-    click_link 'Show'
+    click_link 'Anzeigen'
     assert page.has_text? 'Probezeit assignment feedback text'
   end
 
   def play_create_new_group_offer_feedback
     visit volunteer_path(@volunteer)
     within '.group-assignments-table' do
-      click_link 'New Probezeit Feedback'
+      click_link 'Probezeit Feedback erfassen'
     end
     fill_in 'Text', with: 'Probezeit group assignment feedback text'
-    click_button 'Create Probezeit Feedback'
-    assert page.has_text? 'Probezeit Feedback was successfully created.'
+    click_button 'Probezeit Feedback erfassen'
+    assert page.has_text? 'Probezeit Feedback wurde erfolgreich erstellt.'
     within '.group-assignments-table' do
-      click_link 'Probezeit Feedback index'
+      click_link 'Probezeit Feedback Liste'
     end
-    click_link 'Show'
+    click_link 'Anzeigen'
     assert page.has_text? 'Probezeit group assignment feedback text'
   end
 end

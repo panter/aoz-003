@@ -9,20 +9,20 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
   test 'superadmin can create new group offer' do
     login_as @user
     visit group_offers_path
-    click_link 'Group offer categories'
-    assert page.has_text? 'Group offer categories'
-    click_link 'New Group offer category'
+    click_link 'Gruppenangebot Kategorien'
+    assert page.has_text? 'Gruppenangebot Kategorien'
+    click_link 'Gruppenangebot Kategorie erfassen'
 
-    fill_in 'Category name', with: 'Nähen'
+    fill_in 'Name', with: 'Nähen'
     assert page.has_checked_field?('group_offer_category_category_state_active')
-    click_button 'Create Group offer category'
+    click_button 'Gruppenangebot Kategorie erfassen'
 
-    assert page.has_text? 'Group offer category was successfully created.'
+    assert page.has_text? 'Gruppenangebot Kategorie wurde erfolgreich erstellt.'
 
-    assert page.has_text? 'Category name'
+    assert page.has_text? 'Name'
     assert page.has_text? 'Nähen'
-    assert page.has_text? 'Category state'
-    assert page.has_text? 'Active'
+    assert page.has_text? 'Status'
+    assert page.has_text? 'Aktiv'
   end
 
   test 'superadmin can update a category' do
@@ -31,12 +31,12 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
     visit group_offer_categories_path
 
     assert page.has_text? 'Schwimmen'
-    click_link 'Edit'
-    fill_in 'Category name', with: 'Schwimmkurs für Anfänger'
+    click_link 'Bearbeiten'
+    fill_in 'Name', with: 'Schwimmkurs für Anfänger'
     page.choose('group_offer_category_category_state_inactive')
-    click_button 'Update Group offer category'
-    assert page.has_text? 'Group offer category was successfully updated.'
+    click_button 'Gruppenangebot Kategorie aktualisieren'
+    assert page.has_text? 'Gruppenangebot Kategorie wurde erfolgreich geändert.'
     assert page.has_text? 'Schwimmkurs für Anfänger'
-    assert page.has_text? 'Inactive'
+    assert page.has_text? 'Inaktiv'
   end
 end

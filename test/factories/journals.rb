@@ -7,7 +7,7 @@ FactoryBot.define do
     category { Journal::CATEGORIES.sample }
 
     trait :faker_text do
-      body { Faker::Hipster.paragraph }
+      body { FFaker::Lorem.paragraph }
     end
 
     factory :journal_seed, traits: [:faker_text]

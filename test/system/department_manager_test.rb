@@ -46,10 +46,10 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     login_as department_manager_without_department
     visit group_offers_path
     assert page.has_text? group_offer.title
-    click_link 'Edit'
-    fill_in 'Title', with: 'new title'
-    click_button 'Update Group offer'
-    assert page.has_text? 'Group offer was successfully updated.'
+    click_link 'Bearbeiten'
+    fill_in 'Bezeichnung', with: 'new title'
+    click_button 'Gruppenangebot aktualisieren'
+    assert page.has_text? 'Gruppenangebot wurde erfolgreich geändert.'
     assert page.has_text? 'new title'
   end
 
@@ -62,7 +62,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     assert page.has_link? group_offer.title
     assert page.has_link? assignment.client.contact.full_name
     refute page.has_link? 'Löschen'
-    refute page.has_link? 'New Feedback'
-    refute page.has_link? 'Feedback index'
+    refute page.has_link? 'Feedback erfassen'
+    refute page.has_link? 'Feedback Liste'
   end
 end

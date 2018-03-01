@@ -199,7 +199,7 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
 
   def create_group_assignments(start_date = nil, end_date = nil)
     volunteer = create :volunteer
-    volunteer.contact.update(first_name: Faker::Name.first_name)
+    volunteer.contact.update(first_name: FFaker::Name.first_name)
     group_offer = create :group_offer, necessary_volunteers: 1
     GroupAssignment.create!(volunteer: volunteer, group_offer: group_offer,
       period_start: start_date, period_end: end_date)

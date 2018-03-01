@@ -3,10 +3,10 @@ FactoryBot.define do
     association :feedbackable, factory: :assignment
     volunteer
     association :author, factory: :user
-    goals { Faker::Lorem.words(4).join(', ') }
-    achievements { Faker::Lorem.sentence }
-    future { Faker::Lorem.sentence }
-    comments { Faker::Lorem.paragraph }
+    goals { FFaker::Lorem.words(4).join(', ') }
+    achievements { FFaker::Lorem.sentence }
+    future { FFaker::Lorem.sentence }
+    comments { FFaker::Lorem.paragraph }
     conversation false
     after(:build) do |feedback|
       if feedback.volunteer.present? && feedback.feedbackable.blank?
