@@ -4,7 +4,7 @@ class VolunteersController < ApplicationController
   include ContactAttributes
   include VolunteerAttributes
 
-  before_action :set_volunteer, only: [:show, :edit, :update, :terminate]
+  before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account]
 
   def index
     authorize Volunteer
@@ -78,6 +78,23 @@ class VolunteersController < ApplicationController
     @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @seeking_clients = @q.result.paginate(page: params[:page])
+  end
+
+  def account
+    @volunteer.contact.primary_email = volunteer_params[:contact_attributes][:primary_email]
+    if @volunteer.save
+      invite_volunteer_user
+      redirect_back(fallback_location: volunteer_path(@volunteer),
+        notice: 'Freiwillige/r erhält eine Accountaktivierungs-Email.')
+    elsif @volunteer.contact.errors.messages[:primary_email]
+      redirect_to @volunteer, notice: {
+        message: 'Die Mailadresse ist scheinbar nicht gültig',
+        model_message: 'Für einen Useraccount wird eine gültige Email benötigt.',
+        action_link: { text: 'Mailadresse konfigurieren', path: edit_volunteer_path(@volunteer) }
+      }
+    else
+      redirect_to @volunteer, notice: 'Account erstellen fehlgeschlagen!'
+    end
   end
 
   private

@@ -20,4 +20,16 @@ class Import < ApplicationRecord
   def self.find_by_hauptperson(hauptperson_id)
     with_deleted.find_by('store @> ?', { haupt_person: { pk_Hauptperson: hauptperson_id } }.to_json)
   end
+
+  def volunteer?
+    importable_type == 'Volunteer'
+  end
+
+  def email
+    @email ||= store['haupt_person']['email'] if volunteer?
+  end
+
+  def email_valid?
+    @email_valid ||= email.match(Devise.email_regexp) if volunteer? && email.present?
+  end
 end
