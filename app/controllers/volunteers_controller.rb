@@ -81,8 +81,7 @@ class VolunteersController < ApplicationController
   end
 
   def account
-    @volunteer.contact.assign_attributes(validate_email_format: true,
-      primary_email: volunteer_params[:contact_attributes][:primary_email])
+    @volunteer.contact.primary_email = volunteer_params[:contact_attributes][:primary_email]
     if @volunteer.save
       invite_volunteer_user
       redirect_back(fallback_location: volunteer_path(@volunteer),
