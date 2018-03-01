@@ -27,7 +27,9 @@ class VolunteersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @volunteer_events = @volunteer.events.past
+  end
 
   def new
     @volunteer = Volunteer.new

@@ -13,16 +13,16 @@ button.btn.btn-default(data-toggle='collapse' data-target='#volunteer-events' ty
           th Departement
           th
       tbody
-        - events.past.each do |event|
+        - events.each do |event|
           tr
-            td= event.title if event.title
+            td= event.title
             td= t(".#{event.kind}") if event.kind
-            td= l(event.date.to_date) if event.date
+            td= l(event.date) if event.date
             td
               = "#{(event.start_time.strftime('%H:%M'))} - " if event.start_time
               = "#{(event.end_time.strftime('%H:%M'))}" if event.end_time
             td= event.title if event.title
-            td= event.department.contact.last_name if event.department
+            td= event.department&.contact&.last_name
             td.index-action-cell.hidden-print
               span= link_to t_action(:show), event_path(event)
 hr
