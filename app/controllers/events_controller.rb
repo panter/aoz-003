@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   def index
     authorize Event
-    @q = Event.date_desc.ransack(params[:q])
+    @q = Event.ransack(params[:q])
     @q.sorts = ['date desc'] if @q.sorts.empty?
     @events = @q.result.paginate(page: params[:page])
   end

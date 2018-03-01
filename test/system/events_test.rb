@@ -114,21 +114,17 @@ class EventsTest < ApplicationSystemTestCase
 
   test 'event pagination' do
     really_destroy_with_deleted(Event)
-    (1..20).to_a.map do
+    Event.per_page.times do
       event = create :event
-      event.update(title: 'second_page')
-      event
+      event.update(title: 'first_page')
     end
-    20.times do
+    Event.per_page.times do
       create :event
     end
     visit events_path
-    first(:link, '2').click
-    visit current_url
+    assert page.has_text? 'first_page'
 
-    assert page.has_css? '.pagination'
-    Event.order('date desc').paginate(page: 2).each do |event|
-      assert page.has_text? "#{event.title}"
-    end
+    first(:link, '2').click
+    refute page.has_text? 'first_page'
   end
 end
