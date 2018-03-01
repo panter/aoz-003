@@ -8,7 +8,9 @@ class EventVolunteersController < ApplicationController
     )
     if @event.save
       redirect_to @event, notice: 'Teilnehmer/in erfolgreich hinzugefügt.'
-    else
+    elsif volunteer_is_not_twice_in_same_event
+      redirect_to @event, notice: 'Freiwillige/r wurde bereits zu dieser Veranstaltung hinzugefügt.'
+    elsif
       render 'events/show'
     end
   end
@@ -27,6 +29,10 @@ class EventVolunteersController < ApplicationController
   def set_event
     @event = Event.find(params[:event_id])
     authorize EventVolunteer
+  end
+
+  def volunteer_is_not_twice_in_same_event
+    !(@event.volunteers.include? @volunteer)
   end
 
   def event_volunteer_params

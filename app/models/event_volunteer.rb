@@ -4,6 +4,8 @@ class EventVolunteer < ApplicationRecord
 
   delegate :intro_course?, to: :event
 
+  validates :volunteer_id, uniqueness: { scope: :event_id }
+
   belongs_to :event
   belongs_to :volunteer
   belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'event_volunteers'
