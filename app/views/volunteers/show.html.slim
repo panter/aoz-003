@@ -39,7 +39,7 @@ nav.navbar.section-navigation
 
 - if policy(Volunteer).superadmin_privileges?
   - if @volunteer.import.present?
-    = render 'import_acount_invite', volunteer: @volunteer
+    = render 'import_account_invite', volunteer: @volunteer
 
 
   h2.small= t('checklist')

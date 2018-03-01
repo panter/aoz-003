@@ -4,14 +4,19 @@ p.text-warning Dieses Freiwilligenprofil wurde von Access importiert.
   p.text-warning Ein Useraccount wurde bereits erstellt.
 - elsif volunteer.user.blank? && volunteer.accepted?
   h3.small User Account erstellen
-  - if volunteer.import.store['haupt_person']['email'].present?
-    p
-      'Für die Emailadresse
-      = mail_to "#{volunteer.import.store['haupt_person']['email']}", volunteer.import.store['haupt_person']['email']
-      = ' einen '
-      = link_to "Account erstellen",
-          account_volunteer_path(volunteer), method: :put, class: 'btn btn-default btn-xs'
-
+  - if volunteer.import.email_valid?
+    p Für die Emailadresse #{mail_to "#{volunteer.import.email}", volunteer.import.email} einen Account erstellen
+  - elsif volunteer.import.email.present?
+      p.text-danger Scheinbar ist die importierte Mailadresse nicht gültig.
   - else
-    = simple_form_for(volunteer, url: account_volunteer_path(volunteer)) do |f|
-      = f.simple_fields_for(:contact) |c|
+    p.text-warning Es wird eine gültige Emailadresse des Freiwilligen benötigt, um einen Useraccount zu erstellen.
+
+  p Bitte stellen Sie sicher das die importierte Mailadresse des Freiwilligen korrekt ist.
+  = simple_form_for(volunteer, url: account_volunteer_path(volunteer), method: :put) do |f|
+    .row
+      = f.simple_fields_for(:contact) do |c|
+        .form-group.col-xs-12.col-md-4
+          = c.label :primary_email
+          = c.input_field :primary_email, value: volunteer.import.email_valid? ? volunteer.import.email : '',
+            class: 'form-control'
+    = f.button :submit, value: 'Account mit angegebener Email erstellen'

@@ -82,9 +82,11 @@ class VolunteersController < ApplicationController
 
   def account
     @volunteer.contact.assign_attributes(validate_email_format: true,
-      primary_email: @volunteer.import.store['haupt_person']['email'])
+      primary_email: volunteer_params[:contact_attributes][:primary_email])
     if @volunteer.save
       invite_volunteer_user
+      redirect_back(fallback_location: volunteer_path(@volunteer),
+        notice: 'Freiwillige/r erhält eine Accountaktivierungs-Email.')
     elsif @volunteer.contact.errors.messages[:primary_email].any?
       redirect_to @volunteer, notice: {
         message: 'Die Mailadresse ist scheinbar nicht gültig',

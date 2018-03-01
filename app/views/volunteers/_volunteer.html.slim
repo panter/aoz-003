@@ -14,8 +14,13 @@ tr
   td = volunteer.expectations
   td = volunteer.interests
   - if policy(Volunteer).show_acceptance?
-    td.button-acceptance = link_to t(".acceptance.#{volunteer.acceptance}"), '#',
-      class: "btn btn-xs btn-acceptance-#{volunteer.acceptance}"
+    td.button-acceptance.index-action-cell
+      = link_to t(".acceptance.#{volunteer.acceptance}"), '#',
+        class: "btn btn-xs btn-acceptance-#{volunteer.acceptance}"
+      - if !volunteer.external && volunteer.user.blank?
+        span Kein Login
+        - if volunteer.import.present?
+          span Importiert
   td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
   td
     - if volunteer.self_applicant?
