@@ -87,7 +87,7 @@ class VolunteersController < ApplicationController
       invite_volunteer_user
       redirect_back(fallback_location: volunteer_path(@volunteer),
         notice: 'Freiwillige/r erhält eine Accountaktivierungs-Email.')
-    elsif @volunteer.contact.errors.messages[:primary_email].any?
+    elsif @volunteer.contact.errors.messages[:primary_email]
       redirect_to @volunteer, notice: {
         message: 'Die Mailadresse ist scheinbar nicht gültig',
         model_message: 'Für einen Useraccount wird eine gültige Email benötigt.',

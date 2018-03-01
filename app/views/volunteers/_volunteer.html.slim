@@ -17,9 +17,9 @@ tr
     td.button-acceptance.index-action-cell
       = link_to t(".acceptance.#{volunteer.acceptance}"), '#',
         class: "btn btn-xs btn-acceptance-#{volunteer.acceptance}"
-      - if !volunteer.external && volunteer.user.blank?
+      - if !volunteer.external && !volunteer.user
         span Kein Login
-        - if volunteer.import.present?
+        - if volunteer.import
           span Importiert
   td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
   td

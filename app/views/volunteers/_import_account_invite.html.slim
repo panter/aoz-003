@@ -1,8 +1,8 @@
 h2.small Importiert
 p.text-warning Dieses Freiwilligenprofil wurde von Access importiert.
-- if volunteer.user.present?
+- if volunteer.user
   p.text-warning Ein Useraccount wurde bereits erstellt.
-- elsif volunteer.user.blank? && volunteer.accepted?
+- elsif !volunteer.user && volunteer.accepted?
   h3.small User Account erstellen
   - if volunteer.import.email_valid?
     p Für die Emailadresse #{mail_to "#{volunteer.import.email}", volunteer.import.email} einen Account erstellen
