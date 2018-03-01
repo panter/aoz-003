@@ -6,12 +6,6 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
     login_as @superadmin
   end
 
-  test 'xlsx file is downloadable' do
-    10.times { create :assignment }
-    get assignments_url(format: :xlsx)
-    assert_equal Mime[:xlsx], response.content_type
-  end
-
   test 'xlsx files columns and cells are correct' do
     assignment = create :assignment, period_start: 3.months.ago, period_end: nil
     wb = get_xls_from_response(assignments_url(format: :xlsx))

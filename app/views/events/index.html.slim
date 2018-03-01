@@ -22,10 +22,10 @@ h1 Veranstaltungen
           td= event.title if event.title
           td= event.department&.contact&.last_name
           td.index-action-cell.hidden-print
-            span= link_to t_action(:show), event_path(event)
-            span= link_to t_action(:edit), edit_event_path(event)
-            spam= link_to t_action(:download), event_path(event, format: :xlsx)
-            span= link_to t_action(:delete), event_path(event), confirm_deleting(event)
+            = link_to t_action(:show), event_path(event)
+            = link_to t_action(:edit), edit_event_path(event)
+            = link_to t_action(:download), event_path(event, format: :xlsx)
+            = link_to t_action(:delete), event_path(event), confirm_deleting(event)
 
 = form_navigation_btn :new
 = form_navigation_btn :back

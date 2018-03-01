@@ -22,11 +22,6 @@ class UsersXlsxExportTest < ActionDispatch::IntegrationTest
     assert_xls_cols_equal(wb, row, 7, subject_user.email)
   end
 
-  test 'xlsx file is downloadable' do
-    get users_url(format: :xlsx)
-    assert_equal Mime[:xlsx], response.content_type
-  end
-
   test 'filtering volunteer users has only volunteer in xls' do
     wb = get_xls_from_response(users_url(format: :xlsx, q: { role_eq: 'volunteer' }))
     assert_user_xls_row(wb, @volunteer.user, 2)

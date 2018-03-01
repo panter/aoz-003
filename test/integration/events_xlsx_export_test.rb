@@ -17,13 +17,7 @@ class EventsXlsxExportTest < ActionDispatch::IntegrationTest
     get event_url(@event, format: :xlsx)
   end
 
-  test 'xlsx file is downloadable' do
-    assert response.success?
-    assert_equal Mime[:xlsx], response.content_type
-  end
-
   test 'xlsx files has the right columns' do
-    assert response.success?
     wb = get_xls_from_response(event_url(@event, format: :xlsx))
     assert_xls_cols_equal(wb, 1, 0, 'Titel', 'Juch Besuchstag')
     assert_xls_cols_equal(wb, 2, 0, 'Art', 'Einführungsveranstaltung')
