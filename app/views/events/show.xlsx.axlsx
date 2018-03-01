@@ -14,63 +14,52 @@ standard_format = wb.styles.add_style alignment: { wrap_text: true, horizontal: 
 date_format = wb.styles.add_style alignment: { horizontal: :left, vertical: :top}, format_code: 'dd.mm.yyyy', width: :auto_fit
 time_format = wb.styles.add_style alignment: { horizontal: :left, vertical: :top}, format_code: 'hh:mm', width: :auto_fit
 
-volunteer_cell_types = [
-  :string,          # 00
-  :string,          # 01
-  :string,          # 02
-  :string,          # 03
-  :string,          # 04
-  :integer,         # 05
-]
-
-volunteer_cell_styles = [
-  standard_format,  # 00
-  standard_format,  # 01
-  date_format,      # 02
-  standard_format,  # 03
-  standard_format,  # 04
-  standard_format,  # 05
-]
+row_options = {
+  types: [
+      :string,          # 00
+      :string,          # 01
+      :string,          # 02
+      :string,          # 03
+      :string,          # 04
+      :integer,         # 05
+    ],
+  style: [
+      standard_format,  # 00
+      standard_format,  # 01
+      date_format,      # 02
+      standard_format,  # 03
+      standard_format,  # 04
+      standard_format,  # 05
+    ]
+}
 
 wb.add_worksheet(name: 'Veranstaltung') do |sheet|
-  total_volunteers = @event.volunteers.count if @event.volunteers.any?
-  title = @event.title if @event.title?
-  kind = t(".#{@event.kind}") if @event.kind?
-  department = @event.department.contact.last_name if @event.department_id?
-  start_time = l(@event.start_time, format: :time) if @event.start_time?
-  end_time = l(@event.end_time, format: :time) if @event.end_time?
-  date = l(@event.date) if @event.date?
-  description = @event.description if @event.description?
-  sheet.add_row(['Titel', title],types: :string, style: [col_header, standard_format])
-  sheet.add_row(['Art', kind], types: :string, style: [col_header, standard_format])
-  sheet.add_row(['Ort', department], types: :string, style: [col_header, standard_format])
-  sheet.add_row(['Startzeit', start_time], types: :string, style: [col_header, time_format])
-  sheet.add_row(['Endzeit', end_time], types: :string, style: [col_header, time_format])
-  sheet.add_row(['Datum', date], types: :string, style: [col_header, date_format])
-  sheet.add_row(['Beschreibung', description], types: :string, style: [col_header, standard_format], height: 200)
-  sheet.add_row
-  sheet.add_row
-  sheet.add_row
+  sheet.add_row(['Titel', @event.title],types: :string, style: [col_header, standard_format])
+  sheet.add_row(['Art', @event.t_enum(:kind)], types: :string, style: [col_header, standard_format])
+  sheet.add_row(['Ort', @event.department&.contact&.last_name], types: :string, style: [col_header, standard_format])
+  sheet.add_row(['Startzeit',
+                @event.start_time.present? ? l(@event.start_time, format: :time) : nil],
+                types: :string, style: [col_header, time_format])
+  sheet.add_row(['Endzeit',
+                @event.end_time.present? ? l(@event.end_time, format: :time) : nil],
+                types: :string, style: [col_header, time_format])
+  sheet.add_row(['Datum',
+                @event.date.present? ? l(@event.date) : nil],
+                types: :string, style: [col_header, date_format])
+  sheet.add_row(['Beschreibung', @event.description], types: :string, style: [col_header, standard_format], height: 200)
+  3.times { sheet.add_row }
   sheet.add_row(['Teilnehmerliste'], types: :string, style: col_header)
-  sheet.add_row(['Teilnehmeranzahl', total_volunteers], types: [:string, :integer], style: [col_header, standard_format])
-  sheet.add_row
-  sheet.add_row
+  sheet.add_row(['Teilnehmeranzahl', @event.volunteers.count], types: [:string, :integer], style: [col_header, standard_format])
+  2.times { sheet.add_row }
   sheet.add_row(['Name', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Jahrgang'], types: :string, style: col_header)
-  @event.volunteers.each do |volunteer|
-    name = volunteer.full_name if volunteer.contact.full_name?
-    mail = volunteer.contact.primary_email if volunteer.contact.primary_email?
-    volunteer_start = l(volunteer.accepted_at.to_date)
-    address = volunteer.contact.full_address if volunteer.contact.full_address.present?
-    phone = volunteer.contact.primary_phone if volunteer.contact.primary_phone?
-    birth_year = volunteer.birth_year.year if volunteer.birth_year?
-    body_row = [
-      name,             #0
-      mail,             #1
-      volunteer_start,  #2
-      address,          #3
-      phone,            #4
-      birth_year,       #5
+  @event.volunteers.map do |volunteer|
+    [
+      volunteer.contact&.full_name,
+      volunteer.contact&.primary_email,
+      volunteer.accepted_at.present? ? l(volunteer.accepted_at.to_date) : nil,
+      volunteer.contact&.full_address,
+      volunteer.contact&.primary_phone,
+      volunteer.birth_year&.year,
     ]
-    sheet.add_row body_row, types: volunteer_cell_types, style: volunteer_cell_styles
-  end
+  end.each { |row| sheet.add_row row, row_options }
 end

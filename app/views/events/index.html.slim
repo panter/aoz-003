@@ -15,17 +15,17 @@ h1 Veranstaltungen
       - @events.each do |event|
         tr
           td= t(".#{event.kind}") if event.kind
-          td= l(event.date.to_date) if event.date
+          td= l(event.date) if event.date
           td
             = "#{l(event.start_time, format: :time)} - " if event.start_time
             = "#{l(event.end_time, format: :time)}" if event.end_time
           td= event.title if event.title
-          td= event.department.contact.last_name if event.department
+          td= event.department&.contact&.last_name
           td.index-action-cell.hidden-print
             span= link_to t_action(:show), event_path(event)
             span= link_to t_action(:edit), edit_event_path(event)
+            spam= link_to t_action(:download), event_path(event, format: :xlsx)
             span= link_to t_action(:delete), event_path(event), confirm_deleting(event)
-            span= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters)
 
 = form_navigation_btn :new
 = form_navigation_btn :back
