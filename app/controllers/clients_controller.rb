@@ -8,7 +8,8 @@ class ClientsController < ApplicationController
 
   def index
     authorize Client
-    @q = policy_scope(Client).ransack(default_filter)
+    set_default_filter(acceptance_scope: :not_resigned)
+    @q = policy_scope(Client).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @clients = @q.result
     respond_to do |format|
@@ -95,16 +96,6 @@ class ClientsController < ApplicationController
       message: 'Beenden fehlgeschlagen.', model_message: @client.errors.messages[:acceptance].first,
       action_link: { text: 'Begleitung bearbeiten', path: edit_assignment_path(@client.assignment) }
     }
-  end
-
-  def default_filter
-    return { acceptance_not_eq: 2 } if params[:q].blank?
-    filters = params.to_unsafe_hash[:q]
-    if filters[:acceptance_eq].present? || filters[:contact_full_name_cont].present?
-      filters.except(:acceptance_not_eq)
-    else
-      filters.merge(acceptance_not_eq: 2)
-    end
   end
 
   def set_client

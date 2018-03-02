@@ -14,20 +14,6 @@ module FilterDropdownHelper
     dropdown_list_filter(attribute_group, filter_links, *q_filters)
   end
 
-  # Creates a filter dropdown for an enum attribute
-  # Params:
-  # attribute  - the model attribute name as string or symbol
-  # collection - what the rails model returns on enum all (eg. enum attribute :kind -> Model.kinds)
-  def enum_filter_dropdown(attribute, collection)
-    filter_links = collection.map do |option|
-      list_filter_link("#{attribute}_eq".to_sym, option[0], enum_value: option[1])
-    end
-    li_dropdown do
-      concat dropdown_toggle_link(toggler_text(attribute, collection))
-      concat dropdown_menu(filter_links, "#{attribute}_eq".to_sym)
-    end
-  end
-
   # Creates a filter dropdown that filters a boolean attribute to either true or false
   # Params:
   # attribute - the model attribute name as string or symbol
@@ -40,9 +26,9 @@ module FilterDropdownHelper
       concat dropdown_toggle_link(attr_text + bool_toggler_text_end(filter, on_text, off_text))
       concat dropdown_ul(tag.li { all_link_to(filter) }) {
         concat li_a_element(on_text, bool_toggle_url(filter, true),
-          class: q_active_class(filter, 'true'))
+          class: list_filter_link_class(filter, 'true'))
         concat li_a_element(off_text, bool_toggle_url(filter, false),
-          class: q_active_class(filter, 'false'))
+          class: list_filter_link_class(filter, 'false'))
       }
     end
   end
@@ -67,7 +53,7 @@ module FilterDropdownHelper
               filter[:value],
               *filter_keys.reject { |key| key == filter[:q] }.reject { |key| filter[:qs]&.include? key }
           ),
-            class: q_active_class(filter[:q], filter[:value]))
+            class: list_filter_link_class(filter[:q], filter[:value]))
         end
       }
     end
@@ -92,28 +78,8 @@ module FilterDropdownHelper
 
   def custom_text_filter_value_in_search(in_search)
     in_search.find do |filter|
-      filter[:value].to_s == search_parameters[filter[:q].to_s]
+      filter[:value].to_s == search_parameters[filter[:q]].to_s
     end
-  end
-
-  def q_active_class(filter, value)
-    if q_is?(filter, value)
-      'bg-success'
-    else
-      ''
-    end
-  end
-
-  def q_true?(filter)
-    search_parameters[filter] == 'true'
-  end
-
-  def q_false?(filter)
-    search_parameters[filter] == 'false'
-  end
-
-  def q_is?(filter, value)
-    search_parameters[filter] == value
   end
 
   def custom_filter_url(filter, multi_qs, value, *excludes)
@@ -127,22 +93,18 @@ module FilterDropdownHelper
   end
 
   def bool_toggler_text_end(filter, on_text, off_text)
-    return ": #{on_text} " if q_true?(filter)
-    return ": #{off_text} " if q_false?(filter)
-    ' '
+    case search_parameters[filter]
+    when 'true'
+      ": #{on_text} "
+    when 'false'
+      ": #{off_text} "
+    else
+      ' '
+    end
   end
 
   def params_except(*key)
     params.to_unsafe_hash.except(*key)
-  end
-
-  def enum_toggler_text(attribute, collection)
-    if filter_active?("#{attribute}_eq".to_sym, '', search_parameters["#{attribute}_eq"])
-      "#{t_attr(attribute)}: " +
-        collection.invert[search_parameters["#{attribute}_eq"].to_i].humanize
-    else
-      "#{t_attr(attribute)} "
-    end
   end
 
   def dropdown_list_filter(attribute, filter_links, *q_filters)
@@ -158,21 +120,23 @@ module FilterDropdownHelper
     end
   end
 
-  def list_filter_link(q_filter, filter_attribute, bool_filter: false, enum_value: false)
+  def list_filter_link(q_filter, filter_attribute, bool_filter: false)
     tag.li do
       link_to(
-        filter_url(q_filter, bool_filter, filter_attribute, enum_value: enum_value),
-        class: list_filter_link_class(q_filter, filter_attribute, enum_value)
+        filter_url(q_filter, bool_filter, filter_attribute),
+        class: list_filter_link_class(q_filter, filter_attribute)
       ) do
         translate_value(filter_attribute, q_filter)
       end
     end
   end
 
-  def list_filter_link_class(q_filter, filter_attribute, enum_value)
-    if q_filter == :acceptance_eq && filter_active?(q_filter, filter_attribute, enum_value)
-      "bg-#{filter_attribute}"
-    elsif filter_active?(q_filter, filter_attribute, enum_value)
+  def list_filter_link_class(filter, value)
+    if !filter_active?(filter, value)
+      ''
+    elsif filter == :acceptance_scope
+      "bg-#{value}"
+    else
       'bg-success'
     end
   end
@@ -183,17 +147,17 @@ module FilterDropdownHelper
     end
   end
 
-  def filter_url(q_filter, bool_filter, filter_attribute, enum_value: false)
-    if filter_active?(q_filter, filter_attribute, enum_value)
+  def filter_url(q_filter, bool_filter, filter_attribute)
+    if filter_active?(q_filter, filter_attribute)
       url_for(params_except('page').merge(q: search_parameters.except(q_filter)))
     else
-      filter_parameter = { q_filter => bool_filter || enum_value || filter_attribute }
+      filter_parameter = { q_filter => bool_filter || filter_attribute }
       url_for(params_except('page').merge(q: search_parameters.merge(filter_parameter)))
     end
   end
 
-  def filter_active?(q_filter, filter_attribute, enum_value = nil)
-    [filter_attribute.to_s, 'true', enum_value.to_s].include? search_parameters[q_filter]
+  def filter_active?(filter, value)
+    [value.to_s, 'true'].include? search_parameters[filter]
   end
 
   def dropdown_menu(filter_links, q_filters)

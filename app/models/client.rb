@@ -47,6 +47,8 @@ class Client < ApplicationRecord
 
   scope :with_assignment, (-> { joins(:assignment) })
   scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })
+  scope :not_resigned, (-> { where.not(acceptance: :resigned) })
+  scope :acceptance_scope, ->(scope) { public_send(scope) }
 
   scope :need_accompanying, lambda {
     inactive.order(created_at: :asc)
@@ -98,6 +100,17 @@ class Client < ApplicationRecord
     acceptances.keys.map(&:to_sym)
   end
 
+  def self.acceptance_filters
+    scopes = [:not_resigned] + acceptances.keys
+    scopes.map do |scope|
+      {
+        q: :acceptance_scope,
+        value: scope,
+        text: I18n.t("acceptance.#{scope}")
+      }
+    end
+  end
+
   def self.cost_unit_collection
     cost_units.keys.map(&:to_sym)
   end
@@ -123,7 +136,7 @@ class Client < ApplicationRecord
 
   # allow ransack to use defined scopes
   def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive']
+    ['active', 'inactive', 'acceptance_scope']
   end
 
   private

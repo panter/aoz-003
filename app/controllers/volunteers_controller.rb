@@ -8,7 +8,8 @@ class VolunteersController < ApplicationController
 
   def index
     authorize Volunteer
-    @q = policy_scope(Volunteer).ransack(default_filter)
+    set_default_filter(acceptance_scope: :not_resigned)
+    @q = policy_scope(Volunteer).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @volunteers = @q.result
     @volunteers = activity_filter
@@ -112,16 +113,6 @@ class VolunteersController < ApplicationController
       model_message: @volunteer.errors.messages[:acceptance].first,
       action_link: { text: 'Begleitung bearbeiten', path: volunteer_path(@volunteer, anchor: 'assignments') }
     }
-  end
-
-  def default_filter
-    return { acceptance_not_eq: Volunteer.acceptances[:resigned] } if params[:q].blank?
-    filters = params.to_unsafe_hash[:q]
-    if filters[:acceptance_eq].present? || filters[:contact_full_name_cont].present?
-      filters.except(:acceptance_not_eq)
-    else
-      filters.merge(acceptance_not_eq: Volunteer.acceptances[:resigned])
-    end
   end
 
   def activity_filter

@@ -164,6 +164,16 @@ class VolunteersTest < ApplicationSystemTestCase
     refute page.has_text? 'If you have any experiences with voluntary work, please describe here.'
   end
 
+  test 'volunteers_default_filters' do
+    volunteer = create :volunteer, acceptance: :resigned
+    volunteer.contact.update(first_name: 'Resigned volunteer')
+
+    visit volunteers_path
+
+    assert page.has_text? 'Affirmation: Not resigned'
+    refute page.has_text? 'Resigned volunteer'
+  end
+
   test 'volunteer_pagination' do
     really_destroy_with_deleted(Volunteer)
     (1..20).to_a.map do
@@ -186,6 +196,13 @@ class VolunteersTest < ApplicationSystemTestCase
     Volunteer.order('created_at desc').paginate(page: 2).each do |volunteer|
       assert page.has_text? "#{volunteer.contact.full_name} #{volunteer.contact.city}"\
         " #{volunteer.contact.postal_code}"
+    end
+
+    within page.first('.pagination') do
+      assert page.has_link? '1',
+        href: volunteers_path(page: 1, q: { acceptance_scope: :not_resigned })
+      assert page.has_link? 'Previous',
+        href: volunteers_path(page: 1, q: { acceptance_scope: :not_resigned })
     end
   end
 
