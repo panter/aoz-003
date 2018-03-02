@@ -173,6 +173,17 @@ class Volunteer < ApplicationRecord
     accepted.internal.where(intro_course: false)
   }
 
+  scope :candidates_for_event, lambda { |event|
+  if event.intro_course?
+    volunteers = needs_intro_course
+  else
+    volunteers = accepted.internal
+  end
+    volunteers
+      .left_joins(:event_volunteers)
+      .where('event_volunteers.event_id IS NULL OR event_volunteers.event_id != ?', event.id)
+  }
+
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)
   end

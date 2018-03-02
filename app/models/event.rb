@@ -17,5 +17,10 @@ class Event < ApplicationRecord
     kinds.keys.map(&:to_sym)
   end
 
+  def self.candidates_for_event(event)
+    volunteers = needs_intro_course if event.intro_course? else accepted.internal
+    volunteers - event.volunteers
+  end
+
   scope :past, (-> { date_before(:date, Time.zone.today) })
 end
