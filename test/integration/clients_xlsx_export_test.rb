@@ -7,12 +7,6 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
     login_as @superadmin
   end
 
-  test 'xlsx file is downloadable' do
-    10.times { create :client }
-    get clients_url(format: :xlsx)
-    assert_equal Mime[:xlsx], response.content_type
-  end
-
   test 'xlsx files columns and cells are correct' do
     client = create :client, entry_date: 'Feb. 2014', birth_year: 30.years.ago.to_date,
       education: 'educati', created_at: 2.days.ago, nationality: 'IT'

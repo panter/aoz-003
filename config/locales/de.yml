@@ -342,6 +342,8 @@ de:
         kind: Art
         subject: Betreff
         body: Text
+      event:
+        kinds: *id-kinds-event
       group_assignment:
         <<: *id-termination-attrs
         member: Mitglied
@@ -982,6 +984,7 @@ de:
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
+      time: "%H:%M"
       date_only: "%d.%m.%Y"
       devise:
         mailer:
@@ -1300,6 +1303,8 @@ en:
         kind: Art
         subject: Betreff
         body: Text
+      event:
+        kinds: *id-kinds-event
       group_assignment:
         <<: *id-termination-attrs
         member: Member
@@ -1707,6 +1712,7 @@ en:
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
+      time: "%H:%M"
       date_only: "%d.%m.%Y"
       devise:
         mailer:

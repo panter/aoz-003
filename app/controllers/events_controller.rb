@@ -9,6 +9,10 @@ class EventsController < ApplicationController
   def show
     @volunteers = Volunteer.needs_intro_course
     @event_volunteer = EventVolunteer.new(event: @event)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def new

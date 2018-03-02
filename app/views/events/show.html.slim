@@ -1,6 +1,9 @@
 h1 Veranstaltung
 h2= @event.title if @event.title
 
+ul.list-inline
+  li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+
 .table-responsive
   table.table.table-no-border-top
     tbody
@@ -13,11 +16,11 @@ h2= @event.title if @event.title
       tr
         td Zeit
         td
-          = "#{(@event.start_time.strftime('%H:%M'))} - " if @event.start_time
-          = "#{(@event.end_time.strftime('%H:%M'))}" if @event.end_time
+          = "#{l(@event.start_time, format: :time)} - " if @event.start_time
+          = "#{l(@event.end_time, format: :time)}" if @event.end_time
       tr
         td Departement
-        td= @event.department.contact.last_name if @event.department
+        td= @event.department&.contact&.last_name
       tr
         td Beschreibung
         td= word_wrap(@event.description) if @event.description
