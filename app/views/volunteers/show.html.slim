@@ -192,6 +192,9 @@ h2.small= t('.availability')
   h2.small= t('.old_group_assignments')
   = render 'group_assignments/volunteer_group_assignments_logs', group_assignment_logs: @volunteer.group_assignment_logs
 
+- if policy(Event).show? && @volunteer_events.present?
+  = render 'events/volunteer_events', events: @volunteer_events
+
 nav.navbar.section-navigation
   ul.list-inline
     li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
