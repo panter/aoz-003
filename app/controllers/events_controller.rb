@@ -9,7 +9,8 @@ class EventsController < ApplicationController
   end
 
   def show
-    @can_participate = Volunteer.candidates_for_event(@event)
+    @volunteers = @event.intro_course? ? Volunteer.needs_intro_course : Volunteer.accepted.internal
+    @volunteers -= @event.event_volunteers.map(&:volunteer)
     @event_volunteer = EventVolunteer.new(event: @event)
     respond_to do |format|
       format.html
