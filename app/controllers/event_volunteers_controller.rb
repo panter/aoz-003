@@ -29,10 +29,6 @@ class EventVolunteersController < ApplicationController
     authorize EventVolunteer
   end
 
-  def volunteer_is_not_twice_in_same_event
-    !(@event.volunteers.include? @volunteer)
-  end
-
   def event_volunteer_params
     params.require(:event_volunteer).permit(:volunteer_id, :creator_id)
   end
