@@ -2,6 +2,8 @@ h1 Veranstaltungen
 
 = form_navigation_btn :new
 
+= bootstrap_paginate(@events)
+
 .table-responsive
   table.table
     thead
@@ -29,3 +31,5 @@ h1 Veranstaltungen
 
 = form_navigation_btn :new
 = form_navigation_btn :back
+
+= bootstrap_paginate(@events)
