@@ -142,11 +142,6 @@ class EventsTest < ApplicationSystemTestCase
       assert page.has_text? @volunteer1.full_name
     end
 
-    visit event_path(@event)
-    select(@volunteer1, from: 'event_volunteer_volunteer_id')
-    click_button 'Teilnehmer/in hinzufügen'
-
-    assert page.has_text? 'Freiwillige/r wurde bereits zu dieser Veranstaltung hinzugefügt.'
-    assert @event.volunteers.count, 1
+    refute page.has_select?('event_volunteer_volunteer_id', text: @volunteer1.full_name)
   end
 end

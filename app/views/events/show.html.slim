@@ -37,5 +37,6 @@ h3 Teilnehmende
 - if @event.event_volunteers.any?
   = render 'event_volunteers/show'
 
-= form_navigation_btn :edit
-= form_navigation_btn :back
+ul.list-inline
+  li= button_link 'Veranstaltung bearbeiten', edit_event_path(@event), dimension: 'sm'
+  li= button_link 'Zurück', events_path, dimension: 'sm'
