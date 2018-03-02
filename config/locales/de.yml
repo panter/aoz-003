@@ -836,6 +836,8 @@ de:
       created_assignments: Erstellte Gruppeneinsätze
       outside_departments: Ausserhalb Standorten
       started_assignments: Begonnene Gruppeneinsätze
+      intro_course_events: Besuchte Einführungskurse
+      total_events: Total besuchte Veranstaltungen
     index:
       new_report: Neuen Report erstellen
     one: Kennzahl

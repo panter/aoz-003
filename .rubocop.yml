@@ -25,6 +25,8 @@ Style/FrozenStringLiteralComment:
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 Style/FormatString:
   EnforcedStyle: percent
@@ -34,21 +36,22 @@ Metrics/LineLength:
   Max: 100
 Metrics/ClassLength:
   Exclude:
-    - 'test/*'
+    - 'test/**/*'
 Metrics/MethodLength:
   Exclude:
-    - 'db/migrate/*'
-    - 'test/*'
+    - 'test/**/*'
     - 'db/seeds.rb'
 
 Metrics/AbcSize:
   Max: 19
   Exclude:
-    - 'db/migrate/*'
-    - 'test/*'
+    - 'test/**/*'
 
 Metrics/BlockLength:
-  Exclude: ['test/system/*', 'db/seeds.rb', 'config/routes.rb']
+  Exclude:
+    - 'test/system/*'
+    - 'db/seeds.rb'
+    - 'config/routes.rb'
 
 Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
