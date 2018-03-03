@@ -130,4 +130,18 @@ class EventsTest < ApplicationSystemTestCase
     assert page.has_text? 'second_page'
     refute page.has_text? 'first_page'
   end
+
+  test 'adding a volunteers twice to an event does not work' do
+    visit event_path(@event)
+
+    select(@volunteer1, from: 'event_volunteer_volunteer_id')
+    click_button 'Teilnehmer/in hinzufügen'
+    visit current_url
+
+    within '.event-volunteers-table' do
+      assert page.has_text? @volunteer1.full_name
+    end
+
+    refute page.has_select?('event_volunteer_volunteer_id', text: @volunteer1.full_name)
+  end
 end

@@ -3,10 +3,10 @@ class EventVolunteersController < ApplicationController
 
   def create
     authorize EventVolunteer
-    @event.event_volunteers << EventVolunteer.new(
+    @event_volunteer = EventVolunteer.new(
       event_volunteer_params.merge(event_id: params[:event_id], creator_id: current_user.id)
     )
-    if @event.save
+    if @event_volunteer.save
       redirect_to @event, notice: 'Teilnehmer/in erfolgreich hinzugefügt.'
     else
       render 'events/show'
