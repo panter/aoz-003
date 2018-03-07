@@ -96,4 +96,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def all_checked?(selector)
     page.find_all(selector).all?(&:checked?)
   end
+
+  def selectize_select(field, value)
+    page.execute_script %Q{ $('.#{field} .selectize-input').click(); }
+    page.execute_script %Q{ $('.#{field} .selectize-dropdown-content .option:contains("#{value}")').click(); }
+  end
 end
