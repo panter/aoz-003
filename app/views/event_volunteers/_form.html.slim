@@ -2,17 +2,6 @@ h4 Neue Teilnehmende hinzufügen
 = simple_form_for(@event_volunteer, url: url_for([@event, @event_volunteer])) do |f|
   = simple_error_notice f
 
-
-  nav.navbar.section-navigation#filters
-    hr
-    ul.list-unstyled
-      li.li-search-form
-        = search_form_for @q do |f|
-          = f.search_field :search_volunteer_cont, class: 'search-field',
-            data: { autocomplete: search_events_path }, autofocus: true,
-            placeholder: 'Nach Freiwillige suchen'
-          = f.submit 'Suchen', class: 'search-submit'
-
   .row
     .col-xs-12
       = f.association :volunteer, collection: @volunteers, label: false

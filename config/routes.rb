@@ -63,9 +63,6 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :event_volunteers, only: [:create, :destroy]
-      collection do
-        match 'search' => 'events#search', via: :get, as: :search
-      end
   end
 
   resources :feedbacks, only: [:new, :create]

@@ -18,15 +18,6 @@ class EventsController < ApplicationController
     end
   end
 
-  def search
-    authorize Event
-    @q = policy_scope(Event).ransack search_volunteer_cont: params[:term]
-    @volunteers = @q.result distinct: true
-    respond_to do |format|
-      format.json
-    end
-  end
-
   def new
     @event = Event.new
     authorize @event

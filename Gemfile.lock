@@ -354,6 +354,7 @@ GEM
     scss_lint (0.56.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5.3)
+    selectize-rails (0.12.4.1)
     selenium-webdriver (3.8.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
@@ -478,6 +479,7 @@ DEPENDENCIES
   rubyzip (>= 1.2.1)
   sassc-rails
   scss_lint
+  selectize-rails
   selenium-webdriver
   simple_form
   slim-rails
