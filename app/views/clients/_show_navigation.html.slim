@@ -1,7 +1,7 @@
 nav.navbar.section-navigation
   ul.list-inline
     - if policy(Client).superadmin_privileges?
-      li.button-acceptance = link_to t_attr(@client.acceptance, Client), '#',
+      li.button-acceptance = link_to t(".acceptance.#{@client.acceptance}"), '#',
         class: "btn btn-acceptance-#{@client.acceptance}"
     - if policy(@client).edit?
       li= button_link t_action(:edit), edit_client_path(@client)
