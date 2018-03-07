@@ -21,6 +21,7 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :show?,            :volunteer_managing_or_volunteers_profile?
   alias_method :edit?,            :volunteer_managing_or_volunteers_profile?
   alias_method :update?,          :volunteer_managing_or_volunteers_profile?
+  alias_method :account?,         :superadmin?
 
   # supplementary policies
   alias_method :superadmin_privileges?, :superadmin?

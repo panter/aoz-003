@@ -1,15 +1,25 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, except: [:index, :new, :create]
 
   def index
     authorize Event
-    @events = Event.all
+    @q = Event.ransack(params[:q])
+    @q.sorts = ['date desc'] if @q.sorts.empty?
+    @events = @q.result.paginate(page: params[:page])
   end
 
-  def show; end
+  def show
+    @volunteers = @event.intro_course? ? Volunteer.needs_intro_course : Volunteer.accepted.internal
+    @volunteers -= @event.event_volunteers.map(&:volunteer)
+    @event_volunteer = EventVolunteer.new(event: @event)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
+  end
 
   def new
-    @event = Event.new(creator: current_user)
+    @event = Event.new
     authorize @event
   end
 

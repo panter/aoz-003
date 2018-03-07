@@ -38,7 +38,11 @@ nav.navbar.section-navigation
     li= form_navigation_btn :back, with_row: false unless current_user.volunteer?
 
 - if policy(Volunteer).superadmin_privileges?
-  h3= t('checklist')
+  - if @volunteer.import.present?
+    = render 'import_account_invite', volunteer: @volunteer
+
+
+  h2.small= t('checklist')
   .table-responsive
     table.table.table-no-border-top
       tbody
@@ -58,7 +62,7 @@ nav.navbar.section-navigation
           td= t_attr(:evaluation)
           td= t(@volunteer.evaluation)
 
-h3 Persönlicher Hintergrund
+h2.small Persönlicher Hintergrund
 .table-responsive
   table.table.table-no-border-top
     tbody
@@ -127,7 +131,7 @@ h3 Persönlicher Hintergrund
           - else
             = link_to @volunteer.registrar.full_name, profile_link(@volunteer.registrar)
 
-h3= t_attr(:single_accompaniment)
+h2.small= t_attr(:single_accompaniment)
 .table-responsive
   table.table.table-striped
     thead
@@ -151,7 +155,7 @@ h3= t_attr(:single_accompaniment)
         - @volunteer.group_accompaniments_house_moving.each do |group|
           td.text-center= boolean_glyph(group[:value])
 
-h3= t_attr(:group_accompaniment)
+h2.small= t_attr(:group_accompaniment)
 .table-responsive
   table.table.table-striped
     thead
@@ -169,24 +173,27 @@ h3= t_attr(:group_accompaniment)
           td= t_attr(:other_offer_desc)
           td= @volunteer.other_offer_desc
 
-h3= t('.availability')
+h2.small= t('.availability')
 = render 'availability/show', available: @volunteer
 
 - if @volunteer.assignments.unterminated.any?
-  h3#assignments Aktuelle Begleitungen
+  h2.small#assignments Aktuelle Begleitungen
   = render 'assignments/client_volunteer_index', assignments: @volunteer.assignments.unterminated
 
 - if @volunteer.assignment_logs.any?
-  h3 Archivierte Begleitungen
+  h2.small Archivierte Begleitungen
   = render 'assignment_logs/assignment_logs_volunteer_index', assignment_logs: @volunteer.assignment_logs
 
 - if @volunteer.group_assignments.unterminated.any?
-  h3#assignments= t('.group_assignments')
+  h2.small#assignments= t('.group_assignments')
   = render 'group_assignments/volunteer_group_assignments', group_assignments: @volunteer.group_assignments.unterminated, editable: true
 
 - if @volunteer.group_assignment_logs.any?
-  h3= t('.old_group_assignments')
+  h2.small= t('.old_group_assignments')
   = render 'group_assignments/volunteer_group_assignments_logs', group_assignment_logs: @volunteer.group_assignment_logs
+
+- if policy(Event).show? && @volunteer_events.present?
+  = render 'events/volunteer_events', events: @volunteer_events
 
 nav.navbar.section-navigation
   ul.list-inline

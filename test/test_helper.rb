@@ -24,7 +24,8 @@ class ActiveSupport::TestCase
     really_destroy_with_deleted(
       User, Volunteer, Client, ClientNotification, Contact, Profile, Journal, AssignmentLog,
       Assignment, Department, LanguageSkill, Relative, GroupOffer, GroupAssignment, Feedback,
-      TrialFeedback, BillingExpense, Certificate, GroupAssignmentLog, Hour, Import, Event
+      TrialFeedback, BillingExpense, Certificate, GroupAssignmentLog, Hour, Import, Event,
+      EventVolunteer
     )
 
     super
@@ -38,6 +39,8 @@ class ActiveSupport::TestCase
 
   def get_xls_from_response(url)
     get url
+    assert response.success?
+    assert_equal Mime[:xlsx], response.content_type
     excel_file = Tempfile.new
     excel_file.write(response.body)
     excel_file.close

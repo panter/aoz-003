@@ -64,6 +64,9 @@ class Volunteer < ApplicationRecord
   has_many :reminded_assignments, through: :reminder_mailing_volunteers,
     source: :reminder_mailable, inverse_of: 'reminder_mailable'
 
+  has_many :event_volunteers, dependent: :delete_all
+  has_many :events, through: :event_volunteers
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   # Validations
@@ -117,6 +120,7 @@ class Volunteer < ApplicationRecord
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
   scope :not_resigned, (-> { where.not(acceptance: :resigned) })
+  scope :acceptance_scope, ->(scope) { public_send(scope) }
 
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).merge(Assignment.start_before(6.months.ago))
@@ -163,6 +167,10 @@ class Volunteer < ApplicationRecord
 
   scope :accpted_between, lambda { |start_date, end_date|
     date_between_inclusion(:accepted_at, start_date, end_date)
+  }
+
+  scope :needs_intro_course, lambda {
+    accepted.internal.where(intro_course: false)
   }
 
   def verify_and_update_state
@@ -281,6 +289,17 @@ class Volunteer < ApplicationRecord
     acceptances.keys.map(&:to_sym)
   end
 
+  def self.acceptance_filters
+    scopes = [:not_resigned] + acceptances.keys
+    scopes.map do |scope|
+      {
+        q: :acceptance_scope,
+        value: scope,
+        text: I18n.t("volunteers.acceptance.#{scope}")
+      }
+    end
+  end
+
   def self.first_languages
     ['DE', 'EN', 'FR', 'ES', 'IT', 'AR'].map do |lang|
       [I18nData.languages(I18n.locale)[lang], lang]
@@ -344,7 +363,7 @@ class Volunteer < ApplicationRecord
   end
 
   def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'not_resigned']
+    ['active', 'inactive', 'not_resigned', 'acceptance_scope']
   end
 
   def terminate!

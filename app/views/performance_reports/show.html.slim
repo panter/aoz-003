@@ -116,6 +116,14 @@ table.table.table-striped.table-bordered
       td= t('.volunteers.values.total_trial_feedbacks')
       - column_order.each do |category_key|
         td= @report_content['volunteers'][category_key]['total_trial_feedbacks']
+    tr
+      td= t('.volunteers.values.intro_course_events')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['intro_course_events']
+    tr.active
+      td= t('.volunteers.values.total_events')
+      - column_order.each do |category_key|
+        td= @report_content['volunteers'][category_key]['total_events']
 
 h3 Klienten
 table.table.table-striped.table-bordered

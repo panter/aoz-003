@@ -1,14 +1,13 @@
 class ClientTransform < Transformer
-  def prepare_attributes(personen_rolle)
-    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
+  def prepare_attributes(personen_rolle, haupt_person)
     begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
     familien_rolle = @familien_rollen.find(begleitet[:fk_FamilienRolle])
     {
       user: @ac_import.import_user,
       nationality: haupt_person[:nationality],
-      salutation: haupt_person[:salutation],
+      salutation: haupt_person[:salutation] || 'unknown',
       birth_year: haupt_person[:d_Geburtsdatum],
-      entry_date: haupt_person[:d_EintrittCH] && haupt_person[:d_EintrittCH],
+      entry_date: haupt_person[:d_EintrittCH] && Date.parse(haupt_person[:d_EintrittCH]).to_date.to_s,
       comments: comments(begleitet, personen_rolle, haupt_person),
       relatives_attributes: relatives_attrs(relatives),
       accepted_at: personen_rolle[:d_Rollenbeginn],
@@ -24,19 +23,16 @@ class ClientTransform < Transformer
     client = get_import_entity(:client, personen_rollen_id)
     return client if client.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
-    client = Client.create(prepare_attributes(personen_rolle))
+    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
+    client = Client.create!(prepare_attributes(personen_rolle, haupt_person))
+    if haupt_person == {} # handle access db inconsistencies
+      client.update_columns(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende])
+    end
     update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
-  def import_all
-    @personen_rolle.all_clients.each do |key, personen_rolle|
-      get_or_create_by_import(key, personen_rolle)
-    end
-  end
-
-  def handle_client_acceptance(personen_rolle)
-    return 'resigned' if personen_rolle[:d_Rollenende]
-    'accepted'
+  def default_all
+    @personen_rolle.all_clients
   end
 
   def comments(begleitet, personen_rolle, haupt_person)

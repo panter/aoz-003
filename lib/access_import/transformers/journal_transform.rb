@@ -46,14 +46,8 @@ class JournalTransform < Transformer
     end
   end
 
-  def import_multiple(access_journale)
-    access_journale.map do |key, access_journal|
-      get_or_create_by_import(key, access_journal)
-    end
-  end
-
-  def import_all(access_journale = nil)
-    import_multiple(access_journale || @journale.all)
+  def default_all
+    @journale.all
   end
 
   CATEGORY_MAP = {

@@ -164,6 +164,16 @@ class VolunteersTest < ApplicationSystemTestCase
     refute page.has_text? 'If you have any experiences with voluntary work, please describe here.'
   end
 
+  test 'volunteers_default_filters' do
+    volunteer = create :volunteer, acceptance: :resigned
+    volunteer.contact.update(first_name: 'Resigned volunteer')
+
+    visit volunteers_path
+
+    assert page.has_text? 'Affirmation: Not resigned'
+    refute page.has_text? 'Resigned volunteer'
+  end
+
   test 'volunteer_pagination' do
     really_destroy_with_deleted(Volunteer)
     (1..20).to_a.map do
@@ -186,6 +196,13 @@ class VolunteersTest < ApplicationSystemTestCase
     Volunteer.order('created_at desc').paginate(page: 2).each do |volunteer|
       assert page.has_text? "#{volunteer.contact.full_name} #{volunteer.contact.city}"\
         " #{volunteer.contact.postal_code}"
+    end
+
+    within page.first('.pagination') do
+      assert page.has_link? '1',
+        href: volunteers_path(page: 1, q: { acceptance_scope: :not_resigned })
+      assert page.has_link? 'Previous',
+        href: volunteers_path(page: 1, q: { acceptance_scope: :not_resigned })
     end
   end
 
@@ -261,5 +278,50 @@ class VolunteersTest < ApplicationSystemTestCase
     visit volunteer_path(volunteer)
     assert page.has_text? group_offer.title
     refute page.has_link? group_offer.title
+  end
+
+  test 'imported_create_account_for_imported_volunteer' do
+    use_rack_driver
+    really_destroy_with_deleted(Volunteer)
+    volunteer = create :volunteer
+    import = Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1,
+      importable: volunteer, store: { haupt_person: { email: 'imported@example.com' } })
+    visit volunteers_path
+    assert page.has_text? 'Kein Login'
+    assert page.has_text? 'Importiert'
+    click_link 'Show', href: volunteer_path(volunteer)
+    assert page.has_text? "Für die Emailadresse #{import.email} einen Account erstellen"
+    assert page.has_field? 'Primary email', with: import.email
+    click_button 'Account mit angegebener Email erstellen'
+    assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
+  end
+
+  test 'imported_create_account_with_invalid_imported_email' do
+    use_rack_driver
+    volunteer = create :volunteer
+    Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1,
+      importable: volunteer, store: { haupt_person: { email: 'invalid' } })
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'Scheinbar ist die importierte Mailadresse nicht gültig.'
+    assert_empty find_field('Primary email').value
+    fill_in 'Primary email', with: 'some_email@example.com'
+    click_button 'Account mit angegebener Email erstellen'
+    assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
+  end
+
+  test 'imported_create_account_no_email_imported_enter_inavalid_email' do
+    use_rack_driver
+    volunteer = create :volunteer
+    Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1, importable: volunteer,
+      store: { haupt_person: { email: nil } })
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'Es wird eine gültige Emailadresse des Freiwilligen benötigt, um einen'
+    assert_empty find_field('Primary email').value
+    fill_in 'Primary email', with: 'invalid'
+    click_button 'Account mit angegebener Email erstellen'
+    within '.alert.alert-danger.alert-dismissible' do
+      assert page.has_text? 'Die Mailadresse ist scheinbar nicht gültig'
+      assert page.has_link? 'Mailadresse konfigurieren', href: edit_volunteer_path(volunteer)
+    end
   end
 end

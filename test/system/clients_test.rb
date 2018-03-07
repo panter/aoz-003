@@ -142,6 +142,17 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? 'Fluent'
   end
 
+  test 'clients_default_filters' do
+    client = create :client, acceptance: :resigned
+    client.contact.update(first_name: 'Resigned client')
+
+    login_as @superadmin
+    visit clients_path
+
+    assert page.has_text? 'Affirmation: Nicht beendet'
+    refute page.has_text? 'Resigned client'
+  end
+
   test 'client_pagination' do
     login_as @superadmin
     70.times do
@@ -154,8 +165,10 @@ class ClientsTest < ApplicationSystemTestCase
     end
 
     within page.first('.pagination') do
-      assert page.has_link? '1', href: clients_path(page: 1)
-      assert page.has_link? 'Previous', href: clients_path(page: 1)
+      assert page.has_link? '1',
+        href: clients_path(page: 1, q: { acceptance_scope: :not_resigned })
+      assert page.has_link? 'Previous',
+        href: clients_path(page: 1, q: { acceptance_scope: :not_resigned })
     end
   end
 
@@ -172,6 +185,7 @@ class ClientsTest < ApplicationSystemTestCase
   end
 
   test 'all_needed_actions_are_available_in_the_index' do
+    use_rack_driver
     client = create :client
     social_worker = create :social_worker
     client_department_manager = create :client, user: @department_manager

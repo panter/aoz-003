@@ -60,12 +60,20 @@ class ApplicationPolicy
     true
   end
 
+  def record_present?
+    record.is_a? ApplicationRecord
+  end
+
   def user_owns_record?
-    record.class != Class && record.user_id == user.id
+    record_present? && record.user_id == user.id
   end
 
   def user_owns_registration?
-    record.class != Class && record.registrar_id == user.id
+    record_present? && record.registrar_id == user.id
+  end
+
+  def user_involved_authority?
+    record_present? && record.involved_authority_id == user.id
   end
 
   def volunteers_entry?

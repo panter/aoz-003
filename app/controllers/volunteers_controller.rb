@@ -4,11 +4,12 @@ class VolunteersController < ApplicationController
   include ContactAttributes
   include VolunteerAttributes
 
-  before_action :set_volunteer, only: [:show, :edit, :update, :terminate]
+  before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account]
 
   def index
     authorize Volunteer
-    @q = policy_scope(Volunteer).ransack(default_filter)
+    set_default_filter(acceptance_scope: :not_resigned)
+    @q = policy_scope(Volunteer).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @volunteers = @q.result
     @volunteers = activity_filter
@@ -27,7 +28,9 @@ class VolunteersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @volunteer_events = @volunteer.events.past
+  end
 
   def new
     @volunteer = Volunteer.new
@@ -80,6 +83,23 @@ class VolunteersController < ApplicationController
     @seeking_clients = @q.result.paginate(page: params[:page])
   end
 
+  def account
+    @volunteer.contact.primary_email = volunteer_params[:contact_attributes][:primary_email]
+    if @volunteer.save
+      invite_volunteer_user
+      redirect_back(fallback_location: volunteer_path(@volunteer),
+        notice: 'Freiwillige/r erhält eine Accountaktivierungs-Email.')
+    elsif @volunteer.contact.errors.messages[:primary_email]
+      redirect_to @volunteer, notice: {
+        message: 'Die Mailadresse ist scheinbar nicht gültig',
+        model_message: 'Für einen Useraccount wird eine gültige Email benötigt.',
+        action_link: { text: 'Mailadresse konfigurieren', path: edit_volunteer_path(@volunteer) }
+      }
+    else
+      redirect_to @volunteer, notice: 'Account erstellen fehlgeschlagen!'
+    end
+  end
+
   private
 
   def not_resigned
@@ -93,16 +113,6 @@ class VolunteersController < ApplicationController
       model_message: @volunteer.errors.messages[:acceptance].first,
       action_link: { text: 'Begleitung bearbeiten', path: volunteer_path(@volunteer, anchor: 'assignments') }
     }
-  end
-
-  def default_filter
-    return { acceptance_not_eq: Volunteer.acceptances[:resigned] } if params[:q].blank?
-    filters = params.to_unsafe_hash[:q]
-    if filters[:acceptance_eq].present? || filters[:contact_full_name_cont].present?
-      filters.except(:acceptance_not_eq)
-    else
-      filters.merge(acceptance_not_eq: Volunteer.acceptances[:resigned])
-    end
   end
 
   def activity_filter

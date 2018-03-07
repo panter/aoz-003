@@ -20,6 +20,7 @@ de:
       accepted: Angemeldet
       rejected: Abgelehnt
       resigned: Beendet
+      not_resigned: Nicht beendet
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: egal
@@ -81,6 +82,8 @@ de:
       index:
         <<: *id-kinds-event
       show:
+        <<: *id-kinds-event
+      volunteer_events:
         <<: *id-kinds-event
     gender_request: &id-gender_requests
       all: Alle
@@ -218,6 +221,7 @@ de:
         resigned_at: Beendet am
         undecided: Angemeldet
         undecided_at: Angemeldet am
+        not_resigned: Nicht beendet
       create: &id-volunteers-create
         <<: *id-availability
         acceptance: *id-volunteer-acceptance
@@ -342,6 +346,8 @@ de:
         kind: Art
         subject: Betreff
         body: Text
+      event:
+        kinds: *id-kinds-event
       group_assignment:
         <<: *id-termination-attrs
         member: Mitglied
@@ -832,6 +838,8 @@ de:
       created_assignments: Erstellte Gruppeneinsätze
       outside_departments: Ausserhalb Standorten
       started_assignments: Begonnene Gruppeneinsätze
+      intro_course_events: Besuchte Einführungskurse
+      total_events: Total besuchte Veranstaltungen
     index:
       new_report: Neuen Report erstellen
     one: Kennzahl
@@ -982,6 +990,7 @@ de:
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
+      time: "%H:%M"
       date_only: "%d.%m.%Y"
       devise:
         mailer:
@@ -1029,6 +1038,7 @@ en:
       accepted: Angemeldet
       rejected: Abgelehnt
       resigned: Beendet
+      not_resigned: Nicht beendet
     age_request: &id-age_requests
       age_middle: 36 - 50
       age_no_matter: "age doesn't matter"
@@ -1090,6 +1100,8 @@ en:
       index:
         <<: *id-kinds-event
       show:
+        <<: *id-kinds-event
+      volunteer_events:
         <<: *id-kinds-event
     gender_request: &id-gender_requests
       all: All
@@ -1221,6 +1233,7 @@ en:
         resigned_at: Resigned at
         undecided: Undecided
         undecided_at: Undecided at
+        not_resigned: Not resigned
       create: &id-volunteers-create
         <<: [*id-availability, *id-volunteer-aceptance]
         acceptance: *id-volunteer-aceptance
@@ -1300,6 +1313,8 @@ en:
         kind: Art
         subject: Betreff
         body: Text
+      event:
+        kinds: *id-kinds-event
       group_assignment:
         <<: *id-termination-attrs
         member: Member
@@ -1707,6 +1722,7 @@ en:
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
+      time: "%H:%M"
       date_only: "%d.%m.%Y"
       devise:
         mailer:

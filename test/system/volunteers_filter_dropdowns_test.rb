@@ -21,7 +21,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter by acceptance works and disabling works as well' do
     within '.section-navigation' do
-      click_link 'Acceptance'
+      click_link 'Affirmation: Not resigned'
       click_link 'Undecided'
     end
     visit current_url
@@ -30,8 +30,8 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? 'Accepted'
     end
     within '.section-navigation' do
-      click_link 'Acceptance'
-      assert page.find('a.bg-undecided', text: 'Undecided').present?
+      click_link 'Affirmation: Undecided'
+      assert page.has_link? text: 'Undecided', class: 'bg-undecided'
       click_link 'All'
     end
     visit current_url
@@ -48,7 +48,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Acceptance'
+      click_link 'Affirmation: Not resigned'
       click_link 'Accepted'
     end
     visit current_url
@@ -60,7 +60,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     within '.section-navigation' do
       click_link 'Salutation: Mr.'
-      assert page.find('a.bg-success', text: 'Mr.').present?
+      assert page.has_link? 'Mr.', class: 'bg-success'
       click_link 'All'
     end
     visit current_url
@@ -93,7 +93,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     within '.section-navigation' do
       click_link 'Single accompaniment'
-      assert page.find('a.bg-success', text: 'Man').present?
+      assert page.has_link? 'Man', class: 'bg-success'
       click_link 'Woman'
     end
     visit current_url
@@ -103,8 +103,8 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     within '.section-navigation' do
       click_link 'Single accompaniment'
-      assert page.find('a.bg-success', text: 'Man').present?
-      assert page.find('a.bg-success', text: 'Woman').present?
+      assert page.has_link? 'Man', class: 'bg-success'
+      assert page.has_link? 'Woman', class: 'bg-success'
       click_link 'Woman'
     end
     visit current_url
@@ -175,7 +175,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? 'Resigned'
     end
     within '.section-navigation' do
-      click_link 'Acceptance'
+      click_link 'Affirmation: Not resigned'
       click_link 'Resigned'
     end
     visit current_url

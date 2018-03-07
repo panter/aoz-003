@@ -15,9 +15,7 @@ class KursartTransform < Transformer
     update_timestamps(group_offer_category, kursart[:d_MutDatum])
   end
 
-  def import_all
-    @kursarten.all.map do |key, kurs|
-      get_or_create_by_import(key, kurs)
-    end
+  def default_all
+    @kursarten.all
   end
 end

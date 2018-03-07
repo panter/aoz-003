@@ -48,13 +48,7 @@ class AssignmentTransform < Transformer
     update_timestamps(assignment, fw_einsatz[:d_MutDatum])
   end
 
-  def import_multiple(freiwilligen_einsaetze)
-    freiwilligen_einsaetze.map do |key, fw_einsatz|
-      get_or_create_by_import(key, fw_einsatz)
-    end
-  end
-
-  def import_all(freiwilligen_einsaetze = nil)
-    import_multiple(freiwilligen_einsaetze || @freiwilligen_einsaetze.where_begleitung)
+  def default_all
+    @freiwilligen_einsaetze.where_begleitung
   end
 end

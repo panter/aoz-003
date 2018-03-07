@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180219131415) do
+ActiveRecord::Schema.define(version: 20180223131033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -242,8 +242,21 @@ ActiveRecord::Schema.define(version: 20180219131415) do
     t.index ["deleted_at"], name: "index_email_templates_on_deleted_at"
   end
 
+  create_table "event_volunteers", force: :cascade do |t|
+    t.bigint "volunteer_id"
+    t.bigint "event_id"
+    t.bigint "creator_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_event_volunteers_on_creator_id"
+    t.index ["deleted_at"], name: "index_event_volunteers_on_deleted_at"
+    t.index ["event_id"], name: "index_event_volunteers_on_event_id"
+    t.index ["volunteer_id"], name: "index_event_volunteers_on_volunteer_id"
+  end
+
   create_table "events", force: :cascade do |t|
-    t.integer "kind", default: 0
+    t.integer "kind"
     t.date "date"
     t.time "start_time"
     t.time "end_time"
