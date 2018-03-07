@@ -97,8 +97,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     page.find_all(selector).all?(&:checked?)
   end
 
-  def selectize_select(field, value)
-    page.execute_script %Q{ $('.#{field} .selectize-input').click(); }
-    page.execute_script %Q{ $('.#{field} .selectize-dropdown-content .option:contains("#{value}")').click(); }
+  def selectize_select(value)
+    page.find('div.selectize-input input', match: :first).set("#{value}")  # fill in the input field
+    page.find('div.selectize-dropdown-content > div', match: :first).click  # select the first response from the dropdown that appears
   end
 end

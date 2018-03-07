@@ -36,7 +36,7 @@ class EventsTest < ApplicationSystemTestCase
     visit event_path(@event)
 
     assert page.has_text? 'Neue Teilnehmende hinzufügen'
-    selectize_select('event_volunteer_volunteer_id', @volunteer1)
+    selectize_select(@volunteer1.full_name)
     click_button 'Teilnehmer/in hinzufügen'
 
     within '.event-volunteers-table' do
@@ -49,18 +49,16 @@ class EventsTest < ApplicationSystemTestCase
     visit event_path(@event)
 
     # adding first volunteer to the event
-    selectize_select('event_volunteer_volunteer_id', @volunteer1)
+    selectize_select(@volunteer1.full_name)
     click_button 'Teilnehmer/in hinzufügen'
-    visit event_path(@event)
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
       refute page.has_text? @volunteer2.full_name
     end
 
     # adding second volunteer to the event
-    selectize_select('event_volunteer_volunteer_id', @volunteer2)
+    selectize_select(@volunteer2)
     click_button 'Teilnehmer/in hinzufügen'
-    visit event_path(@event)
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
       assert page.has_text? @volunteer2.full_name
@@ -133,9 +131,8 @@ class EventsTest < ApplicationSystemTestCase
   test 'adding a volunteers twice to an event does not work' do
     visit event_path(@event)
 
-    selectize_select('event_volunteer_volunteer_id', @volunteer1)
+    selectize_select(@volunteer1)
     click_button 'Teilnehmer/in hinzufügen'
-    visit event_path(@event)
 
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
