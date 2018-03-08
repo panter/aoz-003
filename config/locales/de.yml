@@ -348,7 +348,7 @@ de:
       event:
         kinds: *id-kinds-event
       event_volunteer:
-        volunteer-id: Freiwillige/r
+        volunteer_id: Freiwillige/r
       group_assignment:
         <<: *id-termination-attrs
         member: Mitglied
@@ -520,7 +520,7 @@ de:
         event_volunteer:
           attributes:
             volunteer:
-              required: Freiwillige/r muss ausgewählt werden.
+              required: muss ausgewählt werden.
     models:
       assignment: Begleitung
       feedback: Feedback

@@ -21,7 +21,7 @@ class EventVolunteerTest < ActiveSupport::TestCase
     event_volunteer = build :event_volunteer, volunteer: @volunteer, event: @event, creator: create(:user)
 
     refute event_volunteer.valid?
-    assert_equal ["ist bereits in dieser Veranstaltung."], event_volunteer.errors[:volunteer_id]
+    assert_equal ["Freiwillige/r ist bereits in dieser Veranstaltung."], event_volunteer.errors.full_messages_for(:volunteer_id)
   end
 
   test 'presence validations' do

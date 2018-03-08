@@ -127,4 +127,20 @@ class EventsTest < ApplicationSystemTestCase
     assert page.has_text? 'second_page'
     refute page.has_text? 'first_page'
   end
+
+  test 'adding a volunteers twice to an event does not work' do
+    visit event_path(@event)
+
+    selectize_select('event_volunteer_volunteer', @volunteer1)
+    click_button 'Teilnehmer/in hinzufügen'
+
+    assert page.has_text? 'Teilnehmer/in erfolgreich hinzugefügt.'
+
+    within '.event-volunteers-table' do
+      assert page.has_text? @volunteer1
+    end
+
+    selectize_fill('event_volunteer_volunteer', @volunteer1)
+    refute page.has_css?('.selectize-dropdown-content .option', text: @volunteer1)
+  end
 end
