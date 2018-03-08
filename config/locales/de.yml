@@ -1,265 +1,263 @@
 ---
 de:
-  aaa_injectable: &id-injectables
-    termination_attributes: &id-termination-attrs
-      term_feedback_activities: 'Endfeedback: Hauptaktivitäten'
-      term_feedback_success: 'Endfeedback: Erfolge'
-      term_feedback_problems: 'Endfeedback: Probleme'
-      term_feedback_transfair: 'Endfeedback: TransFair'
-    termination_feedback_questions: &id-termination-feedback-quests
-      term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
-      term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
-      term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
-      term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
-    reminder_mailings:
-      kinds: &id-kinds-enum-values
-        trial_period: Probezeit
-        half_year: Halbjährlich
-        termination: Beendigung
-    acceptance: &id-client-acceptance
-      accepted: Angemeldet
-      rejected: Abgelehnt
-      resigned: Beendet
-      not_resigned: Nicht beendet
-    age_request: &id-age_requests
-      age_middle: 36 - 50
-      age_no_matter: egal
-      age_old: älter als 51
-      age_young: 20 - 35
-      all: Alle
-    assignment_kinds: &id-assignment-kinds
-      assignment: Tandem
-      group_offer: Gruppenangebot
-      accompaniment: Einzelperson
-      family: Familie
-      german_class: Deutschkurs
-      transit_center: Durchgangszentrum
-      workshop: Handwerkstatt
-    availability: &id-availability
-      afternoon: Nachmittags
-      detailed_description: Genauere Angaben
-      evening: Abends
-      flexible: Flexibel
-      morning: Morgens
-      weekend: Wochenende
-      workday: Werktags
-    category: &id-categories
-      conversation: Gespräch
-      email: E-Mail
-      feedback: Rückmeldung
-      telephone: Telefonat
-    clients:
-      client:
-        acceptance: *id-client-acceptance
-      show:
-        acceptance: *id-client-acceptance
-      show_navigation:
-        acceptance: *id-client-acceptance
-    created_at: Erstellt um
-    cost_unit: &id-client-cost-units
-      city: Stadt
-      municipality: Gemeinde
-      canton: Kanton
-    email_templates:
-      kind: &id-kinds-template
-        assignment: Begleitung
-        signup: Anmeldung
-        trial: Probezeit
-        half_year: Halbjährlich
-        termination: Beendigung
-      index:
-        <<: *id-kinds-template
-      show:
-        <<: *id-kinds-template
-    events:
-      kind: &id-kinds-event
-        intro_course: Einführungsveranstaltung
-        professional_training: Weiterbildung
-        professional_event: Fachveranstaltung
-        theme_exchange: Erfahrungsaustausch/Themenabend
-        volunteering: Freiwilligenanlass
-        german_class_managers: Treffen Deutschkursleitende
-      index:
-        <<: *id-kinds-event
-      show:
-        <<: *id-kinds-event
-      volunteer_events:
-        <<: *id-kinds-event
-    gender_request: &id-gender_requests
-      all: Alle
-      man: Mann
-      no_matter: egal
-      woman: Frau
-    generic_keys: &id-generic_keys
-      address: Adresse
-      avatar: Foto
-      birth_year: Jahrgang
-      city: Ort
-      created_at: Erstellt am
-      created_by: Angemeldet von
-      email: Email
-      first_name: Vorname
-      full_name: Name
-      hours: Stunden
-      languages: Sprachen
-      last_name: Nachname
-      minutes: Minuten
-      nationality: Nationalität
-      phone: Telefonnummer
-      postal_code: PLZ
-      profession: Beruf
-      salutation: Anrede
-      state: Status
-      street: Strasse
-      updated_at: Aktualisiert am
-      zip: Postleitzahl
-    group_assignments:
-      volunteer_group_assignments:
-        activate: Aktivieren
-        deactivate: Deaktivieren
-    group_offer_categories:
-      index:
-        category_states: &id-group-offer-category-states
-          active: Aktiv
-          inactive: Inaktiv
-        group_offers: Gruppenangebote
-        group_offer_categories: Gruppenangebot Kategorien
-      show:
-        category_states: *id-group-offer-category-states
-    group_offers:
-      one: Gruppenangebot
-      other: Gruppenangebote
-      change_active_state:
-        activated: Gruppenangebot wurde erfolgreich aktiviert.
-        deactivated: Gruppenangebot wurde erfolgreich deaktiviert.
-        no-change: Gruppenangebot konnte nicht aktualisiert werden.
-      index: &id-help-texts
-        activate: Aktivieren
-        deactivate: Deaktivieren
-        group_offer_categories: Gruppenangebot Kategorien
-        necessary_volunteers: 'Benötigt %{amount} Freiwillige'
-        offer_of: Angebot von
-      show: *id-help-texts
-      form:
-        location_external: Ort (betrifft externe Gruppenangebote)
-        organization_external: Organisation (betrifft externe Gruppenangebote)
-    language_level: &id-lang-levels
-      basic: Wenig
-      fluent: Mittel
-      good: Gut
-      native_speaker: Muttersprache
-    offer_state: &id-offer-states
-      full: Voll
-      open: Offen
-      partially_occupied: Teilweise besetzt
-    offer_type: &id-offer-types
-      external_offer: Externes Gruppenangebot
-      internal_offer: Internes Gruppenangebot
-    messages:
-      confirm_delete: "Wirklich %{model} %{record} löschen?"
-      confirm_record_delete: '%{model} wirklich löschen?'
-      select_prompt: "%{model} wählen"
-    rejection_type: &id-rejection-types
-      her: von Freiwillige/r vor / nach Erstgespräch
-      other: Anderer Grund
-      us: durch uns vor / nach Gespräch
-    relation: &id-relations
-      aunt: Tante
-      brother: Bruder
-      daughter: Tochter
-      father: Vater
-      husband: (Ehe-)Partner
-      mother: Mutter
-      sister: Schwester
-      son: Sohn
-      uncle: Onkel
-      wife: (Ehe-)Partnerin
-    role: &id-roles
-      department_manager: Freiwilligenverantwortliche/r
-      social_worker: Sozialarbeiter/in
-      superadmin: Superadmin
-      volunteer: Freiwillige/r
-    salutation: &id-salutations
-      all: Alle
-      family: Familie
-      mr: Herr
-      mrs: Frau
-    state: &id-states
+  termination_attributes: &id-termination-attrs
+    term_feedback_activities: 'Endfeedback: Hauptaktivitäten'
+    term_feedback_success: 'Endfeedback: Erfolge'
+    term_feedback_problems: 'Endfeedback: Probleme'
+    term_feedback_transfair: 'Endfeedback: TransFair'
+  termination_feedback_questions: &id-termination-feedback-quests
+    term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
+    term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
+    term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
+    term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
+  reminder_mailings:
+    kinds: &id-kinds-enum-values
+      trial_period: Probezeit
+      half_year: Halbjährlich
+      termination: Beendigung
+  acceptance: &id-client-acceptance
+    accepted: Angemeldet
+    rejected: Abgelehnt
+    resigned: Beendet
+    not_resigned: Nicht beendet
+  age_request: &id-age_requests
+    age_middle: 36 - 50
+    age_no_matter: egal
+    age_old: älter als 51
+    age_young: 20 - 35
+    all: Alle
+  assignment_kinds: &id-assignment-kinds
+    assignment: Tandem
+    group_offer: Gruppenangebot
+    accompaniment: Einzelperson
+    family: Familie
+    german_class: Deutschkurs
+    transit_center: Durchgangszentrum
+    workshop: Handwerkstatt
+  availability: &id-availability
+    afternoon: Nachmittags
+    detailed_description: Genauere Angaben
+    evening: Abends
+    flexible: Flexibel
+    morning: Morgens
+    weekend: Wochenende
+    workday: Werktags
+  category: &id-categories
+    conversation: Gespräch
+    email: E-Mail
+    feedback: Rückmeldung
+    telephone: Telefonat
+  clients:
+    client:
+      acceptance: *id-client-acceptance
+    show:
+      acceptance: *id-client-acceptance
+    show_navigation:
+      acceptance: *id-client-acceptance
+  created_at: Erstellt um
+  cost_unit: &id-client-cost-units
+    city: Stadt
+    municipality: Gemeinde
+    canton: Kanton
+  email_templates:
+    kind: &id-kinds-template
+      assignment: Begleitung
+      signup: Anmeldung
+      trial: Probezeit
+      half_year: Halbjährlich
+      termination: Beendigung
+    index:
+      <<: *id-kinds-template
+    show:
+      <<: *id-kinds-template
+  events:
+    kind: &id-kinds-event
+      intro_course: Einführungsveranstaltung
+      professional_training: Weiterbildung
+      professional_event: Fachveranstaltung
+      theme_exchange: Erfahrungsaustausch/Themenabend
+      volunteering: Freiwilligenanlass
+      german_class_managers: Treffen Deutschkursleitende
+    index:
+      <<: *id-kinds-event
+    show:
+      <<: *id-kinds-event
+    volunteer_events:
+      <<: *id-kinds-event
+  gender_request: &id-gender_requests
+    all: Alle
+    man: Mann
+    no_matter: egal
+    woman: Frau
+  generic_keys: &id-generic_keys
+    address: Adresse
+    avatar: Foto
+    birth_year: Jahrgang
+    city: Ort
+    created_at: Erstellt am
+    created_by: Angemeldet von
+    email: Email
+    first_name: Vorname
+    full_name: Name
+    hours: Stunden
+    languages: Sprachen
+    last_name: Nachname
+    minutes: Minuten
+    nationality: Nationalität
+    phone: Telefonnummer
+    postal_code: PLZ
+    profession: Beruf
+    salutation: Anrede
+    state: Status
+    street: Strasse
+    updated_at: Aktualisiert am
+    zip: Postleitzahl
+  group_assignments:
+    volunteer_group_assignments:
+      activate: Aktivieren
+      deactivate: Deaktivieren
+  group_offer_categories:
+    index:
+      category_states: &id-group-offer-category-states
+        active: Aktiv
+        inactive: Inaktiv
+      group_offers: Gruppenangebote
+      group_offer_categories: Gruppenangebot Kategorien
+    show:
+      category_states: *id-group-offer-category-states
+  group_offers:
+    one: Gruppenangebot
+    other: Gruppenangebote
+    change_active_state:
+      activated: Gruppenangebot wurde erfolgreich aktiviert.
+      deactivated: Gruppenangebot wurde erfolgreich deaktiviert.
+      no-change: Gruppenangebot konnte nicht aktualisiert werden.
+    index: &id-help-texts
+      activate: Aktivieren
+      deactivate: Deaktivieren
+      group_offer_categories: Gruppenangebot Kategorien
+      necessary_volunteers: 'Benötigt %{amount} Freiwillige'
+      offer_of: Angebot von
+    show: *id-help-texts
+    form:
+      location_external: Ort (betrifft externe Gruppenangebote)
+      organization_external: Organisation (betrifft externe Gruppenangebote)
+  language_level: &id-lang-levels
+    basic: Wenig
+    fluent: Mittel
+    good: Gut
+    native_speaker: Muttersprache
+  offer_state: &id-offer-states
+    full: Voll
+    open: Offen
+    partially_occupied: Teilweise besetzt
+  offer_type: &id-offer-types
+    external_offer: Externes Gruppenangebot
+    internal_offer: Internes Gruppenangebot
+  messages:
+    confirm_delete: "Wirklich %{model} %{record} löschen?"
+    confirm_record_delete: '%{model} wirklich löschen?'
+    select_prompt: "%{model} wählen"
+  rejection_type: &id-rejection-types
+    her: von Freiwillige/r vor / nach Erstgespräch
+    other: Anderer Grund
+    us: durch uns vor / nach Gespräch
+  relation: &id-relations
+    aunt: Tante
+    brother: Bruder
+    daughter: Tochter
+    father: Vater
+    husband: (Ehe-)Partner
+    mother: Mutter
+    sister: Schwester
+    son: Sohn
+    uncle: Onkel
+    wife: (Ehe-)Partnerin
+  role: &id-roles
+    department_manager: Freiwilligenverantwortliche/r
+    social_worker: Sozialarbeiter/in
+    superadmin: Superadmin
+    volunteer: Freiwillige/r
+  salutation: &id-salutations
+    all: Alle
+    family: Familie
+    mr: Herr
+    mrs: Frau
+  state: &id-states
+    accepted: Akzeptiert
+    active: Aktiv
+    active_further: Aktiv, an weiteren Einsätzen interessiert
+    all: Alle
+    contacted: Kontaktiert
+    finished: Abgeschlossen
+    inactive: Inaktiv
+    invited: Eingeladen
+    interested: Interessiert
+    registered: Registriert
+    rejected: Abgelehnt
+    reserved: Reserviert
+    resigned: Abgemeldet
+    undecided: Angemeldet
+  updated_at: Geändert um
+  volunteer_applications: &id-volunteers-by-actions
+    feedback:
+      new: Neues Feedback
+      index: Feedback Liste
+    acceptance: &id-volunteer-acceptance
+      management: Aufnahme Verwaltung
       accepted: Akzeptiert
-      active: Aktiv
-      active_further: Aktiv, an weiteren Einsätzen interessiert
-      all: Alle
-      contacted: Kontaktiert
-      finished: Abgeschlossen
-      inactive: Inaktiv
+      accept: Akzeptieren
+      accepted_at: Akzeptiert am
       invited: Eingeladen
-      interested: Interessiert
+      invited_at: Eingeladen am
       registered: Registriert
+      registered_at: Registriert am
       rejected: Abgelehnt
-      reserved: Reserviert
-      resigned: Abgemeldet
+      reject: Ablehnen
+      rejected_at: Abgelehnt am
+      resigned: Beendet
+      resign: Austreten
+      resigned_at: Beendet am
       undecided: Angemeldet
-    updated_at: Geändert um
-    volunteer_applications: &id-volunteers-by-actions
-      feedback:
-        new: Neues Feedback
-        index: Feedback Liste
-      acceptance: &id-volunteer-acceptance
-        management: Aufnahme Verwaltung
-        accepted: Akzeptiert
-        accept: Akzeptieren
-        accepted_at: Akzeptiert am
-        invited: Eingeladen
-        invited_at: Eingeladen am
-        registered: Registriert
-        registered_at: Registriert am
-        rejected: Abgelehnt
-        reject: Ablehnen
-        rejected_at: Abgelehnt am
-        resigned: Beendet
-        resign: Austreten
-        resigned_at: Beendet am
-        undecided: Angemeldet
-        undecided_at: Angemeldet am
-        not_resigned: Nicht beendet
-      create: &id-volunteers-create
-        <<: *id-availability
-        acceptance: *id-volunteer-acceptance
-        availability: Verfügbarkeit?
-        availability_question: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
-      edit: *id-volunteers-create
-      form:
-        <<: [*id-volunteers-create, *id-volunteer-acceptance]
-        state: &id-volunteer-active-states
-      index: &id-volunteers-index
-        <<: [*id-volunteers-create, *id-volunteer-acceptance, *id-states]
-        state: &id-volunteer-active-states
-        show_assignments: Begleitete anzeigen
-      new:
-        <<: [*id-volunteers-create, *id-volunteer-acceptance]
-      one: Freiwillige/r
-      other: Freiwillige
-      show:
-        <<: [*id-volunteers-index]
-        acceptance: *id-volunteer-acceptance
-        state: *id-volunteer-active-states
-        availability: Verfügbarkeit
-        group_assignments: Aktuelle Gruppenangebote
-        hour_reports: Stunden Rapporte
-        new_certificate: Nachweis ausstellen
-        old_group_assignments: Archivierte Gruppenangebote
-        report_hours: Stunden erfassen
-        show_certificate: Nachweis anzeigen
-        show_certificates: Nachweise anzeigen
-      volunteer:
-        <<: *id-volunteers-index
-        acceptance: *id-volunteer-acceptance
-        state: *id-volunteer-active-states
-    volunteer_state: &id-volunteer-states
-      external_volunteer: Externe Freiwillige
-      internal_volunteer: AOZ-Freiwillige
-    volunteers: *id-volunteers-by-actions
-  <<: *id-injectables
+      undecided_at: Angemeldet am
+      not_resigned: Nicht beendet
+    create: &id-volunteers-create
+      <<: *id-availability
+      acceptance: *id-volunteer-acceptance
+      availability: Verfügbarkeit?
+      availability_question: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+    edit: *id-volunteers-create
+    form:
+      <<: [*id-volunteers-create, *id-volunteer-acceptance]
+      state: &id-volunteer-active-states
+    index: &id-volunteers-index
+      <<: [*id-volunteers-create, *id-volunteer-acceptance, *id-states]
+      state: &id-volunteer-active-states
+      show_assignments: Begleitete anzeigen
+    new:
+      <<: [*id-volunteers-create, *id-volunteer-acceptance]
+    one: Freiwillige/r
+    other: Freiwillige
+    show:
+      <<: [*id-volunteers-index]
+      acceptance: *id-volunteer-acceptance
+      state: *id-volunteer-active-states
+      availability: Verfügbarkeit
+      group_assignments: Aktuelle Gruppenangebote
+      hour_reports: Stunden Rapporte
+      new_certificate: Nachweis ausstellen
+      old_group_assignments: Archivierte Gruppenangebote
+      report_hours: Stunden erfassen
+      show_certificate: Nachweis anzeigen
+      show_certificates: Nachweise anzeigen
+    volunteer:
+      <<: *id-volunteers-index
+      acceptance: *id-volunteer-acceptance
+      state: *id-volunteer-active-states
+  volunteer_state: &id-volunteer-states
+    external_volunteer: Externe Freiwillige
+    internal_volunteer: AOZ-Freiwillige
+  volunteers: *id-volunteers-by-actions
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
   clear_filters: Filter aufheben
