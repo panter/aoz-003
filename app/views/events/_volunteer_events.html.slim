@@ -5,7 +5,6 @@ button.btn.btn-default(data-toggle='collapse' data-target='#volunteer-events' ty
     table.table
       thead
         tr
-          th Titel
           th Art
           th Datum
           th Zeit
@@ -15,7 +14,6 @@ button.btn.btn-default(data-toggle='collapse' data-target='#volunteer-events' ty
       tbody
         - events.each do |event|
           tr
-            td= event.title
             td= t(".#{event.kind}") if event.kind
             td= l(event.date) if event.date
             td
