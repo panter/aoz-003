@@ -57,7 +57,12 @@ class PerformanceReportTest < ActiveSupport::TestCase
     assignment_trial_feedbacks: 0,
     group_offer_trial_feedbacks: 0,
     total_trial_feedbacks: 0,
-    intro_course_events: 0,
+    intro_course: 0,
+    professional_training: 0,
+    professional_event: 0,
+    theme_exchange: 0,
+    volunteering: 0,
+    german_class_managers: 0,
     total_events: 0
   }.stringify_keys.freeze
 
@@ -187,23 +192,35 @@ class PerformanceReportTest < ActiveSupport::TestCase
 
     # events
 
-    intro_event_this_year = create :event, kind: :intro_course, date: @this_periods.first
-    intro_event_last_year = create :event, kind: :intro_course, date: @last_periods.first
-    other_event_this_year = create :event, kind: :professional_training, date: @this_periods.first
+    Event.kinds.each_key do |kind|
+      event_this_year = create :event, kind: kind, date: @this_periods.first
+      event_last_year = create :event, kind: kind, date: @last_periods.first
 
-    create :event_volunteer, event: intro_event_this_year, volunteer: volunteer_zurich_this_year
-    create :event_volunteer, event: intro_event_this_year, volunteer: volunteer_zurich_this_year2
-    create :event_volunteer, event: intro_event_last_year, volunteer: volunteer_zurich_last_year
-    create :event_volunteer, event: other_event_this_year, volunteer: volunteer_zurich_this_year
+      create :event_volunteer, event: event_this_year, volunteer: volunteer_zurich_this_year
+      create :event_volunteer, event: event_this_year, volunteer: volunteer_zurich_this_year2
+      create :event_volunteer, event: event_last_year, volunteer: volunteer_zurich_last_year
+    end
 
     refresh_reports
 
     expected_influenced_this_year.merge!(
-      intro_course_events: 2, total_events: 3
+      intro_course: 2,
+      professional_training: 2,
+      professional_event: 2,
+      theme_exchange: 2,
+      volunteering: 2,
+      german_class_managers: 2,
+      total_events: 12
     ).stringify_keys!
 
     expected_influenced_last_year.merge!(
-      intro_course_events: 1, total_events: 1
+      intro_course: 1,
+      professional_training: 1,
+      professional_event: 1,
+      theme_exchange: 1,
+      volunteering: 1,
+      german_class_managers: 1,
+      total_events: 6
     ).stringify_keys!
 
     assert_equal(expected_influenced_this_year, @this_year.report_content['volunteers']['all'])
