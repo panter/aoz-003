@@ -97,8 +97,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     page.find_all(selector).all?(&:checked?)
   end
 
-  def selectize_select(value)
-    page.find('div.selectize-input input', match: :first).set("#{value}")  # fill in the input field
-    page.find('div.selectize-dropdown-content > div', match: :first).click  # select the first response from the dropdown that appears
+  def selectize_select(field, value)
+    # fill in the input field
+    page.find(".#{field} div.selectize-input input").set(value)
+    # select the first dropdown item with given value
+    page.find(".#{field} div.selectize-dropdown-content .option", text: value).click
   end
 end
