@@ -16,4 +16,18 @@ class EventVolunteerTest < ActiveSupport::TestCase
     @event_volunteer.destroy
     refute @event_volunteer.volunteer.intro_course
   end
+
+  test 'adding same volunteer twice to an event does not work' do
+    event_volunteer = build :event_volunteer, volunteer: @volunteer, event: @event, creator: create(:user)
+
+    refute event_volunteer.valid?
+    assert_equal ["ist bereits in dieser Veranstaltung."], event_volunteer.errors[:volunteer_id]
+  end
+
+  test 'presence validations' do
+    event_volunteer = build :event_volunteer, volunteer: nil, event: nil, creator: nil
+
+    refute event_volunteer.valid?
+    assert_equal [:event, :volunteer, :creator], event_volunteer.errors.keys
+  end
 end

@@ -9,7 +9,7 @@ class EventVolunteersController < ApplicationController
     if @event_volunteer.save
       redirect_to @event, notice: 'Teilnehmer/in erfolgreich hinzugefügt.'
     else
-      render 'events/show'
+      redirect_to @event, notice: @event_volunteer.errors.full_messages.first
     end
   end
 
