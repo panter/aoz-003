@@ -19,12 +19,12 @@ class JournalsTest < ApplicationSystemTestCase
   test 'can_create_journal_entry_by_link_button_in_show' do
     visit client_path(create(:client))
     first('a', text: 'Journal').click
-    click_link 'New Journal'
-    assert page.has_text? 'New Journal'
-    fill_in 'Body', with: 'My bogus demo text body, just for this test.'
-    select('Telephone', from: 'Category')
-    click_button 'Create journal entry'
-    assert page.has_text? 'Journal was successfully created.'
+    click_link 'Journal erfassen'
+    assert page.has_text? 'Journal erfassen'
+    fill_in 'Text', with: 'My bogus demo text body, just for this test.'
+    select('Telefonat', from: 'Kategorie')
+    click_button 'Journaleintrag speichern'
+    assert page.has_text? 'Journal wurde erfolgreich erstellt.'
     assert page.has_text? 'My bogus demo text body, just for this test.'
   end
 
@@ -33,12 +33,12 @@ class JournalsTest < ApplicationSystemTestCase
 
     click_link 'Journal'
     assert page.has_text? @journal_volunteer.body
-    first('a', text: 'Edit').click
-    assert page.has_text? 'Edit Journal'
+    first('a', text: 'Bearbeiten').click
+    assert page.has_text? 'Journal bearbeiten'
     page.accept_confirm do
       first('a', text: 'Löschen').click
     end
-    assert page.has_text? 'Journal was successfully deleted.'
+    assert page.has_text? 'Journal wurde erfolgreich gelöscht.'
     click_link 'Journal'
     refute page.has_text? @journal_volunteer.body
   end

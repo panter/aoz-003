@@ -20,10 +20,10 @@ class EmailTemplatesTest < ApplicationSystemTestCase
   test 'changing another email to active deactivates the former active' do
     within 'tbody tr:last-child' do
       assert page.has_text? @other_email_template.subject
-      click_link 'Edit'
+      click_link 'Bearbeiten'
     end
     page.check('Aktiv')
-    click_button 'Update E-Mailvorlage'
+    click_button 'E-Mailvorlage aktualisieren'
     click_link 'Zurück'
     within 'tr.bg-success' do
       refute page.has_text? @email_template.subject

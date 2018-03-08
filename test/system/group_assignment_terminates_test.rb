@@ -72,17 +72,17 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
   test 'adding_hour_redirect_back_works' do
     login_as @volunteer.user
     visit terminate_group_assignment_path(@group_assignment)
-    click_link 'New Hour report'
+    click_link 'Stunde erfassen'
     assert page.has_text? @group_assignment.group_offer.to_label
     test_date = 1.year.ago
     select(test_date.day, from: 'hour_meeting_date_3i')
     select(I18n.t('date.month_names')[test_date.month], from: 'hour_meeting_date_2i')
     select(test_date.year, from: 'hour_meeting_date_1i')
     select(3, from: 'hour_hours')
-    fill_in 'Activity', with: 'my_tryout_activity_hour_thingie'
-    fill_in 'Comments', with: 'my_tryout_commment_hour_thingie'
-    click_button 'Create Hour report'
-    assert page.has_text? 'Hour report was successfully created.'
+    fill_in 'Tätigkeit / Was wurde gemacht', with: 'my_tryout_activity_hour_thingie'
+    fill_in 'Bemerkungen / Gab es etwas Besonderes', with: 'my_tryout_commment_hour_thingie'
+    click_button 'Stunde erfassen'
+    assert page.has_text? 'Stunde wurde erfolgreich erstellt.'
 
     within '.hours-table' do
       assert page.has_text? "3:#{'%02i' % 0}"
@@ -94,9 +94,9 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
   test 'adding_feedback_redirect_back_works' do
     login_as @volunteer.user
     visit terminate_group_assignment_path(@group_assignment)
-    click_link 'New Feedback'
-    fill_in 'Comments', with: 'my_newly_added_feedback_comment_text'
-    click_button 'Create Feedback'
+    click_link 'Feedback erfassen'
+    fill_in 'Bemerkungen', with: 'my_newly_added_feedback_comment_text'
+    click_button 'Feedback erfassen'
 
     within '.feedbacks-table' do
       assert page.has_text? 'my_newly_added_feedback_comment_text'

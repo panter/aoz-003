@@ -48,8 +48,8 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
 
   test 'filter by state' do
     within '.section-navigation#filters' do
-      click_link 'Offer state'
-      click_link 'Open'
+      click_link 'Status des FW-Einsatzes'
+      click_link 'Offen'
     end
     visit current_url
     within 'tbody' do
@@ -83,8 +83,8 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
 
   test 'filter_by_department_state_and_category' do
     within '.section-navigation#filters' do
-      click_link 'Offer state'
-      click_link 'Open'
+      click_link 'Status des FW-Einsatzes'
+      click_link 'Offen'
     end
     visit current_url
     within '.section-navigation#filters' do
@@ -101,8 +101,8 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       refute page.has_text? @part_d2.title
     end
     within '.section-navigation#filters' do
-      click_link 'Offer state: Open'
-      click_link 'All'
+      click_link 'Status des FW-Einsatzes: Offen'
+      click_link 'Alle'
     end
     visit current_url
     within 'tbody' do

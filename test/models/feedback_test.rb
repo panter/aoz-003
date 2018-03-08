@@ -5,7 +5,7 @@ class FeedbackTest < ActiveSupport::TestCase
     volunteer = create :volunteer_with_user
     invalid_feedback = Feedback.new(volunteer: volunteer, author: volunteer.user)
     refute invalid_feedback.valid?
-    assert_equal ["can't be blank"], invalid_feedback.errors.messages[:comments]
+    assert_equal ["darf nicht leer sein"], invalid_feedback.errors.messages[:comments]
   end
 
   test 'since_last_submitted_scope' do

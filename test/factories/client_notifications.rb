@@ -7,7 +7,7 @@ FactoryBot.define do
     active true
 
     trait :faker_text do
-      body { Faker::HeyArnold.quote }
+      body { FFaker::Lorem.paragraph }
     end
 
     factory :client_notification_seed, traits: [:faker_text]

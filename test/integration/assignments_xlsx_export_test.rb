@@ -11,7 +11,7 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
     wb = get_xls_from_response(assignments_url(format: :xlsx))
 
     assert_xls_cols_equal(wb, 1, 0, 'id', 'Freiwillige/r', 'Freiwillige/r Mailadresse',
-      'Klient/in', 'Start date', 'End date', 'Created at', 'Updated at')
+      'Klient/in', 'Einsatzbeginn', 'Einsatzende', 'Erstellt am', 'Aktualisiert am')
 
     assert_xls_cols_equal(wb, 2, 0, assignment.id,
       assignment.volunteer.contact.full_name, assignment.volunteer.contact.primary_email,

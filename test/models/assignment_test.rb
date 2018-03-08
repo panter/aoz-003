@@ -24,6 +24,6 @@ class AssignmentTest < ActiveSupport::TestCase
     assignment_dup.save
 
     refute assignment_dup.persisted?
-    assert assignment_dup.errors[:client_id].include?('Assignment already exists.')
+    assert_equal ['Die Begleitung existiert bereits.'], assignment_dup.errors[:client_id]
   end
 end

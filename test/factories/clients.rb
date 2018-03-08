@@ -46,22 +46,22 @@ FactoryBot.define do
       gender_request { Client::GENDER_REQUESTS.sample }
       age_request { Client::AGE_REQUESTS.sample }
       permit { Client::PERMITS.sample }
-      goals { Faker::Lorem.sentence }
-      education { Faker::Company.profession }
-      interests { Faker::Lorem.sentence }
-      comments { Faker::Lorem.sentence }
-      other_request { Faker::Lorem.sentence }
-      actual_activities { Faker::Lorem.sentence }
-      detailed_description { Faker::Lorem.sentence }
+      goals { FFaker::Lorem.sentence }
+      education { FFaker::Education.major }
+      interests { FFaker::Lorem.sentence }
+      comments { FFaker::Lorem.sentence }
+      other_request { FFaker::Lorem.sentence }
+      actual_activities { FFaker::Lorem.sentence }
+      detailed_description { FFaker::Lorem.sentence }
       nationality { ISO3166::Country.codes.sample }
     end
 
     after(:build) do |client|
       client.user ||= create(:user_fake_email)
       if client.salutation == 'mrs'
-        client.contact.first_name = I18n.t('faker.name.female_first_name', locale: :en).sample
+        client.contact.first_name = I18n.t('faker.name.female_first_name').sample
       elsif client.salutation == 'mr'
-        client.contact.first_name = I18n.t('faker.name.male_first_name', locale: :en).sample
+        client.contact.first_name = I18n.t('faker.name.male_first_name').sample
       end
     end
 

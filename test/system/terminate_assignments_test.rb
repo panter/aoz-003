@@ -28,15 +28,15 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    click_link 'New Hour report'
+    click_link 'Stunde erfassen'
     assert page.has_text? @assignment.to_label
     select(1.year.ago.day, from: 'hour_meeting_date_3i')
     select(I18n.t('date.month_names')[1.year.ago.month], from: 'hour_meeting_date_2i')
     select(1.year.ago.year, from: 'hour_meeting_date_1i')
     select(3, from: 'hour_hours')
-    fill_in 'Activity', with: 'my_tryout_activity_hour_thingie'
-    fill_in 'Comments', with: 'my_tryout_commment_hour_thingie'
-    click_button 'Create Hour report'
+    fill_in 'Tätigkeit / Was wurde gemacht', with: 'my_tryout_activity_hour_thingie'
+    fill_in 'Bemerkungen / Gab es etwas Besonderes', with: 'my_tryout_commment_hour_thingie'
+    click_button 'Stunde erfassen'
     assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
     assert page.has_text? 'my_tryout_activity_hour_thingie'
     assert page.has_text? 'my_tryout_commment_hour_thingie'
@@ -46,9 +46,9 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    click_link 'New Feedback'
-    fill_in 'Comments', with: 'my_tryout_feedback_comment_text_to_find'
-    click_button 'Create Feedback'
+    click_link 'Feedback erfassen'
+    fill_in 'Bemerkungen', with: 'my_tryout_feedback_comment_text_to_find'
+    click_button 'Feedback erfassen'
     assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
     assert page.has_text? 'my_tryout_feedback_comment_text_to_find'
   end
@@ -105,7 +105,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    refute page.find_field('I waived the compensation of my expenses.').checked?
+    refute page.find_field('Ich verzichte auf die Auszahlung von Spesen.').checked?
     page.check('assignment_volunteer_attributes_waive')
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'

@@ -12,13 +12,13 @@ class EventsTest < ApplicationSystemTestCase
 
   test 'new event form' do
     visit new_event_path
-    assert page.has_text? 'New Veranstaltung'
+    assert page.has_text? 'Veranstaltung erfassen'
     select('Einführungsveranstaltung', from: 'Art')
     fill_in 'Titel', with: 'Titel asdf'
     select('Event Department', from: 'Standort')
 
     fill_in 'Beschreibung', with: 'Beschreibung asdf'
-    click_button 'Create Veranstaltung'
+    click_button 'Veranstaltung erfassen'
 
     assert page.has_text? 'Titel asdf'
     assert page.has_text? 'Beschreibung asdf'
@@ -27,7 +27,7 @@ class EventsTest < ApplicationSystemTestCase
 
   test 'when creating a new event, it is not possible to add volunteers' do
     visit new_event_path
-    assert page.has_text? 'New Veranstaltung'
+    assert page.has_text? 'Veranstaltung erfassen'
     refute page.has_text? 'Neue Teilnehmende hinzufügen'
     refute page.has_select? 'event_volunteer_volunteer_id'
   end
@@ -90,8 +90,8 @@ class EventsTest < ApplicationSystemTestCase
       assert page.has_text? 'Event Department'
       assert page.has_text? @event.end_time.strftime('%H:%M')
       assert page.has_text? @event.start_time.strftime('%H:%M')
-      assert page.has_text? @event.date.strftime('%Y-%m-%d')
-      assert page.has_link? 'Show'
+      assert page.has_text? I18n.l(@event.date)
+      assert page.has_link? 'Anzeigen'
     end
   end
 

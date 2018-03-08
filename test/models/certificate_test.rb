@@ -4,7 +4,7 @@ class CertificateTest < ActiveSupport::TestCase
   test 'certificate is valid' do
     certificate = Certificate.new
     refute certificate.valid?
-    error_msgs = { volunteer: ['must exist'], user: ['must exist'] }
+    error_msgs = { volunteer: ['muss ausgefüllt werden'], user: ['muss ausgefüllt werden'] }
     assert_equal error_msgs, certificate.errors.messages
     certificate.user = create :user
     certificate.volunteer = create :volunteer_with_user

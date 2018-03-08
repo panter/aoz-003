@@ -1,6 +1,5 @@
 include ApplicationHelper
 
-Faker::Config.locale = 'de'
 EMAIL_DOMAIN = '@example.com'.freeze
 
 def puts_model_counts(lead, *models)
@@ -18,10 +17,10 @@ end
 def make_relatives
   Array.new(2).map do
     Relative.new do |relative|
-      relative.first_name = Faker::Name.first_name
-      relative.last_name = Faker::Name.last_name
+      relative.first_name = FFaker::Name.first_name
+      relative.last_name = FFaker::Name.last_name
       relative.relation = random_relation
-      relative.birth_year = Faker::Date.birthday(18, 65)
+      relative.birth_year = FFaker::Time.between(18.years.ago, 85.years.ago)
     end
   end
 end
@@ -43,7 +42,7 @@ superadmin_and_social_worker.each do |user|
   next if user.clients.count > 1
   journals = [
     Journal.new(
-      body: Faker::Lorem.sentence(rand(2..5)),
+      body: FFaker::Lorem.sentence(rand(2..5)),
       user: user,
       category: Journal::CATEGORIES.sample
     )
@@ -113,14 +112,14 @@ def assignment_generator(creator, create_day, start_date = nil, end_date = nil, 
   volunteer.update(created_at: create_day, updated_at: create_day + 1)
   client = FactoryBot.create(:client, acceptance: 'accepted', user: creator)
   client.update(created_at: create_day - 5)
-  start_date ||= Faker::Date.between(create_day, create_day + 50)
+  start_date ||= FFaker::Time.between(create_day, create_day + 50)
   assignment = FactoryBot.create(:assignment, volunteer: volunteer, period_start: start_date,
     period_end: end_date, creator: creator,
     client: FactoryBot.create(:client, acceptance: 'accepted', user: creator))
   assignment.update(created_at: create_day)
   if terminated_at.present?
     assignment.update(period_end_set_by: creator, termination_submitted_by: assignment.volunteer.user,
-      termination_submitted_at: Faker::Date.between(end_date, terminated_at), termination_verified_by: creator,
+      termination_submitted_at: FFaker::Time.between(end_date, terminated_at), termination_verified_by: creator,
       termination_verified_at: terminated_at)
   end
   assignment
@@ -130,15 +129,15 @@ def gemerate_feedback_and_hours(creator, hourable, start_date, end_date = nil, v
   volunteer = volunteer || hourable.volunteer
   end_date = end_date&.to_date || 2.days.ago.to_date
   start_date = start_date.to_date
-  meeting_date = Faker::Date.between(start_date + 1, end_date).to_date
+  meeting_date = FFaker::Time.between(start_date + 1, end_date).to_date
   hour = FactoryBot.create(:hour, volunteer: volunteer, hourable: hourable, meeting_date: meeting_date)
   hour.update(created_at: meeting_date + 1)
   feedback = FactoryBot.create(:feedback, volunteer: volunteer, feedbackable: hourable,
     author: volunteer.user)
-  feedback.update(created_at: Faker::Date.between(start_date + 1, end_date - 1))
+  feedback.update(created_at: FFaker::Time.between(start_date + 1, end_date - 1))
   trial_feedback = FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
     trial_feedbackable: hourable)
-  trial_feedback.update(created_at: Faker::Date.between(start_date + 6*7, start_date + 8*7))
+  trial_feedback.update(created_at: FFaker::Time.between(start_date + 6*7, start_date + 8*7))
 end
 
 
@@ -147,20 +146,20 @@ if Assignment.count < 1
   # trial Assignments
   creator = User.superadmins.first
   3.times do
-    start_date = Faker::Date.between(6.weeks.ago, 8.weeks.ago).to_date
+    start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago).to_date
     assignment = assignment_generator(creator, start_date - 2, start_date)
     gemerate_feedback_and_hours(creator, assignment, start_date)
   end
   # half_year Assignments
   3.times do
-    start_date = Faker::Date.between(6.months.ago, 12.months.ago).to_date
+    start_date = FFaker::Time.between(6.months.ago, 12.months.ago).to_date
     assignment = assignment_generator(creator, start_date - 2, start_date)
     gemerate_feedback_and_hours(creator, assignment, start_date)
   end
   # ended Assignments
   2.times do
-    start_date = Faker::Date.between(1.year.ago, 2.years.ago).to_date
-    end_date = Faker::Date.between(start_date + 100, 2.days.ago).to_date
+    start_date = FFaker::Time.between(1.year.ago, 2.years.ago).to_date
+    end_date = FFaker::Time.between(start_date + 100, 2.days.ago).to_date
     assignment = assignment_generator(creator, start_date - 10, start_date, end_date,
       terminated_at: end_date + 10)
     gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 10)
@@ -169,8 +168,8 @@ if Assignment.count < 1
   # Generate last year assignment for performance report
   2.times do
     create_day = 1.year.ago.to_date + 2
-    start_date = Faker::Date.between(create_day, create_day + 50).to_date
-    end_date = Faker::Date.between(create_day + 100, 1.year.ago.end_of_year.to_date - 2).to_date
+    start_date = FFaker::Time.between(create_day, create_day + 50).to_date
+    end_date = FFaker::Time.between(create_day + 100, 1.year.ago.end_of_year.to_date - 2).to_date
     assignment = assignment_generator(creator, start_date - 10, start_date, end_date,
       terminated_at: end_date + 10)
     gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 10)
@@ -178,16 +177,16 @@ if Assignment.count < 1
 
   # started last year, ends this year
   create_day = 1.year.ago.beginning_of_year.to_date + 10
-  start_date = Faker::Date.between(create_day, create_day + 50).to_date
-  end_date = Faker::Date.between(Time.zone.now.beginning_of_year.to_date + 2, 3.days.ago).to_date
+  start_date = FFaker::Time.between(create_day, create_day + 50).to_date
+  end_date = FFaker::Time.between(Time.zone.now.beginning_of_year.to_date + 2, 3.days.ago).to_date
   assignment = assignment_generator(creator, create_day, start_date, end_date,
     terminated_at: end_date + 3)
   gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 3)
 
   3.times do
     create_day = 2.years.ago.beginning_of_year.to_date + 10
-    start_date = Faker::Date.between(create_day, create_day + 50)
-    end_date = Faker::Date.between(create_day + 100, 2.years.ago.end_of_year.to_date - 2)
+    start_date = FFaker::Time.between(create_day, create_day + 50)
+    end_date = FFaker::Time.between(create_day + 100, 2.years.ago.end_of_year.to_date - 2)
     assignment = assignment_generator(creator, create_day, start_date, end_date,
       terminated_at: end_date + 3)
     gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 3)
@@ -200,26 +199,26 @@ Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sa
      .each do |group_offer|
   creator = User.superadmins.first
   volunteers = Array.new(4).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
-  start_date = Faker::Date.between(6.weeks.ago, 8.weeks.ago)
+  start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
     period_start: start_date, period_end: nil)
   gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.first)
 
-  start_date = Faker::Date.between(6.months.ago, 12.months.ago)
+  start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.second, group_offer: group_offer,
     period_start: start_date, period_end: nil)
   gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.second)
 
   # ended GroupAssignments
-  start_date = Faker::Date.between(6.months.ago, 12.months.ago)
-  end_date = Faker::Date.between(1.week.ago, 3.days.ago)
+  start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
+  end_date = FFaker::Time.between(1.week.ago, 3.days.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.third, group_offer: group_offer,
     period_start: start_date, period_end: end_date)
   gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.third)
 
   group_assignment = GroupAssignment.create(volunteer: volunteers.fourth, group_offer: group_offer,
-    period_start: Faker::Date.between(6.months.ago, 12.months.ago),
-    period_end: Faker::Date.between(1.week.ago, 3.days.ago))
+    period_start: FFaker::Time.between(6.months.ago, 12.months.ago),
+    period_end: FFaker::Time.between(1.week.ago, 3.days.ago))
   gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.fourth)
 end
 puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,

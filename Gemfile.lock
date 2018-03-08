@@ -179,8 +179,7 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faker (1.8.7)
-      i18n (>= 0.7)
+    ffaker (2.8.1)
     ffi (1.9.18)
     font-awesome-rails (4.7.0.3)
       railties (>= 3.2, < 5.2)
@@ -448,7 +447,7 @@ DEPENDENCIES
   devise-i18n
   devise_invitable
   factory_bot_rails
-  faker
+  ffaker
   font-awesome-rails
   i18n_data
   i18n_rails_helpers

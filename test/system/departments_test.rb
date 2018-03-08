@@ -28,8 +28,8 @@ class DepartmentsTest < ApplicationSystemTestCase
     visit departments_path
     Department.all.sample do |d|
       assert page.has_text? d.contact.last_name
-      assert page.has_link? 'Show', href: department_path(d.id)
-      assert page.has_link? 'Edit', href: edit_department_path(d.id)
+      assert page.has_link? 'Anzeigen', href: department_path(d.id)
+      assert page.has_link? 'Bearbeiten', href: edit_department_path(d.id)
       assert page.has_link? 'Löschen', href: department_path(d.id)
     end
   end
@@ -38,23 +38,23 @@ class DepartmentsTest < ApplicationSystemTestCase
     assocable_users = User.department_assocable
     login_as @superadmin
     visit departments_path
-    click_link 'New Department'
+    click_link 'Standort erfassen'
     assocable_users.each do |u|
       check u.to_s
     end
     fill_in 'Name', with: 'Bogus Hog Department'
-    fill_in 'Street', with: 'bogus street 999'
-    fill_in 'Extended address', with: 'bogus ext. addr.'
-    fill_in 'Zip', with: '9999'
-    fill_in 'City', with: 'bogus town'
-    fill_in 'Primary email', with: 'department@aoz.ch'
-    fill_in 'Primary phone', with: '0441234567'
-    click_button 'Create Department'
-    assert page.has_text? 'Department was successfully created.'
+    fill_in 'Strasse', with: 'bogus street 999'
+    fill_in 'Adresszusatz', with: 'bogus ext. addr.'
+    fill_in 'PLZ', with: '9999'
+    fill_in 'Ort', with: 'bogus town'
+    fill_in 'Mailadresse', with: 'department@aoz.ch'
+    fill_in 'Telefonnummer', with: '0441234567'
+    click_button 'Standort erfassen'
+    assert page.has_text? 'Standort wurde erfolgreich erstellt.'
     assert page.has_text? 'Bogus Hog Department'
-    assert page.has_text? 'Street'
-    assert page.has_text? 'Extended address'
-    assert page.has_text? 'City'
+    assert page.has_text? 'Strasse'
+    assert page.has_text? 'Adresszusatz'
+    assert page.has_text? 'Ort'
     assert page.has_text? 'bogus street 999'
     assert page.has_text? 'bogus ext. addr.'
     assert page.has_text? '9999'
@@ -64,14 +64,14 @@ class DepartmentsTest < ApplicationSystemTestCase
     assocable_users.each do |user|
       assert page.has_link? user.full_name, href: /profiles\/#{user.profile.id}/
     end
-    assert page.has_link? 'Edit'
+    assert page.has_link? 'Standort bearbeiten'
     assert page.has_link? 'Zurück'
   end
 
   test 'As Department Manager there is a link in the Navbar to his department' do
     login_as @department_manager
     visit profile_path(@department_manager.profile.id)
-    assert page.has_link? 'Department',
+    assert page.has_link? 'Standort',
       href: department_path(@department_manager.department.first.id)
   end
 
@@ -80,13 +80,13 @@ class DepartmentsTest < ApplicationSystemTestCase
     visit edit_department_path(@department_manager.department.first.id)
     refute page.has_select? 'User'
     fill_in 'Name', with: 'Name changed'
-    fill_in 'Street', with: 'Street changed'
-    fill_in 'Extended address', with: 'Extended address changed'
-    fill_in 'Zip', with: 'Zip changed'
-    fill_in 'City', with: 'City changed'
-    fill_in 'Primary email', with: 'department@aoz.ch'
-    fill_in 'Primary phone', with: '0441234567'
-    click_button 'Update Department'
+    fill_in 'Strasse', with: 'Street changed'
+    fill_in 'Adresszusatz', with: 'Extended address changed'
+    fill_in 'PLZ', with: 'Zip changed'
+    fill_in 'Ort', with: 'City changed'
+    fill_in 'Mailadresse', with: 'department@aoz.ch'
+    fill_in 'Telefonnummer', with: '0441234567'
+    click_button 'Standort aktualisieren'
     assert page.has_text? 'Name changed'
     assert page.has_text? 'Street changed'
     assert page.has_text? 'Extended address changed'
@@ -99,8 +99,8 @@ class DepartmentsTest < ApplicationSystemTestCase
   test 'After logging in as Department Manager he should see his department' do
     visit new_user_session_path
     fill_in 'Email', with: @department_manager.email
-    fill_in 'Password', with: 'asdfasdf'
-    click_button 'Log in'
+    fill_in 'Passwort', with: 'asdfasdf'
+    click_button 'Anmelden'
     assert page.has_text? @department_manager.department.first.contact.last_name
     if @department_manager.department.first.contact.street.present?
       assert page.has_text? @department_manager.department.first.contact.street
@@ -134,7 +134,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit edit_department_path(department)
     page.check(department_manager_no_profile.email.to_s)
-    click_button 'Update Department'
+    click_button 'Standort aktualisieren'
 
     visit department_path(department)
     assert page.has_link? department_manager_no_profile.email

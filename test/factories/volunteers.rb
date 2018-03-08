@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :volunteer do
-    birth_year { Faker::Date.birthday(18, 85) }
+    birth_year { FFaker::Time.between(18.years.ago, 85.years.ago) }
     contact
     salutation { ['mr', 'mrs'].sample }
     acceptance :accepted
@@ -53,8 +53,8 @@ FactoryBot.define do
     end
 
     trait :faker_extra do
-      profession { Faker::Company.profession }
-      working_percent { "#{Faker::Number.between(1, 10)}0" }
+      profession { FFaker::Job.title }
+      working_percent { "#{rand(1..10)}0" }
     end
 
     trait :fake_single_assignments do
@@ -76,9 +76,9 @@ FactoryBot.define do
 
     after(:build) do |volunteer|
       if volunteer.salutation == 'mrs'
-        volunteer.contact.first_name = I18n.t('faker.name.female_first_name', locale: :en).sample
+        volunteer.contact.first_name = I18n.t('faker.name.female_first_name').sample
       elsif volunteer.salutation == 'mr'
-        volunteer.contact.first_name = I18n.t('faker.name.male_first_name', locale: :en).sample
+        volunteer.contact.first_name = I18n.t('faker.name.male_first_name').sample
       end
     end
 

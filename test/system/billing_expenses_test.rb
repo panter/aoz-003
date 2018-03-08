@@ -12,11 +12,11 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     login_as superadmin
     visit volunteer_path(@volunteer)
-    click_button 'Create Billing expense'
+    click_button 'Spesenformular erfassen'
   end
 
   test 'superadmin can create a billing expense' do
-    assert page.has_text? 'Billing expense was successfully created.'
+    assert page.has_text? 'Spesenformular wurde erfolgreich erstellt.'
   end
 
   test 'created billing expenses collects hours from assignment and group offer' do
@@ -27,11 +27,11 @@ class BillingExpensesTest < ApplicationSystemTestCase
   end
 
   test 'no duplicate billing expenses' do
-    click_button 'Create Billing expense'
+    click_button 'Spesenformular erfassen'
     visit volunteer_path(@volunteer)
     assert_no_difference 'BillingExpense.count' do
-      click_button 'Create Billing expense'
-      assert page.has_text? 'There are no billable hours for this volunteer'
+      click_button 'Spesenformular erfassen'
+      assert page.has_text? 'Dieser Freiwillige hat keine verrechenbaren Stunden'
     end
   end
 
@@ -39,7 +39,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     within '.table-responsive' do
       assert page.has_link? @volunteer.contact.full_name
       assert page.has_text? @volunteer.contact.full_address
-      click_link 'Show'
+      click_link 'Anzeigen'
     end
     assert page.has_text? 'Spesenauszahlung an'
     assert page.has_text? 'Kostenstelle'
@@ -61,7 +61,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     create :hour, hourable: group_offer, volunteer: volunteer, hours: '3', minutes: '30'
 
     visit volunteer_path(volunteer)
-    click_button 'Create Billing expense'
-    assert page.has_text? 'Billing expense was successfully created.'
+    click_button 'Spesenformular erfassen'
+    assert page.has_text? 'Spesenformular wurde erfolgreich erstellt.'
   end
 end

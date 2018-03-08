@@ -25,39 +25,39 @@ class HoursTest < ApplicationSystemTestCase
   end
 
   test 'volunteer can create hour report for an assignment' do
-    click_link 'Report hours'
-    select @assignment1.to_label, from: 'Assignment'
+    click_link 'Stunden erfassen'
+    select @assignment1.to_label, from: 'Einsatz'
     within '#hour_meeting_date_3i' do
       select(Time.zone.today.day)
     end
     within '#hour_meeting_date_2i' do
-      select(Time.zone.today.strftime('%B'))
+      select(I18n.l Time.zone.today, format: '%B')
     end
     within '#hour_meeting_date_1i' do
       select(Time.zone.today.year)
     end
-    select '2', from: 'Hours'
-    select '15', from: 'Minutes'
-    click_button 'Create Hour report'
-    assert page.has_text? 'Hour report was successfully created.'
+    select '2', from: 'Stunden'
+    select '15', from: 'Minuten'
+    click_button 'Stunde erfassen'
+    assert page.has_text? 'Stunde wurde erfolgreich erstellt.'
   end
 
   test 'volunteer can create also an hour report for group offer' do
-    click_link 'Report hours'
-    select @group_offer1.to_label, from: 'Assignment'
+    click_link 'Stunden erfassen'
+    select @group_offer1.to_label, from: 'Einsatz'
     within '#hour_meeting_date_3i' do
       select(Time.zone.today.day)
     end
     within '#hour_meeting_date_2i' do
-      select(Time.zone.today.strftime('%B'))
+      select(I18n.l Time.zone.today, format: '%B')
     end
     within '#hour_meeting_date_1i' do
       select(Time.zone.today.year)
     end
-    select '2', from: 'Hours'
-    select '15', from: 'Minutes'
-    click_button 'Create Hour report'
-    assert page.has_text? 'Hour report was successfully created.'
+    select '2', from: 'Stunden'
+    select '15', from: 'Minuten'
+    click_button 'Stunde erfassen'
+    assert page.has_text? 'Stunde wurde erfolgreich erstellt.'
   end
 
   test 'volunteer can see only her assignment' do
@@ -70,11 +70,11 @@ class HoursTest < ApplicationSystemTestCase
     create :hour, hourable: @assignment1, volunteer: @volunteer1
     create :hour, hourable: assignment2, volunteer: volunteer2
 
-    click_link 'Hour reports'
+    click_link 'Stunden Rapporte'
     assert page.has_text? @client1.contact.full_name
     refute page.has_text? client2.contact.full_name
     visit volunteer_hours_path(volunteer2)
-    assert page.has_text? 'You are not authorized to perform this action.'
+    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
     refute page.has_text? client2.contact.full_name
   end
 
@@ -89,11 +89,11 @@ class HoursTest < ApplicationSystemTestCase
 
     create :hour, hourable: @group_offer1, volunteer: @volunteer1
     create :hour, hourable: group_offer2, volunteer: volunteer2
-    click_link 'Hour reports'
+    click_link 'Stunden Rapporte'
     assert page.has_text? @group_offer1.to_label
     refute page.has_text? group_offer2.to_label
     visit volunteer_hours_path(volunteer2)
-    assert page.has_text? 'You are not authorized to perform this action.'
+    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
     refute page.has_text? group_offer2.to_label
   end
 end

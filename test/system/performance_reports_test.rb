@@ -14,8 +14,8 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     two_years_ago = Time.zone.now.years_ago(2).year
     first(:link, 'Neuen Report erstellen').click
     click_link two_years_ago.to_s
-    click_button 'Create Performance Report'
-    assert page.has_text? 'Performance Report was successfully created.'
+    click_button 'Kennzahlen Report erfassen'
+    assert page.has_text? 'Kennzahlen Report wurde erfolgreich erstellt.'
     assert page.has_text? "Kennzahlen des Kalenderjahrs #{two_years_ago}"
   end
 

@@ -3,7 +3,7 @@ FactoryBot.define do
     client
     volunteer {}
     creator {}
-    period_start { [nil, Faker::Date.between(500.days.ago, 200.days.ago)].sample }
+    period_start { [nil, FFaker::Time.between(500.days.ago, 200.days.ago)].sample }
     period_end { nil }
 
     trait :active_this_year do

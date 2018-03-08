@@ -14,10 +14,10 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
 
     Client.with_deleted.where.not(id: client.id).map(&:really_destroy!)
     wb = get_xls_from_response(clients_url(format: :xlsx))
-    assert_xls_cols_equal(wb, 1, 0, 'id', 'Salutation', 'Name', 'First name', 'Street',
-      'Extended address', 'Zip', 'City', 'Primary phone', 'Secondary phone', 'Primary email',
-      'Birth year', 'Nationality', 'Education', 'Entry date', 'Affirmation', 'Created at',
-      'Updated at')
+    assert_xls_cols_equal(wb, 1, 0, 'id', 'Anrede', 'Nachname', 'Vorname', 'Strasse',
+      'Adresszusatz', 'PLZ', 'Ort', 'Telefonnummer', 'Telefonnummer 2', 'Mailadresse',
+      'Jahrgang', 'Nationalität', 'Beruf oder Ausbildung im Herkunftsland',
+      'Einreisedatum', 'Affirmation', 'Erstellt am', 'Aktualisiert am')
 
     assert_equal client.id.to_s, wb.cell(2, 1).to_s
     assert_xls_cols_equal(wb, 2, 1, I18n.t("salutation.#{client.salutation}"),

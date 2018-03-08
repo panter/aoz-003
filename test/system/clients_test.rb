@@ -11,51 +11,51 @@ class ClientsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit new_client_path
 
-    fill_in 'First name', with: 'asdf'
-    fill_in 'Last name', with: 'asdf'
+    fill_in 'Vorname', with: 'asdf'
+    fill_in 'Nachname', with: 'asdf'
     within '.client_birth_year' do
-      select('1995', from: 'Birth year')
+      select('1995', from: 'Jahrgang')
     end
-    select('Mrs.', from: 'Salutation')
-    select('Aruba', from: 'Nationality')
-    fill_in 'Entry date', with: 'Sept. 2015'
+    select('Frau', from: 'Anrede')
+    select('Aruba', from: 'Nationalität')
+    fill_in 'Einreisedatum', with: 'Sept. 2015'
     choose('client_permit_b')
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
-    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Secondary phone', with: '0123456789'
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
+    fill_in 'Telefonnummer', with: '0123456789', match: :first
+    fill_in 'Telefonnummer 2', with: '0123456789'
     within '#languages' do
-      choose('Good')
+      choose('Gut')
     end
     click_on('Sprache hinzufügen')
-    select('Akan', from: 'Language')
-    select('Fluent', from: 'Level')
-    click_on('Add family member')
+    select('Akan', from: 'Sprache')
+    select('Mittel', from: 'Niveau')
+    click_on('Verwandte hinzufügen')
     within '#relatives' do
-      fill_in 'First name', with: 'asdf'
-      fill_in 'Last name', with: 'asdf'
-      select('2001', from: 'Birth year')
-      select('Uncle', from: 'Relation')
+      fill_in 'Vorname', with: 'asdf'
+      fill_in 'Nachname', with: 'asdf'
+      select('2001', from: 'Jahrgang')
+      select('Onkel', from: 'Verwandtschaftsbeziehung')
     end
-    fill_in 'Goals', with: 'asdfasdf'
-    select("gender doesn't matter", from: "Volunteer's gender")
-    select('36 - 50', from: "Volunteer's age")
-    fill_in 'Other request', with: 'asdfasdf'
-    fill_in 'Education', with: 'asdfasdf'
-    fill_in 'Actual activities', with: 'asdfasdf'
-    fill_in 'Interests', with: 'asdfasdf'
-    select('Angemeldet', from: 'Acceptance')
-    fill_in 'Comments', with: 'asdfasdf'
-    fill_in 'Competent authority', with: 'asdfasdf'
-    select @social_worker.full_name, from: 'Involved authority'
-    select('Gemeinde', from: 'Cost unit')
+    fill_in 'Inhalte der Begleitung', with: 'asdfasdf'
+    select("egal", from: "Geschlecht Freiwillige/r")
+    select('36 - 50', from: "Alter Freiwillige/r")
+    fill_in 'Andere Anforderungen', with: 'asdfasdf'
+    fill_in 'Beruf oder Ausbildung im Herkunftsland', with: 'asdfasdf'
+    fill_in 'Aktuelle Tätigkeiten', with: 'asdfasdf'
+    fill_in 'Interessen', with: 'asdfasdf'
+    select('Angemeldet', from: 'Affirmation')
+    fill_in 'Bemerkungen', with: 'asdfasdf'
+    fill_in 'Anmeldende Stelle', with: 'asdfasdf'
+    select @social_worker.full_name, from: 'Fallführende Stelle'
+    select('Gemeinde', from: 'Kostenträger')
     page.check('client_evening')
-    fill_in 'Detailed Description', with: 'After 7'
+    fill_in 'Genauere Angaben', with: 'After 7'
 
-    click_button 'Create Client'
-    assert page.has_text? 'Client was successfully created.'
+    click_button 'Klient/in erfassen'
+    assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
     assert page.has_text? @social_worker.full_name
     @superadmin.clients.each do |client|
       assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
@@ -67,79 +67,78 @@ class ClientsTest < ApplicationSystemTestCase
   test 'new client form with preselected fields' do
     login_as @superadmin
     visit new_client_path
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Client'
-    fill_in 'Last name', with: "doesn't matter"
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Client'
+    fill_in 'Nachname', with: "doesn't matter"
+    fill_in 'Telefonnummer', with: '0123456789', match: :first
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
     within '#languages' do
-      choose('Good')
+      choose('Gut')
     end
-    click_button 'Create Client'
-    assert page.has_text? 'Client was successfully created.'
+    click_button 'Klient/in erfassen'
+    assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
     within '.table-no-border-top' do
-      assert page.has_text? "age doesn't matter"
-      assert page.has_text? "gender doesn't matter"
-      assert page.has_text? 'German Good'
+      assert page.has_text? "egal", count: 2
+      assert page.has_text? 'Deutsch Gut'
     end
   end
 
   test 'new client can select custom language' do
     login_as @superadmin
     visit new_client_path
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Dari'
-    fill_in 'Last name', with: 'Dari'
-    fill_in 'Primary email', with: 'client@aoz.com'
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Dari'
+    fill_in 'Nachname', with: 'Dari'
+    fill_in 'Mailadresse', with: 'client@aoz.com'
+    fill_in 'Telefonnummer', with: '0123456789', match: :first
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
 
     within '#languages' do
-      choose('Good')
+      choose('Gut')
     end
 
     click_on('Sprache hinzufügen')
-    select('Dari', from: 'Language')
-    select('Native speaker', from: 'Level')
+    select('Dari', from: 'Sprache')
+    select('Muttersprache', from: 'Niveau')
 
-    click_button 'Create Client'
-    assert page.has_text? 'Client was successfully created.'
+    click_button 'Klient/in erfassen'
+    assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
     within '.table-no-border-top' do
-      assert page.has_text? 'Dari Native speaker'
-      assert page.has_text? 'German Good'
+      assert page.has_text? 'Dari Muttersprache'
+      assert page.has_text? 'Deutsch Gut'
     end
   end
 
   test 'level without a language is not shown' do
     login_as @superadmin
     visit new_client_path
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'asdf'
-    fill_in 'Last name', with: 'asdf'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
-    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
-    fill_in 'Primary phone', with: '0123456789'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'asdf'
+    fill_in 'Nachname', with: 'asdf'
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
+    fill_in 'Telefonnummer', with: '0123456789', match: :first
     within '#languages' do
-      choose('Basic')
+      choose('Wenig')
     end
 
     click_on('Sprache hinzufügen')
-    select('Fluent', from: 'Level')
+    select('Mittel', from: 'Niveau')
 
-    click_button 'Create Client'
+    click_button 'Klient/in erfassen'
     within '.table-no-border-top' do
-      refute page.has_text? 'Fluent'
-      assert page.has_text? 'German Basic'
+      refute page.has_text? 'Mittel'
+      assert page.has_text? 'Deutsch Wenig'
     end
 
     visit clients_path
-    refute page.has_text? 'Fluent'
+    refute page.has_text? 'Mittel'
   end
 
   test 'clients_default_filters' do
@@ -167,7 +166,7 @@ class ClientsTest < ApplicationSystemTestCase
     within page.first('.pagination') do
       assert page.has_link? '1',
         href: clients_path(page: 1, q: { acceptance_scope: :not_resigned })
-      assert page.has_link? 'Previous',
+      assert page.has_link? 'Zurück',
         href: clients_path(page: 1, q: { acceptance_scope: :not_resigned })
     end
   end
@@ -179,9 +178,9 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
     assert page.has_text? 'unassigned_goals unassigned_interests  unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} Angemeldet without_assignment Show Edit"
+      "#{I18n.l(without_assignment.created_at.to_date)} Angemeldet without_assignment Anzeigen Bearbeiten"
     assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} Angemeldet with_assignment Show Edit"
+      "#{I18n.l(with_assignment.created_at.to_date)} Angemeldet with_assignment Anzeigen Bearbeiten"
   end
 
   test 'all_needed_actions_are_available_in_the_index' do
@@ -193,26 +192,26 @@ class ClientsTest < ApplicationSystemTestCase
 
     login_as @superadmin
     visit clients_path
-    assert page.has_link? 'Show', count: 3
-    assert page.has_link? 'Edit', count: 3
+    assert page.has_link? 'Anzeigen', count: 3
+    assert page.has_link? 'Bearbeiten', count: 3
 
     login_as @department_manager
     visit clients_path
     assert page.has_text? client_department_manager
     refute page.has_text? client_social_worker
     refute page.has_text? client
-    assert page.has_link? 'Show'
-    assert page.has_link? 'Edit', href: edit_client_path(client_department_manager)
-    refute page.has_link? 'Edit', href: edit_client_path(client_social_worker)
+    assert page.has_link? 'Anzeigen'
+    assert page.has_link? 'Bearbeiten', href: edit_client_path(client_department_manager)
+    refute page.has_link? 'Bearbeiten', href: edit_client_path(client_social_worker)
 
     login_as social_worker
     visit clients_path
     assert page.has_text? client_social_worker
     refute page.has_text? client_department_manager
     refute page.has_text? client
-    assert page.has_link? 'Show'
-    refute page.has_link? 'Edit', href: edit_client_path(client_department_manager)
-    assert page.has_link? 'Edit', href: edit_client_path(client_social_worker)
+    assert page.has_link? 'Anzeigen'
+    refute page.has_link? 'Bearbeiten', href: edit_client_path(client_department_manager)
+    assert page.has_link? 'Bearbeiten', href: edit_client_path(client_social_worker)
   end
 
   test 'department_manager_sees_his_scoped_client_index_correctly' do
@@ -225,9 +224,9 @@ class ClientsTest < ApplicationSystemTestCase
     assert page.has_text? with_assignment.contact.full_name
     assert page.has_text? without_assignment.contact.full_name
     assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} Show"
+      "#{I18n.l(without_assignment.created_at.to_date)} Anzeigen"
     assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} Show"
+      "#{I18n.l(with_assignment.created_at.to_date)} Anzeigen"
     refute page.has_text? superadmins_client.contact.full_name
   end
 
@@ -239,28 +238,28 @@ class ClientsTest < ApplicationSystemTestCase
     ]
     login_as @superadmin
     visit clients_path
-    assert page.has_text? 'German, Good'
-    assert page.has_text? 'Italian, Native speaker'
-    refute page.has_text? 'French, Fluent'
+    assert page.has_text? 'Deutsch, Gut'
+    assert page.has_text? 'Italienisch, Muttersprache'
+    refute page.has_text? 'Französisch, Mittel'
   end
 
   test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
     login_as @superadmin
     visit new_client_path
-    assert page.has_text? 'Sprachkenntnisse Deutsch * Level'
+    assert page.has_text? 'Sprachkenntnisse Deutsch * Niveau'
     within '#languages' do
-      choose('Basic')
+      choose('Wenig')
     end
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Client'
-    fill_in 'Last name', with: "doesn't matter"
-    fill_in 'Primary email', with: 'client@aoz.com'
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
-    click_button 'Create Client'
-    assert page.has_text? 'German Basic'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Client'
+    fill_in 'Nachname', with: "doesn't matter"
+    fill_in 'Mailadresse', with: 'client@aoz.com'
+    fill_in 'Telefonnummer', with: '0123456789', match: :first
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    click_button 'Klient/in erfassen'
+    assert page.has_text? 'Deutsch Wenig'
   end
 
   test 'client_print_view_is_not_paginated' do
@@ -288,19 +287,19 @@ class ClientsTest < ApplicationSystemTestCase
     visit new_client_path
 
     within '#languages' do
-      choose('Basic')
+      choose('Wenig')
     end
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Client'
-    fill_in 'Last name', with: "doesn't matter"
-    fill_in 'Primary email', with: 'client@aoz.com'
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
-    refute page.has_select? 'Involved authority'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Client'
+    fill_in 'Nachname', with: "doesn't matter"
+    fill_in 'Mailadresse', with: 'client@aoz.com'
+    fill_in 'Telefonnummer', with: '0123456789', match: :first
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    refute page.has_select? 'Fallführende Stelle'
 
-    click_button 'Create Client'
+    click_button 'Klient/in erfassen'
 
     login_as @superadmin
     visit client_path(Client.last)

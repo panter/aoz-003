@@ -11,13 +11,13 @@ class AssignmentsTest < ApplicationSystemTestCase
   test 'new_assignment_form' do
     login_as @user
     visit new_assignment_path
-    select @client.contact.full_name, from: 'Client'
-    select @volunteer.contact.full_name, from: 'Volunteer'
+    select @client.contact.full_name, from: 'Klient/in'
+    select @volunteer.contact.full_name, from: 'Freiwillige'
     page.find('#assignment_period_start').click
     page.find('.month', text: 'Jan').click
     page.find_all('.day', exact_text: '1').first.click
-    click_button 'Create Assignment'
-    assert page.has_text? 'Assignment was successfully created.'
+    click_button 'Begleitung erfassen'
+    assert page.has_text? 'Begleitung wurde erfolgreich erstellt.'
     within '.table-striped' do
       assert page.has_link? @volunteer.contact.full_name
       assert page.has_link? @client.contact.full_name
@@ -53,14 +53,14 @@ class AssignmentsTest < ApplicationSystemTestCase
 
     login_as user
     visit new_assignment_path
-    select @client.contact.full_name, from: 'Client'
-    select @volunteer.contact.full_name, from: 'Volunteer'
+    select @client.contact.full_name, from: 'Klient/in'
+    select @volunteer.contact.full_name, from: 'Freiwillige'
     page.find('#assignment_period_start').click
     page.find('.month', text: 'Jan').click
     page.find_all('.day', exact_text: '1').first.click
-    click_button 'Create Assignment'
+    click_button 'Begleitung erfassen'
     within '.table-striped' do
-      click_link 'Show'
+      click_link 'Anzeigen'
     end
     assert page.has_text? @client.contact.last_name
   end
@@ -68,7 +68,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   test 'volunteer can not see new assignment button' do
     login_as @volunteer.user
     visit volunteer_path(@volunteer)
-    refute page.has_link? 'New Assignment'
+    refute page.has_link? 'Begleitung erfassen'
   end
 
   test 'assignments_print_view_is_not_paginated' do
