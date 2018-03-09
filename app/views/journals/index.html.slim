@@ -4,7 +4,6 @@ h1= t_title(:index, Journal)
       table.table
         thead
           tr
-            th= t_attr(:created_at)
             th= t_attr(:category)
             th= t_attr(:text)
             th= t_attr(:author)
@@ -12,7 +11,6 @@ h1= t_title(:index, Journal)
         tbody
           - @journaled.journals.each do |record|
             tr
-              td= l(record.created_at.to_date)
               td= t("category.#{record.category}")
               td
                 - if record.title?
