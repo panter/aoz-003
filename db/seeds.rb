@@ -109,10 +109,10 @@ puts_model_counts('After EmailTemplates created', User, EmailTemplate)
 
 def assignment_generator(creator, create_day, start_date = nil, end_date = nil, terminated_at: nil, volunteer: nil)
   volunteer ||= FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted')
-  volunteer.update(created_at: create_day, updated_at: create_day + 1)
+  volunteer.update(created_at: create_day, updated_at: create_day + 1.day)
   client = FactoryBot.create(:client, acceptance: 'accepted', user: creator)
-  client.update(created_at: create_day - 5)
-  start_date ||= FFaker::Time.between(create_day, create_day + 50)
+  client.update(created_at: create_day - 5.days)
+  start_date ||= FFaker::Time.between(create_day, create_day + 50.days)
   assignment = FactoryBot.create(:assignment, volunteer: volunteer, period_start: start_date,
     period_end: end_date, creator: creator,
     client: FactoryBot.create(:client, acceptance: 'accepted', user: creator))
@@ -125,19 +125,18 @@ def assignment_generator(creator, create_day, start_date = nil, end_date = nil, 
   assignment
 end
 
-def gemerate_feedback_and_hours(creator, hourable, start_date, end_date = nil, volunteer: nil)
+def generate_feedback_and_hours(creator, hourable, start_date, end_date = nil, volunteer: nil)
   volunteer = volunteer || hourable.volunteer
-  end_date = end_date&.to_date || 2.days.ago.to_date
-  start_date = start_date.to_date
-  meeting_date = FFaker::Time.between(start_date + 1, end_date).to_date
+  end_date ||= 2.days.ago
+  meeting_date = FFaker::Time.between(start_date + 1.day, end_date)
   hour = FactoryBot.create(:hour, volunteer: volunteer, hourable: hourable, meeting_date: meeting_date)
-  hour.update(created_at: meeting_date + 1)
+  hour.update(created_at: meeting_date + 1.day)
   feedback = FactoryBot.create(:feedback, volunteer: volunteer, feedbackable: hourable,
     author: volunteer.user)
-  feedback.update(created_at: FFaker::Time.between(start_date + 1, end_date - 1))
+  feedback.update(created_at: FFaker::Time.between(start_date + 1.day, end_date - 1.day))
   trial_feedback = FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
     trial_feedbackable: hourable)
-  trial_feedback.update(created_at: FFaker::Time.between(start_date + 6*7, start_date + 8*7))
+  trial_feedback.update(created_at: FFaker::Time.between(start_date + 6.weeks, start_date + 8.weeks))
 end
 
 
@@ -146,50 +145,50 @@ if Assignment.count < 1
   # trial Assignments
   creator = User.superadmins.first
   3.times do
-    start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago).to_date
-    assignment = assignment_generator(creator, start_date - 2, start_date)
-    gemerate_feedback_and_hours(creator, assignment, start_date)
+    start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
+    assignment = assignment_generator(creator, start_date - 2.days, start_date)
+    generate_feedback_and_hours(creator, assignment, start_date)
   end
   # half_year Assignments
   3.times do
-    start_date = FFaker::Time.between(6.months.ago, 12.months.ago).to_date
-    assignment = assignment_generator(creator, start_date - 2, start_date)
-    gemerate_feedback_and_hours(creator, assignment, start_date)
+    start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
+    assignment = assignment_generator(creator, start_date - 2.days, start_date)
+    generate_feedback_and_hours(creator, assignment, start_date)
   end
   # ended Assignments
   2.times do
-    start_date = FFaker::Time.between(1.year.ago, 2.years.ago).to_date
-    end_date = FFaker::Time.between(start_date + 100, 2.days.ago).to_date
-    assignment = assignment_generator(creator, start_date - 10, start_date, end_date,
-      terminated_at: end_date + 10)
-    gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 10)
+    start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
+    end_date = FFaker::Time.between(start_date + 100.days, 2.days.ago)
+    assignment = assignment_generator(creator, start_date - 10.days, start_date, end_date,
+      terminated_at: end_date + 10.days)
+    generate_feedback_and_hours(creator, assignment, start_date, end_date + 10.days)
   end
 
   # Generate last year assignment for performance report
   2.times do
-    create_day = 1.year.ago.to_date + 2
-    start_date = FFaker::Time.between(create_day, create_day + 50).to_date
-    end_date = FFaker::Time.between(create_day + 100, 1.year.ago.end_of_year.to_date - 2).to_date
-    assignment = assignment_generator(creator, start_date - 10, start_date, end_date,
-      terminated_at: end_date + 10)
-    gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 10)
+    create_day = 1.year.ago + 2.days
+    start_date = FFaker::Time.between(create_day, create_day + 50.days)
+    end_date = FFaker::Time.between(create_day + 100.days, 1.year.ago.end_of_year - 2.days)
+    assignment = assignment_generator(creator, start_date - 10.days, start_date, end_date,
+      terminated_at: end_date + 10.days)
+    generate_feedback_and_hours(creator, assignment, start_date, end_date + 10.days)
   end
 
   # started last year, ends this year
-  create_day = 1.year.ago.beginning_of_year.to_date + 10
-  start_date = FFaker::Time.between(create_day, create_day + 50).to_date
-  end_date = FFaker::Time.between(Time.zone.now.beginning_of_year.to_date + 2, 3.days.ago).to_date
+  create_day = 1.year.ago.beginning_of_year + 10.days
+  start_date = FFaker::Time.between(create_day, create_day + 50.days)
+  end_date = FFaker::Time.between(Time.zone.now.beginning_of_year + 2.days, 3.days.ago)
   assignment = assignment_generator(creator, create_day, start_date, end_date,
-    terminated_at: end_date + 3)
-  gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 3)
+    terminated_at: end_date + 3.days)
+  generate_feedback_and_hours(creator, assignment, start_date, end_date + 3.days)
 
   3.times do
-    create_day = 2.years.ago.beginning_of_year.to_date + 10
-    start_date = FFaker::Time.between(create_day, create_day + 50)
-    end_date = FFaker::Time.between(create_day + 100, 2.years.ago.end_of_year.to_date - 2)
+    create_day = 2.years.ago.beginning_of_year + 10.days
+    start_date = FFaker::Time.between(create_day, create_day + 50.days)
+    end_date = FFaker::Time.between(create_day + 100.days, 2.years.ago.end_of_year - 2.days)
     assignment = assignment_generator(creator, create_day, start_date, end_date,
-      terminated_at: end_date + 3)
-    gemerate_feedback_and_hours(creator, assignment, start_date, end_date + 3)
+      terminated_at: end_date + 3.days)
+    generate_feedback_and_hours(creator, assignment, start_date, end_date + 3.days)
   end
 end
 puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client,
@@ -202,24 +201,24 @@ Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sa
   start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
     period_start: start_date, period_end: nil)
-  gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.first)
+  generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.first)
 
   start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.second, group_offer: group_offer,
     period_start: start_date, period_end: nil)
-  gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.second)
+  generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.second)
 
   # ended GroupAssignments
   start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
   end_date = FFaker::Time.between(1.week.ago, 3.days.ago)
   group_assignment = GroupAssignment.create(volunteer: volunteers.third, group_offer: group_offer,
     period_start: start_date, period_end: end_date)
-  gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.third)
+  generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.third)
 
   group_assignment = GroupAssignment.create(volunteer: volunteers.fourth, group_offer: group_offer,
     period_start: FFaker::Time.between(6.months.ago, 12.months.ago),
     period_end: FFaker::Time.between(1.week.ago, 3.days.ago))
-  gemerate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.fourth)
+  generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.fourth)
 end
 puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
   GroupAssignment, Department, Assignment, Client)
