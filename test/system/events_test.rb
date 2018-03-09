@@ -36,9 +36,8 @@ class EventsTest < ApplicationSystemTestCase
     visit event_path(@event)
 
     assert page.has_text? 'Neue Teilnehmende hinzufügen'
-    select(@volunteer1, from: 'event_volunteer_volunteer_id')
+    selectize_select('event_volunteer_volunteer', @volunteer1)
     click_button 'Teilnehmer/in hinzufügen'
-    visit current_url
 
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
@@ -50,18 +49,16 @@ class EventsTest < ApplicationSystemTestCase
     visit event_path(@event)
 
     # adding first volunteer to the event
-    select(@volunteer1, from: 'event_volunteer_volunteer_id')
+    selectize_select('event_volunteer_volunteer', @volunteer1)
     click_button 'Teilnehmer/in hinzufügen'
-    visit current_url
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
       refute page.has_text? @volunteer2.full_name
     end
 
     # adding second volunteer to the event
-    select(@volunteer2, from: 'event_volunteer_volunteer_id')
+    selectize_select('event_volunteer_volunteer', @volunteer2)
     click_button 'Teilnehmer/in hinzufügen'
-    visit current_url
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
       assert page.has_text? @volunteer2.full_name
@@ -69,7 +66,7 @@ class EventsTest < ApplicationSystemTestCase
       page.find_all('a', text: 'Löschen').first.click
     end
 
-    visit current_url
+    visit event_path(@event)
 
     within '.event-volunteers-table' do
       refute page.has_text? @volunteer1.full_name
@@ -134,14 +131,16 @@ class EventsTest < ApplicationSystemTestCase
   test 'adding a volunteers twice to an event does not work' do
     visit event_path(@event)
 
-    select(@volunteer1, from: 'event_volunteer_volunteer_id')
+    selectize_select('event_volunteer_volunteer', @volunteer1)
     click_button 'Teilnehmer/in hinzufügen'
-    visit current_url
+
+    assert page.has_text? 'Teilnehmer/in erfolgreich hinzugefügt.'
 
     within '.event-volunteers-table' do
-      assert page.has_text? @volunteer1.full_name
+      assert page.has_text? @volunteer1
     end
 
-    refute page.has_select?('event_volunteer_volunteer_id', text: @volunteer1.full_name)
+    selectize_fill('event_volunteer_volunteer', @volunteer1)
+    refute page.has_css?('.selectize-dropdown-content .option', text: @volunteer1)
   end
 end

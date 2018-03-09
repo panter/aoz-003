@@ -347,6 +347,8 @@ de:
         body: Text
       event:
         kinds: *id-kinds-event
+      event_volunteer:
+        volunteer_id: Freiwillige/r
       group_assignment:
         <<: *id-termination-attrs
         member: Mitglied
@@ -419,7 +421,6 @@ de:
         scope: Bereich
         title: Titel
         user: Ersteller/in
-
       profile:
         <<: *id-generic_keys
       relative:
@@ -516,6 +517,10 @@ de:
         group_offer:
           department:
             blank: Freiwilligenverantwortliche können nur ihrem Standort zugeteilte Gruppenangebote erfassen
+        event_volunteer:
+          attributes:
+            volunteer:
+              required: muss ausgewählt werden.
     models:
       assignment: Begleitung
       feedback: Feedback

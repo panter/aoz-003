@@ -96,4 +96,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def all_checked?(selector)
     page.find_all(selector).all?(&:checked?)
   end
+
+  def selectize_fill(field, value)
+    # fill in the input field
+    page.find(".#{field} div.selectize-input input").set(value)
+  end
+
+  def selectize_select(field, value)
+    selectize_fill(field, value)
+    # select the first dropdown item with given value
+    page.find(".#{field} div.selectize-dropdown-content .option", text: value).click
+  end
+
 end
