@@ -705,13 +705,25 @@ de:
         email_being_changed_to: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wird. Die neue Mailadresse ist: %{email}'
         email_has_changed: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wurde. Die eingetragene Mailadresse ist: %{email}'
         subject: Email wurde geändert
-      hello: 'Hallo %{email}!'
+      hello: Liebe/r Freiwillige/r
       invitation_instructions:
         accept: Einladung annehmen
         accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
-        ignore: 'Wenn Sie die Einladung nicht annehmen möchten, ignorieren Sie bitte diese Email einfach.<br>Es wird kein Benutzerkonto erstellt solange Sie nicht die Einladung mittels des Links oben annehmen.'
-        someone_invited_you: 'Jemand hat Sie zu %{url} eingeladen. Sie können die Einladung mit dem Link unten annehmen:'
-        subject: Einladung
+        someone_invited_you: |
+          'Herzlich willkommen! Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben.
+          Bei Ihrer Erstregistrierung auf www.aoz-freiwillige.ch haben Sie folgende E-Mail Adresse angegeben: %{email}!<br>
+          Bevor wir Ihr Freiwilligen-Profil auf unserer Onlineplattform freischalten können,
+          müssen Sie Ihre E-Mail Adresse bestätigen und ein persönliches Passwort erstellen.
+          Bitte klicken Sie dafür auf folgenden Link:'
+        having_trouble: |
+          Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
+          mailto:freiwillige@aoz.ch<br>
+          oder<br>
+          Telefon 044 415 67 35
+        greetings: |
+          Freundliche Grüsse<br>
+          AOZ Fachstelle Freiwilligenarbeit
+        subject: Einladung für AOZ Fachstelle Freiwilligenarbeit
       password_change:
         password_has_changed: Wir möchten Ihnen mitteilen, dass Ihr Passwort geändert wurde.
         subject: Passwort wurde geändert
