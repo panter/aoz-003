@@ -74,9 +74,19 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     assert page.has_text? 'Total Probezeit-Feedbacks ' +
       row_numbers(volunteers, column_order, :total_trial_feedbacks)
 
-    assert page.has_text? 'Besuchte Einführungskurse ' +
-      row_numbers(volunteers, column_order, :intro_course_events)
-    assert page.has_text? 'Total besuchte Veranstaltungen ' +
+    assert page.has_text? 'Teilnehmende Einführungsveranstaltungen ' +
+      row_numbers(volunteers, column_order, :intro_course)
+    assert page.has_text? 'Teilnehmende Weiterbildungen ' +
+      row_numbers(volunteers, column_order, :professional_training)
+    assert page.has_text? 'Teilnehmende Fachveranstaltungen ' +
+      row_numbers(volunteers, column_order, :professional_event)
+    assert page.has_text? 'Teilnehmende Erfahrungsaustausch/Themenabende ' +
+      row_numbers(volunteers, column_order, :theme_exchange)
+    assert page.has_text? 'Teilnehmende Freiwilligenanlässe ' +
+      row_numbers(volunteers, column_order, :volunteering)
+    assert page.has_text? 'Teilnehmende Treffen Deutschkursleitende ' +
+      row_numbers(volunteers, column_order, :german_class_managers)
+    assert page.has_text? 'Total Teilnehmende Veranstaltungen ' +
       row_numbers(volunteers, column_order, :total_events)
 
     # Clients section

@@ -842,8 +842,13 @@ de:
       created_assignments: Erstellte Gruppeneinsätze
       outside_departments: Ausserhalb Standorten
       started_assignments: Begonnene Gruppeneinsätze
-      intro_course_events: Besuchte Einführungskurse
-      total_events: Total besuchte Veranstaltungen
+      intro_course: Teilnehmende Einführungsveranstaltungen
+      professional_training: Teilnehmende Weiterbildungen
+      professional_event: Teilnehmende Fachveranstaltungen
+      theme_exchange: Teilnehmende Erfahrungsaustausch/Themenabende
+      volunteering: Teilnehmende Freiwilligenanlässe
+      german_class_managers: Teilnehmende Treffen Deutschkursleitende
+      total_events: Total Teilnehmende Veranstaltungen
     index:
       new_report: Neuen Report erstellen
     one: Kennzahl

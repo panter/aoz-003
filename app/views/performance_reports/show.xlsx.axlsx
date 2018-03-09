@@ -25,7 +25,7 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
     :assignment_hours, :group_offer_hour_records, :group_offer_hours, :total_hour_records,
     :total_hours, :assignment_feedbacks, :group_offer_feedbacks, :total_feedbacks,
     :assignment_trial_feedbacks, :group_offer_trial_feedbacks, :total_trial_feedbacks,
-    :intro_course_events, :total_events
+    *Event.kinds.keys, :total_events
   ].each do |row_key|
     row = [t(".volunteers.values.#{row_key}")] +
       column_order.map { |col| volunteers[col][row_key.to_s] }

@@ -49,7 +49,7 @@ class PerformanceReport < ApplicationRecord
       .joins(:event)
       .merge(Event.date_between_inclusion(:date, *periods))
 
-    {
+    stats = {
       total: volunteers.count,
       active_assignment: assignment_active.size,
       active_group_assignment: group_active.size,
@@ -72,9 +72,14 @@ class PerformanceReport < ApplicationRecord
       assignment_trial_feedbacks: trial_feedbacks.assignment.count,
       group_offer_trial_feedbacks: trial_feedbacks.group_offer.count,
       total_trial_feedbacks: trial_feedbacks.count,
-      intro_course_events: event_volunteers.merge(Event.intro_course).count,
       total_events: event_volunteers.count,
     }
+
+    Event.kinds.each_key do |kind|
+      stats[kind] = event_volunteers.merge(Event.public_send(kind)).count
+    end
+
+    stats
   end
 
   def client_performance
