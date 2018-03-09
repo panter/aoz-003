@@ -1,8 +1,8 @@
 p
-  = t('devise.mailer.hello', email: @resource.email)
+  = t('devise.mailer.hello')
 
 p
-  = t('devise.mailer.invitation_instructions.someone_invited_you', url: root_url)
+  = t('devise.mailer.invitation_instructions.someone_invited_you', email: @resource.email).html_safe
 
 p
   = link_to t('devise.mailer.invitation_instructions.accept'), accept_invitation_url(@resource, :invitation_token => @token)
@@ -12,4 +12,7 @@ p
     = t('devise.mailer.invitation_instructions.accept_until', due_date: l(@resource.invitation_due_at, format: :'devise.mailer.invitation_instructions.accept_until_format'))
 
 p
-  = t('devise.mailer.invitation_instructions.ignore').html_safe
+  = t('devise.mailer.invitation_instructions.having_trouble').html_safe
+
+p
+  = t('devise.mailer.invitation_instructions.greetings').html_safe
