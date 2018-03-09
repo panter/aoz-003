@@ -14,7 +14,11 @@ h1= t_title(:index, Journal)
             tr
               td= l(record.created_at.to_date)
               td= t("category.#{record.category}")
-              td= word_wrap(record.body) if record.body
+              td
+                - if record.title?
+                  strong= record.title
+                  br
+                = word_wrap(record.body) if record.body
               td= link_to record.user.full_name, record.user.profile
               td= link_to t_action(:edit), url_for([@journaled, record]) + '/edit'
 = form_navigation_btn :new

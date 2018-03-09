@@ -3,6 +3,7 @@
   h1= @journaled.contact.full_name
   .row
     .col-xs-12= f.input :category, collection: Journal::CATEGORIES
+    .col-xs-12= f.input :title
     .col-xs-12= f.input :body
     .col-xs-12= f.button :submit
     - if action_name == 'edit'

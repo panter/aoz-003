@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223131033) do
+ActiveRecord::Schema.define(version: 20180309174707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -466,6 +466,7 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.datetime "updated_at", null: false
     t.string "category"
     t.bigint "assignment_id"
+    t.string "title"
     t.index ["assignment_id"], name: "index_journals_on_assignment_id"
     t.index ["deleted_at"], name: "index_journals_on_deleted_at"
     t.index ["journalable_type", "journalable_id"], name: "index_journals_on_journalable_type_and_journalable_id"

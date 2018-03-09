@@ -20,11 +20,16 @@ class JournalsTest < ApplicationSystemTestCase
     visit client_path(create(:client))
     first('a', text: 'Journal').click
     click_link 'Journal erfassen'
+
     assert page.has_text? 'Journal erfassen'
+
+    fill_in 'Titel', with: 'Bogus Title'
     fill_in 'Text', with: 'My bogus demo text body, just for this test.'
     select('Telefonat', from: 'Kategorie')
     click_button 'Journaleintrag speichern'
+
     assert page.has_text? 'Journal wurde erfolgreich erstellt.'
+    assert page.has_text? 'Bogus Title'
     assert page.has_text? 'My bogus demo text body, just for this test.'
   end
 
