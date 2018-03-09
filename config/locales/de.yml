@@ -47,6 +47,8 @@ de:
     email: E-Mail
     feedback: Rückmeldung
     telephone: Telefonat
+    single_accompaniment: Einzelbegleitung
+    group_offer: Gruppenangebot
   clients:
     client:
       acceptance: *id-client-acceptance
