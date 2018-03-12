@@ -1,6 +1,6 @@
 tr
   td= t("salutation.#{client.salutation}") if client.salutation?
-  td= client.contact.full_name
+  td= link_to client.contact.full_name, client
   td= client.contact.city
   td= client.contact.postal_code
   td= client.birth_year&.year
