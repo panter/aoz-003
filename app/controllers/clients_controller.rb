@@ -33,12 +33,12 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new(user: current_user)
-    @client.language_skills << LanguageSkill.new(language: 'DE')
+    @client.language_skills.build(language: 'DE')
     authorize @client
   end
 
   def edit
-    @client.language_skills << LanguageSkill.new(language: 'DE') if @client.german_missing?
+    @client.language_skills.build(language: 'DE') if @client.german_missing?
   end
 
   def create
