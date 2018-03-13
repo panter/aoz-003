@@ -19,4 +19,4 @@ p.text-warning Dieses Freiwilligenprofil wurde von Access importiert.
           = c.label :primary_email
           = c.input_field :primary_email, value: volunteer.import.email_valid? ? volunteer.import.email : '',
             class: 'form-control'
-    = f.button :submit, value: 'Account mit angegebener Email erstellen'
+    = f.button :submit, value: 'Einladung an angegebene E-Mail verschicken'

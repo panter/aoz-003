@@ -292,7 +292,7 @@ class VolunteersTest < ApplicationSystemTestCase
     click_link 'Anzeigen', href: volunteer_path(volunteer)
     assert page.has_text? "Für die Emailadresse #{import.email} einen Account erstellen"
     assert page.has_field? 'Mailadresse', with: import.email
-    click_button 'Account mit angegebener Email erstellen'
+    click_button 'Einladung an angegebene E-Mail verschicken'
     assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
   end
 
@@ -305,7 +305,7 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_text? 'Scheinbar ist die importierte Mailadresse nicht gültig.'
     assert_empty find_field('Mailadresse').value
     fill_in 'Mailadresse', with: 'some_email@example.com'
-    click_button 'Account mit angegebener Email erstellen'
+    click_button 'Einladung an angegebene E-Mail verschicken'
     assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
   end
 
@@ -318,7 +318,7 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_text? 'Es wird eine gültige Emailadresse des Freiwilligen benötigt, um einen'
     assert_empty find_field('Mailadresse').value
     fill_in 'Mailadresse', with: 'invalid'
-    click_button 'Account mit angegebener Email erstellen'
+    click_button 'Einladung an angegebene E-Mail verschicken'
     within '.alert.alert-danger.alert-dismissible' do
       assert page.has_text? 'Die Mailadresse ist scheinbar nicht gültig'
       assert page.has_link? 'Mailadresse konfigurieren', href: edit_volunteer_path(volunteer)
