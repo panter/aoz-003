@@ -11,8 +11,8 @@ class GroupOffersController < ApplicationController
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @group_offers = @q.result.reorder(active: :desc)
     respond_to do |format|
-      format.xlsx { render xlsx: 'index', locals: { group_offers: @group_offers } }
       format.html { @group_offers = @group_offers.paginate(page: params[:page]) }
+      format.xlsx
     end
   end
 
