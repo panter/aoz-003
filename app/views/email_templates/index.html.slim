@@ -1,6 +1,11 @@
+- content_for :navigation do
+  ul.list-inline
+    li= form_navigation_btn :new, with_row: false
+    li= button_link navigation_glyph(:back), reminder_mailings_path
+
 h1 Alle E-Mailvorlagen
 
-= form_navigation_btn :new
+= yield :navigation
 
 .table-responsive
   table.table
@@ -19,4 +24,4 @@ h1 Alle E-Mailvorlagen
           td= word_wrap(email_template.body)
           = render 'index_actions', subject: email_template
 
-= form_navigation_btn :new
+= yield :navigation
