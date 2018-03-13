@@ -22,6 +22,7 @@ class ProfilesTest < ApplicationSystemTestCase
     assert page.has_field? 'Strasse'
     assert page.has_field? 'PLZ'
     assert page.has_field? 'Ort'
+    assert page.has_field? 'Mailadresse', with: @user_without_profile.email
     assert page.has_field? 'Beruf'
     assert page.has_field? name: 'profile[flexible]'
     assert page.has_field? name: 'profile[morning]'
