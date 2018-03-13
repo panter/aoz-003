@@ -52,4 +52,14 @@ class VolunteerTest < ActiveSupport::TestCase
     refute volunteer.active?
     refute volunteer.user.present?
   end
+
+  test 'terminate_volunteer_without_user' do
+    volunteer = create :volunteer
+
+    assert_nil volunteer.user
+
+    volunteer.terminate!
+
+    assert volunteer.resigned?
+  end
 end

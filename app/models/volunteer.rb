@@ -369,7 +369,7 @@ class Volunteer < ApplicationRecord
   def terminate!
     self.class.transaction do
       update(acceptance: :resigned, resigned_at: Time.zone.now)
-      user.destroy
+      user&.destroy
     end
   end
 
