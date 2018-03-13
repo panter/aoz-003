@@ -14,6 +14,7 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
     t_attr(:availability),
     t_attr(:target_group),
     t_attr(:duration),
+    t_attr(:offer_type),
     t_attr(:offer_state),
     t_attr(:volunteers),
     t_attr(:group_offer_category)
@@ -37,6 +38,7 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
     durations = GroupOffer::DURATION.map do |duration|
                   t_attr(duration) if offer[duration]
                 end.compact.join(', ')
+    type = t("offer_type.#{offer.offer_type}") if offer.offer_type?
     state = t("offer_state.#{offer.offer_state}") if offer.offer_state?
     creator = offer.creator if offer.creator
     sheet.add_row [
@@ -46,6 +48,7 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
       availabilities,
       targets,
       durations,
+      type,
       state,
       offer.volunteers_with_roles,
       offer.group_offer_category
