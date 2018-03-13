@@ -157,7 +157,7 @@ module FilterDropdownHelper
   end
 
   def filter_active?(filter, value)
-    [value.to_s, 'true'].include? search_parameters[filter]
+    [value.to_s, 'true'].include? search_parameters[filter].to_s
   end
 
   def dropdown_menu(filter_links, q_filters)
