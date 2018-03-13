@@ -47,6 +47,8 @@ de:
     email: E-Mail
     feedback: Rückmeldung
     telephone: Telefonat
+    single_accompaniment: Einzelbegleitung
+    group_offer: Gruppenangebot
   clients:
     client:
       acceptance: *id-client-acceptance
@@ -110,6 +112,7 @@ de:
     salutation: Anrede
     state: Status
     street: Strasse
+    title: Titel
     updated_at: Aktualisiert am
     zip: Postleitzahl
   group_assignments:
@@ -332,7 +335,6 @@ de:
         primary_email: Mailadresse
         primary_phone: Telefonnummer
         secondary_phone: Telefonnummer 2
-        title: Titel
         personal_particulars: Personalien
       department:
         <<: *id-generic_keys
@@ -419,7 +421,6 @@ de:
         period_end: Bis
         period_start: Von
         scope: Bereich
-        title: Titel
         user: Ersteller/in
       profile:
         <<: *id-generic_keys
