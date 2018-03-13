@@ -718,10 +718,10 @@ de:
           müssen Sie Ihre E-Mail Adresse bestätigen und ein persönliches Passwort erstellen.
           Bitte klicken Sie dafür auf folgenden Link:'
         having_trouble: |
-          Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
-          mailto:freiwillige@aoz.ch<br>
+          'Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
+          %{email}
           oder<br>
-          Telefon 044 415 67 35
+          Telefon 044 415 67 35'
         greetings: |
           Freundliche Grüsse<br>
           AOZ Fachstelle Freiwilligenarbeit
