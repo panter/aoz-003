@@ -124,7 +124,7 @@ h2.small Persönlicher Hintergrund
         td #{t_attr(:external)} / #{t_attr(:internal)}
         td= @volunteer.external? ? t_attr(:external) : t_attr(:internal)
       tr
-        td= t_attr(:registered_by)
+        td= t_attr(:created_by)
         td
           - if @volunteer.self_applicant?
             = t('volunteer_self_applicant')
