@@ -91,7 +91,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Tandem'
+      click_link 'Einsatz'
       click_link 'Aktiv'
     end
     visit current_url
