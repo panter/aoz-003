@@ -8,6 +8,8 @@ nav.navbar.section-navigation.hidden-print
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
     li= button_link 'Klient erfassen', new_client_path, dimension: :sm
+    - if policy(ClientNotification).index?
+      li= button_link 'Wartezeitbenachrichtigung', client_notifications_path, dimension: :sm
   ul.list-inline
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
     - if policy(Client).superadmin_privileges?
@@ -18,6 +20,4 @@ nav.navbar.section-navigation.hidden-print
     li= button_link t('clear_filters'), clients_path, dimension: :sm
     li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: :sm
     li= link_to navigation_glyph(:print), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
-    - if policy(ClientNotification).index?
-      li= button_link 'Wartezeitbenachrichtigung', client_notifications_path, dimension: :sm
   hr
