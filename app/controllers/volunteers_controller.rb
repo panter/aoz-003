@@ -108,7 +108,10 @@ class VolunteersController < ApplicationController
 
   def resigned_fail_notice
     {
-      message: 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.',
+      message:
+        'Beenden fehlgeschlagen.
+        Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.
+        Bitte sicherstellen, dass alle Einsätze komplett abgeschlossen sind.',
       model_message: @volunteer.errors.messages[:acceptance].first,
       action_link: { text: 'Begleitung bearbeiten', path: volunteer_path(@volunteer, anchor: 'assignments') }
     }

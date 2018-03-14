@@ -44,7 +44,9 @@ class Client < ApplicationRecord
 
   validates :acceptance, exclusion: {
     in: ['resigned'],
-    message: 'Klient/in kann nicht beendet werden, solange noch ein laufendes Tandem existiert.'
+    message:
+      'Klient/in kann nicht beendet werden, solange noch ein laufendes Tandem existiert.
+      Bitte sicherstellen, dass alle Einsätze komplett abgeschlossen sind.'
   }, unless: :terminatable?
 
   scope :with_assignment, (-> { joins(:assignment) })
