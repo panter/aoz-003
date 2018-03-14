@@ -124,7 +124,7 @@ module FilterDropdownHelper
     tag.li do
       link_to(
         filter_url(q_filter, bool_filter, filter_attribute),
-        class: list_filter_link_class(q_filter, filter_attribute)
+        class: list_filter_link_class(q_filter, bool_filter || filter_attribute)
       ) do
         translate_value(filter_attribute, q_filter)
       end
@@ -148,7 +148,7 @@ module FilterDropdownHelper
   end
 
   def filter_url(q_filter, bool_filter, filter_attribute)
-    if filter_active?(q_filter, filter_attribute)
+    if filter_active?(q_filter, bool_filter || filter_attribute)
       url_for(params_except('page').merge(q: search_parameters.except(q_filter)))
     else
       filter_parameter = { q_filter => bool_filter || filter_attribute }
@@ -157,7 +157,7 @@ module FilterDropdownHelper
   end
 
   def filter_active?(filter, value)
-    [value.to_s, 'true'].include? search_parameters[filter].to_s
+    value.present? && search_parameters[filter].to_s == value.to_s
   end
 
   def dropdown_menu(filter_links, q_filters)
