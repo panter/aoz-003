@@ -14,10 +14,10 @@ nav.navbar.navbar-top.hidden-print
         ul.nav.navbar-nav
           - if policy(User).index?
             li= link_to 'Benutzer/innen', users_path
-          - if policy(Client).index?
-            li= link_to 'Klienten/innen', clients_path
           - if policy(Volunteer).index?
             li= link_to 'Freiwillige', volunteers_path
+          - if policy(Client).index?
+            li= link_to 'Klienten/innen', clients_path
           - if policy(Department).manager_with_department?
             li= link_to t_model(Department), department_path(current_user.department.first.id)
           - if policy(Assignment).index?
