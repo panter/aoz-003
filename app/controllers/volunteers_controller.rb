@@ -8,9 +8,8 @@ class VolunteersController < ApplicationController
 
   def index
     authorize Volunteer
-    set_default_filter(acceptance_scope: :not_resigned)
     @q = policy_scope(Volunteer).ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @volunteers = @q.result
     @volunteers = activity_filter
     respond_to do |format|

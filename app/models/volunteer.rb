@@ -15,7 +15,9 @@ class Volunteer < ApplicationRecord
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
 
-  enum acceptance: { undecided: 0, invited: 4, accepted: 1, rejected: 2, resigned: 3 }
+  enum acceptance: { undecided: 0, invited: 1, accepted: 2, rejected: 3, resigned: 4 }
+
+  ransacker :acceptance, formatter: ->(value) { acceptances[value] }
 
   has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
@@ -120,7 +122,6 @@ class Volunteer < ApplicationRecord
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
   scope :not_resigned, (-> { where.not(acceptance: :resigned) })
-  scope :acceptance_scope, ->(scope) { public_send(scope) }
 
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).merge(Assignment.start_before(6.months.ago))
@@ -290,12 +291,11 @@ class Volunteer < ApplicationRecord
   end
 
   def self.acceptance_filters
-    scopes = [:not_resigned] + acceptances.keys
-    scopes.map do |scope|
+    acceptances.keys.map do |key|
       {
-        q: :acceptance_scope,
-        value: scope,
-        text: I18n.t("volunteers.acceptance.#{scope}")
+        q: :acceptance_eq,
+        value: key,
+        text: I18n.t("volunteers.acceptance.#{key}")
       }
     end
   end
@@ -363,7 +363,7 @@ class Volunteer < ApplicationRecord
   end
 
   def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'not_resigned', 'acceptance_scope']
+    ['active', 'inactive', 'not_resigned']
   end
 
   def terminate!

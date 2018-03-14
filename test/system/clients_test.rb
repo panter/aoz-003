@@ -141,17 +141,6 @@ class ClientsTest < ApplicationSystemTestCase
     refute page.has_text? 'Mittel'
   end
 
-  test 'clients_default_filters' do
-    client = create :client, acceptance: :resigned
-    client.contact.update(first_name: 'Resigned client')
-
-    login_as @superadmin
-    visit clients_path
-
-    assert page.has_text? 'Affirmation: Nicht beendet'
-    refute page.has_text? 'Resigned client'
-  end
-
   test 'client_pagination' do
     login_as @superadmin
     70.times do
@@ -164,10 +153,8 @@ class ClientsTest < ApplicationSystemTestCase
     end
 
     within page.first('.pagination') do
-      assert page.has_link? '1',
-        href: clients_path(page: 1, q: { acceptance_scope: :not_resigned })
-      assert page.has_link? 'Zurück',
-        href: clients_path(page: 1, q: { acceptance_scope: :not_resigned })
+      assert page.has_link? '1', href: clients_path(page: 1)
+      assert page.has_link? 'Zurück', href: clients_path(page: 1)
     end
   end
 

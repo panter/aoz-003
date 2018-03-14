@@ -28,27 +28,27 @@ class ClientActivityFilterTest < ActionDispatch::IntegrationTest
   end
 
   test 'client_acceptance_tandem_filters_work_together' do
-    get clients_path(q: { acceptance_eq: '0', active: 'true' })
+    get clients_path(q: { acceptance_eq: Client.acceptances[:accepted], active: 'true' })
     assert response.body.include? @client_accepted.contact.full_name
     refute response.body.include? @client_rejected.contact.full_name
     refute response.body.include? @client_resigned.contact.full_name
 
-    get clients_path(q: { acceptance_eq: '0', inactive: 'true' })
+    get clients_path(q: { acceptance_eq: Client.acceptances[:accepted], inactive: 'true' })
     refute response.body.include? @client_accepted.contact.full_name
     refute response.body.include? @client_rejected.contact.full_name
     refute response.body.include? @client_resigned.contact.full_name
 
-    get clients_path(q: { acceptance_eq: '1', active: 'true' })
+    get clients_path(q: { acceptance_eq: Client.acceptances[:rejected], active: 'true' })
     refute response.body.include? @client_accepted.contact.full_name
     refute response.body.include? @client_rejected.contact.full_name
     refute response.body.include? @client_resigned.contact.full_name
 
-    get clients_path(q: { acceptance_eq: '1', inactive: 'true' })
+    get clients_path(q: { acceptance_eq: Client.acceptances[:rejected], inactive: 'true' })
     refute response.body.include? @client_accepted.contact.full_name
     refute response.body.include? @client_rejected.contact.full_name
     refute response.body.include? @client_resigned.contact.full_name
 
-    get clients_path(q: { acceptance_eq: '2' })
+    get clients_path(q: { acceptance_eq: Client.acceptances[:resigned] })
     refute response.body.include? @client_accepted.contact.full_name
     refute response.body.include? @client_rejected.contact.full_name
     assert response.body.include? @client_resigned.contact.full_name
