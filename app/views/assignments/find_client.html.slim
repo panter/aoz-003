@@ -1,5 +1,7 @@
 h1= @volunteer.contact.full_name
 
+= button_link navigation_glyph(:back), volunteers_path
+
 = render 'volunteers/show_excerpt', volunteer: @volunteer
 
 h3= t_attr(:single_accompaniment, Volunteer)
