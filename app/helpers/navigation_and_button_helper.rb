@@ -58,4 +58,12 @@ module NavigationAndButtonHelper
       tag.span(text, class: 'sr-only')
     end
   end
+
+  def assignment_status_badge(assignment)
+    if assignment.active?
+      link_to 'Aktiv', '#', class: 'btn btn-xs btn-acceptance-undecided'
+    else
+      link_to 'Inaktiv', '#', class: 'btn btn-xs btn-acceptance-resigned'
+    end
+  end
 end
