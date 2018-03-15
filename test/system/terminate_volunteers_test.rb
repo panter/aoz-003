@@ -53,21 +53,24 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer_aa)
     click_link 'Beenden'
 
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
 
     @active_assignment.update(period_end: 2.days.ago)
     @volunteer_aa.reload
     visit current_url
     click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
 
     @active_group_assignment.update(period_end: 2.days.ago)
     @volunteer_aa.reload
     visit current_url
     click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
   end
 
@@ -75,14 +78,16 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer_ua)
     click_link 'Beenden'
 
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
 
     @unsubmitted_assignment.update(termination_submitted_at: 2.days.ago,
       termination_submitted_by: @volunteer_sa.user, period_end_set_by: @superadmin)
     @volunteer_ua.reload
     visit current_url
     click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
 
     @unsubmitted_group_assignment.update(termination_submitted_at: 2.days.ago,
@@ -90,7 +95,8 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     @volunteer_ua.reload
     visit current_url
     click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
   end
 
@@ -98,7 +104,8 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer_sa)
     click_link 'Beenden'
 
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
 
     @submitted_assignment.update(termination_submitted_at: 2.days.ago,
       termination_submitted_by: @volunteer_sa.user, period_end_set_by: @superadmin,
@@ -106,7 +113,8 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     @volunteer_sa.reload
     visit current_url
     click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
 
     @submitted_group_assignment.update(termination_submitted_at: 2.days.ago,
