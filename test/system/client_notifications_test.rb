@@ -11,7 +11,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
   test 'the right client notification should be marked active' do
     login_as @user
     visit clients_path
-    click_link 'Wartezeit Benachrichtigungen'
+    click_link 'Wartezeitbenachrichtigung'
     assert page.has_text? @client_notification.body
     within 'tr.bg-success' do
       assert page.has_text? @client_notification.body
@@ -82,7 +82,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @social_worker
     visit clients_path
 
-    refute page.has_link? 'Wartezeit Benachrichtigungen'
+    refute page.has_link? 'Wartezeitbenachrichtigung'
   end
 
   test 'superadmin does not see this notification' do
