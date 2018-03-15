@@ -17,7 +17,7 @@ nav.navbar.section-navigation#filters
   ul.list-inline
     li= button_link t('clear_filters'), group_offers_path, dimension: 'sm'
     = custom_filter_dropdown('Standort', *Department.filterable)
-    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Deaktiviert')
+    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
     = custom_filter_dropdown('Beendet',
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
       { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
@@ -32,7 +32,7 @@ nav.navbar.section-navigation#filters
 table.table.table-striped
   thead
     tr
-      th Aktiv
+      th Status
       th= t_attr(:title)
       th= sort_link @q, :location
       th Verantwortliche/r
@@ -47,7 +47,7 @@ table.table.table-striped
   tbody
     - @group_offers.each do |offer|
       tr
-        td= t("#{offer.active?}")
+        td.button-acceptance= assignment_status_badge(offer)
         td= offer.title
         td
           - if offer.external? && offer.organization?

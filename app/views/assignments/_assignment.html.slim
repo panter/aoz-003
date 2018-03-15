@@ -1,4 +1,5 @@
 tr
+  td.button-acceptance= assignment_status_badge(assignment)
   - if action_index? || controller_name == 'clients'
     td = link_to assignment.volunteer, assignment.volunteer
   td
