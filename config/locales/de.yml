@@ -444,6 +444,8 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
+        comments: Bemerkungen
+        additional_comments: Sonstige Bemerkungen
         external: Extern
         internal: Intern
         available: Verfügbar
@@ -949,6 +951,8 @@ de:
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
         external: Als externen Freiwilligen registrieren?
+        comments: Bemerkungen
+        additional_comments: Sonstige Bemerkungen
     "no": 'Nein'
     options:
       certificate:
