@@ -164,16 +164,6 @@ class VolunteersTest < ApplicationSystemTestCase
     refute page.has_text? 'Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
   end
 
-  test 'volunteers_default_filters' do
-    volunteer = create :volunteer, acceptance: :resigned
-    volunteer.contact.update(first_name: 'Resigned volunteer')
-
-    visit volunteers_path
-
-    assert page.has_text? 'Affirmation: Nicht beendet'
-    refute page.has_text? 'Resigned volunteer'
-  end
-
   test 'volunteer_pagination' do
     really_destroy_with_deleted(Volunteer)
     (1..20).to_a.map do
@@ -199,10 +189,8 @@ class VolunteersTest < ApplicationSystemTestCase
     end
 
     within page.first('.pagination') do
-      assert page.has_link? '1',
-        href: volunteers_path(page: 1, q: { acceptance_scope: :not_resigned })
-      assert page.has_link? 'Zurück',
-        href: volunteers_path(page: 1, q: { acceptance_scope: :not_resigned })
+      assert page.has_link? '1', href: volunteers_path(page: 1)
+      assert page.has_link? 'Zurück', href: volunteers_path(page: 1)
     end
   end
 

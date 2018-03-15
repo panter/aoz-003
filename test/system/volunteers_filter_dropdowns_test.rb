@@ -21,7 +21,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter by acceptance works and disabling works as well' do
     within '.section-navigation' do
-      click_link 'Affirmation: Nicht beendet'
+      click_link 'Affirmation'
       click_link 'Angemeldet'
     end
     visit current_url
@@ -48,7 +48,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Affirmation: Nicht beendet'
+      click_link 'Affirmation'
       click_link 'Akzeptiert'
     end
     visit current_url
@@ -158,24 +158,21 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'thead_acceptance_filter_dropdown_by_default_excludes_resigned' do
+  test 'thead_acceptance_filter_dropdown_by_default_shows_all' do
     visit volunteers_path
     within 'tbody' do
       assert page.has_text? 'Akzeptiert'
       assert page.has_text? 'Angemeldet'
       assert page.has_text? 'Eingeladen'
       assert page.has_text? 'Abgelehnt'
-      refute page.has_text? 'Beendet'
+      assert page.has_text? 'Beendet'
     end
   end
 
   test 'choosing_acceptance_resigned_works' do
     visit volunteers_path
-    within 'tbody' do
-      refute page.has_text? 'Beendet'
-    end
     within '.section-navigation' do
-      click_link 'Affirmation: Nicht beendet'
+      click_link 'Affirmation'
       click_link 'Beendet'
     end
     visit current_url

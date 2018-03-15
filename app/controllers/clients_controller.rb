@@ -8,9 +8,8 @@ class ClientsController < ApplicationController
 
   def index
     authorize Client
-    set_default_filter(acceptance_scope: :not_resigned)
     @q = policy_scope(Client).ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @clients = @q.result
     respond_to do |format|
       format.xlsx

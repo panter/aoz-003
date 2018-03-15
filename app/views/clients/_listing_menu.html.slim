@@ -14,7 +14,7 @@ nav.navbar.section-navigation.hidden-print
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
     - if policy(Client).superadmin_privileges?
       = custom_filter_dropdown 'Affirmation', *Client.acceptance_filters
-      = custom_filter_dropdown('Tandem',
+      = custom_filter_dropdown('Einsatz',
         { q: :active, text: 'Aktiv', value: 'true' },
         { q: :inactive, text: 'Inaktiv', value: 'true' })
     li= button_link t('clear_filters'), clients_path, dimension: :sm
