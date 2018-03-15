@@ -47,11 +47,7 @@ table.table.table-striped
   tbody
     - @group_offers.each do |offer|
       tr
-        td.button-acceptance
-          - if offer.active?
-            = link_to 'Aktiv', '#', class: 'btn btn-xs btn-acceptance-undecided'
-          - else
-            = link_to 'Inaktiv', '#', class: 'btn btn-xs btn-acceptance-resigned'
+        td.button-acceptance= assignment_status_badge(offer)
         td= offer.title
         td
           - if offer.external? && offer.organization?
