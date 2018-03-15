@@ -1,4 +1,9 @@
 tr
+  td.button-acceptance
+    - if assignment.active?
+      = link_to 'Aktiv', '#', class: 'btn btn-xs btn-acceptance-undecided'
+    - else
+      = link_to 'Inaktiv', '#', class: 'btn btn-xs btn-acceptance-resigned'
   - if action_index? || controller_name == 'clients'
     td = link_to assignment.volunteer, assignment.volunteer
   td
