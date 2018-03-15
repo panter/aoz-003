@@ -1,7 +1,7 @@
 tr
   td = t("salutation.#{volunteer.salutation}") if volunteer.salutation?
   - if action_name == 'index' || action_name == 'seeking_clients'
-    td = volunteer.contact.full_name
+    td = link_to volunteer.contact.full_name, volunteer
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
   td = mail_to volunteer.contact.primary_email
