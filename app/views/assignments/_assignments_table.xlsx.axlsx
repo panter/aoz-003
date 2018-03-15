@@ -9,14 +9,14 @@ standard_format = wb.styles.add_style alignment: { horizontal: :left }, width: :
 date_format = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
 
 cell_types = [
-  :integer, # 0
-  :string,  # 1
-  :string,  # 2
-  :string,  # 3
-  :date,    # 4
-  :date,    # 5
-  :date,    # 6
-  :date     # 7
+  :string, # 0
+  :string, # 1
+  :string, # 2
+  :string, # 3
+  :date,   # 4
+  :date,   # 5
+  :date,   # 6
+  :date    # 7
 ]
 
 cell_styles = [
@@ -34,7 +34,7 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
   # add header row
   sheet.add_row(
     [
-      'id',                         # 0
+      'Status',                     # 0
       'Freiwillige/r',              # 1
       'Freiwillige/r Mailadresse',  # 2
       'Klient/in',                  # 3
@@ -50,7 +50,7 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
   assignments.each do |assignment|
     sheet.add_row(
       [
-        assignment.id,                                                 # 0
+        assignment.active? ? 'Aktiv' : 'Inaktiv',                      # 0
         assignment.volunteer.contact.full_name,                        # 1
         assignment.volunteer.contact.primary_email,                    # 2
         assignment.client.contact.full_name,                           # 3

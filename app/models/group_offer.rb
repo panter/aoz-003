@@ -138,7 +138,7 @@ class GroupOffer < ApplicationRecord
       else
         "#{volunteer} (#{I18n.t('activerecord.attributes.group_assignment.member')})"
       end
-    end.compact.join(', ')
+    end.compact
   end
 
   def update_search_volunteers
