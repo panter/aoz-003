@@ -19,11 +19,12 @@ tr
     - if policy(assignment).edit?
       = link_to t_action(:edit), edit_polymorphic_path(assignment)
   td.index-action-cell.hidden-print= link_to t('download'), assignment_path(assignment, format: :pdf)
-  - if policy(TrialFeedback).index?
-    td.index-action-cell.hidden-print
-      = link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
-      span= link_to t_title(:index, TrialFeedback), polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
-  - if policy(Feedback).index?
-    td.index-action-cell.hidden-print
-      = link_to t_title(:new, Feedback), new_polymorphic_path([assignment.volunteer, assignment, Feedback])
-      = link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])
+  - if controller_name == 'volunteers'
+    - if policy(TrialFeedback).index?
+      td.index-action-cell.hidden-print
+        = link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
+        span= link_to t_title(:index, TrialFeedback), polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
+    - if policy(Feedback).index?
+      td.index-action-cell.hidden-print
+        = link_to t_title(:new, Feedback), new_polymorphic_path([assignment.volunteer, assignment, Feedback])
+        = link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])
