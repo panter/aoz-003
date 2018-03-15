@@ -11,6 +11,7 @@ col_body = wb.styles.add_style(
 
 wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
   header_row = [
+    'Status',
     t_attr(:title),
     t_attr(:location),
     'Verantwortliche/r',
@@ -45,6 +46,7 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
     volunteers = offer.volunteers_with_roles
 
     sheet.add_row [
+      offer.active? ? 'Aktiv' : 'Inaktiv',
       offer.title,
       offer.full_location,
       creator,
