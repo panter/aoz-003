@@ -15,12 +15,12 @@ module NavigationAndButtonHelper
   def make_nav_button(action)
     if action == :back
       text = navigation_glyph(:back)
-      action = :index if action == :back
+      action = :index
     else
       text = t_title(action)
     end
     button_link(text,
-      controller: controller_name, action: action, id: action == :index || params[:id])
+      controller: controller_name, action: action, id: action == :index ? nil : params[:id])
   end
 
   def boolean_glyph(value)

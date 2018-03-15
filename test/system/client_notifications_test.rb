@@ -30,7 +30,6 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     end
     page.check('client_notification_active')
     click_button 'Klienten Wartezeit Benachrichtigung aktualisieren'
-    click_link 'Zurück'
     within 'tr.bg-success' do
       refute page.has_text? @client_notification.body
       assert page.has_text? @other_client_notification.body

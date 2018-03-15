@@ -1,5 +1,8 @@
 h1= t('.group_offer_categories')
-= form_navigation_btn :new
+
+ul.list-inline
+  li= button_link navigation_glyph(:back), group_offers_path
+  li= form_navigation_btn :new, with_row: false
 
 .table-responsive
   table.table.table-striped
@@ -17,5 +20,3 @@ h1= t('.group_offer_categories')
             td= category.description
             td= t(".category_states.#{category.category_state}")
             td= link_to t_action(:edit), edit_group_offer_category_path(category)
-
-= button_link t('.group_offers'), group_offers_path
