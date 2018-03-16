@@ -18,11 +18,11 @@ nav.navbar.section-navigation#filters
     li= button_link t('clear_filters'), group_offers_path, dimension: 'sm'
     = custom_filter_dropdown('Standort', *Department.filterable)
     = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
+    = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
+    = custom_filter_dropdown('Kategorie', *GroupOfferCategory.filterable_group_offer)
     = custom_filter_dropdown('Beendet',
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
       { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
-    = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
-    = custom_filter_dropdown('Kategorie', *GroupOfferCategory.filterable_group_offer)
     = button_link 'Beendete Begleitungen',
       terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }), dimension: :sm
   hr
