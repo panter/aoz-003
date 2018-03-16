@@ -112,12 +112,6 @@ h2.small Persönlicher Hintergrund
       tr
         td= t_attr(:interests)
         td= @volunteer.interests
-      tr
-        td= t_attr(:comments)
-        td= @volunteer.comments
-      tr
-        td= t_attr(:additional_comments)
-        td= @volunteer.additional_comments
       - if @volunteer.internal?
         tr
           td= t_attr(:bank_details)
@@ -136,6 +130,12 @@ h2.small Persönlicher Hintergrund
             = t('volunteer_self_applicant')
           - else
             = link_to @volunteer.registrar.full_name, profile_link(@volunteer.registrar)
+      tr
+        td= t_attr(:comments)
+        td= @volunteer.comments
+      tr
+        td= t_attr(:additional_comments)
+        td= @volunteer.additional_comments
 
 h2.small= t_attr(:single_accompaniment)
 .table-responsive

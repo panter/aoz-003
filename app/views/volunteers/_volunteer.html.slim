@@ -11,8 +11,12 @@ tr
   td = volunteer.education
   td = volunteer.profession
   td = "#{volunteer.working_percent}%" if volunteer.working_percent.present?
-  td = volunteer.expectations
   td = volunteer.interests
+  - if policy(Volunteer).superadmin_privileges?
+    - if volunteer.comments
+      = td_truncate_content_modal(volunteer.comments, 'Bemerkungen', shorten_size: 100)
+    - else
+      td
   - if policy(Volunteer).show_acceptance?
     td.button-acceptance.index-action-cell
       = link_to t(".acceptance.#{volunteer.acceptance}"), '#',
