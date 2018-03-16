@@ -14,7 +14,9 @@
       .col-xs-12.col-md-6= f.input :location, label: t('.location_external')
 
   .row
-    .col-xs-12.col-md-3= f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons
+    .col-xs-12.col-md-3
+      = f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons,
+          disabled: @group_offer.group_assignments.any?
     .col-xs-12.col-md-3= f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
     .col-xs-12.col-md-6= f.input :necessary_volunteers, collection: 1..10
 

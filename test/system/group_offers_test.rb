@@ -188,4 +188,15 @@ class GroupOffersTest < ApplicationSystemTestCase
       assert_text volunteer
     end
   end
+
+  test 'offer_type_is_disabled_if_group_assignments_are_present' do
+    group_offer = create :group_offer
+    create :group_assignment, group_offer: group_offer
+
+    login_as create(:user)
+    visit edit_group_offer_path(group_offer)
+
+    assert_field 'Internes Gruppenangebot', disabled: true
+    assert_field 'Externes Gruppenangebot', disabled: true
+  end
 end
