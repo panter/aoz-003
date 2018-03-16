@@ -31,5 +31,6 @@ h1 Klienten/innen
         th.hidden-print colspan='2'
     tbody
       = render @clients
+      = render 'modal_truncate'
 
 = bootstrap_paginate(@clients)
