@@ -193,10 +193,12 @@ h2.small= t('.availability')
 - if @volunteer.group_assignments.unterminated.any?
   h2.small#assignments= t('.group_assignments')
   = render 'group_assignments/volunteer_group_assignments', group_assignments: @volunteer.group_assignments.unterminated, editable: true
+  = render 'modal_truncate'
 
 - if @volunteer.group_assignment_logs.any?
   h2.small= t('.old_group_assignments')
   = render 'group_assignments/volunteer_group_assignments_logs', group_assignment_logs: @volunteer.group_assignment_logs
+  = render 'modal_truncate'
 
 - if policy(Event).show? && @volunteer_events.present?
   = render 'events/volunteer_events', events: @volunteer_events

@@ -120,8 +120,9 @@ class GroupAssignmentsController < ApplicationController
   def group_assignment_params
     params.require(:group_assignment).permit(
       :period_start, :period_end, :termination_submitted_at, :terminated_at, :responsible,
-      :term_feedback_activities, :term_feedback_problems, :term_feedback_success, :redirect_to,
-      :term_feedback_transfair, volunteer_attributes: [:waive]
+      :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
+      :redirect_to, :term_feedback_transfair, :comments, :additional_comments,
+      volunteer_attributes: [:waive]
     )
   end
 end
