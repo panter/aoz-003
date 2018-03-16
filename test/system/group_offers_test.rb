@@ -13,7 +13,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     fill_in 'Bezeichnung', with: 'asdf'
     page.choose('group_offer_offer_type_internal_offer')
     page.choose('group_offer_offer_state_full')
-    page.choose('group_offer_volunteer_state_internal_volunteer')
     select @group_offer_category.category_name, from: 'Kategorie'
     select @department_manager.department.first, from: 'Department'
     select @department_manager, from: 'Verantwortliche/r'

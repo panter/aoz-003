@@ -1,7 +1,6 @@
 class GroupOffersController < ApplicationController
   include GroupAssignmentsAttributes
   before_action :set_group_offer, except: [:index, :search, :new, :create]
-  before_action :set_volunteer_collection
   before_action :set_department_manager_collection
 
   def index
@@ -44,9 +43,7 @@ class GroupOffersController < ApplicationController
     authorize @group_offer
   end
 
-  def edit
-    set_assignable_collection
-  end
+  def edit; end
 
   def create
     @group_offer = GroupOffer.new(group_offer_params)
@@ -108,37 +105,13 @@ class GroupOffersController < ApplicationController
     authorize @group_offer
   end
 
-  def set_assignable_collection
-    set_volunteer_collection
-    @assignable = if @group_offer.volunteer_state == 'internal_volunteer'
-                    define_assignables(@internals)
-                  else
-                    define_assignables(@externals)
-                  end
-    @assignable += @group_offer.volunteers.map do |volunteer|
-      [volunteer.contact.full_name, volunteer.id]
-    end
-    @assignable.uniq!
-  end
-
-  def define_assignables(volunteers)
-    VolunteerPolicy::Scope.new(current_user, volunteers).resolve.map do |volunteer|
-      [volunteer.contact.full_name, volunteer.id]
-    end
-  end
-
-  def set_volunteer_collection
-    @internals = Volunteer.accepted.internal
-    @externals = Volunteer.accepted.external
-  end
-
   def set_department_manager_collection
     @department_managers = User.department_managers
   end
 
   def group_offer_params
     params.require(:group_offer).permit(
-      :title, :offer_type, :offer_state, :volunteer_state, :necessary_volunteers, :description,
+      :title, :offer_type, :offer_state, :necessary_volunteers, :description,
       :women, :men, :children, :teenagers, :unaccompanied, :all, :long_term, :regular,
       :short_term, :workday, :weekend, :morning, :afternoon, :evening, :flexible, :schedule_details,
       :department_id, :creator_id, :organization, :location, :period_end, :group_offer_category_id,

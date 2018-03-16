@@ -34,14 +34,10 @@ h2= @group_offer.title
       tr
         td= t_attr(:group_offer_category)
         td= @group_offer.group_offer_category.category_name
-      tr
-        td= t_attr(:volunteer_state)
-        td
-          - if @group_offer.necessary_volunteers
-            = t('group_offers.index.necessary_volunteers', amount: @group_offer.necessary_volunteers)
-            br
-          - if @group_offer.volunteer_state?
-            = t("volunteer_state.#{@group_offer.volunteer_state}")
+      - if @group_offer.necessary_volunteers
+        tr
+          td= t_attr(:necessary_volunteers)
+          td= t('group_offers.index.necessary_volunteers', amount: @group_offer.necessary_volunteers)
       tr
         td= t_attr(:description)
         td= @group_offer.description

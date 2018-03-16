@@ -1,7 +1,7 @@
 = simple_error_notice f
 
 - if policy(Volunteer).superadmin_privileges?
-  = f.input :external, input_html: { data: { state: { remove: ['contacted', 'resigned', 'inactive', 'rejected'], selected: 'accepted' }, hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
+  = f.input :external, input_html: { data: { hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
   fieldset
     legend= t('.acceptance.management')
     = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance), as: :radio_buttons, include_blank: false, selected: @volunteer.acceptance.to_i

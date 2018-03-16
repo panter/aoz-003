@@ -257,9 +257,6 @@ de:
       <<: *id-volunteers-index
       acceptance: *id-volunteer-acceptance
       state: *id-volunteer-active-states
-  volunteer_state: &id-volunteer-states
-    external_volunteer: Externe Freiwillige
-    internal_volunteer: AOZ-Freiwillige
   volunteers: *id-volunteers-by-actions
   accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
@@ -382,7 +379,6 @@ de:
         title: Bezeichnung
         unaccompanied: Unbegleitete Minderjährige
         volunteers: Freiwillige
-        volunteer_state: Interne oder externe Freiwillige
         women: Frauen
         period_end: Angebotsenddatum
       group_offer_category:
@@ -981,7 +977,6 @@ de:
         group_offer_categories: Gruppenangebot Kategorien
         offer_type: *id-offer-types
         offer_state: *id-offer-states
-        volunteer_state: *id-volunteer-states
       group_offer_category:
         category_state: *id-group-offer-category-states
       journal:
