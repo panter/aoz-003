@@ -99,6 +99,7 @@ de:
     created_at: Erstellt am
     created_by: Angemeldet von
     comments: Bemerkungen
+    department: Standort
     email: Email
     first_name: Vorname
     full_name: Name
@@ -357,6 +358,7 @@ de:
         volunteer: Freiwillige
         period: Zeitraum
       group_offer:
+        <<: *id-generic_keys
         active: Aktiv
         all: Alle
         availability: Zeitangaben
@@ -430,7 +432,6 @@ de:
       user:
         <<: *id-generic_keys
         clients: Kunden/innen
-        department: Standort
         profile: Profil
         role: Rolle
       volunteer: &id-volunteer_attributes

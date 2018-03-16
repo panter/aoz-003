@@ -22,7 +22,7 @@ tr
         span Kein Login
         - if volunteer.import
           span Importiert
-  td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
+  td = volunteer.external? ? t_attr(:external, Volunteer) : t_attr(:internal, Volunteer)
   td
     - if volunteer.self_applicant?
       = t('volunteer_self_applicant')
