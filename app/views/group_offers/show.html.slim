@@ -103,5 +103,15 @@ h2= @group_offer.title
 
 
 - unless params[:format] == 'pdf'
-  = form_navigation_btn :edit
-  = form_navigation_btn :back
+  - show_volunteers = (params[:page] || params[:q]).present?
+  #add-volunteers.collapse class=('in' if show_volunteers)
+    h2 Freiwillige hinzufügen
+    = render 'volunteers/columns', volunteers: @volunteers
+    br
+
+  ul.list-inline
+    li= button_link 'Gruppenangebot bearbeiten', edit_group_offer_path(@group_offer)
+    li
+      a.btn.btn-default href='#add-volunteers' data-toggle='collapse' aria-expanded=show_volunteers.to_s aria-controls='add-volunteers'
+        'Freiwillige hinzufügen
+    li= button_link navigation_glyph(:back), group_offers_path

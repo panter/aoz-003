@@ -27,7 +27,11 @@ class GroupOffersController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html
+      format.html do
+        @q = policy_scope(Volunteer.candidates_for_group_offer(@group_offer)).ransack(params[:q])
+        @volunteers = @q.result.paginate(page: params[:page])
+      end
+
       format.pdf do
         render pdf: "group_offer_#{@group_offer.id}", layout: 'pdf.pdf',
         template: 'group_offers/show.html.slim', encoding: 'UTF-8'

@@ -1,11 +1,12 @@
-= bootstrap_paginate(volunteers)
+- unless controller_name == 'group_offers'
+  = bootstrap_paginate(volunteers)
 
 .table-responsive
   table.table.table-striped
     thead
       tr
         th= sort_link @q, :salutation
-        - if action_name == 'index' || action_name == 'seeking_clients'
+        - if action_name == 'index' || action_name == 'seeking_clients' || controller_name == 'group_offers'
           th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
         th= sort_link @q, :contact_city
         th= sort_link @q, :contact_postal_code

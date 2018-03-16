@@ -20,16 +20,6 @@
     .col-xs-12.col-md-3= f.input :necessary_volunteers, collection: 1..10
 
   .row
-    #volunteers
-      = f.simple_fields_for :group_assignments do |group_assignment|
-        = render 'group_assignment_fields', f: group_assignment
-      .col-xs-12
-        = hidden_field_tag :internals, @internals.map{|item| {id: item.id, value: item.contact.full_name}}.to_json
-        = hidden_field_tag :externals, @externals.map{|item| {id: item.id, value: item.contact.full_name}}.to_json
-        p#add_volunteers_text Um Freiwillige hinzufügen können müssen zuerst 'Interne oder externe Freiwillige' ausgewählt werden.
-        = link_to_add_association 'Freiwillige hinzufügen', f, :group_assignments, class: 'btn btn-default', id: 'add_volunteers'
-
-  .row
     .col-xs-12= f.input :description
 
   h3= t_attr(:target_group)

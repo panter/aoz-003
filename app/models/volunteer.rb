@@ -174,6 +174,15 @@ class Volunteer < ApplicationRecord
     accepted.internal.where(intro_course: false)
   }
 
+  scope :candidates_for_group_offer, lambda { |group_offer|
+    volunteers = accepted
+    volunteers = group_offer.internal? ? volunteers.internal : volunteers.external
+
+    # exclude volunteers which already have a group assignment
+    assignments = group_offer.group_assignments.where('volunteer_id = volunteers.id')
+    volunteers.where("NOT EXISTS (#{assignments.to_sql})")
+  }
+
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)
   end
