@@ -7,9 +7,9 @@ class GroupOffer < ApplicationRecord
   OFFER_TYPES = [:internal_offer, :external_offer].freeze
   OFFER_STATES = [:open, :partially_occupied, :full].freeze
 
-  belongs_to :department, optional: true
+  belongs_to :department
   belongs_to :group_offer_category
-  belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true,
+  belongs_to :creator, -> { with_deleted }, class_name: 'User',
     inverse_of: 'group_offers'
 
   # termination record relations
@@ -32,7 +32,7 @@ class GroupOffer < ApplicationRecord
 
   has_many :volunteer_contacts, through: :volunteers, source: :contact
 
-  validates :title, presence: true
+  validates :title, :offer_type, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
   validates :period_end, absence: {
     message: lambda { |object, _|

@@ -11,8 +11,8 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     fill_in 'Bezeichnung', with: 'asdf'
-    page.choose('group_offer_offer_type_internal_offer')
-    page.choose('group_offer_offer_state_full')
+    choose 'Internes Gruppenangebot'
+    choose 'Voll'
     select @group_offer_category.category_name, from: 'Kategorie'
     select @department_manager.department.first, from: 'Department'
     select @department_manager, from: 'Verantwortliche/r'
@@ -34,7 +34,9 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     fill_in 'Bezeichnung', with: 'asdf'
     select @group_offer_category.category_name, from: 'Kategorie'
+    choose 'Internes Gruppenangebot'
     click_button 'Gruppenangebot erfassen'
+
     assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
     assert page.has_link? department_manager.department.first.contact.last_name
   end

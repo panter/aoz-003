@@ -1,13 +1,11 @@
 FactoryBot.define do
   factory :group_offer do
     association :creator, factory: :user_fake_email
+    association :department
+
     title { FFaker::Lorem.sentence }
     necessary_volunteers 5
     offer_type :internal_offer
-
-    trait :with_department do
-      association :department
-    end
 
     after(:build) do |group_offer|
       if GroupOfferCategory.any?
