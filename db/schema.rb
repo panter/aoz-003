@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20180315172823) do
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
     t.text "term_feedback_transfair"
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["assignment_id"], name: "index_assignment_logs_on_assignment_id"
     t.index ["client_id"], name: "index_assignment_logs_on_client_id"
     t.index ["creator_id"], name: "index_assignment_logs_on_creator_id"
@@ -89,6 +91,8 @@ ActiveRecord::Schema.define(version: 20180315172823) do
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
     t.text "term_feedback_transfair"
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["period_end"], name: "index_assignments_on_period_end"
@@ -180,6 +184,7 @@ ActiveRecord::Schema.define(version: 20180315172823) do
     t.datetime "resigned_at"
     t.datetime "accepted_at"
     t.datetime "rejected_at"
+    t.text "additional_comments"
     t.index ["acceptance"], name: "index_clients_on_acceptance"
     t.index ["accepted_at"], name: "index_clients_on_accepted_at"
     t.index ["birth_year"], name: "index_clients_on_birth_year"
@@ -314,6 +319,8 @@ ActiveRecord::Schema.define(version: 20180315172823) do
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
     t.text "term_feedback_transfair"
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
     t.index ["group_assignment_id"], name: "index_group_assignment_logs_on_group_assignment_id"
     t.index ["group_offer_id"], name: "index_group_assignment_logs_on_group_offer_id"
@@ -343,6 +350,8 @@ ActiveRecord::Schema.define(version: 20180315172823) do
     t.text "term_feedback_transfair"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["period_end"], name: "index_group_assignments_on_period_end"
@@ -425,7 +434,7 @@ ActiveRecord::Schema.define(version: 20180315172823) do
     t.integer "hours", default: 0
     t.integer "minutes", default: 0
     t.string "activity"
-    t.string "comments"
+    t.text "comments"
     t.bigint "volunteer_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
