@@ -17,6 +17,7 @@ table.table.table-striped.list-responses-table
     tr
       th= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th Einsatz
+      th Bemerkungen
       th= sort_link @q, :hours, 'Zeit'
       th= sort_link @q, :updated_at, 'Alter'
       th.limit-width
@@ -28,6 +29,16 @@ table.table.table-striped.list-responses-table
         td
           a href="#{url_for(record.hourable)}" title="#{record.hourable.to_label}"
             = record.hourable.to_label
+        - if record.hourable.assignment?
+          - if record.hourable.comments?
+            = td_truncate_content_modal(record.hourable.comments, 'Bemerkungen', shorten_size: 100)
+          - else
+            td chelp
+        - else
+          - if GroupAssignment.find_by(id: record.hourable).comments?
+            = td_truncate_content_modal(GroupAssignment.find_by(id: record.hourable_id).comments, 'Bemerkungen', shorten_size: 100)
+          - else
+            td wtf
         td.index-action-cell
           span
             - total_hours = record.hours + (record.minutes/60.0)
