@@ -208,13 +208,13 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     assert_field 'Internes Gruppenangebot', checked: true
     assert_field 'Standort'
-    refute_field 'Organization'
+    refute_field 'Organisation'
     refute_field 'Ort'
 
     choose 'Externes Gruppenangebot'
 
     refute_field 'Standort'
-    assert_field 'Organization'
+    assert_field 'Organisation'
     assert_field 'Ort'
   end
 end

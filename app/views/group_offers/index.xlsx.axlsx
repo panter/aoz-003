@@ -13,15 +13,17 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
   header_row = [
     'Status',
     t_attr(:title),
+    t_attr(:group_offer_category),
+    t_attr(:offer_type),
+    t_attr(:department),
     t_attr(:location),
-    'Verantwortliche/r',
     t_attr(:availability),
     t_attr(:target_group),
+    t_attr(:organization),
     t_attr(:duration),
-    t_attr(:offer_type),
     t_attr(:offer_state),
-    t_attr(:volunteers),
-    t_attr(:group_offer_category)
+    'Verantwortliche/r',
+    t_attr(:volunteers)
   ]
 
   sheet.add_row header_row, style: col_header
@@ -48,15 +50,17 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
     sheet.add_row [
       offer.active? ? 'Aktiv' : 'Inaktiv',
       offer.title,
-      offer.full_location,
-      creator,
+      offer.group_offer_category,
+      type,
+      (offer.department if offer.internal?),
+      (offer.location if offer.external?),
       availabilities,
       targets,
+      (offer.organization if offer.external?),
       durations,
-      type,
       state,
-      volunteers.join("\r"),
-      offer.group_offer_category
+      creator,
+      volunteers.join("\r")
     ], types: :string, style: col_body, height: volunteers.size * 14
   end
 end
