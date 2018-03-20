@@ -24,7 +24,7 @@ nav.navbar.section-navigation#filters
     = custom_filter_dropdown('Beendet',
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
       { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
-    = button_link 'Beendete Begleitungen',
+    = button_link 'Beendete Einsätze',
       terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }), dimension: :sm
   hr
 
