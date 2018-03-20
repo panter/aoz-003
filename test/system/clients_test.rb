@@ -148,7 +148,7 @@ class ClientsTest < ApplicationSystemTestCase
     end
     visit clients_path
     first(:link, '2').click
-    Client.order('created_at desc').paginate(page: 2).each do |client|
+    Client.order('acceptance asc').paginate(page: 2).each do |client|
       assert page.has_text? client.contact.full_name
     end
 

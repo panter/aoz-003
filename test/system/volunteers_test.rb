@@ -183,7 +183,7 @@ class VolunteersTest < ApplicationSystemTestCase
     visit current_url
 
     assert page.has_css? '.pagination'
-    Volunteer.order('created_at desc').paginate(page: 2).each do |volunteer|
+    Volunteer.order('acceptance asc').paginate(page: 2).each do |volunteer|
       assert page.has_text? "#{volunteer.contact.full_name} #{volunteer.contact.city}"\
         " #{volunteer.contact.postal_code}"
     end
