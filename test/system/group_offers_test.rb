@@ -11,10 +11,9 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     fill_in 'Bezeichnung', with: 'asdf'
-    choose 'Internes Gruppenangebot'
     choose 'Voll'
     select @group_offer_category.category_name, from: 'Kategorie'
-    select @department_manager.department.first, from: 'Department'
+    select @department_manager.department.first, from: 'Standort'
     select @department_manager, from: 'Verantwortliche/r'
     select '2', from: 'Anzahl der benötigten Freiwilligen'
     fill_in 'Beschreibung des Angebotes', with: 'asdf'
@@ -34,7 +33,6 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     fill_in 'Bezeichnung', with: 'asdf'
     select @group_offer_category.category_name, from: 'Kategorie'
-    choose 'Internes Gruppenangebot'
     click_button 'Gruppenangebot erfassen'
 
     assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
@@ -146,7 +144,11 @@ class GroupOffersTest < ApplicationSystemTestCase
       refute_text external_volunteer
     end
 
-    group_offer.update(offer_type: :external_offer)
+    group_offer.update!(
+      offer_type: :external_offer,
+      organization: 'Acme Corporation',
+      location: 'Texas'
+    )
     visit group_offer_path(group_offer)
     click_link 'Freiwillige hinzufügen'
 
@@ -189,14 +191,30 @@ class GroupOffersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'offer_type_is_disabled_if_group_assignments_are_present' do
+  test 'offer_type_is_readonly_if_group_assignments_are_present' do
     group_offer = create :group_offer
     create :group_assignment, group_offer: group_offer
 
     login_as create(:user)
     visit edit_group_offer_path(group_offer)
 
-    assert_field 'Internes Gruppenangebot', disabled: true
-    assert_field 'Externes Gruppenangebot', disabled: true
+    assert_field 'Internes Gruppenangebot', readonly: true
+    assert_field 'Externes Gruppenangebot', readonly: true
+  end
+
+  test 'offer_type_toggles_location_fields' do
+    login_as create(:user)
+    visit new_group_offer_path
+
+    assert_field 'Internes Gruppenangebot', checked: true
+    assert_field 'Standort'
+    refute_field 'Organization'
+    refute_field 'Ort'
+
+    choose 'Externes Gruppenangebot'
+
+    refute_field 'Standort'
+    assert_field 'Organization'
+    assert_field 'Ort'
   end
 end

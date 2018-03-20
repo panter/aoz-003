@@ -7,7 +7,7 @@ class GroupOffer < ApplicationRecord
   OFFER_TYPES = [:internal_offer, :external_offer].freeze
   OFFER_STATES = [:open, :partially_occupied, :full].freeze
 
-  belongs_to :department
+  belongs_to :department, optional: true
   belongs_to :group_offer_category
   belongs_to :creator, -> { with_deleted }, class_name: 'User',
     inverse_of: 'group_offers'
@@ -40,6 +40,9 @@ class GroupOffer < ApplicationRecord
                  "#{object.group_assignments.running.count} laufende Gruppeneinsätze hat."
              }
   }, if: :running_assignments?
+
+  validates :department, presence: true, if: :internal?
+  validates :organization, :location, presence: true, if: :external?
 
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
