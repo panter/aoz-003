@@ -24,3 +24,8 @@ test:
   script:
     - bundle exec rails test:system
     - bundle exec rails test
+  artifacts:
+    paths:
+      - tmp/screenshots
+    when: on_failure
+    expire_in: 1 week
