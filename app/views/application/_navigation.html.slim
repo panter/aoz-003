@@ -1,7 +1,7 @@
 nav.navbar.navbar-top.hidden-print
   - if current_user.present?
-    .container
-      .navbar-header
+    .container-fluid
+      .navbar-header.navbar-left
         button.navbar-toggle.collapsed aria-controls='navbar' aria-expanded='false' data-target='#navbar' data-toggle='collapse' type='button'
           span.sr-only Toggle navigation
           span.icon-bar
@@ -11,27 +11,27 @@ nav.navbar.navbar-top.hidden-print
           = image_tag 'AOZ_Logo.svg', alt: 'AOZ Logo', class: 'brand-image'
 
       #navbar.collapse.navbar-collapse
-        ul.nav.navbar-nav
-          - if policy(User).index?
-            li= link_to 'Benutzer/innen', users_path
+        ul.nav.navbar-nav.navbar-left
           - if policy(Volunteer).index?
             li= link_to 'Freiwillige', volunteers_path
           - if policy(Client).index?
             li= link_to 'Klienten/innen', clients_path
-          - if policy(Department).manager_with_department?
-            li= link_to t_model(Department), department_path(current_user.department.first.id)
           - if policy(Assignment).index?
             li= link_to 'Begleitungen', assignments_path
           - if policy(GroupOffer).index?
             li= link_to 'Gruppenangebote', group_offers_path
-          - if policy(Department).index?
-            li= link_to 'Standorte', departments_path
-          - if policy(PerformanceReport).index?
-            li= link_to 'Kennzahlen', performance_reports_path
           - if policy(ReminderMailing).index?
             li = link_to 'Erinnerungs-Emails', reminder_mailings_path
           - if policy(Event).index?
             li = link_to 'Veranstaltungen', events_path
+          - if policy(PerformanceReport).index?
+            li= link_to 'Kennzahlen', performance_reports_path
+          - if policy(User).index?
+            li= link_to 'Benutzer/innen', users_path
+          - if policy(Department).index?
+            li= link_to 'Standorte', departments_path
+          - elsif policy(Department).manager_with_department?
+            li= link_to t_model(Department), department_path(current_user.department.first.id)
         ul.nav.navbar-nav.navbar-right
           li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
