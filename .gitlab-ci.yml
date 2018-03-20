@@ -1,3 +1,5 @@
+image: nbulai/ruby-chromedriver:2.35
+
 stages:
   - test
 
@@ -16,10 +18,13 @@ variables:
 before_script:
   - gem install bundler --no-ri --no-rdoc
   - bundle install -j $(nproc) --path vendor
+  - bundle exec chromedriver-update 2.36
+  - ruby --version
+  - google-chrome --version
+  - bundle exec chromedriver --version
   - bundle exec rails db:schema:load
 
 test:
-  image: "andistaub/ruby-chromedriver:latest"
   stage: test
   script:
     - bundle exec rails test:system
