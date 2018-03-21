@@ -310,7 +310,7 @@ de:
         zip_city: PLZ/Ort
       client:
         <<: *id-generic_keys
-        acceptance: Affirmation
+        acceptance: Prozess
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
         cost_unit: Kostenträger
@@ -439,7 +439,7 @@ de:
         role: Rolle
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance]
-        acceptance: Affirmation
+        acceptance: Prozess
         acceptances: *id-volunteer-acceptance
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität

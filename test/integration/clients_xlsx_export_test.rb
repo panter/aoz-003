@@ -17,7 +17,7 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
     assert_xls_cols_equal(wb, 1, 0, 'id', 'Anrede', 'Nachname', 'Vorname', 'Strasse',
       'Adresszusatz', 'PLZ', 'Ort', 'Telefonnummer', 'Telefonnummer 2', 'Mailadresse',
       'Jahrgang', 'Nationalität', 'Beruf oder Ausbildung im Herkunftsland',
-      'Einreisedatum', 'Affirmation', 'Erstellt am', 'Aktualisiert am')
+      'Einreisedatum', 'Prozess', 'Erstellt am', 'Aktualisiert am')
 
     assert_equal client.id.to_s, wb.cell(2, 1).to_s
     assert_xls_cols_equal(wb, 2, 1, I18n.t("salutation.#{client.salutation}"),

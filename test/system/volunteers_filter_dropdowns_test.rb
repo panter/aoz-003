@@ -21,7 +21,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter by acceptance works and disabling works as well' do
     within '.section-navigation' do
-      click_link 'Affirmation'
+      click_link 'Prozess'
       click_link 'Angemeldet'
     end
     visit current_url
@@ -30,7 +30,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? 'Akzeptiert'
     end
     within '.section-navigation' do
-      click_link 'Affirmation: Angemeldet'
+      click_link 'Prozess: Angemeldet'
       assert page.has_link? text: 'Angemeldet', class: 'bg-undecided'
       click_link 'Alle'
     end
@@ -48,7 +48,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Affirmation'
+      click_link 'Prozess'
       click_link 'Akzeptiert'
     end
     visit current_url
@@ -172,7 +172,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
   test 'choosing_acceptance_resigned_works' do
     visit volunteers_path
     within '.section-navigation' do
-      click_link 'Affirmation'
+      click_link 'Prozess'
       click_link 'Beendet'
     end
     visit current_url
