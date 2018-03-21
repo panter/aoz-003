@@ -9,7 +9,7 @@ class GroupAssignmentPolicy < ApplicationPolicy
 
   alias_method :verify_termination?, :superadmin?
 
-  alias_method :create?,             :superadmin_or_department_manager?
+  alias_method :create?,             :superadmin_or_department_manager_offer?
   alias_method :terminated_index?,   :superadmin_or_department_manager?
 
   alias_method :edit?,               :superadmin_or_department_manager_creation?

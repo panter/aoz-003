@@ -32,8 +32,16 @@ class ApplicationPolicy
   end
 
   def department_manager_offer?
+    if record.is_a? GroupOffer
+      offer = record
+    elsif record.is_a? GroupAssignment
+      offer = record.group_offer
+    else
+      return false
+    end
+
     department_manager? &&
-      (user.department.include?(record.department) || user.group_offers.include?(record))
+      (user.department.include?(offer.department) || user.group_offers.include?(offer))
   end
 
   def superadmin_or_department_manager_offer?
