@@ -803,8 +803,6 @@ de:
       not_zurich: Auserhalb Zürich
       external: Extern
       internal: Intern
-      in_departments: In Standorten
-      outside_departments: Ausserhalb Standorten
     values: &id-performance-value-descs
       total: Gesammt
       active_total: Total Akiv
@@ -843,11 +841,9 @@ de:
       termination_submitted: Beendigung bestätigt
       termination_verified: Beendigung quittiert
       performance_appraisal_reviews: Standortgespräche
-      in_departments: In Standorten
       ended_assignments: Beendete Gruppeneinsätze
       active_assignments: Aktive Gruppeneinsätze
       created_assignments: Erstellte Gruppeneinsätze
-      outside_departments: Ausserhalb Standorten
       started_assignments: Begonnene Gruppeneinsätze
       intro_course: Teilnehmende Einführungsveranstaltungen
       professional_training: Teilnehmende Weiterbildungen

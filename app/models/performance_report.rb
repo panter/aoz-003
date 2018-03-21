@@ -140,8 +140,8 @@ class PerformanceReport < ApplicationRecord
     group_offers = GroupOffer.created_before(periods.last)
     {
       all: group_offer_stats(group_offers),
-      in_departments: group_offer_stats(group_offers.where.not(department_id: nil)),
-      outside_departments: group_offer_stats(group_offers.where(department_id: nil))
+      internal: group_offer_stats(group_offers.internal),
+      external: group_offer_stats(group_offers.external)
     }
   end
 

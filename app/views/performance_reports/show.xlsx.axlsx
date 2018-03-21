@@ -76,7 +76,7 @@ end
 
 wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
   group_offers = @report_content['group_offers']
-  column_order = ['in_departments', 'outside_departments', 'all']
+  column_order = ['internal', 'external', 'all']
 
   header_row = column_order.map do |category_key|
     t(".group_offers.categories.#{category_key}")

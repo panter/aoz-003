@@ -14,5 +14,12 @@ FactoryBot.define do
         group_offer.group_offer_category = create(:group_offer_category)
       end
     end
+
+    trait :external do
+      offer_type :external_offer
+      department nil
+      location { FFaker::Address.city }
+      organization { FFaker::Company.name }
+    end
   end
 end

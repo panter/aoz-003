@@ -47,7 +47,8 @@ class GroupOffer < ApplicationRecord
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
 
-  scope :in_department, (-> { field_not_nil(:department_id) })
+  scope :internal, (-> { where(offer_type: 'internal_offer') })
+  scope :external, (-> { where(offer_type: 'external_offer') })
 
   scope :active_group_assignments_between, lambda { |start_date, end_date|
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
