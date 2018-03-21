@@ -1,6 +1,8 @@
 tr
+  td.index-action-cell.hidden-print
+    - if policy(user).destroy?
+      = button_link navigation_glyph(:delete), user,
+          method: :delete, title: 'Löschen',
+          data: { confirm: t('are_you_sure_delete_user', email: user.email)}
   td= link_to user.full_name, profile_link(user)
   td= t("role.#{user.role}")
-  td
-    - if policy(user).destroy?
-      = link_to t_action(:delete), user, data: { confirm: t('are_you_sure_delete_user', email: user.email)}, method: :delete

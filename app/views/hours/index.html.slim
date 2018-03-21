@@ -5,6 +5,7 @@ h1= t_title(:index, Hour)
       table.table
         thead
           tr
+            th.hidden-print Aktionen
             - if policy(Hour).supervisor?
               th= t_model(Volunteer)
             th= t_attr(:hourable)
@@ -12,10 +13,16 @@ h1= t_title(:index, Hour)
             th= t_attr(:duration)
             th= t_attr(:activity)
             th= t_attr(:comments)
-            th colspan=3
         tbody
           - @volunteer.hours.each do |record|
             tr
+              td.index-action-cell.hidden-print
+                = button_link navigation_glyph(:show), volunteer_hour_path(@volunteer, record),
+                    title: 'Anzeigen'
+                = button_link navigation_glyph(:edit), edit_volunteer_hour_path(@volunteer, record),
+                    title: 'Bearbeiten'
+                = button_link navigation_glyph(:delete), volunteer_hour_path(@volunteer, record),
+                    confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
               - if current_user.superadmin?
                 td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
               td
@@ -30,9 +37,6 @@ h1= t_title(:index, Hour)
               td= "#{record.hours}:#{'%02i' % record.minutes}"
               td= record.activity
               td= record.comments
-              td= link_to t_action(:show), volunteer_hour_path(@volunteer, record)
-              td= link_to t_action(:edit), edit_volunteer_hour_path(@volunteer, record)
-              td= link_to navigation_glyph(:delete), volunteer_hour_path(@volunteer, record), confirm_deleting(record)
 .row
   .col-xs-12
 = form_navigation_btn :new

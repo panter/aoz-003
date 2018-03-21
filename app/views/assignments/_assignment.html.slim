@@ -1,4 +1,9 @@
 tr
+  td.index-action-cell.hidden-print
+    = button_link navigation_glyph(:show), assignment, title: 'Anzeigen'
+    - if policy(assignment).edit?
+      = button_link navigation_glyph(:edit), edit_polymorphic_path(assignment), title: 'Bearbeiten'
+    = button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
   td.button-acceptance= assignment_status_badge(assignment)
   - if action_index? || controller_name == 'clients'
     td = link_to assignment.volunteer, assignment.volunteer
@@ -15,11 +20,6 @@ tr
     - else
       = assignment.creator.full_name
   = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
-  td.index-action-cell
-    = link_to t_action(:show), assignment
-    - if policy(assignment).edit?
-      = link_to t_action(:edit), edit_polymorphic_path(assignment)
-  td.index-action-cell.hidden-print= link_to t('download'), assignment_path(assignment, format: :pdf)
   - if controller_name == 'volunteers'
     - if policy(TrialFeedback).index?
       td.index-action-cell.hidden-print

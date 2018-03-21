@@ -5,6 +5,7 @@ h1= t_title(:index, BillingExpense)
       table.table
         thead
           tr
+            th.hidden-print Aktionen
             th= t_model(Volunteer)
             th= t_attr(:address)
             th= t_attr(:bank_details, Volunteer)
@@ -13,10 +14,16 @@ h1= t_title(:index, BillingExpense)
             th= t_attr(:amount, BillingExpense)
             th= t_attr(:created_at)
             th= t_attr(:created_by)
-            th colspan=3
         tbody
           - @volunteer.billing_expenses.each do |record|
             tr
+              td.index-action-cell.hidden-print
+                = button_link navigation_glyph(:show), volunteer_billing_expense_path(@volunteer, record),
+                    title: 'Anzeigen'
+                = button_link navigation_glyph(:download), volunteer_billing_expense_path(@volunteer, record, format: :pdf),
+                    title: 'Herunterladen'
+                = button_link navigation_glyph(:delete), volunteer_billing_expense_path(@volunteer, record),
+                    confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
               td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
               td= @volunteer.contact.full_address
               td= record.full_bank_details
@@ -25,9 +32,6 @@ h1= t_title(:index, BillingExpense)
               td= record.amount
               td= l(record.created_at.to_date)
               td= record.user.profile.contact.full_name
-              td= link_to t_action(:show), volunteer_billing_expense_path(@volunteer, record)
-              td= link_to t('download'), volunteer_billing_expense_path(@volunteer, record, format: :pdf)
-              td= link_to navigation_glyph(:delete), volunteer_billing_expense_path(@volunteer, record), confirm_deleting(record)
 .row
   .col-xs-12
     = simple_form_for [@volunteer, BillingExpense.new] do |f|

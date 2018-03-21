@@ -5,6 +5,11 @@
   table.table.table-striped
     thead
       tr
+        - if action_index?
+          th.hidden-print Aktionen
+        th
+        - if policy(Volunteer).show_acceptance?
+          th= sort_link @q, :acceptance
         th= sort_link @q, :salutation
         - if action_name == 'index' || action_name == 'seeking_clients' || controller_name == 'group_offers'
           th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
@@ -19,11 +24,8 @@
         th= sort_link @q, :working_percent
         th= sort_link @q, :interests
         th= t_attr(:comments)
-        - if policy(Volunteer).show_acceptance?
-          th= sort_link @q, :acceptance
         th= sort_link @q, :external
         th= t_attr(:created_by, Volunteer)
-        th colspan=(action_index? ? '4' : '2')
 
     tbody
       = render volunteers

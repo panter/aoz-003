@@ -4,13 +4,16 @@ h1= t_title(:index, Journal)
       table.table
         thead
           tr
+            th.hidden-print Aktionen
             th= t_attr(:category)
             th= t_attr(:text)
             th= t_attr(:author)
-            th
         tbody
           - @journaled.journals.each do |record|
             tr
+              td.index-action-cell.hidden-print
+                = button_link navigation_glyph(:edit), url_for([@journaled, record]) + '/edit',
+                    title: 'Bearbeiten'
               td= t("category.#{record.category}")
               td
                 - if record.title?
@@ -18,7 +21,6 @@ h1= t_title(:index, Journal)
                   br
                 = word_wrap(record.body) if record.body
               td= link_to record.user.full_name, record.user.profile
-              td= link_to t_action(:edit), url_for([@journaled, record]) + '/edit'
 = form_navigation_btn :new
 .row
   .col-xs-12= button_link navigation_glyph(:back), @journaled

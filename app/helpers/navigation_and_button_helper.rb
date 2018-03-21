@@ -7,9 +7,9 @@ module NavigationAndButtonHelper
     button
   end
 
-  def button_link(text, target, type = 'default', dimension: nil)
+  def button_link(text, target, type = 'default', dimension: nil, **options)
     btn_size = " btn-#{dimension}" if dimension
-    link_to text, target, class: "btn btn-#{type}#{btn_size}"
+    link_to text, target, class: "btn btn-#{type}#{btn_size}", **options
   end
 
   def make_nav_button(action)
@@ -33,9 +33,15 @@ module NavigationAndButtonHelper
 
   def navigation_glyph(icon_type = :back)
     translate_glyph = {
+      show: { text: 'Anzeigen', glyph: 'eye-open' },
+      edit: { text: 'Bearbeiten', glyph: 'pencil' },
+      delete: { text: 'Löschen', glyph: 'trash' },
+      terminate: { text: 'Beenden', glyph: 'off' },
+      activate: { text: 'Aktivieren', glyph: 'ok' },
+      deactivate: { text: 'Deaktivieren', glyph: 'remove' },
       back: { text: 'Zurück', glyph: 'arrow-left' },
       print: { text: 'Ausdrucken', glyph: 'print' },
-      delete: { text: 'Löschen', glyph: 'trash' }
+      download: { text: 'Herunterladen', glyph: 'download-alt' }
     }
     glyph_span(translate_glyph[icon_type.to_sym])
   end
@@ -48,7 +54,7 @@ module NavigationAndButtonHelper
 
   def navigation_fa_icon(icon_type = :xlsx)
     translate_fa = {
-      xlsx: { text: 'Excel sheet', fa_type: 'file-excel-o' }
+      xlsx: { text: 'Excel herunterladen', fa_type: 'file-excel-o' }
     }
     fa_span(translate_fa[icon_type.to_sym])
   end

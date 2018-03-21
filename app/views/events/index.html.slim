@@ -7,15 +7,24 @@ h1 Veranstaltungen
 .table-responsive
   table.table
     thead
+      th.hidden-print Aktionen
       th Art
       th Datum
       th Zeit
       th Titel
       th Departement
-      th
     tbody
       - @events.each do |event|
         tr
+          td.index-action-cell.hidden-print
+            = button_link navigation_glyph(:show), event_path(event),
+                title: 'Anzeigen'
+            = button_link navigation_glyph(:edit), edit_event_path(event),
+                title: 'Bearbeiten'
+            = button_link navigation_glyph(:download), event_path(event, format: :xlsx),
+                title: 'Herunterladen'
+            = button_link navigation_glyph(:delete), event_path(event),
+                confirm_deleting(event, 'btn btn-default').merge(title: 'Anzeigen')
           td= t(".#{event.kind}") if event.kind
           td= l(event.date) if event.date
           td
@@ -23,11 +32,6 @@ h1 Veranstaltungen
             = "#{l(event.end_time, format: :time)}" if event.end_time
           td= event.title if event.title
           td= event.department&.contact&.last_name
-          td.index-action-cell.hidden-print
-            = link_to t_action(:show), event_path(event)
-            = link_to t_action(:edit), edit_event_path(event)
-            = link_to t_action(:download), event_path(event, format: :xlsx)
-            = link_to t_action(:delete), event_path(event), confirm_deleting(event)
 
 = form_navigation_btn :new
 = form_navigation_btn :back

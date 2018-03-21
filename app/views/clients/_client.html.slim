@@ -1,4 +1,13 @@
 tr
+  td.index-action-cell.hidden-print
+    = button_link navigation_glyph(:show), client_path(client), title: 'Anzeigen'
+    - if policy(client).edit?
+      = button_link navigation_glyph(:edit), edit_client_path(client), title: 'Bearbeiten'
+    - if policy(client).set_terminated?
+      = button_link navigation_glyph(:terminate), set_terminated_client_path(client), method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }, title: 'Beenden'
+  - if policy(Client).superadmin_privileges?
+    td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
+      class: "btn btn-xs btn-acceptance-#{client.acceptance}"
   td= t("salutation.#{client.salutation}") if client.salutation?
   td= link_to client.contact.full_name, client
   td= client.contact.city
@@ -19,12 +28,4 @@ tr
   td= client.competent_authority
   td.no-wrap= l(client.created_at.to_date)
   - if policy(Client).superadmin_privileges?
-    td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
-      class: "btn btn-xs btn-acceptance-#{client.acceptance}"
     = td_truncate_content_modal(client.comments, 'Bemerkungen', shorten_size: 100)
-  td.index-action-cell.hidden-print
-    = link_to t_action(:show), client_path(client)
-    - if policy(client).edit?
-      = link_to t_action(:edit), edit_client_path(client)
-    - if policy(client).set_terminated?
-      = link_to 'Beenden', set_terminated_client_path(client), method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }
