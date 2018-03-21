@@ -25,10 +25,7 @@ table.table.table-striped.group-assignments-table
             = t_attr(:member, GroupAssignment)
         td= l(group_assignment.period_start) if group_assignment.period_start
         td= l(group_assignment.period_end) if group_assignment.period_end
-        - if group_assignment.comments
-          = td_truncate_content_modal(group_assignment.comments, 'Bemerkungen', shorten_size: 100)
-        - else
-          td
+        = td_truncate_content_modal(group_assignment.comments, 'Bemerkungen', shorten_size: 100)
         td
           - if group_assignment.group_offer && policy(group_assignment.group_offer).show?
             = link_to t_action(:show), group_offer_path(group_assignment.group_offer)

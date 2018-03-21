@@ -14,10 +14,7 @@ tr
       = link_to assignment.creator.full_name, profile_path(assignment.creator)
     - else
       = assignment.creator.full_name
-  - if assignment.comments
-    = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
-  - else
-    td
+  = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
   td.index-action-cell
     = link_to t_action(:show), assignment
     - if policy(assignment).edit?

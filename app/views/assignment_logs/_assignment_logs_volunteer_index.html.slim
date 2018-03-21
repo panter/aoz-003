@@ -17,10 +17,7 @@ table.table.table-striped.assignment-logs-table
           assignment.creator.full_name, profile_path(assignment.creator))
         td= link_to_if(assignment.assignment && policy(assignment.assignment).show?,
           t_action(:show), assignment.assignment) { '' }
-        - if assignment.comments
-          = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
-        - else
-          td
+        = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
         td.index-action-cell.hidden-print
           span
             = link_to_if(policy(TrialFeedback).index?, t_title(:index, TrialFeedback),

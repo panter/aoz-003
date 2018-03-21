@@ -21,10 +21,7 @@ tr
   - if policy(Client).superadmin_privileges?
     td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
       class: "btn btn-xs btn-acceptance-#{client.acceptance}"
-    - if client.comments
-      = td_truncate_content_modal(client.comments, 'Bemerkungen', shorten_size: 100)
-    - else
-      td
+    = td_truncate_content_modal(client.comments, 'Bemerkungen', shorten_size: 100)
   td.index-action-cell.hidden-print
     = link_to t_action(:show), client_path(client)
     - if policy(client).edit?
