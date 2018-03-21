@@ -27,8 +27,8 @@ before_script:
 test:
   stage: test
   script:
-    - bundle exec rails test:system
     - bundle exec rails test
+    - bundle exec rails test:system
   artifacts:
     paths:
       - tmp/screenshots
