@@ -91,12 +91,14 @@ de:
     no_matter: egal
     woman: Frau
   generic_keys: &id-generic_keys
+    additional_comments: Sonstige Bemerkungen
     address: Adresse
     avatar: Foto
     birth_year: Jahrgang
     city: Ort
     created_at: Erstellt am
     created_by: Angemeldet von
+    comments: Bemerkungen
     email: Email
     first_name: Vorname
     full_name: Name
@@ -279,9 +281,9 @@ de:
         trial_period: Probezeit
         volunteer: Freiwillige
       feedback:
+        <<: *id-generic_keys
         achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
-        comments: Bemerkungen
         conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
         future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
         goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
@@ -313,7 +315,6 @@ de:
         age_request: Alter Freiwillige/r
         cost_unit: Kostenträger
         city: Stadt
-        comments: Bemerkungen
         competent_authority: Anmeldende Stelle
         date_of_year: Geburtsjahr
         education: Beruf oder Ausbildung im Herkunftsland
@@ -444,8 +445,6 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
-        comments: Bemerkungen
-        additional_comments: Sonstige Bemerkungen
         external: Extern
         internal: Intern
         available: Verfügbar
@@ -936,7 +935,7 @@ de:
           name: Standortname
         user: Assozierte Benutzer/in
       group_assignment:
-        <<: *id-termination-feedback-quests
+        <<: [*id-termination-feedback-quests, *id-generic_keys]
       q:
         state_cont: Status
       user:
@@ -944,6 +943,7 @@ de:
         password: Passwort
         role: Rolle
       volunteer:
+        <<: *id-generic_keys
         expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
         experience: Bitte ankreuzen falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben.
         interests: Welche sind Ihre wichtigsten Freizeitinteressen?
@@ -951,8 +951,6 @@ de:
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
         external: Als externen Freiwilligen registrieren?
-        comments: Bemerkungen
-        additional_comments: Sonstige Bemerkungen
     "no": 'Nein'
     options:
       certificate:
