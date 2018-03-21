@@ -158,7 +158,8 @@ class AssignmentsController < ApplicationController
       :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
-      :term_feedback_transfair, volunteer_attributes: [:waive]
+      :term_feedback_transfair, :comments, :additional_comments,
+      volunteer_attributes: [:waive]
     )
   end
 end

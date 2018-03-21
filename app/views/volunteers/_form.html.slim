@@ -104,6 +104,9 @@ fieldset
 = single_field_fieldset(f, :expectations)
 = single_field_fieldset(f, :strengths)
 = single_field_fieldset(f, :interests)
+- if policy(Volunteer).superadmin_privileges?
+  = single_field_fieldset(f, :comments)
+  = single_field_fieldset(f, :additional_comments)
 
 h3= policy(@volunteer).superadmin_privileges? ? t('.availability') : t('.availability_question')
 = render 'availability/form', f: f

@@ -16,8 +16,8 @@
         th= sort_link @q, :education
         th= sort_link @q, :profession
         th= sort_link @q, :working_percent
-        th= sort_link @q, :expectations
         th= sort_link @q, :interests
+        th= t_attr(:comments)
         - if policy(Volunteer).show_acceptance?
           th= sort_link @q, :acceptance
         th= sort_link @q, :external

@@ -10,6 +10,7 @@
         th= sort_link @q, :period_start, t_attr(:period_start, Assignment)
         th= sort_link @q, :period_end, t_attr(:period_end, Assignment)
         th= sort_link @q, :creator_email, t_attr(:created_by)
+        th= t_attr(:comments)
         th.hidden-print colspan='4'
 
     tbody

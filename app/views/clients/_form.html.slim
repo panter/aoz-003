@@ -56,6 +56,7 @@
     = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true
     - if policy(Client).superadmin_privileges?
       = f.input :comments
+      = f.input :additional_comments
 
   fieldset
     legend Wann sind Sie verfügbar?

@@ -18,6 +18,10 @@
       - else
         = f.association :volunteer, include_blank: true,
           selected: params[:volunteer_id] || @assignment&.volunteer&.id
+  .row
+    .col-xs-12= f.input :comments
+  .row
+    .col-xs-12= f.input :additional_comments
 
   .row
     .col-xs-12= f.button :submit

@@ -73,6 +73,9 @@ h1= @client.contact.full_name
         tr
           td= t_attr(:comments)
           td= @client.comments
+        tr
+          td= t_attr(:additional_comments)
+          td= @client.additional_comments
 
 h3 Wann sind Sie verfügbar?
 = render 'availability/show', available: @client
