@@ -13,6 +13,8 @@ class Certificate < ApplicationRecord
     self.institution ||= DEFAULT_INSTITUTION + ", #{user&.profile.contact.primary_phone}"
     self.duration_start = volunteer.min_assignment_date
     self.duration_end = volunteer.max_assignment_date
+    self.creator_name ||= user.profile.contact.full_name
+    self.creator_function ||= user.profile.profession
   end
 
   def convert_volunteer_contact

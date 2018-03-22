@@ -34,6 +34,6 @@
 
   .signature.row
     .col-xs-8
-      .name= @certificate.user.profile.contact.full_name
-      .position= @certificate.user.profile.profession
+      .name= @certificate.creator_name
+      .position= @certificate.creator_function
     .col-xs-4= "Zürich #{l(@certificate.created_at.to_date)}"
