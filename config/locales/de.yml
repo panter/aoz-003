@@ -798,8 +798,8 @@ de:
   not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   pdf_header:
-    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch
-    contact: Telefon 044 415 66 72<br>Telefax n.v.<br>jeannine.stauffer@aoz.ch
+    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch/freiwilligenarbeit
+    contact: Telefon %{phone}<br>Telefax n.v.<br>freiwillige@aoz.ch
     title: Fachstelle Freiwilligenarbeit
   performance_reports: &id-performance-reports-de-keys
     categories: &id-performance-scope-categories
