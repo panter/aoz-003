@@ -33,7 +33,7 @@ class GroupOffersController < ApplicationController
 
       format.pdf do
         render pdf: "group_offer_#{@group_offer.id}", layout: 'pdf.pdf',
-        template: 'group_offers/show.html.slim', encoding: 'UTF-8'
+        template: 'group_offers/show.pdf.slim', encoding: 'UTF-8'
       end
     end
   end

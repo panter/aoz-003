@@ -13,8 +13,6 @@
         tr
           td
             = link_to_if(policy(group_assignment.volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
-          - if params[:format] == 'pdf'
-            td= group_assignment.volunteer.contact.primary_email
           td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
           td= l(group_assignment.period_start) if group_assignment.period_start
           td= l(group_assignment.period_end) if group_assignment.period_end
