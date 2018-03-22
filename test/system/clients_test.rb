@@ -46,7 +46,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Beruf oder Ausbildung im Herkunftsland', with: 'asdfasdf'
     fill_in 'Aktuelle Tätigkeiten', with: 'asdfasdf'
     fill_in 'Interessen', with: 'asdfasdf'
-    select('Angemeldet', from: 'Affirmation')
+    select('Angemeldet', from: 'Prozess')
     fill_in 'Bemerkungen', with: 'asdfasdf'
     fill_in 'Anmeldende Stelle', with: 'asdfasdf'
     select @social_worker.full_name, from: 'Fallführende Stelle'

@@ -310,7 +310,7 @@ de:
         zip_city: PLZ/Ort
       client:
         <<: *id-generic_keys
-        acceptance: Affirmation
+        acceptance: Prozess
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
         cost_unit: Kostenträger
@@ -372,7 +372,7 @@ de:
         long_term: Langfristig
         men: Männer
         necessary_volunteers: Anzahl der benötigten Freiwilligen
-        offer_state: Status des FW-Einsatzes
+        offer_state: FW-Nachfrage
         offer_type: Internes oder externes Gruppenangebot
         regular: Regelmässig
         schedule_details: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum
@@ -439,7 +439,7 @@ de:
         role: Rolle
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance]
-        acceptance: Affirmation
+        acceptance: Prozess
         acceptances: *id-volunteer-acceptance
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität

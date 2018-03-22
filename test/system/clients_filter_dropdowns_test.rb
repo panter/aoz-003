@@ -21,7 +21,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter_by_acceptance_works_and_disabling_works_as_well' do
     within '.section-navigation' do
-      click_link 'Affirmation'
+      click_link 'Prozess'
       click_link 'Angemeldet'
     end
     visit current_url
@@ -32,7 +32,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @rejected_mr_no_matter_age_middle
     end
     within '.section-navigation' do
-      click_link 'Affirmation: Angemeldet'
+      click_link 'Prozess: Angemeldet'
       assert page.has_link? text: 'Angemeldet', class: 'bg-accepted'
       click_link 'Alle'
     end
@@ -52,7 +52,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Affirmation'
+      click_link 'Prozess'
       click_link 'Angemeldet'
     end
     visit current_url
@@ -86,7 +86,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter_acceptance_tandem_and_salutation_at_the_same_time' do
     within '.section-navigation' do
-      click_link 'Affirmation'
+      click_link 'Prozess'
       click_link 'Angemeldet'
     end
     visit current_url
