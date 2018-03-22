@@ -82,8 +82,9 @@ class CertificatesController < ApplicationController
 
   def certificate_params
     params.require(:certificate).permit(
-      :duration, :duration_end, :duration_start, :hours, :minutes, :text_body, :institution,
-      :function, :volunteer_id, volunteer_contact: [:name, :street, :city], assignment_kinds: []
+      :duration, :duration_end, :duration_start, :hours, :minutes, :text_body,
+      :institution, :function, :volunteer_id, :creator_name, :creator_function,
+      volunteer_contact: [:name, :street, :city], assignment_kinds: []
     )
   end
 end

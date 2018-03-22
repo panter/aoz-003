@@ -45,6 +45,6 @@
 
   .signature
     .person
-      .name= @certificate.user.profile.contact.full_name
-      .position= @certificate.user.profile.profession
+      .name= @certificate.creator_name
+      .position= @certificate.creator_function
     .place-date= "Zürich #{l(@certificate.created_at.to_date)}"
