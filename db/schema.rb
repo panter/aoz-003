@@ -387,9 +387,8 @@ ActiveRecord::Schema.define(version: 20180322145019) do
 
   create_table "group_offers", force: :cascade do |t|
     t.string "title"
-    t.string "offer_type"
+    t.string "offer_type", default: "internal_offer", null: false
     t.string "offer_state"
-    t.string "volunteer_state"
     t.integer "necessary_volunteers"
     t.text "description"
     t.boolean "women", default: false

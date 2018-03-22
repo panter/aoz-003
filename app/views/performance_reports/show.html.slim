@@ -239,7 +239,7 @@ table.table.table-striped.table-bordered
   htead
     tr
       th
-      - column_order = ['in_departments', 'outside_departments', 'all']
+      - column_order = ['internal', 'external', 'all']
       - column_order.each do |category_key|
         th= t(".assignments.categories.#{category_key}")
   tbody

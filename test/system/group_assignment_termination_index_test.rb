@@ -35,7 +35,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'visiting_termination_index_displays_correct_assignments' do
     visit group_offers_path
-    click_link 'Beendete Begleitungen'
+    click_link 'Beendete Einsätze'
     assert page.has_text? termination_index_table_text(@un_submitted)
     assert page.has_text? termination_index_table_text(@submitted)
     refute page.has_text? termination_index_table_text(@not_ended)
@@ -72,7 +72,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'ended_assignment_can_be_verified' do
     visit group_offers_path
-    click_link 'Beendete Begleitungen'
+    click_link 'Beendete Einsätze'
     assert page.has_text? termination_index_table_text(@un_submitted)
     assert page.has_text? termination_index_table_text(@submitted)
     refute page.has_text? termination_index_table_text(@verified)
@@ -80,7 +80,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     page.find_all('a', text: 'Beendigung Quittieren').first.click
     click_link 'Beendigung Quittieren'
 
-    assert page.has_text? 'Beendete Gruppen Begleitungen'
+    assert page.has_text? 'Beendete Gruppeneinsätze'
     refute page.has_text? termination_index_table_text(@un_submitted)
     refute page.has_text? termination_index_table_text(@submitted)
     refute page.has_text? termination_index_table_text(@verified)
@@ -88,7 +88,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'clear_filter_link_is_working_correctly' do
     visit group_offers_path
-    click_link 'Beendete Begleitungen'
+    click_link 'Beendete Einsätze'
     click_link 'Quittiert: Unquittiert'
     click_link exact_text: 'Quittiert'
     visit current_url
