@@ -11,11 +11,9 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     fill_in 'Bezeichnung', with: 'asdf'
-    page.choose('group_offer_offer_type_internal_offer')
-    page.choose('group_offer_offer_state_full')
-    page.choose('group_offer_volunteer_state_internal_volunteer')
+    choose 'Voll'
     select @group_offer_category.category_name, from: 'Kategorie'
-    select @department_manager.department.first, from: 'Department'
+    select @department_manager.department.first, from: 'Standort'
     select @department_manager, from: 'Verantwortliche/r'
     select '2', from: 'Anzahl der benötigten Freiwilligen'
     fill_in 'Beschreibung des Angebotes', with: 'asdf'
@@ -36,6 +34,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     fill_in 'Bezeichnung', with: 'asdf'
     select @group_offer_category.category_name, from: 'Kategorie'
     click_button 'Gruppenangebot erfassen'
+
     assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
     assert page.has_link? department_manager.department.first.contact.last_name
   end
@@ -95,31 +94,30 @@ class GroupOffersTest < ApplicationSystemTestCase
       create(:group_assignment, volunteer: volunteer, group_offer: group_offer)
     end
     visit group_offer_path(group_offer)
-    assert page.has_link? volunteer1.contact.full_name
-    assert page.has_link? volunteer2.contact.full_name
+    assert page.has_link? volunteer1
+    assert page.has_link? volunteer2
 
     Volunteer.find(volunteer1.id).destroy
 
     visit group_offer_path(group_offer)
-    assert page.has_link? volunteer2.contact.full_name
-    refute page.has_link? volunteer1.contact.full_name
+    assert page.has_link? volunteer2
+    refute page.has_link? volunteer1
   end
 
-  test 'department_manager_has_group_assignment_select_dropdowns_in_edit_form_filled' do
+  test 'department_manager_can_only_add_volunteers_they_registered' do
     department_manager = create :department_manager
-    volunteer_one = create :volunteer
+    volunteer_one = create :volunteer, registrar: department_manager
     volunteer_two = create :volunteer
-    group_offer = create :group_offer, group_offer_category: @group_offer_category,
-      department: department_manager.department.first, group_assignments: [
-        GroupAssignment.create(volunteer: volunteer_one),
-        GroupAssignment.create(volunteer: volunteer_two)
-      ]
+    group_offer = create :group_offer, department: department_manager.department.first
+
     login_as department_manager
-    visit edit_group_offer_path(group_offer)
-    select_values = page.find_all('#volunteers .group_offer_group_assignments_volunteer select')
-                        .map(&:value).map(&:to_i)
-    assert select_values.include? volunteer_one.id
-    assert select_values.include? volunteer_two.id
+    visit group_offer_path(group_offer)
+    click_link 'Freiwillige hinzufügen'
+
+    within '#add-volunteers' do
+      assert_text volunteer_one
+      refute_text volunteer_two
+    end
   end
 
   test 'department_manager cannot access group offer pages unless there is a department assigned' do
@@ -132,57 +130,91 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
   end
 
-  test 'volunteer collection on creation is present' do
+  test 'add_volunteers_on_show' do
+    group_offer = create :group_offer
+    internal_volunteer = create :volunteer
+    external_volunteer = create :volunteer, external: true
+
+    login_as create(:user)
+    visit group_offer_path(group_offer)
+    click_link 'Freiwillige hinzufügen'
+
+    within '#add-volunteers' do
+      assert_text internal_volunteer
+      refute_text external_volunteer
+    end
+
+    group_offer.update!(
+      offer_type: :external_offer,
+      organization: 'Acme Corporation',
+      location: 'Texas'
+    )
+    visit group_offer_path(group_offer)
+    click_link 'Freiwillige hinzufügen'
+
+    within '#add-volunteers' do
+      refute_text internal_volunteer
+      assert_text external_volunteer
+    end
+
+    click_link 'Freiwillige/n hinzufügen'
+
+    assert_text 'Freiwillige/r erfolgreich hinzugefügt.'
+
+    click_link 'Freiwillige hinzufügen'
+
+    within '.assignments-table' do
+      assert_text external_volunteer
+    end
+
+    within '#add-volunteers' do
+      refute_text external_volunteer
+    end
+  end
+
+  test 'volunteer_selection_stays_visible_after_sorting' do
+    group_offer = create :group_offer
     volunteer = create :volunteer
+
     login_as create(:user)
-    visit new_group_offer_path
-    select(@group_offer_category, from: 'Kategorie')
-    fill_in 'Bezeichnung', with: 'Title'
-    page.choose('AOZ-Freiwillige')
+    visit group_offer_path(group_offer)
     click_link 'Freiwillige hinzufügen'
-    select(volunteer.full_name, from: '* Freiwillige')
-    click_button 'Gruppenangebot erfassen'
-    assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
+
+    within '#add-volunteers' do
+      assert_text volunteer
+
+      click_link 'Anrede'
+    end
+
+    within '#add-volunteers' do
+      assert_text volunteer
+    end
   end
 
-  test 'internal_external_volunteers_load_different_lists' do
-    internal = create :volunteer_internal
-    external = create :volunteer_external
+  test 'offer_type_is_readonly_if_group_assignments_are_present' do
+    group_offer = create :group_offer
+    create :group_assignment, group_offer: group_offer
+
     login_as create(:user)
-    visit new_group_offer_path
-    select(@group_offer_category, from: 'Kategorie')
-    fill_in 'Bezeichnung', with: 'Title'
+    visit edit_group_offer_path(group_offer)
 
-    page.choose('AOZ-Freiwillige')
-    click_link 'Freiwillige hinzufügen'
-    select_values = page.find_all('#volunteers .group_offer_group_assignments_volunteer select')
-                        .map(&:value).map(&:to_i)
-    assert select_values.include? internal.id
-    refute select_values.include? external.id
-
-    page.choose('Externe Freiwillige')
-    click_link 'Freiwillige hinzufügen'
-    select_values = page.find_all('#volunteers .group_offer_group_assignments_volunteer select')
-                        .map(&:value).map(&:to_i)
-    refute select_values.include? internal.id
-    assert select_values.include? external.id
+    assert_field 'Internes Gruppenangebot', readonly: true
+    assert_field 'Externes Gruppenangebot', readonly: true
   end
 
-  test 'group_offers_on_edit_have_only_internal_or_external_volunteers' do
-    internal = create :volunteer_with_user, :internal
-    external = create :volunteer_external
-    internal_group_offer = create :group_offer, volunteer_state: 'internal_volunteer'
-    external_group_offer = create :group_offer, volunteer_state: 'external_volunteer'
+  test 'offer_type_toggles_location_fields' do
     login_as create(:user)
+    visit new_group_offer_path
 
-    visit edit_group_offer_path(internal_group_offer)
-    click_link 'Freiwillige hinzufügen'
-    assert page.has_select?('Freiwillige', text: internal.full_name)
-    refute page.has_select?('Freiwillige', text: external.full_name)
+    assert_field 'Internes Gruppenangebot', checked: true
+    assert_field 'Standort'
+    refute_field 'Organisation'
+    refute_field 'Ort'
 
-    visit edit_group_offer_path(external_group_offer)
-    click_link 'Freiwillige hinzufügen'
-    refute page.has_select?('Freiwillige', text: internal.full_name)
-    assert page.has_select?('Freiwillige', text: external.full_name)
+    choose 'Externes Gruppenangebot'
+
+    refute_field 'Standort'
+    assert_field 'Organisation'
+    assert_field 'Ort'
   end
 end

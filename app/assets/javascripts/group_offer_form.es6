@@ -1,38 +1,15 @@
 function groupOfferForm() {
-  if (window.location.href.indexOf('new') > 0) {
-    $('#add_volunteers').prop('disabled', true).attr('disabled', true);
-  } else {
-    $('#add_volunteers_text').hide();
-  }
-  if ($('input:radio[name="group_offer[volunteer_state]"]').is(':checked')){
-    $('input:radio[name="group_offer[volunteer_state]"]').attr('disabled', true);
-  }
-
-  $('input:radio[name="group_offer[volunteer_state]"]').on('change', ({target}) => {
-    $('#add_volunteers').prop('disabled', false).attr('disabled', false);
-    $('#add_volunteers_text').hide();
-    populate_dropdowns(target);
+  // scroll to the volunteers partial when sorting / paginating
+  $('#add-volunteers').find('a.sort_link, a.page-link').each((i, link) => {
+    link.hash = '#add-volunteers';
   });
 
-  $(document).on('cocoon:after-insert', function(e, insertedItem) {
-    populate_dropdowns('input:radio[name="group_offer[volunteer_state]"]:checked');
-  });
+  $('.group_offer_offer_type input').on('change', toggleGroupOfferLocationFields);
+  toggleGroupOfferLocationFields();
 }
 
-const populate_dropdowns = (target) => {
-  var selectInternals = $('.new-group-offer-volunteer-collection');
-  var items=[];
-  if($(target).val() == 'internal_volunteer') {
-    items = JSON.parse($('input[name=internals]').val());
-  } else {
-    items = JSON.parse($('input[name=externals]').val());
-  }
-
-  selectInternals.empty();
-  for (var i = 0; i < items.length; i++) {
-    var opt = document.createElement('option');
-    opt.value = items[i].id;
-    opt.innerHTML = items[i].value;
-    selectInternals.append(opt);
-  }
+function toggleGroupOfferLocationFields() {
+  var internal = $('#group_offer_offer_type_internal_offer').is(':checked');
+  $('.group-offer-internal-fields').toggle(internal);
+  $('.group-offer-external-fields').toggle(!internal);
 }

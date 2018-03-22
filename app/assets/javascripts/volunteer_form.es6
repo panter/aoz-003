@@ -6,10 +6,8 @@ function volunteerForm() {
   $('.volunteer-active-checkbox-changes').on('change', ({target}) => {
     const data = $(target).data();
     if(target.checked) {
-      changeStateSelectToActiveVolunteer(data.state);
       hideFormRegions(data.hide);
     } else {
-      changeStateSelectToNonActiveVolunteer(data.state);
       showFormRegions(data.hide);
     }
   });
@@ -27,17 +25,6 @@ const hideFormRegions = (hide) => {
 
 const showFormRegions = (hide) => {
   hide.forEach(cssClass => $('.' + cssClass).show());
-}
-
-const changeStateSelectToNonActiveVolunteer = ({remove}) => {
-  const options = $('#volunteer_state');
-  remove.forEach(value => options.find(`[value="${value}"]`).show());
-}
-
-const changeStateSelectToActiveVolunteer = ({remove, selected}) => {
-  const options = $('#volunteer_state');
-  remove.forEach(value => options.find(`[value="${value}"]`).hide());
-  options.val(selected);
 }
 
 const show_rejection = (target) => {

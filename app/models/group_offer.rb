@@ -5,13 +5,11 @@ class GroupOffer < ApplicationRecord
   TARGET_GROUP = [:women, :men, :children, :teenagers, :unaccompanied, :all].freeze
   DURATION = [:long_term, :regular, :short_term].freeze
   OFFER_TYPES = [:internal_offer, :external_offer].freeze
-  EXTERNAL_OFFER = 'external_offer'.freeze
   OFFER_STATES = [:open, :partially_occupied, :full].freeze
-  VOLUNTEER_STATES = [:internal_volunteer, :external_volunteer].freeze
 
   belongs_to :department, optional: true
   belongs_to :group_offer_category
-  belongs_to :creator, -> { with_deleted }, class_name: 'User', optional: true,
+  belongs_to :creator, -> { with_deleted }, class_name: 'User',
     inverse_of: 'group_offers'
 
   # termination record relations
@@ -34,7 +32,7 @@ class GroupOffer < ApplicationRecord
 
   has_many :volunteer_contacts, through: :volunteers, source: :contact
 
-  validates :title, presence: true
+  validates :title, :offer_type, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
   validates :period_end, absence: {
     message: lambda { |object, _|
@@ -43,10 +41,14 @@ class GroupOffer < ApplicationRecord
              }
   }, if: :running_assignments?
 
+  validates :department, presence: true, if: :internal?
+  validates :organization, :location, presence: true, if: :external?
+
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
 
-  scope :in_department, (-> { field_not_nil(:department_id) })
+  scope :internal, (-> { where(offer_type: 'internal_offer') })
+  scope :external, (-> { where(offer_type: 'external_offer') })
 
   scope :active_group_assignments_between, lambda { |start_date, end_date|
     joins(:group_assignments).merge(GroupAssignment.active_between(start_date, end_date))
@@ -98,8 +100,12 @@ class GroupOffer < ApplicationRecord
     false
   end
 
+  def internal?
+    offer_type.to_s == 'internal_offer'
+  end
+
   def external?
-    offer_type == EXTERNAL_OFFER
+    offer_type.to_s == 'external_offer'
   end
 
   def responsible?(volunteer)

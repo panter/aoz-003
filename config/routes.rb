@@ -66,7 +66,7 @@ Rails.application.routes.draw do
   end
 
   resources :feedbacks, only: [:new, :create]
-  resources :group_assignments, only: [:show, :edit, :update],
+  resources :group_assignments, only: [:show, :create, :edit, :update],
     concerns: [:update_submitted_at, :hours_resources, :termination_actions]
 
   resources :group_offer_categories, except: [:destroy]

@@ -129,7 +129,7 @@ class PerformanceReportsTest < ApplicationSystemTestCase
       row_numbers(assignments, column_order, :termination_verified)
 
     # Group Offer section
-    column_order = ['in_departments', 'outside_departments', 'all']
+    column_order = ['internal', 'external', 'all']
     assert page.has_text? 'Erstellt ' + row_numbers(group_offers, column_order, :created)
     assert page.has_text? 'Beendet ' + row_numbers(group_offers, column_order, :ended)
     assert page.has_text? 'Alle ' + row_numbers(group_offers, column_order, :all)
