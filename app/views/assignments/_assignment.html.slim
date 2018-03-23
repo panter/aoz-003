@@ -11,9 +11,9 @@ tr
   td= l(assignment.period_end) if assignment.period_end
   td
     - if policy(User).show? && assignment.client.involved_authority.present?
-      = link_to assignment.client.involved_authority.full_name, profile_path(assignment.client.involved_authority)
+      = link_to assignment.client.involved_authority.full_name, profile_link(assignment.client.involved_authority)
     - else
-      = link_to assignment.creator.full_name, profile_path(assignment.creator)
+      = link_to assignment.creator.full_name, profile_link(assignment.creator)
   = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
   td.index-action-cell
     = link_to t_action(:show), assignment
