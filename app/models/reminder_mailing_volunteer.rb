@@ -53,7 +53,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def anrede
-    I18n.t("salutation.#{volunteer.salutation}", locale: :de)
+    I18n.t("salutation.#{volunteer.salutation}")
   end
 
   def name
@@ -61,7 +61,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def einsatz_start
-    I18n.l(reminder_mailable.period_start, locale: :de) if reminder_mailable.period_start
+    I18n.l(reminder_mailable.period_start) if reminder_mailable.period_start
   end
 
   def einsatz
