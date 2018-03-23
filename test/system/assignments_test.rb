@@ -47,7 +47,6 @@ class AssignmentsTest < ApplicationSystemTestCase
   # end
 
   test 'creating_a_pdf_with_a_user_that_has_no_profile_will_not_crash' do
-    login_as @user
     user = create :user, :without_profile
     refute user.profile.present?
 
@@ -62,6 +61,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     within '.table-striped' do
       click_link 'Anzeigen'
     end
+
     assert page.has_text? @client.contact.last_name
   end
 

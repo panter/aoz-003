@@ -52,6 +52,10 @@ class Assignment < ApplicationRecord
   end
 
   def involved_authority_contact
-    client.involved_authority.present? ? client.involved_authority.profile.contact : creator.profile.contact
+    if client.involved_authority
+      client.involved_authority.profile&.contact
+    else
+      creator.profile&.contact
+    end
   end
 end
