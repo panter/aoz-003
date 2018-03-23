@@ -154,9 +154,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     first('.day',  exact_text: '17').click
     click_button 'Begleitung aktualisieren'
 
-    assert page.has_current_path? terminated_index_assignments_path(
-      q: { termination_verified_by_id_null: 'true' }
-    )
+    assert page.has_current_path? terminated_index_assignments_path
+
     within '.table-responsive' do
       click_link 'Beendigungs Email erstellen', href: new_termination_assignment_reminder_mailings_path(@assignment)
     end
