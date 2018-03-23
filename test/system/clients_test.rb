@@ -55,8 +55,8 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Genauere Angaben', with: 'After 7'
 
     click_button 'Klient/in erfassen'
-    assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
-    assert page.has_text? @social_worker.full_name
+    assert_text 'Klient/in wurde erfolgreich erstellt.'
+    assert_text @social_worker.full_name
     @superadmin.clients.each do |client|
       assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
       assert page.has_link? client.user.full_name, href: /profiles\/#{client.user.profile.id}/
@@ -78,10 +78,10 @@ class ClientsTest < ApplicationSystemTestCase
       choose('Gut')
     end
     click_button 'Klient/in erfassen'
-    assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
+    assert_text 'Klient/in wurde erfolgreich erstellt.'
     within '.table-no-border-top' do
-      assert page.has_text? "egal", count: 2
-      assert page.has_text? 'Deutsch Gut'
+      assert_text 'egal', count: 2
+      assert_text 'Deutsch Gut'
     end
   end
 
@@ -106,10 +106,10 @@ class ClientsTest < ApplicationSystemTestCase
     select('Muttersprache', from: 'Niveau')
 
     click_button 'Klient/in erfassen'
-    assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
+    assert_text 'Klient/in wurde erfolgreich erstellt.'
     within '.table-no-border-top' do
-      assert page.has_text? 'Dari Muttersprache'
-      assert page.has_text? 'Deutsch Gut'
+      assert_text 'Dari Muttersprache'
+      assert_text 'Deutsch Gut'
     end
   end
 
@@ -133,12 +133,12 @@ class ClientsTest < ApplicationSystemTestCase
 
     click_button 'Klient/in erfassen'
     within '.table-no-border-top' do
-      refute page.has_text? 'Mittel'
-      assert page.has_text? 'Deutsch Wenig'
+      refute_text 'Mittel'
+      assert_text 'Deutsch Wenig'
     end
 
     visit clients_path
-    refute page.has_text? 'Mittel'
+    refute_text 'Mittel'
   end
 
   test 'client_pagination' do
@@ -149,7 +149,7 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     first(:link, '2').click
     Client.order('acceptance asc').paginate(page: 2).each do |client|
-      assert page.has_text? client.contact.full_name
+      assert_text client.contact.full_name
     end
 
     within page.first('.pagination') do
@@ -162,12 +162,18 @@ class ClientsTest < ApplicationSystemTestCase
     with_assignment, without_assignment = create_clients_for_index_text_check
     login_as @superadmin
     visit clients_path
-    assert page.has_text? with_assignment.contact.full_name
-    assert page.has_text? without_assignment.contact.full_name
-    assert page.has_text? 'unassigned_goals unassigned_interests  unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} Angemeldet without_assignment Anzeigen Bearbeiten"
-    assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} Angemeldet with_assignment Anzeigen Bearbeiten"
+
+    assert_link 'Anzeigen', count: 2
+    assert_link 'Bearbeiten', count: 2
+    assert_link 'Beenden', count: 2
+
+    assert_text with_assignment.contact.full_name
+    assert_text without_assignment.contact.full_name
+
+    assert_text 'unassigned_goals unassigned_interests unassigned_authority ' +
+      I18n.l(without_assignment.created_at.to_date)
+    assert_text 'assigned_goals assigned_interests assigned_authority ' +
+      I18n.l(with_assignment.created_at.to_date)
   end
 
   test 'all_needed_actions_are_available_in_the_index' do
@@ -184,18 +190,18 @@ class ClientsTest < ApplicationSystemTestCase
 
     login_as @department_manager
     visit clients_path
-    assert page.has_text? client_department_manager
-    refute page.has_text? client_social_worker
-    refute page.has_text? client
+    assert_text client_department_manager
+    refute_text client_social_worker
+    refute_text client
     assert page.has_link? 'Anzeigen'
     assert page.has_link? 'Bearbeiten', href: edit_client_path(client_department_manager)
     refute page.has_link? 'Bearbeiten', href: edit_client_path(client_social_worker)
 
     login_as social_worker
     visit clients_path
-    assert page.has_text? client_social_worker
-    refute page.has_text? client_department_manager
-    refute page.has_text? client
+    assert_text client_social_worker
+    refute_text client_department_manager
+    refute_text client
     assert page.has_link? 'Anzeigen'
     refute page.has_link? 'Bearbeiten', href: edit_client_path(client_department_manager)
     assert page.has_link? 'Bearbeiten', href: edit_client_path(client_social_worker)
@@ -208,13 +214,20 @@ class ClientsTest < ApplicationSystemTestCase
     without_assignment.update(user: @department_manager)
     login_as @department_manager
     visit clients_path
-    assert page.has_text? with_assignment.contact.full_name
-    assert page.has_text? without_assignment.contact.full_name
-    assert page.has_text? 'unassigned_goals unassigned_interests unassigned_authority '\
-      "#{I18n.l(without_assignment.created_at.to_date)} Anzeigen"
-    assert page.has_text? 'assigned_goals assigned_interests assigned_authority '\
-      "#{I18n.l(with_assignment.created_at.to_date)} Anzeigen"
-    refute page.has_text? superadmins_client.contact.full_name
+
+    assert_link 'Anzeigen', count: 2
+    assert_link 'Bearbeiten', count: 2
+    assert_link 'Beenden', count: 2
+
+    assert_text with_assignment.contact.full_name
+    assert_text without_assignment.contact.full_name
+
+    assert_text 'unassigned_goals unassigned_interests unassigned_authority ' +
+      I18n.l(without_assignment.created_at.to_date)
+    assert_text 'assigned_goals assigned_interests assigned_authority ' +
+      I18n.l(with_assignment.created_at.to_date)
+
+    refute_text superadmins_client.contact.full_name
   end
 
   test 'client_index_shows_german_and_native_languages_only' do
@@ -225,15 +238,15 @@ class ClientsTest < ApplicationSystemTestCase
     ]
     login_as @superadmin
     visit clients_path
-    assert page.has_text? 'Deutsch, Gut'
-    assert page.has_text? 'Italienisch, Muttersprache'
-    refute page.has_text? 'Französisch, Mittel'
+    assert_text 'Deutsch, Gut'
+    assert_text 'Italienisch, Muttersprache'
+    refute_text 'Französisch, Mittel'
   end
 
   test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
     login_as @superadmin
     visit new_client_path
-    assert page.has_text? 'Sprachkenntnisse Deutsch * Niveau'
+    assert_text 'Sprachkenntnisse Deutsch * Niveau'
     within '#languages' do
       choose('Wenig')
     end
@@ -246,7 +259,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
     click_button 'Klient/in erfassen'
-    assert page.has_text? 'Deutsch Wenig'
+    assert_text 'Deutsch Wenig'
   end
 
   test 'client_print_view_is_not_paginated' do

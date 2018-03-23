@@ -5,17 +5,17 @@ h1 Standorte
     table.table.table-striped
       thead
         tr
+          th.hidden-print Aktionen
           th Standort
           th= t_attr(:street, Contact)
           th= t_attr(:postal_code, Contact)
-          th
 
       tbody
         - @departments.each do |d|
           tr
+            = render 'index_actions', subject: d
             td= d.contact.last_name
             td= d.contact.street
             td= d.contact.postal_code
-            = render 'index_actions', subject: d
 
 = form_navigation_btn :new

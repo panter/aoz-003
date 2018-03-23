@@ -45,10 +45,11 @@
 }
 
 .index-action-cell {
-  span,
+  white-space: nowrap;
+
   a {
     display: block;
-    margin-top: 5px;
+    margin-right: 2px;
 
     &.whole-text {
       color: $link-color;
@@ -57,18 +58,10 @@
         text-decoration: underline;
       }
     }
+  }
 
-    &:first-child {
-      margin-top: 0;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &:nth-child(n + 2) {
-      margin-top: 2px;
-    }
+  a.btn {
+    display: inline-block;
   }
 }
 

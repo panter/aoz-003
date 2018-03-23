@@ -8,6 +8,9 @@ h1 Klienten/innen
   table.table.table-striped
     thead
       tr
+        th.hidden-print Aktionen
+        - if policy(Client).superadmin_privileges?
+          th= sort_link @q, :acceptance, t_attr(:acceptance)
         th= sort_link @q, :salutation, t_attr(:salutation, Client)
         th= sort_link @q, :contact_last_name, t_attr(:full_name, Contact)
         th= sort_link @q, :contact_city, t_attr(:city, Contact)
@@ -26,9 +29,7 @@ h1 Klienten/innen
         th.truncate-th
           span= sort_link @q, :created_at, t_attr(:created_at, Client)
         - if policy(Client).superadmin_privileges?
-          th= sort_link @q, :acceptance, t_attr(:acceptance)
           th= t_attr(:comments, Client)
-        th.hidden-print colspan='2'
     tbody
       = render @clients
 

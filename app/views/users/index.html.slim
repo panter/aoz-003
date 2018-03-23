@@ -21,9 +21,9 @@ nav.navbar.section-navigation
 table.table.table-striped
   thead
     tr
+      th.hidden-print Aktionen
       th= t_attr(:full_name)
       th= sort_link @q, :role, t_attr(:role, User)
-      th
   tbody
     = render @users
 

@@ -4,6 +4,7 @@
   table.table.table-striped
     thead
       tr
+        th
         th Status
         th= sort_link @q, :volunteer_contact_last_name, 'Frewillige/r' if action_index?
         th= sort_link @q, :client_contact_last_name, 'Klient/in'
