@@ -50,4 +50,8 @@ class Assignment < ApplicationRecord
   def self.ransackable_scopes(auth_object = nil)
     ['active', 'inactive', 'active_or_not_yet_active']
   end
+
+  def involved_authority_contact
+    client.involved_authority.present? ? client.involved_authority.profile.contact : creator.profile.contact
+  end
 end
