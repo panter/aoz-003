@@ -15,10 +15,14 @@ tr
   td= l(assignment.period_start) if assignment.period_start
   td= l(assignment.period_end) if assignment.period_end
   td
-    - if policy(User).show? && assignment.client.involved_authority.present?
-      = link_to assignment.client.involved_authority.full_name, profile_link(assignment.client.involved_authority)
+    - if assignment.client.involved_authority
+      = link_to_if policy(User).show?,
+          assignment.client.involved_authority.full_name,
+          profile_link(assignment.client.involved_authority)
     - else
-      = link_to assignment.creator.full_name, profile_link(assignment.creator)
+      = link_to_if policy(User).show?,
+          assignment.creator.full_name,
+          profile_link(assignment.creator)
   = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
   - if controller_name == 'volunteers'
     - if policy(TrialFeedback).index?
