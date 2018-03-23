@@ -50,15 +50,6 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   def replace_ruby_template(template)
     template % template_variables
-  rescue KeyError => _
-    string_replace_key_error(template)
-  end
-
-  def string_replace_key_error(template)
-    template.gsub(/\%\{([\w]*)\}/) do |key_match|
-      key = key_match.remove('%{').remove('}').to_sym
-      template_variables[key].presence || ''
-    end
   end
 
   def anrede
@@ -86,9 +77,12 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def template_variables
-    @template_variables ||= ReminderMailing::TEMPLATE_VARNAMES.map do |varname|
+    template_variables = ReminderMailing::TEMPLATE_VARNAMES.map do |varname|
       [varname, send(varname.to_s.underscore)]
     end.to_h
+
+    template_variables.default = ''
+    template_variables
   end
 
   def email_absender

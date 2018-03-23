@@ -5,19 +5,19 @@ FactoryBot.define do
     subject { FFaker::Lorem.sentence }
 
     trait :half_year do
-      kind { 0 }
+      kind { ReminderMailing.kinds[:half_year] }
       body { FFaker::Lorem.paragraph }
       subject { FFaker::Lorem.sentence }
     end
 
     trait :trial_period do
-      kind { 1 }
+      kind { ReminderMailing.kinds[:trial_period] }
       body { FFaker::Lorem.paragraph }
       subject { FFaker::Lorem.sentence }
     end
 
     trait :termination do
-      kind { 2 }
+      kind { ReminderMailing.kinds[:termination] }
       body { FFaker::Lorem.paragraph }
       subject { FFaker::Lorem.sentence }
     end

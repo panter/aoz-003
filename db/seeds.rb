@@ -88,9 +88,9 @@ puts_model_counts('After Client created', User, Volunteer, Client)
 
 # create EmailTemplates
 if EmailTemplate.count < 1
-  FactoryBot.create :email_template_seed, active: true
+  FactoryBot.create :email_template_signup, active: true
   2.times do
-    FactoryBot.create :email_template_seed, active: false
+    FactoryBot.create :email_template_signup, active: false
   end
   FactoryBot.create :email_template_trial, active: true
   2.times do
