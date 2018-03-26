@@ -44,6 +44,19 @@ class ReminderMailing < ApplicationRecord
     end
   end
 
+  def last_feedbacks
+    scope = kind == 'trial_period' ? TrialFeedback : Feedback
+
+    scope = scope
+      .created_desc
+      .created_at_or_after(created_at)
+      .author_is_volunteer
+      .where(author_id: volunteers.distinct.pluck(:user_id))
+
+    scope.from_assignments(assignments.ids)
+      .or(scope.from_group_offers(group_assignments.distinct.pluck(:group_offer_id)))
+  end
+
   private
 
   def remove_untoggled_volunteers
