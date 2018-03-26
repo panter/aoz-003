@@ -41,7 +41,9 @@ module NavigationAndButtonHelper
       deactivate: { text: 'Deaktivieren', glyph: 'remove' },
       back: { text: 'Zurück', glyph: 'arrow-left' },
       print: { text: 'Ausdrucken', glyph: 'print' },
-      download: { text: 'Herunterladen', glyph: 'download-alt' }
+      download: { text: 'Herunterladen', glyph: 'download-alt' },
+      yes: { text: 'Ja', glyph: 'ok' },
+      no: { text: 'Nein', glyph: 'remove' }
     }
     glyph_span(translate_glyph[icon_type.to_sym])
   end

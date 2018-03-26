@@ -243,7 +243,6 @@ de:
       <<: [*id-volunteers-index]
       acceptance: *id-volunteer-acceptance
       state: *id-volunteer-active-states
-      availability: Verfügbarkeit
       group_assignments: Aktuelle Gruppenangebote
       hour_reports: Stunden Rapporte
       new_certificate: Nachweis ausstellen
@@ -440,6 +439,7 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
+        availability: Verfügbarkeit
         external: Extern
         internal: Intern
         available: Verfügbar
@@ -638,7 +638,7 @@ de:
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
   clients_xlsx: Klienten
-  clients_need_accompanying: Klienten ohne Begleitung
+  clients_need_accompanying: Klient/innen ohne Begleitung
   contact_info: Kontakt Informationen
   contacts:
     fields:

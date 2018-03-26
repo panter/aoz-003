@@ -137,50 +137,46 @@ h2.small Persönlicher Hintergrund
         td= t_attr(:additional_comments)
         td= @volunteer.additional_comments
 
-h2.small= t_attr(:single_accompaniment)
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
-          th.text-center= t_attr(single)
-    tbody
-      tr
-        - @volunteer.slice(Volunteer::SINGLE_ACCOMPANIMENTS).values.each do |value|
-          td.text-center= boolean_glyph(value)
+.row
+  .col-xs-6
+    = render 'volunteers/single_accompaniments', volunteer: @volunteer
+  .col-xs-6
+    h3= t_attr(:availability, Volunteer)
+    = render 'availability/show', available: @volunteer
 
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        - @volunteer.group_accompaniments_house_moving.each do |group|
-          th.text-center
+h3= t_attr(:group_accompaniment)
+h4.label-list
+  .row
+    .col-xs-12
+      - @volunteer.group_accompaniments_active_without_house_moving.each do |group|
+        - if group[:value]
+          span.label.label-success>
+            => navigation_glyph(:yes)
             = t_attr(group[:title])
-    tbody
-      tr
-        - @volunteer.group_accompaniments_house_moving.each do |group|
-          td.text-center= boolean_glyph(group[:value])
-
-h2.small= t_attr(:group_accompaniment)
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        - @volunteer.group_accompaniments_active_without_house_moving.each do |group|
-          th.text-center
+        - else
+          span.label.label-danger>
+            => navigation_glyph(:no)
             = t_attr(group[:title])
-    tbody
-      tr
-        - @volunteer.group_accompaniments_active_without_house_moving.each do |group|
-          td.text-center= boolean_glyph(group[:value])
+  .row
+    .col-xs-12
+      - @volunteer.group_accompaniments_house_moving.each do |group|
+        - if group[:value]
+          span.label.label-success>
+            => navigation_glyph(:yes)
+            = t_attr(group[:title])
+        - else
+          span.label.label-danger>
+            => navigation_glyph(:no)
+            = t_attr(group[:title])
 
-      - if @volunteer.other_offer_desc?
-        tr
-          td= t_attr(:other_offer_desc)
-          td= @volunteer.other_offer_desc
-
-h2.small= t('.availability')
-= render 'availability/show', available: @volunteer
+.row
+  .col-xs-12
+    strong= t_attr(:other_offer_desc)
+    ':
+    - if @volunteer.other_offer_desc?
+      = @volunteer.other_offer_desc
+    - else
+      em keine
 
 - if @volunteer.assignments.unterminated.any?
   h2.small#assignments Aktuelle Begleitungen

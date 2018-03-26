@@ -6,6 +6,8 @@ class GroupOfferCategory < ApplicationRecord
 
   CATEGORY_STATES = [:active, :inactive].freeze
 
+  default_scope { order(:category_name) }
+
   scope :house_moving, -> { where('category_name LIKE ?', '%Zürich%') }
   scope :active, -> { where(category_state: :active) }
   scope :active_without_house_moving, -> { active.where.not('category_name LIKE ?', '%Zürich%') }
