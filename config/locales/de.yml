@@ -1032,3 +1032,4 @@ de:
   hours:
     new:
       report_hours: "Stunden erfassen"
+  total_hours: "Stunden Total:"
