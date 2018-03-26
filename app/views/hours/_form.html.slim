@@ -8,7 +8,8 @@
   - else
     .row
       .col-xs-12
-        = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection
+        = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection,
+          required: true
 
   .row
     .col-xs-12
