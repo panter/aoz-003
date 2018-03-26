@@ -3,7 +3,8 @@ require 'application_system_test_case'
 class VolunteerApplicationsTest < ApplicationSystemTestCase
   setup do
     @user = create :user
-    create :email_template, body: 'Liebe/r %{Anrede} %{Name}', subject: '%{Anrede} %{Name}'
+    create :email_template,
+      body: 'Liebe/r %{Anrede} %{Name} %{InvalidKey}Gruss, AOZ', subject: '%{Anrede} %{Name}'
   end
 
   test 'login page show link for volunteer application' do
@@ -63,9 +64,10 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     mailer = ActionMailer::Base.deliveries.last
     mail_body = mailer.text_part.body.encoded
 
-    assert_includes mail_body, 'Liebe/r Frau Vorname Name'
-    refute_includes mail_body, '%{Anrede} %{Name}'
-    assert_equal mailer.subject, 'Frau Vorname Name'
+    assert_equal 'Frau Vorname Name', mailer.subject
+    assert_includes mail_body, 'Liebe/r Frau Vorname Name Gruss, AOZ'
+    refute_includes mailer.subject, '%{'
+    refute_includes mail_body, '%{'
 
     assert page.has_current_path? thanks_volunteer_applications_path
     assert page.has_text? 'Vielen Dank'
