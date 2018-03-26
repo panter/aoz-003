@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322145019) do
+ActiveRecord::Schema.define(version: 20180326082150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,7 +122,6 @@ ActiveRecord::Schema.define(version: 20180322145019) do
 
   create_table "certificates", force: :cascade do |t|
     t.integer "hours"
-    t.integer "minutes"
     t.date "duration_start"
     t.date "duration_end"
     t.text "institution"
@@ -432,8 +431,7 @@ ActiveRecord::Schema.define(version: 20180322145019) do
 
   create_table "hours", force: :cascade do |t|
     t.date "meeting_date"
-    t.integer "hours", default: 0
-    t.integer "minutes", default: 0
+    t.float "hours", default: 0.0
     t.string "activity"
     t.text "comments"
     t.bigint "volunteer_id"

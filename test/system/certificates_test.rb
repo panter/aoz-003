@@ -4,7 +4,7 @@ class CertificatesTest < ApplicationSystemTestCase
   def setup
     @volunteer = create(:volunteer, :with_assignment, user: create(:user_volunteer))
     @assignment = @volunteer.assignments.first
-    @hour = create :hour, volunteer: @volunteer, hourable: @assignment, hours: 2, minutes: 15
+    @hour = create :hour, volunteer: @volunteer, hourable: @assignment, hours: 2
     login_as create(:user)
   end
 
@@ -21,7 +21,7 @@ class CertificatesTest < ApplicationSystemTestCase
     click_link 'Nachweis ausstellen'
     assert page.has_text? 'Nachweis erfassen'
     assert page.has_field? 'Text', text: 'Die **AOZ** ist ein Unternehmen der Stadt Zürich und'
-    assert page.has_field? 'Stunden', with: 2
+    assert page.has_field? 'Stunden', with: 2.0
     click_button 'Weitere Felder anpassen'
     assert page.has_field? 'Tandem', checked: true, count: 1
     assert page.has_field? 'Name', with: @volunteer.contact.full_name

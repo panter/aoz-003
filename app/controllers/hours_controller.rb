@@ -25,7 +25,7 @@ class HoursController < ApplicationController
     @hour.hourable ||= find_hourable
     authorize @hour
     if @hour.save
-      redirect_to create_redirect, make_notice
+      redirect_to create_redirect, notice: t('hours_created')
     else
       render :new
     end
@@ -79,7 +79,7 @@ class HoursController < ApplicationController
   end
 
   def hour_params
-    params.require(:hour).permit(:meeting_date, :hours, :minutes, :activity, :comments,
+    params.require(:hour).permit(:meeting_date, :hours, :activity, :comments,
       :volunteer_id, :hourable_id, :hourable_type, :hourable_id_and_type)
   end
 end

@@ -36,10 +36,9 @@ class HoursTest < ApplicationSystemTestCase
     within '#hour_meeting_date_1i' do
       select(Time.zone.today.year)
     end
-    select '2', from: 'Stunden'
-    select '15', from: 'Minuten'
-    click_button 'Stunde erfassen'
-    assert page.has_text? 'Stunde wurde erfolgreich erstellt.'
+    fill_in 'Stunden', with: 2.0
+    click_button 'Stunden erfassen'
+    assert page.has_text? 'Stunden wurden erfolgreich erfasst.'
   end
 
   test 'volunteer can create also an hour report for group offer' do
@@ -54,10 +53,9 @@ class HoursTest < ApplicationSystemTestCase
     within '#hour_meeting_date_1i' do
       select(Time.zone.today.year)
     end
-    select '2', from: 'Stunden'
-    select '15', from: 'Minuten'
-    click_button 'Stunde erfassen'
-    assert page.has_text? 'Stunde wurde erfolgreich erstellt.'
+    fill_in 'Stunden', with: 2.0
+    click_button 'Stunden erfassen'
+    assert page.has_text? 'Stunden wurden erfolgreich erfasst.'
   end
 
   test 'volunteer can see only her assignment' do

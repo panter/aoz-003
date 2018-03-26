@@ -394,7 +394,6 @@ de:
         hours: Stunden
         last: Letzter Stundeneintrag am
         meeting_date: Datum des Treffens / des Kurses
-        minutes: Minuten
       journal:
         <<: *id-generic_keys
         author: Erstellt von
@@ -530,7 +529,7 @@ de:
       group_assignment: Begleitung
       group_offer: Gruppenangebot
       group_offer_category: Gruppenangebot Kategorie
-      hour: Stunde
+      hour: Stunden
       journal: Journal
       language_skill: Sprachkompetenz
       performance_report: Kennzahlen Report
@@ -1015,6 +1014,7 @@ de:
   voluntary_platform: Freiwilligen Plattform
   volunteer_application: Freiwilligen Anmeldung
   volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
+  hours_created: Stunden wurden erfolgreich erfasst.
   volunteer_created_invite_sent: 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an %{email} verschickt.'
   volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
   volunteer_mailer:
@@ -1029,3 +1029,6 @@ de:
   will_paginate:
     next_label: Weiter
     previous_label: Zurück
+  hours:
+    new:
+      report_hours: "Stunden erfassen"
