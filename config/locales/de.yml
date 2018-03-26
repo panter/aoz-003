@@ -706,16 +706,16 @@ de:
         accept: Einladung annehmen
         accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
         someone_invited_you: |
-          'Herzlich willkommen! Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben.
-          Bei Ihrer Erstregistrierung auf www.aoz-freiwillige.ch haben Sie folgende E-Mail Adresse angegeben: %{email}!<br>
-          Bevor wir Ihr Freiwilligen-Profil auf unserer Onlineplattform freischalten können,
+          Herzlich willkommen! Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben.<br>
+          Bei Ihrer Erstregistrierung auf www.aoz-freiwillige.ch haben Sie folgende E-Mail Adresse angegeben: %{email}<br>
+          Bevor wir Ihr Profil auf unserer Onlineplattform freischalten können,
           müssen Sie Ihre E-Mail Adresse bestätigen und ein persönliches Passwort erstellen.
-          Bitte klicken Sie dafür auf folgenden Link:'
+          Bitte klicken Sie dafür auf folgenden Link:
         having_trouble: |
-          'Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
+          Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
           %{email}
           oder<br>
-          Telefon 044 415 67 35'
+          Telefon 044 415 67 35
         greetings: |
           Freundliche Grüsse<br>
           AOZ Fachstelle Freiwilligenarbeit
