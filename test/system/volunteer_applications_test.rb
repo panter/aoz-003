@@ -43,7 +43,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     fill_in 'Ausbildung', with: 'Gurke'
     fill_in 'Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?', with: 'asfd'
     page.check('volunteer_experience')
-    fill_in 'Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.',
+    fill_in 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.',
       with: 'sdfsdfsdf'
     fill_in 'Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?',
       with: 'asdf'
