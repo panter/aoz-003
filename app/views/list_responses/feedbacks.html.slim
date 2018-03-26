@@ -25,7 +25,7 @@ table.table.table-striped.list-responses-table
       th Zukunft
       th= t_attr(:comments, Feedback)
       th.limit-width= sort_link @q, :conversation, 'Gespräch'
-      th= sort_link @q, :created_at, 'Alter'
+      th= sort_link @q, :created_at, 'Datum'
       th.limit-width
 
   tbody
@@ -50,7 +50,7 @@ table.table.table-striped.list-responses-table
         = td_truncate_content_modal(record.comments, t_attr(:comments, Feedback), shorten_size: 300)
         td= t(record.conversation)
         td.index-action-cell
-          span= "#{(Time.zone.today - record.created_at.to_date).to_i} Tage"
+          span= I18n.l record.created_at.to_date
           - if record.reviewer.present?
             span
               = "Angeschaut von: "

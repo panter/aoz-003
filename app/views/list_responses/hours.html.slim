@@ -18,7 +18,7 @@ table.table.table-striped.list-responses-table
       th= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th Einsatz
       th= sort_link @q, :hours, 'Zeit'
-      th= sort_link @q, :updated_at, 'Alter'
+      th= sort_link @q, :updated_at, 'Datum'
       th.limit-width
 
   tbody
@@ -36,7 +36,7 @@ table.table.table-striped.list-responses-table
             - if total_hours > 1
               = "n"
         td.index-action-cell
-          span #{(Time.zone.today - record.created_at.to_date).to_i} Tage
+          span= I18n.l record.created_at.to_date
           - if record.reviewer.present?
             span
               = "Angeschaut von: "
