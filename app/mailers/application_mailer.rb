@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'Freiwillige AOZ <info@aoz-freiwillige.ch>'
+  default from: '"Freiwillige AOZ" <freiwillige@aoz.ch>'
   layout 'mailer'
 end
