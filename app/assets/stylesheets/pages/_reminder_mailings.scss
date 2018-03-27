@@ -3,27 +3,6 @@
     min-height: 30vh;
   }
 
-  .select-all-mailings {
-    padding-left: 7px;
-
-    input {
-      margin: 0 5px 0 0;
-    }
-
-    label {
-      font-weight: 500;
-      margin: 0;
-    }
-  }
-
-  .mailing-selected {
-    td {
-      background-color: $brand-success-lighter;
-      border-bottom: 1px solid $gray-lighter;
-      color: $gray-base;
-    }
-  }
-
   .mailing-body-preview {
     background-color: $gray-lighter;
     border: solid 1px $gray-lighter;

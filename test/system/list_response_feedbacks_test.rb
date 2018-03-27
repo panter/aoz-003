@@ -43,7 +43,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks_list_contains_only_relevant_records' do
-    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link exact_text: 'Feedback Eingang'
     assert page.has_link? @assignment_pendent.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_pendent.feedbackable.to_label
     assert page.has_link? @group_assignment_pendent.volunteer.contact.last_name
@@ -60,7 +60,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks list without filter shows marked done feedback' do
-    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link exact_text: 'Feedback Eingang'
     click_link 'Filter aufheben'
     visit current_url
     # marked done shoud now be displayed
@@ -71,7 +71,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks_list_with_filter_erledigt_shows_only_marked_done' do
-    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link exact_text: 'Feedback Eingang'
     click_link 'Geprüft: Ungesehen'
     within 'li.dropdown.open' do
       click_link 'Angeschaut'
@@ -89,7 +89,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'marking_feedback_done_works' do
-    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link exact_text: 'Feedback Eingang'
     within 'tbody' do
       click_link 'Angeschaut', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
         assignments\/#{@assignment_pendent.id}\/feedbacks\/#{@assignment_fb_pendent.id}\/.*/x

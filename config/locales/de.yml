@@ -289,7 +289,7 @@ de:
         <<: *id-generic_keys
         amount: Betrag
         assignment: Begleitung
-        created_by: Verantwortliche/r
+        created_by: Erstellt von
       certificate:
         <<: *id-generic_keys
         assignment: Einsatz

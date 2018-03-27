@@ -1,0 +1,17 @@
+.table {
+  .limit-width {
+    width: 5%;
+  }
+}
+
+.table-scrollable {
+  overflow-y: auto;
+}
+
+.assignments.find-client .table-scrollable {
+  max-height: 300px;
+}
+
+.billing-expenses.new .table-scrollable {
+  max-height: 500px;
+}

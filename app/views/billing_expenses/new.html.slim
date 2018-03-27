@@ -1,0 +1,35 @@
+= render 'reminder_mailings/section_navigation'
+
+h1 Spesenformulare erfassen
+
+= simple_form_for @billing_expense do |f|
+  .row
+    .col-xs-12
+      => button_link navigation_glyph(:back), billing_expenses_path
+      => f.button :submit, 'Spesenformulare erstellen', 'data-confirm' => 'Sind Sie sicher dass Sie die Spesenformulare für die ausgewählten Freiwilligen erstellen möchten?'
+
+  .table-responsive.table-scrollable
+    table.table.table-striped.list-responses-table
+      thead
+        tr
+          th.limit-width= select_all_rows
+          th Freiwillige/r
+          th= t_attr(:bank_details, Volunteer)
+          th Stunden
+          th Betrag
+          th Periode
+
+      tbody
+        - @volunteers.each do |volunteer|
+          tr.table-row-selectable
+            td= check_box_tag 'selected_volunteers[]', volunteer.id,
+                  @selected_volunteers.include?(volunteer.id.to_s), disabled: !volunteer.iban?
+            td= link_to volunteer, edit_volunteer_path(volunteer)
+            td
+              - if volunteer.iban?
+                = volunteer.full_bank_details
+              - else
+                span.label.label-danger Keine IBAN angegeben
+            td= link_to format_hours(volunteer.total_hours), volunteer_hours_path(volunteer)
+            td= format_currency BillingExpense.amount_for(volunteer.total_hours)
+            td= format_hours_period volunteer.hours.billable
