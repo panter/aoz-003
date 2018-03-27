@@ -12,7 +12,6 @@ class Hour < ApplicationRecord
   belongs_to :billing_expense, -> { with_deleted }, optional: true, inverse_of: 'hours'
   belongs_to :certificate, optional: true
 
-  validates :minutes, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :meeting_date, presence: true
   validates :hourable, presence: true
@@ -36,9 +35,6 @@ class Hour < ApplicationRecord
     group_offer.where(hourable_id: group_offer_ids)
   }
 
-  HOUR_RANGE = (1..8).to_a
-  MINUTE_RANGE = [0, 15, 30, 45].freeze
-
   def assignment?
     hourable_type == 'Assignment'
   end
@@ -48,11 +44,7 @@ class Hour < ApplicationRecord
   end
 
   def self.total_hours
-    sum(&:hours) + sum(&:minutes) / 60
-  end
-
-  def self.minutes_rest
-    sum(&:minutes) % 60
+    sum(:hours)
   end
 
   def hourable_id_and_type=(id_and_type)

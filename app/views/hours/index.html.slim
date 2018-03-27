@@ -1,6 +1,11 @@
 - if policy(Hour).supervisor?
   h1= @volunteer.contact.full_name
 h1= t_title(:index, Hour)
+.row
+  .col-xs-12
+    h4.pull-right
+      = t('total_hours')
+      =< @volunteer.hours.total_hours
 .table-responsive
       table.table
         thead
@@ -34,7 +39,7 @@ h1= t_title(:index, Hour)
                 - else
                   = link_to record.hourable.to_label, group_offer_path(record.hourable)
               td= l(record.meeting_date)
-              td= "#{record.hours}:#{'%02i' % record.minutes}"
+              td= record.hours
               td= record.activity
               td= record.comments
 .row

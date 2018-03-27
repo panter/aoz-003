@@ -8,7 +8,6 @@ class Certificate < ApplicationRecord
     self.text_body ||= default_text_body
     self.function ||= DEFAULT_FUNCTION
     self.hours ||= volunteer.hours.total_hours
-    self.minutes ||= volunteer.hours.minutes_rest
     self.volunteer_contact ||= convert_volunteer_contact
     self.institution ||= DEFAULT_INSTITUTION + ", #{user&.profile.contact.primary_phone}"
     self.duration_start = volunteer.min_assignment_date

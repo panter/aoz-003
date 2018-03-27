@@ -514,16 +514,16 @@ class PerformanceReportTest < ActiveSupport::TestCase
       volunteer: ass_last_year.volunteer, author: ass_last_year.volunteer.user)
     feedback_last_year.update(created_at: ass_last_year.period_start + 80)
 
-    hour_zurich_this_year = create(:hour, hourable: ass_zurich_this_year, hours: 2, minutes: 30,
+    hour_zurich_this_year = create(:hour, hourable: ass_zurich_this_year, hours: 2.5,
       volunteer: ass_zurich_this_year.volunteer, meeting_date: ass_zurich_this_year.period_start + 78)
     hour_zurich_this_year.update(created_at: ass_zurich_this_year.period_start + 80)
-    hour_this_year = create(:hour, hourable: ass_this_year, hours: 2, minutes: 30,
+    hour_this_year = create(:hour, hourable: ass_this_year, hours: 2.5,
       volunteer: ass_this_year.volunteer, meeting_date: ass_this_year.period_start + 78)
     hour_this_year.update(created_at: ass_this_year.period_start + 80)
-    hour_zurich_last_year = create(:hour, hourable: ass_zurich_last_year, hours: 2, minutes: 30,
+    hour_zurich_last_year = create(:hour, hourable: ass_zurich_last_year, hours: 2.5,
       volunteer: ass_zurich_last_year.volunteer, meeting_date: ass_zurich_last_year.period_start + 78)
     hour_zurich_last_year.update(created_at: ass_zurich_last_year.period_start + 80)
-    hour_last_year = create(:hour, hourable: ass_last_year, hours: 2, minutes: 30,
+    hour_last_year = create(:hour, hourable: ass_last_year, hours: 2.5,
       volunteer: ass_last_year.volunteer, meeting_date: ass_last_year.period_start + 78)
     hour_last_year.update(created_at: ass_last_year.period_start + 80)
 

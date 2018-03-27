@@ -122,7 +122,6 @@ ActiveRecord::Schema.define(version: 20180326135756) do
 
   create_table "certificates", force: :cascade do |t|
     t.integer "hours"
-    t.integer "minutes"
     t.date "duration_start"
     t.date "duration_end"
     t.text "institution"
@@ -431,8 +430,7 @@ ActiveRecord::Schema.define(version: 20180326135756) do
 
   create_table "hours", force: :cascade do |t|
     t.date "meeting_date"
-    t.integer "hours", default: 0
-    t.integer "minutes", default: 0
+    t.float "hours", default: 0.0
     t.string "activity"
     t.text "comments"
     t.bigint "volunteer_id"

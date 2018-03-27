@@ -5,10 +5,10 @@ class BillingExpensesTest < ApplicationSystemTestCase
     superadmin = create :user
     @volunteer = create :volunteer
     @assignment = create :assignment, volunteer: @volunteer, period_start: 9.months.ago
-    @hour1 = create :hour, volunteer: @volunteer, hourable: @assignment, hours: '2', minutes: '30'
+    @hour1 = create :hour, volunteer: @volunteer, hourable: @assignment, hours: '2.5'
     @group_offer = create :group_offer
     @group_assignment = create :group_assignment, volunteer: @volunteer, period_start: 9.months.ago
-    @hour2 = create :hour, hourable: @group_offer, volunteer: @volunteer, hours: '3', minutes: '30'
+    @hour2 = create :hour, hourable: @group_offer, volunteer: @volunteer, hours: '3.5'
 
     login_as superadmin
     visit volunteer_path(@volunteer)
@@ -21,7 +21,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
   test 'created billing expenses collects hours from assignment and group offer' do
     within '.table-responsive' do
-      assert_equal 6, @volunteer.hours.total_hours
+      assert_equal 6.0, @volunteer.hours.total_hours
       assert_equal 50, @volunteer.billing_expenses.last.amount
     end
   end
@@ -58,7 +58,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     volunteer = create :volunteer
     group_offer = create :group_offer, volunteers: [volunteer]
     volunteer.group_assignments.last.update(period_start: 2.months.ago)
-    create :hour, hourable: group_offer, volunteer: volunteer, hours: '3', minutes: '30'
+    create :hour, hourable: group_offer, volunteer: volunteer, hours: '3'
 
     visit volunteer_path(volunteer)
     click_button 'Spesenformular erfassen'

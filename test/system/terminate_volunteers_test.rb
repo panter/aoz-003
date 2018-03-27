@@ -32,7 +32,7 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     # active
     @active_group_assignment = create :group_assignment, volunteer: @volunteer_aa, group_offer: @group_offer,
       period_start: 20.days.ago, period_end: nil, period_end_set_by: @superadmin
-    @hour = create :hour, volunteer: @volunteer_aa, hourable: @group_offer, hours: 2, minutes: 45
+    @hour = create :hour, volunteer: @volunteer_aa, hourable: @group_offer, hours: 2
     @feedback = create :feedback, volunteer: @volunteer_aa, author: @volunteer_aa.user,
       feedbackable: @group_offer
 

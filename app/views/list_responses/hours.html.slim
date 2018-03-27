@@ -30,10 +30,9 @@ table.table.table-striped.list-responses-table
             = record.hourable.to_label
         td.index-action-cell
           span
-            - total_hours = record.hours + (record.minutes/60.0)
-            = total_hours
+            = record.hours
             = " Stunde"
-            - if total_hours > 1
+            - if record.hours > 1
               = "n"
         td.index-action-cell
           span #{(Time.zone.today - record.created_at.to_date).to_i} Tage
