@@ -94,4 +94,68 @@ class ReminderMailingTest < ActiveSupport::TestCase
     assert(mailing_body.include?(mailing_creator.profile.contact.natural_name),
       "#{mailing_creator.profile.contact.natural_name} not found in #{mailing_body}")
   end
+
+  test 'feedback_helpers' do # rubocop:disable Metrics/BlockLength
+    other_volunteer = create :volunteer_with_user
+    other_group_assignment = create :group_assignment, group_offer: @group_offer,
+      volunteer: other_volunteer
+    _unrelated_feedback = create :feedback
+    _unrelated_trial_feedback = create :trial_feedback
+
+    half_year_mailing = create :reminder_mailing, :half_year, reminder_mailing_volunteers:
+      [@assignment_probation, @group_assignment_probation, other_group_assignment],
+      created_at: 1.month.ago
+
+    trial_period_mailing = create :reminder_mailing, :trial_period, reminder_mailing_volunteers:
+      [@assignment_probation, @group_assignment_probation, other_group_assignment],
+      created_at: 1.month.ago
+
+    assert_empty half_year_mailing.feedbacks
+    assert_empty trial_period_mailing.feedbacks
+
+    feedback1 = create :feedback, feedbackable: @assignment_probation,
+      created_at: 1.day.ago, volunteer: @volunteer, author: @volunteer.user
+    feedback2 = create :feedback, feedbackable: @assignment_probation,
+      created_at: 2.days.ago, volunteer: @volunteer, author: @volunteer.user
+    feedback3 = create :feedback, feedbackable: @group_offer,
+      created_at: 3.days.ago, volunteer: @volunteer, author: @volunteer.user
+    feedback4 = create :feedback, feedbackable: @group_offer,
+      created_at: 4.days.ago, volunteer: other_volunteer, author: other_volunteer.user
+    _feedback_past = create :feedback, feedbackable: @assignment_probation,
+      created_at: 1.year.ago, volunteer: @volunteer, author: @volunteer.user
+    _feedback_other_assignment = create :feedback, feedbackable: create(:assignment),
+      created_at: 1.week.ago, volunteer: @volunteer, author: @volunteer.user
+    _feedback_other_author = create :feedback, feedbackable: @assignment_probation,
+      created_at: 1.week.ago, volunteer: @volunteer, author: @superadmin
+
+    assert_equal [feedback1, feedback2, feedback3, feedback4],
+      half_year_mailing.feedbacks.created_desc
+    assert_equal 2, half_year_mailing.feedback_count
+
+    trial_feedback1 = create :trial_feedback,
+      trial_feedbackable: @assignment_probation,
+      created_at: 1.day.ago, volunteer: @volunteer, author: @volunteer.user
+    trial_feedback2 = create :trial_feedback,
+      trial_feedbackable: @assignment_probation,
+      created_at: 2.days.ago, volunteer: @volunteer, author: @volunteer.user
+    trial_feedback3 = create :trial_feedback,
+      trial_feedbackable: @group_offer,
+      created_at: 3.days.ago, volunteer: @volunteer, author: @volunteer.user
+    trial_feedback4 = create :trial_feedback,
+      trial_feedbackable: @group_offer,
+      created_at: 4.days.ago, volunteer: other_volunteer, author: other_volunteer.user
+    _trial_feedback_past = create :trial_feedback,
+      trial_feedbackable: @assignment_probation,
+      created_at: 1.year.ago, volunteer: @volunteer, author: @volunteer.user
+    _trial_feedback_other_assignment = create :trial_feedback,
+      trial_feedbackable: create(:assignment),
+      created_at: 1.week.ago, volunteer: @volunteer, author: @volunteer.user
+    _trial_feedback_other_author = create :trial_feedback,
+      trial_feedbackable: @assignment_probation,
+      created_at: 1.week.ago, volunteer: @volunteer, author: @superadmin
+
+    assert_equal [trial_feedback1, trial_feedback2, trial_feedback3, trial_feedback4],
+      trial_period_mailing.feedbacks.created_desc
+    assert_equal 2, trial_period_mailing.feedback_count
+  end
 end

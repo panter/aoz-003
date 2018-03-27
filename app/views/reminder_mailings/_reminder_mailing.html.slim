@@ -13,6 +13,7 @@ tr
       'Nicht versandt
   td= l(reminder_mailing.created_at.to_date)
   td
-    - last_feedback = reminder_mailing.last_feedbacks.first
-    - if last_feedback
-        = link_to I18n.l(last_feedback.created_at.to_date), reminder_mailing
+    = link_to reminder_mailing_path(reminder_mailing, anchor: 'feedbacks') do
+      => reminder_mailing.feedback_count
+      'von
+      = reminder_mailing.volunteers.count
