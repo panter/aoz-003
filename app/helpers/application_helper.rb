@@ -81,11 +81,6 @@ module ApplicationHelper
     search_parameters.deep_merge(q: query)
   end
 
-  def clear_filter_button
-    filter = { all: true, s: params.dig(:q, :s) }.compact
-    button_link t('clear_filters'), url_for(q: filter), dimension: :sm
-  end
-
   def search_parameters
     @search_parameters ||= (params[:q]&.to_unsafe_hash || {}).except(:all)
   end
