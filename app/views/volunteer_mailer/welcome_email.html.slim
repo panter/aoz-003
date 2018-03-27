@@ -21,7 +21,7 @@ p= @volunteer.contact.primary_email
   p= @volunteer.contact.primary_phone
 
 h4= "#{t_attr(:birth_year, Volunteer)}: "
-p= @volunteer.birth_year&.year if @volunteer.birth_year
+p= @volunteer.birth_year.year if @volunteer.birth_year
 
 h4= "#{t_attr(:avatar, Volunteer)}: "
 p= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?

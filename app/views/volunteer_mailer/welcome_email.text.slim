@@ -24,8 +24,7 @@
   = "#{rn2}#{t_attr(:primary_phone, Contact)}:\t\t#{@volunteer.contact.primary_phone}\r\n"
 
 - if @volunteer.birth_year?
-  = "#{rn2}#{t_attr(:birth_year, Volunteer)}:#{t3}#{@volunteer.birth_year&.year}\r\n"
-
+  = "#{rn2}#{t_attr(:birth_year, Volunteer)}:\t\t#{@volunteer.birth_year.year}\r\n"
 
 - if @volunteer.avatar.present?
   = "#{rn2}#{t_attr(:avatar, Volunteer)}:\t\t"
