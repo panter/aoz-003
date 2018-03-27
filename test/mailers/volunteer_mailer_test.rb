@@ -21,7 +21,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
     assert_match @volunteer.contact.last_name, mail_body
     assert_match @volunteer.contact.postal_code, mail_body
     assert_match @volunteer.contact.city, mail_body
-    assert_match I18n.l(@volunteer.birth_year), mail_body
+    assert_match @volunteer.birth_year.year.to_s, mail_body
     assert_match 'Bogus Education', mail_body
     assert_match 'Frau', mail_body
   end
