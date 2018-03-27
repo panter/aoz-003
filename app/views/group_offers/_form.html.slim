@@ -48,5 +48,6 @@
             - availabilities.each do |availability|
               = f.input availability, label: t("availability.#{availability}")
 
+  = render 'group_assignments'
   .row
     .col-xs-12= f.button :submit

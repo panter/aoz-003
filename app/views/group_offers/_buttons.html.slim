@@ -1,0 +1,4 @@
+ul.list-inline
+  li = form_navigation_btn :back, with_row: false
+  li = assignment_status_badge(@group_offer, 'button-acceptance')
+  li= link_to navigation_glyph(:print), url_for(print: :true), { class: 'btn btn-default btn-sm', target: '_blank' }

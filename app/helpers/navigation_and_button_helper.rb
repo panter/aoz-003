@@ -67,11 +67,11 @@ module NavigationAndButtonHelper
     end
   end
 
-  def assignment_status_badge(assignment)
+  def assignment_status_badge(assignment, css = 'btn-xs')
     if assignment.active?
-      link_to 'Aktiv', '#', class: 'btn btn-xs btn-acceptance-undecided'
+      link_to 'Aktiv', '#', class: "btn btn-acceptance-undecided #{css}"
     else
-      link_to 'Inaktiv', '#', class: 'btn btn-xs btn-acceptance-resigned'
+      link_to 'Inaktiv', '#', class: "btn btn-acceptance-resigned #{css}"
     end
   end
 end

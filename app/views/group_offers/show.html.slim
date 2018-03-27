@@ -66,36 +66,7 @@ h2= @group_offer.title
       tr
         td= t_attr(:schedule_details)
         td= @group_offer.schedule_details
-
-- if @group_offer.group_assignments.unterminated.any?
-  h2 Aktuelle Gruppeneinsätze
-  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments, redirect_to_action: :show
-
-- if @group_offer.group_assignment_logs.any?
-  h2 Archivierte Gruppeneinsätze
-  .table-responsive.log-table.m-b-20
-    table.table.table-no-border-top
-      thead
-        tr
-          th Freiwillige/r
-          th Rolle
-          th Anfangsdatum
-          th Enddatum
-          th Begleitung Beendet
-          th Archiviert
-      tbody
-        - @group_offer.group_assignment_logs.order('created_at asc').each do |ga_log|
-          tr
-            td= link_to_if(policy(Volunteer).show?, ga_log.volunteer.contact.full_name,
-              volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
-            td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
-            td= l(ga_log.period_start) if ga_log.period_start
-            td= l(ga_log.period_end) if ga_log.period_end
-            td= l(ga_log.created_at)
-            td
-                = "Quittiert von "
-                = link_to ga_log.termination_verified_by.full_name, profile_link(ga_log.termination_verified_by)
-                = " am #{l(ga_log.termination_verified_at.to_date)}"
+= render 'group_assignments'
 
 - show_volunteers = (params[:page] || params[:q]).present?
 #add-volunteers.collapse class=('in' if show_volunteers)
