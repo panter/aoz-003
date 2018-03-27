@@ -78,4 +78,23 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit assignments_url(print: true)
     assert_equal Assignment.count, find_all('tbody tr').size
   end
+
+  test 'clear_default_filter' do
+    create :assignment, :active, comments: 'active_assignment'
+    create :assignment, :inactive, comments: 'inactive_assignment'
+
+    login_as @user
+    visit assignments_path
+
+    assert_text 'active_assignment'
+    refute_text 'inactive_assignment'
+
+    click_link 'Status: Aktiv'
+    click_link 'Alle'
+
+    assert_link exact_text: 'Status'
+
+    assert_text 'active_assignment'
+    assert_text 'inactive_assignment'
+  end
 end
