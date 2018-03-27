@@ -12,9 +12,9 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :picked, (-> { where(picked: true) })
 
   scope :kind, ->(kind) { joins(:reminder_mailing).where('reminder_mailings.kind = ?', kind) }
-  scope :trial_period, (-> { kind(0) })
-  scope :half_year, (-> { kind(1) })
-  scope :termination, (-> { kind(2) })
+  scope :half_year, (-> { kind(ReminderMailing.kinds[:half_year]) })
+  scope :trial_period, (-> { kind(ReminderMailing.kinds[:trial_period]) })
+  scope :termination, (-> { kind(ReminderMailing.kinds[:termination]) })
   scope :termination_for, ->(mailable) { termination.where(reminder_mailable: mailable) }
 
   def mark_process_submitted(user, terminate_parent_mailing: false)
@@ -30,11 +30,7 @@ class ReminderMailingVolunteer < ApplicationRecord
     reminder_mailable_type == 'GroupAssignment'
   end
 
-  def mailable_to_label
-    base_assignment_entity.to_label
-  end
-
-  def base_assignment_entity
+  def base_entity
     return reminder_mailable if assignment?
     reminder_mailable.group_offer
   end
@@ -44,6 +40,12 @@ class ReminderMailingVolunteer < ApplicationRecord
       subject: replace_ruby_template(reminder_mailing.subject),
       body: replace_ruby_template(reminder_mailing.body)
     }
+  end
+
+  def last_feedback
+    reminder_mailing.feedbacks
+      .created_desc
+      .find_by(author_id: volunteer.user_id)
   end
 
   private
