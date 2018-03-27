@@ -148,26 +148,19 @@ h3= t_attr(:group_accompaniment)
 h4.label-list
   .row
     .col-xs-12
-      - @volunteer.group_accompaniments_active_without_house_moving.each do |group|
-        - if group[:value]
+      - if @group_offer_categories.present?
+        - @group_offer_categories.each do |category|
           span.label.label-success>
             => navigation_glyph(:yes)
-            = t_attr(group[:title])
-        - else
-          span.label.label-danger>
-            => navigation_glyph(:no)
-            = t_attr(group[:title])
+            = t_attr(category.category_name)
+      - else
+        em Keine Kategorien Ausgewählt
   .row
     .col-xs-12
-      - @volunteer.group_accompaniments_house_moving.each do |group|
-        - if group[:value]
-          span.label.label-success>
-            => navigation_glyph(:yes)
-            = t_attr(group[:title])
-        - else
-          span.label.label-danger>
-            => navigation_glyph(:no)
-            = t_attr(group[:title])
+      - @group_offer_categories_house_moving.each do |category|
+        span.label.label-success>
+          => navigation_glyph(:yes)
+          = t_attr(category.category_name)
 
 .row
   .col-xs-12
