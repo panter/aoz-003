@@ -130,7 +130,7 @@ class VolunteersTest < ApplicationSystemTestCase
     visit edit_volunteer_path(volunteer)
     refute page.has_text? 'Grund für die Ablehnung'
     refute page.has_field? 'Erläuterung zur Ablehnung'
-    find('#volunteer_acceptance').find(:xpath, 'option[4]').select_option
+    find("option[value='rejected']").click
     assert page.has_content? 'Grund für die Ablehnung'
     page.choose('volunteer_rejection_type_other')
     assert page.has_field? 'Erläuterung zur Ablehnung'
@@ -233,7 +233,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'accepted at creation volunteer gets invited' do
     visit new_volunteer_path
-    find('#volunteer_acceptance').find(:xpath, 'option[3]').select_option
+    find("option[value='accepted']").click
     select('Frau', from: 'Anrede')
     fill_in 'Vorname', with: 'Volunteer'
     fill_in 'Nachname', with: 'accepted'
@@ -251,7 +251,7 @@ class VolunteersTest < ApplicationSystemTestCase
   test 'undecided to accepted volunteer gets invited' do
     volunteer = create :volunteer, acceptance: 'undecided'
     visit edit_volunteer_path(volunteer)
-    find('#volunteer_acceptance').find(:xpath, 'option[3]').select_option
+    find("option[value='accepted']").click
     first(:button, 'Freiwillige/n aktualisieren').click
 
     assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
