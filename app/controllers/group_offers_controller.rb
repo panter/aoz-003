@@ -7,8 +7,8 @@ class GroupOffersController < ApplicationController
     authorize GroupOffer
     set_default_filter(period_end_blank: 'true')
     @q = policy_scope(GroupOffer).ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @group_offers = @q.result.reorder(active: :desc)
+    @q.sorts = ['active desc', 'created_at desc'] if @q.sorts.empty?
+    @group_offers = @q.result
     respond_to do |format|
       format.html { @group_offers = @group_offers.paginate(page: params[:page]) }
       format.xlsx
