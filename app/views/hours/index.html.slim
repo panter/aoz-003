@@ -5,7 +5,7 @@ h1= t_title(:index, Hour)
   .col-xs-12
     h4.pull-right
       = t('total_hours')
-      =< @volunteer.hours.sum(&:hours)
+      =< @volunteer.hours.total_hours
 .table-responsive
       table.table
         thead

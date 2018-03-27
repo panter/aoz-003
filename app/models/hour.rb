@@ -44,7 +44,7 @@ class Hour < ApplicationRecord
   end
 
   def self.total_hours
-    sum(&:hours)
+    sum(:hours)
   end
 
   def hourable_id_and_type=(id_and_type)
