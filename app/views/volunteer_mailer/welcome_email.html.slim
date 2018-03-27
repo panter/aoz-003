@@ -5,10 +5,10 @@ div= @body
 h2= t('.submitted')
 
 h3
-  = "#{@volunteer.contact.title} " if @volunteer.contact.title.present?
-  = "#{@volunteer.contact.first_name} #{@volunteer.contact.last_name}"
+  = t("salutation.#{@volunteer.salutation}") if @volunteer.salutation?
+  = " #{@volunteer.contact.first_name} #{@volunteer.contact.last_name}"
 
-h4= t(".address")
+h4= "#{t(".address")}: "
 p
   = @volunteer.contact.street
   br= "#{@volunteer.contact.postal_code} #{@volunteer.contact.city}"
@@ -21,11 +21,7 @@ p= @volunteer.contact.primary_email
   p= @volunteer.contact.primary_phone
 
 h4= "#{t_attr(:birth_year, Volunteer)}: "
-p= l(@volunteer.birth_year) if @volunteer.birth_year
-
-
-h4= "#{t_attr(:salutation, Volunteer)}: "
-p= t("salutation.#{@volunteer.salutation}") if @volunteer.salutation?
+p= @volunteer.birth_year.year if @volunteer.birth_year
 
 h4= "#{t_attr(:avatar, Volunteer)}: "
 p= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?
@@ -66,7 +62,7 @@ p= @volunteer.strengths
 h4= "#{t_attr(:interests, Volunteer)}: "
 p= @volunteer.interests
 
-h4= t_attr(:single_accompaniment, Volunteer)
+h4= "#{t_attr(:single_accompaniment, Volunteer)}:"
 tables
   tr
     - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
@@ -75,7 +71,7 @@ tables
           span style="#{margin_r}"
             = t_attr(single, Volunteer)
 
-h4= t_attr(:group_accompaniment, Volunteer)
+h4= "#{t_attr(:group_accompaniment, Volunteer)}:"
 table
   tr
     - @volunteer.group_accompaniments_all_values.each do |group|

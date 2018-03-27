@@ -243,7 +243,6 @@ de:
       <<: [*id-volunteers-index]
       acceptance: *id-volunteer-acceptance
       state: *id-volunteer-active-states
-      availability: Verfügbarkeit
       group_assignments: Aktuelle Gruppenangebote
       hour_reports: Stunden Rapporte
       new_certificate: Nachweis ausstellen
@@ -439,6 +438,7 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
+        availability: Verfügbarkeit
         external: Extern
         internal: Intern
         available: Verfügbar
@@ -473,7 +473,7 @@ de:
         trial_period: Probezeitbericht erhalten
         unaccompanied: Unbegleitete Minderjährige
         volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
-        volunteer_experience_desc: Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
+        volunteer_experience_desc: Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         waive: Ich verzichte auf die Auszahlung von Spesen.
         woman: Frau
         working_percent: Stellenprozent
@@ -637,7 +637,7 @@ de:
   client_destroyed: Klient/in wurde erfolgreich gelöscht.
   client_updated: Klient/in wurde erfolgreich aktualisiert.
   clients_xlsx: Klienten
-  clients_need_accompanying: Klienten ohne Begleitung
+  clients_need_accompanying: Klient/innen ohne Begleitung
   contact_info: Kontakt Informationen
   contacts:
     fields:
@@ -705,16 +705,16 @@ de:
         accept: Einladung annehmen
         accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
         someone_invited_you: |
-          'Herzlich willkommen! Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben.
-          Bei Ihrer Erstregistrierung auf www.aoz-freiwillige.ch haben Sie folgende E-Mail Adresse angegeben: %{email}!<br>
-          Bevor wir Ihr Freiwilligen-Profil auf unserer Onlineplattform freischalten können,
+          Herzlich willkommen! Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben.<br>
+          Bei Ihrer Erstregistrierung auf www.aoz-freiwillige.ch haben Sie folgende E-Mail Adresse angegeben: %{email}<br>
+          Bevor wir Ihr Profil auf unserer Onlineplattform freischalten können,
           müssen Sie Ihre E-Mail Adresse bestätigen und ein persönliches Passwort erstellen.
-          Bitte klicken Sie dafür auf folgenden Link:'
+          Bitte klicken Sie dafür auf folgenden Link:
         having_trouble: |
-          'Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
+          Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
           %{email}
           oder<br>
-          Telefon 044 415 67 35'
+          Telefon 044 415 67 35
         greetings: |
           Freundliche Grüsse<br>
           AOZ Fachstelle Freiwilligenarbeit

@@ -190,10 +190,13 @@ class ReminderMailingsTest < ApplicationSystemTestCase
   test 'termination_mailing_for_group_assignment_termination_is_sent' do
     group_assignment = create :group_assignment, period_start: 2.months.ago, period_end: 2.days.ago,
       period_end_set_by: @superadmin
+    group_offer = group_assignment.group_offer
+
     termination_reminder = create :reminder_mailing, kind: :termination,
       reminder_mailing_volunteers: [group_assignment],
-      body: '%{Anrede} %{Name} %{FeedbackLink} %{Einsatz} %{EinsatzTitel} %{EmailAbsender} '\
-            '%{EinsatzStart}'
+      subject: 'Beendigung %{Einsatz}',
+      body: '%{Anrede} %{Name} %{FeedbackLink} %{Einsatz} %{EmailAbsender} '\
+            '%{EinsatzStart} %{InvalidKey}Gruss, AOZ'
     login_as @superadmin
     visit polymorphic_path([group_assignment, termination_reminder], action: :send_termination)
 
@@ -201,6 +204,16 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     termination_reminder.reload
     assert termination_reminder.sending_triggered, 'Sending on the mailer was not triggered'
-    mailing_volunteer = termination_reminder.reminder_mailing_volunteers.first
+
+    assert_equal 1, ActionMailer::Base.deliveries.size
+    mailer = ActionMailer::Base.deliveries.last
+    mail_body = mailer.text_part.body.encoded
+
+    assert_equal "Beendigung Gruppenangebot #{group_offer.title} (#{group_offer.department})",
+      mailer.subject
+    assert_includes mail_body, "#{group_assignment.volunteer.contact.natural_name} Feedback Geben"
+    assert_includes mail_body, "#{I18n.l group_assignment.period_start} Gruss, AOZ"
+    refute_includes mailer.subject, '%{'
+    refute_includes mail_body, '%{'
   end
 end

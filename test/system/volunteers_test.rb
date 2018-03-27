@@ -157,11 +157,11 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'volunteer_experience_description_field_is_conditional' do
     visit new_volunteer_path
-    refute page.has_text? 'Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
+    refute page.has_text? 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
     page.check('volunteer_experience')
-    assert page.has_text? 'Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
+    assert page.has_text? 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
     page.uncheck('volunteer_experience')
-    refute page.has_text? 'Falls sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
+    refute page.has_text? 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
   end
 
   test 'volunteer_pagination' do

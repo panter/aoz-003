@@ -3,6 +3,7 @@
     thead
       tr
         th= t_attr(:title, Contact)
+        th= t_attr(:full_name, Volunteer)
         th= t_attr(:city, Contact)
         th= t_attr(:postal_code, Contact)
         th= t_attr(:primary_email, Contact)
@@ -12,7 +13,6 @@
         th= t_attr(:education, Volunteer)
         th= t_attr(:profession, Volunteer)
         th= t_attr(:working_percent, Volunteer)
-        th= t_attr(:expectations, Volunteer)
         th= t_attr(:interests, Volunteer)
         th= t_attr(:external, Volunteer)
 
@@ -24,11 +24,11 @@
         td = volunteer.contact.postal_code
         td = volunteer.contact.primary_email
         td = volunteer.birth_year.year if volunteer.birth_year?
-        td = volunteer.language_skills.first.language_name if volunteer.language_skills.any?
-        td = render 'language_skills/show_inline', language_skills: volunteer.language_skills
+        td = volunteer.native_language&.language_name
+        td = render 'language_skills/show_inline',
+              language_skills: volunteer.foreign_languages
         td = volunteer.education
         td = volunteer.profession
         td #{volunteer.working_percent}%
-        td = volunteer.expectations
         td = volunteer.interests
-        td = volunteer.external? ? t_attr(:external) : t_attr(:internal)
+        td = volunteer.external? ? t_attr(:external, Volunteer) : t_attr(:internal, Volunteer)
