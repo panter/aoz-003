@@ -5,8 +5,7 @@
         = f.input :language, collection: Client.first_languages + languages
       - else
         = f.input :language, collection: Volunteer.first_languages + languages
-    .col-xs-12.col-md-6
+    .col-xs-12.col-md-5
       = f.input :level, collection: LanguageSkill::LANGUAGE_LEVELS
-  .row
-    .col-xs-12.col-md-12
+    .col-xs-12.col-md-1.m-t-20
       = link_to_remove_association navigation_glyph(:delete), f, class: 'btn btn-default'
