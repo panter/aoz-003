@@ -42,7 +42,7 @@ table.table.table-striped
       th= t_attr(:duration)
       th= sort_link @q, :offer_state
       th= t_attr(:volunteers)
-      th= sort_link @q, :group_offer_category, t_attr(:group_offer_category)
+      th= sort_link @q, :group_offer_category_category_name, t_attr(:group_offer_category)
 
   tbody
     - @group_offers.each do |offer|
