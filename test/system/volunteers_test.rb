@@ -242,7 +242,7 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'Ort', with: 'Zürich'
     fill_in 'Mailadresse', with: 'volunteer@aoz.ch'
     fill_in 'Telefonnummer', with: '0123456789'
-    first(:button, 'Freiwillige/n aktualisieren').click
+    first(:button, 'Freiwillige/n erfassen').click
 
     assert page.has_text? 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an volunteer@aoz.ch verschickt.'
     assert_equal 1, ActionMailer::Base.deliveries.size
