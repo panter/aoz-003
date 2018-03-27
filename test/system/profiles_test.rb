@@ -40,12 +40,17 @@ class ProfilesTest < ApplicationSystemTestCase
     @user_without_profile.reload
 
     assert page.has_current_path? profile_path(@user_without_profile.profile)
-    assert page.has_text? 'Hans'
-    assert page.has_text? 'Muster'
-    refute page.has_selector?('table > tbody td:nth-child(1) i.glyphicon-ok')
-    assert page.has_selector?('table > tbody td:nth-child(2) i.glyphicon-ok')
-    assert page.has_selector?('table > tbody td:nth-child(3) i.glyphicon-remove')
-    assert page.has_text? 'Profil wurde erfolgreich erstellt.'
+    assert_text 'Profil wurde erfolgreich erstellt.'
+
+    assert_text 'Hans'
+    assert_text 'Muster'
+
+    assert_text 'Nein Flexibel'
+    assert_text 'Ja Morgens'
+    assert_text 'Nein Nachmittags'
+    assert_text 'Nein Abends'
+    assert_text 'Nein Werktags'
+    assert_text 'Nein Wochenende'
   end
 
   test 'when_profile_created_it_can_be_displayed' do

@@ -4,25 +4,14 @@ h1= @volunteer.contact.full_name
 
 = render 'volunteers/show_excerpt', volunteer: @volunteer
 
-h3= t_attr(:single_accompaniment, Volunteer)
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
-          th.text-center= t_attr(single)
-    tbody
-      tr
-        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
-          td.text-center
-            - if @volunteer.read_attribute(single)
-              i.glyphicon.glyphicon-ok.text-success
-            - else
-              i.glyphicon.glyphicon-remove.text-danger
+.row
+  .col-xs-6
+    = render 'volunteers/single_accompaniments', volunteer: @volunteer
+  .col-xs-6
+    h3= t_attr(:availability, Volunteer)
+    = render 'availability/show', available: @volunteer
 
-= render 'availability/show', available: @volunteer
-
-h1= t('clients_need_accompanying')
+h3= t('clients_need_accompanying')
 
 nav.navbar.section-navigation
   ul.list-inline
@@ -30,12 +19,11 @@ nav.navbar.section-navigation
     li= render 'age_request_select'
     li= render 'language_skills_language_select'
 
-= bootstrap_paginate(@need_accompanying)
-
-.table-responsive
+#find-clients-table.table-responsive
   table.table.table-striped
     thead
       tr
+        th.hidden-print Aktionen
         th= sort_link @q, :salutation, t_attr(:salutation, Client)
         th= sort_link @q, :contact_last_name, t_attr(:full_name, Contact)
         th= sort_link @q, :contact_city, t_attr(:address, Client)
@@ -48,10 +36,12 @@ nav.navbar.section-navigation
         th= sort_link @q, :created_at, t_attr(:created_at, Client)
         th= sort_link @q, :gender_request, t_attr(:gender_request, Client)
         th= sort_link @q, :age_request, t_attr(:age_request, Client)
-        th colspan='2'
     tbody
       - @need_accompanying.each do |client|
         tr
+          td.index-action-cell.hidden-print
+            = button_link navigation_glyph(:show), client, title: 'Anzeigen'
+            = button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: @volunteer)
           td = t("salutation.#{client.salutation}") if client.salutation?
           td = client.contact.full_name
           td = client.contact.full_address
@@ -70,7 +60,5 @@ nav.navbar.section-navigation
           td = l(client.created_at.to_date)
           td = t("gender_request.#{client.gender_request}") if client.gender_request.present?
           td = t("age_request.#{client.age_request}") if client.age_request.present?
-          td= button_link t_action(:show), client
-          td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: @volunteer)
 
 = bootstrap_paginate(@need_accompanying)

@@ -87,7 +87,7 @@ fieldset
   legend= t_attr(:group_accompaniment, Volunteer)
   .row
     .col-xs-12
-      = f.association :group_offer_categories, as: :check_boxes, label: false, collection: GroupOfferCategory.active_without_house_moving
+      = f.association :group_offer_categories, as: :check_boxes, label: false, collection: GroupOfferCategory.active.without_house_moving
 .row
   .col-xs-12
     = f.input :other_offer_desc
