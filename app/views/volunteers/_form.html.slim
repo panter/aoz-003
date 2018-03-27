@@ -2,18 +2,20 @@
 
 - if policy(Volunteer).superadmin_privileges?
   .row
-    .col-xs-12.col-md-3
+    .col-xs-12.col-md-4
       fieldset
         legend= t('.acceptance.management')
 
-        = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance), as: :radio_buttons,
-          include_blank: false, selected: @volunteer.acceptance.to_i
+        = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance), as: :select,
+          include_blank: false, selected: @volunteer.acceptance.to_i, id: 'asdf'
         - unless @volunteer.undecided?
           ul.list-unstyled
             - @volunteer.slice(:invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at).compact.each do |key, value|
               li #{t_attr(key)} #{l(value)}
 
-    .col-xs-12.col-md-5
+        = f.input :external, input_html: { data: { hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
+
+    .col-xs-12.col-md-4
       fieldset.checklist
         legend= t('checklist')
         ul.list-inline
@@ -23,8 +25,6 @@
           li= f.input :doc_sent
           li= f.input :evaluation
 
-    .col-xs-12.col-md-4.m-t-20
-      = f.input :external, input_html: { data: { hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
 
     .col-xs-12.col-md-4
       = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
