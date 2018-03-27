@@ -207,6 +207,7 @@ de:
       index: Feedback Liste
     acceptance: &id-volunteer-acceptance
       management: Aufnahme Verwaltung
+      other: Weiteres
       accepted: Akzeptiert
       accept: Akzeptieren
       accepted_at: Akzeptiert am

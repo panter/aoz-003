@@ -45,3 +45,11 @@ fieldset {
   display: inline-block;
   margin: 5px;
 }
+
+.checkbox {
+  margin-top: 0;
+}
+
+.checkbox + .checkbox-line {
+  margin-top: 0;
+}
