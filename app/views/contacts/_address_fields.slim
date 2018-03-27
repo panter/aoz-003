@@ -1,0 +1,12 @@
+fieldset
+  legend= t_attr(:address, Contact)
+  .row
+    .col-xs-6
+      = f.input :street, required: true
+    .col-xs-6
+      = f.input :extended
+  .row
+    .col-xs-4
+      = f.input :postal_code, required: true
+    .col-xs-8
+      = f.input :city, required: true

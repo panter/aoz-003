@@ -7,7 +7,7 @@
         legend= t('.acceptance.management')
 
         = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance), as: :select,
-          include_blank: false, selected: @volunteer.acceptance.to_i, id: 'asdf'
+          include_blank: false, selected: @volunteer.acceptance.to_i
         - unless @volunteer.undecided?
           ul.list-unstyled
             - @volunteer.slice(:invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at).compact.each do |key, value|
@@ -31,35 +31,28 @@
       = f.input :rejection_text
 
 .row
-  .col-xs-12.col-md-6
-    fieldset
-      legend= t_attr(:personal_particulars, Contact)
+  = f.simple_fields_for :contact do |c|
+    .col-xs-12.col-md-6
+      fieldset
+        legend= t_attr(:personal_particulars, Contact)
+        = f.input :salutation,
+          as: :select,
+          collection: Volunteer::SALUTATIONS,
+          include_blank: true
+        = render 'contacts/user_fields', f: c
+    .col-xs-12.col-md-6
+      = render 'contacts/address_fields', f: c
+    .col-xs-12.col-md-6
       .row
         .col-xs-12.col-md-6
-          = f.input :salutation,
-                    as: :select,
-                    collection: Volunteer::SALUTATIONS,
-                    include_blank: true
-        .col-xs-12.col-md-6
+          = f.input :nationality, as: :country
           = f.input :birth_year,
             as: :select,
             collection: Volunteer.year_collection,
             include_blank: true
-
-    = f.simple_fields_for :contact do |c|
-      = render 'contacts/fields', f: c
-    .row
-      .col-xs-12.col-md-6
-        = f.input :nationality, as: :country
-      .col-xs-12.col-md-6
-        = f.input :additional_nationality, as: :country
-
-    = f.input :avatar, as: :file
-
-  .col-xs-12.col-md-6
-    = render 'language_skills/form', f: f, speaker: @volunteer
-
-  .col-xs-12.col-md-6
+        .col-xs-12.col-md-6
+          = f.input :additional_nationality, as: :country
+          = f.input :avatar, as: :file
       .row
         .col-xs-8
           = f.input :profession
@@ -75,7 +68,19 @@
           = checkbox_toggle_collapse(f, :experience, '#experience-desc')
         .col-xs-12.collapse#experience-desc
           = f.input :volunteer_experience_desc
+    .col-xs-12.col-md-6
+      = render 'contacts/phone_fields', f: c
 
+    .col-xs-12.col-md-6
+    - if current_user.present?
+      .col-xs-12.col-md-6
+        fieldset.bank-data
+          legend Bankdaten für Spesen
+          = checkbox_toggle_collapse(f, :waive, '.waiver-collapse', check_shows: false)
+          = f.input :bank, wrapper_html: { class: 'waiver-collapse' }
+          = f.input :iban, wrapper_html: { class: 'waiver-collapse' }
+
+.row
   .col-xs-12.col-md-6
     h3= t('volunteer_engagement_type_will')
     .row
@@ -91,6 +96,8 @@
         - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single_accompaniment|
           .col-xs-12.col-md-3
             = f.input single_accompaniment
+  .col-xs-12.col-md-6
+    = render 'language_skills/form', f: f, speaker: @volunteer
 .row
   .col-xs-12.col-md-6
     fieldset
@@ -102,14 +109,10 @@
           collection: GroupOfferCategory.house_moving, item_wrapper_class: 'col-xs-4'
       = f.input :other_offer_desc
 
+  .col-xs-12.col-md-6
+    h3= policy(@volunteer).superadmin_privileges? ? t('.availability') : t('.availability_question')
+    = render 'availability/form', f: f
 
-  - if current_user.present?
-    .col-xs-12.col-md-6
-      fieldset.bank-data
-        legend Bankdaten für Spesen
-        = checkbox_toggle_collapse(f, :waive, '.waiver-collapse', check_shows: false)
-        = f.input :bank, wrapper_html: { class: 'waiver-collapse' }
-        = f.input :iban, wrapper_html: { class: 'waiver-collapse' }
 
 fieldset
   legend= t('.acceptance.other')
@@ -123,7 +126,3 @@ fieldset
     .col-xs-12.col-md-6
       = f.input :comments
       = f.input :additional_comments
-
-    .col-xs-12.col-md-6
-      h3= policy(@volunteer).superadmin_privileges? ? t('.availability') : t('.availability_question')
-      = render 'availability/form', f: f
