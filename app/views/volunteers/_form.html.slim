@@ -6,7 +6,7 @@
       fieldset
         legend= t('.acceptance.management')
 
-        = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance), as: :select,
+        = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance)[0...-1], as: :select,
           include_blank: false, selected: @volunteer.acceptance.to_i
         - unless @volunteer.undecided?
           ul.list-unstyled
