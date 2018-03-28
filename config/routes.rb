@@ -53,7 +53,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :assignments, except: [:destroy], concerns: [:update_submitted_at, :search, :termination_actions]
+  resources :assignments, except: [:destroy], concerns: [:update_submitted_at, :termination_actions] do
+    get :volunteer_search, on: :collection
+    get :client_search, on: :collection
+
+  end
   resources :client_notifications, :departments, :performance_reports, :email_templates, :users
 
   resources :clients, except: [:destroy], concerns: :search do
