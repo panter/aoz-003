@@ -11,13 +11,13 @@ nav.navbar.section-navigation.hidden-print
     - if policy(ClientNotification).index?
       li= button_link 'Wartezeitbenachrichtigung', client_notifications_path, dimension: :sm
   ul.list-inline
+    li= clear_filter_button
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
     - if policy(Client).superadmin_privileges?
       = custom_filter_dropdown 'Prozess', *Client.acceptance_filters
       = custom_filter_dropdown('Einsatz',
         { q: :active, text: 'Aktiv', value: 'true' },
         { q: :inactive, text: 'Inaktiv', value: 'true' })
-    li= button_link t('clear_filters'), clients_path, dimension: :sm
     li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: :sm
     li= link_to navigation_glyph(:print), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
   hr

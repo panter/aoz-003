@@ -59,7 +59,7 @@ module GroupOfferAndAssignment
 
   def create_group_assignments_by_period(start_date = nil, end_date = nil)
     volunteer = create :volunteer
-    volunteer.contact.update(first_name: FFaker::Name.first_name)
+    volunteer.contact.update(first_name: FFaker::Name.unique.first_name)
     create_group_assignments(create(:group_offer), start_date, end_date, volunteer)
   end
 

@@ -4,7 +4,7 @@ h1 Eingereichte Feedbacks
 
 nav.navbar.section-navigation.hidden-print
   ul.list-inline
-    li= button_link 'Filter aufheben', url_for(q: { s: ['updated_at asc'] }), dimension: :sm
+    li= clear_filter_button
     = custom_filter_dropdown('Geprüft',
         { q: :reviewer_id_not_null, text: 'Angeschaut', value: 'true' },
         { q: :reviewer_id_null, text: 'Ungesehen', value: 'true' })

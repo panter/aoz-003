@@ -29,6 +29,8 @@ class ActiveSupport::TestCase
     )
 
     super
+
+    FFaker::UniqueUtils.clear
     DatabaseCleaner.start
   end
 

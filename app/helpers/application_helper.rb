@@ -82,7 +82,7 @@ module ApplicationHelper
   end
 
   def search_parameters
-    @search_parameters ||= params[:q]&.to_unsafe_hash || {}
+    @search_parameters ||= (params[:q]&.to_unsafe_hash || {}).except(:all)
   end
 
   def bootstrap_paginate(paginate_collection)

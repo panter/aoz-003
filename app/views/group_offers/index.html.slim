@@ -16,7 +16,7 @@ nav.navbar.section-navigation#filters
     li= link_to navigation_glyph(:print), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
   hr
   ul.list-inline
-    li= button_link t('clear_filters'), group_offers_path, dimension: 'sm'
+    li= clear_filter_button
     = custom_filter_dropdown('Standort', *Department.filterable)
     = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
     = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
@@ -25,7 +25,7 @@ nav.navbar.section-navigation#filters
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
       { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
     = button_link 'Beendete Einsätze',
-      terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }), dimension: :sm
+      terminated_index_group_assignments_path, dimension: :sm
   hr
 
 = bootstrap_paginate(@group_offers)
