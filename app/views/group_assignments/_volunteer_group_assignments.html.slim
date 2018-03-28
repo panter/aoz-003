@@ -17,8 +17,8 @@ table.table.table-striped.group-assignments-table
             = button_link navigation_glyph(:show), group_offer_path(group_assignment.group_offer),
                 title: 'Anzeigen'
           - if editable
-            - if policy(group_assignment.group_offer).edit?
-              = button_link navigation_glyph(:edit), edit_group_offer_path(group_assignment.group_offer),
+            - if policy(group_assignment).edit?
+              = button_link navigation_glyph(:edit), edit_group_assignment_path(group_assignment),
                   title: 'Bearbeiten'
             - if policy(group_assignment).show?
               = button_link navigation_glyph(:download), group_assignment_path(group_assignment, format: :pdf),
