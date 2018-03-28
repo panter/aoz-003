@@ -52,10 +52,14 @@ class Assignment < ApplicationRecord
   end
 
   def involved_authority_contact
+    involved_authority&.contact
+  end
+
+  def involved_authority
     if client.involved_authority
-      client.involved_authority.profile&.contact
+      client.involved_authority.profile
     else
-      creator.profile&.contact
+      creator.profile
     end
   end
 end
