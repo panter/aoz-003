@@ -3,7 +3,7 @@ FactoryBot.define do
     association :creator, factory: :user_fake_email
     association :department
 
-    title { FFaker::Lorem.sentence }
+    title { FFaker::Lorem.unique.sentence }
     necessary_volunteers 5
     offer_type :internal_offer
 

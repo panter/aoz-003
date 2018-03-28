@@ -10,7 +10,7 @@ FactoryBot.define do
     active true
 
     trait :signup do
-      subject { FFaker::Lorem.sentence }
+      subject '%{Anrede} %{Name}'
       body do
         "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}"
       end
