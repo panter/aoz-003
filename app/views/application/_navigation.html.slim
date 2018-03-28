@@ -15,7 +15,7 @@ nav.navbar.navbar-top.hidden-print
           - if policy(Volunteer).index?
             li= link_to 'Freiwillige', volunteers_path
           - if policy(Client).index?
-            li= link_to 'Klienten/innen', clients_path
+            li= link_to 'Klient/innen', clients_path
           - if policy(Assignment).index?
             li= link_to 'Begleitungen', assignments_path
           - if policy(GroupOffer).index?
