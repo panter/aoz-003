@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    email { "#{Time.zone.now.to_i}#{FFaker::Internet.user_name}my-user@temporary-mail.com" }
+    email { "#{Time.zone.now.to_i}#{FFaker::Internet.unique.user_name}my-user@temporary-mail.com" }
     password 'asdfasdf'
     role User::SUPERADMIN
 
@@ -30,7 +30,7 @@ FactoryBot.define do
     end
 
     trait :without_profile do
-      email { FFaker::Internet.email("no_profile_user#{Time.zone.now.to_i}") }
+      email { FFaker::Internet.unique.email("no_profile_user#{Time.zone.now.to_i}") }
       profile {}
     end
 
@@ -40,8 +40,8 @@ FactoryBot.define do
 
     after(:create) do |user|
       next unless user.email.include?('my-user@temporary-mail.com')
-      user.email = user.role + '_' + FFaker::Internet.email(
-        FFaker::Internet.user_name(user.profile.contact.natural_name)
+      user.email = user.role + '_' + FFaker::Internet.unique.email(
+        FFaker::Internet.unique.user_name(user.profile.contact.natural_name)
       )
       user.profile.contact.primary_email = user.email
       user.save
