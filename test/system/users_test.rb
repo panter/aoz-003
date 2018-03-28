@@ -84,9 +84,9 @@ class UsersTest < ApplicationSystemTestCase
 
     visit edit_volunteer_path(volunteer.id)
     assert page.has_text? 'Freiwillige/n bearbeiten'
-    page.choose 'Akzeptiert'
+    page.find('#volunteer_acceptance').find(:xpath, 'option[3]').select_option
     assert_difference 'User.count', 1 do
-      click_button 'Freiwillige/n aktualisieren'
+      first(:button, 'Freiwillige/n aktualisieren').click
     end
     assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size

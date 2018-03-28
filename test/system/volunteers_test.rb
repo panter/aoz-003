@@ -48,7 +48,7 @@ class VolunteersTest < ApplicationSystemTestCase
     page.check('volunteer_weekend')
     fill_in 'Genauere Angaben', with: 'I am every two weeks available on tuesdays asdfasdf.'
 
-    click_button 'Freiwillige/n erfassen'
+    first(:button, 'Freiwillige/n erfassen').click
     assert page.has_text? 'Freiwillige/r wurde erfolgreich erstellt.'
   end
 
@@ -65,7 +65,7 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
 
-    click_button 'Freiwillige/n erfassen'
+    first(:button, 'Freiwillige/n erfassen').click
 
     assert page.has_text? 'Kosovo'
   end
@@ -87,7 +87,7 @@ class VolunteersTest < ApplicationSystemTestCase
     page.check('volunteer_bank_account')
     page.check('volunteer_evaluation')
 
-    click_button 'Freiwillige/n erfassen'
+    first(:button, 'Freiwillige/n erfassen').click
 
     assert page.has_text? 'Probezeitbericht erhalten Ja'
     assert page.has_text? 'Einführungskurs besucht Ja'
@@ -107,7 +107,7 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
 
-    click_button 'Freiwillige/n erfassen'
+    first(:button, 'Freiwillige/n erfassen').click
 
     assert page.has_text? 'Probezeitbericht erhalten Nein'
     assert page.has_text? 'Einführungskurs besucht Nein'
@@ -130,7 +130,7 @@ class VolunteersTest < ApplicationSystemTestCase
     visit edit_volunteer_path(volunteer)
     refute page.has_text? 'Grund für die Ablehnung'
     refute page.has_field? 'Erläuterung zur Ablehnung'
-    choose 'Abgelehnt'
+    find("option[value='rejected']").click
     assert page.has_content? 'Grund für die Ablehnung'
     page.choose('volunteer_rejection_type_other')
     assert page.has_field? 'Erläuterung zur Ablehnung'
@@ -233,7 +233,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'accepted at creation volunteer gets invited' do
     visit new_volunteer_path
-    choose('volunteer_acceptance_accepted')
+    find("option[value='accepted']").click
     select('Frau', from: 'Anrede')
     fill_in 'Vorname', with: 'Volunteer'
     fill_in 'Nachname', with: 'accepted'
@@ -242,7 +242,7 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'Ort', with: 'Zürich'
     fill_in 'Mailadresse', with: 'volunteer@aoz.ch'
     fill_in 'Telefonnummer', with: '0123456789'
-    click_button 'Freiwillige/n erfassen'
+    first(:button, 'Freiwillige/n erfassen').click
 
     assert page.has_text? 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an volunteer@aoz.ch verschickt.'
     assert_equal 1, ActionMailer::Base.deliveries.size
@@ -251,8 +251,8 @@ class VolunteersTest < ApplicationSystemTestCase
   test 'undecided to accepted volunteer gets invited' do
     volunteer = create :volunteer, acceptance: 'undecided'
     visit edit_volunteer_path(volunteer)
-    choose('volunteer_acceptance_accepted')
-    click_button 'Freiwillige/n aktualisieren'
+    find("option[value='accepted']").click
+    first(:button, 'Freiwillige/n aktualisieren').click
 
     assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size

@@ -1,7 +1,7 @@
 function volunteerForm() {
   show_rejection();
 
-  $('#volunteer_acceptance_rejected').on('change', ({target}) => show_rejection(target));
+  $('#volunteer_acceptance').on('change', ({target}) => show_rejection(target));
 
   $('.volunteer-active-checkbox-changes').on('change', ({target}) => {
     const data = $(target).data();

@@ -117,6 +117,7 @@ de:
     title: Titel
     updated_at: Aktualisiert am
     zip: Postleitzahl
+    other: Weiteres
   group_assignments:
     volunteer_group_assignments:
       activate: Aktivieren
