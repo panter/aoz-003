@@ -42,8 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_filter(filters)
-    return if params[:q].presence
-    params.merge!(q: filters).permit!
+    params[:q] ||= filters
   end
 
   private

@@ -27,10 +27,10 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   test 'visiting_termination_index_displays_correct_assignments' do
     visit assignments_path
     click_link 'Beendete Begleitungen'
-    assert page.has_text? termination_index_table_text(@un_submitted)
-    assert page.has_text? termination_index_table_text(@submitted)
-    refute page.has_text? termination_index_table_text(@not_ended)
-    refute page.has_text? termination_index_table_text(@verified)
+    assert_text termination_index_table_text(@un_submitted)
+    assert_text termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@not_ended)
+    refute_text termination_index_table_text(@verified)
   end
 
   test 'filtering_submitted_terminations' do
@@ -38,8 +38,8 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Bestätigt'
     visit current_url
-    refute page.has_text? termination_index_table_text(@un_submitted)
-    assert page.has_text? termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@un_submitted)
+    assert_text termination_index_table_text(@submitted)
   end
 
   test 'filtering_not_submitted_terminations' do
@@ -47,8 +47,8 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Unbestätigt'
     visit current_url
-    assert page.has_text? termination_index_table_text(@un_submitted)
-    refute page.has_text? termination_index_table_text(@submitted)
+    assert_text termination_index_table_text(@un_submitted)
+    refute_text termination_index_table_text(@submitted)
   end
 
   test 'filtering_for_only_verified' do
@@ -56,42 +56,48 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Quittiert: Unquittiert'
     click_link exact_text: 'Quittiert'
     visit current_url
-    refute page.has_text? termination_index_table_text(@un_submitted)
-    refute page.has_text? termination_index_table_text(@submitted)
-    assert page.has_text? termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@un_submitted)
+    refute_text termination_index_table_text(@submitted)
+    assert_text termination_index_table_text(@verified)
   end
 
   test 'ended_assignment_can_be_verified' do
     visit assignments_path
     click_link 'Beendete Begleitungen'
-    assert page.has_text? termination_index_table_text(@un_submitted)
-    assert page.has_text? termination_index_table_text(@submitted)
-    refute page.has_text? termination_index_table_text(@verified)
+    assert_text termination_index_table_text(@un_submitted)
+    assert_text termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@verified)
 
     page.find_all('a', text: 'Beendigung Quittieren').first.click
     click_link 'Beendigung Quittieren'
 
-    assert page.has_text? 'Beendete Begleitungen'
-    refute page.has_text? termination_index_table_text(@un_submitted)
-    refute page.has_text? termination_index_table_text(@submitted)
-    refute page.has_text? termination_index_table_text(@verified)
+    assert_text 'Beendete Begleitungen'
+    refute_text termination_index_table_text(@un_submitted)
+    refute_text termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@verified)
   end
 
   test 'clear_filter_link_is_working_correctly' do
     visit assignments_path
     click_link 'Beendete Begleitungen'
+
     click_link 'Quittiert: Unquittiert'
     click_link exact_text: 'Quittiert'
-    visit current_url
+
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Bestätigt'
-    visit current_url
+
+    refute_text termination_index_table_text(@un_submitted)
+    refute_text termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@not_ended)
+    assert_text termination_index_table_text(@verified)
+
     click_link 'Filter aufheben'
-    visit current_url
-    assert page.has_text? termination_index_table_text(@un_submitted)
-    assert page.has_text? termination_index_table_text(@submitted)
-    refute page.has_text? termination_index_table_text(@not_ended)
-    refute page.has_text? termination_index_table_text(@verified)
+
+    assert_text termination_index_table_text(@un_submitted)
+    assert_text termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@not_ended)
+    assert_text termination_index_table_text(@verified)
   end
 
   test 'there_is_correct_links_to_the_termination_forms' do
@@ -111,7 +117,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   test 'assignment_quittieren_creates_a_assignment_log_record_from_assignment' do
     visit terminated_index_assignments_path
     click_link 'Beendigung Quittieren', href: verify_termination_assignment_path(@submitted.id)
-    assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
+    assert_text 'Der Einsatz wurde erfolgreich quittiert.'
     assert_equal @submitted, AssignmentLog.find_by(assignment_id: @submitted.id).assignment
   end
 
@@ -134,7 +140,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
     # TODO: Flappy test
     # wait_for_ajax
-    # assert page.has_text? 'Beendigungs-Email wird versendet.'
+    # assert_text 'Beendigungs-Email wird versendet.'
 
     # Assignment has an end-date, reminder mailing was created and was sent
     visit terminated_index_assignments_path
@@ -143,15 +149,15 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
       href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
 
     click_link 'Beendigung Quittieren', href: /#{@un_submitted.id}\/verify_termination/
-    assert page.has_text? 'Der Einsatz wurde erfolgreich quittiert.'
+    assert_text 'Der Einsatz wurde erfolgreich quittiert.'
+
+    @un_submitted.reload
 
     visit terminated_index_assignments_path
     click_link 'Quittiert: Unquittiert'
-    click_link 'Quittiert', href: /termination_verified_by_id_not_null/
-    visit current_url
+    click_link exact_text: 'Quittiert'
 
-    @un_submitted.reload
-    assert page.has_text? "Quittiert von #{@un_submitted.termination_verified_by.full_name} am"\
+    assert_text "Quittiert von #{@un_submitted.termination_verified_by.full_name} am"\
       " #{I18n.l(@un_submitted.termination_verified_at.to_date)}"
   end
 end

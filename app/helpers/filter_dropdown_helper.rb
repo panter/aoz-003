@@ -166,8 +166,15 @@ module FilterDropdownHelper
     end
   end
 
+  def clear_filter_button
+    filter = { all: true, s: params.dig(:q, :s) }.compact
+    button_link t('clear_filters'), url_for(q: filter), dimension: :sm
+  end
+
   def all_link_to(q_filters)
-    link_to t('all'), url_for(q: search_parameters.except(*q_filters))
+    filter = search_parameters.except(*q_filters)
+    filter = { all: true } if filter.empty?
+    link_to t('all'), url_for(q: filter)
   end
 
   def dropdown_ul(all_list_link)
