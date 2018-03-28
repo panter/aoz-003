@@ -24,7 +24,7 @@ tr
           'Importiert
   td = t("salutation.#{volunteer.salutation}") if volunteer.salutation?
   - if action_name == 'index' || action_name == 'seeking_clients' || controller_name == 'group_offers'
-    td = link_to volunteer.contact.full_name, volunteer
+    td = link_to volunteer.contact.full_name, edit_volunteer_path(volunteer)
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
   td = mail_to volunteer.contact.primary_email

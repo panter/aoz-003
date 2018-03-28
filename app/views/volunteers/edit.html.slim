@@ -1,11 +1,34 @@
-h1= t_title(:edit)
-
 = simple_form_for(@volunteer) do |f|
+  h1= @volunteer.full_name
+  = render 'buttons'
+  = f.button :submit
   = render 'volunteers/form', f: f, volunteer: @volunteer
+
+
+  - if @volunteer.assignments.unterminated.any?
+    h2.small#assignments Aktuelle Begleitungen
+    = render 'assignments/client_volunteer_index', assignments: @volunteer.assignments.unterminated
+
+  - if @volunteer.assignment_logs.any?
+    h2.small Archivierte Begleitungen
+    = render 'assignment_logs/assignment_logs_volunteer_index', assignment_logs: @volunteer.assignment_logs
+
+  - if @volunteer.group_assignments.unterminated.any?
+    h2.small#assignments= t('volunteer_applications.show.group_assignments')
+    = render 'group_assignments/volunteer_group_assignments', group_assignments: @volunteer.group_assignments.unterminated, editable: true
+
+  - if @volunteer.group_assignment_logs.any?
+    h2.small= t('volunteer_applications.show.old_group_assignments')
+    = render 'group_assignments/volunteer_group_assignments_logs', group_assignment_logs: @volunteer.group_assignment_logs
+
+  - if policy(Event).show? && @volunteer_events.present?
+    = render 'events/volunteer_events', events: @volunteer_events
+
+
   - if current_user.volunteer?
     = f.button :submit, t('update_profile')
   - else
     = f.button :submit
 
-- unless current_user.volunteer?
-  = form_navigation_btn :back
+
+= render 'buttons'
