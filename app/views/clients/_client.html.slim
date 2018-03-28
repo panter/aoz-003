@@ -9,7 +9,7 @@ tr
     td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
       class: "btn btn-xs btn-acceptance-#{client.acceptance}"
   td= t("salutation.#{client.salutation}") if client.salutation?
-  td= link_to client.contact.full_name, client
+  td= link_to client.contact.full_name, edit_client_path(client)
   td= client.contact.city
   td= client.contact.postal_code
   td= client.birth_year&.year

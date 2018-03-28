@@ -156,17 +156,17 @@ class UsersTest < ApplicationSystemTestCase
     visit users_path
     assert page.has_link? superadmin_no_profile.email
     click_link superadmin_no_profile.email
-    assert page.has_text? 'Rolle Superadmin'
+    assert page.has_text? 'Superadmin'
 
     visit users_path
     assert page.has_link? department_manager_no_profile.email
     click_link department_manager_no_profile.email
-    assert page.has_text? 'Rolle Freiwilligenverantwortliche/r'
+    assert page.has_text? 'Freiwilligenverantwortliche/r'
 
     visit users_path
     assert page.has_link? social_worker_no_profile.email
     click_link social_worker_no_profile.email
-    assert page.has_text? 'Rolle Sozialarbeiter/in'
+    assert page.has_text? 'Sozialarbeiter/in'
 
     visit users_path
     assert page.has_link? volunteer_no_profile.full_name
