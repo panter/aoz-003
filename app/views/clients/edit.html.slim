@@ -1,4 +1,8 @@
-h1.m-b-20= t_title(:edit)
-= render 'buttons'
-= render 'form'
+= simple_form_for(@client) do |f|
+  - if @client.contact
+    h1.m-b-20= "#{@client.contact.last_name}, #{@client.contact.first_name}"
+  - else
+    h1.m-b-20= t_title(:edit)
+  = render 'buttons'
+  = render 'form', f: f
 = render 'buttons'
