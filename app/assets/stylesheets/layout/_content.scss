@@ -50,20 +50,26 @@
   a {
     display: block;
     margin-right: 2px;
-
-    &.whole-text {
-      color: $link-color;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   a.btn {
     display: inline-block;
   }
 }
+
+.truncate-td {
+  span,
+  a {
+    display: block;
+    &.whole-text {
+      color: $link-color;
+      text-decoration: underline;
+    }
+  }
+}
+
+
+
 
 .modal-header-sm {
   padding: 7px 15px;

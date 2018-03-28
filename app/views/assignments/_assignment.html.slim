@@ -23,7 +23,7 @@ tr
       = link_to_if policy(User).show?,
           assignment.creator.full_name,
           profile_link(assignment.creator)
-  = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
+  = td_truncate_content_modal(assignment.comments, 'Bemerkungen')
   - if controller_name == 'volunteers'
     - if policy(TrialFeedback).index?
       td.index-action-cell.hidden-print
