@@ -1,14 +1,17 @@
-require 'tasks_test_helper'
+require_relative '../tasks_test_helper'
 
+# rubocop:disable all
 class AccessImportsTest < ActiveSupport::TestCase
   test 'active_volunteers' do
     active_xls = parse_volunteers_xls_header(extract_xlsx('ListeAktiveFreiwillige'))
     found_active_volunteers = find_all_from_xls(active_xls, Volunteer.joins(:contact))
-    found_active_volunteers.each_value do |result|
+    found_active_volunteers.each do |result|
       assert_basic_values(result[:row], result[:found])
     end
 
-    active_volunteer_ids = found_active_volunteers.map { |_, hash| hash[:found].id }
+    puts "Verified #{found_active_volunteers.size} volunteer records."
+
+    active_volunteer_ids = found_active_volunteers.map { |hash| hash[:found].id }
     Volunteer.where.not(id: active_volunteer_ids).each do |volunteer|
       assert volunteer.resigned?, "Volunteer(id: #{volunteer.id}, full_name: "\
         "#{volunteer.contact.full_name}) not resigned, but it should have been"
@@ -18,11 +21,13 @@ class AccessImportsTest < ActiveSupport::TestCase
   test 'active_clients' do
     active_xls = parse_clients_xls_header(extract_xlsx('ListeAktiveBegleitete'))
     found_active_clients = find_all_from_xls(active_xls, Client.joins(:contact))
-    found_active_clients.each_value do |result|
+    found_active_clients.each do |result|
       assert_basic_values(result[:row], result[:found])
     end
 
-    active_client_ids = found_active_clients.map { |_, hash| hash[:found].id }
+    puts "Verified #{found_active_clients.size} client records."
+
+    active_client_ids = found_active_clients.map { |hash| hash[:found].id }
     Client.where.not(id: active_client_ids).each do |client|
       assert client.resigned?, "Client(id: #{client.id}, full_name: "\
         "#{client.contact.full_name}) not resigned, but it should have been"
@@ -30,15 +35,21 @@ class AccessImportsTest < ActiveSupport::TestCase
   end
 
   def assert_basic_values(row, found)
-    assert_equal row[:first_name].to_s, found.contact.first_name.to_s
-    assert_equal row[:last_name].to_s, found.contact.last_name.to_s
-    assert_equal row[:city].to_s, found.contact.city.to_s
-    assert_equal row[:street].to_s, found.contact.street.to_s
-    assert_equal row[:extended].to_s, found.contact.extended.to_s
-    assert_equal row[:secondary_phone].to_s, found.contact.secondary_phone&.strip.to_s
+    columns = [:first_name, :last_name, :city, :street, :extended, :secondary_phone]
+
+    expected = row.slice(*columns)
+      .transform_values { |v| v.to_s.strip }
+
+    actual = found.contact.slice(*columns)
+      .symbolize_keys
+      .transform_values { |v| v.to_s.strip }
+
+    assert_equal expected, actual
+
     assert_nil found.resigned_at
     assert_equal anrede_to_salutation(row[:anrede]).to_s, found.salutation.to_s,
       "Salutation on #{found.id} is #{found.salutation} where it should be #{row[:anrede]}"
+
     if found.is_a?(Client)
       assert_equal row[:entry_date]&.to_date.to_s, found.entry_date.to_s.strip
     else
@@ -48,9 +59,10 @@ class AccessImportsTest < ActiveSupport::TestCase
   end
 
   def find_all_from_xls(xls, query)
-    xls.each_with_index.map do |row, index|
-      [index, { found: find_from_row(row, query), row: row }]
-    end.to_h
+    xls.map do |row|
+      found = find_from_row(row, query)
+      { found: found, row: row } if found
+    end.compact
   end
 
   def parse_clients_xls_header(xls)
@@ -76,27 +88,23 @@ class AccessImportsTest < ActiveSupport::TestCase
   end
 
   def find_from_row(hash, query)
-    found, query = narrow_query(query, 'contacts.first_name = ?', hash[:first_name])
-    return query if found || (!found && !query)
+    result = query.joins(:contact).find_by(
+      contacts: {
+        first_name: hash[:first_name].presence,
+        last_name: hash[:last_name].presence,
+        postal_code: hash[:postal_code].presence,
+        city: hash[:city].presence,
+        street: hash[:street].presence,
+        extended: hash[:extended].presence
+      }
+    )
 
-    found, query = narrow_query(query, 'contacts.last_name = ?', hash[:last_name])
-    return query if found || (!found && !query)
-
-    found, query = narrow_query(query, 'contacts.postal_code = ?', hash[:postal_code])
-    return query if found || (!found && !query)
-
-    found, query = narrow_query(query, 'contacts.city = ?', hash[:city])
-    return query if found || (!found && !query)
-
-    found, query = narrow_query(query, 'contacts.street = ?', hash[:street])
-    return query if found || (!found && !query)
-
-    found, query = narrow_query(query, 'contacts.extended = ?', hash[:extended])
-    return query if found || (!found && !query)
-
-    found, query = narrow_query(query, 'birth_year = ?', hash[:birth_year])
-    return [false, query] unless found
-    query
+    if result
+      result
+    else
+      puts "\nCan't find record for #{hash.inspect}"
+      nil
+    end
   end
 
   def anrede_to_salutation(anrede)

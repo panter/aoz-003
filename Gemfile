@@ -28,6 +28,8 @@ gem 'i18n_rails_helpers'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'mdb'
+gem 'panter-rails-deploy'
 gem 'paperclip'
 gem 'paranoia'
 gem 'pg', '~> 0.21'
@@ -56,11 +58,6 @@ group :development do
   gem 'overcommit', require: false
   gem 'rubocop', require: false
   gem 'scss_lint', require: false
-end
-
-group :production, :development do
-  gem 'mdb'
-  gem 'panter-rails-deploy'
 end
 
 group :development, :test do
