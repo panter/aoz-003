@@ -18,7 +18,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
 
   test 'has a navbar link to clients page' do
     visit user_path(@department_manager.id)
-    assert page.has_link? 'Klienten/innen'
+    assert page.has_link? 'Klient/innen'
   end
 
   test 'can see his clients' do
