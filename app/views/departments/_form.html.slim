@@ -1,19 +1,17 @@
 = simple_form_for(@department) do |f|
   = simple_error_notice f
-  - if policy(Department).can_associate_user?
-    .row
-      .col-xs-12.col-md-6
-        = f.input :user, as: :select, collection: User.department_assocable.sort_by(&:to_s)
+  .row
+    .col-xs-12.col-md-6.department_assocable
+      - if policy(Department).can_associate_user?
+        = f.association :user, as: :check_boxes, collection: User.department_assocable.sort_by(&:to_s)
 
-      = f.simple_fields_for :contact do |c|
-        .col-xs-12.col-md-6
-          = c.input :last_name, required: true, label: t('generic_keys.full_name')
-    .row
-      = f.simple_fields_for :contact do |c|
-        .col-xs-12.col-md-6
-          = render 'contacts/address_fields', f: c
-        .col-xs-12.col-md-6
-          = render 'contacts/phone_fields', f: c
+    = f.simple_fields_for :contact do |c|
+      .col-xs-12.col-md-6
+        = c.input :last_name, required: true, label: t('generic_keys.full_name')
+    = f.simple_fields_for :contact do |c|
+      .col-xs-12.col-md-6
+        = render 'contacts/address_fields', f: c
+        = render 'contacts/phone_fields', f: c
 
   .row
     .col-xs-12
