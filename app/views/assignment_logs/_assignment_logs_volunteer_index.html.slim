@@ -24,7 +24,7 @@ table.table.table-striped.assignment-logs-table
                 profile_link(assignment.creator)
         td= link_to_if(assignment.assignment && policy(assignment.assignment).show?,
           t_action(:show), assignment.assignment) { '' }
-        = td_truncate_content_modal(assignment.comments, 'Bemerkungen', shorten_size: 100)
+        = td_truncate_content_modal(assignment.comments, 'Bemerkungen')
         td.index-action-cell.hidden-print
           span
             = link_to_if(policy(TrialFeedback).index?, t_title(:index, TrialFeedback),
