@@ -1,3 +1,11 @@
+.index {
+  display: block;
+}
+
+.container-fluid {
+  padding: 0 50px;
+}
+
 .row,
 .simple_form {
   margin-bottom: $padding-large-horizontal;

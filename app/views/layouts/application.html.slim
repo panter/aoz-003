@@ -21,7 +21,7 @@ html
   body class="#{controller_name.dasherize} #{action_name.dasherize}"
     .wrapper
       = render 'navigation'
-      .container
+      .container-fluid
         = render 'notification'
 
         = yield
