@@ -12,7 +12,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     login_as superadmin
     visit volunteer_path(@volunteer)
-    first(:link, 'Spesenformular Liste').click
+    click_link 'Spesenformular Liste', match: :first
     click_button 'Spesenformular erfassen'
   end
 
@@ -63,7 +63,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     create :hour, hourable: group_offer, volunteer: volunteer, hours: '3'
 
     visit volunteer_path(volunteer)
-    first(:link, 'Spesenformular Liste').click
+    click_link 'Spesenformular Liste', match: :first
     click_button 'Spesenformular erfassen'
     assert page.has_text? 'Spesenformular wurde erfolgreich erstellt.'
   end
