@@ -4,7 +4,7 @@ class ClientsController < ApplicationController
   include ContactAttributes
 
   before_action :set_client, only: [:show, :edit, :update, :set_terminated]
-  before_action :set_social_worker_collection, only: [:new, :edit]
+  before_action :set_social_worker_collection, only: [:new, :create, :edit, :update]
 
   def index
     authorize Client
