@@ -3,7 +3,9 @@ class DepartmentsController < ApplicationController
 
   def index
     authorize Department
-    @departments = policy_scope(Department)
+    @q = policy_scope(Department).ransack(params[:q])
+    @q.sorts = ['contact_last_name asc'] if @q.sorts.empty?
+    @departments = @q.result
   end
 
   def show; end
