@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326135756) do
+ActiveRecord::Schema.define(version: 20180403135553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -681,6 +681,7 @@ ActiveRecord::Schema.define(version: 20180326135756) do
     t.datetime "invited_at"
     t.text "comments"
     t.text "additional_comments"
+    t.boolean "teenager"
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
     t.index ["active"], name: "index_volunteers_on_active"

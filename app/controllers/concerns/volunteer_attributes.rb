@@ -6,7 +6,7 @@ module VolunteerAttributes
       [
         :birth_year, :salutation, :avatar, :nationality, :additional_nationality,
         :profession, :education, :motivation, :experience, :expectations, :strengths,
-        :skills, :interests, :man, :woman, :family, :kid, :unaccompanied, :other_offer_desc,
+        :skills, :interests, :man, :woman, :family, :kid, :teenager, :unaccompanied, :other_offer_desc,
         :trial_period, :doc_sent, :bank_account, :evaluation, :own_kids, :rejection_type,
         :rejection_text, :intro_course, :flexible, :morning, :afternoon, :evening, :working_percent,
         :workday, :weekend, :detailed_description, contact_attributes,

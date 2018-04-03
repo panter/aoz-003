@@ -10,7 +10,7 @@ class Volunteer < ApplicationRecord
   before_save :record_acceptance_changed, if: :will_save_change_to_acceptance?
   after_update :copy_contact_to_user, if: :user_added?
 
-  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
+  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :teenager, :unaccompanied].freeze
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze

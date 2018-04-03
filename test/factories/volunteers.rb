@@ -62,6 +62,7 @@ FactoryBot.define do
       woman { [true, false].sample }
       family { [true, false].sample }
       kid { [true, false].sample }
+      teenager { [true, false].sample }
       unaccompanied { [true, false].sample }
     end
 
