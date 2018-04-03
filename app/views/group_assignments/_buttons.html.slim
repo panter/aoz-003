@@ -1,0 +1,4 @@
+ul.list-inline
+  li= button_link navigation_glyph(:back), group_offer_path(@group_assignment.group_offer)
+  li= button_link navigation_glyph(:download), group_assignment_path(@group_assignment, format: :pdf),
+    title: 'Herunterladen'
