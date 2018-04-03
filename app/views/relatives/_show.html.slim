@@ -9,5 +9,5 @@ tr
             dd
               = relative.birth_year.try(:year)
               - if relative.relation.present?
-              |,
-              = t("relation.#{relative.relation}")
+                = ', '
+                = t("relation.#{relative.relation}")
