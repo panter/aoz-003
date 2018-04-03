@@ -1,7 +1,7 @@
 h1 Veranstaltung
 h2= @event.title if @event.title
 
-= render 'buttons', show_xls: true
+= render 'buttons', create: false
 
 .table-responsive
   table.table.table-no-border-top
@@ -39,4 +39,4 @@ h3 Teilnehmende
 - if @event.event_volunteers.any?
   = render 'event_volunteers/show'
 
-= render 'buttons', show_xls: true
+= render 'buttons', create: false
