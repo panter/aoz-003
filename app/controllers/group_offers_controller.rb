@@ -7,8 +7,8 @@ class GroupOffersController < ApplicationController
     authorize GroupOffer
     set_default_filter(period_end_blank: 'true')
     @q = policy_scope(GroupOffer).ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @group_offers = @q.result.reorder(active: :desc)
+    @q.sorts = ['active desc', 'created_at desc'] if @q.sorts.empty?
+    @group_offers = @q.result
     respond_to do |format|
       format.html { @group_offers = @group_offers.paginate(page: params[:page]) }
       format.xlsx
@@ -79,8 +79,11 @@ class GroupOffersController < ApplicationController
   end
 
   def submit_initiate_termination
-    if @group_offer.update(period_end: group_offer_params[:period_end],
-      period_end_set_by: current_user)
+    if @group_offer.update(
+      period_end: group_offer_params[:period_end],
+      period_end_set_by: current_user,
+      active: false
+      )
       redirect_to group_offers_path, notice: 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
     else
       render :initiate_termination

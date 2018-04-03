@@ -46,7 +46,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'filter by state' do
+  test 'filter by offer state' do
     within '.section-navigation#filters' do
       click_link 'FW-Nachfrage'
       click_link 'Offen'

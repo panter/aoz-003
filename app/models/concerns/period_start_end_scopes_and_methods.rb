@@ -30,7 +30,6 @@ module PeriodStartEndScopesAndMethods
       date_between_inclusion(:period_start, start_date, end_date)
     }
 
-    scope :started_six_months_ago, (-> { date_at_or_before(:period_start, 6.months.ago) })
     scope :started_ca_six_weeks_ago, (-> { start_within(6.weeks.ago.to_date, 8.weeks.ago.to_date) })
     scope :no_start_and_end, (-> { no_start.no_end })
 
@@ -43,10 +42,6 @@ module PeriodStartEndScopesAndMethods
       no_end.start_before(end_date)
             .or(start_before(end_date).end_after(start_date))
     }
-
-    def started_six_months_ago?
-      period_start < 6.months.ago
-    end
 
     def started_ca_six_weeks_ago?
       period_start < 6.weeks.ago && period_start > 8.weeks.ago

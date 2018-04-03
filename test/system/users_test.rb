@@ -83,8 +83,8 @@ class UsersTest < ApplicationSystemTestCase
     volunteer = create :volunteer, acceptance: :undecided
 
     visit edit_volunteer_path(volunteer.id)
-    assert page.has_text? 'Freiwillige/n bearbeiten'
-    page.find('#volunteer_acceptance').find(:xpath, 'option[3]').select_option
+    assert page.has_text? volunteer.full_name
+    find("option[value='accepted']").click
     assert_difference 'User.count', 1 do
       first(:button, 'Freiwillige/n aktualisieren').click
     end
@@ -156,17 +156,17 @@ class UsersTest < ApplicationSystemTestCase
     visit users_path
     assert page.has_link? superadmin_no_profile.email
     click_link superadmin_no_profile.email
-    assert page.has_text? 'Rolle Superadmin'
+    assert page.has_text? 'Superadmin'
 
     visit users_path
     assert page.has_link? department_manager_no_profile.email
     click_link department_manager_no_profile.email
-    assert page.has_text? 'Rolle Freiwilligenverantwortliche/r'
+    assert page.has_text? 'Freiwilligenverantwortliche/r'
 
     visit users_path
     assert page.has_link? social_worker_no_profile.email
     click_link social_worker_no_profile.email
-    assert page.has_text? 'Rolle Sozialarbeiter/in'
+    assert page.has_text? 'Sozialarbeiter/in'
 
     visit users_path
     assert page.has_link? volunteer_no_profile.full_name

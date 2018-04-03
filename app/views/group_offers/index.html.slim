@@ -18,10 +18,9 @@ nav.navbar.section-navigation#filters
   ul.list-inline
     li= clear_filter_button
     = custom_filter_dropdown('Standort', *Department.filterable)
-    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
     = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
     = custom_filter_dropdown('Kategorie', *GroupOfferCategory.filterable_group_offer)
-    = custom_filter_dropdown('Beendet',
+    = custom_filter_dropdown('Einsatz',
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
       { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
     = button_link 'Beendete Einsätze',
@@ -34,7 +33,7 @@ table.table.table-striped
   thead
     tr
       th.hidden-print Aktionen
-      th Status
+      th= sort_link @q, :active, 'Status'
       th= t_attr(:title)
       th= sort_link @q, :location
       th Verantwortliche/r
@@ -43,7 +42,7 @@ table.table.table-striped
       th= t_attr(:duration)
       th= sort_link @q, :offer_state
       th= t_attr(:volunteers)
-      th= sort_link @q, :group_offer_category, t_attr(:group_offer_category)
+      th= sort_link @q, :group_offer_category_category_name, t_attr(:group_offer_category)
 
   tbody
     - @group_offers.each do |offer|

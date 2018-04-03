@@ -12,6 +12,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     login_as superadmin
     visit volunteer_path(@volunteer)
+    click_link 'Spesenformular Liste', match: :first
     click_button 'Spesenformular erfassen'
   end
 
@@ -29,6 +30,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
   test 'no duplicate billing expenses' do
     click_button 'Spesenformular erfassen'
     visit volunteer_path(@volunteer)
+    first(:link, 'Spesenformular Liste').click
     assert_no_difference 'BillingExpense.count' do
       click_button 'Spesenformular erfassen'
       assert page.has_text? 'Dieser Freiwillige hat keine verrechenbaren Stunden'
@@ -61,6 +63,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     create :hour, hourable: group_offer, volunteer: volunteer, hours: '3'
 
     visit volunteer_path(volunteer)
+    click_link 'Spesenformular Liste', match: :first
     click_button 'Spesenformular erfassen'
     assert page.has_text? 'Spesenformular wurde erfolgreich erstellt.'
   end
