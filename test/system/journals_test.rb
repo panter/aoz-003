@@ -12,7 +12,7 @@ class JournalsTest < ApplicationSystemTestCase
 
   test 'volunteer_has_link_to_their_journal_entry' do
     visit volunteer_path(@volunteer)
-    click_link 'Journal'
+    first(:link, 'Journal').click
 
     assert_link @journal_volunteer.user.full_name
     assert_text @journal_volunteer.body
@@ -20,7 +20,7 @@ class JournalsTest < ApplicationSystemTestCase
 
   test 'can_create_journal' do
     visit client_journals_path(create(:client))
-    click_link 'Journal erfassen'
+    click_link 'Journal erfassen', match: :first
 
     assert_text 'Journal erfassen'
 

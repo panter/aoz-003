@@ -59,4 +59,13 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     click_button 'Gruppenangebots Ende setzen'
     assert page.has_text? 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
   end
+
+  test 'initiate termination sets group offer to inactive' do
+    login_as @superadmin
+    visit initiate_termination_group_offer_path(@group_offer)
+    click_button 'Jetzt alle Einsätze auf Enddatum beenden'
+    click_button 'Gruppenangebots Ende setzen'
+    @group_offer.reload
+    refute @group_offer.active
+  end
 end

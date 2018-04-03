@@ -1,5 +1,6 @@
 h1= t('.volunteers_certificates', name: @volunteer.contact.full_name)
-
+ul.list-inline
+  li= button_link t_title(:new), new_volunteer_certificate_path(@volunteer), dimension: 'sm'
 .table-responsive
   table.table
     thead

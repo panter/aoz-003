@@ -1,72 +1,84 @@
-= simple_form_for(@client) do |f|
-  = simple_error_notice f
-  = f.input :salutation, as: :select, collection: Client::SALUTATIONS, include_blank: true
+= simple_error_notice f
 
-  .row
-    = f.simple_fields_for :contact do |c|
-      .col-xs-12.col-md-6= c.input :first_name, required: true
-      .col-xs-12.col-md-6= c.input :last_name, required: true, label: t_attr(:last_name)
-    .col-xs-12.col-md-3= f.input :birth_year, as: :select, collection: Client.year_collection,
-                                 include_blank: true
-    .col-xs-12.col-md-3= f.input :nationality, as: :country
-    .col-xs-12.col-md-3= f.input :entry_date
-    .col-xs-12.col-md-3= f.input :permit, collection: Client::PERMITS, as: :radio_buttons
+.row
+  .col-xs-12.col-md-6
+    fieldset
+      legend= t_attr(:personal_particulars, Contact)
+      = f.input :salutation, as: :select, collection: Client::SALUTATIONS, include_blank: true
+      = f.simple_fields_for :contact do |c|
+        .row
+          .col-xs-12.col-md-6
+            = c.input :first_name, required: true
+            = f.input :birth_year, as: :select, collection: Client.year_collection,
+              include_blank: true
+            = f.input :entry_date
+          .col-xs-12.col-md-6
+            = c.input :last_name, required: true, label: t_attr(:last_name)
+            = f.input :nationality, as: :country
+            = f.input :permit, collection: Client::PERMITS, as: :radio_buttons
 
   = f.simple_fields_for :contact do |c|
-    = render 'contacts/fields', f: c
+    .col-xs-12.col-md-6
+      = render 'contacts/address_fields', f: c
+      = render 'contacts/phone_fields', f: c
 
-  fieldset
-    legend Sprachkenntnisse
-    #languages
-      = f.simple_fields_for :language_skills do |language|
-        - if language.object.language == 'DE'
-          .nested-fields
-            h4 Deutsch
-            = language.input :level, as: :radio_buttons, collection: LanguageSkill::LANGUAGE_LEVELS.without(:native_speaker)
-            = language.hidden_field :language, value: 'DE'
-            hr
-        - else
-          = render 'language_skills/fields', f: language, speaker: @client
+fieldset
+  legend Sprachkenntnisse
+  .row
+    .col-xs-12.col-md-6
+      #languages
+        = f.simple_fields_for :language_skills do |language|
+          - if language.object.language == 'DE'
+            .nested-fields
+              h4 Deutsch
+              = language.input :level, as: :radio_buttons, collection: LanguageSkill::LANGUAGE_LEVELS.without(:native_speaker)
+              = language.hidden_field :language, value: 'DE'
+              hr
+          - else
+            = render 'language_skills/fields', f: language, speaker: @client
+    .col-xs-12.col-md-6
       .links
         = link_to_add_polymorphic_association 'Sprache hinzufügen', f, :language_skills, class: 'btn btn-default'
+.row
+  .col-xs-12.col-md-6
+    = render 'relatives/form', f: f, relative: @client
 
-  = render 'relatives/form', f: f, relative: @client
+  .col-xs-12.col-md-6
+    fieldset
+      legend Persönlicher Hintergrund
+      = f.input :goals
+      = f.input :education
+      = f.input :actual_activities
+      = f.input :interests
 
-  fieldset
-    legend Persönlicher Hintergrund
-    = f.input :goals
-    = f.input :education
-    = f.input :actual_activities
-    = f.input :interests
+.row
+  .col-xs-12.col-md-6
+    fieldset
+      legend Anforderungen an die/den Freiwillige/n
+      = f.input :gender_request, collection: Client::GENDER_REQUESTS, default: :no_matter
+      = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
+      = f.input :other_request
 
-  fieldset
-    legend Anforderungen an die/den Freiwillige/n
-    = f.input :gender_request, collection: Client::GENDER_REQUESTS, default: :no_matter
-    = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
-    = f.input :other_request
+    fieldset
+      legend Wann sind Sie verfügbar?
+      = render 'availability/form', f: f
 
-  fieldset
-    legend Interne Kriterien
-    - if policy(@client).set_terminated?
-      = f.input :acceptance, collection: policy(@client).acceptance_collection, include_blank: false
-    - if policy(Client).superadmin_privileges?
-      = f.association :involved_authority, collection: @social_workers
+  .col-xs-12.col-md-6
+    fieldset
+      legend Interne Kriterien
+      - if policy(@client).set_terminated?
+        = acceptance_select(@client, f)
+      - if policy(Client).superadmin_privileges?
+        = f.association :involved_authority, collection: @social_workers
 
-    = f.input :competent_authority
-    = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true
-    - if policy(Client).superadmin_privileges?
-      = f.input :comments
-      = f.input :additional_comments
+      = f.input :competent_authority
+      = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true
+      - if policy(Client).superadmin_privileges?
+        = f.input :comments
+        = f.input :additional_comments
 
-  fieldset
-    legend Wann sind Sie verfügbar?
-    = render 'availability/form', f: f
-
-  nav.navbar.section-navigation
-    hr
-    ul.list-inline
-      li= f.button :submit
-      - if action_name == 'edit' && policy(Client).destroy?
-        li= link_to navigation_glyph(:delete), url_for(@client), confirm_deleting(@client, 'btn btn-default')
-      li
-      li= button_link 'Zurück', f.object
+nav.navbar.section-navigation
+  ul.list-inline
+    li= f.button :submit
+    - if action_name == 'edit' && policy(Client).destroy?
+      li= link_to navigation_glyph(:delete), url_for(@client), confirm_deleting(@client, 'btn btn-default')

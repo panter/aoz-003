@@ -18,8 +18,9 @@ class CertificatesTest < ApplicationSystemTestCase
     group_offer = create :group_offer, volunteers: [@volunteer]
     group_offer.group_assignments.last.update(period_start: 2.years.ago)
     visit volunteer_path(@volunteer)
-    click_link 'Nachweis ausstellen'
+    first(:link, 'Nachweis').click
     assert page.has_text? 'Nachweis erfassen'
+    click_link('Nachweis erfassen')
     assert page.has_field? 'Text', text: 'Die **AOZ** ist ein Unternehmen der Stadt Zürich und'
     assert page.has_field? 'Stunden', with: 2.0
     click_button 'Weitere Felder anpassen'
@@ -73,8 +74,8 @@ class CertificatesTest < ApplicationSystemTestCase
     volunteer.group_assignments.last.update(period_start: 2.months.ago)
 
     visit volunteer_path(volunteer)
-    click_link 'Nachweis ausstellen'
-    page.find_button('Nachweis erfassen').click
-    assert page.has_text? 'Die AOZ ist ein Unternehmen der Stadt Zürich'
+    first(:link, 'Nachweis').click
+    click_link('Nachweis erfassen')
+    assert page.has_text? 'ist ein Unternehmen der Stadt Zürich'
   end
 end

@@ -135,7 +135,7 @@ class VolunteersTest < ApplicationSystemTestCase
     page.choose('volunteer_rejection_type_other')
     assert page.has_field? 'Erläuterung zur Ablehnung'
     fill_in 'Erläuterung zur Ablehnung', with: 'Explanation'
-    click_button 'Freiwillige/n aktualisieren'
+    first(:button, 'Freiwillige/n aktualisieren').click
 
     visit volunteer_path(volunteer)
     assert page.has_content? 'Grund für die Ablehnung: Anderer Grund'
@@ -311,5 +311,31 @@ class VolunteersTest < ApplicationSystemTestCase
       assert page.has_text? 'Die Mailadresse ist scheinbar nicht gültig'
       assert page.has_link? 'Mailadresse konfigurieren', href: edit_volunteer_path(volunteer)
     end
+  end
+
+  test 'not resigned volunteer can not be terminated via acceptance select in edit' do
+    @undecided = create :volunteer, acceptance: :undecided
+    @invited = create :volunteer, acceptance: :invited
+    @accepted = create :volunteer, acceptance: :accepted
+    @rejected = create :volunteer, acceptance: :rejected
+
+    visit edit_volunteer_path(@undecided)
+    refute page.has_select? 'Beendet'
+
+    visit edit_volunteer_path(@invited)
+    refute page.has_select? 'Beendet'
+
+    visit edit_volunteer_path(@accepted)
+    refute page.has_select? 'Beendet'
+
+    visit edit_volunteer_path(@rejected)
+    refute page.has_select? 'Beendet'
+  end
+
+  test 'resigned volunteers acceptance can not be changed in edit anymore' do
+    @resigned = create :volunteer, acceptance: :resigned
+
+    visit edit_volunteer_path(@resigned)
+    assert page.has_field? 'Prozess', disabled: true
   end
 end

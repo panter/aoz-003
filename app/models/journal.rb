@@ -6,8 +6,6 @@ class Journal < ApplicationRecord
 
   belongs_to :journalable, polymorphic: true, required: false
 
-  default_scope { order(created_at: :desc) }
-
   CATEGORIES = [
     :telephone,
     :conversation,
@@ -16,6 +14,16 @@ class Journal < ApplicationRecord
     :single_accompaniment,
     :group_offer
   ].freeze
+
+  def self.categories_filters
+    CATEGORIES.map do |category|
+      {
+        q: 'category_eq',
+        value: category,
+        text: I18n.t("category.#{category}")
+      }
+    end
+  end
 
   validates :category, presence: true
 end
