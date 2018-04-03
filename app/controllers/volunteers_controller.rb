@@ -29,8 +29,15 @@ class VolunteersController < ApplicationController
 
   def show
     @volunteer_events = @volunteer.events.past
+
     @group_offer_categories = @volunteer.group_offer_categories.active.without_house_moving
     @group_offer_categories_house_moving = @volunteer.group_offer_categories.active.house_moving
+
+    @current_assignments = @volunteer.assignments.unterminated
+    @archived_assignments = @volunteer.assignment_logs
+
+    @current_group_assignments = @volunteer.group_assignments.unterminated
+    @archived_group_assignments = @volunteer.group_assignment_logs
   end
 
   def new

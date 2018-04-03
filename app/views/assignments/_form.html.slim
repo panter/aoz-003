@@ -4,10 +4,8 @@
   .row
     .col-xs-12.col-md-6
       - if action_name == 'new'
-        = f.association :client, include_blank: true,
-          selected: params[:client_id] || @assignment&.client&.id
-        = f.association :volunteer, include_blank: true,
-          selected: params[:volunteer_id] || @assignment&.volunteer&.id
+        = f.association :client, include_blank: true
+        = f.association :volunteer, include_blank: true
       - else
         h4.m-b-10= t_model(Client)
         = render 'user_table', user: @assignment.client, client: true
