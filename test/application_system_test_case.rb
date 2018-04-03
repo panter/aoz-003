@@ -69,8 +69,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def wait_for_ajax
     Timeout.timeout(Capybara.default_max_wait_time) do
-      active = page.evaluate_script('jQuery.active')
-      active = page.evaluate_script('jQuery.active') until active.zero?
+      loop until page.evaluate_script('jQuery.active').zero?
     end
   end
 
@@ -107,5 +106,4 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     # select the first dropdown item with given value
     page.find(".#{field} div.selectize-dropdown-content .option", text: value).click
   end
-
 end

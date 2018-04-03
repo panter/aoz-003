@@ -105,6 +105,27 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     assert_equal @superadmin, @group_assignment_fb_pendent.reviewer
   end
 
+  test 'truncate_modal_shows_all_text' do
+    comments = FFaker::Lorem.paragraph(20)
+    achievements = FFaker::Lorem.paragraph(20)
+    future = FFaker::Lorem.paragraph(20)
+    @assignment_fb_pendent.update(comments: comments, achievements: achievements, future: future)
+    @group_assignment_fb_pendent.update(reviewer: @superadmin)
+    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    page.find('td', text: comments.truncate(300)).click
+    wait_for_ajax
+    assert page.has_text? comments
+    click_button 'Schliessen'
+    page.find('td', text: future.truncate(300)).click
+    wait_for_ajax
+    assert page.has_text? future
+    click_button 'Schliessen'
+    wait_for_ajax
+    page.find('td', text: achievements.truncate(300)).click
+    wait_for_ajax
+    assert page.has_text? achievements
+  end
+
   test 'Creating new trial feedback reminder if no active mail template redirect to creating one' do
     ClientNotification.destroy_all
     click_link 'Halbjahres Erinnerung erstellen'

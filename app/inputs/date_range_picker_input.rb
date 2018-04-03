@@ -16,8 +16,12 @@ class DateRangePickerInput < SimpleForm::Inputs::Base
 
   def date_field(position, template)
     attribute = "#{attribute_name}_#{position}"
-    name = { name: "#{object_name}[#{attribute}]" }
-    html_opts = input_html_options.merge(name)
+
+    html_opts = input_html_options.merge(
+      id: "#{object_name}_#{attribute}",
+      name: "#{object_name}[#{attribute}]"
+    )
+
     template.content_tag(:div, class: 'form-group col-xs-6') do
       template.concat content_tag(:label,
         I18n.t("activerecord.attributes.#{object_name}.#{attribute}"), for: html_opts[:id])
