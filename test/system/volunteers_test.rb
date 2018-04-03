@@ -135,7 +135,7 @@ class VolunteersTest < ApplicationSystemTestCase
     page.choose('volunteer_rejection_type_other')
     assert page.has_field? 'Erläuterung zur Ablehnung'
     fill_in 'Erläuterung zur Ablehnung', with: 'Explanation'
-    click_button 'Freiwillige/n aktualisieren'
+    first(:button, 'Freiwillige/n aktualisieren').click
 
     visit volunteer_path(volunteer)
     assert page.has_content? 'Grund für die Ablehnung: Anderer Grund'

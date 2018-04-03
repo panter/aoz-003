@@ -1,6 +1,7 @@
 h1= t_title(:new)
 
 = simple_form_for(@volunteer, url: volunteers_path) do |f|
+  = f.button :submit
   = render 'volunteers/form', f: f
   = f.button :submit
 
