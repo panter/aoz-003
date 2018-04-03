@@ -175,14 +175,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert query.include? created_after
   end
 
-  test 'started_six_months_ago' do
-    created_before = make_assignment(start_date: 7.months.ago)
-    created_after = make_assignment(start_date: 2.months.ago)
-    query = Assignment.started_six_months_ago
-    assert query.include? created_before
-    refute query.include? created_after
-  end
-
   test 'zurich_not_zurich' do
     assignment_zurich = make_assignment(client: create(:client_z))
     zurich = Assignment.zurich
