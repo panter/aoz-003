@@ -67,7 +67,7 @@ fieldset
     fieldset
       legend Interne Kriterien
       - if policy(@client).set_terminated?
-        = f.input :acceptance, collection: policy(@client).acceptance_collection, include_blank: false
+        = acceptance_select(@client, f)
       - if policy(Client).superadmin_privileges?
         = f.association :involved_authority, collection: @social_workers
 

@@ -121,4 +121,21 @@ module ApplicationHelper
       link_to(text, url, class: 'btn btn-sm btn-section-active')
     end
   end
+
+  def acceptance_select(record, form)
+    collection = record.class.enum_collection(:acceptance)
+    if record.resigned?
+      disabled = true
+    else
+      disabled = false
+      collection -= [:resigned]
+    end
+
+    form.input(
+      :acceptance,
+      include_blank: false,
+      collection: collection,
+      disabled: disabled
+    )
+  end
 end

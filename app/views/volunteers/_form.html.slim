@@ -5,9 +5,7 @@
     .col-xs-12.col-md-4
       fieldset
         legend= t('.acceptance.management')
-
-        = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance), as: :select,
-          include_blank: false, selected: @volunteer.acceptance.to_i
+        = acceptance_select(@volunteer, f)
         - unless @volunteer.undecided?
           ul.list-unstyled
             - @volunteer.slice(:invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at).compact.each do |key, value|
