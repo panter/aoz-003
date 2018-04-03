@@ -147,7 +147,7 @@ li.button-acceptance a {
 }
 
 .btn-acceptance-undecided {
-  @extend .btn-success;
+  @extend .btn-info;
 }
 
 .btn-acceptance-invited {
@@ -155,11 +155,11 @@ li.button-acceptance a {
 }
 
 .btn-acceptance-accepted {
-  @extend .btn-danger;
+  @extend .btn-success;
 }
 
 .btn-acceptance-rejected {
-  @extend .btn-info;
+  @extend .btn-danger;
 }
 
 .btn-acceptance-resigned {
@@ -168,8 +168,12 @@ li.button-acceptance a {
   color: $white;
 }
 
+.btn-acceptance-accepted.btn-acceptance-client {
+  @extend .btn-info;
+}
+
 .bg-undecided {
-  @extend .bg-success;
+  @extend .bg-info;
 }
 
 .bg-invited {
@@ -177,11 +181,11 @@ li.button-acceptance a {
 }
 
 .bg-accepted {
-  @extend .bg-danger;
+  @extend .bg-success;
 }
 
 .bg-rejected {
-  @extend .bg-info;
+  @extend .bg-danger;
 }
 
 .bg-resigned {
