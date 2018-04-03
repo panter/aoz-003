@@ -21,6 +21,7 @@ class GroupAssignmentsController < ApplicationController
 
   def create
     @group_assignment = GroupAssignment.new(group_assignment_params)
+    @group_assignment.default_values
     authorize @group_assignment
 
     if @group_assignment.save
@@ -136,6 +137,7 @@ class GroupAssignmentsController < ApplicationController
       :period_start, :period_end, :termination_submitted_at, :terminated_at, :responsible,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :redirect_to, :term_feedback_transfair, :comments, :additional_comments,
+      :trial_period_end, :frequency, :description, :place, :happens_at, :agreement_text,
       :group_offer_id, :volunteer_id, volunteer_attributes: [:waive]
     )
   end

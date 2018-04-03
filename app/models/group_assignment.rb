@@ -61,9 +61,26 @@ class GroupAssignment < ApplicationRecord
       period_end: period_end || date)
   end
 
+  def default_values
+    self.agreement_text ||= default_agreement_text
+  end
+
   private
 
   def update_group_offer_search_field
     group_offer.update_search_volunteers
+  end
+
+  def default_agreement_text
+    <<~HEREDOC
+      Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:
+      * Verhaltenskodex für Freiwillige
+      * Rechte und Pflichten für Freiwillige
+      * AOZ Leitlinien Praktische Integrationsarbeit
+
+      Allenfalls auch
+      * Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)
+      * Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende
+    HEREDOC
   end
 end

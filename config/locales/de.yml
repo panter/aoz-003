@@ -551,20 +551,6 @@ de:
   assignment_exists: Die Begleitung existiert bereits.
   assignment_pdf:
     <<: *id-generic_keys
-    agreement_text:
-      -
-        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-        items: ['Verhaltenskodex für Freiwillige', 'Rechte und Pflichten für Freiwillige', 'AOZ Leitlinien Praktische Integrationsarbeit 2011']
-      -
-        title: Allenfalls auch
-        items: ['Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)', 'Abmachungen für das Leiten von niederschwelligen Deutschkursen']
-    group_agreement_text:
-      -
-        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-        items: ['Verhaltenskodex für Freiwillige', 'Rechte und Pflichten für Freiwillige', 'AOZ Leitlinien Praktische Integrationsarbeit']
-      -
-        title: Allenfalls auch
-        items: ['Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)', 'Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende']
     birthdate: Geburtsdatum
     city_date: 'Ort, Datum:'
     client_title: Begleitete Person
@@ -577,7 +563,7 @@ de:
     for_aoz: Für die AOZ
     frequency: Frequenz
     function: Funktion
-    how_often: Wie oft?
+    frequency: Wie oft?
     last_name: Name
     mobile: Handy
     organization: Organisation
@@ -593,9 +579,10 @@ de:
     volunteer_title: Freiwillige Person
     volunteer_title_2: Der/die Freiwillige
     weekly: 1x pro Woche
-    what: Was?
+    assignment_description: Was?
     when: Tag / Zeit
     zurich: Zürich
+    agreement_text: Vereinbarungstext
   available_volunteers: Verfügbare Freiwillige
   billing_expense_pdf:
     <<: *id-generic_keys
