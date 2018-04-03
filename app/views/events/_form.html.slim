@@ -2,24 +2,20 @@
   = simple_error_notice f
 
   .row
-    .col-xs-12
+    .col-xs-12.col-md-6
       = f.input :kind, collection: Event.kind_collection, label: 'Art', include_blank: false
-    .col-xs-12
       = f.input :title, label: 'Titel'
-  .row
-    .col-xs-12.col-md-4
-      = f.association :department, label: 'Standort'
-    .col-xs-12.col-md-4
+      = f.input :description, label: 'Beschreibung'
+    .col-xs-12.col-md-6
+      = f.input :speaker, label: 'Referent/in'
+      = f.association :department, label: 'Standort', collection: Department.all.sort_by(&:to_s)
+    .col-xs-12.col-md-2
       = f.input :date, as: :date_picker, wrapper: :date_picker, label: 'Datum'
-    .col-xs-12.col-md-2
+    .col-xs-6.col-md-2
       = f.input :start_time, as: :time, label: 'Startzeit', include_blank: true
-    .col-xs-12.col-md-2
+    .col-xs-6.col-md-2
       = f.input :end_time, as: :time, label: 'Endzeit', include_blank: true
   .row
     .col-xs-12
-      = f.input :description, label: 'Beschreibung'
 
-  nav.navbar
-    ul.list-inline
-      li= f.button :submit
-      li= button_link navigation_glyph(:back), :back
+= render 'buttons', show_xls: false
