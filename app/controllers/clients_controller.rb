@@ -4,13 +4,12 @@ class ClientsController < ApplicationController
   include ContactAttributes
 
   before_action :set_client, only: [:show, :edit, :update, :set_terminated]
-  before_action :set_social_worker_collection, only: [:new, :edit]
+  before_action :set_social_worker_collection, only: [:new, :create, :edit, :update]
 
   def index
     authorize Client
-    set_default_filter(acceptance_scope: :not_resigned)
     @q = policy_scope(Client).ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @clients = @q.result
     respond_to do |format|
       format.xlsx
@@ -33,12 +32,12 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new(user: current_user)
-    @client.language_skills << LanguageSkill.new(language: 'DE')
+    @client.language_skills.build(language: 'DE')
     authorize @client
   end
 
   def edit
-    @client.language_skills << LanguageSkill.new(language: 'DE') if @client.german_missing?
+    @client.language_skills.build(language: 'DE') if @client.german_missing?
   end
 
   def create
@@ -109,11 +108,11 @@ class ClientsController < ApplicationController
 
   def client_params
     params.require(:client).permit(
-      :gender_request, :age_request, :other_request, :birth_year,
-      :salutation, :nationality, :entry_date, :permit, :goals, :education, :interests,
-      :acceptance, :comments, :involved_authority_id, :competent_authority, :actual_activities,
-      :cost_unit, language_skills_attributes, relatives_attributes, contact_attributes,
-      availability_attributes
+      :gender_request, :age_request, :other_request, :birth_year, :salutation,
+      :nationality, :entry_date, :permit, :goals, :education, :interests, :acceptance,
+      :comments, :additional_comments, :involved_authority_id, :competent_authority,
+      :actual_activities, :cost_unit, language_skills_attributes, relatives_attributes,
+      contact_attributes, availability_attributes
     )
   end
 end

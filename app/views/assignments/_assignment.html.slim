@@ -1,4 +1,10 @@
 tr
+  td.index-action-cell.hidden-print
+    = button_link navigation_glyph(:show), assignment, title: 'Anzeigen'
+    - if policy(assignment).edit?
+      = button_link navigation_glyph(:edit), edit_polymorphic_path(assignment), title: 'Bearbeiten'
+    = button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
+  td.button-acceptance= assignment_status_badge(assignment)
   - if action_index? || controller_name == 'clients'
     td = link_to assignment.volunteer, assignment.volunteer
   td
@@ -9,20 +15,21 @@ tr
   td= l(assignment.period_start) if assignment.period_start
   td= l(assignment.period_end) if assignment.period_end
   td
-    - if policy(User).show? && assignment.creator.profile.present?
-      = link_to assignment.creator.full_name, profile_path(assignment.creator)
+    - if assignment.client.involved_authority
+      = link_to_if policy(User).show?,
+          assignment.client.involved_authority.full_name,
+          profile_link(assignment.client.involved_authority)
     - else
-      = assignment.creator.full_name
-  td.index-action-cell
-    = link_to t_action(:show), assignment
-    - if policy(assignment).edit?
-      = link_to t_action(:edit), edit_polymorphic_path(assignment)
-  td.index-action-cell.hidden-print= link_to t('download'), assignment_path(assignment, format: :pdf)
-  - if policy(TrialFeedback).index?
-    td.index-action-cell.hidden-print
-      = link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
-      span= link_to t_title(:index, TrialFeedback), polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
-  - if policy(Feedback).index?
-    td.index-action-cell.hidden-print
-      = link_to t_title(:new, Feedback), new_polymorphic_path([assignment.volunteer, assignment, Feedback])
-      = link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])
+      = link_to_if policy(User).show?,
+          assignment.creator.full_name,
+          profile_link(assignment.creator)
+  = td_truncate_content_modal(assignment.comments, 'Bemerkungen')
+  - if controller_name == 'volunteers'
+    - if policy(TrialFeedback).index?
+      td.index-action-cell.hidden-print
+        = link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
+        span= link_to t_title(:index, TrialFeedback), polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
+    - if policy(Feedback).index?
+      td.index-action-cell.hidden-print
+        = link_to t_title(:new, Feedback), new_polymorphic_path([assignment.volunteer, assignment, Feedback])
+        = link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])

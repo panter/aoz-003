@@ -1,27 +1,3 @@
-.row
-  - if f.object.department?
-    .col-xs-12.col-md-6= f.input :last_name, required: true, label: t('.name')
-  - elsif !f.object.client?
-    .col-xs-12.col-md-6= f.input :first_name, required: true
-    .col-xs-12.col-md-6= f.input :last_name, required: true, label: t('.last_name')
-
-fieldset
-  legend= t_attr(:address, Contact)
-  = f.input :street, required: true
-  = f.input :extended
-  .row
-    .col-xs-4
-      = f.input :postal_code, required: true
-    .col-xs-8
-      = f.input :city, required: true
-
-fieldset
-  legend Telefon und Email
-  .row
-    .col-xs-12.col-md-6
-      = f.input :primary_email, as: :email, required: f.object.needs_primary_email?
-    .col-xs-12.col-md-6
-      = f.input :primary_phone, as: :tel, required: f.object.needs_primary_phone?
-    - if controller_name == 'clients'
-      .col-xs-12.col-md-6
-        = f.input :secondary_phone, as: :tel
+= render 'contacts/user_fields', f: f
+= render 'contacts/address_fields', f: f
+= render 'contacts/phone_fields', f: f

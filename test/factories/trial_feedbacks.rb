@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :trial_feedback do
     association :trial_feedbackable, factory: :assignment
-    body { Faker::Lorem.paragraph }
+    body { FFaker::Lorem.paragraph }
 
     after(:build) do |trial_feedback|
       if trial_feedback.volunteer.present? && trial_feedback.trial_feedbackable.blank?

@@ -1,7 +1,14 @@
 class ReminderMailing < ApplicationRecord
   before_update :remove_untoggled_volunteers
 
-  TEMPLATE_VARNAMES = [:Anrede, :Einsatz, :Name, :EinsatzStart, :FeedbackLink, :EmailAbsender].freeze
+  TEMPLATE_VARNAMES = [
+    :Anrede,
+    :Name,
+    :Einsatz,
+    :EinsatzStart,
+    :FeedbackLink,
+    :EmailAbsender
+  ].freeze
 
   belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'reminder_mailings'
 
@@ -35,6 +42,22 @@ class ReminderMailing < ApplicationRecord
     else
       super(reminder_mailable)
     end
+  end
+
+  def feedbacks
+    scope = kind == 'trial_period' ? TrialFeedback : Feedback
+
+    scope = scope
+      .created_at_or_after(created_at)
+      .author_is_volunteer
+      .where(author_id: volunteers.distinct.pluck(:user_id))
+
+    scope.from_assignments(assignments.ids)
+      .or(scope.from_group_offers(group_assignments.distinct.pluck(:group_offer_id)))
+  end
+
+  def feedback_count
+    feedbacks.group(:author_id).count.count
   end
 
   private

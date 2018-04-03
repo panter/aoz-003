@@ -1,4 +1,9 @@
 tr
+  td.index-action-cell.hidden-print
+    = button_link navigation_glyph(:show), reminder_mailing, title: 'Anzeigen'
+    - unless reminder_mailing.sending_triggered
+      = button_link navigation_glyph(:edit), edit_reminder_mailing_path(reminder_mailing),
+          title: 'Bearbeiten'
   td= reminder_mailing.t_enum(:kind)
   td= link_to reminder_mailing.creator.full_name, profile_link(reminder_mailing.creator)
   td
@@ -7,7 +12,8 @@ tr
     - else
       'Nicht versandt
   td= l(reminder_mailing.created_at.to_date)
-  td.index-action-cell.hidden-print
-    = link_to 'Anzeigen', reminder_mailing
-    - unless reminder_mailing.sending_triggered
-      = link_to 'Bearbeiten', edit_reminder_mailing_path(reminder_mailing)
+  td
+    = link_to reminder_mailing_path(reminder_mailing, anchor: 'feedbacks') do
+      => reminder_mailing.feedback_count
+      'von
+      = reminder_mailing.volunteers.count

@@ -5,8 +5,8 @@ h2= @group_offer.title
   table.table.table-no-border-top
     tbody
       tr
-        td= t_attr(:active)
-        td= t(@group_offer.active)
+        td Status
+        td.button-acceptance= assignment_status_badge(@group_offer)
       tr
         td= t_attr(:offer_type)
         td
@@ -34,14 +34,10 @@ h2= @group_offer.title
       tr
         td= t_attr(:group_offer_category)
         td= @group_offer.group_offer_category.category_name
-      tr
-        td= t_attr(:volunteer_state)
-        td
-          - if @group_offer.necessary_volunteers
-            = t('group_offers.index.necessary_volunteers', amount: @group_offer.necessary_volunteers)
-            br
-          - if @group_offer.volunteer_state?
-            = t("volunteer_state.#{@group_offer.volunteer_state}")
+      - if @group_offer.necessary_volunteers
+        tr
+          td= t_attr(:necessary_volunteers)
+          td= t('group_offers.index.necessary_volunteers', amount: @group_offer.necessary_volunteers)
       tr
         td= t_attr(:description)
         td= @group_offer.description
@@ -70,38 +66,17 @@ h2= @group_offer.title
       tr
         td= t_attr(:schedule_details)
         td= @group_offer.schedule_details
+= render 'group_assignments'
 
-- if @group_offer.group_assignments.unterminated.any?
-  h2 Aktuelle Gruppeneinsätze
-  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments, redirect_to_action: :show
+- show_volunteers = (params[:page] || params[:q]).present?
+#add-volunteers.collapse class=('in' if show_volunteers)
+  h2 Freiwillige hinzufügen
+  = render 'volunteers/columns', volunteers: @volunteers
+  br
 
-- if @group_offer.group_assignment_logs.any?
-  h2 Archivierte Gruppeneinsätze
-  .table-responsive.log-table.m-b-20
-    table.table.table-no-border-top
-      thead
-        tr
-          th Freiwillige/r
-          th Funktion
-          th Anfangsdatum
-          th Enddatum
-          th Begleitung Beendet
-          th Archiviert
-      tbody
-        - @group_offer.group_assignment_logs.order('created_at asc').each do |ga_log|
-          tr
-            td= link_to_if(policy(Volunteer).show?, ga_log.volunteer.contact.full_name,
-              volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
-            td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
-            td= l(ga_log.period_start) if ga_log.period_start
-            td= l(ga_log.period_end) if ga_log.period_end
-            td= l(ga_log.created_at)
-            td
-                = "Quittiert von "
-                = link_to ga_log.termination_verified_by.full_name, profile_link(ga_log.termination_verified_by)
-                = " am #{l(ga_log.termination_verified_at.to_date)}"
-
-
-- unless params[:format] == 'pdf'
-  = form_navigation_btn :edit
-  = form_navigation_btn :back
+ul.list-inline
+  li= button_link 'Gruppenangebot bearbeiten', edit_group_offer_path(@group_offer)
+  li
+    a.btn.btn-default href='#add-volunteers' data-toggle='collapse' aria-expanded=show_volunteers.to_s aria-controls='add-volunteers'
+      'Freiwillige hinzufügen
+  li= button_link navigation_glyph(:back), group_offers_path

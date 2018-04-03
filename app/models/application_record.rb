@@ -42,10 +42,10 @@ class ApplicationRecord < ActiveRecord::Base
   }
 
   # order scopes
-  scope :created_desc, (-> { order('created_at desc') })
-  scope :created_asc, (-> { order('created_at asc') })
-  scope :updated_desc, (-> { order('updated_at desc') })
-  scope :updated_asc, (-> { order('updated_at asc') })
+  scope :created_desc, (-> { order("#{table_name}.created_at DESC") })
+  scope :created_asc, (-> { order("#{table_name}.created_at ASC") })
+  scope :updated_desc, (-> { order("#{table_name}.updated_at DESC") })
+  scope :updated_asc, (-> { order("#{table_name}.updated_at ASC") })
 
   scope :polymorph_model, ->(model) { where("#{model_name}able_type = ?", model.to_s.classify) }
 

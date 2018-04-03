@@ -21,7 +21,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter_by_acceptance_works_and_disabling_works_as_well' do
     within '.section-navigation' do
-      click_link 'Affirmation: Nicht beendet'
+      click_link 'Prozess'
       click_link 'Angemeldet'
     end
     visit current_url
@@ -32,27 +32,27 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @rejected_mr_no_matter_age_middle
     end
     within '.section-navigation' do
-      click_link 'Affirmation: Angemeldet'
+      click_link 'Prozess: Angemeldet'
       assert page.has_link? text: 'Angemeldet', class: 'bg-accepted'
-      click_link 'All'
+      click_link 'Alle'
     end
     visit current_url
     within 'tbody' do
       assert page.has_text? @accepted_mrs_same_age_old
       assert page.has_text? @accepted_mr_no_matter_age_old
-      refute page.has_text? @resigned_mrs_same_age_middle
+      assert page.has_text? @resigned_mrs_same_age_middle
       assert page.has_text? @rejected_mr_no_matter_age_middle
     end
   end
 
   test 'filter_acceptance_and_salutation_at_the_same_time' do
     within '.section-navigation' do
-      click_link 'Salutation'
-      click_link 'Mr.'
+      click_link 'Anrede'
+      click_link 'Herr'
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Affirmation: Nicht beendet'
+      click_link 'Prozess'
       click_link 'Angemeldet'
     end
     visit current_url
@@ -63,9 +63,9 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @rejected_mr_no_matter_age_middle
     end
     within '.section-navigation' do
-      click_link 'Salutation: Mr.'
-      assert page.has_link? 'Mr.', class: 'bg-success'
-      click_link 'All'
+      click_link 'Anrede: Herr'
+      assert page.has_link? 'Herr', class: 'bg-success'
+      click_link 'Alle'
     end
     visit current_url
     within 'tbody' do
@@ -74,30 +74,30 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @resigned_mrs_same_age_middle
       refute page.has_text? @rejected_mr_no_matter_age_middle
     end
-    click_link 'Clear filters'
+    click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
       assert page.has_text? @accepted_mrs_same_age_old
       assert page.has_text? @accepted_mr_no_matter_age_old
-      refute page.has_text? @resigned_mrs_same_age_middle
+      assert page.has_text? @resigned_mrs_same_age_middle
       assert page.has_text? @rejected_mr_no_matter_age_middle
     end
   end
 
   test 'filter_acceptance_tandem_and_salutation_at_the_same_time' do
     within '.section-navigation' do
-      click_link 'Affirmation: Nicht beendet'
+      click_link 'Prozess'
       click_link 'Angemeldet'
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Tandem'
+      click_link 'Einsatz'
       click_link 'Aktiv'
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Salutation'
-      click_link 'Mrs.'
+      click_link 'Anrede'
+      click_link 'Frau'
     end
     visit current_url
     within 'tbody' do
@@ -107,9 +107,9 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @rejected_mr_no_matter_age_middle
     end
     within '.section-navigation' do
-      click_link 'Salutation: Mrs.'
-      assert page.has_link? text: 'Mrs.', class: 'bg-success'
-      click_link 'All'
+      click_link 'Anrede: Frau'
+      assert page.has_link? text: 'Frau', class: 'bg-success'
+      click_link 'Alle'
     end
     visit current_url
     within 'tbody' do
@@ -118,12 +118,12 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @resigned_mrs_same_age_middle
       refute page.has_text? @rejected_mr_no_matter_age_middle
     end
-    click_link 'Clear filters'
+    click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
       assert page.has_text? @accepted_mrs_same_age_old
       assert page.has_text? @accepted_mr_no_matter_age_old
-      refute page.has_text? @resigned_mrs_same_age_middle
+      assert page.has_text? @resigned_mrs_same_age_middle
       assert page.has_text? @rejected_mr_no_matter_age_middle
     end
   end

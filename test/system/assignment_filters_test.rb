@@ -2,41 +2,37 @@ require 'application_system_test_case'
 
 class AssignmentFiltersTest < ApplicationSystemTestCase
   def setup
-    @assignment_active = create :assignment_active
-    @assignment_inactive = create :assignment_inactive
+    @assignment_active = create :assignment, :active
+    @assignment_inactive = create :assignment, :inactive
+
     login_as create(:user)
     visit assignments_path
   end
 
   test 'filter by activity' do
-    assert page.has_link? @assignment_active.client.contact.full_name
-    refute page.has_link? @assignment_inactive.client.contact.full_name
-    within '.section-navigation' do
-      click_link 'Status'
-      click_link 'Aktiv'
-    end
-    visit current_url
     within 'tbody' do
-      assert page.has_link? @assignment_active.client.contact.full_name
-      refute page.has_link? @assignment_inactive.client.contact.full_name
+      assert_text 'Aktiv'
+      refute_text 'Inaktiv'
     end
+
     within '.section-navigation' do
       click_link 'Status: Aktiv'
+      click_link 'Alle'
+    end
+
+    within 'tbody' do
+      assert_text 'Aktiv'
+      assert_text 'Inaktiv'
+    end
+
+    within '.section-navigation' do
+      click_link exact_text: 'Status'
       click_link 'Inaktiv'
     end
-    visit current_url
+
     within 'tbody' do
-      refute page.has_link? @assignment_active.client.contact.full_name
-      assert page.has_link? @assignment_inactive.client.contact.full_name
-    end
-    within '.section-navigation' do
-      click_link 'Status: Inaktiv'
-      click_link 'All'
-    end
-    visit current_url
-    within 'tbody' do
-      assert page.has_link? @assignment_active.client.contact.full_name
-      refute page.has_link? @assignment_inactive.client.contact.full_name
+      refute_text 'Aktiv'
+      assert_text 'Inaktiv'
     end
   end
 end

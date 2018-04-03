@@ -3,10 +3,8 @@ h1 Beendete Begleitungen
 nav.navbar.section-navigation.hidden-print
   hr
   ul.list-inline
-    li= button_link 'Alle Begleitungen', assignments_path, dimension: :sm
-    li= button_link 'Filter aufheben',
-      terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' }),
-      dimension: :sm
+    li= button_link navigation_glyph(:back), assignments_path, dimension: :sm
+    li= clear_filter_button
     = custom_filter_dropdown('Ende Bestätigt',
       { q: :termination_submitted_by_id_not_null, text: 'Bestätigt', value: 'true' },
       { q: :termination_submitted_by_id_null, text: 'Unbestätigt', value: 'true' })
@@ -21,17 +19,31 @@ nav.navbar.section-navigation.hidden-print
   table.table.table-striped
     thead
       tr
+        th.hidden-print Aktionen
+        - if policy(Assignment).verify_termination?
+          th
         th= sort_link @q, :volunteer_contact_last_name, 'Frewillige/r'
         th= sort_link @q, :client_contact_last_name, 'Klient/in'
         th= sort_link @q, :period_start, t_attr(:period_start, Assignment)
         th= sort_link @q, :period_end, t_attr(:period_end, Assignment)
         th Email Status
         th Bestätigt
-        th colspan=(policy(Assignment).verify_termination? ? '3' : '2') Aktionen
+        th
 
     tbody
       - @assignments.each do |assignment|
         tr
+          td.index-action-cell.hidden-print
+            = button_link navigation_glyph(:show), assignment_path(assignment), title: 'Anzeigen'
+            = button_link navigation_glyph(:edit), edit_assignment_path(assignment), title: 'Bearbeiten'
+          - if policy(Assignment).verify_termination?
+            td
+              = link_to_if(assignment.termination_verified_by.blank?, 'Beendigung Quittieren',
+                verify_termination_assignment_path(assignment), class: 'btn btn-default',
+                data: { method: 'PATCH' }) do
+                  = "Quittiert von "
+                  = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
+                  = " am #{l(assignment.termination_verified_at.to_date)}"
           td= link_to assignment.volunteer.contact.full_name, volunteer_path(assignment.volunteer)
           td= link_to assignment.client.contact.full_name, client_path(assignment.client)
           td= l(assignment.period_start) if assignment.period_start
@@ -46,9 +58,6 @@ nav.navbar.section-navigation.hidden-print
               = link_to 'Beendigungs Email senden', reminder_mailing_path(assignment.reminder_mailings.termination.last)
           td= boolean_glyph(assignment.termination_submitted_by.present?)
           td.index-action-cell
-            = link_to 'Anzeigen', assignment_path(assignment)
-            = link_to 'Bearbeiten', edit_assignment_path(assignment)
-          td.index-action-cell
             = link_to 'Beendigungsformular', terminate_assignment_path(assignment)
             - if assignment.termination_submitted_by.present?
               - if assignment.volunteer.certificates.blank?
@@ -56,13 +65,5 @@ nav.navbar.section-navigation.hidden-print
               - else
                 = link_to 'Dossier Freiwillig Engagiert', volunteer_certificate_path(assignment.volunteer, assignment.volunteer.certificates.last)
             = link_to 'Freiwillige/n beenden', terminate_volunteer_path(assignment.volunteer), method: :put unless assignment.volunteer.resigned?
-            - if policy(Assignment).verify_termination?
-              td
-                = link_to_if(assignment.termination_verified_by.blank?, 'Beendigung Quittieren',
-                  verify_termination_assignment_path(assignment), class: 'btn btn-default',
-                  data: { method: 'PATCH' }) do
-                    = "Quittiert von "
-                    = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
-                    = " am #{l(assignment.termination_verified_at.to_date)}"
 
 = bootstrap_paginate(@assignments)

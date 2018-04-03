@@ -17,12 +17,15 @@ class GroupOfferScopesTest < ActiveSupport::TestCase
     assert query.include? group_offer_inactive
   end
 
-  test 'in_department' do
-    in_department = create :group_offer, department: create(:department)
-    outside_department = create :group_offer
-    query = GroupOffer.in_department
-    assert query.include? in_department
-    refute query.include? outside_department
+  test 'internal_external' do
+    internal = create :group_offer
+    external = create :group_offer, :external
+
+    assert_includes GroupOffer.internal, internal
+    refute_includes GroupOffer.internal, external
+
+    assert_includes GroupOffer.external, external
+    refute_includes GroupOffer.external, internal
   end
 
   test 'active_group_assignments_between' do

@@ -1,5 +1,6 @@
 nav.navbar.section-navigation.hidden-print
   ul.section-nav-ul.list-unstyled
+    li= button_link 'E-Mailvorlagen', email_templates_path, dimension: 'sm'
     li= section_nav_button('feedbacks', 'Feedback Eingang', list_responses_feedbacks_path(q: default_list_response_query))
     li= section_nav_button('trial_feedbacks', 'Probezeit Feedback Eingang', list_responses_trial_feedbacks_path(q: default_list_response_query))
     li= section_nav_button('hours', 'Stunden Eingang', list_responses_hours_path(q: default_list_response_query))

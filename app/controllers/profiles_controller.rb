@@ -7,7 +7,9 @@ class ProfilesController < ApplicationController
   def show; end
 
   def new
-    @profile = Profile.new(user_id: current_user.id)
+    @profile = Profile.new(user: current_user)
+    @profile.contact.primary_email = current_user.email
+
     authorize @profile
   end
 

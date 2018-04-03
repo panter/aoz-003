@@ -6,24 +6,29 @@ col_header = wb.styles.add_style(
   alignment: { horizontal: :center, vertical: :center },
   border: { color: '00', edges: [:bottom], style: :thin})
 
+col_body = wb.styles.add_style(
+  alignment: { wrap_text: true, horizontal: :left, vertical: :top })
+
 wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
   header_row = [
+    'Status',
     t_attr(:title),
+    t_attr(:group_offer_category),
+    t_attr(:offer_type),
+    t_attr(:department),
     t_attr(:location),
-    'Verantwortliche/r',
     t_attr(:availability),
     t_attr(:target_group),
+    t_attr(:organization),
     t_attr(:duration),
     t_attr(:offer_state),
-    t_attr(:volunteers),
-    t_attr(:group_offer_category)
+    'Verantwortliche/r',
+    t_attr(:volunteers)
   ]
 
   sheet.add_row header_row, style: col_header
 
-  cell_types = Array.new(header_row.size).map { :string }
-  cell_styles = Array.new(header_row.size).map { nil }
-  group_offers.each do |offer|
+  @group_offers.each do |offer|
     availabilities = availability_collection.map do |availability|
                       t("availability.#{availability}") if offer[availability]
                     end.compact.join(', ')
@@ -37,18 +42,25 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
     durations = GroupOffer::DURATION.map do |duration|
                   t_attr(duration) if offer[duration]
                 end.compact.join(', ')
+    type = t("offer_type.#{offer.offer_type}") if offer.offer_type?
     state = t("offer_state.#{offer.offer_state}") if offer.offer_state?
     creator = offer.creator if offer.creator
+    volunteers = offer.volunteers_with_roles
+
     sheet.add_row [
+      offer.active? ? 'Aktiv' : 'Inaktiv',
       offer.title,
-      offer.full_location,
-      creator,
+      offer.group_offer_category,
+      type,
+      (offer.department if offer.internal?),
+      (offer.location if offer.external?),
       availabilities,
       targets,
+      (offer.organization if offer.external?),
       durations,
       state,
-      offer.volunteers_with_roles,
-      offer.group_offer_category
-    ], types: cell_types, style: cell_styles
+      creator,
+      volunteers.join("\r")
+    ], types: :string, style: col_body, height: volunteers.size * 14
   end
 end

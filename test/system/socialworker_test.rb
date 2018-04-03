@@ -8,17 +8,17 @@ class SocialworkerTest < ApplicationSystemTestCase
 
   test 'when logged in socialworker cannot see create user link' do
     visit root_path
-    assert_not page.has_link? 'Create user'
+    assert_not page.has_link? 'Benutzer/in erfassen'
   end
 
   test 'when updates user login, cannot see role field' do
     visit edit_user_path(@socialworker)
-    assert_not page.has_field? 'Role'
+    assert_not page.has_field? 'Rolle'
   end
 
   test 'has a navbar link to clients page' do
     visit user_path(@socialworker.id)
-    assert page.has_link? 'Klienten/innen'
+    assert page.has_link? 'Klient/innen'
   end
 
   test 'does not have navbar link to users page' do
@@ -37,9 +37,9 @@ class SocialworkerTest < ApplicationSystemTestCase
 
   test 'cannot see comment field in client creation or show' do
     visit new_client_path
-    assert_not page.has_field? 'Comments'
+    assert_not page.has_field? 'Bemerkungen'
     visit client_path(@socialworker.clients.first)
-    assert_not page.has_content? 'Comments'
+    assert_not page.has_content? 'Bemerkungen'
   end
 
   test 'can only see her own clients' do

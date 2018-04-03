@@ -19,4 +19,22 @@ class GroupOfferValidationTest < ActiveSupport::TestCase
     group_offer.reload
     assert group_offer.valid?
   end
+
+  test 'group_offer_requires_location_fields' do
+    group_offer = build :group_offer
+    group_offer.offer_type = 'internal_offer'
+    group_offer.department = nil
+
+    refute group_offer.valid?
+    assert_includes group_offer.errors, :department
+    refute_includes group_offer.errors, :organization
+    refute_includes group_offer.errors, :location
+
+    group_offer.offer_type = 'external_offer'
+
+    refute group_offer.valid?
+    refute_includes group_offer.errors, :department
+    assert_includes group_offer.errors, :organization
+    assert_includes group_offer.errors, :location
+  end
 end

@@ -59,13 +59,13 @@ module GroupOfferAndAssignment
 
   def create_group_assignments_by_period(start_date = nil, end_date = nil)
     volunteer = create :volunteer
-    volunteer.contact.update(first_name: Faker::Name.first_name)
+    volunteer.contact.update(first_name: FFaker::Name.unique.first_name)
     create_group_assignments(create(:group_offer), start_date, end_date, volunteer)
   end
 
   def create_group_offer(title, volunteer_count, start_date, group_offer_category = nil)
     group_offer_category ||= create :group_offer_category
-    go_title = title ? title : Faker::Simpsons.quote
+    go_title = title ? title : FFaker::CheesyLingo.title
     group_offer = create :group_offer, group_offer_category: group_offer_category, title: go_title,
       necessary_volunteers: volunteer_count
     group_offer.update(created_at: start_date)

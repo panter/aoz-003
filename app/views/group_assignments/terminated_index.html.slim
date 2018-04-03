@@ -1,12 +1,10 @@
-h1 Beendete Gruppen Begleitungen
+h1 Beendete Gruppeneinsätze
 
 nav.navbar.section-navigation.hidden-print
   hr
   ul.list-inline
     li= button_link 'Zurück zu Gruppenangeboten', group_offers_path, dimension: :sm
-    li= button_link 'Filter aufheben',
-      terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }),
-      dimension: :sm
+    li= clear_filter_button
     = custom_filter_dropdown('Ende Bestätigt',
       { q: :termination_submitted_by_id_not_null, text: 'Bestätigt', value: 'true' },
       { q: :termination_submitted_by_id_null, text: 'Unbestätigt', value: 'true' })

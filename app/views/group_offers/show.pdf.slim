@@ -1,0 +1,112 @@
+h1 Gruppenangebot
+h2= @group_offer.title
+
+.table-responsive
+  table.table.table-no-border-top
+    tbody
+      tr
+        td Status
+        td.button-acceptance= assignment_status_badge(@group_offer)
+      tr
+        td= t_attr(:offer_type)
+        td
+          - if @group_offer.offer_type?
+            = t("offer_type.#{@group_offer.offer_type}")
+            br
+          - if @group_offer.external? && @group_offer.organization?
+            = "#{t('group_offers.index.offer_of')} "
+            = @group_offer.organization
+            br
+            = @group_offer.location
+            br
+          - if !@group_offer.external? && @group_offer.department
+            = "#{t('group_offers.index.offer_of')} "
+            = @group_offer.department
+      tr
+        td Verantwortliche/r
+        td= @group_offer.creator if @group_offer.creator
+      tr
+        td= t_attr(:offer_state)
+        td= t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
+      tr
+        td= t_attr(:group_offer_category)
+        td= @group_offer.group_offer_category.category_name
+      - if @group_offer.necessary_volunteers
+        tr
+          td= t_attr(:necessary_volunteers)
+          td= t('group_offers.index.necessary_volunteers', amount: @group_offer.necessary_volunteers)
+      tr
+        td= t_attr(:description)
+        td= @group_offer.description
+      tr
+        td= t_attr(:target_group)
+        td
+          - if @group_offer.all?
+            = t_attr(:all)
+          - else
+            - GroupOffer::TARGET_GROUP.find_all { |group| @group_offer[group] }.each do |target|
+              = t_attr(target)
+              br
+      tr
+        td= t_attr(:duration)
+        td
+          - GroupOffer::DURATION.find_all { |duration| @group_offer[duration]  }.each do |duration|
+            = t_attr(duration)
+            br
+      tr
+        td= t_attr(:availability)
+        td
+          - availability_collection.each do |availability|
+            - if @group_offer[availability]
+              = t("availability.#{availability}")
+              br
+      tr
+        td= t_attr(:schedule_details)
+        td= @group_offer.schedule_details
+
+- if @group_offer.group_assignments.unterminated.any?
+  h2 Aktuelle Gruppeneinsätze
+  .table-responsive.assignments-table
+    table.table.table-no-border-top
+      thead
+        tr
+          th.limit-width Freiwillige/r
+          th.limit-width Mailadresse
+          th.limit-width= t_attr(:role, GroupAssignment)
+          th.limit-width= t_attr(:period_start, GroupAssignment)
+          th.limit-width= t_attr(:period_end, GroupAssignment)
+      tbody
+        - @group_offer.group_assignments.unterminated.each do |group_assignment|
+          tr
+            td= group_assignment.volunteer.contact.full_name
+            td= word_wrap(group_assignment.volunteer.contact.primary_email)
+            td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
+            td= l(group_assignment.period_start) if group_assignment.period_start
+            td= l(group_assignment.period_end) if group_assignment.period_end
+
+- if @group_offer.group_assignment_logs.any?
+  h2 Archivierte Gruppeneinsätze
+  .table-responsive.log-table.m-b-20
+    table.table.table-no-border-top
+      thead
+        tr
+          th.limit-width Freiwillige/r
+          th.limit-width Mailadresse
+          th.limit-width Rolle
+          th.limit-width Anfangsdatum
+          th.limit-width Enddatum
+      tbody
+        - @group_offer.group_assignment_logs.order('created_at asc').each do |ga_log|
+          tr
+            td= ga_log.volunteer.contact.full_name
+            td= word_wrap(ga_log.volunteer.contact.primary_email)
+            td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
+            td= l(ga_log.period_start) if ga_log.period_start
+            td
+              = l(ga_log.period_end) if ga_log.period_end
+              br
+              = "Beendet am #{l(ga_log.created_at)}"
+              br
+              = "Quittiert von #{(ga_log.termination_verified_by.full_name)}"
+              br
+              = " am #{l(ga_log.termination_verified_at.to_date)}"

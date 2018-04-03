@@ -23,7 +23,7 @@ class VolunteerTest < ActiveSupport::TestCase
     volunteer_user = create :user_volunteer
     external_volunteer.user = volunteer_user
     assert external_volunteer.invalid?
-    assert_equal ['must be blank'], external_volunteer.errors.messages[:user]
+    assert_equal ['darf nicht ausgefüllt werden'], external_volunteer.errors.messages[:user]
     external_volunteer.external = false
     assert external_volunteer.valid?
   end
@@ -51,5 +51,15 @@ class VolunteerTest < ActiveSupport::TestCase
     assert volunteer.resigned?
     refute volunteer.active?
     refute volunteer.user.present?
+  end
+
+  test 'terminate_volunteer_without_user' do
+    volunteer = create :volunteer
+
+    assert_nil volunteer.user
+
+    volunteer.terminate!
+
+    assert volunteer.resigned?
   end
 end

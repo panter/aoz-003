@@ -8,9 +8,8 @@ class VolunteersController < ApplicationController
 
   def index
     authorize Volunteer
-    set_default_filter(acceptance_scope: :not_resigned)
     @q = policy_scope(Volunteer).ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @volunteers = @q.result
     @volunteers = activity_filter
     respond_to do |format|
@@ -30,6 +29,8 @@ class VolunteersController < ApplicationController
 
   def show
     @volunteer_events = @volunteer.events.past
+    @group_offer_categories = @volunteer.group_offer_categories.active.without_house_moving
+    @group_offer_categories_house_moving = @volunteer.group_offer_categories.active.house_moving
   end
 
   def new
@@ -109,7 +110,10 @@ class VolunteersController < ApplicationController
 
   def resigned_fail_notice
     {
-      message: 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.',
+      message:
+        'Beenden fehlgeschlagen.
+        Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.
+        Bitte sicherstellen, dass alle Einsätze komplett abgeschlossen sind.',
       model_message: @volunteer.errors.messages[:acceptance].first,
       action_link: { text: 'Begleitung bearbeiten', path: volunteer_path(@volunteer, anchor: 'assignments') }
     }
@@ -145,6 +149,6 @@ class VolunteersController < ApplicationController
 
   def volunteer_params
     params.require(:volunteer).permit(volunteer_attributes, :bank, :iban, :waive, :acceptance,
-      :take_more_assignments, :external)
+      :take_more_assignments, :external, :comments, :additional_comments)
   end
 end

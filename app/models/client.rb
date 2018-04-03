@@ -10,6 +10,8 @@ class Client < ApplicationRecord
   enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
   enum cost_unit: { city: 0, municipality: 1, canton: 2 }
 
+  ransacker :acceptance, formatter: ->(value) { acceptances[value] }
+
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
   PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
@@ -42,13 +44,13 @@ class Client < ApplicationRecord
 
   validates :acceptance, exclusion: {
     in: ['resigned'],
-    message: 'Klient/in kann nicht beendet werden, solange noch ein laufendes Tandem existiert.'
+    message:
+      'Klient/in kann nicht beendet werden, solange noch ein laufendes Tandem existiert.
+      Bitte sicherstellen, dass alle Einsätze komplett abgeschlossen sind.'
   }, unless: :terminatable?
 
   scope :with_assignment, (-> { joins(:assignment) })
   scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })
-  scope :not_resigned, (-> { where.not(acceptance: :resigned) })
-  scope :acceptance_scope, ->(scope) { public_send(scope) }
 
   scope :need_accompanying, lambda {
     inactive.order(created_at: :asc)
@@ -101,12 +103,11 @@ class Client < ApplicationRecord
   end
 
   def self.acceptance_filters
-    scopes = [:not_resigned] + acceptances.keys
-    scopes.map do |scope|
+    acceptances.keys.map do |key|
       {
-        q: :acceptance_scope,
-        value: scope,
-        text: I18n.t("acceptance.#{scope}")
+        q: :acceptance_eq,
+        value: key,
+        text: I18n.t("acceptance.#{key}")
       }
     end
   end
@@ -136,7 +137,7 @@ class Client < ApplicationRecord
 
   # allow ransack to use defined scopes
   def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'acceptance_scope']
+    ['active', 'inactive']
   end
 
   private

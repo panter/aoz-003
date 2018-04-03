@@ -4,21 +4,24 @@ class JournalsController < ApplicationController
 
   def index
     authorize Journal
-    @journals = Journal.where(journal_relations.except(:user_id))
+    @q = @journaled.journals.ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @journals = @q.result.paginate(page: params[:page])
   end
 
   def new
-    @journal = Journal.new(journal_relations)
+    @journal = @journaled.journals.new
     authorize @journal
   end
 
   def edit; end
 
   def create
-    @journal = Journal.new(journal_params.merge(journal_relations))
+    @journal = @journaled.journals.new(journal_params)
+    @journal.user = current_user
     authorize @journal
     if @journal.save
-      journal_redirect
+      redirect_to [@journaled, Journal], make_notice
     else
       render :new
     end
@@ -26,7 +29,7 @@ class JournalsController < ApplicationController
 
   def update
     if @journal.update(journal_params)
-      journal_redirect
+      redirect_to [@journaled, Journal], make_notice
     else
       render :edit
     end
@@ -34,26 +37,10 @@ class JournalsController < ApplicationController
 
   def destroy
     @journal.destroy
-    redirect_back(fallback_location: url_for(@journaled))
+    redirect_to [@journaled, Journal], make_notice
   end
 
   private
-
-  def journal_redirect
-    if @journaled.class == Client
-      redirect_to polymorphic_path([@journaled, Journal]), make_notice
-    else
-      redirect_to @journaled, make_notice
-    end
-  end
-
-  def journal_relations
-    {
-      journalable_type: @journaled.class.model_name.name,
-      journalable_id: @journaled.id,
-      user_id: current_user.id
-    }
-  end
 
   def set_journal
     @journal = Journal.find_by(id: params[:id])
@@ -71,7 +58,7 @@ class JournalsController < ApplicationController
 
   def journal_params
     params.require(:journal).permit(
-      :category, :user_id, :body, :client_id, :volunteer_id
+      :category, :user_id, :body, :title, :client_id, :volunteer_id
     )
   end
 end

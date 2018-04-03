@@ -7,12 +7,11 @@
 
 = "\r\n#{t('.submitted')}#{rn2}"
 
-- if @volunteer.contact.title.present?
-  = "\r\n#{t_attr(:title, Contact)}:#{t4}#{@volunteer.contact.title.strip}\r\n"
+== "#{t_attr(:salutation, Volunteer)}:#{t3}#{t("salutation.#{@volunteer.salutation}")}\r\n"
 == "#{t_attr(:first_name, Contact)}:#{t3}#{@volunteer.contact.first_name}\r\n"
 == "#{t_attr(:last_name, Contact)}:#{t4}#{@volunteer.contact.last_name}\r\n"
 
-= "#{rn2}#{t('.address')}#{rn2}"
+= "#{rn2}#{t('.address')}:#{rn2}"
 - if @volunteer.contact.street.present?
   = "#{@volunteer.contact.street}\r\n"
 
@@ -25,11 +24,7 @@
   = "#{rn2}#{t_attr(:primary_phone, Contact)}:\t\t#{@volunteer.contact.primary_phone}\r\n"
 
 - if @volunteer.birth_year?
-  = "#{rn2}#{t_attr(:birth_year, Volunteer)}:#{t3}#{l(@volunteer.birth_year)}\r\n"
-
-- if @volunteer.salutation?
-  = "\r\n#{t_attr(:salutation, Volunteer)}:#{t3}"
-  = t("salutation.#{@volunteer.salutation}") if @volunteer.salutation?
+  = "#{rn2}#{t_attr(:birth_year, Volunteer)}:\t\t#{@volunteer.birth_year.year}\r\n"
 
 - if @volunteer.avatar.present?
   = "#{rn2}#{t_attr(:avatar, Volunteer)}:\t\t"
@@ -86,11 +81,11 @@
 
 = t('volunteer_engagement_type_will')
 
-= "\r\n#{t_attr(:single_accompaniment, Volunteer)}#{rn2}"
+= "\r\n#{t_attr(:single_accompaniment, Volunteer)}:#{rn2}"
 - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
   - if @volunteer.read_attribute(single)
     = "#{t_attr(single, Volunteer)} "
-= "#{rn2}#{t_attr(:group_accompaniment, Volunteer)}#{rn2}"
+= "#{rn2}#{t_attr(:group_accompaniment, Volunteer)}:#{rn2}"
 - @volunteer.group_accompaniments_all_values.each do |group|
   - if group[:value]
     = t_attr(group[:title], Volunteer)

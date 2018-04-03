@@ -32,7 +32,7 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     # active
     @active_group_assignment = create :group_assignment, volunteer: @volunteer_aa, group_offer: @group_offer,
       period_start: 20.days.ago, period_end: nil, period_end_set_by: @superadmin
-    @hour = create :hour, volunteer: @volunteer_aa, hourable: @group_offer, hours: 2, minutes: 45
+    @hour = create :hour, volunteer: @volunteer_aa, hourable: @group_offer, hours: 2
     @feedback = create :feedback, volunteer: @volunteer_aa, author: @volunteer_aa.user,
       feedbackable: @group_offer
 
@@ -51,62 +51,70 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
 
   test 'Volunteer with active assignments can not be terminated' do
     visit volunteer_path(@volunteer_aa)
-    click_link 'Beenden'
+    first(:link, 'Beenden').click
 
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
 
     @active_assignment.update(period_end: 2.days.ago)
     @volunteer_aa.reload
     visit current_url
-    click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    first(:link, 'Beenden').click
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
 
     @active_group_assignment.update(period_end: 2.days.ago)
     @volunteer_aa.reload
     visit current_url
-    click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    first(:link, 'Beenden').click
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
   end
 
   test 'Volunteer with ended but not submitted assignments can not be terminated' do
     visit volunteer_path(@volunteer_ua)
-    click_link 'Beenden'
+    first(:link, 'Beenden').click
 
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
 
     @unsubmitted_assignment.update(termination_submitted_at: 2.days.ago,
       termination_submitted_by: @volunteer_sa.user, period_end_set_by: @superadmin)
     @volunteer_ua.reload
     visit current_url
-    click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    first(:link, 'Beenden').click
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
 
     @unsubmitted_group_assignment.update(termination_submitted_at: 2.days.ago,
       termination_submitted_by: @volunteer_ua.user, period_end_set_by: @superadmin)
     @volunteer_ua.reload
     visit current_url
-    click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    first(:link, 'Beenden').click
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
   end
 
   test 'Volunteer with ended, submitted but not verified assignments can not be terminated' do
     visit volunteer_path(@volunteer_sa)
-    click_link 'Beenden'
+    first(:link, 'Beenden').click
 
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
 
     @submitted_assignment.update(termination_submitted_at: 2.days.ago,
       termination_submitted_by: @volunteer_sa.user, period_end_set_by: @superadmin,
       termination_verified_at: 2.days.ago, termination_verified_by: @superadmin)
     @volunteer_sa.reload
     visit current_url
-    click_link 'Beenden'
-    assert page.has_text? 'Beenden fehlgeschlagen. Freiwillige/r hat noch nicht beendete Einsätze.'
+    first(:link, 'Beenden').click
+    assert page.has_text?
+      'Beenden fehlgeschlagen. Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.'
     assert page.has_link? 'Begleitung bearbeiten'
 
     @submitted_group_assignment.update(termination_submitted_at: 2.days.ago,
@@ -114,7 +122,7 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
       termination_verified_at: 2.days.ago, termination_verified_by: @superadmin)
     @volunteer_sa.reload
     visit current_url
-    click_link 'Beenden'
+    first(:link, 'Beenden').click
     assert page.has_text? 'Freiwillige/r wurde erfolgreich beendet.'
   end
 end

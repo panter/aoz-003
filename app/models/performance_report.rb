@@ -49,7 +49,7 @@ class PerformanceReport < ApplicationRecord
       .joins(:event)
       .merge(Event.date_between_inclusion(:date, *periods))
 
-    {
+    stats = {
       total: volunteers.count,
       active_assignment: assignment_active.size,
       active_group_assignment: group_active.size,
@@ -61,20 +61,25 @@ class PerformanceReport < ApplicationRecord
       resigned: volunteers.resigned_between(*periods).count,
       inactive: volunteers.where.not(id: assignment_active + group_active).distinct.count,
       assignment_hour_records: hours.assignment.count,
-      assignment_hours: hours.assignment.sum(:hours) + (hours.assignment.sum(:minutes) / 60.0),
+      assignment_hours: hours.assignment.total_hours,
       group_offer_hour_records: hours.group_offer.count,
-      group_offer_hours: hours.group_offer.sum(:hours) + (hours.group_offer.sum(:minutes) / 60.0),
+      group_offer_hours: hours.group_offer.total_hours,
       total_hour_records: hours.count,
-      total_hours: hours.sum(:hours) + (hours.sum(:minutes) / 60.0),
+      total_hours: hours.total_hours,
       assignment_feedbacks: feedbacks.assignment.count,
       group_offer_feedbacks: feedbacks.group_offer.count,
       total_feedbacks: feedbacks.count,
       assignment_trial_feedbacks: trial_feedbacks.assignment.count,
       group_offer_trial_feedbacks: trial_feedbacks.group_offer.count,
       total_trial_feedbacks: trial_feedbacks.count,
-      intro_course_events: event_volunteers.merge(Event.intro_course).count,
       total_events: event_volunteers.count,
     }
+
+    Event.kinds.each_key do |kind|
+      stats[kind] = event_volunteers.merge(Event.public_send(kind)).count
+    end
+
+    stats
   end
 
   def client_performance
@@ -125,7 +130,7 @@ class PerformanceReport < ApplicationRecord
       termination_submitted: assignments.termination_submitted_between(*periods).count,
       termination_verified: assignments.termination_verified_between(*periods).count,
       hour_report_count: hours.count,
-      hours: hours.sum(:hours) + (hours.sum(:minutes) / 60.0),
+      hours: hours.total_hours,
       feedback_count: feedbacks.count,
       trial_feedback_count: trial_feedbacks.count
     }
@@ -135,8 +140,8 @@ class PerformanceReport < ApplicationRecord
     group_offers = GroupOffer.created_before(periods.last)
     {
       all: group_offer_stats(group_offers),
-      in_departments: group_offer_stats(group_offers.where.not(department_id: nil)),
-      outside_departments: group_offer_stats(group_offers.where(department_id: nil))
+      internal: group_offer_stats(group_offers.internal),
+      external: group_offer_stats(group_offers.external)
     }
   end
 
@@ -163,7 +168,7 @@ class PerformanceReport < ApplicationRecord
       total_active_assignments: active_ga.count,
       total_ended_assignments: ended_ga.count,
       hour_report_count: hours.count,
-      hours: hours.sum(:hours) + (hours.sum(:minutes) / 60.0),
+      hours: hours.total_hours,
       feedback_count: feedbacks.count
     }
   end

@@ -1,0 +1,12 @@
+h3= t_attr(:single_accompaniment, Volunteer)
+
+h4.label-list
+  - Volunteer::SINGLE_ACCOMPANIMENTS.each do |key|
+    - if volunteer.read_attribute(key)
+      span.label.label-success>
+        => navigation_glyph(:yes)
+        = t_attr(key, Volunteer)
+    - else
+      span.label.label-danger>
+        => navigation_glyph(:no)
+        = t_attr(key, Volunteer)

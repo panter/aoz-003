@@ -18,68 +18,68 @@ class VolunteersTest < ApplicationSystemTestCase
 
     visit new_volunteer_path
 
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Volunteer'
-    fill_in 'Last name', with: 'aoz'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'aoz'
     within '.volunteer_birth_year' do
-      select('1988', from: 'Birth year')
+      select('1988', from: 'Jahrgang')
     end
-    select('Syrian Arab Republic', from: 'Nationality')
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
-    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Profession', with: 'Developer'
-    fill_in 'Education', with: 'CEID'
-    fill_in 'What is your motivation to volunteer with migrants?', with: 'asfd'
+    select('Syrien, Arabische Republik', from: 'Nationalität')
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    fill_in 'Beruf', with: 'Developer'
+    fill_in 'Ausbildung', with: 'CEID'
+    fill_in 'Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?', with: 'asfd'
     page.check('volunteer_experience')
-    fill_in 'What do you expect from a person who would accompany you', with: 'asdf'
-    fill_in 'Where do you see your strengths?', with: 'asdf'
-    fill_in 'What are your most important leisure interests?', with: 'asdf'
+    fill_in 'Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?', with: 'asdf'
+    fill_in 'Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?', with: 'asdf'
+    fill_in 'Welche sind Ihre wichtigsten Freizeitinteressen?', with: 'asdf'
     page.check('Training')
     page.check('German Course')
     page.check('Other Offer')
-    fill_in 'Description', with: 'Description'
+    fill_in 'Beschreibung', with: 'Description'
     page.check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
     fill_in 'Bank', with: 'BankName'
     fill_in 'IBAN', with: 'CH01 2345 6789 0123 4567 8'
     page.check('volunteer_waive')
     page.check('volunteer_weekend')
-    fill_in 'Detailed Description', with: 'I am every two weeks available on tuesdays asdfasdf.'
+    fill_in 'Genauere Angaben', with: 'I am every two weeks available on tuesdays asdfasdf.'
 
-    click_button 'Create Volunteer'
-    assert page.has_text? 'Volunteer was successfully created.'
+    first(:button, 'Freiwillige/n erfassen').click
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich erstellt.'
   end
 
   test 'show volunteer custom nationality (nationality_name test)' do
     visit new_volunteer_path
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Volunteer'
-    fill_in 'Last name', with: 'Volunteer'
-    select('Kosovo', from: 'Nationality')
-    fill_in 'Primary email', with: 'volunteer@kosovo.com'
-    fill_in 'Primary phone', with: '0123456789'
-    select('Mrs.', from: 'Salutation')
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'Volunteer'
+    select('Kosovo', from: 'Nationalität')
+    fill_in 'Mailadresse', with: 'volunteer@kosovo.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    select('Frau', from: 'Anrede')
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
 
-    click_button 'Create Volunteer'
+    first(:button, 'Freiwillige/n erfassen').click
 
     assert page.has_text? 'Kosovo'
   end
 
   test 'show volunteer checklist' do
     visit new_volunteer_path
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Volunteer'
-    fill_in 'Last name', with: 'Volunteer'
-    fill_in 'Primary email', with: 'volunteer@kosovo.com'
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'Volunteer'
+    fill_in 'Mailadresse', with: 'volunteer@kosovo.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
 
     page.check('volunteer_trial_period')
     page.check('volunteer_intro_course')
@@ -87,91 +87,81 @@ class VolunteersTest < ApplicationSystemTestCase
     page.check('volunteer_bank_account')
     page.check('volunteer_evaluation')
 
-    click_button 'Create Volunteer'
+    first(:button, 'Freiwillige/n erfassen').click
 
-    assert page.has_text? 'Trial period report Yes'
-    assert page.has_text? 'Introductory course Yes'
-    assert page.has_text? "Engaged volunteer's documents sent Yes"
-    assert page.has_text? 'Bank account details entered Yes'
-    assert page.has_text? 'Final evaluation Yes'
+    assert page.has_text? 'Probezeitbericht erhalten Ja'
+    assert page.has_text? 'Einführungskurs besucht Ja'
+    assert page.has_text? 'Dossier Freiwillige engagiert verschickt Ja'
+    assert page.has_text? 'Kontodaten eingetragen Ja'
+    assert page.has_text? 'Abschlussevaluation erhalten Ja'
   end
 
   test 'volunteer checklist has default values (false)' do
     visit new_volunteer_path
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Volunteer'
-    fill_in 'Last name', with: 'Volunteer'
-    fill_in 'Primary email', with: 'volunteer@kosovo.com'
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'Volunteer'
+    fill_in 'Mailadresse', with: 'volunteer@kosovo.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
 
-    click_button 'Create Volunteer'
+    first(:button, 'Freiwillige/n erfassen').click
 
-    assert page.has_text? 'Trial period report No'
-    assert page.has_text? 'Introductory course No'
-    assert page.has_text? "Engaged volunteer's documents sent No"
-    assert page.has_text? 'Bank account details entered No'
-    assert page.has_text? 'Final evaluation No'
+    assert page.has_text? 'Probezeitbericht erhalten Nein'
+    assert page.has_text? 'Einführungskurs besucht Nein'
+    assert page.has_text? 'Dossier Freiwillige engagiert verschickt Nein'
+    assert page.has_text? 'Kontodaten eingetragen Nein'
+    assert page.has_text? 'Abschlussevaluation erhalten Nein'
   end
 
   test 'rejection fields are shown only when the volunteer is rejected' do
     visit new_volunteer_path
-    refute page.has_text? 'Reason for rejection'
-    refute page.has_field? 'Explanation for rejection'
+    refute page.has_text? 'Grund für die Ablehnung'
+    refute page.has_field? 'Erläuterung zur Ablehnung'
 
     volunteer = create :volunteer
 
     visit volunteer_path(volunteer)
-    refute page.has_text? 'Reason for rejection'
-    refute page.has_text? 'Explanation for rejection'
+    refute page.has_text? 'Grund für die Ablehnung'
+    refute page.has_text? 'Erläuterung zur Ablehnung'
 
     visit edit_volunteer_path(volunteer)
-    refute page.has_text? 'Reason for rejection'
-    refute page.has_field? 'Explanation for rejection'
-    choose 'Rejected'
-    assert page.has_content? 'Reason for rejection'
+    refute page.has_text? 'Grund für die Ablehnung'
+    refute page.has_field? 'Erläuterung zur Ablehnung'
+    find("option[value='rejected']").click
+    assert page.has_content? 'Grund für die Ablehnung'
     page.choose('volunteer_rejection_type_other')
-    assert page.has_field? 'Explanation for rejection'
-    fill_in 'Explanation for rejection', with: 'Explanation'
-    click_button 'Update Volunteer'
+    assert page.has_field? 'Erläuterung zur Ablehnung'
+    fill_in 'Erläuterung zur Ablehnung', with: 'Explanation'
+    first(:button, 'Freiwillige/n aktualisieren').click
 
     visit volunteer_path(volunteer)
-    assert page.has_content? 'Reason for rejection: Other'
-    assert page.has_content? 'Explanation for rejection: Explanation'
+    assert page.has_content? 'Grund für die Ablehnung: Anderer Grund'
+    assert page.has_content? 'Erläuterung zur Ablehnung: Explanation'
   end
 
   test 'volunteer form has working_percent field' do
     visit edit_volunteer_path(Volunteer.first)
-    assert page.has_field? 'Employment rate'
+    assert page.has_field? 'Stellenprozent'
   end
 
   test 'volunteer has no secondary phone field' do
     visit new_volunteer_path
-    refute page.has_text? 'Secondary phone'
+    refute page.has_text? 'Telefonnummer 2'
 
     visit volunteer_path(Volunteer.first)
-    refute page.has_text? 'Secondary phone'
+    refute page.has_text? 'Telefonnummer 2'
   end
 
   test 'volunteer_experience_description_field_is_conditional' do
     visit new_volunteer_path
-    refute page.has_text? 'If you have any experiences with voluntary work, please describe here.'
+    refute page.has_text? 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
     page.check('volunteer_experience')
-    assert page.has_text? 'If you have any experiences with voluntary work, please describe here.'
+    assert page.has_text? 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
     page.uncheck('volunteer_experience')
-    refute page.has_text? 'If you have any experiences with voluntary work, please describe here.'
-  end
-
-  test 'volunteers_default_filters' do
-    volunteer = create :volunteer, acceptance: :resigned
-    volunteer.contact.update(first_name: 'Resigned volunteer')
-
-    visit volunteers_path
-
-    assert page.has_text? 'Affirmation: Not resigned'
-    refute page.has_text? 'Resigned volunteer'
+    refute page.has_text? 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.'
   end
 
   test 'volunteer_pagination' do
@@ -193,16 +183,14 @@ class VolunteersTest < ApplicationSystemTestCase
     visit current_url
 
     assert page.has_css? '.pagination'
-    Volunteer.order('created_at desc').paginate(page: 2).each do |volunteer|
+    Volunteer.order('acceptance asc').paginate(page: 2).each do |volunteer|
       assert page.has_text? "#{volunteer.contact.full_name} #{volunteer.contact.city}"\
         " #{volunteer.contact.postal_code}"
     end
 
     within page.first('.pagination') do
-      assert page.has_link? '1',
-        href: volunteers_path(page: 1, q: { acceptance_scope: :not_resigned })
-      assert page.has_link? 'Previous',
-        href: volunteers_path(page: 1, q: { acceptance_scope: :not_resigned })
+      assert page.has_link? '1', href: volunteers_path(page: 1)
+      assert page.has_link? 'Zurück', href: volunteers_path(page: 1)
     end
   end
 
@@ -231,7 +219,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
     visit volunteers_path
 
-    assert page.has_text? 'You are not authorized to perform this action.'
+    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
   end
 
   test 'social_worker_cant_see_volunteer_seeking_clients' do
@@ -240,33 +228,33 @@ class VolunteersTest < ApplicationSystemTestCase
 
     visit seeking_clients_volunteers_path
 
-    assert page.has_text? 'You are not authorized to perform this action.'
+    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
   end
 
   test 'accepted at creation volunteer gets invited' do
     visit new_volunteer_path
-    choose('volunteer_acceptance_accepted')
-    select('Mrs.', from: 'Salutation')
-    fill_in 'First name', with: 'Volunteer'
-    fill_in 'Last name', with: 'accepted'
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
-    fill_in 'Primary email', with: 'volunteer@aoz.ch'
-    fill_in 'Primary phone', with: '0123456789'
-    click_button 'Create Volunteer'
+    find("option[value='accepted']").click
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'accepted'
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'volunteer@aoz.ch'
+    fill_in 'Telefonnummer', with: '0123456789'
+    first(:button, 'Freiwillige/n erfassen').click
 
-    assert page.has_text? 'Volunteer was successfully created. Invitation sent to volunteer@aoz.ch.'
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an volunteer@aoz.ch verschickt.'
     assert_equal 1, ActionMailer::Base.deliveries.size
   end
 
   test 'undecided to accepted volunteer gets invited' do
     volunteer = create :volunteer, acceptance: 'undecided'
     visit edit_volunteer_path(volunteer)
-    choose('volunteer_acceptance_accepted')
-    click_button 'Update Volunteer'
+    find("option[value='accepted']").click
+    first(:button, 'Freiwillige/n aktualisieren').click
 
-    assert page.has_text? "Invitation sent to #{volunteer.contact.primary_email}"
+    assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size
   end
 
@@ -289,10 +277,10 @@ class VolunteersTest < ApplicationSystemTestCase
     visit volunteers_path
     assert page.has_text? 'Kein Login'
     assert page.has_text? 'Importiert'
-    click_link 'Show', href: volunteer_path(volunteer)
+    click_link 'Anzeigen', href: volunteer_path(volunteer)
     assert page.has_text? "Für die Emailadresse #{import.email} einen Account erstellen"
-    assert page.has_field? 'Primary email', with: import.email
-    click_button 'Account mit angegebener Email erstellen'
+    assert page.has_field? 'Mailadresse', with: import.email
+    click_button 'Einladung an angegebene E-Mail verschicken'
     assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
   end
 
@@ -303,9 +291,9 @@ class VolunteersTest < ApplicationSystemTestCase
       importable: volunteer, store: { haupt_person: { email: 'invalid' } })
     visit volunteer_path(volunteer)
     assert page.has_text? 'Scheinbar ist die importierte Mailadresse nicht gültig.'
-    assert_empty find_field('Primary email').value
-    fill_in 'Primary email', with: 'some_email@example.com'
-    click_button 'Account mit angegebener Email erstellen'
+    assert_empty find_field('Mailadresse').value
+    fill_in 'Mailadresse', with: 'some_email@example.com'
+    click_button 'Einladung an angegebene E-Mail verschicken'
     assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
   end
 
@@ -316,12 +304,38 @@ class VolunteersTest < ApplicationSystemTestCase
       store: { haupt_person: { email: nil } })
     visit volunteer_path(volunteer)
     assert page.has_text? 'Es wird eine gültige Emailadresse des Freiwilligen benötigt, um einen'
-    assert_empty find_field('Primary email').value
-    fill_in 'Primary email', with: 'invalid'
-    click_button 'Account mit angegebener Email erstellen'
+    assert_empty find_field('Mailadresse').value
+    fill_in 'Mailadresse', with: 'invalid'
+    click_button 'Einladung an angegebene E-Mail verschicken'
     within '.alert.alert-danger.alert-dismissible' do
       assert page.has_text? 'Die Mailadresse ist scheinbar nicht gültig'
       assert page.has_link? 'Mailadresse konfigurieren', href: edit_volunteer_path(volunteer)
     end
+  end
+
+  test 'not resigned volunteer can not be terminated via acceptance select in edit' do
+    @undecided = create :volunteer, acceptance: :undecided
+    @invited = create :volunteer, acceptance: :invited
+    @accepted = create :volunteer, acceptance: :accepted
+    @rejected = create :volunteer, acceptance: :rejected
+
+    visit edit_volunteer_path(@undecided)
+    refute page.has_select? 'Beendet'
+
+    visit edit_volunteer_path(@invited)
+    refute page.has_select? 'Beendet'
+
+    visit edit_volunteer_path(@accepted)
+    refute page.has_select? 'Beendet'
+
+    visit edit_volunteer_path(@rejected)
+    refute page.has_select? 'Beendet'
+  end
+
+  test 'resigned volunteers acceptance can not be changed in edit anymore' do
+    @resigned = create :volunteer, acceptance: :resigned
+
+    visit edit_volunteer_path(@resigned)
+    assert page.has_field? 'Prozess', disabled: true
   end
 end

@@ -1,0 +1,10 @@
+fieldset
+  legend Telefon und Email
+  .row
+    .col-xs-12.col-md-6
+      = f.input :primary_email, as: :email, required: f.object.needs_primary_email?
+    .col-xs-12.col-md-6
+      = f.input :primary_phone, as: :tel, required: f.object.needs_primary_phone?
+    - if controller_name == 'clients'
+      .col-xs-12.col-md-6
+        = f.input :secondary_phone, as: :tel

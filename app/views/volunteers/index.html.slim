@@ -11,16 +11,14 @@ nav.navbar.section-navigation
     li= button_link t_title(:new), new_volunteer_path, dimension: 'sm'
     - if policy(Volunteer).superadmin_privileges?
       li= button_link t('seeking_clients'), seeking_clients_volunteers_url, dimension: 'sm'
-    li |
-    li= button_link 'E-Mailvorlagen', email_templates_path, dimension: 'sm'
 
   hr
 
   ul.list-inline
-    li= button_link t('clear_filters'), volunteers_path, dimension: 'sm'
+    li= clear_filter_button
     li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
     - if policy(Volunteer).show_acceptance?
-      = custom_filter_dropdown 'Affirmation', *Volunteer.acceptance_filters
+      = custom_filter_dropdown 'Prozess', *Volunteer.acceptance_filters
       = boolean_toggler_filter_dropdown(:active, 'Einsatz', 'Aktiv', 'Inaktiv')
     = boolean_toggler_filter_dropdown(:external, 'Intern/Extern', 'Extern', 'Intern')
     = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
@@ -32,3 +30,4 @@ nav.navbar.section-navigation
   hr
 
 = render 'columns', volunteers: @volunteers
+

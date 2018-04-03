@@ -82,7 +82,7 @@ module ApplicationHelper
   end
 
   def search_parameters
-    @search_parameters ||= params[:q]&.to_unsafe_hash || {}
+    @search_parameters ||= (params[:q]&.to_unsafe_hash || {}).except(:all)
   end
 
   def bootstrap_paginate(paginate_collection)
@@ -92,11 +92,11 @@ module ApplicationHelper
 
   def profile_link(user)
     if user.profile
-      profile_path(user.profile)
+      edit_profile_path(user.profile)
     elsif user.volunteer?
-      volunteer_path(user.volunteer)
+      edit_volunteer_path(user.volunteer)
     else
-      user_path(user)
+      edit_user_path(user)
     end
   end
 
@@ -105,8 +105,8 @@ module ApplicationHelper
   end
 
   def td_truncate_content_modal(body, title, shorten_size: 40)
-    return tag.td(body) if body.size < shorten_size
-    tag.td(class: 'index-action-cell', data: truncate_modal_data(body, title), role: 'button') do
+    return tag.td(body) if body.to_s.size < shorten_size
+    tag.td(class: 'truncate-td', data: truncate_modal_data(body, title), role: 'button') do
       concat tag.span body.truncate(shorten_size)
       concat tag.span('Ganzer Text', class: 'whole-text')
     end
@@ -120,5 +120,22 @@ module ApplicationHelper
     link_to_unless(action_name == actions_name, text, url, class: 'btn btn-default btn-sm') do
       link_to(text, url, class: 'btn btn-sm btn-section-active')
     end
+  end
+
+  def acceptance_select(record, form)
+    collection = record.class.enum_collection(:acceptance)
+    if record.resigned?
+      disabled = true
+    else
+      disabled = false
+      collection -= [:resigned]
+    end
+
+    form.input(
+      :acceptance,
+      include_blank: false,
+      collection: collection,
+      disabled: disabled
+    )
   end
 end

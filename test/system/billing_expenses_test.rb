@@ -5,33 +5,35 @@ class BillingExpensesTest < ApplicationSystemTestCase
     superadmin = create :user
     @volunteer = create :volunteer
     @assignment = create :assignment, volunteer: @volunteer, period_start: 9.months.ago
-    @hour1 = create :hour, volunteer: @volunteer, hourable: @assignment, hours: '2', minutes: '30'
+    @hour1 = create :hour, volunteer: @volunteer, hourable: @assignment, hours: '2.5'
     @group_offer = create :group_offer
     @group_assignment = create :group_assignment, volunteer: @volunteer, period_start: 9.months.ago
-    @hour2 = create :hour, hourable: @group_offer, volunteer: @volunteer, hours: '3', minutes: '30'
+    @hour2 = create :hour, hourable: @group_offer, volunteer: @volunteer, hours: '3.5'
 
     login_as superadmin
     visit volunteer_path(@volunteer)
-    click_button 'Create Billing expense'
+    click_link 'Spesenformular Liste', match: :first
+    click_button 'Spesenformular erfassen'
   end
 
   test 'superadmin can create a billing expense' do
-    assert page.has_text? 'Billing expense was successfully created.'
+    assert page.has_text? 'Spesenformular wurde erfolgreich erstellt.'
   end
 
   test 'created billing expenses collects hours from assignment and group offer' do
     within '.table-responsive' do
-      assert_equal 6, @volunteer.hours.total_hours
+      assert_equal 6.0, @volunteer.hours.total_hours
       assert_equal 50, @volunteer.billing_expenses.last.amount
     end
   end
 
   test 'no duplicate billing expenses' do
-    click_button 'Create Billing expense'
+    click_button 'Spesenformular erfassen'
     visit volunteer_path(@volunteer)
+    first(:link, 'Spesenformular Liste').click
     assert_no_difference 'BillingExpense.count' do
-      click_button 'Create Billing expense'
-      assert page.has_text? 'There are no billable hours for this volunteer'
+      click_button 'Spesenformular erfassen'
+      assert page.has_text? 'Dieser Freiwillige hat keine verrechenbaren Stunden'
     end
   end
 
@@ -39,7 +41,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     within '.table-responsive' do
       assert page.has_link? @volunteer.contact.full_name
       assert page.has_text? @volunteer.contact.full_address
-      click_link 'Show'
+      click_link 'Anzeigen'
     end
     assert page.has_text? 'Spesenauszahlung an'
     assert page.has_text? 'Kostenstelle'
@@ -58,10 +60,11 @@ class BillingExpensesTest < ApplicationSystemTestCase
     volunteer = create :volunteer
     group_offer = create :group_offer, volunteers: [volunteer]
     volunteer.group_assignments.last.update(period_start: 2.months.ago)
-    create :hour, hourable: group_offer, volunteer: volunteer, hours: '3', minutes: '30'
+    create :hour, hourable: group_offer, volunteer: volunteer, hours: '3'
 
     visit volunteer_path(volunteer)
-    click_button 'Create Billing expense'
-    assert page.has_text? 'Billing expense was successfully created.'
+    click_link 'Spesenformular Liste', match: :first
+    click_button 'Spesenformular erfassen'
+    assert page.has_text? 'Spesenformular wurde erfolgreich erstellt.'
   end
 end

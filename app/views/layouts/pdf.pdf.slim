@@ -7,12 +7,19 @@ html
       .col-xs-3
         .pdf-logo-image
           = wicked_pdf_image_tag 'AOZ_Logo.svg'
-      .col-xs-4
+      .col-xs-3
         b= t('pdf_header.title').html_safe
-      .col-xs-2
+      .col-xs-3
         = t('pdf_header.address').html_safe
       .col-xs-3
-        = t('pdf_header.contact').html_safe
+        - if controller_name == 'assignments'
+          == t('pdf_header.contact', phone: @assignment&.creator.profile.contact.primary_phone)
+        - elsif controller_name == 'group_offers'
+          == t('pdf_header.contact', phone: @group_offer&.creator.profile.contact.primary_phone)
+        - elsif controller_name == 'billing_expenses'
+          == t('pdf_header.contact', phone: @billing_expense&.user.profile.contact.primary_phone)
+        - else
+          == t('pdf_header.contact', phone: '044 415 66 72')
 
     .container
       = yield

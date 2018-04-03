@@ -4,15 +4,21 @@ nav.navbar.section-navigation.hidden-print
     li.li-search-form
       = search_form_for @q do |f|
         = f.search_field :volunteer_contact_full_name_cont, class: 'search-field',
-          data: { autocomplete: search_assignments_path }, autofocus: true,
-          placeholder: 'Nach Freiwillige suchen'
-        = f.submit 'Suchen', class: 'search-submit'
+          data: { autocomplete: volunteer_search_assignments_path }, autofocus: true,
+          placeholder: 'Freiwillige Suchen'
+        = f.submit 'Freiwillige Suchen', class: 'search-submit'
+  ul.list-unstyled
+    li.li-search-form
+      = search_form_for @q do |f|
+        = f.search_field :client_contact_full_name_cont, class: 'search-field',
+          data: { autocomplete: client_search_assignments_path }, autofocus: true,
+          placeholder: 'Klient/innen Suchen'
+        = f.submit 'Klient/innen Suchen', class: 'search-submit'
   ul.list-inline
-    li= button_link 'Begleitung erfassen', new_assignment_path, dimension: :sm
+    li= clear_filter_button
     = custom_filter_dropdown('Status',
       { q: :active_or_not_yet_active, text: 'Aktiv', value: 'true' },
       { q: :inactive, text: 'Inaktiv', value: 'true' })
-    li= button_link t('clear_filters'), assignments_path, dimension: :sm
     li= button_link 'Beendete Begleitungen', terminated_index_assignments_path, dimension: :sm
     li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: :sm
     li= link_to navigation_glyph(:print), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }

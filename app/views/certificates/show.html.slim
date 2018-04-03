@@ -6,7 +6,7 @@
       li= button_link navigation_glyph(:print), volunteer_certificate_path(@volunteer, @certificate, print: true)
       li= button_link t_action(:download), volunteer_certificate_path(@volunteer, @certificate, format: :pdf)
       li= link_to navigation_glyph(:delete), volunteer_certificate_path(@volunteer, @certificate), confirm_deleting(@certificate, 'btn btn-default')
-      li= form_navigation_btn :back, with_row: false
+      li= button_link navigation_glyph(:back), :back
   hr
 
 .certificate
@@ -45,6 +45,6 @@
 
   .signature
     .person
-      .name= @certificate.user.profile.contact.full_name
-      .position= @certificate.user.profile.profession
+      .name= @certificate.creator_name
+      .position= @certificate.creator_function
     .place-date= "Zürich #{l(@certificate.created_at.to_date)}"

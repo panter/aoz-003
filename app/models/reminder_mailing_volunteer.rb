@@ -12,9 +12,9 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :picked, (-> { where(picked: true) })
 
   scope :kind, ->(kind) { joins(:reminder_mailing).where('reminder_mailings.kind = ?', kind) }
-  scope :trial_period, (-> { kind(0) })
-  scope :half_year, (-> { kind(1) })
-  scope :termination, (-> { kind(2) })
+  scope :half_year, (-> { kind(ReminderMailing.kinds[:half_year]) })
+  scope :trial_period, (-> { kind(ReminderMailing.kinds[:trial_period]) })
+  scope :termination, (-> { kind(ReminderMailing.kinds[:termination]) })
   scope :termination_for, ->(mailable) { termination.where(reminder_mailable: mailable) }
 
   def mark_process_submitted(user, terminate_parent_mailing: false)
@@ -30,11 +30,7 @@ class ReminderMailingVolunteer < ApplicationRecord
     reminder_mailable_type == 'GroupAssignment'
   end
 
-  def mailable_to_label
-    base_assignment_entity.to_label
-  end
-
-  def base_assignment_entity
+  def base_entity
     return reminder_mailable if assignment?
     reminder_mailable.group_offer
   end
@@ -46,23 +42,20 @@ class ReminderMailingVolunteer < ApplicationRecord
     }
   end
 
+  def last_feedback
+    reminder_mailing.feedbacks
+      .created_desc
+      .find_by(author_id: volunteer.user_id)
+  end
+
   private
 
   def replace_ruby_template(template)
     template % template_variables
-  rescue KeyError => _
-    string_replace_key_error(template)
-  end
-
-  def string_replace_key_error(template)
-    template.gsub(/\%\{([\w]*)\}/) do |key_match|
-      key = key_match.remove('%{').remove('}').to_sym
-      template_variables[key].presence || ''
-    end
   end
 
   def anrede
-    I18n.t("salutation.#{volunteer.salutation}", locale: :de)
+    I18n.t("salutation.#{volunteer.salutation}")
   end
 
   def name
@@ -70,7 +63,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def einsatz_start
-    I18n.l(reminder_mailable.period_start, locale: :de) if reminder_mailable.period_start
+    I18n.l(reminder_mailable.period_start) if reminder_mailable.period_start
   end
 
   def einsatz
@@ -86,9 +79,12 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def template_variables
-    @template_variables ||= ReminderMailing::TEMPLATE_VARNAMES.map do |varname|
+    template_variables = ReminderMailing::TEMPLATE_VARNAMES.map do |varname|
       [varname, send(varname.to_s.underscore)]
     end.to_h
+
+    template_variables.default = ''
+    template_variables
   end
 
   def email_absender

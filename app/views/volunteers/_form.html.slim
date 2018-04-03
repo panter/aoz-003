@@ -1,109 +1,126 @@
 = simple_error_notice f
 
 - if policy(Volunteer).superadmin_privileges?
-  = f.input :external, input_html: { data: { state: { remove: ['contacted', 'resigned', 'inactive', 'rejected'], selected: 'accepted' }, hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
-  fieldset
-    legend= t('.acceptance.management')
-    = f.input :acceptance, collection: Volunteer.enum_collection(:acceptance), as: :radio_buttons, include_blank: false, selected: @volunteer.acceptance.to_i
-    - unless @volunteer.undecided?
-      ul.list-unstyled
-        - @volunteer.slice(:invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at).compact.each do |key, value|
-          li #{t_attr(key)} #{l(value)}
-
-  = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
-  = f.input :rejection_text
-
-- if policy(Volunteer).superadmin_privileges?
-  fieldset.checklist
-    legend= t('checklist')
-    ul.list-inline
-      li= f.input :trial_period
-      li= f.input :intro_course
-      li= f.input :doc_sent
-      li= f.input :bank_account
-      li= f.input :evaluation
-
-fieldset
-  legend= t_attr(:personal_particulars, Contact)
   .row
-    .col-xs-12
-      = f.input :salutation,
-                as: :select,
-                collection: Volunteer::SALUTATIONS,
-                include_blank: true
+    .col-xs-12.col-md-4
+      fieldset
+        legend= t('.acceptance.management')
+        = acceptance_select(@volunteer, f)
+        - unless @volunteer.undecided?
+          ul.list-unstyled
+            - @volunteer.slice(:invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at).compact.each do |key, value|
+              li #{t_attr(key)} #{l(value)}
+
+        = f.input :external, input_html: { data: { hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
+
+    .col-xs-12.col-md-4
+      fieldset.checklist
+        legend= t('checklist')
+        ul.list-inline
+          li= f.input :trial_period
+          li= f.input :intro_course
+          li= f.input :bank_account
+          li= f.input :doc_sent
+          li= f.input :evaluation
+
+
+    .col-xs-12.col-md-4
+      = f.input :rejection_type, collection: Volunteer::REJECTIONS, as: :radio_buttons
+      = f.input :rejection_text
+
+.row
   = f.simple_fields_for :contact do |c|
-    = render 'contacts/fields', f: c
-
-  .row
     .col-xs-12.col-md-6
-      = f.input :birth_year,
-                as: :select,
-                collection: Volunteer.year_collection,
-                include_blank: true
-  .row
+      fieldset
+        legend= t_attr(:personal_particulars, Contact)
+        = f.input :salutation,
+          as: :select,
+          collection: Volunteer::SALUTATIONS,
+          include_blank: true
+        = render 'contacts/user_fields', f: c
     .col-xs-12.col-md-6
-      = f.input :nationality, as: :country
+      = render 'contacts/address_fields', f: c
     .col-xs-12.col-md-6
-      = f.input :additional_nationality, as: :country
-  .row
-    .col-xs-12
-      = f.input :avatar, as: :file
+      .row
+        .col-xs-12.col-md-6
+          = f.input :nationality, as: :country
+          = f.input :birth_year,
+            as: :select,
+            collection: Volunteer.year_collection,
+            include_blank: true
+        .col-xs-12.col-md-6
+          = f.input :additional_nationality, as: :country
+          = f.input :avatar, as: :file
+      .row
+        .col-xs-8
+          = f.input :profession
+        .col-xs-4
+          = f.input :working_percent
+        .col-xs-6
+          = f.input :own_kids
+        .col-xs-6
+          = f.input :education
+        .col-xs-12
+          = f.input :motivation
+        .col-xs-12
+          = checkbox_toggle_collapse(f, :experience, '#experience-desc')
+        .col-xs-12.collapse#experience-desc
+          = f.input :volunteer_experience_desc
+    .col-xs-12.col-md-6
+      = render 'contacts/phone_fields', f: c
 
-
-= render 'language_skills/form', f: f, speaker: @volunteer
+    .col-xs-12.col-md-6
+    - if current_user.present?
+      .col-xs-12.col-md-6
+        fieldset.bank-data
+          legend Bankdaten für Spesen
+          = checkbox_toggle_collapse(f, :waive, '.waiver-collapse', check_shows: false)
+          = f.input :bank, wrapper_html: { class: 'waiver-collapse' }
+          = f.input :iban, wrapper_html: { class: 'waiver-collapse' }
 
 .row
-  .col-xs-8
-    = f.input :profession
-  .col-xs-4
-    = f.input :working_percent
-  .col-xs-12
-    = f.input :own_kids
-  .col-xs-12
-    = f.input :education
-  .col-xs-12
-    = f.input :motivation
-  .col-xs-12
-    = checkbox_toggle_collapse(f, :experience, '#experience-desc')
-  .col-xs-12.collapse#experience-desc
-    = f.input :volunteer_experience_desc
+  .col-xs-12.col-md-6
+    h3= t('volunteer_engagement_type_will')
+    .row
+      .col-xs-12
+        p= t('duration_info')
+    .row
+      .col-xs-12
+        p= link_to t('accompaniment_info'), 'https://www.stadt-zuerich.ch/aoz/de/index/integration/fachstelle-freiwilligenarbeit/einsatzbereiche-fuer-freiwillige-.html'
 
-h3= t('volunteer_engagement_type_will')
+    fieldset
+      legend= t_attr(:single_accompaniment, Volunteer)
+      .row
+        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single_accompaniment|
+          .col-xs-12.col-md-3
+            = f.input single_accompaniment
+  .col-xs-12.col-md-6
+    = render 'language_skills/form', f: f, speaker: @volunteer
 .row
-  .col-xs-12
-    p= t('duration_info')
-.row
-  .col-xs-12
-    p= link_to t('accompaniment_info'), 'https://www.stadt-zuerich.ch/aoz/de/index/integration/fachstelle-freiwilligenarbeit/einsatzbereiche-fuer-freiwillige-.html'
+  .col-xs-12.col-md-6
+    fieldset
+      legend= t_attr(:group_accompaniment, Volunteer)
+      .row
+        = f.association :group_offer_categories, as: :check_boxes, label: false,
+          collection: GroupOfferCategory.active.without_house_moving, item_wrapper_class: 'col-xs-4 checkbox-line'
+        = f.association :group_offer_categories, as: :check_boxes, label: false,
+          collection: GroupOfferCategory.house_moving, item_wrapper_class: 'col-xs-4'
+      = f.input :other_offer_desc
+
+  .col-xs-12.col-md-6
+    h3= policy(@volunteer).superadmin_privileges? ? t('.availability') : t('.availability_question')
+    = render 'availability/form', f: f
+
 
 fieldset
-  legend= t_attr(:single_accompaniment, Volunteer)
-  .row
-    - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single_accompaniment|
-      .col-xs-12.col-md-3
-        = f.input single_accompaniment
-
-fieldset
-  legend= t_attr(:group_accompaniment, Volunteer)
-  .row
-    .col-xs-12
-      = f.association :group_offer_categories, as: :check_boxes, label: false, collection: GroupOfferCategory.active_without_house_moving
+  legend= t('generic_keys.other')
 .row
-  .col-xs-12
-    = f.input :other_offer_desc
-  .col-xs-12
-    = f.association :group_offer_categories, as: :check_boxes, label: false, collection: GroupOfferCategory.house_moving
+  .col-xs-12.col-md-6
+    = f.input :expectations
+    = f.input :strengths
+    = f.input :interests
 
-- if current_user.present?
-  fieldset.bank-data
-    legend Bankdaten für Spesen
-    = checkbox_toggle_collapse(f, :waive, '.waiver-collapse', check_shows: false)
-    = f.input :bank, wrapper_html: { class: 'waiver-collapse' }
-    = f.input :iban, wrapper_html: { class: 'waiver-collapse' }
-
-= single_field_fieldset(f, :expectations)
-= single_field_fieldset(f, :strengths)
-= single_field_fieldset(f, :interests)
-
-h3= policy(@volunteer).superadmin_privileges? ? t('.availability') : t('.availability_question')
-= render 'availability/form', f: f
+  - if policy(Volunteer).superadmin_privileges?
+    .col-xs-12.col-md-6
+      = f.input :comments
+      = f.input :additional_comments

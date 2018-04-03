@@ -11,21 +11,20 @@ class HoursController < ApplicationController
   def new
     @hour = Hour.new(volunteer: @volunteer, hourable: find_hourable)
     authorize @hour
-    @simple_form_for_params = [
-      [@volunteer, @hour.hourable, @hour],
-      { url: polymorphic_path([@volunteer, @hour.hourable, @hour],
-        redirect_to: params[:redirect_to], group_assignment: params[:group_assignment]) }
-    ]
+    simple_form_params
   end
 
-  def edit; end
+  def edit
+    simple_form_params
+  end
 
   def create
     @hour = Hour.new(hour_params)
     @hour.hourable ||= find_hourable
     authorize @hour
+    simple_form_params
     if @hour.save
-      redirect_to create_redirect, make_notice
+      redirect_to create_redirect, notice: t('hours_created')
     else
       render :new
     end
@@ -54,6 +53,13 @@ class HoursController < ApplicationController
   end
 
   private
+  def simple_form_params
+    @simple_form_for_params = [
+      [@volunteer, @hour.hourable, @hour],
+      { url: polymorphic_path([@volunteer, @hour.hourable, @hour],
+                              redirect_to: params[:redirect_to], group_assignment: params[:group_assignment]) }
+    ]
+  end
 
   def find_hourable
     Assignment.find_by(id: params[:assignment_id]) ||
@@ -79,7 +85,7 @@ class HoursController < ApplicationController
   end
 
   def hour_params
-    params.require(:hour).permit(:meeting_date, :hours, :minutes, :activity, :comments,
+    params.require(:hour).permit(:meeting_date, :hours, :activity, :comments,
       :volunteer_id, :hourable_id, :hourable_type, :hourable_id_and_type)
   end
 end

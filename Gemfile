@@ -28,6 +28,8 @@ gem 'i18n_rails_helpers'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'mdb'
+gem 'panter-rails-deploy'
 gem 'paperclip'
 gem 'paranoia'
 gem 'pg', '~> 0.21'
@@ -38,6 +40,7 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'redcarpet'
 gem 'rubyzip', '>= 1.2.1'
 gem 'sassc-rails'
+gem 'selectize-rails'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'sprockets-es6'
@@ -57,16 +60,11 @@ group :development do
   gem 'scss_lint', require: false
 end
 
-group :production, :development do
-  gem 'mdb'
-  gem 'panter-rails-deploy'
-end
-
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'factory_bot_rails'
-  gem 'faker'
+  gem 'ffaker'
   gem 'listen'
   gem 'pry-byebug'
   gem 'pry-rails'

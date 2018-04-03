@@ -57,7 +57,12 @@ class PerformanceReportTest < ActiveSupport::TestCase
     assignment_trial_feedbacks: 0,
     group_offer_trial_feedbacks: 0,
     total_trial_feedbacks: 0,
-    intro_course_events: 0,
+    intro_course: 0,
+    professional_training: 0,
+    professional_event: 0,
+    theme_exchange: 0,
+    volunteering: 0,
+    german_class_managers: 0,
     total_events: 0
   }.stringify_keys.freeze
 
@@ -187,23 +192,35 @@ class PerformanceReportTest < ActiveSupport::TestCase
 
     # events
 
-    intro_event_this_year = create :event, kind: :intro_course, date: @this_periods.first
-    intro_event_last_year = create :event, kind: :intro_course, date: @last_periods.first
-    other_event_this_year = create :event, kind: :professional_training, date: @this_periods.first
+    Event.kinds.each_key do |kind|
+      event_this_year = create :event, kind: kind, date: @this_periods.first
+      event_last_year = create :event, kind: kind, date: @last_periods.first
 
-    create :event_volunteer, event: intro_event_this_year, volunteer: volunteer_zurich_this_year
-    create :event_volunteer, event: intro_event_this_year, volunteer: volunteer_zurich_this_year2
-    create :event_volunteer, event: intro_event_last_year, volunteer: volunteer_zurich_last_year
-    create :event_volunteer, event: other_event_this_year, volunteer: volunteer_zurich_this_year
+      create :event_volunteer, event: event_this_year, volunteer: volunteer_zurich_this_year
+      create :event_volunteer, event: event_this_year, volunteer: volunteer_zurich_this_year2
+      create :event_volunteer, event: event_last_year, volunteer: volunteer_zurich_last_year
+    end
 
     refresh_reports
 
     expected_influenced_this_year.merge!(
-      intro_course_events: 2, total_events: 3
+      intro_course: 2,
+      professional_training: 2,
+      professional_event: 2,
+      theme_exchange: 2,
+      volunteering: 2,
+      german_class_managers: 2,
+      total_events: 12
     ).stringify_keys!
 
     expected_influenced_last_year.merge!(
-      intro_course_events: 1, total_events: 1
+      intro_course: 1,
+      professional_training: 1,
+      professional_event: 1,
+      theme_exchange: 1,
+      volunteering: 1,
+      german_class_managers: 1,
+      total_events: 6
     ).stringify_keys!
 
     assert_equal(expected_influenced_this_year, @this_year.report_content['volunteers']['all'])
@@ -497,16 +514,16 @@ class PerformanceReportTest < ActiveSupport::TestCase
       volunteer: ass_last_year.volunteer, author: ass_last_year.volunteer.user)
     feedback_last_year.update(created_at: ass_last_year.period_start + 80)
 
-    hour_zurich_this_year = create(:hour, hourable: ass_zurich_this_year, hours: 2, minutes: 30,
+    hour_zurich_this_year = create(:hour, hourable: ass_zurich_this_year, hours: 2.5,
       volunteer: ass_zurich_this_year.volunteer, meeting_date: ass_zurich_this_year.period_start + 78)
     hour_zurich_this_year.update(created_at: ass_zurich_this_year.period_start + 80)
-    hour_this_year = create(:hour, hourable: ass_this_year, hours: 2, minutes: 30,
+    hour_this_year = create(:hour, hourable: ass_this_year, hours: 2.5,
       volunteer: ass_this_year.volunteer, meeting_date: ass_this_year.period_start + 78)
     hour_this_year.update(created_at: ass_this_year.period_start + 80)
-    hour_zurich_last_year = create(:hour, hourable: ass_zurich_last_year, hours: 2, minutes: 30,
+    hour_zurich_last_year = create(:hour, hourable: ass_zurich_last_year, hours: 2.5,
       volunteer: ass_zurich_last_year.volunteer, meeting_date: ass_zurich_last_year.period_start + 78)
     hour_zurich_last_year.update(created_at: ass_zurich_last_year.period_start + 80)
-    hour_last_year = create(:hour, hourable: ass_last_year, hours: 2, minutes: 30,
+    hour_last_year = create(:hour, hourable: ass_last_year, hours: 2.5,
       volunteer: ass_last_year.volunteer, meeting_date: ass_last_year.period_start + 78)
     hour_last_year.update(created_at: ass_last_year.period_start + 80)
 
@@ -604,44 +621,44 @@ class PerformanceReportTest < ActiveSupport::TestCase
     assert_equal([0, 0.0], type_of_values(@this_year.report_content).sort)
     assert_equal([0, 0.0], type_of_values(@last_year.report_content).sort)
 
-    go_this_year_in_dep = create(:group_offer, department: create(:department))
-    go_this_year_in_dep.update(created_at: @this_dates.first + 10)
-    go_this_year_not_in_dep = create(:group_offer, department_id: nil)
-    go_this_year_not_in_dep.update(created_at: @this_dates.first + 10)
-    go_last_year_in_dep = create(:group_offer, department: create(:department))
-    go_last_year_in_dep.update(created_at: @last_dates.first + 10)
-    go_last_year_not_in_dep = create(:group_offer, department_id: nil)
-    go_last_year_not_in_dep.update(created_at: @last_dates.first + 10)
+    go_this_year_internal = create(:group_offer)
+    go_this_year_internal.update(created_at: @this_dates.first + 10)
+    go_this_year_external = create(:group_offer, :external)
+    go_this_year_external.update(created_at: @this_dates.first + 10)
+    go_last_year_internal = create(:group_offer)
+    go_last_year_internal.update(created_at: @last_dates.first + 10)
+    go_last_year_external = create(:group_offer, :external)
+    go_last_year_external.update(created_at: @last_dates.first + 10)
 
     refresh_reports
 
     this_year_all_expected = GROUP_OFFER_ZERO.merge(all: 4, created: 2).stringify_keys
     assert_equal(this_year_all_expected, @this_year.report_content['group_offers']['all'])
-    this_year_in_dep_expected = GROUP_OFFER_ZERO.merge(all: 2, created: 1).stringify_keys
-    assert_equal(this_year_in_dep_expected, @this_year.report_content['group_offers']['in_departments'])
-    this_year_not_in_dep_expected = GROUP_OFFER_ZERO.merge(all: 2, created: 1).stringify_keys
-    assert_equal(this_year_not_in_dep_expected, @this_year.report_content['group_offers']['outside_departments'])
+    this_year_internal_expected = GROUP_OFFER_ZERO.merge(all: 2, created: 1).stringify_keys
+    assert_equal(this_year_internal_expected, @this_year.report_content['group_offers']['internal'])
+    this_year_external_expected = GROUP_OFFER_ZERO.merge(all: 2, created: 1).stringify_keys
+    assert_equal(this_year_external_expected, @this_year.report_content['group_offers']['external'])
 
     last_year_all_expected = GROUP_OFFER_ZERO.merge(all: 2, created: 2).stringify_keys
     assert_equal(last_year_all_expected, @last_year.report_content['group_offers']['all'])
-    last_year_in_dep_expected = GROUP_OFFER_ZERO.merge(all: 1, created: 1).stringify_keys
-    assert_equal(last_year_in_dep_expected, @last_year.report_content['group_offers']['in_departments'])
-    last_year_not_in_dep_expected = GROUP_OFFER_ZERO.merge(all: 1, created: 1).stringify_keys
-    assert_equal(last_year_not_in_dep_expected, @last_year.report_content['group_offers']['outside_departments'])
+    last_year_internal_expected = GROUP_OFFER_ZERO.merge(all: 1, created: 1).stringify_keys
+    assert_equal(last_year_internal_expected, @last_year.report_content['group_offers']['internal'])
+    last_year_external_expected = GROUP_OFFER_ZERO.merge(all: 1, created: 1).stringify_keys
+    assert_equal(last_year_external_expected, @last_year.report_content['group_offers']['external'])
 
     # active assignment
-    g_ass_this_year_in_dep = create(:group_assignment, group_offer: go_this_year_in_dep,
-      period_start: go_this_year_in_dep.created_at.to_date + 10, period_end: nil)
-    g_ass_this_year_in_dep.update(created_at: @this_dates.first + 8)
-    g_ass_this_year_not_in_dep = create(:group_assignment, group_offer: go_this_year_not_in_dep,
-      period_start: go_this_year_not_in_dep.created_at.to_date + 10, period_end: nil)
-    g_ass_this_year_not_in_dep.update(created_at: @this_dates.first + 8)
-    g_ass_last_year_in_dep = create(:group_assignment, group_offer: go_last_year_in_dep,
-      period_start: go_last_year_in_dep.created_at.to_date + 10, period_end: nil)
-    g_ass_last_year_in_dep.update(created_at: @last_dates.first + 8)
-    g_ass_last_year_not_in_dep = create(:group_assignment, group_offer: go_last_year_not_in_dep,
-      period_start: go_last_year_not_in_dep.created_at.to_date + 10, period_end: nil)
-    g_ass_last_year_not_in_dep.update(created_at: @last_dates.first + 8)
+    g_ass_this_year_internal = create(:group_assignment, group_offer: go_this_year_internal,
+      period_start: go_this_year_internal.created_at.to_date + 10, period_end: nil)
+    g_ass_this_year_internal.update(created_at: @this_dates.first + 8)
+    g_ass_this_year_external = create(:group_assignment, group_offer: go_this_year_external,
+      period_start: go_this_year_external.created_at.to_date + 10, period_end: nil)
+    g_ass_this_year_external.update(created_at: @this_dates.first + 8)
+    g_ass_last_year_internal = create(:group_assignment, group_offer: go_last_year_internal,
+      period_start: go_last_year_internal.created_at.to_date + 10, period_end: nil)
+    g_ass_last_year_internal.update(created_at: @last_dates.first + 8)
+    g_ass_last_year_external = create(:group_assignment, group_offer: go_last_year_external,
+      period_start: go_last_year_external.created_at.to_date + 10, period_end: nil)
+    g_ass_last_year_external.update(created_at: @last_dates.first + 8)
 
     refresh_reports
 
@@ -650,71 +667,75 @@ class PerformanceReportTest < ActiveSupport::TestCase
       total_created_assignments: 2, total_started_assignments: 2, total_active_assignments: 4
     ).stringify_keys!
     assert_equal(this_year_all_expected, @this_year.report_content['group_offers']['all'])
-    this_year_not_in_dep_expected.merge!(
+    this_year_external_expected.merge!(
       created_assignments: 1, started_assignments: 1, active_assignments: 2, total_assignments: 2,
       total_created_assignments: 1, total_started_assignments: 1, total_active_assignments: 2
     ).stringify_keys!
-    assert_equal(this_year_not_in_dep_expected, @this_year.report_content['group_offers']['in_departments'])
-    this_year_in_dep_expected.merge!(
+    assert_equal(this_year_external_expected, @this_year.report_content['group_offers']['external'])
+    this_year_internal_expected.merge!(
       created_assignments: 1, started_assignments: 1, active_assignments: 2, total_assignments: 2,
       total_created_assignments: 1, total_started_assignments: 1, total_active_assignments: 2
     ).stringify_keys!
-    assert_equal(this_year_in_dep_expected, @this_year.report_content['group_offers']['outside_departments'])
+    assert_equal(this_year_internal_expected, @this_year.report_content['group_offers']['internal'])
 
     last_year_all_expected.merge!(
       created_assignments: 2, started_assignments: 2, active_assignments: 2, total_assignments: 2,
       total_created_assignments: 2, total_started_assignments: 2, total_active_assignments: 2
     ).stringify_keys!
     assert_equal(last_year_all_expected, @last_year.report_content['group_offers']['all'])
-    last_year_not_in_dep_expected.merge!(
+    last_year_external_expected.merge!(
       created_assignments: 1, started_assignments: 1, active_assignments: 1, total_assignments: 1,
       total_created_assignments: 1, total_started_assignments: 1, total_active_assignments: 1
     ).stringify_keys!
-    assert_equal(last_year_not_in_dep_expected, @last_year.report_content['group_offers']['in_departments'])
-    last_year_in_dep_expected.merge!(
+    assert_equal(last_year_external_expected, @last_year.report_content['group_offers']['external'])
+    last_year_internal_expected.merge!(
       created_assignments: 1, started_assignments: 1, active_assignments: 1, total_assignments: 1,
       total_created_assignments: 1, total_started_assignments: 1, total_active_assignments: 1
     ).stringify_keys!
-    assert_equal(last_year_in_dep_expected, @last_year.report_content['group_offers']['outside_departments'])
+    assert_equal(last_year_internal_expected, @last_year.report_content['group_offers']['internal'])
 
     # ended group assignments
-    g_ass_this_year_in_dep.update(period_end: g_ass_this_year_in_dep.period_start + 100,
-      period_end_set_by: @user, termination_submitted_by: g_ass_this_year_in_dep.volunteer.user,
-      termination_submitted_at: g_ass_this_year_in_dep.period_start + 110, termination_verified_by: @user,
-      termination_verified_at: g_ass_this_year_in_dep.period_start + 120)
-    g_ass_this_year_not_in_dep.update(period_end: g_ass_this_year_not_in_dep.period_start + 100,
-      period_end_set_by: @user, termination_submitted_by: g_ass_this_year_not_in_dep.volunteer.user,
-      termination_submitted_at: g_ass_this_year_not_in_dep.period_start + 110, termination_verified_by: @user,
-      termination_verified_at: g_ass_this_year_not_in_dep.period_start + 120)
-    g_ass_last_year_in_dep.update(period_end: g_ass_last_year_in_dep.period_start + 100,
-      period_end_set_by: @user, termination_submitted_by: g_ass_last_year_in_dep.volunteer.user,
-      termination_submitted_at: g_ass_last_year_in_dep.period_start + 110, termination_verified_by: @user,
-      termination_verified_at: g_ass_last_year_in_dep.period_start + 120)
-    g_ass_last_year_not_in_dep.update(period_end: g_ass_last_year_not_in_dep.period_start + 100,
-      period_end_set_by: @user, termination_submitted_by: g_ass_last_year_not_in_dep.volunteer.user,
-      termination_submitted_at: g_ass_last_year_not_in_dep.period_start + 110, termination_verified_by: @user,
-      termination_verified_at: g_ass_last_year_not_in_dep.period_start + 120)
+    g_ass_this_year_internal.update(period_end: g_ass_this_year_internal.period_start + 100,
+      period_end_set_by: @user, termination_submitted_by: g_ass_this_year_internal.volunteer.user,
+      termination_submitted_at: g_ass_this_year_internal.period_start + 110,
+      termination_verified_by: @user,
+      termination_verified_at: g_ass_this_year_internal.period_start + 120)
+    g_ass_this_year_external.update(period_end: g_ass_this_year_external.period_start + 100,
+      period_end_set_by: @user, termination_submitted_by: g_ass_this_year_external.volunteer.user,
+      termination_submitted_at: g_ass_this_year_external.period_start + 110,
+      termination_verified_by: @user,
+      termination_verified_at: g_ass_this_year_external.period_start + 120)
+    g_ass_last_year_internal.update(period_end: g_ass_last_year_internal.period_start + 100,
+      period_end_set_by: @user, termination_submitted_by: g_ass_last_year_internal.volunteer.user,
+      termination_submitted_at: g_ass_last_year_internal.period_start + 110,
+      termination_verified_by: @user,
+      termination_verified_at: g_ass_last_year_internal.period_start + 120)
+    g_ass_last_year_external.update(period_end: g_ass_last_year_external.period_start + 100,
+      period_end_set_by: @user, termination_submitted_by: g_ass_last_year_external.volunteer.user,
+      termination_submitted_at: g_ass_last_year_external.period_start + 110,
+      termination_verified_by: @user,
+      termination_verified_at: g_ass_last_year_external.period_start + 120)
 
     refresh_reports
 
     this_year_all_expected.merge!(ended_assignments: 2, total_active_assignments: 2,
       total_ended_assignments: 2, active_assignments: 2).stringify_keys!
     assert_equal(this_year_all_expected, @this_year.report_content['group_offers']['all'])
-    this_year_not_in_dep_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
+    this_year_external_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
       total_ended_assignments: 1, active_assignments: 1).stringify_keys!
-    assert_equal(this_year_not_in_dep_expected, @this_year.report_content['group_offers']['in_departments'])
-    this_year_in_dep_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
+    assert_equal(this_year_external_expected, @this_year.report_content['group_offers']['external'])
+    this_year_internal_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
       total_ended_assignments: 1, active_assignments: 1).stringify_keys!
-    assert_equal(this_year_in_dep_expected, @this_year.report_content['group_offers']['outside_departments'])
+    assert_equal(this_year_internal_expected, @this_year.report_content['group_offers']['internal'])
 
     last_year_all_expected.merge!(ended_assignments: 2, total_active_assignments: 2,
       total_ended_assignments: 2, active_assignments: 2).stringify_keys!
     assert_equal(last_year_all_expected, @last_year.report_content['group_offers']['all'])
-    last_year_not_in_dep_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
+    last_year_external_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
       total_ended_assignments: 1, active_assignments: 1).stringify_keys!
-    assert_equal(last_year_not_in_dep_expected, @last_year.report_content['group_offers']['in_departments'])
-    last_year_in_dep_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
+    assert_equal(last_year_external_expected, @last_year.report_content['group_offers']['external'])
+    last_year_internal_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
       total_ended_assignments: 1, active_assignments: 1).stringify_keys!
-    assert_equal(last_year_in_dep_expected, @last_year.report_content['group_offers']['outside_departments'])
+    assert_equal(last_year_internal_expected, @last_year.report_content['group_offers']['internal'])
   end
 end

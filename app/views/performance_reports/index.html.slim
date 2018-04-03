@@ -10,25 +10,30 @@ nav.navbar.section-navigation
   table.table.table-striped
     thead
       tr
-        th= t_attr(:created_at)
+        th.hidden-print Aktionen
         th= t_attr(:period)
-        th colspan='4'
+        th= t_attr(:created_at)
 
     tbody
       - @performance_reports.each do |performance_report|
         tr
-          td= l(performance_report.created_at, format: :default)
-          - if performance_report.year.present?
-            td= performance_report.year
-          - else
-            td
+          td.index-action-cell.hidden-print
+            = button_link navigation_glyph(:show), performance_report, title: 'Anzeigen'
+            = button_link navigation_glyph(:edit), edit_performance_report_path(performance_report),
+                title: 'Bearbeiten'
+            = button_link navigation_glyph(:delete), performance_report,
+                confirm_deleting(performance_report, 'btn btn-default').merge(title: 'Löschen')
+            = button_link navigation_fa_icon(:xlsx),
+                performance_report_path(performance_report, format: :xlsx),
+                title: 'Excel herunterladen'
+          td
+            - if performance_report.year.present?
+              = performance_report.year
+            - else
               = l(performance_report.period_start.to_date, format: :default)
               = " - "
               = l(performance_report.period_end.to_date, format: :default)
-          td = link_to t_action(:show), performance_report
-          td = link_to 'Excel downloaden', performance_report_path(performance_report, format: :xlsx)
-          td = link_to t_action(:edit), edit_performance_report_path(performance_report)
-          td = link_to navigation_glyph(:delete), performance_report, confirm_deleting(performance_report)
+          td= l(performance_report.created_at, format: :default)
 
 nav.navbar.section-navigation
   hr

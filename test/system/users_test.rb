@@ -11,53 +11,53 @@ class UsersTest < ApplicationSystemTestCase
 
   test 'invalid superadmin information' do
     fill_in 'Email', with: ''
-    select '', from: 'Role'
+    select '', from: 'Rolle'
 
     assert_no_difference 'User.count' do
       accept_prompt do
-        click_button 'Create User'
+        click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Please review the problems below:'
-      assert page.has_text? "can't be blank"
-      assert page.has_text? 'is not included in the list'
+      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'darf nicht leer sein'
+      assert page.has_text? 'ist nicht in der Liste enthalten'
     end
   end
 
   test 'invalid user role' do
     fill_in 'Email', with: 'superadmin@test.ch'
-    select '', from: 'Role'
+    select '', from: 'Rolle'
 
     assert_no_difference 'User.count' do
       accept_prompt do
-        click_button 'Create User'
+        click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Please review the problems below:'
-      assert page.has_text? 'is not included in the list'
+      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'ist nicht in der Liste enthalten'
     end
   end
 
   test 'taken user email' do
     fill_in 'Email', with: 'superadmin@example.com'
-    select 'Superadmin', from: 'Role'
+    select 'Superadmin', from: 'Rolle'
 
     assert_no_difference 'User.count' do
       accept_prompt do
-        click_button 'Create User'
+        click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Please review the problems below:'
-      assert page.has_text? 'has already been taken'
+      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'ist schon vergeben'
     end
   end
 
   test 'valid superadmin registration' do
     fill_in 'Email', with: 'superadmin@test.ch'
-    select 'Superadmin', from: 'Role'
+    select 'Superadmin', from: 'Rolle'
 
     assert_difference 'User.count', 1 do
       accept_prompt do
-        click_button 'Create User'
+        click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Invitation sent to superadmin@test.ch'
+      assert page.has_text? 'Einladung wurde an superadmin@test.ch verschickt.'
     end
 
     assert_equal 1, ActionMailer::Base.deliveries.size
@@ -69,26 +69,26 @@ class UsersTest < ApplicationSystemTestCase
     create :user, role: 'social_worker'
     visit users_path
 
-    assert page.has_link? 'Delete'
+    assert page.has_link? 'Löschen'
   end
 
   test "superadmin can't destroy superadmin" do
     create :user, role: 'superadmin'
     visit users_path
 
-    assert_not page.has_link? 'Delete'
+    assert_not page.has_link? 'Löschen'
   end
 
   test 'accepted volunteer becomes a user' do
     volunteer = create :volunteer, acceptance: :undecided
 
     visit edit_volunteer_path(volunteer.id)
-    assert page.has_text? 'Edit Volunteer'
-    page.choose 'Accepted'
+    assert page.has_text? volunteer.full_name
+    find("option[value='accepted']").click
     assert_difference 'User.count', 1 do
-      click_button 'Update Volunteer'
+      first(:button, 'Freiwillige/n aktualisieren').click
     end
-    assert page.has_text? "Invitation sent to #{volunteer.contact.primary_email}"
+    assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last
     assert_equal volunteer.contact.primary_email, email['to'].to_s
@@ -103,11 +103,11 @@ class UsersTest < ApplicationSystemTestCase
 
     other_users.each do |user|
       visit edit_user_path(user)
-      refute page.has_field? 'Password'
+      refute page.has_field? 'Passwort'
     end
 
     visit edit_user_path(@user)
-    assert page.has_field? 'Password'
+    assert page.has_field? 'Passwort'
   end
 
   test 'filter users by role' do
@@ -123,7 +123,7 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_link? user_volunteer.full_name
 
     within '.section-navigation' do
-      click_link 'Role'
+      click_link 'Rolle'
       click_link 'Superadmin'
     end
     visit current_url
@@ -135,8 +135,8 @@ class UsersTest < ApplicationSystemTestCase
     end
 
     within '.section-navigation' do
-      click_link 'Role: Superadmin'
-      click_link 'Volunteer'
+      click_link 'Rolle: Superadmin'
+      click_link 'Freiwillige/r'
     end
     visit current_url
     within 'tbody' do
@@ -156,17 +156,17 @@ class UsersTest < ApplicationSystemTestCase
     visit users_path
     assert page.has_link? superadmin_no_profile.email
     click_link superadmin_no_profile.email
-    assert page.has_text? 'Role Superadmin'
+    assert page.has_text? 'Superadmin'
 
     visit users_path
     assert page.has_link? department_manager_no_profile.email
     click_link department_manager_no_profile.email
-    assert page.has_text? 'Role Department manager'
+    assert page.has_text? 'Freiwilligenverantwortliche/r'
 
     visit users_path
     assert page.has_link? social_worker_no_profile.email
     click_link social_worker_no_profile.email
-    assert page.has_text? 'Role Social worker'
+    assert page.has_text? 'Sozialarbeiter/in'
 
     visit users_path
     assert page.has_link? volunteer_no_profile.full_name

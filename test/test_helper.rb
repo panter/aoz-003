@@ -29,6 +29,8 @@ class ActiveSupport::TestCase
     )
 
     super
+
+    FFaker::UniqueUtils.clear
     DatabaseCleaner.start
   end
 
@@ -49,7 +51,7 @@ class ActiveSupport::TestCase
 
   def assert_xls_cols_equal(wb, row, offset, *columns)
     columns.each_with_index do |column, index|
-      assert_equal column, wb.cell(row, index + 1 + offset)
+      assert_equal column.to_s, wb.cell(row, index + 1 + offset).to_s
     end
   end
 

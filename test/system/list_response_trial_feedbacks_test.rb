@@ -102,7 +102,7 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'truncate_modal_shows_all_text' do
-    body = Faker::Lorem.paragraph(50)
+    body = FFaker::Lorem.paragraph(50)
     @assignment_fb_pendent.update(body: body)
     @group_assignment_fb_pendent.update(reviewer: @superadmin)
     click_link 'Probezeit Feedback Eingang'

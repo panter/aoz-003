@@ -1,25 +1,25 @@
 FactoryBot.define do
   factory :reminder_mailing do
     association :creator, factory: :user_fake_email
-    body { Faker::Lorem.paragraph }
-    subject { Faker::Lorem.sentence }
+    body { FFaker::Lorem.paragraph }
+    subject { FFaker::Lorem.sentence }
 
     trait :half_year do
-      kind { 0 }
-      body { Faker::Lorem.paragraph }
-      subject { Faker::Lorem.sentence }
+      kind { ReminderMailing.kinds[:half_year] }
+      body { FFaker::Lorem.paragraph }
+      subject { FFaker::Lorem.sentence }
     end
 
     trait :trial_period do
-      kind { 1 }
-      body { Faker::Lorem.paragraph }
-      subject { Faker::Lorem.sentence }
+      kind { ReminderMailing.kinds[:trial_period] }
+      body { FFaker::Lorem.paragraph }
+      subject { FFaker::Lorem.sentence }
     end
 
     trait :termination do
-      kind { 2 }
-      body { Faker::Lorem.paragraph }
-      subject { Faker::Lorem.sentence }
+      kind { ReminderMailing.kinds[:termination] }
+      body { FFaker::Lorem.paragraph }
+      subject { FFaker::Lorem.sentence }
     end
 
     after(:build) do |reminder_mailing|

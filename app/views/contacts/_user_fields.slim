@@ -1,0 +1,4 @@
+.row
+  - if !f.object.client?
+    .col-xs-12.col-md-6= f.input :first_name, required: true
+    .col-xs-12.col-md-6= f.input :last_name, required: true, label: t('generic_keys.last_name')

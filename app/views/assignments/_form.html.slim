@@ -2,22 +2,25 @@
   = simple_error_notice f
 
   .row
-    .col-xs-12
-      - if action_name == 'new' && !params[:client_id]
-        = f.association :client, include_blank: true, collection: Client.need_accompanying
-      - else
+    .col-xs-12.col-md-6
+      - if action_name == 'new'
         = f.association :client, include_blank: true,
           selected: params[:client_id] || @assignment&.client&.id
-
-  .row
-    .col-xs-12= f.input :period, as: :date_range_picker, label: false
-  .row
-    .col-xs-12
-      - if action_name == 'new' && !params[:volunteer_id]
-        = f.association :volunteer, include_blank: true, collection: Volunteer.seeking_clients
-      - else
         = f.association :volunteer, include_blank: true,
           selected: params[:volunteer_id] || @assignment&.volunteer&.id
+      - else
+        h4.m-b-10= t_model(Client)
+        = render 'user_table', user: @assignment.client, client: true
+        h4.m-b-10= t_model(Volunteer)
+        = render 'user_table', user: @assignment.volunteer, client: false
+
+    .col-xs-12.col-md-6
+      = f.input :period, as: :date_range_picker, label: false
+    .col-xs-12.col-md-6
+      = f.input :comments
+    .col-xs-12.col-md-6
+      = f.input :additional_comments
 
   .row
-    .col-xs-12= f.button :submit
+    .col-xs-12
+      = f.button :submit

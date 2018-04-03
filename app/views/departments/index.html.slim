@@ -1,21 +1,22 @@
 h1 Standorte
 
+= form_navigation_btn :new
 .row
   .col-xs-12
     table.table.table-striped
       thead
         tr
-          th Standort
-          th= t_attr(:street, Contact)
-          th= t_attr(:postal_code, Contact)
-          th
+          th.hidden-print Aktionen
+          th= sort_link @q, :contact_last_name, 'Standort'
+          th= sort_link @q, :contact_street, t_attr(:street, Contact)
+          th= sort_link @q, :contact_postal_code, t_attr(:postal_code, Contact)
 
       tbody
         - @departments.each do |d|
           tr
+            = render 'index_actions', subject: d
             td= d.contact.last_name
             td= d.contact.street
             td= d.contact.postal_code
-            = render 'index_actions', subject: d
 
 = form_navigation_btn :new

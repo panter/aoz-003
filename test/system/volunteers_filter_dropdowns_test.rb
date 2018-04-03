@@ -21,70 +21,70 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'filter by acceptance works and disabling works as well' do
     within '.section-navigation' do
-      click_link 'Affirmation: Not resigned'
-      click_link 'Undecided'
+      click_link 'Prozess'
+      click_link 'Angemeldet'
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Undecided'
-      refute page.has_text? 'Accepted'
+      assert page.has_text? 'Angemeldet'
+      refute page.has_text? 'Akzeptiert'
     end
     within '.section-navigation' do
-      click_link 'Affirmation: Undecided'
-      assert page.has_link? text: 'Undecided', class: 'bg-undecided'
-      click_link 'All'
+      click_link 'Prozess: Angemeldet'
+      assert page.has_link? text: 'Angemeldet', class: 'bg-undecided'
+      click_link 'Alle'
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Accepted'
-      assert page.has_text? 'Undecided'
+      assert page.has_text? 'Akzeptiert'
+      assert page.has_text? 'Angemeldet'
     end
   end
 
   test 'Filter acceptance and salutation at the same time' do
     within '.section-navigation' do
-      click_link 'Salutation'
-      click_link 'Mr.'
+      click_link 'Anrede'
+      click_link 'Herr'
     end
     visit current_url
     within '.section-navigation' do
-      click_link 'Affirmation: Not resigned'
-      click_link 'Accepted'
+      click_link 'Prozess'
+      click_link 'Akzeptiert'
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Mr.'
-      refute page.has_text? 'Mrs.'
-      assert page.has_text? 'Accepted'
-      refute page.has_text? 'Rejected'
+      assert page.has_text? 'Herr'
+      refute page.has_text? 'Frau'
+      assert page.has_text? 'Akzeptiert'
+      refute page.has_text? 'Abgelehnt'
     end
     within '.section-navigation' do
-      click_link 'Salutation: Mr.'
-      assert page.has_link? 'Mr.', class: 'bg-success'
-      click_link 'All'
+      click_link 'Anrede: Herr'
+      assert page.has_link? 'Herr', class: 'bg-success'
+      click_link 'Alle'
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Mrs.'
-      assert page.has_text? 'Mr.'
-      assert page.has_text? 'Accepted'
-      refute page.has_text? 'Rejected'
+      assert page.has_text? 'Frau'
+      assert page.has_text? 'Herr'
+      assert page.has_text? 'Akzeptiert'
+      refute page.has_text? 'Abgelehnt'
     end
-    click_link 'Clear filters'
+    click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Mrs.'
-      assert page.has_text? 'Mr.'
-      assert page.has_text? 'Accepted'
-      assert page.has_text? 'Rejected'
+      assert page.has_text? 'Frau'
+      assert page.has_text? 'Herr'
+      assert page.has_text? 'Akzeptiert'
+      assert page.has_text? 'Abgelehnt'
     end
   end
 
   test 'boolean filters for single accompainment' do
     false_volunteer = create :volunteer, man: false, woman: false, morning: false, workday: false
     within '.section-navigation' do
-      click_link 'Single accompaniment'
-      click_link 'Man'
+      click_link 'Einzelbegleitungen'
+      click_link 'Mann'
     end
     visit current_url
     within 'tbody' do
@@ -92,9 +92,9 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? false_volunteer.to_s
     end
     within '.section-navigation' do
-      click_link 'Single accompaniment'
-      assert page.has_link? 'Man', class: 'bg-success'
-      click_link 'Woman'
+      click_link 'Einzelbegleitungen'
+      assert page.has_link? 'Mann', class: 'bg-success'
+      click_link 'Frau'
     end
     visit current_url
     within 'tbody' do
@@ -102,16 +102,16 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? false_volunteer.to_s
     end
     within '.section-navigation' do
-      click_link 'Single accompaniment'
-      assert page.has_link? 'Man', class: 'bg-success'
-      assert page.has_link? 'Woman', class: 'bg-success'
-      click_link 'Woman'
+      click_link 'Einzelbegleitungen'
+      assert page.has_link? 'Mann', class: 'bg-success'
+      assert page.has_link? 'Frau', class: 'bg-success'
+      click_link 'Frau'
     end
     visit current_url
     within 'tbody' do
       assert page.has_text? Volunteer.where(man: true, woman: false).first.to_s
     end
-    click_link 'Clear filters'
+    click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
       assert page.has_text? false_volunteer.to_s
@@ -120,7 +120,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'Filter for group offer categories' do
     within '.section-navigation' do
-      click_link 'Group offer categories'
+      click_link 'Gruppenangebote in AOZ-Einrichtungen'
       click_link @c1
     end
     visit current_url
@@ -130,7 +130,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @volunteer3
     end
     within '.section-navigation' do
-      click_link 'Group offer categories'
+      click_link 'Gruppenangebote in AOZ-Einrichtungen'
       click_link @c3
     end
     visit current_url
@@ -140,7 +140,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @volunteer3
     end
     within '.section-navigation' do
-      click_link 'Group offer categories'
+      click_link 'Gruppenangebote in AOZ-Einrichtungen'
       click_link @c2
     end
     visit current_url
@@ -149,7 +149,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       assert page.has_text? @volunteer2
       refute page.has_text? @volunteer3
     end
-    click_link 'Clear filters'
+    click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
       assert page.has_text? @volunteer1
@@ -158,33 +158,30 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'thead_acceptance_filter_dropdown_by_default_excludes_resigned' do
+  test 'thead_acceptance_filter_dropdown_by_default_shows_all' do
     visit volunteers_path
     within 'tbody' do
-      assert page.has_text? 'Accepted'
-      assert page.has_text? 'Undecided'
+      assert page.has_text? 'Akzeptiert'
+      assert page.has_text? 'Angemeldet'
       assert page.has_text? 'Eingeladen'
-      assert page.has_text? 'Rejected'
-      refute page.has_text? 'Resigned'
+      assert page.has_text? 'Abgelehnt'
+      assert page.has_text? 'Beendet'
     end
   end
 
   test 'choosing_acceptance_resigned_works' do
     visit volunteers_path
-    within 'tbody' do
-      refute page.has_text? 'Resigned'
-    end
     within '.section-navigation' do
-      click_link 'Affirmation: Not resigned'
-      click_link 'Resigned'
+      click_link 'Prozess'
+      click_link 'Beendet'
     end
     visit current_url
     within 'tbody' do
-      refute page.has_text? 'Accepted'
-      refute page.has_text? 'Undecided'
+      refute page.has_text? 'Akzeptiert'
+      refute page.has_text? 'Angemeldet'
       refute page.has_text? 'Eingeladen'
-      refute page.has_text? 'Rejected'
-      assert page.has_text? 'Resigned'
+      refute page.has_text? 'Abgelehnt'
+      assert page.has_text? 'Beendet'
     end
   end
 end

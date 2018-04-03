@@ -5,37 +5,7 @@ h1= @volunteer.contact.full_name
   - if @volunteer.rejection_text.present?
     h4= "#{t_attr(:rejection_text)}: #{@volunteer.rejection_text}"
 
-nav.navbar.section-navigation
-  ul.list-inline.pull-right
-    - if policy(Volunteer).superadmin_privileges?
-        li= button_link 'Journal', polymorphic_path([@volunteer, Journal]), 'primary'
-  ul.list-inline
-    - if policy(@volunteer).terminate?
-      li.button-acceptance = link_to t(".acceptance.#{@volunteer.acceptance}"), '#',
-        class: "btn btn-acceptance-#{@volunteer.acceptance}"
-      li= link_to 'Beenden', terminate_volunteer_path(@volunteer), class: 'btn btn-default', method: :put unless @volunteer.resigned?
-    - if policy(Volunteer).superadmin_privileges?
-      ul.list-inline
-        - if @volunteer.seeking_clients?
-          li= button_link t_title(:new, Assignment), new_assignment_path(volunteer_id: @volunteer)
-        - if @volunteer.internal_and_started_assignments?
-          li
-            = simple_form_for [@volunteer, BillingExpense.new] do |f|
-              = f.hidden_field :volunteer_id, value: @volunteer.id
-              = f.button :submit
-          - if @volunteer.billing_expenses.any?
-            li= button_link t_title(:index, BillingExpense), volunteer_billing_expenses_path(@volunteer)
-          li= button_link t('.new_certificate'), new_volunteer_certificate_path(@volunteer)
-          - if @volunteer.certificates.size == 1
-            li= button_link t('.show_certificate'), volunteer_certificate_path(@volunteer, @volunteer.certificates.first)
-          - elsif @volunteer.certificates.size > 1
-            li= button_link t('.show_certificates'), volunteer_certificates_path(@volunteer)
-  ul.list-inline
-    - if @volunteer.internal_and_started_assignments?
-      li = button_link t('.report_hours'), new_volunteer_hour_url(@volunteer)
-      li = button_link t('.hour_reports'), volunteer_hours_path(@volunteer)
-    li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
-    li= form_navigation_btn :back, with_row: false unless current_user.volunteer?
+= render 'buttons'
 
 - if policy(Volunteer).superadmin_privileges?
   - if @volunteer.import.present?
@@ -53,11 +23,11 @@ nav.navbar.section-navigation
           td= t_attr(:intro_course)
           td= t(@volunteer.intro_course)
         tr
-          td= t_attr(:doc_sent)
-          td= t(@volunteer.doc_sent)
-        tr
           td= t_attr(:bank_account)
           td= t(@volunteer.bank_account)
+        tr
+          td= t_attr(:doc_sent)
+          td= t(@volunteer.doc_sent)
         tr
           td= t_attr(:evaluation)
           td= t(@volunteer.evaluation)
@@ -124,57 +94,52 @@ h2.small Persönlicher Hintergrund
         td #{t_attr(:external)} / #{t_attr(:internal)}
         td= @volunteer.external? ? t_attr(:external) : t_attr(:internal)
       tr
-        td= t_attr(:registered_by)
+        td= t_attr(:created_by)
         td
           - if @volunteer.self_applicant?
             = t('volunteer_self_applicant')
           - else
             = link_to @volunteer.registrar.full_name, profile_link(@volunteer.registrar)
+      tr
+        td= t_attr(:comments)
+        td= @volunteer.comments
+      tr
+        td= t_attr(:additional_comments)
+        td= @volunteer.additional_comments
 
-h2.small= t_attr(:single_accompaniment)
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        - Volunteer::SINGLE_ACCOMPANIMENTS.each do |single|
-          th.text-center= t_attr(single)
-    tbody
-      tr
-        - @volunteer.slice(Volunteer::SINGLE_ACCOMPANIMENTS).values.each do |value|
-          td.text-center= boolean_glyph(value)
+.row
+  .col-xs-6
+    = render 'volunteers/single_accompaniments', volunteer: @volunteer
+  .col-xs-6
+    h3= t_attr(:availability, Volunteer)
+    = render 'availability/show', available: @volunteer
 
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        - @volunteer.group_accompaniments_house_moving.each do |group|
-          th.text-center
-            = t_attr(group[:title])
-    tbody
-      tr
-        - @volunteer.group_accompaniments_house_moving.each do |group|
-          td.text-center= boolean_glyph(group[:value])
+h3= t_attr(:group_accompaniment)
+h4.label-list
+  .row
+    .col-xs-12
+      - if @group_offer_categories.present?
+        - @group_offer_categories.each do |category|
+          span.label.label-success>
+            => navigation_glyph(:yes)
+            = t_attr(category.category_name)
+      - else
+        em Keine Kategorien Ausgewählt
+  .row
+    .col-xs-12
+      - @group_offer_categories_house_moving.each do |category|
+        span.label.label-success>
+          => navigation_glyph(:yes)
+          = t_attr(category.category_name)
 
-h2.small= t_attr(:group_accompaniment)
-.table-responsive
-  table.table.table-striped
-    thead
-      tr
-        - @volunteer.group_accompaniments_active_without_house_moving.each do |group|
-          th.text-center
-            = t_attr(group[:title])
-    tbody
-      tr
-        - @volunteer.group_accompaniments_active_without_house_moving.each do |group|
-          td.text-center= boolean_glyph(group[:value])
-
-      - if @volunteer.other_offer_desc?
-        tr
-          td= t_attr(:other_offer_desc)
-          td= @volunteer.other_offer_desc
-
-h2.small= t('.availability')
-= render 'availability/show', available: @volunteer
+.row
+  .col-xs-12
+    strong= t_attr(:other_offer_desc)
+    ':
+    - if @volunteer.other_offer_desc?
+      = @volunteer.other_offer_desc
+    - else
+      em keine
 
 - if @volunteer.assignments.unterminated.any?
   h2.small#assignments Aktuelle Begleitungen
@@ -195,8 +160,4 @@ h2.small= t('.availability')
 - if policy(Event).show? && @volunteer_events.present?
   = render 'events/volunteer_events', events: @volunteer_events
 
-nav.navbar.section-navigation
-  ul.list-inline
-    li= button_link current_user.volunteer? ? t('edit_profile') : t_title(:edit), edit_volunteer_path(@volunteer)
-    - if policy(Volunteer).index?
-      li= form_navigation_btn :back, with_row: false
+= render 'buttons'

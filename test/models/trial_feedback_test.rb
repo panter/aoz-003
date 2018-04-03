@@ -5,6 +5,6 @@ class TrialFeedbackTest < ActiveSupport::TestCase
     volunteer = create :volunteer_with_user
     invalid_feedback = TrialFeedback.new(volunteer: volunteer, author: volunteer.user)
     refute invalid_feedback.valid?
-    assert_equal ["can't be blank"], invalid_feedback.errors.messages[:body]
+    assert_equal ["darf nicht leer sein"], invalid_feedback.errors.messages[:body]
   end
 end

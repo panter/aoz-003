@@ -4,7 +4,7 @@ h4 Neue Teilnehmende hinzufügen
 
   .row
     .col-xs-12
-      = f.association :volunteer, collection: @volunteers, label: false
+      = f.association :volunteer, collection: @volunteers, label: false, include_blank: false
   .row
     .col-xs-12
       = f.button :submit, 'Teilnehmer/in hinzufügen'

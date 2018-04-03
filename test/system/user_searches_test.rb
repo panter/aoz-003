@@ -25,11 +25,11 @@ class UserSearchesTest < ApplicationSystemTestCase
     assert page.has_text? @superadmin.full_name
     assert page.has_text? 'Superadmin'
     assert page.has_text? @social_worker.full_name
-    assert page.has_text? 'Social worker'
+    assert page.has_text? 'Sozialarbeiter/in'
     refute page.has_text? @volunteer.full_name
-    refute page.has_text? 'Volunteer'
+    refute page.has_text? 'Freiwillige/r'
     refute page.has_text? @department_manager.full_name
-    refute page.has_text? 'Department manager'
+    refute page.has_text? 'Freiwilligenverantwortliche/r'
   end
 
   # with this test we check if the suggestions are correct, we don't check what happens in the body section,
@@ -46,15 +46,15 @@ class UserSearchesTest < ApplicationSystemTestCase
     within 'tbody' do
       refute page.has_text? @department_manager.full_name
       assert_equal @department_manager.email, 'better_call_saul@good.man'
-      assert page.has_text? 'Department manager'
+      assert page.has_text? 'Freiwilligenverantwortliche/r'
       assert page.has_link? @department_manager.email
 
       refute page.has_text? @superadmin.full_name
       refute page.has_text? 'Superadmin'
       refute page.has_text? @social_worker.full_name
-      refute page.has_text? 'Social worker'
+      refute page.has_text? 'Sozialarbeiter/in'
       refute page.has_text? @volunteer.full_name
-      refute page.has_text? 'Volunteer'
+      refute page.has_text? 'Freiwillige/r'
     end
   end
 end

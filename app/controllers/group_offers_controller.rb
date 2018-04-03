@@ -1,18 +1,17 @@
 class GroupOffersController < ApplicationController
   include GroupAssignmentsAttributes
   before_action :set_group_offer, except: [:index, :search, :new, :create]
-  before_action :set_volunteer_collection
   before_action :set_department_manager_collection
 
   def index
     authorize GroupOffer
     set_default_filter(period_end_blank: 'true')
     @q = policy_scope(GroupOffer).ransack(params[:q])
-    @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @group_offers = @q.result.reorder(active: :desc)
+    @q.sorts = ['active desc', 'created_at desc'] if @q.sorts.empty?
+    @group_offers = @q.result
     respond_to do |format|
-      format.xlsx { render xlsx: 'index', locals: { group_offers: @group_offers } }
       format.html { @group_offers = @group_offers.paginate(page: params[:page]) }
+      format.xlsx
     end
   end
 
@@ -27,10 +26,14 @@ class GroupOffersController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html
+      format.html do
+        @q = policy_scope(Volunteer.candidates_for_group_offer(@group_offer)).ransack(params[:q])
+        @volunteers = @q.result.paginate(page: params[:page])
+      end
+
       format.pdf do
         render pdf: "group_offer_#{@group_offer.id}", layout: 'pdf.pdf',
-        template: 'group_offers/show.html.slim', encoding: 'UTF-8'
+        template: 'group_offers/show.pdf.slim', encoding: 'UTF-8'
       end
     end
   end
@@ -40,9 +43,7 @@ class GroupOffersController < ApplicationController
     authorize @group_offer
   end
 
-  def edit
-    set_assignable_collection
-  end
+  def edit; end
 
   def create
     @group_offer = GroupOffer.new(group_offer_params)
@@ -78,8 +79,11 @@ class GroupOffersController < ApplicationController
   end
 
   def submit_initiate_termination
-    if @group_offer.update(period_end: group_offer_params[:period_end],
-      period_end_set_by: current_user)
+    if @group_offer.update(
+      period_end: group_offer_params[:period_end],
+      period_end_set_by: current_user,
+      active: false
+      )
       redirect_to group_offers_path, notice: 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
     else
       render :initiate_termination
@@ -104,37 +108,13 @@ class GroupOffersController < ApplicationController
     authorize @group_offer
   end
 
-  def set_assignable_collection
-    set_volunteer_collection
-    @assignable = if @group_offer.volunteer_state == 'internal_volunteer'
-                    define_assignables(@internals)
-                  else
-                    define_assignables(@externals)
-                  end
-    @assignable += @group_offer.volunteers.map do |volunteer|
-      [volunteer.contact.full_name, volunteer.id]
-    end
-    @assignable.uniq!
-  end
-
-  def define_assignables(volunteers)
-    VolunteerPolicy::Scope.new(current_user, volunteers).resolve.map do |volunteer|
-      [volunteer.contact.full_name, volunteer.id]
-    end
-  end
-
-  def set_volunteer_collection
-    @internals = Volunteer.accepted.internal
-    @externals = Volunteer.accepted.external
-  end
-
   def set_department_manager_collection
     @department_managers = User.department_managers
   end
 
   def group_offer_params
     params.require(:group_offer).permit(
-      :title, :offer_type, :offer_state, :volunteer_state, :necessary_volunteers, :description,
+      :title, :offer_type, :offer_state, :necessary_volunteers, :description,
       :women, :men, :children, :teenagers, :unaccompanied, :all, :long_term, :regular,
       :short_term, :workday, :weekend, :morning, :afternoon, :evening, :flexible, :schedule_details,
       :department_id, :creator_id, :organization, :location, :period_end, :group_offer_category_id,

@@ -8,11 +8,12 @@ class Certificate < ApplicationRecord
     self.text_body ||= default_text_body
     self.function ||= DEFAULT_FUNCTION
     self.hours ||= volunteer.hours.total_hours
-    self.minutes ||= volunteer.hours.minutes_rest
     self.volunteer_contact ||= convert_volunteer_contact
-    self.institution ||= DEFAULT_INSTITUTION
+    self.institution ||= DEFAULT_INSTITUTION + ", #{user&.profile.contact.primary_phone}"
     self.duration_start = volunteer.min_assignment_date
     self.duration_end = volunteer.max_assignment_date
+    self.creator_name ||= user.profile.contact.full_name
+    self.creator_function ||= user.profile.profession
   end
 
   def convert_volunteer_contact
@@ -28,7 +29,7 @@ class Certificate < ApplicationRecord
   end
 
   DEFAULT_INSTITUTION = "**AOZ** Zürich, Flüelastrasse 32, 8047 Zürich  \r\n"\
-    '044 415 67 35, info@aoz-freiwillige.ch'.freeze
+    'freiwillige@aoz.ch'.freeze
 
   DEFAULT_FUNCTION = 'Förderung der sozialen und beruflichen Integration von Asylsuchenden, '\
     'Geflüchteten und Migrant/innen'.freeze

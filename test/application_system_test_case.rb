@@ -4,7 +4,9 @@ require 'utility/reminder_mailing_builder'
 require 'utility/group_offer_and_assignment'
 
 Capybara.register_driver :chrome_headless do |app|
-  chrome_options = { chromeOptions: { args: %w[headless disable-gpu no-sandbox] } }
+  chrome_options = {
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox window-size=1600x2000] }
+  }
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chrome_options)
   Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
 end
@@ -94,4 +96,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def all_checked?(selector)
     page.find_all(selector).all?(&:checked?)
   end
+
+  def selectize_fill(field, value)
+    # fill in the input field
+    page.find(".#{field} div.selectize-input input").set(value)
+  end
+
+  def selectize_select(field, value)
+    selectize_fill(field, value)
+    # select the first dropdown item with given value
+    page.find(".#{field} div.selectize-dropdown-content .option", text: value).click
+  end
+
 end

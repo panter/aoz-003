@@ -12,13 +12,13 @@ class EventsTest < ApplicationSystemTestCase
 
   test 'new event form' do
     visit new_event_path
-    assert page.has_text? 'New Veranstaltung'
+    assert page.has_text? 'Veranstaltung erfassen'
     select('Einführungsveranstaltung', from: 'Art')
     fill_in 'Titel', with: 'Titel asdf'
     select('Event Department', from: 'Standort')
 
     fill_in 'Beschreibung', with: 'Beschreibung asdf'
-    click_button 'Create Veranstaltung'
+    click_button 'Veranstaltung erfassen'
 
     assert page.has_text? 'Titel asdf'
     assert page.has_text? 'Beschreibung asdf'
@@ -27,7 +27,7 @@ class EventsTest < ApplicationSystemTestCase
 
   test 'when creating a new event, it is not possible to add volunteers' do
     visit new_event_path
-    assert page.has_text? 'New Veranstaltung'
+    assert page.has_text? 'Veranstaltung erfassen'
     refute page.has_text? 'Neue Teilnehmende hinzufügen'
     refute page.has_select? 'event_volunteer_volunteer_id'
   end
@@ -36,9 +36,8 @@ class EventsTest < ApplicationSystemTestCase
     visit event_path(@event)
 
     assert page.has_text? 'Neue Teilnehmende hinzufügen'
-    select(@volunteer1, from: 'event_volunteer_volunteer_id')
+    selectize_select('event_volunteer_volunteer', @volunteer1)
     click_button 'Teilnehmer/in hinzufügen'
-    visit current_url
 
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
@@ -50,18 +49,16 @@ class EventsTest < ApplicationSystemTestCase
     visit event_path(@event)
 
     # adding first volunteer to the event
-    select(@volunteer1, from: 'event_volunteer_volunteer_id')
+    selectize_select('event_volunteer_volunteer', @volunteer1)
     click_button 'Teilnehmer/in hinzufügen'
-    visit current_url
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
       refute page.has_text? @volunteer2.full_name
     end
 
     # adding second volunteer to the event
-    select(@volunteer2, from: 'event_volunteer_volunteer_id')
+    selectize_select('event_volunteer_volunteer', @volunteer2)
     click_button 'Teilnehmer/in hinzufügen'
-    visit current_url
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
       assert page.has_text? @volunteer2.full_name
@@ -69,7 +66,7 @@ class EventsTest < ApplicationSystemTestCase
       page.find_all('a', text: 'Löschen').first.click
     end
 
-    visit current_url
+    visit event_path(@event)
 
     within '.event-volunteers-table' do
       refute page.has_text? @volunteer1.full_name
@@ -90,8 +87,8 @@ class EventsTest < ApplicationSystemTestCase
       assert page.has_text? 'Event Department'
       assert page.has_text? @event.end_time.strftime('%H:%M')
       assert page.has_text? @event.start_time.strftime('%H:%M')
-      assert page.has_text? @event.date.strftime('%Y-%m-%d')
-      assert page.has_link? 'Show'
+      assert page.has_text? I18n.l(@event.date)
+      assert page.has_link? 'Anzeigen'
     end
   end
 
@@ -134,14 +131,16 @@ class EventsTest < ApplicationSystemTestCase
   test 'adding a volunteers twice to an event does not work' do
     visit event_path(@event)
 
-    select(@volunteer1, from: 'event_volunteer_volunteer_id')
+    selectize_select('event_volunteer_volunteer', @volunteer1)
     click_button 'Teilnehmer/in hinzufügen'
-    visit current_url
+
+    assert page.has_text? 'Teilnehmer/in erfolgreich hinzugefügt.'
 
     within '.event-volunteers-table' do
-      assert page.has_text? @volunteer1.full_name
+      assert page.has_text? @volunteer1
     end
 
-    refute page.has_select?('event_volunteer_volunteer_id', text: @volunteer1.full_name)
+    selectize_fill('event_volunteer_volunteer', @volunteer1)
+    refute page.has_css?('.selectize-dropdown-content .option', text: @volunteer1)
   end
 end

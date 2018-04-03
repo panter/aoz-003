@@ -1,5 +1,6 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, except: [:index, :terminated_index, :search, :new, :create, :find_client]
+  before_action :set_assignment,
+    except: [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client]
 
   def index
     authorize Assignment
@@ -23,9 +24,18 @@ class AssignmentsController < ApplicationController
     @assignments = @q.result.paginate(page: params[:page])
   end
 
-  def search
+  def volunteer_search
     authorize Assignment
     @q = policy_scope(Assignment).ransack volunteer_contact_full_name_cont: params[:term]
+    @assignments = @q.result distinct: true
+    respond_to do |format|
+      format.json
+    end
+  end
+
+  def client_search
+    authorize Assignment
+    @q = policy_scope(Assignment).ransack client_contact_full_name_cont: params[:term]
     @assignments = @q.result distinct: true
     respond_to do |format|
       format.json
@@ -115,7 +125,7 @@ class AssignmentsController < ApplicationController
 
   def create_update_redirect
     if @assignment.saved_change_to_period_end?(from: nil)
-      redirect_to terminated_index_assignments_path(q: { termination_verified_by_id_null: 'true' }),
+      redirect_to terminated_index_assignments_path,
         notice: 'Die Einsatzbeendung wurde initiiert.'
     else
       redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
@@ -158,7 +168,8 @@ class AssignmentsController < ApplicationController
       :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
-      :term_feedback_transfair, volunteer_attributes: [:waive]
+      :term_feedback_transfair, :comments, :additional_comments,
+      volunteer_attributes: [:waive]
     )
   end
 end

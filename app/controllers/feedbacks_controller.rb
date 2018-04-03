@@ -14,20 +14,19 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.new(feedbackable: @feedbackable, volunteer: @volunteer,
       author: current_user)
     authorize @feedback
-    @simple_form_for_params = [
-      [@volunteer, @feedbackable, @feedback],
-      { url: polymorphic_path([@volunteer, @feedbackable, @feedback],
-        redirect_to: params[:redirect_to], group_assignment: params[:group_assignment]) }
-    ]
+    simple_form_params
   end
 
-  def edit; end
+  def edit
+    simple_form_params
+  end
 
   def create
     @feedback = Feedback.new(feedback_params.merge(author_id: current_user.id,
       volunteer_id: @volunteer.id))
     @feedback.feedbackable = @feedbackable
     authorize @feedback
+    simple_form_params
     if @feedback.save
       redirect_to create_redirect, make_notice
     else
@@ -58,6 +57,13 @@ class FeedbacksController < ApplicationController
   end
 
   private
+  def simple_form_params
+    @simple_form_for_params = [
+      [@volunteer, @feedbackable, @feedback],
+      { url: polymorphic_path([@volunteer, @feedbackable, @feedback],
+                              redirect_to: params[:redirect_to], group_assignment: params[:group_assignment]) }
+    ]
+  end
 
   def set_feedbackable
     @feedbackable = Assignment.find_by(id: params[:assignment_id]) ||

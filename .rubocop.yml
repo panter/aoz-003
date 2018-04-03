@@ -34,6 +34,8 @@ Style/AsciiComments:
   Enabled: false
 Metrics/LineLength:
   Max: 100
+  Exclude:
+    - 'db/seeds.rb'
 Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
@@ -46,6 +48,7 @@ Metrics/AbcSize:
   Max: 19
   Exclude:
     - 'test/**/*'
+    - 'db/seeds.rb'
 
 Metrics/BlockLength:
   Exclude:

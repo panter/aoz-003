@@ -15,7 +15,9 @@ class Volunteer < ApplicationRecord
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
 
-  enum acceptance: { undecided: 0, invited: 4, accepted: 1, rejected: 2, resigned: 3 }
+  enum acceptance: { undecided: 0, invited: 1, accepted: 2, rejected: 3, resigned: 4 }
+
+  ransacker :acceptance, formatter: ->(value) { acceptances[value] }
 
   has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
@@ -120,7 +122,6 @@ class Volunteer < ApplicationRecord
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
   scope :not_resigned, (-> { where.not(acceptance: :resigned) })
-  scope :acceptance_scope, ->(scope) { public_send(scope) }
 
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).merge(Assignment.start_before(6.months.ago))
@@ -171,6 +172,15 @@ class Volunteer < ApplicationRecord
 
   scope :needs_intro_course, lambda {
     accepted.internal.where(intro_course: false)
+  }
+
+  scope :candidates_for_group_offer, lambda { |group_offer|
+    volunteers = accepted
+    volunteers = group_offer.internal? ? volunteers.internal : volunteers.external
+
+    # exclude volunteers which already have a group assignment
+    assignments = group_offer.group_assignments.where('volunteer_id = volunteers.id')
+    volunteers.where("NOT EXISTS (#{assignments.to_sql})")
   }
 
   def verify_and_update_state
@@ -290,12 +300,11 @@ class Volunteer < ApplicationRecord
   end
 
   def self.acceptance_filters
-    scopes = [:not_resigned] + acceptances.keys
-    scopes.map do |scope|
+    acceptances.keys.map do |key|
       {
-        q: :acceptance_scope,
-        value: scope,
-        text: I18n.t("volunteers.acceptance.#{scope}")
+        q: :acceptance_eq,
+        value: key,
+        text: I18n.t("volunteers.acceptance.#{key}")
       }
     end
   end
@@ -328,18 +337,6 @@ class Volunteer < ApplicationRecord
     end
   end
 
-  def group_accompaniments_active_without_house_moving
-    GroupOfferCategory.active_without_house_moving.map do |group|
-      { title: group.category_name, value: group_offer_categories.include?(group) }
-    end
-  end
-
-  def group_accompaniments_house_moving
-    GroupOfferCategory.house_moving.map do |group|
-      { title: group.category_name, value: group_offer_categories.include?(group) }
-    end
-  end
-
   def to_s
     contact.full_name
   end
@@ -363,13 +360,13 @@ class Volunteer < ApplicationRecord
   end
 
   def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'not_resigned', 'acceptance_scope']
+    ['active', 'inactive', 'not_resigned']
   end
 
   def terminate!
     self.class.transaction do
       update(acceptance: :resigned, resigned_at: Time.zone.now)
-      user.destroy
+      user&.destroy
     end
   end
 

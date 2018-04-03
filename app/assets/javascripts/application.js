@@ -18,4 +18,5 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.de.js
 //= require cocoon
+//= require selectize
 //= require_tree .

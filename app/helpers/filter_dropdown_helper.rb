@@ -124,7 +124,7 @@ module FilterDropdownHelper
     tag.li do
       link_to(
         filter_url(q_filter, bool_filter, filter_attribute),
-        class: list_filter_link_class(q_filter, filter_attribute)
+        class: list_filter_link_class(q_filter, bool_filter || filter_attribute)
       ) do
         translate_value(filter_attribute, q_filter)
       end
@@ -134,7 +134,7 @@ module FilterDropdownHelper
   def list_filter_link_class(filter, value)
     if !filter_active?(filter, value)
       ''
-    elsif filter == :acceptance_scope
+    elsif filter == :acceptance_eq
       "bg-#{value}"
     else
       'bg-success'
@@ -148,7 +148,7 @@ module FilterDropdownHelper
   end
 
   def filter_url(q_filter, bool_filter, filter_attribute)
-    if filter_active?(q_filter, filter_attribute)
+    if filter_active?(q_filter, bool_filter || filter_attribute)
       url_for(params_except('page').merge(q: search_parameters.except(q_filter)))
     else
       filter_parameter = { q_filter => bool_filter || filter_attribute }
@@ -157,7 +157,7 @@ module FilterDropdownHelper
   end
 
   def filter_active?(filter, value)
-    [value.to_s, 'true'].include? search_parameters[filter]
+    value.present? && search_parameters[filter].to_s == value.to_s
   end
 
   def dropdown_menu(filter_links, q_filters)
@@ -166,8 +166,15 @@ module FilterDropdownHelper
     end
   end
 
+  def clear_filter_button
+    filter = { all: true, s: params.dig(:q, :s) }.compact
+    button_link t('clear_filters'), url_for(q: filter), dimension: :sm
+  end
+
   def all_link_to(q_filters)
-    link_to t('all'), url_for(q: search_parameters.except(*q_filters))
+    filter = search_parameters.except(*q_filters)
+    filter = { all: true } if filter.empty?
+    link_to t('all'), url_for(q: filter)
   end
 
   def dropdown_ul(all_list_link)

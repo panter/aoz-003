@@ -1,3 +1,7 @@
+.container-fluid {
+  padding: 0 50px;
+}
+
 .row,
 .simple_form {
   margin-bottom: $padding-large-horizontal;
@@ -21,7 +25,7 @@
 }
 
 .section-navigation {
-  margin-bottom: 0;
+  margin-bottom: 10px;
   margin-top: 0;
 
   hr,
@@ -45,32 +49,31 @@
 }
 
 .index-action-cell {
+  white-space: nowrap;
+
+  a {
+    display: block;
+    margin-right: 2px;
+  }
+
+  a.btn {
+    display: inline-block;
+  }
+}
+
+.truncate-td {
   span,
   a {
     display: block;
-    margin-top: 5px;
-
     &.whole-text {
       color: $link-color;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    &:first-child {
-      margin-top: 0;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &:nth-child(n + 2) {
-      margin-top: 2px;
+      text-decoration: underline;
     }
   }
 }
+
+
+
 
 .modal-header-sm {
   padding: 7px 15px;
@@ -181,10 +184,6 @@ li.button-acceptance a {
   background-color: lighten($gray-base, 80%);
 }
 
-.bg-not_resigned {
-  @extend .bg-success;
-}
-
 .log-table {
   max-height: 150px;
   overflow-y: auto;
@@ -192,4 +191,11 @@ li.button-acceptance a {
 
 .disabled-title {
   color: $gray-light;
+}
+
+.label-list {
+  .label {
+    display: inline-block;
+    margin-bottom: 0.3em;
+  }
 }

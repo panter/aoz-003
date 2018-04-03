@@ -3,14 +3,15 @@ require 'application_system_test_case'
 class VolunteerApplicationsTest < ApplicationSystemTestCase
   setup do
     @user = create :user
-    create :email_template, body: 'Liebe/r %{Anrede} %{Name}', subject: '%{Anrede} %{Name}'
+    create :email_template,
+      body: 'Liebe/r %{Anrede} %{Name} %{InvalidKey}Gruss, AOZ', subject: '%{Anrede} %{Name}'
   end
 
   test 'login page show link for volunteer application' do
     visit root_path
 
     assert page.has_current_path? new_user_session_path
-    assert page.has_link? 'Do you want to register as a volunteer?'
+    assert page.has_link? 'Möchten Sie sich als Freiwillige/r anmelden?'
   end
 
   test 'new volunteer application' do
@@ -22,59 +23,60 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
       'Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
 
     visit root_path
-    click_link 'Do you want to register as a volunteer?'
+    click_link 'Möchten Sie sich als Freiwillige/r anmelden?'
 
     assert page.has_current_path? new_volunteer_application_path
-    assert page.has_text? 'Volunteer Registration'
-    fill_in 'First name', with: 'Vorname'
-    fill_in 'Last name', with: 'Name'
+    assert page.has_text? 'Freiwilligen Anmeldung'
+    fill_in 'Vorname', with: 'Vorname'
+    fill_in 'Nachname', with: 'Name'
     within '.volunteer_birth_year' do
-      select('1980', from: 'Birth year')
+      select('1980', from: 'Jahrgang')
     end
-    select('Mrs.', from: 'Salutation')
-    select('Syrian Arab Republic', from: 'Nationality')
-    fill_in 'Street', with: 'Sihlstrasse 131'
-    fill_in 'Zip', with: '8002'
-    fill_in 'City', with: 'Zürich'
-    fill_in 'Primary email', with: 'gurke@gurkenmail.com'
-    fill_in 'Primary phone', with: '0123456789'
-    fill_in 'Profession', with: 'Developer'
-    fill_in 'Education', with: 'Gurke'
-    fill_in 'What is your motivation to volunteer with migrants?', with: 'asfd'
+    select('Frau', from: 'Anrede')
+    select('Syrien, Arabische Republik', from: 'Nationalität')
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    fill_in 'Beruf', with: 'Developer'
+    fill_in 'Ausbildung', with: 'Gurke'
+    fill_in 'Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?', with: 'asfd'
     page.check('volunteer_experience')
-    fill_in 'If you have any experiences with voluntary work, please describe here.',
+    fill_in 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.',
       with: 'sdfsdfsdf'
-    fill_in 'What do you expect from a person who would accompany you / your volunteer work?',
+    fill_in 'Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?',
       with: 'asdf'
-    fill_in 'Where do you see your strengths? (Social competencies that you could contribute to voluntary work)', with: 'asdf'
-    fill_in 'What are your most important leisure interests?', with: 'asdf'
+    fill_in 'Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?', with: 'asdf'
+    fill_in 'Welche sind Ihre wichtigsten Freizeitinteressen?', with: 'asdf'
     page.check('Culture')
     page.check('Training')
     page.check('German Course')
     page.check('Other Offer')
-    fill_in 'Description', with: 'Description'
+    fill_in 'Beschreibung', with: 'Description'
     page.check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
     page.check('volunteer_weekend')
-    fill_in 'Detailed Description', with: 'I am every two weeks available on tuesdays asdfasdf.'
+    fill_in 'Genauere Angaben', with: 'I am every two weeks available on tuesdays asdfasdf.'
 
-    click_button 'Submit registration'
+    click_button 'Anmeldung abschicken'
 
     assert_equal 1, ActionMailer::Base.deliveries.size
     mailer = ActionMailer::Base.deliveries.last
     mail_body = mailer.text_part.body.encoded
 
-    assert_includes mail_body, 'Liebe/r Mrs. Vorname Name'
-    refute_includes mail_body, '%{Anrede} %{Name}'
-    assert_equal mailer.subject, 'Mrs. Vorname Name'
+    assert_equal 'Frau Vorname Name', mailer.subject
+    assert_includes mail_body, 'Liebe/r Frau Vorname Name Gruss, AOZ'
+    refute_includes mailer.subject, '%{'
+    refute_includes mail_body, '%{'
 
     assert page.has_current_path? thanks_volunteer_applications_path
-    assert page.has_text? 'Thank you'
-    assert page.has_text? 'Your registration has been successfully sent.'
-    assert page.has_text? 'We will soon get back to you.'
+    assert page.has_text? 'Vielen Dank'
+    assert page.has_text? 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
+    assert page.has_text? 'Wir werden uns bald bei Ihnen melden.'
   end
 
   test 'secondary phone not visible in the application form' do
     visit new_volunteer_application_path
-    refute page.has_text? 'Secondary phone'
+    refute page.has_text? 'Telefonnummer 2'
   end
 end

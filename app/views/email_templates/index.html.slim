@@ -1,22 +1,27 @@
+- content_for :navigation do
+  ul.list-inline
+    li= form_navigation_btn :new, with_row: false
+    li= button_link navigation_glyph(:back), reminder_mailings_path
+
 h1 Alle E-Mailvorlagen
 
-= form_navigation_btn :new
+= yield :navigation
 
 .table-responsive
   table.table
     thead
+      th.hidden-print Aktionen
       th Art
       th Aktiv
       th Betreff
       th Text
-      th
     tbody
       - @email_templates.each do |email_template|
         tr class=(email_template.active ? 'bg-success': '')
+          = render 'index_actions', subject: email_template
           td= t(".#{email_template.kind}")
           td= boolean_glyph(email_template.active)
           td= email_template.subject
           td= word_wrap(email_template.body)
-          = render 'index_actions', subject: email_template
 
-= form_navigation_btn :new
+= yield :navigation

@@ -4,7 +4,7 @@ h1 Eingereichte Probezeit Feedbacks
 
 nav.navbar.section-navigation.hidden-print
   ul.list-inline
-    li= button_link 'Filter aufheben', url_for(q: { s: ['updated_at asc'] }), dimension: :sm
+    li= clear_filter_button
     = custom_filter_dropdown('Geprüft',
         { q: :reviewer_id_not_null, text: 'Angeschaut', value: 'true' },
         { q: :reviewer_id_null, text: 'Ungesehen', value: 'true' })
@@ -21,7 +21,7 @@ table.table.table-striped.list-responses-table
       th.limit-width Einsatz
       th= sort_link @q, :author_profile_contact_full_name, 'Autor/in'
       th Text
-      th= sort_link @q, :created_at, 'Alter'
+      th= sort_link @q, :created_at, 'Datum'
       th.limit-width
   tbody
     - @trial_feedbacks.each do |record|
@@ -41,7 +41,7 @@ table.table.table-striped.list-responses-table
             = link_to record.author.profile.contact.natural_name, record.author.profile
         = td_truncate_content_modal(record.body, 'Text', shorten_size: 500)
         td.index-action-cell
-          span= "#{(Time.zone.today - record.created_at.to_date).to_i} Tage"
+          span= I18n.l record.created_at.to_date
           - if record.reviewer.present?
             span
               = "Angeschaut von: "
@@ -54,4 +54,3 @@ table.table.table-striped.list-responses-table
 
 = bootstrap_paginate(@trial_feedbacks)
 
-= render 'modal_truncate'

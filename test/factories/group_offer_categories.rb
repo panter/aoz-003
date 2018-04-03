@@ -1,8 +1,6 @@
 FactoryBot.define do
   factory :group_offer_category do
-    sequence :category_name do |n|
-      "category #{n}"
-    end
+    category_name { FFaker::Skill.unique.specialty }
     category_state 'active'
   end
 end

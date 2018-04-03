@@ -1,8 +1,9 @@
 class GroupAssignmentsController < ApplicationController
-  before_action :set_group_assignment, except: [:terminated_index]
+  before_action :set_group_assignment, except: [:create, :terminated_index]
 
   def terminated_index
     authorize GroupAssignment
+    set_default_filter(termination_verified_by_id_null: 'true')
     @q = policy_scope(GroupAssignment).ended.ransack(params[:q])
     @q.sorts = ['updated_at desc'] if @q.sorts.empty?
     @group_assignments = @q.result
@@ -15,6 +16,19 @@ class GroupAssignmentsController < ApplicationController
           template: 'group_assignments/show.pdf.slim',
           layout: 'pdf.pdf', encoding: 'UTF-8'
       end
+    end
+  end
+
+  def create
+    @group_assignment = GroupAssignment.new(group_assignment_params)
+    authorize @group_assignment
+
+    if @group_assignment.save
+      redirect_to @group_assignment.group_offer,
+        notice: 'Freiwillige/r erfolgreich hinzugefügt.'
+    else
+      redirect_to @group_assignment.group_offer,
+        notice: @group_assignment.errors.full_messages.first
     end
   end
 
@@ -110,7 +124,7 @@ class GroupAssignmentsController < ApplicationController
 
   def create_update_redirect
     if @group_assignment.saved_change_to_period_end?(from: nil)
-      redirect_to terminated_index_group_assignments_path(q: { termination_verified_by_id_null: 'true' }),
+      redirect_to terminated_index_group_assignments_path,
         notice: 'Die Einsatzbeendung wurde initiiert.'
     else
       redirect_to @group_assignment.group_offer, make_notice
@@ -120,8 +134,9 @@ class GroupAssignmentsController < ApplicationController
   def group_assignment_params
     params.require(:group_assignment).permit(
       :period_start, :period_end, :termination_submitted_at, :terminated_at, :responsible,
-      :term_feedback_activities, :term_feedback_problems, :term_feedback_success, :redirect_to,
-      :term_feedback_transfair, volunteer_attributes: [:waive]
+      :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
+      :redirect_to, :term_feedback_transfair, :comments, :additional_comments,
+      :group_offer_id, :volunteer_id, volunteer_attributes: [:waive]
     )
   end
 end

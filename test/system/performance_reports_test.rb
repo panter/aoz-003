@@ -14,8 +14,8 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     two_years_ago = Time.zone.now.years_ago(2).year
     first(:link, 'Neuen Report erstellen').click
     click_link two_years_ago.to_s
-    click_button 'Create Performance Report'
-    assert page.has_text? 'Performance Report was successfully created.'
+    click_button 'Kennzahlen Report erfassen'
+    assert page.has_text? 'Kennzahlen Report wurde erfolgreich erstellt.'
     assert page.has_text? "Kennzahlen des Kalenderjahrs #{two_years_ago}"
   end
 
@@ -74,9 +74,19 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     assert page.has_text? 'Total Probezeit-Feedbacks ' +
       row_numbers(volunteers, column_order, :total_trial_feedbacks)
 
-    assert page.has_text? 'Besuchte Einführungskurse ' +
-      row_numbers(volunteers, column_order, :intro_course_events)
-    assert page.has_text? 'Total besuchte Veranstaltungen ' +
+    assert page.has_text? 'Teilnehmende Einführungsveranstaltungen ' +
+      row_numbers(volunteers, column_order, :intro_course)
+    assert page.has_text? 'Teilnehmende Weiterbildungen ' +
+      row_numbers(volunteers, column_order, :professional_training)
+    assert page.has_text? 'Teilnehmende Fachveranstaltungen ' +
+      row_numbers(volunteers, column_order, :professional_event)
+    assert page.has_text? 'Teilnehmende Erfahrungsaustausch/Themenabende ' +
+      row_numbers(volunteers, column_order, :theme_exchange)
+    assert page.has_text? 'Teilnehmende Freiwilligenanlässe ' +
+      row_numbers(volunteers, column_order, :volunteering)
+    assert page.has_text? 'Teilnehmende Treffen Deutschkursleitende ' +
+      row_numbers(volunteers, column_order, :german_class_managers)
+    assert page.has_text? 'Total Teilnehmende Veranstaltungen ' +
       row_numbers(volunteers, column_order, :total_events)
 
     # Clients section
@@ -119,7 +129,7 @@ class PerformanceReportsTest < ApplicationSystemTestCase
       row_numbers(assignments, column_order, :termination_verified)
 
     # Group Offer section
-    column_order = ['in_departments', 'outside_departments', 'all']
+    column_order = ['internal', 'external', 'all']
     assert page.has_text? 'Erstellt ' + row_numbers(group_offers, column_order, :created)
     assert page.has_text? 'Beendet ' + row_numbers(group_offers, column_order, :ended)
     assert page.has_text? 'Alle ' + row_numbers(group_offers, column_order, :all)

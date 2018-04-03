@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223131033) do
+ActiveRecord::Schema.define(version: 20180326135756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
     t.text "term_feedback_transfair"
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["assignment_id"], name: "index_assignment_logs_on_assignment_id"
     t.index ["client_id"], name: "index_assignment_logs_on_client_id"
     t.index ["creator_id"], name: "index_assignment_logs_on_creator_id"
@@ -89,6 +91,8 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
     t.text "term_feedback_transfair"
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["period_end"], name: "index_assignments_on_period_end"
@@ -118,7 +122,6 @@ ActiveRecord::Schema.define(version: 20180223131033) do
 
   create_table "certificates", force: :cascade do |t|
     t.integer "hours"
-    t.integer "minutes"
     t.date "duration_start"
     t.date "duration_end"
     t.text "institution"
@@ -131,6 +134,8 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "creator_name"
+    t.string "creator_function"
     t.index ["deleted_at"], name: "index_certificates_on_deleted_at"
     t.index ["user_id"], name: "index_certificates_on_user_id"
     t.index ["volunteer_id"], name: "index_certificates_on_volunteer_id"
@@ -180,6 +185,7 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.datetime "resigned_at"
     t.datetime "accepted_at"
     t.datetime "rejected_at"
+    t.text "additional_comments"
     t.index ["acceptance"], name: "index_clients_on_acceptance"
     t.index ["accepted_at"], name: "index_clients_on_accepted_at"
     t.index ["birth_year"], name: "index_clients_on_birth_year"
@@ -205,7 +211,6 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.datetime "deleted_at"
     t.string "first_name"
     t.string "last_name"
-    t.string "title"
     t.string "primary_email"
     t.string "primary_phone"
     t.string "secondary_phone"
@@ -314,6 +319,8 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
     t.text "term_feedback_transfair"
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
     t.index ["group_assignment_id"], name: "index_group_assignment_logs_on_group_assignment_id"
     t.index ["group_offer_id"], name: "index_group_assignment_logs_on_group_offer_id"
@@ -343,6 +350,8 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.text "term_feedback_transfair"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["period_end"], name: "index_group_assignments_on_period_end"
@@ -376,9 +385,8 @@ ActiveRecord::Schema.define(version: 20180223131033) do
 
   create_table "group_offers", force: :cascade do |t|
     t.string "title"
-    t.string "offer_type"
+    t.string "offer_type", default: "internal_offer", null: false
     t.string "offer_state"
-    t.string "volunteer_state"
     t.integer "necessary_volunteers"
     t.text "description"
     t.boolean "women", default: false
@@ -422,10 +430,9 @@ ActiveRecord::Schema.define(version: 20180223131033) do
 
   create_table "hours", force: :cascade do |t|
     t.date "meeting_date"
-    t.integer "hours", default: 0
-    t.integer "minutes", default: 0
+    t.float "hours", default: 0.0
     t.string "activity"
-    t.string "comments"
+    t.text "comments"
     t.bigint "volunteer_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -466,6 +473,7 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.datetime "updated_at", null: false
     t.string "category"
     t.bigint "assignment_id"
+    t.string "title"
     t.index ["assignment_id"], name: "index_journals_on_assignment_id"
     t.index ["deleted_at"], name: "index_journals_on_deleted_at"
     t.index ["journalable_type", "journalable_id"], name: "index_journals_on_journalable_type_and_journalable_id"
@@ -671,6 +679,8 @@ ActiveRecord::Schema.define(version: 20180223131033) do
     t.boolean "active", default: false
     t.date "activeness_might_end"
     t.datetime "invited_at"
+    t.text "comments"
+    t.text "additional_comments"
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
     t.index ["active"], name: "index_volunteers_on_active"
