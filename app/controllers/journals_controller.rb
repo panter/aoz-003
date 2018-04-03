@@ -6,7 +6,7 @@ class JournalsController < ApplicationController
     authorize Journal
     @q = @journaled.journals.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @journals = @q.result
+    @journals = @q.result.paginate(page: params[:page])
   end
 
   def new
