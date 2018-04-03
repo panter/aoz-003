@@ -184,6 +184,10 @@ li.button-acceptance a {
   @extend .bg-success;
 }
 
+.clients .bg-accepted {
+  @extend .bg-info;
+}
+
 .bg-rejected {
   @extend .bg-danger;
 }
