@@ -139,6 +139,6 @@ class DepartmentsTest < ApplicationSystemTestCase
     visit department_path(department)
     assert page.has_link? department_manager_no_profile.email
     click_link department_manager_no_profile.email
-    assert page.has_text? department_manager_no_profile.email
+    assert_text department_manager_no_profile.email
   end
 end
