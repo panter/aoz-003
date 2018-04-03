@@ -106,7 +106,7 @@ module ApplicationHelper
 
   def td_truncate_content_modal(body, title, shorten_size: 40)
     return tag.td(body) if body.to_s.size < shorten_size
-    tag.td(class: 'index-action-cell', data: truncate_modal_data(body, title), role: 'button') do
+    tag.td(class: 'truncate-td', data: truncate_modal_data(body, title), role: 'button') do
       concat tag.span body.truncate(shorten_size)
       concat tag.span('Ganzer Text', class: 'whole-text')
     end

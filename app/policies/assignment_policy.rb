@@ -10,7 +10,8 @@ class AssignmentPolicy < ApplicationPolicy
   # controller action policies
   alias_method :index?,                :superadmin_or_department_manager?
   alias_method :terminated_index?,     :superadmin_or_department_manager?
-  alias_method :search?,               :superadmin_or_department_manager?
+  alias_method :volunteer_search?,     :superadmin_or_department_manager?
+  alias_method :client_search?,        :superadmin_or_department_manager?
   alias_method :new?,                  :superadmin_or_department_manager?
   alias_method :create?,               :superadmin_or_department_manager?
   alias_method :find_client?,          :superadmin_or_department_manager?

@@ -1,14 +1,15 @@
 h1 Standorte
 
+= form_navigation_btn :new
 .row
   .col-xs-12
     table.table.table-striped
       thead
         tr
           th.hidden-print Aktionen
-          th Standort
-          th= t_attr(:street, Contact)
-          th= t_attr(:postal_code, Contact)
+          th= sort_link @q, :contact_last_name, 'Standort'
+          th= sort_link @q, :contact_street, t_attr(:street, Contact)
+          th= sort_link @q, :contact_postal_code, t_attr(:postal_code, Contact)
 
       tbody
         - @departments.each do |d|

@@ -4,9 +4,16 @@ nav.navbar.section-navigation.hidden-print
     li.li-search-form
       = search_form_for @q do |f|
         = f.search_field :volunteer_contact_full_name_cont, class: 'search-field',
-          data: { autocomplete: search_assignments_path }, autofocus: true,
-          placeholder: 'Nach Freiwillige suchen'
-        = f.submit 'Suchen', class: 'search-submit'
+          data: { autocomplete: volunteer_search_assignments_path }, autofocus: true,
+          placeholder: 'Freiwillige Suchen'
+        = f.submit 'Freiwillige Suchen', class: 'search-submit'
+  ul.list-unstyled
+    li.li-search-form
+      = search_form_for @q do |f|
+        = f.search_field :client_contact_full_name_cont, class: 'search-field',
+          data: { autocomplete: client_search_assignments_path }, autofocus: true,
+          placeholder: 'Klient/innen Suchen'
+        = f.submit 'Klient/innen Suchen', class: 'search-submit'
   ul.list-inline
     li= clear_filter_button
     = custom_filter_dropdown('Status',

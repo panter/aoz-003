@@ -38,7 +38,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     assocable_users = User.department_assocable
     login_as @superadmin
     visit departments_path
-    click_link 'Standort erfassen'
+    first(:link, 'Standort erfassen').click
     assocable_users.each do |u|
       check u.to_s
     end

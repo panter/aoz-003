@@ -36,7 +36,7 @@ tr
   td = "#{volunteer.working_percent}%" if volunteer.working_percent.present?
   td = volunteer.interests
   - if policy(Volunteer).superadmin_privileges?
-    = td_truncate_content_modal(volunteer.comments, 'Bemerkungen', shorten_size: 100)
+    = td_truncate_content_modal(volunteer.comments, 'Bemerkungen')
   td = volunteer.external? ? t_attr(:external, Volunteer) : t_attr(:internal, Volunteer)
   td
     - if volunteer.self_applicant?
