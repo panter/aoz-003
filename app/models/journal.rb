@@ -15,5 +15,15 @@ class Journal < ApplicationRecord
     :group_offer
   ].freeze
 
+  def self.categories_filters
+    CATEGORIES.map do |category|
+      {
+        q: 'category_eq',
+        value: category,
+        text: I18n.t("category.#{category}")
+      }
+    end
+  end
+
   validates :category, presence: true
 end

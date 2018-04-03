@@ -1,15 +1,21 @@
 h1= @journaled.contact.full_name
 h1= t_title(:index, Journal)
+
+nav.navbar.section-navigation#filters
+ul.list-inline
+    li= clear_filter_button
+    = custom_filter_dropdown('Kategorien', *Journal.categories_filters)
+
 .table-responsive
       table.table
         thead
           tr
             th.hidden-print Aktionen
-            th= t_attr(:category)
+            th= sort_link @q, :category
             th= t_attr(:text)
             th= t_attr(:author)
         tbody
-          - @journaled.journals.each do |record|
+          - @journals.each do |record|
             tr
               td.index-action-cell.hidden-print
                 = button_link navigation_glyph(:edit), url_for([@journaled, record]) + '/edit',
