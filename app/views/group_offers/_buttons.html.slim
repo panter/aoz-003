@@ -1,5 +1,8 @@
 ul.list-inline
   li= form_navigation_btn :back, with_row: false
   li= assignment_status_badge(@group_offer, 'button-acceptance')
-  li= link_to navigation_glyph(:print), url_for(print: :true), { class: 'btn btn-default btn-md', target: '_blank' }
   li= button_link navigation_glyph(:download), group_offer_path(@group_offer, format: :pdf), title: 'Herunterladen'
+  li= link_to navigation_glyph(:print), group_offer_path(@group_offer, print: :true, format: :pdf),
+    { class: 'btn btn-default btn-md', target: '_blank' }
+
+
