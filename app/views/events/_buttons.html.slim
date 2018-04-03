@@ -1,4 +1,4 @@
 ul.list-inline
-  li = form_navigation_btn :back, with_row: false
+  li= form_navigation_btn :back, with_row: false
   li= button_link 'Veranstaltung bearbeiten', edit_event_path(@event), dimension: 'md'
   li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'md' if show_xls
