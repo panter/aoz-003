@@ -28,7 +28,7 @@ module GroupAssignmentAndAssignmentCommon
     }
 
     scope :need_trial_period_reminder_mailing, lambda {
-      started_ca_six_weeks_ago.no_reminder_mailing
+      active.start_before(5.weeks.ago).no_reminder_mailing
     }
 
     scope :with_reminder_mailing_kind, lambda { |kind_number|
