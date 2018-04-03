@@ -6,7 +6,7 @@ nav.navbar.section-navigation
     li= button_link navigation_glyph(:back), @journaled
     li= button_link t_title(:new, Journal), new_polymorphic_path([@journaled, @journalable, Journal]), dimension: 'sm'
     li= clear_filter_button
-    = custom_filter_dropdown('Kategorien', *Journal.categories_filters)
+    = custom_filter_dropdown('Kategorie', *Journal.categories_filters)
   hr
 
 = bootstrap_paginate(@journals)
