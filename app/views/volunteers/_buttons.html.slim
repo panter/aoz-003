@@ -1,0 +1,21 @@
+nav.navbar.section-navigation
+  ul.list-inline.pull-right
+    - if policy(Volunteer).superadmin_privileges?
+      li= button_link navigation_glyph(:journal), polymorphic_path([@volunteer, Journal]), 'primary', title: 'Journal'
+  ul.list-inline
+    li= form_navigation_btn :back, with_row: false unless current_user.volunteer?
+    - if policy(@volunteer).terminate?
+      li.button-acceptance = link_to t("volunteer_applications.acceptance.#{@volunteer.acceptance}"), '#',
+        class: "btn btn-acceptance-#{@volunteer.acceptance}"
+      li= link_to navigation_glyph(:terminate), terminate_volunteer_path(@volunteer), class: 'btn btn-default',
+        title: 'Beenden', method: :put unless @volunteer.resigned?
+    - if @volunteer.internal_and_started_assignments?
+      li = button_link navigation_glyph(:hours), volunteer_hours_path(@volunteer), title: t('volunteer_applications.show.hour_reports')
+    - if policy(Volunteer).superadmin_privileges?
+      - if @volunteer.seeking_clients?
+        li= button_link navigation_glyph(:assignment), find_client_volunteer_path(id: @volunteer), title: t('seeking_clients')
+    - if @volunteer.internal_and_started_assignments?
+      li= button_link navigation_glyph(:billing_expenses), volunteer_billing_expenses_path(@volunteer), title: t_title(:index, BillingExpense)
+    - if policy(Volunteer).superadmin_privileges?
+      li= button_link navigation_glyph(:certificate), volunteer_certificates_path(@volunteer), title: t('volunteer_applications.show.new_certificate')
+

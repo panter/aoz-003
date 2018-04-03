@@ -44,7 +44,11 @@ module NavigationAndButtonHelper
       download: { text: 'Herunterladen', glyph: 'download-alt' },
       yes: { text: 'Ja', glyph: 'ok' },
       no: { text: 'Nein', glyph: 'remove' },
-      journal: { text: 'Journal', glyph: 'book' }
+      journal: { text: 'Journal', glyph: 'book' },
+      hours: { text: 'Stunden erfassen', glyph: 'time' },
+      billing_expenses: { text: 'Spesen', glyph: 'usd' },
+      assignment: { text: 'Begleitung', glyph: 'user' },
+      certificate: { text: 'Nachweis', glyph: 'education' }
     }
     glyph_span(translate_glyph[icon_type.to_sym])
   end

@@ -83,8 +83,8 @@ class UsersTest < ApplicationSystemTestCase
     volunteer = create :volunteer, acceptance: :undecided
 
     visit edit_volunteer_path(volunteer.id)
-    assert page.has_text? 'Freiwillige/n bearbeiten'
-    page.find('#volunteer_acceptance').find(:xpath, 'option[3]').select_option
+    assert page.has_text? volunteer.full_name
+    find("option[value='accepted']").click
     assert_difference 'User.count', 1 do
       first(:button, 'Freiwillige/n aktualisieren').click
     end

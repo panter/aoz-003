@@ -8,7 +8,7 @@ class InternExternVolunteersTest < ApplicationSystemTestCase
 
   test 'Volunteer can be created as extern' do
     visit volunteers_path
-    click_link 'Freiwillige/n erfassen'
+    first(:link, 'Freiwillige/n erfassen').click
     check 'Als externen Freiwilligen registrieren?'
     select 'Herr', from: 'Anrede'
     fill_in 'Vorname', with: 'Heiri'
@@ -16,7 +16,7 @@ class InternExternVolunteersTest < ApplicationSystemTestCase
     fill_in 'Strasse', with: 'Strasse xyz'
     fill_in 'PLZ', with: '8001'
     fill_in 'Ort', with: 'Zürich'
-    click_button 'Freiwillige/n erfassen'
+    first(:button, 'Freiwillige/n erfassen').click
     assert page.has_text? 'Freiwillige/r wurde erfolgreich erstellt.'
     assert page.has_text? 'Extern'
     visit volunteers_path
