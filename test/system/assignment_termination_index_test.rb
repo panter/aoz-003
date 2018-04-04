@@ -85,6 +85,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link exact_text: 'Quittiert'
 
     click_link 'Ende Bestätigt'
+    sleep 0.5
     click_link exact_text: 'Bestätigt'
 
     refute_text termination_index_table_text(@un_submitted)

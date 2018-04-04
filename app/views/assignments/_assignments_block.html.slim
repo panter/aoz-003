@@ -4,9 +4,9 @@
   table.table.table-striped
     thead
       tr
-        th
+        th.hidden-print Aktionen
         th Status
-        th= sort_link @q, :volunteer_contact_last_name, 'Frewillige/r' if action_index?
+        th= sort_link @q, :volunteer_contact_last_name, 'Freiwillige/r' if action_index?
         th= sort_link @q, :client_contact_last_name, 'Klient/in'
         th= sort_link @q, :period_start, t_attr(:period_start, Assignment)
         th= sort_link @q, :period_end, t_attr(:period_end, Assignment)

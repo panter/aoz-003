@@ -212,16 +212,8 @@ class Volunteer < ApplicationRecord
     accepted? && assignments.active.blank? && group_assignments.active.blank?
   end
 
-  def unterminated_assignments?
-    assignments.unterminated.any?
-  end
-
-  def unterminated_group_assignments?
-    group_assignments.unterminated.any?
-  end
-
   def terminatable?
-    !(unterminated_assignments? || unterminated_group_assignments?)
+    assignments.unterminated.none? && group_assignments.unterminated.none?
   end
 
   def state

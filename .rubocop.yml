@@ -41,6 +41,7 @@ Metrics/LineLength:
   Exclude:
     - 'db/seeds.rb'
 Metrics/ClassLength:
+  Max: 150
   Exclude:
     - 'test/**/*'
 Metrics/MethodLength:

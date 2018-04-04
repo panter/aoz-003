@@ -1,14 +1,18 @@
 table.table.table-striped.assignments-table
   thead
     tr
-      - if controller_name == 'clients'
+      th.hidden-print Aktionen
+      th Status
+      - if controller_name != 'volunteers'
         th= t_model(Volunteer)
-      th= t_model(Client)
+      - if controller_name != 'clients'
+        th= t_model(Client)
       th= t_attr(:period_start, Assignment)
       th= t_attr(:period_end, Assignment)
       th= t_attr(:created_by)
       th Bemerkungen
-      th colspan='5'
+      - if controller_name == 'volunteers'
+        th colspan=2
 
   tbody
     = render assignments
