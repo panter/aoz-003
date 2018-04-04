@@ -84,8 +84,8 @@ h3 Wann sind Sie verfügbar?
   h3#assignments Aktuelle Begleitungen
   = render 'assignments/client_volunteer_index', assignments: @current_assignments
 
-- if @archived_assignment.present?
+- if @archived_assignments.present?
   h3 Archivierte Begleitungen
-  = render 'assignments/client_volunteer_index', assignments: @archived_assignment
+  = render 'assignments/client_volunteer_index', assignments: @archived_assignments
 
 = render 'show_navigation'
