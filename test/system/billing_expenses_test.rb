@@ -102,4 +102,19 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text "Erstellt am Zürich, #{I18n.l @billing_expense1.created_at.to_date, format: :long}"
     assert_text "Erstellt von #{@superadmin}"
   end
+
+  test 'delete billing expenses' do
+    @billing_expense4.destroy
+
+    visit billing_expenses_path
+
+    assert_text @billing_expense1.volunteer
+
+    page.accept_confirm do
+      click_link 'Löschen'
+    end
+
+    assert_text 'Spesenformular wurde erfolgreich gelöscht.'
+    refute_text @billing_expense1.volunteer
+  end
 end
