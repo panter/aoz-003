@@ -1,6 +1,12 @@
 = simple_form_for @reminder_mailing do |f|
   = simple_error_notice f
   = f.input_field :kind, value: @reminder_mailing.kind, as: :hidden
+  .row
+    .col-xs-12.col-md-4
+      = render 'email_templates/explain_panel', template_varnames: ReminderMailing::TEMPLATE_VARNAMES
+    .col-xs-12.col-md-8
+      = render 'email_templates/subject_body_inputs', f: f
+
   fieldset
     legend Frewillige auswählen
     - if f.object.errors.include?(:volunteers)
@@ -23,11 +29,5 @@
               = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
             td= link_to mailing_volunteer.object.reminder_mailable.to_label, mailing_volunteer.object.base_entity, target: '_blank'
             td= link_to mailing_volunteer.object.volunteer.contact.full_name, mailing_volunteer.object.volunteer, target: '_blank'
-
-  .row
-    .col-xs-12.col-md-4
-      = render 'email_templates/explain_panel', template_varnames: ReminderMailing::TEMPLATE_VARNAMES
-    .col-xs-12.col-md-8
-      = render 'email_templates/subject_body_inputs', f: f
 
   = render 'form_submit_back', f: f
