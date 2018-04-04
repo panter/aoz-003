@@ -5,7 +5,7 @@ class BillingExpensesController < ApplicationController
   def index
     authorize BillingExpense
 
-    @q = BillingExpense.ransack(params[:q])
+    @q = policy_scope(BillingExpense).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
 
     @billing_expenses = @q.result.page(params[:page])
@@ -58,7 +58,10 @@ class BillingExpensesController < ApplicationController
   end
 
   def set_volunteer
-    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+    if params[:volunteer_id]
+      @volunteer = Volunteer.find(params[:volunteer_id])
+      authorize @volunteer
+    end
   end
 
   def pdf_file_name

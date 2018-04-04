@@ -20,12 +20,14 @@ h1
         thead
           tr
             th.hidden-print Aktionen
-            th= sort_link @q, :volunteer_contact_last_name, t_model(Volunteer)
+            - unless @volunteer
+              th= sort_link @q, :volunteer_contact_last_name, t_model(Volunteer)
             th= t_attr(:bank_details, Volunteer)
             th= t_attr(:hours)
             th= sort_link @q, :amount
             th Periode
-            th= sort_link @q, :user_profile_contact_last_name, t_attr(:created_by)
+            - if policy(BillingExpense).superadmin_privileges?
+              th= sort_link @q, :user_profile_contact_last_name, t_attr(:created_by)
             th= sort_link @q, :created_at
         tbody
           - @billing_expenses.each do |record|
@@ -35,14 +37,17 @@ h1
                     title: 'Anzeigen'
                 = button_link navigation_glyph(:download), billing_expense_path(record, format: :pdf),
                     title: 'Herunterladen'
-                = button_link navigation_glyph(:delete), billing_expense_path(record),
+                - if policy(BillingExpense).destroy?
+                  = button_link navigation_glyph(:delete), billing_expense_path(record),
                     confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
-              td= link_to record.volunteer.contact.full_name, volunteer_path(record.volunteer)
+              - unless @volunteer
+                td= link_to record.volunteer.contact.full_name, volunteer_path(record.volunteer)
               td= record.full_bank_details
               td= link_to format_hours(record.hours.total_hours), volunteer_hours_path(record.volunteer)
               td= format_currency record.amount
               td= format_hours_period record.hours
-              td= link_to record.user, profile_link(record.user)
+              - if policy(BillingExpense).superadmin_privileges?
+                td= link_to record.user, profile_link(record.user)
               td= l(record.created_at.to_date)
 
 = bootstrap_paginate(@billing_expenses)
