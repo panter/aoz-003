@@ -6,9 +6,9 @@ h1 Erinnerungs-Emails
       tr
         th.hidden-print Aktionen
         th Art
-        th Erstellt von
+        th= sort_link @q, :creator_profile_contact_last_name, 'Erstellt von'
         th Status
-        th Erstellt am
+        th= sort_link @q, :created_at, 'Erstellt am'
         th Eingegangenes Feedback
     tbody
       = render @reminder_mailings
