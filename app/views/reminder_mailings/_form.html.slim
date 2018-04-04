@@ -8,7 +8,7 @@
       = render 'email_templates/subject_body_inputs', f: f
 
   fieldset
-    legend Frewillige auswählen
+    legend Freiwillige auswählen
     - if f.object.errors.include?(:volunteers)
       = f.error_notification message: f.object.errors.messages[:volunteers].first
     .table-responsive.table-scrollable
