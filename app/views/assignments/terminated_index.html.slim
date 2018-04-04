@@ -22,7 +22,7 @@ nav.navbar.section-navigation.hidden-print
         th.hidden-print Aktionen
         - if policy(Assignment).verify_termination?
           th
-        th= sort_link @q, :volunteer_contact_last_name, 'Frewillige/r'
+        th= sort_link @q, :volunteer_contact_last_name, 'Freiwillige/r'
         th= sort_link @q, :client_contact_last_name, 'Klient/in'
         th= sort_link @q, :period_start, t_attr(:period_start, Assignment)
         th= sort_link @q, :period_end, t_attr(:period_end, Assignment)

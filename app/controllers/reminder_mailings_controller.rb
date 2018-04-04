@@ -4,7 +4,9 @@ class ReminderMailingsController < ApplicationController
 
   def index
     authorize ReminderMailing
-    @reminder_mailings = ReminderMailing.created_desc
+    @q = ReminderMailing.ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+    @reminder_mailings = @q.result
   end
 
   def show; end

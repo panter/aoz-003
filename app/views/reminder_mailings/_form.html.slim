@@ -1,33 +1,34 @@
 = simple_form_for @reminder_mailing do |f|
   = simple_error_notice f
   = f.input_field :kind, value: @reminder_mailing.kind, as: :hidden
-  fieldset
-    legend Frewillige auswählen
-    - if f.object.errors.include?(:volunteers)
-      = f.error_notification message: f.object.errors.messages[:volunteers].first
-    table.table.table-striped
-      thead
-        tr
-          th.limit-width= select_all_rows
-          th Einsatz
-          th Freiwillige/r
-      tbody
-        = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
-          tr.table-row-selectable data-index="#{mailing_volunteer.index}" class="#{mailing_volunteer.object.picked && 'mailing-selected'}"
-            td
-              = mailing_volunteer.label :picked, 'Ausgewählt', class: 'sr-only'
-              = mailing_volunteer.input_field :picked, as: :boolean
-              = mailing_volunteer.input_field :id, as: :hidden
-              = mailing_volunteer.input_field :volunteer_id, as: :hidden
-              = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
-              = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
-            td= link_to mailing_volunteer.object.reminder_mailable.to_label, mailing_volunteer.object.base_entity, target: '_blank'
-            td= link_to mailing_volunteer.object.volunteer.contact.full_name, mailing_volunteer.object.volunteer, target: '_blank'
-
   .row
     .col-xs-12.col-md-4
       = render 'email_templates/explain_panel', template_varnames: ReminderMailing::TEMPLATE_VARNAMES
     .col-xs-12.col-md-8
       = render 'email_templates/subject_body_inputs', f: f
+
+  fieldset
+    legend Freiwillige auswählen
+    - if f.object.errors.include?(:volunteers)
+      = f.error_notification message: f.object.errors.messages[:volunteers].first
+    .table-responsive.table-scrollable
+      table.table.table-striped
+        thead
+          tr
+            th.limit-width= select_all_rows
+            th Einsatz
+            th Freiwillige/r
+        tbody
+          = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
+            tr.table-row-selectable data-index="#{mailing_volunteer.index}" class="#{mailing_volunteer.object.picked && 'mailing-selected'}"
+              td
+                = mailing_volunteer.label :picked, 'Ausgewählt', class: 'sr-only'
+                = mailing_volunteer.input_field :picked, as: :boolean
+                = mailing_volunteer.input_field :id, as: :hidden
+                = mailing_volunteer.input_field :volunteer_id, as: :hidden
+                = mailing_volunteer.input_field :reminder_mailable_id, as: :hidden
+                = mailing_volunteer.input_field :reminder_mailable_type, as: :hidden
+              td= link_to mailing_volunteer.object.reminder_mailable.to_label, mailing_volunteer.object.base_entity, target: '_blank'
+              td= link_to mailing_volunteer.object.volunteer.contact.full_name, mailing_volunteer.object.volunteer, target: '_blank'
 
   = render 'form_submit_back', f: f
