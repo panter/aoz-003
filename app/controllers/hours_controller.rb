@@ -1,5 +1,5 @@
 class HoursController < ApplicationController
-  before_action :set_hour, only: [:show, :edit, :update, :destroy, :create_redirect, :mark_as_done]
+  before_action :set_hour, only: [:show, :edit, :update, :destroy, :create_redirect]
   before_action :set_volunteer
 
   def index
@@ -43,16 +43,8 @@ class HoursController < ApplicationController
     redirect_to @volunteer, make_notice
   end
 
-  def mark_as_done
-    redirect_path = list_responses_hours_path(params.to_unsafe_hash.slice(:q))
-    if @hour.update(reviewer: current_user)
-      redirect_to(redirect_path, notice: 'Stunden als angeschaut markiert.')
-    else
-      redirect_to(redirect_path, notice: 'Fehler: Angeschaut markieren fehlgeschlagen.')
-    end
-  end
-
   private
+
   def simple_form_params
     @simple_form_for_params = [
       [@volunteer, @hour.hourable, @hour],

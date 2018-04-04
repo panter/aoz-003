@@ -22,7 +22,11 @@ Style/LineEndConcatenation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/NumericPredicate:
+  Enabled: false
 
+Layout/IndentArray:
+  EnforcedStyle: consistent
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 Layout/MultilineMethodCallIndentation:
@@ -40,6 +44,7 @@ Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
 Metrics/MethodLength:
+  Max: 15
   Exclude:
     - 'test/**/*'
     - 'db/seeds.rb'
@@ -63,7 +68,7 @@ Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/FormatStringToken:
-  EnforcedStyle: template
+  Enabled: false
 
 Style/SymbolArray:
   EnforcedStyle: brackets

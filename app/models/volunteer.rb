@@ -183,6 +183,17 @@ class Volunteer < ApplicationRecord
     volunteers.where("NOT EXISTS (#{assignments.to_sql})")
   }
 
+  scope :need_refunds, (-> { where(waive: false) })
+
+  scope :with_billable_hours, lambda {
+    need_refunds
+      .joins(:contact)
+      .joins(:hours).merge(Hour.billable)
+      .select('volunteers.*, SUM(hours.hours) AS total_hours')
+      .group(:id, 'contacts.full_name')
+      .order("(CASE WHEN COALESCE(iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
+  }
+
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)
   end

@@ -8,7 +8,10 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
     @volunteer = create :volunteer_with_user
     @assignment = create(:assignment, volunteer: @volunteer,
       hours: [create(:hour, volunteer: @volunteer)])
-    @billing_expense = BillingExpense.create!(user: @superadmin, volunteer: @volunteer, hours: @volunteer.hours.billable)
+    @billing_expense = create(:billing_expense,
+      user: @superadmin,
+      volunteer: @volunteer,
+      hours: @volunteer.hours.billable)
   end
 
   test 'Create: Only superadmin can create billing expense' do
@@ -18,29 +21,30 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
   end
 
   test 'Destroy: Only superadmin can destroy billing expense' do
-    assert_permit @superadmin, BillingExpense.first, 'destroy?'
-    refute_permit @social_worker, BillingExpense.first, 'destroy?'
-    refute_permit @department_manager, BillingExpense.first, 'destroy?'
+    assert_permit @superadmin, @billing_expense, 'destroy?'
+    refute_permit @social_worker, @billing_expense, 'destroy?'
+    refute_permit @department_manager, @billing_expense, 'destroy?'
   end
 
   test 'Update: Only superadmin can update billing expense' do
-    assert_permit @superadmin, BillingExpense.first, 'update?', 'edit?'
-    refute_permit @social_worker, BillingExpense.first, 'update?', 'edit?'
-    refute_permit @department_manager, BillingExpense.first, 'update?', 'edit?'
+    assert_permit @superadmin, @billing_expense, 'update?', 'edit?'
+    refute_permit @social_worker, @billing_expense, 'update?', 'edit?'
+    refute_permit @department_manager, @billing_expense, 'update?', 'edit?'
   end
 
   test 'Show: social worker and department manager cannot show billing expenses' do
-    refute_permit @social_worker, BillingExpense.first, 'show?'
-    refute_permit @department_manager, BillingExpense.first, 'show?'
+    refute_permit @social_worker, @billing_expense, 'show?'
+    refute_permit @department_manager, @billing_expense, 'show?'
   end
 
   test 'Show: superadmin can see all billing expenses' do
-    BillingExpense.create!(
+    create(:billing_expense,
       user: @superadmin, volunteer: @volunteer,
       hours: [
         create(:hour, volunteer: @volunteer, hourable: @assignment)
       ]
     )
+
     BillingExpense.all.each do |billing_expense|
       assert_permit @superadmin, billing_expense, 'show?'
     end

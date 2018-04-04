@@ -5,6 +5,7 @@ FactoryBot.define do
     salutation { ['mr', 'mrs'].sample }
     acceptance :accepted
     group_offer_categories { |category| [category.association(:group_offer_category)] }
+    iban { generate :iban }
 
     trait :with_language_skills do
       language_skills do |language_skill|

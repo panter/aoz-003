@@ -3,7 +3,7 @@ module FullBankDetails
 
   included do
     def full_bank_details
-      [bank, iban].reject(&:blank?).join(' ')
+      [bank, iban].reject(&:blank?).join(', ')
     end
   end
 end

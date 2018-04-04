@@ -1,42 +1,48 @@
-h1= @volunteer.contact.full_name
-h1= t_title(:index, BillingExpense)
+- unless @volunteer
+  = render 'reminder_mailings/section_navigation'
+
+h1
+  'Spesenformulare
+  - if @volunteer
+    = "für #{@volunteer}"
+
+.row
+  .col-xs-12
+    - if @volunteer
+      => button_link navigation_glyph(:back), @volunteer
+    - else
+      => button_link 'Spesenformulare erstellen', new_billing_expense_path
+
+= bootstrap_paginate(@billing_expenses)
 
 .table-responsive
       table.table
         thead
           tr
             th.hidden-print Aktionen
-            th= t_model(Volunteer)
-            th= t_attr(:address)
+            th= sort_link @q, :volunteer_contact_last_name, t_model(Volunteer)
             th= t_attr(:bank_details, Volunteer)
-            th= t_attr(:waive, Volunteer)
-            th= t_attr(:hours, Hour)
-            th= t_attr(:amount, BillingExpense)
-            th= t_attr(:created_at)
-            th= t_attr(:created_by)
+            th= t_attr(:hours)
+            th= sort_link @q, :amount
+            th Periode
+            th= sort_link @q, :user_profile_contact_last_name, t_attr(:created_by)
+            th= sort_link @q, :created_at
         tbody
-          - @volunteer.billing_expenses.each do |record|
+          - @billing_expenses.each do |record|
             tr
               td.index-action-cell.hidden-print
-                = button_link navigation_glyph(:show), volunteer_billing_expense_path(@volunteer, record),
+                = button_link navigation_glyph(:show), billing_expense_path(record),
                     title: 'Anzeigen'
-                = button_link navigation_glyph(:download), volunteer_billing_expense_path(@volunteer, record, format: :pdf),
+                = button_link navigation_glyph(:download), billing_expense_path(record, format: :pdf),
                     title: 'Herunterladen'
-                = button_link navigation_glyph(:delete), volunteer_billing_expense_path(@volunteer, record),
+                = button_link navigation_glyph(:delete), billing_expense_path(record),
                     confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
-              td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
-              td= @volunteer.contact.full_address
+              td= link_to record.volunteer.contact.full_name, volunteer_path(record.volunteer)
               td= record.full_bank_details
-              td= t(@volunteer.waive)
-              td= record.hours.total_hours
-              td= record.amount
+              td= link_to format_hours(record.hours.total_hours), volunteer_hours_path(record.volunteer)
+              td= format_currency record.amount
+              td= format_hours_period record.hours
+              td= link_to record.user, profile_link(record.user)
               td= l(record.created_at.to_date)
-              td= record.user.profile.contact.full_name
-.row
-  .col-xs-12
-    = simple_form_for [@volunteer, BillingExpense.new] do |f|
-      = f.hidden_field :volunteer_id, value: @volunteer.id
-      = f.button :submit
-.row
-  .col-xs-12
-    = button_link navigation_glyph(:back), @volunteer
+
+= bootstrap_paginate(@billing_expenses)
