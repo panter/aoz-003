@@ -78,7 +78,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Spesen', match: :first
 
     assert_text "Spesenformulare für #{@volunteer1}"
-    assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 3.5 Stunden Fr. 50.00"
+    assert_text "UBS, #{@volunteer1.iban} 3.5 Stunden Fr. 50.00"
     refute_text @volunteer4
 
     assert_link 'Zurück', href: volunteer_path(@volunteer1)
