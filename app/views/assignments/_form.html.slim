@@ -22,5 +22,15 @@
       = f.input :additional_comments
 
   .row
+    .col-xs-12.col-md-6
+      = f.input :assignment_description, label: t('assignment_pdf.assignment_description')
+      = f.input :first_meeting, label: t('assignment_pdf.first_time')
+      = f.input :duration, label: t('assignment_pdf.duration')
+    .col-xs-12.col-md-6
+      = f.input :frequency, label: t('assignment_pdf.frequency')
+      = f.input :trial_period_end, label: t('assignment_pdf.trial_time')
+      = f.input :special_agreement, label: t('assignment_pdf.special')
+      = f.input :agreement_text, label: t('assignment_pdf.agreement_text'), input_html: { class: 'text-body' }
+  .row
     .col-xs-12
       = f.button :submit

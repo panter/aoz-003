@@ -1,15 +1,26 @@
 h1= @journaled.contact.full_name
 h1= t_title(:index, Journal)
+
+nav.navbar.section-navigation
+  ul.list-inline
+    li= button_link navigation_glyph(:back), @journaled
+    li= button_link t_title(:new, Journal), new_polymorphic_path([@journaled, @journalable, Journal]), dimension: 'sm'
+    li= clear_filter_button
+    = custom_filter_dropdown('Kategorie', *Journal.categories_filters)
+  hr
+
+= bootstrap_paginate(@journals)
+
 .table-responsive
       table.table
         thead
           tr
             th.hidden-print Aktionen
-            th= t_attr(:category)
+            th= sort_link @q, :category
             th= t_attr(:text)
             th= t_attr(:author)
         tbody
-          - @journaled.journals.each do |record|
+          - @journals.each do |record|
             tr
               td.index-action-cell.hidden-print
                 = button_link navigation_glyph(:edit), url_for([@journaled, record]) + '/edit',
@@ -21,6 +32,10 @@ h1= t_title(:index, Journal)
                   br
                 = word_wrap(record.body) if record.body
               td= link_to record.user.full_name, record.user.profile
-= form_navigation_btn :new
-.row
-  .col-xs-12= button_link navigation_glyph(:back), @journaled
+
+= bootstrap_paginate(@journals)
+
+nav.navbar.section-navigation
+ul.list-inline
+  li= button_link navigation_glyph(:back), @journaled
+  li= button_link t_title(:new, Journal), new_polymorphic_path([@journaled, @journalable, Journal]), dimension: 'sm'

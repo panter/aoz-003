@@ -54,6 +54,7 @@ class AssignmentsController < ApplicationController
 
   def new
     @assignment = Assignment.new
+    @assignment.default_values
     authorize @assignment
   end
 
@@ -169,6 +170,8 @@ class AssignmentsController < ApplicationController
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :term_feedback_transfair, :comments, :additional_comments,
+      :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
+      :special_agreement, :first_meeting,
       volunteer_attributes: [:waive]
     )
   end

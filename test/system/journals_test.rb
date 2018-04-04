@@ -20,7 +20,7 @@ class JournalsTest < ApplicationSystemTestCase
 
   test 'can_create_journal' do
     visit client_journals_path(create(:client))
-    click_link 'Journal erfassen'
+    click_link 'Journal erfassen', match: :first
 
     assert_text 'Journal erfassen'
 
