@@ -26,6 +26,7 @@ class ReminderMailing < ApplicationRecord
   has_many :process_submitters, through: :reminder_mailing_volunteers, source: :process_submitted_by
 
   enum kind: { half_year: 0, trial_period: 1, termination: 2 }
+  ransacker :kind, formatter: ->(value) { kinds[value] }
 
   validates :subject, presence: true
   validates :body, presence: true
@@ -58,6 +59,16 @@ class ReminderMailing < ApplicationRecord
 
   def feedback_count
     feedbacks.group(:author_id).count.count
+  end
+
+  def self.kind_collection
+    kinds.keys.map do |key|
+      {
+        q: :kind_eq,
+        value: key,
+        text: I18n.t("reminder_mailings.kinds.#{key}")
+      }
+    end
   end
 
   private

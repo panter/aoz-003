@@ -1,5 +1,10 @@
 = render 'section_navigation'
 h1 Erinnerungs-Emails
+nav.navbar.section-navigation
+  ul.list-inline
+    li= clear_filter_button
+    = custom_filter_dropdown('Art', *ReminderMailing.kind_collection)
+  hr
 .table-responsive
   table.table.table-striped
     thead
