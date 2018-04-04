@@ -9,6 +9,8 @@ module FormatHelper
   end
 
   def format_hours_period(hours)
+    return '' if hours.blank?
+
     dates = hours.map(&:meeting_date)
     "#{I18n.l dates.min} - #{I18n.l dates.max}"
   end

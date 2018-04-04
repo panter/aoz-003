@@ -47,7 +47,7 @@ class BillingExpensesController < ApplicationController
 
   def destroy
     @billing_expense.destroy
-    redirect_to @volunteer, make_notice
+    redirect_to billing_expenses_url, make_notice
   end
 
   private

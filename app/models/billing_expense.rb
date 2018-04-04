@@ -14,7 +14,7 @@ class BillingExpense < ApplicationRecord
 
   AMOUNT = [50, 100, 150].freeze
 
-  validates :iban, presence: true
+  validates :volunteer, :user, :iban, presence: true
   validates :amount, inclusion: { in: AMOUNT }, unless: :import_mode
 
   def self.amount_for(hours)
