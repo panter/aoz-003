@@ -169,8 +169,9 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_text? 'Sozialarbeiter/in'
 
     visit users_path
-    assert page.has_link? volunteer_no_profile.full_name
     click_link volunteer_no_profile.full_name
-    assert page.has_text? volunteer_no_profile.full_name
+
+    assert page.has_field? 'Vorname', with: volunteer_no_profile.profile.contact.first_name
+    assert page.has_field? 'Nachname', with: volunteer_no_profile.profile.contact.last_name
   end
 end

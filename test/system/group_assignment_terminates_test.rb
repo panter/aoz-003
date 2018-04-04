@@ -13,7 +13,7 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
 
     @unrelated_group_assignment = create :group_assignment, group_offer: @group_offer
     @unrelated_hour = create :hour, volunteer: @unrelated_group_assignment.volunteer,
-      hourable: @group_offer, hours: 5.0
+      hourable: @group_offer, hours: 5, comments: 'Unrelated Hour'
     @unrelated_feedback = create :feedback, volunteer: @unrelated_group_assignment.volunteer,
       author: @unrelated_group_assignment.volunteer.user, feedbackable: @group_offer
   end
@@ -31,7 +31,7 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
       assert page.has_text? I18n.l(@hour.meeting_date)
       assert page.has_text? @hour.hours
       refute page.has_text? I18n.l(@unrelated_hour.meeting_date)
-      refute page.has_text? @unrelated_hour.hours
+      refute page.has_text? @unrelated_hour.comments
     end
 
     # existing feedback listed
