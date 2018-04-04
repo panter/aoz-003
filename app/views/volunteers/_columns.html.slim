@@ -19,10 +19,10 @@
         th= sort_link @q, :birth_year, t_attr(:birth_year, Volunteer)
         th= t_attr(:native_language, Volunteer)
         th= t_attr(:languages, Volunteer)
-        th= sort_link @q, :education
-        th= sort_link @q, :profession
+        th= t_attr(:education, Volunteer)
+        th= t_attr(:profession, Volunteer)
         th= sort_link @q, :working_percent
-        th= sort_link @q, :interests
+        th= t_attr(:interests, Volunteer)
         th= t_attr(:comments)
         th= sort_link @q, :external
         th= t_attr(:created_by, Volunteer)

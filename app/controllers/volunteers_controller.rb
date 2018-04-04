@@ -149,6 +149,6 @@ class VolunteersController < ApplicationController
 
   def volunteer_params
     params.require(:volunteer).permit(volunteer_attributes, :bank, :iban, :waive, :acceptance,
-      :take_more_assignments, :external, :comments, :additional_comments)
+      :take_more_assignments, :external, :comments, :additional_comments, :working_percent)
   end
 end

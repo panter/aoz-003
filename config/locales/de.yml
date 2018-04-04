@@ -458,7 +458,8 @@ de:
         iban: IBAN
         interests: Interessen
         intro_course: Einführungskurs besucht
-        kid: Kinder
+        kid: Kind
+        teenager: Jugendliche/r
         man: Mann
         native_language: Muttersprache
         other_offer_desc: Beschreibung
@@ -472,7 +473,7 @@ de:
         strengths: Stärken
         take_more_assignments: Akzeptiere weitere Einsätze
         trial_period: Probezeitbericht erhalten
-        unaccompanied: Unbegleitete Minderjährige
+        unaccompanied: Unbegleitete/r Minderjährige/r
         volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         waive: Ich verzichte auf die Auszahlung von Spesen.

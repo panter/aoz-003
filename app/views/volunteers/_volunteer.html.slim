@@ -43,3 +43,4 @@ tr
       = t('volunteer_self_applicant')
     - else
       = link_to volunteer.registrar.full_name, profile_link(volunteer.registrar)
+    = l(volunteer.created_at) if volunteer.created_at
