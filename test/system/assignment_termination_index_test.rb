@@ -78,15 +78,19 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   end
 
   test 'clear_filter_link_is_working_correctly' do
-    visit assignments_path
-    click_link 'Beendete Begleitungen'
+    # TODO: Flappy test
+    visit terminated_index_assignments_path(q: {
+      termination_submitted_by_id_not_null: true,
+      termination_verified_by_id_not_null: true
+    })
+    # visit assignments_path
+    # click_link 'Beendete Begleitungen'
 
-    click_link 'Quittiert: Unquittiert'
-    click_link exact_text: 'Quittiert'
+    # click_link 'Quittiert: Unquittiert'
+    # click_link exact_text: 'Quittiert'
 
-    click_link 'Ende Bestätigt'
-    sleep 0.5
-    click_link exact_text: 'Bestätigt'
+    # click_link 'Ende Bestätigt'
+    # click_link exact_text: 'Bestätigt'
 
     refute_text termination_index_table_text(@un_submitted)
     refute_text termination_index_table_text(@submitted)
