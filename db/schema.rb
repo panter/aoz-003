@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326135756) do
+ActiveRecord::Schema.define(version: 20180403055709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,13 @@ ActiveRecord::Schema.define(version: 20180326135756) do
     t.text "term_feedback_transfair"
     t.text "comments"
     t.text "additional_comments"
+    t.string "assignment_description"
+    t.string "first_meeting"
+    t.string "frequency"
+    t.string "trial_period_end"
+    t.string "duration"
+    t.string "special_agreement"
+    t.text "agreement_text"
     t.index ["assignment_id"], name: "index_assignment_logs_on_assignment_id"
     t.index ["client_id"], name: "index_assignment_logs_on_client_id"
     t.index ["creator_id"], name: "index_assignment_logs_on_creator_id"
@@ -93,6 +100,13 @@ ActiveRecord::Schema.define(version: 20180326135756) do
     t.text "term_feedback_transfair"
     t.text "comments"
     t.text "additional_comments"
+    t.string "assignment_description"
+    t.string "first_meeting"
+    t.string "frequency"
+    t.string "trial_period_end"
+    t.string "duration"
+    t.string "special_agreement"
+    t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["period_end"], name: "index_assignments_on_period_end"
@@ -321,6 +335,12 @@ ActiveRecord::Schema.define(version: 20180326135756) do
     t.text "term_feedback_transfair"
     t.text "comments"
     t.text "additional_comments"
+    t.string "place"
+    t.text "description"
+    t.string "happens_at"
+    t.string "frequency"
+    t.string "trial_period_end"
+    t.text "agreement_text"
     t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
     t.index ["group_assignment_id"], name: "index_group_assignment_logs_on_group_assignment_id"
     t.index ["group_offer_id"], name: "index_group_assignment_logs_on_group_offer_id"
@@ -352,6 +372,12 @@ ActiveRecord::Schema.define(version: 20180326135756) do
     t.datetime "updated_at", null: false
     t.text "comments"
     t.text "additional_comments"
+    t.string "place"
+    t.text "description"
+    t.string "happens_at"
+    t.string "frequency"
+    t.string "trial_period_end"
+    t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["period_end"], name: "index_group_assignments_on_period_end"

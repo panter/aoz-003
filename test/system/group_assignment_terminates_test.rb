@@ -13,7 +13,7 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
 
     @unrelated_group_assignment = create :group_assignment, group_offer: @group_offer
     @unrelated_hour = create :hour, volunteer: @unrelated_group_assignment.volunteer,
-      hourable: @group_offer, hours: 5
+      hourable: @group_offer, hours: 5.0
     @unrelated_feedback = create :feedback, volunteer: @unrelated_group_assignment.volunteer,
       author: @unrelated_group_assignment.volunteer.user, feedbackable: @group_offer
   end
