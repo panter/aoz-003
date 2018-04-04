@@ -8,7 +8,8 @@ class ClientActivityFilterTest < ActionDispatch::IntegrationTest
     @client_rejected = create :client, acceptance: 'rejected'
     create :assignment_active, client: @client_rejected
     @client_resigned = create :client, acceptance: 'accepted'
-    create :assignment_active, client: @client_resigned, period_end: 2.days.ago
+    create :assignment_active, client: @client_resigned, period_end: 2.days.ago,
+      termination_verified_by: @superadmin, termination_verified_at: Time.zone.now
     @client_resigned.resigned!
     login_as @superadmin
   end

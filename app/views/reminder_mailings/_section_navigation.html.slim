@@ -1,10 +1,9 @@
 nav.navbar.section-navigation.hidden-print
   ul.section-nav-ul.list-unstyled
-    li= button_link 'E-Mailvorlagen', email_templates_path, dimension: 'sm'
-    li= section_nav_button('feedbacks', 'Feedback Eingang', list_responses_feedbacks_path(q: default_list_response_query))
-    li= section_nav_button('trial_feedbacks', 'Probezeit Feedback Eingang', list_responses_trial_feedbacks_path(q: default_list_response_query))
-    li= section_nav_button('hours', 'Stunden Eingang', list_responses_hours_path(q: default_list_response_query))
-    li
-    li= section_nav_button('new_probation_period', 'Probezeit Erinnerung erstellen', new_trial_period_reminder_mailings_path)
-    li= section_nav_button('new_half_year', 'Halbjahres Erinnerung erstellen', new_half_year_reminder_mailings_path)
-    li= section_nav_button('index', 'Versandte Erinnerungen', reminder_mailings_path)
+    li= section_nav_button 'Probezeit Feedback Eingang', list_responses_trial_feedbacks_path
+    li= section_nav_button 'Feedback Eingang', list_responses_feedbacks_path
+    li= section_nav_button 'Spesenformulare', billing_expenses_path
+    li= section_nav_button 'Probezeit Erinnerung erstellen', new_trial_period_reminder_mailings_path
+    li= section_nav_button 'Halbjahres Erinnerung erstellen', new_half_year_reminder_mailings_path
+    li= section_nav_button 'Versandte Erinnerungen', reminder_mailings_path
+    li= section_nav_button 'E-Mailvorlagen', email_templates_path

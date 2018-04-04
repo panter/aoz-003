@@ -289,7 +289,7 @@ de:
         <<: *id-generic_keys
         amount: Betrag
         assignment: Begleitung
-        created_by: Verantwortliche/r
+        created_by: Erstellt von
       certificate:
         <<: *id-generic_keys
         assignment: Einsatz
@@ -458,7 +458,8 @@ de:
         iban: IBAN
         interests: Interessen
         intro_course: Einführungskurs besucht
-        kid: Kinder
+        kid: Kind
+        teenager: Jugendliche/r
         man: Mann
         native_language: Muttersprache
         other_offer_desc: Beschreibung
@@ -472,7 +473,7 @@ de:
         strengths: Stärken
         take_more_assignments: Akzeptiere weitere Einsätze
         trial_period: Probezeitbericht erhalten
-        unaccompanied: Unbegleitete Minderjährige
+        unaccompanied: Unbegleitete/r Minderjährige/r
         volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         waive: Ich verzichte auf die Auszahlung von Spesen.
@@ -551,20 +552,6 @@ de:
   assignment_exists: Die Begleitung existiert bereits.
   assignment_pdf:
     <<: *id-generic_keys
-    agreement_text:
-      -
-        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-        items: ['Verhaltenskodex für Freiwillige', 'Rechte und Pflichten für Freiwillige', 'AOZ Leitlinien Praktische Integrationsarbeit 2011']
-      -
-        title: Allenfalls auch
-        items: ['Abmachungen für die freiwillige Begleitung von unbegleiteten minderjährigen Jugendlichen (MNA)', 'Abmachungen für das Leiten von niederschwelligen Deutschkursen']
-    group_agreement_text:
-      -
-        title: 'Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:'
-        items: ['Verhaltenskodex für Freiwillige', 'Rechte und Pflichten für Freiwillige', 'AOZ Leitlinien Praktische Integrationsarbeit']
-      -
-        title: Allenfalls auch
-        items: ['Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)', 'Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende']
     birthdate: Geburtsdatum
     city_date: 'Ort, Datum:'
     client_title: Begleitete Person
@@ -577,7 +564,7 @@ de:
     for_aoz: Für die AOZ
     frequency: Frequenz
     function: Funktion
-    how_often: Wie oft?
+    frequency: Wie oft?
     last_name: Name
     mobile: Handy
     organization: Organisation
@@ -593,9 +580,10 @@ de:
     volunteer_title: Freiwillige Person
     volunteer_title_2: Der/die Freiwillige
     weekly: 1x pro Woche
-    what: Was?
+    assignment_description: Was?
     when: Tag / Zeit
     zurich: Zürich
+    agreement_text: Vereinbarungstext
   available_volunteers: Verfügbare Freiwillige
   billing_expense_pdf:
     <<: *id-generic_keys

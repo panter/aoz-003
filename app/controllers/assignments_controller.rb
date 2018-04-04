@@ -53,7 +53,8 @@ class AssignmentsController < ApplicationController
   end
 
   def new
-    @assignment = Assignment.new
+    @assignment = Assignment.new(client_id: params[:client_id], volunteer_id: params[:volunteer_id])
+    @assignment.default_values
     authorize @assignment
   end
 
@@ -81,7 +82,7 @@ class AssignmentsController < ApplicationController
 
   def find_client
     set_volunteer
-    @q = policy_scope(Client).need_accompanying.ransack(params[:q])
+    @q = policy_scope(Client).inactive.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @need_accompanying = @q.result.paginate(page: params[:page])
   end
@@ -169,6 +170,8 @@ class AssignmentsController < ApplicationController
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :term_feedback_transfair, :comments, :additional_comments,
+      :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
+      :special_agreement, :first_meeting,
       volunteer_attributes: [:waive]
     )
   end

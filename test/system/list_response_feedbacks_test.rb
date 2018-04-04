@@ -43,7 +43,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks_list_contains_only_relevant_records' do
-    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link exact_text: 'Feedback Eingang'
     assert page.has_link? @assignment_pendent.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_pendent.feedbackable.to_label
     assert page.has_link? @group_assignment_pendent.volunteer.contact.last_name
@@ -60,7 +60,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks list without filter shows marked done feedback' do
-    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link exact_text: 'Feedback Eingang'
     click_link 'Filter aufheben'
     visit current_url
     # marked done shoud now be displayed
@@ -71,7 +71,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks_list_with_filter_erledigt_shows_only_marked_done' do
-    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link exact_text: 'Feedback Eingang'
     click_link 'Geprüft: Ungesehen'
     within 'li.dropdown.open' do
       click_link 'Angeschaut'
@@ -89,7 +89,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'marking_feedback_done_works' do
-    click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+    click_link exact_text: 'Feedback Eingang'
     within 'tbody' do
       click_link 'Angeschaut', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
         assignments\/#{@assignment_pendent.id}\/feedbacks\/#{@assignment_fb_pendent.id}\/.*/x
@@ -104,6 +104,28 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     @group_assignment_fb_pendent.reload
     assert_equal @superadmin, @group_assignment_fb_pendent.reviewer
   end
+
+  # TODO: Flappy test
+  # test 'truncate_modal_shows_all_text' do
+  #   comments = FFaker::Lorem.paragraph(20)
+  #   achievements = FFaker::Lorem.paragraph(20)
+  #   future = FFaker::Lorem.paragraph(20)
+  #   @assignment_fb_pendent.update(comments: comments, achievements: achievements, future: future)
+  #   @group_assignment_fb_pendent.update(reviewer: @superadmin)
+  #   click_link 'Feedback Eingang', href: /.*\/feedbacks\?.*$/
+  #   page.find('td', text: comments.truncate(300)).click
+  #   wait_for_ajax
+  #   assert page.has_text? comments
+  #   click_button 'Schliessen'
+  #   page.find('td', text: future.truncate(300)).click
+  #   wait_for_ajax
+  #   assert page.has_text? future
+  #   click_button 'Schliessen'
+  #   wait_for_ajax
+  #   page.find('td', text: achievements.truncate(300)).click
+  #   wait_for_ajax
+  #   assert page.has_text? achievements
+  # end
 
   test 'Creating new trial feedback reminder if no active mail template redirect to creating one' do
     ClientNotification.destroy_all

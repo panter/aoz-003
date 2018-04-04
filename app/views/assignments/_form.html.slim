@@ -4,10 +4,8 @@
   .row
     .col-xs-12.col-md-6
       - if action_name == 'new'
-        = f.association :client, include_blank: true,
-          selected: params[:client_id] || @assignment&.client&.id
-        = f.association :volunteer, include_blank: true,
-          selected: params[:volunteer_id] || @assignment&.volunteer&.id
+        = f.association :client, include_blank: true
+        = f.association :volunteer, include_blank: true
       - else
         h4.m-b-10= t_model(Client)
         = render 'user_table', user: @assignment.client, client: true
@@ -21,6 +19,16 @@
     .col-xs-12.col-md-6
       = f.input :additional_comments
 
+  .row
+    .col-xs-12.col-md-6
+      = f.input :assignment_description, label: t('assignment_pdf.assignment_description')
+      = f.input :first_meeting, label: t('assignment_pdf.first_time')
+      = f.input :duration, label: t('assignment_pdf.duration')
+    .col-xs-12.col-md-6
+      = f.input :frequency, label: t('assignment_pdf.frequency')
+      = f.input :trial_period_end, label: t('assignment_pdf.trial_time')
+      = f.input :special_agreement, label: t('assignment_pdf.special')
+      = f.input :agreement_text, label: t('assignment_pdf.agreement_text'), input_html: { class: 'text-body' }
   .row
     .col-xs-12
       = f.button :submit

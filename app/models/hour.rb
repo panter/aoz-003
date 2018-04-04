@@ -12,7 +12,7 @@ class Hour < ApplicationRecord
   belongs_to :billing_expense, -> { with_deleted }, optional: true, inverse_of: 'hours'
   belongs_to :certificate, optional: true
 
-  validates :hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :hours, presence: true, numericality: { greater_than: 0 }
   validates :meeting_date, presence: true
   validates :hourable, presence: true
 
@@ -20,10 +20,6 @@ class Hour < ApplicationRecord
 
   scope :since_last_submitted, lambda { |submitted_at|
     where('created_at > ?', submitted_at) if submitted_at
-  }
-
-  scope :need_refund, lambda {
-    joins(:volunteer).where('volunteers.waive = FALSE')
   }
 
   scope :assignment, (-> { where(hourable_type: 'Assignment') })

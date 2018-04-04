@@ -7,7 +7,7 @@ tr
       = button_link navigation_glyph(:terminate), set_terminated_client_path(client), method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }, title: 'Beenden'
   - if policy(Client).superadmin_privileges?
     td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
-      class: "btn btn-xs btn-acceptance-#{client.acceptance}"
+      class: "btn btn-xs btn-acceptance-#{client.acceptance} btn-acceptance-client"
   td= t("salutation.#{client.salutation}") if client.salutation?
   td= link_to client.contact.full_name, edit_client_path(client)
   td= client.contact.city

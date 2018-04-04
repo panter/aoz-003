@@ -36,7 +36,9 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     # not all checkboxes are checked
     refute all_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
-    find('input[name="select-all-mailings"]').click
+
+    check 'table-row-select-all'
+
     # All checkboxes are checked
     assert all_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
@@ -103,7 +105,9 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     # not all checkboxes are checked
     refute all_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
-    find('input[name="select-all-mailings"]').click
+
+    check 'table-row-select-all'
+
     # All checkboxes are checked
     assert all_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')

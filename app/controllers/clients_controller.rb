@@ -28,7 +28,10 @@ class ClientsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @current_assignments = @client.assignments.unterminated
+    @archived_assignments = @client.assignment_logs
+  end
 
   def new
     @client = Client.new(user: current_user)
@@ -91,9 +94,11 @@ class ClientsController < ApplicationController
   end
 
   def resigned_fail_notice
+    assignment = @client.assignments.unterminated.first
+
     {
       message: 'Beenden fehlgeschlagen.', model_message: @client.errors.messages[:acceptance].first,
-      action_link: { text: 'Begleitung bearbeiten', path: edit_assignment_path(@client.assignment) }
+      action_link: { text: 'Begleitung bearbeiten', path: edit_assignment_path(assignment) }
     }
   end
 

@@ -10,7 +10,7 @@ class Volunteer < ApplicationRecord
   before_save :record_acceptance_changed, if: :will_save_change_to_acceptance?
   after_update :copy_contact_to_user, if: :user_added?
 
-  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :unaccompanied].freeze
+  SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :teenager, :unaccompanied].freeze
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
@@ -183,6 +183,17 @@ class Volunteer < ApplicationRecord
     volunteers.where("NOT EXISTS (#{assignments.to_sql})")
   }
 
+  scope :need_refunds, (-> { where(waive: false) })
+
+  scope :with_billable_hours, lambda {
+    need_refunds
+      .joins(:contact)
+      .joins(:hours).merge(Hour.billable)
+      .select('volunteers.*, SUM(hours.hours) AS total_hours')
+      .group(:id, 'contacts.full_name')
+      .order("(CASE WHEN COALESCE(iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
+  }
+
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)
   end
@@ -201,16 +212,8 @@ class Volunteer < ApplicationRecord
     accepted? && assignments.active.blank? && group_assignments.active.blank?
   end
 
-  def unterminated_assignments?
-    assignments.unterminated.any?
-  end
-
-  def unterminated_group_assignments?
-    group_assignments.unterminated.any?
-  end
-
   def terminatable?
-    !(unterminated_assignments? || unterminated_group_assignments?)
+    assignments.unterminated.none? && group_assignments.unterminated.none?
   end
 
   def state

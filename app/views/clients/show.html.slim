@@ -80,8 +80,12 @@ h1= @client.contact.full_name
 h3 Wann sind Sie verfügbar?
 = render 'availability/show', available: @client
 
-- if @client.assignment
-  h3#assignments Begleitungen
-  = render 'assignments/client_volunteer_index', assignments: @client.assignment
+- if @current_assignments.present?
+  h3#assignments Aktuelle Begleitungen
+  = render 'assignments/client_volunteer_index', assignments: @current_assignments
+
+- if @archived_assignments.present?
+  h3 Archivierte Begleitungen
+  = render 'assignments/client_volunteer_index', assignments: @archived_assignments
 
 = render 'show_navigation'

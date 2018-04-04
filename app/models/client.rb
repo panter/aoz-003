@@ -23,13 +23,9 @@ class Client < ApplicationRecord
   belongs_to :involved_authority, -> { with_deleted }, class_name: 'User',
     inverse_of: 'involved_authorities', optional: true
   has_many :manager_departments, through: :user, source: :departments
-  has_one :assignment_creator_departments, through: :assignment, source: :creator
 
-  has_one :assignment, dependent: :destroy
-  has_many :assignment_logs
-
-  has_one :volunteer, through: :assignment
-  has_many :volunteer_logs, through: :assignment_logs
+  has_many :assignments, dependent: :destroy
+  has_many :assignment_logs, dependent: :destroy
 
   has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
@@ -49,33 +45,26 @@ class Client < ApplicationRecord
       Bitte sicherstellen, dass alle Einsätze komplett abgeschlossen sind.'
   }, unless: :terminatable?
 
-  scope :with_assignment, (-> { joins(:assignment) })
-  scope :with_active_assignment, (-> { with_assignment.merge(Assignment.active) })
+  scope :with_assignments, (-> { distinct.joins(:assignments) })
+  scope :with_active_assignments, (-> { with_assignments.merge(Assignment.active) })
 
-  scope :need_accompanying, lambda {
-    inactive.order(created_at: :asc)
-  }
-
-  scope :with_active_assignment_between, lambda { |start_date, end_date|
-    with_assignment.merge(Assignment.active_between(start_date, end_date))
-  }
-
-  scope :with_inactive_assignment, lambda {
-    left_outer_joins(:assignment)
+  scope :with_inactive_assignments, lambda {
+    left_outer_joins(:assignments)
       .accepted
       .where('assignments.period_end < ?', Time.zone.today)
   }
 
-  scope :without_assignment, lambda {
-    left_outer_joins(:assignment).where('assignments.id is NULL')
+  scope :without_assignments, lambda {
+    left_outer_joins(:assignments).where('assignments.id is NULL')
   }
 
   scope :active, lambda {
-    accepted.with_active_assignment
+    accepted.with_active_assignments
   }
 
   scope :inactive, lambda {
-    accepted.without_assignment.or(with_inactive_assignment)
+    active_assignments = Assignment.active.where('client_id = clients.id')
+    accepted.where("NOT EXISTS (#{active_assignments.to_sql})")
   }
 
   scope :resigned_between, lambda { |start_date, end_date|
@@ -87,7 +76,7 @@ class Client < ApplicationRecord
   }
 
   def terminatable?
-    assignment.blank? || assignment.no_period? || assignment.ended?
+    assignments.unterminated.none?
   end
 
   def self.acceptences_restricted

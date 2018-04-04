@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   concern :assignment_feedbacks do
-    resources :hours, concerns: :mark_submitted_at
+    resources :hours
     resources :feedbacks, concerns: :mark_submitted_at
     resources :trial_feedbacks, concerns: :mark_submitted_at
   end
@@ -82,7 +82,6 @@ Rails.application.routes.draw do
     patch :end_all_assignments, on: :member
   end
 
-  get 'list_responses/hours', to: 'list_responses#hours'
   get 'list_responses/feedbacks', to: 'list_responses#feedbacks'
   get 'list_responses/trial_feedbacks', to: 'list_responses#trial_feedbacks'
 
@@ -106,13 +105,15 @@ Rails.application.routes.draw do
     get :seeking_clients, on: :collection
 
     resources :assignments, except: [:destroy], concerns: [:assignment_feedbacks, :hours_resources]
-    resources :billing_expenses, except: [:edit, :update]
+    resources :billing_expenses, only: [:index]
     resources :certificates
     resources :group_assignments, only: [:show, :edit, :update], concerns: :hours_resources
     resources :group_offers, except: [:destroy], concerns: :assignment_feedbacks
     resources :hours
     resources :journals, except: [:show]
   end
+
+  resources :billing_expenses, except: [:edit, :update]
 
   root 'application#home'
 end

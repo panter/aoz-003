@@ -29,7 +29,7 @@
           .col-xs-6
             = t('billing_expense_pdf.chosen_amount')
           .col-xs-6.col_input
-            = "#{'Fr.'} #{@billing_expense.amount}"
+            = format_currency @billing_expense.amount
 
 .row
   .col-xs-11.col-xs-offset-1
@@ -66,7 +66,7 @@
           .col-xs-6
             = t_attr(:bank_details, Volunteer)
           .col-xs-6
-            = "#{@billing_expense.volunteer.bank_account}" if @billing_expense.volunteer.bank_account.present?
+            = @billing_expense.full_bank_details
         .row
           br=
           .col-xs-6

@@ -15,21 +15,21 @@ class ClientTest < ActiveSupport::TestCase
     refute client.valid?
   end
 
-  test 'a client without assignment should show up in need accompanying' do
-    result = Client.need_accompanying
+  test 'a client without assignment should show up in inactive' do
+    result = Client.inactive
     assert_equal [@client], result.to_a
   end
 
-  test 'a client with an active assignment should not show up in need accompanying' do
+  test 'a client with an active assignment should not show up in inactive' do
     create :assignment_active, client: @client
-    result = Client.need_accompanying
+    result = Client.inactive
     assert_equal [], result.to_a
   end
 
-  test 'a client with an inactive assignment should show up in need accompanying' do
+  test 'a client with an inactive assignment should show up in inactive' do
     client = create :client
     create :assignment_inactive, client: client
-    result = Client.need_accompanying
+    result = Client.inactive
     assert result.include? @client
     assert result.include? client
   end

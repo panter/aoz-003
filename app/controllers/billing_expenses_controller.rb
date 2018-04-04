@@ -1,10 +1,15 @@
 class BillingExpensesController < ApplicationController
   before_action :set_billing_expense, only: [:show, :destroy]
-  before_action :set_volunteer
+  before_action :set_volunteer, only: [:index]
 
   def index
     authorize BillingExpense
-    @billing_expenses = BillingExpense.where(volunteer: @volunteer)
+
+    @q = policy_scope(BillingExpense).ransack(params[:q])
+    @q.sorts = ['created_at desc'] if @q.sorts.empty?
+
+    @billing_expenses = @q.result.page(params[:page])
+    @billing_expenses = @billing_expenses.where(volunteer_id: @volunteer.id) if @volunteer
   end
 
   def show
@@ -18,26 +23,31 @@ class BillingExpensesController < ApplicationController
   end
 
   def new
-    @billing_expense = BillingExpense.new(volunteer: @volunteer)
+    @billing_expense = BillingExpense.new
     authorize @billing_expense
+
+    @q = Volunteer.with_billable_hours.ransack(params[:q])
+    @volunteers = @q.result
+    @selected_volunteers = params[:selected_volunteers].presence || []
   end
 
   def create
-    @billing_expense = BillingExpense.new(@volunteer.slice(:bank, :iban))
-    @billing_expense.hours = @volunteer.hours.billable
-    @billing_expense.volunteer = @volunteer
-    @billing_expense.user = current_user
-    authorize @billing_expense
-    if @billing_expense.save
-      redirect_to volunteer_billing_expenses_url, make_notice
-    else
-      redirect_to volunteer_billing_expenses_url, notice: t('already_computed')
-    end
+    authorize BillingExpense, :create?
+
+    selected_volunteers = params[:selected_volunteers]
+    volunteers = Volunteer.need_refunds.where(id: selected_volunteers)
+    BillingExpense.create_for!(volunteers, current_user)
+
+    redirect_to billing_expenses_url,
+      notice: 'Spesenformulare wurden erfolgreich erstellt.'
+  rescue ActiveRecord::RecordInvalid => error
+    redirect_to new_billing_expense_url(selected_volunteers: selected_volunteers),
+      notice: error.message
   end
 
   def destroy
     @billing_expense.destroy
-    redirect_to @volunteer, make_notice
+    redirect_to billing_expenses_url, make_notice
   end
 
   private
@@ -48,12 +58,18 @@ class BillingExpensesController < ApplicationController
   end
 
   def set_volunteer
-    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+    if params[:volunteer_id]
+      @volunteer = Volunteer.find(params[:volunteer_id])
+      authorize @volunteer
+    end
   end
 
   def pdf_file_name
     'Spesenauszahlung-' +
-      [@volunteer.contact.full_name, @volunteer.hours.maximum(:meeting_date)].join('-').parameterize
+      [
+        @billing_expense.volunteer.contact.full_name,
+        @billing_expense.volunteer.hours.maximum(:meeting_date)
+      ].join('-').parameterize
   end
 
   def billing_expense_params

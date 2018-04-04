@@ -24,26 +24,31 @@ class AssignmentsTest < ApplicationSystemTestCase
     end
   end
 
-  # Travis GFYS
-  # test 'assign unassigned client - volunteer side' do
+  # TODO: Flappy test
+  # test 'assign unassigned client' do
   #   login_as @user
   #   visit volunteers_path
-  #   click_link 'Looking for clients'
-  #   click_link 'Find client'
-  #   page.find('a', text: 'Reserve').click
-  #   visit current_url
-  #   page.refresh
-  #   sleep 5
-  #   click_button 'Create Assignment'
-  #   assignment = Assignment.last
-  #   assignment.period_start = 2.days.ago.to_date
-  #   assignment.save!
-  #   assert page.has_text? @client.contact.full_name
-  #   assert page.has_text? @volunteer.contact.full_name
+  #   click_link 'Klienten suchen'
+  #   click_link 'Klient/in finden'
+
+  #   wait_for_ajax
+  #   click_link 'Reservieren'
+
+  #   fill_in 'Einsatzbeginn', with: 2.days.ago.to_date
+  #   click_button 'Begleitung erfassen'
+
+  #   assert_text @client.contact.full_name
+  #   assert_text @volunteer.contact.full_name
+
   #   visit client_path(@client)
-  #   assert page.has_text? 'Reserved'
+
+  #   assert_text 'Aktiv'
+  #   assert_text @volunteer
+
   #   visit volunteer_path(@volunteer)
-  #   assert page.has_text? 'Active'
+
+  #   assert_text 'Aktiv'
+  #   assert_text @client
   # end
 
   test 'creating_a_pdf_with_a_user_that_has_no_profile_will_not_crash' do

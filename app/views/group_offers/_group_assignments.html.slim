@@ -8,6 +8,7 @@
     table.table.table-no-border-top
       thead
         tr
+          th.hidden-print Aktionen
           th Freiwillige/r
           th Rolle
           th Anfangsdatum
@@ -17,6 +18,10 @@
       tbody
         - @group_offer.group_assignment_logs.order('created_at asc').each do |ga_log|
           tr
+            td.index-action-cell.hidden-print
+              - if policy(ga_log.group_assignment).show?
+                = button_link navigation_glyph(:download), group_assignment_path(ga_log.group_assignment, format: :pdf),
+                  title: 'Herunterladen'
             td= link_to_if(policy(Volunteer).show?, ga_log.volunteer.contact.full_name,
               volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
             td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
