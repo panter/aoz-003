@@ -10,8 +10,8 @@ class ReminderMailingsController < ApplicationController
   def show; end
 
   def new_trial_period
-    @assignments = Assignment.need_trial_period_reminder_mailing.distinct
-    @group_assignments = GroupAssignment.need_trial_period_reminder_mailing.distinct
+    @assignments = Assignment.need_trial_period_reminder_mailing.distinct.by_volunteer_name
+    @group_assignments = GroupAssignment.need_trial_period_reminder_mailing.distinct.by_volunteer_name
     @reminder_mailing = ReminderMailing.new(kind: 'trial_period', creator: current_user,
       reminder_mailing_volunteers: @assignments + @group_assignments)
     if EmailTemplate.trial.active.any?
@@ -24,8 +24,8 @@ class ReminderMailingsController < ApplicationController
   end
 
   def new_half_year
-    @reminder_mailables = Assignment.submitted_since(params[:submitted_since]&.to_date)
-    @reminder_mailables += GroupAssignment.submitted_since(params[:submitted_since]&.to_date)
+    @reminder_mailables = Assignment.submitted_since(params[:submitted_since]&.to_date).by_volunteer_name
+    @reminder_mailables += GroupAssignment.submitted_since(params[:submitted_since]&.to_date).by_volunteer_name
     @reminder_mailing = ReminderMailing.new(kind: 'half_year',
       reminder_mailing_volunteers: @reminder_mailables)
     if EmailTemplate.half_year.active.any?
