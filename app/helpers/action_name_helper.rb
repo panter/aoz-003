@@ -1,6 +1,6 @@
 module ActionNameHelper
   def action_new?
-    action_name == 'new'
+    action_name == 'new' || action_name == 'create'
   end
 
   def action_index?
@@ -12,6 +12,6 @@ module ActionNameHelper
   end
 
   def action_edit?
-    action_name == 'edit'
+    action_name == 'edit' || action_name == 'update'
   end
 end
