@@ -207,3 +207,10 @@ li.button-acceptance a {
     margin-bottom: 0.3em;
   }
 }
+
+.btn-lg-accepted {
+  @extend .btn-success;
+  padding: 16px 32px 16px 32px;
+  margin: 16px;
+  font-size: 16px;
+}
