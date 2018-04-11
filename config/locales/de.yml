@@ -5,11 +5,13 @@ de:
     term_feedback_success: 'Endfeedback: Erfolge'
     term_feedback_problems: 'Endfeedback: Probleme'
     term_feedback_transfair: 'Endfeedback: TransFair'
+    term_remaining_hours: 'Restliche Stunden'
   termination_feedback_questions: &id-termination-feedback-quests
     term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
     term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
     term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
     term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
+    term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values
       trial_period: Probezeit
