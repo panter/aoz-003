@@ -56,12 +56,7 @@ class ClientsTest < ApplicationSystemTestCase
 
     click_button 'Klient/in erfassen'
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    assert_text @social_worker.full_name
-    @superadmin.clients.each do |client|
-      assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
-      assert page.has_link? client.user.full_name, href: /profiles\/#{client.user.profile.id}/
-      assert page.has_link? client.contact.primary_email
-    end
+    assert page.has_select? 'Fallführende Stelle', selected: @social_worker.full_name
   end
 
   test 'new client form with preselected fields' do
@@ -79,10 +74,11 @@ class ClientsTest < ApplicationSystemTestCase
     end
     click_button 'Klient/in erfassen'
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    within '.table-no-border-top' do
-      assert_text 'egal', count: 2
-      assert_text 'Deutsch Gut'
-    end
+    refute page.has_select? 'Beendet'
+
+    assert page.has_select? 'Geschlecht Freiwillige/r', selected: 'egal'
+    assert page.has_select? 'Alter Freiwillige/r', selected: 'egal'
+    assert page.has_field? id: 'client_language_skills_attributes_0_level_good', checked: true
   end
 
   test 'new client can select custom language' do
@@ -107,38 +103,11 @@ class ClientsTest < ApplicationSystemTestCase
 
     click_button 'Klient/in erfassen'
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    within '.table-no-border-top' do
-      assert_text 'Dari Muttersprache'
-      assert_text 'Deutsch Gut'
-    end
-  end
 
-  test 'level without a language is not shown' do
-    login_as @superadmin
-    visit new_client_path
-    select('Frau', from: 'Anrede')
-    fill_in 'Vorname', with: 'asdf'
-    fill_in 'Nachname', with: 'asdf'
-    fill_in 'Strasse', with: 'Sihlstrasse 131'
-    fill_in 'PLZ', with: '8002'
-    fill_in 'Ort', with: 'Zürich'
-    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
-    fill_in 'Telefonnummer', with: '0123456789', match: :first
-    within '#languages' do
-      choose('Wenig')
-    end
+    assert page.has_select? 'Sprache', selected: 'Dari'
+    assert page.has_select? 'Niveau', selected: 'Muttersprache'
 
-    click_on('Sprache hinzufügen')
-    select('Mittel', from: 'Niveau')
-
-    click_button 'Klient/in erfassen'
-    within '.table-no-border-top' do
-      refute_text 'Mittel'
-      assert_text 'Deutsch Wenig'
-    end
-
-    visit clients_path
-    refute_text 'Mittel'
+    assert page.has_field? id: 'client_language_skills_attributes_0_level_good', checked: true
   end
 
   test 'client_pagination' do
@@ -259,7 +228,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
     click_button 'Klient/in erfassen'
-    assert_text 'Deutsch Wenig'
+    assert page.has_field? id: 'client_language_skills_attributes_0_level_basic', checked: true
   end
 
   test 'client_print_view_is_not_paginated' do

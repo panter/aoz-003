@@ -49,7 +49,7 @@ class ClientsController < ApplicationController
     @client.involved_authority ||= current_user if current_user.social_worker?
     authorize @client
     if @client.save
-      redirect_to @client, create_success_notice
+      redirect_to edit_client_path(@client), create_success_notice
     else
       render :new
     end
@@ -59,7 +59,7 @@ class ClientsController < ApplicationController
     @client.assign_attributes(client_params)
     @client.resigned_by = current_user if @client.will_save_change_to_acceptance?(to: :resigned)
     if @client.save
-      redirect_to @client, create_update_redirect_notice
+      redirect_to edit_client_path(@client), create_update_redirect_notice
     else
       @custom_notice = resigned_fail_notice if @client.errors.messages[:acceptance].present?
       render :edit
@@ -68,10 +68,10 @@ class ClientsController < ApplicationController
 
   def set_terminated
     if @client.update(acceptance: :resigned, resigned_by: current_user)
-      redirect_back(fallback_location: client_path(@client),
+      redirect_back(fallback_location: edit_client_path(@client),
         notice: 'Klient/in wurde erfolgreich beendet.')
     else
-      redirect_back(fallback_location: client_path(@client), notice: resigned_fail_notice)
+      redirect_back(fallback_location: edit_client_path(@client), notice: resigned_fail_notice)
     end
   end
 
