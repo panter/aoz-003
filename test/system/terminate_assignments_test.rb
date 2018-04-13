@@ -18,17 +18,14 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
     assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
-    assert page.has_text? "#{I18n.l(@hour.meeting_date)} #{@hour.hours} "\
-      "#{@hour.activity} #{@hour.comments}"
-    assert page.has_text? "#{@feedback.goals} #{@feedback.achievements} #{@feedback.future} "\
-      "#{@feedback.comments} #{I18n.t(@feedback.conversation)}"
+    assert page.has_text? @assignment.volunteer.hours.total_hours
   end
 
   test 'volunteer_termination_form_creating_hours_redirects_back_to_form' do
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    click_link 'Stunden erfassen'
+    click_link 'Restliche Stunden erfassen'
     assert page.has_text? @assignment.to_label
     select(1.year.ago.day, from: 'hour_meeting_date_3i')
     select(I18n.t('date.month_names')[1.year.ago.month], from: 'hour_meeting_date_2i')
@@ -38,19 +35,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     fill_in 'Bemerkungen / Gab es etwas Besonderes', with: 'my_tryout_commment_hour_thingie'
     click_button 'Stunden erfassen'
     assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
-    assert page.has_text? 'my_tryout_activity_hour_thingie'
-    assert page.has_text? 'my_tryout_commment_hour_thingie'
-  end
-
-  test 'volunteer_termination_form_creating_feedbacks_redirects_back_to_form' do
-    @assignment.update(period_end: 2.days.ago)
-    login_as @volunteer.user
-    visit terminate_assignment_path(@assignment)
-    click_link 'Feedback erfassen'
-    fill_in 'Bemerkungen', with: 'my_tryout_feedback_comment_text_to_find'
-    click_button 'Feedback erfassen'
-    assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
-    assert page.has_text? 'my_tryout_feedback_comment_text_to_find'
   end
 
   test 'submitting_termination_sets_termination_submitted_at_and_termination_submitted_by' do
