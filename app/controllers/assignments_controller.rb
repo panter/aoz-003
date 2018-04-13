@@ -64,7 +64,7 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.new(assignment_params.merge(creator_id: current_user.id))
     authorize @assignment
     if @assignment.save
-      redirect_to assignments_url, make_notice
+      redirect_to edit_assignment_path(@assignment), make_notice
     else
       render :new
     end
@@ -110,7 +110,7 @@ class AssignmentsController < ApplicationController
       .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
     if @assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@assignment).deliver_now
-      redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
+      redirect_back(fallback_location: terminate_assignment_path(@assignment), notice: 'Der Einsatz ist hiermit abgeschlossen.')
     else
       redirect_back(fallback_location: terminate_assignment_path(@assignment))
     end
@@ -125,11 +125,11 @@ class AssignmentsController < ApplicationController
   private
 
   def create_update_redirect
-    if @assignment.saved_change_to_period_end?(from: nil)
+    if @assignment.saved_change_to_period_end?(from: nil) && (@assignment.ended? || @assignment.will_end_today?)
       redirect_to terminated_index_assignments_path,
         notice: 'Die Einsatzbeendung wurde initiiert.'
     else
-      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
+      redirect_to edit_assignment_path(@assignment), make_notice
     end
   end
 

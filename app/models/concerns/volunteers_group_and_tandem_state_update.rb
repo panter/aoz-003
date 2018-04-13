@@ -12,6 +12,10 @@ module VolunteersGroupAndTandemStateUpdate
       period_end.present? && period_end > Time.zone.today
     end
 
+    def will_end_today?
+      period_end.present? && period_end == Time.zone.today
+    end
+
     def started?
       period_start.present? && period_start <= Time.zone.today
     end
