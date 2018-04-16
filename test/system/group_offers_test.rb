@@ -36,7 +36,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_button 'Gruppenangebot erfassen'
 
     assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
-    assert page.has_link? department_manager.department.first.contact.last_name
+    refute page.has_select? 'Standort'
   end
 
   test 'category for a group offer is required' do

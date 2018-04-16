@@ -51,7 +51,7 @@ class GroupOffersController < ApplicationController
     @group_offer.department ||= current_user.department&.first
     authorize @group_offer
     if @group_offer.save
-      redirect_to @group_offer, make_notice
+      redirect_to edit_group_offer_path(@group_offer), make_notice
     else
       render :new
     end
@@ -59,7 +59,7 @@ class GroupOffersController < ApplicationController
 
   def update
     if @group_offer.update(group_offer_params)
-      redirect_to @group_offer, make_notice
+      redirect_to edit_group_offer_path(@group_offer), make_notice
     else
       render :edit
     end

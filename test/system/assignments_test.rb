@@ -18,10 +18,8 @@ class AssignmentsTest < ApplicationSystemTestCase
     page.find_all('.day', exact_text: '1').first.click
     click_button 'Begleitung erfassen'
     assert page.has_text? 'Begleitung wurde erfolgreich erstellt.'
-    within '.table-striped' do
-      assert page.has_link? @volunteer.contact.full_name
-      assert page.has_link? @client.contact.full_name
-    end
+    assert page.has_link? @volunteer.contact.full_name
+    assert page.has_link? @client.contact.full_name
   end
 
   # TODO: Flappy test
@@ -63,10 +61,8 @@ class AssignmentsTest < ApplicationSystemTestCase
     page.find('.month', text: 'Jan').click
     page.find_all('.day', exact_text: '1').first.click
     click_button 'Begleitung erfassen'
-    within '.table-striped' do
-      click_link 'Anzeigen'
-    end
 
+    get assignments_url(@volunteer, format: :pdf)
     assert page.has_text? @client.contact.last_name
   end
 
