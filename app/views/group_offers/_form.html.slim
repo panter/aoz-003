@@ -17,7 +17,7 @@
 
       - if policy(GroupOffer).supervisor_privileges?
         .row.group-offer-internal-fields
-          .col-md-12= f.association :department, required: true
+          .col-md-12= f.association :department, collection: Department.name_asc, required: true
         .row.group-offer-external-fields
           .col-md-6= f.input :organization, required: true
           .col-md-6= f.input :location, required: true
