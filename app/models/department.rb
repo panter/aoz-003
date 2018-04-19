@@ -17,6 +17,12 @@ class Department < ApplicationRecord
   scope :with_group_offer, lambda {
     joins(:group_offers).where('group_offers.department_id IS NOT NULL')
   }
+  scope :name_asc, lambda {
+    joins(:contact).order('contacts.last_name ASC')
+  }
+  scope :name_desc, lambda {
+    joins(:contact).order('contacts.last_name DESC')
+  }
 
   def self.filterable
     with_group_offer.uniq.map do |department|
