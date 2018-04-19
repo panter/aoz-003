@@ -17,6 +17,8 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :termination, (-> { kind(ReminderMailing.kinds[:termination]) })
   scope :termination_for, ->(mailable) { termination.where(reminder_mailable: mailable) }
 
+  delegate :full_name, to: :volunteer
+
   def mark_process_submitted(user, terminate_parent_mailing: false)
     update(process_submitted_by: user, process_submitted_at: Time.zone.now)
     reminder_mailing.update(obsolete: true) if terminate_parent_mailing
