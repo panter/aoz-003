@@ -67,4 +67,11 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
 
     assert_nil rmv.last_feedback
   end
+
+  test 'volunteer full_name' do
+    reminder_mailing = create :reminder_mailing
+    rmv = reminder_mailing.reminder_mailing_volunteers.first
+
+    assert_equal rmv.full_name, rmv.volunteer.full_name
+  end
 end
