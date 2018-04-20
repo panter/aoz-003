@@ -5,4 +5,5 @@ $(() => $(document).on('turbolinks:render, turbolinks:load', () => {
   tableRowSelectable();
   volunteerForm();
   groupOfferForm();
+  assigmentForm();
 }));
