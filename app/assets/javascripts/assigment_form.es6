@@ -1,13 +1,26 @@
 function assigmentForm() {
-  $('.assignments .download-assignment a').on('click', (event) => {
+  $('.assignments .print-assignment a, .assignments .download-assignment a').on('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    let newWindow = undefined;
     let href = $(event.currentTarget).attr('href');
+    let target = $(event.currentTarget).attr('target')
+
+    if (target === '_blank') {
+      newWindow = window.open('', '_blank');
+    }
+
     submitForm().then((data) => {
-      Turbolinks.visit(href);
+      if (target === '_blank') {
+        newWindow.location = href;
+      } else {
+        Turbolinks.visit(href);
+      }
     });
-    return false;
   });
 
-  const submitForm = () => {
+  const submitForm = (callback) => {
     let form = $('form.edit_assignment');
     let formAction = form.attr('action');
     let valuesToSubmit = form.serialize();
