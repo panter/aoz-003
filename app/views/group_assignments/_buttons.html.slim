@@ -1,7 +1,7 @@
 ul.list-inline
   li= button_link navigation_glyph(:back), group_offer_path(@group_assignment.group_offer)
-  li= button_link navigation_glyph(:download), group_assignment_path(@group_assignment, format: :pdf),
+  li.autosave-button = button_link navigation_glyph(:download), group_assignment_path(@group_assignment, format: :pdf),
     title: 'Herunterladen'
-  li = link_to navigation_glyph(:print), group_assignment_path(@group_assignment, print: :true, format: :pdf),
+  li.autosave-button = link_to navigation_glyph(:print), group_assignment_path(@group_assignment, print: :true, format: :pdf),
     { class: 'btn btn-default btn-md', target: '_blank' }
 
