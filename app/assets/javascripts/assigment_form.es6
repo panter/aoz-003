@@ -1,5 +1,5 @@
 function assigmentForm() {
-  $('.assignments .print-assignment a, .assignments .download-assignment a').on('click', (event) => {
+  $('.autosave-button a').on('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -21,9 +21,11 @@ function assigmentForm() {
   });
 
   const submitForm = (callback) => {
-    let form = $('form.edit_assignment');
+    let form = $('form.simple_form');
     let formAction = form.attr('action');
     let valuesToSubmit = form.serialize();
+
+    console.log(formAction);
 
     return new Promise((resolve, reject) => {
       $.ajax({

@@ -1,6 +1,6 @@
 ul.list-inline
   li = form_navigation_btn :back, with_row: false
   li = assignment_status_badge(assignment, 'btn')
-  li.download-assignment = button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
-  li.print-assignment = link_to navigation_glyph(:print), assignment_path(assignment, print: :true, format: :pdf),
+  li.autosave-button = button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
+  li.autosave-button = link_to navigation_glyph(:print), assignment_path(assignment, print: :true, format: :pdf),
     { class: 'btn btn-default btn-md', target: '_blank' }
