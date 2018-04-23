@@ -2,6 +2,9 @@
   = simple_error_notice f
 
   .row
+    .col-xs-12
+      = f.button :submit
+  .row
     .col-xs-12.col-md-6
       - if action_name == 'new'
         = f.association :client, include_blank: true
