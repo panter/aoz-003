@@ -1,5 +1,6 @@
 = simple_form_for(@group_assignment, url: group_assignment_path(@group_assignment, redirect_to: params[:redirect_to])) do |f|
   = simple_error_notice f
+  = f.button :submit
 
   dl.dl-horizontal.m-t-30
     dt Freiwillige/r:

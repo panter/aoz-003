@@ -52,7 +52,7 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
       click_link 'Bearbeiten', href: edit_group_assignment_path(@ga1, redirect_to: :show)
     end
     uncheck 'Verantwortliche/r'
-    click_button 'Begleitung aktualisieren'
+    page.find_all('input[type="submit"]').first.click
     assert page.has_text? 'Begleitung wurde erfolgreich geändert.'
     within '.assignments-table' do
       refute page.has_text? 'Verantwortliche/r'

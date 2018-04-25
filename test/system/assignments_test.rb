@@ -16,7 +16,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     page.find('#assignment_period_start').click
     page.find('.month', text: 'Jan').click
     page.find_all('.day', exact_text: '1').first.click
-    click_button 'Begleitung erfassen'
+    page.find_all('input[type="submit"]').first.click
     assert page.has_text? 'Begleitung wurde erfolgreich erstellt.'
     assert page.has_link? @volunteer.contact.full_name
     assert page.has_link? @client.contact.full_name
@@ -60,7 +60,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     page.find('#assignment_period_start').click
     page.find('.month', text: 'Jan').click
     page.find_all('.day', exact_text: '1').first.click
-    click_button 'Begleitung erfassen'
+    page.find_all('input[type="submit"]').first.click
 
     get assignments_url(@volunteer, format: :pdf)
     assert page.has_text? @client.contact.last_name
@@ -79,4 +79,21 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit assignments_url(print: true)
     assert_equal Assignment.count, find_all('tbody tr').size
   end
+
+  # TODO: Flappy test
+  # test 'saves assigment before download or print' do
+  #   assignment = create :assignment, volunteer: @volunteer
+  #
+  #   login_as @user
+  #
+  #   visit edit_volunteer_assignment_url(volunteer_id: @volunteer.id, id: assignment.id)
+  #   fill_in 'Bemerkungen', with: 'test'
+  #   page.find_all('.autosave-button a').first.click
+  #
+  #   using_wait_time 2 do
+  #     # TODO: find out why Capybara need to explicitly find comments input to save form with AJAX
+  #     assert_equal 'test', page.find_all('#assignment_comments').first.value
+  #     assert_equal 'test', assignment.reload.comments
+  #   end
+  # end
 end
