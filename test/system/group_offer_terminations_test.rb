@@ -53,7 +53,7 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     click_link 'Bearbeiten', href: edit_group_assignment_path(@group_assignment2,
       redirect_to: :initiate_termination)
     fill_in id: 'group_assignment_period_end', with: Time.zone.today.to_s
-    click_button 'Begleitung aktualisieren'
+    page.find_all('input[type="submit"]').first.click
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     refute page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     click_button 'Gruppenangebots Ende setzen'
