@@ -156,7 +156,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     page.find('#assignment_period_end').click
     page.find('.month', text: 'Jan').click
     first('.day',  exact_text: '17').click
-    click_button 'Begleitung aktualisieren'
+    page.find_all('input[type="submit"]').first.click
 
     assert page.has_current_path? terminated_index_assignments_path
 
