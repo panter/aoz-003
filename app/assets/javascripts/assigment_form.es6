@@ -25,8 +25,6 @@ function assigmentForm() {
     let formAction = form.attr('action');
     let valuesToSubmit = form.serialize();
 
-    console.log(formAction);
-
     return new Promise((resolve, reject) => {
       $.ajax({
         type: 'POST',
