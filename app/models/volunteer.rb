@@ -32,7 +32,6 @@ class Volunteer < ApplicationRecord
   has_one :department, through: :registrar
 
   has_many :departments, through: :group_offers
-  has_many :clients, through: :assignments
 
   has_many :hours, dependent: :destroy
   has_many :feedbacks, dependent: :destroy
