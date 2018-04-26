@@ -17,6 +17,9 @@ function volunteerForm() {
     const checked = $(target).is(':checked');
     $(data.collapse).toggleClass('collapse', data.checkShows ? !checked : checked );
   });
+
+  $('.volunteer-active-checkbox-changes').trigger('change');
+  $('.checkbox-toggle-collapse').trigger('change');
 }
 
 const hideFormRegions = (hide) => {

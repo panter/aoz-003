@@ -20,10 +20,11 @@ table.table.table-striped.group-assignments-table
           t_action(:show), group_offer_path(group_assignment.group_offer)) { '' }
         td.index-action-cell.hidden-print
           span
-            =link_to_if(policy(TrialFeedback).index?, t_title(:index, TrialFeedback),
-              polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])) { '' }
-            =link_to_if(policy(Feedback).index?, t_title(:index, Feedback),
-              polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])) { '' }
+            - unless @volunteer.external?
+              =link_to_if(policy(TrialFeedback).index?, t_title(:index, TrialFeedback),
+                polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])) { '' }
+              =link_to_if(policy(Feedback).index?, t_title(:index, Feedback),
+                polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])) { '' }
             =link_to_if(policy(GroupAssignment).verify_termination?, 'Beendigungsformular',
               polymorphic_path(group_assignment.group_assignment, action: :terminate)) { '' }
         td.index-action-cell.hidden-print

@@ -21,7 +21,7 @@ tr
           assignment.creator.full_name,
           profile_link(assignment.creator)
   = td_truncate_content_modal(assignment.comments, 'Bemerkungen')
-  - if controller_name == 'volunteers'
+  - if controller_name == 'volunteers' && !assignment.volunteer.external?
     - if policy(TrialFeedback).index?
       td.index-action-cell.hidden-print
         = link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
