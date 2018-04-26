@@ -1,10 +1,8 @@
 td.index-action-cell.hidden-print
-  = button_link navigation_glyph(:show), subject, title: 'Anzeigen'
+  - if subject.class != Volunteer
+    = button_link navigation_glyph(:show), subject, title: 'Anzeigen'
   - if policy(subject).edit?
     = button_link navigation_glyph(:edit), edit_polymorphic_path(subject), title: 'Bearbeiten'
   - if policy(subject.class).destroy? && controller_name != 'clients'
     = button_link navigation_glyph(:delete), subject, nil,
         confirm_deleting(subject, 'btn btn-default').merge(title: 'Löschen')
-  - if subject.class == Volunteer && policy(Volunteer).terminate? && !subject.resigned?
-    = button_link navigation_glyph(:terminate), terminate_volunteer_path(subject),
-        method: :put, title: 'Beenden'
