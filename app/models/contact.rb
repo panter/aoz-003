@@ -26,7 +26,7 @@ class Contact < ApplicationRecord
   end
 
   def full_address
-    [street, extended, postal_code, city].reject(&:blank?).join(', ')
+    [street, extended, full_city].reject(&:blank?).join(', ')
   end
 
   def profile?
