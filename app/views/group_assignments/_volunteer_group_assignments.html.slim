@@ -44,13 +44,12 @@ table.table.table-striped.group-assignments-table
         td= l(group_assignment.period_start) if group_assignment.period_start
         td= l(group_assignment.period_end) if group_assignment.period_end
         = td_truncate_content_modal(group_assignment.comments, 'Bemerkungen')
-        - unless @volunteer.external?
-          - if editable
-            td.index-action-cell.hidden-print
-              - if policy(TrialFeedback).index?
-                span= link_to t_title(:new, TrialFeedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])
-                span= link_to t_title(:index, TrialFeedback), polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])
-            td.index-action-cell.hidden-print
-              - if policy(Feedback).index?
-                span= link_to t_title(:new, Feedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
-                span= link_to t_title(:index, Feedback), polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
+        - if editable && !@volunteer.external?
+          td.index-action-cell.hidden-print
+            - if policy(TrialFeedback).index?
+              span= link_to t_title(:new, TrialFeedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])
+              span= link_to t_title(:index, TrialFeedback), polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])
+          td.index-action-cell.hidden-print
+            - if policy(Feedback).index?
+              span= link_to t_title(:new, Feedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
+              span= link_to t_title(:index, Feedback), polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
