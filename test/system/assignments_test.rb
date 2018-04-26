@@ -30,7 +30,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   #   click_link 'Klient/in suchen'
 
   #   wait_for_ajax
-  #   click_link 'Reservieren'
+  #   click_link 'Begleitung erstellen'
 
   #   fill_in 'Einsatzbeginn', with: 2.days.ago.to_date
   #   click_button 'Begleitung erfassen'
