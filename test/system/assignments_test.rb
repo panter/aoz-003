@@ -27,7 +27,7 @@ class AssignmentsTest < ApplicationSystemTestCase
   #   login_as @user
   #   visit volunteers_path
   #   click_link 'Klienten suchen'
-  #   click_link 'Klient/in finden'
+  #   click_link 'Klient/in suchen'
 
   #   wait_for_ajax
   #   click_link 'Reservieren'

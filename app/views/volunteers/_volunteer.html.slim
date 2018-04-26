@@ -7,7 +7,7 @@ tr
           group_assignments_path(group_assignment: { group_offer_id: @group_offer.id, volunteer_id: volunteer.id }),
           class: 'btn btn-default', method: :post
     - elsif volunteer.seeking_clients?
-      = button_link 'Klient/in finden', find_client_volunteer_path(id: volunteer)
+      = button_link 'Klient/in suchen', find_client_volunteer_path(id: volunteer)
     - elsif volunteer.assignments.any? || volunteer.group_assignments.any?
       = button_link t('.show_assignments'), volunteer_path(volunteer, anchor: 'assignments')
     - else
