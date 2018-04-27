@@ -41,31 +41,19 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
     assert mailing_volunteer.process_template[:subject].include? @volunteer.contact.natural_name
   end
 
-  test 'last_feedback' do
+  test 'current_submission' do
     reminder_mailing = create :reminder_mailing, created_at: 1.month.ago,
       reminder_mailing_volunteers: [@assignment_probation]
     rmv = reminder_mailing.reminder_mailing_volunteers.first
-    other_volunteer = create(:volunteer)
 
-    feedback = create :feedback, volunteer: @volunteer, author: @volunteer.user,
-      created_at: 1.day.ago, feedbackable: @assignment_probation
-    feedback_older = create :feedback, volunteer: @volunteer, author: @volunteer.user,
-      created_at: 1.week.ago, feedbackable: @assignment_probation
-    _feedback_other_author = create :feedback, volunteer: @volunteer, author: @superadmin,
-      created_at: 1.hour.ago, feedbackable: @assignment_probation
-    _feedback_other_volunteer = create :feedback,
-      volunteer: other_volunteer, author: other_volunteer.user,
-      created_at: 1.hour.ago, feedbackable: @assignment_probation
+    assert_nil rmv.current_submission
 
-    assert_equal feedback, rmv.last_feedback
+    @assignment_probation.update(submitted_at: 2.months.ago)
+    assert_nil rmv.current_submission
 
-    feedback.destroy
-
-    assert_equal feedback_older, rmv.last_feedback
-
-    feedback_older.destroy
-
-    assert_nil rmv.last_feedback
+    submitted_at = 1.day.ago
+    @assignment_probation.update(submitted_at: submitted_at)
+    assert_equal submitted_at, rmv.current_submission
   end
 
   test 'volunteer full_name' do

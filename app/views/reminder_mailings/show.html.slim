@@ -24,7 +24,7 @@ h4 Text
 .mailing-body-preview= markdown(example[:body])
 hr
 
-h3#feedbacks
+h3#volunteers
   - if @reminder_mailing.sending_triggered
     'Versandt an
   - else
@@ -36,23 +36,22 @@ table.table.table-condensed
       th Status
       th Freiwillige/r
       th Einsatz
-      th Letztes Feedback
+      th Letzte Bestätigung
   tbody
     - @reminder_mailing.reminder_mailing_volunteers.select(&:picked?).each do |mailing_volunteer|
-      - last_feedback = mailing_volunteer.last_feedback
+      - current_submission = mailing_volunteer.current_submission
       tr
         td
-          - if last_feedback
-            .label.label-success Beantwortet
+          - if current_submission
+            .label.label-success Bestätigt
           - else
-            .label.label-warning Unbeantwortet
+            .label.label-warning Unbestätigt
         td= link_to mailing_volunteer.volunteer.contact.full_name, mailing_volunteer.volunteer
         td
           = link_to mailing_volunteer.base_entity.to_label, mailing_volunteer.base_entity
         td
-          - if last_feedback
-            = link_to I18n.l(last_feedback.created_at.to_date),
-                polymorphic_path([mailing_volunteer.volunteer, mailing_volunteer.base_entity, last_feedback])
+          - if current_submission
+            = I18n.l current_submission.to_date
 
 nav.navbar.hidden-print
   ul.list-inline

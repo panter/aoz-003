@@ -11,18 +11,6 @@ class Assignment < ApplicationRecord
     scope: :volunteer_id, message: I18n.t('assignment_exists')
   }
 
-  def last_feedback
-    feedbacks.where(author: volunteer.user).last
-  end
-
-  def last_trial_feedback
-    trial_feedbacks.last
-  end
-
-  def last_hour
-    hours.last
-  end
-
   def polymorph_url_object
     self
   end

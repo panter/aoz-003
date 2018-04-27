@@ -44,10 +44,9 @@ class ReminderMailingVolunteer < ApplicationRecord
     }
   end
 
-  def last_feedback
-    reminder_mailing.feedbacks
-      .created_desc
-      .find_by(author_id: volunteer.user_id)
+  def current_submission
+    date = reminder_mailable.submitted_at
+    date if date && date > reminder_mailing.created_at
   end
 
   private
