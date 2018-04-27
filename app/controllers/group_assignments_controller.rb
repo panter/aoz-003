@@ -71,9 +71,11 @@ class GroupAssignmentsController < ApplicationController
   def terminate; end
 
   def update_terminated_at
-    @group_assignment.volunteer.waive = waive_param_true?
-    @group_assignment.assign_attributes(group_assignment_params.except(:volunteer_attributes)
-      .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
+    @group_assignment.assign_attributes(group_assignment_params.merge(
+      termination_submitted_at: Time.zone.now,
+      termination_submitted_by: current_user
+    ))
+
     if @group_assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@group_assignment).deliver_now
       redirect_to @group_assignment.volunteer,
@@ -103,10 +105,6 @@ class GroupAssignmentsController < ApplicationController
   def create_redirect(notice_text = nil, default_path = nil)
     redirect_to default_redirect || default_path || polymorphic_path(@group_assignment.group_offer),
       notice: notice_text || make_notice[:notice]
-  end
-
-  def waive_param_true?
-    group_assignment_params[:volunteer_attributes][:waive] == '1'
   end
 
   def terminate_reminder_mailing

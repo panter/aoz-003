@@ -27,6 +27,8 @@ Style/NumericPredicate:
 
 Layout/IndentArray:
   EnforcedStyle: consistent
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 Layout/MultilineMethodCallIndentation:

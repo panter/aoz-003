@@ -105,9 +105,11 @@ class AssignmentsController < ApplicationController
   end
 
   def update_terminated_at
-    @assignment.volunteer.waive = waive_param_true?
-    @assignment.assign_attributes(assignment_params.except(:volunteer_attributes)
-      .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
+    @assignment.assign_attributes(assignment_params.merge(
+      termination_submitted_at: Time.zone.now,
+      termination_submitted_by: current_user
+    ))
+
     if @assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@assignment).deliver_now
       redirect_back(fallback_location: terminate_assignment_path(@assignment), notice: 'Der Einsatz ist hiermit abgeschlossen.')
@@ -131,10 +133,6 @@ class AssignmentsController < ApplicationController
     else
       redirect_to edit_assignment_path(@assignment), make_notice
     end
-  end
-
-  def waive_param_true?
-    assignment_params[:volunteer_attributes][:waive] == '1'
   end
 
   def terminate_reminder_mailing
@@ -165,7 +163,7 @@ class AssignmentsController < ApplicationController
 
   def assignment_params
     params.require(:assignment).permit(
-      :client_id, :volunteer_id, :period_start, :period_end, :waive,
+      :client_id, :volunteer_id, :period_start, :period_end,
       :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
