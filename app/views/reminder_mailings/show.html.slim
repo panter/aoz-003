@@ -33,6 +33,7 @@ h3#volunteers
 table.table.table-condensed
   thead
     tr
+      th.hidden-print Aktionen
       th Status
       th Freiwillige/r
       th Einsatz
@@ -41,6 +42,9 @@ table.table.table-condensed
     - @reminder_mailing.reminder_mailing_volunteers.select(&:picked?).each do |mailing_volunteer|
       - current_submission = mailing_volunteer.current_submission
       tr
+        td.index-action-cell.hidden-print
+          = button_link navigation_glyph(:edit), mailing_volunteer.feedback_url(host: request.host_with_port),
+              title: 'Bestätigen', target: '_blank'
         td
           - if current_submission
             .label.label-success Bestätigt

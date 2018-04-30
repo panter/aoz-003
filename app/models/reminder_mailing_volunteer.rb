@@ -49,6 +49,26 @@ class ReminderMailingVolunteer < ApplicationRecord
     date if date && date > reminder_mailing.created_at
   end
 
+  def feedback_url(options = {})
+    if reminder_mailing.half_year?
+      path = reminder_mailable
+      action = :last_submitted_hours_and_feedbacks
+    elsif reminder_mailing.trial_period?
+      path = [volunteer, reminder_mailable.polymorph_url_object, TrialFeedback]
+      action = :new
+    elsif reminder_mailing.termination?
+      path = reminder_mailable
+      action = :terminate
+    else
+      return
+    end
+
+    Rails.application.routes.url_helpers.polymorphic_url(
+      path,
+      ActionMailer::Base.default_url_options.merge(options.merge(action: action))
+    )
+  end
+
   private
 
   def replace_ruby_template(template)
@@ -100,28 +120,5 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   def feedback_link
     "[Feedback Geben](#{feedback_url})"
-  end
-
-  def feedback_url
-    if reminder_mailing.half_year?
-      make_polymorphic_path(reminder_mailable, :last_submitted_hours_and_feedbacks)
-    elsif reminder_mailing.trial_period?
-      make_polymorphic_path([volunteer, reminder_mailable.polymorph_url_object, TrialFeedback],
-        :new)
-    elsif reminder_mailing.termination?
-      make_polymorphic_path([reminder_mailable], :terminate)
-    end
-  end
-
-  def make_polymorphic_path(path_array, action)
-    host_url + Rails.application.routes.url_helpers.polymorphic_path(path_array, action: action)
-  end
-
-  def host_url
-    if Rails.env.production?
-      "https://#{ENV['DEVISE_EMAIL_DOMAIN'] || 'https://staging.aoz-freiwillige.ch'}"
-    else
-      'http://localhost:3000'
-    end
   end
 end
