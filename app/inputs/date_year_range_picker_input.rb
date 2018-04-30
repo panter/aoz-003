@@ -34,6 +34,7 @@ class DateYearRangePickerInput < SimpleForm::Inputs::Base
   def date_field(position, template)
     attribute = "#{attribute_name}_#{position}"
     name = { name: "#{object_name}[#{attribute}]" }
+    value = { value: localize(@builder.object.send(attribute.to_sym)) }
     html_opts = input_html_options.merge(name)
     template.content_tag(:div, class: 'form-group col-xs-6') do
       template.concat content_tag(:label,

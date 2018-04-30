@@ -19,8 +19,11 @@ class DateRangePickerInput < SimpleForm::Inputs::Base
 
     html_opts = input_html_options.merge(
       id: "#{object_name}_#{attribute}",
-      name: "#{object_name}[#{attribute}]"
+      name: "#{object_name}[#{attribute}]",
+      value: localize(@builder.object.send(attribute.to_sym))
     )
+    
+    puts localize @builder.object.period_start
 
     template.content_tag(:div, class: 'form-group col-xs-6') do
       template.concat content_tag(:label,

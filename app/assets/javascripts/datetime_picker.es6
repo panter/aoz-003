@@ -1,6 +1,6 @@
 function dateTimePicker() {
   const datepickers = $('.input-daterange input').datepicker({
-    format: 'yyyy-mm-dd',
+    format: 'dd.mm.yyyy',
     startView: 1,
     todayBtn: true,
     clearBtn: true,
@@ -12,7 +12,7 @@ function dateTimePicker() {
   });
 
   const datepickersSingle = $('.input-date-picker input').datepicker({
-    format: 'yyyy-mm-dd',
+    format: 'dd.mm.yyyy',
     todayBtn: true,
     clearBtn: true,
     language: 'de',
