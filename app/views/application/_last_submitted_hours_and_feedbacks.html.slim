@@ -3,7 +3,8 @@ h1 Zuletzt übermittelte Stunden und Feedbacks
 h4.m-t-20.m-b-20.text-center.row-box
   'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
   br
-  = button_link 'Bestätigen', polymorphic_path(confirmable, action: :update_submitted_at), class: 'btn btn-lg-accepted'
+  = button_link 'Bestätigen', polymorphic_path(confirmable, action: :update_submitted_at),
+      class: 'btn btn-lg-accepted', method: :put
 
 h3.m-b-20
   'Einsatz

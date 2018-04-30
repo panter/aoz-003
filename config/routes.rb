@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   concern :update_submitted_at do
     get :last_submitted_hours_and_feedbacks, on: :member
-    get :update_submitted_at, on: :member
     put :update_submitted_at, on: :member
   end
 
