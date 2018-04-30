@@ -165,7 +165,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     end
 
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
-    assert page.has_link? @volunteer_assignment.contact.full_name, href: volunteer_path(@volunteer_assignment)
+    assert page.has_link? @volunteer_assignment.contact.full_name, href: edit_volunteer_path(@volunteer_assignment)
 
     fill_in 'Betreff', with: 'Erinnerung fuer Beendigung des Einsatzes: %{Einsatz}'
     fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'

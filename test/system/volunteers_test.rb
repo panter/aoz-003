@@ -277,7 +277,7 @@ class VolunteersTest < ApplicationSystemTestCase
     visit volunteers_path
     assert page.has_text? 'Kein Login'
     assert page.has_text? 'Importiert'
-    click_link 'Anzeigen', href: volunteer_path(volunteer)
+    click_link 'Bearbeiten', href: edit_volunteer_path(volunteer)
     assert page.has_text? "Für die Emailadresse #{import.email} einen Account erstellen"
     assert page.has_field? 'Mailadresse', with: import.email
     click_button 'Einladung an angegebene E-Mail verschicken'
