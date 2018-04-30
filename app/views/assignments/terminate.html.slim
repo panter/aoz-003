@@ -68,7 +68,7 @@ hr
         .col-xs-12.col-md-6
           fieldset
             legend Restliche Stunden
-            p= button_link 'Restliche Stunden erfassen', new_polymorphic_path([@assignment.volunteer, @assignment, Hour], redirect_to: request.fullpath)
+            = f.input :remaining_hours
         .col-xs-12.col-md-6
           fieldset
             legend Spesen

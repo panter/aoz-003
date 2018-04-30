@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment,
-    except: [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client]
+  before_action :set_assignment, except:
+    [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client]
 
   def index
     authorize Assignment
@@ -112,9 +112,10 @@ class AssignmentsController < ApplicationController
 
     if @assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@assignment).deliver_now
-      redirect_back(fallback_location: terminate_assignment_path(@assignment), notice: 'Der Einsatz ist hiermit abgeschlossen.')
+      redirect_back fallback_location: terminate_assignment_path(@assignment),
+        notice: 'Der Einsatz ist hiermit abgeschlossen.'
     else
-      redirect_back(fallback_location: terminate_assignment_path(@assignment))
+      redirect_back fallback_location: terminate_assignment_path(@assignment)
     end
   end
 
@@ -169,7 +170,7 @@ class AssignmentsController < ApplicationController
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :term_feedback_transfair, :comments, :additional_comments,
       :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
-      :special_agreement, :first_meeting,
+      :special_agreement, :first_meeting, :remaining_hours,
       volunteer_attributes: [:waive]
     )
   end

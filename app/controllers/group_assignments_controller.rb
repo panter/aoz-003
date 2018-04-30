@@ -133,7 +133,8 @@ class GroupAssignmentsController < ApplicationController
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :redirect_to, :term_feedback_transfair, :comments, :additional_comments,
       :trial_period_end, :frequency, :description, :place, :happens_at, :agreement_text,
-      :group_offer_id, :volunteer_id, volunteer_attributes: [:waive]
+      :group_offer_id, :volunteer_id, :remaining_hours,
+      volunteer_attributes: [:waive]
     )
   end
 end
