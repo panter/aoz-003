@@ -1,4 +1,3 @@
-- redirect_to_action ||= nil
 .table-responsive.assignments-table
   table.table.table-no-border-top
     thead
@@ -13,7 +12,7 @@
       - group_assignments.unterminated.each do |group_assignment|
         tr
           td.index-action-cell.hidden-print
-            = button_link navigation_glyph(:edit), edit_group_assignment_path(group_assignment, redirect_to: redirect_to_action),
+            = button_link navigation_glyph(:edit), edit_group_assignment_path(group_assignment, redirect_to: request.fullpath),
               title: 'Bearbeiten' if policy(group_assignment).edit?
             - if policy(group_assignment).show?
               = button_link navigation_glyph(:download), group_assignment_path(group_assignment, format: :pdf),
@@ -31,7 +30,7 @@
           td.index-action-cell.hidden-print
             - if group_assignment.period_end.blank?
               = link_to_if(policy(group_assignment).set_end_today?, 'Heute beenden',
-                set_end_today_group_assignment_path(group_assignment, redirect_to: redirect_to_action),
+                set_end_today_group_assignment_path(group_assignment, redirect_to: request.fullpath),
                 data: { method: 'PUT' }) { '' }
             - elsif group_assignment.termination_submitted_by_id.blank?
               = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular an Freiwillige/n mailen',

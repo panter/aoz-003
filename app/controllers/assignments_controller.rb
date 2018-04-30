@@ -94,7 +94,7 @@ class AssignmentsController < ApplicationController
 
   def update_submitted_at
     @assignment.update(submitted_at: Time.zone.now)
-    redirect_to last_submitted_hours_and_feedbacks_assignment_path,
+    redirect_to default_redirect || last_submitted_hours_and_feedbacks_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
 

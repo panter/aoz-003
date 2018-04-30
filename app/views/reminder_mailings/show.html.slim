@@ -43,8 +43,9 @@ table.table.table-condensed
       - current_submission = mailing_volunteer.current_submission
       tr
         td.index-action-cell.hidden-print
-          = button_link navigation_glyph(:edit), mailing_volunteer.feedback_url(host: request.host_with_port),
-              title: 'Bestätigen', target: '_blank'
+          = button_link navigation_glyph(:edit),
+              mailing_volunteer.feedback_url(host: request.host_with_port, redirect_to: request.fullpath),
+              title: 'Bestätigen'
         td
           - if current_submission
             .label.label-success Bestätigt

@@ -43,7 +43,7 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit initiate_termination_group_offer_path(@group_offer)
     click_link 'Heute beenden', href: set_end_today_group_assignment_path(@group_assignment1,
-      redirect_to: :initiate_termination)
+      redirect_to: initiate_termination_group_offer_path(@group_offer))
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     assert page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     refute page.has_text? "#{@group_assignment1.volunteer.full_name} "\
@@ -51,7 +51,7 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     assert page.has_text? "#{@group_assignment2.volunteer.full_name} "\
       "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
     click_link 'Bearbeiten', href: edit_group_assignment_path(@group_assignment2,
-      redirect_to: :initiate_termination)
+      redirect_to: initiate_termination_group_offer_path(@group_offer))
     fill_in id: 'group_assignment_period_end', with: Time.zone.today.to_s
     page.find_all('input[type="submit"]').first.click
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'

@@ -45,6 +45,11 @@ class ApplicationController < ActionController::Base
     params[:q] ||= filters
   end
 
+  def default_redirect
+    params[:redirect_to].presence
+  end
+  helper_method :default_redirect
+
   private
 
   def storable_location?

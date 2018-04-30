@@ -28,7 +28,7 @@ class FeedbacksController < ApplicationController
     authorize @feedback
     simple_form_params
     if @feedback.save
-      redirect_to create_redirect, make_notice
+      redirect_to default_redirect || @volunteer, make_notice
     else
       render :new
     end
@@ -59,9 +59,12 @@ class FeedbacksController < ApplicationController
   private
   def simple_form_params
     @simple_form_for_params = [
-      [@volunteer, @feedbackable, @feedback],
-      { url: polymorphic_path([@volunteer, @feedbackable, @feedback],
-                              redirect_to: params[:redirect_to], group_assignment: params[:group_assignment]) }
+      [@volunteer, @feedbackable, @feedback], {
+        url: polymorphic_path(
+          [@volunteer, @feedbackable, @feedback],
+          redirect_to: default_redirect, group_assignment: params[:group_assignment]
+        )
+      }
     ]
   end
 
@@ -84,11 +87,6 @@ class FeedbacksController < ApplicationController
     @feedbackable = @feedback.feedbackable
     @volunteer = @feedback.volunteer
     authorize @feedback
-  end
-
-  def create_redirect
-    return @volunteer unless params[:redirect_to]
-    polymorphic_path(find_feedbackable_submit_form, action: params[:redirect_to].to_sym)
   end
 
   def feedback_params

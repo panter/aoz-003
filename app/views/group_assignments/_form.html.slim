@@ -1,4 +1,4 @@
-= simple_form_for(@group_assignment, url: group_assignment_path(@group_assignment, redirect_to: params[:redirect_to])) do |f|
+= simple_form_for(@group_assignment, url: group_assignment_path(@group_assignment, redirect_to: default_redirect)) do |f|
   = simple_error_notice f
   = f.button :submit
 

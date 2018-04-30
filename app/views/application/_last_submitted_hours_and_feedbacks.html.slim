@@ -3,7 +3,7 @@ h1 Zuletzt übermittelte Stunden und Feedbacks
 h4.m-t-20.m-b-20.text-center.row-box
   'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
   br
-  = button_link 'Bestätigen', polymorphic_path(confirmable, action: :update_submitted_at),
+  = button_link 'Bestätigen', polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect),
       class: 'btn btn-lg-accepted', method: :put
 
 h3.m-b-20
@@ -12,10 +12,10 @@ h3.m-b-20
 
 h4 Stunden
 = render 'last_submitted_hours', hours: hours, confirmable: confirmable
-p= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: :last_submitted_hours_and_feedbacks)
+p= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
 br
 
 h4 Feedbacks
 = render 'last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
-p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: :last_submitted_hours_and_feedbacks)
+p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: request.fullpath)
 

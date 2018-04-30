@@ -1,5 +1,5 @@
 class HoursController < ApplicationController
-  before_action :set_hour, only: [:show, :edit, :update, :destroy, :create_redirect]
+  before_action :set_hour, only: [:show, :edit, :update, :destroy]
   before_action :set_volunteer
 
   def index
@@ -24,7 +24,7 @@ class HoursController < ApplicationController
     authorize @hour
     simple_form_params
     if @hour.save
-      redirect_to create_redirect, notice: t('hours_created')
+      redirect_to default_redirect || @volunteer, notice: t('hours_created')
     else
       render :new
     end
@@ -47,9 +47,12 @@ class HoursController < ApplicationController
 
   def simple_form_params
     @simple_form_for_params = [
-      [@volunteer, @hour.hourable, @hour],
-      { url: polymorphic_path([@volunteer, @hour.hourable, @hour],
-                              redirect_to: params[:redirect_to], group_assignment: params[:group_assignment]) }
+      [@volunteer, @hour.hourable, @hour], {
+        url: polymorphic_path(
+          [@volunteer, @hour.hourable, @hour],
+          redirect_to: default_redirect, group_assignment: params[:group_assignment]
+        )
+      }
     ]
   end
 
@@ -69,11 +72,6 @@ class HoursController < ApplicationController
 
   def set_volunteer
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
-  end
-
-  def create_redirect
-    return @volunteer unless params[:redirect_to]
-    polymorphic_path(find_hourable_submit_form, action: params[:redirect_to]&.to_sym)
   end
 
   def hour_params

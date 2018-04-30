@@ -1,6 +1,6 @@
 - if @group_offer.group_assignments.unterminated.any?
   h2 Aktuelle Gruppeneinsätze
-  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments, redirect_to_action: :show
+  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments
 
 - if @group_offer.group_assignment_logs.any?
   h2 Archivierte Gruppeneinsätze

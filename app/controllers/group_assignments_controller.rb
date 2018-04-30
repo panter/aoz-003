@@ -37,9 +37,9 @@ class GroupAssignmentsController < ApplicationController
 
   def update
     @group_assignment.assign_attributes(group_assignment_params)
-    period_end_set_notice, redirect_action = handle_period_end
+    period_end_set_notice, redirect_path = handle_period_end
     if @group_assignment.save
-      create_redirect_to(period_end_set_notice, action: redirect_action)
+      create_redirect period_end_set_notice, redirect_path
     else
       render :edit
     end
@@ -47,9 +47,9 @@ class GroupAssignmentsController < ApplicationController
 
   def set_end_today
     if @group_assignment.update(period_end: Time.zone.today, period_end_set_by: current_user)
-      create_redirect_to('Einsatzende wurde erfolgreich gesetzt.')
+      create_redirect 'Einsatzende wurde erfolgreich gesetzt.'
     else
-      create_redirect_to('Einsatzende konnte nicht gesetzt werden.')
+      create_redirect 'Einsatzende konnte nicht gesetzt werden.'
     end
   end
 
@@ -64,7 +64,7 @@ class GroupAssignmentsController < ApplicationController
 
   def update_submitted_at
     @group_assignment.update(submitted_at: Time.zone.now)
-    redirect_to last_submitted_hours_and_feedbacks_group_assignment_path,
+    redirect_to default_redirect || last_submitted_hours_and_feedbacks_group_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
 
@@ -96,16 +96,13 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment.period_end_set_by = current_user
     [
       'Einsatzende wurde erfolgreich gesetzt.',
-      params[:redirect_to] || :terminated_group_assignments_index
+      terminated_index_group_assignments_path
     ]
   end
 
-  def create_redirect_to(notice_text = nil, action: nil)
-    action ||= params[:redirect_to] unless params[:redirect_to] == 'show'
-    redirect_to(
-      polymorphic_path(@group_assignment.group_offer, action: action),
+  def create_redirect(notice_text = nil, default_path = nil)
+    redirect_to default_redirect || default_path || polymorphic_path(@group_assignment.group_offer),
       notice: notice_text || make_notice[:notice]
-    )
   end
 
   def waive_param_true?
