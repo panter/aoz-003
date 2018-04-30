@@ -40,7 +40,7 @@ nav.navbar.navbar-top.hidden-print
             ul.dropdown-menu
               - if current_user.volunteer?
                 li
-                  = link_to 'Profil anzeigen', volunteer_path(current_user.volunteer.id)
+                  = link_to 'Profil anzeigen', edit_volunteer_path(current_user.volunteer.id)
               - else
                 li
                   - if current_user.profile.blank?

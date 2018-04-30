@@ -29,7 +29,7 @@ h1= t_title(:index, Hour)
                 = button_link navigation_glyph(:delete), volunteer_hour_path(@volunteer, record),
                     confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
               - if current_user.superadmin?
-                td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
+                td= link_to @volunteer.contact.full_name, edit_volunteer_path(@volunteer)
               td
                 - if record.assignment?
                   - if policy(Hour).supervisor?

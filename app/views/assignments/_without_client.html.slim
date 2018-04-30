@@ -20,5 +20,5 @@ tr
       - if without_client[group]
         = t("activerecord.attributes.volunteer.#{group}")
         br
-  td= button_link t_action(:show), volunteer_path(without_client)
+  td= button_link t_action(:show), edit_volunteer_path(without_client)
   td= button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: without_client.id)

@@ -41,7 +41,7 @@ h1
                   = button_link navigation_glyph(:delete), billing_expense_path(record),
                     confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
               - unless @volunteer
-                td= link_to record.volunteer.contact.full_name, volunteer_path(record.volunteer)
+                td= link_to record.volunteer.contact.full_name, edit_volunteer_path(record.volunteer)
               td= record.full_bank_details
               td= link_to format_hours(record.hours.total_hours), volunteer_hours_path(record.volunteer)
               td= format_currency record.amount

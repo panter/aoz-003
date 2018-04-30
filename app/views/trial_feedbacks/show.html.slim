@@ -6,7 +6,7 @@ h1= t_title(:show)
       - if policy(TrialFeedback).superadmin_privileges?
         tr
           td= t_model(Volunteer)
-          td= link_to @trial_feedback.volunteer.contact.full_name, volunteer_path(@trial_feedback.volunteer)
+          td= link_to @trial_feedback.volunteer.contact.full_name, edit_volunteer_path(@trial_feedback.volunteer)
       - if @trial_feedback.assignment?
         tr
           td= t_model(Assignment)

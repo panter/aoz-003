@@ -24,7 +24,7 @@
                 verify_termination_group_assignment_path(group_assignment), class: 'btn btn-default',
                 data: { method: 'PATCH' }) { '' }
           td
-            = link_to_if(policy(group_assignment.volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
+            = link_to_if(policy(group_assignment.volunteer).edit?, group_assignment.volunteer.contact.full_name, edit_volunteer_path(group_assignment.volunteer))
           td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
           td= l(group_assignment.period_start) if group_assignment.period_start
           td= l(group_assignment.period_end) if group_assignment.period_end
