@@ -1,6 +1,5 @@
 td.index-action-cell.hidden-print
-  - if subject.class != Volunteer
-    = button_link navigation_glyph(:show), subject, title: 'Anzeigen'
+  = button_link navigation_glyph(:show), subject, title: 'Anzeigen'
   - if policy(subject).edit?
     = button_link navigation_glyph(:edit), edit_polymorphic_path(subject), title: 'Bearbeiten'
   - if policy(subject.class).destroy? && controller_name != 'clients'
