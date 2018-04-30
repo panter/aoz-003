@@ -47,5 +47,8 @@ nav.navbar.navbar-top.hidden-print
                     = link_to 'Profil erfassen', new_profile_path
                   - else
                     = link_to 'Profil anzeigen', current_user.profile
+              - if policy(current_user).edit?
+                li
+                  = link_to 'Login bearbeiten', edit_user_path(current_user)
               li
                 = link_to 'Abmelden', destroy_user_session_path, method: :delete
