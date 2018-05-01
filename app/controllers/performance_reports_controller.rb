@@ -16,11 +16,11 @@ class PerformanceReportsController < ApplicationController
   def edit; end
 
   def create
-    performance_report = PerformanceReport.new report_params
-    performance_report.user = current_user
-    authorize performance_report
-    if performance_report.save
-      redirect_to performance_report, make_notice
+    @performance_report = PerformanceReport.new report_params
+    @performance_report.user = current_user
+    authorize @performance_report
+    if @performance_report.save
+      redirect_to @performance_report, make_notice
     else
       render :new
     end
