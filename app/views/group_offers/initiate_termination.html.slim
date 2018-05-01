@@ -10,7 +10,7 @@ h1 Gruppenangebot Beenden
       = f.simple_fields_for :group_assignments do |ga|
         - next if ga.index > 0
         = ga.input :period_end, as: :string, wrapper: :date_picker_inline,
-          input_html: { value: Time.zone.today.to_s }, label: false
+          input_html: { value: l(Time.zone.today) }, label: false
       input.btn.btn-default.btn-sm type='submit' name='commit' value='Jetzt alle Einsätze auf Enddatum beenden' data-disable-with='Begleitung aktualisieren'
   hr
 
