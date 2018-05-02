@@ -19,7 +19,20 @@ namespace :access do
   end
 
   desc 'Set all Volunteers that where imported and created before May 2018 to intro_course = true'
-  task intro_true: :environment do
+  task cleanup_afterwards: :environment do
+    # Make sure terminated assignments have log entry
+    Assignment
+      .terminated
+      .left_joins(:assignment_log)
+      .where('assignment_logs.id' => nil)
+      .map(&:create_log_of_self)
+    # Make sure terminated group_assignments have log entry
+    GroupAssignment
+      .terminated
+      .left_joins(:group_assignment_logs)
+      .where('group_assignment_logs.id' => nil)
+      .map(&:create_log_of_self)
+
     Volunteer
       .joins(:import)
       .created_before('2018-05-01')
