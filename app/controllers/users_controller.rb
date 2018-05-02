@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @q = User.ransack(params[:q])
+    @q = User.distinct.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @users = @q.result
     respond_to do |format|
