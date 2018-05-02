@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 20180403135553) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind"
+    t.integer "kind", null: false
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -735,6 +735,7 @@ ActiveRecord::Schema.define(version: 20180403135553) do
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "client_notifications", "users"
   add_foreign_key "clients", "users"
+  add_foreign_key "events", "departments"
   add_foreign_key "feedbacks", "users", column: "author_id"
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"
