@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment,
-    except: [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client]
+  before_action :set_assignment, except:
+    [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client]
 
   def index
     authorize Assignment
@@ -96,7 +96,7 @@ class AssignmentsController < ApplicationController
 
   def update_submitted_at
     @assignment.update(submitted_at: Time.zone.now)
-    redirect_to last_submitted_hours_and_feedbacks_assignment_path,
+    redirect_to default_redirect || last_submitted_hours_and_feedbacks_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
 
@@ -107,14 +107,17 @@ class AssignmentsController < ApplicationController
   end
 
   def update_terminated_at
-    @assignment.volunteer.waive = waive_param_true?
-    @assignment.assign_attributes(assignment_params.except(:volunteer_attributes)
-      .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
+    @assignment.assign_attributes(assignment_params.merge(
+      termination_submitted_at: Time.zone.now,
+      termination_submitted_by: current_user
+    ))
+
     if @assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@assignment).deliver_now
-      redirect_back(fallback_location: terminate_assignment_path(@assignment), notice: 'Der Einsatz ist hiermit abgeschlossen.')
+      redirect_back fallback_location: terminate_assignment_path(@assignment),
+        notice: 'Der Einsatz ist hiermit abgeschlossen.'
     else
-      redirect_back(fallback_location: terminate_assignment_path(@assignment))
+      redirect_back fallback_location: terminate_assignment_path(@assignment)
     end
   end
 
@@ -133,10 +136,6 @@ class AssignmentsController < ApplicationController
     else
       redirect_to edit_assignment_path(@assignment), make_notice
     end
-  end
-
-  def waive_param_true?
-    assignment_params[:volunteer_attributes][:waive] == '1'
   end
 
   def terminate_reminder_mailing
@@ -167,13 +166,13 @@ class AssignmentsController < ApplicationController
 
   def assignment_params
     params.require(:assignment).permit(
-      :client_id, :volunteer_id, :period_start, :period_end, :waive,
+      :client_id, :volunteer_id, :period_start, :period_end,
       :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :term_feedback_transfair, :comments, :additional_comments,
       :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
-      :special_agreement, :first_meeting,
+      :special_agreement, :first_meeting, :remaining_hours,
       volunteer_attributes: [:waive]
     )
   end

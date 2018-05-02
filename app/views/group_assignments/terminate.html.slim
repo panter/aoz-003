@@ -64,7 +64,7 @@ hr
         .col-xs-12.col-md-6
           fieldset
             legend Restliche Stunden
-            p= button_link 'Restliche Stunden erfassen', new_polymorphic_path([@group_assignment.volunteer, @group_assignment.group_offer, Hour], redirect_to: :terminate, group_assignment: @group_assignment.id)
+            = f.input :remaining_hours
         .col-xs-12.col-md-6
           fieldset
             legend Spesen
@@ -79,4 +79,4 @@ hr
         p.text-bigger-2.text-center.m-t-30
           em Das TransFair-Team
 
-        .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher das Sie alle daten eingetragen haben?' }, class: 'btn btn-lg-accepted'
+        .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher dass Sie alle Daten eingetragen haben?' }, class: 'btn btn-lg-accepted'

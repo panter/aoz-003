@@ -50,20 +50,17 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
     assert_equal 'rand_transfair_text', @group_assignment.term_feedback_transfair
   end
 
-  test 'adding_hour_redirect_back_works' do
+  test 'group_assignment_termination_form_adds_remaining_hours' do
     login_as @volunteer.user
     visit terminate_group_assignment_path(@group_assignment)
-    click_link 'Restliche Stunden erfassen'
-    assert page.has_text? @group_assignment.group_offer.to_label
-    test_date = 1.year.ago
-    select(test_date.day, from: 'hour_meeting_date_3i')
-    select(I18n.t('date.month_names')[test_date.month], from: 'hour_meeting_date_2i')
-    select(test_date.year, from: 'hour_meeting_date_1i')
-    fill_in 'Stunden', with: 3.0
-    fill_in 'Tätigkeit / Was wurde gemacht', with: 'my_tryout_activity_hour_thingie'
-    fill_in 'Bemerkungen / Gab es etwas Besonderes', with: 'my_tryout_commment_hour_thingie'
-    click_button 'Stunden erfassen'
-    assert page.has_text? 'Stunden wurden erfolgreich erfasst'
+    fill_in 'Restliche Stunden', with: '12.35'
+
+    page.accept_confirm do
+      click_on 'Einsatz wird hiermit abgeschlossen'
+    end
+
+    visit volunteer_hours_path(@volunteer)
+    assert_text '12.35'
   end
 
   test 'termination triggers notification email to creator' do

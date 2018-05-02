@@ -26,4 +26,14 @@ class AssignmentTest < ActiveSupport::TestCase
     refute assignment_dup.persisted?
     assert_equal ['Die Begleitung existiert bereits.'], assignment_dup.errors[:client_id]
   end
+
+  test 'add_remaining_hours' do
+    assignment = create :assignment, remaining_hours: 2.35,
+      period_start: 1.week.ago, period_end: 1.day.ago
+
+    hour = assignment.hours.first
+    assert_equal 2.35, hour.hours
+    assert_equal assignment.period_end, hour.meeting_date
+    assert_equal assignment.volunteer, hour.volunteer
+  end
 end

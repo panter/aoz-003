@@ -2,8 +2,7 @@ h1 Gruppenangebot Beenden
 
 - if @group_offer.group_assignments.running.any?
   h2 Noch nicht beendete Gruppeneinsätze
-  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments.running,
-    redirect_to_action: :initiate_termination
+  = render 'group_assignments_index', group_assignments: @group_offer.group_assignments.running
   - if @group_offer.group_assignments.running.size > 1
     = simple_form_for(@group_offer, url: end_all_assignments_group_offer_path(@group_offer)) do |f|
       h3 Alle Gruppeneinsätze beenden

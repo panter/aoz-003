@@ -27,6 +27,8 @@ Style/NumericPredicate:
 
 Layout/IndentArray:
   EnforcedStyle: consistent
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 Layout/MultilineMethodCallIndentation:
@@ -45,13 +47,13 @@ Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
 Metrics/MethodLength:
-  Max: 15
+  Max: 20
   Exclude:
     - 'test/**/*'
     - 'db/seeds.rb'
 
 Metrics/AbcSize:
-  Max: 19
+  Max: 20
   Exclude:
     - 'test/**/*'
     - 'db/seeds.rb'

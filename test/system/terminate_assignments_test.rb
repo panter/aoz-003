@@ -13,7 +13,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
       author: @volunteer.user
   end
 
-  test 'volunteer_termination_submit_form_displays_existing_hours_and_feedbacks' do
+  test 'assignment_termination_submit_form_displays_existing_hours_and_feedbacks' do
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
@@ -21,20 +21,18 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     assert page.has_text? @assignment.volunteer.hours.total_hours
   end
 
-  test 'volunteer_termination_form_creating_hours_redirects_back_to_form' do
+  test 'assignment_termination_form_adds_remaining_hours' do
     @assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_assignment_path(@assignment)
-    click_link 'Restliche Stunden erfassen'
-    assert page.has_text? @assignment.to_label
-    select(1.year.ago.day, from: 'hour_meeting_date_3i')
-    select(I18n.t('date.month_names')[1.year.ago.month], from: 'hour_meeting_date_2i')
-    select(1.year.ago.year, from: 'hour_meeting_date_1i')
-    fill_in 'Stunden', with: 3.0
-    fill_in 'Tätigkeit / Was wurde gemacht', with: 'my_tryout_activity_hour_thingie'
-    fill_in 'Bemerkungen / Gab es etwas Besonderes', with: 'my_tryout_commment_hour_thingie'
-    click_button 'Stunden erfassen'
-    assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
+    fill_in 'Restliche Stunden', with: '12.35'
+
+    page.accept_confirm do
+      click_on 'Einsatz wird hiermit abgeschlossen'
+    end
+
+    visit volunteer_hours_path(@volunteer)
+    assert_text '12.35'
   end
 
   test 'submitting_termination_sets_termination_submitted_at_and_termination_submitted_by' do

@@ -113,6 +113,7 @@ de:
     phone: Telefonnummer
     postal_code: PLZ
     profession: Beruf
+    remaining_hours: Restliche Stunden in diesem Einsatz
     salutation: Anrede
     state: Status
     street: Strasse
