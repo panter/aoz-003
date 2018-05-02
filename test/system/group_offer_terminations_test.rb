@@ -31,10 +31,10 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit initiate_termination_group_offer_path(@group_offer)
     assert page.has_field? id: 'group_offer_group_assignments_attributes_0_period_end',
-      with: Time.zone.today.to_s
+      with: I18n.l(Time.zone.today)
     click_button 'Jetzt alle Einsätze auf Enddatum beenden'
     assert page.has_text? 'Gruppeneinsätze wurden beendet.'
-    assert page.has_field? 'Angebotsenddatum', with: Time.zone.today.to_s
+    assert page.has_field? 'Angebotsenddatum', with: I18n.l(Time.zone.today)
     click_button 'Gruppenangebots Ende setzen'
     assert page.has_text? 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
   end
