@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 20180403135553) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind", null: false
+    t.integer "kind"
     t.date "date"
     t.time "start_time"
     t.time "end_time"
