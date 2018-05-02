@@ -73,7 +73,11 @@ class AccessImport
 
   def make_billing_expenses
     start_message(:billing_expense)
-    billing_expense_transform.import_all
+    Import.volunteer.each do |import|
+      billing_expense_transform.import_all(
+        @freiwilligen_entschaedigung.where_personen_rolle(import.access_id)
+      )
+    end
     display_stats(BillingExpense, Hour)
   end
 
