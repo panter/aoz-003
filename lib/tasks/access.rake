@@ -34,8 +34,7 @@ namespace :access do
       .map(&:create_log_of_self)
 
     Volunteer
-      .joins(:import)
-      .created_before('2018-05-01')
-      .update_all(intro_course: true)
+      .created_before(Time.zone.parse('2018-04-30T23:59:59'))
+      .update_all(intro_course: true, trial_period: true)
   end
 end
