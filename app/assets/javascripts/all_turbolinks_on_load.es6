@@ -1,4 +1,4 @@
-$(() => $(document).on('turbolinks:render, turbolinks:load', () => {
+$(() => {
   truncateModal();
   dateTimePicker();
   conditionalField();
@@ -6,4 +6,4 @@ $(() => $(document).on('turbolinks:render, turbolinks:load', () => {
   volunteerForm();
   groupOfferForm();
   assigmentForm();
-}));
+});
