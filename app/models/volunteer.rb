@@ -32,7 +32,6 @@ class Volunteer < ApplicationRecord
   has_one :department, through: :registrar
 
   has_many :departments, through: :group_offers
-  has_many :clients, through: :assignments
 
   has_many :hours, dependent: :destroy
   has_many :feedbacks, dependent: :destroy
@@ -51,7 +50,7 @@ class Volunteer < ApplicationRecord
 
   has_many :group_assignments, dependent: :delete_all
   has_many :group_assignment_logs
-
+  
   has_many :group_offers, through: :group_assignments
   # categories done in group offers
   has_many :categories_from_group_assignments, through: :group_offers, source: :group_offer_category

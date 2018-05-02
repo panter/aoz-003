@@ -28,7 +28,7 @@ nav.navbar.section-navigation.hidden-print
     tbody
       - @group_assignments.each do |assignment|
         tr
-          td= link_to assignment.volunteer.contact.full_name, volunteer_path(assignment.volunteer)
+          td= link_to assignment.volunteer.contact.full_name, edit_volunteer_path(assignment.volunteer)
           td= link_to assignment.title
           td= l(assignment.period_start) if assignment.period_start
           td= l(assignment.period_end) if assignment.period_end

@@ -16,7 +16,7 @@
           th Einsatz
       tbody
         tr
-          td= link_to mailing_volunteer.object.volunteer.contact.full_name, volunteer_path(mailing_volunteer.object.volunteer)
+          td= link_to mailing_volunteer.object.volunteer.contact.full_name, edit_volunteer_path(mailing_volunteer.object.volunteer)
           td=link_to mailing_volunteer.object.reminder_mailable.to_label, polymorphic_path(mailing_volunteer.object.reminder_mailable)
     hr
 

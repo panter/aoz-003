@@ -9,7 +9,9 @@ class AssignmentsController < ApplicationController
     @q.sorts = ['period_start desc'] if @q.sorts.empty?
     @assignments = @q.result
     respond_to do |format|
-      format.xlsx
+      format.xlsx do
+        render xlsx: 'index', filename: 'Begleitungen'
+      end
       format.html do
         @assignments = @assignments.paginate(page: params[:page],
           per_page: params[:print] && @assignments.size)

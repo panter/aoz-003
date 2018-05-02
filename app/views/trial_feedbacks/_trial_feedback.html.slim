@@ -1,6 +1,6 @@
 tr
   - if policy(TrialFeedback).superadmin_privileges?
-    td= link_to trial_feedback.volunteer.full_name, volunteer_path(trial_feedback.volunteer)
+    td= link_to trial_feedback.volunteer.full_name, edit_volunteer_path(trial_feedback.volunteer)
   td= link_to trial_feedback.trial_feedbackable.to_label, url_for(trial_feedback.trial_feedbackable)
   td = word_wrap(trial_feedback.body) if trial_feedback.body?
   - if policy(TrialFeedback).superadmin_privileges?

@@ -4,7 +4,7 @@
 
   dl.dl-horizontal.m-t-30
     dt Freiwillige/r:
-    dd= link_to @group_assignment.volunteer.contact.full_name, volunteer_path(@group_assignment.volunteer), target: '_blank'
+    dd= link_to @group_assignment.volunteer.contact.full_name, edit_volunteer_path(@group_assignment.volunteer), target: '_blank'
     dt Gruppenangebot:
     dd= link_to @group_assignment.group_offer.to_label, group_offer_path(@group_assignment.group_offer), target: '_blank'
   .row

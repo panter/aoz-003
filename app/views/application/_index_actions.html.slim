@@ -5,6 +5,3 @@ td.index-action-cell.hidden-print
   - if policy(subject.class).destroy? && controller_name != 'clients'
     = button_link navigation_glyph(:delete), subject, nil,
         confirm_deleting(subject, 'btn btn-default').merge(title: 'Löschen')
-  - if subject.class == Volunteer && policy(Volunteer).terminate? && !subject.resigned?
-    = button_link navigation_glyph(:terminate), terminate_volunteer_path(subject),
-        method: :put, title: 'Beenden'
