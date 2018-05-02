@@ -53,7 +53,7 @@ class AccessImport
 
   def make_journal
     start_message(:journal)
-    Import.client.or(Import.volunteer).each do |import|
+    Import.client.or(Import.volunteer).find_each do |import|
       journal_transform.import_all(
         @journale.where_haupt_person(import.store['haupt_person']['pk_Hauptperson'])
       )
@@ -63,7 +63,7 @@ class AccessImport
 
   def make_hours
     start_message(:hour)
-    Import.volunteer.each do |import|
+    Import.volunteer.find_each do |import|
       hour_transform.import_all(
         @stundenerfassung.where_personen_rolle(import.access_id)
       )
@@ -73,7 +73,7 @@ class AccessImport
 
   def make_billing_expenses
     start_message(:billing_expense)
-    Import.volunteer.each do |import|
+    Import.volunteer.find_each do |import|
       billing_expense_transform.import_all(
         @freiwilligen_entschaedigung.where_personen_rolle(import.access_id)
       )
