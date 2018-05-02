@@ -164,6 +164,7 @@ de:
     confirm_delete: "Wirklich %{model} %{record} löschen?"
     confirm_record_delete: '%{model} wirklich löschen?'
     select_prompt: "%{model} wählen"
+    confirm_terminate_volunteer: "Wollen Sie den Freiwilligen wirklich beenden?"
   rejection_type: &id-rejection-types
     her: von Freiwillige/r vor / nach Erstgespräch
     other: Anderer Grund
