@@ -37,10 +37,6 @@ FactoryBot.define do
       salutation { 'mr' }
     end
 
-    trait :seed_contact do
-      association :contact, factory: :contact_seed
-    end
-
     trait :external do
       external { true }
     end
@@ -85,8 +81,8 @@ FactoryBot.define do
     end
 
     factory :volunteer_with_user do
-      after(:create) do |volunteer|
-        volunteer.update(user: create(:user_volunteer))
+      after(:build) do |volunteer|
+        volunteer.user = build(:user_volunteer, volunteer: volunteer)
       end
     end
     factory :volunteer_external, traits: [:external]
@@ -96,14 +92,14 @@ FactoryBot.define do
     factory(
       :volunteer_seed,
       traits: [
-        :seed_contact, :with_language_skills, :with_journals, :faker_extra,
+        :with_language_skills, :with_journals, :faker_extra,
         :fake_availability, :fake_single_assignments
       ]
     )
 
     factory(
       :volunteer_seed_with_user,
-      traits: [:seed_contact, :with_language_skills, :with_journals, :faker_extra,
+      traits: [:with_language_skills, :with_journals, :faker_extra,
                :fake_availability, :fake_single_assignments]
     ) do
       after(:create) { |volunteer| volunteer.update(user: create(:user_volunteer)) }
