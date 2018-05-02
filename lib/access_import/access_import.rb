@@ -63,7 +63,11 @@ class AccessImport
 
   def make_hours
     start_message(:hour)
-    hour_transform.import_all
+    Import.volunteer.each do |import|
+      hour_transform.import_all(
+        @stundenerfassung.where_personen_rolle(import.access_id)
+      )
+    end
     display_stats(Hour)
   end
 
