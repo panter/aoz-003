@@ -29,6 +29,7 @@ class GroupAssignmentTransform < Transformer
     return group_assignment if group_assignment.present?
     einsatz ||= @freiwilligen_einsaetze.find(einsatz_id)
     volunteer ||= @ac_import.volunteer_transform.get_or_create_by_import(einsatz[:fk_PersonenRolle])
+    return if volunteer.blank?
     group_assignment = GroupAssignment.new(prepare_attributes(einsatz, volunteer))
     return group_assignment if group_offer.blank?
     group_assignment.group_offer = group_offer

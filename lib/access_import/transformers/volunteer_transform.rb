@@ -32,8 +32,7 @@ class VolunteerTransform < Transformer
     volunteer = get_import_entity(:volunteer, personen_rollen_id)
     return volunteer if volunteer.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
-    return nil if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
-    binding.pry if personen_rolle[:d_Rollenende].present?
+    return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
     volunteer = Volunteer.new(prepare_attributes(personen_rolle))
     volunteer.save!(validate: false)
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])

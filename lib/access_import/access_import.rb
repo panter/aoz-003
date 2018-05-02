@@ -53,7 +53,11 @@ class AccessImport
 
   def make_journal
     start_message(:journal)
-    journal_transform.import_all
+    Import.client.or(Import.volunteer).each do |import|
+      journal_transform.import_all(
+        @journale.where_haupt_person(import.store['haupt_person']['pk_Hauptperson'])
+      )
+    end
     display_stats(Journal)
   end
 

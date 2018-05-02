@@ -23,7 +23,7 @@ class ClientTransform < Transformer
     client = get_import_entity(:client, personen_rollen_id)
     return client if client.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
-    return nil if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
+    return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     client = Client.create!(prepare_attributes(personen_rolle, haupt_person))
     if haupt_person == {} # handle access db inconsistencies

@@ -39,6 +39,7 @@ class AssignmentTransform < Transformer
     volunteer ||= @ac_import.volunteer_transform.get_or_create_by_import(
       fw_einsatz[:fk_PersonenRolle], freiwilliger
     )
+    return if volunteer.blank?
     begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
     client = @ac_import.client_transform.get_or_create_by_import(begleitet[:fk_PersonenRolle])
     return if client.blank?
