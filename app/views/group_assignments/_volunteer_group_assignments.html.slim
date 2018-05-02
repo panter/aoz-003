@@ -26,7 +26,7 @@ table.table.table-striped.group-assignments-table
                   title: 'Herunterladen'
             - if policy(group_assignment.group_offer).change_active_state?
               = button_link navigation_glyph(group_assignment.group_offer.active? ? :deactivate : :activate),
-                  change_active_state_group_offer_path(group_assignment.group_offer), method: :put, remote: :true,
+                  change_active_state_group_offer_path(group_assignment.group_offer), method: :put,
                   title: (group_assignment.group_offer.active? ? 'Deaktivieren' : 'Aktivieren')
         td
           - if group_assignment.group_offer
