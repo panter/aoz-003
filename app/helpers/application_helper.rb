@@ -87,10 +87,10 @@ module ApplicationHelper
   end
 
   def profile_link(user)
-    if user.profile
-      edit_profile_path(user.profile)
-    elsif user.volunteer?
+    if user.volunteer?
       edit_volunteer_path(user.volunteer)
+    elsif user.profile
+      edit_profile_path(user.profile)
     else
       edit_user_path(user)
     end

@@ -15,11 +15,6 @@ class HoursTest < ApplicationSystemTestCase
     create :group_assignment, group_offer: @group_offer1, volunteer: @volunteer1,
       period_start: 7.weeks.ago
     login_as @user_volunteer1
-    visit root_url
-    within '.navbar-top' do
-      click_link I18n.t("role.#{@user_volunteer1.role}"), href: '#'
-    end
-    click_link 'Profil anzeigen'
   end
 
   test 'volunteer can create hour report for an assignment' do

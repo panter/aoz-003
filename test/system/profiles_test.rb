@@ -68,28 +68,10 @@ class ProfilesTest < ApplicationSystemTestCase
     within '.navbar-top' do
       click_link I18n.t("role.#{@user_without_profile.role}"), href: '#'
     end
-    click_link 'Profil anzeigen'
+    click_link 'Profil bearbeiten', match: :first
+    click_link 'Zurück'
     assert page.has_text? @user_without_profile.profile.contact.first_name
     assert page.has_text? @user_without_profile.profile.contact.last_name
-  end
-
-  test 'user can change the password from profile page' do
-    login_as @user
-    visit profile_path(@user.profile.id)
-
-    click_link 'Login bearbeiten'
-
-    assert page.has_field? 'Passwort'
-    assert page.has_field? 'Email'
-    assert page.has_field? 'Rolle'
-
-    fill_in 'Passwort', with: 'abcdefghijk'
-    fill_in 'Email', with: 'new@email.com'
-    click_button 'Login aktualisieren'
-
-    user = User.find @user.id
-    assert user.valid_password? 'abcdefghijk'
-    assert_equal user.email, 'new@email.com'
   end
 
   test 'profileless user gets new profile link on show profile' do

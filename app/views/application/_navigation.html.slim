@@ -38,15 +38,13 @@ nav.navbar.navbar-top.hidden-print
               span= "#{current_user.full_name} #{t("role.#{current_user.role}")}"
               span.caret
             ul.dropdown-menu
-              - if current_user.volunteer?
-                li
-                  = link_to 'Profil anzeigen', edit_volunteer_path(current_user.volunteer.id)
-              - else
-                li
-                  - if current_user.profile.blank?
-                    = link_to 'Profil erfassen', new_profile_path
-                  - else
-                    = link_to 'Profil anzeigen', current_user.profile
+              li
+                - if current_user.volunteer?
+                  = link_to 'Profil bearbeiten', profile_link(current_user)
+                - elsif current_user.profile.blank?
+                  = link_to 'Profil erfassen', new_profile_path
+                - else
+                  = link_to 'Profil bearbeiten', edit_profile_path(current_user.profile)
               - if policy(current_user).edit?
                 li
                   = link_to 'Login bearbeiten', edit_user_path(current_user)
