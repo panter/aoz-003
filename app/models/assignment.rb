@@ -43,11 +43,6 @@ class Assignment < ApplicationRecord
     involved_authority&.contact
   end
 
-  def involved_authority_organization
-    department = involved_authority&.user&.department&.first&.contact
-    [department&.last_name, department&.full_address].reject(&:blank?).join(', ')
-  end
-
   def involved_authority
     if client.involved_authority
       client.involved_authority.profile
