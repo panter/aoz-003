@@ -3,7 +3,7 @@ h1= t_title(:new)
 = render 'form'
 
 javascript:
-  $(document).on('turbolinks:render, turbolinks:load', function () {
+  $(function () {
     var templateVarnames = #{EmailTemplate.template_varnames.to_json.html_safe}
     var templateStrings = #{EmailTemplate.active_as_hash.to_json.html_safe}
 

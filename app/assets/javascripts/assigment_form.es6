@@ -3,7 +3,7 @@ function assigmentForm() {
     event.preventDefault();
     event.stopPropagation();
 
-    let newWindow = undefined;
+    let newWindow = window;
     let href = $(event.currentTarget).attr('href');
     let target = $(event.currentTarget).attr('target')
 
@@ -12,11 +12,7 @@ function assigmentForm() {
     }
 
     submitForm().then((data) => {
-      if (target === '_blank') {
-        newWindow.location = href;
-      } else {
-        Turbolinks.visit(href);
-      }
+      newWindow.location.href = href;
     });
   });
 

@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', () => {
+$(() => {
   $("input[data-autocomplete]").each((_index, input) => {
     $(input).autocomplete({
       source: $(input).data('autocomplete'),
