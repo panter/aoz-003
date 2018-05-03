@@ -40,6 +40,7 @@ class GroupOffer < ApplicationRecord
 
   validates :department, presence: true, if: :internal?
   validates :organization, :location, presence: true, if: :external?
+  validates :active, inclusion: { in: [false] }, if: :terminated?
 
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
