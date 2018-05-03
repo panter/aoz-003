@@ -338,4 +338,22 @@ class VolunteersTest < ApplicationSystemTestCase
     visit edit_volunteer_path(@resigned)
     assert page.has_field? 'Prozess', disabled: true
   end
+
+  test 'external volunteer can not get machted with a client' do
+    @external = create :volunteer_external, acceptance: :accepted
+    visit volunteers_path
+
+    # "Klient/en" suchen button is not shown on volunteer index
+    within page.find('tr', text: @external.full_name) do
+      assert_text 'Nicht zuweisbar'
+    end
+
+    # "Klient/en" suchen button is not shown on volunteer show
+    visit volunteer_path(@external)
+    refute page.has_button? 'Klienten suchen'
+
+    # "Klient/en" suchen button is not shown on volunteer edit
+    visit edit_volunteer_path(@external)
+    refute page.has_button? 'Klienten suchen'
+  end
 end
