@@ -75,7 +75,7 @@ class GroupOfferTransform < Transformer
   end
 
   def grouped_group_assignments(group_assignments)
-    group_assignments.group_by do |group_assignment|
+    group_assignments.compact.group_by do |group_assignment|
       group_assignment.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
     end
   end

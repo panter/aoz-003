@@ -53,37 +53,32 @@ class AccessImport
 
   def make_journal
     start_message(:journal)
-    journal_transform.import_all
+    Import.client.or(Import.volunteer).find_each do |import|
+      journal_transform.import_all(
+        @journale.where_haupt_person(import.store['haupt_person']['pk_Hauptperson'])
+      )
+    end
     display_stats(Journal)
   end
 
   def make_hours
     start_message(:hour)
-    hour_transform.import_all
+    Import.volunteer.find_each do |import|
+      hour_transform.import_all(
+        @stundenerfassung.where_personen_rolle(import.access_id)
+      )
+    end
     display_stats(Hour)
   end
 
   def make_billing_expenses
     start_message(:billing_expense)
-    billing_expense_transform.import_all
-    display_stats(BillingExpense, Hour)
-  end
-
-  # Terminate Client and Volunteer at the very end, so their termination won't block
-  # other related records import
-  #
-  def run_acceptance_termination_on_clients_and_volunteers
-    Client.joins(:import).field_not_nil(:resigned_at).or(
-      Client.joins(:import).where(
-        'imports.store @> ?',
-        { personen_rolle: { pk_PersonenRolle: 1666 } }.to_json
+    Import.volunteer.find_each do |import|
+      billing_expense_transform.import_all(
+        @freiwilligen_entschaedigung.where_personen_rolle(import.access_id)
       )
-    ).update_all(acceptance: :resigned)
-
-    Volunteer.joins(:import).field_not_nil(:resigned_at).or(
-      Volunteer.joins(:import)
-               .where('imports.store @> ?', { haupt_person: { email: nil } }.to_json)
-    ).update_all(acceptance: :resigned)
+    end
+    display_stats(BillingExpense, Hour)
   end
 
   # Clean up after imports finished

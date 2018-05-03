@@ -9,13 +9,7 @@ class AccessImportsTest < ActiveSupport::TestCase
       assert_basic_values(result[:row], result[:found])
     end
 
-    puts "Verified #{found_active_volunteers.size} volunteer records."
-
-    active_volunteer_ids = found_active_volunteers.map { |hash| hash[:found].id }
-    Volunteer.where.not(id: active_volunteer_ids).each do |volunteer|
-      assert volunteer.resigned?, "Volunteer(id: #{volunteer.id}, full_name: "\
-        "#{volunteer.contact.full_name}) not resigned, but it should have been"
-    end
+    puts "\nVerified #{found_active_volunteers.size} volunteer records.\n"
   end
 
   test 'active_clients' do
@@ -25,13 +19,7 @@ class AccessImportsTest < ActiveSupport::TestCase
       assert_basic_values(result[:row], result[:found])
     end
 
-    puts "Verified #{found_active_clients.size} client records."
-
-    active_client_ids = found_active_clients.map { |hash| hash[:found].id }
-    Client.where.not(id: active_client_ids).each do |client|
-      assert client.resigned?, "Client(id: #{client.id}, full_name: "\
-        "#{client.contact.full_name}) not resigned, but it should have been"
-    end
+    puts "\nVerified #{found_active_clients.size} client records.\n"
   end
 
   def assert_basic_values(row, found)

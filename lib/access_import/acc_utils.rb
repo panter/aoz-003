@@ -48,7 +48,7 @@ module AccUtils
   end
 
   def email(h_email)
-    return "unknown_email_#{Time.now.to_i}@example.com" if h_email.nil?
+    return "unknown_email_#{Time.zone.now.to_f}@example.com" if h_email.nil?
     h_email.sub(/^\#mailto:/, '').sub(/\#$/, '')
   end
 

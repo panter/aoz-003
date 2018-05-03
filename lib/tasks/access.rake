@@ -11,12 +11,28 @@ namespace :access do
       @acimport.make_billing_expenses
       @acimport.make_journal
       @acimport.make_hours
-      @acimport.run_acceptance_termination_on_clients_and_volunteers
       @acimport.overall_stats
     else
       warn 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
     end
   end
+
+  desc 'Test imports'
+  task test: :environment do
+    if Rails.env.production?
+      abort 'This task should never be executed on a Production instance'
+    end
+    if Import.blank?
+      if ENV['file'].present?
+        Rake::Task['access:import'].invoke
+      else
+        warn 'No access file set!'
+        abort 'run "rails access:test file=path/to/access_file.accdb"'
+      end
+    end
+    Rails::TestUnit::Runner.rake_run(['lib/access_import_test'])
+  end
+
 
   desc 'Set all Volunteers that where imported and created before May 2018 to intro_course = true'
   task cleanup_afterwards: :environment do

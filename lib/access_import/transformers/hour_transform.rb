@@ -13,11 +13,12 @@ class HourTransform < Transformer
     hour = get_import_entity(:hour, erfassung_id)
     return hour if hour.present?
     erfassung ||= @stundenerfassung.find(erfassung_id)
+    return if erfassung[:z_Stundenzahl] <= 0
     hourable = get_hourable(erfassung)
     return if hourable.blank? || hourable.deleted?
     volunteer = get_volunteer(erfassung)
     return if volunteer.blank? || volunteer.deleted?
-    hour = Hour.create(prepare_attributes(erfassung, hourable, volunteer))
+    hour = Hour.create!(prepare_attributes(erfassung, hourable, volunteer))
     update_timestamps(hour, hour.meeting_date)
   end
 
