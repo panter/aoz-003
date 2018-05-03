@@ -18,7 +18,7 @@ FactoryBot.define do
         feedback.volunteer = create(:volunteer_with_user)
         feedback.feedbackable = create(:assignment, volunteer: feedback.volunteer)
       end
-      feedback.author ||= feedback.volunteer&.user || create(:user_fake_email)
+      feedback.author ||= feedback.volunteer&.user || create(:user)
     end
   end
 end

@@ -34,10 +34,6 @@ FactoryBot.define do
       profile {}
     end
 
-    trait :fake_email do
-
-    end
-
     after(:create) do |user|
       next unless user.email.include?('my-user@temporary-mail.com')
       user.email = user.role + '_' + FFaker::Internet.unique.email(
@@ -51,6 +47,5 @@ FactoryBot.define do
     factory :department_manager, traits: [:department_manager, :with_department]
     factory :department_manager_without_department, traits: [:department_manager]
     factory :user_volunteer, traits: [:volunteer]
-    factory :user_fake_email, traits: [:fake_email]
   end
 end

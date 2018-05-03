@@ -15,7 +15,7 @@ FactoryBot.define do
         trial_feedback.trial_feedbackable = create(:assignment, period_end: nil,
           period_start: 6.weeks.ago, volunteer: trial_feedback.volunteer)
       end
-      trial_feedback.author ||= trial_feedback.volunteer&.user || create(:user_fake_email)
+      trial_feedback.author ||= trial_feedback.volunteer&.user || create(:user)
     end
   end
 end

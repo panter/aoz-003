@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :group_offer do
-    association :creator, factory: :user_fake_email
+    association :creator, factory: :user
     association :department
 
     title { FFaker::Lorem.unique.sentence }
