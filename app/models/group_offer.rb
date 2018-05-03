@@ -74,11 +74,11 @@ class GroupOffer < ApplicationRecord
   scope :terminated, (-> { field_not_nil(:period_end_set_by) })
 
   def terminatable?
-    group_assignments.have_start.any? || group_assignment_logs.any?
+    group_assignments.unterminated.none?
   end
 
   def terminated?
-    period_end_set_by.present?
+    period_end_set_by.present? && period_end.present?
   end
 
   def active_group_assignments_between?(start_date, end_date)
