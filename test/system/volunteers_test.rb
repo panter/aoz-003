@@ -350,10 +350,10 @@ class VolunteersTest < ApplicationSystemTestCase
 
     # "Klient/en" suchen button is not shown on volunteer show
     visit volunteer_path(@external)
-    refute page.has_button? 'Klienten suchen'
+    refute page.has_button? 'Klient/in suchen'
 
     # "Klient/en" suchen button is not shown on volunteer edit
     visit edit_volunteer_path(@external)
-    refute page.has_button? 'Klienten suchen'
+    refute page.has_button? 'Klient/in suchen'
   end
 end
