@@ -118,6 +118,7 @@ class User < ApplicationRecord
       email: email, password: Devise.friendly_token, role: role
     )
     new_user.save! && new_user.send_reset_password_instructions
+    new_user
   end
 
   def self.new_volunteer(volunteer)
