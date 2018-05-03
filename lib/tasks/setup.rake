@@ -8,7 +8,7 @@ namespace :setup do
     end
   end
 
-  desc 'Create staging initial superadmin users'
+  desc 'Create staging servers initial users'
   task staging_user_init: :environment do
     [
       'superadmin@example.com', 'jeannine.stauffer@aoz.ch', 'emi@panter.ch',
@@ -26,8 +26,7 @@ namespace :setup do
   def create_bulk_user(email, role)
     user = User.create_user_and_send_password_reset email: email, role: role
     user.build_profile
-    user.profile.build_contact
-    user.profile.contact.assign_attributes(first_name: email, last_name: email,
+    user.profile.build_contact(first_name: email, last_name: email,
       street: 'example_street', postal_code: '8000', primary_email: email,
       primary_phone: '000000')
     user.save!
