@@ -70,12 +70,18 @@ class GroupOffer < ApplicationRecord
     date_between_inclusion(:period_end, start_date, end_date)
   }
 
+  scope :terminated, (-> { field_not_nil(:period_end_set_by) })
+
   def active_group_assignments_between?(start_date, end_date)
     group_assignments.active_between(start_date, end_date).any?
   end
 
   def terminatable?
     group_assignments.have_start.any? || group_assignment_logs.any?
+  end
+
+  def terminated?
+    period_end_set_by.present?
   end
 
   def all_group_assignments_ended_within?(start_date, end_date)
