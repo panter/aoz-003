@@ -548,12 +548,6 @@ de:
   add_entry: Eintrag Hinzufügen
   add_relative: Verwandte hinzufügen
   all: Alle
-  application_submitted: |
-    Ihre Anmeldung wurde erfolgreich an uns abgeschickt.<br>
-    Sie werden eine Bestätigungsmail mit Ihren Angaben erhalten.<br>
-    Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ interessieren.<br>
-    Wir werden uns bald bei Ihnen melden.
-
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
@@ -768,9 +762,6 @@ de:
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   "false": Nein
   forgot_password: Passwort vergessen?
-  get_back: |
-    Freundliche Grüsse
-    AOZ Fachstelle Freiwilligenarbeit
   helpers:
     submit:
       create: '%{model} erfassen'
