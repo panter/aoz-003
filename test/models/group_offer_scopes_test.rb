@@ -65,4 +65,12 @@ class GroupOfferScopesTest < ActiveSupport::TestCase
     assert query.include? created_before
     refute query.include? created_after
   end
+
+  test 'terminated' do
+    terminated_go = create :group_offer, :terminated
+    unterminated_go = create :group_offer
+    query = GroupOffer.terminated
+    assert query.include? terminated_go
+    refute query.include? unterminated_go
+  end
 end
