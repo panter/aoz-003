@@ -50,7 +50,7 @@ class Volunteer < ApplicationRecord
 
   has_many :group_assignments, dependent: :delete_all
   has_many :group_assignment_logs
-  
+
   has_many :group_offers, through: :group_assignments
   # categories done in group offers
   has_many :categories_from_group_assignments, through: :group_offers, source: :group_offer_category
@@ -155,7 +155,7 @@ class Volunteer < ApplicationRecord
     seeking_clients
   }
   scope :seeking_clients, lambda {
-    accepted.where(active: false).or(accepted.activeness_ended)
+    internal.accepted.where(active: false).or(internal.accepted.activeness_ended)
   }
   scope :seeking_clients_will_take_more, lambda {
     seeking_clients.or(accepted.will_take_more_assignments)
@@ -294,7 +294,7 @@ class Volunteer < ApplicationRecord
   end
 
   def seeking_clients?
-    accepted? && inactive? || take_more_assignments? && active?
+    internal? && (accepted? && inactive? || take_more_assignments? && active?)
   end
 
   def self.acceptance_collection
