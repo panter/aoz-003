@@ -21,5 +21,11 @@ FactoryBot.define do
       location { FFaker::Address.city }
       organization { FFaker::Company.name }
     end
+
+    trait :terminated do
+      period_end { 2.days.ago }
+      association :period_end_set_by, factory: :user
+      active { false }
+    end
   end
 end
