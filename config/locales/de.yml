@@ -548,7 +548,6 @@ de:
   add_entry: Eintrag Hinzufügen
   add_relative: Verwandte hinzufügen
   all: Alle
-  application_submitted: 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
@@ -763,7 +762,6 @@ de:
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   "false": Nein
   forgot_password: Passwort vergessen?
-  get_back: Wir werden uns bald bei Ihnen melden.
   helpers:
     submit:
       create: '%{model} erfassen'
@@ -989,7 +987,7 @@ de:
       text: notwendig
     "yes": 'Ja'
   submit_application: Anmeldung abschicken
-  thank_you: "Vielen Dank \U0001F389"
+  thank_you: "Vielen Dank für Ihre Anmeldung \U0001F389"
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"

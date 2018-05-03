@@ -71,7 +71,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
 
     assert page.has_current_path? thanks_volunteer_applications_path
     assert page.has_text? 'Vielen Dank'
-    assert page.has_text? 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
+    assert page.has_text? 'Ihre Anmeldung wurde erfolgreich an uns abgeschickt.'
     assert page.has_text? 'Wir werden uns bald bei Ihnen melden.'
   end
 
