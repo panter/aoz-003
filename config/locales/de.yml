@@ -297,6 +297,8 @@ de:
       certificate:
         <<: *id-generic_keys
         assignment: Einsatz
+        creator_name: Erstellt von
+        creator_function: Rolle
         duration: Einsatzdauer
         duration_end: Bis
         duration_start: Von
