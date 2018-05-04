@@ -36,7 +36,10 @@ class Client < ApplicationRecord
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
 
-  validates :salutation, presence: true
+  validates :salutation, presence: true, inclusion: { in: SALUTATIONS.map(&:to_s) }
+  validates :gender_request, inclusion: { in: GENDER_REQUESTS.map(&:to_s), allow_blank: true }
+  validates :age_request, inclusion: { in: AGE_REQUESTS.map(&:to_s), allow_blank: true }
+  validates :permit, inclusion: { in: PERMITS.map(&:to_s), allow_blank: true }
 
   validates :acceptance, exclusion: {
     in: ['resigned'],
