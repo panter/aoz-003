@@ -3,13 +3,13 @@
   .row
     .col-xs-12
       = f.input :email
-      - if action_name == 'edit' && user == current_user
+      - if action_edit? && user == current_user
         = f.input :password
 
       - if policy(User).create?
         = f.input :role, collection: User.role_collection
 
-  - unless action_name == 'edit'
+  - unless action_edit?
     = f.simple_fields_for :profile do |profile|
       = profile.simple_fields_for :contact do |c|
         = c.input :first_name

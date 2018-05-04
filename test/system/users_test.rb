@@ -174,4 +174,25 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_field? 'Vorname', with: volunteer_no_profile.profile.contact.first_name
     assert page.has_field? 'Nachname', with: volunteer_no_profile.profile.contact.last_name
   end
+
+  test 'volunteer can change password' do
+    volunteer = create :volunteer_with_user
+    login_as volunteer.user
+    visit root_path
+
+    click_on volunteer.user
+    click_on 'Login bearbeiten'
+    fill_in 'Passwort', with: '123456'
+    click_on 'Login aktualisieren'
+
+    assert_text "#{volunteer} Persönlicher Hintergrund"
+
+    click_on volunteer.user
+    click_on 'Abmelden'
+    fill_in 'Email', with: volunteer.user.email
+    fill_in 'Passwort', with: '123456'
+    click_on 'Anmelden'
+
+    assert_text "#{volunteer} Persönlicher Hintergrund"
+  end
 end

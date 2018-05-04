@@ -33,7 +33,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     within '.navbar-top' do
       click_link I18n.t("role.#{@user_volunteer.role}"), href: '#'
     end
-    click_link 'Profil anzeigen'
+    click_link 'Profil bearbeiten'
     within '.assignments-table' do
       click_link 'Probezeit Feedback Liste'
     end
@@ -48,7 +48,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     within '.navbar-top' do
       click_link I18n.t("role.#{@user_volunteer.role}"), href: '#'
     end
-    click_link 'Profil anzeigen'
+    click_link 'Profil bearbeiten'
     within '.group-assignments-table' do
       click_link 'Probezeit Feedback Liste'
     end

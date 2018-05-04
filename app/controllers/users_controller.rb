@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @q = User.ransack(params[:q])
+    @q = User.distinct.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @users = @q.result
     respond_to do |format|
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   def update
     if handle_update(user_params)
       bypass_sign_in @user if @user == current_user
-      redirect_to @user, notice: t('profile_updated')
+      redirect_to @user.volunteer? ? @user.volunteer : @user, notice: t('profile_updated')
     else
       render :edit
     end

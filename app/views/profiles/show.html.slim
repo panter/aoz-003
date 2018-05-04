@@ -19,6 +19,3 @@ h3 Wann sind Sie verfügbar?
 = render 'availability/show', available: @profile
 
 = form_navigation_btn :edit
-.row
-  .col-xs-12
-    = link_to t('edit_login'), edit_user_path(current_user.id), class: 'btn btn-default'
