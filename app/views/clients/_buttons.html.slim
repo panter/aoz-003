@@ -1,8 +1,8 @@
 ul.list-inline
   li = form_navigation_btn :back, with_row: false
   - if policy(Client).superadmin_privileges?
-    li.button-acceptance = link_to t("volunteer_applications.acceptance.#{@client.acceptance}"), '#',
-      class: "btn btn-acceptance-#{@client.acceptance}"
+    li.button-acceptance = link_to t("acceptance.#{@client.acceptance}"), '#',
+        class: "btn btn-acceptance-#{@client.acceptance} btn-acceptance-client"
   li = link_to navigation_glyph(:print), url_for(print: :true), { class: 'btn btn-default btn-sm', target: '_blank' }
   - if !@client.resigned? && policy(@client).set_terminated?
     li= link_to navigation_glyph(:terminate), set_terminated_client_path(@client), class: 'btn btn-default',
