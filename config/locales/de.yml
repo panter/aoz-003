@@ -684,7 +684,11 @@ de:
         submit_button: Einladung schicken
       no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
       send_instructions: 'Sie haben eine Einladung in Ihrem Email Postfach: %{email}'
-      updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
+      updated: |
+        Liebe/r Freiwillige/r
+        Herzlich willkommen!
+        Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben.
+        Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
     mailer:
       confirmation_instructions:
         subject: Anleitung zur Bestätigung Ihres Accounts
