@@ -63,7 +63,7 @@ h4.m-b-10= t('assignment_pdf.client_title')
       .col-xs-5= t('assignment_pdf.languages')
       .col-xs-7.col-input
         - @assignment.client.language_skills.each do |language|
-          = "#{language.full_language_skills}. "
+          = "#{language.language_name} "
 
 .row-box
   .col-xs-12
