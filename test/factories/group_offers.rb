@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :group_offer do
-    association :creator, factory: :user_fake_email
+    association :creator, factory: :user
     association :department
 
     title { FFaker::Lorem.unique.sentence }
@@ -20,6 +20,12 @@ FactoryBot.define do
       department nil
       location { FFaker::Address.city }
       organization { FFaker::Company.name }
+    end
+
+    trait :terminated do
+      period_end { 2.days.ago }
+      association :period_end_set_by, factory: :user
+      active { false }
     end
   end
 end

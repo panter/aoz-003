@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :reminder_mailing do
-    association :creator, factory: :user_fake_email
+    association :creator, factory: :user
     body { FFaker::Lorem.paragraph }
     subject { FFaker::Lorem.sentence }
 

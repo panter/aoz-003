@@ -57,7 +57,7 @@ FactoryBot.define do
     end
 
     after(:build) do |client|
-      client.user ||= create(:user_fake_email)
+      client.user ||= create(:user)
       if client.salutation == 'mrs'
         client.contact.first_name = I18n.t('faker.name.female_first_name').sample
       elsif client.salutation == 'mr'
