@@ -289,7 +289,6 @@ DEFAULT_GROUP_OFFER_CATEGORIES = [
   { category_name: 'Hausaufgabenhilfe' }
 ].freeze
 
-
 def production_seed
   DEFAULT_TEMPLATES_EMAIL_TEMPLATES.each do |template_params|
     EmailTemplate.find_or_create_by(template_params)
