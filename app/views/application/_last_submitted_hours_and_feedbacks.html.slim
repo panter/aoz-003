@@ -1,10 +1,13 @@
 h1 Zuletzt übermittelte Stunden und Feedbacks
 
 h4.m-t-20.m-b-20.text-center.row-box
-  'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
-  br
-  = button_link 'Bestätigen', polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect),
-      class: 'btn btn-lg-accepted', method: :put
+  = simple_form_for confirmable, url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect), method: :put do |f|
+    'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
+    br
+    = f.simple_fields_for(:volunteer) do |volunteer|
+      br
+      = volunteer.input :waive
+    = f.submit 'Bestätigen', class: 'btn btn-lg-accepted', method: :put
 
 h3.m-b-20
   'Einsatz

@@ -95,7 +95,10 @@ class AssignmentsController < ApplicationController
   end
 
   def update_submitted_at
-    @assignment.update(submitted_at: Time.zone.now)
+    @assignment.update(params.require(:assignment).permit(
+      volunteer_attributes: [:waive]
+    ).merge(submitted_at: Time.zone.now))
+
     redirect_to default_redirect || last_submitted_hours_and_feedbacks_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
