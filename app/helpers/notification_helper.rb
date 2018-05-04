@@ -2,7 +2,7 @@ module NotificationHelper
   def notification_warning_bubble(text)
     tag.div(class: 'alert alert-warning alert-dismissible', role: 'alert') do
       concat notification_close_button
-      concat text
+      concat raw(text)
     end
   end
 
