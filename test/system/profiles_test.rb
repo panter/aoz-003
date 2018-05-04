@@ -34,13 +34,15 @@ class ProfilesTest < ApplicationSystemTestCase
 
     fill_in 'Vorname', with: 'Hans'
     fill_in 'Nachname', with: 'Muster'
+    fill_in 'Mailadresse', with: FFaker::Internet.unique.email
+    fill_in 'Telefonnummer', with: '123456789'
     page.check(name: 'profile[morning]')
 
     click_button 'Profil erfassen'
     @user_without_profile.reload
 
-    assert page.has_current_path? profile_path(@user_without_profile.profile)
     assert_text 'Profil wurde erfolgreich erstellt.'
+    assert page.has_current_path? profile_path(@user_without_profile.profile)
 
     assert_text 'Hans'
     assert_text 'Muster'
@@ -61,6 +63,8 @@ class ProfilesTest < ApplicationSystemTestCase
 
     fill_in 'Vorname', with: 'Hans'
     fill_in 'Nachname', with: 'Muster'
+    fill_in 'Mailadresse', with: FFaker::Internet.unique.email
+    fill_in 'Telefonnummer', with: '123456789'
 
     click_button 'Profil erfassen'
     @user_without_profile.reload

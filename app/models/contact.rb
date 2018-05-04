@@ -3,8 +3,8 @@ class Contact < ApplicationRecord
 
   belongs_to :contactable, polymorphic: true, optional: true
 
-  validates :last_name, presence: true, if: :validate_last_name?
-  validates :first_name, presence: true, if: :validate_first_name?
+  validates :last_name, presence: true, if: :needs_last_name?
+  validates :first_name, presence: true, if: :needs_first_name?
   validates :primary_email, presence: true, uniqueness: true,
     format: { with: Devise.email_regexp },
     if: :needs_primary_email?
@@ -47,15 +47,23 @@ class Contact < ApplicationRecord
   end
 
   def needs_primary_email?
-    !external && volunteer?
+    !department?
   end
 
   def needs_primary_phone?
-    !external && volunteer? || client?
+    !department?
   end
 
   def needs_address?
     volunteer? || client?
+  end
+
+  def needs_first_name?
+    !department? && !profile?
+  end
+
+  def needs_last_name?
+    !profile?
   end
 
   def natural_name
@@ -67,14 +75,6 @@ class Contact < ApplicationRecord
   end
 
   private
-
-  def validate_first_name?
-    !department? && !profile?
-  end
-
-  def validate_last_name?
-    !profile?
-  end
 
   def full_name_changed?
     will_save_change_to_attribute?(:first_name) || will_save_change_to_attribute?(:last_name)

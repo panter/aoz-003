@@ -69,6 +69,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Strasse', with: 'Sihlstrasse 131'
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: FFaker::Internet.unique.email
     within '#languages' do
       choose('Gut')
     end
