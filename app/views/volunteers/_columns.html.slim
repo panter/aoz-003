@@ -17,8 +17,7 @@
         th= sort_link @q, :contact_postal_code
         th= sort_link @q, :contact_primary_email
         th= sort_link @q, :birth_year, t_attr(:birth_year, Volunteer)
-        th= t_attr(:native_language, Volunteer)
-        th= t_attr(:languages, Volunteer)
+        th= t_attr(:language_skills, Volunteer)
         th= t_attr(:education, Volunteer)
         th= t_attr(:profession, Volunteer)
         th= sort_link @q, :working_percent
