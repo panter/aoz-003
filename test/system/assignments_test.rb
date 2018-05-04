@@ -46,23 +46,6 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_text @client
   end
 
-  test 'creating_a_pdf_with_a_user_that_has_no_profile_will_not_crash' do
-    user = create :user, :without_profile
-    refute user.profile.present?
-
-    login_as user
-    visit new_assignment_path
-    select @client.contact.full_name, from: 'Klient/in'
-    select @volunteer.contact.full_name, from: 'Freiwillige'
-    page.find('#assignment_period_start').click
-    page.find('.month', text: 'Jan').click
-    page.find_all('.day', exact_text: '1').first.click
-    page.find_all('input[type="submit"]').first.click
-
-    get assignments_url(@volunteer, format: :pdf)
-    assert page.has_text? @client.contact.last_name
-  end
-
   test 'volunteer can not see new assignment button' do
     login_as @volunteer.user
     visit volunteer_path(@volunteer)

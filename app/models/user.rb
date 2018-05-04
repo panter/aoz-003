@@ -114,6 +114,10 @@ class User < ApplicationRecord
     department.any?
   end
 
+  def missing_profile?
+    !volunteer? && !profile
+  end
+
   def self.create_user_and_send_password_reset(email:, role:)
     new_user = User.new(
       email: email, password: Devise.friendly_token, role: role

@@ -123,4 +123,30 @@ class ProfilesTest < ApplicationSystemTestCase
     visit profile_path(@user.profile.id)
     refute page.has_text? 'Telefonnummer 2'
   end
+
+  test 'user without profile gets redirected to profile form' do
+    login_as @user_without_profile
+    visit root_path
+
+    assert_text 'Profil erfassen'
+    assert_text 'Bitte füllen Sie Ihr Profil aus um die Applikation zu verwenden.'
+    refute_link 'Freiwillige'
+  end
+
+  test 'volunteer without profile does not get redirected to profile form' do
+    user = create :user_volunteer, volunteer: create(:volunteer), profile: nil
+    login_as user
+    visit root_path
+
+    refute_text 'Profil erfassen'
+    assert_link 'Freiwillige'
+  end
+
+  test 'superadmin with profile does not get redirected to profile form' do
+    login_as @user
+    visit root_path
+
+    refute_text 'Profil erfassen'
+    assert_link 'Freiwillige'
+  end
 end
