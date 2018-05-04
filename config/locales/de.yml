@@ -1017,7 +1017,6 @@ de:
       <<: *id-volunteer_attributes
       lead: Dies ist die Bestätigung für das Freiwilligen Email
       subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ
-      submitted: Die Angaben der Anmeldung
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
