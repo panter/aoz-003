@@ -39,7 +39,7 @@ class FeedbackPolicyTest < PolicyAssertions::Test
   test 'volunteer_has_limited_access_to_group_offer_feedbacks' do
     group_offer = create :group_offer, volunteers: [@volunteer, @other_volunteer]
     other_group_offer = create :group_offer,
-      volunteers: [create(:volunteer, user: create(:user_volunteer)), @other_volunteer]
+      volunteers: [create(:volunteer_with_user), @other_volunteer]
     superadmin_feedback = create :feedback, volunteer: @volunteer, author: @superadmin,
       feedbackable: group_offer
     feedback_volunteer = create :feedback, volunteer: @volunteer, author: @user_volunteer,

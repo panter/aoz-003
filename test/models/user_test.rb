@@ -12,6 +12,23 @@ class UserTest < ActiveSupport::TestCase
     assert @user.valid?
   end
 
+  test 'email validation' do
+    user = build :user
+    user.email = nil
+
+    refute user.valid?
+    assert_includes user.errors.keys, :email
+
+    user.email = @user.email
+
+    refute user.valid?
+    assert_includes user.errors.keys, :email
+
+    user.email = FFaker::Internet.unique.email
+
+    assert user.valid?
+  end
+
   test '#create_user_and_send_password_reset \
     with new email creates new superadmin' do
 

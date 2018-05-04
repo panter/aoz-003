@@ -5,7 +5,8 @@ class Contact < ApplicationRecord
 
   validates :last_name, presence: true, if: :validate_last_name?
   validates :first_name, presence: true, if: :validate_first_name?
-  validates :primary_email, presence: true, format: { with: Devise.email_regexp },
+  validates :primary_email, presence: true, uniqueness: true,
+    format: { with: Devise.email_regexp },
     if: :needs_primary_email?
 
   validates :primary_phone, presence: true, if: :needs_primary_phone?

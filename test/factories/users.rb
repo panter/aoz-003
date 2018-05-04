@@ -1,10 +1,14 @@
 FactoryBot.define do
   factory :user do
-    email { "#{Time.zone.now.to_i}#{FFaker::Internet.unique.user_name}my-user@temporary-mail.com" }
+    email { FFaker::Internet.unique.email }
     password 'asdfasdf'
     role User::SUPERADMIN
 
     association :profile, strategy: :build
+
+    after :build do |user|
+      user.profile&.user = user
+    end
 
     trait :social_worker do
       role User::SOCIAL_WORKER
@@ -12,6 +16,7 @@ FactoryBot.define do
 
     trait :volunteer do
       role User::VOLUNTEER
+      volunteer { create :volunteer }
     end
 
     trait :department_manager do
@@ -32,15 +37,6 @@ FactoryBot.define do
     trait :without_profile do
       email { FFaker::Internet.unique.email("no_profile_user#{Time.zone.now.to_i}") }
       profile {}
-    end
-
-    after(:create) do |user|
-      next unless user.email.include?('my-user@temporary-mail.com')
-      user.email = user.role + '_' + FFaker::Internet.unique.email(
-        FFaker::Internet.unique.user_name(user.profile.contact.natural_name)
-      )
-      user.profile.contact.primary_email = user.email
-      user.save
     end
 
     factory :social_worker, traits: [:social_worker]

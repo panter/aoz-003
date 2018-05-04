@@ -15,13 +15,13 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
     @volunteer3.contact.update(first_name: 'Skyler', last_name: 'White')
 
     # CLIENTS
-    @client1 = create :client, user: @user
+    @client1 = create :client, user: @superadmin
     @client1.contact.update(first_name: 'Amy', last_name: 'Pond')
 
-    @client2 = create :client, user: @user
+    @client2 = create :client, user: @superadmin
     @client2.contact.update(first_name: 'Rory', last_name: 'Williams')
 
-    @client3 = create :client, user: @user
+    @client3 = create :client, user: @superadmin
     @client3.contact.update(first_name: 'River', last_name: 'Song')
 
 

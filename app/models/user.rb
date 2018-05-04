@@ -87,6 +87,7 @@ class User < ApplicationRecord
   ROLES = ROLES_FOR_USER_CREATE.dup.push(VOLUNTEER).freeze
 
   validates :role, inclusion: { in: ROLES }
+  validates :email, uniqueness: true
 
   scope :department_assocable, (-> { where(role: CAN_MANAGE_DEPARTMENT) })
   scope :superadmins, (-> { where(role: SUPERADMIN) })

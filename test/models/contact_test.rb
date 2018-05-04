@@ -5,6 +5,23 @@ class ContactTest < ActiveSupport::TestCase
     @contact = Contact.new
   end
 
+  test 'email validation' do
+    contact = build :contact, contactable: build(:volunteer)
+    contact.primary_email = nil
+
+    refute contact.valid?
+    assert_includes contact.errors.keys, :primary_email
+
+    contact.primary_email = @contact.primary_email
+
+    refute contact.valid?
+    assert_includes contact.errors.keys, :primary_email
+
+    contact.primary_email = FFaker::Internet.unique.email
+
+    assert contact.valid?
+  end
+
   test 'Dont require first and lastname on profiles' do
     @contact.contactable_type = 'Profile'
 

@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :assignment do
     client
-    volunteer {}
-    creator {}
+    association :volunteer, factory: :volunteer_with_user
+    association :creator, factory: :user
     period_start { [nil, FFaker::Time.between(500.days.ago, 200.days.ago)].sample }
     period_end { nil }
 
@@ -29,11 +29,6 @@ FactoryBot.define do
     trait :blank_period do
       period_start { nil }
       period_end { nil }
-    end
-
-    after(:build) do |assignment|
-      assignment.creator = create(:user) if assignment.creator.blank?
-      assignment.volunteer = create(:volunteer_with_user) if assignment.volunteer.blank?
     end
 
     factory :assignment_blank_period, traits: [:blank_period]
