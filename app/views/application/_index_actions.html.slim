@@ -5,3 +5,5 @@ td.index-action-cell.hidden-print
   - if policy(subject.class).destroy? && !['clients', 'volunteers'].include?(controller_name)
     = button_link navigation_glyph(:delete), subject, nil,
         confirm_deleting(subject, 'btn btn-default').merge(title: 'Löschen')
+  - if subject.class == Volunteer && policy(subject).show?
+    = button_link navigation_glyph(:journal), volunteer_journals_path(subject), title: 'Journal'
