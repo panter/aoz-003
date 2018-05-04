@@ -356,4 +356,13 @@ class VolunteersTest < ApplicationSystemTestCase
     visit edit_volunteer_path(@external)
     refute page.has_button? 'Klient/in suchen'
   end
+
+  test 'department_manager_can_see_acceptance_manipulation_on_his_volunteers_edit' do
+    department_manager = create :department_manager
+    volunteer = create :volunteer_with_user, registrar: department_manager, acceptance: :undecided
+    login_as department_manager
+    visit edit_volunteer_path(volunteer)
+    assert page.has_text? 'Aufnahme Verwaltung'
+    assert page.has_select?('Prozess')
+  end
 end

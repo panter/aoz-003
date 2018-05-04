@@ -15,7 +15,9 @@ class VolunteerPolicyTest < PolicyAssertions::Test
       *actions_list(:terminate, :show, :edit, :update))
     refute_permit(department_manager, create(:volunteer),
       *actions_list(:terminate, :show, :edit, :update))
-    refute_permit(department_manager, Volunteer, 'superadmin_privileges?')
+    refute_permit(department_manager, Volunteer, 'superadmin_privileges?', 'update_acceptance?')
+    assert_permit(department_manager, Volunteer, 'show_acceptance?')
+    assert_permit(department_manager, department_manager_volunteer, 'update_acceptance?')
   end
 
   test 'social_worker_has_no_access' do

@@ -109,7 +109,7 @@ class ApplicationPolicy
   end
 
   def superadmin_or_department_managers_registration?
-    superadmin? || department_manager? && user_owns_registration?
+    superadmin? || (department_manager? && user_owns_registration?)
   end
 
   def superadmin_or_user_in_records_related?
