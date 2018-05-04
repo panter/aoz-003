@@ -11,8 +11,10 @@ ul.list-inline
       class: "btn btn-acceptance-#{@volunteer.acceptance}"
   - if policy(Volunteer).superadmin_privileges?
     li= button_link navigation_glyph(:journal), polymorphic_path([@volunteer, Journal]), title: 'Journal'
-  - if policy(Volunteer).show?
-    li= button_link navigation_glyph(:show), polymorphic_path(@volunteer), title: 'Anzeigen'
+  - if action_name == 'edit' && policy(@volunteer).show?
+    li= button_link navigation_glyph(:show), polymorphic_path(@volunteer), title: t_action(:show)
+  - if action_name == 'show' && policy(@volunteer).edit?
+    li= button_link navigation_glyph(:edit), edit_polymorphic_path(@volunteer), title: t_action(:edit)
   - if @volunteer.internal_and_started_assignments?
     li = button_link navigation_glyph(:hours), volunteer_hours_path(@volunteer), title: t('volunteer_applications.show.hour_reports')
   - if policy(Volunteer).superadmin_privileges? && @volunteer.seeking_clients?
