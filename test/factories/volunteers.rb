@@ -84,7 +84,14 @@ FactoryBot.define do
       after(:build) do |volunteer|
         volunteer.user = build(:user_volunteer, volunteer: volunteer)
       end
+
+      factory(
+        :volunteer_seed_with_user,
+        traits: [:with_language_skills, :with_journals, :faker_extra,
+                 :fake_availability, :fake_single_assignments]
+      )
     end
+
     factory :volunteer_external, traits: [:external]
     factory :volunteer_internal, traits: [:internal]
     factory :volunteer_z, traits: [:zuerich]
@@ -96,13 +103,5 @@ FactoryBot.define do
         :fake_availability, :fake_single_assignments
       ]
     )
-
-    factory(
-      :volunteer_seed_with_user,
-      traits: [:with_language_skills, :with_journals, :faker_extra,
-               :fake_availability, :fake_single_assignments]
-    ) do
-      after(:create) { |volunteer| volunteer.update(user: create(:user_volunteer)) }
-    end
   end
 end
