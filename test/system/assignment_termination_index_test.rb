@@ -78,19 +78,14 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   end
 
   test 'clear_filter_link_is_working_correctly' do
-    # TODO: Flappy test
-    visit terminated_index_assignments_path(q: {
-      termination_submitted_by_id_not_null: true,
-      termination_verified_by_id_not_null: true
-    })
-    # visit assignments_path
-    # click_link 'Beendete Begleitungen'
+    visit assignments_path
+    click_link 'Beendete Begleitungen'
 
-    # click_link 'Quittiert: Unquittiert'
-    # click_link exact_text: 'Quittiert'
+    click_link 'Quittiert: Unquittiert'
+    click_link exact_text: 'Quittiert'
 
-    # click_link 'Ende Bestätigt'
-    # click_link exact_text: 'Bestätigt'
+    click_link 'Ende Bestätigt'
+    click_link exact_text: 'Bestätigt'
 
     refute_text termination_index_table_text(@un_submitted)
     refute_text termination_index_table_text(@submitted)
@@ -143,17 +138,14 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     )
     click_link 'Email versenden'
 
-    # TODO: Flappy test
-    # wait_for_ajax
-    # assert_text 'Beendigungs-Email wird versendet.'
+    assert_text 'Beendigungs-Email wird versendet.'
 
     # Assignment has an end-date, reminder mailing was created and was sent
     visit terminated_index_assignments_path
     @un_submitted.reload
 
-    # TODO: Flappy test
-    # assert page.has_link? 'Übermittelt am ',
-    #   href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
+    assert page.has_link? 'Übermittelt am ',
+      href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
 
     click_link 'Beendigung Quittieren', href: /#{@un_submitted.id}\/verify_termination/
     assert_text 'Der Einsatz wurde erfolgreich quittiert.'

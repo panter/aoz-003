@@ -52,17 +52,16 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
     refute page.has_link? @group_assignment_fb_superadmin.trial_feedbackable.to_label
   end
 
-  # TODO: Flappy test
-  # test 'feedbacks list without filter shows marked done feedback' do
-  #   click_link 'Probezeit Feedback Eingang'
-  #   click_link 'Filter aufheben'
-  #   visit current_url
-  #   # marked done shoud now be displayed
-  #   assert page.has_link? @assignment_done.volunteer.contact.last_name
-  #   assert page.has_link? @assignment_fb_done.trial_feedbackable.to_label
-  #   assert page.has_link? @group_assignment_done.volunteer.contact.last_name
-  #   assert page.has_link? @group_assignment_fb_done.trial_feedbackable.to_label
-  # end
+  test 'feedbacks list without filter shows marked done feedback' do
+    click_link 'Probezeit Feedback Eingang'
+    click_link 'Filter aufheben'
+    visit current_url
+    # marked done shoud now be displayed
+    assert page.has_link? @assignment_done.volunteer.contact.last_name
+    assert page.has_link? @assignment_fb_done.trial_feedbackable.to_label
+    assert page.has_link? @group_assignment_done.volunteer.contact.last_name
+    assert page.has_link? @group_assignment_fb_done.trial_feedbackable.to_label
+  end
 
   test 'feedbacks_list_with_filter_erledigt_shows_only_marked_done' do
     click_link 'Probezeit Feedback Eingang'
@@ -108,8 +107,9 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
     @group_assignment_fb_pendent.update(reviewer: @superadmin)
     click_link 'Probezeit Feedback Eingang'
     page.find('td', text: body.truncate(500)).click
-    wait_for_ajax
+
     assert page.has_text? body
+
     click_button 'Schliessen'
   end
 

@@ -74,13 +74,11 @@ class ClientsTest < ApplicationSystemTestCase
     end
     click_button 'Klient/in erfassen'
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    refute page.has_select? 'Beendet'
+    refute_select 'Beendet'
 
-    assert page.has_select? 'Geschlecht Freiwillige/r', selected: 'egal'
-    assert page.has_select? 'Alter Freiwillige/r', selected: 'egal'
-
-    # TODO: Flappy test
-    # assert page.has_field? id: 'client_language_skills_attributes_0_level_good', checked: true
+    assert_select 'Geschlecht Freiwillige/r', selected: 'egal'
+    assert_select 'Alter Freiwillige/r', selected: 'egal'
+    assert_field 'Gut', checked: true
   end
 
   test 'new client can select custom language' do
@@ -104,13 +102,11 @@ class ClientsTest < ApplicationSystemTestCase
     select('Muttersprache', from: 'Niveau')
 
     click_button 'Klient/in erfassen'
+
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-
-    assert page.has_select? 'Sprache', selected: 'Dari'
-    assert page.has_select? 'Niveau', selected: 'Muttersprache'
-
-    # TODO: Flappy test
-    # assert page.has_field? id: 'client_language_skills_attributes_0_level_good', checked: true
+    assert_select 'Sprache', selected: 'Dari'
+    assert_select 'Niveau', selected: 'Muttersprache'
+    assert_field 'Gut', checked: true
   end
 
   test 'client_pagination' do
@@ -232,8 +228,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Ort', with: 'Zürich'
     click_button 'Klient/in erfassen'
 
-    # TODO: Flappy test
-    # assert page.has_field? id: 'client_language_skills_attributes_0_level_basic', checked: true
+    assert_field 'Wenig', checked: true
   end
 
   test 'client_print_view_is_not_paginated' do
