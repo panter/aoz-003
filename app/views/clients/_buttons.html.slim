@@ -10,6 +10,6 @@ ul.list-inline
         class: "btn btn-acceptance-#{@client.acceptance} btn-acceptance-client"
   - if policy(Journal).index?
     li= button_link navigation_glyph(:journal), polymorphic_path([@client, Journal]), title: 'Journal', class: 'btn btn-default'
-  - if policy(Volunteer).show?
-    li= button_link navigation_glyph(:show), polymorphic_path(@client), title: 'Anzeigen'
+  - if policy(@client).show?
+    li= button_link navigation_glyph(:show), polymorphic_path(@client), title: t_action(:show)
   li = link_to navigation_glyph(:print), url_for(print: :true), { class: 'btn btn-default btn-sm', target: '_blank' }
