@@ -1,12 +1,15 @@
+- if !@client.resigned? && policy(@client).set_terminated?
+  ul.list-inline.pull-right
+    li= link_to navigation_glyph(:terminate), set_terminated_client_path(@client), class: 'btn btn-default',
+      method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }, title: 'Beenden'
+
 ul.list-inline
   li = form_navigation_btn :back, with_row: false
   - if policy(Client).superadmin_privileges?
     li.button-acceptance = link_to t("acceptance.#{@client.acceptance}"), '#',
         class: "btn btn-acceptance-#{@client.acceptance} btn-acceptance-client"
-  li = link_to navigation_glyph(:print), url_for(print: :true), { class: 'btn btn-default btn-sm', target: '_blank' }
-  - if !@client.resigned? && policy(@client).set_terminated?
-    li= link_to navigation_glyph(:terminate), set_terminated_client_path(@client), class: 'btn btn-default',
-      method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }, title: 'Beenden'
   - if policy(Journal).index?
-    ul.list-inline.pull-right
-      li= button_link navigation_glyph(:journal), polymorphic_path([@client, Journal]), title: 'Journal', class: 'btn btn-default'
+    li= button_link navigation_glyph(:journal), polymorphic_path([@client, Journal]), title: 'Journal', class: 'btn btn-default'
+  - if policy(Volunteer).show?
+    li= button_link navigation_glyph(:show), polymorphic_path(@client), title: 'Anzeigen'
+  li = link_to navigation_glyph(:print), url_for(print: :true), { class: 'btn btn-default btn-sm', target: '_blank' }
