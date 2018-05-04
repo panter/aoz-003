@@ -2,6 +2,6 @@ td.index-action-cell.hidden-print
   = button_link navigation_glyph(:show), subject, title: 'Anzeigen'
   - if policy(subject).edit?
     = button_link navigation_glyph(:edit), edit_polymorphic_path(subject), title: 'Bearbeiten'
-  - if policy(subject.class).destroy? && controller_name != 'clients'
+  - if policy(subject.class).destroy? && !['clients', 'volunteers'].include?(controller_name)
     = button_link navigation_glyph(:delete), subject, nil,
         confirm_deleting(subject, 'btn btn-default').merge(title: 'Löschen')

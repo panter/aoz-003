@@ -7,8 +7,9 @@ nav.navbar.section-navigation
     - if policy(@volunteer).terminate?
       li.button-acceptance = link_to t("volunteer_applications.acceptance.#{@volunteer.acceptance}"), '#',
         class: "btn btn-acceptance-#{@volunteer.acceptance}"
-      li= link_to navigation_glyph(:terminate), terminate_volunteer_path(@volunteer), class: 'btn btn-default',
-        title: 'Beenden', method: :put unless @volunteer.resigned?
+      li= link_to navigation_glyph(:terminate), terminate_volunteer_path(@volunteer),
+        class: 'btn btn-default', title: 'Beenden', method: :put,
+        data: { confirm: t('messages.confirm_terminate_volunteer') } unless @volunteer.resigned?
     - if @volunteer.internal_and_started_assignments?
       li = button_link navigation_glyph(:hours), volunteer_hours_path(@volunteer), title: t('volunteer_applications.show.hour_reports')
     - if policy(Volunteer).superadmin_privileges? && @volunteer.seeking_clients?
