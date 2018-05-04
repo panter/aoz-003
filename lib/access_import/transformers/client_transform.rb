@@ -5,7 +5,7 @@ class ClientTransform < Transformer
     {
       user: @ac_import.import_user,
       nationality: haupt_person[:nationality],
-      salutation: haupt_person[:salutation] || 'unknown',
+      salutation: haupt_person[:salutation] || 'family',
       birth_year: haupt_person[:d_Geburtsdatum],
       entry_date: haupt_person[:d_EintrittCH] && Date.parse(haupt_person[:d_EintrittCH]).to_date.to_s,
       comments: comments(begleitet, personen_rolle, haupt_person),
