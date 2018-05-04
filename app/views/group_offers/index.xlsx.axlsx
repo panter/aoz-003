@@ -1,4 +1,5 @@
 wb = xlsx_package.workbook
+wb.use_shared_strings = true
 
 col_header = wb.styles.add_style(
   bg_color: 'FFDFDEDF',
@@ -61,6 +62,6 @@ wb.add_worksheet(name: t('group_offers', count: 2)) do |sheet|
       state,
       creator,
       volunteers.join("\r")
-    ], types: :string, style: col_body, height: volunteers.size * 14
+    ], types: :string, style: col_body
   end
 end
