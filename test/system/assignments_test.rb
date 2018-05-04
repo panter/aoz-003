@@ -22,32 +22,29 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert page.has_link? @client.contact.full_name
   end
 
-  # TODO: Flappy test
-  # test 'assign unassigned client' do
-  #   login_as @user
-  #   visit volunteers_path
-  #   click_link 'Klienten suchen'
-  #   click_link 'Klient/in suchen'
+  test 'assign unassigned client' do
+    login_as @user
+    visit volunteers_path
+    click_link 'Klient/in suchen', match: :first
+    click_link 'Klient/in suchen'
+    click_link 'Begleitung erstellen'
 
-  #   wait_for_ajax
-  #   click_link 'Begleitung erstellen'
+    fill_in 'Einsatzbeginn', with: 2.days.ago.to_date
+    click_button 'Begleitung erfassen', match: :first
 
-  #   fill_in 'Einsatzbeginn', with: 2.days.ago.to_date
-  #   click_button 'Begleitung erfassen'
+    assert_text @client.contact.full_name
+    assert_text @volunteer.contact.full_name
 
-  #   assert_text @client.contact.full_name
-  #   assert_text @volunteer.contact.full_name
+    visit client_path(@client)
 
-  #   visit client_path(@client)
+    assert_text 'Aktiv'
+    assert_text @volunteer
 
-  #   assert_text 'Aktiv'
-  #   assert_text @volunteer
+    visit volunteer_path(@volunteer)
 
-  #   visit volunteer_path(@volunteer)
-
-  #   assert_text 'Aktiv'
-  #   assert_text @client
-  # end
+    assert_text 'Aktiv'
+    assert_text @client
+  end
 
   test 'creating_a_pdf_with_a_user_that_has_no_profile_will_not_crash' do
     user = create :user, :without_profile

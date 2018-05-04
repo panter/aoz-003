@@ -19,11 +19,15 @@ class LanguageSkill < ApplicationRecord
     native_languages.first || LanguageSkill.new
   end
 
-  def language_name
+  def self.language_name(language)
     return '' if language.blank?
     return 'Dari' if language == 'DR'
     return 'Farsi' if language == 'FS'
     I18nData.languages(I18n.locale)[language]
+  end
+
+  def language_name
+    self.class.language_name(language)
   end
 
   def full_language_skills

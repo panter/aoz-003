@@ -3,18 +3,20 @@ require 'application_system_test_case'
 class ClientsFilterDropdownsTest < ApplicationSystemTestCase
   def setup
     @user = create :user, role: 'superadmin'
-    @accepted_mrs_same_age_old = create(:client, acceptance: 'accepted', salutation: 'mrs',
-      gender_request: 'same', age_request: 'age_old')
-    create :assignment_active, client: @accepted_mrs_same_age_old
-    @accepted_mrs_same_age_old = @accepted_mrs_same_age_old.contact.full_name
-    @accepted_mr_no_matter_age_old = create(:client, acceptance: 'accepted', salutation: 'mr',
+
+    @accepted_woman_age_old = create(:client, acceptance: 'accepted', salutation: 'mrs',
+      gender_request: 'woman', age_request: 'age_old')
+    create :assignment_active, client: @accepted_woman_age_old
+
+    @accepted_no_matter_age_old = create(:client, acceptance: 'accepted', salutation: 'mr',
       gender_request: 'no_matter', age_request: 'age_old')
-    create :assignment_active, client: @accepted_mr_no_matter_age_old
-    @accepted_mr_no_matter_age_old = @accepted_mr_no_matter_age_old.contact.full_name
-    @resigned_mrs_same_age_middle = create(:client, acceptance: 'resigned', salutation: 'mrs',
-      gender_request: 'same', age_request: 'age_middle').contact.full_name
-    @rejected_mr_no_matter_age_middle = create(:client, acceptance: 'rejected', salutation: 'mr',
+    create :assignment_active, client: @accepted_no_matter_age_old
+
+    @resigned_woman_age_middle = create(:client, acceptance: 'resigned', salutation: 'mrs',
+      gender_request: 'woman', age_request: 'age_middle').contact.full_name
+    @rejected_no_matter_age_middle = create(:client, acceptance: 'rejected', salutation: 'mr',
       gender_request: 'no_matter', age_request: 'age_middle').contact.full_name
+
     login_as @user
     visit clients_path
   end
@@ -26,10 +28,10 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @accepted_mrs_same_age_old
-      assert page.has_text? @accepted_mr_no_matter_age_old
-      refute page.has_text? @resigned_mrs_same_age_middle
-      refute page.has_text? @rejected_mr_no_matter_age_middle
+      assert_text @accepted_woman_age_old
+      assert_text @accepted_no_matter_age_old
+      refute_text @resigned_woman_age_middle
+      refute_text @rejected_no_matter_age_middle
     end
     within '.section-navigation' do
       click_link 'Prozess: Angemeldet'
@@ -38,10 +40,10 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @accepted_mrs_same_age_old
-      assert page.has_text? @accepted_mr_no_matter_age_old
-      assert page.has_text? @resigned_mrs_same_age_middle
-      assert page.has_text? @rejected_mr_no_matter_age_middle
+      assert_text @accepted_woman_age_old
+      assert_text @accepted_no_matter_age_old
+      assert_text @resigned_woman_age_middle
+      assert_text @rejected_no_matter_age_middle
     end
   end
 
@@ -57,10 +59,10 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      refute page.has_text? @accepted_mrs_same_age_old
-      assert page.has_text? @accepted_mr_no_matter_age_old
-      refute page.has_text? @resigned_mrs_same_age_middle
-      refute page.has_text? @rejected_mr_no_matter_age_middle
+      refute_text @accepted_woman_age_old
+      assert_text @accepted_no_matter_age_old
+      refute_text @resigned_woman_age_middle
+      refute_text @rejected_no_matter_age_middle
     end
     within '.section-navigation' do
       click_link 'Anrede: Herr'
@@ -69,18 +71,18 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @accepted_mrs_same_age_old
-      assert page.has_text? @accepted_mr_no_matter_age_old
-      refute page.has_text? @resigned_mrs_same_age_middle
-      refute page.has_text? @rejected_mr_no_matter_age_middle
+      assert_text @accepted_woman_age_old
+      assert_text @accepted_no_matter_age_old
+      refute_text @resigned_woman_age_middle
+      refute_text @rejected_no_matter_age_middle
     end
     click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
-      assert page.has_text? @accepted_mrs_same_age_old
-      assert page.has_text? @accepted_mr_no_matter_age_old
-      assert page.has_text? @resigned_mrs_same_age_middle
-      assert page.has_text? @rejected_mr_no_matter_age_middle
+      assert_text @accepted_woman_age_old
+      assert_text @accepted_no_matter_age_old
+      assert_text @resigned_woman_age_middle
+      assert_text @rejected_no_matter_age_middle
     end
   end
 
@@ -101,10 +103,10 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @accepted_mrs_same_age_old
-      refute page.has_text? @accepted_mr_no_matter_age_old
-      refute page.has_text? @resigned_mrs_same_age_middle
-      refute page.has_text? @rejected_mr_no_matter_age_middle
+      assert_text @accepted_woman_age_old
+      refute_text @accepted_no_matter_age_old
+      refute_text @resigned_woman_age_middle
+      refute_text @rejected_no_matter_age_middle
     end
     within '.section-navigation' do
       click_link 'Anrede: Frau'
@@ -113,18 +115,67 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @accepted_mrs_same_age_old
-      assert page.has_text? @accepted_mr_no_matter_age_old
-      refute page.has_text? @resigned_mrs_same_age_middle
-      refute page.has_text? @rejected_mr_no_matter_age_middle
+      assert_text @accepted_woman_age_old
+      assert_text @accepted_no_matter_age_old
+      refute_text @resigned_woman_age_middle
+      refute_text @rejected_no_matter_age_middle
     end
     click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
-      assert page.has_text? @accepted_mrs_same_age_old
-      assert page.has_text? @accepted_mr_no_matter_age_old
-      assert page.has_text? @resigned_mrs_same_age_middle
-      assert page.has_text? @rejected_mr_no_matter_age_middle
+      assert_text @accepted_woman_age_old
+      assert_text @accepted_no_matter_age_old
+      assert_text @resigned_woman_age_middle
+      assert_text @rejected_no_matter_age_middle
     end
+  end
+
+  test 'filter_find_client' do
+    Assignment.destroy_all
+    create :volunteer
+    client_with_language_skills = create :client, :with_language_skills,
+      age_request: 'age_young', gender_request: 'woman'
+
+    login_as @user
+    visit volunteers_path
+    click_on 'Klient/in suchen', match: :first
+    click_on 'Klient/in suchen'
+
+    assert_button 'Geschlecht Freiwillige/r: Alle'
+    assert_button 'Alter Freiwillige/r: Alle'
+    assert_button 'Sprachkenntnisse: Alle'
+
+    assert_text client_with_language_skills
+    assert_text @accepted_woman_age_old
+    assert_text @accepted_no_matter_age_old
+    refute_text @resigned_woman_age_middle
+    refute_text @rejected_no_matter_age_middle
+
+    click_on 'Geschlecht Freiwillige/r: Alle'
+    click_on 'Frau'
+
+    assert_text client_with_language_skills
+    assert_text @accepted_woman_age_old
+    refute_text @accepted_no_matter_age_old
+    refute_text @resigned_woman_age_middle
+    refute_text @rejected_no_matter_age_middle
+
+    click_on 'Alter Freiwillige/r: Alle'
+    click_on '20 - 35'
+
+    assert_text client_with_language_skills
+    refute_text @accepted_woman_age_old
+    refute_text @accepted_no_matter_age_old
+    refute_text @resigned_woman_age_middle
+    refute_text @rejected_no_matter_age_middle
+
+    click_on 'Sprachkenntnisse: Alle'
+    click_on client_with_language_skills.language_skills.first.language_name
+
+    assert_text client_with_language_skills
+    refute_text @accepted_woman_age_old
+    refute_text @accepted_no_matter_age_old
+    refute_text @resigned_woman_age_middle
+    refute_text @rejected_no_matter_age_middle
   end
 end
