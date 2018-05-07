@@ -256,7 +256,7 @@ DEFAULT_TEMPLATES_EMAIL_TEMPLATES = [
   },
   {
     subject: 'Ihre Anmeldung als Freiwillige/r bei der AOZ Fachstelle Freiwilligenarbeit',
-    body: "Liebe/r %{Anrede} Freiwillige/r %{Name}\r\n\r\nVielen Dank für Ihre Anmeldung! \r\nIhre Anmeldung wurde erfolgreich mit den unten stehenden Angaben an uns abgeschickt.\r\n\r\nWir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben und werden uns bald bei Ihnen melden.\r\n \r\n\r\nFreundliche Grüsse\r\nAOZ Fachstelle Freiwilligenarbeit\r\nfreiwillige@aoz.ch\r\n 044 415 67 35",
+    body: "Liebe/r %{Anrede} Freiwillige/r %{Name}\r\n\r\nVielen Dank für Ihre Anmeldung! \r\nIhre Anmeldung wurde erfolgreich mit den unten stehenden Angaben an uns abgeschickt.\r\n\r\nWir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben und werden uns bald bei Ihnen melden.\r\n \r\n\r\nFreundliche Grüsse\r\nAOZ Fachstelle Freiwilligenarbeit\r\ninfo@aoz-freiwillige.ch\r\n 044 415 67 35",
     kind: 'trial', active: true
   },
   {
@@ -267,7 +267,7 @@ DEFAULT_TEMPLATES_EMAIL_TEMPLATES = [
   },
   {
     subject: 'Ihre Anmeldung als Freiwillige/r bei der AOZ Fachstelle Freiwilligenarbeit',
-    body: "Liebe/r %{Anrede} Freiwillige/r %{Name}\r\n\r\n%{FeedbackLink}\r\n\r\nVielen Dank für Ihre Anmeldung! \r\nIhre Anmeldung wurde erfolgreich mit den unten stehenden Angaben an uns abgeschickt.\r\n\r\nWir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben und werden uns bald bei Ihnen melden.\r\n \r\n\r\nFreundliche Grüsse\r\nAOZ Fachstelle Freiwilligenarbeit\r\nfreiwillige@aoz.ch\r\n 044 415 67 35",
+    body: "Liebe/r %{Anrede} Freiwillige/r %{Name}\r\n\r\n%{FeedbackLink}\r\n\r\nVielen Dank für Ihre Anmeldung! \r\nIhre Anmeldung wurde erfolgreich mit den unten stehenden Angaben an uns abgeschickt.\r\n\r\nWir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben und werden uns bald bei Ihnen melden.\r\n \r\n\r\nFreundliche Grüsse\r\nAOZ Fachstelle Freiwilligenarbeit\r\ninfo@aoz-freiwillige.ch\r\n 044 415 67 35",
     kind: 'half_year',
     active: true
   }

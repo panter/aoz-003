@@ -29,7 +29,7 @@ class Certificate < ApplicationRecord
   end
 
   DEFAULT_INSTITUTION = "**AOZ** Zürich, Flüelastrasse 32, 8047 Zürich  \r\n"\
-    'freiwillige@aoz.ch'.freeze
+    'info@aoz-freiwillige.ch'.freeze
 
   DEFAULT_FUNCTION = 'Förderung der sozialen und beruflichen Integration von Asylsuchenden, '\
     'Geflüchteten und Migrant/innen'.freeze
