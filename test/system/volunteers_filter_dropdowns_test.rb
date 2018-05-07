@@ -120,7 +120,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'Filter for group offer categories' do
     within '.section-navigation' do
-      click_link 'Gruppenangebote in AOZ-Einrichtungen'
+      click_link 'Interessiert an Gruppenangebot Kategorie'
       click_link @c1
     end
     visit current_url
@@ -130,7 +130,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @volunteer3
     end
     within '.section-navigation' do
-      click_link 'Gruppenangebote in AOZ-Einrichtungen'
+      click_link 'Interessiert an Gruppenangebot Kategorie'
       click_link @c3
     end
     visit current_url
@@ -140,7 +140,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @volunteer3
     end
     within '.section-navigation' do
-      click_link 'Gruppenangebote in AOZ-Einrichtungen'
+      click_link 'Interessiert an Gruppenangebot Kategorie'
       click_link @c2
     end
     visit current_url
