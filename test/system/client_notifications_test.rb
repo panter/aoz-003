@@ -40,7 +40,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @social_worker
     visit clients_path
 
-    click_link 'Klient erfassen'
+    click_link 'Klient/in erfassen', match: :first
     select('Frau', from: 'Anrede')
     fill_in 'Vorname', with: 'asdf'
     fill_in 'Nachname', with: 'asdf'
@@ -52,7 +52,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     within '#languages' do
       choose('Wenig')
     end
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
     assert page.has_text? @client_notification.body
   end
 
@@ -61,7 +61,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @social_worker
     visit clients_path
 
-    click_link 'Klient erfassen'
+    click_link 'Klient/in erfassen', match: :first
     select('Frau', from: 'Anrede')
     fill_in 'Vorname', with: 'asdf'
     fill_in 'Nachname', with: 'asdf'
@@ -73,7 +73,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     within '#languages' do
       choose('Wenig')
     end
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
     assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
   end
 
@@ -88,7 +88,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @user
     visit clients_path
 
-    click_link 'Klient erfassen'
+    click_link 'Klient/in erfassen', match: :first
     select('Frau', from: 'Anrede')
     fill_in 'Vorname', with: 'asdf'
     fill_in 'Nachname', with: 'asdf'
@@ -100,7 +100,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     within '#languages' do
       choose('Wenig')
     end
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
     assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
     refute page.has_text? @client_notification.body
   end

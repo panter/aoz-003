@@ -54,7 +54,7 @@ class ClientsTest < ApplicationSystemTestCase
     page.check('client_evening')
     fill_in 'Genauere Angaben', with: 'After 7'
 
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
     assert page.has_select? 'Fallführende Stelle', selected: @social_worker.full_name
   end
@@ -73,7 +73,7 @@ class ClientsTest < ApplicationSystemTestCase
     within '#languages' do
       choose('Gut')
     end
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
     refute_select 'Beendet'
 
@@ -101,6 +101,9 @@ class ClientsTest < ApplicationSystemTestCase
     click_on('Sprache hinzufügen')
     select('Dari', from: 'Sprache')
     select('Muttersprache', from: 'Niveau')
+
+    click_button 'Klient/in erfassen', match: :first
+    assert_text 'Klient/in wurde erfolgreich erstellt.'
 
     click_button 'Klient/in erfassen'
 
@@ -227,7 +230,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Strasse', with: 'Sihlstrasse 131'
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
 
     assert_field 'Wenig', checked: true
   end
@@ -269,7 +272,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Ort', with: 'Zürich'
     refute page.has_select? 'Fallführende Stelle'
 
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
 
     login_as @superadmin
     visit client_path(Client.last)
