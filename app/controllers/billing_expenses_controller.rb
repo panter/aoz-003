@@ -60,7 +60,7 @@ class BillingExpensesController < ApplicationController
   def set_volunteer
     if params[:volunteer_id]
       @volunteer = Volunteer.find(params[:volunteer_id])
-      authorize @volunteer
+      authorize @volunteer, :show?
     end
   end
 

@@ -4,7 +4,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
 
-    @volunteer1 = create :volunteer, bank: 'UBS'
+    @volunteer1 = create :volunteer_with_user, bank: 'UBS'
     @assignment1 = create :assignment, volunteer: @volunteer1
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 2.5
     billed_hour1 = create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 3.5
@@ -74,6 +74,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
   end
 
   test 'volunteer profile shows only billing expenses for this volunteer' do
+    login_as @volunteer1.user
     visit volunteer_path(@volunteer1)
     click_link 'Spesen', match: :first
 
