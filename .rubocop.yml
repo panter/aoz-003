@@ -85,5 +85,8 @@ Style/RegexpLiteral:
 
 Style/WordArray:
   Enabled: false
+
+Rails/FilePath:
+  Enabled: false
 Rails/HasAndBelongsToMany:
   Enabled: false

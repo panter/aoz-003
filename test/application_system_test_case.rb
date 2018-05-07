@@ -1,7 +1,5 @@
 require 'test_helper'
 require 'selenium/webdriver'
-require 'utility/reminder_mailing_builder'
-require 'utility/group_offer_and_assignment'
 
 Capybara.register_driver :chrome_headless do |app|
   chrome_options = {

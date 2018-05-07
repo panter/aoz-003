@@ -2,8 +2,8 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'database_cleaner'
 require 'policy_assertions'
-require 'utility/reminder_mailing_builder'
-require 'utility/group_offer_and_assignment'
+
+Dir[Rails.root.join 'test/utility/**/*.rb'].each { |path| require path }
 
 class ActionMailer::TestCase
   include ReminderMailingBuilder
@@ -39,30 +39,10 @@ class ActiveSupport::TestCase
     super
   end
 
-  def get_xls_from_response(url)
-    get url
-    assert response.success?
-    assert_equal Mime[:xlsx], response.content_type
-    excel_file = Tempfile.new
-    excel_file.write(response.body)
-    excel_file.close
-    Roo::Spreadsheet.open(excel_file.path, extension: 'xlsx')
-  end
-
-  def assert_xls_cols_equal(wb, row, offset, *columns)
-    columns.each_with_index do |column, index|
-      assert_equal column.to_s, wb.cell(row, index + 1 + offset).to_s
-    end
-  end
-
   def really_destroy_with_deleted(*models)
     models.each do |model|
       model.with_deleted.map(&:really_destroy!)
     end
-  end
-
-  def assert_xls_row_empty(wb, row, cols = 8)
-    (1..cols).to_a.each { |column| assert_nil wb.cell(row, column) }
   end
 
   def controllers_action_list(controller_name = nil)
