@@ -71,16 +71,6 @@ class AccessImport
     display_stats(Hour)
   end
 
-  def make_billing_expenses
-    start_message(:billing_expense)
-    Import.volunteer.find_each do |import|
-      billing_expense_transform.import_all(
-        @freiwilligen_entschaedigung.where_personen_rolle(import.access_id)
-      )
-    end
-    display_stats(BillingExpense, Hour)
-  end
-
   # Clean up after imports finished
   def self.finalize
     proc { User.find_by(email: EMAIL).delete } # Remove the import user with softdelete
