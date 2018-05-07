@@ -46,10 +46,13 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_text @client
   end
 
-  test 'volunteer can not see new assignment button' do
+  test 'volunteer cannot see new/edit assignment buttons' do
+    create :assignment, volunteer: @volunteer
     login_as @volunteer.user
     visit volunteer_path(@volunteer)
-    refute page.has_link? 'Begleitung erfassen'
+
+    refute_link 'Begleitung erfassen'
+    refute_link 'Bearbeiten'
   end
 
   test 'assignments_print_view_is_not_paginated' do

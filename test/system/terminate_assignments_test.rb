@@ -15,7 +15,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
 
   test 'assignment_termination_submit_form_displays_existing_hours_and_feedbacks' do
     @assignment.update(period_end: 2.days.ago)
-    login_as @volunteer.user
+    login_as @superadmin
     visit terminate_assignment_path(@assignment)
     assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
     assert page.has_text? @assignment.volunteer.hours.total_hours
@@ -23,7 +23,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
 
   test 'assignment_termination_form_adds_remaining_hours' do
     @assignment.update(period_end: 2.days.ago)
-    login_as @volunteer.user
+    login_as @superadmin
     visit terminate_assignment_path(@assignment)
     fill_in 'Restliche Stunden', with: '12.35'
 
@@ -37,19 +37,19 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
 
   test 'submitting_termination_sets_termination_submitted_at_and_termination_submitted_by' do
     @assignment.update(period_end: 2.days.ago)
-    login_as @volunteer.user
+    login_as @superadmin
     visit terminate_assignment_path(@assignment)
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
     @assignment.reload
     assert @assignment.termination_submitted_at.present?
-    assert_equal @volunteer.user, @assignment.termination_submitted_by
+    assert_equal @superadmin, @assignment.termination_submitted_by
   end
 
   test 'termination triggers notification email to creator' do
     @assignment.update(period_end: 2.days.ago)
-    login_as @volunteer.user
+    login_as @superadmin
     visit terminate_assignment_path(@assignment)
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
@@ -85,10 +85,13 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
 
   test 'volunteer_expenses_waive_field_matches_and_updates_volunteer_waive_field' do
     @assignment.update(period_end: 2.days.ago)
-    login_as @volunteer.user
+    login_as @superadmin
     visit terminate_assignment_path(@assignment)
+
     refute page.find_field('Ich verzichte auf die Auszahlung von Spesen.').checked?
-    page.check('assignment_volunteer_attributes_waive')
+
+    check 'Ich verzichte auf die Auszahlung von Spesen.'
+
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
