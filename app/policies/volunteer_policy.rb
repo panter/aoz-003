@@ -26,4 +26,5 @@ class VolunteerPolicy < ApplicationPolicy
   # supplementary policies
   alias_method :superadmin_privileges?, :superadmin?
   alias_method :show_acceptance?, :superadmin_or_department_manager?
+  alias_method :update_acceptance?, :superadmin_or_department_managers_registration?
 end

@@ -2,7 +2,7 @@ h1= t_title(:new)
 
 = simple_form_for(@volunteer, url: volunteers_path) do |f|
   = f.button :submit
-  = render 'volunteers/form', f: f
+  = render 'volunteers/form', f: f, volunteer: @volunteer
   = f.button :submit
 
 = form_navigation_btn :back

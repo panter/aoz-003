@@ -1,6 +1,6 @@
 = simple_error_notice f
 
-- if policy(Volunteer).superadmin_privileges?
+- if current_user && policy(volunteer).update_acceptance?
   .row
     .col-xs-12.col-md-4
       fieldset
