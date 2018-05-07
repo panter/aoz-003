@@ -8,7 +8,6 @@ namespace :access do
       @acimport.make_clients
       @acimport.make_assignments
       @acimport.make_group_offers
-      @acimport.make_billing_expenses
       @acimport.make_journal
       @acimport.make_hours
       @acimport.overall_stats
