@@ -122,4 +122,18 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'superclient@example.com', @client.contact.primary_email
     assert_not_equal 'superclient@example.com', @client.user.email
   end
+
+  test 'missing_profile?' do
+    superadmin = create :user
+    volunteer = create :user_volunteer, volunteer: create(:volunteer)
+
+    refute superadmin.missing_profile?
+    refute volunteer.missing_profile?
+
+    superadmin.profile = nil
+    volunteer.profile = nil
+
+    assert superadmin.missing_profile?
+    refute volunteer.missing_profile?
+  end
 end

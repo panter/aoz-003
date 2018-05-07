@@ -22,41 +22,39 @@ class ContactTest < ActiveSupport::TestCase
     assert contact.valid?
   end
 
-  test 'Dont require first and lastname on profiles' do
+  test 'required fields for profiles' do
     @contact.contactable_type = 'Profile'
 
-    assert @contact.valid?
+    refute @contact.valid?
+    assert_equal [:primary_email, :primary_phone],
+      @contact.errors.keys
   end
 
-  test 'Required fields for Clients' do
+  test 'required fields for clients' do
     @contact.contactable_type = 'Client'
 
     refute @contact.valid?
-    assert_equal @contact.errors.keys, [:last_name, :first_name, :primary_phone, :street,
-                                        :postal_code, :city]
+    assert_equal [
+      :last_name, :first_name, :primary_email, :primary_phone,
+      :street, :postal_code, :city
+    ], @contact.errors.keys
   end
 
-  test 'Required fields for Volunteers' do
+  test 'required fields for volunteers' do
     @contact.contactable_type = 'Volunteer'
 
     refute @contact.valid?
-    assert_equal @contact.errors.keys, [:last_name, :first_name, :primary_email, :primary_phone,
-                                        :street, :postal_code, :city]
+    assert_equal [
+      :last_name, :first_name, :primary_email, :primary_phone,
+      :street, :postal_code, :city
+    ], @contact.errors.keys
   end
 
-  test 'Required fields for external Volunteers' do
-    volunteer = build :volunteer_external
-    volunteer.contact = Contact.new
-    refute volunteer.valid?
-    assert_equal volunteer.contact.errors.keys, [:last_name, :first_name, :street, :postal_code,
-                                                 :city]
-  end
-
-  test 'requires only last name for departments' do
+  test 'required fields for departments' do
     @contact.contactable_type = 'Department'
 
     refute @contact.valid?
-    assert_equal @contact.errors.keys, [:last_name]
+    assert_equal [:last_name], @contact.errors.keys
   end
 
   test 'update_first_or_lastname_changes_full_name_attribute' do

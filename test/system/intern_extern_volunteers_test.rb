@@ -16,6 +16,8 @@ class InternExternVolunteersTest < ApplicationSystemTestCase
     fill_in 'Strasse', with: 'Strasse xyz'
     fill_in 'PLZ', with: '8001'
     fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: FFaker::Internet.unique.email
+    fill_in 'Telefonnummer', with: '123456789'
     first(:button, 'Freiwillige/n erfassen').click
     assert page.has_text? 'Freiwillige/r wurde erfolgreich erstellt.'
     assert page.has_text? 'Extern'

@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   after_action :verify_authorized, unless: :devise_controller?
 
+  before_action :ensure_profile_presence!
+
   delegate :superadmin?, to: :current_user
   delegate :department_manager?, to: :current_user
   delegate :social_worker?, to: :current_user
@@ -63,5 +65,12 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:alert] = t('not_authorized')
     redirect_to(root_path)
+  end
+
+  def ensure_profile_presence!
+    return unless current_user&.missing_profile?
+
+    flash[:alert] = 'Bitte füllen Sie Ihr Profil aus um die Applikation zu verwenden.'
+    redirect_to new_profile_path
   end
 end
