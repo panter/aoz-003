@@ -25,35 +25,6 @@ def make_relatives
   end
 end
 
-FactoryBot.create(:department_manager, email: "department_manager#{EMAIL_DOMAIN}",
-    password: 'asdfasdf')
-FactoryBot.create(:volunteer_with_user)
-          .user.update(password: 'asdfasdf', email: "volunteer#{EMAIL_DOMAIN}")
-puts_model_counts('First Users created', User, Profile, Contact, Volunteer, Client, Department)
-
-superadmin_and_social_worker = [:superadmin, :social_worker].map do |role|
-  FactoryBot.create(:user, role: role, email: "#{role}#{EMAIL_DOMAIN}",
-    password: 'asdfasdf')
-end
-puts_model_counts('Superadmin and SocialWorker created', User, Volunteer, Department, Client,
-  Volunteer)
-
-superadmin_and_social_worker.each do |user|
-  next if user.clients.count > 1
-  journals = [
-    Journal.new(
-      body: FFaker::Lorem.sentence(rand(2..5)),
-      user: user,
-      category: Journal::CATEGORIES.sample
-    )
-  ]
-  user.clients << Array.new(2).map do
-    FactoryBot.create :client_seed, journals: journals, relatives: make_relatives, user: user
-  end
-  user.save
-end
-puts_model_counts('Journal created', User, Volunteer, Client, Journal, Relative)
-
 def create_two_group_offers(group_offer_category)
   department_manager = User.find_by(role: 'department_manager')
   department = FactoryBot.create(:department, users: [department_manager])
@@ -69,43 +40,6 @@ def create_two_group_offers(group_offer_category)
   puts_model_counts('GroupOffers created', User, Volunteer, Department, Client, Volunteer,
     GroupOffer, GroupAssignment)
 end
-
-# create Volunteers for each acceptance type
-Volunteer.acceptance_collection.each do |acceptance|
-  if ['undecided', 'rejected'].include?(acceptance)
-    FactoryBot.create(:volunteer_seed, acceptance: acceptance, user_id: nil)
-  else
-    FactoryBot.create(:volunteer_seed_with_user, acceptance: acceptance)
-  end
-end
-puts_model_counts('After Volunteer created', User, Volunteer, Client)
-
-# create Clients for each acceptance type
-Client.acceptance_collection_restricted.each do |acceptance|
-  FactoryBot.create(:client, acceptance: acceptance, user: User.superadmins.first)
-end
-puts_model_counts('After Client created', User, Volunteer, Client)
-
-# create EmailTemplates
-if EmailTemplate.count < 1
-  FactoryBot.create :email_template_signup, active: true
-  2.times do
-    FactoryBot.create :email_template_signup, active: false
-  end
-  FactoryBot.create :email_template_trial, active: true
-  2.times do
-    FactoryBot.create :email_template_trial, active: false
-  end
-  FactoryBot.create :email_template_half_year, active: true
-  2.times do
-    FactoryBot.create :email_template_half_year, active: false
-  end
-  FactoryBot.create :email_template_termination, active: true
-  2.times do
-    FactoryBot.create :email_template_termination, active: false
-  end
-end
-puts_model_counts('After EmailTemplates created', User, EmailTemplate)
 
 def assignment_generator(creator, create_day, start_date = nil, end_date = nil, terminated_at: nil, volunteer: nil)
   volunteer ||= FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted')
@@ -139,106 +73,233 @@ def generate_feedback_and_hours(creator, hourable, start_date, end_date = nil, v
   trial_feedback.update(created_at: FFaker::Time.between(start_date + 6.weeks, start_date + 8.weeks))
 end
 
+def development_seed
+  FactoryBot.create(:department_manager, email: "department_manager#{EMAIL_DOMAIN}",
+      password: 'asdfasdf')
+  FactoryBot.create(:volunteer_with_user)
+            .user.update(password: 'asdfasdf', email: "volunteer#{EMAIL_DOMAIN}")
+  puts_model_counts('First Users created', User, Profile, Contact, Volunteer, Client, Department)
 
-# create Assignments
-if Assignment.count < 1
-  # trial Assignments
-  creator = User.superadmins.first
-  3.times do
-    start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
-    assignment = assignment_generator(creator, start_date - 2.days, start_date)
-    generate_feedback_and_hours(creator, assignment, start_date)
+  superadmin_and_social_worker = [:superadmin, :social_worker].map do |role|
+    FactoryBot.create(:user, role: role, email: "#{role}#{EMAIL_DOMAIN}",
+      password: 'asdfasdf')
   end
-  # half_year Assignments
-  3.times do
-    start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
-    assignment = assignment_generator(creator, start_date - 2.days, start_date)
-    generate_feedback_and_hours(creator, assignment, start_date)
-  end
-  # ended Assignments
-  2.times do
-    start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
-    end_date = FFaker::Time.between(start_date + 100.days, 2.days.ago)
-    assignment = assignment_generator(creator, start_date - 10.days, start_date, end_date,
-      terminated_at: end_date + 10.days)
-    generate_feedback_and_hours(creator, assignment, start_date, end_date + 10.days)
-  end
+  puts_model_counts('Superadmin and SocialWorker created', User, Volunteer, Department, Client,
+    Volunteer)
 
-  # Generate last year assignment for performance report
-  2.times do
-    create_day = 1.year.ago + 2.days
+  superadmin_and_social_worker.each do |user|
+    next if user.clients.count > 1
+    journals = [
+      Journal.new(
+        body: FFaker::Lorem.sentence(rand(2..5)),
+        user: user,
+        category: Journal::CATEGORIES.sample
+      )
+    ]
+    user.clients << Array.new(2).map do
+      FactoryBot.create :client_seed, journals: journals, relatives: make_relatives, user: user
+    end
+    user.save
+  end
+  puts_model_counts('Journal created', User, Volunteer, Client, Journal, Relative)
+
+  # create Volunteers for each acceptance type
+  Volunteer.acceptance_collection.each do |acceptance|
+    if ['undecided', 'rejected'].include?(acceptance)
+      FactoryBot.create(:volunteer_seed, acceptance: acceptance, user_id: nil)
+    else
+      FactoryBot.create(:volunteer_seed_with_user, acceptance: acceptance)
+    end
+  end
+  puts_model_counts('After Volunteer created', User, Volunteer, Client)
+
+  # create Clients for each acceptance type
+  Client.acceptance_collection_restricted.each do |acceptance|
+    FactoryBot.create(:client, acceptance: acceptance, user: User.superadmins.first)
+  end
+  puts_model_counts('After Client created', User, Volunteer, Client)
+
+  # create EmailTemplates
+  if EmailTemplate.count < 1
+    FactoryBot.create :email_template_signup, active: true
+    2.times do
+      FactoryBot.create :email_template_signup, active: false
+    end
+    FactoryBot.create :email_template_trial, active: true
+    2.times do
+      FactoryBot.create :email_template_trial, active: false
+    end
+    FactoryBot.create :email_template_half_year, active: true
+    2.times do
+      FactoryBot.create :email_template_half_year, active: false
+    end
+    FactoryBot.create :email_template_termination, active: true
+    2.times do
+      FactoryBot.create :email_template_termination, active: false
+    end
+  end
+  puts_model_counts('After EmailTemplates created', User, EmailTemplate)
+
+
+
+  # create Assignments
+  if Assignment.count < 1
+    # trial Assignments
+    creator = User.superadmins.first
+    3.times do
+      start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
+      assignment = assignment_generator(creator, start_date - 2.days, start_date)
+      generate_feedback_and_hours(creator, assignment, start_date)
+    end
+    # half_year Assignments
+    3.times do
+      start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
+      assignment = assignment_generator(creator, start_date - 2.days, start_date)
+      generate_feedback_and_hours(creator, assignment, start_date)
+    end
+    # ended Assignments
+    2.times do
+      start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
+      end_date = FFaker::Time.between(start_date + 100.days, 2.days.ago)
+      assignment = assignment_generator(creator, start_date - 10.days, start_date, end_date,
+        terminated_at: end_date + 10.days)
+      generate_feedback_and_hours(creator, assignment, start_date, end_date + 10.days)
+    end
+
+    # Generate last year assignment for performance report
+    2.times do
+      create_day = 1.year.ago + 2.days
+      start_date = FFaker::Time.between(create_day, create_day + 50.days)
+      end_date = FFaker::Time.between(create_day + 100.days, 1.year.ago.end_of_year - 2.days)
+      assignment = assignment_generator(creator, start_date - 10.days, start_date, end_date,
+        terminated_at: end_date + 10.days)
+      generate_feedback_and_hours(creator, assignment, start_date, end_date + 10.days)
+    end
+
+    # started last year, ends this year
+    create_day = 1.year.ago.beginning_of_year + 10.days
     start_date = FFaker::Time.between(create_day, create_day + 50.days)
-    end_date = FFaker::Time.between(create_day + 100.days, 1.year.ago.end_of_year - 2.days)
-    assignment = assignment_generator(creator, start_date - 10.days, start_date, end_date,
-      terminated_at: end_date + 10.days)
-    generate_feedback_and_hours(creator, assignment, start_date, end_date + 10.days)
-  end
-
-  # started last year, ends this year
-  create_day = 1.year.ago.beginning_of_year + 10.days
-  start_date = FFaker::Time.between(create_day, create_day + 50.days)
-  end_date = FFaker::Time.between(Time.zone.now.beginning_of_year + 2.days, 3.days.ago)
-  assignment = assignment_generator(creator, create_day, start_date, end_date,
-    terminated_at: end_date + 3.days)
-  generate_feedback_and_hours(creator, assignment, start_date, end_date + 3.days)
-
-  3.times do
-    create_day = 2.years.ago.beginning_of_year + 10.days
-    start_date = FFaker::Time.between(create_day, create_day + 50.days)
-    end_date = FFaker::Time.between(create_day + 100.days, 2.years.ago.end_of_year - 2.days)
+    end_date = FFaker::Time.between(Time.zone.now.beginning_of_year + 2.days, 3.days.ago)
     assignment = assignment_generator(creator, create_day, start_date, end_date,
       terminated_at: end_date + 3.days)
     generate_feedback_and_hours(creator, assignment, start_date, end_date + 3.days)
+
+    3.times do
+      create_day = 2.years.ago.beginning_of_year + 10.days
+      start_date = FFaker::Time.between(create_day, create_day + 50.days)
+      end_date = FFaker::Time.between(create_day + 100.days, 2.years.ago.end_of_year - 2.days)
+      assignment = assignment_generator(creator, create_day, start_date, end_date,
+        terminated_at: end_date + 3.days)
+      generate_feedback_and_hours(creator, assignment, start_date, end_date + 3.days)
+    end
+  end
+  puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client,
+    TrialFeedback)
+
+  Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sample) }
+      .each do |group_offer|
+    creator = User.superadmins.first
+    volunteers = Array.new(4).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
+    start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
+    group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
+      period_start: start_date, period_end: nil)
+    generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.first)
+
+    start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
+    group_assignment = GroupAssignment.create(volunteer: volunteers.second, group_offer: group_offer,
+      period_start: start_date, period_end: nil)
+    generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.second)
+
+    # ended GroupAssignments
+    start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
+    end_date = FFaker::Time.between(1.week.ago, 3.days.ago)
+    group_assignment = GroupAssignment.create(volunteer: volunteers.third, group_offer: group_offer,
+      period_start: start_date, period_end: end_date)
+    generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.third)
+
+    group_assignment = GroupAssignment.create(volunteer: volunteers.fourth, group_offer: group_offer,
+      period_start: FFaker::Time.between(6.months.ago, 12.months.ago),
+      period_end: FFaker::Time.between(1.week.ago, 3.days.ago))
+    generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.fourth)
+  end
+  puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
+    GroupAssignment, Department, Assignment, Client)
+
+  # create ClientNotifications
+  if ClientNotification.count < 1
+    superadmin = User.find_by(email: 'superadmin@example.com')
+    [
+      FactoryBot.create(:client_notification_seed, active: true, user: superadmin),
+      2.times do
+        FactoryBot.create(:client_notification_seed, active: false, user: superadmin)
+      end
+    ]
+  end
+  puts_model_counts('After ClientNotification created', User, Client, ClientNotification)
+
+  # make sure the state is correct, after stuff has been done via FactoryBot
+  Volunteer.accepted.map(&:verify_and_update_state)
+
+  puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,
+    Assignment, Contact, GroupOffer, PerformanceReport, User, BillingExpense, Department,
+    GroupOfferCategory, Profile, Volunteer, Certificate, EmailTemplate, Hour, Relative, Client,
+    Feedback, Import, ClientNotification, GroupAssignment, Journal, ReminderMailing)
+end
+
+
+DEFAULT_TEMPLATES_EMAIL_TEMPLATES = [
+  {
+    subject: '%{Name} Beendigung des Gruppeneinsatzes',
+    body: '%{Anrede} %{Name} %{FeedbackLink} %{EinsatzTitel}',
+    kind: 'termination',
+    active: true
+  },
+  {
+    subject: 'Ihre Anmeldung als Freiwillige/r bei der AOZ Fachstelle Freiwilligenarbeit',
+    body: "Liebe/r %{Anrede} Freiwillige/r %{Name}\r\n\r\nVielen Dank für Ihre Anmeldung! \r\nIhre Anmeldung wurde erfolgreich mit den unten stehenden Angaben an uns abgeschickt.\r\n\r\nWir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben und werden uns bald bei Ihnen melden.\r\n \r\n\r\nFreundliche Grüsse\r\nAOZ Fachstelle Freiwilligenarbeit\r\nfreiwillige@aoz.ch\r\n 044 415 67 35",
+    kind: 'trial', active: true
+  },
+  {
+    subject: 'Vielen Dank für Ihre Anmeldung',
+    body: "Liebe/r Freiwillige/r\r\n\r\nIhre Anmeldung wurde erfolgreich an uns abgeschickt. Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ interessieren.\r\n\r\n Wir werden uns bald bei Ihnen melden.\r\n\r\nFreundliche Grüsse\r\n\r\nAOZ Fachstelle Freiwilligenarbeit\r\n",
+    kind: 'signup',
+    active: true
+  },
+  {
+    subject: 'Ihre Anmeldung als Freiwillige/r bei der AOZ Fachstelle Freiwilligenarbeit',
+    body: "Liebe/r %{Anrede} Freiwillige/r %{Name}\r\n\r\n%{FeedbackLink}\r\n\r\nVielen Dank für Ihre Anmeldung! \r\nIhre Anmeldung wurde erfolgreich mit den unten stehenden Angaben an uns abgeschickt.\r\n\r\nWir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben und werden uns bald bei Ihnen melden.\r\n \r\n\r\nFreundliche Grüsse\r\nAOZ Fachstelle Freiwilligenarbeit\r\nfreiwillige@aoz.ch\r\n 044 415 67 35",
+    kind: 'half_year',
+    active: true
+  }
+].freeze
+
+DEFAULT_GROUP_OFFER_CATEGORIES = [
+  { category_name: 'Animation F' },
+  { category_name: 'Kurzeinsatz' },
+  { category_name: 'Andere' },
+  { category_name: 'Deutsch-Kurs' },
+  { category_name: 'Bildung' },
+  { category_name: 'Kultur' },
+  { category_name: 'Musik' },
+  { category_name: 'Kreativ' },
+  { category_name: 'Sport' },
+  { category_name: 'Kinderbetreuung' },
+  { category_name: 'Freizeit' },
+  { category_name: 'Bewerbungswerkstatt' },
+  { category_name: 'Hausaufgabenhilfe' },
+  { category_name: 'Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt' }
+].freeze
+
+def production_seed
+  DEFAULT_TEMPLATES_EMAIL_TEMPLATES.each do |template_params|
+    EmailTemplate.find_or_create_by(template_params)
+  end
+
+  DEFAULT_GROUP_OFFER_CATEGORIES.each do |category_param|
+    go_category = GroupOfferCategory.find_or_create_by!(category_param)
+    go_category.update(category_state: 'active')
   end
 end
-puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client,
-  TrialFeedback)
 
-Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sample) }
-     .each do |group_offer|
-  creator = User.superadmins.first
-  volunteers = Array.new(4).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
-  start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
-  group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
-    period_start: start_date, period_end: nil)
-  generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.first)
-
-  start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
-  group_assignment = GroupAssignment.create(volunteer: volunteers.second, group_offer: group_offer,
-    period_start: start_date, period_end: nil)
-  generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.second)
-
-  # ended GroupAssignments
-  start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
-  end_date = FFaker::Time.between(1.week.ago, 3.days.ago)
-  group_assignment = GroupAssignment.create(volunteer: volunteers.third, group_offer: group_offer,
-    period_start: start_date, period_end: end_date)
-  generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.third)
-
-  group_assignment = GroupAssignment.create(volunteer: volunteers.fourth, group_offer: group_offer,
-    period_start: FFaker::Time.between(6.months.ago, 12.months.ago),
-    period_end: FFaker::Time.between(1.week.ago, 3.days.ago))
-  generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.fourth)
-end
-puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
-  GroupAssignment, Department, Assignment, Client)
-
-# create ClientNotifications
-if ClientNotification.count < 1
-  superadmin = User.find_by(email: 'superadmin@example.com')
-  [
-    FactoryBot.create(:client_notification_seed, active: true, user: superadmin),
-    2.times do
-      FactoryBot.create(:client_notification_seed, active: false, user: superadmin)
-    end
-  ]
-end
-puts_model_counts('After ClientNotification created', User, Client, ClientNotification)
-
-# make sure the state is correct, after stuff has been done via FactoryBot
-Volunteer.accepted.map(&:verify_and_update_state)
-
-puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,
-  Assignment, Contact, GroupOffer, PerformanceReport, User, BillingExpense, Department,
-  GroupOfferCategory, Profile, Volunteer, Certificate, EmailTemplate, Hour, Relative, Client,
-  Feedback, Import, ClientNotification, GroupAssignment, Journal, ReminderMailing)
+production_seed if Rails.env.production?
+development_seed if Rails.env.development?
