@@ -117,4 +117,28 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text 'Spesenformular wurde erfolgreich gelöscht.'
     refute_text @billing_expense1.volunteer
   end
+
+  test 'download single billing expense' do
+    use_rack_driver
+
+    visit billing_expenses_path
+    click_on 'Herunterladen', match: :first
+    pdf = load_pdf(page.body)
+
+    assert_equal 1, pdf.page_count
+    assert_includes pdf.pages.first.text, "Spesenauszahlung an #{@volunteer4}"
+  end
+
+  test 'download multiple billing expenses' do
+    use_rack_driver
+
+    visit billing_expenses_path
+    page.all('input[type="checkbox"]').each(&:click)
+    click_on 'Auswahl herunterladen'
+    pdf = load_pdf(page.body)
+
+    assert_equal 2, pdf.page_count
+    assert_includes pdf.pages[0].text, "Spesenauszahlung an #{@volunteer4}"
+    assert_includes pdf.pages[1].text, "Spesenauszahlung an #{@volunteer1}"
+  end
 end

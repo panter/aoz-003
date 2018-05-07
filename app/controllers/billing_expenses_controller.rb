@@ -1,6 +1,7 @@
 class BillingExpensesController < ApplicationController
   before_action :set_billing_expense, only: [:show, :destroy]
   before_action :set_volunteer, only: [:index]
+  before_action :set_selection, only: [:index, :download]
 
   def index
     authorize BillingExpense
@@ -10,6 +11,28 @@ class BillingExpensesController < ApplicationController
 
     @billing_expenses = @q.result.page(params[:page])
     @billing_expenses = @billing_expenses.where(volunteer_id: @volunteer.id) if @volunteer
+  end
+
+  def download
+    authorize BillingExpense
+
+    if @selected_billing_expenses.blank?
+      flash[:notice] = 'Bitte wählen Sie die Spesenformulare aus die Sie herunterladen möchten.'
+      return redirect_back(fallback_location: billing_expenses_path)
+    end
+
+    merged_expenses = CombinePDF.new
+    billing_expenses = policy_scope(BillingExpense).where(id: @selected_billing_expenses)
+
+    billing_expenses.each do |billing_expense|
+      @billing_expense = billing_expense
+      html = render_to_string(action: 'show.html', layout: 'pdf.pdf')
+      merged_expenses << CombinePDF.parse(WickedPdf.new.pdf_from_string(html, encoding: 'UTF-8'))
+    end
+
+    send_data merged_expenses.to_pdf,
+      disposition: 'inline',
+      filename: "Spesenauszahlungen-#{Time.zone.now.strftime '%F'}.pdf"
   end
 
   def show
@@ -62,6 +85,10 @@ class BillingExpensesController < ApplicationController
       @volunteer = Volunteer.find(params[:volunteer_id])
       authorize @volunteer, :show?
     end
+  end
+
+  def set_selection
+    @selected_billing_expenses = params[:selected_billing_expenses].presence || []
   end
 
   def pdf_file_name
