@@ -1,13 +1,24 @@
 h1 Zuletzt übermittelte Stunden und Feedbacks
 
-h4.m-t-20.m-b-20.text-center.row-box
-  = simple_form_for confirmable, url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect), method: :put do |f|
-    'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
-    br
-    = f.simple_fields_for(:volunteer) do |volunteer|
-      br
-      = volunteer.input :waive
-    = f.submit 'Bestätigen', class: 'btn btn-lg-accepted', method: :put
+.submit-box
+  .col-xs-12
+    p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
+
+  = simple_form_for(confirmable, class: 'col-xs-12',
+      url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect, ), method: :put) do |f|
+    .row
+      .col-xs-12
+        = f.submit value: 'Bestätigen', class: 'btn btn-lg-accepted'
+      - unless @volunteer.waive
+        .col-xs-12.text-left
+          hr
+          h3.small.m-b-20.text-left Kontoangaben
+        = f.simple_fields_for :volunteer do |vf|
+          = vf.input_field :waive, hidden: true
+          .col-xs-4.text-left
+            = vf.input :iban
+          .col-xs-4.text-left
+            = vf.input :bank
 
 h2.m-b-20.m-t-30
   'Einsatz

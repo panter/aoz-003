@@ -92,13 +92,12 @@ class AssignmentsController < ApplicationController
   def last_submitted_hours_and_feedbacks
     @last_submitted_hours = @assignment.hours_since_last_submitted
     @last_submitted_feedbacks = @assignment.feedbacks_since_last_submitted
+    @volunteer = @assignment.volunteer
   end
 
   def update_submitted_at
-    @assignment.update(params.require(:assignment).permit(
-      volunteer_attributes: [:waive]
-    ).merge(submitted_at: Time.zone.now))
-
+    @assignment.update(assignment_params.slice(:volunteer_attributes)
+      .merge(submitted_at: Time.zone.now))
     redirect_to default_redirect || last_submitted_hours_and_feedbacks_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
@@ -176,7 +175,7 @@ class AssignmentsController < ApplicationController
       :term_feedback_transfair, :comments, :additional_comments,
       :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
       :special_agreement, :first_meeting, :remaining_hours,
-      volunteer_attributes: [:waive]
+      volunteer_attributes: [:waive, :iban, :bank]
     )
   end
 end
