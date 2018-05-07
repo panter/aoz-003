@@ -9,16 +9,15 @@ h1 Zuletzt übermittelte Stunden und Feedbacks
     .row
       .col-xs-12
         = f.submit value: 'Bestätigen', class: 'btn btn-lg-accepted'
-      - unless @volunteer.waive
-        .col-xs-12.text-left
-          hr
-          h3.small.m-b-20.text-left Kontoangaben
         = f.simple_fields_for :volunteer do |vf|
-          = vf.input_field :waive, hidden: true
-          .col-xs-4.text-left
-            = vf.input :iban
-          .col-xs-4.text-left
-            = vf.input :bank
+          .col-xs-12.text-left
+            = checkbox_toggle_collapse(vf, :waive, '#not-waive-expenses', check_shows: false)
+          .col-xs-12.text-left#not-waive-expenses
+            .row
+              .col-xs-4.text-left
+                = vf.input :iban
+              .col-xs-4.text-left
+                = vf.input :bank
 
 h2.m-b-20.m-t-30
   'Einsatz
