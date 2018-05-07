@@ -9,16 +9,15 @@ h4.m-t-20.m-b-20.text-center.row-box
       = volunteer.input :waive
     = f.submit 'Bestätigen', class: 'btn btn-lg-accepted', method: :put
 
-h3.m-b-20
+h2.m-b-20.m-t-30
   'Einsatz
   = link_to confirmable.to_label, polymorphic_path([confirmable.volunteer, confirmable]), target: '_blank'
 
-h4 Stunden
+h3 Stunden
 = render 'last_submitted_hours', hours: hours, confirmable: confirmable
-p= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
-br
+p.m-b-30= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
 
-h4 Feedbacks
+h3 Feedbacks
 = render 'last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
 p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: request.fullpath)
 
