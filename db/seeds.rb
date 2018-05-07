@@ -286,7 +286,8 @@ DEFAULT_GROUP_OFFER_CATEGORIES = [
   { category_name: 'Kinderbetreuung' },
   { category_name: 'Freizeit' },
   { category_name: 'Bewerbungswerkstatt' },
-  { category_name: 'Hausaufgabenhilfe' }
+  { category_name: 'Hausaufgabenhilfe' },
+  { category_name: 'Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt' }
 ].freeze
 
 def production_seed
