@@ -1,14 +1,4 @@
 .row
   .col-xs-12.centered.columns.text-center
-    h1.small.m-b-20= t('thank_you')
-    p.text-bigger-3 Liebe/r Freiwillige/r
-    p.text-bigger-3.m-b-20
-      'Ihre Anmeldung wurde erfolgreich an uns abgeschickt.<br>
-      'Sie werden eine Bestätigungsmail erhalten.<br>
-      'Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ interessieren.<br>
-      'Wir werden uns bald bei Ihnen melden.
-    p.text-bigger-3
-      'Freundliche Grüsse<br>
-      'AOZ Fachstelle Freiwilligenarbeit
-
-
+    h1.small.m-b-20== EmailTemplate.signup.active.first.subject
+    p.text-bigger-3== EmailTemplate.signup.active.first.body
