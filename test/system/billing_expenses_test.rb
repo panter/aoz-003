@@ -3,27 +3,33 @@ require 'application_system_test_case'
 class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
+    date = '2018-01-01'.to_time
 
     @volunteer1 = create :volunteer_with_user, bank: 'UBS'
     @assignment1 = create :assignment, volunteer: @volunteer1
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 2.5
-    billed_hour1 = create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 3.5
+    billed_hour1 = create :hour, volunteer: @volunteer1, hourable: @assignment1,
+      hours: 3.5, meeting_date: date
     @billing_expense1 = create :billing_expense, volunteer: @volunteer1, hours: [billed_hour1]
     group_assignment1 = create :group_assignment, volunteer: @volunteer1
-    create :hour, hourable: group_assignment1.group_offer, volunteer: @volunteer1, hours: 35
+    create :hour, hourable: group_assignment1.group_offer, volunteer: @volunteer1,
+      hours: 35, meeting_date: date
 
     @volunteer2 = create :volunteer
     assignment2 = create :assignment, volunteer: @volunteer2
-    create :hour, volunteer: @volunteer2, hourable: assignment2, hours: 4.5
+    create :hour, volunteer: @volunteer2, hourable: assignment2,
+      hours: 4.5, meeting_date: date
 
     @volunteer3 = create :volunteer, iban: nil
     assignment3 = create :assignment, volunteer: @volunteer3
-    create :hour, volunteer: @volunteer3, hourable: assignment3, hours: 2.5
+    create :hour, volunteer: @volunteer3, hourable: assignment3,
+      hours: 2.5, meeting_date: date
 
     @volunteer4 = create :volunteer
     group_assignment4 = create :group_assignment, volunteer: @volunteer4
     billed_hour4 = create :hour, volunteer: @volunteer4,
-      hourable: group_assignment4.group_offer, hours: 5.5
+      hourable: group_assignment4.group_offer,
+      hours: 5.5, meeting_date: date - 1.month
     @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4]
 
     login_as superadmin
@@ -33,12 +39,25 @@ class BillingExpensesTest < ApplicationSystemTestCase
     visit billing_expenses_path
 
     assert_text 'Spesenformulare'
-    assert_link 'Herunterladen', count: 2
+    assert_link 'Herunterladen', count: 1
 
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 3.5 Stunden Fr. 50.00"
-    assert_text "#{@volunteer4} #{@volunteer4.iban} 5.5 Stunden Fr. 50.00"
     refute_text @volunteer2
     refute_text @volunteer3
+    refute_text @volunteer4
+
+    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Juli 2017 - Dezember 2017'
+
+    assert_text "#{@volunteer4} #{@volunteer4.iban} 5.5 Stunden Fr. 50.00"
+    refute_text @volunteer1
+
+    click_link 'Periode: Juli 2017 - Dezember 2017'
+    click_link 'Alle'
+
+    assert_link 'Herunterladen', count: 2
+    assert_text @volunteer1
+    assert_text @volunteer4
   end
 
   test 'superadmin can create billing expenses for unbilled hours' do
@@ -126,13 +145,16 @@ class BillingExpensesTest < ApplicationSystemTestCase
     pdf = load_pdf(page.body)
 
     assert_equal 1, pdf.page_count
-    assert_includes pdf.pages.first.text, "Spesenauszahlung an #{@volunteer4}"
+    assert_includes pdf.pages.first.text, "Spesenauszahlung an #{@volunteer1}"
   end
 
   test 'download multiple billing expenses' do
     use_rack_driver
 
     visit billing_expenses_path
+    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Alle'
+
     page.all('input[type="checkbox"]').each(&:click)
     click_on 'Auswahl herunterladen'
     pdf = load_pdf(page.body)

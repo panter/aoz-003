@@ -294,6 +294,7 @@ de:
         amount: Betrag
         assignment: Begleitung
         created_by: Erstellt von
+        period: Periode
       certificate:
         <<: *id-generic_keys
         assignment: Einsatz

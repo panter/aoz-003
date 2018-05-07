@@ -53,7 +53,7 @@ Metrics/MethodLength:
     - 'db/seeds.rb'
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 25
   Exclude:
     - 'test/**/*'
     - 'db/seeds.rb'

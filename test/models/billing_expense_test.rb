@@ -67,4 +67,22 @@ class BillingExpenseTest < ActiveSupport::TestCase
     assert_equal creator, hour1b.reload.reviewer
     refute_equal creator, hour1c.reload.reviewer
   end
+
+  test 'period scope' do
+    date = Time.zone.now.beginning_of_year
+
+    billing_expense1 = create :billing_expense,
+      hours: [create(:hour, meeting_date: date + 1.week)]
+
+    billing_expense2 = create :billing_expense,
+      hours: [
+        create(:hour, meeting_date: date + 1.week),
+        create(:hour, meeting_date: date - 1.week)
+      ]
+
+    _billing_expense3 = create :billing_expense,
+      hours: [create(:hour, meeting_date: date - 1.week)]
+
+    assert_equal [billing_expense1, billing_expense2], BillingExpense.period(date).reorder(:id)
+  end
 end

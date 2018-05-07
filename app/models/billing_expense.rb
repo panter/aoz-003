@@ -2,6 +2,8 @@ class BillingExpense < ApplicationRecord
   include ImportRelation
   include FullBankDetails
 
+  PERIOD = 6.months
+
   attr_accessor :import_mode
 
   before_validation :compute_amount, unless: :import_mode
@@ -12,10 +14,21 @@ class BillingExpense < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  scope :period, lambda { |date|
+    date = Time.zone.parse(date) unless date.is_a? Time
+
+    joins(:hours)
+      .merge(Hour.date_between(:meeting_date, date, date + PERIOD))
+  }
+
   AMOUNT = [50, 100, 150].freeze
 
   validates :volunteer, :user, :iban, presence: true
   validates :amount, inclusion: { in: AMOUNT }, unless: :import_mode
+
+  def self.ransackable_scopes(auth_object = nil)
+    ['period']
+  end
 
   def self.amount_for(hours)
     if hours > 50

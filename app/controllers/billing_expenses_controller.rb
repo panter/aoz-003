@@ -2,14 +2,16 @@ class BillingExpensesController < ApplicationController
   before_action :set_billing_expense, only: [:show, :destroy]
   before_action :set_volunteer, only: [:index]
   before_action :set_selection, only: [:index, :download]
+  before_action :set_periods, only: [:index]
 
   def index
     authorize BillingExpense
 
+    set_default_filter(period: @billing_periods.first[:value])
     @q = policy_scope(BillingExpense).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
 
-    @billing_expenses = @q.result.page(params[:page])
+    @billing_expenses = @q.result
     @billing_expenses = @billing_expenses.where(volunteer_id: @volunteer.id) if @volunteer
   end
 
@@ -89,6 +91,30 @@ class BillingExpensesController < ApplicationController
 
   def set_selection
     @selected_billing_expenses = params[:selected_billing_expenses].presence || []
+  end
+
+  def set_periods
+    @billing_periods = []
+    hours = Hour.billed
+    oldest_date = hours.minimum(:meeting_date) || Time.zone.now
+    newest_date = hours.maximum(:meeting_date) || Time.zone.now
+
+    start_of_year = newest_date.beginning_of_year
+    date = start_of_year
+    date += BillingExpense::PERIOD if newest_date >= start_of_year + BillingExpense::PERIOD
+
+    until date < oldest_date - BillingExpense::PERIOD
+      @billing_periods << {
+        q: :period,
+        value: date.strftime('%Y-%m-%d'),
+        text: '%s - %s' % [
+          I18n.l(date, format: '%e. %B %Y'),
+          I18n.l(date + BillingExpense::PERIOD - 1.day, format: '%e. %B %Y')
+        ]
+      }
+
+      date -= BillingExpense::PERIOD
+    end
   end
 
   def pdf_file_name

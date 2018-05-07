@@ -8,15 +8,15 @@ h1
 
 = simple_form_for :billing_expenses, url: download_billing_expenses_path(format: :pdf),
     html: { target: '_blank' } do |f|
-  .row
-    .col-xs-12
-      => f.button :submit, 'Auswahl herunterladen', data: { disable_with: false }
+  ul.list-inline
+    li= clear_filter_button
+    = custom_filter_dropdown(t_attr(:period, BillingExpense), *@billing_periods)
+    li=> f.button :submit, 'Auswahl herunterladen', data: { disable_with: false }
+    li
       - if @volunteer
         => button_link navigation_glyph(:back), @volunteer
       - else
         => button_link 'Spesenformulare erstellen', new_billing_expense_path
-
-  = bootstrap_paginate(@billing_expenses)
 
   .table-responsive
     table.table
@@ -55,5 +55,3 @@ h1
             - if policy(BillingExpense).superadmin_privileges?
               td= link_to record.user, profile_link(record.user)
             td= l(record.created_at.to_date)
-
-  = bootstrap_paginate(@billing_expenses)
