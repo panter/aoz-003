@@ -6,7 +6,7 @@
       = f.button :submit
   .row
     .col-xs-12.col-md-6
-      - if action_name == 'new'
+      - if action_new?
         = f.association :client, include_blank: true
         = f.association :volunteer, include_blank: true
       - else
