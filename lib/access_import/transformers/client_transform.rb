@@ -25,9 +25,21 @@ class ClientTransform < Transformer
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
-    client = Client.create!(prepare_attributes(personen_rolle, haupt_person))
+    client = Client.new(prepare_attributes(personen_rolle, haupt_person))
     if haupt_person == {} # handle access db inconsistencies
-      client.update_columns(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende])
+      client.contact.assign_attributes(primary_email: generate_bogus_email, street: 'xxx',
+        postal_code: '8000', city: 'Zürich')
+      client.assign_attributes(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende])
+    end
+    if !client.save && client.errors.messages[:'contact.primary_email']&.include?('ist bereits vergeben')
+      clients_with_same_email = Client.joins(:contact)
+        .where('contacts.primary_email = ?', client.contact.primary_email)
+      if clients_with_same_email.maximum(:updated_at) < personen_rolle[:d_MutDatum]
+        clients_with_same_email.map { |cl| cl.contact.update(primary_email: generate_bogus_email) }
+      else
+        client.contact.primary_email = generate_bogus_email
+      end
+      client.save!
     end
     update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end

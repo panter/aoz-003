@@ -39,8 +39,10 @@ module AccessImportSetup
       return User.with_deleted.find_by(email: IMPORT_USER_EMAIL).restore
     end
     user = User.create!(email: IMPORT_USER_EMAIL, password: SecureRandom.hex(60), role: 'superadmin')
-    user.profile = Profile.new(contact: Contact.new(first_name: IMPORT_USER_NAME,
-      last_name: IMPORT_USER_NAME, primary_email: IMPORT_USER_EMAIL))
+    user.build_profile
+    user.profile.build_contact(first_name: IMPORT_USER_NAME, last_name: IMPORT_USER_NAME,
+      primary_email: IMPORT_USER_EMAIL, primary_phone: '0000', city: 'Zuerich', postal_code: '8000',
+      street: 'xxxxxx')
     user.save!
     user
   end
