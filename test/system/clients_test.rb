@@ -104,10 +104,6 @@ class ClientsTest < ApplicationSystemTestCase
 
     click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-
-    click_button 'Klient/in erfassen'
-
-    assert_text 'Klient/in wurde erfolgreich erstellt.'
     assert_select 'Sprache', selected: 'Dari'
     assert_select 'Niveau', selected: 'Muttersprache'
     assert_field 'Gut', checked: true
