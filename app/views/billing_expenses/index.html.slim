@@ -7,7 +7,7 @@ h1
     = "für #{@volunteer}"
 
 = simple_form_for :billing_expenses, url: download_billing_expenses_path(format: :pdf),
-    html: { target: '_blank' } do |f|
+    html: { class: 'form-ignore-changes', target: '_blank' } do |f|
   ul.list-inline
     li= clear_filter_button
     = custom_filter_dropdown(t_attr(:period, BillingExpense), *@billing_periods)
