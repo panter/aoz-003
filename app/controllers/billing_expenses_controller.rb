@@ -1,6 +1,5 @@
 class BillingExpensesController < ApplicationController
   before_action :set_billing_expense, only: [:show, :destroy]
-  before_action :set_volunteer, only: [:index]
   before_action :set_selection, only: [:index, :download]
 
   def index
@@ -11,9 +10,14 @@ class BillingExpensesController < ApplicationController
     set_default_filter(period: @billing_periods.first[:value])
     @q = policy_scope(BillingExpense).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
-
     @billing_expenses = @q.result
-    @billing_expenses = @billing_expenses.where(volunteer_id: @volunteer.id) if @volunteer
+
+    if params[:volunteer_id]
+      @volunteer = Volunteer.find(params[:volunteer_id])
+      authorize @volunteer, :show?
+
+      @billing_expenses = @billing_expenses.where(volunteer: @volunteer)
+    end
   end
 
   def download
@@ -81,13 +85,6 @@ class BillingExpensesController < ApplicationController
   def set_billing_expense
     @billing_expense = BillingExpense.find(params[:id])
     authorize @billing_expense
-  end
-
-  def set_volunteer
-    if params[:volunteer_id]
-      @volunteer = Volunteer.find(params[:volunteer_id])
-      authorize @volunteer, :show?
-    end
   end
 
   def set_selection

@@ -34,10 +34,13 @@ Layout/MultilineOperationIndentation:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
-Style/FormatString:
-  EnforcedStyle: percent
 Style/AsciiComments:
   Enabled: false
+Style/FormatString:
+  EnforcedStyle: percent
+Style/GuardClause:
+  MinBodyLength: 5
+
 Metrics/LineLength:
   Max: 100
   Exclude:
