@@ -1,24 +1,33 @@
 h1 Zuletzt übermittelte Stunden und Feedbacks
 
-h4.m-t-20.m-b-20.text-center.row-box
-  = simple_form_for confirmable, url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect), method: :put do |f|
-    'Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
-    br
-    = f.simple_fields_for(:volunteer) do |volunteer|
-      br
-      = volunteer.input :waive
-    = f.submit 'Bestätigen', class: 'btn btn-lg-accepted', method: :put
+.submit-box
+  .col-xs-12
+    p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
 
-h3.m-b-20
+  = simple_form_for(confirmable, class: 'col-xs-12',
+      url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect, ), method: :put) do |f|
+    .row
+      .col-xs-12
+        = f.submit value: 'Bestätigen', class: 'btn btn-lg-accepted'
+        = f.simple_fields_for :volunteer do |vf|
+          .col-xs-12.text-left
+            = checkbox_toggle_collapse(vf, :waive, '#not-waive-expenses', check_shows: false)
+          .col-xs-12.text-left#not-waive-expenses
+            .row
+              .col-xs-4.text-left
+                = vf.input :iban
+              .col-xs-4.text-left
+                = vf.input :bank
+
+h2.m-b-20.m-t-30
   'Einsatz
   = link_to confirmable.to_label, polymorphic_path([confirmable.volunteer, confirmable]), target: '_blank'
 
-h4 Stunden
+h3 Stunden
 = render 'last_submitted_hours', hours: hours, confirmable: confirmable
-p= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
-br
+p.m-b-30= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
 
-h4 Feedbacks
+h3 Feedbacks
 = render 'last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
 p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: request.fullpath)
 

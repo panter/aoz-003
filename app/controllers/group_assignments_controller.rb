@@ -56,6 +56,7 @@ class GroupAssignmentsController < ApplicationController
   def last_submitted_hours_and_feedbacks
     @last_submitted_hours = @group_assignment.hours_since_last_submitted
     @last_submitted_feedbacks = @group_assignment.feedbacks_since_last_submitted
+    @volunteer = @group_assignment.volunteer
     return if params[:rmv_id].blank?
     rmv = ReminderMailingVolunteer.find(params[:rmv_id].to_i)
     return if rmv.reminder_mailable != @group_assignment || rmv.volunteer.user != current_user
@@ -63,7 +64,8 @@ class GroupAssignmentsController < ApplicationController
   end
 
   def update_submitted_at
-    @group_assignment.update(submitted_at: Time.zone.now)
+    @group_assignment.update(group_assignment_params.slice(:volunteer_attributes)
+      .merge(submitted_at: Time.zone.now))
     redirect_to default_redirect || last_submitted_hours_and_feedbacks_group_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
@@ -134,7 +136,7 @@ class GroupAssignmentsController < ApplicationController
       :redirect_to, :term_feedback_transfair, :comments, :additional_comments,
       :trial_period_end, :frequency, :description, :place, :happens_at, :agreement_text,
       :group_offer_id, :volunteer_id, :remaining_hours,
-      volunteer_attributes: [:waive]
+      volunteer_attributes: [:waive, :iban, :bank]
     )
   end
 end
