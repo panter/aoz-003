@@ -1,13 +1,17 @@
 .panel.panel-default
   .panel-heading
     strong Anleitung
-  .panel-body
-    'Sie können die folgenden Platzhalter benützen:
-  ul#template-variables.list-group
+  .panel-body.instruction-hidden
+    strong Für diese E-Mailvorlage gibt es keine Platzhalter.
+    p
+      ' Bitte benützen Sie keine Platzhalter für diese Vorlage,
+      ' sonst wird der Inhalt für die Bestätigung der Anmeldung von Freiwilligen nicht richtig angezeigt.
+  .panel-body.instruction-default Sie können die folgenden Platzhalter benützen:
+  ul#template-variables.list-group.instruction-default
     - template_varnames.each do |var_name|
       li.list-group-item %{#{var_name}}
 
-  .panel-body
+  .panel-body.instruction-default
     p Zum Beispiel:
     pre
       = "Guten Tag %{Anrede} %{Name}\r\n"

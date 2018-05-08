@@ -15,15 +15,26 @@ javascript:
         })
       );
     }
+    function toggleTemplateExample(varNames) {
+      if (varNames.length > 0) {
+        $('.instruction-default').hide();
+        $('.instruction-hidden').show()
+      } else {
+        $('.instruction-default').show();
+        $('.instruction-hidden').hide()
+      }
+    }
     function addTemplateStrings(subject, body) {
       $("#email_template_subject").val(subject);
       $("#email_template_body").text(body);
     }
     var kind = $("#email_template_kind").val();
+    toggleTemplateExample(templateVarnames[kind]);
     addTemplateStrings(templateStrings[kind]['subject'], templateStrings[kind]['body']);
     $('#email_template_kind').change(function () {
       var newKind = $("#email_template_kind").val();
       addTemplateStrings(templateStrings[newKind]['subject'], templateStrings[newKind]['body']);
       addVarnames(templateVarnames[newKind]);
+      toggleTemplateExample(templateVarnames[newKind]);
     });
   });

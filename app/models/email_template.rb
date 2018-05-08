@@ -29,7 +29,7 @@ class EmailTemplate < ApplicationRecord
 
   def self.template_varnames
     {
-      signup: [:Anrede, :Name],
+      signup: [],
       assignment: [:Anrede, :Name, :EinsatzTitel, :FeedbackLink],
       trial: ReminderMailing::TEMPLATE_VARNAMES,
       half_year: ReminderMailing::TEMPLATE_VARNAMES,
