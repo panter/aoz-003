@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
-  before_action :store_user_location!, if: :storable_location?
-
   protect_from_forgery with: :exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -17,16 +15,20 @@ class ApplicationController < ActionController::Base
   delegate :volunteer?, to: :current_user
 
   def after_sign_in_path_for(current_user)
-    location = stored_location_for(current_user)
-    if location && location[/\/volunteers\/[0-9]+\/(group_)?assignments\/[0-9]+\//].present?
-      return location
-    end
-    return volunteer_path(current_user.volunteer.id) if volunteer?
-    return new_profile_path if current_user.profile.blank?
-    if policy(Department).manager_with_department?
-      return department_path(current_user.department.first.id)
-    end
-    root_path
+    stored_location_for(current_user) ||
+      if current_user.volunteer?
+        volunteer_path(current_user.volunteer)
+      elsif policy(Department).manager_with_department?
+        department_path(current_user.department.first)
+      elsif !current_user.profile
+        new_profile_path
+      else
+        root_path
+      end
+  end
+
+  def after_sign_out_path_for(current_user)
+    new_user_session_path
   end
 
   def home
@@ -53,14 +55,6 @@ class ApplicationController < ActionController::Base
   helper_method :default_redirect
 
   private
-
-  def storable_location?
-    request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
-  end
-
-  def store_user_location!
-    store_location_for(:user, request.fullpath)
-  end
 
   def user_not_authorized
     flash[:alert] = t('not_authorized')
