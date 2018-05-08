@@ -11,6 +11,8 @@ namespace :access do
       @acimport.make_journal
       @acimport.make_hours
       @acimport.overall_stats
+      Rake::Task['access:cleanup_afterwards'].invoke
+      Rake::Task['db:seed'].invoke
     else
       warn 'No access file set. run "rails access:import file=path/to/access_file.accdb"'
     end

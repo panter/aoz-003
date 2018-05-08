@@ -48,9 +48,16 @@ module AccUtils
   end
 
   def email(h_email)
-    return "unknown_email_#{Time.zone.now.to_f}@example.com" if h_email.nil?
-    h_email.sub(/^\#mailto:/, '').sub(/\#$/, '')
+    return generate_bogus_email if h_email.nil?
+    email = h_email.sub(/^\#mailto:/, '').sub(/\#$/, '')
+    return generate_bogus_email unless email.match?(Devise.email_regexp)
+    email
   end
+
+  def generate_bogus_email
+    "unknown_email_#{Time.zone.now.to_f}@example.com"
+  end
+
 
   def map_gender(value)
     return nil unless value
