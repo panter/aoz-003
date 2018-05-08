@@ -18,7 +18,13 @@ h1 Alle E-Mailvorlagen
     tbody
       - @email_templates.each do |email_template|
         tr class=(email_template.active ? 'bg-success': '')
-          = render 'index_actions', subject: email_template
+          td.index-action-cell.hidden-print
+            = button_link navigation_glyph(:show), email_template, title: 'Anzeigen'
+            - if policy(email_template).edit?
+              = button_link navigation_glyph(:edit), edit_polymorphic_path(email_template), title: 'Bearbeiten'
+            - if policy(email_template).destroy?
+              = button_link navigation_glyph(:delete), email_template, nil,
+                  confirm_deleting(email_template, 'btn btn-default').merge(title: 'Löschen')
           td= t(".#{email_template.kind}")
           td= boolean_glyph(email_template.active)
           td= email_template.subject

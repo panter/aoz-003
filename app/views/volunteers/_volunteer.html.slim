@@ -1,6 +1,14 @@
 tr
   - if action_index?
-    = render 'index_actions', subject: volunteer
+      td.index-action-cell.hidden-print
+        = button_link navigation_glyph(:show), volunteer, title: 'Anzeigen'
+        - if policy(volunteer).edit?
+          = button_link navigation_glyph(:edit), edit_polymorphic_path(volunteer), title: 'Bearbeiten'
+        - if policy(volunteer).destroy?
+          = button_link navigation_glyph(:delete), volunteer, nil,
+              confirm_deleting(volunteer, 'btn btn-default').merge(title: 'Löschen')
+        - if policy(volunteer).show?
+          = button_link navigation_glyph(:journal), volunteer_journals_path(volunteer), title: 'Journal'
   td
     - if controller_name == 'group_offers'
       = link_to 'Freiwillige/n hinzufügen',
