@@ -249,14 +249,14 @@ end
 
 DEFAULT_TEMPLATES_EMAIL_TEMPLATES = [
   {
-    subject: '%{Name} Beendigung des Gruppeneinsatzes',
-    body: '%{Anrede} %{Name} %{FeedbackLink} %{EinsatzTitel}',
+    subject: 'Rückmeldung zur Beendigung von %{Einsatz}',
+    body: "Liebe/r %{Anrede} %{Name}\r\n\r\nWir bitten Sie um eine Rückmeldung bezüglich der Beendigung von %{Einsatz}.\r\nBitte tragen Sie Ihre Rückmeldung hier ein:%{FeedbackLink}\r\n\r\nFreundliche Grüsse\r\n\r\nAOZ Fachstelle Freiwilligenarbeit\r\n",
     kind: 'termination',
     active: true
   },
   {
-    subject: 'Ihre Anmeldung als Freiwillige/r bei der AOZ Fachstelle Freiwilligenarbeit',
-    body: "Liebe/r %{Anrede} Freiwillige/r %{Name}\r\n\r\nVielen Dank für Ihre Anmeldung! \r\nIhre Anmeldung wurde erfolgreich mit den unten stehenden Angaben an uns abgeschickt.\r\n\r\nWir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben und werden uns bald bei Ihnen melden.\r\n \r\n\r\nFreundliche Grüsse\r\nAOZ Fachstelle Freiwilligenarbeit\r\nfreiwillige@aoz.ch\r\n 044 415 67 35",
+    subject: 'Probezeit Rückmeldung zu %{Einsatz}',
+    body: "Liebe/r %{Anrede} %{Name}\r\n\r\nWir bitten Sie um eine Probezeit Rückmeldung bezüglich %{Einsatz}.\r\nBitte tragen Sie Ihre Rückmeldung hier ein:%{FeedbackLink}\r\n\r\nFreundliche Grüsse\r\n\r\nAOZ Fachstelle Freiwilligenarbeit\r\n",
     kind: 'trial', active: true
   },
   {
@@ -266,8 +266,8 @@ DEFAULT_TEMPLATES_EMAIL_TEMPLATES = [
     active: true
   },
   {
-    subject: 'Ihre Anmeldung als Freiwillige/r bei der AOZ Fachstelle Freiwilligenarbeit',
-    body: "Liebe/r %{Anrede} Freiwillige/r %{Name}\r\n\r\n%{FeedbackLink}\r\n\r\nVielen Dank für Ihre Anmeldung! \r\nIhre Anmeldung wurde erfolgreich mit den unten stehenden Angaben an uns abgeschickt.\r\n\r\nWir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben und werden uns bald bei Ihnen melden.\r\n \r\n\r\nFreundliche Grüsse\r\nAOZ Fachstelle Freiwilligenarbeit\r\nfreiwillige@aoz.ch\r\n 044 415 67 35",
+    subject: 'Halbjährliche Rückmeldung zu %{Einsatz}',
+    body: "Liebe/r %{Anrede} %{Name}\r\n\r\nWir bitten Sie um eine Halbjährliche Rückmeldung bezüglich %{Einsatz}.\r\nBitte tragen Sie Ihre Rückmeldung hier ein:%{FeedbackLink}\r\n\r\nFreundliche Grüsse\r\n\r\nAOZ Fachstelle Freiwilligenarbeit\r\n",
     kind: 'half_year',
     active: true
   }

@@ -788,7 +788,7 @@ de:
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   pdf_header:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch/freiwilligenarbeit
-    contact: Telefon %{phone}<br>Telefax n.v.<br>freiwillige@aoz.ch
+    contact: Telefon %{phone}<br>Telefax n.v.<br>info@aoz-freiwillige.ch
     title: Fachstelle Freiwilligenarbeit
   performance_reports: &id-performance-reports-de-keys
     categories: &id-performance-scope-categories
