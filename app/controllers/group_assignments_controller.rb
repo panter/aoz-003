@@ -66,7 +66,6 @@ class GroupAssignmentsController < ApplicationController
   def update_submitted_at
     @group_assignment.update(group_assignment_params.slice(:volunteer_attributes)
       .merge(submitted_at: Time.zone.now))
-    @group_assignment.update(submitted_at: Time.zone.now)
     redirect_to default_redirect || last_submitted_hours_and_feedbacks_group_assignment_path,
       notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
