@@ -68,6 +68,36 @@ class BillingExpenseTest < ActiveSupport::TestCase
     refute_equal creator, hour1c.reload.reviewer
   end
 
+  test 'generate_periods without hours' do
+    periods = BillingExpense.generate_periods
+    now = Time.zone.now
+
+    if now > now.beginning_of_year + BillingExpense::PERIOD
+      value = "#{now.year}-07-01"
+      text = "Juli #{now.year} - Dezember #{now.year}"
+    else
+      value = "#{now.year}-01-01"
+      text = "Januar #{now.year} - Juni #{now.year}"
+    end
+
+    assert_equal [{ q: :period, value: value, text: text }], periods
+  end
+
+  test 'generate_periods with hours' do
+    hour1 = create :hour, meeting_date: '2014-02-03'
+    hour2 = create :hour, meeting_date: '2015-06-30'
+    create :hour, meeting_date: '2017-06-30'
+    create :billing_expense, hours: [hour1, hour2]
+
+    periods = BillingExpense.generate_periods
+
+    assert_equal [
+      { q: :period, value: '2015-01-01', text: 'Januar 2015 - Juni 2015' },
+      { q: :period, value: '2014-07-01', text: 'Juli 2014 - Dezember 2014' },
+      { q: :period, value: '2014-01-01', text: 'Januar 2014 - Juni 2014' }
+    ], periods
+  end
+
   test 'period scope' do
     date = Time.zone.now.beginning_of_year
 

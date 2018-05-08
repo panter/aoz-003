@@ -61,6 +61,33 @@ class BillingExpense < ApplicationRecord
     end
   end
 
+  def self.generate_periods
+    periods = []
+
+    hours = Hour.billed
+    oldest_date = hours.minimum(:meeting_date) || Time.zone.now
+    newest_date = hours.maximum(:meeting_date) || Time.zone.now
+
+    start_of_year = newest_date.beginning_of_year
+    date = start_of_year
+    date += PERIOD if newest_date >= start_of_year + PERIOD
+
+    until date < oldest_date - PERIOD
+      periods << {
+        q: :period,
+        value: date.strftime('%Y-%m-%d'),
+        text: '%s - %s' % [
+          I18n.l(date, format: '%B %Y'),
+          I18n.l(date + PERIOD - 1.day, format: '%B %Y')
+        ]
+      }
+
+      date -= PERIOD
+    end
+
+    periods
+  end
+
   private
 
   def compute_amount
