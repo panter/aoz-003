@@ -14,8 +14,10 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
 
   test 'initiate_termination_form_is_disabled_when_has_running_group_asignments' do
     login_as @superadmin
-    visit group_offers_path
-    click_link 'Beenden', href: initiate_termination_group_offer_path(@group_offer)
+    visit group_offer_path(@group_offer)
+    accept_confirm do
+      first(:link, 'Beenden').click
+    end
     assert page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     assert page.has_text? "#{@group_assignment1.volunteer.full_name} "\
       "Mitglied #{I18n.l(@group_assignment1.period_start)}"
