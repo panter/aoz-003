@@ -31,14 +31,15 @@ tr
           br
           'Importiert
   td = t("salutation.#{volunteer.salutation}") if volunteer.salutation?
-  - if action_name == 'index' || action_name == 'seeking_clients' || controller_name == 'group_offers'
+  - if action_index? || action_name == 'seeking_clients' || controller_name == 'group_offers'
     td = link_to_if policy(Volunteer).edit?, volunteer.contact.full_name, edit_volunteer_path(volunteer)
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
   td = mail_to volunteer.contact.primary_email
   td = volunteer.birth_year.year if volunteer.birth_year?
-  td = volunteer.native_language&.language_name
-  td = render 'language_skills/show_inline', language_skills: volunteer.foreign_languages
+  td.language-skill-index
+    - [volunteer.native_language, volunteer.foreign_languages].flatten.each do |language|
+      span= language.full_language_skills
   td = volunteer.education
   td = volunteer.profession
   td = "#{volunteer.working_percent}%" if volunteer.working_percent.present?

@@ -1,4 +1,4 @@
-h1= @volunteer.contact.full_name
+h1.m-b-20= @volunteer.contact.full_name
 - if @volunteer.rejected?
   - if @volunteer.rejection_type.present?
     h4= "#{t_attr(:rejection_type)}: #{t("rejection_type.#{@volunteer.rejection_type}")}"

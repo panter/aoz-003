@@ -11,14 +11,13 @@
         - if policy(Volunteer).show_acceptance?
           th= sort_link @q, :acceptance
         th= sort_link @q, :salutation
-        - if action_name == 'index' || action_name == 'seeking_clients' || controller_name == 'group_offers'
+        - if action_index? || action_name == 'seeking_clients' || controller_name == 'group_offers'
           th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
         th= sort_link @q, :contact_city
         th= sort_link @q, :contact_postal_code
         th= sort_link @q, :contact_primary_email
         th= sort_link @q, :birth_year, t_attr(:birth_year, Volunteer)
-        th= t_attr(:native_language, Volunteer)
-        th= t_attr(:languages, Volunteer)
+        th= t_attr(:language_skills, Volunteer)
         th= t_attr(:education, Volunteer)
         th= t_attr(:profession, Volunteer)
         th= sort_link @q, :working_percent

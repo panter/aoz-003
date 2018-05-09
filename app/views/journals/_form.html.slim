@@ -6,5 +6,5 @@
     .col-xs-12= f.input :title
     .col-xs-12= f.input :body
     .col-xs-12= f.button :submit
-    - if action_name == 'edit'
+    - if action_edit?
       .col-xs-12.m-t-10= link_to navigation_glyph(:delete), url_for([@journaled, @journal]), confirm_deleting(@journal, 'btn btn-default')
