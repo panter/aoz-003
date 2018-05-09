@@ -1,39 +1,26 @@
 .panel.panel-default
   .panel-heading
     strong Anleitung
-  - if action_new?
-    .panel-body.instruction-hidden
-      strong Für diese E-Mailvorlage gibt es keine Platzhalter.
-      p
-        ' Bitte benützen Sie keine Platzhalter für diese Vorlage,
-        ' sonst wird der Inhalt für die Bestätigung der Anmeldung von Freiwilligen nicht richtig angezeigt.
-    .panel-body.instruction-default Sie können die folgenden Platzhalter benützen:
-    ul#template-variables.list-group.instruction-default
-      - template_varnames.each do |var_name|
-        li.list-group-item %{#{var_name}}
-  - elsif @email_template.signup?
-    .panel-body
-      strong Für diese E-Mailvorlage gibt es keine Platzhalter.
-      p
-        ' Bitte benützen Sie keine Platzhalter für diese Vorlage,
-        ' sonst wird der Inhalt für die Bestätigung der Anmeldung von Freiwilligen nicht richtig angezeigt.
-  - else
-    .panel-body Sie können die folgenden Platzhalter benützen:
-    ul#template-variables.list-group
-      - template_varnames.each do |var_name|
-        li.list-group-item %{#{var_name}}
-  - if action_new? || !@email_template.signup?
-    .panel-body.instruction-default
-      p Zum Beispiel:
-      pre
-        = "Guten Tag %{Anrede} %{Name}\r\n"
-        = "Wir bitten um Ihre Rückmeldung für:\r\n%{Einsatz}.\r\n"
-        = "Danke im Voraus!\r\n"
-      p Resultat:
-      pre
-        = "Guten Tag Frau Marie Muster\r\n"
-        = "Wir bitten um Ihre Rückmeldung für:\r\nJogakurs - Zentrum Juch\r\n"
-        = "Danke im Voraus!\r\n"
+  .panel-body.instruction-hidden
+    strong Für diese E-Mailvorlage gibt es keine Platzhalter.
+    p
+      ' Bitte benützen Sie keine Platzhalter für diese Vorlage,
+      ' sonst wird der Inhalt für die Bestätigung der Anmeldung von Freiwilligen nicht richtig angezeigt.
+  .panel-body.instruction-default Sie können die folgenden Platzhalter benützen:
+  ul#template-variables.list-group.instruction-default
+    - template_varnames.each do |var_name|
+      li.list-group-item %{#{var_name}}
+  .panel-body.instruction-default
+    p Zum Beispiel:
+    pre
+      = "Guten Tag %{Anrede} %{Name}\r\n"
+      = "Wir bitten um Ihre Rückmeldung für:\r\n%{Einsatz}.\r\n"
+      = "Danke im Voraus!\r\n"
+    p Resultat:
+    pre
+      = "Guten Tag Frau Marie Muster\r\n"
+      = "Wir bitten um Ihre Rückmeldung für:\r\nJogakurs - Zentrum Juch\r\n"
+      = "Danke im Voraus!\r\n"
 
 
 

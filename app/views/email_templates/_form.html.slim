@@ -4,16 +4,15 @@
   .row.m-t-30
     .col-xs-12.col-md-4
       = render 'explain_panel', template_varnames: EmailTemplate.template_varnames[@email_template.kind.to_sym]
-    div class="#{action_new? ? 'col-xs-4 col-md-1' : 'col-xs-12.col-md-8'}"
+    .col-xs-4.col-md-1
       fieldset
         legend Aktiv
         = f.label :active, class: 'sr-only'
-        = f.input :active, wrapper_html: { class: "#{action_new? && 'text-center'}" }, label: false
-    - if action_new?
-      .col-xs-8.col-md-7
-        fieldset
-          legend Art
-          = f.input :kind, collection: EmailTemplate.kind_collection, label: false, selected: @email_template.kind
+        = f.input :active, wrapper_html: { class: 'text-center' }, label: false
+    .col-xs-8.col-md-7
+      fieldset
+        legend Art
+        = f.input :kind, collection: EmailTemplate.kind_collection, label: false, selected: @email_template.kind, disabled: !action_new?
     .col-xs-12.col-md-8
       = render 'subject_body_inputs', f: f
 
@@ -21,3 +20,7 @@
     ul.list-inline
       li= f.button :submit
       li= button_link navigation_glyph(:back), :back
+
+javascript:
+  var templateVarnames = #{EmailTemplate.template_varnames.to_json.html_safe}
+  var templateStrings = #{EmailTemplate.active_as_hash.to_json.html_safe}
