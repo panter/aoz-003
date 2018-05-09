@@ -32,7 +32,7 @@ dl.dl-horizontal
 
 hr
 
-- if @assignment.termination_feedback_submitted?
+- if @assignment.termination_verifiable?
   h2.m-t-20 Beendigungs Feedback vom #{l(@assignment.termination_submitted_at.to_date)}
 
   table.table.table-striped
@@ -45,11 +45,11 @@ hr
         th= t('termination_feedback_questions.term_remaining_hours')
     tbody
       tr
-        td= @assignment.term_feedback_activities if @assignment.term_feedback_activities?
-        td= @assignment.term_feedback_success if @assignment.term_feedback_success?
-        td= @assignment.term_feedback_problems if @assignment.term_feedback_problems?
-        td= @assignment.term_feedback_transfair if @assignment.term_feedback_transfair?
-        td= @assignment.hours.last.hours if @assignment.termination_submitted_at?
+        td= @assignment.term_feedback_activities
+        td= @assignment.term_feedback_success
+        td= @assignment.term_feedback_problems
+        td= @assignment.term_feedback_transfair
+        td= @assignment.hours.last&.hours || 0.0
 
 - else
   h2.m-t-20 Beendigung Abschliessen

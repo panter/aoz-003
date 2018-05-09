@@ -58,11 +58,6 @@ module GroupAssignmentAndAssignmentCommon
         .where('reminder_mailings.kind != 1 OR reminder_mailing_volunteers.id IS NULL')
     }
 
-    def termination_feedback_submitted?
-      termination_submitted_by.present? &&
-        [term_feedback_activities, term_feedback_success, term_feedback_problems, term_feedback_transfair].any?
-    end
-
     def termination_verifiable?
       ended? && termination_submitted_by.present?
     end
