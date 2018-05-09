@@ -191,6 +191,21 @@ class GroupOffersTest < ApplicationSystemTestCase
     end
   end
 
+
+  test 'terminated_volunteer_is_not_listed_in_ad' do
+    group_offer = create :group_offer
+    volunteer = create :volunteer
+    terminated = create :volunteer, acceptance: :resigned, resigned_at: 2.days.ago
+    login_as create(:user)
+    visit group_offer_path(group_offer)
+    click_link 'Freiwillige hinzufügen'
+
+    within '#add-volunteers' do
+      assert page.has_text? volunteer.contact.full_name
+      refute page.has_text? terminated.contact.full_name
+    end
+  end
+
   test 'offer_type_is_readonly_if_group_assignments_are_present' do
     group_offer = create :group_offer
     create :group_assignment, group_offer: group_offer
