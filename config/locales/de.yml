@@ -460,7 +460,7 @@ de:
         experience: Erfahrung
         family: Familie
         group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
-        group_offer_categories_id: Gruppenangebote in AOZ-Einrichtungen
+        group_offer_categories_id: Interessiert an Gruppenangebot Kategorie
         iban: IBAN
         interests: Interessen
         intro_course: Einführungskurs besucht
@@ -475,6 +475,7 @@ de:
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
         single_accompaniment: Einzelbegleitungen
+        single_accompaniment_id: Interessiert an Einzelbegleitung
         skills: Kompetenzen
         state: Einsatz
         strengths: Stärken
