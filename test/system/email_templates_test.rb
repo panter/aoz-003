@@ -34,47 +34,19 @@ class EmailTemplatesTest < ApplicationSystemTestCase
 
   test 'sign up email template shows no variables' do
     visit new_email_template_path
-
-    within '#email_template_kind' do
-      select('Anmeldung')
-    end
+    select 'Anmeldung', from: 'email_template_kind'
 
     assert_text 'Für diese E-Mailvorlage gibt es keine Platzhalter.'
     refute_text 'Sie können die folgenden Platzhalter benützen:'
-    refute_text 'Zum Beispiel: %{Anrede} %{Name}'
+    refute_text 'Zum Beispiel: Guten Tag %{Anrede} %{Name}'
   end
 
-  # test 'trial email template shows variables' do
-  #   visit new_email_template_path
+  test 'trial email template shows variables' do
+    visit new_email_template_path
+    select 'Probezeit', from: 'email_template_kind'
 
-  #   within '#email_template_kind' do
-  #     select('Probezeit')
-  #   end
-  #   wait_for_ajax
-  #   refute_text 'Für diese E-Mailvorlage gibt es keine Platzhalter.'
-  #   assert_text 'Sie können die folgenden Platzhalter benützen:'
-  #   assert_text 'Zum Beispiel: %{Anrede} %{Name}'
-  # end
-
-  # test 'half year email template shows variables' do
-  #   visit new_email_template_path
-
-  #   within '#email_template_kind' do
-  #     select('Halbjährlich')
-  #   end
-  #   refute_text 'Für diese E-Mailvorlage gibt es keine Platzhalter.'
-  #   assert_text 'Sie können die folgenden Platzhalter benützen:'
-  #   assert_text 'Zum Beispiel: %{Anrede} %{Name}'
-  # end
-
-  # test 'termination email template shows variables' do
-  #   visit new_email_template_path
-
-  #   within '#email_template_kind' do
-  #     select('Beendigung')
-  #   end
-  #   refute_text 'Für diese E-Mailvorlage gibt es keine Platzhalter.'
-  #   assert_text 'Sie können die folgenden Platzhalter benützen:'
-  #   assert_text 'Zum Beispiel: %{Anrede} %{Name}'
-  # end
+    refute_text 'Für  diese E-Mailvorlage gibt es keine Platzhalter.'
+    assert_text 'Sie können die folgenden Platzhalter benützen:'
+    assert_text 'Zum Beispiel: Guten Tag %{Anrede} %{Name}'
+  end
 end
