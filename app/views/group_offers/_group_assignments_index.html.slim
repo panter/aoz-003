@@ -31,7 +31,7 @@
             - if group_assignment.period_end.blank?
               = link_to_if(policy(group_assignment).set_end_today?, 'Heute beenden',
                 set_end_today_group_assignment_path(group_assignment, redirect_to: request.fullpath),
-                data: { confirm: 'Heute beenden?', method: 'PUT' }) { '' }
+                data: { confirm: 'Wollen Sie die Begleitung wirklich beenden?', method: 'PUT' }) { '' }
             - elsif group_assignment.termination_submitted_by_id.blank?
               = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular an Freiwillige/n mailen',
                 polymorphic_path([group_assignment, ReminderMailing], action: :new_termination),
