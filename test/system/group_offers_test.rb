@@ -49,27 +49,31 @@ class GroupOffersTest < ApplicationSystemTestCase
   end
 
   test 'group offer can be deactivated' do
-    group_offer = create :group_offer
+    @group_offer = create :group_offer
     login_as create(:user)
-    visit group_offers_path
-    assert page.has_text? group_offer.title
+    visit group_offer_path(@group_offer)
+    assert page.has_text? @group_offer.title
     refute page.has_link? 'Aktivieren'
-    click_link 'Deaktivieren'
+    accept_confirm do
+      first(:link, 'Deaktivieren').click
+    end
 
-    assert page.has_text? group_offer.title
+    assert page.has_text? @group_offer.title
     assert page.has_link? 'Aktivieren'
     refute page.has_link? 'Deaktivieren'
   end
 
   test 'group_offer_can_be_activated' do
-    group_offer = create :group_offer, active: false
+    @group_offer = create :group_offer, active: false
     login_as create(:user)
-    visit group_offers_path
-    assert page.has_text? group_offer.title
+    visit group_offer_path(@group_offer)
+    assert page.has_text? @group_offer.title
     assert page.has_link? 'Aktivieren'
-    click_link 'Aktivieren'
+    accept_confirm do
+      first(:link, 'Aktivieren').click
+    end
 
-    assert page.has_text? group_offer.title
+    assert page.has_text? @group_offer.title
     assert page.has_link? 'Deaktivieren'
     refute page.has_link? 'Aktivieren'
   end
