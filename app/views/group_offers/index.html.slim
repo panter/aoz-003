@@ -23,6 +23,7 @@ nav.navbar.section-navigation#filters
     = custom_filter_dropdown('Einsatz',
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
       { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
+    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
     = button_link 'Beendete Einsätze',
       terminated_index_group_assignments_path, dimension: :sm
   hr
