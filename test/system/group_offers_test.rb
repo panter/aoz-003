@@ -191,6 +191,30 @@ class GroupOffersTest < ApplicationSystemTestCase
     end
   end
 
+  test 'basic_group_offer_find_volunteer_search_is_working' do
+    group_offer = create :group_offer
+    volunteer = create :volunteer
+    volunteer_two = create :volunteer
+    group_assignment = create :group_assignment, group_offer: group_offer, period_start: 2.days.ago
+
+    login_as create(:user)
+    visit group_offer_path(group_offer)
+    click_link 'Freiwillige hinzufügen'
+
+    within '#add-volunteers' do
+      assert page.has_text? volunteer.contact.full_name
+      assert page.has_text? volunteer_two.contact.full_name
+      refute page.has_text? group_assignment.volunteer.contact.full_name
+
+      fill_in id: 'q_contact_full_name_cont',	with: volunteer_two.contact.full_name
+      click_button 'Suchen'
+    end
+
+    within '#add-volunteers' do
+      assert page.has_text? volunteer_two.contact.full_name
+      refute page.has_text? volunteer.contact.full_name
+    end
+  end
 
   test 'terminated_volunteer_is_not_listed_in_ad' do
     group_offer = create :group_offer

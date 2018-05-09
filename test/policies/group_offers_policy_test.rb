@@ -16,9 +16,9 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
     assert_permit(department_manager_without_department, GroupOffer,
       *actions_list(:index, :search, :new, :create))
     assert_permit(department_manager_without_department, manager_group_offer,
-      *actions_list(:show, :edit, :update))
+      *actions_list(:show, :edit, :update, :search_volunteer))
     refute_permit(department_manager_without_department, other_group_offer,
-      *actions_list(:show, :edit, :update))
+      *actions_list(:show, :edit, :update, :search_volunteer))
     refute_permit(department_manager_without_department, GroupOffer, 'supervisor_privileges?')
   end
 
@@ -29,9 +29,9 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
 
     assert_permit(department_manager, GroupOffer, *actions_list(:index, :search, :new, :create))
     assert_permit(department_manager, department_group_offer,
-      *actions_list(:show, :edit, :update))
+      *actions_list(:show, :edit, :update, :search_volunteer))
     refute_permit(department_manager, other_group_offer,
-      *actions_list(:show, :edit, :update))
+      *actions_list(:show, :edit, :update, :search_volunteer))
     refute_permit(department_manager, GroupOffer, 'supervisor_privileges?')
   end
 
@@ -40,8 +40,9 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
     group_offer_volunteer = create :group_offer
     create(:group_assignment, volunteer: volunteer, group_offer: group_offer_volunteer)
     group_offer_other = create :group_offer
-    refute_permit(volunteer.user, GroupOffer, *actions_list(except: [:show]), 'supervisor_privileges?')
-    assert_permit(volunteer.user, group_offer_volunteer, *actions_list(:show))
+    refute_permit(volunteer.user, GroupOffer, *actions_list(except: [:show, :search_volunteer]),
+      'supervisor_privileges?')
+    assert_permit(volunteer.user, group_offer_volunteer, *actions_list(:show, :search_volunteer))
     refute_permit(volunteer.user, group_offer_other, *actions_list)
   end
 end

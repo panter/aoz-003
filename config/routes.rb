@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     get :initiate_termination, on: :member
     put :submit_initiate_termination, on: :member
     patch :end_all_assignments, on: :member
+    get :search_volunteer, on: :member
   end
 
   get 'list_responses/feedbacks', to: 'list_responses#feedbacks'
