@@ -1,6 +1,7 @@
 class AssignmentsController < ApplicationController
   before_action :set_assignment, except:
-    [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client]
+    [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client,
+     :hours_and_feedbacks_submitted]
 
   def index
     authorize Assignment
@@ -98,8 +99,7 @@ class AssignmentsController < ApplicationController
   def update_submitted_at
     @assignment.update(assignment_params.slice(:volunteer_attributes)
       .merge(submitted_at: Time.zone.now))
-    redirect_to default_redirect || last_submitted_hours_and_feedbacks_assignment_path,
-      notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
   end
 
   def terminate
@@ -127,6 +127,10 @@ class AssignmentsController < ApplicationController
     @assignment.verify_termination(current_user)
     redirect_back(fallback_location: terminated_index_assignments_path)
     flash[:notice] = 'Der Einsatz wurde erfolgreich quittiert.'
+  end
+
+  def hours_and_feedbacks_submitted
+    authorize :assignment, :hours_and_feedbacks_submitted?
   end
 
   private

@@ -1,5 +1,6 @@
 class GroupAssignmentsController < ApplicationController
-  before_action :set_group_assignment, except: [:create, :terminated_index]
+  before_action :set_group_assignment, except:
+    [:create, :terminated_index, :hours_and_feedbacks_submitted]
 
   def terminated_index
     authorize GroupAssignment
@@ -65,8 +66,7 @@ class GroupAssignmentsController < ApplicationController
   def update_submitted_at
     @group_assignment.update(group_assignment_params.slice(:volunteer_attributes)
       .merge(submitted_at: Time.zone.now))
-    redirect_to default_redirect || last_submitted_hours_and_feedbacks_group_assignment_path,
-      notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
   end
 
   def terminate; end
@@ -90,6 +90,10 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment.verify_termination(current_user)
     redirect_back(fallback_location: terminated_index_group_assignments_path)
     flash[:notice] = 'Der Gruppeneinsatz wurde erfolgreich quittiert.'
+  end
+
+  def hours_and_feedbacks_submitted
+    authorize :group_assignment, :hours_and_feedbacks_submitted?
   end
 
   private

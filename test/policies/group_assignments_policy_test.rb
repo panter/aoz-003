@@ -14,7 +14,9 @@ class GroupAssignmentPolicyTest < PolicyAssertions::Test
     assert_permit(department_manager, department_manager_group_assignment,
       *actions_list(except: [:verify_termination, :terminated_index]))
     refute_permit(department_manager, create(:group_assignment),
-      *actions_list(except: [:verify_termination, :terminated_index]))
+      *actions_list(
+        except: [:verify_termination, :terminated_index, :hours_and_feedbacks_submitted]
+      ))
   end
 
   test 'social_worker_has_no_access' do
@@ -31,7 +33,7 @@ class GroupAssignmentPolicyTest < PolicyAssertions::Test
     assert_permit(volunteer.user, volunteer_group_assignment,
       *actions_list(
         :terminate, :update_submitted_at, :show, :update_terminated_at,
-        :last_submitted_hours_and_feedbacks
+        :last_submitted_hours_and_feedbacks, :hours_and_feedbacks_submitted
       ))
     refute_permit(volunteer.user, create(:group_assignment),
       *actions_list(

@@ -31,6 +31,10 @@ class ApplicationPolicy
     superadmin? || department_manager? || social_worker?
   end
 
+  def superadmin_or_department_manager_or_volunteer?
+    superadmin? || department_manager? || volunteer?
+  end
+
   def department_manager_offer?
     if record.is_a? GroupOffer
       offer = record
