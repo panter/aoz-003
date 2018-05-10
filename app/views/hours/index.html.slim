@@ -6,6 +6,7 @@ h1 Stunden Rapporte
     h4.pull-right
       = t('total_hours')
       =< @volunteer.hours.total_hours
+= form_navigation_btn :new
 .table-responsive
       table.table
         thead
@@ -42,8 +43,7 @@ h1 Stunden Rapporte
               td= record.hours
               td= record.activity
               td= record.comments
-.row
-  .col-xs-12
+
 = form_navigation_btn :new
 .row
   .col-xs-12
