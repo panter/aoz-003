@@ -46,7 +46,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_text @client
   end
 
-  test 'volunteer cannot see new/edit assignment buttons' do
+  test 'volunteer_cannot_see_new_or_edit_assignment_buttons' do
     create :assignment, volunteer: @volunteer
     login_as @volunteer.user
     visit volunteer_path(@volunteer)
