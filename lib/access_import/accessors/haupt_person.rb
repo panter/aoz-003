@@ -10,7 +10,7 @@ class HauptPerson < Accessor
     rec[:salutation] = salutation(rec[:t_Anrede], rec[:t_Geschlecht])
     rec[:city], rec[:postal_code] = handle_plz(rec[:fk_PLZ])
     rec[:email] = rec[:h_Email] ? email(rec[:h_Email]) : email(nil)
-    rec[:nationality] = rec[:fk_Land] && @laender.find(rec[:fk_Land])
+    rec[:nationality] = @laender.find(rec[:fk_Land])[:alpha2] if rec[:fk_Land]&.positive?
     rec[:sprachen] = @sprache_pro_hauptperson.where_person(rec[:pk_Hauptperson])
     rec
   end
