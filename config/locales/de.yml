@@ -369,8 +369,10 @@ de:
         children: Kinder
         description: Beschreibung des Angebotes
         duration: Dauer
+        external: Extern
         group_offer_category: Kategorie
         group_offer_category_id: Kategorie
+        internal: Intern
         location: Ort
         long_term: Langfristig
         men: Männer

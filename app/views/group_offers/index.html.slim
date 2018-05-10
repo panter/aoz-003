@@ -24,6 +24,9 @@ nav.navbar.section-navigation#filters
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
       { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
     = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
+    = custom_filter_dropdown('Intern/Extern',
+      { q: :offer_type_eq, text: 'Extern', value: 'external_offer'},
+      { q: :offer_type_eq, text: 'Intern', value: 'internal_offer'})
     = button_link 'Beendete Einsätze',
       terminated_index_group_assignments_path, dimension: :sm
   hr
@@ -44,6 +47,7 @@ table.table.table-striped
       th= sort_link @q, :offer_state
       th= t_attr(:volunteers)
       th= sort_link @q, :group_offer_category_category_name, t_attr(:group_offer_category)
+      th= sort_link @q, :offer_type, t_attr(:external, GroupOffer)
 
   tbody
     - @group_offers.each do |offer|
@@ -93,6 +97,7 @@ table.table.table-striped
               = t_attr(:member, GroupAssignment)
             br
         td= link_to offer.group_offer_category.category_name, url_for(q: search_parameters.merge(group_offer_category_id_eq: offer.group_offer_category.id))
+        td = offer.external? ? t_attr(:external, GroupOffer) : t_attr(:internal, GroupOffer)
 
 = bootstrap_paginate(@group_offers)
 
