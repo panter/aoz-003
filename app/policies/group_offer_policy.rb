@@ -21,7 +21,8 @@ class GroupOfferPolicy < ApplicationPolicy
   alias_method :new?,    :superadmin_or_department_manager_is_responsible?
   alias_method :create?, :superadmin_or_department_manager_is_responsible?
 
-  alias_method :show?,   :superadmin_or_departments_offer_or_volunteer_included?
+  alias_method :show?,             :superadmin_or_departments_offer_or_volunteer_included?
+  alias_method :search_volunteer?, :superadmin_or_departments_offer_or_volunteer_included?
 
   alias_method :edit?,                        :superadmin_or_department_manager_offer?
   alias_method :update?,                      :superadmin_or_department_manager_offer?

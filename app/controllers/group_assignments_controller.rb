@@ -23,12 +23,11 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment = GroupAssignment.new(group_assignment_params)
     @group_assignment.default_values
     authorize @group_assignment
-
     if @group_assignment.save
-      redirect_to @group_assignment.group_offer,
+      redirect_to request.referer || @group_assignment.group_offer,
         notice: 'Freiwillige/r erfolgreich hinzugefügt.'
     else
-      redirect_to @group_assignment.group_offer,
+      redirect_to request.referer || @group_assignment.group_offer,
         notice: @group_assignment.errors.full_messages.first
     end
   end
