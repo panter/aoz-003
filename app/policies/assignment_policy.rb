@@ -34,5 +34,5 @@ class AssignmentPolicy < ApplicationPolicy
   alias_method :last_submitted_hours_and_feedbacks?,
     :superadmin_or_department_manager_creation_or_volunteer_related?
   alias_method :hours_and_feedbacks_submitted?,
-    :superadmin_or_department_manager_creation_or_volunteer_related?
+   :superadmin_or_department_manager_or_volunteer?
 end

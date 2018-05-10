@@ -10,7 +10,8 @@ class AssignmentPolicyTest < PolicyAssertions::Test
     assignment_department_manager = create :assignment, creator: department_manager
     assert_permit(department_manager, Assignment,
       *actions_list(
-        :index, :terminated_index, :volunteer_search, :client_search, :new, :create
+        :index, :terminated_index, :volunteer_search, :client_search, :new, :create,
+        :hours_and_feedbacks_submitted
       ))
     assert_permit(department_manager, assignment_department_manager,
       *actions_list(
@@ -36,7 +37,8 @@ class AssignmentPolicyTest < PolicyAssertions::Test
     other_assignment = create :assignment, volunteer: (create :volunteer_with_user)
     assert_permit(volunteer.user, assignment,
       *actions_list(
-        :show, :last_submitted_hours_and_feedbacks, :update_submitted_at
+        :show, :last_submitted_hours_and_feedbacks, :update_submitted_at,
+        :hours_and_feedbacks_submitted
       ))
     refute_permit(volunteer.user, Assignment,
       *actions_list(
@@ -44,6 +46,7 @@ class AssignmentPolicyTest < PolicyAssertions::Test
         :new, :create, :edit, :update,
         :terminate, :update_terminated_at, :verify_termination
       ))
-    refute_permit(volunteer.user, other_assignment, *actions_list)
+    refute_permit(volunteer.user, other_assignment,
+      *actions_list(except: [:hours_and_feedbacks_submitted]))
   end
 end
