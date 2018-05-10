@@ -49,7 +49,7 @@ table.table.table-striped
     - @group_offers.each do |offer|
       tr
         td.index-action-cell.hidden-print
-          = button_link navigation_glyph(:show), group_offer_path(offer), title: 'Anzeigen'
+          = button_link navigation_glyph(:show), group_offer_path(offer), title: 'Anzeigen/Freiwillige hinzufügen'
           = button_link navigation_glyph(:edit), edit_group_offer_path(offer), title: 'Bearbeiten'
         td.button-acceptance= assignment_status_badge(offer)
         td= offer.title
