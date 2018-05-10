@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   resources :group_assignments, only: [:show, :create, :edit, :update],
     concerns: [:update_submitted_at, :hours_resources, :termination_actions] do
     put :set_end_today, on: :member
+    get :hours_and_feedbacks_submitted, on: :collection
   end
 
   resources :group_offer_categories, except: [:destroy]

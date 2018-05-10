@@ -23,6 +23,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen'
 
+    assert_equal current_path, hours_and_feedbacks_submitted_assignments_path
     assert_text 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
 
     @volunteer.reload
@@ -38,6 +39,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
 
     click_on 'Bestätigen'
 
+    assert_equal current_path, hours_and_feedbacks_submitted_assignments_path
     assert_text 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
   end
 
