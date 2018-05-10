@@ -99,8 +99,7 @@ class AssignmentsController < ApplicationController
   def update_submitted_at
     @assignment.update(assignment_params.slice(:volunteer_attributes)
       .merge(submitted_at: Time.zone.now))
-    redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path,
-      notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
   end
 
   def terminate
