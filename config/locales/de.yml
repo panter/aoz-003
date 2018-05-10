@@ -610,7 +610,7 @@ de:
     year: Jahr
   certificates:
     certificate: &id-certificates-show
-      aprox_hours_given: 'Total ca. %{hours} Stunden'
+      hours_given: 'Total %{hours} Stunden'
       back_to_volunteer: Zurück zum Freiwilligenprofil
     edit: &id-certificates-form
       group_offer: Gruppenangebot

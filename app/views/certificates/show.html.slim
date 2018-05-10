@@ -39,7 +39,7 @@
       dt= t_attr(:duration)
       dd= "#{l(@certificate.duration_start, default: '')} #{t('to')} #{l(@certificate.duration_end, default: '')}"
       dt= t_attr(:time_given)
-      dd= t('.aprox_hours_given', hours: @certificate.hours)
+      dd= t('.hours_given', hours: @certificate.hours)
 
     .text-body= markdown(@certificate.text_body)
 
