@@ -36,9 +36,9 @@ class AccessImport
     # TODO: Need to find out if this import is really needed, and then fix it,
     #       because it possibly doesn't work propperly
     #
-    # shell_message '... from Kurse'
-    # kurs_transform.import_all
-    # display_stats(GroupOffer, GroupAssignment)
+    shell_message '... from Kurse'
+    kurs_transform.import_all
+    display_stats(GroupOffer, GroupAssignment)
 
     shell_message '... from Animation f'
     group_offer_transform.import_all
