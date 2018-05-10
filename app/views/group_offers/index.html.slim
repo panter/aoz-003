@@ -97,7 +97,7 @@ table.table.table-striped
               = t_attr(:member, GroupAssignment)
             br
         td= link_to offer.group_offer_category.category_name, url_for(q: search_parameters.merge(group_offer_category_id_eq: offer.group_offer_category.id))
-        td = offer.external? ? t_attr(:external, GroupOffer) : t_attr(:internal, GroupOffer)
+        td= t_attr(offer.external? ? :external : :internal, GroupOffer)
 
 = bootstrap_paginate(@group_offers)
 
