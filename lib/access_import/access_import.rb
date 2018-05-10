@@ -33,9 +33,6 @@ class AccessImport
   def make_group_offers
     start_message(:group_offer)
 
-    # TODO: Need to find out if this import is really needed, and then fix it,
-    #       because it possibly doesn't work propperly
-    #
     shell_message '... from Kurse'
     kurs_transform.import_all
     display_stats(GroupOffer, GroupAssignment)
@@ -43,9 +40,11 @@ class AccessImport
     shell_message '... from Animation f'
     group_offer_transform.import_all
     display_stats(GroupOffer, GroupAssignment)
+
     shell_message '... from Kurzeinsatz'
     group_offer_transform.import_all(@freiwilligen_einsaetze.where_kurzeinsatz)
     display_stats(GroupOffer, GroupAssignment)
+
     shell_message '... from Andere'
     group_offer_transform.import_all(@freiwilligen_einsaetze.where_andere)
     display_stats(GroupOffer, GroupAssignment)
