@@ -79,10 +79,11 @@ class GroupOffersController < ApplicationController
 
   def change_active_state
     if @group_offer.update(active: !@group_offer.active)
-      redirect_to group_offers_url,
+      redirect_back fallback_location: group_offer_path(@group_offer),
         notice: @group_offer.active? ? t('.activated') : t('.deactivated')
     else
-      redirect_to group_offers_url, notice: t('.no-change')
+      redirect_back fallback_location: group_offer_path(@group_offer),
+        notice: t('.no-change')
     end
   end
 

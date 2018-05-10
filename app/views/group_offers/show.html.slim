@@ -1,4 +1,6 @@
-h1 Gruppenangebot
+h1.m-b-20 Gruppenangebot
+= render 'buttons'
+
 h2= @group_offer.title
 
 .table-responsive
@@ -81,9 +83,10 @@ h2= @group_offer.title
   = render 'volunteers/columns', volunteers: @volunteers
   br
 
-ul.list-inline
+ul.list-inline.m-b-20
   li= button_link 'Gruppenangebot bearbeiten', edit_group_offer_path(@group_offer)
   li
     a.btn.btn-default href='#add-volunteers' data-toggle='collapse' aria-expanded=show_volunteers.to_s aria-controls='add-volunteers'
       'Freiwillige hinzufügen
-  li= button_link navigation_glyph(:back), group_offers_path
+
+= render 'buttons'

@@ -23,6 +23,7 @@ nav.navbar.section-navigation#filters
     = custom_filter_dropdown('Einsatz',
       { q: :period_end_blank, text: 'Laufend', value: 'true'},
       { q: :period_end_set_by_id_not_null, text: 'Beendet', value: 'true'})
+    = boolean_toggler_filter_dropdown(:active, 'Status', 'Aktiv', 'Inaktiv')
     = button_link 'Beendete Einsätze',
       terminated_index_group_assignments_path, dimension: :sm
   hr
@@ -50,14 +51,6 @@ table.table.table-striped
         td.index-action-cell.hidden-print
           = button_link navigation_glyph(:show), group_offer_path(offer), title: 'Anzeigen'
           = button_link navigation_glyph(:edit), edit_group_offer_path(offer), title: 'Bearbeiten'
-          = button_link navigation_glyph(:download), group_offer_path(offer, format: :pdf), title: 'Herunterladen'
-          - if offer.period_end.blank?
-            = button_link navigation_glyph(offer.active? ? :deactivate : :activate),
-                change_active_state_group_offer_path(offer), method: :put,
-                title: (offer.active? ? 'Deaktivieren' : 'Aktivieren')
-          - if policy(offer).initiate_termination?
-            = button_link navigation_glyph(:terminate),
-                initiate_termination_group_offer_path(offer), title: 'Beenden'
         td.button-acceptance= assignment_status_badge(offer)
         td= offer.title
         td

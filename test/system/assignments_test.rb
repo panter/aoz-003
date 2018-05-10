@@ -52,7 +52,9 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer)
 
     refute_link 'Begleitung erfassen'
-    refute_link 'Bearbeiten'
+    within '.assignments-table, .group-assignments-table' do
+      refute_link 'Bearbeiten'
+    end
   end
 
   test 'assignments_print_view_is_not_paginated' do
