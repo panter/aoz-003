@@ -34,8 +34,12 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
   test 'setting_period_end_with_today_shortcut' do
     login_as @superadmin
     visit group_offer_path(@group_offer)
-    click_link 'Heute beenden',
-      href: set_end_today_group_assignment_path(@ga1, redirect_to: group_offer_path(@group_offer))
+
+    accept_confirm do
+      click_link 'Heute beenden',
+        href: set_end_today_group_assignment_path(@ga1, redirect_to: group_offer_path(@group_offer))
+    end
+
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     @ga1.reload
     visit group_offer_path(@group_offer)
