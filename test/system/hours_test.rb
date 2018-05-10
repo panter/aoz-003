@@ -20,7 +20,7 @@ class HoursTest < ApplicationSystemTestCase
   test 'volunteer can create hour report for an assignment' do
     visit volunteer_path(@volunteer1)
     first(:link, 'Stunden erfassen').click
-    assert page.has_text? 'Stunden Liste'
+    assert page.has_text? 'Stunden Rapporte'
     first(:link, 'Stunden erfassen').click
     select @assignment1.to_label, from: 'Einsatz'
     within '#hour_meeting_date_3i' do
@@ -40,7 +40,7 @@ class HoursTest < ApplicationSystemTestCase
   test 'volunteer can create also an hour report for group offer' do
     visit volunteer_path(@volunteer1)
     first(:link, 'Stunden erfassen').click
-    assert page.has_text? 'Stunden Liste'
+    assert page.has_text? 'Stunden Rapporte'
     first(:link, 'Stunden erfassen').click
     select @group_offer1.to_label, from: 'Einsatz'
     within '#hour_meeting_date_3i' do
