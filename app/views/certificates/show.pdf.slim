@@ -28,7 +28,7 @@
       .col-xs-3= t_attr(:duration)
       .col-xs-7= "#{l(@certificate.duration_start, default: '')} #{t('to')} #{l(@certificate.duration_end, default: '')}"
       .col-xs-3= t_attr(:time_given)
-      .col-xs-7= t('.aprox_hours_given', hours: @certificate.hours)
+      .col-xs-7= t('.hours_given', hours: @certificate.hours)
 
     .text-body= markdown(@certificate.text_body)
 
