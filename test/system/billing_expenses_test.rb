@@ -100,8 +100,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text "Strasse #{@volunteer1.contact.street}"
     assert_text "PLZ / Ort #{@volunteer1.contact.postal_code}, #{@volunteer1.contact.city}"
     assert_text "Name der Bank / IBAN UBS, #{@volunteer1.iban}"
-    assert_text "Erstellt am Zürich, #{I18n.l @billing_expense1.created_at.to_date, format: :long}"
-    assert_text "Erstellt von #{@superadmin}"
+    assert_text "Zürich, #{I18n.l @billing_expense1.created_at.to_date, format: :long}"
   end
 
   test 'delete billing expenses' do

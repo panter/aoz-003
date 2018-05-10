@@ -63,15 +63,8 @@
         = @billing_expense.full_bank_details
     .row
       br=
-      .col-xs-4
-        = t_attr(:created_at)
       .col-xs-8
         = "#{t('assignment_pdf.zurich')}, #{(l @billing_expense.created_at.to_date, format: :long)}"
-    .row
-      .col-xs-4
-        = t_attr(:created_by)
-      .col-xs-8
-        = @billing_expense.user.profile.contact.full_name
 
 .row
   .col-xs-12
