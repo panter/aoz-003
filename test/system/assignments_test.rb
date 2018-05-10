@@ -46,7 +46,52 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_text @client
   end
 
-  test 'volunteer_cannot_see_new_or_edit_assignment_buttons' do
+  test 'assign multiple clients' do
+    login_as @user
+    visit volunteers_path
+    click_link 'Klient/in suchen', match: :first
+    click_link 'Klient/in suchen'
+    click_link 'Begleitung erstellen', match: :first
+
+    fill_in 'Einsatzbeginn', with: 2.days.ago.to_date
+    click_button 'Begleitung erfassen', match: :first
+
+    assert_text @client.contact.full_name
+    assert_text @volunteer.contact.full_name
+
+    visit client_path(@client)
+
+    assert_text 'Aktiv'
+    assert_text @volunteer
+
+    visit volunteer_path(@volunteer)
+
+    assert_text 'Aktiv'
+    assert_text @client
+
+    another_client = create :client
+    visit volunteer_path(@volunteer)
+
+    click_link 'Zusätzliche/n Klient/in suchen'
+    click_link 'Begleitung erstellen', match: :first
+
+    fill_in 'Einsatzbeginn', with: 3.days.ago.to_date
+    click_button 'Begleitung erfassen', match: :first
+
+    assert_text another_client.contact.full_name
+    assert_text @volunteer.contact.full_name
+
+    visit client_path(another_client)
+
+    assert_text 'Aktiv'
+    assert_text @volunteer
+
+    visit volunteer_path(@volunteer)
+    assert_text @client
+    assert_text another_client
+  end
+
+  test 'volunteer cannot see new/edit assignment buttons' do
     create :assignment, volunteer: @volunteer
     login_as @volunteer.user
     visit volunteer_path(@volunteer)
