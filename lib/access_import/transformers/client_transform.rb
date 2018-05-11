@@ -13,7 +13,6 @@ class ClientTransform < Transformer
       accepted_at: personen_rolle[:d_Rollenbeginn],
       resigned_at: personen_rolle[:d_Rollenende]
     }.merge(contact_attributes(haupt_person))
-      .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
         personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,
         begleitet: begleitet, relatives: relatives && relatives))
@@ -30,6 +29,14 @@ class ClientTransform < Transformer
       client.contact.assign_attributes(primary_email: generate_bogus_email, street: 'xxx',
         postal_code: '8000', city: 'Zürich')
       client.assign_attributes(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende])
+    end
+    if haupt_person[:sprachen]&.any?
+      client.language_skills = haupt_person[:sprachen].map do |sprache|
+        LanguageSkill.new(language: sprache[:language], level: sprache[:level])
+      end
+    end
+    unless client.language_skills.map(&:language).include?('DE')
+      client.language_skills = [LanguageSkill.new(language: 'DE', level: 'basic')]
     end
     if !client.save && client.errors.messages[:'contact.primary_email']&.include?('ist bereits vergeben')
       clients_with_same_email = Client.joins(:contact)

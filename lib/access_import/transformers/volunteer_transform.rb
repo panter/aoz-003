@@ -21,7 +21,6 @@ class VolunteerTransform < Transformer
       intro_course: true,
       waive: personen_rolle[:b_SpesenVerzicht] == 1
     }.merge(prepare_kontoangaben(personen_rolle[:fk_Hauptperson]))
-      .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(contact_attributes(haupt_person.merge(email: import_time_email)))
       .merge(import_attributes(:tbl_Personenrollen, personen_rolle[:pk_PersonenRolle],
         personen_rolle: personen_rolle, haupt_person: haupt_person.merge(email: original_email)))
@@ -34,6 +33,7 @@ class VolunteerTransform < Transformer
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     volunteer = Volunteer.new(prepare_attributes(personen_rolle, haupt_person))
+    volunteer.skip_callback(:save, :record_acceptance_change) if volunteer.accepted_at?
     volunteer.save!(validate: false)
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end

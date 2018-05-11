@@ -17,7 +17,7 @@ class SpracheProHauptperson < Accessor
     # rec[:language] = @sprachen.find(rec[:fk_Sprache])
     levels = rec.values_at(:fk_KenntnisstufeLe, :fk_KenntnisstufeSc, :fk_KenntnisstufeSp, :fk_KenntnisstufeVe)
     level = levels.max == 6 ? (levels - [6]).max : levels.max
-    rec[:level] = LANGUAGE_LEVELS[level]
+    rec[:level] = LANGUAGE_LEVELS[level] || 'basic'
     rec[:language] = I18n.t('language_names').find { |_, v| v[:pk_sprache] == rec[:fk_Sprache] }&.first
     rec.except(
       :d_MutDatum, :t_Mutation
