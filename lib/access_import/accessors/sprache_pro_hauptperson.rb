@@ -7,16 +7,20 @@ class SpracheProHauptperson < Accessor
     1 => 'basic',
     2 => 'good',
     3 => 'fluent',
+    6 => 'basic',
     7 => 'native_speaker'
   }.freeze
 
   def sanitize_record(rec)
     rec = parse_int_fields(rec, *level_keys, :fk_Hauptperson, :fk_Sprache, :pk_SpracheProPerson)
-    rec = add_kentniss_levels(rec)
-    rec[:language] = @sprachen.find(rec[:fk_Sprache])
+    # rec = add_kentniss_levels(rec)
+    # rec[:language] = @sprachen.find(rec[:fk_Sprache])
+    levels = rec.values_at(:fk_KenntnisstufeLe, :fk_KenntnisstufeSc, :fk_KenntnisstufeSp, :fk_KenntnisstufeVe)
+    level = levels.max == 6 ? (levels - [6]).max : levels.max
+    rec[:level] = LANGUAGE_LEVELS[level]
+    rec[:language] = I18n.t('language_names').find { |_, v| v[:pk_sprache] == rec[:fk_Sprache] }&.first
     rec.except(
-      :d_MutDatum, :t_Mutation, :fk_KenntnisstufeLe, :fk_KenntnisstufeSc, :fk_KenntnisstufeSp,
-      :fk_KenntnisstufeVe
+      :d_MutDatum, :t_Mutation
     )
   end
 
