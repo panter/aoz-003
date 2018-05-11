@@ -7,14 +7,13 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @client = create :client, user: @department_manager
     @volunteer = create :volunteer_with_user
     @assignment = create :assignment, volunteer: @volunteer, client: @client,
-      period_start: 10.weeks.ago, period_end: nil, creator: @department_manager
+      period_start: 10.weeks.ago, period_end: 2.days.ago, creator: @department_manager
     @hour = create :hour, volunteer: @volunteer, hourable: @assignment
     @feedback = create :feedback, volunteer: @volunteer, feedbackable: @assignment,
       author: @volunteer.user
   end
 
   test 'assignment_termination_submit_form_displays_existing_hours_and_feedbacks' do
-    @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
     assert page.has_text?(/Die Begleitung (endet|wurde) am #{I18n.l(@assignment.period_end)}/)
@@ -22,7 +21,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'assignment_termination_form_adds_remaining_hours' do
-    @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
     fill_in 'Restliche Stunden', with: '12.35'
@@ -36,7 +34,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'submitting_termination_sets_termination_submitted_at_and_termination_submitted_by' do
-    @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
     page.accept_confirm do
@@ -48,7 +45,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'termination triggers notification email to creator' do
-    @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
     page.accept_confirm do
@@ -60,7 +56,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'superadmin_submitting_termination_sets_termination_submitted_at_and_termination_submitt' do
-    @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
     page.accept_confirm do
@@ -72,7 +67,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'department_manager_submitting_termination_sets_termination_submitted' do
-    @assignment.update(period_end: 2.days.ago)
     login_as @department_manager
     visit terminate_assignment_path(@assignment)
     page.accept_confirm do
@@ -84,7 +78,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
   end
 
   test 'volunteer_expenses_waive_field_matches_and_updates_volunteer_waive_field' do
-    @assignment.update(period_end: 2.days.ago)
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
 
@@ -97,5 +90,20 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     end
     @volunteer.reload
     assert @volunteer.waive
+  end
+
+  test 'terminate assignment without feedback or hours' do
+    Hour.destroy_all
+    Feedback.destroy_all
+
+    login_as @superadmin
+    visit terminate_assignment_path(@assignment)
+
+    page.accept_confirm do
+      click_on 'Einsatz wird hiermit abgeschlossen'
+    end
+
+    visit terminate_assignment_path(@assignment)
+    assert_text "Beendigungs Feedback vom #{I18n.l Time.zone.today}"
   end
 end
