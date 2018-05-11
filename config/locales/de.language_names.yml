@@ -1,6 +1,6 @@
 ---
 de:
-  language_names:
+  language_names: &id-language_names
     AA:
       de: Afar
       pk_sprache:
@@ -85,9 +85,6 @@ de:
     ET:
       de: Estnisch
       pk_sprache:
-    EU:
-      de: Baskisch
-      pk_sprache:
     FA:
       de: Persisch
       pk_sprache: 18
@@ -97,23 +94,11 @@ de:
     FJ:
       de: Fiji
       pk_sprache:
-    FO:
-      de: Färöisch
-      pk_sprache:
     FR:
       de: Französisch
       pk_sprache: 3
-    FY:
-      de: Friesisch
-      pk_sprache:
-    GA:
-      de: Irisch
-      pk_sprache:
-    GD:
-      de: Schottisches Gälisch
-      pk_sprache:
-    GL:
-      de: Galizisch
+    FS:
+      de: Farsi
       pk_sprache:
     GN:
       de: Guarani
@@ -139,15 +124,9 @@ de:
     HY:
       de: Armenisch
       pk_sprache: 10
-    IA:
-      de: Interlingua
-      pk_sprache:
     ID:
       de: Indonesisch
       pk_sprache: 61
-    IE:
-      de: Interlingue
-      pk_sprache:
     IK:
       de: Inupiak
       pk_sprache:
@@ -198,9 +177,6 @@ de:
       pk_sprache: 8
     KY:
       de: Kirgisisch
-      pk_sprache:
-    LA:
-      de: Lateinisch
       pk_sprache:
     LN:
       de: Lingala
@@ -478,3 +454,5 @@ de:
     MA:
       de: Mandinka
       pk_sprache: 71
+en:
+  language_names: *id-language_names
