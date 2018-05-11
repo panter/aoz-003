@@ -20,4 +20,4 @@ table.table.table-striped.assignments-table
 - if controller_name == 'volunteers'
   ul.list-inline
     - if policy(Assignment).find_client?
-      li= button_link 'Zusätzliche/n Klient/in suchen', find_client_volunteer_path(id: @volunteer), title: t('seeking_clients')
+    li= button_link 'Zusätzliche/n Klient/in suchen', find_client_volunteer_path(id: @volunteer)
