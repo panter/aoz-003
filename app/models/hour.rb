@@ -17,6 +17,7 @@ class Hour < ApplicationRecord
   validates :hourable, presence: true
 
   scope :billable, (-> { where(billing_expense: nil) })
+  scope :billed, (-> { where.not(billing_expense: nil) })
 
   scope :since_last_submitted, lambda { |submitted_at|
     where('created_at > ?', submitted_at) if submitted_at

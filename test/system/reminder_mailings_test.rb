@@ -29,7 +29,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]'
     ).reduce { |a, b| a.checked? || b.checked? }
 
-    find('td', text: assignment.to_label).click
+    check 'Ausgewählt', match: :first
+
     # at least one checkbox is checked?
     assert any_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
@@ -98,7 +99,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]'
     ).reduce { |a, b| a.checked? || b.checked? }
 
-    find('td', text: assignment.to_label).click
+    check 'Ausgewählt', match: :first
+
     # at least one checkbox is checked?
     assert any_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')

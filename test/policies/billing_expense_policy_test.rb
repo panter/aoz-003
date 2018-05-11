@@ -36,21 +36,29 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
   end
 
   test 'volunteer has only access to own index and show' do
-    assert_permit(@volunteer1.user, BillingExpense, *actions_list(:index))
-    refute_permit(@volunteer1.user, BillingExpense, *actions_list(except: [:index, :show]))
+    assert_permit(@volunteer1.user, BillingExpense,
+      *actions_list(:index, :download))
+    refute_permit(@volunteer1.user, BillingExpense,
+      *actions_list(except: [:index, :download, :show]))
 
     # volunteer1's billing expense
-    assert_permit(@volunteer1.user, @billing_expense1, *actions_list(:index, :show))
-    refute_permit(@volunteer1.user, @billing_expense1, *actions_list(except: [:index, :show]))
+    assert_permit(@volunteer1.user, @billing_expense1,
+      *actions_list(:index, :show))
+    refute_permit(@volunteer1.user, @billing_expense1,
+      *actions_list(except: [:index, :download, :show]))
 
-    refute_permit(@volunteer1.user, @billing_expense2, *actions_list(except: [:index]))
+    refute_permit(@volunteer1.user, @billing_expense2,
+      *actions_list(except: [:index, :download]))
 
 
     # volunteer2's billing expense
-    assert_permit(@volunteer2.user, @billing_expense2, *actions_list(:index, :show))
-    refute_permit(@volunteer2.user, @billing_expense2, *actions_list(except: [:index, :show]))
+    assert_permit(@volunteer2.user, @billing_expense2,
+      *actions_list(:index, :download, :show))
+    refute_permit(@volunteer2.user, @billing_expense2,
+      *actions_list(except: [:index, :download, :show]))
 
-    refute_permit(@volunteer2.user, @billing_expense1, *actions_list(except: [:index]))
+    refute_permit(@volunteer2.user, @billing_expense1,
+      *actions_list(except: [:index, :download]))
   end
 
   test 'superadmin scopes all billing expenses' do

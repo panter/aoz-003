@@ -113,7 +113,9 @@ Rails.application.routes.draw do
     resources :journals, except: [:show]
   end
 
-  resources :billing_expenses, except: [:edit, :update]
+  resources :billing_expenses, except: [:edit, :update] do
+    post :download, on: :collection
+  end
 
   root 'application#home'
 end

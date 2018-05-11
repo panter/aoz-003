@@ -6,48 +6,52 @@ h1
   - if @volunteer
     = "für #{@volunteer}"
 
-.row
-  .col-xs-12
-    - if @volunteer
-      => button_link navigation_glyph(:back), @volunteer
-    - else
-      => button_link 'Spesenformulare erstellen', new_billing_expense_path
+= simple_form_for :billing_expenses, url: download_billing_expenses_path(format: :pdf),
+    html: { class: 'form-ignore-changes', target: '_blank' } do |f|
+  ul.list-inline
+    li= clear_filter_button
+    = custom_filter_dropdown(t_attr(:period, BillingExpense), *@billing_periods)
+    li=> f.button :submit, 'Auswahl herunterladen', data: { disable_with: false }
+    li
+      - if @volunteer
+        => button_link navigation_glyph(:back), @volunteer
+      - else
+        => button_link 'Spesenformulare erstellen', new_billing_expense_path
 
-= bootstrap_paginate(@billing_expenses)
-
-.table-responsive
-      table.table
-        thead
-          tr
-            th.hidden-print Aktionen
+  .table-responsive
+    table.table
+      thead
+        tr
+          th.limit-width= select_all_rows
+          th.hidden-print Aktionen
+          - unless @volunteer
+            th= sort_link @q, :volunteer_contact_last_name, t_model(Volunteer)
+          th= t_attr(:bank_details, Volunteer)
+          th= t_attr(:hours)
+          th= sort_link @q, :amount
+          th Periode
+          - if policy(BillingExpense).superadmin_privileges?
+            th= sort_link @q, :user_profile_contact_last_name, t_attr(:created_by)
+          th= sort_link @q, :created_at
+      tbody
+        - @billing_expenses.each do |record|
+          tr.table-row-selectable
+            td= check_box_tag 'selected_billing_expenses[]', record.id,
+                  @selected_billing_expenses.include?(record.id.to_s)
+            td.index-action-cell.hidden-print
+              = button_link navigation_glyph(:show), billing_expense_path(record),
+                  title: 'Anzeigen'
+              = button_link navigation_glyph(:download), billing_expense_path(record, format: :pdf),
+                  title: 'Herunterladen'
+              - if policy(BillingExpense).destroy?
+                = button_link navigation_glyph(:delete), billing_expense_path(record),
+                  confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
             - unless @volunteer
-              th= sort_link @q, :volunteer_contact_last_name, t_model(Volunteer)
-            th= t_attr(:bank_details, Volunteer)
-            th= t_attr(:hours)
-            th= sort_link @q, :amount
-            th Periode
+              td= link_to record.volunteer.contact.full_name, edit_volunteer_path(record.volunteer)
+            td= record.full_bank_details
+            td= link_to format_hours(record.hours.total_hours), volunteer_hours_path(record.volunteer)
+            td= format_currency record.amount
+            td= format_hours_period record.hours
             - if policy(BillingExpense).superadmin_privileges?
-              th= sort_link @q, :user_profile_contact_last_name, t_attr(:created_by)
-            th= sort_link @q, :created_at
-        tbody
-          - @billing_expenses.each do |record|
-            tr
-              td.index-action-cell.hidden-print
-                = button_link navigation_glyph(:show), billing_expense_path(record),
-                    title: 'Anzeigen'
-                = button_link navigation_glyph(:download), billing_expense_path(record, format: :pdf),
-                    title: 'Herunterladen'
-                - if policy(BillingExpense).destroy?
-                  = button_link navigation_glyph(:delete), billing_expense_path(record),
-                    confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
-              - unless @volunteer
-                td= link_to record.volunteer.contact.full_name, edit_volunteer_path(record.volunteer)
-              td= record.full_bank_details
-              td= link_to format_hours(record.hours.total_hours), volunteer_hours_path(record.volunteer)
-              td= format_currency record.amount
-              td= format_hours_period record.hours
-              - if policy(BillingExpense).superadmin_privileges?
-                td= link_to record.user, profile_link(record.user)
-              td= l(record.created_at.to_date)
-
-= bootstrap_paginate(@billing_expenses)
+              td= link_to record.user, profile_link(record.user)
+            td= l(record.created_at.to_date)

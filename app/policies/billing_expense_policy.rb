@@ -8,6 +8,7 @@ class BillingExpensePolicy < ApplicationPolicy
   end
 
   alias_method :index?,                 :superadmin_or_volunteer?
+  alias_method :download?,              :superadmin_or_volunteer?
   alias_method :show?,                  :superadmin_or_volunteer_related?
   alias_method :new?,                   :superadmin?
   alias_method :edit?,                  :superadmin?
