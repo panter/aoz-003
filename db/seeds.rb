@@ -277,7 +277,7 @@ DEFAULT_GROUP_OFFER_CATEGORIES = [
   { category_name: 'Animation F' },
   { category_name: 'Kurzeinsatz' },
   { category_name: 'Andere' },
-  { category_name: 'Deutsch-Kurs' },
+  { category_name: 'Deutschkurs' },
   { category_name: 'Bildung' },
   { category_name: 'Kultur' },
   { category_name: 'Musik' },
