@@ -6,4 +6,5 @@ $(() => {
   volunteerForm();
   groupOfferForm();
   assigmentForm();
+  emailTemplate();
 });
