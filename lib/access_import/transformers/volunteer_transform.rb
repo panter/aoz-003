@@ -8,8 +8,7 @@ class VolunteerTransform < Transformer
   # konto_angaben = @konto_angaben.where_haupt_person(haupt_person[:pk_Hauptperson])
   # stunden_erfassungen = @stundenerfassung.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
   #
-  def prepare_attributes(personen_rolle)
-    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
+  def prepare_attributes(personen_rolle, haupt_person)
     original_email = haupt_person[:email]
     {
       salutation: haupt_person[:salutation],
@@ -33,7 +32,8 @@ class VolunteerTransform < Transformer
     return volunteer if volunteer.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
-    volunteer = Volunteer.new(prepare_attributes(personen_rolle))
+    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
+    volunteer = Volunteer.new(prepare_attributes(personen_rolle, haupt_person))
     volunteer.save!(validate: false)
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
