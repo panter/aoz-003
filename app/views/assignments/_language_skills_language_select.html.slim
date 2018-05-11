@@ -10,5 +10,5 @@
       = link_to t('all'), request_params_filter({language_skills_language_cont: ''})
     - Client.first_languages.each do |(name, code)|
       li= link_to name, request_params_filter({language_skills_language_cont: code})
-    - I18nData.languages(I18n.locale).each do |(code, name)|
+    - t('language_names').each do |(code, name)|
       li= link_to name, request_params_filter({language_skills_language_cont: code})

@@ -1,639 +1,480 @@
 ---
 de:
-  languages:
+  language_names:
     AA:
-      alpha2: AA
       de: Afar
       pk_sprache:
     AB:
-      alpha2: AB
       de: Abchasisch
       pk_sprache:
     AF:
-      alpha2: AF
       de: Afrikaans
       pk_sprache: 73
     AM:
-      alpha2: AM
       de: Amharisch
       pk_sprache: 24
     AR:
-      alpha2: AR
       de: Arabisch
       pk_sprache: 11
     AS:
-      alpha2: AS
       de: Assamesisch
       pk_sprache:
     AY:
-      alpha2: AY
       de: Aymara
       pk_sprache:
     AZ:
-      alpha2: AZ
       de: Aserbaidschanisch
       pk_sprache: 39
     BA:
-      alpha2: BA
       de: Baschkirisch
       pk_sprache:
     BE:
-      alpha2: BE
       de: Belorussisch
       pk_sprache:
     BG:
-      alpha2: BG
       de: Bulgarisch
       pk_sprache: 31
     BH:
-      alpha2: BH
       de: Biharisch
       pk_sprache:
     BI:
-      alpha2: BI
       de: Bislamisch
       pk_sprache:
     BN:
-      alpha2: BN
       de: Bengalisch
       pk_sprache: 52
     BO:
-      alpha2: BO
       de: Tibetanisch
       pk_sprache: 14
     BR:
-      alpha2: BR
       de: Bretonisch
       pk_sprache:
     CA:
-      alpha2: CA
       de: Katalanisch
       pk_sprache:
     CO:
-      alpha2: CO
       de: Korsisch
       pk_sprache:
     CS:
-      alpha2: CS
       de: Tschechisch
       pk_sprache: 33
     CY:
-      alpha2: CY
       de: Walisisch
       pk_sprache:
     DA:
-      alpha2: DA
       de: Dänisch
       pk_sprache: 28
     DE:
-      alpha2: DE
       de: Deutsch
       pk_sprache: 1
     DZ:
-      alpha2: DZ
       de: Dzongkha/Bhutani
       pk_sprache:
     EL:
-      alpha2: EL
       de: Griechisch
       pk_sprache: 58
     EN:
-      alpha2: EN
       de: Englisch
       pk_sprache: 2
     EO:
-      alpha2: EO
       de: Esperanto
       pk_sprache:
     ES:
-      alpha2: ES
       de: Spanisch
       pk_sprache: 12
     ET:
-      alpha2: ET
       de: Estnisch
       pk_sprache:
     EU:
-      alpha2: EU
       de: Baskisch
       pk_sprache:
     FA:
-      alpha2: FA
       de: Persisch
       pk_sprache: 18
     FI:
-      alpha2: FI
       de: Finnisch
       pk_sprache: 67
     FJ:
-      alpha2: FJ
       de: Fiji
       pk_sprache:
     FO:
-      alpha2: FO
       de: Färöisch
       pk_sprache:
     FR:
-      alpha2: FR
       de: Französisch
       pk_sprache: 3
     FY:
-      alpha2: FY
       de: Friesisch
       pk_sprache:
     GA:
-      alpha2: GA
       de: Irisch
       pk_sprache:
     GD:
-      alpha2: GD
       de: Schottisches Gälisch
       pk_sprache:
     GL:
-      alpha2: GL
       de: Galizisch
       pk_sprache:
     GN:
-      alpha2: GN
       de: Guarani
       pk_sprache:
     GU:
-      alpha2: GU
       de: Gujaratisch
       pk_sprache:
     HA:
-      alpha2: HA
       de: Haussa
       pk_sprache:
     HE:
-      alpha2: HE
       de: Hebräisch
       pk_sprache: 37
     HI:
-      alpha2: HI
       de: Hindi
       pk_sprache: 22
     HR:
-      alpha2: HR
       de: Kroatisch
       pk_sprache: 74
     HU:
-      alpha2: HU
       de: Ungarisch
       pk_sprache: 41
     HY:
-      alpha2: HY
       de: Armenisch
       pk_sprache: 10
     IA:
-      alpha2: IA
       de: Interlingua
       pk_sprache:
     ID:
-      alpha2: ID
       de: Indonesisch
       pk_sprache: 61
     IE:
-      alpha2: IE
       de: Interlingue
       pk_sprache:
     IK:
-      alpha2: IK
       de: Inupiak
       pk_sprache:
     IS:
-      alpha2: IS
       de: Isländisch
       pk_sprache:
     IT:
-      alpha2: IT
       de: Italienisch
       pk_sprache: 4
     IU:
-      alpha2: IU
       de: Inuktitut
       pk_sprache:
     IW:
-      alpha2: IW
       de: Hebräisch
       pk_sprache:
     JA:
-      alpha2: JA
       de: Japanisch
       pk_sprache: 43
     JI:
-      alpha2: JI
       de: Jiddish
       pk_sprache:
     JV:
-      alpha2: JV
       de: Javanisch
       pk_sprache:
     KA:
-      alpha2: KA
       de: Georgisch
       pk_sprache: 59
     KK:
-      alpha2: KK
       de: Kasachisch
       pk_sprache:
     KL:
-      alpha2: KL
       de: Kalaallisut
       pk_sprache:
     KM:
-      alpha2: KM
       de: Kambodschanisch
       pk_sprache:
     KN:
-      alpha2: KN
       de: Kannada
       pk_sprache:
     KO:
-      alpha2: KO
       de: Koreanisch
       pk_sprache: 60
     KS:
-      alpha2: KS
       de: Kaschmirisch
       pk_sprache:
     KU:
-      alpha2: KU
       de: Kurdisch
       pk_sprache: 8
     KY:
-      alpha2: KY
       de: Kirgisisch
       pk_sprache:
     LA:
-      alpha2: LA
       de: Lateinisch
       pk_sprache:
     LN:
-      alpha2: LN
       de: Lingala
       pk_sprache: 20
     LO:
-      alpha2: LO
       de: Laotisch
       pk_sprache:
     LT:
-      alpha2: LT
       de: Litauisch
       pk_sprache:
     LV:
-      alpha2: LV
       de: Lettisch
       pk_sprache:
     MG:
-      alpha2: MG
       de: Malagasisch
       pk_sprache:
     MI:
-      alpha2: MI
       de: Maorisch
       pk_sprache:
     MK:
-      alpha2: MK
       de: Mazedonisch
       pk_sprache: 44
     ML:
-      alpha2: ML
       de: Malajalam
       pk_sprache: 75
     MN:
-      alpha2: MN
       de: Mongolisch
       pk_sprache: 48
     MO:
-      alpha2: MO
       de: Moldavisch
       pk_sprache:
     MR:
-      alpha2: MR
       de: Marathi
       pk_sprache:
     MS:
-      alpha2: MS
       de: Malaysisch
       pk_sprache:
     MT:
-      alpha2: MT
       de: Maltesisch
       pk_sprache:
     MY:
-      alpha2: MY
       de: Burmesisch
       pk_sprache:
     NA:
-      alpha2: NA
       de: Nauruisch
       pk_sprache:
     NE:
-      alpha2: NE
       de: Nepalesisch
       pk_sprache: 53
     NL:
-      alpha2: NL
       de: Flämisch
       pk_sprache: 34
     'NO':
-      alpha2: 'NO'
       de: Norwegisch
       pk_sprache: 72
     OC:
-      alpha2: OC
       de: Okzitanisch
       pk_sprache:
     OM:
-      alpha2: OM
       de: Oromo
       pk_sprache:
     OR:
-      alpha2: OR
       de: Oriya
       pk_sprache:
     PA:
-      alpha2: PA
       de: Pundjabisch
       pk_sprache:
     PL:
-      alpha2: PL
       de: Polnisch
       pk_sprache: 50
     PS:
-      alpha2: PS
       de: Paschtu
       pk_sprache: 17
     PT:
-      alpha2: PT
       de: Portugiesisch
       pk_sprache: 36
     QU:
-      alpha2: QU
       de: Quechua
       pk_sprache:
     RM:
-      alpha2: RM
       de: Rätoromanisch
       pk_sprache: 32
     RN:
-      alpha2: RN
       de: Kirundisch
       pk_sprache:
     RO:
-      alpha2: RO
       de: Rumänisch
       pk_sprache: 45
     RU:
-      alpha2: RU
       de: Russisch
       pk_sprache: 9
     RW:
-      alpha2: RW
       de: Kijarwanda
       pk_sprache:
     SA:
-      alpha2: SA
       de: Sanskrit
       pk_sprache:
     SD:
-      alpha2: SD
       de: Zinti
       pk_sprache:
     SG:
-      alpha2: SG
       de: Sango
       pk_sprache:
     SH:
-      alpha2: SH
       de: Serbokroatisch
       pk_sprache: 15
     SI:
-      alpha2: SI
       de: Singhalesisch
       pk_sprache: 38
     SK:
-      alpha2: SK
       de: Slowakisch
       pk_sprache: 63
     SL:
-      alpha2: SL
       de: Slowenisch
       pk_sprache:
     SM:
-      alpha2: SM
       de: Samoanisch
       pk_sprache:
     SN:
-      alpha2: SN
       de: Schonisch
       pk_sprache:
     SO:
-      alpha2: SO
       de: Somalisch
       pk_sprache: 13
     SQ:
-      alpha2: SQ
       de: Albanisch
       pk_sprache: 6
     SR:
-      alpha2: SR
       de: Serbisch
       pk_sprache: 66
     SS:
-      alpha2: SS
       de: Swasiländisch
       pk_sprache:
     ST:
-      alpha2: ST
       de: Sesothisch
       pk_sprache:
     SU:
-      alpha2: SU
       de: Sudanesisch
       pk_sprache:
     SV:
-      alpha2: SV
       de: Schwedisch
       pk_sprache: 57
     SW:
-      alpha2: SW
       de: Suaheli
       pk_sprache: 64
     TA:
-      alpha2: TA
       de: Tamilisch
       pk_sprache: 26
     TE:
-      alpha2: TE
       de: Tegulu
       pk_sprache:
     TG:
-      alpha2: TG
       de: Tadschikisch
       pk_sprache:
     TH:
-      alpha2: TH
       de: Thai
       pk_sprache: 68
     TI:
-      alpha2: TI
       de: Tigrinja
       pk_sprache: 23
     TK:
-      alpha2: TK
       de: Turkmenisch
       pk_sprache:
     TL:
-      alpha2: TL
       de: Tagalog
       pk_sprache:
     TN:
-      alpha2: TN
       de: Sezuan
       pk_sprache:
     TO:
-      alpha2: TO
       de: Tongaisch
       pk_sprache:
     TR:
-      alpha2: TR
       de: Türkisch
       pk_sprache: 7
     TS:
-      alpha2: TS
       de: Tsongaisch
       pk_sprache:
     TT:
-      alpha2: TT
       de: Tatarisch
       pk_sprache:
     TW:
-      alpha2: TW
       de: Twi
       pk_sprache:
     UG:
-      alpha2: UG
       de: Uigur
       pk_sprache:
     UK:
-      alpha2: UK
       de: Ukrainisch
       pk_sprache:
     UR:
-      alpha2: UR
       de: Urdu
       pk_sprache: 19
     UZ:
-      alpha2: UZ
       de: Usbekisch
       pk_sprache:
     VI:
-      alpha2: VI
       de: Vietnamesisch
       pk_sprache:
     VO:
-      alpha2: VO
       de: Volapük
       pk_sprache:
     WO:
-      alpha2: WO
       de: Wolof
       pk_sprache:
     XH:
-      alpha2: XH
       de: Xhosa
       pk_sprache:
     YI:
-      alpha2: YI
       de: Jiddish
       pk_sprache:
     YO:
-      alpha2: YO
       de: Joruba
       pk_sprache:
     ZA:
-      alpha2: ZA
       de: Zhuang
       pk_sprache:
     ZH:
-      alpha2: ZH
       de: Chinesisch
       pk_sprache: 47
     ZU:
-      alpha2: ZU
       de: Zulu
       pk_sprache:
     BS:
-      alpha2: BS
       de: Bosnisch
       pk_sprache: 16
     KG:
-      alpha2: KG
       de: Kimongo
       pk_sprache: 21
     LB:
-      alpha2: LB
       de: Luxemburgisch
       pk_sprache: 56
     CE:
-      alpha2: CE
       de: Tschetschenisch
       pk_sprache: 62
     FF:
-      alpha2: FF
       de: Fula
       pk_sprache: 76
     GS:
-      alpha2: GS
       de: Schweizerdeutsch
       pk_sprache: 5
     CM:
-      alpha2: CM
       de: Mandarin
       pk_sprache: 25
     RR:
-      alpha2: RR
       de: Romanes
       pk_sprache: 30
     MM:
-      alpha2: MM
       de: Mina
       pk_sprache: 35
     BC:
-      alpha2: BC
       de: Bicol
       pk_sprache: 40
     AT:
-      alpha2: AT
       de: Azeri-türk
       pk_sprache: 42
     BL:
-      alpha2: BL
       de: Bilen
       pk_sprache: 49
     DR:
-      alpha2: DR
       de: Dari
       pk_sprache: 54
     TZ:
-      alpha2: TZ
       de: Thigray
       pk_sprache: 55
     AH:
-      alpha2: AH
       de: Amarash
       pk_sprache: 65
     KD:
-      alpha2: KD
       de: Kurmandschi
       pk_sprache: 69
     RA:
-      alpha2: RA
       de: Roma
       pk_sprache: 70
     MA:
-      alpha2: MA
       de: Mandinka
       pk_sprache: 71

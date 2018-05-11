@@ -15,15 +15,18 @@ class LanguageSkill < ApplicationRecord
     where.not(id: native_language.id)
   }
 
+  def self.languages
+    @languages ||= I18n.t('language_names').map { |key, lang| [lang[:de], key.to_s] }
+  end
+
+
   def self.native_language
     native_languages.first || LanguageSkill.new
   end
 
   def self.language_name(language)
     return '' if language.blank?
-    return 'Dari' if language == 'DR'
-    return 'Farsi' if language == 'FS'
-    I18nData.languages(I18n.locale)[language]
+    I18n.t("language_names.#{language}.de")
   end
 
   def language_name
