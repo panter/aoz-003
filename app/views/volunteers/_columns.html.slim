@@ -9,6 +9,7 @@
         th
         - if policy(Volunteer).show_acceptance?
           th= sort_link @q, :acceptance
+        th= sort_link @q, :active, 'Status'
         th= sort_link @q, :salutation
         - if action_in?(:index, :seeking_clients) || controller_in?(:group_offers)
           th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)

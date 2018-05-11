@@ -30,6 +30,7 @@ tr
         - if volunteer.import
           br
           'Importiert
+  td.button-acceptance= assignment_status_badge(volunteer)
   td = t("salutation.#{volunteer.salutation}") if volunteer.salutation?
   - if action_in?(:index, :seeking_clients) || controller_in?(:group_offers)
     td = link_to_if policy(Volunteer).edit?, volunteer.contact.full_name, edit_volunteer_path(volunteer)
