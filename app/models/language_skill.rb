@@ -16,7 +16,7 @@ class LanguageSkill < ApplicationRecord
   }
 
   def self.languages
-    @languages ||= I18n.t('language_names').map { |key, lang| [lang[:de], key.to_s] }
+    @languages ||= I18n.t('language_names').map { |key, lang| [lang[:de], key.to_s] }.sort
   end
 
 
