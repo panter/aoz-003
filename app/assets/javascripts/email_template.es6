@@ -16,6 +16,10 @@ function toggleTemplateExample (varNames) {
   }
 }
 function addTemplateStrings (subject, body) {
+  if ($('form.edit_email_template').length) {
+    return;
+  }
+
   $("#email_template_subject").val(subject);
   $("#email_template_body").val(body);
 }
