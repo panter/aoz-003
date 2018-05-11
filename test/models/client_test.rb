@@ -38,4 +38,24 @@ class ClientTest < ActiveSupport::TestCase
     new_client = Client.new
     assert new_client.contact.present?
   end
+
+  test 'records acceptance changes' do
+    client = create :client
+
+    refute_nil client.accepted_at
+    assert_nil client.rejected_at
+    assert_nil client.resigned_at
+
+    client.update(acceptance: :rejected)
+
+    refute_nil client.accepted_at
+    refute_nil client.rejected_at
+    assert_nil client.resigned_at
+
+    client.update(acceptance: :resigned)
+
+    refute_nil client.accepted_at
+    refute_nil client.rejected_at
+    refute_nil client.resigned_at
+  end
 end
