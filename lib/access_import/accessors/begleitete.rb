@@ -4,9 +4,10 @@ class Begleitete < Accessor
   end
 
   def sanitize_record(rec)
-    rec = parse_int_fields(rec, :fk_FamilienRolle, :fk_PersonenRolle, :pk_Begleitete)
+    rec = parse_int_fields(rec, :fk_FamilienRolle, :fk_PersonenRolle, :pk_Begleitete, :z_Jahrgang)
     rec = parse_datetime_fields(rec, :d_MutDatum)
     rec[:gender] = map_gender(rec[:t_Geschlecht])
+    rec[:birth_year] = Date.ordinal(rec[:z_Jahrgang]) if rec[:z_Jahrgang]
     rec[:relation] = map_familien_rolle(rec)
     rec
   end
