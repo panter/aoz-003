@@ -6,6 +6,7 @@ FactoryBot.define do
     title { FFaker::Lorem.unique.sentence }
     necessary_volunteers 5
     offer_type :internal_offer
+    comments { FFaker::CheesyLingo.paragraph }
 
     after(:build) do |group_offer|
       if GroupOfferCategory.any?
