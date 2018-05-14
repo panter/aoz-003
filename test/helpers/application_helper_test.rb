@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CountryNameHelperTest < ActionDispatch::IntegrationTest
+class ApplicationHelperTest < ActionView::TestCase
   include ApplicationHelper
 
   test 'nationality_name_helper_does_not_crash_on_record_with_invalid_country_letters' do
