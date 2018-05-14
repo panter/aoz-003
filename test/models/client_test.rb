@@ -98,14 +98,12 @@ class ClientTest < ActiveSupport::TestCase
     refute @client.active?
 
     assignment = create :assignment, client: @client, period_start: nil, period_end: nil
-    refute_nil client.rejected_at
     refute @client.active?
 
     assignment.update period_start: 10.days.ago
     assert @client.active?
 
     assignment.update period_end: 5.days.ago
-    refute_nil client.rejected_at
     assert_not @client.active?
   end
 end

@@ -274,4 +274,26 @@ class ClientsTest < ApplicationSystemTestCase
     visit client_path(Client.last)
     assert page.has_link? @social_worker.full_name, count: 2
   end
+
+  test 'client table should display inactive status' do
+    # clear out all existing clients
+    Client.delete_all
+    client = create :client, :with_relatives, :with_language_skills
+    create :assignment_inactive, client: client
+
+    login_as @superadmin
+    visit clients_path
+    assert_text 'Inaktiv'
+  end
+
+  test 'client table should display active status' do
+    # clear out all existing clients
+    Client.delete_all
+    client = create :client, :with_relatives, :with_language_skills
+    create :assignment_active, client: client
+
+    login_as @superadmin
+    visit clients_path
+    assert_text 'Aktiv'
+  end
 end
