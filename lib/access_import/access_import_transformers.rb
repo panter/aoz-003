@@ -8,7 +8,7 @@ module AccessImportTransformers
 
   def client_transform
     @client_transform ||= ClientTransform.new(self, @begleitete, @haupt_person, @familien_rollen,
-      @personen_rolle)
+      @personen_rolle, @verfahrens_history)
   end
 
   def department_transform

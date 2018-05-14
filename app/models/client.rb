@@ -11,7 +11,7 @@ class Client < ApplicationRecord
 
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
-  PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
+  PERMITS = [:N, :F, :'B-FL', :B, :C, :PF, :CH].freeze
   SALUTATIONS = [:mrs, :mr, :family].freeze
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'clients'

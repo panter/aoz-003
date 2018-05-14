@@ -959,6 +959,8 @@ de:
           b: 'B'
           b-fl: B-FL
           c: 'C'
+          pf: PF
+          ch: CH
         relatives:
           relation: *id-relations
         salutation: *id-salutations
