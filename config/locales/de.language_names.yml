@@ -1,458 +1,156 @@
 ---
 de:
   language_names: &id-language_names
-    AA:
-      de: Afar
-      pk_sprache:
-    AB:
-      de: Abchasisch
-      pk_sprache:
-    AF:
-      de: Afrikaans
-      pk_sprache: 73
-    AM:
-      de: Amharisch
-      pk_sprache: 24
-    AR:
-      de: Arabisch
-      pk_sprache: 11
-    AS:
-      de: Assamesisch
-      pk_sprache:
-    AY:
-      de: Aymara
-      pk_sprache:
-    AZ:
-      de: Aserbaidschanisch
-      pk_sprache: 39
-    BA:
-      de: Baschkirisch
-      pk_sprache:
-    BE:
-      de: Belorussisch
-      pk_sprache:
-    BG:
-      de: Bulgarisch
-      pk_sprache: 31
-    BH:
-      de: Biharisch
-      pk_sprache:
-    BI:
-      de: Bislamisch
-      pk_sprache:
-    BN:
-      de: Bengalisch
-      pk_sprache: 52
-    BO:
-      de: Tibetanisch
-      pk_sprache: 14
-    BR:
-      de: Bretonisch
-      pk_sprache:
-    CA:
-      de: Katalanisch
-      pk_sprache:
-    CO:
-      de: Korsisch
-      pk_sprache:
-    CS:
-      de: Tschechisch
-      pk_sprache: 33
-    CY:
-      de: Walisisch
-      pk_sprache:
-    DA:
-      de: Dänisch
-      pk_sprache: 28
-    DE:
-      de: Deutsch
-      pk_sprache: 1
-    DZ:
-      de: Dzongkha/Bhutani
-      pk_sprache:
-    EL:
-      de: Griechisch
-      pk_sprache: 58
-    EN:
-      de: Englisch
-      pk_sprache: 2
-    EO:
-      de: Esperanto
-      pk_sprache:
-    ES:
-      de: Spanisch
-      pk_sprache: 12
-    ET:
-      de: Estnisch
-      pk_sprache:
-    FA:
-      de: Persisch
-      pk_sprache: 18
-    FI:
-      de: Finnisch
-      pk_sprache: 67
-    FJ:
-      de: Fiji
-      pk_sprache:
-    FR:
-      de: Französisch
-      pk_sprache: 3
-    FS:
-      de: Farsi
-      pk_sprache:
-    GN:
-      de: Guarani
-      pk_sprache:
-    GU:
-      de: Gujaratisch
-      pk_sprache:
-    HA:
-      de: Haussa
-      pk_sprache:
-    HE:
-      de: Hebräisch
-      pk_sprache: 37
-    HI:
-      de: Hindi
-      pk_sprache: 22
-    HR:
-      de: Kroatisch
-      pk_sprache: 74
-    HU:
-      de: Ungarisch
-      pk_sprache: 41
-    HY:
-      de: Armenisch
-      pk_sprache: 10
-    ID:
-      de: Indonesisch
-      pk_sprache: 61
-    IK:
-      de: Inupiak
-      pk_sprache:
-    IS:
-      de: Isländisch
-      pk_sprache:
-    IT:
-      de: Italienisch
-      pk_sprache: 4
-    IU:
-      de: Inuktitut
-      pk_sprache:
-    IW:
-      de: Hebräisch
-      pk_sprache:
-    JA:
-      de: Japanisch
-      pk_sprache: 43
-    JI:
-      de: Jiddish
-      pk_sprache:
-    JV:
-      de: Javanisch
-      pk_sprache:
-    KA:
-      de: Georgisch
-      pk_sprache: 59
-    KK:
-      de: Kasachisch
-      pk_sprache:
-    KL:
-      de: Kalaallisut
-      pk_sprache:
-    KM:
-      de: Kambodschanisch
-      pk_sprache:
-    KN:
-      de: Kannada
-      pk_sprache:
-    KO:
-      de: Koreanisch
-      pk_sprache: 60
-    KS:
-      de: Kaschmirisch
-      pk_sprache:
-    KU:
-      de: Kurdisch
-      pk_sprache: 8
-    KY:
-      de: Kirgisisch
-      pk_sprache:
-    LN:
-      de: Lingala
-      pk_sprache: 20
-    LO:
-      de: Laotisch
-      pk_sprache:
-    LT:
-      de: Litauisch
-      pk_sprache:
-    LV:
-      de: Lettisch
-      pk_sprache:
-    MG:
-      de: Malagasisch
-      pk_sprache:
-    MI:
-      de: Maorisch
-      pk_sprache:
-    MK:
-      de: Mazedonisch
-      pk_sprache: 44
-    ML:
-      de: Malajalam
-      pk_sprache: 75
-    MN:
-      de: Mongolisch
-      pk_sprache: 48
-    MO:
-      de: Moldavisch
-      pk_sprache:
-    MR:
-      de: Marathi
-      pk_sprache:
-    MS:
-      de: Malaysisch
-      pk_sprache:
-    MT:
-      de: Maltesisch
-      pk_sprache:
-    MY:
-      de: Burmesisch
-      pk_sprache:
-    NA:
-      de: Nauruisch
-      pk_sprache:
-    NE:
-      de: Nepalesisch
-      pk_sprache: 53
-    NL:
-      de: Flämisch
-      pk_sprache: 34
-    'NO':
-      de: Norwegisch
-      pk_sprache: 72
-    OC:
-      de: Okzitanisch
-      pk_sprache:
-    OM:
-      de: Oromo
-      pk_sprache:
-    OR:
-      de: Oriya
-      pk_sprache:
-    PA:
-      de: Pundjabisch
-      pk_sprache:
-    PL:
-      de: Polnisch
-      pk_sprache: 50
-    PS:
-      de: Paschtu
-      pk_sprache: 17
-    PT:
-      de: Portugiesisch
-      pk_sprache: 36
-    QU:
-      de: Quechua
-      pk_sprache:
-    RM:
-      de: Rätoromanisch
-      pk_sprache: 32
-    RN:
-      de: Kirundisch
-      pk_sprache:
-    RO:
-      de: Rumänisch
-      pk_sprache: 45
-    RU:
-      de: Russisch
-      pk_sprache: 9
-    RW:
-      de: Kijarwanda
-      pk_sprache:
-    SA:
-      de: Sanskrit
-      pk_sprache:
-    SD:
-      de: Zinti
-      pk_sprache:
-    SG:
-      de: Sango
-      pk_sprache:
-    SH:
-      de: Serbokroatisch
-      pk_sprache: 15
-    SI:
-      de: Singhalesisch
-      pk_sprache: 38
-    SK:
-      de: Slowakisch
-      pk_sprache: 63
-    SL:
-      de: Slowenisch
-      pk_sprache:
-    SM:
-      de: Samoanisch
-      pk_sprache:
-    SN:
-      de: Schonisch
-      pk_sprache:
-    SO:
-      de: Somalisch
-      pk_sprache: 13
-    SQ:
-      de: Albanisch
-      pk_sprache: 6
-    SR:
-      de: Serbisch
-      pk_sprache: 66
-    SS:
-      de: Swasiländisch
-      pk_sprache:
-    ST:
-      de: Sesothisch
-      pk_sprache:
-    SU:
-      de: Sudanesisch
-      pk_sprache:
-    SV:
-      de: Schwedisch
-      pk_sprache: 57
-    SW:
-      de: Suaheli
-      pk_sprache: 64
-    TA:
-      de: Tamilisch
-      pk_sprache: 26
-    TE:
-      de: Tegulu
-      pk_sprache:
-    TG:
-      de: Tadschikisch
-      pk_sprache:
-    TH:
-      de: Thai
-      pk_sprache: 68
-    TI:
-      de: Tigrinja
-      pk_sprache: 23
-    TK:
-      de: Turkmenisch
-      pk_sprache:
-    TL:
-      de: Tagalog
-      pk_sprache:
-    TN:
-      de: Sezuan
-      pk_sprache:
-    TO:
-      de: Tongaisch
-      pk_sprache:
-    TR:
-      de: Türkisch
-      pk_sprache: 7
-    TS:
-      de: Tsongaisch
-      pk_sprache:
-    TT:
-      de: Tatarisch
-      pk_sprache:
-    TW:
-      de: Twi
-      pk_sprache:
-    UG:
-      de: Uigur
-      pk_sprache:
-    UK:
-      de: Ukrainisch
-      pk_sprache:
-    UR:
-      de: Urdu
-      pk_sprache: 19
-    UZ:
-      de: Usbekisch
-      pk_sprache:
-    VI:
-      de: Vietnamesisch
-      pk_sprache:
-    VO:
-      de: Volapük
-      pk_sprache:
-    WO:
-      de: Wolof
-      pk_sprache:
-    XH:
-      de: Xhosa
-      pk_sprache:
-    YI:
-      de: Jiddish
-      pk_sprache:
-    YO:
-      de: Joruba
-      pk_sprache:
-    ZA:
-      de: Zhuang
-      pk_sprache:
-    ZH:
-      de: Chinesisch
-      pk_sprache: 47
-    ZU:
-      de: Zulu
-      pk_sprache:
-    BS:
-      de: Bosnisch
-      pk_sprache: 16
-    KG:
-      de: Kimongo
-      pk_sprache: 21
-    LB:
-      de: Luxemburgisch
-      pk_sprache: 56
-    CE:
-      de: Tschetschenisch
-      pk_sprache: 62
-    FF:
-      de: Fula
-      pk_sprache: 76
-    GS:
-      de: Schweizerdeutsch
-      pk_sprache: 5
-    CM:
-      de: Mandarin
-      pk_sprache: 25
-    RR:
-      de: Romanes
-      pk_sprache: 30
-    MM:
-      de: Mina
-      pk_sprache: 35
-    BC:
-      de: Bicol
-      pk_sprache: 40
-    AT:
-      de: Azeri-türk
-      pk_sprache: 42
-    BL:
-      de: Bilen
-      pk_sprache: 49
-    DR:
-      de: Dari
-      pk_sprache: 54
-    TZ:
-      de: Thigray
-      pk_sprache: 55
-    AH:
-      de: Amarash
-      pk_sprache: 65
-    KD:
-      de: Kurmandschi
-      pk_sprache: 69
-    RA:
-      de: Roma
-      pk_sprache: 70
-    MA:
-      de: Mandinka
-      pk_sprache: 71
+    AA: Afar
+    AB: Abchasisch
+    AF: Afrikaans
+    AM: Amharisch
+    AR: Arabisch
+    AS: Assamesisch
+    AY: Aymara
+    AZ: Aserbaidschanisch
+    BA: Baschkirisch
+    BE: Belorussisch
+    BG: Bulgarisch
+    BH: Biharisch
+    BI: Bislamisch
+    BN: Bengalisch
+    BO: Tibetanisch
+    BR: Bretonisch
+    CA: Katalanisch
+    CO: Korsisch
+    CS: Tschechisch
+    CY: Walisisch
+    DA: Dänisch
+    DE: Deutsch
+    DZ: Dzongkha/Bhutani
+    EL: Griechisch
+    EN: Englisch
+    EO: Esperanto
+    ES: Spanisch
+    ET: Estnisch
+    FA: Persisch
+    FI: Finnisch
+    FJ: Fiji
+    FR: Französisch
+    FS: Farsi
+    GN: Guarani
+    GU: Gujaratisch
+    HA: Haussa
+    HE: Hebräisch
+    HI: Hindi
+    HR: Kroatisch
+    HU: Ungarisch
+    HY: Armenisch
+    ID: Indonesisch
+    IK: Inupiak
+    IS: Isländisch
+    IT: Italienisch
+    IU: Inuktitut
+    IW: Hebräisch
+    JA: Japanisch
+    JI: Jiddish
+    JV: Javanisch
+    KA: Georgisch
+    KK: Kasachisch
+    KL: Kalaallisut
+    KM: Kambodschanisch
+    KN: Kannada
+    KO: Koreanisch
+    KS: Kaschmirisch
+    KU: Kurdisch
+    KY: Kirgisisch
+    LN: Lingala
+    LO: Laotisch
+    LT: Litauisch
+    LV: Lettisch
+    MG: Malagasisch
+    MI: Maorisch
+    MK: Mazedonisch
+    ML: Malajalam
+    MN: Mongolisch
+    MO: Moldavisch
+    MR: Marathi
+    MS: Malaysisch
+    MT: Maltesisch
+    MY: Burmesisch
+    NA: Nauruisch
+    NE: Nepalesisch
+    NL: Flämisch
+    'NO': Norwegisch
+    OC: Okzitanisch
+    OM: Oromo
+    OR: Oriya
+    PA: Pundjabisch
+    PL: Polnisch
+    PS: Paschtu
+    PT: Portugiesisch
+    QU: Quechua
+    RM: Rätoromanisch
+    RN: Kirundisch
+    RO: Rumänisch
+    RU: Russisch
+    RW: Kijarwanda
+    SA: Sanskrit
+    SD: Zinti
+    SG: Sango
+    SH: Serbokroatisch
+    SI: Singhalesisch
+    SK: Slowakisch
+    SL: Slowenisch
+    SM: Samoanisch
+    SN: Schonisch
+    SO: Somalisch
+    SQ: Albanisch
+    SR: Serbisch
+    SS: Swasiländisch
+    ST: Sesothisch
+    SU: Sudanesisch
+    SV: Schwedisch
+    SW: Suaheli
+    TA: Tamilisch
+    TE: Tegulu
+    TG: Tadschikisch
+    TH: Thai
+    TI: Tigrinja
+    TK: Turkmenisch
+    TL: Tagalog
+    TN: Sezuan
+    TO: Tongaisch
+    TR: Türkisch
+    TS: Tsongaisch
+    TT: Tatarisch
+    TW: Twi
+    UG: Uigur
+    UK: Ukrainisch
+    UR: Urdu
+    UZ: Usbekisch
+    VI: Vietnamesisch
+    VO: Volapük
+    WO: Wolof
+    XH: Xhosa
+    YI: Jiddish
+    YO: Joruba
+    ZA: Zhuang
+    ZH: Chinesisch
+    ZU: Zulu
+    BS: Bosnisch
+    KG: Kimongo
+    LB: Luxemburgisch
+    CE: Tschetschenisch
+    FF: Fula
+    GS: Schweizerdeutsch
+    CM: Mandarin
+    RR: Romanes
+    MM: Mina
+    BC: Bicol
+    AT: Azeri-türk
+    BL: Bilen
+    DR: Dari
+    TZ: Thigray
+    AH: Amarash
+    KD: Kurmandschi
+    RA: Roma
+    MA: Mandinka
 en:
   language_names: *id-language_names

@@ -297,7 +297,7 @@ class Volunteer < ApplicationRecord
 
   def self.first_languages
     ['DE', 'EN', 'FR', 'ES', 'IT', 'AR'].map do |lang|
-      [I18n.t("language_names.#{lang}.de"), lang]
+      [I18n.t("language_names.#{lang}"), lang]
     end
   end
 
