@@ -30,7 +30,7 @@ class ClientsTest < ApplicationSystemTestCase
       choose('Gut')
     end
     click_on('Sprache hinzufügen')
-    select('Akan', from: 'Sprache')
+    select('Albanisch', from: 'Sprache')
     select('Mittel', from: 'Niveau')
     click_on('Verwandte hinzufügen')
     within '#relatives' do
@@ -86,8 +86,8 @@ class ClientsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit new_client_path
     select('Frau', from: 'Anrede')
-    fill_in 'Vorname', with: 'Dari'
-    fill_in 'Nachname', with: 'Dari'
+    fill_in 'Vorname', with: 'Aymara'
+    fill_in 'Nachname', with: 'Aymara'
     fill_in 'Mailadresse', with: 'client@aoz.com'
     fill_in 'Telefonnummer', with: '0123456789', match: :first
     fill_in 'Strasse', with: 'Sihlstrasse 131'
@@ -99,12 +99,12 @@ class ClientsTest < ApplicationSystemTestCase
     end
 
     click_on('Sprache hinzufügen')
-    select('Dari', from: 'Sprache')
+    select('Aymara', from: 'Sprache')
     select('Muttersprache', from: 'Niveau')
 
     click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    assert_select 'Sprache', selected: 'Dari'
+    assert_select 'Sprache', selected: 'Aymara'
     assert_select 'Niveau', selected: 'Muttersprache'
     assert_field 'Gut', checked: true
   end

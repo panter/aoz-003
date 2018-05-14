@@ -96,14 +96,9 @@ class Client < ApplicationRecord
   end
 
   def self.first_languages
-    [
-      [I18nData.languages(I18n.locale)['TI'], 'TI'],
-      ['Dari', 'DR'],
-      [I18nData.languages(I18n.locale)['AR'], 'AR'],
-      ['Farsi', 'FS'],
-      [I18nData.languages(I18n.locale)['DE'], 'DE'],
-      [I18nData.languages(I18n.locale)['EN'], 'EN']
-    ]
+    @first_languages ||= ['TI', 'DR', 'AR', 'FS', 'DE', 'EN'].map do |lang|
+      [I18n.t("language_names.#{lang}"), lang]
+    end
   end
 
   def german_missing?

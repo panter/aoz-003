@@ -12,7 +12,8 @@ module AccessImportSetup
     setup_class_variables(*instantiate_all_accessors)
     @sprache_pro_hauptperson.add_other_accessors(@sprachen, @sprach_kenntnisse)
     @einsatz_orte.add_other_accessors(@plz)
-    @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson)
+    @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson, @sprachen,
+      @sprach_kenntnisse)
     @kontoangaben.add_other_accessors(@plz)
 
     # don't overwrite imported accepted_at values
