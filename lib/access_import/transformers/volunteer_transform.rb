@@ -1,13 +1,4 @@
 class VolunteerTransform < Transformer
-  # could be needed relations
-  #
-  # k_traeger = @kosten_traeger.find(personen_rolle[:fk_Kostenträger])
-  # journals = @journale.where_haupt_person(haupt_person[:pk_Hauptperson])
-  # einsaetze = @fw_einsaetze.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
-  # entschaedigungen = @fw_entschaedigung.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
-  # konto_angaben = @konto_angaben.where_haupt_person(haupt_person[:pk_Hauptperson])
-  # stunden_erfassungen = @stundenerfassung.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
-  #
   def prepare_attributes(personen_rolle, haupt_person)
     original_email = haupt_person[:email]
     {
@@ -19,6 +10,7 @@ class VolunteerTransform < Transformer
       registrar: @ac_import.import_user,
       acceptance: :accepted,
       intro_course: true,
+      profession: haupt_person[:t_Beruf],
       waive: personen_rolle[:b_SpesenVerzicht] == 1
     }.merge(prepare_kontoangaben(personen_rolle[:fk_Hauptperson]))
       .merge(contact_attributes(haupt_person.merge(email: import_time_email)))
