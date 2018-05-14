@@ -17,10 +17,11 @@
 
     .col-xs-12.col-md-6
       = f.input :period, as: :date_range_picker, label: false
-    .col-xs-12.col-md-6
-      = f.input :comments
-    .col-xs-12.col-md-6
-      = f.input :additional_comments
+    - if policy(Assignment).show_comments?
+      .col-xs-12.col-md-6
+        = f.input :comments
+      .col-xs-12.col-md-6
+        = f.input :additional_comments
 
   .row
     .col-xs-12.col-md-6

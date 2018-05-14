@@ -11,6 +11,7 @@ class GroupAssignmentPolicy < ApplicationPolicy
 
   alias_method :create?,             :superadmin_or_department_manager_offer?
   alias_method :terminated_index?,   :superadmin_or_department_manager?
+  alias_method :show_comments?,           :superadmin_or_department_manager?
 
   alias_method :edit?,               :superadmin_or_department_manager_creation?
   alias_method :set_end_today?,      :superadmin_or_department_manager_creation?

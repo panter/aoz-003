@@ -69,7 +69,7 @@ h1.m-b-20= @client.contact.full_name
         td= t_attr(:created_by)
         td= link_to @client.user.full_name, profile_link(@client.user)
 
-      - if policy(Client).superadmin_privileges?
+      - if policy(Client).show_comments?
         tr
           td= t_attr(:comments)
           td= @client.comments

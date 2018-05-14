@@ -49,6 +49,10 @@
             - availabilities.each do |availability|
               = f.input availability, label: t("availability.#{availability}")
 
+  - if policy(GroupOffer).show_comments?
+    .row
+      .col-xs-12.col-md-12= f.input :comments
+
   = render 'group_assignments'
   - if action_edit?
     ul.list-inline

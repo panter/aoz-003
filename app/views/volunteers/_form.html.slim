@@ -120,7 +120,7 @@ fieldset
     = f.input :strengths
     = f.input :interests
 
-  - if policy(Volunteer).superadmin_privileges?
+  - if current_user && policy(volunteer).show_comments?
     .col-xs-12.col-md-6
       = f.input :comments
       = f.input :additional_comments

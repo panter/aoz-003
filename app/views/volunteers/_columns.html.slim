@@ -21,7 +21,8 @@
         th= t_attr(:profession, Volunteer)
         th= sort_link @q, :working_percent
         th= t_attr(:interests, Volunteer)
-        th= t_attr(:comments)
+        - if policy(Volunteer).show_comments?
+          th= t_attr(:comments)
         th= sort_link @q, :external
         th= t_attr(:created_by, Volunteer)
 

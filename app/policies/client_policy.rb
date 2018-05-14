@@ -28,6 +28,7 @@ class ClientPolicy < ApplicationPolicy
 
   # suplementary policies
   alias_method :superadmin_privileges?, :superadmin?
+  alias_method :show_comments?, :superadmin_or_department_manager_or_social_worker?
 
   def acceptance_collection
     if superadmin_or_department_managers_record?
