@@ -16,7 +16,7 @@ class VolunteerTransform < Transformer
       nationality: haupt_person[:nationality],
       accepted_at: personen_rolle[:d_Rollenbeginn],
       resigned_at: personen_rolle[:d_Rollenende],
-      comments: "#{personen_rolle[:m_Bemerkungen]}\n\n#{haupt_person[:m_Bemerkungen]}",
+      comments: [personen_rolle[:m_Bemerkungen], haupt_person[:m_Bemerkungen]].compact.join("\n\n"),
       registrar: @ac_import.import_user,
       acceptance: :accepted,
       intro_course: true,
