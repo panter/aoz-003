@@ -26,6 +26,7 @@ class ClientTransform < Transformer
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     client = Client.new(prepare_attributes(personen_rolle, haupt_person))
+    client.skip_callback(:save, :record_acceptance_change) if client.accepted_at?
     if haupt_person == {} # handle access db inconsistencies
       client.contact.assign_attributes(primary_email: generate_bogus_email, street: 'xxx',
         postal_code: '8000', city: 'Zürich')

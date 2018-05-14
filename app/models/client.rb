@@ -4,13 +4,10 @@ class Client < ApplicationRecord
   include BuildContactRelation
   include ZuerichScopes
   include ImportRelation
-
-  before_update :record_acceptance_change, if: :will_save_change_to_acceptance?
+  include AcceptanceAttributes
 
   enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
   enum cost_unit: { city: 0, municipality: 1, canton: 2 }
-
-  ransacker :acceptance, formatter: ->(value) { acceptances[value] }
 
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
@@ -90,20 +87,6 @@ class Client < ApplicationRecord
     acceptences_restricted.keys.map(&:to_sym)
   end
 
-  def self.acceptance_collection
-    acceptances.keys.map(&:to_sym)
-  end
-
-  def self.acceptance_filters
-    acceptances.keys.map do |key|
-      {
-        q: :acceptance_eq,
-        value: key,
-        text: I18n.t("acceptance.#{key}")
-      }
-    end
-  end
-
   def self.cost_unit_collection
     cost_units.keys.map(&:to_sym)
   end
@@ -130,11 +113,5 @@ class Client < ApplicationRecord
   # allow ransack to use defined scopes
   def self.ransackable_scopes(auth_object = nil)
     ['active', 'inactive']
-  end
-
-  private
-
-  def record_acceptance_change
-    self["#{acceptance}_at".to_sym] = Time.zone.now
   end
 end

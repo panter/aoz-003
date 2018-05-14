@@ -311,7 +311,7 @@ de:
         time_given: Zeitaufwand
         zip_city: PLZ/Ort
       client:
-        <<: *id-generic_keys
+        <<: [*id-generic_keys, *id-client-acceptance]
         acceptance: Prozess
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
