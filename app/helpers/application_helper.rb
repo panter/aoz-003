@@ -69,8 +69,9 @@ module ApplicationHelper
 
   def nationality_name(nationality)
     return '' if nationality.blank?
-    c = ISO3166::Country[nationality]
-    c.translations[I18n.locale.to_s] || c.name
+    country = ISO3166::Country[nationality]
+    return '' unless country
+    country.translations[I18n.locale.to_s] || country.name
   end
 
   def request_params_filter(query)
