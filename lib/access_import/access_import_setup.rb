@@ -14,6 +14,10 @@ module AccessImportSetup
     @einsatz_orte.add_other_accessors(@plz)
     @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson)
     @kontoangaben.add_other_accessors(@plz)
+
+    # don't overwrite imported accepted_at values
+    Volunteer.skip_callback(:save, :record_acceptance_change, if: :accepted_at?)
+    Client.skip_callback(:save, :record_acceptance_change, if: :accepted_at?)
   end
 
   def instantiate_all_accessors
