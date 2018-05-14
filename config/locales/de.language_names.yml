@@ -1,6 +1,6 @@
 ---
 de:
-  language_names: &id-language_names
+  language_names:
     AA: Afar
     AB: Abchasisch
     AF: Afrikaans
@@ -152,5 +152,3 @@ de:
     KD: Kurmandschi
     RA: Roma
     MA: Mandinka
-en:
-  language_names: *id-language_names
