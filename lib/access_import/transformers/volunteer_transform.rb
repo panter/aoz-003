@@ -33,6 +33,11 @@ class VolunteerTransform < Transformer
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     volunteer = Volunteer.new(prepare_attributes(personen_rolle, haupt_person))
+    if haupt_person[:sprachen]&.any?
+      volunteer.language_skills = haupt_person[:sprachen].map do |sprache|
+        LanguageSkill.new(language: sprache[:language], level: sprache[:level])
+      end
+    end
     volunteer.skip_callback(:save, :record_acceptance_change) if volunteer.accepted_at?
     volunteer.save!(validate: false)
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
