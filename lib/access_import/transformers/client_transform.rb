@@ -1,7 +1,7 @@
 class ClientTransform < Transformer
   def prepare_attributes(personen_rolle, haupt_person, begleitet, relatives)
     familien_rolle = @familien_rollen.find(begleitet[:fk_FamilienRolle])
-    verfahrens_history = @verfahrens_history.where_haupt_person(haupt_person[:pk_Hauptperson])
+    verfahrens_histories = @verfahrens_history.where_haupt_person(haupt_person[:pk_Hauptperson]).values
     {
       user: @ac_import.import_user,
       nationality: haupt_person[:nationality],
@@ -12,11 +12,11 @@ class ClientTransform < Transformer
       accepted_at: personen_rolle[:d_Rollenbeginn],
       resigned_at: personen_rolle[:d_Rollenende],
       cost_unit: personen_rolle[:cost_unit],
-      permit: verfahrens_history.any? ? verfahrens_history.first[:permit] : nil
+      permit: verfahrens_histories.any? ? verfahrens_histories.first[:permit] : nil
     }.merge(contact_attributes(haupt_person))
       .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
         personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,
-        begleitet: begleitet, verfahrens_history: verfahrens_history,
+        begleitet: begleitet, verfahrens_history: verfahrens_histories && verfahrens_histories,
         relatives: relatives && relatives))
   end
 
