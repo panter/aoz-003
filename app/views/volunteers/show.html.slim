@@ -100,7 +100,7 @@ h2.small Persönlicher Hintergrund
             = t('volunteer_self_applicant')
           - else
             = link_to @volunteer.registrar.full_name, profile_link(@volunteer.registrar)
-      - if policy(Volunteer).show_acceptance?
+      - if policy(Volunteer).show_comments?
         tr
           td= t_attr(:comments)
           td= @volunteer.comments

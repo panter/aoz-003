@@ -44,7 +44,7 @@ tr
   td = volunteer.profession
   td = "#{volunteer.working_percent}%" if volunteer.working_percent.present?
   td = volunteer.interests
-  - if policy(Volunteer).show_acceptance?
+  - if policy(Volunteer).show_comments?
     = td_truncate_content_modal(volunteer.comments, 'Bemerkungen')
   td = volunteer.external? ? t_attr(:external, Volunteer) : t_attr(:internal, Volunteer)
   td
