@@ -10,8 +10,9 @@
   .row
     .col-xs-12.col-md-6
       = f.input :period, as: :date_range_picker, label: false
-      = f.input :comments
-      = f.input :additional_comments
+      - if policy(GroupAssignment).comments?
+        = f.input :comments
+        = f.input :additional_comments
       = f.input :agreement_text, input_html: { class: 'text-body' }, label: t('assignment_pdf.agreement_text')
       fieldset
         label Rolle
