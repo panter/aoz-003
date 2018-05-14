@@ -30,7 +30,6 @@ class VolunteerTransform < Transformer
         LanguageSkill.new(language: sprache[:language], level: sprache[:level])
       end
     end
-    volunteer.skip_callback(:save, :record_acceptance_change) if volunteer.accepted_at?
     volunteer.save!(validate: false)
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
