@@ -1,7 +1,7 @@
 class ClientTransform < Transformer
   def prepare_attributes(personen_rolle, haupt_person, begleitet, relatives)
     familien_rolle = @familien_rollen.find(begleitet[:fk_FamilienRolle])
-    verfahrens_histories = @verfahrens_history.where_haupt_person(haupt_person[:pk_Hauptperson]).values
+    verfahrens_history = @verfahrens_history.where_haupt_person(haupt_person[:pk_Hauptperson]).values
     {
       user: @ac_import.import_user,
       nationality: haupt_person[:nationality],
@@ -16,7 +16,7 @@ class ClientTransform < Transformer
     }.merge(contact_attributes(haupt_person))
       .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
         personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,
-        begleitet: begleitet, verfahrens_history: verfahrens_histories && verfahrens_histories,
+        begleitet: begleitet, verfahrens_history: verfahrens_history,
         relatives: relatives && relatives))
   end
 
@@ -26,7 +26,9 @@ class ClientTransform < Transformer
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
-    client = Client.new(prepare_attributes(personen_rolle, haupt_person))
+    begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
+    client = Client.new(prepare_attributes(personen_rolle, haupt_person, begleitet, relatives))
+    client.relatives = init_relatives(relatives)
     handle_missing_haupt_person(client, personen_rolle) if haupt_person == {}
     handle_language_skills(client, haupt_person)
     handle_missing_email(client, personen_rolle) unless client.save
