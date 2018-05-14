@@ -9,13 +9,9 @@ class PersonenRolle < Accessor
       :fk_Hauptperson, :fk_Kostenträger, :pk_PersonenRolle, :z_AnzErw, :z_AnzKind,
       :z_Familienverband, :z_Rolle)
     rec[:rolle] = ACCESS_TO_OWN_ROLES_MAP[rec[:z_Rolle]]
-    rec[:cost_unit] = COST_UNIT_MAP[rec[:fk_Kostenträger]]
+    rec[:cost_unit] = cost_unit(rec[:fk_Kostenträger])
     rec
   end
-
-  COST_UNIT_MAP = {
-    1 => 'city', 2 => 'canton', 3 => 'schlieren', 4 => 'uster', 5 => 'dietikon'
-  }.freeze
 
   ACCESS_TO_OWN_ROLES_MAP = {
     1 => 'Volunteer',

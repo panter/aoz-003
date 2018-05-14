@@ -7,6 +7,7 @@ class FreiwilligenEinsaetze < Accessor
     rec = parse_int_fields(rec, :pk_FreiwilligenEinsatz, :fk_PersonenRolle, :fk_FreiwilligenFunktion,
       :fk_Kostenträger, :fk_EinsatzOrt, :fk_Begleitete, :fk_Kurs, :fk_Semester, :fk_Lehrmittel, :z_FamilienBegleitung)
     rec = parse_float_fields(rec, :z_Spesen)
+    rec[:cost_unit] = cost_unit(rec[:fk_Kostenträger])
     rec[:fk_FreiwilligenFunktion] = 0 unless rec[:fk_FreiwilligenFunktion]
     rec[:funktion] = freiwilligen_funktion(rec[:fk_FreiwilligenFunktion]).bezeichnung
     rec[:lehrmittel] = LEHRMITTEL[rec[:fk_Lehrmittel]] if rec[:fk_Lehrmittel]
