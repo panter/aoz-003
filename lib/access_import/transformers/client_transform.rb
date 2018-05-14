@@ -12,7 +12,8 @@ class ClientTransform < Transformer
       comments: comments(begleitet, personen_rolle, haupt_person),
       relatives_attributes: relatives_attrs(relatives),
       accepted_at: personen_rolle[:d_Rollenbeginn],
-      resigned_at: personen_rolle[:d_Rollenende]
+      resigned_at: personen_rolle[:d_Rollenende],
+      cost_unit: personen_rolle[:cost_unit]
     }.merge(contact_attributes(haupt_person))
       .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],

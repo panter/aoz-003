@@ -7,7 +7,7 @@ class Client < ApplicationRecord
   include AcceptanceAttributes
 
   enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
-  enum cost_unit: { city: 0, municipality: 1, canton: 2 }
+  enum cost_unit: { city: 0, uster: 1, canton: 2, dietikon: 3, schlieren: 4 }
 
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
