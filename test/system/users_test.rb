@@ -72,11 +72,19 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_link? 'Löschen'
   end
 
-  test "superadmin can't destroy superadmin" do
+  test 'superadmin can destroy other superadmin' do
     create :user, role: 'superadmin'
     visit users_path
 
-    assert_not page.has_link? 'Löschen'
+    assert page.has_link? 'Löschen'
+  end
+
+  test 'superadmin can not destroy itself' do
+    visit users_path
+
+    within page.find('tr', text: @user.full_name) do
+      refute page.has_link? 'Löschen'
+    end
   end
 
   test 'accepted volunteer becomes a user' do
