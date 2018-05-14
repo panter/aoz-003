@@ -61,9 +61,7 @@ de:
   cost_unit: &id-client-cost-units
     city: Stadt
     canton: Kanton
-    dietikon: Gemeinde Dietikon
-    schlieren: Gemeinde Schlieren
-    uster: Gemeinde Uster
+    municipality: Gemeinde
   email_templates:
     kind: &id-kinds-template
       assignment: Begleitung

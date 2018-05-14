@@ -29,7 +29,7 @@ class Accessor
   end
 
   COST_UNIT_MAP = {
-    1 => 'city', 2 => 'canton', 3 => 'schlieren', 4 => 'uster', 5 => 'dietikon'
+    1 => 'city', 2 => 'canton', 3 => 'municipality', 4 => 'municipality', 5 => 'municipality'
   }.freeze
 
   def cost_unit(fk_kostentraeger)
