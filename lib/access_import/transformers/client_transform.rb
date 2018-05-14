@@ -26,32 +26,10 @@ class ClientTransform < Transformer
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
-    begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
-    client = Client.new(prepare_attributes(personen_rolle, haupt_person, begleitet, relatives))
-    client.relatives = init_relatives(relatives)
-    if haupt_person == {} # handle access db inconsistencies
-      client.contact.assign_attributes(primary_email: generate_bogus_email, street: 'xxx',
-        postal_code: '8000', city: 'Zürich')
-      client.assign_attributes(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende])
-    end
-    if haupt_person[:sprachen]&.any?
-      client.language_skills = haupt_person[:sprachen].map do |sprache|
-        LanguageSkill.new(language: sprache[:language], level: sprache[:level])
-      end
-    end
-    unless client.language_skills.map(&:language).include?('DE')
-      client.language_skills = [LanguageSkill.new(language: 'DE', level: 'basic')]
-    end
-    if !client.save && client.errors.messages[:'contact.primary_email']&.include?('ist bereits vergeben')
-      clients_with_same_email = Client.joins(:contact)
-        .where('contacts.primary_email = ?', client.contact.primary_email)
-      if clients_with_same_email.maximum(:updated_at) < personen_rolle[:d_MutDatum]
-        clients_with_same_email.map { |cl| cl.contact.update(primary_email: generate_bogus_email) }
-      else
-        client.contact.primary_email = generate_bogus_email
-      end
-      client.save!
-    end
+    client = Client.new(prepare_attributes(personen_rolle, haupt_person))
+    handle_missing_haupt_person(client, personen_rolle) if haupt_person == {}
+    handle_language_skills(client, haupt_person)
+    handle_missing_email(client, personen_rolle) unless client.save
     update_timestamps(client, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end
 
@@ -63,6 +41,35 @@ class ClientTransform < Transformer
     [
       begleitet[:m_Bemerkung], personen_rolle[:m_Bemerkungen], haupt_person[:m_Bemerkungen]
     ].compact.join(";\n\n")
+  end
+
+  def handle_missing_haupt_person(client, personen_rolle)
+    client.contact.assign_attributes(primary_email: generate_bogus_email, street: 'xxx',
+      postal_code: '8000', city: 'Zürich')
+    client.assign_attributes(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende])
+  end
+
+  def handle_language_skills(client, haupt_person)
+    if haupt_person[:sprachen]&.any?
+      client.language_skills = haupt_person[:sprachen].map do |sprache|
+        LanguageSkill.new(language: sprache[:language], level: sprache[:level])
+      end
+    end
+    unless client.language_skills.map(&:language).include?('DE')
+      client.language_skills = [LanguageSkill.new(language: 'DE', level: 'basic')]
+    end
+  end
+
+  def handle_missing_email(client, personen_rolle)
+    return unless client.errors.messages[:'contact.primary_email']&.include?('ist bereits vergeben')
+    clients_with_same_email = Client.joins(:contact)
+      .where('contacts.primary_email = ?', client.contact.primary_email)
+    if clients_with_same_email.maximum(:updated_at) < personen_rolle[:d_MutDatum]
+      clients_with_same_email.map { |cl| cl.contact.update(primary_email: generate_bogus_email) }
+    else
+      client.contact.primary_email = generate_bogus_email
+    end
+    client.save!
   end
 
   def handle_begleitete(personen_rolle, haupt_person)
