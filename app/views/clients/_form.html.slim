@@ -73,6 +73,6 @@ fieldset
 
       = f.input :competent_authority
       = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true
-      - if policy(Client).comments?
+      - if policy(Client).show_comments?
         = f.input :comments
         = f.input :additional_comments

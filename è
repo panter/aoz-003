@@ -1,0 +1,34 @@
+unify comments policy
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Mon May 14 15:36:15 2018 +0200
+#
+# On branch changes/comments-policies-update
+# Your branch is ahead of 'origin/changes/comments-policies-update' by 2 commits.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   app/policies/assignment_policy.rb
+#	modified:   app/policies/client_policy.rb
+#	modified:   app/policies/group_assignment_policy.rb
+#	modified:   app/policies/group_offer_policy.rb
+#	modified:   app/views/assignment_logs/_assignment_logs_volunteer_index.html.slim
+#	modified:   app/views/assignment_logs/_client_volunteer_index.html.slim
+#	modified:   app/views/assignments/_assignment.html.slim
+#	modified:   app/views/assignments/_assignments_block.html.slim
+#	modified:   app/views/assignments/_form.html.slim
+#	modified:   app/views/clients/_client.html.slim
+#	modified:   app/views/clients/_form.html.slim
+#	modified:   app/views/clients/index.html.slim
+#	modified:   app/views/clients/show.html.slim
+#	modified:   app/views/group_assignments/_form.html.slim
+#	modified:   app/views/group_assignments/_volunteer_group_assignments.html.slim
+#	modified:   app/views/group_assignments/_volunteer_group_assignments_logs.html.slim
+#	modified:   app/views/group_offers/_form.html.slim
+#	modified:   test/policies/assignment_policy_test.rb
+#	modified:   test/policies/client_policy_test.rb
+#	modified:   test/policies/group_assignments_policy_test.rb
+#	modified:   test/policies/group_offers_policy_test.rb
+#

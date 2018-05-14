@@ -11,7 +11,7 @@
         th= sort_link @q, :period_start, t_attr(:period_start, Assignment)
         th= sort_link @q, :period_end, t_attr(:period_end, Assignment)
         th= 'Fallführende Stelle'
-        - if policy(Assignment).comments?
+        - if policy(Assignment).show_comments?
           th= t_attr(:comments)
         th.hidden-print colspan='4'
 

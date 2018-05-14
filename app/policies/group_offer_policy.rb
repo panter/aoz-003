@@ -33,4 +33,5 @@ class GroupOfferPolicy < ApplicationPolicy
 
   # supplemental policies
   alias_method :supervisor_privileges?, :superadmin?
+  alias_method :show_comments?,         :superadmin_or_department_manager_is_responsible?
 end
