@@ -7,6 +7,7 @@ class ClientTransform < Transformer
       nationality: haupt_person[:nationality],
       salutation: haupt_person[:salutation] || 'family',
       birth_year: haupt_person[:d_Geburtsdatum],
+      profession: haupt_person[:t_Beruf]
       entry_date: haupt_person[:d_EintrittCH] && Date.parse(haupt_person[:d_EintrittCH]).to_date.to_s,
       comments: comments(begleitet, personen_rolle, haupt_person),
       relatives_attributes: relatives_attrs(relatives),
