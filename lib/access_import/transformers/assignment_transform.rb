@@ -41,8 +41,8 @@ class AssignmentTransform < Transformer
     begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
     client = @ac_import.client_transform.get_or_create_by_import(begleitet[:fk_PersonenRolle])
     return if client.blank?
-    parameters = prepare_attributes(fw_einsatz, client, volunteer, begleitet)
-    assignment = Assignment.new(parameters)
+    client.update(cost_unit: fw_einsatz[:cost_unit]) if fw_einsatz[:cost_unit]
+    assignment = Assignment.new(prepare_attributes(fw_einsatz, client, volunteer, begleitet))
     assignment.save!(validate: false)
     update_timestamps(assignment, fw_einsatz[:d_MutDatum])
   end

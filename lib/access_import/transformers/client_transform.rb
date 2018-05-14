@@ -10,7 +10,8 @@ class ClientTransform < Transformer
       entry_date: haupt_person[:d_EintrittCH] && Date.parse(haupt_person[:d_EintrittCH]).to_date.to_s,
       comments: comments(begleitet, personen_rolle, haupt_person),
       accepted_at: personen_rolle[:d_Rollenbeginn],
-      resigned_at: personen_rolle[:d_Rollenende]
+      resigned_at: personen_rolle[:d_Rollenende],
+      cost_unit: personen_rolle[:cost_unit]
     }.merge(contact_attributes(haupt_person))
       .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
         personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,

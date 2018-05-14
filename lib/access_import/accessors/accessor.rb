@@ -28,6 +28,14 @@ class Accessor
     all[id.to_i]
   end
 
+  COST_UNIT_MAP = {
+    1 => 'city', 2 => 'canton', 3 => 'municipality', 4 => 'municipality', 5 => 'municipality'
+  }.freeze
+
+  def cost_unit(fk_kostentraeger)
+    COST_UNIT_MAP[fk_kostentraeger] if fk_kostentraeger&.positive?
+  end
+
   ACCESS_ROLES = OpenStruct.new(volunteer: 1, client: 2, animator: 3, participant: 4).freeze
 
   FREIWILLIGEN_FUNKTION_BY_NAME = OpenStruct.new(
