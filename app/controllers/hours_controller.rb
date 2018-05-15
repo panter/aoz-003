@@ -4,6 +4,9 @@ class HoursController < ApplicationController
 
   def index
     authorize @volunteer.hours.first || Hour
+    @q = @volunteer.hours.ransack(params[:q])
+    @q.sorts = ['meeting_date desc'] if @q.sorts.empty?
+    @hours = @q.result
   end
 
   def show; end
