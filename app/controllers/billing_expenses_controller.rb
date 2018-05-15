@@ -46,8 +46,8 @@ class BillingExpensesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: pdf_file_name, layout: 'pdf.pdf',
-        template: 'billing_expenses/show.html.slim', encoding: 'UTF-8'
+        render pdf: pdf_file_name(@billing_expense),
+          template: 'billing_expenses/show.html'
       end
     end
   end
@@ -91,11 +91,11 @@ class BillingExpensesController < ApplicationController
     @selected_billing_expenses = params[:selected_billing_expenses].presence || []
   end
 
-  def pdf_file_name
+  def pdf_file_name(record)
     'Spesenauszahlung-' +
       [
-        @billing_expense.volunteer.contact.full_name,
-        @billing_expense.volunteer.hours.maximum(:meeting_date)
+        record.volunteer.contact.full_name,
+        record.hours.maximum(:meeting_date)
       ].join('-').parameterize
   end
 

@@ -49,8 +49,7 @@ class AssignmentsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "assignment_#{@assignment.id}", template: 'assignments/show.html.slim',
-          layout: 'pdf.pdf', encoding: 'UTF-8'
+        render pdf: pdf_file_name(@assignment), template: 'assignments/show.html'
       end
     end
   end

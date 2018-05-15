@@ -13,9 +13,7 @@ class GroupAssignmentsController < ApplicationController
   def show
     respond_to do |format|
       format.pdf do
-        render pdf: "group_assignment_#{@group_assignment.id}",
-          template: 'group_assignments/show.pdf.slim',
-          layout: 'pdf.pdf', encoding: 'UTF-8'
+        render pdf: pdf_file_name(@group_assignment)
       end
     end
   end
