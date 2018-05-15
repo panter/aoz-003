@@ -49,7 +49,7 @@ class AssignmentsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: pdf_file_name(@assignment), template: 'assignments/show.html'
+        render_pdf_attachment @assignment
       end
     end
   end
@@ -65,7 +65,7 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params.merge(creator_id: current_user.id))
     authorize @assignment
-    if @assignment.save
+    if save_with_pdf @assignment
       redirect_to edit_assignment_path(@assignment), make_notice
     else
       render :new
@@ -75,7 +75,7 @@ class AssignmentsController < ApplicationController
   def update
     @assignment.assign_attributes(assignment_params)
     @assignment.period_end_set_by = current_user if @assignment.will_save_change_to_period_end?
-    if @assignment.save
+    if save_with_pdf @assignment
       create_update_redirect
     else
       render :edit
@@ -177,7 +177,7 @@ class AssignmentsController < ApplicationController
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :term_feedback_transfair, :comments, :additional_comments,
       :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
-      :special_agreement, :first_meeting, :remaining_hours,
+      :special_agreement, :first_meeting, :remaining_hours, :generate_pdf,
       volunteer_attributes: [:waive, :iban, :bank]
     )
   end

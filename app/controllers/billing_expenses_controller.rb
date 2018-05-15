@@ -33,8 +33,7 @@ class BillingExpensesController < ApplicationController
 
     billing_expenses.each do |billing_expense|
       @billing_expense = billing_expense
-      html = render_to_string(action: 'show.html', layout: 'pdf.pdf')
-      merged_expenses << CombinePDF.parse(WickedPdf.new.pdf_from_string(html, encoding: 'UTF-8'))
+      merged_expenses << CombinePDF.parse(render_to_pdf('show.html'))
     end
 
     send_data merged_expenses.to_pdf,

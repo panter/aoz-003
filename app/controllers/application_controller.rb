@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  include PdfHelpers
 
   protect_from_forgery with: :exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -66,10 +67,5 @@ class ApplicationController < ActionController::Base
 
     flash[:alert] = 'Bitte füllen Sie Ihr Profil aus um die Applikation zu verwenden.'
     redirect_to new_profile_path
-  end
-
-  def pdf_file_name(record)
-    date = record.try(:pdf_updated_at) || record.updated_at
-    "#{record.model_name.human}-#{record.id}-#{date.strftime '%F'}.pdf"
   end
 end

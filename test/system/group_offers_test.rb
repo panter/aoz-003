@@ -275,4 +275,70 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert_field 'Organisation'
     assert_field 'Ort'
   end
+
+  test 'creates/updates group assignment PDF when requested' do
+    use_rack_driver
+
+    group_offer = create :group_offer
+    group_assignment = create :group_assignment, group_offer: group_offer
+    login_as create(:user)
+    visit group_offer_path(group_offer)
+
+    within('.assignments-table') { refute_link 'Herunterladen' }
+
+    # create initial PDF
+
+    within('.assignments-table') { click_on 'Bearbeiten' }
+    fill_in 'Wie oft?', with: 'daily'
+
+    assert_field 'Vereinbarung erzeugen', checked: true
+
+    click_on 'Begleitung aktualisieren', match: :first
+
+    assert_text 'Begleitung wurde erfolgreich geändert.'
+
+    within('.assignments-table') { click_on 'Bearbeiten' }
+    click_on 'Herunterladen', match: :first
+    pdf = load_pdf(page.body)
+
+    assert_equal 1, pdf.page_count
+    assert_match(/Wie oft\? +daily/, pdf.pages.first.text)
+
+    # changing a field doesn't automatically update the PDF
+
+    visit edit_group_assignment_path(group_assignment)
+
+    assert_field 'Vereinbarung überschreiben', checked: false
+
+    fill_in 'Wie oft?', with: 'weekly'
+    click_on 'Begleitung aktualisieren', match: :first
+
+    assert_text 'Begleitung wurde erfolgreich geändert.'
+
+    within('.assignments-table') { click_on 'Bearbeiten' }
+    click_on 'Herunterladen', match: :first
+    pdf = load_pdf(page.body)
+
+    assert_match(/Wie oft\? +daily/, pdf.pages.first.text)
+
+    # request to update the PDF
+
+    visit edit_group_assignment_path(group_assignment)
+    check 'Vereinbarung überschreiben'
+    click_on 'Begleitung aktualisieren', match: :first
+
+    assert_text 'Begleitung wurde erfolgreich geändert.'
+
+    within('.assignments-table') { click_on 'Bearbeiten' }
+    click_on 'Herunterladen', match: :first
+    pdf = load_pdf(page.body)
+
+    assert_match(/Wie oft\? +weekly/, pdf.pages.first.text)
+
+    # make sure the download link is displayed on the group offer as well
+
+    visit group_offer_path(group_offer)
+
+    within('.assignments-table') { assert_link 'Herunterladen', count: 1 }
+  end
 end

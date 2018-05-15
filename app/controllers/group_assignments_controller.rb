@@ -13,7 +13,7 @@ class GroupAssignmentsController < ApplicationController
   def show
     respond_to do |format|
       format.pdf do
-        render pdf: pdf_file_name(@group_assignment)
+        render_pdf_attachment @group_assignment
       end
     end
   end
@@ -22,7 +22,7 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment = GroupAssignment.new(group_assignment_params)
     @group_assignment.default_values
     authorize @group_assignment
-    if @group_assignment.save
+    if save_with_pdf @group_assignment, 'show.pdf'
       redirect_to request.referer || @group_assignment.group_offer,
         notice: 'Freiwillige/r erfolgreich hinzugefügt.'
     else
@@ -36,7 +36,7 @@ class GroupAssignmentsController < ApplicationController
   def update
     @group_assignment.assign_attributes(group_assignment_params)
     period_end_set_notice, redirect_path = handle_period_end
-    if @group_assignment.save
+    if save_with_pdf @group_assignment, 'show.pdf'
       create_redirect period_end_set_notice, redirect_path
     else
       render :edit
@@ -136,7 +136,7 @@ class GroupAssignmentsController < ApplicationController
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :redirect_to, :term_feedback_transfair, :comments, :additional_comments,
       :trial_period_end, :frequency, :description, :place, :happens_at, :agreement_text,
-      :group_offer_id, :volunteer_id, :remaining_hours,
+      :group_offer_id, :volunteer_id, :remaining_hours, :generate_pdf,
       volunteer_attributes: [:waive, :iban, :bank]
     )
   end
