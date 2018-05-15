@@ -193,7 +193,7 @@ class UsersTest < ApplicationSystemTestCase
     fill_in 'Passwort', with: '123456'
     click_on 'Login aktualisieren'
 
-    assert_text "#{volunteer} Bearbeiten Persönlicher Hintergrund"
+    assert_text "#{volunteer} Bearbeiten Ausdrucken Persönlicher Hintergrund"
 
     click_on volunteer.user
     click_on 'Abmelden'
@@ -201,6 +201,6 @@ class UsersTest < ApplicationSystemTestCase
     fill_in 'Passwort', with: '123456'
     click_on 'Anmelden'
 
-    assert_text "#{volunteer} Bearbeiten Persönlicher Hintergrund"
+    assert_text "#{volunteer} Bearbeiten Ausdrucken Persönlicher Hintergrund"
   end
 end
