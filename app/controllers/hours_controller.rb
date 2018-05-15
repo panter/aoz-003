@@ -74,7 +74,8 @@ class HoursController < ApplicationController
   end
 
   def set_volunteer
-    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+    @volunteer = Volunteer.find(params[:volunteer_id])
+    authorize @volunteer
   end
 
   def hour_params
