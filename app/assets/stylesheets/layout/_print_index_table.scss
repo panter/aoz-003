@@ -1,4 +1,5 @@
 body {
+  &.volunteers,
   &.clients,
   &.assignments {
     @media print {
