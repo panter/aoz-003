@@ -66,6 +66,10 @@ module AccUtils
   end
 
   def contact_attributes(haupt_person)
+    if haupt_person[:t_Telefon1].blank? && haupt_person[:t_Telefon2].present?
+      haupt_person[:t_Telefon1] = haupt_person[:t_Telefon2]
+      haupt_person[:t_Telefon2] = nil
+    end
     { contact_attributes: {
       first_name:      haupt_person[:t_Vorname] || 'unbekannt',
       last_name:       haupt_person[:t_Nachname] || 'unbekannt',
