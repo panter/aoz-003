@@ -35,7 +35,7 @@ class ContactTest < ActiveSupport::TestCase
 
     refute @contact.valid?
     assert_equal [
-      :last_name, :first_name, :primary_email, :primary_phone,
+      :last_name, :first_name, :primary_phone,
       :street, :postal_code, :city
     ], @contact.errors.keys
   end
