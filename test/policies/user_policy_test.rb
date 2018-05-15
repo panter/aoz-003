@@ -13,8 +13,8 @@ class UserPolicyTest < PolicyAssertions::Test
     assert_permit @superadmin, @department_manager, 'destroy?'
   end
 
-  test 'Destroy: superadmin cannot delete other superadmin' do
-    refute_permit @superadmin, @other_superadmin, 'destroy?'
+  test 'Destroy: superadmin can delete other superadmin' do
+    assert_permit @superadmin, @other_superadmin, 'destroy?'
   end
 
   test 'Destroy: superadmin cannot delete itself' do

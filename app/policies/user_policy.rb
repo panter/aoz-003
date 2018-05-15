@@ -1,6 +1,6 @@
 class UserPolicy < ApplicationPolicy
-  def superadmin_and_subject_not_superadmin?
-    superadmin? && !record.superadmin?
+  def superadmin_and_not_own_subject?
+    superadmin? && user != record
   end
 
   def superadmin_or_current_user_is_subject?
@@ -15,6 +15,5 @@ class UserPolicy < ApplicationPolicy
   alias_method :show?,    :superadmin_or_current_user_is_subject?
   alias_method :edit?,    :superadmin_or_current_user_is_subject?
   alias_method :update?,  :superadmin_or_current_user_is_subject?
-
-  alias_method :destroy?, :superadmin_and_subject_not_superadmin?
+  alias_method :destroy?, :superadmin_and_not_own_subject?
 end
