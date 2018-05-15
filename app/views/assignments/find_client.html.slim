@@ -26,41 +26,58 @@ nav.navbar.section-navigation
     thead
       tr
         th.hidden-print Aktionen
+        - if policy(Client).superadmin_privileges?
+          th= sort_link @q, :acceptance, t_attr(:acceptance, Client)
+        th= sort_link @q, :active, 'Status'
         th= sort_link @q, :salutation, t_attr(:salutation, Client)
         th= sort_link @q, :contact_last_name, t_attr(:full_name, Contact)
-        th= sort_link @q, :contact_city, t_attr(:address, Client)
+        th= sort_link @q, :contact_city, t_attr(:city, Contact)
+        th= sort_link @q, :contact_postal_code, t_attr(:postal_code, Contact)
         th= sort_link @q, :birth_year, t_attr(:birth_year, Client)
         th= t_attr(:relatives, Client)
         th= sort_link @q, :nationality, t_attr(:nationality, Client)
         th= sort_link @q, :language_skills_language, t_attr(:language_skills, Client)
-        th= t_attr(:goals, Client)
-        th= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
-        th= sort_link @q, :created_at, t_attr(:created_at, Client)
-        th= sort_link @q, :gender_request, t_attr(:gender_request, Client)
-        th= sort_link @q, :age_request, t_attr(:age_request, Client)
+        th.truncate-th
+          span= t_attr(:goals, Client)
+        th= t_attr(:interests, Client)
+        - if policy(Client).superadmin_privileges?
+          th= t_attr(:involved_authority, Client)
+        th.truncate-th
+          span= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
+        th.truncate-th
+          span= sort_link @q, :created_at, t_attr(:created_at, Client)
+        - if policy(Client).show_comments?
+          th= t_attr(:comments, Client)
     tbody
       - @need_accompanying.each do |client|
         tr
           td.index-action-cell.hidden-print
             = button_link navigation_glyph(:show), client, title: 'Anzeigen'
             = button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: @volunteer)
-          td = t("salutation.#{client.salutation}") if client.salutation?
-          td = client.contact.full_name
-          td = client.contact.full_address
-          td = client.birth_year.try(:year)
+          - if policy(Client).superadmin_privileges?
+          td.button-acceptance = link_to t("acceptance.#{client.acceptance}"), '#',
+            class: "btn btn-xs btn-acceptance-#{client.acceptance} btn-acceptance-client"
+          td.button-acceptance= assignment_status_badge(client)
+          td= t("salutation.#{client.salutation}") if client.salutation?
+          td= link_to client.contact.full_name, edit_client_path(client)
+          td= client.contact.city
+          td= client.contact.postal_code
+          td= client.birth_year&.year
           td
             - client.relatives.each do |relative|
               = relative
               br
-          td = nationality_name(client.nationality)
-          td
-            - client.language_skills.each do |language|
-              = language.full_language_skills
-              br
-          td = client.goals
-          td = client.competent_authority
-          td = l(client.created_at.to_date)
-          td = t("gender_request.#{client.gender_request}") if client.gender_request.present?
-          td = t("age_request.#{client.age_request}") if client.age_request.present?
+          td= nationality_name(client.nationality)
+          td.language-skill-index
+            - [client.language_skills.german, client.language_skills.native_languages].flatten.each do |language|
+              span= language.full_language_skills
+          td= client.goals
+          td= client.interests
+          - if policy(Client).superadmin_privileges?
+            td= link_to client.involved_authority.full_name, profile_link(client.involved_authority) if client.involved_authority
+          td= client.competent_authority
+          td.no-wrap= l(client.created_at.to_date)
+          - if policy(Client).show_comments?
+            = td_truncate_content_modal(client.comments, 'Bemerkungen')
 
 = bootstrap_paginate(@need_accompanying)
