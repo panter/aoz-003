@@ -1,5 +1,7 @@
-tr
+= content_tag :tr, id: dom_id(user) do
   td.index-action-cell.hidden-print
+    - if policy(current_user).edit?
+      = button_link navigation_glyph(:edit), edit_user_path(user), title: 'Bearbeiten'
     - if policy(user).destroy?
       = button_link navigation_glyph(:delete), user,
           method: :delete, title: 'Löschen',
