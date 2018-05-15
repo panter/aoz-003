@@ -19,6 +19,7 @@ nav.navbar.section-navigation
     li= render 'gender_request_select'
     li= render 'age_request_select'
     li= render 'language_skills_language_select'
+    = boolean_filter_dropdown(:availability, Client::AVAILABILITY)
 
 .table-responsive.table-scrollable
   table.table.table-striped
