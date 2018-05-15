@@ -13,6 +13,6 @@ class Sprachen < Accessor
 
   def language(sprache)
     sprache = 'Tigrinja' if sprache == 'Tigrinia'
-    I18nData.languages(:de).select { |_key, language| language == sprache }.keys.first
+    I18n.t('language_names').find { |_key, language| language == sprache }.first
   end
 end
