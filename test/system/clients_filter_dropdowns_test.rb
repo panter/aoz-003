@@ -178,4 +178,46 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     refute_text @resigned_woman_age_middle
     refute_text @rejected_no_matter_age_middle
   end
+
+  test 'filter find client availability' do
+    Assignment.destroy_all
+    create :volunteer
+    client_flexible = create :client, flexible: true
+    client_morning = create :client, morning: true
+    client_flexible_morning = create :client, flexible: true, morning: true
+
+    login_as @user
+    visit volunteers_path
+    click_on 'Klient/in suchen', match: :first
+    click_on 'Klient/in suchen'
+
+    assert_link 'Verfügbarkeit'
+
+    assert_text client_flexible
+    assert_text client_morning
+    assert_text client_flexible_morning
+
+    click_on 'Verfügbarkeit'
+    click_on 'Flexibel'
+
+    assert_text client_flexible
+    assert_text client_flexible_morning
+    refute_text client_morning
+
+    # boolean_filter_dropdown chooses two values -> flexible & mornings
+    click_on 'Verfügbarkeit'
+    click_on 'Morgens'
+
+    assert_text client_flexible_morning
+    refute_text client_flexible
+    refute_text client_morning
+
+    # deselect flexible
+    click_on 'Verfügbarkeit'
+    click_on 'Flexibel'
+
+    assert_text client_morning
+    assert_text client_flexible_morning
+    refute_text client_flexible
+  end
 end
