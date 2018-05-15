@@ -266,7 +266,8 @@ de:
   activerecord:
     attributes:
       assignment:
-        <<: [*id-generic_keys, *id-termination-attrs]
+        <<: [*id-generic_keys, *id-termination-attrs, *id-availability]
+        availability: Verfügbarkeit
         agreement: Zustimmung
         client: Klient/in
         ended: Beendet

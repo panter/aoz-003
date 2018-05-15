@@ -13,6 +13,7 @@ class Client < ApplicationRecord
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
   PERMITS = [:N, :F, :'B-FL', :B, :C, :PF, :CH].freeze
   SALUTATIONS = [:mrs, :mr, :family].freeze
+  AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'clients'
   belongs_to :resigned_by, class_name: 'User', inverse_of: 'resigned_clients',
