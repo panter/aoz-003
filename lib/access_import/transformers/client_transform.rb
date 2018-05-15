@@ -46,7 +46,7 @@ class ClientTransform < Transformer
   end
 
   def handle_missing_haupt_person(client, personen_rolle)
-    client.contact.assign_attributes(primary_email: generate_bogus_email, street: 'xxx',
+    client.contact.assign_attributes(street: 'xxx',
       postal_code: '8000', city: 'Zürich')
     client.assign_attributes(acceptance: :resigned, resigned_at: personen_rolle[:d_Rollenende])
   end
@@ -64,13 +64,7 @@ class ClientTransform < Transformer
 
   def handle_missing_email(client, personen_rolle)
     return unless client.errors.messages[:'contact.primary_email']&.include?('ist bereits vergeben')
-    clients_with_same_email = Client.joins(:contact)
-      .where('contacts.primary_email = ?', client.contact.primary_email)
-    if clients_with_same_email.maximum(:updated_at) < personen_rolle[:d_MutDatum]
-      clients_with_same_email.map { |cl| cl.contact.update(primary_email: generate_bogus_email) }
-    else
-      client.contact.primary_email = generate_bogus_email
-    end
+    client.contact.primary_email = nil
     client.save!
   end
 

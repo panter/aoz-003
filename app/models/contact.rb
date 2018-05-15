@@ -47,7 +47,7 @@ class Contact < ApplicationRecord
   end
 
   def needs_primary_email?
-    !department?
+    !department? && !client?
   end
 
   def needs_primary_phone?
