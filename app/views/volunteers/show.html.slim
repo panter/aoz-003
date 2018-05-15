@@ -70,9 +70,10 @@ h2.small Persönlicher Hintergrund
       tr
         td= t_attr(:experience)
         td
-          dl.dl-horizontal
-            dt= t(@volunteer.experience)
-            dd= @volunteer.volunteer_experience_desc if @volunteer.volunteer_experience_desc?
+          - if @volunteer.experience?
+            dl.dl-horizontal
+              dt= t(@volunteer.experience)
+              dd= @volunteer.volunteer_experience_desc
       tr
         td= t_attr(:expectations)
         td= @volunteer.expectations
