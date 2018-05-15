@@ -7,6 +7,8 @@ class VolunteerTransform < Transformer
       nationality: haupt_person[:nationality],
       accepted_at: personen_rolle[:d_Rollenbeginn],
       resigned_at: personen_rolle[:d_Rollenende],
+      profession: haupt_person[:t_Beruf],
+      comments: [personen_rolle[:m_Bemerkungen], haupt_person[:m_Bemerkungen]].compact.join("\n\n"),
       registrar: @ac_import.import_user,
       acceptance: :accepted,
       intro_course: true,
