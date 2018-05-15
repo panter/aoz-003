@@ -109,4 +109,12 @@ class Client < ApplicationRecord
   def self.ransackable_scopes(auth_object = nil)
     ['active', 'inactive']
   end
+
+  def active?
+    accepted? && assignments.active.any?
+  end
+
+  def inactive?
+    accepted? && assignments.active.blank?
+  end
 end
