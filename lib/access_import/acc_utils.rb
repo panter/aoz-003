@@ -78,7 +78,7 @@ module AccUtils
       city:            haupt_person[:city] || 'unbekannt',
       postal_code:     haupt_person[:postal_code] || '0000',
       primary_email:   haupt_person[:email],
-      primary_phone:   haupt_person[:t_Telefon1] || '000 000 00 00',
+      primary_phone:   haupt_person[:t_Telefon1] || 'Keine Nummer für Import vorhanden',
       secondary_phone: haupt_person[:t_Telefon2]
     } }
   end
