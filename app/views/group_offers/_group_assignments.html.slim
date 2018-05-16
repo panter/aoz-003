@@ -30,5 +30,5 @@
             td= l(ga_log.created_at)
             td
               = "Quittiert von "
-              = link_to ga_log.termination_verified_by.full_name, profile_link(ga_log.termination_verified_by)
+              = link_to_if policy(ga_log.termination_verified_by.profile).edit?, ga_log.termination_verified_by.full_name, profile_link(ga_log.termination_verified_by)
               = " am #{l(ga_log.termination_verified_at.to_date)}"
