@@ -10,7 +10,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     @group_offer = create :group_offer, volunteers: [@volunteer]
     create :hour, hourable: @group_offer, volunteer: @volunteer, created_at: 2.days.ago
     @group_offer_feedback = create :feedback, feedbackable: @group_offer, author: @volunteer.user,
-      volunteer: @volunteer
+      volunteer: @volunteer, comments: 'feedback_volunteer1'
     login_as @volunteer.user
   end
 
@@ -105,19 +105,21 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
 
   test 'volunteer can see only own hours and feedbacks of group assignment' do
     @group_assignment1 = @group_offer.group_assignments.where(volunteer: @volunteer).last
-    @hour_volunteer1 = create :hour, volunteer: @volunteer, hourable: @group_offer, hours: 2
+    @hour_volunteer1 = create :hour, volunteer: @volunteer, hourable: @group_offer,
+      comments: 'hour_volunteer1'
 
     @volunteer2 = create :volunteer_with_user
     @group_assignment2 = @group_offer.group_assignments.where(volunteer: @volunteer2).last
-    @hour_volunteer2 = create :hour, volunteer: @volunteer2, hourable: @group_offer, hours: 3
+    @hour_volunteer2 = create :hour, volunteer: @volunteer2, hourable: @group_offer,
+      comments: 'hour_volunteer2'
     @group_offer_feedback2 = create :feedback, feedbackable: @group_offer, author: @volunteer2.user,
-      volunteer: @volunteer2
+      volunteer: @volunteer2, comments: 'feedback_volunteer2'
 
     visit last_submitted_hours_and_feedbacks_group_assignment_path(@group_assignment1)
 
-    assert_text @hour_volunteer1.hours
-    assert_text @group_offer_feedback.comments
-    refute_text @hour_volunteer2.hours
-    assert_text @group_offer_feedback.comments
+    assert_text 'hour_volunteer1'
+    assert_text 'feedback_volunteer1'
+    refute_text 'hour_volunteer2'
+    refute_text 'feedback_volunteer2'
   end
 end

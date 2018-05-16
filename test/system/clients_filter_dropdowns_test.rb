@@ -170,7 +170,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     refute_text @rejected_no_matter_age_middle
 
     click_on 'Sprachkenntnisse: Alle'
-    click_on client_with_language_skills.language_skills.first.language_name
+    click_on client_with_language_skills.language_skills.first.language_name, match: :first
 
     assert_text client_with_language_skills
     refute_text @accepted_woman_age_old
