@@ -102,4 +102,22 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert_text @group_offer_feedback.comments
     assert_text 'new feedback from volunteer'
   end
+
+  test 'volunteer can see only own hours and feedbacks of group assignment' do
+    @group_assignment1 = @group_offer.group_assignments.where(volunteer: @volunteer).last
+    @hour_volunteer1 = create :hour, volunteer: @volunteer, hourable: @group_offer, hours: 2
+
+    @volunteer2 = create :volunteer_with_user
+    @group_assignment2 = @group_offer.group_assignments.where(volunteer: @volunteer2).last
+    @hour_volunteer2 = create :hour, volunteer: @volunteer2, hourable: @group_offer, hours: 3
+    @group_offer_feedback2 = create :feedback, feedbackable: @group_offer, author: @volunteer2.user,
+      volunteer: @volunteer2
+
+    visit last_submitted_hours_and_feedbacks_group_assignment_path(@group_assignment1)
+
+    assert_text @hour_volunteer1.hours
+    assert_text @group_offer_feedback.comments
+    refute_text @hour_volunteer2.hours
+    assert_text @group_offer_feedback.comments
+  end
 end
