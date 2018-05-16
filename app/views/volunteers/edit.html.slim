@@ -1,5 +1,9 @@
+- if policy(Volunteer).superadmin_privileges?
+  - if @volunteer.import.present?
+    = render 'import_account_invite', volunteer: @volunteer
+
 = simple_form_for(@volunteer) do |f|
-  h1= @volunteer.full_name
+  h1.m-b-20= @volunteer.full_name
   = render 'buttons'
   = f.button :submit
   = render 'volunteers/form', f: f, volunteer: @volunteer
@@ -24,11 +28,9 @@
   - if policy(Event).show? && @volunteer_events.present?
     = render 'events/volunteer_events', events: @volunteer_events
 
-
   - if current_user.volunteer?
     = f.button :submit, t('update_profile')
   - else
     = f.button :submit
-
 
 = render 'buttons'

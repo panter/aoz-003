@@ -89,11 +89,11 @@ class VolunteersTest < ApplicationSystemTestCase
 
     first(:button, 'Freiwillige/n erfassen').click
 
-    assert page.has_text? 'Probezeitbericht erhalten Ja'
-    assert page.has_text? 'Einführungskurs besucht Ja'
-    assert page.has_text? 'Dossier Freiwillige engagiert verschickt Ja'
-    assert page.has_text? 'Kontodaten eingetragen Ja'
-    assert page.has_text? 'Abschlussevaluation erhalten Ja'
+    assert page.has_field? 'Probezeitbericht erhalten', checked: true
+    assert page.has_field? 'Einführungskurs besucht', checked: true
+    assert page.has_field? 'Dossier Freiwillige engagiert verschickt', checked: true
+    assert page.has_field? 'Kontodaten eingetragen', checked: true
+    assert page.has_field? 'Abschlussevaluation erhalten', checked: true
   end
 
   test 'volunteer checklist has default values (false)' do
@@ -109,11 +109,11 @@ class VolunteersTest < ApplicationSystemTestCase
 
     first(:button, 'Freiwillige/n erfassen').click
 
-    assert page.has_text? 'Probezeitbericht erhalten Nein'
-    assert page.has_text? 'Einführungskurs besucht Nein'
-    assert page.has_text? 'Dossier Freiwillige engagiert verschickt Nein'
-    assert page.has_text? 'Kontodaten eingetragen Nein'
-    assert page.has_text? 'Abschlussevaluation erhalten Nein'
+    assert page.has_field? 'Probezeitbericht erhalten', checked: false
+    assert page.has_field? 'Einführungskurs besucht', checked: false
+    assert page.has_field? 'Dossier Freiwillige engagiert verschickt', checked: false
+    assert page.has_field? 'Kontodaten eingetragen', checked: false
+    assert page.has_field? 'Abschlussevaluation erhalten', checked: false
   end
 
   test 'rejection fields are shown only when the volunteer is rejected' do
@@ -337,5 +337,32 @@ class VolunteersTest < ApplicationSystemTestCase
 
     visit edit_volunteer_path(@resigned)
     assert page.has_field? 'Prozess', disabled: true
+  end
+
+  test 'external volunteer can not get machted with a client' do
+    @external = create :volunteer_external, acceptance: :accepted
+    visit volunteers_path
+
+    # "Klient/en" suchen button is not shown on volunteer index
+    within page.find('tr', text: @external.full_name) do
+      assert_text 'Nicht zuweisbar'
+    end
+
+    # "Klient/en" suchen button is not shown on volunteer show
+    visit volunteer_path(@external)
+    refute page.has_button? 'Klient/in suchen'
+
+    # "Klient/en" suchen button is not shown on volunteer edit
+    visit edit_volunteer_path(@external)
+    refute page.has_button? 'Klient/in suchen'
+  end
+
+  test 'department_manager_can_see_acceptance_manipulation_on_his_volunteers_edit' do
+    department_manager = create :department_manager
+    volunteer = create :volunteer_with_user, registrar: department_manager, acceptance: :undecided
+    login_as department_manager
+    visit edit_volunteer_path(volunteer)
+    assert page.has_text? 'Aufnahme Verwaltung'
+    assert page.has_select?('Prozess')
   end
 end

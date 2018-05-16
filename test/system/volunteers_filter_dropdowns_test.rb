@@ -83,7 +83,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
   test 'boolean filters for single accompainment' do
     false_volunteer = create :volunteer, man: false, woman: false, morning: false, workday: false
     within '.section-navigation' do
-      click_link 'Einzelbegleitungen'
+      click_link 'Interessiert an Einzelbegleitung'
       click_link 'Mann'
     end
     visit current_url
@@ -92,7 +92,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? false_volunteer.to_s
     end
     within '.section-navigation' do
-      click_link 'Einzelbegleitungen'
+      click_link 'Interessiert an Einzelbegleitung'
       assert page.has_link? 'Mann', class: 'bg-success'
       click_link 'Frau'
     end
@@ -102,7 +102,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? false_volunteer.to_s
     end
     within '.section-navigation' do
-      click_link 'Einzelbegleitungen'
+      click_link 'Interessiert an Einzelbegleitung'
       assert page.has_link? 'Mann', class: 'bg-success'
       assert page.has_link? 'Frau', class: 'bg-success'
       click_link 'Frau'
@@ -120,7 +120,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
   test 'Filter for group offer categories' do
     within '.section-navigation' do
-      click_link 'Gruppenangebote in AOZ-Einrichtungen'
+      click_link 'Interessiert an Gruppenangebot Kategorie'
       click_link @c1
     end
     visit current_url
@@ -130,7 +130,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @volunteer3
     end
     within '.section-navigation' do
-      click_link 'Gruppenangebote in AOZ-Einrichtungen'
+      click_link 'Interessiert an Gruppenangebot Kategorie'
       click_link @c3
     end
     visit current_url
@@ -140,7 +140,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       refute page.has_text? @volunteer3
     end
     within '.section-navigation' do
-      click_link 'Gruppenangebote in AOZ-Einrichtungen'
+      click_link 'Interessiert an Gruppenangebot Kategorie'
       click_link @c2
     end
     visit current_url

@@ -17,7 +17,7 @@ table.table.table-striped
   tbody
     - @feedbacks.each do |record|
       tr
-        td= link_to record.volunteer.full_name, volunteer_path(record.volunteer)
+        td= link_to record.volunteer.full_name, edit_volunteer_path(record.volunteer)
         td= link_to record.feedbackable.to_label, url_for(record.feedbackable)
         td= record.goals
         td= record.achievements

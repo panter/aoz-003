@@ -154,10 +154,10 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'state_active_method_for_single_volunteer_instance' do
-    volunteer = create :volunteer, acceptance: :undecided
+    volunteer = create :volunteer_with_user, acceptance: :undecided
     assert_not volunteer.accepted?
     assert_not volunteer.active?
-    volunteer.update(acceptance: 'accepted', user: create(:user_volunteer))
+    volunteer.update(acceptance: 'accepted')
     assert volunteer.accepted?
     assert_not volunteer.active?
     assignment = create :assignment, volunteer: volunteer, period_start: nil, period_end: nil
@@ -178,10 +178,10 @@ class VolunteerStateTest < ActiveSupport::TestCase
   end
 
   test 'state_inactive_method_for_single_volunteer_instance' do
-    volunteer = create :volunteer, acceptance: :undecided
+    volunteer = create :volunteer_with_user, acceptance: :undecided
     assert_not volunteer.accepted?
     assert_not volunteer.inactive?
-    volunteer.update(acceptance: 'accepted', user: create(:user_volunteer))
+    volunteer.update(acceptance: 'accepted')
     assert volunteer.accepted?
     assert volunteer.inactive?
     assignment = create :assignment, volunteer: volunteer, period_start: nil, period_end: nil

@@ -2,6 +2,8 @@ class BillingExpense < ApplicationRecord
   include ImportRelation
   include FullBankDetails
 
+  PERIOD = 6.months
+
   attr_accessor :import_mode
 
   before_validation :compute_amount, unless: :import_mode
@@ -12,10 +14,21 @@ class BillingExpense < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  scope :period, lambda { |date|
+    date = Time.zone.parse(date) unless date.is_a? Time
+
+    joins(:hours)
+      .merge(Hour.date_between(:meeting_date, date, date + PERIOD))
+  }
+
   AMOUNT = [50, 100, 150].freeze
 
   validates :volunteer, :user, :iban, presence: true
   validates :amount, inclusion: { in: AMOUNT }, unless: :import_mode
+
+  def self.ransackable_scopes(auth_object = nil)
+    ['period']
+  end
 
   def self.amount_for(hours)
     if hours > 50
@@ -46,6 +59,33 @@ class BillingExpense < ApplicationRecord
         )
       end
     end
+  end
+
+  def self.generate_periods
+    periods = []
+
+    hours = Hour.billed
+    oldest_date = hours.minimum(:meeting_date) || Time.zone.now
+    newest_date = hours.maximum(:meeting_date) || Time.zone.now
+
+    start_of_year = newest_date.beginning_of_year
+    date = start_of_year
+    date += PERIOD if newest_date >= start_of_year + PERIOD
+
+    until date < oldest_date - PERIOD
+      periods << {
+        q: :period,
+        value: date.strftime('%Y-%m-%d'),
+        text: '%s - %s' % [
+          I18n.l(date, format: '%B %Y'),
+          I18n.l(date + PERIOD - 1.day, format: '%B %Y')
+        ]
+      }
+
+      date -= PERIOD
+    end
+
+    periods
   end
 
   private

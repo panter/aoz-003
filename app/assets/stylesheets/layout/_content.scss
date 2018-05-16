@@ -12,6 +12,8 @@
 }
 
 .dl-horizontal {
+  margin-bottom: 0;
+
   dt {
     font-weight: normal;
     text-align: left;
@@ -206,4 +208,11 @@ li.button-acceptance a {
     display: inline-block;
     margin-bottom: 0.3em;
   }
+}
+
+.btn-lg-accepted {
+  @extend .btn-success;
+  padding: 16px 32px 16px 32px;
+  margin: 16px;
+  font-size: 16px;
 }

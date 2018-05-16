@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   concern :update_submitted_at do
     get :last_submitted_hours_and_feedbacks, on: :member
-    get :update_submitted_at, on: :member
     put :update_submitted_at, on: :member
+    get :hours_and_feedbacks_submitted, on: :collection
   end
 
   concern :mark_submitted_at do
@@ -27,8 +27,6 @@ Rails.application.routes.draw do
   end
 
   concern :termination_actions do
-    put :set_end_today, on: :member
-
     member do
       get :terminate
       put :update_terminated_at
@@ -56,7 +54,6 @@ Rails.application.routes.draw do
   resources :assignments, except: [:destroy], concerns: [:update_submitted_at, :termination_actions] do
     get :volunteer_search, on: :collection
     get :client_search, on: :collection
-
   end
   resources :client_notifications, :departments, :performance_reports, :email_templates, :users
 
@@ -71,7 +68,9 @@ Rails.application.routes.draw do
 
   resources :feedbacks, only: [:new, :create]
   resources :group_assignments, only: [:show, :create, :edit, :update],
-    concerns: [:update_submitted_at, :hours_resources, :termination_actions]
+    concerns: [:update_submitted_at, :hours_resources, :termination_actions] do
+    put :set_end_today, on: :member
+  end
 
   resources :group_offer_categories, except: [:destroy]
 
@@ -80,6 +79,7 @@ Rails.application.routes.draw do
     get :initiate_termination, on: :member
     put :submit_initiate_termination, on: :member
     patch :end_all_assignments, on: :member
+    get :search_volunteer, on: :member
   end
 
   get 'list_responses/feedbacks', to: 'list_responses#feedbacks'
@@ -113,7 +113,9 @@ Rails.application.routes.draw do
     resources :journals, except: [:show]
   end
 
-  resources :billing_expenses, except: [:edit, :update]
+  resources :billing_expenses, except: [:edit, :update] do
+    post :download, on: :collection
+  end
 
   root 'application#home'
 end

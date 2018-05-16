@@ -1,0 +1,21 @@
+.thanks {
+  #thanks_body {
+    min-height: 30vh;
+  }
+
+  .thanks-preview {
+    display: inline-block;
+    max-width: 100%;
+    padding: 8px 15px 5px 10px;
+
+    .thanks-title {
+      font-size: floor(($font-size-base * 2.1));
+    }
+
+    .thanks-text p {
+      margin-bottom: 2px;
+      font-size: 130%;
+    }
+  }
+
+}

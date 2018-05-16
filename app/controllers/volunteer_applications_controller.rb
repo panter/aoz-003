@@ -24,6 +24,7 @@ class VolunteerApplicationsController < ApplicationController
   end
 
   def thanks
+    @email_template = EmailTemplate.signup.active.first!
     authorize :volunteer_application, :thanks?
   end
 

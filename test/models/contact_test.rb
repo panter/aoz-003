@@ -5,41 +5,56 @@ class ContactTest < ActiveSupport::TestCase
     @contact = Contact.new
   end
 
-  test 'Dont require first and lastname on profiles' do
-    @contact.contactable_type = 'Profile'
+  test 'email validation' do
+    contact = build :contact, contactable: build(:volunteer)
+    contact.primary_email = nil
 
-    assert @contact.valid?
+    refute contact.valid?
+    assert_includes contact.errors.keys, :primary_email
+
+    contact.primary_email = @contact.primary_email
+
+    refute contact.valid?
+    assert_includes contact.errors.keys, :primary_email
+
+    contact.primary_email = FFaker::Internet.unique.email
+
+    assert contact.valid?
   end
 
-  test 'Required fields for Clients' do
+  test 'required fields for profiles' do
+    @contact.contactable_type = 'Profile'
+
+    refute @contact.valid?
+    assert_equal [:primary_email, :primary_phone],
+      @contact.errors.keys
+  end
+
+  test 'required fields for clients' do
     @contact.contactable_type = 'Client'
 
     refute @contact.valid?
-    assert_equal @contact.errors.keys, [:last_name, :first_name, :primary_phone, :street,
-                                        :postal_code, :city]
+    assert_equal [
+      :last_name, :first_name, :primary_phone,
+      :street, :postal_code, :city
+    ], @contact.errors.keys
   end
 
-  test 'Required fields for Volunteers' do
+  test 'required fields for volunteers' do
     @contact.contactable_type = 'Volunteer'
 
     refute @contact.valid?
-    assert_equal @contact.errors.keys, [:last_name, :first_name, :primary_email, :primary_phone,
-                                        :street, :postal_code, :city]
+    assert_equal [
+      :last_name, :first_name, :primary_email, :primary_phone,
+      :street, :postal_code, :city
+    ], @contact.errors.keys
   end
 
-  test 'Required fields for external Volunteers' do
-    volunteer = build :volunteer_external
-    volunteer.contact = Contact.new
-    refute volunteer.valid?
-    assert_equal volunteer.contact.errors.keys, [:last_name, :first_name, :street, :postal_code,
-                                                 :city]
-  end
-
-  test 'requires only last name for departments' do
+  test 'required fields for departments' do
     @contact.contactable_type = 'Department'
 
     refute @contact.valid?
-    assert_equal @contact.errors.keys, [:last_name]
+    assert_equal [:last_name], @contact.errors.keys
   end
 
   test 'update_first_or_lastname_changes_full_name_attribute' do

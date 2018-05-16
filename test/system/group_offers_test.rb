@@ -36,7 +36,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_button 'Gruppenangebot erfassen'
 
     assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
-    assert page.has_link? department_manager.department.first.contact.last_name
+    refute page.has_select? 'Standort'
   end
 
   test 'category for a group offer is required' do
@@ -49,27 +49,31 @@ class GroupOffersTest < ApplicationSystemTestCase
   end
 
   test 'group offer can be deactivated' do
-    group_offer = create :group_offer
+    @group_offer = create :group_offer
     login_as create(:user)
-    visit group_offers_path
-    assert page.has_text? group_offer.title
+    visit group_offer_path(@group_offer)
+    assert page.has_text? @group_offer.title
     refute page.has_link? 'Aktivieren'
-    click_link 'Deaktivieren'
+    accept_confirm do
+      first(:link, 'Deaktivieren').click
+    end
 
-    assert page.has_text? group_offer.title
+    assert page.has_text? @group_offer.title
     assert page.has_link? 'Aktivieren'
     refute page.has_link? 'Deaktivieren'
   end
 
   test 'group_offer_can_be_activated' do
-    group_offer = create :group_offer, active: false
+    @group_offer = create :group_offer, active: false
     login_as create(:user)
-    visit group_offers_path
-    assert page.has_text? group_offer.title
+    visit group_offer_path(@group_offer)
+    assert page.has_text? @group_offer.title
     assert page.has_link? 'Aktivieren'
-    click_link 'Aktivieren'
+    accept_confirm do
+      first(:link, 'Aktivieren').click
+    end
 
-    assert page.has_text? group_offer.title
+    assert page.has_text? @group_offer.title
     assert page.has_link? 'Deaktivieren'
     refute page.has_link? 'Aktivieren'
   end
@@ -188,6 +192,45 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     within '#add-volunteers' do
       assert_text volunteer
+    end
+  end
+
+  test 'basic_group_offer_find_volunteer_search_is_working' do
+    group_offer = create :group_offer
+    volunteer = create :volunteer
+    volunteer_two = create :volunteer
+    group_assignment = create :group_assignment, group_offer: group_offer, period_start: 2.days.ago
+
+    login_as create(:user)
+    visit group_offer_path(group_offer)
+    click_link 'Freiwillige hinzufügen'
+
+    within '#add-volunteers' do
+      assert page.has_text? volunteer.contact.full_name
+      assert page.has_text? volunteer_two.contact.full_name
+      refute page.has_text? group_assignment.volunteer.contact.full_name
+
+      fill_in id: 'q_contact_full_name_cont',	with: volunteer_two.contact.full_name
+      click_button 'Suchen'
+    end
+
+    within '#add-volunteers' do
+      assert page.has_text? volunteer_two.contact.full_name
+      refute page.has_text? volunteer.contact.full_name
+    end
+  end
+
+  test 'terminated_volunteer_is_not_listed_in_ad' do
+    group_offer = create :group_offer
+    volunteer = create :volunteer
+    terminated = create :volunteer, acceptance: :resigned, resigned_at: 2.days.ago
+    login_as create(:user)
+    visit group_offer_path(group_offer)
+    click_link 'Freiwillige hinzufügen'
+
+    within '#add-volunteers' do
+      assert page.has_text? volunteer.contact.full_name
+      refute page.has_text? terminated.contact.full_name
     end
   end
 

@@ -4,5 +4,12 @@ ul.list-inline
   li= button_link navigation_glyph(:download), group_offer_path(@group_offer, format: :pdf), title: 'Herunterladen'
   li= link_to navigation_glyph(:print), group_offer_path(@group_offer, print: :true, format: :pdf),
     { class: 'btn btn-default btn-md', target: '_blank' }
-
-
+  - if @group_offer.period_end.blank?
+    li= button_link navigation_glyph(@group_offer.active? ? :deactivate : :activate),
+      change_active_state_group_offer_path(@group_offer), method: :put,
+      title: (@group_offer.active? ? 'Deaktivieren' : 'Aktivieren'),
+      data: { confirm: @group_offer.active? ? 'Gruppenangebot wirklich deaktivieren?' : 'Gruppenangebot wirklich aktivieren?' }
+  - if policy(@group_offer).initiate_termination?
+    li= button_link navigation_glyph(:terminate),
+      initiate_termination_group_offer_path(@group_offer), title: 'Beenden',
+      data: { confirm: 'Gruppenangebot wirklich beenden?'}

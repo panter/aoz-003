@@ -18,6 +18,11 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       group_offer_category: @c1)
     @part_d2 = create(:group_offer, title: 'p2', offer_state: 'partially_occupied', department: @d2,
       group_offer_category: @c2)
+    @active = create(:group_offer, title: 'active_group_offer', department: @d1,
+      group_offer_category: @c2, active: true)
+    @inactive = create(:group_offer, title: 'inactive_group_offer', department: @d2,
+      group_offer_category: @c2, active: false)
+
     login_as create(:user)
     visit group_offers_path
     within 'tbody' do
@@ -27,6 +32,8 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @open_d2.title
       assert page.has_text? @full_d2.title
       assert page.has_text? @part_d2.title
+      assert page.has_text? @active.title
+      assert page.has_text? @inactive.title
     end
   end
 
@@ -125,6 +132,57 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       refute page.has_text? @open_d2.title
       refute page.has_text? @full_d2.title
       refute page.has_text? @part_d2.title
+    end
+  end
+
+  test 'filter by status active' do
+    within '.section-navigation#filters' do
+      click_link 'Status'
+      click_link 'Aktiv'
+    end
+    visit current_url
+    within 'tbody' do
+      assert_text @active.title
+      refute_text @inactive.title
+    end
+  end
+
+  test 'filter by status inactive' do
+    within '.section-navigation#filters' do
+      click_link 'Status'
+      click_link 'Inaktiv'
+    end
+    visit current_url
+    within 'tbody' do
+      assert_text @inactive.title
+      assert_text find('tr', text: 'active_group_offer', visible: false)
+    end
+  end
+
+  test 'filter by offer type internal/external' do
+    @internal = create(:group_offer)
+    @external = create(:group_offer, :external)
+
+    # filter for intern
+    within '.section-navigation#filters' do
+      click_link 'Intern/Extern'
+      click_link 'Intern'
+    end
+    visit current_url
+    within 'tbody' do
+      assert_text @internal.title
+      refute_text @external.title
+    end
+
+    # filter for extern
+    within '.section-navigation#filters' do
+      click_link 'Intern/Extern'
+      click_link 'Extern'
+    end
+    visit current_url
+    within 'tbody' do
+      assert_text @external.title
+      refute_text @internal.title
     end
   end
 end

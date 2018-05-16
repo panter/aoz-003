@@ -35,13 +35,6 @@ class SocialworkerTest < ApplicationSystemTestCase
     end
   end
 
-  test 'cannot see comment field in client creation or show' do
-    visit new_client_path
-    assert_not page.has_field? 'Bemerkungen'
-    visit client_path(@socialworker.clients.first)
-    assert_not page.has_content? 'Bemerkungen'
-  end
-
   test 'can only see her own clients' do
     visit clients_path
     other_socialworker = create :social_worker, :with_clients

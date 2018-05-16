@@ -15,8 +15,6 @@ class GroupOffer < ApplicationRecord
   # termination record relations
   belongs_to :period_end_set_by, -> { with_deleted }, class_name: 'User', optional: true,
     inverse_of: 'group_offer_period_ends_set'
-  belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true,
-    inverse_of: 'group_offer_terminations_verified'
 
   has_many :group_assignments, dependent: :destroy
   accepts_nested_attributes_for :group_assignments, allow_destroy: true
@@ -42,6 +40,7 @@ class GroupOffer < ApplicationRecord
 
   validates :department, presence: true, if: :internal?
   validates :organization, :location, presence: true, if: :external?
+  validates :active, inclusion: { in: [false] }, if: :terminated?
 
   scope :active, (-> { where(active: true) })
   scope :inactive, (-> { where(active: false) })
@@ -72,12 +71,18 @@ class GroupOffer < ApplicationRecord
     date_between_inclusion(:period_end, start_date, end_date)
   }
 
-  def active_group_assignments_between?(start_date, end_date)
-    group_assignments.active_between(start_date, end_date).any?
-  end
+  scope :terminated, (-> { field_not_nil(:period_end_set_by) })
 
   def terminatable?
-    group_assignments.have_start.any? || group_assignment_logs.any?
+    group_assignments.unterminated.none?
+  end
+
+  def terminated?
+    period_end_set_by.present? && period_end.present?
+  end
+
+  def active_group_assignments_between?(start_date, end_date)
+    group_assignments.active_between(start_date, end_date).any?
   end
 
   def all_group_assignments_ended_within?(start_date, end_date)

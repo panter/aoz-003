@@ -3,8 +3,8 @@ require 'application_system_test_case'
 class TrialFeedbacksTest < ApplicationSystemTestCase
   def setup
     use_rack_driver
-    @user_volunteer = create :user_volunteer, email: 'volunteer@example.com'
-    @volunteer = create :volunteer, user: @user_volunteer
+    @volunteer = create :volunteer_with_user
+    @user_volunteer = @volunteer.user
     @assignment = create :assignment, volunteer: @volunteer
     @superadmin = create :user
     @other_volunteer = create :volunteer_with_user
@@ -33,7 +33,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     within '.navbar-top' do
       click_link I18n.t("role.#{@user_volunteer.role}"), href: '#'
     end
-    click_link 'Profil anzeigen'
+    click_link 'Profil bearbeiten'
     within '.assignments-table' do
       click_link 'Probezeit Feedback Liste'
     end
@@ -48,7 +48,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     within '.navbar-top' do
       click_link I18n.t("role.#{@user_volunteer.role}"), href: '#'
     end
-    click_link 'Profil anzeigen'
+    click_link 'Profil bearbeiten'
     within '.group-assignments-table' do
       click_link 'Probezeit Feedback Liste'
     end
@@ -107,7 +107,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
 
   test 'volunteer_can_create_only_their_trial_feedbacks_on_assignment' do
     other_assignment = create :assignment,
-      volunteer: create(:volunteer, user: create(:user_volunteer))
+      volunteer: create(:volunteer_with_user)
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_assignment, TrialFeedback])
     assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
@@ -116,8 +116,8 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
   test 'volunteer_can_create_only_their_trial_feedbacks_on_group_offer' do
     other_group_offer = create :group_offer, title: 'other_group_offer',
       volunteers: [
-        create(:volunteer, user: create(:user_volunteer)),
-        create(:volunteer, user: create(:user_volunteer))
+        create(:volunteer_with_user),
+        create(:volunteer_with_user)
       ]
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_group_offer, TrialFeedback])

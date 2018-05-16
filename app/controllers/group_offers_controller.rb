@@ -2,6 +2,7 @@ class GroupOffersController < ApplicationController
   include GroupAssignmentsAttributes
   before_action :set_group_offer, except: [:index, :search, :new, :create]
   before_action :set_department_manager_collection
+  before_action :set_volunteers, only: [:show, :search_volunteer, :edit]
 
   def index
     authorize GroupOffer
@@ -27,7 +28,7 @@ class GroupOffersController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        @q = policy_scope(Volunteer.candidates_for_group_offer(@group_offer)).ransack(params[:q])
+        @q = @volunteers.ransack(params[:q])
         @volunteers = @q.result.paginate(page: params[:page])
       end
 
@@ -38,12 +39,23 @@ class GroupOffersController < ApplicationController
     end
   end
 
+  def search_volunteer
+    @q = @volunteers.ransack(contact_full_name_cont: params[:term])
+    @volunteers = @q.result distinct: true
+    respond_to do |format|
+      format.json
+    end
+  end
+
   def new
     @group_offer = GroupOffer.new
     authorize @group_offer
   end
 
-  def edit; end
+  def edit
+    @q = @volunteers.ransack(params[:q])
+    @volunteers = @q.result.paginate(page: params[:page])
+  end
 
   def create
     @group_offer = GroupOffer.new(group_offer_params)
@@ -51,7 +63,7 @@ class GroupOffersController < ApplicationController
     @group_offer.department ||= current_user.department&.first
     authorize @group_offer
     if @group_offer.save
-      redirect_to @group_offer, make_notice
+      redirect_to edit_group_offer_path(@group_offer), make_notice
     else
       render :new
     end
@@ -59,7 +71,7 @@ class GroupOffersController < ApplicationController
 
   def update
     if @group_offer.update(group_offer_params)
-      redirect_to @group_offer, make_notice
+      redirect_to edit_group_offer_path(@group_offer), make_notice
     else
       render :edit
     end
@@ -67,10 +79,11 @@ class GroupOffersController < ApplicationController
 
   def change_active_state
     if @group_offer.update(active: !@group_offer.active)
-      redirect_to group_offers_url,
+      redirect_back fallback_location: group_offer_path(@group_offer),
         notice: @group_offer.active? ? t('.activated') : t('.deactivated')
     else
-      redirect_to group_offers_url, notice: t('.no-change')
+      redirect_back fallback_location: group_offer_path(@group_offer),
+        notice: t('.no-change')
     end
   end
 
@@ -110,6 +123,10 @@ class GroupOffersController < ApplicationController
 
   def set_department_manager_collection
     @department_managers = User.department_managers
+  end
+
+  def set_volunteers
+    @volunteers = policy_scope(Volunteer.candidates_for_group_offer(@group_offer))
   end
 
   def group_offer_params

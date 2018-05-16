@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'ostruct'
-require 'utility/performance_report_generator'
 
 class PerformanceReportTest < ActiveSupport::TestCase
   include PerformanceReportGenerator

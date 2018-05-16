@@ -1,16 +1,18 @@
-= simple_form_for(@group_assignment, url: group_assignment_path(@group_assignment, redirect_to: params[:redirect_to])) do |f|
+= simple_form_for(@group_assignment, url: group_assignment_path(@group_assignment, redirect_to: default_redirect)) do |f|
   = simple_error_notice f
+  = f.button :submit
 
   dl.dl-horizontal.m-t-30
     dt Freiwillige/r:
-    dd= link_to @group_assignment.volunteer.contact.full_name, volunteer_path(@group_assignment.volunteer), target: '_blank'
+    dd= link_to @group_assignment.volunteer.contact.full_name, edit_volunteer_path(@group_assignment.volunteer), target: '_blank'
     dt Gruppenangebot:
     dd= link_to @group_assignment.group_offer.to_label, group_offer_path(@group_assignment.group_offer), target: '_blank'
   .row
     .col-xs-12.col-md-6
       = f.input :period, as: :date_range_picker, label: false
-      = f.input :comments
-      = f.input :additional_comments
+      - if policy(GroupAssignment).show_comments?
+        = f.input :comments
+        = f.input :additional_comments
       = f.input :agreement_text, input_html: { class: 'text-body' }, label: t('assignment_pdf.agreement_text')
       fieldset
         label Rolle

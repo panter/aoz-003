@@ -23,22 +23,13 @@ dl.dl-horizontal
         @group_assignment.department, target: '_blank')
   dt Einsatzdauer:
   dd= "#{l(@group_assignment.period_start)} bis #{l(@group_assignment.period_end)}" if @group_assignment.period_start.present?
+  dt Total bisherige Stunden:
+  dd= @group_assignment.volunteer.hours.total_hours
+
 hr
 
-
-h2 Bisherige Einträge
-
-h3 Stunden
-= render 'last_submitted_hours', hours: @group_assignment.hours, confirmable: @group_assignment
-p= button_link t_title(:new, Hour), new_polymorphic_path([@group_assignment.volunteer, @group_assignment.group_offer, Hour], redirect_to: :terminate, group_assignment: @group_assignment.id)
-
-h3 Bisheriges Feedback
-= render 'last_submitted_feedbacks', feedbacks: @group_assignment.feedbacks, confirmable: @group_assignment
-p= button_link t_title(:new, Feedback), new_polymorphic_path([@group_assignment.volunteer, @group_assignment.group_offer, Feedback], redirect_to: :terminate, group_assignment: @group_assignment.id)
-hr
-
-- if @group_assignment.termination_feedback_submitted?
-  h2 Beendigungs Feedback vom #{l(@group_assignment.termination_submitted_at.to_date)}
+- if @group_assignment.termination_verifiable?
+  h2.m-t-20 Beendigungs Feedback vom #{l(@group_assignment.termination_submitted_at.to_date)}
 
   table.table.table-striped
     thead
@@ -47,34 +38,45 @@ hr
         th= t('termination_feedback_questions.term_feedback_success')
         th= t('termination_feedback_questions.term_feedback_problems')
         th= t('termination_feedback_questions.term_feedback_transfair')
+        th= t('termination_feedback_questions.term_remaining_hours')
     tbody
       tr
-        td= @group_assignment.term_feedback_activities if @group_assignment.term_feedback_activities?
-        td= @group_assignment.term_feedback_success if @group_assignment.term_feedback_success?
-        td= @group_assignment.term_feedback_problems if @group_assignment.term_feedback_problems?
-        td= @group_assignment.term_feedback_transfair if @group_assignment.term_feedback_transfair?
+        td= @group_assignment.term_feedback_activities
+        td= @group_assignment.term_feedback_success
+        td= @group_assignment.term_feedback_problems
+        td= @group_assignment.term_feedback_transfair
+        td= @group_assignment.hours.last&.hours || 0.0
+
 - else
-  h2 Beendigung Abschliessen
+  h2.m-t-20 Beendigung Abschliessen
 
   = simple_form_for(@group_assignment, url: update_terminated_at_group_assignment_path, method: :put) do |f|
-    fieldset
-      label.m-b-20.text-bigger-2 Rückmeldungen zur Beendigung des Gruppeneinsatzes
-      = f.input :term_feedback_activities
-      = f.input :term_feedback_success
-      = f.input :term_feedback_problems
-      = f.input :term_feedback_transfair
+    .row
+      .col-xs-12.col-md-6
+        fieldset
+          legend Rückmeldungen zur Beendigung des Gruppeneinsatzes
+          = f.input :term_feedback_activities
+          = f.input :term_feedback_success
+          = f.input :term_feedback_problems
+          = f.input :term_feedback_transfair
 
-    fieldset
-      label.text-bigger-2 Spesen
-      = f.simple_fields_for(:volunteer) do |volunteer|
-        = volunteer.input :waive
-        i Einstellung im Freiwilligenprofil
+      .row
+        .col-xs-12.col-md-6
+          fieldset
+            legend Restliche Stunden
+            = f.input :remaining_hours
+        .col-xs-12.col-md-6
+          fieldset
+            legend Spesen
+            = f.simple_fields_for(:volunteer) do |volunteer|
+              = volunteer.input :waive
+              i Einstellung im Freiwilligenprofil
 
-    hr
+    .row
+      .col-xs-12
+        p.text-bigger-2.text-center.m-t-30
+          em Im Namen der AOZ danken wir Ihnen ganz herzlich für Ihr Feedback und für Ihr Engagement im Rahmen der Freiwilligenarbeit TransFair.
+        p.text-bigger-2.text-center.m-t-30
+          em Das TransFair-Team
 
-    p.text-bigger-2
-      em Im Namen der AOZ danken wir Ihnen ganz herzlich für Ihr Feedback und für Ihr Engagement im Rahmen der Freiwilligenarbeit TransFair.
-    p.text-bigger-2
-      em Das TransFair-Team
-
-    .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher das Sie alle daten eingetragen haben?' }
+        .text-center.m-t-30= f.button :submit, 'Einsatz wird hiermit abgeschlossen', data: { confirm: 'Sind Sie sicher dass Sie alle Daten eingetragen haben?' }, class: 'btn btn-lg-accepted'

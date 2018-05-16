@@ -50,7 +50,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     fill_in 'Bezeichnung', with: 'new title'
     click_button 'Gruppenangebot aktualisieren'
     assert page.has_text? 'Gruppenangebot wurde erfolgreich geändert.'
-    assert page.has_text? 'new title'
+    assert page.has_field? 'Bezeichnung', with: 'new title'
   end
 
   test 'department_manager_has_no_destroy_and_feedback_links_on_volunteer_show' do

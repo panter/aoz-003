@@ -62,4 +62,30 @@ class VolunteerTest < ActiveSupport::TestCase
 
     assert volunteer.resigned?
   end
+
+  test 'records acceptance changes' do
+    volunteer = create :volunteer, acceptance: :undecided
+
+    refute_nil volunteer.undecided_at
+    assert_nil volunteer.invited_at
+    assert_nil volunteer.accepted_at
+    assert_nil volunteer.rejected_at
+    assert_nil volunteer.resigned_at
+
+    volunteer.update(acceptance: :accepted)
+
+    refute_nil volunteer.undecided_at
+    assert_nil volunteer.invited_at
+    refute_nil volunteer.accepted_at
+    assert_nil volunteer.rejected_at
+    assert_nil volunteer.resigned_at
+
+    volunteer.update(acceptance: :rejected)
+
+    refute_nil volunteer.undecided_at
+    assert_nil volunteer.invited_at
+    refute_nil volunteer.accepted_at
+    refute_nil volunteer.rejected_at
+    assert_nil volunteer.resigned_at
+  end
 end

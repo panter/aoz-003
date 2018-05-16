@@ -19,7 +19,7 @@
             th Einsatz
             th Freiwillige/r
         tbody
-          = f.simple_fields_for :reminder_mailing_volunteers do |mailing_volunteer|
+          = f.simple_fields_for :reminder_mailing_volunteers, f.object.reminder_mailing_volunteers.sort_by(&:full_name) do |mailing_volunteer|
             tr.table-row-selectable data-index="#{mailing_volunteer.index}" class="#{mailing_volunteer.object.picked && 'mailing-selected'}"
               td
                 = mailing_volunteer.label :picked, 'Ausgewählt', class: 'sr-only'

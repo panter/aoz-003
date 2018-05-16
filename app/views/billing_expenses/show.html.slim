@@ -1,7 +1,7 @@
 .row
   br=
   br=
-  .col-xs-11.col-xs-offset-1
+  .col-xs-12.col
     h3
       strong
         = "#{t('billing_expense_pdf.title')} #{@billing_expense.volunteer.contact.full_name} "
@@ -9,78 +9,65 @@
           = "von #{l(@billing_expense.hours.maximum(:meeting_date), format: :long)}"
 
 .row
-  .col-xs-11.col-xs-offset-1
+  .col-xs-12
     .row
-      .col-xs-6
-        .row
-          br=
-          .col-xs-6
-            = t('billing_expense_pdf.cost_center')
-          .col-xs-6
-            = '4182'
-        .row
-          .col-xs-6
-            = t('billing_expense_pdf.account')
-          .col-xs-6
-            = '4621'
-        .row
-          br=
-        .row
-          .col-xs-6
-            = t('billing_expense_pdf.chosen_amount')
-          .col-xs-6.col_input
-            = format_currency @billing_expense.amount
+      br=
+      .col-xs-4
+        = t('billing_expense_pdf.cost_center')
+      .col-xs-8
+        = '4182'
+    .row
+      .col-xs-4
+        = t('billing_expense_pdf.account')
+      .col-xs-8
+        = '4621'
+    .row
+      br=
+    .row
+      .col-xs-4
+        = t('billing_expense_pdf.chosen_amount')
+      .col-xs-8.col_input
+        = format_currency @billing_expense.amount
 
 .row
-  .col-xs-11.col-xs-offset-1
+  .col-xs-12
     .row
-      .col-xs-6
-        .row
-          br=
-          .col-xs-6
-            = t('billing_expense_pdf.last_name')
-          .col-xs-6
-            = @billing_expense.volunteer.contact.last_name
-        .row
-          .col-xs-6
-            = t('billing_expense_pdf.first_name')
-          .col-xs-6
-            = @billing_expense.volunteer.contact.first_name
-        .row
-          .col-xs-6
-            = t('billing_expense_pdf.street')
-          .col-xs-6
-            = @billing_expense.volunteer.contact.street
-        .row
-          .col-xs-6
-            = "#{t('billing_expense_pdf.postal_code')} / #{t('billing_expense_pdf.city')}"
-          .col-xs-6
-            = "#{@billing_expense.volunteer.contact.postal_code}, #{@billing_expense.volunteer.contact.city}"
+      br=
+      .col-xs-4
+        = t('billing_expense_pdf.last_name')
+      .col-xs-8
+        = @billing_expense.volunteer.contact.last_name
+    .row
+      .col-xs-4
+        = t('billing_expense_pdf.first_name')
+      .col-xs-8
+        = @billing_expense.volunteer.contact.first_name
+    .row
+      .col-xs-4
+        = t('billing_expense_pdf.street')
+      .col-xs-8
+        = @billing_expense.volunteer.contact.street
+    .row
+      .col-xs-4
+        = "#{t('billing_expense_pdf.postal_code')} / #{t('billing_expense_pdf.city')}"
+      .col-xs-8
+        = "#{@billing_expense.volunteer.contact.postal_code}, #{@billing_expense.volunteer.contact.city}"
 
 .row
-  .col-xs-11.col-xs-offset-1
+  .col-xs-12
     .row
-      .col-xs-6
-        .row
-          br=
-          .col-xs-6
-            = t_attr(:bank_details, Volunteer)
-          .col-xs-6
-            = @billing_expense.full_bank_details
-        .row
-          br=
-          .col-xs-6
-            = t_attr(:created_at)
-          .col-xs-6
-            = "#{t('assignment_pdf.zurich')}, #{(l @billing_expense.created_at.to_date, format: :long)}"
-        .row
-          .col-xs-6
-            = t_attr(:created_by)
-          .col-xs-6
-            = @billing_expense.user.profile.contact.full_name
+      br=
+      .col-xs-4
+        = t_attr(:bank_details, Volunteer)
+      .col-xs-8
+        = @billing_expense.full_bank_details
+    .row
+      br=
+      .col-xs-8
+        = "#{t('assignment_pdf.zurich')}, #{(l @billing_expense.created_at.to_date, format: :long)}"
 
 .row
-  .col-xs-7.col-xs-offset-1
+  .col-xs-12
     .table-responsive
       table.table.table-bordered
         tbody
@@ -112,7 +99,7 @@
               p
                 = t('billing_expense_pdf.amount')
                 br
-                = @billing_expense.amount
+                = format_currency @billing_expense.amount
           tr
             td colspan='3'
               p

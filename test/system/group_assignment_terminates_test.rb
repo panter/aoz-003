@@ -25,26 +25,7 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
     assert page.has_text? "Die Freiwillige: #{@volunteer.contact.natural_name}"
     assert page.has_text? "Das Gruppenangebot #{@group_offer.title} -
       #{@group_offer.group_offer_category.category_name}"
-
-    # Existing hour is listed
-    within '.hours-table' do
-      assert page.has_text? I18n.l(@hour.meeting_date)
-      assert page.has_text? @hour.hours
-      refute page.has_text? I18n.l(@unrelated_hour.meeting_date)
-      refute page.has_text? @unrelated_hour.comments
-    end
-
-    # existing feedback listed
-    within '.feedbacks-table' do
-      assert page.has_text? @feedback.goals
-      assert page.has_text? @feedback.achievements
-      assert page.has_text? @feedback.future
-      assert page.has_text? @feedback.comments
-      refute page.has_text? @unrelated_feedback.goals
-      refute page.has_text? @unrelated_feedback.achievements
-      refute page.has_text? @unrelated_feedback.future
-      refute page.has_text? @unrelated_feedback.comments
-    end
+    assert page.has_text? @group_assignment.volunteer.hours.total_hours
 
     fill_in 'Was waren Ihre Hauptaktivitäten während des Einsatzes?', with: 'rand_activities_text'
     fill_in 'Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?',
@@ -69,43 +50,21 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
     assert_equal 'rand_transfair_text', @group_assignment.term_feedback_transfair
   end
 
-  test 'adding_hour_redirect_back_works' do
+  test 'group_assignment_termination_form_adds_remaining_hours' do
     login_as @volunteer.user
     visit terminate_group_assignment_path(@group_assignment)
-    click_link 'Stunden erfassen'
-    assert page.has_text? @group_assignment.group_offer.to_label
-    test_date = 1.year.ago
-    select(test_date.day, from: 'hour_meeting_date_3i')
-    select(I18n.t('date.month_names')[test_date.month], from: 'hour_meeting_date_2i')
-    select(test_date.year, from: 'hour_meeting_date_1i')
-    fill_in 'Stunden', with: 3.0
-    fill_in 'Tätigkeit / Was wurde gemacht', with: 'my_tryout_activity_hour_thingie'
-    fill_in 'Bemerkungen / Gab es etwas Besonderes', with: 'my_tryout_commment_hour_thingie'
-    click_button 'Stunden erfassen'
-    assert page.has_text? 'Stunden wurden erfolgreich erfasst'
+    fill_in 'Restliche Stunden', with: '12.35'
 
-    within '.hours-table' do
-      assert page.has_text? "3.0"
-      assert page.has_text? 'my_tryout_activity_hour_thingie'
-      assert page.has_text? 'my_tryout_commment_hour_thingie'
+    page.accept_confirm do
+      click_on 'Einsatz wird hiermit abgeschlossen'
     end
-  end
 
-  test 'adding_feedback_redirect_back_works' do
-    login_as @volunteer.user
-    visit terminate_group_assignment_path(@group_assignment)
-    click_link 'Feedback erfassen'
-    fill_in 'Bemerkungen', with: 'my_newly_added_feedback_comment_text'
-    click_button 'Feedback erfassen'
-
-    within '.feedbacks-table' do
-      assert page.has_text? 'my_newly_added_feedback_comment_text'
-    end
+    visit volunteer_hours_path(@volunteer)
+    assert_text '12.35'
   end
 
   test 'termination triggers notification email to creator' do
     ActionMailer::Base.deliveries.clear
-    @group_assignment.update(period_end: 2.days.ago)
     login_as @volunteer.user
     visit terminate_group_assignment_path(@group_assignment)
     page.accept_confirm do
@@ -114,5 +73,20 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal @superadmin.email, mail['to'].to_s
+  end
+
+  test 'terminate group assignment without feedback or hours' do
+    Hour.destroy_all
+    Feedback.destroy_all
+
+    login_as @superadmin
+    visit terminate_group_assignment_path(@group_assignment)
+
+    page.accept_confirm do
+      click_on 'Einsatz wird hiermit abgeschlossen'
+    end
+
+    visit terminate_group_assignment_path(@group_assignment)
+    assert_text "Beendigungs Feedback vom #{I18n.l Time.zone.today}"
   end
 end

@@ -29,7 +29,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]'
     ).reduce { |a, b| a.checked? || b.checked? }
 
-    find('td', text: assignment.to_label).click
+    check 'Ausgewählt', match: :first
+
     # at least one checkbox is checked?
     assert any_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
@@ -98,7 +99,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]'
     ).reduce { |a, b| a.checked? || b.checked? }
 
-    find('td', text: assignment.to_label).click
+    check 'Ausgewählt', match: :first
+
     # at least one checkbox is checked?
     assert any_checked?(
       'input[name^="reminder_mailing[reminder_mailing_volunteers_attributes]"]')
@@ -156,7 +158,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     page.find('#assignment_period_end').click
     page.find('.month', text: 'Jan').click
     first('.day',  exact_text: '17').click
-    click_button 'Begleitung aktualisieren'
+    page.find_all('input[type="submit"]').first.click
 
     assert page.has_current_path? terminated_index_assignments_path
 
@@ -165,7 +167,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     end
 
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
-    assert page.has_link? @volunteer_assignment.contact.full_name, href: volunteer_path(@volunteer_assignment)
+    assert page.has_link? @volunteer_assignment.contact.full_name, href: edit_volunteer_path(@volunteer_assignment)
 
     fill_in 'Betreff', with: 'Erinnerung fuer Beendigung des Einsatzes: %{Einsatz}'
     fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'

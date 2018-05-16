@@ -8,7 +8,6 @@ FactoryBot.define do
     weekend false
 
     contact
-    # pass empty profile to avoid infinite loop
-    user { build :user, profile: nil }
+    association :user, profile: nil
   end
 end

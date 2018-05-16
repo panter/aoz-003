@@ -1,15 +1,5 @@
 class VolunteerTransform < Transformer
-  # could be needed relations
-  #
-  # k_traeger = @kosten_traeger.find(personen_rolle[:fk_Kostenträger])
-  # journals = @journale.where_haupt_person(haupt_person[:pk_Hauptperson])
-  # einsaetze = @fw_einsaetze.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
-  # entschaedigungen = @fw_entschaedigung.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
-  # konto_angaben = @konto_angaben.where_haupt_person(haupt_person[:pk_Hauptperson])
-  # stunden_erfassungen = @stundenerfassung.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
-  #
-  def prepare_attributes(personen_rolle)
-    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
+  def prepare_attributes(personen_rolle, haupt_person)
     original_email = haupt_person[:email]
     {
       salutation: haupt_person[:salutation],
@@ -17,12 +7,13 @@ class VolunteerTransform < Transformer
       nationality: haupt_person[:nationality],
       accepted_at: personen_rolle[:d_Rollenbeginn],
       resigned_at: personen_rolle[:d_Rollenende],
+      comments: [personen_rolle[:m_Bemerkungen], haupt_person[:m_Bemerkungen]].compact.join("\n\n"),
       registrar: @ac_import.import_user,
       acceptance: :accepted,
       intro_course: true,
+      profession: haupt_person[:t_Beruf],
       waive: personen_rolle[:b_SpesenVerzicht] == 1
     }.merge(prepare_kontoangaben(personen_rolle[:fk_Hauptperson]))
-      .merge(language_skills_attributes(haupt_person[:sprachen]))
       .merge(contact_attributes(haupt_person.merge(email: import_time_email)))
       .merge(import_attributes(:tbl_Personenrollen, personen_rolle[:pk_PersonenRolle],
         personen_rolle: personen_rolle, haupt_person: haupt_person.merge(email: original_email)))
@@ -32,7 +23,14 @@ class VolunteerTransform < Transformer
     volunteer = get_import_entity(:volunteer, personen_rollen_id)
     return volunteer if volunteer.present?
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
-    volunteer = Volunteer.new(prepare_attributes(personen_rolle))
+    return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
+    haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
+    volunteer = Volunteer.new(prepare_attributes(personen_rolle, haupt_person))
+    if haupt_person[:sprachen]&.any?
+      volunteer.language_skills = haupt_person[:sprachen].map do |sprache|
+        LanguageSkill.new(language: sprache[:language], level: sprache[:level])
+      end
+    end
     volunteer.save!(validate: false)
     update_timestamps(volunteer, personen_rolle[:d_Rollenbeginn], personen_rolle[:d_MutDatum])
   end

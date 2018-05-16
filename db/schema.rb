@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403135553) do
+ActiveRecord::Schema.define(version: 20180514094136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 20180403135553) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind"
+    t.integer "kind", null: false
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -445,6 +445,7 @@ ActiveRecord::Schema.define(version: 20180403135553) do
     t.bigint "period_end_set_by_id"
     t.date "period_start"
     t.date "period_end"
+    t.text "comments"
     t.index ["creator_id"], name: "index_group_offers_on_creator_id"
     t.index ["deleted_at"], name: "index_group_offers_on_deleted_at"
     t.index ["department_id"], name: "index_group_offers_on_department_id"
@@ -735,6 +736,7 @@ ActiveRecord::Schema.define(version: 20180403135553) do
   add_foreign_key "certificates", "volunteers"
   add_foreign_key "client_notifications", "users"
   add_foreign_key "clients", "users"
+  add_foreign_key "events", "departments"
   add_foreign_key "feedbacks", "users", column: "author_id"
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"

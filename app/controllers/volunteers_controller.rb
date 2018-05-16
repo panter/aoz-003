@@ -54,10 +54,10 @@ class VolunteersController < ApplicationController
     if @volunteer.save
       if @volunteer.accepted?
         invite_volunteer_user
-        redirect_to @volunteer, notice: t('volunteer_created_invite_sent',
+        redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created_invite_sent',
           email: @volunteer.primary_email)
       else
-        redirect_to @volunteer, notice: t('volunteer_created')
+        redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created')
       end
     else
       render :new
@@ -68,19 +68,19 @@ class VolunteersController < ApplicationController
     @volunteer.attributes = volunteer_params
     return render :edit unless @volunteer.valid?
     if handle_volunteer_update
-      redirect_to volunteers_path, notice: t('invite_sent', email: @volunteer.primary_email)
+      redirect_to edit_volunteer_path(@volunteer), notice: t('invite_sent', email: @volunteer.primary_email)
     else
-      redirect_to @volunteer, notice: t('volunteer_updated')
+      redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_updated')
     end
   end
 
   def terminate
     if @volunteer.terminatable?
       @volunteer.terminate!
-      redirect_back fallback_location: volunteers_url,
+      redirect_back fallback_location: edit_volunteer_path(@volunteer),
         notice: 'Freiwillige/r wurde erfolgreich beendet.'
     else
-      redirect_back(fallback_location: volunteer_path(@volunteer), notice: resigned_fail_notice)
+      redirect_back(fallback_location: edit_volunteer_path(@volunteer), notice: resigned_fail_notice)
     end
   end
 
@@ -95,7 +95,7 @@ class VolunteersController < ApplicationController
     @volunteer.contact.primary_email = volunteer_params[:contact_attributes][:primary_email]
     if @volunteer.save
       invite_volunteer_user
-      redirect_back(fallback_location: volunteer_path(@volunteer),
+      redirect_back(fallback_location: edit_volunteer_path(@volunteer),
         notice: 'Freiwillige/r erhält eine Accountaktivierungs-Email.')
     elsif @volunteer.contact.errors.messages[:primary_email]
       redirect_to @volunteer, notice: {
@@ -104,7 +104,7 @@ class VolunteersController < ApplicationController
         action_link: { text: 'Mailadresse konfigurieren', path: edit_volunteer_path(@volunteer) }
       }
     else
-      redirect_to @volunteer, notice: 'Account erstellen fehlgeschlagen!'
+      redirect_to edit_volunteer_path(@volunteer), notice: 'Account erstellen fehlgeschlagen!'
     end
   end
 
@@ -122,7 +122,7 @@ class VolunteersController < ApplicationController
         Freiwillige/r kann nicht beendet werden, solange noch laufende Einsätze existieren.
         Bitte sicherstellen, dass alle Einsätze komplett abgeschlossen sind.',
       model_message: @volunteer.errors.messages[:acceptance].first,
-      action_link: { text: 'Begleitung bearbeiten', path: volunteer_path(@volunteer, anchor: 'assignments') }
+      action_link: { text: 'Begleitung bearbeiten', path: edit_volunteer_path(@volunteer, anchor: 'assignments') }
     }
   end
 

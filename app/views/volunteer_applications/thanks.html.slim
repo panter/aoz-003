@@ -1,6 +1,4 @@
 .row
-  .col-xs-12.centered.columns.text-center
-    h1= t('thank_you')
-
-    p= t('application_submitted')
-    p= t('get_back')
+  .col-xs-12.centered.columns.text-center.thanks-preview
+    .thanks-title.m-b-20= markdown(@email_template[:subject])
+    .thanks-text= markdown(@email_template[:body])

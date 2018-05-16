@@ -5,7 +5,7 @@ h1= t_title(:show)
     tbody
       tr
         td= t_model(Volunteer)
-        td= link_to @feedback.volunteer.contact.full_name, volunteer_path(@feedback.volunteer)
+        td= link_to @feedback.volunteer.contact.full_name, edit_volunteer_path(@feedback.volunteer)
       - if @feedback.assignment?
         tr
           td= t_model(Assignment)

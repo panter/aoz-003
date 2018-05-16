@@ -27,7 +27,7 @@ table.table.table-striped.list-responses-table
     - @trial_feedbacks.each do |record|
       tr*{ data: { feedback_id: record.id } }
         td.index-action-cell
-          a href=volunteer_path(record.volunteer)
+          a href=edit_volunteer_path(record.volunteer)
             span #{record.volunteer.contact.last_name},
             span= record.volunteer.contact.first_name
         td.index-action-cell

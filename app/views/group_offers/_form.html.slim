@@ -1,3 +1,4 @@
+- show_volunteers = (params[:page] || params[:q]).present?
 = simple_form_for(@group_offer) do |f|
   = simple_error_notice f
 
@@ -17,7 +18,7 @@
 
       - if policy(GroupOffer).supervisor_privileges?
         .row.group-offer-internal-fields
-          .col-md-12= f.association :department, required: true
+          .col-md-12= f.association :department, collection: Department.name_asc, required: true
         .row.group-offer-external-fields
           .col-md-6= f.input :organization, required: true
           .col-md-6= f.input :location, required: true
@@ -48,6 +49,29 @@
             - availabilities.each do |availability|
               = f.input availability, label: t("availability.#{availability}")
 
+  - if policy(GroupOffer).show_comments?
+    .row
+      .col-xs-12.col-md-12= f.input :comments
+
   = render 'group_assignments'
+  - if action_edit?
+    ul.list-inline
+      li
+        a.btn.btn-default href='#add-volunteers' data-toggle='collapse' aria-expanded=show_volunteers.to_s aria-controls='add-volunteers'
+          'Freiwillige hinzufügen
   .row
     .col-xs-12= f.button :submit
+
+- if action_edit?
+  #add-volunteers.collapse class=('in' if show_volunteers)
+    h2 Freiwillige hinzufügen
+
+    ul.list-unstyled.m-t-20
+      li.li-search-form
+        = search_form_for @q, url: edit_group_offer_path(@group_offer) do |f|
+          = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_volunteer_group_offer_path(@group_offer) }, autofocus: true
+          = f.submit 'Suchen', class: 'search-submit'
+
+    = render 'volunteers/columns', volunteers: @volunteers, group_offer_redirect: :edit
+    br
+

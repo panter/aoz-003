@@ -5,9 +5,9 @@ class Volunteer < ApplicationRecord
   include ZuerichScopes
   include ImportRelation
   include FullBankDetails
+  include AcceptanceAttributes
 
   before_validation :handle_user_with_external_change, if: :external_changed?
-  before_save :record_acceptance_changed, if: :will_save_change_to_acceptance?
   after_update :copy_contact_to_user, if: :user_added?
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :teenager, :unaccompanied].freeze
@@ -16,8 +16,6 @@ class Volunteer < ApplicationRecord
   SALUTATIONS = [:mrs, :mr].freeze
 
   enum acceptance: { undecided: 0, invited: 1, accepted: 2, rejected: 3, resigned: 4 }
-
-  ransacker :acceptance, formatter: ->(value) { acceptances[value] }
 
   has_one :contact, as: :contactable, dependent: :destroy
   accepts_nested_attributes_for :contact
@@ -32,7 +30,6 @@ class Volunteer < ApplicationRecord
   has_one :department, through: :registrar
 
   has_many :departments, through: :group_offers
-  has_many :clients, through: :assignments
 
   has_many :hours, dependent: :destroy
   has_many :feedbacks, dependent: :destroy
@@ -156,7 +153,7 @@ class Volunteer < ApplicationRecord
     seeking_clients
   }
   scope :seeking_clients, lambda {
-    accepted.where(active: false).or(accepted.activeness_ended)
+    internal.accepted.where(active: false).or(internal.accepted.activeness_ended)
   }
   scope :seeking_clients_will_take_more, lambda {
     seeking_clients.or(accepted.will_take_more_assignments)
@@ -295,26 +292,12 @@ class Volunteer < ApplicationRecord
   end
 
   def seeking_clients?
-    accepted? && inactive? || take_more_assignments? && active?
-  end
-
-  def self.acceptance_collection
-    acceptances.keys.map(&:to_sym)
-  end
-
-  def self.acceptance_filters
-    acceptances.keys.map do |key|
-      {
-        q: :acceptance_eq,
-        value: key,
-        text: I18n.t("volunteers.acceptance.#{key}")
-      }
-    end
+    internal? && (accepted? && inactive? || take_more_assignments? && active?)
   end
 
   def self.first_languages
     ['DE', 'EN', 'FR', 'ES', 'IT', 'AR'].map do |lang|
-      [I18nData.languages(I18n.locale)[lang], lang]
+      [I18n.t("language_names.#{lang}"), lang]
     end
   end
 
@@ -397,10 +380,6 @@ class Volunteer < ApplicationRecord
     user.profile&.contact&.update(contact.slice(:first_name, :last_name, :street, :postal_code,
       :city, :primary_phone, :secondary_phone, :primary_email))
     user.update(email: contact.primary_email)
-  end
-
-  def record_acceptance_changed
-    self["#{acceptance}_at".to_sym] = Time.zone.now
   end
 
   def user_deleted?

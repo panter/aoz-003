@@ -107,8 +107,9 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
     @group_assignment_fb_pendent.update(reviewer: @superadmin)
     click_link 'Probezeit Feedback Eingang'
     page.find('td', text: body.truncate(500)).click
-    wait_for_ajax
+
     assert page.has_text? body
+
     click_button 'Schliessen'
   end
 

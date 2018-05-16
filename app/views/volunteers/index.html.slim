@@ -22,7 +22,7 @@ nav.navbar.section-navigation
     - if policy(Volunteer).show_acceptance?
       = custom_filter_dropdown 'Prozess', *Volunteer.acceptance_filters
       = boolean_toggler_filter_dropdown(:active, 'Einsatz', 'Aktiv', 'Inaktiv')
-    = boolean_filter_dropdown(:single_accompaniment, Volunteer::SINGLE_ACCOMPANIMENTS)
+    = boolean_filter_dropdown(:single_accompaniment_id, Volunteer::SINGLE_ACCOMPANIMENTS)
     = custom_filter_dropdown(t_attr(:group_offer_categories_id, Volunteer), *GroupOfferCategory.filterable_volunteer)
     = boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)
     = boolean_toggler_filter_dropdown(:external, 'Intern/Extern', 'Extern', 'Intern')

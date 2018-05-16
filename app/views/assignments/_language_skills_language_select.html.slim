@@ -1,13 +1,14 @@
-- language_skills_language_filter = request_filter(:language_skills_language_cont, t('all'))
+- language_skills_language_filter = search_parameters[:language_skills_language_cont].presence
 .btn-group
   button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:language_skills)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
-    = "#{t_attr(:language_skills, Client)} : "
-    = language_skills_language_filter + ' '
+    = "#{t_attr(:language_skills, Client)}: "
+    = language_skills_language_filter ? LanguageSkill.language_name(language_skills_language_filter) : t('all')
+    = ' '
     span.caret aria-hidden='true'
   ul.dropdown-menu
     li
       = link_to t('all'), request_params_filter({language_skills_language_cont: ''})
     - Client.first_languages.each do |(name, code)|
       li= link_to name, request_params_filter({language_skills_language_cont: code})
-    - I18nData.languages(I18n.locale).each do |(code, name)|
+    - t('language_names').each do |(code, name)|
       li= link_to name, request_params_filter({language_skills_language_cont: code})

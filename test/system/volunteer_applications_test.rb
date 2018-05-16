@@ -70,9 +70,28 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     refute_includes mail_body, '%{'
 
     assert page.has_current_path? thanks_volunteer_applications_path
-    assert page.has_text? 'Vielen Dank'
-    assert page.has_text? 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
-    assert page.has_text? 'Wir werden uns bald bei Ihnen melden.'
+  end
+
+  test "volunteer see's thankyou page with content from signup email template" do
+    @email_template1 = create :email_template, kind: :signup, active: true
+    @email_template2 = create :email_template, kind: :signup, active: false, subject: 'Hoi', body: 'Wadap?'
+    visit thanks_volunteer_applications_path
+
+    # thanks page takes body text from active template
+    assert page.has_text? @email_template1.subject
+    assert page.has_text? @email_template1.body
+
+    refute page.has_text? 'Howdy'
+    refute page.has_text? 'Wadap?'
+
+    # ensure text is updated when another template is set to active
+    @email_template2.update(active: true)
+    visit thanks_volunteer_applications_path
+    assert page.has_text? 'Hoi'
+    assert page.has_text? 'Wadap?'
+
+    refute page.has_text? @email_template1.subject
+    refute page.has_text? @email_template1.body
   end
 
   test 'secondary phone not visible in the application form' do

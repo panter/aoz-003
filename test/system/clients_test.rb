@@ -30,7 +30,7 @@ class ClientsTest < ApplicationSystemTestCase
       choose('Gut')
     end
     click_on('Sprache hinzufügen')
-    select('Akan', from: 'Sprache')
+    select('Albanisch', from: 'Sprache')
     select('Mittel', from: 'Niveau')
     click_on('Verwandte hinzufügen')
     within '#relatives' do
@@ -54,14 +54,9 @@ class ClientsTest < ApplicationSystemTestCase
     page.check('client_evening')
     fill_in 'Genauere Angaben', with: 'After 7'
 
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    assert_text @social_worker.full_name
-    @superadmin.clients.each do |client|
-      assert page.has_link? client.involved_authority.full_name, href: /profiles\/#{client.involved_authority.profile.id}/
-      assert page.has_link? client.user.full_name, href: /profiles\/#{client.user.profile.id}/
-      assert page.has_link? client.contact.primary_email
-    end
+    assert page.has_select? 'Fallführende Stelle', selected: @social_worker.full_name
   end
 
   test 'new client form with preselected fields' do
@@ -74,23 +69,25 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Strasse', with: 'Sihlstrasse 131'
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: FFaker::Internet.unique.email
     within '#languages' do
       choose('Gut')
     end
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    within '.table-no-border-top' do
-      assert_text 'egal', count: 2
-      assert_text 'Deutsch Gut'
-    end
+    refute_select 'Beendet'
+
+    assert_select 'Geschlecht Freiwillige/r', selected: 'egal'
+    assert_select 'Alter Freiwillige/r', selected: 'egal'
+    assert_field 'Gut', checked: true
   end
 
   test 'new client can select custom language' do
     login_as @superadmin
     visit new_client_path
     select('Frau', from: 'Anrede')
-    fill_in 'Vorname', with: 'Dari'
-    fill_in 'Nachname', with: 'Dari'
+    fill_in 'Vorname', with: 'Aymara'
+    fill_in 'Nachname', with: 'Aymara'
     fill_in 'Mailadresse', with: 'client@aoz.com'
     fill_in 'Telefonnummer', with: '0123456789', match: :first
     fill_in 'Strasse', with: 'Sihlstrasse 131'
@@ -102,43 +99,14 @@ class ClientsTest < ApplicationSystemTestCase
     end
 
     click_on('Sprache hinzufügen')
-    select('Dari', from: 'Sprache')
+    select('Aymara', from: 'Sprache')
     select('Muttersprache', from: 'Niveau')
 
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    within '.table-no-border-top' do
-      assert_text 'Dari Muttersprache'
-      assert_text 'Deutsch Gut'
-    end
-  end
-
-  test 'level without a language is not shown' do
-    login_as @superadmin
-    visit new_client_path
-    select('Frau', from: 'Anrede')
-    fill_in 'Vorname', with: 'asdf'
-    fill_in 'Nachname', with: 'asdf'
-    fill_in 'Strasse', with: 'Sihlstrasse 131'
-    fill_in 'PLZ', with: '8002'
-    fill_in 'Ort', with: 'Zürich'
-    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
-    fill_in 'Telefonnummer', with: '0123456789', match: :first
-    within '#languages' do
-      choose('Wenig')
-    end
-
-    click_on('Sprache hinzufügen')
-    select('Mittel', from: 'Niveau')
-
-    click_button 'Klient/in erfassen'
-    within '.table-no-border-top' do
-      refute_text 'Mittel'
-      assert_text 'Deutsch Wenig'
-    end
-
-    visit clients_path
-    refute_text 'Mittel'
+    assert_select 'Sprache', selected: 'Aymara'
+    assert_select 'Niveau', selected: 'Muttersprache'
+    assert_field 'Gut', checked: true
   end
 
   test 'client_pagination' do
@@ -258,8 +226,9 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Strasse', with: 'Sihlstrasse 131'
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
-    click_button 'Klient/in erfassen'
-    assert_text 'Deutsch Wenig'
+    click_button 'Klient/in erfassen', match: :first
+
+    assert_field 'Wenig', checked: true
   end
 
   test 'client_print_view_is_not_paginated' do
@@ -299,10 +268,32 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Ort', with: 'Zürich'
     refute page.has_select? 'Fallführende Stelle'
 
-    click_button 'Klient/in erfassen'
+    click_button 'Klient/in erfassen', match: :first
 
     login_as @superadmin
     visit client_path(Client.last)
     assert page.has_link? @social_worker.full_name, count: 2
+  end
+
+  test 'client table should display inactive status' do
+    # clear out all existing clients
+    Client.delete_all
+    client = create :client, :with_relatives, :with_language_skills
+    create :assignment_inactive, client: client
+
+    login_as @superadmin
+    visit clients_path
+    assert_text 'Inaktiv'
+  end
+
+  test 'client table should display active status' do
+    # clear out all existing clients
+    Client.delete_all
+    client = create :client, :with_relatives, :with_language_skills
+    create :assignment_active, client: client
+
+    login_as @superadmin
+    visit clients_path
+    assert_text 'Aktiv'
   end
 end

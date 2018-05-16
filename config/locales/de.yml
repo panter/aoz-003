@@ -5,11 +5,13 @@ de:
     term_feedback_success: 'Endfeedback: Erfolge'
     term_feedback_problems: 'Endfeedback: Probleme'
     term_feedback_transfair: 'Endfeedback: TransFair'
+    term_remaining_hours: 'Restliche Stunden'
   termination_feedback_questions: &id-termination-feedback-quests
     term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
     term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
     term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
     term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
+    term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values
       trial_period: Probezeit
@@ -58,8 +60,8 @@ de:
   created_at: Erstellt um
   cost_unit: &id-client-cost-units
     city: Stadt
-    municipality: Gemeinde
     canton: Kanton
+    municipality: Gemeinde
   email_templates:
     kind: &id-kinds-template
       assignment: Begleitung
@@ -111,6 +113,7 @@ de:
     phone: Telefonnummer
     postal_code: PLZ
     profession: Beruf
+    remaining_hours: Restliche Stunden in diesem Einsatz
     salutation: Anrede
     state: Status
     street: Strasse
@@ -161,6 +164,7 @@ de:
     confirm_delete: "Wirklich %{model} %{record} löschen?"
     confirm_record_delete: '%{model} wirklich löschen?'
     select_prompt: "%{model} wählen"
+    confirm_terminate_volunteer: "Wollen Sie den Freiwilligen wirklich beenden?"
   rejection_type: &id-rejection-types
     her: von Freiwillige/r vor / nach Erstgespräch
     other: Anderer Grund
@@ -262,7 +266,8 @@ de:
   activerecord:
     attributes:
       assignment:
-        <<: [*id-generic_keys, *id-termination-attrs]
+        <<: [*id-generic_keys, *id-termination-attrs, *id-availability]
+        availability: Verfügbarkeit
         agreement: Zustimmung
         client: Klient/in
         ended: Beendet
@@ -290,9 +295,12 @@ de:
         amount: Betrag
         assignment: Begleitung
         created_by: Erstellt von
+        period: Periode
       certificate:
         <<: *id-generic_keys
         assignment: Einsatz
+        creator_name: Erstellt von
+        creator_function: Rolle
         duration: Einsatzdauer
         duration_end: Bis
         duration_start: Von
@@ -304,7 +312,7 @@ de:
         time_given: Zeitaufwand
         zip_city: PLZ/Ort
       client:
-        <<: *id-generic_keys
+        <<: [*id-generic_keys, *id-client-acceptance]
         acceptance: Prozess
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
@@ -362,8 +370,10 @@ de:
         children: Kinder
         description: Beschreibung des Angebotes
         duration: Dauer
+        external: Extern
         group_offer_category: Kategorie
         group_offer_category_id: Kategorie
+        internal: Intern
         location: Ort
         long_term: Langfristig
         men: Männer
@@ -454,7 +464,7 @@ de:
         experience: Erfahrung
         family: Familie
         group_accompaniment: Gruppenangebote in AOZ-Einrichtungen
-        group_offer_categories_id: Gruppenangebote in AOZ-Einrichtungen
+        group_offer_categories_id: Interessiert an Gruppenangebot Kategorie
         iban: IBAN
         interests: Interessen
         intro_course: Einführungskurs besucht
@@ -462,12 +472,14 @@ de:
         teenager: Jugendliche/r
         man: Mann
         native_language: Muttersprache
+        language_skills: Sprachkenntnisse
         other_offer_desc: Beschreibung
         own_kids: Familie (Kinder, Jahrgang)
         registrar: Registrator
         rejection_text: Erläuterung zur Ablehnung
         rejection_type: Grund für die Ablehnung
         single_accompaniment: Einzelbegleitungen
+        single_accompaniment_id: Interessiert an Einzelbegleitung
         skills: Kompetenzen
         state: Einsatz
         strengths: Stärken
@@ -545,7 +557,6 @@ de:
   add_entry: Eintrag Hinzufügen
   add_relative: Verwandte hinzufügen
   all: Alle
-  application_submitted: 'Ihre Anmeldung wurde erfolgreich abgeschickt.'
   are_you_sure: Sind Sie sicher?
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
   are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
@@ -603,7 +614,7 @@ de:
     year: Jahr
   certificates:
     certificate: &id-certificates-show
-      aprox_hours_given: 'Total ca. %{hours} Stunden'
+      hours_given: 'Total %{hours} Stunden'
       back_to_volunteer: Zurück zum Freiwilligenprofil
     edit: &id-certificates-form
       group_offer: Gruppenangebot
@@ -681,7 +692,9 @@ de:
         submit_button: Einladung schicken
       no_invitations_remaining: Sie können keine weiteren Einladungen mehr vornehmen.
       send_instructions: 'Sie haben eine Einladung in Ihrem Email Postfach: %{email}'
-      updated: Ihr Passwort wurde erfolgreich gesetzt. Sie sind jetzt angemeldet.
+      updated: |
+        Herzlich willkommen bei der AOZ Fachstelle Freiwilligenarbeit!<br>
+        Ihr Passwort wurde erfolgreich gesetzt und Sie sind jetzt angemeldet.
     mailer:
       confirmation_instructions:
         subject: Anleitung zur Bestätigung Ihres Accounts
@@ -760,7 +773,6 @@ de:
         other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
   "false": Nein
   forgot_password: Passwort vergessen?
-  get_back: Wir werden uns bald bei Ihnen melden.
   helpers:
     submit:
       create: '%{model} erfassen'
@@ -782,7 +794,7 @@ de:
   password_reset_instructions: Ich möchte mein Passwort zurücksetzen
   pdf_header:
     address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch/freiwilligenarbeit
-    contact: Telefon %{phone}<br>Telefax n.v.<br>freiwillige@aoz.ch
+    contact: Telefon %{phone}<br>Telefax n.v.<br>info@aoz-freiwillige.ch
     title: Fachstelle Freiwilligenarbeit
   performance_reports: &id-performance-reports-de-keys
     categories: &id-performance-scope-categories
@@ -894,8 +906,8 @@ de:
   profile_updated: Profil wurde erfolgreich aktualisiert.
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
-  reserve: Reservieren
-  seeking_clients: Klienten suchen
+  reserve: Begleitung erstellen
+  seeking_clients: Klient/in suchen
   show_my_profile: Mein Profil
   simple_form:
     error_notification:
@@ -948,6 +960,8 @@ de:
           b: 'B'
           b-fl: B-FL
           c: 'C'
+          pf: PF
+          ch: CH
         relatives:
           relation: *id-relations
         salutation: *id-salutations
@@ -986,7 +1000,7 @@ de:
       text: notwendig
     "yes": 'Ja'
   submit_application: Anmeldung abschicken
-  thank_you: "Vielen Dank \U0001F389"
+  thank_you: "Vielen Dank für Ihre Anmeldung \U0001F389"
   time:
     formats:
       default: "%a, %d.%m.%y %H:%M"
@@ -1011,7 +1025,6 @@ de:
       <<: *id-volunteer_attributes
       lead: Dies ist die Bestätigung für das Freiwilligen Email
       subject: Bestätigung der Anmeldung als Freiwillger bei der AOZ
-      submitted: Die Angaben der Anmeldung
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?

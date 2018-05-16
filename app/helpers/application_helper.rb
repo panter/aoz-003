@@ -69,12 +69,9 @@ module ApplicationHelper
 
   def nationality_name(nationality)
     return '' if nationality.blank?
-    c = ISO3166::Country[nationality]
-    c.translations[I18n.locale.to_s] || c.name
-  end
-
-  def request_filter(query, all)
-    params.try(:q).try(query) || all
+    country = ISO3166::Country[nationality]
+    return '' unless country
+    country.translations[I18n.locale.to_s] || country.name
   end
 
   def request_params_filter(query)
@@ -91,10 +88,10 @@ module ApplicationHelper
   end
 
   def profile_link(user)
-    if user.profile
-      edit_profile_path(user.profile)
-    elsif user.volunteer?
+    if user.volunteer?
       edit_volunteer_path(user.volunteer)
+    elsif user.profile
+      edit_profile_path(user.profile)
     else
       edit_user_path(user)
     end

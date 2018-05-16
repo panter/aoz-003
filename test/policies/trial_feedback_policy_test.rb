@@ -41,7 +41,7 @@ class TrialFeedbackPolicyTest < PolicyAssertions::Test
   test 'volunteer has limited access to group_offer feedbacks' do
     group_offer = create :group_offer, volunteers: [@volunteer, @other_volunteer]
     other_group_offer = create :group_offer,
-      volunteers: [create(:volunteer, user: create(:user_volunteer)), @other_volunteer]
+      volunteers: [create(:volunteer_with_user), @other_volunteer]
     superadmin_feedback = create :trial_feedback, volunteer: @volunteer, author: @superadmin,
       trial_feedbackable: group_offer
     feedback_volunteer = create :trial_feedback, volunteer: @volunteer, author: @user_volunteer,

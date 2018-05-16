@@ -48,9 +48,16 @@ module AccUtils
   end
 
   def email(h_email)
-    return "unknown_email_#{Time.now.to_i}@example.com" if h_email.nil?
-    h_email.sub(/^\#mailto:/, '').sub(/\#$/, '')
+    return generate_bogus_email if h_email.nil?
+    email = h_email.sub(/^\#mailto:/, '').sub(/\#$/, '')
+    return generate_bogus_email unless email.match?(Devise.email_regexp)
+    email
   end
+
+  def generate_bogus_email
+    "unknown_email_#{Time.zone.now.to_f}@example.com"
+  end
+
 
   def map_gender(value)
     return nil unless value
@@ -59,6 +66,10 @@ module AccUtils
   end
 
   def contact_attributes(haupt_person)
+    if haupt_person[:t_Telefon1].blank? && haupt_person[:t_Telefon2].present?
+      haupt_person[:t_Telefon1] = haupt_person[:t_Telefon2]
+      haupt_person[:t_Telefon2] = nil
+    end
     { contact_attributes: {
       first_name:      haupt_person[:t_Vorname] || 'unbekannt',
       last_name:       haupt_person[:t_Nachname] || 'unbekannt',
@@ -67,7 +78,7 @@ module AccUtils
       city:            haupt_person[:city] || 'unbekannt',
       postal_code:     haupt_person[:postal_code] || '0000',
       primary_email:   haupt_person[:email],
-      primary_phone:   haupt_person[:t_Telefon1] || '000 000 00 00',
+      primary_phone:   haupt_person[:t_Telefon1] || 'Keine Nummer für Import vorhanden',
       secondary_phone: haupt_person[:t_Telefon2]
     } }
   end

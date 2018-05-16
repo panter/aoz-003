@@ -87,6 +87,7 @@ class User < ApplicationRecord
   ROLES = ROLES_FOR_USER_CREATE.dup.push(VOLUNTEER).freeze
 
   validates :role, inclusion: { in: ROLES }
+  validates :email, uniqueness: true
 
   scope :department_assocable, (-> { where(role: CAN_MANAGE_DEPARTMENT) })
   scope :superadmins, (-> { where(role: SUPERADMIN) })
@@ -113,11 +114,16 @@ class User < ApplicationRecord
     department.any?
   end
 
+  def missing_profile?
+    !volunteer? && !profile
+  end
+
   def self.create_user_and_send_password_reset(email:, role:)
     new_user = User.new(
       email: email, password: Devise.friendly_token, role: role
     )
     new_user.save! && new_user.send_reset_password_instructions
+    new_user
   end
 
   def self.new_volunteer(volunteer)

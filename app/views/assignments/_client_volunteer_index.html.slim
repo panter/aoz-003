@@ -16,3 +16,7 @@ table.table.table-striped.assignments-table
 
   tbody
     = render assignments
+
+- if controller_in?(:volunteers) && policy(Assignment).find_client?
+  ul.list-inline
+    li= button_link 'Zusätzliche/n Klient/in suchen', find_client_volunteer_path(id: @volunteer)

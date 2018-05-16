@@ -6,10 +6,13 @@ module GroupAssignmentAndAssignmentCommon
     include PeriodStartEndScopesAndMethods
 
     belongs_to :volunteer
-    accepts_nested_attributes_for :volunteer
+    accepts_nested_attributes_for :volunteer, update_only: true
 
     has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
     has_many :reminder_mailings, through: :reminder_mailing_volunteers
+
+    attribute :remaining_hours
+    after_save :add_remaining_hours
 
     scope :with_hours, (-> { joins(:hours) })
 
@@ -55,17 +58,26 @@ module GroupAssignmentAndAssignmentCommon
         .where('reminder_mailings.kind != 1 OR reminder_mailing_volunteers.id IS NULL')
     }
 
-    def termination_feedback_submitted?
-      termination_submitted_by.present? &&
-        [term_feedback_activities, term_feedback_success, term_feedback_problems, term_feedback_transfair].any?
-    end
-
     def termination_verifiable?
       ended? && termination_submitted_by.present?
     end
 
     def terminated?
       termination_verifiable? && termination_verified_by.present?
+    end
+
+    private
+
+    def add_remaining_hours
+      return unless remaining_hours?
+
+      polymorph_url_object.hours.create!(
+        hours: remaining_hours,
+        meeting_date: period_end,
+        volunteer: volunteer
+      )
+
+      self.remaining_hours = nil
     end
   end
 end

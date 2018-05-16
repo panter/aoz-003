@@ -5,5 +5,5 @@ h4 Teilnehmende
       - @event.event_volunteers.each do |event_volunteer|
         tr
           td Name
-          td= link_to event_volunteer.volunteer.full_name, volunteer_path(event_volunteer.volunteer)
+          td= link_to event_volunteer.volunteer.full_name, edit_volunteer_path(event_volunteer.volunteer)
           td= link_to 'Löschen', polymorphic_path([@event, event_volunteer]), method: :delete

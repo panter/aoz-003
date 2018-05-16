@@ -27,15 +27,20 @@ Style/NumericPredicate:
 
 Layout/IndentArray:
   EnforcedStyle: consistent
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
-Style/FormatString:
-  EnforcedStyle: percent
 Style/AsciiComments:
   Enabled: false
+Style/FormatString:
+  EnforcedStyle: percent
+Style/GuardClause:
+  MinBodyLength: 5
+
 Metrics/LineLength:
   Max: 100
   Exclude:
@@ -45,13 +50,13 @@ Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
 Metrics/MethodLength:
-  Max: 15
+  Max: 20
   Exclude:
     - 'test/**/*'
     - 'db/seeds.rb'
 
 Metrics/AbcSize:
-  Max: 19
+  Max: 25
   Exclude:
     - 'test/**/*'
     - 'db/seeds.rb'
@@ -82,6 +87,9 @@ Style/RegexpLiteral:
   AllowInnerSlashes: true
 
 Style/WordArray:
+  Enabled: false
+
+Rails/FilePath:
   Enabled: false
 Rails/HasAndBelongsToMany:
   Enabled: false

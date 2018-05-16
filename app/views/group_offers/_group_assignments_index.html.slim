@@ -1,4 +1,3 @@
-- redirect_to_action ||= nil
 .table-responsive.assignments-table
   table.table.table-no-border-top
     thead
@@ -13,7 +12,7 @@
       - group_assignments.unterminated.each do |group_assignment|
         tr
           td.index-action-cell.hidden-print
-            = button_link navigation_glyph(:edit), edit_group_assignment_path(group_assignment, redirect_to: redirect_to_action),
+            = button_link navigation_glyph(:edit), edit_group_assignment_path(group_assignment, redirect_to: request.fullpath),
               title: 'Bearbeiten' if policy(group_assignment).edit?
             - if policy(group_assignment).show?
               = button_link navigation_glyph(:download), group_assignment_path(group_assignment, format: :pdf),
@@ -24,15 +23,15 @@
                 verify_termination_group_assignment_path(group_assignment), class: 'btn btn-default',
                 data: { method: 'PATCH' }) { '' }
           td
-            = link_to_if(policy(group_assignment.volunteer).show?, group_assignment.volunteer.contact.full_name, volunteer_path(group_assignment.volunteer))
+            = link_to_if(policy(group_assignment.volunteer).edit?, group_assignment.volunteer.contact.full_name, edit_volunteer_path(group_assignment.volunteer))
           td= group_assignment.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
           td= l(group_assignment.period_start) if group_assignment.period_start
           td= l(group_assignment.period_end) if group_assignment.period_end
           td.index-action-cell.hidden-print
             - if group_assignment.period_end.blank?
               = link_to_if(policy(group_assignment).set_end_today?, 'Heute beenden',
-                set_end_today_group_assignment_path(group_assignment, redirect_to: redirect_to_action),
-                data: { method: 'PUT' }) { '' }
+                set_end_today_group_assignment_path(group_assignment, redirect_to: request.fullpath),
+                data: { confirm: 'Wollen Sie den Gruppeneinsatz wirklich beenden?', method: 'PUT' }) { '' }
             - elsif group_assignment.termination_submitted_by_id.blank?
               = link_to_if(policy(group_assignment).terminate?, 'Beendigungsformular an Freiwillige/n mailen',
                 polymorphic_path([group_assignment, ReminderMailing], action: :new_termination),

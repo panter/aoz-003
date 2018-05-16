@@ -29,7 +29,7 @@
           td
             ul.list-unstyled
               - group_offer.volunteers.each do |volunteer|
-                li= link_to volunteer.full_name, volunteer_path(volunteer)
+                li= link_to volunteer.full_name, edit_volunteer_path(volunteer)
 
 = form_navigation_btn :edit
 - if policy(Department).index?

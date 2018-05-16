@@ -14,7 +14,13 @@ h1 Standorte
       tbody
         - @departments.each do |d|
           tr
-            = render 'index_actions', subject: d
+            td.index-action-cell.hidden-print
+              = button_link navigation_glyph(:show), d, title: 'Anzeigen'
+              - if policy(d).edit?
+                = button_link navigation_glyph(:edit), edit_polymorphic_path(d), title: 'Bearbeiten'
+              - if policy(d).destroy?
+                = button_link navigation_glyph(:delete), d, nil,
+                    confirm_deleting(d, 'btn btn-default').merge(title: 'Löschen')
             td= d.contact.last_name
             td= d.contact.street
             td= d.contact.postal_code

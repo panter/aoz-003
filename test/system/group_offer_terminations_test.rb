@@ -14,8 +14,10 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
 
   test 'initiate_termination_form_is_disabled_when_has_running_group_asignments' do
     login_as @superadmin
-    visit group_offers_path
-    click_link 'Beenden', href: initiate_termination_group_offer_path(@group_offer)
+    visit group_offer_path(@group_offer)
+    accept_confirm do
+      first(:link, 'Beenden').click
+    end
     assert page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     assert page.has_text? "#{@group_assignment1.volunteer.full_name} "\
       "Mitglied #{I18n.l(@group_assignment1.period_start)}"
@@ -31,10 +33,10 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit initiate_termination_group_offer_path(@group_offer)
     assert page.has_field? id: 'group_offer_group_assignments_attributes_0_period_end',
-      with: Time.zone.today.to_s
+      with: I18n.l(Time.zone.today)
     click_button 'Jetzt alle Einsätze auf Enddatum beenden'
     assert page.has_text? 'Gruppeneinsätze wurden beendet.'
-    assert page.has_field? 'Angebotsenddatum', with: Time.zone.today.to_s
+    assert page.has_field? 'Angebotsenddatum', with: I18n.l(Time.zone.today)
     click_button 'Gruppenangebots Ende setzen'
     assert page.has_text? 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
   end
@@ -42,8 +44,10 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
   test 'setting_period_end_to_group_assignment_single_works' do
     login_as @superadmin
     visit initiate_termination_group_offer_path(@group_offer)
-    click_link 'Heute beenden', href: set_end_today_group_assignment_path(@group_assignment1,
-      redirect_to: :initiate_termination)
+    accept_confirm do
+      click_link 'Heute beenden', href: set_end_today_group_assignment_path(@group_assignment1,
+        redirect_to: initiate_termination_group_offer_path(@group_offer))
+    end
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     assert page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     refute page.has_text? "#{@group_assignment1.volunteer.full_name} "\
@@ -51,9 +55,9 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     assert page.has_text? "#{@group_assignment2.volunteer.full_name} "\
       "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
     click_link 'Bearbeiten', href: edit_group_assignment_path(@group_assignment2,
-      redirect_to: :initiate_termination)
+      redirect_to: initiate_termination_group_offer_path(@group_offer))
     fill_in id: 'group_assignment_period_end', with: Time.zone.today.to_s
-    click_button 'Begleitung aktualisieren'
+    page.find_all('input[type="submit"]').first.click
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     refute page.has_text? 'Noch nicht beendete Gruppeneinsätze'
     click_button 'Gruppenangebots Ende setzen'

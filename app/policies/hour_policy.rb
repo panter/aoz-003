@@ -4,7 +4,7 @@ class HourPolicy < ApplicationPolicy
   end
 
   def handle_record_or_class
-    record.class == Class ? true : user.volunteer.id == record.volunteer.id
+    record.class == Class ? true : user.volunteer.id == record.volunteer_id
   end
 
   alias_method :supervisor?,     :superadmin?

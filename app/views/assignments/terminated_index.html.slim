@@ -44,7 +44,7 @@ nav.navbar.section-navigation.hidden-print
                   = "Quittiert von "
                   = link_to assignment.termination_verified_by.full_name, profile_link(assignment.termination_verified_by)
                   = " am #{l(assignment.termination_verified_at.to_date)}"
-          td= link_to assignment.volunteer.contact.full_name, volunteer_path(assignment.volunteer)
+          td= link_to assignment.volunteer.contact.full_name, edit_volunteer_path(assignment.volunteer)
           td= link_to assignment.client.contact.full_name, client_path(assignment.client)
           td= l(assignment.period_start) if assignment.period_start
           td= l(assignment.period_end) if assignment.period_end

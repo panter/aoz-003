@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
   include ContactAttributes
 
   before_action :set_profile, only: [:show, :edit, :update]
+  skip_before_action :ensure_profile_presence!, only: [:new, :create]
 
   def show; end
 
@@ -17,7 +18,9 @@ class ProfilesController < ApplicationController
 
   def create
     @profile = Profile.new(profile_params)
+    @profile.user = current_user
     authorize @profile
+
     if @profile.save
       redirect_to @profile, make_notice
     else
@@ -42,7 +45,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :user_id, :picture, :profession, :avatar,
+      :picture, :profession, :avatar,
       contact_attributes, availability_attributes
     )
   end

@@ -1,6 +1,7 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment,
-    except: [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client]
+  before_action :set_assignment, except:
+    [:index, :terminated_index, :volunteer_search, :client_search, :new, :create, :find_client,
+     :hours_and_feedbacks_submitted]
 
   def index
     authorize Assignment
@@ -9,7 +10,9 @@ class AssignmentsController < ApplicationController
     @q.sorts = ['period_start desc'] if @q.sorts.empty?
     @assignments = @q.result
     respond_to do |format|
-      format.xlsx
+      format.xlsx do
+        render xlsx: 'index', filename: 'Begleitungen'
+      end
       format.html do
         @assignments = @assignments.paginate(page: params[:page],
           per_page: params[:print] && @assignments.size)
@@ -64,7 +67,7 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.new(assignment_params.merge(creator_id: current_user.id))
     authorize @assignment
     if @assignment.save
-      redirect_to assignments_url, make_notice
+      redirect_to edit_assignment_path(@assignment), make_notice
     else
       render :new
     end
@@ -90,12 +93,13 @@ class AssignmentsController < ApplicationController
   def last_submitted_hours_and_feedbacks
     @last_submitted_hours = @assignment.hours_since_last_submitted
     @last_submitted_feedbacks = @assignment.feedbacks_since_last_submitted
+    @volunteer = @assignment.volunteer
   end
 
   def update_submitted_at
-    @assignment.update(submitted_at: Time.zone.now)
-    redirect_to last_submitted_hours_and_feedbacks_assignment_path,
-      notice: 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    @assignment.update(assignment_params.slice(:volunteer_attributes)
+      .merge(submitted_at: Time.zone.now))
+    redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
   end
 
   def terminate
@@ -105,14 +109,17 @@ class AssignmentsController < ApplicationController
   end
 
   def update_terminated_at
-    @assignment.volunteer.waive = waive_param_true?
-    @assignment.assign_attributes(assignment_params.except(:volunteer_attributes)
-      .merge(termination_submitted_at: Time.zone.now, termination_submitted_by: current_user))
+    @assignment.assign_attributes(assignment_params.merge(
+      termination_submitted_at: Time.zone.now,
+      termination_submitted_by: current_user
+    ))
+
     if @assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@assignment).deliver_now
-      redirect_to @assignment.volunteer, notice: 'Der Einsatz ist hiermit abgeschlossen.'
+      redirect_back fallback_location: terminate_assignment_path(@assignment),
+        notice: 'Der Einsatz ist hiermit abgeschlossen.'
     else
-      redirect_back(fallback_location: terminate_assignment_path(@assignment))
+      redirect_back fallback_location: terminate_assignment_path(@assignment)
     end
   end
 
@@ -122,19 +129,19 @@ class AssignmentsController < ApplicationController
     flash[:notice] = 'Der Einsatz wurde erfolgreich quittiert.'
   end
 
+  def hours_and_feedbacks_submitted
+    authorize :assignment, :hours_and_feedbacks_submitted?
+  end
+
   private
 
   def create_update_redirect
-    if @assignment.saved_change_to_period_end?(from: nil)
+    if @assignment.saved_change_to_period_end?(from: nil) && (@assignment.ended? || @assignment.will_end_today?)
       redirect_to terminated_index_assignments_path,
         notice: 'Die Einsatzbeendung wurde initiiert.'
     else
-      redirect_to(volunteer? ? @assignment.volunteer : assignments_url, make_notice)
+      redirect_to edit_assignment_path(@assignment), make_notice
     end
-  end
-
-  def waive_param_true?
-    assignment_params[:volunteer_attributes][:waive] == '1'
   end
 
   def terminate_reminder_mailing
@@ -165,14 +172,14 @@ class AssignmentsController < ApplicationController
 
   def assignment_params
     params.require(:assignment).permit(
-      :client_id, :volunteer_id, :period_start, :period_end, :waive,
+      :client_id, :volunteer_id, :period_start, :period_end,
       :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
       :term_feedback_transfair, :comments, :additional_comments,
       :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
-      :special_agreement, :first_meeting,
-      volunteer_attributes: [:waive]
+      :special_agreement, :first_meeting, :remaining_hours,
+      volunteer_attributes: [:waive, :iban, :bank]
     )
   end
 end

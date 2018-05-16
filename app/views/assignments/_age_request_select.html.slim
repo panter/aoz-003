@@ -1,7 +1,7 @@
-- age_request_filter = request_filter(:age_request_cont, 'all')
+- age_request_filter = search_parameters[:age_request_cont].presence || 'all'
 .btn-group
   button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:age_request)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
-    = "#{t_attr(:age_request, Client)} : "
+    = "#{t_attr(:age_request, Client)}: "
     = t(age_request_filter, scope: [:simple_form, :options, :client, :age_request]) + ' '
     span.caret aria-hidden='true'
   ul.dropdown-menu

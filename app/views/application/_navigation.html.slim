@@ -11,41 +11,43 @@ nav.navbar.navbar-top.hidden-print
           = image_tag 'AOZ_Logo.svg', alt: 'AOZ Logo', class: 'brand-image'
 
       #navbar.collapse.navbar-collapse
-        ul.nav.navbar-nav.navbar-left
-          - if policy(Volunteer).index?
-            li= link_to 'Freiwillige', volunteers_path
-          - if policy(Client).index?
-            li= link_to 'Klient/innen', clients_path
-          - if policy(Assignment).index?
-            li= link_to 'Begleitungen', assignments_path
-          - if policy(GroupOffer).index?
-            li= link_to 'Gruppenangebote', group_offers_path
-          - if policy(ReminderMailing).index?
-            li = link_to 'Erinnerungs-Emails', reminder_mailings_path
-          - if policy(Event).index?
-            li = link_to 'Veranstaltungen', events_path
-          - if policy(PerformanceReport).index?
-            li= link_to 'Kennzahlen', performance_reports_path
-          - if policy(User).index?
-            li= link_to 'Benutzer/innen', users_path
-          - if policy(Department).index?
-            li= link_to 'Standorte', departments_path
-          - elsif policy(Department).manager_with_department?
-            li= link_to t_model(Department), department_path(current_user.department.first.id)
+        - unless current_user.missing_profile?
+          ul.nav.navbar-nav.navbar-left
+            - if policy(Volunteer).index?
+              li= link_to 'Freiwillige', volunteers_path
+            - if policy(Client).index?
+              li= link_to 'Klient/innen', clients_path
+            - if policy(Assignment).index?
+              li= link_to 'Begleitungen', assignments_path
+            - if policy(GroupOffer).index?
+              li= link_to 'Gruppenangebote', group_offers_path
+            - if policy(ReminderMailing).index?
+              li = link_to 'Erinnerungs-Emails', reminder_mailings_path
+            - if policy(Event).index?
+              li = link_to 'Veranstaltungen', events_path
+            - if policy(PerformanceReport).index?
+              li= link_to 'Kennzahlen', performance_reports_path
+            - if policy(User).index?
+              li= link_to 'Benutzer/innen', users_path
+            - if policy(Department).index?
+              li= link_to 'Standorte', departments_path
+            - elsif policy(Department).manager_with_department?
+              li= link_to t_model(Department), department_path(current_user.department.first.id)
         ul.nav.navbar-nav.navbar-right
           li.dropdown#menu
             a.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown' href='#' role='button'
               span= "#{current_user.full_name} #{t("role.#{current_user.role}")}"
               span.caret
             ul.dropdown-menu
-              - if current_user.volunteer?
+              li
+                - if current_user.volunteer?
+                  = link_to 'Profil bearbeiten', profile_link(current_user)
+                - elsif current_user.profile.blank?
+                  = link_to 'Profil erfassen', new_profile_path
+                - else
+                  = link_to 'Profil bearbeiten', edit_profile_path(current_user.profile)
+              - if policy(current_user).edit?
                 li
-                  = link_to 'Profil anzeigen', volunteer_path(current_user.volunteer.id)
-              - else
-                li
-                  - if current_user.profile.blank?
-                    = link_to 'Profil erfassen', new_profile_path
-                  - else
-                    = link_to 'Profil anzeigen', current_user.profile
+                  = link_to 'Login bearbeiten', edit_user_path(current_user)
               li
                 = link_to 'Abmelden', destroy_user_session_path, method: :delete

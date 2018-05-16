@@ -8,22 +8,24 @@ class SessionsTest < ApplicationSystemTestCase
   test 'redirects to login page if not authenticated' do
     visit root_path
 
-    assert page.has_current_path? new_user_session_path
-    assert page.has_text? 'Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.'
+    assert_current_path new_user_session_path
+    assert_text 'Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.'
   end
 
   test 'sign in with valid credentials' do
-    visit new_user_session_path
+    visit volunteers_path
 
-    assert page.has_field? 'Email'
+    assert_field 'Email'
 
     fill_in 'Email', with: @user.email
     fill_in 'Passwort', with: 'asdfasdf'
     click_button 'Anmelden'
 
-    assert page.has_text? 'Erfolgreich angemeldet.'
+    assert_text 'Erfolgreich angemeldet.'
+    assert_text 'Freiwillige/n erfassen'
+
     within '.navbar-top' do
-      assert page.has_link? I18n.t("role.#{@user.role}"), href: '#'
+      assert_link I18n.t("role.#{@user.role}"), href: '#'
     end
   end
 
@@ -33,10 +35,10 @@ class SessionsTest < ApplicationSystemTestCase
     within '.navbar-top' do
       click_link I18n.t("role.#{@user.role}"), href: '#'
     end
-    assert page.has_link? 'Abmelden'
+    assert_link 'Abmelden'
     click_link 'Abmelden'
 
-    assert page.has_current_path? new_user_session_path
-    assert page.has_text? 'Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.'
+    assert_current_path new_user_session_path
+    assert_text 'Erfolgreich abgemeldet.'
   end
 end

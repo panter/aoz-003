@@ -4,7 +4,9 @@ class ReminderMailingsController < ApplicationController
 
   def index
     authorize ReminderMailing
-    @q = ReminderMailing.ransack(params[:q])
+    @q = ReminderMailing
+      .includes(creator: { profile: :contact }, reminder_mailing_volunteers: :reminder_mailable)
+      .ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @reminder_mailings = @q.result
   end

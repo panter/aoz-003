@@ -27,7 +27,7 @@ class GroupOfferTransform < Transformer
     grouped_group_assignments(fetched_gas).map do |_, group_assignments|
       location = group_assignments.first.import.store['freiwilligen_einsatz']['t_EinsatzOrt']
       offers_assignments = group_assignments.find_all { |ga| ga.group_offer_id.blank? }
-      next if offers_assignments.blank?
+      next if offers_assignments.blank? || offers_assignments.map(&:period_end).count(&:nil?).zero?
       title = offers_assignments.first.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
       get_or_create_by_import(
         offers_assignments, location: location, title: title,
@@ -75,7 +75,7 @@ class GroupOfferTransform < Transformer
   end
 
   def grouped_group_assignments(group_assignments)
-    group_assignments.group_by do |group_assignment|
+    group_assignments.compact.group_by do |group_assignment|
       group_assignment.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
     end
   end
@@ -88,7 +88,7 @@ class GroupOfferTransform < Transformer
   end
 
   def einsatz_ort_ids(group_assignments)
-    @einsatz_ort_ids ||= group_assignments.map do |group_assignment|
+    group_assignments.map do |group_assignment|
       group_assignment.import.store['freiwilligen_einsatz']['fk_EinsatzOrt']
     end
   end

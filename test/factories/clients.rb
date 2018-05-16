@@ -1,14 +1,11 @@
 FactoryBot.define do
   factory :client do
-    association :contact
+    user
+    contact
     salutation { ['mr', 'mrs'].sample }
 
     trait :zuerich do
       association :contact, factory: :contact_zuerich
-    end
-
-    trait :seed_contact do
-      association :contact, factory: :contact_seed
     end
 
     trait :with_relatives do
@@ -57,7 +54,6 @@ FactoryBot.define do
     end
 
     after(:build) do |client|
-      client.user ||= create(:user_fake_email)
       if client.salutation == 'mrs'
         client.contact.first_name = I18n.t('faker.name.female_first_name').sample
       elsif client.salutation == 'mr'
@@ -69,7 +65,7 @@ FactoryBot.define do
     factory(
       :client_seed,
       traits: [
-        :seed_contact, :with_language_skills, :with_journals, :fake_availability,
+        :with_language_skills, :with_journals, :fake_availability,
         :faker_misc
       ]
     )

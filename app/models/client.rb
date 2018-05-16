@@ -4,18 +4,16 @@ class Client < ApplicationRecord
   include BuildContactRelation
   include ZuerichScopes
   include ImportRelation
-
-  before_update :record_acceptance_change, if: :will_save_change_to_acceptance?
+  include AcceptanceAttributes
 
   enum acceptance: { accepted: 0, rejected: 1, resigned: 2 }
   enum cost_unit: { city: 0, municipality: 1, canton: 2 }
 
-  ransacker :acceptance, formatter: ->(value) { acceptances[value] }
-
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
-  PERMITS = [:N, :F, :'B-FL', :B, :C].freeze
+  PERMITS = [:N, :F, :'B-FL', :B, :C, :PF, :CH].freeze
   SALUTATIONS = [:mrs, :mr, :family].freeze
+  AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'clients'
   belongs_to :resigned_by, class_name: 'User', inverse_of: 'resigned_clients',
@@ -36,7 +34,10 @@ class Client < ApplicationRecord
   has_many :journals, as: :journalable, dependent: :destroy
   accepts_nested_attributes_for :journals, allow_destroy: true
 
-  validates :salutation, presence: true
+  validates :salutation, presence: true, inclusion: { in: SALUTATIONS.map(&:to_s) }
+  validates :gender_request, inclusion: { in: GENDER_REQUESTS.map(&:to_s), allow_blank: true }
+  validates :age_request, inclusion: { in: AGE_REQUESTS.map(&:to_s), allow_blank: true }
+  validates :permit, inclusion: { in: PERMITS.map(&:to_s), allow_blank: true }
 
   validates :acceptance, exclusion: {
     in: ['resigned'],
@@ -87,20 +88,6 @@ class Client < ApplicationRecord
     acceptences_restricted.keys.map(&:to_sym)
   end
 
-  def self.acceptance_collection
-    acceptances.keys.map(&:to_sym)
-  end
-
-  def self.acceptance_filters
-    acceptances.keys.map do |key|
-      {
-        q: :acceptance_eq,
-        value: key,
-        text: I18n.t("acceptance.#{key}")
-      }
-    end
-  end
-
   def self.cost_unit_collection
     cost_units.keys.map(&:to_sym)
   end
@@ -110,14 +97,9 @@ class Client < ApplicationRecord
   end
 
   def self.first_languages
-    [
-      [I18nData.languages(I18n.locale)['TI'], 'TI'],
-      ['Dari', 'DR'],
-      [I18nData.languages(I18n.locale)['AR'], 'AR'],
-      ['Farsi', 'FS'],
-      [I18nData.languages(I18n.locale)['DE'], 'DE'],
-      [I18nData.languages(I18n.locale)['EN'], 'EN']
-    ]
+    @first_languages ||= ['TI', 'DR', 'AR', 'FS', 'DE', 'EN'].map do |lang|
+      [I18n.t("language_names.#{lang}"), lang]
+    end
   end
 
   def german_missing?
@@ -129,9 +111,11 @@ class Client < ApplicationRecord
     ['active', 'inactive']
   end
 
-  private
+  def active?
+    accepted? && assignments.active.any?
+  end
 
-  def record_acceptance_change
-    self["#{acceptance}_at".to_sym] = Time.zone.now
+  def inactive?
+    accepted? && assignments.active.blank?
   end
 end

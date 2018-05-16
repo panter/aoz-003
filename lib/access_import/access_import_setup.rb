@@ -12,8 +12,13 @@ module AccessImportSetup
     setup_class_variables(*instantiate_all_accessors)
     @sprache_pro_hauptperson.add_other_accessors(@sprachen, @sprach_kenntnisse)
     @einsatz_orte.add_other_accessors(@plz)
-    @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson)
+    @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson, @sprachen,
+      @sprach_kenntnisse)
     @kontoangaben.add_other_accessors(@plz)
+
+    # don't overwrite imported accepted_at values
+    Volunteer.skip_callback(:save, :record_acceptance_change, if: :accepted_at?)
+    Client.skip_callback(:save, :record_acceptance_change, if: :accepted_at?)
   end
 
   def instantiate_all_accessors
@@ -39,8 +44,10 @@ module AccessImportSetup
       return User.with_deleted.find_by(email: IMPORT_USER_EMAIL).restore
     end
     user = User.create!(email: IMPORT_USER_EMAIL, password: SecureRandom.hex(60), role: 'superadmin')
-    user.profile = Profile.new(contact: Contact.new(first_name: IMPORT_USER_NAME,
-      last_name: IMPORT_USER_NAME, primary_email: IMPORT_USER_EMAIL))
+    user.build_profile
+    user.profile.build_contact(first_name: IMPORT_USER_NAME, last_name: IMPORT_USER_NAME,
+      primary_email: IMPORT_USER_EMAIL, primary_phone: '0000', city: 'Zuerich', postal_code: '8000',
+      street: 'xxxxxx')
     user.save!
     user
   end

@@ -20,6 +20,7 @@ class KursTransform < Transformer
     group_offer_category = @ac_import.kursart_transform.get_or_create_by_import(kurs[:fk_Kursart])
     group_offer = GroupOffer.new(prepare_attributes(kurs, group_offer_category))
     group_offer.group_assignments = fetch_group_assignments(kurs_id)
+    return if group_offer.group_assignments.blank?
     group_offer.department = find_group_offer_department(group_offer.group_assignments)
     group_offer.save!
     group_offer
@@ -33,7 +34,7 @@ class KursTransform < Transformer
   end
 
   def einsatz_ort_ids(group_assignments)
-    @einsatz_ort_ids ||= group_assignments.map do |group_assignment|
+    group_assignments.map do |group_assignment|
       group_assignment.import.store['freiwilligen_einsatz']['fk_EinsatzOrt']
     end
   end
@@ -41,7 +42,8 @@ class KursTransform < Transformer
   def fetch_group_assignments(kurs_id)
     group_assignments = @ac_import.group_assignment_transform.import_all(
       einsaetze: @freiwilligen_einsaetze.where_kurs(kurs_id)
-    )
+    ).compact
+    return [] if group_assignments.blank?
     volunteer_ids = group_assignments.map(&:volunteer_id).uniq
     return group_assignments if volunteer_ids.size == group_assignments.size
     volunteer_ids.map do |volunteer_id|

@@ -1,11 +1,12 @@
 - if policy(Hour).supervisor?
   h1= @volunteer.contact.full_name
-h1= t_title(:index, Hour)
+h1 Stunden Rapporte
 .row
   .col-xs-12
     h4.pull-right
       = t('total_hours')
       =< @volunteer.hours.total_hours
+= form_navigation_btn :new
 .table-responsive
       table.table
         thead
@@ -29,7 +30,7 @@ h1= t_title(:index, Hour)
                 = button_link navigation_glyph(:delete), volunteer_hour_path(@volunteer, record),
                     confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
               - if current_user.superadmin?
-                td= link_to @volunteer.contact.full_name, volunteer_path(@volunteer)
+                td= link_to @volunteer.contact.full_name, edit_volunteer_path(@volunteer)
               td
                 - if record.assignment?
                   - if policy(Hour).supervisor?
@@ -42,8 +43,7 @@ h1= t_title(:index, Hour)
               td= record.hours
               td= record.activity
               td= record.comments
-.row
-  .col-xs-12
+
 = form_navigation_btn :new
 .row
   .col-xs-12

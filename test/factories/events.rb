@@ -7,7 +7,7 @@ FactoryBot.define do
     end_time { FFaker::Time.between(20.hours.ago, 4.hours.ago) }
     date { FFaker::Time.between(300.days.ago, 10.days.ago) }
 
-    association :creator, factory: :user_fake_email
+    association :creator, factory: :user
 
     trait :with_department do
       association :department
