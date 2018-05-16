@@ -23,3 +23,6 @@ ul.list-inline
     li= button_link navigation_glyph(:billing_expenses), volunteer_billing_expenses_path(@volunteer), title: 'Spesenformulare'
   - if policy(Volunteer).superadmin_privileges?
     li= button_link navigation_glyph(:certificate), volunteer_certificates_path(@volunteer), title: t('volunteer_applications.show.new_certificate')
+  - if policy(@volunteer).show?
+    li= button_link navigation_glyph(:print), volunteer_path(@volunteer, print: :true), { class: 'btn btn-default', target: '_blank', title: 'Ausdrucken' }
+

@@ -12,4 +12,4 @@ ul.list-inline
     li= button_link navigation_glyph(:journal), polymorphic_path([@client, Journal]), title: 'Journal', class: 'btn btn-default'
   - if policy(@client).show?
     li= button_link navigation_glyph(:show), polymorphic_path(@client), title: t_action(:show)
-  li = link_to navigation_glyph(:print), url_for(print: :true), { class: 'btn btn-default btn-sm', target: '_blank' }
+  li = link_to navigation_glyph(:print), client_path(@client, print: :true), { class: 'btn btn-default', target: '_blank' }
