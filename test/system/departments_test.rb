@@ -124,7 +124,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     visit department_path(department)
     assert page.has_link? group_offer.title
     volunteers.each do |volunteer|
-      assert page.has_link? volunteer.full_name
+      assert page.has_text? volunteer.full_name
     end
   end
 
