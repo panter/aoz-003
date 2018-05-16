@@ -67,7 +67,7 @@ class VolunteersController < ApplicationController
   def update
     @volunteer.attributes = volunteer_params
     return render :edit unless @volunteer.valid?
-    if handle_volunteer_update
+    if @volunteer.save! && @volunteer.saved_change_to_attribute?(:user_id, from: nil)
       redirect_to edit_volunteer_path(@volunteer), notice: t('invite_sent', email: @volunteer.primary_email)
     else
       redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_updated')
@@ -129,24 +129,6 @@ class VolunteersController < ApplicationController
   def activity_filter
     return @volunteers unless params[:q] && params[:q][:active_eq]
     params[:q][:active_eq] == 'true' ? @volunteers.active : @volunteers.inactive
-  end
-
-  def handle_volunteer_update
-    if @volunteer.acceptance_change == ['undecided', 'accepted'] && @volunteer.user_id.blank?
-      @volunteer.save && invite_volunteer_user
-    else
-      @volunteer.save!
-      false
-    end
-  end
-
-  def invite_volunteer_user
-    return false if @volunteer.external
-    new_user = User.new(
-      email: @volunteer.contact.primary_email, password: Devise.friendly_token,
-      role: 'volunteer', volunteer: @volunteer
-    )
-    new_user.save && new_user.invite!
   end
 
   def set_volunteer
