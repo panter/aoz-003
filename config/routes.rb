@@ -68,7 +68,7 @@ Rails.application.routes.draw do
 
   resources :feedbacks, only: [:new, :create]
   resources :group_assignments, only: [:show, :create, :edit, :update],
-    concerns: [:update_submitted_at, :hours_resources, :termination_actions] do
+    concerns: [:update_submitted_at, :termination_actions] do
     put :set_end_today, on: :member
   end
 

@@ -23,13 +23,10 @@ h2= @group_offer.title
             br
           - if !@group_offer.external? && @group_offer.department
             = "#{t('group_offers.index.offer_of')} "
-            - if policy(@group_offer.department).show?
-              = link_to @group_offer.department, department_path(@group_offer.department.id)
-            - else
-              = @group_offer.department
+            = link_to_if policy(@group_offer.department).show?, @group_offer.department, department_path(@group_offer.department.id)
       tr
         td Verantwortliche/r
-        td= link_to @group_offer.creator, profile_link(@group_offer.creator) if @group_offer.creator
+        td= link_to_if policy(@group_offer.creator.profile).edit?, @group_offer.creator, profile_link(@group_offer.creator) if @group_offer.creator
       tr
         td= t_attr(:offer_state)
         td= t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?
@@ -68,25 +65,28 @@ h2= @group_offer.title
       tr
         td= t_attr(:schedule_details)
         td= @group_offer.schedule_details
+
 = render 'group_assignments'
 
-- show_volunteers = (params[:page] || params[:q]).present?
-#add-volunteers.collapse class=('in' if show_volunteers)
-  h2 Freiwillige hinzufügen
 
-  ul.list-unstyled.m-t-20
-    li.li-search-form
-      = search_form_for @q, url: group_offer_path(@group_offer) do |f|
-        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_volunteer_group_offer_path(@group_offer) }, autofocus: true
-        = f.submit 'Suchen', class: 'search-submit'
+- if policy(@group_offer).edit?
+  - show_volunteers = (params[:page] || params[:q]).present?
+  #add-volunteers.collapse class=('in' if show_volunteers)
+    h2 Freiwillige hinzufügen
 
-  = render 'volunteers/columns', volunteers: @volunteers
-  br
+    ul.list-unstyled.m-t-20
+      li.li-search-form
+        = search_form_for @q, url: group_offer_path(@group_offer) do |f|
+          = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_volunteer_group_offer_path(@group_offer) }, autofocus: true
+          = f.submit 'Suchen', class: 'search-submit'
 
-ul.list-inline.m-b-20
-  li= button_link 'Gruppenangebot bearbeiten', edit_group_offer_path(@group_offer)
-  li
-    a.btn.btn-default href='#add-volunteers' data-toggle='collapse' aria-expanded=show_volunteers.to_s aria-controls='add-volunteers'
-      'Freiwillige hinzufügen
+    = render 'volunteers/columns', volunteers: @volunteers
+    br
+
+  ul.list-inline.m-b-20
+    li= button_link 'Gruppenangebot bearbeiten', edit_group_offer_path(@group_offer)
+    li
+      a.btn.btn-default href='#add-volunteers' data-toggle='collapse' aria-expanded=show_volunteers.to_s aria-controls='add-volunteers'
+        'Freiwillige hinzufügen
 
 = render 'buttons'

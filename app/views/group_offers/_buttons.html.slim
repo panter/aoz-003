@@ -4,7 +4,7 @@ ul.list-inline
   li= button_link navigation_glyph(:download), group_offer_path(@group_offer, format: :pdf), title: 'Herunterladen'
   li= link_to navigation_glyph(:print), group_offer_path(@group_offer, print: :true, format: :pdf),
     { class: 'btn btn-default btn-md', target: '_blank' }
-  - if @group_offer.period_end.blank?
+  - if @group_offer.period_end.blank? && policy(@group_offer).change_active_state?
     li= button_link navigation_glyph(@group_offer.active? ? :deactivate : :activate),
       change_active_state_group_offer_path(@group_offer), method: :put,
       title: (@group_offer.active? ? 'Deaktivieren' : 'Aktivieren'),

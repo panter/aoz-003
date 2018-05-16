@@ -36,11 +36,11 @@ class GroupAssignment < ApplicationRecord
   end
 
   def hours_since_last_submitted
-    group_offer.hours.since_last_submitted(submitted_at)
+    hours.since_last_submitted(submitted_at)
   end
 
   def feedbacks_since_last_submitted
-    group_offer.feedbacks.since_last_submitted(submitted_at)
+    feedbacks.since_last_submitted(submitted_at)
   end
 
   def polymorph_url_object
