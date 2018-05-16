@@ -14,7 +14,6 @@
         th= t_attr(:profession, Volunteer)
         th= t_attr(:working_percent, Volunteer)
         th= t_attr(:interests, Volunteer)
-        th= t_attr(:external, Volunteer)
 
     tbody
       tr
@@ -31,4 +30,3 @@
         td = volunteer.profession
         td #{volunteer.working_percent}%
         td = volunteer.interests
-        td = volunteer.external? ? t_attr(:external, Volunteer) : t_attr(:internal, Volunteer)

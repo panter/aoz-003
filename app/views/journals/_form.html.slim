@@ -2,9 +2,9 @@
   = simple_error_notice f
   h1= @journaled.contact.full_name
   .row
-    .col-xs-12= f.input :category, collection: Journal::CATEGORIES, include_blank: false
-    .col-xs-12= f.input :title
-    .col-xs-12= f.input :body
+    .col-xs-12.col-md-2= f.input :category, collection: Journal::CATEGORIES, include_blank: false
+    .col-xs-12.col-md-10= f.input :title
+    .col-xs-12= f.input :body, input_html: { class: 'text-bg-body' }
     .col-xs-12= f.button :submit
     - if action_edit?
       .col-xs-12.m-t-10= link_to navigation_glyph(:delete), url_for([@journaled, @journal]), confirm_deleting(@journal, 'btn btn-default')
