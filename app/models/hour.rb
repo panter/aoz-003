@@ -20,7 +20,7 @@ class Hour < ApplicationRecord
   scope :billed, (-> { where.not(billing_expense: nil) })
 
   scope :since_last_submitted, lambda { |submitted_at|
-    where('created_at > ?', submitted_at) if submitted_at
+    where('hours.created_at > ?', submitted_at) if submitted_at
   }
 
   scope :assignment, (-> { where(hourable_type: 'Assignment') })

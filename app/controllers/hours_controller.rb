@@ -4,6 +4,9 @@ class HoursController < ApplicationController
 
   def index
     authorize @volunteer.hours.first || Hour
+    @q = @volunteer.hours.ransack(params[:q])
+    @q.sorts = ['meeting_date desc'] if @q.sorts.empty?
+    @hours = @q.result
   end
 
   def show; end
@@ -71,7 +74,8 @@ class HoursController < ApplicationController
   end
 
   def set_volunteer
-    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+    @volunteer = Volunteer.find(params[:volunteer_id])
+    authorize @volunteer, :show?
   end
 
   def hour_params

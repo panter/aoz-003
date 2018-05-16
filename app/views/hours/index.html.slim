@@ -20,7 +20,7 @@ h1 Stunden Rapporte
             th= t_attr(:activity)
             th= t_attr(:comments)
         tbody
-          - @volunteer.hours.each do |record|
+          - @hours.each do |record|
             tr
               td.index-action-cell.hidden-print
                 = button_link navigation_glyph(:show), volunteer_hour_path(@volunteer, record),
