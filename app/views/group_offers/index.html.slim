@@ -89,12 +89,8 @@ table.table.table-striped
         td
           - offer.volunteers.each do |volunteer|
             = link_to_if(policy(volunteer).edit?, volunteer.contact.full_name, edit_volunteer_path(volunteer))
-            - if offer.responsible?(volunteer)
-              br
-              = t_attr(:responsible, GroupAssignment)
-            - else
-              br
-              = t_attr(:member, GroupAssignment)
+            br
+            = t_attr(offer.responsible?(volunteer) ? :responsible : :member, GroupAssignment)
             br
         td= link_to offer.group_offer_category.category_name, url_for(q: search_parameters.merge(group_offer_category_id_eq: offer.group_offer_category.id))
         td= t_attr(offer.external? ? :external : :internal, GroupOffer)
