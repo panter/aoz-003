@@ -54,7 +54,7 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'terminate_volunteer_without_user' do
-    volunteer = create :volunteer
+    volunteer = create :volunteer, external: true, acceptance: :accepted
 
     assert_nil volunteer.user
 

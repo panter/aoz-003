@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :volunteer do
     birth_year { FFaker::Time.between(18.years.ago, 85.years.ago) }
-    contact
+    association :contact, factory: :contact_test_mail
     salutation { ['mr', 'mrs'].sample }
     acceptance :accepted
     group_offer_categories { |category| [category.association(:group_offer_category)] }
