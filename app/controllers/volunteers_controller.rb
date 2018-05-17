@@ -52,8 +52,7 @@ class VolunteersController < ApplicationController
     @volunteer.registrar = current_user
     authorize @volunteer
     if @volunteer.save
-      if @volunteer.accepted?
-        invite_volunteer_user
+      if @volunteer.accepted? && @volunteer.internal? && @volunteer.user
         redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created_invite_sent',
           email: @volunteer.primary_email)
       else
@@ -67,10 +66,14 @@ class VolunteersController < ApplicationController
   def update
     @volunteer.attributes = volunteer_params
     return render :edit unless @volunteer.valid?
-    if @volunteer.save! && @volunteer.saved_change_to_attribute?(:user_id, from: nil)
-      redirect_to edit_volunteer_path(@volunteer), notice: t('invite_sent', email: @volunteer.primary_email)
-    else
+    if @volunteer.will_save_change_to_attribute?(:acceptance, to: 'accepted') &&
+        @volunteer.internal? && !@volunteer.user && @volunteer.save!
+      redirect_to(edit_volunteer_path(@volunteer),
+        notice: t('invite_sent', email: @volunteer.primary_email))
+    elsif @volunteer.save!
       redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_updated')
+    else
+      render :edit
     end
   end
 

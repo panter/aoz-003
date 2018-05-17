@@ -99,7 +99,7 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last
-    assert_equal volunteer.contact.primary_email, email['to'].to_s
+    assert_equal volunteer.contact.primary_email, volunteer.user.email
   end
 
   test 'superadmin can edit only their password' do

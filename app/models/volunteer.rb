@@ -8,7 +8,8 @@ class Volunteer < ApplicationRecord
   include AcceptanceAttributes
 
   before_validation :handle_user_with_external_change, if: :external_changed?
-  before_save :invite_user_if_accepted
+  before_save :build_user_if_accepted
+  after_save :invite_user_if_accepted
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :teenager, :unaccompanied].freeze
   REJECTIONS = [:us, :her, :other].freeze
@@ -378,20 +379,18 @@ class Volunteer < ApplicationRecord
     kinds.uniq
   end
 
-  def invite_user_if_accepted
+  def build_user_if_accepted
     return if !will_save_change_to_attribute?(:acceptance, to: 'accepted') || external? || user.present?
     if User.exists?(email: contact.primary_email)
       return errors.add(:user, "Es existiert bereits ein User mit der Email #{contact.primary_email}!")
     end
-    new_user = User.new(email: contact.primary_email, password: Devise.friendly_token, role: 'volunteer')
-    new_user.build_profile
-    new_user.profile.build_contact(contact.slice(:first_name, :last_name, :street, :postal_code, :city,
-      :primary_phone, :primary_email))
-    new_user.save!(validate: false)
-    new_user.profile.contact.update(primary_email: "dummy_#{Time.zone.now.to_f}@example.com")
-    new_user.reload && new_user.valid? && new_user.invite!
-    self.user = new_user
+    self.user = User.new(email: contact.primary_email, password: Devise.friendly_token, role: 'volunteer')
   end
+
+  def invite_user_if_accepted
+    user.invite! if internal? && saved_change_to_attribute?(:acceptance, to: 'accepted')
+  end
+
 
   def user_deleted?
     user&.deleted?

@@ -74,7 +74,7 @@ FactoryBot.define do
 
     after(:build) do |volunteer|
       if volunteer.accepted? && volunteer.internal?
-        volunteer.user_id = create(:user, role: 'volunteer').id
+        volunteer.user_id = User.create(role: 'volunteer', email: volunteer.contact.primary_email).id
       end
       if volunteer.salutation == 'mrs'
         volunteer.contact.first_name = I18n.t('faker.name.female_first_name').sample
