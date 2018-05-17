@@ -8,7 +8,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
 
   test 'trial_period_mailer' do
     _, _, group_assignments = create_group_offer_entity(
-      nil, 7.weeks.ago, nil, create(:volunteer_with_user), create(:volunteer_with_user)
+      nil, 7.weeks.ago, nil, create(:volunteer), create(:volunteer)
     )
     assignment = make_assignment(start_date: 7.weeks.ago)
     mailing = create_probation_mailing(*group_assignments, assignment)
@@ -22,7 +22,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
 
   test 'half_year_mailer' do
     _, _, group_assignments = create_group_offer_entity(
-      nil, 8.months.ago, nil, create(:volunteer_with_user), create(:volunteer_with_user)
+      nil, 8.months.ago, nil, create(:volunteer), create(:volunteer)
     )
     assignment = make_assignment(start_date: 8.months.ago)
     mailing = create_half_year_mailing(*group_assignments, assignment)

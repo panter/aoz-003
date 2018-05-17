@@ -19,7 +19,7 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'external volunteer can have no user' do
-    external_volunteer = create :volunteer_external
+    external_volunteer = create :volunteer, external: true
     volunteer_user = create :user_volunteer
     external_volunteer.user = volunteer_user
     assert external_volunteer.invalid?
@@ -29,14 +29,14 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'an internal volunteer turned into a external, having a user, user gets softdeleted' do
-    volunteer = create :volunteer_with_user, external: false
+    volunteer = create :volunteer, external: false
     assert volunteer.valid?
     volunteer.update(external: true)
     assert volunteer.user.deleted?
   end
 
   test 'an external volunteer used to be internal with user turned back internal gets back user' do
-    volunteer = create :volunteer_with_user, external: false
+    volunteer = create :volunteer, external: false
     volunteer.update(external: true)
     volunteer.reload
     volunteer.update(external: false)
@@ -44,7 +44,7 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'when an internal volunteer gets terminated will be marked as resigned' do
-    volunteer = create :volunteer_with_user, external: false
+    volunteer = create :volunteer, external: false
     assert volunteer.valid?
     volunteer.terminate!
     volunteer.reload

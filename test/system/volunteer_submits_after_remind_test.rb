@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
   setup do
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     @assignment = create :assignment, volunteer: @volunteer
     create :hour, hourable: @assignment, created_at: 2.days.ago
     @assignment_feedback = create :feedback, feedbackable: @assignment, author: @volunteer.user,
@@ -108,7 +108,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     @hour_volunteer1 = create :hour, volunteer: @volunteer, hourable: @group_offer,
       comments: 'hour_volunteer1'
 
-    @volunteer2 = create :volunteer_with_user
+    @volunteer2 = create :volunteer
     @group_assignment2 = @group_offer.group_assignments.where(volunteer: @volunteer2).last
     @hour_volunteer2 = create :hour, volunteer: @volunteer2, hourable: @group_offer,
       comments: 'hour_volunteer2'

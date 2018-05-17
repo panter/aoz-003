@@ -8,7 +8,7 @@ class VolunteerPolicyTest < PolicyAssertions::Test
 
   test 'department_manager_has_limited_access' do
     department_manager = create :department_manager
-    department_manager_volunteer = create :volunteer_with_user
+    department_manager_volunteer = create :volunteer
     department_manager_volunteer.registrar = department_manager
     assert_permit(department_manager, Volunteer, 'show_acceptance?', 'show_comments?',
       *actions_list(:index, :search, :new, :create, :seeking_clients))
@@ -26,8 +26,8 @@ class VolunteerPolicyTest < PolicyAssertions::Test
   end
 
   test 'volunteer_has_limited_access' do
-    volunteer_one = create :volunteer_with_user
-    volunteer_two = create :volunteer_with_user
+    volunteer_one = create :volunteer
+    volunteer_two = create :volunteer
     assert_permit(volunteer_one.user, volunteer_one, *actions_list(:show, :edit, :update))
     refute_permit(volunteer_one.user, volunteer_two, *actions_list(:show, :edit, :update))
     refute_permit(volunteer_one.user, Volunteer,

@@ -5,7 +5,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     @user = create :user, email: 'superadmin@example.com'
     Assignment.with_deleted.map(&:really_destroy!)
     @client = create :client, user: @user
-    @volunteer = create :volunteer_with_user, take_more_assignments: true
+    @volunteer = create :volunteer, take_more_assignments: true
   end
 
   test 'new_assignment_form' do

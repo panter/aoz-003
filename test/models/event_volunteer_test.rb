@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EventVolunteerTest < ActiveSupport::TestCase
   def setup
-    @volunteer = create :volunteer_with_user, intro_course: false
+    @volunteer = create :volunteer, intro_course: false
     @event = create :event, kind: :intro_course
 
     @event_volunteer = create :event_volunteer, volunteer: @volunteer, event: @event, creator: create(:user)

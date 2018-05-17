@@ -11,7 +11,9 @@ module GroupOfferAndAssignment
   end
 
   def make_volunteer(title, *attributes)
-    volunteer = if attributes.include?(acceptance: 'accepted')
+    acceptance = attributes[:acceptance]
+
+    volunteer = if acceptance && acceptance.to_s != 'accepted'
                   create :volunteer_with_user, *attributes
                 else
                   create :volunteer, *attributes
@@ -36,7 +38,11 @@ module GroupOfferAndAssignment
   end
 
   def create_assignment_entity(title, volunteer, client, start_date, end_date = nil)
-    volunteer = create volunteer
+    volunteer = if volunteer == :volunteer_external
+                  create :volunteer, external: true
+                else
+                  create volunteer
+                end
     volunteer.update(created_at: start_date)
     client = create client, user: @user
     client.update(created_at: start_date)

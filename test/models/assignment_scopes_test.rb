@@ -185,7 +185,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
   end
 
   test 'internal_external' do
-    assignment_external = make_assignment(volunteer: create(:volunteer_external))
+    assignment_external = make_assignment(volunteer: create(:volunteer, external: true))
     internal = Assignment.internal
     external = Assignment.external
     assert_equal 11, internal.count

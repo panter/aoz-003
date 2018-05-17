@@ -38,7 +38,7 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
   end
 
   test 'volunteer_has_limited_access_when_in_group_offer' do
-    volunteer = create :volunteer_with_user
+    volunteer = create :volunteer
     group_offer_volunteer = create :group_offer
     create(:group_assignment, volunteer: volunteer, group_offer: group_offer_volunteer)
     group_offer_other = create :group_offer

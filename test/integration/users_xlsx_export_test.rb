@@ -8,7 +8,7 @@ class UsersXlsxExportTest < ActionDispatch::IntegrationTest
     login_as @superadmin
     @social_worker = create :social_worker
     @department_manager = create :department_manager
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     User.with_deleted
         .where.not(id: [@volunteer.user.id, @department_manager.id, @social_worker.id, @superadmin.id])
         .map(&:really_destroy!)

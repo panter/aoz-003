@@ -3,8 +3,8 @@ require 'test_helper'
 class VolunteerEventsFilterTest < ActionDispatch::IntegrationTest
   def setup
     @superadmin = create :user
-    @volunteer_intro_visited = create :volunteer_with_user, intro_course: true
-    @volunteer_intro_not_visited = create :volunteer_with_user, intro_course: false
+    @volunteer_intro_visited = create :volunteer, intro_course: true
+    @volunteer_intro_not_visited = create :volunteer, intro_course: false
     login_as @superadmin
   end
 

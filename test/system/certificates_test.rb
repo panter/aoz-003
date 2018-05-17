@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class CertificatesTest < ApplicationSystemTestCase
   def setup
-    @volunteer = create(:volunteer_with_user, :with_assignment)
+    @volunteer = create(:volunteer, :with_assignment)
     @assignment = @volunteer.assignments.first
     @hour = create :hour, volunteer: @volunteer, hourable: @assignment, hours: 2
     login_as create(:user)

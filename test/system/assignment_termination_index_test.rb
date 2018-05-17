@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   setup do
     @superadmin = create :user
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     @not_ended = create :assignment, period_start: 3.weeks.ago, period_end: nil
     @un_submitted = create :assignment, period_start: 3.weeks.ago, period_end: 2.days.ago,
       period_end_set_by: @superadmin

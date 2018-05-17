@@ -81,18 +81,18 @@ FactoryBot.define do
     end
 
     factory :volunteer_with_user do
-      after(:build) do |volunteer|
-        volunteer.user = build(:user_volunteer, volunteer: volunteer)
+      after(:save) do |volunteer|
+        unless volunteer.accepted? || volunteer.user.present?
+          previous_acceptance = volunteer.acceptance
+          volunteer.accepted!
+          volunteer.update(acceptance: previous_acceptance)
+        end
       end
-
-      factory(
-        :volunteer_seed_with_user,
-        traits: [:with_language_skills, :with_journals, :faker_extra,
-                 :fake_availability, :fake_single_assignments]
-      )
     end
 
-    factory :volunteer_external, traits: [:external]
+    factory :volunteer_external, traits: [:external] do
+      acceptance { :accepted }
+    end
     factory :volunteer_internal, traits: [:internal]
     factory :volunteer_z, traits: [:zuerich]
 

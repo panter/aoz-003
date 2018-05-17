@@ -3,9 +3,9 @@ require 'application_system_test_case'
 class ReminderMailingsTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :user
-    @volunteer_assignment = create :volunteer_with_user
+    @volunteer_assignment = create :volunteer
     @group_offer = create :group_offer
-    @volunteer_group_offer = create :volunteer_with_user
+    @volunteer_group_offer = create :volunteer
   end
 
   test 'group_assignment_and_assignment_elegible_for_half_year_reminder_mailing_are_includable' do

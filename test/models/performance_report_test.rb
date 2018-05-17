@@ -65,7 +65,7 @@ class PerformanceReportTest < ActiveSupport::TestCase
   }.stringify_keys.freeze
 
   test 'volunteer_zurich_internal_external' do
-    volunteer_zurich_this_year = create :volunteer_with_user, :zuerich
+    volunteer_zurich_this_year = create :volunteer, :zuerich
     volunteer_zurich_this_year.update(created_at: @this_dates.first + 2)
 
     # Last year still all zero
@@ -108,9 +108,9 @@ class PerformanceReportTest < ActiveSupport::TestCase
   end
 
   test 'volunteer_active_inactive' do
-    volunteer_zurich_this_year = create :volunteer_with_user, :zuerich
+    volunteer_zurich_this_year = create :volunteer, :zuerich
     volunteer_zurich_this_year.update(created_at: @this_dates.first + 2)
-    volunteer_zurich_last_year = create :volunteer_with_user, :zuerich
+    volunteer_zurich_last_year = create :volunteer, :zuerich
     volunteer_zurich_last_year.update(created_at: @last_dates.first + 10)
 
     refresh_reports
@@ -148,7 +148,7 @@ class PerformanceReportTest < ActiveSupport::TestCase
 
     assert_equal(expected_influenced_this_year, @this_year.report_content['volunteers']['all'])
 
-    volunteer_zurich_this_year2 = create :volunteer_with_user, :zuerich
+    volunteer_zurich_this_year2 = create :volunteer, :zuerich
     volunteer_zurich_this_year2.update(created_at: @this_dates.first + 2)
     create(:group_assignment, volunteer: volunteer_zurich_this_year2, period_start: 2.days.ago,
       period_end: nil)

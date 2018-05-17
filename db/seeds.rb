@@ -42,7 +42,7 @@ def create_two_group_offers(group_offer_category)
 end
 
 def assignment_generator(creator, create_day, start_date = nil, end_date = nil, terminated_at: nil, volunteer: nil)
-  volunteer ||= FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted')
+  volunteer ||= FactoryBot.create(:volunteer_seed)
   volunteer.update(created_at: create_day, updated_at: create_day + 1.day)
   client = FactoryBot.create(:client, acceptance: 'accepted', user: creator)
   client.update(created_at: create_day - 5.days)
@@ -76,7 +76,7 @@ end
 def development_seed
   FactoryBot.create(:department_manager, email: "department_manager#{EMAIL_DOMAIN}",
       password: 'asdfasdf')
-  FactoryBot.create(:volunteer_with_user)
+  FactoryBot.create(:volunteer)
             .user.update(password: 'asdfasdf', email: "volunteer#{EMAIL_DOMAIN}")
   puts_model_counts('First Users created', User, Profile, Contact, Volunteer, Client, Department)
 
@@ -108,7 +108,7 @@ def development_seed
     if ['undecided', 'rejected'].include?(acceptance)
       FactoryBot.create(:volunteer_seed, acceptance: acceptance, user_id: nil)
     else
-      FactoryBot.create(:volunteer_seed_with_user, acceptance: acceptance)
+      FactoryBot.create(:volunteer_seed)
     end
   end
   puts_model_counts('After Volunteer created', User, Volunteer, Client)
@@ -199,7 +199,7 @@ def development_seed
   Array.new(2).map { FactoryBot.create(:group_offer, department: Department.all.sample) }
       .each do |group_offer|
     creator = User.superadmins.first
-    volunteers = Array.new(4).map { FactoryBot.create(:volunteer_seed_with_user, acceptance: 'accepted') }
+    volunteers = Array.new(4).map { FactoryBot.create(:volunteer_seed) }
     start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
     group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
       period_start: start_date, period_end: nil)

@@ -8,7 +8,7 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     ### ASSIGNMENTS SETUP
     # active
     @client = create :client, user: @superadmin
-    @volunteer_aa = create :volunteer_with_user
+    @volunteer_aa = create :volunteer
     @active_assignment = create :assignment, volunteer: @volunteer_aa, client: @client,
       period_start: 10.weeks.ago, period_end: nil, creator: @superadmin
     @hour = create :hour, volunteer: @volunteer_aa, hourable: @active_assignment
@@ -16,13 +16,13 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
       author: @volunteer_aa.user
 
     # ended/unsubmitted Assignment
-    @volunteer_ua = create :volunteer_with_user
+    @volunteer_ua = create :volunteer
     @unsubmitted_assignment = create :assignment, volunteer: @volunteer_ua, client: @client,
       period_start: 10.weeks.ago, period_end: 2.days.ago, creator: @superadmin,
       period_end_set_by: @superadmin
 
     # submitted
-    @volunteer_sa = create :volunteer_with_user
+    @volunteer_sa = create :volunteer
     @submitted_assignment = create :assignment, volunteer: @volunteer_sa,
       period_start: 3.weeks.ago, period_end: 2.days.ago,
       termination_submitted_at: 2.days.ago, termination_submitted_by: @volunteer_sa.user,

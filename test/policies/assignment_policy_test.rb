@@ -32,9 +32,9 @@ class AssignmentPolicyTest < PolicyAssertions::Test
   end
 
   test 'volunteer_has_limited_access' do
-    volunteer = create :volunteer_with_user
+    volunteer = create :volunteer
     assignment = create :assignment, volunteer: volunteer
-    other_assignment = create :assignment, volunteer: (create :volunteer_with_user)
+    other_assignment = create :assignment, volunteer: (create :volunteer)
     assert_permit(volunteer.user, assignment,
       *actions_list(
         :show, :last_submitted_hours_and_feedbacks, :update_submitted_at,

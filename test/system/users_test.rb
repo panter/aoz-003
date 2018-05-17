@@ -184,7 +184,7 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test 'volunteer can change password' do
-    volunteer = create :volunteer_with_user
+    volunteer = create :volunteer
     login_as volunteer.user
     visit root_path
 

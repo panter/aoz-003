@@ -340,7 +340,7 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'external volunteer can not get machted with a client' do
-    @external = create :volunteer_external, acceptance: :accepted
+    @external = create :volunteer, external: true
     visit volunteers_path
 
     # "Klient/en" suchen button is not shown on volunteer index
