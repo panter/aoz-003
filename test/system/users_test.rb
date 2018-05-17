@@ -87,7 +87,7 @@ class UsersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'accepted volunteer becomes a user' do
+  test 'accepted_volunteer_becomes_a_user' do
     volunteer = create :volunteer, acceptance: :undecided
 
     visit edit_volunteer_path(volunteer.id)
@@ -99,6 +99,7 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last
+    volunteer.reload
     assert_equal volunteer.contact.primary_email, volunteer.user.email
   end
 
@@ -118,10 +119,10 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_field? 'Passwort'
   end
 
-  test 'filter users by role' do
+  test 'filter_users_by_role' do
     department_manager = create :department_manager
     social_worker = create :social_worker
-    user_volunteer = create :user_volunteer
+    user_volunteer = create(:volunteer).user
 
     visit users_path
 
@@ -155,11 +156,11 @@ class UsersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'user index has valid links for users without profile' do
+  test 'user_index_has_valid_links_for_users_without_profile' do
     superadmin_no_profile = create :user, :without_profile
     department_manager_no_profile = create :user, :without_profile, :department_manager
     social_worker_no_profile = create :user, :without_profile, :social_worker
-    volunteer_no_profile = create :user_volunteer
+    volunteer_no_profile = create(:volunteer).user
 
     visit users_path
     assert page.has_link? superadmin_no_profile.email
@@ -179,12 +180,14 @@ class UsersTest < ApplicationSystemTestCase
     visit users_path
     click_link volunteer_no_profile.full_name
 
-    assert page.has_field? 'Vorname', with: volunteer_no_profile.profile.contact.first_name
-    assert page.has_field? 'Nachname', with: volunteer_no_profile.profile.contact.last_name
+    assert page.has_field? 'Vorname', with: volunteer_no_profile.volunteer.contact.first_name
+    assert page.has_field? 'Nachname', with: volunteer_no_profile.volunteer.contact.last_name
   end
 
-  test 'volunteer can change password' do
+  test 'volunteer_can_change_password' do
     volunteer = create :volunteer
+    volunteer.user = create(:user, role: 'volunteer')
+    volunteer.save
     login_as volunteer.user
     visit root_path
 
