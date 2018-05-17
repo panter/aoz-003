@@ -88,4 +88,18 @@ class VolunteerTest < ActiveSupport::TestCase
     refute_nil volunteer.rejected_at
     assert_nil volunteer.resigned_at
   end
+
+  test 'parses numbers for working percent column' do
+    @volunteer.update working_percent: '50%'
+    assert_equal 50, @volunteer.reload.working_percent
+
+    @volunteer.update working_percent: '40 percent'
+    assert_equal 40, @volunteer.reload.working_percent
+
+    @volunteer.update working_percent: 'percent is: 70% (numbers: 87)'
+    assert_equal 70, @volunteer.reload.working_percent
+
+    @volunteer.update working_percent: 'unknown percent'
+    assert_nil @volunteer.reload.working_percent
+  end
 end
