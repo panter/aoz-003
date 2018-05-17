@@ -241,8 +241,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     login_as create(:user)
     visit edit_group_offer_path(group_offer)
 
-    assert_field 'Internes Gruppenangebot', readonly: true
-    assert_field 'Externes Gruppenangebot', readonly: true
+    assert_checked_field 'group_offer[offer_type]', disabled: true
   end
 
   test 'offer_type_toggles_location_fields' do
@@ -251,6 +250,22 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     assert_field 'Internes Gruppenangebot', checked: true
     assert_field 'Standort'
+    refute_field 'Organisation'
+    refute_field 'Ort'
+
+    choose 'Externes Gruppenangebot'
+
+    refute_field 'Standort'
+    assert_field 'Organisation'
+    assert_field 'Ort'
+  end
+
+  test 'department manager can create external group offer' do
+    login_as @department_manager
+    visit new_group_offer_path
+
+    assert_field 'Internes Gruppenangebot', checked: true
+    refute_field 'Standort'
     refute_field 'Organisation'
     refute_field 'Ort'
 

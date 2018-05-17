@@ -10,7 +10,7 @@
   .row
     .col-xs-6.col-md-3
       = f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons,
-          readonly: @group_offer.group_assignments.any?
+       disabled: @group_offer.group_assignments.any?
     .col-xs-6.col-md-3
       = f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
     .col-xs-12.col-md-6
@@ -19,9 +19,9 @@
       - if policy(GroupOffer).supervisor_privileges?
         .row.group-offer-internal-fields
           .col-md-12= f.association :department, collection: Department.name_asc, required: true
-        .row.group-offer-external-fields
-          .col-md-6= f.input :organization, required: true
-          .col-md-6= f.input :location, required: true
+      .row.group-offer-external-fields
+        .col-md-6= f.input :organization, required: true
+        .col-md-6= f.input :location, required: true
 
   .row
     .col-xs-12.col-md-6= f.input :description
