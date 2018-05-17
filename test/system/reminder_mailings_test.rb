@@ -158,7 +158,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     page.find('#assignment_period_end').click
     page.find('.month', text: 'Jan').click
-    first('.day',  exact_text: '17').click
+    first('.day', exact_text: '17').click
     page.find_all('input[type="submit"]').first.click
 
     assert page.has_current_path? terminated_index_assignments_path
@@ -194,7 +194,6 @@ class ReminderMailingsTest < ApplicationSystemTestCase
   end
 
   test 'termination_mailing_for_group_assignment_termination_is_sent' do
-    ActionMailer::Base.deliveries = []
     group_assignment = create :group_assignment, period_start: 2.months.ago, period_end: 2.days.ago,
       period_end_set_by: @superadmin, volunteer: create(:volunteer)
     group_offer = group_assignment.group_offer
@@ -211,7 +210,6 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     termination_reminder.reload
     assert termination_reminder.sending_triggered, 'Sending on the mailer was not triggered'
-    # assert_equal 1, ActionMailer::Base.deliveries.size
     mailer = ActionMailer::Base.deliveries.last
     mail_body = mailer.text_part.body.encoded
 
@@ -219,7 +217,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       mailer.subject
     assert_includes mail_body, "#{group_assignment.volunteer.contact.natural_name} Feedback Geben"
     assert_includes mail_body, "#{I18n.l group_assignment.period_start} Gruss, AOZ"
-    refute_includes mailer.subject, '%{'
-    refute_includes mail_body, '%{'
+    assert_not_includes mailer.subject, '%{'
+    assert_not_includes mail_body, '%{'
   end
 end

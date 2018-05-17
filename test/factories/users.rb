@@ -16,7 +16,6 @@ FactoryBot.define do
 
     trait :volunteer do
       role User::VOLUNTEER
-      # volunteer { create :volunteer }
     end
 
     trait :department_manager do
