@@ -17,6 +17,7 @@ nav.navbar.section-navigation
           tr
             th.hidden-print Aktionen
             th= sort_link @q, :category
+            th= sort_link @q, :created_at
             th= t_attr(:text)
             th= t_attr(:author)
         tbody
@@ -26,6 +27,7 @@ nav.navbar.section-navigation
                 = button_link navigation_glyph(:edit), url_for([@journaled, record]) + '/edit',
                     title: 'Bearbeiten'
               td= t("category.#{record.category}")
+              td= l(record.created_at.to_date)
               td
                 - if record.title?
                   strong= record.title
