@@ -1,9 +1,13 @@
 class GroupAssignmentPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      return all if superadmin?
-      return scope.where(creator_id: user.id) if department_manager?
-      none
+      if superadmin?
+        all
+      elsif department_manager?
+        scope.joins(:group_offer).where(group_offers: { creator_id: user.id })
+      else
+        none
+      end
     end
   end
 
