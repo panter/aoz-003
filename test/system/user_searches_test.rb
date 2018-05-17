@@ -5,8 +5,9 @@ class UserSearchesTest < ApplicationSystemTestCase
     @superadmin = create :user
     @superadmin.profile.contact.update(first_name: 'Walter', last_name: 'White')
 
-    @volunteer = create :user_volunteer
-    @volunteer.profile.contact.update(first_name: 'Jesse', last_name: 'Pinkman')
+    @volunteer = create(:volunteer).user
+
+    @volunteer.volunteer.contact.update(first_name: 'Jesse', last_name: 'Pinkman')
 
     @social_worker = create :user, role: 'social_worker'
     @social_worker.profile.contact.update(first_name: 'Skyler', last_name: 'White')

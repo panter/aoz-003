@@ -271,9 +271,10 @@ class VolunteersTest < ApplicationSystemTestCase
   test 'imported_create_account_for_imported_volunteer' do
     use_rack_driver
     really_destroy_with_deleted(Volunteer)
-    volunteer = create :volunteer
+    volunteer = create :volunteer, acceptance: :undecided
     import = Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1,
       importable: volunteer, store: { haupt_person: { email: 'imported@example.com' } })
+
     visit volunteers_path
     assert page.has_text? 'Kein Login'
     assert page.has_text? 'Importiert'
@@ -286,7 +287,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'imported_create_account_with_invalid_imported_email' do
     use_rack_driver
-    volunteer = create :volunteer
+    volunteer = create :volunteer, acceptance: :undecided
     Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1,
       importable: volunteer, store: { haupt_person: { email: 'invalid' } })
     visit volunteer_path(volunteer)
@@ -299,7 +300,7 @@ class VolunteersTest < ApplicationSystemTestCase
 
   test 'imported_create_account_no_email_imported_enter_inavalid_email' do
     use_rack_driver
-    volunteer = create :volunteer
+    volunteer = create :volunteer, acceptance: :undecided
     Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1, importable: volunteer,
       store: { haupt_person: { email: nil } })
     visit volunteer_path(volunteer)
