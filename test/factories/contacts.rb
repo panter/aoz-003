@@ -6,7 +6,7 @@ FactoryBot.define do
     street { FFaker::Address.street_address }
     city { FFaker::Address.city }
     postal_code { rand(1100..7500).to_s }
-    primary_email { "test_email_#{Time.zone.now.to_f}@example.com" }
+    primary_email { "test_email_#{Time.zone.now.to_f}@example-#{Random.rand(1000)}.com" }
     primary_phone { FFaker::PhoneNumberCH.home_work_phone_number }
     secondary_phone { FFaker::PhoneNumberCH.mobile_phone_number }
 
@@ -31,11 +31,17 @@ FactoryBot.define do
       end
     end
 
-    trait :time_email do
-      primary_email { "test_mail#{Time.zone.now.to_f}@example.com" }
+    trait :contact_volunteer do
+      primary_email { "volunteer_email_#{Time.zone.now.to_f}@example-#{Random.rand(1000)}.com" }
     end
 
-    factory :contact_test_mail, traits: [:time_email]
+    after(:build) do |contact|
+      if contact.invalid?
+        contact.primary_email = "test_factory_email_#{Time.zone.now.to_f}@example.com"
+      end
+    end
+
+    factory :contact_volunteer, traits: [:contact_volunteer]
     factory :contact_department, traits: [:zuerich, :department]
     factory :contact_zuerich, traits: [:zuerich]
   end
