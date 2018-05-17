@@ -259,4 +259,20 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert_field 'Organisation'
     assert_field 'Ort'
   end
+
+  test 'department manager can create external group offer' do
+    login_as @department_manager
+    visit new_group_offer_path
+
+    assert_field 'Internes Gruppenangebot', checked: true
+    refute_field 'Standort'
+    refute_field 'Organisation'
+    refute_field 'Ort'
+
+    choose 'Externes Gruppenangebot'
+
+    refute_field 'Standort'
+    assert_field 'Organisation'
+    assert_field 'Ort'
+  end
 end
