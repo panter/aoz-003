@@ -9,4 +9,13 @@ FactoryBot.define do
       rand(9)
     ]
   end
+
+  sequence :email do |n|
+    'email_%d_%d_%d@domain-%d.com' % [
+      rand(9999),
+      rand(9999),
+      rand(9999),
+      rand(9999)
+    ]
+  end
 end

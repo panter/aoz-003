@@ -14,7 +14,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     make_volunteer(:resigned_inactive, acceptance: :resigned)
     make_volunteer(:resigned_active, acceptance: :resigned)
     group_offer = create :group_offer
-    group_offer.volunteers << @group_offer_member
+    create :group_assignment, group_offer: group_offer, volunteer: @group_offer_member
     create_all_assignments
   end
 

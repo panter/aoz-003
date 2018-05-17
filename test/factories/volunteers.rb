@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :volunteer do
     birth_year { FFaker::Time.between(18.years.ago, 85.years.ago) }
-    association :contact, factory: :contact_volunteer
+    contact
     salutation { ['mr', 'mrs'].sample }
     acceptance :accepted
     group_offer_categories { |category| [category.association(:group_offer_category)] }
@@ -73,6 +73,9 @@ FactoryBot.define do
     end
 
     after(:build) do |volunteer|
+      if volunteer.accepted? && volunteer.internal?
+        volunteer.user_id = create(:user, role: 'volunteer').id
+      end
       if volunteer.salutation == 'mrs'
         volunteer.contact.first_name = I18n.t('faker.name.female_first_name').sample
       elsif volunteer.salutation == 'mr'
