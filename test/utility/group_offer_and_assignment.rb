@@ -11,8 +11,7 @@ module GroupOfferAndAssignment
   end
 
   def make_volunteer(title, *attributes)
-    acceptance = attributes[:acceptance]
-
+    acceptance = attributes.is_a?(Hash) ? attributes[:acceptance] : 'accepted'
     volunteer = if acceptance && acceptance.to_s != 'accepted'
                   create :volunteer_with_user, *attributes
                 else

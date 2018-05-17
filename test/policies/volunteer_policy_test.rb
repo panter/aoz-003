@@ -14,7 +14,7 @@ class VolunteerPolicyTest < PolicyAssertions::Test
       *actions_list(:index, :search, :new, :create, :seeking_clients))
     assert_permit(department_manager, department_manager_volunteer,
       *actions_list(:terminate, :show, :edit, :update))
-    refute_permit(department_manager, create(:volunteer),
+    refute_permit(department_manager, create(:volunteer, acceptance: :undecided),
       *actions_list(:terminate, :show, :edit, :update))
     refute_permit(department_manager, Volunteer, 'superadmin_privileges?', 'update_acceptance?')
     assert_permit(department_manager, Volunteer, 'show_acceptance?', 'show_comments?')
