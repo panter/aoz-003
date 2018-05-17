@@ -2,7 +2,7 @@ class GroupOffersController < ApplicationController
   include GroupAssignmentsAttributes
   before_action :set_group_offer, except: [:index, :search, :new, :create]
   before_action :set_department_manager_collection
-  before_action :set_volunteers, only: [:show, :search_volunteer, :edit]
+  before_action :set_volunteers, only: [:edit, :show, :update]
 
   def index
     authorize GroupOffer
@@ -27,11 +27,7 @@ class GroupOffersController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html do
-        @q = @volunteers.ransack(params[:q])
-        @volunteers = @q.result.paginate(page: params[:page])
-      end
-
+      format.html
       format.pdf do
         render pdf: "group_offer_#{@group_offer.id}", layout: 'pdf.pdf',
         template: 'group_offers/show.pdf.slim', encoding: 'UTF-8'
@@ -40,7 +36,8 @@ class GroupOffersController < ApplicationController
   end
 
   def search_volunteer
-    @q = @volunteers.ransack(contact_full_name_cont: params[:term])
+    @q = policy_scope(Volunteer.candidates_for_group_offer(@group_offer))
+      .ransack(contact_full_name_cont: params[:term])
     @volunteers = @q.result distinct: true
     respond_to do |format|
       format.json
@@ -52,10 +49,7 @@ class GroupOffersController < ApplicationController
     authorize @group_offer
   end
 
-  def edit
-    @q = @volunteers.ransack(params[:q])
-    @volunteers = @q.result.paginate(page: params[:page])
-  end
+  def edit; end
 
   def create
     @group_offer = GroupOffer.new(group_offer_params)
@@ -123,10 +117,12 @@ class GroupOffersController < ApplicationController
 
   def set_department_manager_collection
     @department_managers = User.department_managers
+    @department_managers = @department_managers.or(User.where(id: @group_offer.creator_id)) if @group_offer
   end
 
   def set_volunteers
-    @volunteers = policy_scope(Volunteer.candidates_for_group_offer(@group_offer))
+    @q = policy_scope(Volunteer.candidates_for_group_offer(@group_offer)).ransack(params[:q])
+    @volunteers = @q.result.paginate(page: params[:page])
   end
 
   def group_offer_params
