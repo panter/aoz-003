@@ -6,9 +6,9 @@ tr
     = button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
   td.button-acceptance= assignment_status_badge(assignment)
   - if controller_name != 'volunteers'
-    td = link_to_if policy(assignment.volunteer).show?, assignment.volunteer, assignment.volunteer
+    td = link_to_if policy(assignment.volunteer).show?, assignment.volunteer, edit_volunteer_path(assignment.volunteer)
   - if controller_name != 'clients'
-    td= link_to_if policy(assignment.client).show?, assignment.client.contact.full_name, assignment.client
+    td= link_to_if policy(assignment.client).show?, assignment.client.contact.full_name, edit_client_path(assignment.client)
   td= l(assignment.period_start) if assignment.period_start
   td= l(assignment.period_end) if assignment.period_end
   td= link_to_if policy(User).show?,
