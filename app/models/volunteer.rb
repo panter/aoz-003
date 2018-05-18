@@ -357,8 +357,10 @@ class Volunteer < ApplicationRecord
   end
 
   def working_percent=(value)
-    value = value.match('[0-9]+').to_s.to_i
-    value = nil if value == 0
+    if value.respond_to?(:match)
+      value = value.match('[0-9]+').to_s.to_i
+      value = nil if value == 0
+    end
     write_attribute :working_percent, value
   end
 

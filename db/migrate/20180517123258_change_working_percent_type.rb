@@ -8,7 +8,7 @@ class ChangeWorkingPercentType < ActiveRecord::Migration[5.1]
     # save old working_percent values back as integers
     ids_values.each do |id_value|
       id = id_value[0]
-      value = id_value[1].match('[0-9]+').to_s.to_i
+      value = id_value[1]&.match('[0-9]+').to_s.to_i
       value = value == 0 ? nil : value
       Volunteer.where(id: id).first.update(working_percent: value)
     end

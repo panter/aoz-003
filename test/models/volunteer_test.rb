@@ -99,7 +99,13 @@ class VolunteerTest < ActiveSupport::TestCase
     @volunteer.update working_percent: 'percent is: 70% (numbers: 87)'
     assert_equal 70, @volunteer.reload.working_percent
 
+    @volunteer.update working_percent: 100
+    assert_equal 100, @volunteer.reload.working_percent
+
     @volunteer.update working_percent: 'unknown percent'
+    assert_nil @volunteer.reload.working_percent
+
+    @volunteer.update working_percent: nil
     assert_nil @volunteer.reload.working_percent
   end
 end
