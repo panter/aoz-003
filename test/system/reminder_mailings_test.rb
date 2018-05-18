@@ -204,12 +204,18 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       body: '%{Anrede} %{Name} %{FeedbackLink} %{Einsatz} %{EmailAbsender} '\
             '%{EinsatzStart} %{InvalidKey}Gruss, AOZ'
     login_as @superadmin
+
+    # ignore invitation mails from factories
+    ActionMailer::Base.deliveries.clear
+
     visit polymorphic_path([group_assignment, termination_reminder], action: :send_termination)
 
     assert page.has_text? 'Beendigungs-Email wird versendet.'
 
     termination_reminder.reload
     assert termination_reminder.sending_triggered, 'Sending on the mailer was not triggered'
+
+    assert_equal 1, ActionMailer::Base.deliveries.size
     mailer = ActionMailer::Base.deliveries.last
     mail_body = mailer.text_part.body.encoded
 
