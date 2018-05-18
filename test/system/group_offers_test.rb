@@ -39,12 +39,12 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_select? 'Standort'
   end
 
-  test 'category for a group offer is required' do
+  test 'category_for_a_group_offer_is_required' do
     login_as create(:user)
     visit new_group_offer_path
 
     click_button 'Gruppenangebot erfassen'
-    assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+    assert page.has_text? 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
     assert page.has_text? 'muss ausgefüllt werden'
   end
 

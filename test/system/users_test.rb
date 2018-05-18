@@ -9,7 +9,7 @@ class UsersTest < ApplicationSystemTestCase
     visit new_user_path
   end
 
-  test 'invalid superadmin information' do
+  test 'invalid_superadmin_information' do
     fill_in 'Email', with: ''
     select '', from: 'Rolle'
 
@@ -17,7 +17,7 @@ class UsersTest < ApplicationSystemTestCase
       accept_prompt do
         click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
       assert page.has_text? 'darf nicht leer sein'
       assert page.has_text? 'ist nicht in der Liste enthalten'
     end
@@ -31,7 +31,7 @@ class UsersTest < ApplicationSystemTestCase
       accept_prompt do
         click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
       assert page.has_text? 'ist nicht in der Liste enthalten'
     end
   end
@@ -44,7 +44,7 @@ class UsersTest < ApplicationSystemTestCase
       accept_prompt do
         click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
       assert page.has_text? 'ist schon vergeben'
     end
   end
