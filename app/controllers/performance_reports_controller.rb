@@ -6,7 +6,9 @@ class PerformanceReportsController < ApplicationController
     authorize PerformanceReport
   end
 
-  def show; end
+  def show
+    @value_orders = value_display_orders
+  end
 
   def new
     @performance_report = PerformanceReport.new
@@ -50,5 +52,24 @@ class PerformanceReportsController < ApplicationController
   def report_params
     params.require(:performance_report).permit(:period_start, :period_end, :users_id,
       :report_content, :comment, :title, :scope, :extern)
+  end
+
+  def value_display_orders
+    @value_display_orders ||= {
+      volunteers: [
+        :created, :inactive, :resigned, [:total, :active],
+        :active_assignment, :active_group_assignment, :only_assignment_active, :only_group_active, :active_both, [:active_total, :active],
+        :assignment_hour_records, :assignment_hours, :group_offer_hour_records, :group_offer_hours, [:total_hours, :active],
+        :assignment_feedbacks, :group_offer_feedbacks, [:total_feedbacks, :active],
+        :assignment_trial_feedbacks, :group_offer_trial_feedbacks, [:total_trial_feedbacks, :active]
+      ] + Event.kinds.keys.map(&:to_sym) + [[:total_events, :active]],
+      clients: [:created, :inactive, :resigned, :active_assignment, [:total, :active]],
+      assignments: [:created, :started, :active, :ended, :first_instruction_lessons, [:all, :active]],
+      group_offers_first: [:created, :created_assignments, :ended, [:all, :active],
+                           [:feedback_count, :active]],
+      group_offers_second: [:total_created_assignments, :total_started_assignments,
+                            :total_active_assignments, :total_ended_assignments,
+                            [:total_assignments, :active]]
+    }
   end
 end

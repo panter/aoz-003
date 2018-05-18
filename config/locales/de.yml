@@ -798,19 +798,68 @@ de:
     title: Fachstelle Freiwilligenarbeit
   performance_reports: &id-performance-reports-de-keys
     categories: &id-performance-scope-categories
-      all: Alle
-      zurich: Aus Zürich
-      not_zurich: Auserhalb Zürich
-      external: Extern
-      internal: Intern
+      all: Alle Freiwilligen
+      zurich: Wohnort Zürich
+      not_zurich: Wohnort Auserhalb Zürich
+      external: Externe Freiwillige
+      internal: Interne Freiwillige
+    values_volunteers: &id-pr-values-volunteer
+      created: Freiwillige erstellt
+      inactive: Freiwillige inaktiv
+      resigned: Einsatz beeendet
+      total: Freiwillige (Anzahl Personen)
+      active_assignment: Freiwillige in Tandem aktiv
+      active_group_assignment: Freiwillige in Gruppenangebot aktiv
+      only_assignment_active: Freiwillige ausschliesslich in Tandem aktiv
+      only_group_active: Freiwillige ausschliesslich in Gruppenangebot aktiv
+      active_both: Freiwillige aktiv in Gruppenangebot und Tandem
+      active_total: Freiwillige total akiv
+      assignment_hour_records: Stundenerfassungen von Tandems
+      assignment_hours: Einsatzstunden von FW in Tandems
+      group_offer_hour_records: Stundenberichte von FW in Gruppenangeboten
+      group_offer_hours: Einsatzstunden von FW in Gruppenangeboten
+      total_hours: Geleistete Einsatzstunden total
+      assignment_feedbacks: Feedbacks von FW in Tandems
+      group_offer_feedbacks: Feedbacks von FW in Gruppenangeboten
+      total_feedbacks: Total Feedbacks von Freiwilligen
+      assignment_trial_feedbacks: Probezeit-Feedbacks von FW in Tandems
+      group_offer_trial_feedbacks: Probezeit-Feedbacks von FW in Gruppenangeboten
+      total_trial_feedbacks: Total Probezeit-Feedbacks
+      intro_course: Teilnehmende Einführungsveranstaltungen
+      professional_training: Teilnehmende Weiterbildungen
+      professional_event: Teilnehmende Fachveranstaltungen
+      theme_exchange: Teilnehmende Erfahrungsaustausch/Themenabende
+      volunteering: Teilnehmende Freiwilligenanlässe
+      german_class_managers: Teilnehmende Treffen Deutschkursleitende
+      total_events:  Total Teilnehmende Veranstaltungen
+    values_clients:
+      created: Klient/innen angemeldet
+      inactive: Klient/innen inaktiv
+      resigned: Klient/innen beendet
+      active_assignment: Klient/innen in aktivem Tandem
+      total: Total Anzahl Klient/innen
+    values_assignments:
+      created:  Tandems neu erstellt
+      started:  Gestartete Tandems
+      active:  Aktive Tandems
+      ended:  Beendete Tandems
+      first_instruction_lessons: Besuchte Einführungskurse
+      all: Alle Tandems
+    values_group_offers:
+      created: Gruppenangebote erstellt
+      ended: Gruppenangebote beendet
+      all: Alle Gruppenangebote
+      created_assignments: Gruppenangebote mit neuen Freiwilligen
+      feedback_count: Anzahl gegebener Gruppenangebots Feedbacks
+      total_created_assignments: Neu erstellte Gruppeneinsätze
+      total_started_assignments: Gestartete Gruppeneinsätze
+      total_active_assignments: Aktive Gruppeneinsätze
+      total_ended_assignments: Beendete Gruppeneinsätze
+      total_assignments: Total aller Gruppeneinsätze (Aktive und Inaktive und Beendete)
     values: &id-performance-value-descs
       total: Gesammt
       active_total: Total Akiv
       active_assignment: Total mit aktivem Tandem
-      active_group_assignment: Mit aktivem Gruppeneinsatz
-      active_both: Aktiv in Gruppeneinsatz und Tandem
-      only_assignment_active: Nur in Tandem aktiv
-      only_group_active: Nur in Gruppenangebot aktiv
       created: Erstellt
       resigned: Beendet
       inactive: Inaktiv

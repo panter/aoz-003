@@ -47,7 +47,6 @@ class PerformanceReportTest < ActiveSupport::TestCase
     assignment_hours: 0.0,
     group_offer_hour_records: 0,
     group_offer_hours: 0.0,
-    total_hour_records: 0,
     total_hours: 0.0,
     assignment_feedbacks: 0,
     group_offer_feedbacks: 0,
@@ -357,17 +356,7 @@ class PerformanceReportTest < ActiveSupport::TestCase
     started: 0,
     active: 0,
     ended: 0,
-    probations_ended: 0,
-    performance_appraisal_reviews: 0,
-    home_visits: 0,
-    first_instruction_lessons: 0,
-    progress_meetings: 0,
-    termination_submitted: 0,
-    termination_verified: 0,
-    hour_report_count: 0,
-    hours: 0.0,
-    feedback_count: 0,
-    trial_feedback_count: 0
+    first_instruction_lessons: 0
   }.freeze
 
   test 'assignment_values' do
@@ -405,10 +394,6 @@ class PerformanceReportTest < ActiveSupport::TestCase
     assert_equal(this_year_zurich_expected, @this_year.report_content['assignments']['zurich'])
     this_year_not_zurich_expected = ASSIGNMENT_ZERO.merge(all: 2, created: 1).stringify_keys
     assert_equal(this_year_not_zurich_expected, @this_year.report_content['assignments']['not_zurich'])
-    this_year_external_expected = ASSIGNMENT_ZERO.stringify_keys
-    assert_equal(this_year_external_expected, @this_year.report_content['assignments']['external'])
-    this_year_internal_expected = ASSIGNMENT_ZERO.merge(all: 4, created: 2).stringify_keys
-    assert_equal(this_year_internal_expected, @this_year.report_content['assignments']['internal'])
 
     last_year_all_expected = ASSIGNMENT_ZERO.merge(all: 2, created: 2).stringify_keys
     assert_equal(last_year_all_expected, @last_year.report_content['assignments']['all'])
@@ -416,10 +401,6 @@ class PerformanceReportTest < ActiveSupport::TestCase
     assert_equal(last_year_zurich_expected, @last_year.report_content['assignments']['zurich'])
     last_year_not_zurich_expected = ASSIGNMENT_ZERO.merge(all: 1, created: 1).stringify_keys
     assert_equal(last_year_not_zurich_expected, @last_year.report_content['assignments']['not_zurich'])
-    last_year_external_expected = ASSIGNMENT_ZERO.stringify_keys
-    assert_equal(last_year_external_expected, @last_year.report_content['assignments']['external'])
-    last_year_internal_expected = ASSIGNMENT_ZERO.merge(all: 2, created: 2).stringify_keys
-    assert_equal(last_year_internal_expected, @last_year.report_content['assignments']['internal'])
 
     # starting assignments
     ass_zurich_this_year.update(period_start: @this_dates.first + 20)
@@ -435,7 +416,6 @@ class PerformanceReportTest < ActiveSupport::TestCase
     assert_equal(this_year_zurich_expected, @this_year.report_content['assignments']['zurich'])
     this_year_not_zurich_expected.merge!(started: 1, active: 2).stringify_keys!
     assert_equal(this_year_not_zurich_expected, @this_year.report_content['assignments']['not_zurich'])
-    assert_equal(this_year_external_expected, @this_year.report_content['assignments']['external'])
 
     last_year_all_expected.merge!(started: 2, active: 2).stringify_keys!
     assert_equal(last_year_all_expected, @last_year.report_content['assignments']['all'])
@@ -443,7 +423,6 @@ class PerformanceReportTest < ActiveSupport::TestCase
     assert_equal(last_year_zurich_expected, @last_year.report_content['assignments']['zurich'])
     last_year_not_zurich_expected.merge!(started: 1, active: 1).stringify_keys!
     assert_equal(last_year_not_zurich_expected, @last_year.report_content['assignments']['not_zurich'])
-    assert_equal(last_year_external_expected, @last_year.report_content['assignments']['external'])
 
     # intermediate date counts
     aux_date = @this_dates.first + (20 + 6 * 7)
@@ -461,93 +440,19 @@ class PerformanceReportTest < ActiveSupport::TestCase
 
     refresh_reports
 
-    this_year_all_expected.merge!(probations_ended: 2, performance_appraisal_reviews: 2,
-      home_visits: 2, first_instruction_lessons: 2, progress_meetings: 2).stringify_keys!
+    this_year_all_expected['first_instruction_lessons'] = 2
     assert_equal(this_year_all_expected, @this_year.report_content['assignments']['all'])
-    this_year_zurich_expected.merge!(probations_ended: 1, performance_appraisal_reviews: 1,
-      home_visits: 1, first_instruction_lessons: 1, progress_meetings: 1).stringify_keys!
+    this_year_zurich_expected['first_instruction_lessons'] = 1
     assert_equal(this_year_zurich_expected, @this_year.report_content['assignments']['zurich'])
-    this_year_not_zurich_expected.merge!(probations_ended: 1, performance_appraisal_reviews: 1,
-      home_visits: 1, first_instruction_lessons: 1, progress_meetings: 1).stringify_keys!
+    this_year_not_zurich_expected['first_instruction_lessons'] = 1
     assert_equal(this_year_not_zurich_expected, @this_year.report_content['assignments']['not_zurich'])
-    assert_equal(this_year_external_expected, @this_year.report_content['assignments']['external'])
 
-    last_year_all_expected.merge!(probations_ended: 2, performance_appraisal_reviews: 2,
-      home_visits: 2, first_instruction_lessons: 2, progress_meetings: 2).stringify_keys!
+    last_year_all_expected['first_instruction_lessons'] = 2
     assert_equal(last_year_all_expected, @last_year.report_content['assignments']['all'])
-    last_year_zurich_expected.merge!(probations_ended: 1, performance_appraisal_reviews: 1,
-      home_visits: 1, first_instruction_lessons: 1, progress_meetings: 1).stringify_keys!
+    last_year_zurich_expected['first_instruction_lessons'] = 1
     assert_equal(last_year_zurich_expected, @last_year.report_content['assignments']['zurich'])
-    last_year_not_zurich_expected.merge!(probations_ended: 1, performance_appraisal_reviews: 1,
-      home_visits: 1, first_instruction_lessons: 1, progress_meetings: 1).stringify_keys!
+    last_year_not_zurich_expected['first_instruction_lessons'] = 1
     assert_equal(last_year_not_zurich_expected, @last_year.report_content['assignments']['not_zurich'])
-    assert_equal(last_year_external_expected, @last_year.report_content['assignments']['external'])
-
-    # feedback and hour stuff
-    trial_feedback_zurich_this_year = create(:trial_feedback,
-      trial_feedbackable: ass_zurich_this_year, volunteer: ass_zurich_this_year.volunteer,
-      author: ass_zurich_this_year.volunteer.user)
-    trial_feedback_zurich_this_year.update(created_at: ass_zurich_this_year.period_start + (7 * 7))
-    trial_feedback_this_year = create(:trial_feedback, trial_feedbackable: ass_this_year,
-      volunteer: ass_this_year.volunteer, author: ass_this_year.volunteer.user)
-    trial_feedback_this_year.update(created_at: ass_this_year.period_start + (7 * 7))
-    trial_feedback_zurich_last_year = create(:trial_feedback,
-      trial_feedbackable: ass_zurich_last_year, volunteer: ass_zurich_last_year.volunteer,
-      author: ass_zurich_last_year.volunteer.user)
-    trial_feedback_zurich_last_year.update(created_at: ass_zurich_last_year.period_start + (7 * 7))
-    trial_feedback_last_year = create(:trial_feedback, trial_feedbackable: ass_last_year,
-      volunteer: ass_last_year.volunteer, author: ass_last_year.volunteer.user)
-    trial_feedback_last_year.update(created_at: ass_last_year.period_start + (7 * 7))
-
-    feedback_zurich_this_year = create(:feedback, feedbackable: ass_zurich_this_year,
-      volunteer: ass_zurich_this_year.volunteer, author: ass_zurich_this_year.volunteer.user)
-    feedback_zurich_this_year.update(created_at: ass_zurich_this_year.period_start + 80)
-    feedback_this_year = create(:feedback, feedbackable: ass_this_year,
-      volunteer: ass_this_year.volunteer, author: ass_this_year.volunteer.user)
-    feedback_this_year.update(created_at: ass_this_year.period_start + 80)
-    feedback_zurich_last_year = create(:feedback, feedbackable: ass_zurich_last_year,
-      volunteer: ass_zurich_last_year.volunteer, author: ass_zurich_last_year.volunteer.user)
-    feedback_zurich_last_year.update(created_at: ass_zurich_last_year.period_start + 80)
-    feedback_last_year = create(:feedback, feedbackable: ass_last_year,
-      volunteer: ass_last_year.volunteer, author: ass_last_year.volunteer.user)
-    feedback_last_year.update(created_at: ass_last_year.period_start + 80)
-
-    hour_zurich_this_year = create(:hour, hourable: ass_zurich_this_year, hours: 2.5,
-      volunteer: ass_zurich_this_year.volunteer, meeting_date: ass_zurich_this_year.period_start + 78)
-    hour_zurich_this_year.update(created_at: ass_zurich_this_year.period_start + 80)
-    hour_this_year = create(:hour, hourable: ass_this_year, hours: 2.5,
-      volunteer: ass_this_year.volunteer, meeting_date: ass_this_year.period_start + 78)
-    hour_this_year.update(created_at: ass_this_year.period_start + 80)
-    hour_zurich_last_year = create(:hour, hourable: ass_zurich_last_year, hours: 2.5,
-      volunteer: ass_zurich_last_year.volunteer, meeting_date: ass_zurich_last_year.period_start + 78)
-    hour_zurich_last_year.update(created_at: ass_zurich_last_year.period_start + 80)
-    hour_last_year = create(:hour, hourable: ass_last_year, hours: 2.5,
-      volunteer: ass_last_year.volunteer, meeting_date: ass_last_year.period_start + 78)
-    hour_last_year.update(created_at: ass_last_year.period_start + 80)
-
-    refresh_reports
-
-    this_year_all_expected.merge!(hour_report_count: 2, feedback_count: 2, trial_feedback_count: 2,
-      hours: 5.0).stringify_keys!
-    assert_equal(this_year_all_expected, @this_year.report_content['assignments']['all'])
-    this_year_zurich_expected.merge!(hour_report_count: 1, feedback_count: 1, trial_feedback_count: 1,
-      hours: 2.5).stringify_keys!
-    assert_equal(this_year_zurich_expected, @this_year.report_content['assignments']['zurich'])
-    this_year_not_zurich_expected.merge!(hour_report_count: 1, feedback_count: 1, trial_feedback_count: 1,
-      hours: 2.5).stringify_keys!
-    assert_equal(this_year_not_zurich_expected, @this_year.report_content['assignments']['not_zurich'])
-    assert_equal(this_year_external_expected, @this_year.report_content['assignments']['external'])
-
-    last_year_all_expected.merge!(hour_report_count: 2, feedback_count: 2, trial_feedback_count: 2,
-      hours: 5.0).stringify_keys!
-    assert_equal(last_year_all_expected, @last_year.report_content['assignments']['all'])
-    last_year_zurich_expected.merge!(hour_report_count: 1, feedback_count: 1, trial_feedback_count: 1,
-      hours: 2.5).stringify_keys!
-    assert_equal(last_year_zurich_expected, @last_year.report_content['assignments']['zurich'])
-    last_year_not_zurich_expected.merge!(hour_report_count: 1, feedback_count: 1, trial_feedback_count: 1,
-      hours: 2.5).stringify_keys!
-    assert_equal(last_year_not_zurich_expected, @last_year.report_content['assignments']['not_zurich'])
-    assert_equal(last_year_external_expected, @last_year.report_content['assignments']['external'])
 
     # Ending assignments
     period_end = @this_dates.first + 150
@@ -573,27 +478,19 @@ class PerformanceReportTest < ActiveSupport::TestCase
 
     refresh_reports
 
-    this_year_all_expected.merge!(ended: 2, active: 2, termination_submitted: 2,
-      termination_verified: 2).stringify_keys!
+    this_year_all_expected.merge!(ended: 2, active: 2).stringify_keys!
     assert_equal(this_year_all_expected, @this_year.report_content['assignments']['all'])
-    this_year_zurich_expected.merge!(ended: 1, active: 1, termination_submitted: 1,
-      termination_verified: 1).stringify_keys!
+    this_year_zurich_expected.merge!(ended: 1, active: 1).stringify_keys!
     assert_equal(this_year_zurich_expected, @this_year.report_content['assignments']['zurich'])
-    this_year_not_zurich_expected.merge!(ended: 1, active: 1, termination_submitted: 1,
-      termination_verified: 1).stringify_keys!
+    this_year_not_zurich_expected.merge!(ended: 1, active: 1).stringify_keys!
     assert_equal(this_year_not_zurich_expected, @this_year.report_content['assignments']['not_zurich'])
-    assert_equal(this_year_external_expected, @this_year.report_content['assignments']['external'])
 
-    last_year_all_expected.merge!(ended: 2, active: 2, termination_submitted: 2,
-      termination_verified: 2).stringify_keys!
+    last_year_all_expected.merge!(ended: 2, active: 2).stringify_keys!
     assert_equal(last_year_all_expected, @last_year.report_content['assignments']['all'])
-    last_year_zurich_expected.merge!(ended: 1, active: 1, termination_submitted: 1,
-      termination_verified: 1).stringify_keys!
+    last_year_zurich_expected.merge!(ended: 1, active: 1).stringify_keys!
     assert_equal(last_year_zurich_expected, @last_year.report_content['assignments']['zurich'])
-    last_year_not_zurich_expected.merge!(ended: 1, active: 1, termination_submitted: 1,
-      termination_verified: 1).stringify_keys!
+    last_year_not_zurich_expected.merge!(ended: 1, active: 1).stringify_keys!
     assert_equal(last_year_not_zurich_expected, @last_year.report_content['assignments']['not_zurich'])
-    assert_equal(last_year_external_expected, @last_year.report_content['assignments']['external'])
   end
 
   GROUP_OFFER_ZERO = {
@@ -601,16 +498,11 @@ class PerformanceReportTest < ActiveSupport::TestCase
     created: 0,
     ended: 0,
     created_assignments: 0,
-    started_assignments: 0,
-    active_assignments: 0,
-    ended_assignments: 0,
     total_assignments: 0,
     total_created_assignments: 0,
     total_started_assignments: 0,
     total_active_assignments: 0,
     total_ended_assignments: 0,
-    hour_report_count: 0,
-    hours: 0.0,
     feedback_count: 0
   }.freeze
 
@@ -661,33 +553,33 @@ class PerformanceReportTest < ActiveSupport::TestCase
     refresh_reports
 
     this_year_all_expected.merge!(
-      created_assignments: 2, started_assignments: 2, active_assignments: 4, total_assignments: 4,
+      created_assignments: 2, total_assignments: 4,
       total_created_assignments: 2, total_started_assignments: 2, total_active_assignments: 4
     ).stringify_keys!
     assert_equal(this_year_all_expected, @this_year.report_content['group_offers']['all'])
     this_year_external_expected.merge!(
-      created_assignments: 1, started_assignments: 1, active_assignments: 2, total_assignments: 2,
+      created_assignments: 1, total_assignments: 2,
       total_created_assignments: 1, total_started_assignments: 1, total_active_assignments: 2
     ).stringify_keys!
     assert_equal(this_year_external_expected, @this_year.report_content['group_offers']['external'])
     this_year_internal_expected.merge!(
-      created_assignments: 1, started_assignments: 1, active_assignments: 2, total_assignments: 2,
+      created_assignments: 1, total_assignments: 2,
       total_created_assignments: 1, total_started_assignments: 1, total_active_assignments: 2
     ).stringify_keys!
     assert_equal(this_year_internal_expected, @this_year.report_content['group_offers']['internal'])
 
     last_year_all_expected.merge!(
-      created_assignments: 2, started_assignments: 2, active_assignments: 2, total_assignments: 2,
+      created_assignments: 2, total_assignments: 2,
       total_created_assignments: 2, total_started_assignments: 2, total_active_assignments: 2
     ).stringify_keys!
     assert_equal(last_year_all_expected, @last_year.report_content['group_offers']['all'])
     last_year_external_expected.merge!(
-      created_assignments: 1, started_assignments: 1, active_assignments: 1, total_assignments: 1,
+      created_assignments: 1, total_assignments: 1,
       total_created_assignments: 1, total_started_assignments: 1, total_active_assignments: 1
     ).stringify_keys!
     assert_equal(last_year_external_expected, @last_year.report_content['group_offers']['external'])
     last_year_internal_expected.merge!(
-      created_assignments: 1, started_assignments: 1, active_assignments: 1, total_assignments: 1,
+      created_assignments: 1, total_assignments: 1,
       total_created_assignments: 1, total_started_assignments: 1, total_active_assignments: 1
     ).stringify_keys!
     assert_equal(last_year_internal_expected, @last_year.report_content['group_offers']['internal'])
@@ -716,24 +608,18 @@ class PerformanceReportTest < ActiveSupport::TestCase
 
     refresh_reports
 
-    this_year_all_expected.merge!(ended_assignments: 2, total_active_assignments: 2,
-      total_ended_assignments: 2, active_assignments: 2).stringify_keys!
+    this_year_all_expected.merge!(total_active_assignments: 2, total_ended_assignments: 2).stringify_keys!
     assert_equal(this_year_all_expected, @this_year.report_content['group_offers']['all'])
-    this_year_external_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
-      total_ended_assignments: 1, active_assignments: 1).stringify_keys!
+    this_year_external_expected.merge!(total_active_assignments: 1, total_ended_assignments: 1).stringify_keys!
     assert_equal(this_year_external_expected, @this_year.report_content['group_offers']['external'])
-    this_year_internal_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
-      total_ended_assignments: 1, active_assignments: 1).stringify_keys!
+    this_year_internal_expected.merge!(total_active_assignments: 1, total_ended_assignments: 1).stringify_keys!
     assert_equal(this_year_internal_expected, @this_year.report_content['group_offers']['internal'])
 
-    last_year_all_expected.merge!(ended_assignments: 2, total_active_assignments: 2,
-      total_ended_assignments: 2, active_assignments: 2).stringify_keys!
+    last_year_all_expected.merge!(total_active_assignments: 2, total_ended_assignments: 2).stringify_keys!
     assert_equal(last_year_all_expected, @last_year.report_content['group_offers']['all'])
-    last_year_external_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
-      total_ended_assignments: 1, active_assignments: 1).stringify_keys!
+    last_year_external_expected.merge!(total_active_assignments: 1, total_ended_assignments: 1).stringify_keys!
     assert_equal(last_year_external_expected, @last_year.report_content['group_offers']['external'])
-    last_year_internal_expected.merge!(ended_assignments: 1, total_active_assignments: 1,
-      total_ended_assignments: 1, active_assignments: 1).stringify_keys!
+    last_year_internal_expected.merge!(total_active_assignments: 1, total_ended_assignments: 1).stringify_keys!
     assert_equal(last_year_internal_expected, @last_year.report_content['group_offers']['internal'])
   end
 end
