@@ -102,4 +102,59 @@ class VolunteerTest < ActiveSupport::TestCase
     @volunteer.update working_percent: 'unknown percent'
     assert_nil @volunteer.reload.working_percent
   end
+
+  test 'volunteer_undecided_doesnt_get_a_user' do
+    volunteer = create :volunteer, acceptance: :undecided
+    assert_nil volunteer.user_id
+  end
+
+  test 'volunteer_invited_and_rejected_doesnt_get_a_user' do
+    volunteer = create :volunteer, acceptance: :undecided
+    assert_nil volunteer.user_id
+    volunteer.invited!
+    assert_nil volunteer.user_id
+    volunteer.rejected!
+    assert_nil volunteer.user_id
+  end
+
+  test 'changeing_volunteer_to_accepted_creates_a_user_associated_to_it' do
+    volunteer = create :volunteer, acceptance: :undecided
+    assert_nil volunteer.user_id
+    volunteer.invited!
+    assert_nil volunteer.user_id
+    volunteer.accepted!
+    refute_nil volunteer.user_id
+    assert_equal 'volunteer', volunteer.user.role, 'user role should be volunteer'
+    assert_equal volunteer.contact.primary_email, volunteer.user.email
+    assert volunteer.user.invited_to_sign_up?
+  end
+
+  test 'external_volunteer_does_not_get_user_on_accepted' do
+    volunteer = create :volunteer, acceptance: :undecided, external: true
+    assert_nil volunteer.user_id
+    volunteer.invited!
+    assert_nil volunteer.user_id
+    volunteer.accepted!
+    assert_nil volunteer.user_id
+  end
+
+  test 'volunteer_allready_having_user_chaned_to_acccepted_again_doesnt_trigger_user_creation' do
+    volunteer = create :volunteer, acceptance: :undecided
+    volunteer.accepted!
+    assert_equal 'volunteer', volunteer.user.role, 'user role should be volunteer'
+    assert_equal volunteer.contact.primary_email, volunteer.user.email
+    user_id = volunteer.user.id
+    volunteer.undecided!
+    assert_equal user_id, volunteer.user.id
+    volunteer.accepted!
+    assert_equal user_id, volunteer.user.id
+  end
+
+  test 'volunteer_created_as_accepted_gets_invited_for_account' do
+    volunteer = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    refute_nil volunteer.user_id
+    assert_equal 'volunteer', volunteer.user.role, 'user role should be volunteer'
+    assert_equal volunteer.contact.primary_email, volunteer.user.email
+    assert volunteer.user.invited_to_sign_up?
+  end
 end
