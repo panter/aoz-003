@@ -39,6 +39,7 @@ FactoryBot.define do
 
     trait :external do
       external { true }
+      acceptance { :accepted }
     end
 
     trait :internal do
@@ -93,9 +94,7 @@ FactoryBot.define do
       end
     end
 
-    factory :volunteer_external, traits: [:external] do
-      acceptance { :accepted }
-    end
+    factory :volunteer_external, traits: [:external]
     factory :volunteer_internal, traits: [:internal]
     factory :volunteer_z, traits: [:zuerich]
 

@@ -11,11 +11,6 @@ FactoryBot.define do
   end
 
   sequence :email do |n|
-    'email_%d_%d_%d@domain-%d.com' % [
-      rand(9999),
-      rand(9999),
-      rand(9999),
-      rand(9999)
-    ]
+    'email_%s@example.com' % [SecureRandom.uuid]
   end
 end

@@ -10,13 +10,8 @@ module GroupOfferAndAssignment
     instance_variable_set("@#{title}", assignment)
   end
 
-  def make_volunteer(title, *attributes)
-    acceptance = attributes.is_a?(Hash) ? attributes[:acceptance] : 'accepted'
-    volunteer = if acceptance && acceptance.to_s != 'accepted'
-                  create :volunteer_with_user, *attributes
-                else
-                  create :volunteer, *attributes
-                end
+  def make_volunteer(title, attributes = {})
+    volunteer = create :volunteer, attributes
     return volunteer if title.nil?
     instance_variable_set("@#{title}", volunteer)
   end
