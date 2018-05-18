@@ -67,10 +67,10 @@ class VolunteersController < ApplicationController
     @volunteer.attributes = volunteer_params
     return render :edit unless @volunteer.valid?
     if @volunteer.will_save_change_to_attribute?(:acceptance, to: 'accepted') &&
-        @volunteer.internal? && !@volunteer.user && @volunteer.save!
+        @volunteer.internal? && !@volunteer.user && @volunteer.save
       redirect_to(edit_volunteer_path(@volunteer),
         notice: t('invite_sent', email: @volunteer.primary_email))
-    elsif @volunteer.save!
+    elsif @volunteer.save
       redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_updated')
     else
       render :edit
