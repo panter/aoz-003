@@ -18,6 +18,23 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     assert page.has_text? "Kennzahlen des Kalenderjahrs #{two_years_ago}"
   end
 
+  VALUE_ORDERS = {
+    volunteers: [
+      :created, :inactive, :resigned, :total,
+      :active_assignment, :active_group_assignment, :only_assignment_active, :only_group_active, :active_both, :active_total,
+      :assignment_hour_records, :assignment_hours, :group_offer_hour_records, :group_offer_hours, :total_hours,
+      :assignment_feedbacks, :group_offer_feedbacks, :total_feedbacks,
+      :assignment_trial_feedbacks, :group_offer_trial_feedbacks, :total_trial_feedbacks
+    ] + Event.kinds.keys.map(&:to_sym) + [:total_events],
+    clients: [:created, :inactive, :resigned, :active_assignment, :total],
+    assignments: [:created, :started, :active, :ended, :first_instruction_lessons, :all],
+    group_offers_first: [:created, :created_assignments, :ended, :all,
+                         :feedback_count],
+    group_offers_second: [:total_created_assignments, :total_started_assignments,
+                          :total_active_assignments, :total_ended_assignments,
+                          :total_assignments]
+  }.freeze
+
   test 'performance report data displayed' do
     main_setup_entities
     report_id, this_year_report = PerformanceReport.create!(
@@ -30,138 +47,31 @@ class PerformanceReportsTest < ApplicationSystemTestCase
 
     # Volunteers section
     column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
-    assert page.has_text? 'Erstellt ' + row_numbers(volunteers, column_order, :created)
-    assert page.has_text? 'Inaktiv ' + row_numbers(volunteers, column_order, :inactive)
-    assert page.has_text? 'Beendet ' + row_numbers(volunteers, column_order, :resigned)
-    assert page.has_text? 'Gesammt ' + row_numbers(volunteers, column_order, :total)
-
-    assert page.has_text? 'Nur in Tandem aktiv ' +
-      row_numbers(volunteers, column_order, :only_assignment_active)
-    assert page.has_text? 'Mit aktivem Gruppeneinsatz ' +
-      row_numbers(volunteers, column_order, :active_group_assignment)
-    assert page.has_text? 'Nur in Gruppenangebot aktiv ' +
-      row_numbers(volunteers, column_order, :only_group_active)
-    assert page.has_text? 'Aktiv in Gruppeneinsatz und Tandem ' +
-      row_numbers(volunteers, column_order, :active_both)
-    assert page.has_text? 'Total mit aktivem Tandem ' +
-      row_numbers(volunteers, column_order, :active_assignment)
-    assert page.has_text? 'Total Akiv ' + row_numbers(volunteers, column_order, :active_total)
-
-    assert page.has_text? 'Tandem-Stundenberichte ' +
-      row_numbers(volunteers, column_order, :assignment_hour_records)
-    assert page.has_text? 'Tandem-Stunden ' +
-      row_numbers(volunteers, column_order, :assignment_hours, hours: true)
-    assert page.has_text? 'Gruppenangebots-Stundenberichte ' +
-      row_numbers(volunteers, column_order, :group_offer_hour_records)
-    assert page.has_text? 'Gruppenangebots-Stunden ' +
-      row_numbers(volunteers, column_order, :group_offer_hours, hours: true)
-    assert page.has_text? 'Eingereichte Stundenberichte ' +
-      row_numbers(volunteers, column_order, :total_hour_records)
-    assert page.has_text? 'Stunden total ' + row_numbers(volunteers, column_order, :total_hours, hours: true)
-
-    assert page.has_text? 'Tandem-Feedbacks ' +
-      row_numbers(volunteers, column_order, :assignment_feedbacks)
-    assert page.has_text? 'Gruppenangebots-Feedbacks ' +
-      row_numbers(volunteers, column_order, :group_offer_feedbacks)
-    assert page.has_text? 'Total Feedbacks ' +
-      row_numbers(volunteers, column_order, :total_feedbacks)
-
-    assert page.has_text? 'Tandem-Probezeit-Feedbacks ' +
-      row_numbers(volunteers, column_order, :assignment_trial_feedbacks)
-    assert page.has_text? 'Gruppenangebots-Probezeit-Feedbacks ' +
-      row_numbers(volunteers, column_order, :group_offer_trial_feedbacks)
-    assert page.has_text? 'Total Probezeit-Feedbacks ' +
-      row_numbers(volunteers, column_order, :total_trial_feedbacks)
-
-    assert page.has_text? 'Teilnehmende Einführungsveranstaltungen ' +
-      row_numbers(volunteers, column_order, :intro_course)
-    assert page.has_text? 'Teilnehmende Weiterbildungen ' +
-      row_numbers(volunteers, column_order, :professional_training)
-    assert page.has_text? 'Teilnehmende Fachveranstaltungen ' +
-      row_numbers(volunteers, column_order, :professional_event)
-    assert page.has_text? 'Teilnehmende Erfahrungsaustausch/Themenabende ' +
-      row_numbers(volunteers, column_order, :theme_exchange)
-    assert page.has_text? 'Teilnehmende Freiwilligenanlässe ' +
-      row_numbers(volunteers, column_order, :volunteering)
-    assert page.has_text? 'Teilnehmende Treffen Deutschkursleitende ' +
-      row_numbers(volunteers, column_order, :german_class_managers)
-    assert page.has_text? 'Total Teilnehmende Veranstaltungen ' +
-      row_numbers(volunteers, column_order, :total_events)
+    VALUE_ORDERS[:volunteers].each do |value_key|
+      assert page.has_text?(I18n.t("performance_reports.values_volunteers.#{value_key}") + '  ' + row_numbers(volunteers, column_order, value_key.to_s)), "volunteers: #{value_key}"
+    end
 
     # Clients section
     column_order = ['zurich', 'not_zurich', 'all']
-    assert page.has_text? 'Erstellt ' + row_numbers(clients, column_order, :created)
-    assert page.has_text? 'Inaktiv ' + row_numbers(clients, column_order, :inactive)
-    assert page.has_text? 'Beendet ' + row_numbers(clients, column_order, :resigned)
-    assert page.has_text? 'Gesammt ' + row_numbers(clients, column_order, :total)
-    assert page.has_text? 'Total mit aktivem Tandem ' +
-      row_numbers(clients, column_order, :active_assignment)
+    VALUE_ORDERS[:clients].each do |value_key|
+      assert page.has_text?(I18n.t("performance_reports.values_clients.#{value_key}") + '  ' + row_numbers(clients, column_order, value_key.to_s)), "clients: #{value_key}"
+    end
 
     # Assignment section
-    column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
-    assert page.has_text? 'Erstellt ' + row_numbers(assignments, column_order, :created)
-    assert page.has_text? 'Begonnen ' + row_numbers(assignments, column_order, :started)
-    assert page.has_text? 'Aktiv ' + row_numbers(assignments, column_order, :active)
-    assert page.has_text? 'Beendet ' + row_numbers(assignments, column_order, :ended)
-    assert page.has_text? 'Alle ' + row_numbers(assignments, column_order, :all)
-
-    assert page.has_text? 'Anzahl Stundenrapporte ' +
-      row_numbers(assignments, column_order, :hour_report_count)
-    assert page.has_text? 'Stunden ' + row_numbers(assignments, column_order, :hours, hours: true)
-    assert page.has_text? 'Anzahl Feedbacks ' +
-      row_numbers(assignments, column_order, :feedback_count)
-    assert page.has_text? 'Einführungskurse ' +
-      row_numbers(assignments, column_order, :first_instruction_lessons)
-    assert page.has_text? 'Probezeiten abgeschlossen ' +
-      row_numbers(assignments, column_order, :probations_ended)
-    assert page.has_text? 'Anzahl Probezeitfeedbacks ' +
-      row_numbers(assignments, column_order, :trial_feedback_count)
-
-    assert page.has_text? 'Standortgespräche ' +
-      row_numbers(assignments, column_order, :performance_appraisal_reviews)
-    assert page.has_text? 'Hausbesuche ' + row_numbers(assignments, column_order, :home_visits)
-    assert page.has_text? 'Fortschrittsmeetings ' +
-      row_numbers(assignments, column_order, :progress_meetings)
-    assert page.has_text? 'Beendigung bestätigt ' +
-      row_numbers(assignments, column_order, :termination_submitted)
-    assert page.has_text? 'Beendigung quittiert ' +
-      row_numbers(assignments, column_order, :termination_verified)
+    column_order = ['zurich', 'not_zurich', 'all']
+    VALUE_ORDERS[:assignments].each do |value_key|
+      assert page.has_text?(I18n.t("performance_reports.values_assignments.#{value_key}") + '  ' + row_numbers(assignments, column_order, value_key.to_s)), "assignments: #{value_key}"
+    end
 
     # Group Offer section
     column_order = ['internal', 'external', 'all']
-    assert page.has_text? 'Erstellt ' + row_numbers(group_offers, column_order, :created)
-    assert page.has_text? 'Beendet ' + row_numbers(group_offers, column_order, :ended)
-    assert page.has_text? 'Alle ' + row_numbers(group_offers, column_order, :all)
-
-    assert page.has_text? 'Mit neu erstellten Gruppeneinsätzen ' +
-      row_numbers(group_offers, column_order, :created_assignments)
-    assert page.has_text? 'Mit gestarteten Gruppeneinsätzen ' +
-      row_numbers(group_offers, column_order, :started_assignments)
-    assert page.has_text? 'Mit beendeten Gruppeneinsätzen ' +
-      row_numbers(group_offers, column_order, :ended_assignments)
-    assert page.has_text? 'Mit aktiven Gruppeneinsätzen ' +
-      row_numbers(group_offers, column_order, :active_assignments)
-
-    assert page.has_text? 'Anzahl erstellte Gruppeneinsätze ' +
-      row_numbers(group_offers, column_order, :total_created_assignments)
-    assert page.has_text? 'Anzahl gestartete Gruppeneinsätze ' +
-      row_numbers(group_offers, column_order, :total_started_assignments)
-    assert page.has_text? 'Anzahl aktive Gruppeneinsätze ' +
-      row_numbers(group_offers, column_order, :total_active_assignments)
-    assert page.has_text? 'Anzahl Beendeter Gruppeneinsätze ' +
-      row_numbers(group_offers, column_order, :total_ended_assignments)
-    assert page.has_text? 'Gruppeneinsätze Total ' +
-      row_numbers(group_offers, column_order, :total_assignments)
-
-    assert page.has_text? 'Anzahl Stundenrapporte ' +
-      row_numbers(group_offers, column_order, :hour_report_count)
-    assert page.has_text? 'Stunden ' + row_numbers(group_offers, column_order, :hours, hours: true)
-    assert page.has_text? 'Anzahl Feedbacks ' +
-      row_numbers(group_offers, column_order, :feedback_count)
+    (VALUE_ORDERS[:group_offers_first] + VALUE_ORDERS[:group_offers_second]).each do |value_key|
+      assert page.has_text?(I18n.t("performance_reports.values_group_offers.#{value_key}") + '  ' + row_numbers(group_offers, column_order, value_key.to_s)), "group_offers: #{value_key}"
+    end
   end
 
   def row_numbers(entity, column_order, key, hours: nil)
-    if hours
+    if entity.values_at(*column_order).first[key.to_s].is_a?(Float)
       entity.values_at(*column_order).map { |val| '%g' % ('%.1f' % val[key.to_s]) }.join(' ')
     else
       entity.values_at(*column_order).map { |val| val[key.to_s] }.join(' ')
