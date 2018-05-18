@@ -136,8 +136,4 @@ module ApplicationHelper
       disabled: disabled
     )
   end
-
-  def abbr(abbr, full_term)
-    tag.abbr(abbr.to_s, title: full_term)
-  end
 end
