@@ -208,7 +208,7 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test 'superadmin can change password of other users' do
-    roles = User::ROLES_FOR_USER_CREATE.dup
+    roles = User::ROLES.dup
     users = []
     (roles - ['superadmin']).each do |role, i|
       user = role == 'volunteer' ? create(:user, :volunteer, role: role) : create(:user, role: role)
