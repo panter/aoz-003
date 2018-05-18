@@ -7,12 +7,12 @@
         th= t('assignment_pdf.telephone')
     tbody
       tr
-        td
+        td.fixed-width-xs
           - if client
             = link_to_if policy(Client).show?,
               "#{user.contact.last_name}, #{user.contact.first_name}", edit_client_path(user)
           - else
             = link_to_if policy(Volunteer).edit?,
               "#{user.contact.last_name}, #{user.contact.first_name}", edit_volunteer_path(user)
-        td= user.contact.primary_email
-        td= user.contact.primary_phone
+        td.fixed-width-md= user.contact.primary_email
+        td.fixed-width-xs= user.contact.primary_phone
