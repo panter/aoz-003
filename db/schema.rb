@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180514094136) do
+ActiveRecord::Schema.define(version: 20180517123258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -676,7 +676,7 @@ ActiveRecord::Schema.define(version: 20180514094136) do
     t.bigint "user_id"
     t.string "rejection_type"
     t.text "rejection_text"
-    t.string "working_percent"
+    t.integer "working_percent"
     t.text "volunteer_experience_desc"
     t.bigint "registrar_id"
     t.boolean "trial_period", default: false

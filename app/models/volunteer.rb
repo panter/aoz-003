@@ -356,6 +356,12 @@ class Volunteer < ApplicationRecord
     end
   end
 
+  def working_percent=(value)
+    value = value.match('[0-9]+').to_s.to_i
+    value = nil if value == 0
+    write_attribute :working_percent, value
+  end
+
   private
 
   def kinds_done_ids
