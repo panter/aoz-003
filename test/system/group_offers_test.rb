@@ -279,6 +279,9 @@ class GroupOffersTest < ApplicationSystemTestCase
   test 'creates/updates group assignment PDF when requested' do
     use_rack_driver
 
+    pdf_date = 1.week.ago
+    travel_to pdf_date
+
     group_offer = create :group_offer
     group_assignment = create :group_assignment, group_offer: group_offer
     login_as create(:user)
@@ -302,6 +305,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     pdf = load_pdf(page.body)
 
     assert_equal 1, pdf.page_count
+    assert_match(/Ort, Datum: +Zürich, #{I18n.l pdf_date.to_date}/, pdf.pages.first.text)
     assert_match(/Wie oft\? +daily/, pdf.pages.first.text)
 
     # changing a field doesn't automatically update the PDF
@@ -323,6 +327,9 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     # request to update the PDF
 
+    pdf_date = 3.days.from_now
+    travel_to pdf_date
+
     visit edit_group_assignment_path(group_assignment)
     check 'Vereinbarung überschreiben'
     click_on 'Begleitung aktualisieren', match: :first
@@ -333,6 +340,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_on 'Herunterladen', match: :first
     pdf = load_pdf(page.body)
 
+    assert_match(/Ort, Datum: +Zürich, #{I18n.l pdf_date.to_date}/, pdf.pages.first.text)
     assert_match(/Wie oft\? +weekly/, pdf.pages.first.text)
 
     # make sure the download link is displayed on the group offer as well

@@ -139,7 +139,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     pdf = load_pdf(page.body)
 
     assert_equal 1, pdf.page_count
-    assert_match(/Ort, Datum: +Zürich, #{I18n.l(pdf_date.to_date)}/, pdf.pages.first.text)
+    assert_match(/Ort, Datum: +Zürich, #{I18n.l pdf_date.to_date}/, pdf.pages.first.text)
     assert_match(/Wie oft\? +daily/, pdf.pages.first.text)
 
     # changing a field doesn't automatically update the PDF
@@ -169,7 +169,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     click_on 'Herunterladen', match: :first
     pdf = load_pdf(page.body)
 
-    assert_match(/Ort, Datum: +Zürich, #{I18n.l(pdf_date.to_date)}/, pdf.pages.first.text)
+    assert_match(/Ort, Datum: +Zürich, #{I18n.l pdf_date.to_date}/, pdf.pages.first.text)
     assert_match(/Wie oft\? +weekly/, pdf.pages.first.text)
 
     # make sure the download link is displayed on the index as well
@@ -177,5 +177,11 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit assignments_path
 
     assert_link 'Herunterladen', count: 1
+
+    # make sure the HTML view also displays the PDF creation date
+
+    click_on 'Anzeigen'
+
+    assert_text "Ort, Datum:Zürich, #{I18n.l pdf_date.to_date}"
   end
 end

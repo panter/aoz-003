@@ -1,4 +1,4 @@
-- pdf_created_at = request.format.pdf? ? @assignment.pdf_updated_at : Time.zone.now
+- @pdf_created_at ||= Time.zone.now
 h3.m-b-10= t('assignment_pdf.title')
 
 h4.m-b-10= t('assignment_pdf.volunteer_title')
@@ -113,7 +113,7 @@ h4.m-b-10.m-t-20= t('assignment_pdf.creator_title')
 .row-bottom
   .col-xs-12
     span= t('assignment_pdf.city_date')
-    '#{t('assignment_pdf.zurich')}, #{l pdf_created_at.to_date}
+    '#{t('assignment_pdf.zurich')}, #{l @pdf_created_at.to_date}
 
 .signature-title-row
   .col-xs-4

@@ -47,7 +47,10 @@ class AssignmentsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html
+      format.html do
+        @pdf_created_at = @assignment.pdf_updated_at || Time.zone.now
+      end
+
       format.pdf do
         render_pdf_attachment @assignment
       end
