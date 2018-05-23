@@ -5,6 +5,5 @@ $(() => {
   tableRowSelectable();
   volunteerForm();
   groupOfferForm();
-  assigmentForm();
   emailTemplate();
 });

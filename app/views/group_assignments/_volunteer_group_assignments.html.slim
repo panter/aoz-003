@@ -22,7 +22,7 @@ table.table.table-striped.group-assignments-table
             - if policy(group_assignment).edit?
               = button_link navigation_glyph(:edit), edit_group_assignment_path(group_assignment),
                   title: 'Bearbeiten'
-            - if policy(group_assignment).show?
+            - if policy(group_assignment).show? && group_assignment.pdf.exists?
               = button_link navigation_glyph(:download), group_assignment_path(group_assignment, format: :pdf),
                   title: 'Herunterladen'
             - if policy(group_assignment.group_offer).change_active_state?

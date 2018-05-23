@@ -3,7 +3,8 @@ tr
     = button_link navigation_glyph(:show), assignment, title: 'Anzeigen'
     - if policy(assignment).edit?
       = button_link navigation_glyph(:edit), edit_polymorphic_path(assignment), title: 'Bearbeiten'
-    = button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
+    - if assignment.pdf.exists?
+      = button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
   td.button-acceptance= assignment_status_badge(assignment)
   - if controller_name != 'volunteers'
     td = link_to_if policy(assignment.volunteer).show?, assignment.volunteer, edit_volunteer_path(assignment.volunteer)

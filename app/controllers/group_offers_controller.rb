@@ -29,8 +29,7 @@ class GroupOffersController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "group_offer_#{@group_offer.id}", layout: 'pdf.pdf',
-        template: 'group_offers/show.pdf.slim', encoding: 'UTF-8'
+        render pdf: pdf_file_name(@group_offer)
       end
     end
   end

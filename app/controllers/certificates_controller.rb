@@ -11,8 +11,8 @@ class CertificatesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "volunteer_certificate_#{@certificate.id}", encoding: 'UTF-8',
-          layout: 'certificate.pdf', page_size: 'A4', print_media_type: true, no_background: true,
+        render pdf: pdf_file_name(@certificate),
+          layout: 'certificate.pdf', print_media_type: true, no_background: true,
           margin: { top: 0, bottom: 0, left: 0, right: 0 }
       end
     end

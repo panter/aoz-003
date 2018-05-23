@@ -69,7 +69,7 @@ GEM
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     arel (8.0.0)
-    ast (2.3.0)
+    ast (2.4.0)
     autocomplete_rails (0.3.1)
       rails (>= 4.0, < 5.2)
     autoprefixer-rails (7.2.5)
@@ -265,8 +265,8 @@ GEM
     parallel (1.12.1)
     paranoia (2.4.0)
       activerecord (>= 4.0, < 5.2)
-    parser (2.4.0.2)
-      ast (~> 2.3)
+    parser (2.5.1.0)
+      ast (~> 2.4.0)
     pdf-reader (2.1.0)
       Ascii85 (~> 1.0.0)
       afm (~> 0.2.1)
@@ -336,9 +336,9 @@ GEM
     roo (2.7.1)
       nokogiri (~> 1)
       rubyzip (~> 1.1, < 2.0.0)
-    rubocop (0.52.1)
+    rubocop (0.56.0)
       parallel (~> 1.10)
-      parser (>= 2.4.0.2, < 3.0)
+      parser (>= 2.5)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
@@ -412,7 +412,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.4)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.3.0)
+    unicode-display_width (1.3.2)
     unicode_utils (1.4.0)
     unicorn (5.4.0)
       kgio (~> 2.6)
@@ -504,4 +504,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

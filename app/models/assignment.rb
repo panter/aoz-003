@@ -30,7 +30,12 @@ class Assignment < ApplicationRecord
 
   def create_log_of_self
     AssignmentLog.create(
-      attributes.except('id', 'created_at', 'updated_at').merge(assignment_id: id)
+      attributes.except(
+        'id', 'created_at', 'updated_at',
+        'pdf_file_name', 'pdf_content_type', 'pdf_file_size', 'pdf_updated_at', 'generate_pdf'
+      ).merge(
+        assignment_id: id
+      )
     )
   end
 

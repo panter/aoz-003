@@ -13,7 +13,7 @@ table.table.table-striped.assignment-logs-table
     - assignment_logs.each do |assignment|
       tr
         td.index-action-cell.hidden-print
-          - if policy(assignment.assignment).show?
+          - if policy(assignment.assignment).show? && assignment.assignment.pdf.exists?
             = button_link navigation_glyph(:download), assignment_path(assignment.assignment, format: :pdf),
               title: 'Herunterladen'
         td= link_to_if(policy(Client).show?, assignment.client.contact.full_name, assignment.client)
