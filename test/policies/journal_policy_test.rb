@@ -10,20 +10,21 @@ class JournalPolicyTest < PolicyAssertions::Test
     @journal = create :journal, user: @superadmin
   end
 
-  test 'superadmin gets actions granted' do
+  test 'superadmin and department_manager gets actions granted' do
     assert_permit(
       superadmin, journal,
       'new?', 'create?', 'index?', 'edit?', 'update?', 'destroy?'
     )
-  end
 
-  test 'socialworker or department_manager get no access' do
-    refute_permit(
-      social_worker, journal,
+    assert_permit(
+      department_manager, journal,
       'new?', 'create?', 'index?', 'edit?', 'update?', 'destroy?'
     )
+  end
+
+  test 'socialworker get no access' do
     refute_permit(
-      department_manager, journal,
+      social_worker, journal,
       'new?', 'create?', 'index?', 'edit?', 'update?', 'destroy?'
     )
   end
