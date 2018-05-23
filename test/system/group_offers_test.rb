@@ -241,7 +241,10 @@ class GroupOffersTest < ApplicationSystemTestCase
     login_as create(:user)
     visit edit_group_offer_path(group_offer)
 
-    assert_checked_field 'group_offer[offer_type]', disabled: true
+    assert_text 'Internes Gruppenangebot'
+
+    # ensuring that submitting edit form is working
+    click_button 'Gruppenangebot aktualisieren'
   end
 
   test 'offer_type_toggles_location_fields' do
