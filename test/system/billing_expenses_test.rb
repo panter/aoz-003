@@ -162,7 +162,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
     pdf = load_pdf(page.body)
 
     assert_equal 2, pdf.page_count
-    binding.pry
     assert_includes pdf.pages[1].text, "Spesenauszahlung an #{@volunteer1}"
     assert_includes pdf.pages[0].text, "Spesenauszahlung an #{@volunteer4}"
   end
