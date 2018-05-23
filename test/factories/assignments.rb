@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :assignment do
     client
-    association :volunteer, factory: :volunteer_with_user
+    association :volunteer
     association :creator, factory: :user
     period_start { [nil, FFaker::Time.between(500.days.ago, 200.days.ago)].sample }
     period_end { nil }

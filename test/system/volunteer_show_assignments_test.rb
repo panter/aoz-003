@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class VolunteerShowAssignmentsTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :user
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     @assignment = create :assignment, volunteer: @volunteer, period_start: 2.weeks.ago,
       period_end: nil, creator: @superadmin
     @assignment_log = create(:assignment, volunteer: @volunteer, period_start: 2.weeks.ago,

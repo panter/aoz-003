@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class HoursTest < ApplicationSystemTestCase
   def setup
     @user = create :user
-    @volunteer1 = create :volunteer_with_user
+    @volunteer1 = create :volunteer
     @user_volunteer1 = @volunteer1.user
     @client1 = create :client
     @client1.contact.first_name = @client1.contact.last_name = 'Client1'
@@ -59,7 +59,7 @@ class HoursTest < ApplicationSystemTestCase
 
   test 'volunteer can see only her assignment' do
     visit volunteer_path(@volunteer1)
-    volunteer2 = create :volunteer_with_user
+    volunteer2 = create :volunteer
     client2 = create :client
     client2.contact.first_name = client2.contact.last_name = 'Client2'
     assignment2 = create :assignment, volunteer: volunteer2, client: client2
@@ -77,7 +77,7 @@ class HoursTest < ApplicationSystemTestCase
 
   test 'volunteer_can_see_only_her_group_offers' do
     visit volunteer_path(@volunteer1)
-    volunteer2 = create :volunteer_with_user
+    volunteer2 = create :volunteer
     group_offer2 = create :group_offer, group_offer_category: @group_offer_category,
       title: 'GroupOfferNumberTwo'
     create :group_assignment, group_offer: group_offer2, volunteer: volunteer2,

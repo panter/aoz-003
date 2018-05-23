@@ -24,7 +24,7 @@ class GroupAssignmentPolicyTest < PolicyAssertions::Test
   end
 
   test 'volunteer_has_limited_access' do
-    volunteer = create :volunteer_with_user
+    volunteer = create :volunteer
     volunteer_group_assignment =  create :group_assignment, volunteer: volunteer
     refute_permit(volunteer.user, GroupAssignment,
       'show_comments?', *actions_list(

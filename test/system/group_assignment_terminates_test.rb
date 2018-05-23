@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :user
-    @volunteer = create :volunteer_with_user, salutation: 'mrs'
+    @volunteer = create :volunteer, salutation: 'mrs'
     @group_offer = create :group_offer, creator: @superadmin
     @group_assignment = create :group_assignment, volunteer: @volunteer, group_offer: @group_offer,
       period_start: 20.days.ago, period_end: 10.days.ago, period_end_set_by: @superadmin

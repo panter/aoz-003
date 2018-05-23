@@ -5,7 +5,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     superadmin = create :user
     date = '2018-01-01'.to_time
 
-    @volunteer1 = create :volunteer_with_user, bank: 'UBS'
+    @volunteer1 = create :volunteer, bank: 'UBS'
     @assignment1 = create :assignment, volunteer: @volunteer1
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 2.5
     billed_hour1 = create :hour, volunteer: @volunteer1, hourable: @assignment1,

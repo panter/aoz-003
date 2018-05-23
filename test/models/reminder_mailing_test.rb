@@ -3,7 +3,7 @@ require 'test_helper'
 class ReminderMailingTest < ActiveSupport::TestCase
   def setup
     @superadmin = create :user
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     @assignment_probation = create :assignment, period_start: 7.weeks.ago, volunteer: @volunteer
     @group_offer = create :group_offer
     @group_assignment_probation = GroupAssignment.create(volunteer: @volunteer,

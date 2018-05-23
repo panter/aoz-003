@@ -6,7 +6,7 @@ class EventsTest < ApplicationSystemTestCase
     @department = create :department
     @department.contact.update(last_name: 'Event Department')
     @event = create :event, department: @department
-    @volunteer1 = create :volunteer_with_user
+    @volunteer1 = create :volunteer
     login_as @user
   end
 
@@ -45,7 +45,7 @@ class EventsTest < ApplicationSystemTestCase
   end
 
   test 'removing a volunteer from an existing event' do
-    @volunteer2 = create :volunteer_with_user
+    @volunteer2 = create :volunteer
     visit event_path(@event)
 
     # adding first volunteer to the event

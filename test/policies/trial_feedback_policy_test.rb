@@ -2,10 +2,10 @@ require 'test_helper'
 
 class TrialFeedbackPolicyTest < PolicyAssertions::Test
   def setup
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     @user_volunteer = @volunteer.user
     @superadmin = create :user
-    @other_volunteer = create :volunteer_with_user
+    @other_volunteer = create :volunteer
   end
 
   test 'superadmin can use all actions' do
@@ -41,7 +41,7 @@ class TrialFeedbackPolicyTest < PolicyAssertions::Test
   test 'volunteer has limited access to group_offer feedbacks' do
     group_offer = create :group_offer, volunteers: [@volunteer, @other_volunteer]
     other_group_offer = create :group_offer,
-      volunteers: [create(:volunteer_with_user), @other_volunteer]
+      volunteers: [create(:volunteer), @other_volunteer]
     superadmin_feedback = create :trial_feedback, volunteer: @volunteer, author: @superadmin,
       trial_feedbackable: group_offer
     feedback_volunteer = create :trial_feedback, volunteer: @volunteer, author: @user_volunteer,

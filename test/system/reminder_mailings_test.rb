@@ -2,10 +2,11 @@ require 'application_system_test_case'
 
 class ReminderMailingsTest < ApplicationSystemTestCase
   def setup
+    really_destroy_with_deleted(GroupAssignment, GroupOffer, Volunteer, Client, User)
     @superadmin = create :user
-    @volunteer_assignment = create :volunteer_with_user
+    @volunteer_assignment = create :volunteer
     @group_offer = create :group_offer
-    @volunteer_group_offer = create :volunteer_with_user
+    @volunteer_group_offer = create :volunteer
   end
 
   test 'group_assignment_and_assignment_elegible_for_half_year_reminder_mailing_are_includable' do
@@ -157,7 +158,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     page.find('#assignment_period_end').click
     page.find('.month', text: 'Jan').click
-    first('.day',  exact_text: '17').click
+    first('.day', exact_text: '17').click
     page.find_all('input[type="submit"]').first.click
 
     assert page.has_current_path? terminated_index_assignments_path
@@ -194,7 +195,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
   test 'termination_mailing_for_group_assignment_termination_is_sent' do
     group_assignment = create :group_assignment, period_start: 2.months.ago, period_end: 2.days.ago,
-      period_end_set_by: @superadmin
+      period_end_set_by: @superadmin, volunteer: create(:volunteer)
     group_offer = group_assignment.group_offer
 
     termination_reminder = create :reminder_mailing, kind: :termination,
@@ -203,6 +204,10 @@ class ReminderMailingsTest < ApplicationSystemTestCase
       body: '%{Anrede} %{Name} %{FeedbackLink} %{Einsatz} %{EmailAbsender} '\
             '%{EinsatzStart} %{InvalidKey}Gruss, AOZ'
     login_as @superadmin
+
+    # ignore invitation mails from factories
+    ActionMailer::Base.deliveries.clear
+
     visit polymorphic_path([group_assignment, termination_reminder], action: :send_termination)
 
     assert page.has_text? 'Beendigungs-Email wird versendet.'

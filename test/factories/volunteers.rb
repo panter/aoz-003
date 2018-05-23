@@ -39,6 +39,7 @@ FactoryBot.define do
 
     trait :external do
       external { true }
+      acceptance { :accepted }
     end
 
     trait :internal do
@@ -73,6 +74,9 @@ FactoryBot.define do
     end
 
     after(:build) do |volunteer|
+      if volunteer.accepted? && volunteer.internal?
+        volunteer.user_id = User.create(role: 'volunteer', email: volunteer.contact.primary_email).id
+      end
       if volunteer.salutation == 'mrs'
         volunteer.contact.first_name = I18n.t('faker.name.female_first_name').sample
       elsif volunteer.salutation == 'mr'
@@ -81,15 +85,13 @@ FactoryBot.define do
     end
 
     factory :volunteer_with_user do
-      after(:build) do |volunteer|
-        volunteer.user = build(:user_volunteer, volunteer: volunteer)
+      after(:save) do |volunteer|
+        unless volunteer.accepted? || volunteer.user.present?
+          previous_acceptance = volunteer.acceptance
+          volunteer.accepted!
+          volunteer.update(acceptance: previous_acceptance)
+        end
       end
-
-      factory(
-        :volunteer_seed_with_user,
-        traits: [:with_language_skills, :with_journals, :faker_extra,
-                 :fake_availability, :fake_single_assignments]
-      )
     end
 
     factory :volunteer_external, traits: [:external]
