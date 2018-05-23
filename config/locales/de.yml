@@ -804,7 +804,7 @@ de:
       external: Externe Freiwillige
       internal: Interne Freiwillige
     values_volunteers: &id-pr-values-volunteer
-      created: Freiwillige erstellt
+      created: Freiwillige angemeldet
       inactive: Freiwillige inaktiv
       resigned: Einsatz beeendet
       total: Freiwillige (Anzahl Personen)
