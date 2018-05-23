@@ -856,51 +856,6 @@ de:
       total_active_assignments: Aktive Gruppeneinsätze
       total_ended_assignments: Beendete Gruppeneinsätze
       total_assignments: Total aller Gruppeneinsätze (Aktive und Inaktive und Beendete)
-    values: &id-performance-value-descs
-      total: Gesammt
-      active_total: Total Akiv
-      active_assignment: Total mit aktivem Tandem
-      created: Erstellt
-      resigned: Beendet
-      inactive: Inaktiv
-      total_hour_records: Eingereichte Stundenberichte
-      total_hours: Stunden total
-      assignment_hour_records: Tandem-Stundenberichte
-      assignment_hours: Tandem-Stunden
-      group_offer_hour_records: Gruppenangebots-Stundenberichte
-      group_offer_hours: Gruppenangebots-Stunden
-      total_feedbacks: Total Feedbacks
-      assignment_feedbacks: Tandem-Feedbacks
-      group_offer_feedbacks: Gruppenangebots-Feedbacks
-      total_trial_feedbacks: Total Probezeit-Feedbacks
-      assignment_trial_feedbacks: Tandem-Probezeit-Feedbacks
-      group_offer_trial_feedbacks: Gruppenangebots-Probezeit-Feedbacks
-      all: Alle
-      ended: Beendet
-      hours: Stunden
-      active: Aktiv
-      started: Begonnen
-      home_visits: Hausbesuche
-      feedback_count: Anzahl Feedbacks
-      trial_feedback_count: Anzahl Probezeitfeedbacks
-      probations_ended: Probezeiten abgeschlossen
-      progress_meetings: Fortschrittsmeetings
-      first_instruction_lessons: Einführungskurse
-      hour_report_count: Anzahl Stundenrapporte
-      termination_submitted: Beendigung bestätigt
-      termination_verified: Beendigung quittiert
-      performance_appraisal_reviews: Standortgespräche
-      ended_assignments: Beendete Gruppeneinsätze
-      active_assignments: Aktive Gruppeneinsätze
-      created_assignments: Erstellte Gruppeneinsätze
-      started_assignments: Begonnene Gruppeneinsätze
-      intro_course: Teilnehmende Einführungsveranstaltungen
-      professional_training: Teilnehmende Weiterbildungen
-      professional_event: Teilnehmende Fachveranstaltungen
-      theme_exchange: Teilnehmende Erfahrungsaustausch/Themenabende
-      volunteering: Teilnehmende Freiwilligenanlässe
-      german_class_managers: Teilnehmende Treffen Deutschkursleitende
-      total_events: Total Teilnehmende Veranstaltungen
     index:
       new_report: Neuen Report erstellen
     one: Kennzahl
@@ -911,14 +866,12 @@ de:
       title_year: 'Kennzahlen des Kalenderjahrs %{year}'
       clients:
         categories: *id-performance-scope-categories
-        values: *id-performance-value-descs
         new: Anzahl neuer Klienten
         active_total: Total aktive Klienten per Zeitraumende
         resigned: Anzahl beendete Klienten
         total: Anzahl Klienten insgesamt
       assignments: &id-assignment-report
         categories: *id-performance-scope-categories
-        values: *id-performance-value-descs
         active_total: Total aktive Begleitungen per Zeitraumende
         new: Anzahl neue Begleitungen
         resigned: Anzahl beendete Begleitungen
@@ -931,24 +884,12 @@ de:
         total: Anzahl Gruppen insgesamt (Kurse, Animationen, Andere)
       volunteers:
         categories: *id-performance-scope-categories
-        values: *id-performance-value-descs
         active_total: Total aktive Freiwillige per Zeitraumende
         new: Anzahl neue Freiwillige
         resigned: Anzahl beendete Freiwillige
         total: Anzahl Freiwillige insgesamt
       group_offers:
         categories: *id-performance-scope-categories
-        values:
-          <<: *id-performance-value-descs
-          created_assignments: Mit neu erstellten Gruppeneinsätzen
-          started_assignments: Mit gestarteten Gruppeneinsätzen
-          ended_assignments: Mit beendeten Gruppeneinsätzen
-          active_assignments: Mit aktiven Gruppeneinsätzen
-          total_created_assignments: Anzahl erstellte Gruppeneinsätze
-          total_started_assignments: Anzahl gestartete Gruppeneinsätze
-          total_active_assignments: Anzahl aktive Gruppeneinsätze
-          total_ended_assignments: Anzahl Beendeter Gruppeneinsätze
-          total_assignments: Gruppeneinsätze Total
       zh_assignments:
         <<: *id-assignment-report
         total: Anzahl Begleitete
