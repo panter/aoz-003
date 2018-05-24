@@ -10,7 +10,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 2.5
     billed_hour1 = create :hour, volunteer: @volunteer1, hourable: @assignment1,
       hours: 3.5, meeting_date: date
-    @billing_expense1 = create :billing_expense, volunteer: @volunteer1, hours: [billed_hour1]
+    @billing_expense1 = create :billing_expense, volunteer: @volunteer1, hours: [billed_hour1],
+      created_at: 2.hours.ago
     group_assignment1 = create :group_assignment, volunteer: @volunteer1
     create :hour, hourable: group_assignment1.group_offer, volunteer: @volunteer1,
       hours: 35, meeting_date: date
@@ -30,7 +31,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     billed_hour4 = create :hour, volunteer: @volunteer4,
       hourable: group_assignment4.group_offer,
       hours: 5.5, meeting_date: date - 1.month
-    @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4]
+    @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4],
+      created_at: 1.hour.ago
 
     login_as superadmin
   end
