@@ -64,7 +64,6 @@ class PerformanceReport < ApplicationRecord
       assignment_hours: hours.assignment.total_hours,
       group_offer_hour_records: hours.group_offer.count,
       group_offer_hours: hours.group_offer.total_hours,
-      total_hour_records: hours.count,
       total_hours: hours.total_hours,
       assignment_feedbacks: feedbacks.assignment.count,
       group_offer_feedbacks: feedbacks.group_offer.count,
@@ -106,33 +105,18 @@ class PerformanceReport < ApplicationRecord
     {
       all: assignments_stats(assignments),
       zurich: assignments_stats(assignments.zurich),
-      not_zurich: assignments_stats(assignments.not_zurich),
-      external: assignments_stats(assignments.external),
-      internal: assignments_stats(assignments.internal)
+      not_zurich: assignments_stats(assignments.not_zurich)
     }
   end
 
   def assignments_stats(assignments)
-    hours = Hour.date_between(:meeting_date, *periods).from_assignments(assignments.ids)
-    feedbacks = Feedback.created_between(*periods).from_assignments(assignments.ids)
-    trial_feedbacks = TrialFeedback.created_between(*periods).from_assignments(assignments.ids)
     {
       all: assignments.count,
       created: assignments.created_between(*periods).count,
       started: assignments.start_within(*periods).count,
       active: assignments.active_between(*periods).count,
       ended: assignments.end_within(*periods).count,
-      probations_ended: assignments.date_between(:probation_period, *periods).count,
-      performance_appraisal_reviews: assignments.date_between(:performance_appraisal_review, *periods).count,
-      home_visits: assignments.date_between(:home_visit, *periods).count,
-      first_instruction_lessons: assignments.date_between(:first_instruction_lesson, *periods).count,
-      progress_meetings: assignments.date_between(:progress_meeting, *periods).count,
-      termination_submitted: assignments.termination_submitted_between(*periods).count,
-      termination_verified: assignments.termination_verified_between(*periods).count,
-      hour_report_count: hours.count,
-      hours: hours.total_hours,
-      feedback_count: feedbacks.count,
-      trial_feedback_count: trial_feedbacks.count
+      first_instruction_lessons: assignments.date_between(:first_instruction_lesson, *periods).count
     }
   end
 
@@ -152,23 +136,17 @@ class PerformanceReport < ApplicationRecord
     started_ga = group_assignments.start_within(*periods)
     ended_ga = group_assignments.end_within(*periods)
     created_ga = group_assignments.created_between(*periods)
-    hours = Hour.from_group_offers(group_offers.ids)
     feedbacks = Feedback.created_between(*periods).from_group_offers(group_offers.ids)
     {
       all: group_offers.count,
       created: group_offers.created_after(periods.first).count,
       ended: group_offers.end_within(*periods).count,
       created_assignments: created_ga.pluck(:group_offer_id).uniq.size,
-      started_assignments: started_ga.pluck(:group_offer_id).uniq.size,
-      active_assignments: active_ga.pluck(:group_offer_id).uniq.size,
-      ended_assignments: ended_ga.pluck(:group_offer_id).uniq.size,
       total_assignments: group_assignments.count,
       total_created_assignments: created_ga.count,
       total_started_assignments: started_ga.count,
       total_active_assignments: active_ga.count,
       total_ended_assignments: ended_ga.count,
-      hour_report_count: hours.count,
-      hours: hours.total_hours,
       feedback_count: feedbacks.count
     }
   end

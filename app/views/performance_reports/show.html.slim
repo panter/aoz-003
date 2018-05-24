@@ -16,7 +16,9 @@ p.hidden-print
   = 'Herunterladen: '
   = button_link(navigation_fa_icon, url_for(format: :xlsx))
 
-h3 Freiwillige
+
+
+h3 Fachstelle Freiwilligenarbeit
 table.table.table-striped.table-bordered
   htead
     tr
@@ -24,285 +26,49 @@ table.table.table-striped.table-bordered
       - column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
       - column_order.each do |category_key|
         th= t(".volunteers.categories.#{category_key}")
-  tbody
-    tr
-      td= t('.volunteers.values.created')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['created']
-    tr
-      td= t('.volunteers.values.inactive')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['inactive']
-    tr
-      td= t('.volunteers.values.resigned')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['resigned']
-    tr.active
-      td= t('.volunteers.values.total')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['total']
+  = render 'tbody', columns: column_order, group: :volunteers, values: @value_orders[:volunteers]
 
-    tr
-      td= t('.volunteers.values.only_assignment_active')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['only_assignment_active']
-    tr
-      td= t('.volunteers.values.active_group_assignment')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['active_group_assignment']
-    tr
-      td= t('.volunteers.values.only_group_active')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['only_group_active']
-    tr
-      td= t('.volunteers.values.active_both')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['active_both']
-    tr
-      td= t('.volunteers.values.active_assignment')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['active_assignment']
-    tr.active
-      td Total Akiv
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['active_total']
+h3 Klient/innen
 
-    tr
-      td= t('.volunteers.values.assignment_hour_records')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['assignment_hour_records']
-    tr
-      td= t('.volunteers.values.assignment_hours')
-      - column_order.each do |category_key|
-        td= '%g' % ('%.1f' % @report_content['volunteers'][category_key]['assignment_hours'])
-    tr
-      td= t('.volunteers.values.group_offer_hour_records')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['group_offer_hour_records']
-    tr
-      td= t('.volunteers.values.group_offer_hours')
-      - column_order.each do |category_key|
-        td= '%g' % ('%.1f' % @report_content['volunteers'][category_key]['group_offer_hours'])
-    tr
-      td= t('.volunteers.values.total_hour_records')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['total_hour_records']
-    tr.active
-      td= t('.volunteers.values.total_hours')
-      - column_order.each do |category_key|
-        td= '%g' % ('%.1f' % @report_content['volunteers'][category_key]['total_hours'])
-
-    tr
-      td= t('.volunteers.values.assignment_feedbacks')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['assignment_feedbacks']
-    tr
-      td= t('.volunteers.values.group_offer_feedbacks')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['group_offer_feedbacks']
-    tr.active
-      td= t('.volunteers.values.total_feedbacks')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['total_feedbacks']
-    tr
-      td= t('.volunteers.values.assignment_trial_feedbacks')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['assignment_trial_feedbacks']
-    tr
-      td= t('.volunteers.values.group_offer_trial_feedbacks')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['group_offer_trial_feedbacks']
-    tr.active
-      td= t('.volunteers.values.total_trial_feedbacks')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['total_trial_feedbacks']
-    - Event.kinds.each_key do |key|
-      tr
-        td= t(".volunteers.values.#{key}")
-        - column_order.each do |category_key|
-          td= @report_content['volunteers'][category_key][key]
-    tr.active
-      td= t('.volunteers.values.total_events')
-      - column_order.each do |category_key|
-        td= @report_content['volunteers'][category_key]['total_events']
-
-h3 Klienten
 table.table.table-striped.table-bordered
   htead
     tr
       th
-      - column_order = ['zurich', 'not_zurich', 'all']
-      - column_order.each do |category_key|
-        th= t(".clients.categories.#{category_key}")
-  tbody
-    tr
-      td= t('.clients.values.created')
-      - column_order.each do |category_key|
-        td= @report_content['clients'][category_key]['created']
-    tr
-      td= t('.clients.values.inactive')
-      - column_order.each do |category_key|
-        td= @report_content['clients'][category_key]['inactive']
-    tr
-      td= t('.clients.values.resigned')
-      - column_order.each do |category_key|
-        td= @report_content['clients'][category_key]['resigned']
-    tr
-      td= t('.clients.values.total')
-      - column_order.each do |category_key|
-        td= @report_content['clients'][category_key]['total']
-    tr
-      td= t('.clients.values.active_assignment')
-      - column_order.each do |category_key|
-        td= @report_content['clients'][category_key]['active_assignment']
+      th Wohnhaft in Zürich
+      th Wohnhaft ausserhalb Zürich
+      th Alle Klient/innen
+  = render 'tbody', columns: ['zurich', 'not_zurich', 'all'], group: :clients, values: @value_orders[:clients]
 
-h3 Begleitungen
+h3 Tandems
 table.table.table-striped.table-bordered
   htead
     tr
       th
-      - column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
-      - column_order.each do |category_key|
-        th= t(".assignments.categories.#{category_key}")
-  tbody
-    tr
-      td= t('.assignments.values.created')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['created']
-    tr
-      td= t('.assignments.values.started')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['started']
-    tr
-      td= t('.assignments.values.active')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['active']
-    tr
-      td= t('.assignments.values.ended')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['ended']
-    tr.active
-      td= t('.assignments.values.all')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['all']
-
-    tr
-      td= t('.assignments.values.hour_report_count')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['hour_report_count']
-    tr.active
-      td= t('.assignments.values.hours')
-      - column_order.each do |category_key|
-        td= '%g' % ('%.1f' % @report_content['assignments'][category_key]['hours'])
-
-    tr.active
-      td= t('.assignments.values.feedback_count')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['feedback_count']
-
-    tr
-      td= t('.assignments.values.first_instruction_lessons')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['first_instruction_lessons']
-    tr
-      td= t('.assignments.values.probations_ended')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['probations_ended']
-    tr.active
-      td= t('.assignments.values.trial_feedback_count')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['trial_feedback_count']
-
-    tr
-      td= t('.assignments.values.performance_appraisal_reviews')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['performance_appraisal_reviews']
-    tr
-      td= t('.assignments.values.home_visits')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['home_visits']
-    tr
-      td= t('.assignments.values.progress_meetings')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['progress_meetings']
-    tr
-      td= t('.assignments.values.termination_submitted')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['termination_submitted']
-    tr
-      td= t('.assignments.values.termination_verified')
-      - column_order.each do |category_key|
-        td= @report_content['assignments'][category_key]['termination_verified']
+      th Klient wohnaft in Zürich
+      th Klient wohnhaft ausserhalb Zürich
+      th Alle
+  = render 'tbody', columns: ['zurich', 'not_zurich', 'all'], group: :assignments, values: @value_orders[:assignments]
 
 h3 Gruppenangebote
+- column_order = ['internal', 'external', 'all']
 table.table.table-striped.table-bordered
   htead
     tr
       th
-      - column_order = ['internal', 'external', 'all']
-      - column_order.each do |category_key|
-        th= t(".assignments.categories.#{category_key}")
-  tbody
+      th An AOZ-Standorten
+      th Ausserhalb AOZ-Standorten
+      th Alle
+  = render 'tbody', columns: column_order, group: :group_offers, values:  @value_orders[:group_offers_first]
+
+h3 Gruppeneinsätze
+table.table.table-striped.table-bordered
+  htead
     tr
-      td= t('.group_offers.values.created')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['created']
-    tr
-      td= t('.group_offers.values.ended')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['ended']
-    tr.active
-      td= t('.group_offers.values.all')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['all']
-    tr
-      td= t('.group_offers.values.created_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['created_assignments']
-    tr
-      td= t('.group_offers.values.started_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['started_assignments']
-    tr
-      td= t('.group_offers.values.ended_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['ended_assignments']
-    tr.active
-      td= t('.group_offers.values.active_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['active_assignments']
-    tr
-      td= t('.group_offers.values.total_created_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['total_created_assignments']
-    tr
-      td= t('.group_offers.values.total_started_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['total_started_assignments']
-    tr
-      td= t('.group_offers.values.total_active_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['total_active_assignments']
-    tr
-      td= t('.group_offers.values.total_ended_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['total_ended_assignments']
-    tr.active
-      td= t('.group_offers.values.total_assignments')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['total_assignments']
-    tr
-      td= t('.group_offers.values.hour_report_count')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['hour_report_count']
-    tr.active
-      td= t('.group_offers.values.hours')
-      - column_order.each do |category_key|
-        td= '%g' % ('%.1f' % @report_content['group_offers'][category_key]['hours'])
-    tr.active
-      td= t('.group_offers.values.feedback_count')
-      - column_order.each do |category_key|
-        td= @report_content['group_offers'][category_key]['feedback_count']
+      th
+      th An AOZ-Standorten
+      th Ausserhalb AOZ-Standorten
+      th Alle
+  = render 'tbody', columns: column_order, group: :group_offers, values:  @value_orders[:group_offers_second]
 
 hr
 

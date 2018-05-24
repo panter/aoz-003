@@ -9,8 +9,12 @@
 
   .row
     .col-xs-6.col-md-3
-      = f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons,
-       disabled: @group_offer.group_assignments.any?
+      - if @group_offer.group_assignments.any? && @group_offer.offer_type?
+        = f.input_field :offer_type, value: @group_offer.offer_type, as: :hidden
+        strong= t_attr(:offer_type)
+        p.m-t-10= t("offer_type.#{@group_offer.offer_type}")
+      - else
+        = f.input :offer_type, collection: GroupOffer::OFFER_TYPES, as: :radio_buttons
     .col-xs-6.col-md-3
       = f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
     .col-xs-12.col-md-6
