@@ -103,22 +103,6 @@ class UsersTest < ApplicationSystemTestCase
     assert_equal volunteer.contact.primary_email, volunteer.user.email
   end
 
-  test 'superadmin can edit only their password' do
-    other_superadmin = create :user
-    department_manager = create :department_manager
-    social_worker = create :social_worker
-    volunteer = create :user_volunteer
-    other_users = [other_superadmin, department_manager, social_worker, volunteer]
-
-    other_users.each do |user|
-      visit edit_user_path(user)
-      refute page.has_field? 'Passwort'
-    end
-
-    visit edit_user_path(@user)
-    assert page.has_field? 'Passwort'
-  end
-
   test 'filter_users_by_role' do
     department_manager = create :department_manager
     social_worker = create :social_worker
@@ -210,8 +194,14 @@ class UsersTest < ApplicationSystemTestCase
   test 'superadmin can change password of other users' do
     roles = User::ROLES.dup
     users = []
-    (roles - ['superadmin']).each do |role, i|
-      user = role == 'volunteer' ? create(:user, :volunteer, role: role) : create(:user, role: role)
+    (roles - ['superadmin']).each do |role|
+      user = nil
+      if role == 'volunteer'
+        user = create(:user, :user_volunteer)
+      else
+        user = create(:user)
+      end
+      user.update role: role
       users << user
     end
 
