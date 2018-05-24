@@ -10,7 +10,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 2.5
     billed_hour1 = create :hour, volunteer: @volunteer1, hourable: @assignment1,
       hours: 3.5, meeting_date: date
-    @billing_expense1 = create :billing_expense, volunteer: @volunteer1, hours: [billed_hour1]
+    @billing_expense1 = create :billing_expense, volunteer: @volunteer1, hours: [billed_hour1],
+      created_at: 2.hours.ago
     group_assignment1 = create :group_assignment, volunteer: @volunteer1
     create :hour, hourable: group_assignment1.group_offer, volunteer: @volunteer1,
       hours: 35, meeting_date: date
@@ -30,7 +31,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     billed_hour4 = create :hour, volunteer: @volunteer4,
       hourable: group_assignment4.group_offer,
       hours: 5.5, meeting_date: date - 1.month
-    @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4]
+    @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4],
+      created_at: 1.hour.ago
 
     login_as superadmin
   end
@@ -148,7 +150,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_includes pdf.pages.first.text, "Spesenauszahlung an #{@volunteer1}"
   end
 
-  test 'download multiple billing expenses' do
+  test 'download_multiple_billing_expenses' do
     use_rack_driver
 
     visit billing_expenses_path
@@ -160,7 +162,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     pdf = load_pdf(page.body)
 
     assert_equal 2, pdf.page_count
-    assert_includes pdf.pages[0].text, "Spesenauszahlung an #{@volunteer4}"
     assert_includes pdf.pages[1].text, "Spesenauszahlung an #{@volunteer1}"
+    assert_includes pdf.pages[0].text, "Spesenauszahlung an #{@volunteer4}"
   end
 end
