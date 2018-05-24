@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  include ContactAttributes
-
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -84,9 +82,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :role,
-      profile_attributes: [
-        contact_attributes: contact_attributes[:contact_attributes]
-      ])
+    params.require(:user).permit policy(User).permitted_attributes
   end
 end
