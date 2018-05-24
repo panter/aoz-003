@@ -1,0 +1,6 @@
+tbody
+  - values.each do |value|
+    - if value.is_a? Array
+      = render 'table_row', columns: columns, group: group, value_key: value.first, tr: value.last
+    - else
+      = render 'table_row', columns: columns, group: group, value_key: value

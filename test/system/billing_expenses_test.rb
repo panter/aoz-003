@@ -150,7 +150,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_includes pdf.pages.first.text, "Spesenauszahlung an #{@volunteer1}"
   end
 
-  test 'download multiple billing expenses' do
+  test 'download_multiple_billing_expenses' do
     use_rack_driver
 
     visit billing_expenses_path
@@ -162,7 +162,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     pdf = load_pdf(page.body)
 
     assert_equal 2, pdf.page_count
-    assert_includes pdf.pages[0].text, "Spesenauszahlung an #{@volunteer4}"
     assert_includes pdf.pages[1].text, "Spesenauszahlung an #{@volunteer1}"
+    assert_includes pdf.pages[0].text, "Spesenauszahlung an #{@volunteer4}"
   end
 end
