@@ -9,7 +9,7 @@ ul.list-inline
   - if policy(@volunteer).terminate?
     li.button-acceptance = link_to t("volunteer_applications.acceptance.#{@volunteer.acceptance}"), '#',
       class: "btn btn-acceptance-#{@volunteer.acceptance}"
-  - if policy(Journal).index? || policy(Volunteer).superadmin_privileges?
+  - if policy(Journal).index?
     li= button_link navigation_glyph(:journal), polymorphic_path([@volunteer, Journal]), title: 'Journal'
   - if action_edit? && policy(@volunteer).show?
     li= button_link navigation_glyph(:show), polymorphic_path(@volunteer), title: t_action(:show)
