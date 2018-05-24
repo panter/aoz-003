@@ -161,7 +161,9 @@ class GroupOffersTest < ApplicationSystemTestCase
       assert_text external_volunteer
     end
 
-    click_link 'Freiwillige/n hinzufügen'
+    within page.find('tr', text: external_volunteer.full_name) do
+      click_link 'Freiwillige/n hinzufügen'
+    end
 
     assert_text 'Freiwillige/r erfolgreich hinzugefügt.'
 
@@ -245,6 +247,7 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     # ensuring that submitting edit form is working
     click_button 'Gruppenangebot aktualisieren'
+    assert_text 'Gruppenangebot wurde erfolgreich geändert.'
   end
 
   test 'offer_type_toggles_location_fields' do
