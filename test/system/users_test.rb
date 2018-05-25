@@ -191,34 +191,33 @@ class UsersTest < ApplicationSystemTestCase
     assert_text "#{volunteer} Bearbeiten Ausdrucken Persönlicher Hintergrund"
   end
 
-  # test 'superadmin can change password of other users' do
-  #   roles = User::ROLES.dup
-  #   users = []
-  #   (roles - ['superadmin']).each do |role|
-  #     user = nil
-  #     if role == 'volunteer'
-  #       user = create(:user_volunteer)
-  #     else
-  #       user = create(:user)
-  #     end
-  #     user.update role: role
-  #     users << user
-  #   end
-  #
-  #   puts users.inspect
-  #
-  #   users.each do |user|
-  #     visit users_path
-  #
-  #     within "tr##{ActionView::RecordIdentifier.dom_id user}" do
-  #       click_on 'Bearbeiten'
-  #     end
-  #     fill_in 'Passwort', with: '123456'
-  #     page.accept_alert do
-  #       click_on 'Login aktualisieren'
-  #     end
-  #
-  #     assert_text "Profil wurde erfolgreich aktualisiert."
-  #   end
-  # end
+  test 'superadmin can change password of other users' do
+    roles = User::ROLES.dup
+    users = []
+    (roles - ['superadmin']).each do |role|
+      user =
+        if role == 'volunteer'
+          create(:volunteer).user
+        else
+          create(:user)
+        end
+
+      user.update role: role
+      users << user
+    end
+
+    users.each do |user|
+      visit users_path
+
+      within "tr##{ActionView::RecordIdentifier.dom_id user}" do
+        click_on 'Bearbeiten'
+      end
+      fill_in 'Passwort', with: '123456'
+      page.accept_alert do
+        click_on 'Login aktualisieren'
+      end
+
+      assert_text 'Profil wurde erfolgreich aktualisiert.'
+    end
+  end
 end
