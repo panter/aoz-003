@@ -1,10 +1,8 @@
 class GroupOfferPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      if superadmin?
+      if superadmin? || department_manager?
         all
-      elsif department_manager?
-        resolve_department.or(resolve_creator)
       else
         none
       end
