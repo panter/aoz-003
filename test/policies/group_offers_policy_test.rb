@@ -18,8 +18,12 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
       *actions_list(:index, :search, :new, :create), 'show_comments?')
     assert_permit(department_manager_without_department, manager_group_offer,
       *actions_list(:show, :edit, :update, :search_volunteer), 'show_comments?')
+    assert_permit(department_manager_without_department, manager_group_offer,
+      *actions_list(:show, :edit, :update, :search_volunteer), 'show_comments?')
+    assert_permit(department_manager_without_department, other_group_offer,
+      *actions_list(:index, :search, :show))
     refute_permit(department_manager_without_department, other_group_offer,
-      *actions_list(:show, :edit, :update, :search_volunteer))
+      *actions_list(:edit, :update, :search_volunteer))
     refute_permit(department_manager_without_department, GroupOffer, 'supervisor_privileges?')
   end
 
@@ -30,10 +34,10 @@ class GroupOfferPolicyTest < PolicyAssertions::Test
 
     assert_permit(department_manager, GroupOffer,
       *actions_list(:index, :search, :new, :create), 'show_comments?')
-    assert_permit(department_manager, department_group_offer,
-      *actions_list(:show, :edit, :update, :search_volunteer), 'show_comments?')
+    assert_permit(department_manager, other_group_offer,
+      *actions_list(:index, :search, :show))
     refute_permit(department_manager, other_group_offer,
-      *actions_list(:show, :edit, :update, :search_volunteer))
+      *actions_list(:edit, :update, :search_volunteer))
     refute_permit(department_manager, GroupOffer, 'supervisor_privileges?')
   end
 
