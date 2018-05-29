@@ -152,8 +152,16 @@ class ApplicationPolicy
     superadmin_or_department_manager? || volunteer_included?
   end
 
+  def superadmin_or_department_manager_or_volunteer_related?
+    superadmin_or_department_manager? || volunteer_related?
+  end
+
   def superadmin_or_departments_offer_or_volunteer_included?
     superadmin_or_department_manager_offer? || volunteer_included?
+  end
+
+  def superadmin_or_departments_offer_or_volunteer_related?
+    superadmin_or_department_manager_offer? || volunteer_related?
   end
 
   def superadmin_or_volunteers_entry?
