@@ -10,7 +10,8 @@ nav.navbar.section-navigation#filters
           placeholder: 'Nach Freiwillige suchen'
         = f.submit 'Suchen', class: 'search-submit'
   ul.list-inline
-    li= button_link t_title(:new), new_group_offer_path, dimension: 'sm'
+    - if policy(GroupOffer).new?
+      li= button_link t_title(:new), new_group_offer_path, dimension: 'sm'
     li= button_link t('.group_offer_categories'), group_offer_categories_path, dimension: 'sm'
     li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
     li= link_to navigation_glyph(:print), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
@@ -100,4 +101,5 @@ table.table.table-striped
 
 nav.navbar.section-navigation
   ul.list-inline
-    li= button_link t_title(:new), new_group_offer_path, dimension: 'sm'
+    - if policy(GroupOffer).new?
+      li= button_link t_title(:new), new_group_offer_path, dimension: 'sm'

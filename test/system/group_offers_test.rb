@@ -135,6 +135,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit group_offers_path
     assert page.has_link? 'Anzeigen/Freiwillige hinzufügen'
     refute page.has_link? 'Bearbeiten'
+    refute page.has_link? 'Gruppenangebot erfassen'
 
     click_link 'Anzeigen/Freiwillige hinzufügen'
     assert page.has_text? 'Gruppenangebote'
