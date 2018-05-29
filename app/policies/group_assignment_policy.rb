@@ -1,15 +1,10 @@
 class GroupAssignmentPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      if superadmin?
-        all
-      elsif department_manager?
-        scope.joins(:group_offer).where(group_offers: { creator_id: user.id })
-      else
-        none
-      end
+      superadmin? || department_manager? ? all : none
     end
   end
+
 
   # Actions related to collections
   alias_method :terminated_index?,                   :superadmin_or_department_manager?

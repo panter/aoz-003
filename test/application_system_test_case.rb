@@ -104,4 +104,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     # select the first dropdown item with given value
     page.find(".#{field} div.selectize-dropdown-content .option", text: value).click
   end
+
+  def dom_id(record)
+    ActionView::RecordIdentifier.dom_id record
+  end
 end
