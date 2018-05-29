@@ -75,7 +75,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     click_link 'Zusätzliche/n Klient/in suchen'
     click_link 'Begleitung erstellen', match: :first
 
-    fill_in 'Einsatzbeginn', with: 3.days.ago.to_date
+    fill_in 'Einsatzbeginn', with: I18n.l(3.days.ago.to_date)
     click_button 'Begleitung erfassen', match: :first
 
     assert_text another_client.contact.full_name
