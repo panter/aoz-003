@@ -29,7 +29,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     click_link 'Klient/in suchen'
     click_link 'Begleitung erstellen'
 
-    fill_in 'Einsatzbeginn', with: 2.days.ago.to_date
+    fill_in 'Einsatzbeginn', with: I18n.l(2.days.ago.to_date)
     click_button 'Begleitung erfassen', match: :first
 
     assert_text @client.contact.full_name
@@ -53,7 +53,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     click_link 'Klient/in suchen'
     click_link 'Begleitung erstellen', match: :first
 
-    fill_in 'Einsatzbeginn', with: 2.days.ago.to_date
+    fill_in 'Einsatzbeginn', with: I18n.l(2.days.ago.to_date)
     click_button 'Begleitung erfassen', match: :first
 
     assert_text @client.contact.full_name

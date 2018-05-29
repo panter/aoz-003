@@ -26,3 +26,4 @@ db/bare_db_dump.sql
 lib/access_import_test/*.xlsx
 .stylelintrc
 doc
+/.idea
