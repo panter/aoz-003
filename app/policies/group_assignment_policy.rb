@@ -10,8 +10,10 @@ class GroupAssignmentPolicy < ApplicationPolicy
   alias_method :terminated_index?,                   :superadmin_or_department_manager?
   alias_method :hours_and_feedbacks_submitted?,      :superadmin_or_department_manager_or_volunteer?
 
+  # Actions realted to creating a member
+  alias_method :create?, :superadmin_or_department_manager_offer?
+
   # Actions related to editing a member
-  alias_method :create?,               :superadmin_or_department_manager_offer?
   alias_method :edit?,                 :superadmin_or_department_manager_offer?
   alias_method :update?,               :superadmin_or_department_manager_offer?
   alias_method :update_submitted_at?,  :superadmin_or_departments_offer_or_volunteer_related?

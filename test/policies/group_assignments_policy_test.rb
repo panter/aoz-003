@@ -5,18 +5,34 @@ class GroupAssignmentPolicyTest < PolicyAssertions::Test
     assert_permit(create(:user), GroupAssignment, *actions_list, 'show_comments?')
   end
 
-  test 'department_manager has limited access when set as responsible' do
+  test 'department_manager without department has read-only access' do
     department_manager_without_department = create :department_manager_without_department
-    department_manager_group_offer = create :group_offer, creator: department_manager_without_department
-    department_manager_group_assignment = create :group_assignment, group_offer: department_manager_group_offer
+    group_offer = create :group_offer
+    group_assignment = create :group_assignment, group_offer: group_offer
+
+    assert_permit(department_manager_without_department, GroupAssignment, index_actions)
+    assert_permit(department_manager_without_department, group_assignment, *show_actions, :show_comments?)
+
+    refute_permit(department_manager_without_department, group_assignment, new_actions)
+    refute_permit(department_manager_without_department, group_assignment, edit_actions)
+  end
+
+  test 'department_manager has full access in their departments but limited in others' do
+    department_manager = create :department_manager
+    group_offer = create :group_offer, department: department_manager.department.last
+    group_assignment = create :group_assignment, group_offer: group_offer
     other_group_offer = create :group_offer
     other_group_assignment = create :group_assignment, group_offer: other_group_offer
 
-    assert_permit(department_manager_without_department, GroupAssignment, index_actions)
-    assert_permit(department_manager_without_department, department_manager_group_assignment, *show_actions, :show_comments?)
-    assert_permit(department_manager_without_department, department_manager_group_assignment, edit_actions)
-    assert_permit(department_manager_without_department, other_group_assignment, show_actions)
-    refute_permit(department_manager_without_department, other_group_assignment, edit_actions)
+    assert_permit(department_manager, GroupAssignment, index_actions)
+
+    assert_permit(department_manager, group_assignment, new_actions)
+
+    assert_permit(department_manager, group_assignment, *show_actions, 'show_comments?')
+    assert_permit(department_manager, other_group_assignment, *show_actions, 'show_comments?')
+
+    assert_permit(department_manager, group_assignment, edit_actions)
+    refute_permit(department_manager, other_group_assignment, edit_actions)
   end
 
   test 'social_worker_has_no_access' do
@@ -51,9 +67,12 @@ class GroupAssignmentPolicyTest < PolicyAssertions::Test
     actions_list(:show, :last_submitted_hours_and_feedbacks)
   end
 
+  def new_actions
+    actions_list(:create)
+  end
+
   def edit_actions
     actions_list(
-      :create,
       :edit,
       :update,
       :update_submitted_at,
