@@ -124,31 +124,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'department_manager without department has read-only access for group offers' do
-    department_manager = create :user, role: 'department_manager'
-    group_offer = create :group_offer
-    login_as department_manager
-
-    visit root_path
-    assert page.has_link? 'Gruppenangebote'
-
-    visit group_offers_path
-    assert page.has_link? 'Anzeigen/Freiwillige hinzufügen'
-    refute page.has_link? 'Bearbeiten'
-    refute page.has_link? 'Gruppenangebot erfassen'
-
-    click_link 'Anzeigen/Freiwillige hinzufügen'
-    assert page.has_text? 'Gruppenangebote'
-    assert page.has_text? group_offer.title
-    refute page.has_link? 'Bearbeiten'
-
-    visit new_group_offer_path
-    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
-
-    visit edit_group_offer_path(group_offer)
-    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
-  end
-
   test 'add_volunteers_on_show' do
     group_offer = create :group_offer
     internal_volunteer = create :volunteer
