@@ -36,7 +36,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_button 'Gruppenangebot erfassen'
 
     assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
-    refute page.has_select? 'Standort'
   end
 
   test 'category_for_a_group_offer_is_required' do
@@ -245,13 +244,11 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     assert_field 'Internes Gruppenangebot', checked: true
-    assert_field 'Standort'
     refute_field 'Organisation'
     refute_field 'Ort'
 
     choose 'Externes Gruppenangebot'
 
-    refute_field 'Standort'
     assert_field 'Organisation'
     assert_field 'Ort'
   end
@@ -261,15 +258,15 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     assert_field 'Internes Gruppenangebot', checked: true
-    refute_field 'Standort'
+    assert_field 'Standort'
     refute_field 'Organisation'
     refute_field 'Ort'
 
     choose 'Externes Gruppenangebot'
 
-    refute_field 'Standort'
     assert_field 'Organisation'
     assert_field 'Ort'
+    assert_field 'Standort'
   end
 
   test 'creates/updates group assignment PDF when requested' do
