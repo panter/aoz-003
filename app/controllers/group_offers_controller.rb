@@ -63,7 +63,11 @@ class GroupOffersController < ApplicationController
 
   def update
     if @group_offer.update(group_offer_params)
-      redirect_to edit_group_offer_path(@group_offer), make_notice
+      if policy(@group_offer).edit?
+        redirect_to edit_group_offer_path(@group_offer), make_notice
+      else
+        redirect_to group_offer_path(@group_offer), make_notice
+      end
     else
       render :edit
     end
@@ -124,6 +128,7 @@ class GroupOffersController < ApplicationController
   end
 
   def group_offer_params
-    params.require(:group_offer).permit policy(GroupOffer).permitted_attributes
+    group_offer = defined?(@group_offer) ? @group_offer : GroupOffer
+    params.require(:group_offer).permit policy(group_offer).permitted_attributes
   end
 end

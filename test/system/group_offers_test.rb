@@ -345,4 +345,39 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     within('.assignments-table') { assert_link 'Herunterladen', count: 1 }
   end
+
+  test "switch departments of a group_offer" do
+    def switch(group_offer, to:)
+      department = to
+      visit edit_group_offer_path group_offer
+      select department.contact.last_name, from: 'Standort'
+      click_button 'Gruppenangebot aktualisieren'
+    end
+
+    department_manager = create :department_manager
+    other_department_manager = create :department_manager
+    department = department_manager.department.last
+    other_department = other_department_manager.department.last
+    group_offer = create :group_offer, department: department
+
+    login_as department_manager
+    switch group_offer, to: other_department
+
+    assert page.has_text? group_offer.title
+    refute page.has_button? 'Gruppenangebot aktualisieren'
+    assert_equal group_offer.reload.department, other_department
+
+    visit edit_group_offer_path(group_offer)
+    assert page.has_text? I18n.t('not_authorized')
+
+    login_as other_department_manager
+    switch group_offer, to: department
+
+    assert page.has_text? group_offer.title
+    refute page.has_button? 'Gruppenangebot aktualisieren'
+    assert_equal group_offer.reload.department, department
+
+    visit edit_group_offer_path(group_offer)
+    assert page.has_text? I18n.t('not_authorized')
+  end
 end
