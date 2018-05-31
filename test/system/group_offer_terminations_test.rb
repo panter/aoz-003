@@ -56,7 +56,7 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
       "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
     click_link 'Bearbeiten', href: edit_group_assignment_path(@group_assignment2,
       redirect_to: initiate_termination_group_offer_path(@group_offer))
-    fill_in id: 'group_assignment_period_end', with: Time.zone.today.to_s
+    fill_in id: 'group_assignment_period_end', with: I18n.l(Time.zone.today)
     page.find_all('input[type="submit"]').first.click
     assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
     refute page.has_text? 'Noch nicht beendete Gruppeneinsätze'

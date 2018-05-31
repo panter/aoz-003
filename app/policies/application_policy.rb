@@ -44,12 +44,19 @@ class ApplicationPolicy
       return false
     end
 
-    department_manager? &&
-      (user.department.include?(offer.department) || user.group_offers.include?(offer))
+    department_manager? && user.department.include?(offer.department)
+  end
+
+  def department_manager_has_department?
+    department_manager? && user.department.any?
   end
 
   def superadmin_or_department_manager_offer?
     superadmin? || department_manager_offer?
+  end
+
+  def superadmin_or_deparment_manager_has_department?
+    superadmin? || department_manager_has_department?
   end
 
   def show?
@@ -148,8 +155,20 @@ class ApplicationPolicy
     superadmin_or_department_manager_creation? || volunteer_related?
   end
 
+  def superadmin_or_department_manager_or_volunteer_included?
+    superadmin_or_department_manager? || volunteer_included?
+  end
+
+  def superadmin_or_department_manager_or_volunteer_related?
+    superadmin_or_department_manager? || volunteer_related?
+  end
+
   def superadmin_or_departments_offer_or_volunteer_included?
     superadmin_or_department_manager_offer? || volunteer_included?
+  end
+
+  def superadmin_or_departments_offer_or_volunteer_related?
+    superadmin_or_department_manager_offer? || volunteer_related?
   end
 
   def superadmin_or_volunteers_entry?
