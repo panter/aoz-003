@@ -19,7 +19,7 @@
       = f.input :offer_state, collection: GroupOffer::OFFER_STATES, as: :radio_buttons
     .col-xs-12.col-md-6
       = f.input :necessary_volunteers, collection: 1..10
-      .row.group-offer-internal-fields
+      .row
         .col-md-12= f.association :department, collection: Department.name_asc, required: true
       - if action_new? || (action_edit? && @group_offer.external?)
         .row.group-offer-external-fields
