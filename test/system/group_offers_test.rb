@@ -380,4 +380,25 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit edit_group_offer_path(group_offer)
     assert page.has_text? I18n.t('not_authorized')
   end
+
+  test "department_id is editable on new" do
+    department_manager = create :department_manager
+    department = department_manager.department.last
+
+    assert_equal GroupOffer.count, 0
+
+    login_as department_manager
+    visit new_group_offer_path
+
+    assert page.has_selector?('label', text: 'Standort', visible: true)
+
+    fill_in 'Bezeichnung', with: 'test title'
+    select @group_offer_category.category_name, from: 'Kategorie'
+    select department.contact.last_name, from: 'Standort'
+    click_button 'Gruppenangebot erfassen'
+
+    group_offer = GroupOffer.last
+    assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
+    assert_equal group_offer.department, department
+  end
 end
