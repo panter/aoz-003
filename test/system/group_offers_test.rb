@@ -36,7 +36,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_button 'Gruppenangebot erfassen'
 
     assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
-    refute page.has_select? 'Standort'
   end
 
   test 'category_for_a_group_offer_is_required' do
@@ -245,13 +244,11 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     assert_field 'Internes Gruppenangebot', checked: true
-    assert_field 'Standort'
     refute_field 'Organisation'
     refute_field 'Ort'
 
     choose 'Externes Gruppenangebot'
 
-    refute_field 'Standort'
     assert_field 'Organisation'
     assert_field 'Ort'
   end
@@ -261,15 +258,15 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     assert_field 'Internes Gruppenangebot', checked: true
-    refute_field 'Standort'
+    assert_field 'Standort'
     refute_field 'Organisation'
     refute_field 'Ort'
 
     choose 'Externes Gruppenangebot'
 
-    refute_field 'Standort'
     assert_field 'Organisation'
     assert_field 'Ort'
+    assert_field 'Standort'
   end
 
   test 'creates/updates group assignment PDF when requested' do
@@ -344,5 +341,61 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit group_offer_path(group_offer)
 
     within('.assignments-table') { assert_link 'Herunterladen', count: 1 }
+  end
+
+  test "switch departments of a group_offer" do
+    def switch(group_offer, to:)
+      department = to
+      visit edit_group_offer_path group_offer
+      select department.contact.last_name, from: 'Standort'
+      click_button 'Gruppenangebot aktualisieren'
+    end
+
+    department_manager = create :department_manager
+    other_department_manager = create :department_manager
+    department = department_manager.department.last
+    other_department = other_department_manager.department.last
+    group_offer = create :group_offer, department: department
+
+    login_as department_manager
+    switch group_offer, to: other_department
+
+    assert page.has_text? group_offer.title
+    refute page.has_button? 'Gruppenangebot aktualisieren'
+    assert_equal group_offer.reload.department, other_department
+
+    visit edit_group_offer_path(group_offer)
+    assert page.has_text? I18n.t('not_authorized')
+
+    login_as other_department_manager
+    switch group_offer, to: department
+
+    assert page.has_text? group_offer.title
+    refute page.has_button? 'Gruppenangebot aktualisieren'
+    assert_equal group_offer.reload.department, department
+
+    visit edit_group_offer_path(group_offer)
+    assert page.has_text? I18n.t('not_authorized')
+  end
+
+  test "department_id is editable on new" do
+    department_manager = create :department_manager
+    department = department_manager.department.last
+
+    assert_equal GroupOffer.count, 0
+
+    login_as department_manager
+    visit new_group_offer_path
+
+    assert page.has_selector?('label', text: 'Standort', visible: true)
+
+    fill_in 'Bezeichnung', with: 'test title'
+    select @group_offer_category.category_name, from: 'Kategorie'
+    select department.contact.last_name, from: 'Standort'
+    click_button 'Gruppenangebot erfassen'
+
+    group_offer = GroupOffer.last
+    assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
+    assert_equal group_offer.department, department
   end
 end

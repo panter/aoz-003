@@ -1,5 +1,4 @@
 class GroupOffersController < ApplicationController
-  include GroupAssignmentsAttributes
   before_action :set_group_offer, except: [:index, :search, :new, :create]
   before_action :set_department_manager_collection
   before_action :set_volunteers, only: [:edit, :show, :update]
@@ -64,7 +63,11 @@ class GroupOffersController < ApplicationController
 
   def update
     if @group_offer.update(group_offer_params)
-      redirect_to edit_group_offer_path(@group_offer), make_notice
+      if policy(@group_offer).edit?
+        redirect_to edit_group_offer_path(@group_offer), make_notice
+      else
+        redirect_to group_offer_path(@group_offer), make_notice
+      end
     else
       render :edit
     end
@@ -125,12 +128,7 @@ class GroupOffersController < ApplicationController
   end
 
   def group_offer_params
-    params.require(:group_offer).permit(
-      :title, :offer_type, :offer_state, :necessary_volunteers, :description,
-      :women, :men, :children, :teenagers, :unaccompanied, :all, :long_term, :regular,
-      :short_term, :workday, :weekend, :morning, :afternoon, :evening, :flexible, :schedule_details,
-      :department_id, :creator_id, :organization, :location, :period_end, :group_offer_category_id,
-      group_assignments_attributes
-    )
+    group_offer = defined?(@group_offer) ? @group_offer : GroupOffer
+    params.require(:group_offer).permit policy(group_offer).permitted_attributes
   end
 end
