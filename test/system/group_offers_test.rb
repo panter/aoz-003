@@ -39,12 +39,12 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_select? 'Standort'
   end
 
-  test 'category for a group offer is required' do
+  test 'category_for_a_group_offer_is_required' do
     login_as create(:user)
     visit new_group_offer_path
 
     click_button 'Gruppenangebot erfassen'
-    assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+    assert page.has_text? 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
     assert page.has_text? 'muss ausgefüllt werden'
   end
 
@@ -124,16 +124,6 @@ class GroupOffersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'department_manager cannot access group offer pages unless there is a department assigned' do
-    department_manager = create :user, role: 'department_manager'
-    login_as department_manager
-    refute page.has_link? 'Gruppenangebote'
-    visit group_offers_path
-    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
-    visit new_group_offer_path
-    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
-  end
-
   test 'add_volunteers_on_show' do
     group_offer = create :group_offer
     internal_volunteer = create :volunteer
@@ -161,7 +151,9 @@ class GroupOffersTest < ApplicationSystemTestCase
       assert_text external_volunteer
     end
 
-    click_link 'Freiwillige/n hinzufügen'
+    within page.find('tr', text: external_volunteer.full_name) do
+      click_link 'Freiwillige/n hinzufügen'
+    end
 
     assert_text 'Freiwillige/r erfolgreich hinzugefügt.'
 
@@ -241,8 +233,11 @@ class GroupOffersTest < ApplicationSystemTestCase
     login_as create(:user)
     visit edit_group_offer_path(group_offer)
 
-    assert_field 'Internes Gruppenangebot', readonly: true
-    assert_field 'Externes Gruppenangebot', readonly: true
+    assert_text 'Internes Gruppenangebot'
+
+    # ensuring that submitting edit form is working
+    click_button 'Gruppenangebot aktualisieren'
+    assert_text 'Gruppenangebot wurde erfolgreich geändert.'
   end
 
   test 'offer_type_toggles_location_fields' do
@@ -259,5 +254,95 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute_field 'Standort'
     assert_field 'Organisation'
     assert_field 'Ort'
+  end
+
+  test 'department manager can create external group offer' do
+    login_as @department_manager
+    visit new_group_offer_path
+
+    assert_field 'Internes Gruppenangebot', checked: true
+    refute_field 'Standort'
+    refute_field 'Organisation'
+    refute_field 'Ort'
+
+    choose 'Externes Gruppenangebot'
+
+    refute_field 'Standort'
+    assert_field 'Organisation'
+    assert_field 'Ort'
+  end
+
+  test 'creates/updates group assignment PDF when requested' do
+    use_rack_driver
+
+    pdf_date = 1.week.ago
+    travel_to pdf_date
+
+    group_offer = create :group_offer
+    group_assignment = create :group_assignment, group_offer: group_offer
+    login_as create(:user)
+    visit group_offer_path(group_offer)
+
+    within('.assignments-table') { refute_link 'Herunterladen' }
+
+    # create initial PDF
+
+    within('.assignments-table') { click_on 'Bearbeiten' }
+    fill_in 'Wie oft?', with: 'daily'
+
+    assert_field 'Vereinbarung erzeugen', checked: true
+
+    click_on 'Begleitung aktualisieren', match: :first
+
+    assert_text 'Begleitung wurde erfolgreich geändert.'
+
+    within('.assignments-table') { click_on 'Bearbeiten' }
+    click_on 'Herunterladen', match: :first
+    pdf = load_pdf(page.body)
+
+    assert_equal 1, pdf.page_count
+    assert_match(/Ort, Datum: +Zürich, #{I18n.l pdf_date.to_date}/, pdf.pages.first.text)
+    assert_match(/Wie oft\? +daily/, pdf.pages.first.text)
+
+    # changing a field doesn't automatically update the PDF
+
+    visit edit_group_assignment_path(group_assignment)
+
+    assert_field 'Vereinbarung überschreiben', checked: false
+
+    fill_in 'Wie oft?', with: 'weekly'
+    click_on 'Begleitung aktualisieren', match: :first
+
+    assert_text 'Begleitung wurde erfolgreich geändert.'
+
+    within('.assignments-table') { click_on 'Bearbeiten' }
+    click_on 'Herunterladen', match: :first
+    pdf = load_pdf(page.body)
+
+    assert_match(/Wie oft\? +daily/, pdf.pages.first.text)
+
+    # request to update the PDF
+
+    pdf_date = 3.days.from_now
+    travel_to pdf_date
+
+    visit edit_group_assignment_path(group_assignment)
+    check 'Vereinbarung überschreiben'
+    click_on 'Begleitung aktualisieren', match: :first
+
+    assert_text 'Begleitung wurde erfolgreich geändert.'
+
+    within('.assignments-table') { click_on 'Bearbeiten' }
+    click_on 'Herunterladen', match: :first
+    pdf = load_pdf(page.body)
+
+    assert_match(/Ort, Datum: +Zürich, #{I18n.l pdf_date.to_date}/, pdf.pages.first.text)
+    assert_match(/Wie oft\? +weekly/, pdf.pages.first.text)
+
+    # make sure the download link is displayed on the group offer as well
+
+    visit group_offer_path(group_offer)
+
+    within('.assignments-table') { assert_link 'Herunterladen', count: 1 }
   end
 end

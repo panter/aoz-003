@@ -5,7 +5,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @superadmin = create :user
     @department_manager = create :department_manager
     @client = create :client, user: @department_manager
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     @assignment = create :assignment, volunteer: @volunteer, client: @client,
       period_start: 10.weeks.ago, period_end: 2.days.ago, creator: @department_manager
     @hour = create :hour, volunteer: @volunteer, hourable: @assignment

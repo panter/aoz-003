@@ -3,10 +3,10 @@ require 'application_system_test_case'
 class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
   setup do
     @superadmin = create :user
-    @volunteer1 = create :volunteer_with_user
-    @volunteer2 = create :volunteer_with_user
-    @volunteer3 = create :volunteer_with_user
-    @volunteer4 = create :volunteer_with_user
+    @volunteer1 = create :volunteer
+    @volunteer2 = create :volunteer
+    @volunteer3 = create :volunteer
+    @volunteer4 = create :volunteer
 
     @group_offer1 = create :group_offer
     @not_ended = create :group_assignment, group_offer: @group_offer1, volunteer: @volunteer1,

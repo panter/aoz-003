@@ -9,7 +9,7 @@ class UsersTest < ApplicationSystemTestCase
     visit new_user_path
   end
 
-  test 'invalid superadmin information' do
+  test 'invalid_superadmin_information' do
     fill_in 'Email', with: ''
     select '', from: 'Rolle'
 
@@ -17,7 +17,7 @@ class UsersTest < ApplicationSystemTestCase
       accept_prompt do
         click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
       assert page.has_text? 'darf nicht leer sein'
       assert page.has_text? 'ist nicht in der Liste enthalten'
     end
@@ -31,7 +31,7 @@ class UsersTest < ApplicationSystemTestCase
       accept_prompt do
         click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
       assert page.has_text? 'ist nicht in der Liste enthalten'
     end
   end
@@ -44,7 +44,7 @@ class UsersTest < ApplicationSystemTestCase
       accept_prompt do
         click_button 'Benutzer/in erstellen'
       end
-      assert page.has_text? 'Bitte überprüfen Sie folgende Probleme:'
+      assert page.has_text? 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
       assert page.has_text? 'ist schon vergeben'
     end
   end
@@ -87,7 +87,7 @@ class UsersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'accepted volunteer becomes a user' do
+  test 'accepted_volunteer_becomes_a_user' do
     volunteer = create :volunteer, acceptance: :undecided
 
     visit edit_volunteer_path(volunteer.id)
@@ -99,29 +99,14 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size
     email = ActionMailer::Base.deliveries.last
-    assert_equal volunteer.contact.primary_email, email['to'].to_s
+    volunteer.reload
+    assert_equal volunteer.contact.primary_email, volunteer.user.email
   end
 
-  test 'superadmin can edit only their password' do
-    other_superadmin = create :user
+  test 'filter_users_by_role' do
     department_manager = create :department_manager
     social_worker = create :social_worker
-    volunteer = create :user_volunteer
-    other_users = [other_superadmin, department_manager, social_worker, volunteer]
-
-    other_users.each do |user|
-      visit edit_user_path(user)
-      refute page.has_field? 'Passwort'
-    end
-
-    visit edit_user_path(@user)
-    assert page.has_field? 'Passwort'
-  end
-
-  test 'filter users by role' do
-    department_manager = create :department_manager
-    social_worker = create :social_worker
-    user_volunteer = create :user_volunteer
+    user_volunteer = create(:volunteer).user
 
     visit users_path
 
@@ -155,11 +140,11 @@ class UsersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'user index has valid links for users without profile' do
+  test 'user_index_has_valid_links_for_users_without_profile' do
     superadmin_no_profile = create :user, :without_profile
     department_manager_no_profile = create :user, :without_profile, :department_manager
     social_worker_no_profile = create :user, :without_profile, :social_worker
-    volunteer_no_profile = create :user_volunteer
+    volunteer_no_profile = create(:volunteer).user
 
     visit users_path
     assert page.has_link? superadmin_no_profile.email
@@ -179,12 +164,14 @@ class UsersTest < ApplicationSystemTestCase
     visit users_path
     click_link volunteer_no_profile.full_name
 
-    assert page.has_field? 'Vorname', with: volunteer_no_profile.profile.contact.first_name
-    assert page.has_field? 'Nachname', with: volunteer_no_profile.profile.contact.last_name
+    assert page.has_field? 'Vorname', with: volunteer_no_profile.volunteer.contact.first_name
+    assert page.has_field? 'Nachname', with: volunteer_no_profile.volunteer.contact.last_name
   end
 
-  test 'volunteer can change password' do
-    volunteer = create :volunteer_with_user
+  test 'volunteer_can_change_password' do
+    volunteer = create :volunteer
+    volunteer.user = create(:user, role: 'volunteer')
+    volunteer.save
     login_as volunteer.user
     visit root_path
 
@@ -202,5 +189,35 @@ class UsersTest < ApplicationSystemTestCase
     click_on 'Anmelden'
 
     assert_text "#{volunteer} Bearbeiten Ausdrucken Persönlicher Hintergrund"
+  end
+
+  test 'superadmin can change password of other users' do
+    roles = User::ROLES.dup
+    users = []
+    (roles - ['superadmin']).each do |role|
+      user =
+        if role == 'volunteer'
+          create(:volunteer).user
+        else
+          create(:user)
+        end
+
+      user.update role: role
+      users << user
+    end
+
+    users.each do |user|
+      visit users_path
+
+      within "tr##{ActionView::RecordIdentifier.dom_id user}" do
+        click_on 'Bearbeiten'
+      end
+      fill_in 'Passwort', with: '123456'
+      page.accept_alert do
+        click_on 'Login aktualisieren'
+      end
+
+      assert_text 'Profil wurde erfolgreich aktualisiert.'
+    end
   end
 end

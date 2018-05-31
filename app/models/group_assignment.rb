@@ -29,9 +29,15 @@ class GroupAssignment < ApplicationRecord
 
   def create_log_of_self(start_date = period_start, end_date = period_end)
     GroupAssignmentLog.create(
-      attributes.except('id', 'created_at', 'updated_at', 'active')
-        .merge(title: group_offer.title, group_assignment_id: id, period_start: start_date,
-               period_end: end_date)
+      attributes.except(
+        'id', 'created_at', 'updated_at', 'active',
+        'pdf_file_name', 'pdf_content_type', 'pdf_file_size', 'pdf_updated_at', 'generate_pdf'
+      ).merge(
+        title: group_offer.title,
+        group_assignment_id: id,
+        period_start: start_date,
+        period_end: end_date
+      )
     )
   end
 

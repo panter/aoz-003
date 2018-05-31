@@ -2,11 +2,11 @@ require 'application_system_test_case'
 
 class FeedbacksTest < ApplicationSystemTestCase
   def setup
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     @user_volunteer = @volunteer.user
     @assignment = create :assignment, volunteer: @volunteer, period_start: 7.weeks.ago
     @superadmin = create :user
-    @other_volunteer = create :volunteer_with_user
+    @other_volunteer = create :volunteer
     @group_offer = create :group_offer, necessary_volunteers: 2, title: 'some_group_offer',
       volunteers: [@volunteer, @other_volunteer]
   end
@@ -104,7 +104,7 @@ class FeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'volunteer can create only their feedbacks on assignment' do
-    other_assignment = create :assignment, volunteer: create(:volunteer_with_user)
+    other_assignment = create :assignment, volunteer: create(:volunteer)
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_assignment, Feedback])
     assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
@@ -113,8 +113,8 @@ class FeedbacksTest < ApplicationSystemTestCase
   test 'volunteer can create only their feedbacks on group_offer' do
     other_group_offer = create :group_offer, necessary_volunteers: 2, title: 'other_group_offer',
       volunteers: [
-        create(:volunteer_with_user),
-        create(:volunteer_with_user)
+        create(:volunteer),
+        create(:volunteer)
       ]
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_group_offer, Feedback])

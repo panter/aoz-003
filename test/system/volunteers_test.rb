@@ -258,20 +258,25 @@ class VolunteersTest < ApplicationSystemTestCase
     assert_equal 1, ActionMailer::Base.deliveries.size
   end
 
-  test 'department manager has no link to group offer of not their own' do
+  test 'department manager has a link to group offer of not their own' do
     department_manager = create :department_manager
     volunteer = create :volunteer, registrar: department_manager
     group_offer = create :group_offer, volunteers: [volunteer]
     login_as department_manager
+
     visit volunteer_path(volunteer)
     assert page.has_text? group_offer.title
-    refute page.has_link? group_offer.title
+    assert page.has_link? group_offer.title
+
+    click_on group_offer.title
+    assert page.has_text? group_offer.title
   end
 
   test 'imported_create_account_for_imported_volunteer' do
     use_rack_driver
     really_destroy_with_deleted(Volunteer)
     volunteer = create :volunteer
+    volunteer.user.really_destroy!
     import = Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1,
       importable: volunteer, store: { haupt_person: { email: 'imported@example.com' } })
     visit volunteers_path
@@ -287,6 +292,7 @@ class VolunteersTest < ApplicationSystemTestCase
   test 'imported_create_account_with_invalid_imported_email' do
     use_rack_driver
     volunteer = create :volunteer
+    volunteer.user.really_destroy!
     Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1,
       importable: volunteer, store: { haupt_person: { email: 'invalid' } })
     visit volunteer_path(volunteer)
@@ -300,6 +306,7 @@ class VolunteersTest < ApplicationSystemTestCase
   test 'imported_create_account_no_email_imported_enter_inavalid_email' do
     use_rack_driver
     volunteer = create :volunteer
+    volunteer.user.really_destroy!
     Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1, importable: volunteer,
       store: { haupt_person: { email: nil } })
     visit volunteer_path(volunteer)
@@ -340,7 +347,7 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'external volunteer can not get machted with a client' do
-    @external = create :volunteer_external, acceptance: :accepted
+    @external = create :volunteer, external: true
     visit volunteers_path
 
     # "Klient/en" suchen button is not shown on volunteer index

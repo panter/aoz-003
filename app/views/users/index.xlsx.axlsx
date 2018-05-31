@@ -51,7 +51,7 @@ wb.add_worksheet(name: 'Plattform Benutzer') do |sheet|
   sheet.add_row header_row, type: :string, style: col_header
 
   @users.each do |user|
-    contact = user.profile.contact
+    contact = user.profile&.contact || user.volunteer&.contact || Contact.new
     body_row = [
         user.id,                               # 00
         contact.full_name,             # 01

@@ -3,10 +3,10 @@
   .row
     .col-xs-12
       = f.input :email
-      - if action_edit? && user == current_user
+      - if action_edit? && policy(current_user).edit?
         = f.input :password
 
-      - if policy(User).create?
+      - if policy(User).create? && !user.volunteer?
         = f.input :role, collection: User.role_collection
 
   - unless action_edit?

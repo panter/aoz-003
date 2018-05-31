@@ -1,0 +1,9 @@
+- tr ||= nil
+tr class=(tr)
+  td= t("performance_reports.values_#{group}.#{value_key}")
+  - columns.each do |category_key|
+    td
+      - if @report_content[group.to_s][category_key][value_key.to_s].is_a? Float
+        = '%g' % ('%.1f' % @report_content[group.to_s][category_key][value_key.to_s])
+      - else
+        = @report_content[group.to_s][category_key][value_key.to_s]

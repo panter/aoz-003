@@ -3,11 +3,11 @@ require 'application_system_test_case'
 class TrialFeedbacksTest < ApplicationSystemTestCase
   def setup
     use_rack_driver
-    @volunteer = create :volunteer_with_user
+    @volunteer = create :volunteer
     @user_volunteer = @volunteer.user
     @assignment = create :assignment, volunteer: @volunteer
     @superadmin = create :user
-    @other_volunteer = create :volunteer_with_user
+    @other_volunteer = create :volunteer
     @group_offer = create :group_offer, title: 'some_group_offer',
       volunteers: [@volunteer, @other_volunteer]
   end
@@ -107,7 +107,7 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
 
   test 'volunteer_can_create_only_their_trial_feedbacks_on_assignment' do
     other_assignment = create :assignment,
-      volunteer: create(:volunteer_with_user)
+      volunteer: create(:volunteer)
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_assignment, TrialFeedback])
     assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
@@ -116,8 +116,8 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
   test 'volunteer_can_create_only_their_trial_feedbacks_on_group_offer' do
     other_group_offer = create :group_offer, title: 'other_group_offer',
       volunteers: [
-        create(:volunteer_with_user),
-        create(:volunteer_with_user)
+        create(:volunteer),
+        create(:volunteer)
       ]
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_group_offer, TrialFeedback])

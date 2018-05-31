@@ -11,6 +11,13 @@ module GroupAssignmentAndAssignmentCommon
     has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
     has_many :reminder_mailings, through: :reminder_mailing_volunteers
 
+    # we have PDFs on Assignment and GroupAssignment, but not on *Log
+    if [Assignment, GroupAssignment].include? self
+      has_attached_file :pdf
+      validates_attachment_content_type :pdf, content_type: Mime[:pdf]
+      attribute :generate_pdf, :boolean
+    end
+
     attribute :remaining_hours
     after_save :add_remaining_hours
 

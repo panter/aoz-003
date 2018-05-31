@@ -4,8 +4,10 @@ class ClientNotificationsTest < ApplicationSystemTestCase
   def setup
     @user = create :user
     @social_worker = create :social_worker
-    @other_client_notification = create :client_notification, user: @user
-    @client_notification = create :client_notification, active: true, user: @user
+    @other_client_notification = create :client_notification, user: @user,
+      created_at: 2.hours.ago
+    @client_notification = create :client_notification, active: true, user: @user,
+      created_at: 1.hour.ago
   end
 
   test 'the right client notification should be marked active' do

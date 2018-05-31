@@ -4,7 +4,8 @@ module ApplicationHelper
   end
 
   def simple_error_notice(f)
-    boostrap_row { f.error_notification } if f.error_notification.present?
+    error_message = "Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder."
+    boostrap_row { f.error_notification message: error_message } if f.error_notification.present?
   end
 
   def link_to_add_polymorphic_association(*args)
@@ -134,5 +135,9 @@ module ApplicationHelper
       collection: collection,
       disabled: disabled
     )
+  end
+
+  def abbr(abbr, full_term)
+    tag.abbr(abbr.to_s, title: full_term)
   end
 end

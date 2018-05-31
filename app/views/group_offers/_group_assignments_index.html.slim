@@ -14,7 +14,7 @@
           td.index-action-cell.hidden-print
             = button_link navigation_glyph(:edit), edit_group_assignment_path(group_assignment, redirect_to: request.fullpath),
               title: 'Bearbeiten' if policy(group_assignment).edit?
-            - if policy(group_assignment).show?
+            - if policy(group_assignment).show? && group_assignment.pdf.exists?
               = button_link navigation_glyph(:download), group_assignment_path(group_assignment, format: :pdf),
                 title: 'Herunterladen'
           td

@@ -8,7 +8,7 @@ services:
 
 cache:
   paths:
-    - vendor/ruby
+    - vendor
 
 variables:
   RAILS_ENV: test
@@ -29,6 +29,10 @@ test:
   stage: test
   script:
     - bundle exec rails test
+
+system_test:
+  stage: test
+  script:
     - bundle exec rails test:system
   artifacts:
     paths:

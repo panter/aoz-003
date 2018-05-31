@@ -19,7 +19,7 @@
         - @group_offer.group_assignment_logs.order('created_at asc').each do |ga_log|
           tr
             td.index-action-cell.hidden-print
-              - if policy(ga_log.group_assignment).show?
+              - if policy(ga_log.group_assignment).show? && ga_log.group_assignment.pdf.exists?
                 = button_link navigation_glyph(:download), group_assignment_path(ga_log.group_assignment, format: :pdf),
                   title: 'Herunterladen'
             td= link_to_if(policy(Volunteer).edit?, ga_log.volunteer.contact.full_name,

@@ -3,14 +3,18 @@ require 'test_helper'
 class VolunteerScopesTest < ActiveSupport::TestCase
   def setup
     @today = Time.zone.today
-    [:has_assignment, :has_multiple, :has_inactive, :group_offer_member,
-     :has_active_and_inactive, :no_assignment].map { |v| make_volunteer v, acceptance: :accepted }
-    make_volunteer(:active_will_take_more, take_more_assignments: true, acceptance: :accepted)
-    make_volunteer(:inactive_will_take_more, take_more_assignments: true, acceptance: :accepted)
+    make_volunteer(:has_assignment)
+    make_volunteer(:has_multiple)
+    make_volunteer(:has_inactive)
+    make_volunteer(:group_offer_member)
+    make_volunteer(:has_active_and_inactive)
+    make_volunteer(:no_assignment)
+    make_volunteer(:active_will_take_more, take_more_assignments: true)
+    make_volunteer(:inactive_will_take_more, take_more_assignments: true)
     make_volunteer(:resigned_inactive, acceptance: :resigned)
     make_volunteer(:resigned_active, acceptance: :resigned)
     group_offer = create :group_offer
-    group_offer.volunteers << @group_offer_member
+    create :group_assignment, group_offer: group_offer, volunteer: @group_offer_member
     create_all_assignments
   end
 
@@ -246,16 +250,16 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   test 'external' do
-    external = create :volunteer_external
-    internal = create :volunteer_internal
+    external = create :volunteer, external: true
+    internal = create :volunteer, external: false
     query = Volunteer.external
     assert query.include? external
     refute query.include? internal
   end
 
   test 'internal' do
-    external = create :volunteer_external
-    internal = create :volunteer_internal
+    external = create :volunteer, external: true
+    internal = create :volunteer, external: false
     query = Volunteer.internal
     refute query.include? external
     assert query.include? internal

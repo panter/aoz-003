@@ -18,6 +18,8 @@ Style/Alias:
 
 Style/Documentation:
   Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
 Style/LineEndConcatenation:
   Enabled: false
 Style/FrozenStringLiteralComment:

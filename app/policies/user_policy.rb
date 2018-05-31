@@ -1,4 +1,18 @@
 class UserPolicy < ApplicationPolicy
+  include ContactAttributes
+
+  def permitted_attributes
+    attributes = [
+      :email,
+      :password,
+      profile_attributes: [
+        contact_attributes: contact_attributes[:contact_attributes]
+      ]
+    ]
+    attributes << :role if superadmin?
+    attributes
+  end
+
   def superadmin_and_not_own_subject?
     superadmin? && user != record
   end

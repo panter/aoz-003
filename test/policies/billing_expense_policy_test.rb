@@ -6,17 +6,17 @@ class BillingExpensePolicyTest < PolicyAssertions::Test
     @social_worker = create :user, role: 'social_worker'
     @department_manager = create :user, role: 'department_manager'
 
-    @volunteer1 = create :volunteer_with_user
-    @assignment1 = create(:assignment, volunteer: @volunteer1,
-      hours: [create(:hour, volunteer: @volunteer1)])
+    @volunteer1 = create :volunteer
+    @assignment1 = create(:assignment, volunteer: @volunteer1)
+    create(:hour, volunteer: @volunteer1, hourable: @assignment1)
     @billing_expense1 = create(:billing_expense,
       user: @superadmin,
       volunteer: @volunteer1,
       hours: @volunteer1.hours.billable)
 
-    @volunteer2 = create :volunteer_with_user
-    @assignment2 = create(:assignment, volunteer: @volunteer2,
-      hours: [create(:hour, volunteer: @volunteer2)])
+    @volunteer2 = create :volunteer
+    @assignment2 = create(:assignment, volunteer: @volunteer2)
+    create(:hour, volunteer: @volunteer2, hourable: @assignment2)
     @billing_expense2 = create(:billing_expense,
       user: @superadmin,
       volunteer: @volunteer2,

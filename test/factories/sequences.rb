@@ -9,4 +9,8 @@ FactoryBot.define do
       rand(9)
     ]
   end
+
+  sequence :email do |n|
+    'email_%s@example.com' % [SecureRandom.uuid]
+  end
 end

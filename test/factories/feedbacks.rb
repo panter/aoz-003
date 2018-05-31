@@ -15,7 +15,7 @@ FactoryBot.define do
       elsif feedback.volunteer.blank? && feedback.feedbackable.present?
         feedback.volunteer = feedback.feedbackable.volunteer
       elsif feedback.volunteer.blank? && feedback.feedbackable.blank?
-        feedback.volunteer = create(:volunteer_with_user)
+        feedback.volunteer = create(:volunteer)
         feedback.feedbackable = create(:assignment, volunteer: feedback.volunteer)
       end
       feedback.author ||= feedback.volunteer&.user || create(:user)

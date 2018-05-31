@@ -4,7 +4,7 @@ FactoryBot.define do
     password 'asdfasdf'
     role User::SUPERADMIN
 
-    association :profile, strategy: :build
+    association :profile, strategy: :build, user: nil
 
     after :build do |user|
       user.profile&.user = user
@@ -16,7 +16,6 @@ FactoryBot.define do
 
     trait :volunteer do
       role User::VOLUNTEER
-      volunteer { create :volunteer }
     end
 
     trait :department_manager do

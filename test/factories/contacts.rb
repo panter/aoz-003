@@ -6,7 +6,7 @@ FactoryBot.define do
     street { FFaker::Address.street_address }
     city { FFaker::Address.city }
     postal_code { rand(1100..7500).to_s }
-    primary_email { FFaker::Internet.unique.email }
+    primary_email { generate :email }
     primary_phone { FFaker::PhoneNumberCH.home_work_phone_number }
     secondary_phone { FFaker::PhoneNumberCH.mobile_phone_number }
 
