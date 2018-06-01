@@ -708,10 +708,13 @@ de:
         accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
         having_trouble: |
 
-          Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
-          %{email}
-          oder<br>
-          Telefon 044 415 67 35
+          Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns bitte.<br>
+          %{email}<br>
+          <br>
+
+          044 415 66 72 Leitung Fachstelle<br>
+          044 415 67 38 Leitung TransFair<br>
+          (Montag bis Donnerstag)
         greetings: |
           Freundliche Grüsse<br>
           AOZ Fachstelle Freiwilligenarbeit
