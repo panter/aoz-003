@@ -703,16 +703,11 @@ de:
         email_has_changed: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wurde. Die eingetragene Mailadresse ist: %{email}'
         subject: Email wurde geändert
       hello: Liebe/r Freiwillige/r
-      invitation_instructions:
+      invitation_instructions: &id-invitation_instructions
         accept: Einladung annehmen
         accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
-        someone_invited_you: |
-          Herzlich willkommen! Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben.<br>
-          Bei Ihrer Erstregistrierung auf www.aoz-freiwillige.ch haben Sie folgende E-Mail Adresse angegeben: %{email}<br>
-          Bevor wir Ihr Profil auf unserer Onlineplattform freischalten können,
-          müssen Sie Ihre E-Mail Adresse bestätigen und ein persönliches Passwort erstellen.
-          Bitte klicken Sie dafür auf folgenden Link:
         having_trouble: |
+
           Sollten Sie Schwierigkeiten bei der Registrierung haben, kontaktieren Sie uns.<br>
           %{email}
           oder<br>
@@ -721,6 +716,41 @@ de:
           Freundliche Grüsse<br>
           AOZ Fachstelle Freiwilligenarbeit
         subject: Einladung für AOZ Fachstelle Freiwilligenarbeit
+      volunteer:
+        hello: Liebe/r Freiwillige/r
+        invitation_instructions:
+          <<: *id-invitation_instructions
+          someone_invited_you: |
+            Herzlich willkommen! Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ entschieden haben.
+            Bei Ihrer Erstregistrierung auf www.aoz-freiwillige.ch haben Sie folgende E-Mail Adresse angegeben: %{email}
+
+            Bevor wir Ihr Profil auf unserer Onlineplattform freischalten können,
+            müssen Sie Ihre E-Mail Adresse bestätigen und ein persönliches Passwort erstellen.
+
+            Bitte klicken Sie dafür auf folgenden Link:
+          subject: Einladung für AOZ Fachstelle Freiwilligenarbeit
+      department_manager:
+        invitation_instructions: &id-invitation-instructions-others
+          <<: *id-invitation_instructions
+          someone_invited_you: |
+            Herzlich willkommen bei der AOZ Fachstelle Freiwilligenarbeit.
+            Gerne übermitteln wir Ihnen Ihre Zugangsdaten zu unserer Onlineplattform.
+
+            Wir haben folgende E-Mail Adresse von Ihnen: %{email}
+
+            Bevor wir Ihr Profil auf unserer Onlineplattform freischalten können, müssen Sie Ihre E-Mail Adresse bestätigen und ein persönliches Passwort erstellen.
+
+            Bitte klicken Sie dafür auf folgenden Link:
+          subject: Einladung für Account auf aoz-freiwillige.ch
+        hello: Liebe/r Freiwilligenverantwortliche/r
+      social_worker:
+        invitation_instructions:
+          <<: *id-invitation-instructions-others
+        hello: Liebe/r Sozialarbeiter/in
+      superadmin:
+        invitation_instructions:
+          <<: *id-invitation-instructions-others
+        hello: Liebe/r Superadmin
       password_change:
         password_has_changed: Wir möchten Ihnen mitteilen, dass Ihr Passwort geändert wurde.
         subject: Passwort wurde geändert
