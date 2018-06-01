@@ -163,4 +163,13 @@ class VolunteerTest < ActiveSupport::TestCase
     assert_equal volunteer.contact.primary_email, volunteer.user.email
     assert volunteer.user.invited_to_sign_up?
   end
+
+  test 'volunter belongs to a department and department has many volunteers' do
+    department = create :department
+    3.times { volunteer = create :volunteer, department: department }
+
+    department.reload.volunteers.each do |volunteer|
+      assert_equal volunteer.department, department
+    end
+  end
 end

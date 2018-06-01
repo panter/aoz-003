@@ -27,6 +27,7 @@ class Volunteer < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
   belongs_to :registrar, -> { with_deleted }, class_name: 'User', foreign_key: 'registrar_id', optional: true,
     inverse_of: :volunteers
+  belongs_to :department, optional: true
 
   has_one :registrar_department, through: :registrar
 
