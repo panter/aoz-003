@@ -1,10 +1,22 @@
 class VolunteerPolicy < ApplicationPolicy
+  include AvailabilityAttributes
+  include NestedAttributes
+  include ContactAttributes
+  include VolunteerAttributes
+
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
       return scope.where(registrar_id: user) if department_manager?
       none
     end
+  end
+
+  def permitted_attributes
+    attributes = [volunteer_attributes, :bank, :iban, :waive, :acceptance, :take_more_assignments,
+      :external, :comments, :additional_comments, :working_percent]
+    attributes << :department_id if superadmin_privileges?
+    attributes
   end
 
   def volunteer_managing_or_volunteers_profile?

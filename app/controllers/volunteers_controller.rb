@@ -1,8 +1,4 @@
 class VolunteersController < ApplicationController
-  include AvailabilityAttributes
-  include NestedAttributes
-  include ContactAttributes
-  include VolunteerAttributes
 
   before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account]
 
@@ -140,7 +136,6 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    params.require(:volunteer).permit(volunteer_attributes, :bank, :iban, :waive, :acceptance,
-      :take_more_assignments, :external, :comments, :additional_comments, :working_percent)
+    params.require(:volunteer).permit policy(Volunteer).permitted_attributes
   end
 end

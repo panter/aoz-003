@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180517123258) do
+ActiveRecord::Schema.define(version: 20180601121236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -718,12 +718,14 @@ ActiveRecord::Schema.define(version: 20180517123258) do
     t.text "comments"
     t.text "additional_comments"
     t.boolean "teenager"
+    t.bigint "department_id"
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
     t.index ["active"], name: "index_volunteers_on_active"
     t.index ["activeness_might_end"], name: "index_volunteers_on_activeness_might_end"
     t.index ["birth_year"], name: "index_volunteers_on_birth_year"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
+    t.index ["department_id"], name: "index_volunteers_on_department_id"
     t.index ["external"], name: "index_volunteers_on_external"
     t.index ["invited_at"], name: "index_volunteers_on_invited_at"
     t.index ["nationality"], name: "index_volunteers_on_nationality"
@@ -754,5 +756,6 @@ ActiveRecord::Schema.define(version: 20180517123258) do
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "trial_feedbacks", "users", column: "author_id"
+  add_foreign_key "volunteers", "departments"
   add_foreign_key "volunteers", "users"
 end
