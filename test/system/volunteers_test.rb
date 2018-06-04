@@ -372,4 +372,17 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_text? 'Aufnahme Verwaltung'
     assert page.has_select?('Prozess')
   end
+
+  test 'superadmin can change department of volunteer' do
+    volunteer = Volunteer.last
+    department = create :department
+
+    visit edit_volunteer_path volunteer
+
+    select department.contact.last_name, from: 'Standort'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
+    assert_equal volunteer.reload.department, department
+  end
 end
