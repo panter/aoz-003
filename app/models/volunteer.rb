@@ -193,6 +193,8 @@ class Volunteer < ApplicationRecord
       .order("(CASE WHEN COALESCE(iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
   }
 
+  scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
+
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)
   end

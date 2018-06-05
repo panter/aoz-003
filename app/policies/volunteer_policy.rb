@@ -7,7 +7,9 @@ class VolunteerPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
-      return scope.where(registrar_id: user) if department_manager?
+      return scope.where(department_id: user.department.pluck(:id)).or(
+        scope.assignable_to_department
+      ) if department_manager?
       none
     end
   end
@@ -15,21 +17,21 @@ class VolunteerPolicy < ApplicationPolicy
   def permitted_attributes
     attributes = [volunteer_attributes, :bank, :iban, :waive, :acceptance, :take_more_assignments,
       :external, :comments, :additional_comments, :working_percent]
-    attributes << :department_id if superadmin_privileges?
+    attributes << :department_id if superadmin_or_departments_record_or_assignable_to_department?
     attributes
   end
 
-  def volunteer_undecided?
-    record.department.blank? && record.acceptance == 'undecided'
+  def assignable_to_department?
+    record_present? && record.department.blank? && record.acceptance == 'undecided'
   end
 
-  def superadmin_or_departments_record_or_undecied?
-    superadmin? || department_manager? && (departments_record? || volunteer_undecided?)
+  def superadmin_or_departments_record_or_assignable_to_department?
+    superadmin? || department_manager? && (departments_record? || assignable_to_department?)
   end
 
   def volunteer_managing_or_volunteers_profile?
     superadmin_or_departments_record? ||
-    superadmin_or_departments_record_or_undecied? ||
+    superadmin_or_departments_record_or_assignable_to_department? ||
     user_owns_record?
   end
 
@@ -49,5 +51,5 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :superadmin_privileges?, :superadmin?
   alias_method :show_acceptance?,   :superadmin_or_department_manager?
   alias_method :show_comments?,     :superadmin_or_department_manager?
-  alias_method :update_acceptance?, :superadmin_or_departments_record_or_undecied?
+  alias_method :update_acceptance?, :superadmin_or_departments_record_or_assignable_to_department?
 end

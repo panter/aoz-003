@@ -390,6 +390,58 @@ class VolunteersTest < ApplicationSystemTestCase
   end
 
   test 'department_manager can take over volunteer with acceptance undecided' do
+    department_manager = create :department_manager
+    other_department_manager = create :department_manager
+    department = department_manager.department.last
+    other_department = other_department_manager.department.last
 
+    volunteer = Volunteer.undecided.last
+    volunteer_selector = "tr##{dom_id(volunteer)}"
+
+    volunteer.update department: nil
+
+    Volunteer.where.not(acceptance: :undecided).each do |volunteer|
+      volunteer.update department: department
+    end
+
+    login_as other_department_manager
+    visit volunteers_path
+
+    assert page.has_selector? volunteer_selector
+
+    within volunteer_selector do
+      click_link 'Bearbeiten'
+    end
+
+    assert page.has_text? "#{volunteer}"
+    assert page.has_text? 'Standort'
+    assert page.has_text? 'Prozess'
+
+    select other_department.contact.last_name, from: 'Standort'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
+    assert page.has_button? 'Freiwillige/n aktualisieren'
+    assert_equal volunteer.reload.department, other_department
+
+    visit volunteers_path
+
+    assert page.has_selector? volunteer_selector
+
+    within volunteer_selector do
+      assert page.has_link? 'Bearbeiten'
+    end
+
+    login_as department_manager
+
+    visit edit_volunteer_path(volunteer)
+    assert page.has_text? I18n.t('not_authorized')
+
+    visit volunteers_path
+
+    refute page.has_selector? volunteer_selector
+
+    visit edit_volunteer_path volunteer
+    assert page.has_text? I18n.t('not_authorized')
   end
 end

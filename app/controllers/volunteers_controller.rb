@@ -136,6 +136,7 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    params.require(:volunteer).permit policy(Volunteer).permitted_attributes
+    volunteer = defined?(@volunteer) ? @volunteer : Volunteer
+    params.require(:volunteer).permit policy(volunteer).permitted_attributes
   end
 end
