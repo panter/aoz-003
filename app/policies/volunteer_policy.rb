@@ -19,8 +19,18 @@ class VolunteerPolicy < ApplicationPolicy
     attributes
   end
 
+  def volunteer_undecided?
+    record.department.blank? && record.acceptance == 'undecided'
+  end
+
+  def superadmin_or_departments_record_or_undecied?
+    superadmin? || department_manager? && (departments_record? || volunteer_undecided?)
+  end
+
   def volunteer_managing_or_volunteers_profile?
-    superadmin_or_department_managers_registration? || user_owns_record?
+    superadmin_or_departments_record? ||
+    superadmin_or_departments_record_or_undecied? ||
+    user_owns_record?
   end
 
   # controller action policies
@@ -29,7 +39,7 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :new?,             :superadmin_or_department_manager?
   alias_method :create?,          :superadmin_or_department_manager?
   alias_method :seeking_clients?, :superadmin_or_department_manager?
-  alias_method :terminate?,       :superadmin_or_department_managers_registration?
+  alias_method :terminate?,       :superadmin_or_departments_record?
   alias_method :show?,            :volunteer_managing_or_volunteers_profile?
   alias_method :edit?,            :volunteer_managing_or_volunteers_profile?
   alias_method :update?,          :volunteer_managing_or_volunteers_profile?
@@ -37,7 +47,7 @@ class VolunteerPolicy < ApplicationPolicy
 
   # supplementary policies
   alias_method :superadmin_privileges?, :superadmin?
-  alias_method :show_acceptance?, :superadmin_or_department_manager?
-  alias_method :show_comments?,   :superadmin_or_department_manager?
-  alias_method :update_acceptance?, :superadmin_or_department_managers_registration?
+  alias_method :show_acceptance?,   :superadmin_or_department_manager?
+  alias_method :show_comments?,     :superadmin_or_department_manager?
+  alias_method :update_acceptance?, :superadmin_or_departments_record_or_undecied?
 end

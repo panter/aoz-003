@@ -203,17 +203,6 @@ class VolunteersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'department_manager_can_see_volunteer_index_and_only_her_own_volunteers' do
-    department_manager = create :department_manager
-    login_as department_manager
-    volunteer_department_manager = create :volunteer, registrar: department_manager
-    other_volunteer = create :volunteer
-
-    visit volunteers_path
-    assert page.has_text? volunteer_department_manager.contact.full_name
-    refute page.has_text? other_volunteer.contact.full_name
-  end
-
   test 'social_worker_cannot_see_volunteer_index' do
     login_as create(:social_worker)
 
@@ -256,20 +245,6 @@ class VolunteersTest < ApplicationSystemTestCase
 
     assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size
-  end
-
-  test 'department manager has a link to group offer of not their own' do
-    department_manager = create :department_manager
-    volunteer = create :volunteer, registrar: department_manager
-    group_offer = create :group_offer, volunteers: [volunteer]
-    login_as department_manager
-
-    visit volunteer_path(volunteer)
-    assert page.has_text? group_offer.title
-    assert page.has_link? group_offer.title
-
-    click_on group_offer.title
-    assert page.has_text? group_offer.title
   end
 
   test 'imported_create_account_for_imported_volunteer' do
@@ -384,5 +359,37 @@ class VolunteersTest < ApplicationSystemTestCase
 
     assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
     assert_equal volunteer.reload.department, department
+  end
+
+  test 'department_manager can edit volunteer of assigned to her department' do
+    volunteer = Volunteer.last
+    department = create :department
+    department_manager = create :department_manager, department: [department]
+
+    volunteer.update department: department
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    select department.contact.last_name, from: 'Standort'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
+    assert_equal volunteer.reload.department, department
+  end
+
+  test 'department_manager can not edit volunteer assigned to another department' do
+    volunteer = Volunteer.last
+    department = create :department
+    department_manager = create :department_manager, department: [department]
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    assert page.has_text? I18n.t('not_authorized')
+  end
+
+  test 'department_manager can take over volunteer with acceptance undecided' do
+
   end
 end
