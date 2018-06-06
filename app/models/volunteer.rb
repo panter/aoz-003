@@ -368,6 +368,10 @@ class Volunteer < ApplicationRecord
     write_attribute :working_percent, value
   end
 
+  def assignable_to_department?
+    department.blank? && acceptance == 'undecided'
+  end
+
   private
 
   def kinds_done_ids

@@ -20,7 +20,7 @@ class VolunteerPolicy < ApplicationPolicy
   end
 
   def assignable_to_department?
-    record_present? && record.department.blank? && record.acceptance == 'undecided'
+    record_present? && record.assignable_to_department?
   end
 
   def superadmin_or_departments_record_or_assignable_to_department?
