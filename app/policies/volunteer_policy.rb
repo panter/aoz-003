@@ -29,8 +29,8 @@ class VolunteerPolicy < ApplicationPolicy
 
   def volunteer_managing_or_volunteers_profile?
     superadmin_or_departments_record? ||
-    superadmin_or_departments_record_or_assignable_to_department? ||
-    user_owns_record?
+      superadmin_or_departments_record_or_assignable_to_department? ||
+      user_owns_record?
   end
 
   # controller action policies
