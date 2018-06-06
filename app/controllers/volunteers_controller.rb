@@ -46,7 +46,13 @@ class VolunteersController < ApplicationController
   def create
     @volunteer = Volunteer.new(volunteer_params)
     @volunteer.registrar = current_user
+
+    if current_user.department_manager? && volunteer_params[:department_id].blank?
+      @volunteer.department = current_user.department&.last
+    end
+
     authorize @volunteer
+
     if @volunteer.save
       if @volunteer.accepted? && @volunteer.internal? && @volunteer.user
         redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created_invite_sent',
@@ -136,7 +142,6 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    volunteer = defined?(@volunteer) ? @volunteer : Volunteer
-    params.require(:volunteer).permit policy(volunteer).permitted_attributes
+    params.require(:volunteer).permit policy(Volunteer).permitted_attributes
   end
 end

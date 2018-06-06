@@ -17,7 +17,7 @@ class VolunteerPolicy < ApplicationPolicy
   def permitted_attributes
     attributes = [volunteer_attributes, :bank, :iban, :waive, :acceptance, :take_more_assignments,
       :external, :comments, :additional_comments, :working_percent]
-    attributes << :department_id if superadmin_or_departments_record_or_assignable_to_department?
+    attributes << :department_id if superadmin_or_department_manager?
     attributes
   end
 

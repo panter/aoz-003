@@ -444,4 +444,56 @@ class VolunteersTest < ApplicationSystemTestCase
     visit edit_volunteer_path volunteer
     assert page.has_text? I18n.t('not_authorized')
   end
+
+  test 'department is automatically set for department_manager when creating volunteer' do
+    department_manager = create :department_manager
+    department = department_manager.department.last
+    Volunteer.destroy_all
+
+    login_as department_manager
+    visit new_volunteer_path
+
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'aoz'
+    within '.volunteer_birth_year' do
+      select('1988', from: 'Jahrgang')
+    end
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    click_button 'Freiwillige/n erfassen', match: :first
+
+    assert page.has_text? I18n.t('volunteer_created')
+    assert_equal Volunteer.last.department, department
+  end
+
+  test 'automatocally assigned department can be overwritten by department_manager' do
+    department_manager = create :department_manager
+    department = department_manager.department.last
+    other_department = create :department
+    Volunteer.destroy_all
+
+    login_as department_manager
+    visit new_volunteer_path
+
+    select(other_department.contact.last_name, from: 'Standort')
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'aoz'
+    within '.volunteer_birth_year' do
+      select('1988', from: 'Jahrgang')
+    end
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    click_button 'Freiwillige/n erfassen', match: :first
+
+    assert page.has_text? I18n.t('not_authorized')
+    assert_equal Volunteer.last.department, other_department
+  end
 end
