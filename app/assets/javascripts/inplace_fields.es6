@@ -3,22 +3,15 @@ function inplaceFields() {
     let $fieldLabel = $(field).find('.field_label');
     let $fieldInput = $(field).find('.field_input');
 
-    finishEditing(field);
-
     $fieldLabel.on('click', ({target}) => {
-      startEditing(field);
-    });
+      $(field).addClass('editing');
 
-    $fieldInput.on('focusout', ({target}) => {
-      finishEditing(field);
+      let $editingField = $fieldInput.find('input')
+      $editingField.focus();
+      $editingField.on('blur', ({target}) => {
+        $(field).removeClass('editing');
+      });
     });
   });
 }
 
-const startEditing = (field) => {
-  $(field).addClass('editing');
-}
-
-const finishEditing = (field) => {
-  $(field).removeClass('editing');
-}
