@@ -1,9 +1,10 @@
 .inplace_field {
   position: relative;
 
-  .field_input {
+  .field_label {
     position: relative;
     z-index: 2;
+    cursor: pointer;
   }
 
   .field_input {

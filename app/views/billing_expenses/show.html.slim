@@ -27,7 +27,7 @@
       .col-xs-4
         = t('billing_expense_pdf.chosen_amount')
       .col-xs-8.col_input
-        = format_currency @billing_expense.amount
+        = render 'overwritten_amount_field'
 
 .row
   .col-xs-12

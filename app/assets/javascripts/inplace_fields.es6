@@ -9,7 +9,7 @@ function inplaceFields() {
       startEditing(field);
     });
 
-    $fieldInput.on('ajax:success', ({target}) => {
+    $fieldInput.on('focusout', ({target}) => {
       finishEditing(field);
     });
   });
