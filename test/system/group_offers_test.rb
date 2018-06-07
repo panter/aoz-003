@@ -107,11 +107,12 @@ class GroupOffersTest < ApplicationSystemTestCase
     refute page.has_link? volunteer1
   end
 
-  test 'department_manager_can_only_add_volunteers_they_registered' do
+  test 'department_manager can add any volunteer in her department' do
     department_manager = create :department_manager
-    volunteer_one = create :volunteer, registrar: department_manager
-    volunteer_two = create :volunteer
-    group_offer = create :group_offer, department: department_manager.department.first
+    department = department_manager.department.last
+    volunteer_one = create :volunteer, department: department
+    volunteer_two = create :volunteer, department: department
+    group_offer = create :group_offer, department: department
 
     login_as department_manager
     visit group_offer_path(group_offer)
@@ -119,7 +120,7 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     within '#add-volunteers' do
       assert_text volunteer_one
-      refute_text volunteer_two
+      assert_text volunteer_two
     end
   end
 
@@ -343,7 +344,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     within('.assignments-table') { assert_link 'Herunterladen', count: 1 }
   end
 
-  test "switch departments of a group_offer" do
+  test 'switch departments of a group_offer' do
     def switch(group_offer, to:)
       department = to
       visit edit_group_offer_path group_offer
@@ -378,7 +379,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert page.has_text? I18n.t('not_authorized')
   end
 
-  test "department_id is editable on new" do
+  test 'department_id is editable on new' do
     department_manager = create :department_manager
     department = department_manager.department.last
 

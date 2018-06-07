@@ -27,8 +27,9 @@ class Volunteer < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
   belongs_to :registrar, -> { with_deleted }, class_name: 'User', foreign_key: 'registrar_id', optional: true,
     inverse_of: :volunteers
+  belongs_to :department, optional: true
 
-  has_one :department, through: :registrar
+  has_one :registrar_department, through: :registrar
 
   has_many :departments, through: :group_offers
 
@@ -191,6 +192,8 @@ class Volunteer < ApplicationRecord
       .group(:id, 'contacts.full_name')
       .order("(CASE WHEN COALESCE(iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
   }
+
+  scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
 
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)
@@ -363,6 +366,10 @@ class Volunteer < ApplicationRecord
       value = nil if value == 0
     end
     write_attribute :working_percent, value
+  end
+
+  def assignable_to_department?
+    department.blank? && undecided?
   end
 
   private
