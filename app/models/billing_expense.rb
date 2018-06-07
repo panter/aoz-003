@@ -92,6 +92,10 @@ class BillingExpense < ApplicationRecord
     overwritten_amount.presence || amount
   end
 
+  def edited_amount?
+    overwritten_amount? && overwritten_amount != amount
+  end
+
   private
 
   def compute_amount

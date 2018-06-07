@@ -177,9 +177,9 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     visit billing_expense_path billing_expense
 
-    find('#overwritten_amount .field_label').click
-    find('#overwritten_amount .field_input').fill_in(with: '100')
-    find('#overwritten_amount').click
+    first('.overwritten_amount .field_label').click
+    first('.overwritten_amount .field_input').fill_in(with: '100')
+    first('.overwritten_amount').click
 
     assert page.has_text? 'Fr. 100'
     assert_equal billing_expense.reload.final_amount, 100

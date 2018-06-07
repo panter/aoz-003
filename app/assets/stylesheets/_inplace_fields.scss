@@ -5,6 +5,10 @@
     position: relative;
     z-index: 2;
     cursor: pointer;
+
+    .helper_label {
+      color: #aaa;
+    }
   }
 
   .field_input {
