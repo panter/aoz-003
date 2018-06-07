@@ -369,7 +369,7 @@ class Volunteer < ApplicationRecord
   end
 
   def assignable_to_department?
-    department.blank? && acceptance == 'undecided'
+    department.blank? && undecided?
   end
 
   private
