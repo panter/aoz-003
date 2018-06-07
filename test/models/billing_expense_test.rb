@@ -115,4 +115,22 @@ class BillingExpenseTest < ActiveSupport::TestCase
 
     assert_equal [billing_expense1, billing_expense2], BillingExpense.period(date).reorder(:id)
   end
+
+  test 'amount can be overwriten' do
+    volunteer = create :volunteer
+    hour1 = create :hour, volunteer: volunteer, hours: 1
+    hour2 = create :hour, volunteer: volunteer, hours: 2
+    hour3 = create :hour, volunteer: volunteer, hours: 3
+
+    billing_expense = create :billing_expense, volunteer: volunteer, hours: [hour1, hour2, hour3]
+    assert_equal billing_expense.final_amount, billing_expense.amount
+
+    billing_expense.update overwritten_amount: 200
+    billing_expense.reload
+    assert_equal billing_expense.final_amount, 200
+
+    billing_expense.update overwritten_amount: ''
+    billing_expense.reload
+    assert_equal billing_expense.final_amount, billing_expense.amount
+  end
 end

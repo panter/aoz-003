@@ -88,6 +88,10 @@ class BillingExpense < ApplicationRecord
     periods
   end
 
+  def final_amount
+    overwritten_amount.presence || amount
+  end
+
   private
 
   def compute_amount
