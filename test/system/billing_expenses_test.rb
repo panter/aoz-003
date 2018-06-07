@@ -165,4 +165,23 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_includes pdf.pages[1].text, "Spesenauszahlung an #{@volunteer1}"
     assert_includes pdf.pages[0].text, "Spesenauszahlung an #{@volunteer4}"
   end
+
+  test 'amount is editable' do
+    volunteer = create :volunteer
+    hour1 = create :hour, volunteer: volunteer, hours: 1
+    hour2 = create :hour, volunteer: volunteer, hours: 2
+    hour3 = create :hour, volunteer: volunteer, hours: 3
+
+    billing_expense = create :billing_expense, volunteer: volunteer, hours: [hour1, hour2, hour3]
+    assert_equal billing_expense.final_amount, 50
+
+    visit billing_expense_path billing_expense
+
+    find('#overwritten_amount .field_label').click
+    find('#overwritten_amount .field_input').fill_in(with: '100')
+    find('#overwritten_amount').click
+
+    assert page.has_text? 'Fr. 100'
+    assert_equal billing_expense.reload.final_amount, 100
+  end
 end

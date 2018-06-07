@@ -1,0 +1,5 @@
+.inplace_field#overwritten_amount
+  span.field_label= format_currency @billing_expense.final_amount
+  span.field_input= number_field_tag 'billing_expense[overwritten_amount]',
+    @billing_expense.final_amount,
+    data: { remote: true, url: update_overwritten_amount_billing_expense_path(@billing_expense), method: :put }
