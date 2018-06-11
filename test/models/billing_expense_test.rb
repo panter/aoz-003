@@ -133,4 +133,33 @@ class BillingExpenseTest < ActiveSupport::TestCase
     billing_expense.reload
     assert_equal billing_expense.final_amount, billing_expense.amount
   end
+
+  test 'edited amounts are sortable' do
+    volunteer1 = create :volunteer
+    hour1 = create :hour, volunteer: volunteer1, hours: 1
+    hour2 = create :hour, volunteer: volunteer1, hours: 2
+
+    volunteer2 = create :volunteer
+    hour3 = create :hour, volunteer: volunteer2, hours: 20
+    hour4 = create :hour, volunteer: volunteer2, hours: 15
+
+    billing_expense1 = create :billing_expense, volunteer: volunteer1, hours: [hour1, hour2]
+    billing_expense2 = create :billing_expense, volunteer: volunteer2, hours: [hour3, hour4]
+
+    assert_equal 50, billing_expense1.final_amount
+    assert_equal 100, billing_expense2.final_amount
+
+    billing_expense2.update overwritten_amount: 25
+
+    sorted_by_asc =  [billing_expense2, billing_expense1]
+    sorted_by_desc = sorted_by_asc.reverse
+
+    BillingExpense.unscoped.sort_by_final_amount_asc.each_with_index do |billing_expense, i|
+      assert_equal sorted_by_asc[i], billing_expense
+    end
+
+    BillingExpense.unscoped.sort_by_final_amount_desc.each_with_index do |billing_expense, i|
+      assert_equal sorted_by_desc[i], billing_expense
+    end
+  end
 end
