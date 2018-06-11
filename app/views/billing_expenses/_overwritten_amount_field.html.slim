@@ -1,9 +1,11 @@
 .inplace_field.overwritten_amount
   span.field_label
     = format_currency @billing_expense.final_amount
-    - if @billing_expense.edited_amount? && (request.format.html? || request.format.js?)
-      span.helper_label.hidden-print= " (manuell überschrieben)"
-    = navigation_glyph :edit
+
+    - if(request.format.html? || request.format.js?)
+      - if @billing_expense.edited_amount?
+        span.helper_label.hidden-print= " (manuell überschrieben)"
+      span.hidden-print =navigation_glyph :edit
   span.field_input= text_field_tag 'billing_expense[overwritten_amount]',
     @billing_expense.final_amount,
     data: { remote: true, url: update_overwritten_amount_billing_expense_path(@billing_expense), method: :put }
