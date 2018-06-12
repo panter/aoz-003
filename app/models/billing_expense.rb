@@ -14,12 +14,7 @@ class BillingExpense < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  scope :period, lambda { |date|
-    date = Time.zone.parse(date) unless date.is_a? Time
-
-    joins(:hours)
-      .merge(Hour.date_between(:meeting_date, date, date + PERIOD))
-  }
+  scope :period, ->(date) { joins(:hours).merge(Hour.period(date)) }
 
   FINAL_AMOUNT_SQL = "CASE WHEN overwritten_amount IS NULL THEN amount ELSE overwritten_amount END".freeze
   scope :sort_by_final_amount_asc, lambda {
