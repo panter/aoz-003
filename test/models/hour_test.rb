@@ -14,6 +14,7 @@ class HourTest < ActiveSupport::TestCase
     current_period = BillingExpense::PERIOD
     a_period_ago = current_period.ago
     last_period_ago = a_period_ago - BillingExpense::PERIOD
+    format = '%Y-%m-%d'
 
     volunteer = create :volunteer
     hour1 = create :hour, volunteer: volunteer, hours: 1, meeting_date: a_period_ago - 1.month
@@ -21,8 +22,8 @@ class HourTest < ActiveSupport::TestCase
     hour3 = create :hour, volunteer: volunteer, hours: 1, meeting_date: a_period_ago + 1.month
     hour4 = create :hour, volunteer: volunteer, hours: 1, meeting_date: a_period_ago + 2.months
 
-    current_period_hours = Hour.period(a_period_ago.strftime("%Y-%m-%d"))
-    last_period_hours = Hour.period(last_period_ago.strftime("%Y-%m-%d"))
+    current_period_hours = Hour.period a_period_ago.strftime(format)
+    last_period_hours = Hour.period last_period_ago.strftime(format)
 
     assert_includes current_period_hours, hour3
     assert_includes current_period_hours, hour4
