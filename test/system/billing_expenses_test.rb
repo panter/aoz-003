@@ -3,34 +3,34 @@ require 'application_system_test_case'
 class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
-    date = '2018-01-01'.to_time
+    @date = '2018-01-01'.to_time
 
     @volunteer1 = create :volunteer, bank: 'UBS'
     @assignment1 = create :assignment, volunteer: @volunteer1
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 2.5
     billed_hour1 = create :hour, volunteer: @volunteer1, hourable: @assignment1,
-      hours: 3.5, meeting_date: date
+      hours: 3.5, meeting_date: @date
     @billing_expense1 = create :billing_expense, volunteer: @volunteer1, hours: [billed_hour1],
       created_at: 2.hours.ago
     group_assignment1 = create :group_assignment, volunteer: @volunteer1
     create :hour, hourable: group_assignment1.group_offer, volunteer: @volunteer1,
-      hours: 35, meeting_date: date
+      hours: 35, meeting_date: @date
 
     @volunteer2 = create :volunteer
     assignment2 = create :assignment, volunteer: @volunteer2
     create :hour, volunteer: @volunteer2, hourable: assignment2,
-      hours: 4.5, meeting_date: date
+      hours: 4.5, meeting_date: @date
 
     @volunteer3 = create :volunteer, iban: nil
     assignment3 = create :assignment, volunteer: @volunteer3
     create :hour, volunteer: @volunteer3, hourable: assignment3,
-      hours: 2.5, meeting_date: date
+      hours: 2.5, meeting_date: @date
 
     @volunteer4 = create :volunteer
     group_assignment4 = create :group_assignment, volunteer: @volunteer4
     billed_hour4 = create :hour, volunteer: @volunteer4,
       hourable: group_assignment4.group_offer,
-      hours: 5.5, meeting_date: date - 1.month
+      hours: 5.5, meeting_date: @date - 1.month
     @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4],
       created_at: 1.hour.ago
 
@@ -92,6 +92,46 @@ class BillingExpensesTest < ApplicationSystemTestCase
     refute_text @volunteer2
     assert_text "#{@volunteer3} Keine IBAN angegeben 2.5 Stunden Fr. 50.00"
     refute_text @volunteer4
+  end
+
+  test 'new billing_expense respects the period filter' do
+
+    volunteer1 = create :volunteer
+    create :hour, volunteer: volunteer1, hours: 1, meeting_date: @date - 2.month
+    create :hour, volunteer: volunteer1, hours: 2, meeting_date: @date - 3.month
+
+    volunteer2 = create :volunteer
+    create :hour, volunteer: volunteer2, hours: 1, meeting_date: @date + 1.month
+    create :hour, volunteer: volunteer2, hours: 2, meeting_date: @date - 2.month
+
+    volunteer3 = create :volunteer
+    create :hour, volunteer: volunteer3, hours: 1, meeting_date: @date + 1.month
+    create :hour, volunteer: volunteer3, hours: 2, meeting_date: @date + 3.month
+
+    visit billing_expenses_path
+
+    click_link 'Spesenformulare erstellen'
+    assert_text "#{volunteer2}"
+    assert_text "#{volunteer3}"
+    refute_text "#{volunteer1}"
+
+    visit billing_expenses_path
+
+    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Juli 2017 - Dezember 2017'
+    click_link 'Spesenformulare erstellen'
+    assert_text "#{volunteer1}"
+    assert_text "#{volunteer2}"
+    refute_text "#{volunteer3}"
+
+    visit billing_expenses_path
+
+    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Alle'
+    click_link 'Spesenformulare erstellen'
+    assert_text "#{volunteer1}"
+    assert_text "#{volunteer2}"
+    assert_text "#{volunteer3}"
   end
 
   test 'volunteer profile shows only billing expenses for this volunteer' do
