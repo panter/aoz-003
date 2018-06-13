@@ -72,12 +72,12 @@ class BillingExpenseTest < ActiveSupport::TestCase
     periods = BillingExpense.generate_periods
     now = Time.zone.now
 
-    if now > now.beginning_of_year + BillingExpense::PERIOD
-      value = "#{now.year}-07-01"
-      text = "Juli #{now.year} - Dezember #{now.year}"
+    if now > now.beginning_of_year - 1.month + BillingExpense::PERIOD
+      value = "#{now.year}-06-01"
+      text = "Juni #{now.year} - November #{now.year}"
     else
-      value = "#{now.year}-01-01"
-      text = "Januar #{now.year} - Juni #{now.year}"
+      value = "#{now.year}-12-01"
+      text = "Dezember #{now.year} - Mai #{now.year}"
     end
 
     assert_equal [{ q: :period, value: value, text: text }], periods
@@ -92,9 +92,10 @@ class BillingExpenseTest < ActiveSupport::TestCase
     periods = BillingExpense.generate_periods
 
     assert_equal [
-      { q: :period, value: '2015-01-01', text: 'Januar 2015 - Juni 2015' },
-      { q: :period, value: '2014-07-01', text: 'Juli 2014 - Dezember 2014' },
-      { q: :period, value: '2014-01-01', text: 'Januar 2014 - Juni 2014' }
+      { q: :period, value: '2015-06-01', text: 'Juni 2015 - November 2015' },
+      { q: :period, value: '2014-12-01', text: 'Dezember 2014 - Mai 2015' },
+      { q: :period, value: '2014-06-01', text: 'Juni 2014 - November 2014' },
+      { q: :period, value: '2013-12-01', text: 'Dezember 2013 - Mai 2014' }
     ], periods
   end
 
