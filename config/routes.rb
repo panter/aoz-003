@@ -114,6 +114,7 @@ Rails.application.routes.draw do
   end
 
   resources :billing_expenses, except: [:edit, :update] do
+    put :update_overwritten_amount, on: :member
     post :download, on: :collection
   end
 

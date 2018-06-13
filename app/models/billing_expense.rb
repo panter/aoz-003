@@ -21,6 +21,14 @@ class BillingExpense < ApplicationRecord
       .merge(Hour.date_between(:meeting_date, date, date + PERIOD))
   }
 
+  FINAL_AMOUNT_SQL = "CASE WHEN overwritten_amount IS NULL THEN amount ELSE overwritten_amount END".freeze
+  scope :sort_by_final_amount_asc, lambda {
+    order("#{FINAL_AMOUNT_SQL} asc")
+  }
+  scope :sort_by_final_amount_desc, lambda {
+    order("#{FINAL_AMOUNT_SQL} desc")
+  }
+
   AMOUNT = [50, 100, 150].freeze
 
   validates :volunteer, :user, :iban, presence: true
@@ -28,6 +36,13 @@ class BillingExpense < ApplicationRecord
 
   def self.ransackable_scopes(auth_object = nil)
     ['period']
+  end
+
+  def ransortable_attributes(auth_object = nil)
+    super(auth_object) + [
+      :sort_by_final_amount_asc,
+      :sort_by_final_amount_desc,
+    ]
   end
 
   def self.amount_for(hours)
@@ -86,6 +101,14 @@ class BillingExpense < ApplicationRecord
     end
 
     periods
+  end
+
+  def final_amount
+    overwritten_amount.presence || amount
+  end
+
+  def edited_amount?
+    overwritten_amount? && overwritten_amount != amount
   end
 
   private

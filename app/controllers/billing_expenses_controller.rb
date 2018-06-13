@@ -1,5 +1,5 @@
 class BillingExpensesController < ApplicationController
-  before_action :set_billing_expense, only: [:show, :destroy]
+  before_action :set_billing_expense, only: [:show, :update_overwritten_amount, :destroy]
   before_action :set_selection, only: [:index, :download]
 
   def index
@@ -72,6 +72,11 @@ class BillingExpensesController < ApplicationController
   rescue ActiveRecord::RecordInvalid => error
     redirect_to new_billing_expense_url(selected_volunteers: selected_volunteers),
       notice: error.message
+  end
+
+  def update_overwritten_amount
+    overwritten_amount = params[:billing_expense][:overwritten_amount]
+    @billing_expense.update_attribute(:overwritten_amount, overwritten_amount)
   end
 
   def destroy

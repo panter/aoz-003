@@ -28,7 +28,7 @@ h1
             th= sort_link @q, :volunteer_contact_last_name, t_model(Volunteer)
           th= t_attr(:bank_details, Volunteer)
           th= t_attr(:hours)
-          th= sort_link @q, :amount
+          th= sort_link @q, :final_amount
           th Periode
           - if policy(BillingExpense).superadmin_privileges?
             th= sort_link @q, :user_profile_contact_last_name, t_attr(:created_by)
@@ -50,7 +50,7 @@ h1
               td= link_to record.volunteer.contact.full_name, edit_volunteer_path(record.volunteer)
             td= record.full_bank_details
             td= link_to format_hours(record.hours.total_hours), volunteer_hours_path(record.volunteer)
-            td= format_currency record.amount
+            td= format_currency record.final_amount
             td= format_hours_period record.hours
             - if policy(BillingExpense).superadmin_privileges?
               td= link_to record.user, profile_link(record.user)
