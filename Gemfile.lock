@@ -92,7 +92,7 @@ GEM
     binding_of_callers (0.1.6)
       binding_of_caller (~> 0.7)
       pry (~> 0.10.0)
-    bootstrap-datepicker-rails (1.7.1.1)
+    bootstrap-datepicker-rails (1.8.0.1)
       railties (>= 3.0)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
