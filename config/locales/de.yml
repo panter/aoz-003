@@ -702,7 +702,7 @@ de:
         email_being_changed_to: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wird. Die neue Mailadresse ist: %{email}'
         email_has_changed: 'Wir möchten Ihnen mitteilen, dass die Email für Ihren Account geändert wurde. Die eingetragene Mailadresse ist: %{email}'
         subject: Email wurde geändert
-      hello: Liebe/r Freiwillige/r
+      hello: Liebe/r Benutzer/in
       invitation_instructions: &id-invitation_instructions
         accept: Einladung annehmen
         accept_until: 'Diese Einladung ist gültig bis zum %{due_date}.'
