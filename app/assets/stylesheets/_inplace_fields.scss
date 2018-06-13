@@ -1,0 +1,38 @@
+.inplace_field {
+  position: relative;
+
+  .field_label {
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+
+    .helper_label {
+      color: #aaa;
+    }
+
+    .glyphicon {
+      color: #999;
+      margin-left: 5px;
+      top: 2px;
+    }
+  }
+
+  .field_input {
+    left: 0;
+    position: absolute;
+    visibility: hidden;
+    z-index: 1;
+  }
+
+  &.editing {
+    .field_label {
+      visibility: hidden;
+      z-index: 1;
+    }
+
+    .field_input {
+      visibility: visible;
+      z-index: 2;
+    }
+  }
+}

@@ -1,8 +1,4 @@
 class VolunteersController < ApplicationController
-  include AvailabilityAttributes
-  include NestedAttributes
-  include ContactAttributes
-  include VolunteerAttributes
 
   before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account]
 
@@ -50,7 +46,13 @@ class VolunteersController < ApplicationController
   def create
     @volunteer = Volunteer.new(volunteer_params)
     @volunteer.registrar = current_user
+
+    if current_user.department_manager? && volunteer_params[:department_id].blank?
+      @volunteer.department = current_user.department&.last
+    end
+
     authorize @volunteer
+
     if @volunteer.save
       if @volunteer.accepted? && @volunteer.internal? && @volunteer.user
         redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created_invite_sent',
@@ -96,8 +98,7 @@ class VolunteersController < ApplicationController
 
   def account
     @volunteer.contact.primary_email = volunteer_params[:contact_attributes][:primary_email]
-    if @volunteer.save
-      invite_volunteer_user
+    if @volunteer.save && @volunteer.user&.invited_to_sign_up?
       redirect_back(fallback_location: edit_volunteer_path(@volunteer),
         notice: 'Freiwillige/r erhält eine Accountaktivierungs-Email.')
     elsif @volunteer.contact.errors.messages[:primary_email]
@@ -140,7 +141,6 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    params.require(:volunteer).permit(volunteer_attributes, :bank, :iban, :waive, :acceptance,
-      :take_more_assignments, :external, :comments, :additional_comments, :working_percent)
+    params.require(:volunteer).permit policy(Volunteer).permitted_attributes
   end
 end

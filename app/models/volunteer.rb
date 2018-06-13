@@ -8,8 +8,8 @@ class Volunteer < ApplicationRecord
   include AcceptanceAttributes
 
   before_validation :handle_user_with_external_change, if: :external_changed?
-  before_save :build_user_if_accepted
-  after_save :invite_user_if_accepted
+  before_save :build_user_if_accepted_or_import_invited
+  after_save :invite_user_if_not_invited
 
   SINGLE_ACCOMPANIMENTS = [:man, :woman, :family, :kid, :teenager, :unaccompanied].freeze
   REJECTIONS = [:us, :her, :other].freeze
@@ -27,8 +27,9 @@ class Volunteer < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
   belongs_to :registrar, -> { with_deleted }, class_name: 'User', foreign_key: 'registrar_id', optional: true,
     inverse_of: :volunteers
+  belongs_to :department, optional: true
 
-  has_one :department, through: :registrar
+  has_one :registrar_department, through: :registrar
 
   has_many :departments, through: :group_offers
 
@@ -191,6 +192,8 @@ class Volunteer < ApplicationRecord
       .group(:id, 'contacts.full_name')
       .order("(CASE WHEN COALESCE(iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
   }
+
+  scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
 
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)
@@ -365,6 +368,10 @@ class Volunteer < ApplicationRecord
     write_attribute :working_percent, value
   end
 
+  def assignable_to_department?
+    department.blank? && undecided?
+  end
+
   private
 
   def kinds_done_ids
@@ -381,18 +388,25 @@ class Volunteer < ApplicationRecord
     kinds.uniq
   end
 
-  def build_user_if_accepted
-    return if !will_save_change_to_attribute?(:acceptance, to: 'accepted') || external? || user.present?
+  def build_user_if_accepted_or_import_invited
+    return unless user_invitation_needed?
     if User.exists?(email: contact.primary_email)
       return errors.add(:user, "Es existiert bereits ein User mit der Email #{contact.primary_email}!")
     end
     self.user = User.new(email: contact.primary_email, password: Devise.friendly_token, role: 'volunteer')
   end
 
-  def invite_user_if_accepted
-    user.invite! if internal? && saved_change_to_attribute?(:acceptance, to: 'accepted')
+  def user_invitation_needed?
+    return if external? || user.present?
+    will_save_change_to_attribute?(:acceptance, to: 'accepted') ||
+      (import.present? && contact.will_save_change_to_attribute?(:primary_email))
   end
 
+  def invite_user_if_not_invited
+    if internal? && user.present? && !user.invited_to_sign_up?
+      user.invite!
+    end
+  end
 
   def user_deleted?
     user&.deleted?

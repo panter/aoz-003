@@ -31,9 +31,9 @@ class DepartmentManagerTest < ApplicationSystemTestCase
   end
 
   test 'can see a group offer volunteer and return to the group offer' do
-    volunteer = create :volunteer, registrar: @department_manager
-    group_offer = create :group_offer, volunteers: [volunteer],
-      department: @department_manager.department.first
+    department = @department_manager.department.first
+    volunteer = create :volunteer, department: department
+    group_offer = create :group_offer, volunteers: [volunteer], department: department
     visit volunteer_path(volunteer)
     assert page.has_link? group_offer.title
     visit group_offer_path(group_offer)
@@ -82,7 +82,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     assert page.has_text? I18n.t('not_authorized')
   end
 
-  test "without deparment has read-only access to group_assignments" do
+  test 'without deparment has read-only access to group_assignments' do
     department_manager_without_department = create :department_manager_without_department
     group_offer = create :group_offer
     group_assignment = create :group_assignment, group_offer: group_offer
@@ -137,7 +137,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
 
   test 'can edit group_assignments in her department' do
     group_offer = create :group_offer, department: @department_manager.department.last
-    group_assignment = create :group_assignment, group_offer: group_offer
+    create :group_assignment, group_offer: group_offer
 
     login_as @department_manager
     visit edit_group_offer_path group_offer
@@ -209,10 +209,10 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     assert page.has_text? I18n.t('not_authorized')
   end
 
-  test 'department_manager_has_no_destroy_and_feedback_links_on_volunteer_show' do
-    volunteer = create :volunteer, registrar: @department_manager
-    group_offer = create :group_offer, volunteers: [volunteer],
-      department: @department_manager.department.first
+  test 'department_manager has no destroy and feedback links on volunteer show' do
+    department = @department_manager.department.first
+    volunteer = create :volunteer, department: department
+    group_offer = create :group_offer, volunteers: [volunteer], department: department
     assignment = create :assignment, volunteer: volunteer
     visit volunteer_path(volunteer)
     assert page.has_link? group_offer.title

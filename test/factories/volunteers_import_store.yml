@@ -1,0 +1,85 @@
+---
+haupt_person:
+  city: Zürich
+  email: tester@bluewin.ch
+  fk_PLZ: 8000
+  t_Land: Schweiz
+  fk_Land: 1
+  h_Email: "#mailto:tester@bluewin.ch#"
+  t_Beruf:
+  sprachen:
+  - level: native_speaker
+    language: DE
+    fk_sprache: 1
+    fk_hauptperson: 2423
+    fk_kenntnisstufe_le: 6
+    fk_kenntnisstufe_sc: 6
+    fk_kenntnisstufe_sp: 6
+    fk_kenntnisstufe_ve: 7
+    pk_sprache_pro_person: 5298
+  - level: basic
+    language: IT
+    fk_sprache: 4
+    fk_hauptperson: 2423
+    fk_kenntnisstufe_le: 6
+    fk_kenntnisstufe_sc: 6
+    fk_kenntnisstufe_sp: 6
+    fk_kenntnisstufe_ve: 6
+    pk_sprache_pro_person: 5299
+  - level: basic
+    language: FR
+    fk_sprache: 3
+    fk_hauptperson: 2423
+    fk_kenntnisstufe_le: 6
+    fk_kenntnisstufe_sc: 6
+    fk_kenntnisstufe_sp: 6
+    fk_kenntnisstufe_ve: 6
+    pk_sprache_pro_person: 5300
+  - level: basic
+    language: EN
+    fk_sprache: 2
+    fk_hauptperson: 2423
+    fk_kenntnisstufe_le: 6
+    fk_kenntnisstufe_sc: 6
+    fk_kenntnisstufe_sp: 6
+    fk_kenntnisstufe_ve: 6
+    pk_sprache_pro_person: 5301
+  t_Anrede: Frau
+  t_BemTel1:
+  t_BemTel2:
+  t_NNummer:
+  t_Vorname: Testerin
+  d_MutDatum: '2017-10-12T15:17:35.000+02:00'
+  salutation: mrs
+  t_Mutation: aozseeg
+  t_Nachname: Tester
+  t_Telefon1:
+  t_Telefon2: 079 000 00 00
+  b_KlientAOZ: 0
+  nationality: CH
+  postal_code: '8000'
+  d_EintrittCH:
+  t_Geschlecht: female
+  m_Bemerkungen: Some commentary text string
+  d_Geburtsdatum: '1984-04-02'
+  pk_Hauptperson: 2423
+  t_Adresszeile1: Teststrasse 5
+  t_Adresszeile2:
+personen_rolle:
+  rolle: Volunteer
+  z_Rolle: 1
+  z_AnzErw:
+  cost_unit:
+  z_AnzKind:
+  d_MutDatum: '2017-10-16T11:35:37.000+02:00'
+  t_Mutation: aozseeg
+  b_Interesse: 0
+  d_Rollenende:
+  m_Bemerkungen: Some commentary text string
+  d_Rollenbeginn: '2017-10-12T00:00:00.000+02:00'
+  fk_Hauptperson: 2423
+  b_SpesenVerzicht: 0
+  fk_Kostenträger: 0
+  pk_PersonenRolle: 2412
+  z_Familienverband: 1
+  b_EinführungsKurs: 1

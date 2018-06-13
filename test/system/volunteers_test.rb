@@ -203,17 +203,6 @@ class VolunteersTest < ApplicationSystemTestCase
     end
   end
 
-  test 'department_manager_can_see_volunteer_index_and_only_her_own_volunteers' do
-    department_manager = create :department_manager
-    login_as department_manager
-    volunteer_department_manager = create :volunteer, registrar: department_manager
-    other_volunteer = create :volunteer
-
-    visit volunteers_path
-    assert page.has_text? volunteer_department_manager.contact.full_name
-    refute page.has_text? other_volunteer.contact.full_name
-  end
-
   test 'social_worker_cannot_see_volunteer_index' do
     login_as create(:social_worker)
 
@@ -256,20 +245,6 @@ class VolunteersTest < ApplicationSystemTestCase
 
     assert page.has_text? "Einladung wurde an #{volunteer.contact.primary_email} verschickt."
     assert_equal 1, ActionMailer::Base.deliveries.size
-  end
-
-  test 'department manager has a link to group offer of not their own' do
-    department_manager = create :department_manager
-    volunteer = create :volunteer, registrar: department_manager
-    group_offer = create :group_offer, volunteers: [volunteer]
-    login_as department_manager
-
-    visit volunteer_path(volunteer)
-    assert page.has_text? group_offer.title
-    assert page.has_link? group_offer.title
-
-    click_on group_offer.title
-    assert page.has_text? group_offer.title
   end
 
   test 'imported_create_account_for_imported_volunteer' do
@@ -371,5 +346,168 @@ class VolunteersTest < ApplicationSystemTestCase
     visit edit_volunteer_path(volunteer)
     assert page.has_text? 'Aufnahme Verwaltung'
     assert page.has_select?('Prozess')
+  end
+
+  test 'superadmin can change department of volunteer' do
+    volunteer = Volunteer.last
+    department = create :department
+
+    visit edit_volunteer_path volunteer
+
+    select department.contact.last_name, from: 'Standort'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
+    assert_equal volunteer.reload.department, department
+  end
+
+  test 'department_manager can edit volunteer of assigned to her department' do
+    volunteer = Volunteer.last
+    department = create :department
+    department_manager = create :department_manager, department: [department]
+
+    volunteer.update department: department
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    select department.contact.last_name, from: 'Standort'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
+    assert_equal volunteer.reload.department, department
+  end
+
+  test 'department_manager can not edit volunteer assigned to another department' do
+    volunteer = Volunteer.last
+    department = create :department
+    department_manager = create :department_manager, department: [department]
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    assert page.has_text? I18n.t('not_authorized')
+  end
+
+  test 'department_manager can take over volunteer with acceptance undecided' do
+    department_manager = create :department_manager
+    other_department_manager = create :department_manager
+    department = department_manager.department.last
+    other_department = other_department_manager.department.last
+
+    volunteer = Volunteer.undecided.last
+    volunteer_selector = "tr##{dom_id(volunteer)}"
+
+    volunteer.update department: nil
+
+    Volunteer.where.not(acceptance: :undecided).each do |volunteer|
+      volunteer.update department: department
+    end
+
+    login_as other_department_manager
+    visit volunteers_path
+
+    assert page.has_selector? volunteer_selector
+
+    within volunteer_selector do
+      click_link 'Bearbeiten'
+    end
+
+    assert page.has_text? "#{volunteer}"
+    assert page.has_text? 'Standort'
+    assert page.has_text? 'Prozess'
+
+    select other_department.contact.last_name, from: 'Standort'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
+    assert page.has_button? 'Freiwillige/n aktualisieren'
+    assert_equal volunteer.reload.department, other_department
+
+    visit volunteers_path
+
+    assert page.has_selector? volunteer_selector
+
+    within volunteer_selector do
+      assert page.has_link? 'Bearbeiten'
+    end
+
+    login_as department_manager
+
+    visit edit_volunteer_path(volunteer)
+    assert page.has_text? I18n.t('not_authorized')
+
+    visit volunteers_path
+
+    refute page.has_selector? volunteer_selector
+
+    visit edit_volunteer_path volunteer
+    assert page.has_text? I18n.t('not_authorized')
+  end
+
+  test 'department is automatically set for department_manager when creating volunteer' do
+    department_manager = create :department_manager
+    department = department_manager.department.last
+    Volunteer.destroy_all
+
+    login_as department_manager
+    visit new_volunteer_path
+
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'aoz'
+    within '.volunteer_birth_year' do
+      select('1988', from: 'Jahrgang')
+    end
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    click_button 'Freiwillige/n erfassen', match: :first
+
+    assert page.has_text? I18n.t('volunteer_created')
+    assert_equal Volunteer.last.department, department
+  end
+
+  test 'automatocally assigned department can be overwritten by department_manager' do
+    department_manager = create :department_manager
+    department = department_manager.department.last
+    other_department = create :department
+    Volunteer.destroy_all
+
+    login_as department_manager
+    visit new_volunteer_path
+
+    select(other_department.contact.last_name, from: 'Standort')
+    select('Frau', from: 'Anrede')
+    fill_in 'Vorname', with: 'Volunteer'
+    fill_in 'Nachname', with: 'aoz'
+    within '.volunteer_birth_year' do
+      select('1988', from: 'Jahrgang')
+    end
+    fill_in 'Strasse', with: 'Sihlstrasse 131'
+    fill_in 'PLZ', with: '8002'
+    fill_in 'Ort', with: 'Zürich'
+    fill_in 'Mailadresse', with: 'gurke@gurkenmail.com'
+    fill_in 'Telefonnummer', with: '0123456789'
+    click_button 'Freiwillige/n erfassen', match: :first
+
+    assert page.has_text? I18n.t('not_authorized')
+    assert_equal Volunteer.last.department, other_department
+  end
+
+  test 'invite_imported_volunteer_as_user' do
+    really_destroy_with_deleted(Assignment, GroupAssignment, Volunteer)
+    volunteer = create(:volunteer, :imported)
+    volunteer.update_column(:acceptance, :accepted)
+    login_as @user
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'User Account erstellen'
+    assert page.has_field? 'Mailadresse', with: volunteer.import.email
+    click_button 'Einladung an angegebene E-Mail verschicken'
+    assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
+    volunteer.reload
+    assert volunteer.user.invited_to_sign_up?
   end
 end

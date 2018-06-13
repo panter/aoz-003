@@ -11,6 +11,7 @@ class Department < ApplicationRecord
   has_many :group_offers, dependent: :destroy
   has_many :volunteers_group_offer, through: :group_offers, source: :volunteers
   has_many :volunteers_registrar, through: :user, source: :volunteers
+  has_many :volunteers
 
   validates :contact, presence: true
 

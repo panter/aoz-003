@@ -163,4 +163,38 @@ class VolunteerTest < ActiveSupport::TestCase
     assert_equal volunteer.contact.primary_email, volunteer.user.email
     assert volunteer.user.invited_to_sign_up?
   end
+
+  test 'imported_volunteer_can_get_account_by_setting_real_email' do
+    volunteer = create(:volunteer, :imported)
+    volunteer.update_column(:acceptance, :accepted)
+    volunteer.contact.primary_email = volunteer.import.email
+    volunteer.save
+    assert volunteer.user.present?, 'User was not created'
+    assert volunteer.user.invited_to_sign_up?, 'User was not invited'
+    assert_equal volunteer.import.email, volunteer.user.email
+  end
+
+  test 'volunter belongs to a department and department has many volunteers' do
+    department = create :department
+    3.times { volunteer = create :volunteer, department: department }
+
+    department.reload.volunteers.each do |volunteer|
+      assert_equal volunteer.department, department
+    end
+  end
+
+  test 'volunteer can be assignable to department' do
+    department = create :department
+    volunteer = create :volunteer, acceptance: :undecided
+    assert volunteer.assignable_to_department?
+
+    volunteer.update department: department, acceptance: :undecided
+    refute volunteer.assignable_to_department?
+
+    volunteer.update department: nil, acceptance: :invited
+    refute volunteer.assignable_to_department?
+
+    volunteer.update department: department, acceptance: :invited
+    refute volunteer.assignable_to_department?
+  end
 end

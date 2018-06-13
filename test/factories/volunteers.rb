@@ -73,6 +73,11 @@ FactoryBot.define do
       weekend { [true, false].sample }
     end
 
+    trait :imported do
+      acceptance :invited
+      import
+    end
+
     after(:build) do |volunteer|
       if volunteer.accepted? && volunteer.internal?
         volunteer.user_id = User.create(role: 'volunteer', email: volunteer.contact.primary_email).id

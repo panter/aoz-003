@@ -83,6 +83,10 @@ class ApplicationPolicy
     record.is_a? ApplicationRecord
   end
 
+  def departments_record?
+    record_present? && user.department.include?(record.department)
+  end
+
   def user_owns_record?
     record_present? && record.user_id == user.id
   end
@@ -119,8 +123,8 @@ class ApplicationPolicy
     superadmin? || department_managers_record?
   end
 
-  def superadmin_or_department_managers_registration?
-    superadmin? || (department_manager? && user_owns_registration?)
+  def superadmin_or_departments_record?
+    superadmin? || (department_manager? && departments_record?)
   end
 
   def superadmin_or_user_in_records_related?
