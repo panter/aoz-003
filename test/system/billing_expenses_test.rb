@@ -7,7 +7,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     @volunteer1 = create :volunteer, bank: 'UBS'
     @assignment1 = create :assignment, volunteer: @volunteer1
-    create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 2.5
+    create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 2.5, meeting_date: @date
     billed_hour1 = create :hour, volunteer: @volunteer1, hourable: @assignment1,
       hours: 3.5, meeting_date: @date
     @billing_expense1 = create :billing_expense, volunteer: @volunteer1, hours: [billed_hour1],
@@ -85,7 +85,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text "#{@volunteer2} #{@volunteer2.iban} 4.5 Stunden Fr. 50.00"
     refute_text @volunteer3
 
-    create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 1.5
+    create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 1.5, meeting_date: @date
     click_link 'Spesenformulare erstellen'
 
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 1.5 Stunden Fr. 50.00"
