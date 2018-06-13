@@ -54,7 +54,8 @@ class BillingExpensesController < ApplicationController
     @billing_expense = BillingExpense.new
     authorize @billing_expense
 
-    @q = Volunteer.with_billable_hours(selected_billing_period).ransack(params[:q])
+    @selected_billing_period = selected_billing_period
+    @q = Volunteer.with_billable_hours(@selected_billing_period).ransack(params[:q])
     @volunteers = @q.result
     @selected_volunteers = params[:selected_volunteers].presence || []
   end

@@ -95,24 +95,29 @@ class BillingExpensesTest < ApplicationSystemTestCase
   end
 
   test 'new billing_expense respects the period filter' do
+    def period_text(start_hour, end_hour)
+      text = ["#{I18n.l(start_hour.meeting_date)}"]
+      text << "#{I18n.l(end_hour.meeting_date)}"
+      text.join(' - ')
+    end
 
     volunteer1 = create :volunteer
-    create :hour, volunteer: volunteer1, hours: 1, meeting_date: @date - 2.month
-    create :hour, volunteer: volunteer1, hours: 2, meeting_date: @date - 3.month
+    hour1 = create :hour, volunteer: volunteer1, hours: 10, meeting_date: @date - 2.month
+    hour2 = create :hour, volunteer: volunteer1, hours: 16, meeting_date: @date - 3.month
 
     volunteer2 = create :volunteer
-    create :hour, volunteer: volunteer2, hours: 1, meeting_date: @date + 1.month
-    create :hour, volunteer: volunteer2, hours: 2, meeting_date: @date - 2.month
+    hour3 = create :hour, volunteer: volunteer2, hours: 26, meeting_date: @date + 1.month
+    hour4 = create :hour, volunteer: volunteer2, hours: 15, meeting_date: @date - 2.month
 
     volunteer3 = create :volunteer
-    create :hour, volunteer: volunteer3, hours: 1, meeting_date: @date + 1.month
-    create :hour, volunteer: volunteer3, hours: 2, meeting_date: @date + 3.month
+    hour5 = create :hour, volunteer: volunteer3, hours: 1, meeting_date: @date + 1.month
+    hour6 = create :hour, volunteer: volunteer3, hours: 2, meeting_date: @date + 3.month
 
     visit billing_expenses_path
 
     click_link 'Spesenformulare erstellen'
-    assert_text "#{volunteer2}"
-    assert_text "#{volunteer3}"
+    assert_text "#{volunteer2} #{volunteer2.iban} 26 Stunden Fr. 100.00 #{period_text(hour3, hour3)}"
+    assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 #{period_text(hour5, hour6)}"
     refute_text "#{volunteer1}"
 
     visit billing_expenses_path
@@ -120,8 +125,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Periode: Januar 2018 - Juni 2018'
     click_link 'Juli 2017 - Dezember 2017'
     click_link 'Spesenformulare erstellen'
-    assert_text "#{volunteer1}"
-    assert_text "#{volunteer2}"
+    assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 #{period_text(hour2, hour1)}"
+    assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 #{period_text(hour4, hour4)}"
     refute_text "#{volunteer3}"
 
     visit billing_expenses_path
@@ -129,9 +134,9 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Periode: Januar 2018 - Juni 2018'
     click_link 'Alle'
     click_link 'Spesenformulare erstellen'
-    assert_text "#{volunteer1}"
-    assert_text "#{volunteer2}"
-    assert_text "#{volunteer3}"
+    assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 #{period_text(hour2, hour1)}"
+    assert_text "#{volunteer2} #{volunteer2.iban} 41 Stunden Fr. 100.00 #{period_text(hour4, hour3)}"
+    assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 #{period_text(hour5, hour6)}"
   end
 
   test 'volunteer profile shows only billing expenses for this volunteer' do

@@ -19,6 +19,7 @@ class Hour < ApplicationRecord
   scope :billable, (-> { where(billing_expense: nil) })
   scope :billed, (-> { where.not(billing_expense: nil) })
   scope :period, lambda { |date|
+    return unless date.present?
     date = Time.zone.parse(date) unless date.is_a? Time
 
     date_between(:meeting_date, date, date + BillingExpense::PERIOD)
