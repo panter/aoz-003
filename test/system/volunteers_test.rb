@@ -496,4 +496,18 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_text? I18n.t('not_authorized')
     assert_equal Volunteer.last.department, other_department
   end
+
+  test 'invite_imported_volunteer_as_user' do
+    really_destroy_with_deleted(Assignment, GroupAssignment, Volunteer)
+    volunteer = create(:volunteer, :imported)
+    volunteer.update_column(:acceptance, :accepted)
+    login_as @user
+    visit volunteer_path(volunteer)
+    assert page.has_text? 'User Account erstellen'
+    assert page.has_field? 'Mailadresse', with: volunteer.import.email
+    click_button 'Einladung an angegebene E-Mail verschicken'
+    assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
+    volunteer.reload
+    assert volunteer.user.invited_to_sign_up?
+  end
 end

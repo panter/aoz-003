@@ -98,8 +98,7 @@ class VolunteersController < ApplicationController
 
   def account
     @volunteer.contact.primary_email = volunteer_params[:contact_attributes][:primary_email]
-    if @volunteer.save
-      invite_volunteer_user
+    if @volunteer.save && @volunteer.user&.invited_to_sign_up?
       redirect_back(fallback_location: edit_volunteer_path(@volunteer),
         notice: 'Freiwillige/r erhält eine Accountaktivierungs-Email.')
     elsif @volunteer.contact.errors.messages[:primary_email]

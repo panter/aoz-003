@@ -170,14 +170,16 @@ class UsersTest < ApplicationSystemTestCase
 
   test 'volunteer_can_change_password' do
     volunteer = create :volunteer
-    volunteer.user = create(:user, role: 'volunteer')
-    volunteer.save
+    volunteer_password = '123456'
+    volunteer.user.update(password: volunteer_password)
+    volunteer.user.accept_invitation!
+
     login_as volunteer.user
     visit root_path
 
     click_on volunteer.user
     click_on 'Login bearbeiten'
-    fill_in 'Passwort', with: '123456'
+    fill_in 'Passwort', with: volunteer_password
     click_on 'Login aktualisieren'
 
     assert_text "#{volunteer} Bearbeiten Ausdrucken Persönlicher Hintergrund"
@@ -185,7 +187,7 @@ class UsersTest < ApplicationSystemTestCase
     click_on volunteer.user
     click_on 'Abmelden'
     fill_in 'Email', with: volunteer.user.email
-    fill_in 'Passwort', with: '123456'
+    fill_in 'Passwort', with: volunteer_password
     click_on 'Anmelden'
 
     assert_text "#{volunteer} Bearbeiten Ausdrucken Persönlicher Hintergrund"
