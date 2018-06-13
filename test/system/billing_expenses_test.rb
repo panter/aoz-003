@@ -30,7 +30,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     group_assignment4 = create :group_assignment, volunteer: @volunteer4
     billed_hour4 = create :hour, volunteer: @volunteer4,
       hourable: group_assignment4.group_offer,
-      hours: 5.5, meeting_date: @date - 1.month
+      hours: 5.5, meeting_date: @date - 2.month
     @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4],
       created_at: 1.hour.ago
 
@@ -48,13 +48,13 @@ class BillingExpensesTest < ApplicationSystemTestCase
     refute_text @volunteer3
     refute_text @volunteer4
 
-    click_link 'Periode: Januar 2018 - Juni 2018'
-    click_link 'Juli 2017 - Dezember 2017'
+    click_link 'Periode: Dezember 2017 - Mai 2018'
+    click_link 'Juni 2017 - November 2017'
 
     assert_text "#{@volunteer4} #{@volunteer4.iban} 5.5 Stunden Fr. 50.00"
     refute_text @volunteer1
 
-    click_link 'Periode: Juli 2017 - Dezember 2017'
+    click_link 'Periode: Juni 2017 - November 2017'
     click_link 'Alle'
 
     assert_link 'Herunterladen', count: 2
@@ -116,8 +116,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     visit billing_expenses_path
 
-    click_link 'Periode: Januar 2018 - Juni 2018'
-    click_link 'Juli 2017 - Dezember 2017'
+    click_link 'Periode: Dezember 2017 - Mai 2018'
+    click_link 'Juni 2017 - November 2017'
     click_link 'Spesenformulare erstellen'
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 #{period_text(hour2, hour1)}"
     assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 #{period_text(hour4, hour4)}"
@@ -125,7 +125,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     visit billing_expenses_path
 
-    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Periode: Dezember 2017 - Mai 2018'
     click_link 'Alle'
     click_link 'Spesenformulare erstellen'
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 #{period_text(hour2, hour1)}"
@@ -156,7 +156,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     # creating billing_expense for the all remaining hours
     visit billing_expenses_path
-    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Periode: Dezember 2017 - Mai 2018'
     click_link 'Alle'
     click_link 'Spesenformulare erstellen'
 
@@ -169,7 +169,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
       click_button 'Spesenformulare erstellen'
     end
 
-    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Periode: Dezember 2017 - Mai 2018'
     click_link 'Alle'
     assert_text "#{volunteer} #{volunteer.iban} 26 Stunden Fr. 100.00 #{period_text(hour1, hour1)}"
 
@@ -179,7 +179,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     hour2 = create :hour, volunteer: volunteer, hours: 16, meeting_date: @date + 1.month
 
     visit billing_expenses_path
-    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Periode: Dezember 2017 - Mai 2018'
     click_link 'Alle'
     click_link 'Spesenformulare erstellen'
 
@@ -192,7 +192,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
       click_button 'Spesenformulare erstellen'
     end
 
-    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Periode: Dezember 2017 - Mai 2018'
     click_link 'Alle'
     assert_text "#{volunteer} #{volunteer.iban} 42 Stunden Fr. 100.00 #{period_text(hour1, hour2)}"
   end
@@ -257,7 +257,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     use_rack_driver
 
     visit billing_expenses_path
-    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Periode: Dezember 2017 - Mai 2018'
     click_link 'Alle'
 
     page.all('input[type="checkbox"]').each(&:click)
