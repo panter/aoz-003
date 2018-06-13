@@ -1,4 +1,4 @@
-image: nbulai/ruby-chromedriver:2.35
+image: git.panter.ch:5001/open-source/aoz-003
 
 stages:
   - test
@@ -16,13 +16,7 @@ variables:
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
 
 before_script:
-  - gem update --system
-  - gem install bundler --no-ri --no-rdoc
   - bundle install -j $(nproc) --path vendor
-  - bundle exec chromedriver-update 2.36
-  - ruby --version
-  - google-chrome --version
-  - bundle exec chromedriver --version
   - bundle exec rails db:schema:load
 
 test:
