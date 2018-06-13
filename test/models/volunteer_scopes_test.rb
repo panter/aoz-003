@@ -329,4 +329,46 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     query = Volunteer.active
     refute query.include? volunteer_will_inactive
   end
+
+  test 'with_billable_hours returns volunteers with billable hours for an optional period' do
+    current_period_ago = BillingExpense::PERIOD.ago
+    last_period_ago = current_period_ago - BillingExpense::PERIOD
+    format = '%Y-%m-%d'
+    volunteers_in_current_period_assertion = [@group_offer_member, @has_assignments]
+    volunteers_in_last_period_assertion    = [@has_multiple, @has_active_and_inactive]
+
+    volunteers_in_current_period_assertion.each do |volunteer|
+      create :hour, hours: 1, volunteer: volunteer, meeting_date: current_period_ago + 1.month
+      create :hour, hours: 2, volunteer: volunteer, meeting_date: current_period_ago + 2.months
+    end
+
+    volunteers_in_last_period_assertion.each do |volunteer|
+      create :hour, hours: 3, volunteer: volunteer, meeting_date: current_period_ago - 1.month
+      create :hour, hours: 4, volunteer: volunteer, meeting_date: current_period_ago - 2.months
+    end
+
+    volunteers_with_billable_hours = Volunteer.with_billable_hours
+    volunteers_in_current_period = Volunteer.with_billable_hours current_period_ago.strftime(format)
+    volunteers_in_last_period = Volunteer.with_billable_hours last_period_ago.strftime(format)
+
+    (volunteers_in_current_period + volunteers_in_last_period).each do |volunteer|
+      assert_includes volunteers_with_billable_hours, volunteer
+    end
+
+    volunteers_in_current_period.each do |volunteer|
+      assert_includes volunteers_in_current_period, volunteer
+    end
+
+    volunteers_in_last_period.each do |volunteer|
+      assert_not_includes volunteers_in_current_period, volunteer
+    end
+
+    volunteers_in_last_period.each do |volunteer|
+      assert_includes volunteers_in_last_period, volunteer
+    end
+
+    volunteers_in_current_period.each do |volunteer|
+      assert_not_includes volunteers_in_last_period, volunteer
+    end
+  end
 end

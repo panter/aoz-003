@@ -184,10 +184,13 @@ class Volunteer < ApplicationRecord
 
   scope :need_refunds, (-> { where(waive: false) })
 
-  scope :with_billable_hours, lambda {
+  scope :with_billable_hours, lambda { |date = nil|
+    hours = Hour.billable
+    hours = hours.period(date) if date.present?
+
     need_refunds
       .joins(:contact)
-      .joins(:hours).merge(Hour.billable)
+      .joins(:hours).merge(hours)
       .select('volunteers.*, SUM(hours.hours) AS total_hours')
       .group(:id, 'contacts.full_name')
       .order("(CASE WHEN COALESCE(iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
