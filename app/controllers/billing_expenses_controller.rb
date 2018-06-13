@@ -64,8 +64,9 @@ class BillingExpensesController < ApplicationController
     authorize BillingExpense, :create?
 
     selected_volunteers = params[:selected_volunteers]
+    selected_period = params[:selected_period]
     volunteers = Volunteer.need_refunds.where(id: selected_volunteers)
-    BillingExpense.create_for!(volunteers, current_user)
+    BillingExpense.create_for!(volunteers, current_user, selected_period)
 
     redirect_to billing_expenses_url,
       notice: 'Spesenformulare wurden erfolgreich erstellt.'

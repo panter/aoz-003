@@ -52,10 +52,10 @@ class BillingExpense < ApplicationRecord
     end
   end
 
-  def self.create_for!(volunteers, creator)
+  def self.create_for!(volunteers, creator, date = nil)
     transaction do
       volunteers.find_each do |volunteer|
-        hours = volunteer.hours.billable
+        hours = volunteer.hours.billable.period(date)
         hours.find_each do |hour|
           hour.update!(reviewer: creator)
         end

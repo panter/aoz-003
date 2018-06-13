@@ -3,6 +3,7 @@
 h1 Spesenformulare erfassen
 
 = simple_form_for @billing_expense do |f|
+  = hidden_field_tag 'selected_period', @selected_billing_period
   .row
     .col-xs-12
       => button_link navigation_glyph(:back), billing_expenses_path
@@ -21,7 +22,7 @@ h1 Spesenformulare erfassen
 
       tbody
         - @volunteers.each do |volunteer|
-          tr.table-row-selectable
+          tr.table-row-selectable id=dom_id(volunteer)
             td= check_box_tag 'selected_volunteers[]', volunteer.id,
                   @selected_volunteers.include?(volunteer.id.to_s), disabled: !volunteer.iban?
             td= link_to volunteer, edit_volunteer_path(volunteer)

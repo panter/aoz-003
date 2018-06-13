@@ -95,12 +95,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
   end
 
   test 'new billing_expense respects the period filter' do
-    def period_text(start_hour, end_hour)
-      text = ["#{I18n.l(start_hour.meeting_date)}"]
-      text << "#{I18n.l(end_hour.meeting_date)}"
-      text.join(' - ')
-    end
-
     volunteer1 = create :volunteer
     hour1 = create :hour, volunteer: volunteer1, hours: 10, meeting_date: @date - 2.month
     hour2 = create :hour, volunteer: volunteer1, hours: 16, meeting_date: @date - 3.month
@@ -137,6 +131,70 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 #{period_text(hour2, hour1)}"
     assert_text "#{volunteer2} #{volunteer2.iban} 41 Stunden Fr. 100.00 #{period_text(hour4, hour3)}"
     assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 #{period_text(hour5, hour6)}"
+  end
+
+  test 'creating a billing_expense should respect period filter' do
+    volunteer = create :volunteer
+    hour1 = create :hour, volunteer: volunteer, hours: 26, meeting_date: @date - 2.month
+    hour2 = create :hour, volunteer: volunteer, hours: 16, meeting_date: @date + 1.month
+
+    # creating billing_expense for hours in the current period
+    visit billing_expenses_path
+
+    click_link 'Spesenformulare erstellen'
+
+    within "##{dom_id(volunteer)}" do
+      check 'selected_volunteers[]'
+    end
+
+    assert_checked_field 'selected_volunteers[]', count: 1
+    page.accept_confirm do
+      click_button 'Spesenformulare erstellen'
+    end
+
+    assert_text "#{volunteer} #{volunteer.iban} 16 Stunden Fr. 50.00 #{period_text(hour2, hour2)}"
+
+    # creating billing_expense for the all remaining hours
+    visit billing_expenses_path
+    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Alle'
+    click_link 'Spesenformulare erstellen'
+
+    within "##{dom_id(volunteer)}" do
+      check 'selected_volunteers[]'
+    end
+
+    assert_checked_field 'selected_volunteers[]', count: 1
+    page.accept_confirm do
+      click_button 'Spesenformulare erstellen'
+    end
+
+    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Alle'
+    assert_text "#{volunteer} #{volunteer.iban} 26 Stunden Fr. 100.00 #{period_text(hour1, hour1)}"
+
+    # creating billing_expense for all hours in multiple periods
+    volunteer = create :volunteer
+    hour1 = create :hour, volunteer: volunteer, hours: 26, meeting_date: @date - 2.month
+    hour2 = create :hour, volunteer: volunteer, hours: 16, meeting_date: @date + 1.month
+
+    visit billing_expenses_path
+    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Alle'
+    click_link 'Spesenformulare erstellen'
+
+    within "##{dom_id(volunteer)}" do
+      check 'selected_volunteers[]'
+    end
+
+    assert_checked_field 'selected_volunteers[]', count: 1
+    page.accept_confirm do
+      click_button 'Spesenformulare erstellen'
+    end
+
+    click_link 'Periode: Januar 2018 - Juni 2018'
+    click_link 'Alle'
+    assert_text "#{volunteer} #{volunteer.iban} 42 Stunden Fr. 100.00 #{period_text(hour1, hour2)}"
   end
 
   test 'volunteer profile shows only billing expenses for this volunteer' do
@@ -228,5 +286,13 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert page.has_text? 'Fr. 100'
     assert_equal billing_expense.reload.final_amount, 100
+  end
+
+  private
+
+  def period_text(start_hour, end_hour)
+    text = ["#{I18n.l(start_hour.meeting_date)}"]
+    text << "#{I18n.l(end_hour.meeting_date)}"
+    text.join(' - ')
   end
 end
