@@ -260,7 +260,7 @@ de:
       acceptance: *id-volunteer-acceptance
       state: *id-volunteer-active-states
   volunteers: *id-volunteers-by-actions
-  accompaniment_info: Bei der AOZ gibt es mehrere Mögichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
+  accompaniment_info: Bei der AOZ gibt es mehrere Möglichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
   clear_filters: Filter aufheben
   activerecord:
