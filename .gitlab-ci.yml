@@ -1,14 +1,8 @@
-image: nbulai/ruby-chromedriver:2.35
-
 stages:
   - test
 
 services:
   - postgres:9.6
-
-cache:
-  paths:
-    - vendor
 
 variables:
   RAILS_ENV: test
@@ -16,21 +10,20 @@ variables:
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
 
 before_script:
-  - gem update --system
-  - gem install bundler --no-ri --no-rdoc
-  - bundle install -j $(nproc) --path vendor
-  - bundle exec chromedriver-update 2.36
-  - ruby --version
-  - google-chrome --version
-  - bundle exec chromedriver --version
+  - bundle install --path vendor
   - bundle exec rails db:schema:load
 
 test:
+  image: git.panter.ch:5001/open-source/aoz-003/unit:2.4.4
   stage: test
   script:
     - bundle exec rails test
+  cache:
+    paths:
+      - vendor
 
-system_test:
+system:
+  image: git.panter.ch:5001/open-source/aoz-003/system:2.36
   stage: test
   script:
     - bundle exec rails test:system
@@ -39,3 +32,7 @@ system_test:
       - tmp/screenshots
     when: on_failure
     expire_in: 1 week
+  cache:
+    policy: pull
+    paths:
+      - vendor

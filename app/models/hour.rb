@@ -18,6 +18,14 @@ class Hour < ApplicationRecord
 
   scope :billable, (-> { where(billing_expense: nil) })
   scope :billed, (-> { where.not(billing_expense: nil) })
+  scope :period, lambda { |date = nil|
+    if date.present?
+      date = Time.zone.parse(date) unless date.is_a? Time
+      return if date.blank?
+
+      date_between(:meeting_date, date, date + BillingExpense::PERIOD)
+    end
+  }
 
   scope :since_last_submitted, lambda { |submitted_at|
     where('hours.created_at > ?', submitted_at) if submitted_at

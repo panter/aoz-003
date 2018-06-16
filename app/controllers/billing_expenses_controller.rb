@@ -1,13 +1,12 @@
 class BillingExpensesController < ApplicationController
   before_action :set_billing_expense, only: [:show, :update_overwritten_amount, :destroy]
+  before_action :set_billing_periods, only: [:index, :new, :create]
   before_action :set_selection, only: [:index, :download]
 
   def index
     authorize BillingExpense
 
-    @billing_periods = BillingExpense.generate_periods
-
-    set_default_filter(period: @billing_periods.first[:value])
+    set_default_filter(period: default_billing_period)
     @q = policy_scope(BillingExpense).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @billing_expenses = @q.result
@@ -55,7 +54,8 @@ class BillingExpensesController < ApplicationController
     @billing_expense = BillingExpense.new
     authorize @billing_expense
 
-    @q = Volunteer.with_billable_hours.ransack(params[:q])
+    @selected_billing_period = selected_billing_period
+    @q = Volunteer.with_billable_hours(@selected_billing_period).ransack(params[:q])
     @volunteers = @q.result
     @selected_volunteers = params[:selected_volunteers].presence || []
   end
@@ -64,8 +64,9 @@ class BillingExpensesController < ApplicationController
     authorize BillingExpense, :create?
 
     selected_volunteers = params[:selected_volunteers]
+    selected_period = params[:selected_period]
     volunteers = Volunteer.need_refunds.where(id: selected_volunteers)
-    BillingExpense.create_for!(volunteers, current_user)
+    BillingExpense.create_for!(volunteers, current_user, selected_period)
 
     redirect_to billing_expenses_url,
       notice: 'Spesenformulare wurden erfolgreich erstellt.'
@@ -91,8 +92,24 @@ class BillingExpensesController < ApplicationController
     authorize @billing_expense
   end
 
+  def set_billing_periods
+    @billing_periods = BillingExpense.generate_periods
+  end
+
   def set_selection
     @selected_billing_expenses = params[:selected_billing_expenses].presence || []
+  end
+
+  def default_billing_period
+    @billing_periods.first[:value]
+  end
+
+  def selected_billing_period
+    filter = params[:q]
+
+    return default_billing_period unless filter.present?
+    return nil if filter[:all].present?
+    return filter[:period]
   end
 
   def pdf_file_name(record)

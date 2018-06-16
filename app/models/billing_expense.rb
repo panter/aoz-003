@@ -14,12 +14,7 @@ class BillingExpense < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  scope :period, lambda { |date|
-    date = Time.zone.parse(date) unless date.is_a? Time
-
-    joins(:hours)
-      .merge(Hour.date_between(:meeting_date, date, date + PERIOD))
-  }
+  scope :period, ->(date) { joins(:hours).merge(Hour.period(date)) }
 
   FINAL_AMOUNT_SQL = "CASE WHEN overwritten_amount IS NULL THEN amount ELSE overwritten_amount END".freeze
   scope :sort_by_final_amount_asc, lambda {
@@ -57,10 +52,10 @@ class BillingExpense < ApplicationRecord
     end
   end
 
-  def self.create_for!(volunteers, creator)
+  def self.create_for!(volunteers, creator, date = nil)
     transaction do
       volunteers.find_each do |volunteer|
-        hours = volunteer.hours.billable
+        hours = volunteer.hours.billable.period(date)
         hours.find_each do |hour|
           hour.update!(reviewer: creator)
         end
@@ -83,7 +78,7 @@ class BillingExpense < ApplicationRecord
     oldest_date = hours.minimum(:meeting_date) || Time.zone.now
     newest_date = hours.maximum(:meeting_date) || Time.zone.now
 
-    start_of_year = newest_date.beginning_of_year
+    start_of_year = newest_date.beginning_of_year - 1.month
     date = start_of_year
     date += PERIOD if newest_date >= start_of_year + PERIOD
 

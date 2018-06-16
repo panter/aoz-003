@@ -16,7 +16,7 @@ h1
       - if @volunteer
         => button_link navigation_glyph(:back), @volunteer
       - else
-        => button_link 'Spesenformulare erstellen', new_billing_expense_path
+        => button_link 'Spesenformulare erstellen', new_billing_expense_path(q: params[:q].permit!)
 
   .table-responsive
     table.table
