@@ -122,6 +122,10 @@ class Volunteer < ApplicationRecord
   scope :internal, (-> { where(external: false) })
   scope :not_resigned, (-> { where.not(acceptance: :resigned) })
 
+  scope :with_actively_registered_user, lambda {
+    joins(:user).merge(User.without_deleted.signed_in_at_least_once)
+  }
+
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).merge(Assignment.start_before(6.months.ago))
   }

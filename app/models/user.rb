@@ -94,6 +94,8 @@ class User < ApplicationRecord
   scope :department_managers, (-> { where(role: DEPARTMENT_MANAGER) })
   scope :social_workers, (-> { where(role: SOCIAL_WORKER) })
 
+  scope :signed_in_at_least_once, (-> { where.not(last_sign_in_at: nil) })
+
   def superadmin?
     role == SUPERADMIN
   end
