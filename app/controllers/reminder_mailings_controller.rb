@@ -28,8 +28,10 @@ class ReminderMailingsController < ApplicationController
   end
 
   def new_half_year
-    @reminder_mailables = Assignment.submitted_since(params[:submitted_since]&.to_date)
-    @reminder_mailables += GroupAssignment.submitted_since(params[:submitted_since]&.to_date)
+    @reminder_mailables = Assignment.with_actively_registered_volunteer
+      .submitted_since(params[:submitted_since]&.to_date)
+    @reminder_mailables += GroupAssignment.with_actively_registered_volunteer
+      .submitted_since(params[:submitted_since]&.to_date)
     @reminder_mailing = ReminderMailing.new(kind: 'half_year',
       reminder_mailing_volunteers: @reminder_mailables)
     if EmailTemplate.half_year.active.any?
