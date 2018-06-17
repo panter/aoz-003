@@ -34,5 +34,18 @@ FactoryBot.define do
     factory :assignment_blank_period, traits: [:blank_period]
     factory :assignment_active, traits: [:active]
     factory :assignment_inactive, traits: [:inactive]
+
+    factory :terminated_assignment do
+      period_end { 4.days.ago }
+      termination_submitted_at { 3.days.ago }
+      termination_verified_at { 2.days.ago }
+      association :period_end_set_by, factory: :user
+      after(:build) do |assignment|
+        assignment.volunteer ||= create(:volunteer)
+        assignment.termination_submitted_by = assignment.volunteer.user
+        assignment.termination_verified_by = assignment.period_end_set_by
+      end
+      after(:create, &:create_log_of_self)
+    end
   end
 end

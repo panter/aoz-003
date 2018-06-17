@@ -13,6 +13,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
   test 'group_assignment_and_assignment_elegible_for_half_year_reminder_mailing_are_includable' do
     group_offer = create :group_offer
+    terminated_group_assignment = create :terminated_group_assignment
+    terminated_assignment = create :terminated_assignment
     volunteer_assignment = create :volunteer
     volunteer_group_offer = create :volunteer
     assignment = create :assignment, period_start: 6.months.ago, period_end: nil,
@@ -24,18 +26,40 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     another_group_assignment = GroupAssignment.create(volunteer: volunteer_group_offer, period_end: nil,
       group_offer: group_offer, period_start: 6.months.ago)
     create :email_template_half_year
+
+    terminated_assignment.volunteer.user.update last_sign_in_at: Time.now
+    terminated_group_assignment.volunteer.user.update last_sign_in_at: Time.now
+
     login_as @superadmin
     visit reminder_mailings_path
     page.find_all('a', text: 'Halbjahres Erinnerung erstellen').first.click
-    assert page.has_link? assignment.to_label, href: assignment_path(assignment)
-    assert page.has_link? assignment.volunteer.contact.full_name, href: volunteer_path(assignment.volunteer)
-    assert page.has_link? group_assignment.to_label, href: group_offer_path(group_assignment.group_offer)
-    assert page.has_link? group_assignment.volunteer.contact.full_name, href: volunteer_path(group_assignment.volunteer)
 
-    refute page.has_link? another_assignment.to_label, href: assignment_path(another_assignment)
-    refute page.has_link? another_assignment.volunteer.contact.full_name, href: volunteer_path(another_assignment.volunteer)
-    refute page.has_link? another_group_assignment.to_label, href: group_offer_path(another_group_assignment.group_offer)
-    refute page.has_link? another_group_assignment.volunteer.contact.full_name, href: volunteer_path(another_group_assignment.volunteer)
+    assert page.has_link? assignment.to_label,
+      href: assignment_path(assignment)
+    assert page.has_link? assignment.volunteer.contact.full_name,
+      href: volunteer_path(assignment.volunteer)
+    assert page.has_link? group_assignment.to_label,
+      href: group_offer_path(group_assignment.group_offer)
+    assert page.has_link? group_assignment.volunteer.contact.full_name,
+      href: volunteer_path(group_assignment.volunteer)
+
+    refute page.has_link? another_assignment.to_label,
+      href: assignment_path(another_assignment)
+    refute page.has_link? another_assignment.volunteer.contact.full_name,
+      href: volunteer_path(another_assignment.volunteer)
+    refute page.has_link? another_group_assignment.to_label,
+      href: group_offer_path(another_group_assignment.group_offer)
+    refute page.has_link? another_group_assignment.volunteer.contact.full_name,
+      href: volunteer_path(another_group_assignment.volunteer)
+
+    refute page.has_link? terminated_assignment.to_label,
+      href: assignment_path(terminated_assignment)
+    refute page.has_link? terminated_assignment.volunteer.contact.full_name,
+      href: volunteer_path(terminated_assignment.volunteer)
+    refute page.has_link? terminated_group_assignment.to_label,
+      href: group_offer_path(terminated_group_assignment.group_offer)
+    refute page.has_link? terminated_group_assignment.volunteer.contact.full_name,
+      href: volunteer_path(terminated_group_assignment.volunteer)
 
     # All checkboxes are not checked?
     refute page.find_all(
