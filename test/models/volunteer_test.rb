@@ -174,6 +174,27 @@ class VolunteerTest < ActiveSupport::TestCase
     assert_equal volunteer.import.email, volunteer.user.email
   end
 
+  test 'imported volunteer can be manually reinvited' do
+    volunteer = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    invitation_token = volunteer.user.invitation_token
+    invitation_sent_at = volunteer.user.invitation_sent_at
+    refute_nil volunteer.user_id
+    assert volunteer.user.invited_to_sign_up?
+    assert volunteer.invitable?
+    assert_nil volunteer.user.invitation_accepted_at
+
+    volunteer.reinvite_user
+    assert volunteer.user.invited_to_sign_up?
+    assert_not_equal invitation_token, volunteer.user.invitation_token
+    assert_not_equal invitation_sent_at, volunteer.user.invitation_sent_at
+    assert_nil volunteer.user.invitation_accepted_at
+    assert volunteer.invitable?
+
+    volunteer.user.accept_invitation!
+    refute_nil volunteer.user.invitation_accepted_at
+    assert_nil volunteer.user.invitation_token
+  end
+
   test 'volunter belongs to a department and department has many volunteers' do
     department = create :department
     3.times { volunteer = create :volunteer, department: department }
