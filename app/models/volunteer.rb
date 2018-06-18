@@ -122,6 +122,10 @@ class Volunteer < ApplicationRecord
   scope :internal, (-> { where(external: false) })
   scope :not_resigned, (-> { where.not(acceptance: :resigned) })
 
+  scope :with_actively_registered_user, lambda {
+    joins(:user).merge(User.without_deleted.signed_in_at_least_once)
+  }
+
   scope :with_assignment_6_months_ago, lambda {
     joins(:assignments).merge(Assignment.start_before(6.months.ago))
   }
@@ -406,7 +410,14 @@ class Volunteer < ApplicationRecord
   end
 
   def invite_user_if_not_invited
-    if internal? && user.present? && !user.invited_to_sign_up?
+    # invitation go out to
+    # - interal users only
+    # - where there was a user account created
+    # - no invitation was sent - user.invitation_sent_at.blank
+    #
+    # note: we used to ask here for user.invited_to_sign_up? instaed of user.invitation_sent_at.blank but
+    # it lead to emails sent out twice to users that already set their password
+    if internal? && user.present? && user.invitation_sent_at.blank?
       user.invite!
     end
   end

@@ -371,4 +371,27 @@ class VolunteerScopesTest < ActiveSupport::TestCase
       assert_not_includes volunteers_in_last_period, volunteer
     end
   end
+
+  test 'with_registered_user returns volunteers where password is set for user' do
+    volunteer_without_user1 = create :volunteer, :external
+    volunteer_without_user2 = create :volunteer, :external
+    volunteer_with_user1 = create :volunteer_with_user
+    volunteer_with_user2 = create :volunteer_with_user
+
+    # faking user sign in by setting last_sign_in_at an arbitrary date
+    volunteer_with_user1.user.update last_sign_in_at: Time.now
+    volunteer_with_user2.user.update last_sign_in_at: Time.now
+
+    assert_nil volunteer_without_user1.user
+    assert_nil volunteer_without_user2.user
+    assert volunteer_with_user1.user.present?
+    assert volunteer_with_user2.user.present?
+
+    volunteers_with_user = Volunteer.with_actively_registered_user
+
+    assert_includes volunteers_with_user, volunteer_with_user1
+    assert_includes volunteers_with_user, volunteer_with_user2
+    assert_not_includes volunteers_with_user, volunteer_without_user1
+    assert_not_includes volunteers_with_user, volunteer_without_user2
+  end
 end

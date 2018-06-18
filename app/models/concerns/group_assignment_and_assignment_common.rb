@@ -30,6 +30,10 @@ module GroupAssignmentAndAssignmentCommon
     scope :internal, (-> { joins(:volunteer).merge(Volunteer.internal) })
     scope :external, (-> { joins(:volunteer).merge(Volunteer.external) })
 
+    scope :with_actively_registered_volunteer, lambda {
+      joins(:volunteer).merge(Volunteer.with_actively_registered_user)
+    }
+
     scope :no_reminder_mailing, lambda {
       loj_mailings.where('reminder_mailing_volunteers.id IS NULL')
                   .or(

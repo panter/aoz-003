@@ -197,6 +197,27 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     assert query_deleted.include? verified
   end
 
+  test 'with_actively_registered_volunteer returns group_assignments of volunteers with_actively_registered_user' do
+    volunteer1 = create :volunteer, :external
+    volunteer2 = create :volunteer, :external
+    volunteer3 = create :volunteer_with_user
+    volunteer4 = create :volunteer_with_user
+    group_assignment1 = create :group_assignment, volunteer: volunteer1
+    group_assignment2 = create :group_assignment, volunteer: volunteer2
+    group_assignment3 = create :group_assignment, volunteer: volunteer3
+    group_assignment4 = create :group_assignment, volunteer: volunteer4
+
+    # faking user sign in by setting last_sign_in_at an arbitrary date
+    [volunteer3, volunteer4].each { |v| v.user.update(last_sign_in_at: Time.now) }
+
+    group_assignments = GroupAssignment.with_actively_registered_volunteer
+
+    assert_not_includes group_assignments, group_assignment1
+    assert_not_includes group_assignments, group_assignment2
+    assert_includes group_assignments, group_assignment3
+    assert_includes group_assignments, group_assignment4
+  end
+
   def create_group_assignments(start_date = nil, end_date = nil)
     volunteer = create :volunteer
     volunteer.contact.update(first_name: FFaker::Name.unique.first_name)
