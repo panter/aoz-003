@@ -79,13 +79,5 @@ h1.m-b-20= @client.contact.full_name
 
 h3 Wann sind Sie verfügbar?
 = render 'availability/show', available: @client
-
-- if @current_assignments.present?
-  h3#assignments Aktuelle Begleitungen
-  = render 'assignments/client_volunteer_index', assignments: @current_assignments
-
-- if @archived_assignments.present?
-  h3 Archivierte Begleitungen
-  = render 'assignment_logs/client_volunteer_index', assignments: @archived_assignments
-
+= render 'assignments'
 = render 'show_navigation'
