@@ -5,6 +5,7 @@ class ClientsController < ApplicationController
 
   before_action :set_client, only: [:show, :edit, :update, :set_terminated]
   before_action :set_social_worker_collection, only: [:new, :create, :edit, :update]
+  before_action :set_assignments, only: [:show, :edit]
 
   def index
     authorize Client
@@ -28,10 +29,7 @@ class ClientsController < ApplicationController
     end
   end
 
-  def show
-    @current_assignments = @client.assignments.unterminated
-    @archived_assignments = @client.assignment_logs
-  end
+  def show; end
 
   def new
     @client = Client.new(user: current_user)
@@ -109,6 +107,11 @@ class ClientsController < ApplicationController
 
   def set_social_worker_collection
     @social_workers = User.social_workers
+  end
+
+  def set_assignments
+    @current_assignments = @client.assignments.unterminated
+    @archived_assignments = @client.assignment_logs
   end
 
   def client_params
