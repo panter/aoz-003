@@ -183,7 +183,7 @@ class VolunteerTest < ActiveSupport::TestCase
     assert volunteer.invitable?
     assert_nil volunteer.user.invitation_accepted_at
 
-    volunteer.reinvite_user
+    volunteer.invite_user
     assert volunteer.user.invited_to_sign_up?
     assert_not_equal invitation_token, volunteer.user.invitation_token
     assert_not_equal invitation_sent_at, volunteer.user.invitation_sent_at

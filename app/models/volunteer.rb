@@ -383,7 +383,7 @@ class Volunteer < ApplicationRecord
     internal? && user.present?
   end
 
-  def reinvite_user
+  def invite_user
     user.invite! if invitable?
   end
 
@@ -425,7 +425,7 @@ class Volunteer < ApplicationRecord
     #
     # note: we used to ask here for user.invited_to_sign_up? instaed of user.invitation_sent_at.blank but
     # it lead to emails sent out twice to users that already set their password
-    reinvite_user unless user&.invitation_sent_at.blank?
+    invite_user if user&.invitation_sent_at.blank?
   end
 
   def user_deleted?
