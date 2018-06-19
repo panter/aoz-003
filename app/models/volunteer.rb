@@ -379,12 +379,20 @@ class Volunteer < ApplicationRecord
     department.blank? && undecided?
   end
 
-  def invitable?
+  def ready_for_invitation?
     internal? && user.present?
   end
 
+  def pending_invitation?
+    user.present? && !user.invitation_accepted?
+  end
+
+  def user_needed_for_invitation?
+    !user.present? && accepted?
+  end
+
   def invite_user
-    user.invite! if invitable?
+    user.invite! if ready_for_invitation?
   end
 
   private
