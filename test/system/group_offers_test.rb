@@ -80,7 +80,8 @@ class GroupOffersTest < ApplicationSystemTestCase
   test 'modifying volunteer dates does not create a log entry' do
     login_as create(:user)
     volunteer = create :volunteer
-    group_offer = create :group_offer, volunteers: [volunteer]
+    group_offer = create :group_offer
+    create :group_assignment, volunteer: volunteer, group_offer: group_offer
 
     visit volunteer_path(volunteer)
     assert page.has_text? 'Aktuelle Gruppenangebote'

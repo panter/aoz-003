@@ -7,8 +7,9 @@ class FeedbacksTest < ApplicationSystemTestCase
     @assignment = create :assignment, volunteer: @volunteer, period_start: 7.weeks.ago
     @superadmin = create :user
     @other_volunteer = create :volunteer
-    @group_offer = create :group_offer, necessary_volunteers: 2, title: 'some_group_offer',
-      volunteers: [@volunteer, @other_volunteer]
+    @group_offer = create :group_offer, necessary_volunteers: 2, title: 'some_group_offer'
+    create :group_assignment, volunteer: @volunteer, group_offer: @group_offer
+    create :group_assignment, volunteer: @other_volunteer, group_offer: @group_offer
   end
 
   def setup_feedbacks
@@ -68,8 +69,9 @@ class FeedbacksTest < ApplicationSystemTestCase
 
   test 'group offer feedbacks index contains only the feedbacks related to that group offer' do
     setup_feedbacks
-    other_group_offer = create :group_offer, title: 'some_other_group_offer',
-      volunteers: [@volunteer, @other_volunteer], necessary_volunteers: 2
+    other_group_offer = create :group_offer, title: 'some_other_group_offer', necessary_volunteers: 2
+    create :group_assignment, volunteer: @volunteer, group_offer: other_group_offer
+    create :group_assignment, volunteer: @other_volunteer, group_offer: other_group_offer
     create :feedback, volunteer: @volunteer, feedbackable: other_group_offer,
       author: @user_volunteer, comments: 'same_volunteer_other_groupoffer_feedback'
     login_as @user_volunteer
@@ -111,11 +113,10 @@ class FeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'volunteer can create only their feedbacks on group_offer' do
-    other_group_offer = create :group_offer, necessary_volunteers: 2, title: 'other_group_offer',
-      volunteers: [
-        create(:volunteer),
-        create(:volunteer)
-      ]
+    other_group_offer = create :group_offer, necessary_volunteers: 2, title: 'other_group_offer'
+    create :group_assignment, volunteer: create(:volunteer), group_offer: other_group_offer
+    create :group_assignment, volunteer: create(:volunteer), group_offer: other_group_offer
+
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_group_offer, Feedback])
     assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'

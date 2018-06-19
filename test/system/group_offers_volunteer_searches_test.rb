@@ -9,10 +9,11 @@ class GroupOffersVolunteerSearchesTest < ApplicationSystemTestCase
     @volunteer_two.contact.update(first_name: 'Jesse', last_name: 'Pinkman')
     @volunteer_three = create :volunteer
     @volunteer_three.contact.update(first_name: 'Skyler', last_name: 'White')
-    @group_offer_one = create :group_offer, title: 'group_offer_one',
-      volunteers: [@volunteer_one, @volunteer_three]
-    @group_offer_two = create :group_offer, title: 'group_offer_two',
-      volunteers: [@volunteer_two]
+    @group_offer_one = create :group_offer, title: 'group_offer_one'
+    create :group_assignment, volunteer: @volunteer_one, group_offer: @group_offer_one
+    create :group_assignment, volunteer: @volunteer_three, group_offer: @group_offer_one
+    @group_offer_two = create :group_offer, title: 'group_offer_two'
+    create :group_assignment, volunteer: @volunteer_two, group_offer: @group_offer_two
     login_as @superadmin
     visit group_offers_path
   end

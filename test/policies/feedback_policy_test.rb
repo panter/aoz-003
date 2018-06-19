@@ -37,9 +37,13 @@ class FeedbackPolicyTest < PolicyAssertions::Test
   end
 
   test 'volunteer_has_limited_access_to_group_offer_feedbacks' do
-    group_offer = create :group_offer, volunteers: [@volunteer, @other_volunteer]
-    other_group_offer = create :group_offer,
-      volunteers: [create(:volunteer), @other_volunteer]
+    group_offer = create :group_offer
+    create :group_assignment, volunteer: @volunteer, group_offer: group_offer
+    create :group_assignment, volunteer: @other_volunteer, group_offer: group_offer
+    other_group_offer = create :group_offer
+    create :group_assignment, volunteer: create(:volunteer), group_offer: other_group_offer
+    create :group_assignment, volunteer: @other_volunteer, group_offer: other_group_offer
+
     superadmin_feedback = create :feedback, volunteer: @volunteer, author: @superadmin,
       feedbackable: group_offer
     feedback_volunteer = create :feedback, volunteer: @volunteer, author: @user_volunteer,
