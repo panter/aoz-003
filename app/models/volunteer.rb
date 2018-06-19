@@ -379,6 +379,22 @@ class Volunteer < ApplicationRecord
     department.blank? && undecided?
   end
 
+  def ready_for_invitation?
+    internal? && user.present?
+  end
+
+  def pending_invitation?
+    user.present? && !user.invitation_accepted?
+  end
+
+  def user_needed_for_invitation?
+    !user.present? && accepted?
+  end
+
+  def invite_user
+    user.invite! if ready_for_invitation?
+  end
+
   private
 
   def kinds_done_ids
@@ -417,9 +433,7 @@ class Volunteer < ApplicationRecord
     #
     # note: we used to ask here for user.invited_to_sign_up? instaed of user.invitation_sent_at.blank but
     # it lead to emails sent out twice to users that already set their password
-    if internal? && user.present? && user.invitation_sent_at.blank?
-      user.invite!
-    end
+    invite_user if user&.invitation_sent_at.blank?
   end
 
   def user_deleted?

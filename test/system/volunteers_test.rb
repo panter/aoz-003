@@ -295,6 +295,51 @@ class VolunteersTest < ApplicationSystemTestCase
     end
   end
 
+  test 'imported volunteer can be invited more than once' do
+    use_rack_driver
+    really_destroy_with_deleted(Volunteer)
+    volunteer = create :volunteer
+    volunteer.user.really_destroy!
+    import = Import.create(base_origin_entity: 'tbl_Personenrollen', access_id: 1,
+      importable: volunteer, store: { haupt_person: { email: 'imported@example.com' } })
+    assert_equal 1, ActionMailer::Base.deliveries.size
+
+    visit volunteers_path
+    assert page.has_text? 'Kein Login'
+    assert page.has_text? 'Importiert'
+
+    click_link 'Anzeigen', href: volunteer_path(volunteer)
+    assert page.has_text? 'User Account erstellen'
+    assert page.has_text? "Für die Emailadresse #{import.email} einen Account erstellen"
+    assert page.has_field? 'Mailadresse', with: import.email
+    refute page.has_css? '#reinvite_field', visible: false
+
+    # invite volunteer for the first time
+    click_button 'Einladung an angegebene E-Mail verschicken'
+    assert page.has_text? 'User Account erstellen'
+    assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
+    assert page.has_text? "Für die Emailadresse #{import.email} einen Account erstellen"
+    assert page.has_field? 'Mailadresse', with: import.email
+    assert page.has_css? '#reinvite_field', visible: false
+    assert_equal 2, ActionMailer::Base.deliveries.size
+
+    # invite volunteer second time
+    click_button 'Einladung an angegebene E-Mail verschicken'
+    assert page.has_text? 'User Account erstellen'
+    assert page.has_text? 'Freiwillige/r erhält eine Accountaktivierungs-Email.'
+    assert page.has_text? "Für die Emailadresse #{import.email} einen Account erstellen"
+    assert page.has_field? 'Mailadresse', with: import.email
+    assert page.has_css? '#reinvite_field', visible: false
+    assert_equal 3, ActionMailer::Base.deliveries.size
+
+    # manually accept volunteer's user
+    volunteer.reload.user.update(invitation_accepted_at: Time.now)
+    visit edit_volunteer_path(volunteer)
+    refute page.has_text? 'User Account erstellen'
+    refute page.has_text? "Für die Emailadresse #{import.email} einen Account erstellen"
+    refute page.has_css? '#reinvite_field', visible: false
+  end
+
   test 'not resigned volunteer can not be terminated via acceptance select in edit' do
     @undecided = create :volunteer, acceptance: :undecided
     @invited = create :volunteer, acceptance: :invited
