@@ -83,6 +83,11 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: :user_deleted?
 
+  scope :process_eq, lambda { |process|
+    return unless  process.present?
+    return where(external: false, user: nil) if process == 'not_logged_in'
+    where(acceptance: process)
+  }
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
