@@ -103,6 +103,57 @@ class AssignmentsTest < ApplicationSystemTestCase
     end
   end
 
+  test 'social_worker can show and download assigment pdf' do
+    use_rack_driver
+
+    social_worker = create :social_worker
+    client = create :client, user: social_worker
+    assignment = create :assignment, client: client
+    another_assignment = create :assignment
+
+    # use short email addresses to avoid linebreak issues in PDFs
+    assignment.client.contact.update(primary_email: 'c@site.com')
+    assignment.volunteer.contact.update(primary_email: 'v@site.com')
+    assignment.involved_authority_contact.update(primary_email: 'sw@site.com')
+
+    # generate PDFs first via superadmin
+    login_as @user
+
+    visit edit_assignment_path(assignment)
+    click_button 'Begleitung aktualisieren', match: :first
+    visit edit_assignment_path(another_assignment)
+    click_button 'Begleitung aktualisieren', match: :first
+    visit client_path(client)
+    assert page.has_link? 'Herunterladen'
+    visit client_path(another_assignment.client)
+    assert page.has_link? 'Herunterladen'
+
+    # check show page and pdf download via social worker
+    login_as social_worker
+
+    visit client_path(another_assignment.client)
+    refute page.has_link? 'Anzeigen'
+    refute page.has_link? 'Herunterladen'
+
+    visit client_path(client)
+    assert page.has_link? 'Anzeigen'
+    assert page.has_link? 'Herunterladen'
+
+    click_link 'Anzeigen'
+    assert page.has_text? 'Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten'
+    assert page.has_text? "#{assignment.client.contact.primary_email}"
+    assert page.has_text? "#{assignment.volunteer.contact.primary_email}"
+    assert page.has_text? "#{assignment.involved_authority_contact.primary_email}"
+
+    visit client_path(client)
+    click_link 'Herunterladen'
+    pdf = load_pdf(page.body)
+    assert_equal 1, pdf.page_count
+    assert_match /#{assignment.client.contact.primary_email}/, pdf.pages.first.text
+    assert_match /#{assignment.volunteer.contact.primary_email}/, pdf.pages.first.text
+    assert_match /#{assignment.involved_authority_contact.primary_email}/, pdf.pages.first.text
+  end
+
   test 'assignments_print_view_is_not_paginated' do
     Assignment.with_deleted.map(&:really_destroy!)
     45.times { create :assignment }
