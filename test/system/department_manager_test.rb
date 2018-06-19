@@ -33,7 +33,8 @@ class DepartmentManagerTest < ApplicationSystemTestCase
   test 'can see a group offer volunteer and return to the group offer' do
     department = @department_manager.department.first
     volunteer = create :volunteer, department: department
-    group_offer = create :group_offer, volunteers: [volunteer], department: department
+    group_offer = create :group_offer, department: department
+    create :group_assignment, volunteer: volunteer, group_offer: group_offer
     visit volunteer_path(volunteer)
     assert page.has_link? group_offer.title
     visit group_offer_path(group_offer)
@@ -212,8 +213,10 @@ class DepartmentManagerTest < ApplicationSystemTestCase
   test 'department_manager has no destroy and feedback links on volunteer show' do
     department = @department_manager.department.first
     volunteer = create :volunteer, department: department
-    group_offer = create :group_offer, volunteers: [volunteer], department: department
     assignment = create :assignment, volunteer: volunteer
+    group_offer = create :group_offer, department: department
+    create :group_assignment, volunteer: volunteer, group_offer: group_offer
+
     visit volunteer_path(volunteer)
     assert page.has_link? group_offer.title
     assert page.has_link? assignment.client.contact.full_name
