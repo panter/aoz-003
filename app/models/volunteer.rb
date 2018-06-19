@@ -391,7 +391,7 @@ class Volunteer < ApplicationRecord
     !user.present? && accepted?
   end
 
-  def email_valid_for_invite?
+  def invite_email_valid?
     invite_email&.match(Devise.email_regexp)
   end
 
