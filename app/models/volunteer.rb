@@ -317,6 +317,19 @@ class Volunteer < ApplicationRecord
     end
   end
 
+  def self.process_filters
+    acceptance_filters.append(
+      {
+        q: :acceptance_eq,
+        value: 'not_logged_in',
+        text: human_attribute_name(:not_logged_in)
+      }
+    ).map do |filter|
+      filter[:q] = :process_eq
+      filter
+    end
+  end
+
   def assignment_group_offer_collection
     assignments_hour_form_collection + group_offers_form_collection
   end
@@ -362,7 +375,7 @@ class Volunteer < ApplicationRecord
   end
 
   def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'not_resigned']
+    ['active', 'inactive', 'not_resigned', 'process_eq']
   end
 
   def terminate!
