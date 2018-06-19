@@ -32,6 +32,11 @@ class AssignmentPolicyTest < PolicyAssertions::Test
     client = create :client, user: social_worker
     assignment = create(:assignment, client: client)
     assert_permit social_worker, assignment, *actions_list(:show)
+
+    client = create :client, involved_authority: social_worker
+    assignment = create(:assignment, client: client)
+    assert_permit social_worker, assignment, *actions_list(:show)
+
     refute_permit social_worker, Assignment, *actions_list, 'show_comments?'
   end
 
