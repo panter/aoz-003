@@ -111,6 +111,11 @@ class AssignmentsTest < ApplicationSystemTestCase
     assignment = create :assignment, client: client
     another_assignment = create :assignment
 
+    # use short email addresses to avoid linebreak issues in PDFs
+    assignment.client.contact.update(primary_email: 'c@site.com')
+    assignment.volunteer.contact.update(primary_email: 'v@site.com')
+    assignment.involved_authority_contact.update(primary_email: 'sw@site.com')
+
     # generate PDFs first via superadmin
     login_as @user
 
