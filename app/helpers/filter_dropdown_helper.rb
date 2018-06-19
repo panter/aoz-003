@@ -134,7 +134,7 @@ module FilterDropdownHelper
   def list_filter_link_class(filter, value)
     if !filter_active?(filter, value)
       ''
-    elsif filter == :process_eq
+    elsif [:process_eq, :acceptance_eq].include? filter
       "bg-#{value}"
     else
       'bg-success'
