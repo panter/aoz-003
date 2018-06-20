@@ -9,7 +9,13 @@ class AssignmentPolicy < ApplicationPolicy
 
   def superadmin_or_department_manager_creation_or_volunteer_or_social_worker_related?
     superadmin_or_department_manager_creation_or_volunteer_related? ||
-      (record_present? && social_worker? && user.clients.include?(record.client))
+      social_worker_owns_or_authority?
+  end
+
+  def social_worker_owns_or_authority?
+    record_present? && social_worker? &&
+      (user.clients.include?(record.client) ||
+       user.involved_authorities.include?(record.client))
   end
 
   # controller action policies
