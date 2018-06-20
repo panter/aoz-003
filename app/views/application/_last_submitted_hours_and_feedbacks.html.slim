@@ -1,15 +1,17 @@
 h1 Zuletzt übermittelte Stunden und Feedbacks
 
-.submit-box
-  .col-xs-12
-    p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
 
-  = simple_form_for(confirmable, class: 'col-xs-12',
-      url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect, ), method: :put) do |f|
-    .row
-      .col-xs-12
-        = f.submit value: 'Bestätigen', class: 'btn btn-lg-accepted'
-        = f.simple_fields_for :volunteer do |vf|
+h2.m-b-20.m-t-30
+  'Einsatz
+  = link_to confirmable.to_label, polymorphic_path([confirmable.volunteer, confirmable]), target: '_blank'
+
+h3 Spesen
+= simple_form_for(confirmable, class: 'col-xs-12',
+    url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect, ), method: :put) do |f|
+  .row
+    .col-xs-12
+      = f.simple_fields_for :volunteer do |vf|
+        .row
           .col-xs-12.text-left
             = checkbox_toggle_collapse(vf, :waive, '#not-waive-expenses', check_shows: false)
           .col-xs-12.text-left#not-waive-expenses
@@ -18,11 +20,6 @@ h1 Zuletzt übermittelte Stunden und Feedbacks
                 = vf.input :iban
               .col-xs-4.text-left
                 = vf.input :bank
-
-h2.m-b-20.m-t-30
-  'Einsatz
-  = link_to confirmable.to_label, polymorphic_path([confirmable.volunteer, confirmable]), target: '_blank'
-
 h3 Stunden
 = render 'last_submitted_hours', hours: hours, confirmable: confirmable
 p.m-b-30= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
@@ -31,3 +28,7 @@ h3 Feedbacks
 = render 'last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
 p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: request.fullpath)
 
+.submit-box
+  .col-xs-12
+    p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
+    = link_to 'Bestätigen', '#', class: 'btn btn-lg-accepted submit-button'
