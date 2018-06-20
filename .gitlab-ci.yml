@@ -23,7 +23,7 @@ test:
       - /gems_cache
 
 system:
-  image: git.panter.ch:5001/open-source/aoz-003/system:2.36-slim
+  image: git.panter.ch:5001/open-source/aoz-003/system:2.36-bundled
   stage: test
   script:
     - bundle exec rails test:system
