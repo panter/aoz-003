@@ -9,8 +9,6 @@ class Feedback < ApplicationRecord
     inverse_of: 'reviewed_feedbacks', optional: true
   belongs_to :feedbackable, polymorphic: true, optional: true
 
-  validates :comments, presence: true
-
   scope :assignment, (-> { where(feedbackable_type: 'Assignment') })
   scope :group_offer, (-> { where(feedbackable_type: 'GroupOffer') })
   scope :from_assignments, lambda { |assignment_ids|

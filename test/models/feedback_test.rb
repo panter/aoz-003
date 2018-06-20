@@ -1,13 +1,6 @@
 require 'test_helper'
 
 class FeedbackTest < ActiveSupport::TestCase
-  test 'feedback with no comments is invalid' do
-    volunteer = create :volunteer
-    invalid_feedback = Feedback.new(volunteer: volunteer, author: volunteer.user)
-    refute invalid_feedback.valid?
-    assert_equal ["darf nicht leer sein"], invalid_feedback.errors.messages[:comments]
-  end
-
   test 'since_last_submitted_scope' do
     volunteer = create :volunteer
     assignment = create :assignment, volunteer: volunteer
