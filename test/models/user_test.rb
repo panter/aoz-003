@@ -136,4 +136,21 @@ class UserTest < ActiveSupport::TestCase
     assert superadmin.missing_profile?
     refute volunteer.missing_profile?
   end
+
+  test 'with_pending_invitation' do
+    user = User.create(email: 'user@example.com', role: :volunteer)
+    assert_nil user.invitation_sent_at
+    assert_nil user.invitation_accepted_at
+
+    user.invite!
+    refute_nil user.reload.invitation_sent_at
+    assert_nil user.invitation_accepted_at
+
+    users = User.with_pending_invitation
+
+    assert_includes users, user
+    [@user, @superadmin, @social_worker, @department_manager].each do |user|
+      assert_not_includes users, user
+    end
+  end
 end

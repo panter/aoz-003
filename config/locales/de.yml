@@ -227,7 +227,7 @@ de:
       resigned_at: Beendet am
       undecided: Angemeldet
       undecided_at: Angemeldet am
-      not_logged_in: Kein Login
+      havent_logged_in: Nie eingeloggt
     create: &id-volunteers-create
       <<: *id-availability
       acceptance: *id-volunteer-acceptance
