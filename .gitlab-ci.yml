@@ -36,4 +36,3 @@ system:
     policy: pull
     paths:
       - /gems_cache
-
