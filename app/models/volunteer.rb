@@ -391,8 +391,19 @@ class Volunteer < ApplicationRecord
     !user.present? && accepted?
   end
 
+  def invite_email_valid?
+    invite_email&.match(Devise.email_regexp)
+  end
+
+  def invite_email
+    user&.email || import&.email
+  end
+
   def invite_user
-    user.invite! if ready_for_invitation?
+    if ready_for_invitation?
+      user.update_attribute(:email, contact.primary_email)
+      user.invite!
+    end
   end
 
   private

@@ -4,8 +4,8 @@ p.text-warning Dieses Freiwilligenprofil wurde von Access importiert.
   p.text-warning Ein Useraccount wurde bereits erstellt.
 - if volunteer.user_needed_for_invitation? || volunteer.pending_invitation?
   h3.small User Account erstellen
-  - if volunteer.import.email_valid?
-    p Für die Emailadresse #{mail_to "#{volunteer.import.email}", volunteer.import.email} einen Account erstellen
+  - if volunteer.invite_email_valid?
+    p Für die Emailadresse #{mail_to "#{volunteer.invite_email}", volunteer.invite_email} einen Account erstellen
   - elsif volunteer.import.email.present?
       p.text-danger Scheinbar ist die importierte Mailadresse nicht gültig.
   - else
@@ -19,6 +19,6 @@ p.text-warning Dieses Freiwilligenprofil wurde von Access importiert.
           = hidden_field_tag :reinvite, true, id: 'reinvite_field'
         .form-group.col-xs-12.col-md-4
           = c.label :primary_email
-          = c.input_field :primary_email, value: volunteer.import.email_valid? ? volunteer.import.email : '',
+          = c.input_field :primary_email, value: volunteer.invite_email_valid? ? volunteer.invite_email : '',
             class: 'form-control'
     = f.button :submit, value: 'Einladung an angegebene E-Mail verschicken'
