@@ -8,6 +8,7 @@ variables:
   RAILS_ENV: test
   POSTGRES_DB: aoz_test
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
+  CHROME_PATH: /usr/bin/google-chrome
 
 before_script:
   - bundle install --without development --path /gems_cache
