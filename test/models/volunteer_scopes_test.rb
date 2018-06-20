@@ -400,7 +400,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     Volunteer.destroy_all
 
     # load test data
-    @volunteer_imported = create :volunteer, :imported
+    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
     Volunteer.acceptance_collection.each do |acceptance|
       volunteer = create :volunteer, acceptance: acceptance
       instance_variable_set("@volunteer_#{acceptance}", volunteer)
@@ -421,7 +421,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     end
 
     # special case for volunteers whose haven't logged in
-    volunteers = Volunteer.process_eq('not_logged_in')
-    assert_includes volunteers, @volunteer_imported
+    @volunteer_not_logged_in.invite_user
+    volunteers = Volunteer.process_eq('havent_logged_in')
+    assert_includes volunteers, @volunteer_not_logged_in
   end
 end
