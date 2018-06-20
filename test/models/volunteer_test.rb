@@ -189,8 +189,8 @@ class VolunteerTest < ActiveSupport::TestCase
   test 'volunteer can be manually reinvited' do
     volunteer = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
     invitation_token = volunteer.user.invitation_token
-    invitation_sent_at = volunteer.user.invitation_sent_at
     refute_nil volunteer.user_id
+    refute_nil volunteer.user.invitation_sent_at
     assert volunteer.ready_for_invitation?
     assert volunteer.pending_invitation?
     assert volunteer.user.invited_to_sign_up?
@@ -201,7 +201,7 @@ class VolunteerTest < ActiveSupport::TestCase
     assert volunteer.pending_invitation?
     assert volunteer.user.invited_to_sign_up?
     assert_not_equal invitation_token, volunteer.user.invitation_token
-    assert_not_equal invitation_sent_at, volunteer.user.invitation_sent_at
+    refute_nil volunteer.user.invitation_sent_at
     assert_nil volunteer.user.invitation_accepted_at
 
     volunteer.user.accept_invitation!
