@@ -2,8 +2,13 @@ require 'test_helper'
 require 'selenium/webdriver'
 
 Capybara.register_driver :chrome_headless do |app|
+  chrome_bin = ENV['CHROME_PATH']
+  chrome_bin ||= system('which google-chrome') ? `which google-chrome`[0..-2] : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
   chrome_options = {
-    chromeOptions: { args: %w[headless disable-gpu no-sandbox window-size=1600x2000] }
+    chromeOptions: { 
+      args: %w[headless disable-gpu no-sandbox window-size=1600x2000],
+      binary: chrome_bin
+    }
   }
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chrome_options)
   Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
