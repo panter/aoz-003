@@ -15,6 +15,22 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     login_as @volunteer.user
   end
 
+  # TODO: find a way to disable Chrome's unsaved changes alert for the form
+  # test 'last_submitted_hours_and_feedbacks form is autosaved' do
+  #   visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
+  #   fill_in 'IBAN', with: 'CH12345'
+  #   fill_in 'Name der Bank', with: 'Name of the bank'
+  #   visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
+  #   assert page.has_field? 'IBAN', with: 'CH12345'
+  #   assert page.has_field? 'Name der Bank', with: 'Name of the bank'
+  #
+  #   check 'Ich verzichte auf die Auszahlung von Spesen.'
+  #   visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
+  #   assert page.has_field? 'Ich verzichte auf die Auszahlung von Spesen.', checked: true
+  #   refute page.has_field? 'IBAN'
+  #   refute page.has_field? 'Name der Bank'
+  # end
+
   test 'volunteer_can_confirm_hours_and_feedbacks_for_their_assignment' do
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
 
