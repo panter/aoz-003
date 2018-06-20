@@ -83,6 +83,11 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: :user_deleted?
 
+  scope :process_eq, lambda { |process|
+    return unless process.present?
+    return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
+    where(acceptance: process)
+  }
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
@@ -312,6 +317,19 @@ class Volunteer < ApplicationRecord
     end
   end
 
+  def self.process_filters
+    acceptance_filters.append(
+      {
+        q: :acceptance_eq,
+        value: 'havent_logged_in',
+        text: human_attribute_name(:havent_logged_in)
+      }
+    ).map do |filter|
+      filter[:q] = :process_eq
+      filter
+    end
+  end
+
   def assignment_group_offer_collection
     assignments_hour_form_collection + group_offers_form_collection
   end
@@ -357,7 +375,7 @@ class Volunteer < ApplicationRecord
   end
 
   def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'not_resigned']
+    ['active', 'inactive', 'not_resigned', 'process_eq']
   end
 
   def terminate!
@@ -377,6 +395,33 @@ class Volunteer < ApplicationRecord
 
   def assignable_to_department?
     department.blank? && undecided?
+  end
+
+  def ready_for_invitation?
+    internal? && user.present?
+  end
+
+  def pending_invitation?
+    user.present? && !user.invitation_accepted?
+  end
+
+  def user_needed_for_invitation?
+    !user.present? && accepted?
+  end
+
+  def invite_email_valid?
+    invite_email&.match(Devise.email_regexp)
+  end
+
+  def invite_email
+    user&.email || import&.email
+  end
+
+  def invite_user
+    if ready_for_invitation?
+      user.update_attribute(:email, contact.primary_email)
+      user.invite!
+    end
   end
 
   private
@@ -417,9 +462,7 @@ class Volunteer < ApplicationRecord
     #
     # note: we used to ask here for user.invited_to_sign_up? instaed of user.invitation_sent_at.blank but
     # it lead to emails sent out twice to users that already set their password
-    if internal? && user.present? && user.invitation_sent_at.blank?
-      user.invite!
-    end
+    invite_user if user&.invitation_sent_at.blank?
   end
 
   def user_deleted?

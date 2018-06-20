@@ -8,8 +8,9 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
     @assignment = create :assignment, volunteer: @volunteer
     @superadmin = create :user
     @other_volunteer = create :volunteer
-    @group_offer = create :group_offer, title: 'some_group_offer',
-      volunteers: [@volunteer, @other_volunteer]
+    @group_offer = create :group_offer, title: 'some_group_offer'
+    create :group_assignment, volunteer: @volunteer, group_offer: @group_offer
+    create :group_assignment, volunteer: @other_volunteer, group_offer: @group_offer
   end
 
   def setup_feedbacks
@@ -70,8 +71,9 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
 
   test 'group_offer_trial_feedbacks_index_contains_only_feedbacks_related_to_that_group_offer' do
     setup_feedbacks
-    other_group_offer = create :group_offer, title: 'some_other_group_offer',
-      volunteers: [@volunteer, @other_volunteer]
+    other_group_offer = create :group_offer, title: 'some_other_group_offer'
+    create :group_assignment, volunteer: @volunteer, group_offer: other_group_offer
+    create :group_assignment, volunteer: @other_volunteer, group_offer: other_group_offer
     create :trial_feedback, volunteer: @volunteer, trial_feedbackable: other_group_offer,
       author: @user_volunteer, body: 'same_volunteer_other_groupoffer_feedback'
     login_as @user_volunteer
@@ -114,11 +116,9 @@ class TrialFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'volunteer_can_create_only_their_trial_feedbacks_on_group_offer' do
-    other_group_offer = create :group_offer, title: 'other_group_offer',
-      volunteers: [
-        create(:volunteer),
-        create(:volunteer)
-      ]
+    other_group_offer = create :group_offer, title: 'other_group_offer'
+    create :group_assignment, volunteer: create(:volunteer), group_offer: other_group_offer
+    create :group_assignment, volunteer: create(:volunteer), group_offer: other_group_offer
     login_as @user_volunteer
     visit new_polymorphic_path([@volunteer, other_group_offer, TrialFeedback])
     assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'

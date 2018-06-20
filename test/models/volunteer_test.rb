@@ -174,6 +174,42 @@ class VolunteerTest < ActiveSupport::TestCase
     assert_equal volunteer.import.email, volunteer.user.email
   end
 
+  test 'imported volunteer can be accepted without user account' do
+    volunteer = create(:volunteer, :imported)
+    volunteer.update_column(:acceptance, :accepted)
+    assert volunteer.user_needed_for_invitation?
+    refute volunteer.ready_for_invitation?
+
+    volunteer.contact.primary_email = volunteer.import.email
+    volunteer.save
+    refute volunteer.user_needed_for_invitation?
+    assert volunteer.ready_for_invitation?
+  end
+
+  test 'volunteer can be manually reinvited' do
+    volunteer = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    invitation_token = volunteer.user.invitation_token
+    refute_nil volunteer.user_id
+    refute_nil volunteer.user.invitation_sent_at
+    assert volunteer.ready_for_invitation?
+    assert volunteer.pending_invitation?
+    assert volunteer.user.invited_to_sign_up?
+    assert_nil volunteer.user.invitation_accepted_at
+
+    volunteer.invite_user
+    assert volunteer.ready_for_invitation?
+    assert volunteer.pending_invitation?
+    assert volunteer.user.invited_to_sign_up?
+    assert_not_equal invitation_token, volunteer.user.invitation_token
+    refute_nil volunteer.user.invitation_sent_at
+    assert_nil volunteer.user.invitation_accepted_at
+
+    volunteer.user.accept_invitation!
+    refute_nil volunteer.user.invitation_accepted_at
+    assert_nil volunteer.user.invitation_token
+    refute volunteer.pending_invitation?
+  end
+
   test 'volunter belongs to a department and department has many volunteers' do
     department = create :department
     3.times { volunteer = create :volunteer, department: department }

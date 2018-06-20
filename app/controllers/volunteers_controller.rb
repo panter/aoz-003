@@ -99,6 +99,7 @@ class VolunteersController < ApplicationController
   def account
     @volunteer.contact.primary_email = volunteer_params[:contact_attributes][:primary_email]
     if @volunteer.save && @volunteer.user&.invited_to_sign_up?
+      @volunteer.invite_user if needs_reinvite?
       redirect_back(fallback_location: edit_volunteer_path(@volunteer),
         notice: 'Freiwillige/r erhält eine Accountaktivierungs-Email.')
     elsif @volunteer.contact.errors.messages[:primary_email]
@@ -142,5 +143,9 @@ class VolunteersController < ApplicationController
 
   def volunteer_params
     params.require(:volunteer).permit policy(Volunteer).permitted_attributes
+  end
+
+  def needs_reinvite?
+    params[:reinvite].presence == 'true'
   end
 end

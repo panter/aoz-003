@@ -184,4 +184,46 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       assert page.has_text? 'Beendet'
     end
   end
+
+  test 'filter by process' do
+    # clean existing volunteers first created by setup
+    Volunteer.destroy_all
+
+    # load test data
+    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    Volunteer.acceptance_collection.each do |acceptance|
+      volunteer = create :volunteer, acceptance: acceptance, salutation: 'mrs'
+      instance_variable_set("@volunteer_#{acceptance}", volunteer)
+    end
+
+    # test process filter dropdown
+    visit volunteers_path
+
+    click_link 'Prozess'
+    click_link 'Nie eingeloggt', match: :first
+    assert page.has_text? @volunteer_not_logged_in
+
+    Volunteer.process_eq('havent_logged_in').each do |volunteer|
+      within "tr##{dom_id volunteer}" do
+        assert page.has_text? 'Nie eingeloggt'
+      end
+    end
+
+    Volunteer.acceptance_collection.each do |acceptance|
+      volunteer = instance_variable_get("@volunteer_#{acceptance}")
+      other_acceptances = Volunteer.acceptance_collection - [acceptance]
+
+      visit volunteers_path
+      click_link 'Prozess'
+      click_link Volunteer.human_attribute_name(acceptance), match: :first
+
+      assert page.has_text? volunteer
+
+      other_acceptances.each do |acceptance|
+        other_volunteer = instance_variable_get("@volunteer_#{acceptance}")
+        refute page.has_text? other_volunteer
+      end
+    end
+
+  end
 end

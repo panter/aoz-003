@@ -118,14 +118,17 @@ class DepartmentsTest < ApplicationSystemTestCase
 
   test 'departments group offers with volunteers are displayed' do
     department = @department_manager.department.first
-    volunteers = [create(:volunteer), create(:volunteer)]
-    group_offer = create :group_offer, volunteers: volunteers, department: department
+    volunteer_one = create(:volunteer)
+    volunteer_two = create(:volunteer)
+    group_offer = create :group_offer, department: department
+    create :group_assignment, group_offer: group_offer, volunteer: volunteer_one
+    create :group_assignment, group_offer: group_offer, volunteer: volunteer_two
+
     login_as @department_manager
     visit department_path(department)
     assert page.has_link? group_offer.title
-    volunteers.each do |volunteer|
-      assert page.has_text? volunteer.full_name
-    end
+    assert page.has_text? volunteer_one.full_name
+    assert page.has_text? volunteer_two.full_name
   end
 
   test 'department with department manager without profile has valid link on show' do

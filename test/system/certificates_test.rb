@@ -15,8 +15,8 @@ class CertificatesTest < ApplicationSystemTestCase
   end
 
   test 'creating_volunteer_certificate_form_has_right_content_prefilled' do
-    group_offer = create :group_offer, volunteers: [@volunteer]
-    group_offer.group_assignments.last.update(period_start: 2.years.ago)
+    group_offer = create :group_offer
+    create :group_assignment, volunteer: @volunteer, group_offer: group_offer, period_start: 2.years.ago
     visit volunteer_path(@volunteer)
     first(:link, 'Nachweis').click
     assert page.has_text? 'Nachweis erfassen'
@@ -70,8 +70,8 @@ class CertificatesTest < ApplicationSystemTestCase
 
   test 'volunteer_that_has_only_group_offers_can_have_certificate' do
     volunteer = create :volunteer
-    create :group_offer, volunteers: [volunteer]
-    volunteer.group_assignments.last.update(period_start: 2.months.ago)
+    group_offer = create :group_offer
+    create :group_assignment, volunteer: volunteer, group_offer: group_offer, period_start: 2.years.ago
 
     visit volunteer_path(volunteer)
     first(:link, 'Nachweis').click

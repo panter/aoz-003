@@ -394,4 +394,35 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert_not_includes volunteers_with_user, volunteer_without_user1
     assert_not_includes volunteers_with_user, volunteer_without_user2
   end
+
+  test 'process returns volunteers filtered by acceptance or account status' do
+    # clean existing volunteers first created by setup
+    Volunteer.destroy_all
+
+    # load test data
+    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    Volunteer.acceptance_collection.each do |acceptance|
+      volunteer = create :volunteer, acceptance: acceptance
+      instance_variable_set("@volunteer_#{acceptance}", volunteer)
+    end
+
+    # test volunteers by acceptance
+    Volunteer.acceptance_collection.each do |acceptance|
+      volunteer = instance_variable_get("@volunteer_#{acceptance}")
+      volunteers = Volunteer.process_eq(acceptance)
+      other_acceptances = Volunteer.acceptance_collection - [acceptance]
+
+      assert_includes volunteers, volunteer
+
+      other_acceptances.each do |acceptance|
+        other_volunteer = instance_variable_get("@volunteer_#{acceptance}")
+        assert_not_includes volunteers, other_volunteer
+      end
+    end
+
+    # special case for volunteers whose haven't logged in
+    @volunteer_not_logged_in.invite_user
+    volunteers = Volunteer.process_eq('havent_logged_in')
+    assert_includes volunteers, @volunteer_not_logged_in
+  end
 end
