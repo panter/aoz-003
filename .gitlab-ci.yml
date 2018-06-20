@@ -10,20 +10,20 @@ variables:
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
 
 before_script:
-  - bundle install --path vendor
+  - bundle install --without development --path /gems_cache
   - bundle exec rails db:schema:load
 
 test:
-  image: git.panter.ch:5001/open-source/aoz-003/unit:2.4.4
+  image: git.panter.ch:5001/open-source/aoz-003/unit:2.4.4-slim
   stage: test
   script:
     - bundle exec rails test
   cache:
     paths:
-      - vendor
+      - /gems_cache
 
 system:
-  image: git.panter.ch:5001/open-source/aoz-003/system:2.36
+  image: git.panter.ch:5001/open-source/aoz-003/system:2.36-slim
   stage: test
   script:
     - bundle exec rails test:system
@@ -35,4 +35,5 @@ system:
   cache:
     policy: pull
     paths:
-      - vendor
+      - /gems_cache
+
