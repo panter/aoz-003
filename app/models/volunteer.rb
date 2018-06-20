@@ -84,8 +84,8 @@ class Volunteer < ApplicationRecord
     unless: :user_deleted?
 
   scope :process_eq, lambda { |process|
-    return unless  process.present?
-    return where(external: false, user: nil) if process == 'not_logged_in'
+    return unless process.present?
+    return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
     where(acceptance: process)
   }
   scope :with_hours, (-> { joins(:hours) })
@@ -321,8 +321,8 @@ class Volunteer < ApplicationRecord
     acceptance_filters.append(
       {
         q: :acceptance_eq,
-        value: 'not_logged_in',
-        text: human_attribute_name(:not_logged_in)
+        value: 'havent_logged_in',
+        text: human_attribute_name(:havent_logged_in)
       }
     ).map do |filter|
       filter[:q] = :process_eq

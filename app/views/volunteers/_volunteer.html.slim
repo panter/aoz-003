@@ -24,6 +24,9 @@ tr id=(dom_id(volunteer))
     td.button-acceptance.index-action-cell
       = link_to t(".acceptance.#{volunteer.acceptance}"), '#',
         class: "btn btn-xs btn-acceptance-#{volunteer.acceptance}"
+      - if volunteer.pending_invitation?
+        br
+        'Nie eingeloggt
       - if !volunteer.external && !volunteer.user
         br
         'Kein Login
