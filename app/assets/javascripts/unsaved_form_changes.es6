@@ -3,7 +3,8 @@ $(() => {
   let formSubmitting = false, formData = $(formFilter).serialize();
 
   $(window).on('beforeunload', (event) => {
-    if (!formSubmitting && ($('.has-error').length || formData !== $(formFilter).serialize())) {
+    if ($('.form-auto-save').length === 0 && (!formSubmitting && ($('.has-error').length || formData !== $(formFilter).serialize()))) {
+
       event.returnValue = "Möchten Sie Ihre ungespeicherten Änderungen verwerfen?";
       return event.returnValue;
     }

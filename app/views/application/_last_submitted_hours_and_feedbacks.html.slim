@@ -1,4 +1,4 @@
-= simple_form_for(confirmable, class: 'col-xs-12',
+= simple_form_for(confirmable, html: { class: 'col-xs-12 form-auto-save'}, 
     url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect, ), method: :put) do |f|
   h1 Zuletzt übermittelte Stunden und Feedbacks
 
