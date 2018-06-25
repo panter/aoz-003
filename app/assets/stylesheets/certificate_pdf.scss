@@ -56,8 +56,13 @@ body {
     overflow: visible;
     width: 50%;
 
-    input {
-      margin-right: 5px;
+    svg {
+      display: inline-block;
+      float: none;
+      height: $cert-font-size;
+      margin: 0 5px 0 0;
+      padding: 0;
+      width: $cert-font-size;
     }
   }
 
