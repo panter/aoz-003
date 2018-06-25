@@ -10,5 +10,8 @@
 
 WickedPdf.config = {
   layout: 'pdf.html',
-  encoding: 'UTF-8'
+  encoding: 'UTF-8',
+  page_size: 'A4',
+  print_media_type: true,
+  no_background: true
 }
