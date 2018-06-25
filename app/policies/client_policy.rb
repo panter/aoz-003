@@ -22,6 +22,7 @@ class ClientPolicy < ApplicationPolicy
   alias_method :new?,          :superadmin_or_department_manager_or_social_worker?
   alias_method :create?,       :superadmin_or_department_manager_or_social_worker?
   alias_method :show?,         :superadmin_or_department_manager_or_social_worker?
+  alias_method :destroy?,      :superadmin_or_department_manager_or_social_worker?
   alias_method :edit?,         :superadmin_or_client_responsible?
   alias_method :update?,       :superadmin_or_client_responsible?
   alias_method :set_terminated?, :superadmin_or_department_managers_record?
