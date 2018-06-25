@@ -9,7 +9,7 @@ tr id=dom_id(client)
       = button_link navigation_glyph(:delete), client,
           method: :delete, title: 'Löschen',
           data: { confirm: 'Möchten Sie diese/n Klient/in wirklich löschen?' }
-  - if policy(Client).superadmin_privileges?
+  - if policy(Client).superadmin_or_department_manager_or_social_worker?
     td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
       class: "btn btn-xs btn-acceptance-#{client.acceptance} btn-acceptance-client"
   td.button-acceptance= assignment_status_badge(client)
