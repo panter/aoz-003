@@ -79,7 +79,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    padding-bottom: 2cm;
+    padding-bottom: 2cm + ($cert-font-size * 1.5);
     padding-left: 2cm;
     padding-right: 4cm;
     padding-top: 2.6cm;
@@ -89,9 +89,14 @@ body {
     }
 
     .signature {
+      bottom: 2cm;
       display: flex;
-      flex: 0 1 auto;
-      width: 100%;
+      height: $cert-font-size * 1.5;
+      left: 0;
+      padding-left: 2cm;
+      padding-right: 4cm;
+      position: absolute;
+      width: $a4-short-side;
     }
   }
 }
