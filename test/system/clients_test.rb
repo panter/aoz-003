@@ -296,4 +296,58 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert_text 'Aktiv'
   end
+
+  test 'superadmin, department_manager, social_worker can destroy inactive clients' do
+    [@superadmin, @department_manager, @social_worker].each do |user|
+      client = create :client, user: user
+      client_css = "##{dom_id client}"
+      login_as user
+
+      visit clients_path
+      assert page.has_css? client_css
+      within client_css do
+        assert page.has_link? 'Löschen'
+        assert page.has_text? client
+      end
+
+      page.accept_confirm do
+        click_link 'Löschen'
+      end
+      refute page.has_link? 'Löschen'
+      refute page.has_text? client
+      refute page.has_css? client_css
+    end
+  end
+
+  test 'no user can destroy client with assignment associated' do
+    [@superadmin, @department_manager, @social_worker].each do |user|
+      client = create :client, user: user
+      assignment = create :assignment, client: client
+      client_css = "##{dom_id client}"
+      login_as user
+
+      visit clients_path
+      within client_css do
+        refute page.has_link? 'Löschen'
+        assert page.has_text? client
+      end
+    end
+  end
+
+  test 'no user can destroy client with deleted assignment associated' do
+    [@superadmin, @department_manager, @social_worker].each do |user|
+      client = create :client, user: user
+      assignment = create :assignment, client: client
+      client_css = "##{dom_id client}"
+
+      assignment.destroy
+      login_as user
+
+      visit clients_path
+      within client_css do
+        refute page.has_link? 'Löschen'
+        assert page.has_text? client
+      end
+    end
+  end
 end

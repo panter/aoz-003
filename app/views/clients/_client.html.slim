@@ -1,10 +1,14 @@
-tr
+tr id=dom_id(client)
   td.index-action-cell.hidden-print
     = button_link navigation_glyph(:show), client_path(client), title: 'Anzeigen'
     - if policy(client).edit?
       = button_link navigation_glyph(:edit), edit_client_path(client), title: 'Bearbeiten'
     - if policy(client).set_terminated?
       = button_link navigation_glyph(:terminate), set_terminated_client_path(client), method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }, title: 'Beenden'
+    - if policy(client).destroy? && client.destroyable?
+      = button_link navigation_glyph(:delete), client,
+          method: :delete, title: 'Löschen',
+          data: { confirm: 'Are you sure you want to delete this client?' }
   - if policy(Client).superadmin_privileges?
     td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
       class: "btn btn-xs btn-acceptance-#{client.acceptance} btn-acceptance-client"

@@ -2,12 +2,12 @@ require 'test_helper'
 
 class CliensControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @superadmin = create :user, :with_clients
+    @superadmin = create :user
     @department_manager = create :department_manager
     @social_worker = create :social_worker
   end
 
-  test 'superadmin, department_manager, social_worker can destroy inactive clients' do
+  test 'superadmin, department_manager, social_worker can destroy inactive client' do
     [@superadmin, @department_manager, @social_worker].each do |user|
       client = create :client, user: user
       login_as user
@@ -19,7 +19,7 @@ class CliensControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'no user can destroy clients with assignment associated' do
+  test 'no user can destroy client with assignment associated' do
     [@superadmin, @department_manager, @social_worker].each do |user|
       login_as user
       client = create :client, user: user
@@ -33,7 +33,7 @@ class CliensControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'no user can destroy clients with assignment associated even when its deleted' do
+  test 'no user can destroy client with deleted assignment associated' do
     [@superadmin, @department_manager, @social_worker].each do |user|
       login_as user
       client = create :client, user: user
