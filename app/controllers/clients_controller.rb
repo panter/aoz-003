@@ -3,7 +3,8 @@ class ClientsController < ApplicationController
   include NestedAttributes
   include ContactAttributes
 
-  before_action :set_client, only: [:show, :edit, :update, :set_terminated]
+  rescue_from Client::NotDestroyableError, with: :user_not_authorized
+  before_action :set_client, only: [:show, :edit, :update, :destroy, :set_terminated]
   before_action :set_social_worker_collection, only: [:new, :create, :edit, :update]
   before_action :set_assignments, only: [:show, :edit]
 
@@ -62,6 +63,11 @@ class ClientsController < ApplicationController
       @custom_notice = resigned_fail_notice if @client.errors.messages[:acceptance].present?
       render :edit
     end
+  end
+
+  def destroy
+    @client.destroy!
+    redirect_to clients_path, make_notice
   end
 
   def set_terminated
