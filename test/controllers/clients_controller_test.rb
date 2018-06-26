@@ -9,7 +9,7 @@ class CliensControllerTest < ActionDispatch::IntegrationTest
 
   test 'superadmin, department_manager, social_worker can destroy inactive clients' do
     [@superadmin, @department_manager, @social_worker].each do |user|
-      client = create :client
+      client = create :client, user: user
       login_as user
 
       assert_difference 'Client.count', -1 do
@@ -22,7 +22,7 @@ class CliensControllerTest < ActionDispatch::IntegrationTest
   test 'no user can destroy clients with assignment associated' do
     [@superadmin, @department_manager, @social_worker].each do |user|
       login_as user
-      client = create :client
+      client = create :client, user: user
       assignment = create :assignment, client: client
 
       assert_no_difference 'Client.count' do
@@ -36,7 +36,7 @@ class CliensControllerTest < ActionDispatch::IntegrationTest
   test 'no user can destroy clients with assignment associated even when its deleted' do
     [@superadmin, @department_manager, @social_worker].each do |user|
       login_as user
-      client = create :client
+      client = create :client, user: user
       assignment = create :assignment, client: client
       assignment.destroy
 
