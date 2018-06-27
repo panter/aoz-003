@@ -1,7 +1,11 @@
-- if !@client.resigned? && policy(@client).set_terminated?
-  ul.list-inline.pull-right
+ul.list-inline.pull-right
+  - if !@client.resigned? && policy(@client).set_terminated?
     li= link_to navigation_glyph(:terminate), set_terminated_client_path(@client), class: 'btn btn-default',
       method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }, title: 'Beenden'
+  - if policy(@client).destroy? && @client.destroyable?
+    li= button_link navigation_glyph(:delete), @client,
+        method: :delete, title: 'Löschen',
+        data: { confirm: 'Möchten Sie diese/n Klient/in wirklich löschen?' }
 
 ul.list-inline
   li = form_navigation_btn :back, with_row: false

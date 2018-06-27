@@ -106,4 +106,48 @@ class ClientTest < ActiveSupport::TestCase
     assignment.update period_end: 5.days.ago
     assert_not @client.active?
   end
+
+  test 'client is destroyable' do
+    client = create :client
+    assert client.destroyable?
+
+    assignment = create :assignment, client: client
+    refute client.destroyable?
+
+    assignment.destroy
+    refute_nil assignment.deleted_at
+    refute client.destroyable?
+  end
+
+  test 'destroying a client' do
+    client = create :client
+    assert_nil client.deleted_at
+
+    client.destroy!
+    refute_nil client.reload.deleted_at
+
+    client = create :client, :with_relatives
+    assert_nil client.deleted_at
+
+    client.destroy!
+    refute_nil client.reload.deleted_at
+    client.relatives.each do |relative|
+      assert_nil relative.deleted_at
+    end
+
+    client = create :client
+    assignment = create :assignment, client: client
+    assignment_ids = client.assignments.pluck(:id).join(', ')
+    message = "There are one or more assignment associated: #{assignment_ids}"
+    exception = assert_raise Client::NotDestroyableError do
+      client.destroy!
+    end
+    assert_equal message, exception.message
+
+    assignment.destroy
+    exception = assert_raise Client::NotDestroyableError do
+      client.destroy!
+    end
+    assert_equal message, exception.message
+  end
 end
