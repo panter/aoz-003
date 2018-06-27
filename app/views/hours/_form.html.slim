@@ -13,7 +13,7 @@
 
   .row
     .col-xs-12
-      = f.input :meeting_date, include_blank: true, start_year: Date.today.year - 1, end_year: Date.today.year
+      = f.input :meeting_date, as: :date_picker, wrapper: :date_picker
 
   .row
     .col-xs-12.col-md-6

@@ -23,15 +23,8 @@ class HoursTest < ApplicationSystemTestCase
     assert page.has_text? 'Stunden Rapporte'
     first(:link, 'Stunden erfassen').click
     select @assignment1.to_label, from: 'Einsatz'
-    within '#hour_meeting_date_3i' do
-      select(Time.zone.today.day)
-    end
-    within '#hour_meeting_date_2i' do
-      select(I18n.l Time.zone.today, format: '%B')
-    end
-    within '#hour_meeting_date_1i' do
-      select(Time.zone.today.year)
-    end
+    find('#hour_meeting_date').click
+    find('td.today.day').click
     fill_in 'Stunden', with: 2.0
     click_button 'Stunden erfassen'
     assert page.has_text? 'Stunden wurden erfolgreich erfasst.'
@@ -43,15 +36,8 @@ class HoursTest < ApplicationSystemTestCase
     assert page.has_text? 'Stunden Rapporte'
     first(:link, 'Stunden erfassen').click
     select @group_offer1.to_label, from: 'Einsatz'
-    within '#hour_meeting_date_3i' do
-      select(Time.zone.today.day)
-    end
-    within '#hour_meeting_date_2i' do
-      select(I18n.l Time.zone.today, format: '%B')
-    end
-    within '#hour_meeting_date_1i' do
-      select(Time.zone.today.year)
-    end
+    find('#hour_meeting_date').click
+    find('td.today.day').click
     fill_in 'Stunden', with: 2.0
     click_button 'Stunden erfassen'
     assert page.has_text? 'Stunden wurden erfolgreich erfasst.'
