@@ -122,7 +122,7 @@ class Client < ApplicationRecord
   end
 
   def destroyable?
-    assignments.unscoped.blank?
+    assignments.with_deleted.blank?
   end
 
   private
@@ -136,7 +136,7 @@ class Client < ApplicationRecord
 
     def initialize(client)
       @client = client
-      assignment_ids = @client.assignments.unscoped.pluck(:id).join(', ')
+      assignment_ids = @client.assignments.with_deleted.pluck(:id).join(', ')
       message = "There are one or more assignment associated: #{assignment_ids}"
       super(message)
     end
