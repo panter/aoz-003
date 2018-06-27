@@ -6,6 +6,7 @@ class ApplicationControllerTest < ActionDispatch::IntegrationTest
     @department_manager = create :department_manager
     @social_worker = create :social_worker
     @volunteer = create(:volunteer).user
+    @volunteer.profile = create :profile
   end
 
   test 'redirect user by role on sign in' do
