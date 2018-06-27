@@ -5,6 +5,7 @@ $(() => {
   tableRowSelectable();
   volunteerForm();
   groupOfferForm();
+  lastSubmittedHoursAndFeedbacksForm();
   emailTemplate();
   inplaceFields();
 });

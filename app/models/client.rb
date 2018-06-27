@@ -46,6 +46,8 @@ class Client < ApplicationRecord
       Bitte sicherstellen, dass alle Einsätze komplett abgeschlossen sind.'
   }, unless: :terminatable?
 
+  before_destroy :check_if_destroyable!
+
   scope :with_assignments, (-> { distinct.joins(:assignments) })
   scope :with_active_assignments, (-> { with_assignments.merge(Assignment.active) })
 
@@ -117,5 +119,26 @@ class Client < ApplicationRecord
 
   def inactive?
     accepted? && assignments.active.blank?
+  end
+
+  def destroyable?
+    assignments.with_deleted.blank?
+  end
+
+  private
+
+  def check_if_destroyable!
+    raise NotDestroyableError.new(self) unless destroyable?
+  end
+
+  class NotDestroyableError < StandardError
+    attr_reader :client
+
+    def initialize(client)
+      @client = client
+      assignment_ids = @client.assignments.with_deleted.pluck(:id).join(', ')
+      message = "There are one or more assignment associated: #{assignment_ids}"
+      super(message)
+    end
   end
 end

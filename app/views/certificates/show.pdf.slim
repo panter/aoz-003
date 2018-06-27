@@ -22,7 +22,7 @@
       .col-xs-7
         - @certificate.assignment_kinds['done'].uniq.each do |kind_name, _|
           span.kind-list
-            input*{ type: 'checkbox', checked: true } onclick='return false;'
+            == File.read('app/assets/images/pdf_checkbox_checked.svg')
             = kind_name
     .row
       .col-xs-3= t_attr(:duration)
@@ -32,7 +32,7 @@
 
     .text-body= markdown(@certificate.text_body)
 
-  .signature.row
+  .signature
     .col-xs-8
       .name= @certificate.creator_name
       .position= @certificate.creator_function

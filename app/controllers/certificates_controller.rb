@@ -12,7 +12,9 @@ class CertificatesController < ApplicationController
       format.html
       format.pdf do
         render pdf: pdf_file_name(@certificate),
-          layout: 'certificate.pdf', print_media_type: true, no_background: true,
+          show_as_html: params.key?('debug'),
+          layout: 'certificate.pdf',
+          dpi: '400',
           margin: { top: 0, bottom: 0, left: 0, right: 0 }
       end
     end
