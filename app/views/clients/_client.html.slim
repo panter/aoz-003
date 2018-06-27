@@ -8,7 +8,7 @@ tr id=dom_id(client)
     - if policy(client).destroy? && client.destroyable?
       = button_link navigation_glyph(:delete), client,
           method: :delete, title: 'Löschen',
-          data: { confirm: 'Are you sure you want to delete this client?' }
+          data: { confirm: 'Möchten Sie diese/n Klient/in wirklich löschen?' }
   - if policy(Client).superadmin_privileges?
     td.button-acceptance = link_to t(".acceptance.#{client.acceptance}"), '#',
       class: "btn btn-xs btn-acceptance-#{client.acceptance} btn-acceptance-client"

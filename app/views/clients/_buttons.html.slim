@@ -5,7 +5,7 @@ ul.list-inline.pull-right
   - if policy(@client).destroy? && @client.destroyable?
     li= button_link navigation_glyph(:delete), @client,
         method: :delete, title: 'Löschen',
-        data: { confirm: 'Are you sure you want to delete this client?' }
+        data: { confirm: 'Möchten Sie diese/n Klient/in wirklich löschen?' }
 
 ul.list-inline
   li = form_navigation_btn :back, with_row: false
