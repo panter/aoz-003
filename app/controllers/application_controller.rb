@@ -34,9 +34,11 @@ class ApplicationController < ActionController::Base
 
   def home
     authorize :application, :home?
-    redirect_to volunteers_path if superadmin? || department_manager?
-    redirect_to clients_path if social_worker?
-    redirect_to profile_path(current_user) if volunteer?
+    if current_user.present?
+      redirect_to volunteers_path if superadmin? || department_manager?
+      redirect_to clients_path if social_worker?
+      redirect_to profile_path(current_user) if volunteer? && current_user.profile
+    end
   end
 
   def t_model
