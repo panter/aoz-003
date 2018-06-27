@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CliensControllerTest < ActionDispatch::IntegrationTest
+class ClientsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @superadmin = create :user
     @department_manager = create :department_manager
