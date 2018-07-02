@@ -9,7 +9,7 @@ h1 Klient/innen
     thead
       tr
         th.hidden-print Aktionen
-        - if policy(Client).superadmin_privileges?
+        - if policy(Client).superadmin_or_department_manager_or_social_worker?
           th= sort_link @q, :acceptance, t_attr(:acceptance)
         th= sort_link @q, :active, 'Status'
         th= sort_link @q, :salutation, t_attr(:salutation, Client)
