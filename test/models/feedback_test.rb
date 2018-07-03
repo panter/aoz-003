@@ -32,9 +32,9 @@ class FeedbackTest < ActiveSupport::TestCase
     query_via_assignment = assignment.feedbacks_since_last_submitted
     query_via_feedback = Feedback.where(feedbackable: assignment).since_last_submitted(nil)
     assert query_via_assignment.include? feedback
-    refute query_via_assignment.include? feedback_by_superadmin
+    assert query_via_assignment.include? feedback_by_superadmin
     assert query_via_feedback.include? feedback
-    refute query_via_feedback.include? feedback_by_superadmin
+    assert query_via_feedback.include? feedback_by_superadmin
 
     query_via_assignment = assignment_last_submitted.feedbacks_since_last_submitted
     query_via_feedback = Feedback.where(feedbackable: assignment_last_submitted)
@@ -44,9 +44,9 @@ class FeedbackTest < ActiveSupport::TestCase
 
     refute query_via_assignment.include? before_last_submitted_feedback
     refute query_via_assignment.include? before_last_submitted_feedback_superadmin
-    refute query_via_assignment.include? after_last_submitted_feedback_superadmin
+    assert query_via_assignment.include? after_last_submitted_feedback_superadmin
     refute query_via_feedback.include? before_last_submitted_feedback
     refute query_via_feedback.include? before_last_submitted_feedback_superadmin
-    refute query_via_feedback.include? after_last_submitted_feedback_superadmin
+    assert query_via_feedback.include? after_last_submitted_feedback_superadmin
   end
 end
