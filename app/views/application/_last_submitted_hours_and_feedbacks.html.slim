@@ -9,15 +9,15 @@
 
   h3 Spesen
   = f.simple_fields_for :volunteer do |vf|
-    .row
-      .col-xs-12.text-left
+    .row.text-left#volunteer-update-waive-and-iban
+      .col-xs-12
+        = vf.input_field :id, type: :hidden
         = checkbox_toggle_collapse(vf, :waive, '#not-waive-expenses', check_shows: false)
-      .col-xs-12.text-left#not-waive-expenses
+      .col-xs-12#not-waive-expenses
         .row
-          .col-xs-4.text-left
-            = vf.input :iban
-          .col-xs-4.text-left
-            = vf.input :bank
+          .col-xs-4= vf.input :iban
+          .col-xs-4= vf.input :bank
+
   h3 Stunden
   = render 'last_submitted_hours', hours: hours, confirmable: confirmable
   p.m-b-30= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
