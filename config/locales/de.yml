@@ -208,8 +208,8 @@ de:
   updated_at: Geändert um
   volunteer_applications: &id-volunteers-by-actions
     feedback:
-      new: Neues Feedback
-      index: Feedback Liste
+      new: Neuer Halbjahres-Rapport
+      index: Halbjahres-Rapport Liste
     acceptance: &id-volunteer-acceptance
       management: Aufnahme Verwaltung
       accepted: Akzeptiert
@@ -288,7 +288,7 @@ de:
         conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
         future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
         goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
-        last: Letzter Feedback-Eintrag am
+        last: Letzter Halbjahres-Rapport-Eintrag am
         feedback_activity: Aktivität
         feedbackable_id_and_type: Aktivitäten
       billing_expense:
@@ -532,7 +532,7 @@ de:
               required: muss ausgewählt werden.
     models:
       assignment: Begleitung
-      feedback: Feedback
+      feedback: Halbjahres-Rapport
       billing_expense: Spesenformular
       certificate: Nachweis
       client: Klient/in
@@ -853,9 +853,9 @@ de:
       group_offer_hour_records: Stundenberichte von FW in Gruppenangeboten
       group_offer_hours: Einsatzstunden von FW in Gruppenangeboten
       total_hours: Geleistete Einsatzstunden total
-      assignment_feedbacks: Feedbacks von FW in Tandems
-      group_offer_feedbacks: Feedbacks von FW in Gruppenangeboten
-      total_feedbacks: Total Feedbacks von Freiwilligen
+      assignment_feedbacks: Halbjahres-Rapporte von FW in Tandems
+      group_offer_feedbacks: Halbjahres-Rapporte von FW in Gruppenangeboten
+      total_feedbacks: Total Halbjahres-Rapporte von Freiwilligen
       assignment_trial_feedbacks: Probezeit-Feedbacks von FW in Tandems
       group_offer_trial_feedbacks: Probezeit-Feedbacks von FW in Gruppenangeboten
       total_trial_feedbacks: Total Probezeit-Feedbacks
@@ -884,7 +884,7 @@ de:
       ended: Gruppenangebote beendet
       all: Alle Gruppenangebote
       created_assignments: Gruppenangebote mit neuen Freiwilligen
-      feedback_count: Anzahl gegebener Gruppenangebots Feedbacks
+      feedback_count: Anzahl gegebener Gruppenangebots Halbjahres-Rapporte
       total_created_assignments: Neu erstellte Gruppeneinsätze
       total_started_assignments: Gestartete Gruppeneinsätze
       total_active_assignments: Aktive Gruppeneinsätze

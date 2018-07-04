@@ -1,6 +1,6 @@
-= simple_form_for(confirmable, html: { class: 'col-xs-12 form-auto-save'}, 
+= simple_form_for(confirmable, html: { class: 'col-xs-12 form-auto-save'},
     url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect, ), method: :put) do |f|
-  h1 Zuletzt übermittelte Stunden und Feedbacks
+  h1 Zuletzt übermittelte Stunden und Halbjahres-Rapporte
 
 
   h2.m-b-20.m-t-30
@@ -22,11 +22,11 @@
   = render 'last_submitted_hours', hours: hours, confirmable: confirmable
   p.m-b-30= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
 
-  h3 Feedbacks
+  h3 Halbjahres-Rapporte
   = render 'last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
   p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: request.fullpath)
 
   .submit-box
     .col-xs-12
-      p Ich bestätige, dass ich alle meine Stunden und Feedbacks bis zum heutigen Datum erfasst habe.
+      p Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte bis zum heutigen Datum erfasst habe.
       = f.submit 'Bestätigen', class: 'btn btn-lg-accepted'

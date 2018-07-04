@@ -40,7 +40,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     click_on 'Bestätigen'
 
     assert_equal current_path, hours_and_feedbacks_submitted_assignments_path
-    assert_text 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    assert_text 'Die Stunden und Halbjahres-Rapporte wurden erfolgreich bestätigt.'
 
     @volunteer.reload
     assert @volunteer.waive
@@ -56,7 +56,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     click_on 'Bestätigen'
 
     assert_equal current_path, hours_and_feedbacks_submitted_assignments_path
-    assert_text 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    assert_text 'Die Stunden und Halbjahres-Rapporte wurden erfolgreich bestätigt.'
   end
 
   test 'volunteer_can_add_hours_and_feedback_for_their_assignment' do
@@ -78,11 +78,11 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert_text @assignment.client
     assert_text @assignment_feedback.comments
 
-    click_link 'Feedback erfassen'
+    click_link 'Halbjahres-Rapport erfassen'
     fill_in 'Bemerkungen', with: 'new feedback from volunteer'
-    click_button 'Feedback erfassen'
+    click_button 'Halbjahres-Rapport erfassen'
 
-    assert_text 'Feedback wurde erfolgreich erstellt.'
+    assert_text 'Halbjahres-Rapport wurde erfolgreich erstellt.'
     assert_text @assignment.client
     assert_text @assignment_feedback.comments
     assert_text 'new feedback from volunteer'
@@ -109,11 +109,11 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert_text group_assignment.to_label
     assert_text @group_offer_feedback.comments
 
-    click_link 'Feedback erfassen'
+    click_link 'Halbjahres-Rapport erfassen'
     fill_in 'Bemerkungen', with: 'new feedback from volunteer'
-    click_button 'Feedback erfassen'
+    click_button 'Halbjahres-Rapport erfassen'
 
-    assert_text 'Feedback wurde erfolgreich erstellt.'
+    assert_text 'Halbjahres-Rapport wurde erfolgreich erstellt.'
     assert_text group_assignment.to_label
     assert_text @group_offer_feedback.comments
     assert_text 'new feedback from volunteer'
