@@ -82,7 +82,7 @@ class VolunteersController < ApplicationController
   def update_waive_and_iban
     authorize @volunteer
     @volunteer.update(volunteer_params)
-    respond_to :json
+    render json: nil, status: :ok
   end
 
   def terminate
