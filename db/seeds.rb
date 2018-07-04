@@ -238,9 +238,9 @@ def development_seed
   puts_model_counts('After ClientNotification created', User, Client, ClientNotification)
 
   # make sure the state is correct, after stuff has been done via FactoryBot
-  Volunteer.accepted.map(&:verify_and_update_state)
+  Volunteer.accepted.each(&:verify_and_update_state)
   Volunteer.joins(:user).accepted.each do |volunteer|
-    volunteer.user.update(last_sign_in_at: 2.weeks.ago)
+    volunteer.user.update!(last_sign_in_at: 2.weeks.ago)
   end
 
   puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,

@@ -19,12 +19,12 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     @volunteer.update(waive: false, iban: nil, bank: nil)
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
 
-    native_fill_field('[name$="assignment[volunteer_attributes][iban]"]', 'CH12345')
+    native_fill_field('IBAN', 'CH12345')
     wait_for_ajax
     @volunteer.reload
     assert_equal 'CH12345', @volunteer.iban
 
-    native_fill_field('[name$="assignment[volunteer_attributes][bank]"]', 'Name of the bank')
+    native_fill_field('Bank', 'Name of the bank')
     wait_for_ajax
     @volunteer.reload
     assert_equal 'Name of the bank', @volunteer.bank

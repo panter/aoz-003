@@ -71,9 +71,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
-  def native_fill_field(selector, text)
-    field = page.find(selector)
-    text.split('').each { |c| field.native.send_keys(c) }
+  def native_fill_field(locator, text)
+    field = page.find_field(locator)
+    text.split('').each { |c| field.send_keys(c) }
   end
 
   def fill_autocomplete(name, options = {})
