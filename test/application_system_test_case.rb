@@ -73,7 +73,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def fill_field_with_send_keys(locator, text)
     field = page.find_field(locator)
-    text.split('').each { |c| field.send_keys(c) }
+    text.split('').each do |char|
+      field.native.send_keys(char)
+    end
   end
 
   def fill_autocomplete(name, options = {})

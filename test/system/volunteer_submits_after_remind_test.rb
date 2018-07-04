@@ -20,12 +20,12 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
 
     fill_field_with_send_keys('IBAN', 'CH12345')
-    wait_for_ajax
+    sleep 1
     @volunteer.reload
     assert_equal 'CH12345', @volunteer.iban
 
     fill_field_with_send_keys('Bank', 'Name of the bank')
-    wait_for_ajax
+    sleep 1
     @volunteer.reload
     assert_equal 'Name of the bank', @volunteer.bank
 
@@ -34,7 +34,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert page.has_field? 'Name der Bank', with: 'Name of the bank'
 
     check 'Ich verzichte auf die Auszahlung von Spesen.'
-    wait_for_ajax
+    sleep 1
     @volunteer.reload
     assert @volunteer.waive
 
