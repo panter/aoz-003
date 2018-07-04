@@ -221,6 +221,8 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    lodash-rails (4.17.10)
+      railties (>= 3.1)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -475,6 +477,7 @@ DEPENDENCIES
   js-routes
   letter_opener
   listen
+  lodash-rails
   mdb
   minitest (~> 5.10.3)
   overcommit
