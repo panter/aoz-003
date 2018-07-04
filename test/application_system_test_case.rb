@@ -71,7 +71,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
-  def native_fill_field(locator, text)
+  def fill_field_with_send_keys(locator, text)
     field = page.find_field(locator)
     text.split('').each { |c| field.send_keys(c) }
   end
