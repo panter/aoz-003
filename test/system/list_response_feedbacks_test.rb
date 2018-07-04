@@ -43,7 +43,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks_list_contains_only_relevant_records' do
-    click_link exact_text: 'Feedback Eingang'
+    click_link exact_text: 'Halbjahres-Rapport Eingang'
     assert page.has_link? @assignment_pendent.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_pendent.feedbackable.to_label
     assert page.has_link? @group_assignment_pendent.volunteer.contact.last_name
@@ -60,7 +60,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks list without filter shows marked done feedback' do
-    click_link exact_text: 'Feedback Eingang'
+    click_link exact_text: 'Halbjahres-Rapport Eingang'
     click_link 'Filter aufheben'
     visit current_url
     # marked done shoud now be displayed
@@ -71,7 +71,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'feedbacks_list_with_filter_erledigt_shows_only_marked_done' do
-    click_link exact_text: 'Feedback Eingang'
+    click_link exact_text: 'Halbjahres-Rapport Eingang'
     click_link 'Geprüft: Ungesehen'
     within 'li.dropdown.open' do
       click_link 'Angeschaut'
@@ -89,18 +89,18 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   end
 
   test 'marking_feedback_done_works' do
-    click_link exact_text: 'Feedback Eingang'
+    click_link exact_text: 'Halbjahres-Rapport Eingang'
     within 'tbody' do
       click_link 'Angeschaut', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
         assignments\/#{@assignment_pendent.id}\/feedbacks\/#{@assignment_fb_pendent.id}\/.*/x
     end
-    assert page.has_text? 'Feedback als angeschaut markiert.'
+    assert page.has_text? 'Halbjahres-Rapport als angeschaut markiert.'
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.feedbackable.to_label
     within 'tbody' do
       click_link 'Angeschaut', href: /feedbacks\/#{@group_assignment_fb_pendent.id}/x
     end
-    assert page.has_text? 'Feedback als angeschaut markiert.'
+    assert page.has_text? 'Halbjahres-Rapport als angeschaut markiert.'
     @group_assignment_fb_pendent.reload
     assert_equal @superadmin, @group_assignment_fb_pendent.reviewer
   end
@@ -111,7 +111,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     future = FFaker::Lorem.paragraph(20)
     @assignment_fb_pendent.update(comments: comments, achievements: achievements, future: future)
     @group_assignment_fb_pendent.update(reviewer: @superadmin)
-    click_link 'Feedback Eingang'
+    click_link 'Halbjahres-Rapport Eingang'
     page.find('td', text: comments.truncate(300)).click
 
     assert page.has_text? comments

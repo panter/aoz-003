@@ -257,7 +257,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     assert_equal "Beendigung Gruppenangebot #{group_offer.title} (#{group_offer.department})",
       mailer.subject
-    assert_includes mail_body, "#{group_assignment.volunteer.contact.natural_name} Feedback Geben"
+    assert_includes mail_body, "#{group_assignment.volunteer.contact.natural_name} Halbjahres-Rapport erstellen"
     assert_includes mail_body, "#{I18n.l group_assignment.period_start} Gruss, AOZ"
     refute_includes mailer.subject, '%{'
     refute_includes mail_body, '%{'
