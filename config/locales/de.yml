@@ -532,7 +532,7 @@ de:
               required: muss ausgewählt werden.
     models:
       assignment: Begleitung
-      feedback: Feedback
+      feedback: Halbjahres-Rapport
       billing_expense: Spesenformular
       certificate: Nachweis
       client: Klient/in

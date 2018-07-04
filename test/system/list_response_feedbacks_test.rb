@@ -94,13 +94,13 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
       click_link 'Angeschaut', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
         assignments\/#{@assignment_pendent.id}\/feedbacks\/#{@assignment_fb_pendent.id}\/.*/x
     end
-    assert page.has_text? 'Halbjahres-Rapport als angeschaut markiert.'
+    assert page.has_text? 'Halbjahres-Rapport quittiert.'
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.feedbackable.to_label
     within 'tbody' do
       click_link 'Angeschaut', href: /feedbacks\/#{@group_assignment_fb_pendent.id}/x
     end
-    assert page.has_text? 'Halbjahres-Rapport als angeschaut markiert.'
+    assert page.has_text? 'Halbjahres-Rapport quittiert.'
     @group_assignment_fb_pendent.reload
     assert_equal @superadmin, @group_assignment_fb_pendent.reviewer
   end

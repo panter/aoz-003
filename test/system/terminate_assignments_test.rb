@@ -92,7 +92,7 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     assert @volunteer.waive
   end
 
-  test 'terminate assignment without feedback or hours' do
+  test 'terminate_assignment_without_feedback_or_hours' do
     Hour.destroy_all
     Feedback.destroy_all
 
