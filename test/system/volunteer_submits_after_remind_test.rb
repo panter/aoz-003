@@ -32,7 +32,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert page.has_field? 'Name der Bank', with: 'Name of the bank'
 
     check 'Ich verzichte auf die Auszahlung von Spesen.'
-    sleep 0.3
+    wait_for_ajax
     @volunteer.reload
     assert @volunteer.waive
 

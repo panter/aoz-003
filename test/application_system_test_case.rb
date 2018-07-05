@@ -75,6 +75,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     field = page.find_field(locator)
     text.split('').each do |char|
       field.native.send_keys(char)
+      wait_for_ajax
     end
   end
 

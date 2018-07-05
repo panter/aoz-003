@@ -14,4 +14,6 @@ $(() => {
   })
 })
 
+const throttle = (callBack, time = window.THROTTLE_TIMEOUT) => _.throttle(callBack, time)
+
 const valueOrChecked = field => field.is(':checkbox') ? field.is(':checked') : field.val();
