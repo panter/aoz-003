@@ -45,7 +45,7 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :show?,            :volunteer_managing_or_volunteers_profile?
   alias_method :edit?,            :volunteer_managing_or_volunteers_profile?
   alias_method :update?,          :volunteer_managing_or_volunteers_profile?
-  alias_method :update_waive_and_iban?, :volunteer_managing_or_volunteers_profile?
+  alias_method :update_bank_details?, :volunteer_managing_or_volunteers_profile?
   alias_method :account?,         :superadmin?
 
   # supplementary policies

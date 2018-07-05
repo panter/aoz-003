@@ -8,7 +8,7 @@ $(() => {
         data: { volunteer: { [fieldName]: valueOrChecked($(target)) } },
         method: 'PATCH',
         dataType: 'json',
-        url: Routes.update_waive_and_iban_volunteer_path(volunteerId)
+        url: Routes.update_bank_details_volunteer_path(volunteerId)
       })
     }))
   })
