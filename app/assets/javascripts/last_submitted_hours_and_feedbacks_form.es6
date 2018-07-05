@@ -1,21 +1,9 @@
 $(() => {
-  if (_(window.location.pathname).split('/').last() === 'last_submitted_hours_and_feedbacks') {
-    enableWaiveFormXhrSubmit()
-  }
-})
-
-const throttle = (callBack, time = 1000) => _.throttle(callBack, time)
-
-const enableWaiveFormXhrSubmit = () => {
   const waiveIbanForm = $('#volunteer-update-waive-and-iban')
+  if (waiveIbanForm.length === 0) { return }
   const volunteerId = waiveIbanForm.find('input[name$="assignment[volunteer_attributes][id]"]').val()
-  _(['waive', 'iban', 'bank']).map(fieldName => {
-    return {
-      fieldElement: waiveIbanForm.find(`input[name$="assignment[volunteer_attributes][${fieldName}]"]`),
-      fieldName
-    }
-  }).forEach(({ fieldElement, fieldName }) => {
-    $(fieldElement).on('input', throttle(({ target }) => {
+  _(['waive', 'iban', 'bank']).forEach(fieldName => {
+    waiveIbanForm.find(`input[name$="assignment[volunteer_attributes][${fieldName}]"]`).on('input', throttle(({ target }) => {
       $.ajax({
         data: { volunteer: { [fieldName]: valueOrChecked($(target)) } },
         method: 'PATCH',
@@ -24,6 +12,6 @@ const enableWaiveFormXhrSubmit = () => {
       })
     }))
   })
-}
+})
 
-const valueOrChecked = field => (field.prop('type') === 'checkbox') ? field.prop('checked') : field.val();
+const valueOrChecked = field => field.is(':checkbox') ? field.is(':checked') : field.val();

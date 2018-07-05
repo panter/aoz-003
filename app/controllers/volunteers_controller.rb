@@ -81,7 +81,7 @@ class VolunteersController < ApplicationController
 
   def update_waive_and_iban
     authorize @volunteer
-    @volunteer.update(volunteer_params)
+    @volunteer.update(volunteer_params.slice(:iban, :waive, :bank))
     render json: nil, status: :ok
   end
 

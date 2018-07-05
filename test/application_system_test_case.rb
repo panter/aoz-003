@@ -71,7 +71,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
-  def fill_field_with_send_keys(locator, text)
+  def fill_field_char_by_char_and_wait_for_ajax(locator, text)
     field = page.find_field(locator)
     text.split('').each do |char|
       field.native.send_keys(char)
