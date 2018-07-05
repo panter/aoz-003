@@ -3,7 +3,7 @@ $(() => {
   if (waiveIbanForm.length === 0) { return }
   const volunteerId = waiveIbanForm.find('input[name$="assignment[volunteer_attributes][id]"]').val()
   _(['waive', 'iban', 'bank']).forEach(fieldName => {
-    waiveIbanForm.find(`input[name$="assignment[volunteer_attributes][${fieldName}]"]`).on('input', throttle(({ target }) => {
+    waiveIbanForm.find(`input[name$="assignment[volunteer_attributes][${fieldName}]"]`).on('input change', throttle(({ target }) => {
       $.ajax({
         data: { volunteer: { [fieldName]: valueOrChecked($(target)) } },
         method: 'PATCH',
@@ -16,4 +16,4 @@ $(() => {
 
 const throttle = (callBack, time = window.THROTTLE_TIMEOUT) => _.throttle(callBack, time)
 
-const valueOrChecked = field => field.is(':checkbox') ? field.is(':checked') : field.val();
+const valueOrChecked = field => (field.prop('type') === 'checkbox') ? field.is(':checked') : field.val();
