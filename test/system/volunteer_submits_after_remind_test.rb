@@ -2,8 +2,8 @@ require 'application_system_test_case'
 
 class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
   setup do
-    @volunteer = create :volunteer
-    @assignment = create :assignment, volunteer: @volunteer
+    @assignment = create :assignment
+    @volunteer = @assignment.volunteer
     create :hour, hourable: @assignment, created_at: 2.days.ago
     @assignment_feedback = create :feedback, feedbackable: @assignment, author: @volunteer.user,
       volunteer: @volunteer
@@ -15,15 +15,27 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     login_as @volunteer.user
   end
 
-  test 'last_submitted_hours_and_feedbacks form is autosaved' do
+  test 'last_submitted_hours_and_feedbacks_form_is_autosaved' do
+    @volunteer.update(waive: false, iban: nil, bank: nil)
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
-    fill_in 'IBAN', with: 'CH12345'
-    fill_in 'Name der Bank', with: 'Name of the bank'
+
+    fill_field_char_by_char_and_wait_for_ajax('IBAN', 'CH12345')
+    @volunteer.reload
+    assert_equal 'CH12345', @volunteer.iban
+
+    fill_field_char_by_char_and_wait_for_ajax('Bank', 'Name of the bank')
+    @volunteer.reload
+    assert_equal 'Name of the bank', @volunteer.bank
+
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
     assert page.has_field? 'IBAN', with: 'CH12345'
     assert page.has_field? 'Name der Bank', with: 'Name of the bank'
 
     check 'Ich verzichte auf die Auszahlung von Spesen.'
+    wait_for_ajax
+    @volunteer.reload
+    assert @volunteer.waive
+
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
     assert page.has_field? 'Ich verzichte auf die Auszahlung von Spesen.', checked: true
     refute page.has_field? 'IBAN'

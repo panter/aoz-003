@@ -18,6 +18,8 @@ html
           window.print();
           return false;
         });
+        window.THROTTLE_TIMEOUT = #{Rails.env.test? ? 0 : 300};
+
   body class="#{controller_name.dasherize} #{action_name.dasherize}"
     .wrapper
       = render 'navigation'

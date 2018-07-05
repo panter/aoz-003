@@ -1,6 +1,6 @@
 class VolunteersController < ApplicationController
 
-  before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account]
+  before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account, :update_bank_details]
 
   def index
     authorize Volunteer
@@ -77,6 +77,12 @@ class VolunteersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def update_bank_details
+    authorize @volunteer
+    @volunteer.update(volunteer_params.slice(:iban, :waive, :bank))
+    render json: nil, status: :ok
   end
 
   def terminate
