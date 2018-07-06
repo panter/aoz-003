@@ -8,6 +8,10 @@ nav.navbar.section-navigation.hidden-print
     = custom_filter_dropdown('Geprüft',
         { q: :reviewer_id_not_null, text: 'Angeschaut', value: 'true' },
         { q: :reviewer_id_null, text: 'Ungesehen', value: 'true' })
+    = custom_filter_dropdown('Übernommen',
+        { q: :responsible_id_null, text: 'Offen', value: 'true' },
+        { q: :responsible_id_not_null, text: 'Übernommen', value: 'true' },
+        *@responsibles)
     = custom_filter_dropdown('Autor',
         { q: :author_volunteer, text: 'Freiwillige/r', value: 'true' },
         { q: :author_volunteer, text: 'AOZ', value: 'false' })
