@@ -63,4 +63,3 @@ def trigger_reminder_mailing_send(reminder_mailing)
       VolunteerMailer.public_send(reminder_mailing.kind, mailing_volunteer).deliver
     end
 end
-

@@ -22,7 +22,8 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     @group_offer_pendent = create(:group_offer)
     @group_assignment_pendent = create(:group_assignment, group_offer: @group_offer_pendent)
     @group_assignment_fb_pendent = create(:feedback, feedbackable: @group_offer_pendent,
-      volunteer: @group_assignment_pendent.volunteer, author: @group_assignment_pendent.volunteer.user)
+      volunteer: @group_assignment_pendent.volunteer,
+      author: @group_assignment_pendent.volunteer.user)
     @group_assignment_fb_pendent.update(feedbackable: @group_offer_pendent)
 
     @group_offer_superadmin = create(:group_offer)
@@ -138,15 +139,18 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     @group_assignment_fb_pendent.update(responsible: other_superadmin)
     noone_reponsible_assignment = create(:assignment)
     noone_reponsible_feedback = create(:feedback, feedbackable: noone_reponsible_assignment,
-      volunteer: noone_reponsible_assignment.volunteer, author: noone_reponsible_assignment.volunteer.user)
+      volunteer: noone_reponsible_assignment.volunteer,
+      author: noone_reponsible_assignment.volunteer.user)
     visit list_responses_feedbacks_path
 
     assert page.has_text? "Übernommen durch #{other_superadmin.email}"\
                           " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
     assert page.has_text? "Übernommen durch #{@superadmin.email}"\
                           " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
-    assert page.has_link? 'Übernehmen', href: /.*\/volunteers\/#{noone_reponsible_feedback.volunteer.id}\/
-      assignments\/#{noone_reponsible_assignment.id}\/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
+    assert page.has_link? 'Übernehmen', href: /.*
+      \/volunteers\/#{noone_reponsible_feedback.volunteer.id}
+      \/assignments\/#{noone_reponsible_assignment.id}
+      \/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
 
     within page.find_all('nav.section-navigation').last do
       click_link 'Übernommen'
@@ -157,8 +161,10 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
                           " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
     refute page.has_text? "Übernommen durch #{@superadmin.email}"\
                           " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
-    assert page.has_link? 'Übernehmen', href: /.*\/volunteers\/#{noone_reponsible_feedback.volunteer.id}\/
-      assignments\/#{noone_reponsible_assignment.id}\/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
+    assert page.has_link? 'Übernehmen', href: /.*
+      \/volunteers\/#{noone_reponsible_feedback.volunteer.id}
+      \/assignments\/#{noone_reponsible_assignment.id}
+      \/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
 
     click_link 'Übernommen: Offen'
     within 'li.dropdown.open' do
@@ -169,8 +175,10 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
                           " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
     assert page.has_text? "Übernommen durch #{@superadmin.email}"\
                           " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
-    refute page.has_link? 'Übernehmen', href: /.*\/volunteers\/#{noone_reponsible_feedback.volunteer.id}\/
-      assignments\/#{noone_reponsible_assignment.id}\/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
+    refute page.has_link? 'Übernehmen', href: /.*
+      \/volunteers\/#{noone_reponsible_feedback.volunteer.id}
+      \/assignments\/#{noone_reponsible_assignment.id}
+      \/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
     click_link 'Übernommen: Übernommen'
     within 'li.dropdown.open' do
       assert page.has_link? "Übernommen von #{@superadmin.profile.contact.full_name}"
@@ -182,8 +190,10 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
                           " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
     refute page.has_text? "Übernommen durch #{@superadmin.email}"\
                           " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
-    refute page.has_link? 'Übernehmen', href: /.*\/volunteers\/#{noone_reponsible_feedback.volunteer.id}\/
-      assignments\/#{noone_reponsible_assignment.id}\/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
+    refute page.has_link? 'Übernehmen', href: /.*
+      \/volunteers\/#{noone_reponsible_feedback.volunteer.id}
+      \/ assignments\/#{noone_reponsible_assignment.id}
+      \/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
   end
 
   test 'truncate_modal_shows_all_text' do
@@ -211,7 +221,8 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   test 'Creating new trial feedback reminder if no active mail template redirect to creating one' do
     ClientNotification.destroy_all
     click_link 'Halbjahres Erinnerung erstellen'
-    assert page.has_text? 'Sie müssen eine aktive E-Mailvorlage haben, bevor Sie eine Halbjahres Erinnerung erstellen können.'
+    assert page.has_text? 'Sie müssen eine aktive E-Mailvorlage haben, bevor Sie eine Halbjahres ' \
+      'Erinnerung erstellen können.'
     assert_equal current_path, new_email_template_path
   end
 end

@@ -108,7 +108,8 @@ class ReminderMailingsController < ApplicationController
       return redirect_to reminder_mailings_path, notice: 'Dieses Beendigungs-Mailing wurde bereits'\
         ' versandt.'
     end
-    VolunteerMailer.public_send(@reminder_mailing.kind, @reminder_mailing.reminder_mailing_volunteers.first).deliver_later
+    VolunteerMailer.public_send(@reminder_mailing.kind,
+      @reminder_mailing.reminder_mailing_volunteers.first).deliver_later
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Beendigungs-Email wird versendet.'
   end
