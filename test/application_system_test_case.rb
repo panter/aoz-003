@@ -48,6 +48,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     use_default_driver
   end
 
+  def match_polymorph_path(polymorphic_param, wildcard_start: nil, wildcard_end: true)
+    if wildcard_start
+      { href: /.*#{polymorphic_path(polymorphic_param)}.*/x }
+    elsif wildcard_end
+      { href: /#{polymorphic_path(polymorphic_param)}.*/x }
+    else
+      { href: /#{polymorphic_path(polymorphic_param)}/x }
+    end
+  end
+
   def scroll_to_element(element)
     script = <<-JS
       arguments[0].scrollIntoView(true);
