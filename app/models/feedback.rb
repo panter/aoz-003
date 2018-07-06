@@ -7,6 +7,8 @@ class Feedback < ApplicationRecord
   belongs_to :author, class_name: 'User', inverse_of: 'feedbacks'
   belongs_to :reviewer, class_name: 'User', foreign_key: 'reviewer_id',
     inverse_of: 'reviewed_feedbacks', optional: true
+  belongs_to :responsible, class_name: 'User', foreign_key: 'responsible_id',
+    inverse_of: 'responsible_feedbacks', optional: true
   belongs_to :feedbackable, polymorphic: true, optional: true
 
   scope :assignment, (-> { where(feedbackable_type: 'Assignment') })
@@ -17,6 +19,11 @@ class Feedback < ApplicationRecord
   scope :from_group_offers, lambda { |group_offer_ids|
     group_offer.where(feedbackable_id: group_offer_ids)
   }
+
+  def responsible=(responsible_user)
+    self.responsible_at = Time.zone.now
+    super(responsible_user)
+  end
 
   def assignment?
     feedbackable_type == 'Assignment'

@@ -8,8 +8,9 @@ Rails.application.routes.draw do
     get :hours_and_feedbacks_submitted, on: :collection
   end
 
-  concern :mark_submitted_at do
+  concern :feedback_submit_and_responsibility do
     put :mark_as_done, on: :member
+    put :take_responsibility, on: :member
   end
 
   concern :hours_resources do
@@ -22,8 +23,8 @@ Rails.application.routes.draw do
 
   concern :assignment_feedbacks do
     resources :hours
-    resources :feedbacks, concerns: :mark_submitted_at
-    resources :trial_feedbacks, concerns: :mark_submitted_at
+    resources :feedbacks, concerns: :feedback_submit_and_responsibility
+    resources :trial_feedbacks, concerns: :feedback_submit_and_responsibility
   end
 
   concern :termination_actions do

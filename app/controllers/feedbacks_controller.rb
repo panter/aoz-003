@@ -1,5 +1,6 @@
 class FeedbacksController < ApplicationController
-  before_action :set_feedback, only: [:show, :edit, :update, :destroy, :mark_as_done]
+  before_action :set_feedback,
+    only: [:show, :edit, :update, :destroy, :mark_as_done, :take_responsibility]
   before_action :set_feedbackable
   before_action :set_volunteer
 
@@ -53,6 +54,13 @@ class FeedbacksController < ApplicationController
       redirect_to(redirect_path, notice: 'Halbjahres-Rapport quittiert.')
     else
       redirect_to(redirect_path, notice: 'Fehler: Quittieren fehlgeschlagen.')
+  end
+
+  def take_responsibility
+    if @feedback.update(responsible: current_user)
+      redirect_to(@redirect_back_path, notice: 'Halbjahres-Rapport übernommen.')
+    else
+      redirect_to(@redirect_back_path, notice: 'Fehler: Übernehmen fehlgeschlagen.')
     end
   end
 

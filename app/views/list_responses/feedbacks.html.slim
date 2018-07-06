@@ -27,6 +27,7 @@ table.table.table-striped.list-responses-table
       th= t_attr(:comments, Feedback)
       th.limit-width= sort_link @q, :conversation, 'Gespräch'
       th= sort_link @q, :created_at, 'Datum'
+      th= sort_link @q, :responsible, 'Übernommen'
       th.limit-width
 
   tbody
@@ -58,6 +59,15 @@ table.table.table-striped.list-responses-table
             span
               = "Angeschaut von: "
               = link_to record.reviewer.email, record.reviewer
+        td.index-action-cell.hidden-print
+          - if record.responsible.present?
+            = 'Übernommen durch '
+            = link_to record.responsible.email, record.responsible
+            = " am #{l(record.responsible_at.to_date)}"
+          - else
+            = link_to 'Übernehmen', polymorphic_path([record.volunteer, record.feedbackable, record],
+                action: :take_responsibility, q: search_parameters, page: params[:page]),
+                { method: :put, class: 'btn btn-default btn-xs m-t-10' }
         td.index-action-cell.hidden-print
           - if record.reviewer.present?
             = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable, record])
