@@ -17,6 +17,7 @@ nav.navbar.section-navigation.hidden-print
 table.table.table-striped.list-responses-table
   thead
     tr
+      th.limit-width Journal
       th.limit-width= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th.limit-width Einsatz
       th= sort_link @q, :author_profile_contact_full_name, 'Autor/in'
@@ -32,9 +33,11 @@ table.table.table-striped.list-responses-table
     - @feedbacks.each do |record|
       tr*{ data: { feedback_id: record.id } }
         td.index-action-cell
-          a href=edit_volunteer_path(record.volunteer)
+          = button_link navigation_glyph(:journal), volunteer_journals_path(record.volunteer), title: 'Journal'
+        td.index-action-cell
+          = link_to(edit_volunteer_path(record.volunteer)) do
             span #{record.volunteer.contact.last_name},
-            span= record.volunteer.contact.first_name
+            span  #{record.volunteer.contact.first_name}
         td.index-action-cell
           a href="#{url_for(record.feedbackable)}" title="#{record.feedbackable.to_label}"
             - record.feedbackable.label_parts.reject(&:blank?).each do |label_part|
