@@ -73,6 +73,16 @@ def generate_feedback_and_hours(creator, hourable, start_date, end_date = nil, v
   trial_feedback.update(created_at: FFaker::Time.between(start_date + 6.weeks, start_date + 8.weeks))
 end
 
+def handle_reminder_mailing_seed(mailer_type, reminder_mailables)
+  reminder_mailing = FactoryBot.create(:reminder_mailing, mailer_type, reminder_mailing_volunteers: reminder_mailables)
+  reminder_mailing.reminder_mailing_volunteers
+    .map { |rmv| rmv.update(picked: true) }
+    .each do |mailing_volunteer|
+      VolunteerMailer.trial_period_reminder(mailing_volunteer).deliver_later
+    end
+  reminder_mailing.update(sending_triggered: true)
+end
+
 def development_seed
   FactoryBot.create(:department_manager, email: "department_manager#{EMAIL_DOMAIN}",
       password: 'asdfasdf')
@@ -144,27 +154,33 @@ def development_seed
 
   # create Assignments
   if Assignment.count < 1
-    # trial Assignments
     creator = User.superadmins.first
-    3.times do
+    # trial Assignments
+    trial_assignments = (1..3).to_a.map do
       start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
       assignment = assignment_generator(creator, start_date - 2.days, start_date)
       generate_feedback_and_hours(creator, assignment, start_date)
+      assignment
     end
+    handle_reminder_mailing_seed(:trial_period, trial_assignments)
     # half_year Assignments
-    3.times do
+    half_year_assignments = (1..3).to_a.map do
       start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
       assignment = assignment_generator(creator, start_date - 2.days, start_date)
       generate_feedback_and_hours(creator, assignment, start_date)
+      assignment
     end
+    handle_reminder_mailing_seed(:half_year, half_year_assignments)
     # ended Assignments
-    2.times do
+    termination_assignments = (1..3).to_a.map do
       start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
       end_date = FFaker::Time.between(start_date + 100.days, 2.days.ago)
       assignment = assignment_generator(creator, start_date - 10.days, start_date, end_date,
         terminated_at: end_date + 10.days)
       generate_feedback_and_hours(creator, assignment, start_date, end_date + 10.days)
+      assignment
     end
+    handle_reminder_mailing_seed(:termination, termination_assignments)
 
     # Generate last year assignment for performance report
     2.times do
@@ -204,11 +220,13 @@ def development_seed
     group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
       period_start: start_date, period_end: nil)
     generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.first)
+    handle_reminder_mailing_seed(:trial_period, [group_assignment])
 
     start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
     group_assignment = GroupAssignment.create(volunteer: volunteers.second, group_offer: group_offer,
       period_start: start_date, period_end: nil)
     generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.second)
+    handle_reminder_mailing_seed(:half_year, [group_assignment])
 
     # ended GroupAssignments
     start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
@@ -216,6 +234,7 @@ def development_seed
     group_assignment = GroupAssignment.create(volunteer: volunteers.third, group_offer: group_offer,
       period_start: start_date, period_end: end_date)
     generate_feedback_and_hours(creator, group_assignment.group_offer, start_date, volunteer: volunteers.third)
+    handle_reminder_mailing_seed(:termination, [group_assignment])
 
     group_assignment = GroupAssignment.create(volunteer: volunteers.fourth, group_offer: group_offer,
       period_start: FFaker::Time.between(6.months.ago, 12.months.ago),
