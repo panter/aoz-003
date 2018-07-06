@@ -3,6 +3,8 @@ class FeedbacksController < ApplicationController
     only: [:show, :edit, :update, :destroy, :mark_as_done, :take_responsibility]
   before_action :set_feedbackable
   before_action :set_volunteer
+  before_action :set_list_response_feedback_redirect_back_path,
+    only: [:mark_as_done, :take_responsibility]
 
   def index
     authorize Feedback
@@ -49,11 +51,11 @@ class FeedbacksController < ApplicationController
   end
 
   def mark_as_done
-    redirect_path = list_responses_feedbacks_path(params.to_unsafe_hash.slice(:q))
     if @feedback.update(reviewer: current_user)
-      redirect_to(redirect_path, notice: 'Halbjahres-Rapport quittiert.')
+      redirect_to(@redirect_back_path, notice: 'Halbjahres-Rapport quittiert.')
     else
-      redirect_to(redirect_path, notice: 'Fehler: Quittieren fehlgeschlagen.')
+      redirect_to(@redirect_back_path, notice: 'Fehler: Quittieren fehlgeschlagen.')
+    end
   end
 
   def take_responsibility
@@ -65,6 +67,13 @@ class FeedbacksController < ApplicationController
   end
 
   private
+
+  def set_list_response_feedback_redirect_back_path
+    @redirect_back_path = list_responses_feedbacks_path(
+      params.to_unsafe_hash.slice(:q, :page)
+    )
+  end
+
   def simple_form_params
     @simple_form_for_params = [
       [@volunteer, @feedbackable, @feedback], {

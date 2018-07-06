@@ -6,8 +6,8 @@ nav.navbar.section-navigation.hidden-print
   ul.list-inline
     li= clear_filter_button
     = custom_filter_dropdown('Geprüft',
-        { q: :reviewer_id_not_null, text: 'Angeschaut', value: 'true' },
-        { q: :reviewer_id_null, text: 'Ungesehen', value: 'true' })
+        { q: :reviewer_id_not_null, text: 'Quittiert', value: 'true' },
+        { q: :reviewer_id_null, text: 'Unquittiert', value: 'true' })
     = custom_filter_dropdown('Übernommen',
         { q: :responsible_id_null, text: 'Offen', value: 'true' },
         { q: :responsible_id_not_null, text: 'Übernommen', value: 'true' },
@@ -60,9 +60,7 @@ table.table.table-striped.list-responses-table
         td.index-action-cell
           span= I18n.l record.created_at.to_date
           - if record.reviewer.present?
-            span
-              = "Angeschaut von: "
-              = link_to record.reviewer.email, record.reviewer
+            span Quittiert von: #{link_to(record.reviewer.email, record.reviewer)}
         td.index-action-cell.hidden-print
           - if record.responsible.present?
             = 'Übernommen durch '
@@ -76,7 +74,9 @@ table.table.table-striped.list-responses-table
           - if record.reviewer.present?
             = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable, record])
           - else
-            = link_to 'Angeschaut', polymorphic_path([record.volunteer, record.feedbackable, record], action: :mark_as_done, q: search_parameters), { method: :put, class: 'btn btn-default btn-xs m-t-10' }
+            = link_to 'Quittieren', polymorphic_path([record.volunteer, record.feedbackable, record],
+                action: :mark_as_done, q: search_parameters),
+                { method: :put, class: 'btn btn-default btn-xs m-t-10' }
 
 = bootstrap_paginate(@feedbacks)
 
