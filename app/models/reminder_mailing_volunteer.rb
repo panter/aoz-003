@@ -119,6 +119,6 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def feedback_link
-    "[Feedback Geben](#{feedback_url})"
+    "[Halbjahres-Rapport erstellen](#{feedback_url})"
   end
 end

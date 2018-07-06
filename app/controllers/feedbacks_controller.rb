@@ -50,9 +50,9 @@ class FeedbacksController < ApplicationController
   def mark_as_done
     redirect_path = list_responses_feedbacks_path(params.to_unsafe_hash.slice(:q))
     if @feedback.update(reviewer: current_user)
-      redirect_to(redirect_path, notice: 'Feedback als angeschaut markiert.')
+      redirect_to(redirect_path, notice: 'Halbjahres-Rapport quittiert.')
     else
-      redirect_to(redirect_path, notice: 'Fehler: Angeschaut markieren fehlgeschlagen.')
+      redirect_to(redirect_path, notice: 'Fehler: Quittieren fehlgeschlagen.')
     end
   end
 

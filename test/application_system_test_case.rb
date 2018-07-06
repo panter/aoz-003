@@ -71,6 +71,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
+  def fill_field_char_by_char_and_wait_for_ajax(locator, text)
+    field = page.find_field(locator)
+    text.split('').each do |char|
+      field.native.send_keys(char)
+      wait_for_ajax
+    end
+  end
+
   def fill_autocomplete(name, options = {})
     find("[name=\"#{name}\"]").native.send_keys options[:with], :down
     wait_for_ajax

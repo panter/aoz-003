@@ -13,7 +13,7 @@ nav.navbar.section-navigation.hidden-print
   ul.list-inline
     li= clear_filter_button
     = list_filter_dropdown(:salutation, Client::SALUTATIONS)
-    - if policy(Client).superadmin_privileges?
+    - if policy(Client).superadmin_or_department_manager_or_social_worker?
       = custom_filter_dropdown 'Prozess', *Client.acceptance_filters
       = custom_filter_dropdown('Einsatz',
         { q: :active, text: 'Aktiv', value: 'true' },

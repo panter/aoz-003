@@ -2,8 +2,8 @@ require 'application_system_test_case'
 
 class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
   setup do
-    @volunteer = create :volunteer
-    @assignment = create :assignment, volunteer: @volunteer
+    @assignment = create :assignment
+    @volunteer = @assignment.volunteer
     create :hour, hourable: @assignment, created_at: 2.days.ago
     @assignment_feedback = create :feedback, feedbackable: @assignment, author: @volunteer.user,
       volunteer: @volunteer
@@ -15,15 +15,27 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     login_as @volunteer.user
   end
 
-  test 'last_submitted_hours_and_feedbacks form is autosaved' do
+  test 'last_submitted_hours_and_feedbacks_form_is_autosaved' do
+    @volunteer.update(waive: false, iban: nil, bank: nil)
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
-    fill_in 'IBAN', with: 'CH12345'
-    fill_in 'Name der Bank', with: 'Name of the bank'
+
+    fill_field_char_by_char_and_wait_for_ajax('IBAN', 'CH12345')
+    @volunteer.reload
+    assert_equal 'CH12345', @volunteer.iban
+
+    fill_field_char_by_char_and_wait_for_ajax('Bank', 'Name of the bank')
+    @volunteer.reload
+    assert_equal 'Name of the bank', @volunteer.bank
+
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
     assert page.has_field? 'IBAN', with: 'CH12345'
     assert page.has_field? 'Name der Bank', with: 'Name of the bank'
 
     check 'Ich verzichte auf die Auszahlung von Spesen.'
+    wait_for_ajax
+    @volunteer.reload
+    assert @volunteer.waive
+
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
     assert page.has_field? 'Ich verzichte auf die Auszahlung von Spesen.', checked: true
     refute page.has_field? 'IBAN'
@@ -40,7 +52,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     click_on 'Bestätigen'
 
     assert_equal current_path, hours_and_feedbacks_submitted_assignments_path
-    assert_text 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    assert_text 'Die Stunden und Halbjahres-Rapporte wurden erfolgreich bestätigt.'
 
     @volunteer.reload
     assert @volunteer.waive
@@ -56,7 +68,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     click_on 'Bestätigen'
 
     assert_equal current_path, hours_and_feedbacks_submitted_assignments_path
-    assert_text 'Die Stunden und Feedbacks wurden erfolgreich bestätigt.'
+    assert_text 'Die Stunden und Halbjahres-Rapporte wurden erfolgreich bestätigt.'
   end
 
   test 'volunteer_can_add_hours_and_feedback_for_their_assignment' do
@@ -78,11 +90,11 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert_text @assignment.client
     assert_text @assignment_feedback.comments
 
-    click_link 'Feedback erfassen'
+    click_link 'Halbjahres-Rapport erfassen'
     fill_in 'Bemerkungen', with: 'new feedback from volunteer'
-    click_button 'Feedback erfassen'
+    click_button 'Halbjahres-Rapport erfassen'
 
-    assert_text 'Feedback wurde erfolgreich erstellt.'
+    assert_text 'Halbjahres-Rapport wurde erfolgreich erstellt.'
     assert_text @assignment.client
     assert_text @assignment_feedback.comments
     assert_text 'new feedback from volunteer'
@@ -109,11 +121,11 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert_text group_assignment.to_label
     assert_text @group_offer_feedback.comments
 
-    click_link 'Feedback erfassen'
+    click_link 'Halbjahres-Rapport erfassen'
     fill_in 'Bemerkungen', with: 'new feedback from volunteer'
-    click_button 'Feedback erfassen'
+    click_button 'Halbjahres-Rapport erfassen'
 
-    assert_text 'Feedback wurde erfolgreich erstellt.'
+    assert_text 'Halbjahres-Rapport wurde erfolgreich erstellt.'
     assert_text group_assignment.to_label
     assert_text @group_offer_feedback.comments
     assert_text 'new feedback from volunteer'

@@ -35,7 +35,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     end
     click_link 'Profil bearbeiten'
     within '.assignments-table' do
-      click_link 'Feedback Liste', href: polymorphic_path([@volunteer, @assignment, Feedback])
+      click_link 'Halbjahres-Rapport Liste', href: polymorphic_path([@volunteer, @assignment, Feedback])
     end
     refute page.has_text? 'author_superadmin_assignment_feedback'
     assert page.has_text? 'author_volunteer_assignment_feedback'
@@ -50,7 +50,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     end
     click_link 'Profil bearbeiten'
     within '.group-assignments-table' do
-      click_link 'Feedback Liste', href: polymorphic_path([@volunteer, @group_offer, Feedback])
+      click_link 'Halbjahres-Rapport Liste', href: polymorphic_path([@volunteer, @group_offer, Feedback])
     end
     refute page.has_text? 'author_superadmin_group_offer_feedback'
     assert page.has_text? 'author_volunteer_group_offer_feedback'
@@ -61,7 +61,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     login_as @user_volunteer
     visit volunteer_path(@user_volunteer.volunteer)
     within '.assignments-table' do
-      click_link 'Feedback Liste', href: polymorphic_path([@volunteer, @assignment, Feedback])
+      click_link 'Halbjahres-Rapport Liste', href: polymorphic_path([@volunteer, @assignment, Feedback])
     end
     refute page.has_text? 'author_superadmin_assignment_feedback'
     assert page.has_text? 'author_volunteer_assignment_feedback'
@@ -152,15 +152,15 @@ class FeedbacksTest < ApplicationSystemTestCase
   def play_create_new_assignment_feedback
     visit volunteer_path(@volunteer)
     within '.assignments-table' do
-      click_link 'Feedback erfassen'
+      click_link 'Halbjahres-Rapport erfassen'
     end
     FEEDBACK_FORM_FILL.each do |fill_values|
       fill_in fill_values[:field], with: fill_values[:text]
     end
-    click_button 'Feedback erfassen'
-    assert page.has_text? 'Feedback wurde erfolgreich erstellt.'
+    click_button 'Halbjahres-Rapport erfassen'
+    assert page.has_text? 'Halbjahres-Rapport wurde erfolgreich erstellt.'
     within '.assignments-table' do
-      click_link 'Feedback Liste', href: polymorphic_path([@volunteer, @assignment, Feedback])
+      click_link 'Halbjahres-Rapport Liste', href: polymorphic_path([@volunteer, @assignment, Feedback])
     end
     click_link 'Anzeigen'
     FEEDBACK_FORM_FILL.each do |fill_values|
@@ -171,15 +171,15 @@ class FeedbacksTest < ApplicationSystemTestCase
   def play_create_new_group_offer_feedback
     visit volunteer_path(@volunteer)
     within '.group-assignments-table' do
-      click_link 'Feedback erfassen'
+      click_link 'Halbjahres-Rapport erfassen'
     end
     FEEDBACK_FORM_FILL.each do |fill_values|
       fill_in fill_values[:field], with: fill_values[:text]
     end
-    click_button 'Feedback erfassen'
-    assert page.has_text? 'Feedback wurde erfolgreich erstellt.'
+    click_button 'Halbjahres-Rapport erfassen'
+    assert page.has_text? 'Halbjahres-Rapport wurde erfolgreich erstellt.'
     within '.group-assignments-table' do
-      click_link 'Feedback Liste', href: polymorphic_path([@volunteer, @group_offer, Feedback])
+      click_link 'Halbjahres-Rapport Liste', href: polymorphic_path([@volunteer, @group_offer, Feedback])
     end
     click_link 'Anzeigen'
     FEEDBACK_FORM_FILL.each do |fill_values|

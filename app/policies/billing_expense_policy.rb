@@ -1,8 +1,8 @@
 class BillingExpensePolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      return all if superadmin?
-      return scope.where(volunteer: user.volunteer) if volunteer?
+      return all.distinct if superadmin?
+      return scope.where(volunteer: user.volunteer).distinct if volunteer?
       none
     end
   end

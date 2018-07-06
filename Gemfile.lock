@@ -208,6 +208,9 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    js-routes (1.4.4)
+      railties (>= 3.2)
+      sprockets-rails
     kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -218,6 +221,8 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    lodash-rails (4.17.10)
+      railties (>= 3.1)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -469,8 +474,10 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   jquery-ui-rails
+  js-routes
   letter_opener
   listen
+  lodash-rails
   mdb
   minitest (~> 5.10.3)
   overcommit
