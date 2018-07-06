@@ -6,8 +6,12 @@ nav.navbar.section-navigation.hidden-print
   ul.list-inline
     li= clear_filter_button
     = custom_filter_dropdown('Geprüft',
-        { q: :reviewer_id_not_null, text: 'Angeschaut', value: 'true' },
-        { q: :reviewer_id_null, text: 'Ungesehen', value: 'true' })
+        { q: :reviewer_id_not_null, text: 'Quittiert', value: 'true' },
+        { q: :reviewer_id_null, text: 'Unquittiert', value: 'true' })
+    = custom_filter_dropdown('Übernommen',
+        { q: :responsible_id_null, text: 'Offen', value: 'true' },
+        { q: :responsible_id_not_null, text: 'Übernommen', value: 'true' },
+        *@responsibles)
     = custom_filter_dropdown('Autor',
         { q: :author_volunteer, text: 'Freiwillige/r', value: 'true' },
         { q: :author_volunteer, text: 'AOZ', value: 'false' })
@@ -17,6 +21,7 @@ nav.navbar.section-navigation.hidden-print
 table.table.table-striped.list-responses-table
   thead
     tr
+      th.limit-width Journal
       th.limit-width= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th.limit-width Einsatz
       th= sort_link @q, :author_profile_contact_full_name, 'Autor/in'
@@ -26,15 +31,18 @@ table.table.table-striped.list-responses-table
       th= t_attr(:comments, Feedback)
       th.limit-width= sort_link @q, :conversation, 'Gespräch'
       th= sort_link @q, :created_at, 'Datum'
+      th= sort_link @q, :responsible, 'Übernommen'
       th.limit-width
 
   tbody
     - @feedbacks.each do |record|
       tr*{ data: { feedback_id: record.id } }
         td.index-action-cell
-          a href=edit_volunteer_path(record.volunteer)
+          = button_link navigation_glyph(:journal), volunteer_journals_path(record.volunteer), title: 'Journal'
+        td.index-action-cell
+          = link_to(edit_volunteer_path(record.volunteer)) do
             span #{record.volunteer.contact.last_name},
-            span= record.volunteer.contact.first_name
+            span  #{record.volunteer.contact.first_name}
         td.index-action-cell
           a href="#{url_for(record.feedbackable)}" title="#{record.feedbackable.to_label}"
             - record.feedbackable.label_parts.reject(&:blank?).each do |label_part|
@@ -52,14 +60,23 @@ table.table.table-striped.list-responses-table
         td.index-action-cell
           span= I18n.l record.created_at.to_date
           - if record.reviewer.present?
-            span
-              = "Angeschaut von: "
-              = link_to record.reviewer.email, record.reviewer
+            span Quittiert von: #{link_to(record.reviewer.email, record.reviewer)}
+        td.index-action-cell.hidden-print
+          - if record.responsible.present?
+            = 'Übernommen durch '
+            = link_to record.responsible.email, record.responsible
+            = " am #{l(record.responsible_at.to_date)}"
+          - else
+            = link_to 'Übernehmen', polymorphic_path([record.volunteer, record.feedbackable, record],
+                action: :take_responsibility, q: search_parameters, page: params[:page]),
+                { method: :put, class: 'btn btn-default btn-xs m-t-10' }
         td.index-action-cell.hidden-print
           - if record.reviewer.present?
             = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable, record])
           - else
-            = link_to 'Angeschaut', polymorphic_path([record.volunteer, record.feedbackable, record], action: :mark_as_done, q: search_parameters), { method: :put, class: 'btn btn-default btn-xs m-t-10' }
+            = link_to 'Quittieren', polymorphic_path([record.volunteer, record.feedbackable, record],
+                action: :mark_as_done, q: search_parameters),
+                { method: :put, class: 'btn btn-default btn-xs m-t-10' }
 
 = bootstrap_paginate(@feedbacks)
 

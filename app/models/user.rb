@@ -38,6 +38,8 @@ class User < ApplicationRecord
   has_many :reminder_mailings, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :reviewed_feedbacks, class_name: 'Feedback', foreign_key: 'reviewer_id',
     inverse_of: 'reviewer'
+  has_many :responsible_feedbacks, inverse_of: 'responsible', foreign_key: 'responsible_id',
+    class_name: 'Feedback'
   has_many :reviewed_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'reviewer_id',
     inverse_of: 'reviewer'
   has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id', inverse_of: 'reviewer'
