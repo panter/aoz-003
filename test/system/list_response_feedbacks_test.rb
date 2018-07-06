@@ -44,6 +44,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
 
   test 'feedbacks_list_contains_only_relevant_records' do
     click_link exact_text: 'Halbjahres-Rapport Eingang'
+    assert page.has_link? 'Journal', href: volunteer_journals_path(@assignment_pendent.volunteer)
     assert page.has_link? @assignment_pendent.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_pendent.feedbackable.to_label
     assert page.has_link? @group_assignment_pendent.volunteer.contact.last_name
@@ -64,6 +65,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     click_link 'Filter aufheben'
     visit current_url
     # marked done shoud now be displayed
+    assert page.has_link? 'Journal', href: volunteer_journals_path(@assignment_done.volunteer)
     assert page.has_link? @assignment_done.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_done.feedbackable.to_label
     assert page.has_link? @group_assignment_done.volunteer.contact.last_name
@@ -72,9 +74,9 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
 
   test 'feedbacks_list_with_filter_erledigt_shows_only_marked_done' do
     click_link exact_text: 'Halbjahres-Rapport Eingang'
-    click_link 'Geprüft: Ungesehen'
+    click_link 'Geprüft: Unquittiert'
     within 'li.dropdown.open' do
-      click_link 'Angeschaut'
+      click_link 'Quittiert'
     end
     visit current_url
     # not marked done should now be filtered
@@ -83,6 +85,7 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     refute page.has_link? @group_assignment_pendent.volunteer.contact.last_name
 
     # marked done shoud be displayed
+    assert page.has_link? 'Journal', href: volunteer_journals_path(@assignment_done.volunteer)
     assert page.has_link? @assignment_done.volunteer.contact.last_name
     assert page.has_link? @assignment_fb_done.feedbackable.to_label
     assert page.has_link? @group_assignment_done.volunteer.contact.last_name
@@ -91,18 +94,96 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   test 'marking_feedback_done_works' do
     click_link exact_text: 'Halbjahres-Rapport Eingang'
     within 'tbody' do
-      click_link 'Angeschaut', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
+      click_link 'Quittieren', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
         assignments\/#{@assignment_pendent.id}\/feedbacks\/#{@assignment_fb_pendent.id}\/.*/x
     end
     assert page.has_text? 'Halbjahres-Rapport quittiert.'
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.feedbackable.to_label
     within 'tbody' do
-      click_link 'Angeschaut', href: /feedbacks\/#{@group_assignment_fb_pendent.id}/x
+      click_link 'Quittieren', href: /feedbacks\/#{@group_assignment_fb_pendent.id}/x
     end
     assert page.has_text? 'Halbjahres-Rapport quittiert.'
     @group_assignment_fb_pendent.reload
     assert_equal @superadmin, @group_assignment_fb_pendent.reviewer
+  end
+
+  test 'take_feedback_responsibility_works' do
+    visit list_responses_feedbacks_path
+    within 'tbody' do
+      click_link 'Übernehmen', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
+        assignments\/#{@assignment_pendent.id}\/feedbacks\/#{@assignment_fb_pendent.id}\/.*/x
+    end
+    assert page.has_text? 'Halbjahres-Rapport übernommen.'
+    @assignment_fb_pendent.reload
+    assert page.has_text? "Übernommen durch #{@superadmin.email}"\
+                          " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
+    other_superadmin = create :user
+    login_as other_superadmin
+    visit list_responses_feedbacks_path
+    within 'tbody' do
+      click_link 'Übernehmen', href: /.*\/volunteers\/#{@group_assignment_fb_pendent.volunteer.id}\/
+        group_offers\/#{@group_assignment_fb_pendent.feedbackable.id}\/
+        feedbacks\/#{@group_assignment_fb_pendent.id}\/.*/x
+    end
+    assert page.has_text? 'Halbjahres-Rapport übernommen.'
+    @group_assignment_fb_pendent.reload
+    assert page.has_text? "Übernommen durch #{other_superadmin.email}"\
+                          " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
+  end
+
+  test 'feedback_responsibility_filter_works' do
+    @assignment_fb_pendent.update(responsible: @superadmin)
+    other_superadmin = create :user
+    @group_assignment_fb_pendent.update(responsible: other_superadmin)
+    noone_reponsible_assignment = create(:assignment)
+    noone_reponsible_feedback = create(:feedback, feedbackable: noone_reponsible_assignment,
+      volunteer: noone_reponsible_assignment.volunteer, author: noone_reponsible_assignment.volunteer.user)
+    visit list_responses_feedbacks_path
+
+    assert page.has_text? "Übernommen durch #{other_superadmin.email}"\
+                          " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
+    assert page.has_text? "Übernommen durch #{@superadmin.email}"\
+                          " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
+    assert page.has_link? 'Übernehmen', href: /.*\/volunteers\/#{noone_reponsible_feedback.volunteer.id}\/
+      assignments\/#{noone_reponsible_assignment.id}\/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
+
+    within page.find_all('nav.section-navigation').last do
+      click_link 'Übernommen'
+      click_link 'Offen'
+    end
+    visit current_url
+    refute page.has_text? "Übernommen durch #{other_superadmin.email}"\
+                          " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
+    refute page.has_text? "Übernommen durch #{@superadmin.email}"\
+                          " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
+    assert page.has_link? 'Übernehmen', href: /.*\/volunteers\/#{noone_reponsible_feedback.volunteer.id}\/
+      assignments\/#{noone_reponsible_assignment.id}\/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
+
+    click_link 'Übernommen: Offen'
+    within 'li.dropdown.open' do
+      click_link 'Übernommen'
+    end
+    visit current_url
+    assert page.has_text? "Übernommen durch #{other_superadmin.email}"\
+                          " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
+    assert page.has_text? "Übernommen durch #{@superadmin.email}"\
+                          " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
+    refute page.has_link? 'Übernehmen', href: /.*\/volunteers\/#{noone_reponsible_feedback.volunteer.id}\/
+      assignments\/#{noone_reponsible_assignment.id}\/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
+    click_link 'Übernommen: Übernommen'
+    within 'li.dropdown.open' do
+      assert page.has_link? "Übernommen von #{@superadmin.profile.contact.full_name}"
+      assert page.has_link? "Übernommen von #{other_superadmin.profile.contact.full_name}"
+      click_link "Übernommen von #{other_superadmin.profile.contact.full_name}"
+    end
+    visit current_url
+    assert page.has_text? "Übernommen durch #{other_superadmin.email}"\
+                          " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
+    refute page.has_text? "Übernommen durch #{@superadmin.email}"\
+                          " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
+    refute page.has_link? 'Übernehmen', href: /.*\/volunteers\/#{noone_reponsible_feedback.volunteer.id}\/
+      assignments\/#{noone_reponsible_assignment.id}\/feedbacks\/#{noone_reponsible_feedback.id}\/.*/x
   end
 
   test 'truncate_modal_shows_all_text' do

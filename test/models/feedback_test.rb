@@ -49,4 +49,10 @@ class FeedbackTest < ActiveSupport::TestCase
     refute query_via_feedback.include? before_last_submitted_feedback_superadmin
     assert query_via_feedback.include? after_last_submitted_feedback_superadmin
   end
+
+  test 'set_responsible_also_sets_responsible_at' do
+    feedback = create :feedback
+    feedback.update(responsible: create(:user))
+    assert feedback.responsible_at.present?
+  end
 end
