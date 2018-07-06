@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180607142252) do
+ActiveRecord::Schema.define(version: 20180704073944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -311,9 +311,12 @@ ActiveRecord::Schema.define(version: 20180607142252) do
     t.string "feedbackable_type"
     t.bigint "feedbackable_id"
     t.bigint "reviewer_id"
+    t.bigint "responsible_id"
+    t.datetime "responsible_at"
     t.index ["author_id"], name: "index_feedbacks_on_author_id"
     t.index ["deleted_at"], name: "index_feedbacks_on_deleted_at"
     t.index ["feedbackable_type", "feedbackable_id"], name: "index_feedbacks_on_feedbackable_type_and_feedbackable_id"
+    t.index ["responsible_id"], name: "index_feedbacks_on_responsible_id"
     t.index ["reviewer_id"], name: "index_feedbacks_on_reviewer_id"
     t.index ["volunteer_id"], name: "index_feedbacks_on_volunteer_id"
   end

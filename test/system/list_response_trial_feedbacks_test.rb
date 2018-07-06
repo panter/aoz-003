@@ -86,17 +86,21 @@ class ListResponseTrialFeedbacksTest < ApplicationSystemTestCase
   test 'marking_feedback_done_works' do
     click_link 'Probezeit Feedback Eingang'
     within 'tbody' do
-      click_link 'Angeschaut', href: /.*\/volunteers\/#{@assignment_pendent.volunteer.id}\/
-        assignments\/#{@assignment_pendent.id}\/trial_feedbacks
-        \/#{@assignment_fb_pendent.id}\/.*/x
+      click_link 'Angeschaut', match_polymorph_path([
+        @assignment_fb_pendent.volunteer,
+        @assignment_fb_pendent.trial_feedbackable,
+        @assignment_fb_pendent
+      ])
     end
     assert page.has_text? 'Feedback als angeschaut markiert.'
     refute page.has_link? @assignment_pendent.volunteer.contact.last_name
     refute page.has_link? @assignment_fb_pendent.trial_feedbackable.to_label
     within 'tbody' do
-      click_link 'Angeschaut', href: /.*\/volunteers\/#{@group_assignment_pendent.volunteer.id}\/
-        group_offers\/#{@group_assignment_pendent.group_offer.id}\/trial_feedbacks
-        \/#{@group_assignment_fb_pendent.id}\/.*/x
+      click_link 'Angeschaut', match_polymorph_path([
+        @group_assignment_fb_pendent.volunteer,
+        @group_assignment_fb_pendent.trial_feedbackable,
+        @group_assignment_fb_pendent
+      ])
     end
     assert page.has_text? 'Feedback als angeschaut markiert.'
   end

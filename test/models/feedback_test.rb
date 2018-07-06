@@ -38,7 +38,7 @@ class FeedbackTest < ActiveSupport::TestCase
 
     query_via_assignment = assignment_last_submitted.feedbacks_since_last_submitted
     query_via_feedback = Feedback.where(feedbackable: assignment_last_submitted)
-                                 .since_last_submitted(assignment_last_submitted.submitted_at)
+      .since_last_submitted(assignment_last_submitted.submitted_at)
     assert query_via_feedback.include? after_last_submitted_feedback
     assert query_via_assignment.include? after_last_submitted_feedback
 
@@ -48,5 +48,11 @@ class FeedbackTest < ActiveSupport::TestCase
     refute query_via_feedback.include? before_last_submitted_feedback
     refute query_via_feedback.include? before_last_submitted_feedback_superadmin
     assert query_via_feedback.include? after_last_submitted_feedback_superadmin
+  end
+
+  test 'set_responsible_also_sets_responsible_at' do
+    feedback = create :feedback
+    feedback.update(responsible: create(:user))
+    assert feedback.responsible_at.present?
   end
 end

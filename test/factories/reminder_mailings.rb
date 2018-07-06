@@ -23,10 +23,43 @@ FactoryBot.define do
     end
 
     after(:build) do |reminder_mailing|
-      volunteer = create(:volunteer)
-      assignment = create(:assignment, volunteer: volunteer, period_start: 6.weeks.ago.to_date + 5)
-      reminder_mailing.reminder_mailing_volunteers << ReminderMailingVolunteer.new(
-        volunteer: volunteer, reminder_mailable: assignment, picked: true)
+      if reminder_mailing.reminder_mailing_volunteers.any?
+        reminder_mailing.reminder_mailing_volunteers.each { |rmv| rmv.picked = true }
+      else
+        volunteer = create(:volunteer)
+        assignment = create_reminder_mailable(reminder_mailing, volunteer)
+        reminder_mailing.reminder_mailing_volunteers << ReminderMailingVolunteer.new(
+          volunteer: volunteer, reminder_mailable: assignment, picked: true
+        )
+      end
+    end
+
+    after(:save) do |reminder_mailing|
+      trigger_reminder_mailing_send(reminder_mailing) if reminder_mailing.sending_triggered
     end
   end
+end
+
+def create_reminder_mailable(reminder_mailing, volunteer)
+  case reminder_mailing.kind
+  when 'half_year'
+    create(:assignment, volunteer: volunteer, creator: reminder_mailing.creator,
+      period_start: FFaker::Time.between(6.months.ago, 12.months.ago))
+  when 'trial_period'
+    create(:assignment, volunteer: volunteer, creator: reminder_mailing.creator,
+      period_start: FFaker::Time.between(6.weeks.ago, 8.weeks.ago))
+  when 'termination'
+    start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
+    create(:assignment, volunteer: volunteer, creator: reminder_mailing.creator,
+      period_start: start_date,
+      period_end: FFaker::Time.between(start_date + 100.days, 2.days.ago))
+  end
+end
+
+def trigger_reminder_mailing_send(reminder_mailing)
+  reminder_mailing.reminder_mailing_volunteers
+    .each do |mailing_volunteer|
+      mailing_volunteer.update(picked: true)
+      VolunteerMailer.public_send(reminder_mailing.kind, mailing_volunteer).deliver
+    end
 end
