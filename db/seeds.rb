@@ -60,11 +60,11 @@ end
 
 def handle_reminder_mailing_seed(mailer_type, reminder_mailables)
   reminder_mailing = FactoryBot.create(:reminder_mailing, mailer_type, reminder_mailing_volunteers: reminder_mailables)
-  reminder_mailing.reminder_mailing_volunteers
-    .map { |rmv| rmv.update(picked: true) }
-    .each do |mailing_volunteer|
-      VolunteerMailer.trial_period_reminder(mailing_volunteer).deliver_later
-    end
+
+  reminder_mailing.reminder_mailing_volunteers.each do |mailing_volunteer|
+    mailing_volunteer.update(picked: true)
+    VolunteerMailer.public_send(reminder_mailing.kind.to_sym, mailing_volunteer).deliver
+  end
   reminder_mailing.update(sending_triggered: true)
 end
 

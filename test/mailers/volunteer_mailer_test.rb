@@ -13,7 +13,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
     assignment = make_assignment(start_date: 7.weeks.ago)
     mailing = create_probation_mailing(*group_assignments, assignment)
     mailing.reminder_mailing_volunteers.each do |rmv|
-      mailer = VolunteerMailer.trial_period_reminder(rmv).deliver
+      mailer = VolunteerMailer.public_send(mailing.kind, rmv).deliver
       assert_equal rmv.process_template[:subject], mailer.subject
       assert mailer.to.include? rmv.volunteer.contact.primary_email
       assert_match rmv.process_template[:body], mailer.body.encoded
@@ -27,7 +27,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
     assignment = make_assignment(start_date: 8.months.ago)
     mailing = create_half_year_mailing(*group_assignments, assignment)
     mailing.reminder_mailing_volunteers.each do |rmv|
-      mailer = VolunteerMailer.half_year_reminder(rmv).deliver
+      mailer = VolunteerMailer.public_send(mailing.kind, rmv).deliver
       assert_equal rmv.process_template[:subject], mailer.subject
       assert mailer.to.include? rmv.volunteer.contact.primary_email
       assert_match rmv.process_template[:body], mailer.body.encoded
@@ -38,7 +38,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
     assignment = make_assignment(start_date: 8.months.ago, end_date: 2.days.ago)
     mailing = create_termination_mailing(assignment)
     mailing.reminder_mailing_volunteers do |rmv|
-      mailer = VolunteerMailer.termination_email(rmv).deliver
+      mailer = VolunteerMailer.public_send(mailing.kind, rmv).deliver
       assert_equal rmv.process_template[:subject], mailer.subject
       assert mailer.to.include? rmv.volunteer.contact.primary_email
       assert_match rmv.process_template[:body], mailer.body.encoded
@@ -53,7 +53,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
       body: '%{Anrede} %{Name} %{FeedbackLink} %{Einsatz} %{EinsatzTitel} %{EmailAbsender} '\
             '%{EinsatzStart}'
     mailing_volunteer = termination_reminder.reminder_mailing_volunteers.first
-    mailer = VolunteerMailer.termination_email(mailing_volunteer).deliver
+    mailer = VolunteerMailer.public_send(termination_reminder.kind, mailing_volunteer).deliver
     assert_equal mailing_volunteer.process_template[:subject], mailer.subject
     assert mailer.to.include? mailing_volunteer.volunteer.contact.primary_email
     assert_match mailing_volunteer.volunteer.contact.natural_name, mailer.body.encoded

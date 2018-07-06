@@ -85,7 +85,7 @@ class ReminderMailingsController < ApplicationController
         ' versandt.'
     end
     @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
-      VolunteerMailer.trial_period_reminder(mailing_volunteer).deliver_later
+      VolunteerMailer.public_send(@reminder_mailing.kind, mailing_volunteer).deliver_later
     end
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Probezeit Erinnerungs-Emails werden versendet.'
@@ -97,7 +97,7 @@ class ReminderMailingsController < ApplicationController
         ' versandt.'
     end
     @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
-      VolunteerMailer.half_year_reminder(mailing_volunteer).deliver_later
+      VolunteerMailer.public_send(@reminder_mailing.kind, mailing_volunteer).deliver_later
     end
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Halbjahres Erinnerungs-Emails werden versendet.'
@@ -108,7 +108,7 @@ class ReminderMailingsController < ApplicationController
       return redirect_to reminder_mailings_path, notice: 'Dieses Beendigungs-Mailing wurde bereits'\
         ' versandt.'
     end
-    VolunteerMailer.termination_email(@reminder_mailing.reminder_mailing_volunteers.first).deliver_later
+    VolunteerMailer.public_send(@reminder_mailing.kind, @reminder_mailing.reminder_mailing_volunteers.first).deliver_later
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Beendigungs-Email wird versendet.'
   end
