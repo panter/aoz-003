@@ -1,6 +1,7 @@
 table.table.table-striped.feedbacks-table
   thead
     tr
+      th
       th Ziele
       th Erreichtes
       th Fortsetzen, und wenn ja wie
@@ -13,6 +14,7 @@ table.table.table-striped.feedbacks-table
   tbody
     - feedbacks.each do |record|
       tr
+        td= button_link navigation_glyph(:edit), edit_polymorphic_path([@volunteer, record.feedbackable, record])
         td= record.goals
         td= record.achievements
         td= record.future
