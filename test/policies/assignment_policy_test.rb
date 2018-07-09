@@ -47,7 +47,7 @@ class AssignmentPolicyTest < PolicyAssertions::Test
     assert_permit(volunteer.user, assignment,
       *actions_list(
         :show, :last_submitted_hours_and_feedbacks, :update_submitted_at,
-        :hours_and_feedbacks_submitted
+        :hours_and_feedbacks_submitted, :terminate
       ))
     refute_permit(volunteer.user, Assignment,
       'show_comments?', *actions_list(
