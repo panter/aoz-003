@@ -150,4 +150,19 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     refute_text 'hour_volunteer2'
     refute_text 'feedback_volunteer2'
   end
+
+  test 'volunteer_can_edit_feedback_on_last_submitted_hours_and_feedbacks_path' do
+    login_as @assignment_feedback.volunteer.user
+    visit last_submitted_hours_and_feedbacks_assignment_path(@assignment_feedback.feedbackable)
+
+    click_link 'Bearbeiten', match_polymorph_path(
+      [@assignment_feedback.volunteer, @assignment_feedback.feedbackable, @assignment_feedback]
+    )
+
+    # assert the redirect back to the previous page works
+    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: 'some_different_goal_text'
+    click_button 'Halbjahres-Rapport aktualisieren'
+    assert page.has_text? 'Halbjahres-Rapport wurde erfolgreich geändert.'
+    assert page.has_text? 'Zuletzt übermittelte Stunden und Halbjahres-Rapporte'
+  end
 end

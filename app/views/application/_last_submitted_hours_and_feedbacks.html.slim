@@ -19,11 +19,11 @@
           .col-xs-4= vf.input :bank
 
   h3 Stunden
-  = render 'last_submitted_hours', hours: hours, confirmable: confirmable
+  = render 'hours/last_submitted_hours', hours: hours, confirmable: confirmable
   p.m-b-30= button_link t_title(:new, Hour), new_polymorphic_path([confirmable.volunteer, confirmable, Hour], redirect_to: request.fullpath)
 
   h3 Halbjahres-Rapporte
-  = render 'last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
+  = render 'feedbacks/last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
   p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: request.fullpath)
 
   .submit-box
