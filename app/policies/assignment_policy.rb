@@ -35,7 +35,7 @@ class AssignmentPolicy < ApplicationPolicy
   alias_method :update?,
     :superadmin_or_department_manager_creation?
   alias_method :terminate?,
-    :superadmin_or_department_manager_creation?
+    :superadmin_or_department_manager_creation_or_volunteer_related?
   alias_method :update_terminated_at?,
     :superadmin_or_department_manager_creation?
   alias_method :verify_termination?,
