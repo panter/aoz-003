@@ -51,6 +51,8 @@ class User < ApplicationRecord
     foreign_key: 'termination_submitted_by_id', inverse_of: 'termination_submitted_by'
   has_many :assignment_terminations_verified, class_name: 'Assignment',
     foreign_key: 'termination_verified_by_id', inverse_of: 'termination_verified_by'
+  has_many :assignments_submitted, class_name: 'Assignment',
+    foreign_key: 'submitted_by_id', inverse_of: 'submitted_by'
 
   # GroupAssignment termination relations
   has_many :group_assignment_period_ends_set, class_name: 'GroupAssignment',
@@ -59,6 +61,8 @@ class User < ApplicationRecord
     foreign_key: 'termination_submitted_by_id', inverse_of: 'termination_submitted_by'
   has_many :group_assignment_terminations_verified, class_name: 'GroupAssignment',
     foreign_key: 'termination_verified_by', inverse_of: 'termination_verified_by'
+  has_many :group_assignments_submitted, class_name: 'GroupAssignment',
+    foreign_key: 'submitted_by_id', inverse_of: 'submitted_by'
 
   has_many :group_offer_period_ends_set, class_name: 'GroupOffer',
     foreign_key: 'period_end_set_by_id', inverse_of: 'period_end_set_by'

@@ -17,6 +17,8 @@ module AssignmentCommon
       inverse_of: 'assignment_terminations_submitted', optional: true
     belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User',
       inverse_of: 'assignment_terminations_verified', optional: true
+    belongs_to :submitted_by, -> { with_deleted }, class_name: 'User',
+      inverse_of: 'assignments_submitted', foreign_key: 'submitted_by_id', optional: true
 
     scope :zurich, (-> { joins(:client).merge(Client.zurich) })
     scope :not_zurich, (-> { joins(:client).merge(Client.not_zurich) })

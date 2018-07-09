@@ -29,4 +29,7 @@
   .submit-box
     .col-xs-12
       p Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte bis zum heutigen Datum erfasst habe.
-      = f.submit 'Bestätigen', class: 'btn btn-lg-accepted'
+      - if confirmable.submitted_at.present?
+        p.text-danger Bestätigt am #{l(confirmable.submitted_at.to_date)} durch #{profile_link(confirmable.submitted_by)}
+      - else
+        = f.submit 'Bestätigen', class: 'btn btn-lg-accepted'

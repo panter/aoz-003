@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180704073944) do
+ActiveRecord::Schema.define(version: 20180709115633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20180704073944) do
     t.string "duration"
     t.string "special_agreement"
     t.text "agreement_text"
+    t.bigint "submitted_by_id"
     t.index ["assignment_id"], name: "index_assignment_logs_on_assignment_id"
     t.index ["client_id"], name: "index_assignment_logs_on_client_id"
     t.index ["creator_id"], name: "index_assignment_logs_on_creator_id"
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 20180704073944) do
     t.index ["period_end_set_by_id"], name: "index_assignment_logs_on_period_end_set_by_id"
     t.index ["period_start"], name: "index_assignment_logs_on_period_start"
     t.index ["submitted_at"], name: "index_assignment_logs_on_submitted_at"
+    t.index ["submitted_by_id"], name: "index_assignment_logs_on_submitted_by_id"
     t.index ["termination_submitted_at"], name: "index_assignment_logs_on_termination_submitted_at"
     t.index ["termination_submitted_by_id"], name: "index_assignment_logs_on_termination_submitted_by_id"
     t.index ["termination_verified_at"], name: "index_assignment_logs_on_termination_verified_at"
@@ -111,12 +113,14 @@ ActiveRecord::Schema.define(version: 20180704073944) do
     t.string "pdf_content_type"
     t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
+    t.bigint "submitted_by_id"
     t.index ["client_id"], name: "index_assignments_on_client_id"
     t.index ["creator_id"], name: "index_assignments_on_creator_id"
     t.index ["period_end"], name: "index_assignments_on_period_end"
     t.index ["period_end_set_by_id"], name: "index_assignments_on_period_end_set_by_id"
     t.index ["period_start"], name: "index_assignments_on_period_start"
     t.index ["submitted_at"], name: "index_assignments_on_submitted_at"
+    t.index ["submitted_by_id"], name: "index_assignments_on_submitted_by_id"
     t.index ["termination_submitted_at"], name: "index_assignments_on_termination_submitted_at"
     t.index ["termination_submitted_by_id"], name: "index_assignments_on_termination_submitted_by_id"
     t.index ["termination_verified_at"], name: "index_assignments_on_termination_verified_at"
@@ -350,10 +354,12 @@ ActiveRecord::Schema.define(version: 20180704073944) do
     t.string "frequency"
     t.string "trial_period_end"
     t.text "agreement_text"
+    t.bigint "submitted_by_id"
     t.index ["deleted_at"], name: "index_group_assignment_logs_on_deleted_at"
     t.index ["group_assignment_id"], name: "index_group_assignment_logs_on_group_assignment_id"
     t.index ["group_offer_id"], name: "index_group_assignment_logs_on_group_offer_id"
     t.index ["period_end_set_by_id"], name: "index_group_assignment_logs_on_period_end_set_by_id"
+    t.index ["submitted_by_id"], name: "index_group_assignment_logs_on_submitted_by_id"
     t.index ["termination_submitted_by_id"], name: "index_group_assignment_logs_on_termination_submitted_by_id"
     t.index ["termination_verified_by_id"], name: "index_group_assignment_logs_on_termination_verified_by_id"
     t.index ["title"], name: "index_group_assignment_logs_on_title"
@@ -391,12 +397,14 @@ ActiveRecord::Schema.define(version: 20180704073944) do
     t.string "pdf_content_type"
     t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
+    t.bigint "submitted_by_id"
     t.index ["deleted_at"], name: "index_group_assignments_on_deleted_at"
     t.index ["group_offer_id"], name: "index_group_assignments_on_group_offer_id"
     t.index ["period_end"], name: "index_group_assignments_on_period_end"
     t.index ["period_end_set_by_id"], name: "index_group_assignments_on_period_end_set_by_id"
     t.index ["period_start"], name: "index_group_assignments_on_period_start"
     t.index ["submitted_at"], name: "index_group_assignments_on_submitted_at"
+    t.index ["submitted_by_id"], name: "index_group_assignments_on_submitted_by_id"
     t.index ["termination_submitted_at"], name: "index_group_assignments_on_termination_submitted_at"
     t.index ["termination_submitted_by_id"], name: "index_group_assignments_on_termination_submitted_by_id"
     t.index ["termination_verified_at"], name: "index_group_assignments_on_termination_verified_at"

@@ -63,7 +63,7 @@ class GroupAssignmentsController < ApplicationController
 
   def update_submitted_at
     @group_assignment.update(group_assignment_params.slice(:volunteer_attributes)
-      .merge(submitted_at: Time.zone.now))
+      .merge(submit_feedback: current_user))
     redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
   end
 
