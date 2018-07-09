@@ -125,6 +125,16 @@ class User < ApplicationRecord
     department.any?
   end
 
+  def profile_entity
+    if volunteer?
+      volunteer
+    elsif profile
+      profile
+    else
+      self
+    end
+  end
+
   def missing_profile?
     !volunteer? && !profile
   end

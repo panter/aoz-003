@@ -30,7 +30,7 @@ h2= @event.title if @event.title
         td Erstellt von
         td
           = "Erstellt von "
-          = link_to @event.creator.full_name, profile_link(@event.creator)
+          = link_to @event.creator.full_name, profile_url_path(@event.creator)
           = " am #{l(@event.created_at.to_date)}"
 
 h3 Teilnehmende

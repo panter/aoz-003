@@ -53,5 +53,5 @@ h1
             td= format_currency record.final_amount
             td= format_hours_period record.hours
             - if policy(BillingExpense).superadmin_privileges?
-              td= link_to record.user, profile_link(record.user)
+              td= link_to record.user, profile_url_path(record.user)
             td= l(record.created_at.to_date)

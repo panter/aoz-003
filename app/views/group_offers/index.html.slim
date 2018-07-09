@@ -68,7 +68,7 @@ table.table.table-striped
             = offer.department.contact.last_name
         td
           - if offer.creator
-            =link_to offer.creator.full_name, profile_link(offer.creator)
+            =link_to offer.creator.full_name, profile_url_path(offer.creator)
         td
           - availability_collection.each do |availability|
             - if offer[availability]

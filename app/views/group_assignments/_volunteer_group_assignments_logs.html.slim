@@ -33,5 +33,5 @@ table.table.table-striped.group-assignments-table
           span
             = "Quittiert von "
             = link_to_if(policy(Assignment).verify_termination?, group_assignment.termination_verified_by.full_name,
-              profile_link(group_assignment.termination_verified_by)) { '' }
+              profile_url_path(group_assignment.termination_verified_by)) { '' }
             = " am #{l(group_assignment.termination_verified_at.to_date)}"

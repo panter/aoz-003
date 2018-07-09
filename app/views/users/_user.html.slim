@@ -6,5 +6,5 @@
       = button_link navigation_glyph(:delete), user,
           method: :delete, title: 'Löschen',
           data: { confirm: t('are_you_sure_delete_user', email: user.email)}
-  td= link_to user.full_name, profile_link(user)
+  td= link_to user.full_name, profile_url_path(user)
   td= t("role.#{user.role}")
