@@ -14,7 +14,8 @@ table.table.table-striped.feedbacks-table
   tbody
     - feedbacks.each do |record|
       tr
-        td= button_link navigation_glyph(:edit), edit_polymorphic_path([@volunteer, record.feedbackable, record])
+        td= glyph_action_button_link :edit, edit_polymorphic_path([@volunteer, record.feedbackable, record],
+              redirect_back: "#{request.path}?#{request.query_string}")
         td= record.goals
         td= record.achievements
         td= record.future

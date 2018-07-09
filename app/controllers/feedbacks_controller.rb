@@ -39,7 +39,7 @@ class FeedbacksController < ApplicationController
 
   def update
     if @feedback.update(feedback_params)
-      redirect_to @feedback.volunteer, make_notice
+      redirect_to params[:redirect_to] || @feedback.volunteer, make_notice
     else
       render :edit
     end
@@ -79,7 +79,8 @@ class FeedbacksController < ApplicationController
       [@volunteer, @feedbackable, @feedback], {
         url: polymorphic_path(
           [@volunteer, @feedbackable, @feedback],
-          redirect_to: default_redirect, group_assignment: params[:group_assignment]
+          redirect_to: params[:redirect_back] || default_redirect,
+          group_assignment: params[:group_assignment]
         )
       }
     ]
