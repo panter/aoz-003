@@ -126,13 +126,13 @@ class User < ApplicationRecord
   end
 
   def profile_entity
-    if volunteer?
-      volunteer
-    elsif profile
-      profile
-    else
-      self
-    end
+    @profile_entity ||= if volunteer?
+                          volunteer
+                        elsif profile
+                          profile
+                        else
+                          self
+                        end
   end
 
   def missing_profile?
