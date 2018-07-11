@@ -26,7 +26,7 @@ h2= @group_offer.title
             = link_to_if policy(@group_offer.department).show?, @group_offer.department, department_path(@group_offer.department.id)
       tr
         td Verantwortliche/r
-        td= link_to_if policy(@group_offer.creator.profile).edit?, @group_offer.creator, profile_link(@group_offer.creator) if @group_offer.creator
+        td= link_to_if policy(@group_offer.creator.profile).edit?, @group_offer.creator, profile_url_path(@group_offer.creator) if @group_offer.creator
       tr
         td= t_attr(:offer_state)
         td= t("offer_state.#{@group_offer.offer_state}") if @group_offer.offer_state?

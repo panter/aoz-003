@@ -19,6 +19,8 @@ module GroupAssignmentCommon
       inverse_of: 'group_assignment_terminations_submitted', foreign_key: 'termination_submitted_by_id'
     belongs_to :termination_verified_by, -> { with_deleted }, class_name: 'User', optional: true,
       inverse_of: 'group_offer_terminations_verified'
+    belongs_to :submitted_by, -> { with_deleted }, class_name: 'User',
+      inverse_of: 'group_assignments_submitted', foreign_key: 'submitted_by_id', optional: true
 
     def to_label
       label_parts.compact.join(' - ')

@@ -87,13 +87,17 @@ module ApplicationHelper
       class: 'pagination-lg text-center hidden-print', 'aria-label': 'Pagination'
   end
 
+  def profile_url_path(user)
+    if policy(user.profile_entity).edit?
+      edit_polymorphic_path(user.profile_entity)
+    elsif policy(user.profile_entity).show?
+      polymorphic_path(user.profile_entity)
+    end
+  end
+
   def profile_link(user)
-    if user.volunteer?
-      edit_volunteer_path(user.volunteer)
-    elsif user.profile
-      edit_profile_path(user.profile)
-    else
-      edit_user_path(user)
+    link_to_if(policy(user.profile_entity).show?, user.full_name, profile_url_path(user)) do
+      "#{user.full_name} - #{user.email}"
     end
   end
 

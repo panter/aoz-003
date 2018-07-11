@@ -23,11 +23,11 @@ table.table.table-striped.assignment-logs-table
           - if assignment.client.involved_authority
             = link_to_if policy(User).show?,
                 assignment.client.involved_authority.full_name,
-                profile_link(assignment.client.involved_authority)
+                profile_url_path(assignment.client.involved_authority)
           - else
             = link_to_if policy(User).show?,
                 assignment.creator.full_name,
-                profile_link(assignment.creator)
+                profile_url_path(assignment.creator)
         td= link_to_if(assignment.assignment && policy(assignment.assignment).show?,
           t_action(:show), assignment.assignment) { '' }
         - if policy(Assignment).show_comments?
@@ -45,6 +45,6 @@ table.table.table-striped.assignment-logs-table
           span
             = "Quittiert von "
             = link_to_if(policy(Assignment).verify_termination?, assignment.termination_verified_by.full_name,
-              profile_link(assignment.termination_verified_by)) { '' }
+              profile_url_path(assignment.termination_verified_by)) { '' }
             = " am #{l(assignment.termination_verified_at.to_date)}"
 

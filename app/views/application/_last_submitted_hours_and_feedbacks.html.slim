@@ -1,5 +1,5 @@
 = simple_form_for(confirmable, html: { class: 'col-xs-12 form-auto-save'},
-    url: polymorphic_path(confirmable, action: :update_submitted_at, redirect_to: default_redirect, ), method: :put) do |f|
+    url: polymorphic_path(confirmable, action: :submit_feedback, redirect_to: default_redirect, ), method: :put) do |f|
   h1 Zuletzt übermittelte Stunden und Halbjahres-Rapporte
 
 
@@ -29,4 +29,7 @@
   .submit-box
     .col-xs-12
       p Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte bis zum heutigen Datum erfasst habe.
-      = f.submit 'Bestätigen', class: 'btn btn-lg-accepted'
+      - if confirmable.submitted_at.present?
+        p.text-danger Bestätigt am #{l(confirmable.submitted_at.to_date)} durch #{profile_link(confirmable.submitted_by)}
+      - else
+        = f.submit 'Bestätigen', class: 'btn btn-lg-accepted'
