@@ -16,7 +16,7 @@ class GroupAssignmentPolicy < ApplicationPolicy
   # Actions related to editing a member
   alias_method :edit?,                 :superadmin_or_department_manager_offer?
   alias_method :update?,               :superadmin_or_department_manager_offer?
-  alias_method :update_submitted_at?,  :superadmin_or_departments_offer_or_volunteer_related?
+  alias_method :submit_feedback?,      :superadmin_or_departments_offer_or_volunteer_related?
   alias_method :update_terminated_at?, :superadmin_or_departments_offer_or_volunteer_related?
   alias_method :set_end_today?,        :superadmin_or_department_manager_offer?
   alias_method :terminate?,            :superadmin_or_departments_offer_or_volunteer_related?

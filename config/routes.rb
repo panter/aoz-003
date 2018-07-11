@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   # Route Concerns
   #
 
-  concern :update_submitted_at do
+  concern :submit_feedback do
     get :last_submitted_hours_and_feedbacks, on: :member
-    put :update_submitted_at, on: :member
+    put :submit_feedback, on: :member
     get :hours_and_feedbacks_submitted, on: :collection
   end
 
@@ -52,7 +52,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :assignments, except: [:destroy], concerns: [:update_submitted_at, :termination_actions] do
+  resources :assignments, except: [:destroy], concerns: [:submit_feedback, :termination_actions] do
     get :volunteer_search, on: :collection
     get :client_search, on: :collection
   end
@@ -69,7 +69,7 @@ Rails.application.routes.draw do
 
   resources :feedbacks, only: [:new, :create]
   resources :group_assignments, only: [:show, :create, :edit, :update],
-    concerns: [:update_submitted_at, :termination_actions] do
+    concerns: [:submit_feedback, :termination_actions] do
     put :set_end_today, on: :member
   end
 

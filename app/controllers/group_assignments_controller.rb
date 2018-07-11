@@ -61,7 +61,7 @@ class GroupAssignmentsController < ApplicationController
     rmv.update(link_visits: rmv.link_visits + 1)
   end
 
-  def update_submitted_at
+  def submit_feedback
     @group_assignment.update(group_assignment_params.slice(:volunteer_attributes)
       .merge(submit_feedback: current_user))
     redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path

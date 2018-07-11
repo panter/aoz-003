@@ -17,11 +17,11 @@ class AssignmentPolicyTest < PolicyAssertions::Test
       'show_comments?', *actions_list(
         :find_client, :show, :edit, :update,
         :terminate, :update_terminated_at,
-        :update_submitted_at, :last_submitted_hours_and_feedbacks
+        :submit_feedback, :last_submitted_hours_and_feedbacks
       ))
     refute_permit(department_manager, create(:assignment),
       *actions_list(
-        :show, :edit, :update, :update_submitted_at, :terminate,
+        :show, :edit, :update, :submit_feedback, :terminate,
         :update_terminated_at, :last_submitted_hours_and_feedbacks
       ))
     refute_permit(department_manager, Assignment, *actions_list(:verify_termination))
@@ -46,7 +46,7 @@ class AssignmentPolicyTest < PolicyAssertions::Test
     other_assignment = create :assignment, volunteer: (create :volunteer)
     assert_permit(volunteer.user, assignment,
       *actions_list(
-        :show, :last_submitted_hours_and_feedbacks, :update_submitted_at,
+        :show, :last_submitted_hours_and_feedbacks, :submit_feedback,
         :hours_and_feedbacks_submitted, :terminate
       ))
     refute_permit(volunteer.user, Assignment,
