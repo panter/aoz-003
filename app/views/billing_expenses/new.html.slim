@@ -3,7 +3,7 @@
 h1 Spesenformulare erfassen
 
 = simple_form_for @billing_expense do |f|
-  = hidden_field_tag 'selected_period', @selected_billing_period
+  = hidden_field_tag 'selected_semester', @selected_billing_semester
   .row
     .col-xs-12
       => button_link navigation_glyph(:back), billing_expenses_path
@@ -33,4 +33,4 @@ h1 Spesenformulare erfassen
                 span.label.label-danger Keine IBAN angegeben
             td= link_to format_hours(volunteer.total_hours), volunteer_hours_path(volunteer)
             td= format_currency BillingExpense.amount_for(volunteer.total_hours)
-            td= format_hours_period volunteer.hours.period(@selected_billing_period).billable
+            td= format_hours_semester volunteer.hours.semester(@selected_billing_semester).billable

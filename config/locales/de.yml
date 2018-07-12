@@ -296,7 +296,7 @@ de:
         amount: Betrag
         assignment: Begleitung
         created_by: Erstellt von
-        period: Periode
+        semester: Semester
       certificate:
         <<: *id-generic_keys
         assignment: Einsatz
