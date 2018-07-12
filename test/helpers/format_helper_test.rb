@@ -19,16 +19,39 @@ class FormatHelperTest < ActionView::TestCase
       create(:hour, meeting_date: '2014-05-06'),
       create(:hour, meeting_date: '2012-12-01')
     ])
+    assert_equal '1. Semester 2013 - 2. Semester 2015', format_hours_semester([
+      create(:hour, meeting_date: '2015-07-03'),
+      create(:hour, meeting_date: '2014-05-06'),
+      create(:hour, meeting_date: '2012-12-01')
+    ])
+    assert_equal '2. Semester 2013 - 2. Semester 2015', format_hours_semester([
+      create(:hour, meeting_date: '2015-07-03'),
+      create(:hour, meeting_date: '2014-05-06'),
+      create(:hour, meeting_date: '2013-06-01')
+    ])
+    assert_equal '2. Semester 2013 - 1. Semester 2015', format_hours_semester([
+      create(:hour, meeting_date: '2015-01-03'),
+      create(:hour, meeting_date: '2014-05-06'),
+      create(:hour, meeting_date: '2013-06-01')
+    ])
+
     assert_equal '1. - 2. Semester 2015', format_hours_semester([
       create(:hour, meeting_date: '2015-04-03'),
       create(:hour, meeting_date: '2015-09-06')
     ])
     assert_equal '1. Semester 2015', format_hours_semester([
-      create(:hour, meeting_date: '2015-04-03'),
+      create(:hour, meeting_date: '2014-12-03'),
       create(:hour, meeting_date: '2015-04-06')
     ])
+    assert_equal '2. Semester 2015', format_hours_semester([
+      create(:hour, meeting_date: '2015-09-03'),
+      create(:hour, meeting_date: '2015-10-06')
+    ])
     assert_equal '1. Semester 2015', format_hours_semester([
-      create(:hour, meeting_date: '2015-04-03')
+      create(:hour, meeting_date: '2014-12-02')
+    ])
+    assert_equal '2. Semester 2015', format_hours_semester([
+      create(:hour, meeting_date: '2015-08-03')
     ])
   end
 end
