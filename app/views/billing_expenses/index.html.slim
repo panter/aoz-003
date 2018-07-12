@@ -10,7 +10,7 @@ h1
     html: { class: 'form-ignore-changes', target: '_blank' } do |f|
   ul.list-inline
     li= clear_filter_button
-    = custom_filter_dropdown(t_attr(:period, BillingExpense), *@billing_periods)
+    = custom_filter_dropdown(t_attr(:semester, BillingExpense), *@billing_semesters)
     li=> f.button :submit, 'Auswahl herunterladen', data: { disable_with: false }
     li
       - if @volunteer
@@ -29,7 +29,7 @@ h1
           th= t_attr(:bank_details, Volunteer)
           th= t_attr(:hours)
           th= sort_link @q, :final_amount
-          th Periode
+          th Semester
           - if policy(BillingExpense).superadmin_privileges?
             th= sort_link @q, :user_profile_contact_last_name, t_attr(:created_by)
           th= sort_link @q, :created_at
@@ -51,7 +51,7 @@ h1
             td= record.full_bank_details
             td= link_to format_hours(record.hours.total_hours), volunteer_hours_path(record.volunteer)
             td= format_currency record.final_amount
-            td= format_hours_period record.hours
+            td= format_hours_semester record.hours
             - if policy(BillingExpense).superadmin_privileges?
               td= link_to record.user, profile_url_path(record.user)
             td= l(record.created_at.to_date)

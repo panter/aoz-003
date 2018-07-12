@@ -2,7 +2,7 @@ class BillingExpense < ApplicationRecord
   include ImportRelation
   include FullBankDetails
 
-  PERIOD = 6.months
+  SEMESTER_LENGTH = 6.months
 
   attr_accessor :import_mode
 
@@ -14,7 +14,7 @@ class BillingExpense < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  scope :period, ->(date) { joins(:hours).merge(Hour.period(date)) }
+  scope :semester, ->(date) { joins(:hours).merge(Hour.period(date)) }
 
   FINAL_AMOUNT_SQL = "CASE WHEN overwritten_amount IS NULL THEN amount ELSE overwritten_amount END".freeze
   scope :sort_by_final_amount_asc, lambda {
@@ -30,7 +30,7 @@ class BillingExpense < ApplicationRecord
   validates :amount, inclusion: { in: AMOUNT }, unless: :import_mode
 
   def self.ransackable_scopes(auth_object = nil)
-    ['period']
+    ['semester']
   end
 
   def ransortable_attributes(auth_object = nil)
@@ -71,8 +71,8 @@ class BillingExpense < ApplicationRecord
     end
   end
 
-  def self.generate_periods
-    periods = []
+  def self.generate_semester_filters
+    semesters = []
 
     hours = Hour.billed
     oldest_date = hours.minimum(:meeting_date) || Time.zone.now
@@ -80,22 +80,29 @@ class BillingExpense < ApplicationRecord
 
     start_of_year = newest_date.beginning_of_year - 1.month
     date = start_of_year
-    date += PERIOD if newest_date >= start_of_year + PERIOD
+    date += SEMESTER_LENGTH if newest_date >= start_of_year + SEMESTER_LENGTH
 
-    until date < oldest_date - PERIOD
-      periods << {
-        q: :period,
+    until date < oldest_date - SEMESTER_LENGTH
+      display_year = date.year
+      display_year += 1 if date.month == 12
+      semesters << {
+        q: :semester,
         value: date.strftime('%Y-%m-%d'),
-        text: '%s - %s' % [
-          I18n.l(date, format: '%B %Y'),
-          I18n.l(date + PERIOD - 1.day, format: '%B %Y')
-        ]
+        text: "#{semester_of_year(date)}. Semester #{display_year}"
       }
 
-      date -= PERIOD
+      date -= SEMESTER_LENGTH
     end
 
-    periods
+    semesters
+  end
+
+  def self.semester_of_year(date)
+    if (6..11).cover? date.month
+      2
+    else
+      1
+    end
   end
 
   def final_amount

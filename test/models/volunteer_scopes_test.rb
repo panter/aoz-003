@@ -331,8 +331,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   test 'with_billable_hours returns volunteers with billable hours for an optional period' do
-    current_period_ago = BillingExpense::PERIOD.ago
-    last_period_ago = current_period_ago - BillingExpense::PERIOD
+    current_period_ago = BillingExpense::SEMESTER_LENGTH.ago
+    last_period_ago = current_period_ago - BillingExpense::SEMESTER_LENGTH
     format = '%Y-%m-%d'
     volunteers_in_current_period_assertion = [@group_offer_member, @has_assignments]
     volunteers_in_last_period_assertion    = [@has_multiple, @has_active_and_inactive]

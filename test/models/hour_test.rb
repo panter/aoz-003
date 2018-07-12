@@ -11,9 +11,9 @@ class HourTest < ActiveSupport::TestCase
   end
 
   test 'period returns hours for a billing_expense period' do
-    current_period = BillingExpense::PERIOD
+    current_period = BillingExpense::SEMESTER_LENGTH
     a_period_ago = current_period.ago
-    last_period_ago = a_period_ago - BillingExpense::PERIOD
+    last_period_ago = a_period_ago - BillingExpense::SEMESTER_LENGTH
     format = '%Y-%m-%d'
 
     volunteer = create :volunteer

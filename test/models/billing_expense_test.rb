@@ -68,11 +68,11 @@ class BillingExpenseTest < ActiveSupport::TestCase
     refute_equal creator, hour1c.reload.reviewer
   end
 
-  test 'generate_periods without hours' do
-    periods = BillingExpense.generate_periods
+  test 'generate_semester_filters without hours' do
+    periods = BillingExpense.generate_semester_filters
     now = Time.zone.now
 
-    if now > now.beginning_of_year - 1.month + BillingExpense::PERIOD
+    if now > now.beginning_of_year - 1.month + BillingExpense::SEMESTER_LENGTH
       value = "#{now.year}-06-01"
       text = "Juni #{now.year} - November #{now.year}"
     else
@@ -83,13 +83,13 @@ class BillingExpenseTest < ActiveSupport::TestCase
     assert_equal [{ q: :period, value: value, text: text }], periods
   end
 
-  test 'generate_periods with hours' do
+  test 'generate_semester_filters with hours' do
     hour1 = create :hour, meeting_date: '2014-02-03'
     hour2 = create :hour, meeting_date: '2015-06-30'
     create :hour, meeting_date: '2017-06-30'
     create :billing_expense, hours: [hour1, hour2]
 
-    periods = BillingExpense.generate_periods
+    periods = BillingExpense.generate_semester_filters
 
     assert_equal [
       { q: :period, value: '2015-06-01', text: 'Juni 2015 - November 2015' },
