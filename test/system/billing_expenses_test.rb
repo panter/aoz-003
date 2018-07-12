@@ -96,16 +96,16 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
   test 'new billing_expense respects the period filter' do
     volunteer1 = create :volunteer
-    hour1 = create :hour, volunteer: volunteer1, hours: 10, meeting_date: @date - 2.month
-    hour2 = create :hour, volunteer: volunteer1, hours: 16, meeting_date: @date - 3.month
+    hour1 = create :hour, volunteer: volunteer1, hours: 10, meeting_date: @date - 2.months
+    hour2 = create :hour, volunteer: volunteer1, hours: 16, meeting_date: @date - 3.months
 
     volunteer2 = create :volunteer
-    hour3 = create :hour, volunteer: volunteer2, hours: 26, meeting_date: @date + 1.month
-    hour4 = create :hour, volunteer: volunteer2, hours: 15, meeting_date: @date - 2.month
+    hour3 = create :hour, volunteer: volunteer2, hours: 26, meeting_date: @date + 1.months
+    hour4 = create :hour, volunteer: volunteer2, hours: 15, meeting_date: @date - 2.months
 
     volunteer3 = create :volunteer
-    hour5 = create :hour, volunteer: volunteer3, hours: 1, meeting_date: @date + 1.month
-    hour6 = create :hour, volunteer: volunteer3, hours: 2, meeting_date: @date + 3.month
+    hour5 = create :hour, volunteer: volunteer3, hours: 1, meeting_date: @date + 1.months
+    hour6 = create :hour, volunteer: volunteer3, hours: 2, meeting_date: @date + 3.months
 
     visit billing_expenses_path
 
