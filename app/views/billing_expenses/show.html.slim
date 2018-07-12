@@ -4,9 +4,8 @@
   .col-xs-12.col
     h3
       strong
-        = "#{t('billing_expense_pdf.title')} #{@billing_expense.volunteer.contact.full_name} "
-        - if @billing_expense.hours.any?
-          = "von #{l(@billing_expense.hours.maximum(:meeting_date), format: :long)}"
+        = "#{t('billing_expense_pdf.title')} #{@billing_expense.volunteer.contact.full_name}"
+        = " vom #{format_hours_semester(@billing_expense.hours)}" if @billing_expense.hours.any?
 
 .row
   .col-xs-12

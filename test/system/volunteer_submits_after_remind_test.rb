@@ -8,7 +8,7 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     @assignment_feedback = create :feedback, feedbackable: @assignment, author: @volunteer.user,
       volunteer: @volunteer
     @group_offer = create :group_offer
-    create :group_assignment, volunteer: @volunteer, group_offer: @group_offer
+    @group_assignment = create :group_assignment, volunteer: @volunteer, group_offer: @group_offer
     create :hour, hourable: @group_offer, volunteer: @volunteer, created_at: 2.days.ago
     @group_offer_feedback = create :feedback, feedbackable: @group_offer, author: @volunteer.user,
       volunteer: @volunteer, comments: 'feedback_volunteer1'
@@ -149,5 +149,56 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert_text 'feedback_volunteer1'
     refute_text 'hour_volunteer2'
     refute_text 'feedback_volunteer2'
+  end
+
+  test 'volunteer_can_edit_feedback_on_last_submitted_hours_and_feedbacks_path' do
+    login_as @assignment_feedback.volunteer.user
+    visit last_submitted_hours_and_feedbacks_assignment_path(@assignment_feedback.feedbackable)
+
+    click_link 'Bearbeiten', match_polymorph_path(
+      [@assignment_feedback.volunteer, @assignment_feedback.feedbackable, @assignment_feedback]
+    )
+
+    # assert the redirect back to the previous page works
+    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: 'some_different_goal_text'
+    click_button 'Halbjahres-Rapport aktualisieren'
+    assert page.has_text? 'Halbjahres-Rapport wurde erfolgreich geändert.'
+    assert page.has_text? 'Zuletzt übermittelte Stunden und Halbjahres-Rapporte'
+  end
+
+  test 'superadmin_clicks_submit_on_lshaf_form_ads_submitted_at_and_submitted_by' do
+    # Assignment
+    login_as @assignment_feedback.feedbackable.creator
+    visit last_submitted_hours_and_feedbacks_assignment_path(@assignment_feedback.feedbackable)
+    click_button 'Bestätigen'
+    @assignment_feedback.feedbackable.reload
+    assert_equal @assignment_feedback.feedbackable.creator, @assignment_feedback.feedbackable.submitted_by
+    # GroupAssignment
+    login_as @group_assignment.creator
+    visit last_submitted_hours_and_feedbacks_group_assignment_path(@group_assignment)
+    click_button 'Bestätigen'
+    @group_assignment.reload
+    assert_equal @group_assignment.creator, @group_assignment.submitted_by
+  end
+
+  test 'volunteer_does_not_see_bestaetigen_if_superadmin_allready_did' do
+    # Assignment
+    feedback_submitter = @assignment_feedback.feedbackable.creator
+    @assignment_feedback.feedbackable.update(submit_feedback: feedback_submitter)
+    login_as @assignment_feedback.volunteer.user
+    visit last_submitted_hours_and_feedbacks_assignment_path(@assignment_feedback.feedbackable)
+    assert page.has_text? 'Bestätigt am ' \
+      "#{I18n.l(@assignment_feedback.feedbackable.submitted_at.to_date)} durch " \
+      "#{feedback_submitter.full_name} - #{feedback_submitter.email}"
+    refute page.has_button? 'Bestätigen'
+    # GroupAssignment
+    feedback_submitter = @group_assignment.creator
+    @group_assignment.update(submit_feedback: feedback_submitter)
+    login_as @group_assignment.volunteer.user
+    visit last_submitted_hours_and_feedbacks_group_assignment_path(@group_assignment)
+    assert page.has_text? 'Bestätigt am ' \
+      "#{I18n.l(@group_assignment.submitted_at.to_date)} durch " \
+      "#{feedback_submitter.full_name} - #{feedback_submitter.email}"
+    refute page.has_button? 'Bestätigen'
   end
 end

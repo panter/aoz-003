@@ -36,4 +36,10 @@ class AssignmentTest < ActiveSupport::TestCase
     assert_equal assignment.period_end, hour.meeting_date
     assert_equal assignment.volunteer, hour.volunteer
   end
+
+  test 'submit_feedback_setter_works_correctly' do
+    @assignment.update(submit_feedback: @assignment.volunteer.user)
+    assert_equal @assignment.volunteer.user, @assignment.submitted_by
+    refute_nil @assignment.submitted_at
+  end
 end

@@ -41,7 +41,7 @@ nav.navbar.navbar-top.hidden-print
             ul.dropdown-menu
               li
                 - if current_user.volunteer?
-                  = link_to 'Profil bearbeiten', profile_link(current_user)
+                  = link_to 'Profil bearbeiten', profile_url_path(current_user)
                 - elsif current_user.profile.blank?
                   = link_to 'Profil erfassen', new_profile_path
                 - else

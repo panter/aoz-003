@@ -68,38 +68,39 @@ class BillingExpenseTest < ActiveSupport::TestCase
     refute_equal creator, hour1c.reload.reviewer
   end
 
-  test 'generate_periods without hours' do
-    periods = BillingExpense.generate_periods
+  test 'generate_semester_filters without hours' do
+    semesters = BillingExpense.generate_semester_filters
     now = Time.zone.now
 
-    if now > now.beginning_of_year - 1.month + BillingExpense::PERIOD
+    if (6..11).cover? now.month
       value = "#{now.year}-06-01"
-      text = "Juni #{now.year} - November #{now.year}"
+      text = "2. Semester #{now.year}"
     else
-      value = "#{now.year}-12-01"
-      text = "Dezember #{now.year} - Mai #{now.year}"
+      start_year = now.month == 12 ? now.year : now.year - 1
+      value = "#{start_year}-12-01"
+      text = "1. Semester #{start_year + 1}"
     end
 
-    assert_equal [{ q: :period, value: value, text: text }], periods
+    assert_equal [{ q: :semester, value: value, text: text }], semesters
   end
 
-  test 'generate_periods with hours' do
+  test 'generate_semester_filters with hours' do
     hour1 = create :hour, meeting_date: '2014-02-03'
     hour2 = create :hour, meeting_date: '2015-06-30'
     create :hour, meeting_date: '2017-06-30'
     create :billing_expense, hours: [hour1, hour2]
 
-    periods = BillingExpense.generate_periods
+    semesters = BillingExpense.generate_semester_filters
 
     assert_equal [
-      { q: :period, value: '2015-06-01', text: 'Juni 2015 - November 2015' },
-      { q: :period, value: '2014-12-01', text: 'Dezember 2014 - Mai 2015' },
-      { q: :period, value: '2014-06-01', text: 'Juni 2014 - November 2014' },
-      { q: :period, value: '2013-12-01', text: 'Dezember 2013 - Mai 2014' }
-    ], periods
+      { q: :semester, value: '2015-06-01', text: '2. Semester 2015' },
+      { q: :semester, value: '2014-12-01', text: '1. Semester 2015' },
+      { q: :semester, value: '2014-06-01', text: '2. Semester 2014' },
+      { q: :semester, value: '2013-12-01', text: '1. Semester 2014' }
+    ], semesters
   end
 
-  test 'period scope' do
+  test 'semester scope' do
     date = Time.zone.now.beginning_of_year
 
     billing_expense1 = create :billing_expense,
@@ -114,7 +115,7 @@ class BillingExpenseTest < ActiveSupport::TestCase
     _billing_expense3 = create :billing_expense,
       hours: [create(:hour, meeting_date: date - 1.week)]
 
-    assert_equal [billing_expense1, billing_expense2], BillingExpense.period(date).reorder(:id)
+    assert_equal [billing_expense1, billing_expense2], BillingExpense.semester(date).reorder(:id)
   end
 
   test 'amount can be overwriten' do

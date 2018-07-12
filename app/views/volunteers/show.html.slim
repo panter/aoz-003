@@ -100,7 +100,7 @@ h2.small Persönlicher Hintergrund
           - if @volunteer.self_applicant?
             = t('volunteer_self_applicant')
           - else
-            = link_to @volunteer.registrar.full_name, profile_link(@volunteer.registrar)
+            = link_to @volunteer.registrar.full_name, profile_url_path(@volunteer.registrar)
       - if policy(Volunteer).show_comments?
         tr
           td= t_attr(:comments)

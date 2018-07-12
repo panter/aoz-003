@@ -18,12 +18,12 @@ class Hour < ApplicationRecord
 
   scope :billable, (-> { where(billing_expense: nil) })
   scope :billed, (-> { where.not(billing_expense: nil) })
-  scope :period, lambda { |date = nil|
+  scope :semester, lambda { |date = nil|
     if date.present?
       date = Time.zone.parse(date) unless date.is_a? Time
       return if date.blank?
 
-      date_between(:meeting_date, date, date + BillingExpense::PERIOD)
+      date_between(:meeting_date, date, date + BillingExpense::SEMESTER_LENGTH)
     end
   }
 

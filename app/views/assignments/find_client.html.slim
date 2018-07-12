@@ -74,7 +74,7 @@ nav.navbar.section-navigation
           td= client.goals
           td= client.interests
           - if policy(Client).superadmin_privileges?
-            td= link_to client.involved_authority.full_name, profile_link(client.involved_authority) if client.involved_authority
+            td= link_to client.involved_authority.full_name, profile_url_path(client.involved_authority) if client.involved_authority
           td= client.competent_authority
           td.no-wrap= l(client.created_at.to_date)
           - if policy(Client).show_comments?

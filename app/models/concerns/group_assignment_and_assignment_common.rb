@@ -69,6 +69,11 @@ module GroupAssignmentAndAssignmentCommon
         .where('reminder_mailings.kind != 1 OR reminder_mailing_volunteers.id IS NULL')
     }
 
+    def submit_feedback=(submitter)
+      self.submitted_at = Time.zone.now
+      self.submitted_by = submitter
+    end
+
     def termination_verifiable?
       ended? && termination_submitted_by.present?
     end
