@@ -13,7 +13,7 @@ class FormatHelperTest < ActionView::TestCase
     assert_equal '2.35 Stunden', format_hours(2.35)
   end
 
-  test 'format_hours_period' do
+  test 'format_hours_semester' do
     assert_equal '1. Semester 2013 - 1. Semester 2015', format_hours_semester([
       create(:hour, meeting_date: '2015-04-03'),
       create(:hour, meeting_date: '2014-05-06'),
