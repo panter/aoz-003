@@ -14,10 +14,21 @@ class FormatHelperTest < ActionView::TestCase
   end
 
   test 'format_hours_period' do
-    assert_equal '01.02.2013 - 03.04.2015', format_hours_period([
+    assert_equal '1. Semester 2013 - 1. Semester 2015', format_hours_semester([
       create(:hour, meeting_date: '2015-04-03'),
       create(:hour, meeting_date: '2014-05-06'),
-      create(:hour, meeting_date: '2013-02-01')
+      create(:hour, meeting_date: '2012-12-01')
+    ])
+    assert_equal '1. - 2. Semester 2015', format_hours_semester([
+      create(:hour, meeting_date: '2015-04-03'),
+      create(:hour, meeting_date: '2015-09-06')
+    ])
+    assert_equal '1. Semester 2015', format_hours_semester([
+      create(:hour, meeting_date: '2015-04-03'),
+      create(:hour, meeting_date: '2015-04-06')
+    ])
+    assert_equal '1. Semester 2015', format_hours_semester([
+      create(:hour, meeting_date: '2015-04-03')
     ])
   end
 end
