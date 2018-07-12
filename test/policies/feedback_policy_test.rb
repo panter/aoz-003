@@ -29,7 +29,8 @@ class FeedbackPolicyTest < PolicyAssertions::Test
       feedbackable: assignment
     foreign_feedback = create :feedback, feedbackable: other_assignment,
       volunteer: @other_volunteer, author: @other_volunteer.user
-    refute_permit(@user_volunteer, superadmin_feedback, 'show?', 'edit?', 'update?', 'destroy?')
+    refute_permit(@user_volunteer, superadmin_feedback, 'destroy?')
+    assert_permit(@user_volunteer, superadmin_feedback, 'show?', 'edit?', 'update?')
     refute_permit(@user_volunteer, foreign_feedback, 'show?', 'edit?', 'update?', 'destroy?',
       'new?', 'create?')
     assert_permit(@user_volunteer, feedback_volunteer, 'index?', 'show?', 'edit?', 'update?',
@@ -50,7 +51,8 @@ class FeedbackPolicyTest < PolicyAssertions::Test
       feedbackable: group_offer
     foreign_feedback = create :feedback, volunteer: @other_volunteer, author: @other_volunteer.user,
       feedbackable: other_group_offer
-    refute_permit(@user_volunteer, superadmin_feedback, 'show?', 'edit?', 'update?', 'destroy?')
+    refute_permit(@user_volunteer, superadmin_feedback, 'destroy?')
+    assert_permit(@user_volunteer, superadmin_feedback, 'show?', 'edit?', 'update?')
     refute_permit(@user_volunteer, foreign_feedback, 'show?', 'edit?', 'update?', 'destroy?',
       'new?', 'create?')
     assert_permit(@user_volunteer, feedback_volunteer, 'index?', 'show?', 'edit?', 'update?',
