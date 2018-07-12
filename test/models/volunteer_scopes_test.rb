@@ -330,45 +330,45 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? volunteer_will_inactive
   end
 
-  test 'with_billable_hours returns volunteers with billable hours for an optional period' do
-    current_period_ago = BillingExpense::SEMESTER_LENGTH.ago
-    last_period_ago = current_period_ago - BillingExpense::SEMESTER_LENGTH
+  test 'with_billable_hours returns volunteers with billable hours for an optional semester' do
+    current_semester_ago = BillingExpense::SEMESTER_LENGTH.ago
+    last_semester_ago = current_semester_ago - BillingExpense::SEMESTER_LENGTH
     format = '%Y-%m-%d'
-    volunteers_in_current_period_assertion = [@group_offer_member, @has_assignments]
-    volunteers_in_last_period_assertion    = [@has_multiple, @has_active_and_inactive]
+    volunteers_in_current_semester_assertion = [@group_offer_member, @has_assignments]
+    volunteers_in_last_semester_assertion    = [@has_multiple, @has_active_and_inactive]
 
-    volunteers_in_current_period_assertion.each do |volunteer|
-      create :hour, hours: 1, volunteer: volunteer, meeting_date: current_period_ago + 1.month
-      create :hour, hours: 2, volunteer: volunteer, meeting_date: current_period_ago + 2.months
+    volunteers_in_current_semester_assertion.each do |volunteer|
+      create :hour, hours: 1, volunteer: volunteer, meeting_date: current_semester_ago + 1.month
+      create :hour, hours: 2, volunteer: volunteer, meeting_date: current_semester_ago + 2.months
     end
 
-    volunteers_in_last_period_assertion.each do |volunteer|
-      create :hour, hours: 3, volunteer: volunteer, meeting_date: current_period_ago - 1.month
-      create :hour, hours: 4, volunteer: volunteer, meeting_date: current_period_ago - 2.months
+    volunteers_in_last_semester_assertion.each do |volunteer|
+      create :hour, hours: 3, volunteer: volunteer, meeting_date: current_semester_ago - 1.month
+      create :hour, hours: 4, volunteer: volunteer, meeting_date: current_semester_ago - 2.months
     end
 
     volunteers_with_billable_hours = Volunteer.with_billable_hours
-    volunteers_in_current_period = Volunteer.with_billable_hours current_period_ago.strftime(format)
-    volunteers_in_last_period = Volunteer.with_billable_hours last_period_ago.strftime(format)
+    volunteers_in_current_semester = Volunteer.with_billable_hours current_semester_ago.strftime(format)
+    volunteers_in_last_semester = Volunteer.with_billable_hours last_semester_ago.strftime(format)
 
-    (volunteers_in_current_period + volunteers_in_last_period).each do |volunteer|
+    (volunteers_in_current_semester + volunteers_in_last_semester).each do |volunteer|
       assert_includes volunteers_with_billable_hours, volunteer
     end
 
-    volunteers_in_current_period.each do |volunteer|
-      assert_includes volunteers_in_current_period, volunteer
+    volunteers_in_current_semester.each do |volunteer|
+      assert_includes volunteers_in_current_semester, volunteer
     end
 
-    volunteers_in_last_period.each do |volunteer|
-      assert_not_includes volunteers_in_current_period, volunteer
+    volunteers_in_last_semester.each do |volunteer|
+      assert_not_includes volunteers_in_current_semester, volunteer
     end
 
-    volunteers_in_last_period.each do |volunteer|
-      assert_includes volunteers_in_last_period, volunteer
+    volunteers_in_last_semester.each do |volunteer|
+      assert_includes volunteers_in_last_semester, volunteer
     end
 
-    volunteers_in_current_period.each do |volunteer|
-      assert_not_includes volunteers_in_last_period, volunteer
+    volunteers_in_current_semester.each do |volunteer|
+      assert_not_includes volunteers_in_last_semester, volunteer
     end
   end
 

@@ -14,7 +14,7 @@ class BillingExpense < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  scope :semester, ->(date) { joins(:hours).merge(Hour.period(date)) }
+  scope :semester, ->(date) { joins(:hours).merge(Hour.semester(date)) }
 
   FINAL_AMOUNT_SQL = "CASE WHEN overwritten_amount IS NULL THEN amount ELSE overwritten_amount END".freeze
   scope :sort_by_final_amount_asc, lambda {
@@ -55,7 +55,7 @@ class BillingExpense < ApplicationRecord
   def self.create_for!(volunteers, creator, date = nil)
     transaction do
       volunteers.find_each do |volunteer|
-        hours = volunteer.hours.billable.period(date)
+        hours = volunteer.hours.billable.semester(date)
         hours.find_each do |hour|
           hour.update!(reviewer: creator)
         end

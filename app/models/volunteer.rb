@@ -195,7 +195,7 @@ class Volunteer < ApplicationRecord
 
   scope :with_billable_hours, lambda { |date = nil|
     hours = Hour.billable
-    hours = hours.period(date) if date.present?
+    hours = hours.semester(date) if date.present?
 
     need_refunds
       .joins(:contact)

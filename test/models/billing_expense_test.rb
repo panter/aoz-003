@@ -100,7 +100,7 @@ class BillingExpenseTest < ActiveSupport::TestCase
     ], semesters
   end
 
-  test 'period scope' do
+  test 'semester scope' do
     date = Time.zone.now.beginning_of_year
 
     billing_expense1 = create :billing_expense,

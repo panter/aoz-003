@@ -94,7 +94,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     refute_text @volunteer4
   end
 
-  test 'new_billing_expense_respects_the_period_filter' do
+  test 'new_billing_expense_respects_the_semester_filter' do
     volunteer1 = create :volunteer
     create :hour, volunteer: volunteer1, hours: 10, meeting_date: Time.zone.parse('2017-11-01')
     create :hour, volunteer: volunteer1, hours: 16, meeting_date: Time.zone.parse('2017-10-01')
@@ -134,12 +134,12 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
   end
 
-  test 'creating_a_billing_expense_should_respect_period_filter' do
+  test 'creating_a_billing_expense_should_respect_semester_filter' do
     volunteer = create :volunteer
     create :hour, volunteer: volunteer, hours: 26, meeting_date: Time.zone.parse('2017-11-01')
     create :hour, volunteer: volunteer, hours: 16, meeting_date: Time.zone.parse('2018-02-01')
 
-    # creating billing_expense for hours in the current period
+    # creating billing_expense for hours in the current semester
     visit billing_expenses_path
 
     click_link 'Spesenformulare erstellen'
@@ -174,7 +174,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Alle'
     assert_text "#{volunteer} #{volunteer.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
 
-    # creating billing_expense for all hours in multiple periods
+    # creating billing_expense for all hours in multiple semesters
     volunteer = create :volunteer
     create :hour, volunteer: volunteer, hours: 26, meeting_date: Time.zone.parse('2017-11-01')
     create :hour, volunteer: volunteer, hours: 16, meeting_date: Time.zone.parse('2018-02-01')
