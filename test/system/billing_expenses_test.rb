@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
-    @date = '2018-01-01'.to_time
+    @date = Time.zone.parse('2018-01-01')
 
     @volunteer1 = create :volunteer, bank: 'UBS'
     @assignment1 = create :assignment, volunteer: @volunteer1
@@ -30,7 +30,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     group_assignment4 = create :group_assignment, volunteer: @volunteer4
     billed_hour4 = create :hour, volunteer: @volunteer4,
       hourable: group_assignment4.group_offer,
-      hours: 5.5, meeting_date: @date - 2.month
+      hours: 5.5, meeting_date: Time.zone.parse('2017-11-01')
     @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4],
       created_at: 1.hour.ago
 
@@ -94,49 +94,50 @@ class BillingExpensesTest < ApplicationSystemTestCase
     refute_text @volunteer4
   end
 
-  test 'new billing_expense respects the period filter' do
+  test 'new_billing_expense_respects_the_period_filter' do
     volunteer1 = create :volunteer
-    hour1 = create :hour, volunteer: volunteer1, hours: 10, meeting_date: @date - 2.months
-    hour2 = create :hour, volunteer: volunteer1, hours: 16, meeting_date: @date - 3.months
+    create :hour, volunteer: volunteer1, hours: 10, meeting_date: Time.zone.parse('2017-11-01')
+    create :hour, volunteer: volunteer1, hours: 16, meeting_date: Time.zone.parse('2017-10-01')
 
-    volunteer2 = create :volunteer
-    hour3 = create :hour, volunteer: volunteer2, hours: 26, meeting_date: @date + 1.months
-    hour4 = create :hour, volunteer: volunteer2, hours: 15, meeting_date: @date - 2.months
+    volunteer2 = create :volunteer, iban: 'pick_out_volunteer'
+    create :hour, volunteer: volunteer2, hours: 26, meeting_date: Time.zone.parse('2018-02-01')
+    create :hour, volunteer: volunteer2, hours: 15, meeting_date: Time.zone.parse('2017-11-01')
 
     volunteer3 = create :volunteer
-    hour5 = create :hour, volunteer: volunteer3, hours: 1, meeting_date: @date + 1.months
-    hour6 = create :hour, volunteer: volunteer3, hours: 2, meeting_date: @date + 3.months
+    create :hour, volunteer: volunteer3, hours: 1, meeting_date: Time.zone.parse('2018-02-01')
+    create :hour, volunteer: volunteer3, hours: 2, meeting_date: Time.zone.parse('2018-04-01')
 
     visit billing_expenses_path
 
     click_link 'Spesenformulare erstellen'
-    assert_text "#{volunteer2} #{volunteer2.iban} 26 Stunden Fr. 100.00 #{period_text(hour3, hour3)}"
-    assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 #{period_text(hour5, hour6)}"
-    refute_text "#{volunteer1}"
+    assert_text "#{volunteer2} #{volunteer2.iban} 26 Stunden Fr. 100.00 1. Semester 2018"
+    assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
+    refute_text volunteer1
 
     visit billing_expenses_path
 
     click_link 'Semester: 1. Semester 2018'
     click_link '2. Semester 2017'
     click_link 'Spesenformulare erstellen'
-    assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 #{period_text(hour2, hour1)}"
-    assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 #{period_text(hour4, hour4)}"
-    refute_text "#{volunteer3}"
+    assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
+    assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 2. Semester 2017"
+    refute_text volunteer3
 
     visit billing_expenses_path
 
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
     click_link 'Spesenformulare erstellen'
-    assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 #{period_text(hour2, hour1)}"
-    assert_text "#{volunteer2} #{volunteer2.iban} 41 Stunden Fr. 100.00 #{period_text(hour4, hour3)}"
-    assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 #{period_text(hour5, hour6)}"
+    assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
+    assert_text "#{volunteer2} #{volunteer2.iban} 41 Stunden Fr. 100.00" \
+      ' 2. Semester 2017 - 1. Semester 2018'
+    assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
   end
 
-  test 'creating a billing_expense should respect period filter' do
+  test 'creating_a_billing_expense_should_respect_period_filter' do
     volunteer = create :volunteer
-    hour1 = create :hour, volunteer: volunteer, hours: 26, meeting_date: @date - 2.month
-    hour2 = create :hour, volunteer: volunteer, hours: 16, meeting_date: @date + 1.month
+    create :hour, volunteer: volunteer, hours: 26, meeting_date: Time.zone.parse('2017-11-01')
+    create :hour, volunteer: volunteer, hours: 16, meeting_date: Time.zone.parse('2018-02-01')
 
     # creating billing_expense for hours in the current period
     visit billing_expenses_path
@@ -152,7 +153,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
       click_button 'Spesenformulare erstellen'
     end
 
-    assert_text "#{volunteer} #{volunteer.iban} 16 Stunden Fr. 50.00 #{period_text(hour2, hour2)}"
+    assert_text "#{volunteer} #{volunteer.iban} 16 Stunden Fr. 50.00 1. Semester 2018"
 
     # creating billing_expense for the all remaining hours
     visit billing_expenses_path
@@ -171,12 +172,12 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
-    assert_text "#{volunteer} #{volunteer.iban} 26 Stunden Fr. 100.00 #{period_text(hour1, hour1)}"
+    assert_text "#{volunteer} #{volunteer.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
 
     # creating billing_expense for all hours in multiple periods
     volunteer = create :volunteer
-    hour1 = create :hour, volunteer: volunteer, hours: 26, meeting_date: @date - 2.month
-    hour2 = create :hour, volunteer: volunteer, hours: 16, meeting_date: @date + 1.month
+    create :hour, volunteer: volunteer, hours: 26, meeting_date: Time.zone.parse('2017-11-01')
+    create :hour, volunteer: volunteer, hours: 16, meeting_date: Time.zone.parse('2018-02-01')
 
     visit billing_expenses_path
     click_link 'Semester: 1. Semester 2018'
@@ -194,7 +195,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
-    assert_text "#{volunteer} #{volunteer.iban} 42 Stunden Fr. 100.00 #{period_text(hour1, hour2)}"
+    assert_text "#{volunteer} #{volunteer.iban} 42 Stunden Fr. 100.00"\
+      ' 2. Semester 2017 - 1. Semester 2018'
   end
 
   test 'volunteer profile shows only billing expenses for this volunteer' do
@@ -242,7 +244,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     refute_text @billing_expense1.volunteer
   end
 
-  test 'download single billing expense' do
+  test 'download_single_billing_expense' do
     use_rack_driver
 
     visit billing_expenses_path
@@ -271,11 +273,11 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
   test 'amount is editable' do
     volunteer = create :volunteer
-    hour1 = create :hour, volunteer: volunteer, hours: 1
-    hour2 = create :hour, volunteer: volunteer, hours: 2
-    hour3 = create :hour, volunteer: volunteer, hours: 3
-
-    billing_expense = create :billing_expense, volunteer: volunteer, hours: [hour1, hour2, hour3]
+    billing_expense = create :billing_expense, volunteer: volunteer, hours: [
+      create(:hour, volunteer: volunteer, hours: 1),
+      create(:hour, volunteer: volunteer, hours: 2),
+      create(:hour, volunteer: volunteer, hours: 3)
+    ]
     assert_equal billing_expense.final_amount, 50
 
     visit billing_expense_path billing_expense
@@ -286,13 +288,5 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert page.has_text? 'Fr. 100'
     assert_equal billing_expense.reload.final_amount, 100
-  end
-
-  private
-
-  def period_text(start_hour, end_hour)
-    text = ["#{I18n.l(start_hour.meeting_date)}"]
-    text << "#{I18n.l(end_hour.meeting_date)}"
-    text.join(' - ')
   end
 end
