@@ -72,7 +72,7 @@ class BillingExpense < ApplicationRecord
     end
   end
 
-  def self.generate_semester_filters
+  def self.generate_semester_filters(scope = :billed)
     semesters = []
 
     first_semester = semester_from_hours(scope, date_position: :minimum)
