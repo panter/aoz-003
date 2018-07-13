@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
-    @date = Time.zone.parse('2018-01-01')
+    @date = tz_parse('2018-01-01')
 
     @volunteer1 = create :volunteer, bank: 'UBS'
     @assignment1 = create :assignment, volunteer: @volunteer1
@@ -30,7 +30,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     group_assignment4 = create :group_assignment, volunteer: @volunteer4
     billed_hour4 = create :hour, volunteer: @volunteer4,
       hourable: group_assignment4.group_offer,
-      hours: 5.5, meeting_date: Time.zone.parse('2017-11-01')
+      hours: 5.5, meeting_date: tz_parse('2017-11-01')
     @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4],
       created_at: 1.hour.ago
 
@@ -96,16 +96,16 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
   test 'new_billing_expense_respects_the_semester_filter' do
     volunteer1 = create :volunteer
-    create :hour, volunteer: volunteer1, hours: 10, meeting_date: Time.zone.parse('2017-11-01')
-    create :hour, volunteer: volunteer1, hours: 16, meeting_date: Time.zone.parse('2017-10-01')
+    create :hour, volunteer: volunteer1, hours: 10, meeting_date: tz_parse('2017-11-01')
+    create :hour, volunteer: volunteer1, hours: 16, meeting_date: tz_parse('2017-10-01')
 
     volunteer2 = create :volunteer, iban: 'pick_out_volunteer'
-    create :hour, volunteer: volunteer2, hours: 26, meeting_date: Time.zone.parse('2018-02-01')
-    create :hour, volunteer: volunteer2, hours: 15, meeting_date: Time.zone.parse('2017-11-01')
+    create :hour, volunteer: volunteer2, hours: 26, meeting_date: tz_parse('2018-02-01')
+    create :hour, volunteer: volunteer2, hours: 15, meeting_date: tz_parse('2017-11-01')
 
     volunteer3 = create :volunteer
-    create :hour, volunteer: volunteer3, hours: 1, meeting_date: Time.zone.parse('2018-02-01')
-    create :hour, volunteer: volunteer3, hours: 2, meeting_date: Time.zone.parse('2018-04-01')
+    create :hour, volunteer: volunteer3, hours: 1, meeting_date: tz_parse('2018-02-01')
+    create :hour, volunteer: volunteer3, hours: 2, meeting_date: tz_parse('2018-04-01')
 
     visit billing_expenses_path
 
@@ -136,8 +136,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
   test 'creating_a_billing_expense_should_respect_semester_filter' do
     volunteer = create :volunteer
-    create :hour, volunteer: volunteer, hours: 26, meeting_date: Time.zone.parse('2017-11-01')
-    create :hour, volunteer: volunteer, hours: 16, meeting_date: Time.zone.parse('2018-02-01')
+    create :hour, volunteer: volunteer, hours: 26, meeting_date: tz_parse('2017-11-01')
+    create :hour, volunteer: volunteer, hours: 16, meeting_date: tz_parse('2018-02-01')
 
     # creating billing_expense for hours in the current semester
     visit billing_expenses_path
@@ -176,8 +176,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     # creating billing_expense for all hours in multiple semesters
     volunteer = create :volunteer
-    create :hour, volunteer: volunteer, hours: 26, meeting_date: Time.zone.parse('2017-11-01')
-    create :hour, volunteer: volunteer, hours: 16, meeting_date: Time.zone.parse('2018-02-01')
+    create :hour, volunteer: volunteer, hours: 26, meeting_date: tz_parse('2017-11-01')
+    create :hour, volunteer: volunteer, hours: 16, meeting_date: tz_parse('2018-02-01')
 
     visit billing_expenses_path
     click_link 'Semester: 1. Semester 2018'

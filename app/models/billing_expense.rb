@@ -83,8 +83,7 @@ class BillingExpense < ApplicationRecord
         value: last_semester.strftime('%Y-%m-%d'),
         text: "#{semester_of_year(last_semester)}. Semester #{semester_display_year(last_semester)}"
       }
-
-      last_semester.advance(months: - SEMESTER_LENGTH)
+      last_semester = last_semester.advance(months: -SEMESTER_LENGTH)
     end
 
     semesters

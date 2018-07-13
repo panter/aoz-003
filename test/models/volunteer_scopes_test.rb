@@ -331,18 +331,18 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   test 'with_billable_hours returns volunteers with billable hours for an optional semester' do
-    travel_to Time.zone.parse('2017-07-01')
+    travel_to tz_parse('2017-07-01')
     volunteers_in_current_semester_assertion = [@group_offer_member, @has_assignments]
     volunteers_in_last_semester_assertion    = [@has_multiple, @has_active_and_inactive]
 
     volunteers_in_current_semester_assertion.each do |volunteer|
-      create :hour, hours: 1, volunteer: volunteer, meeting_date: Time.zone.parse('2017-01-01')
-      create :hour, hours: 2, volunteer: volunteer, meeting_date: Time.zone.parse('2017-02-02')
+      create :hour, hours: 1, volunteer: volunteer, meeting_date: tz_parse('2017-01-01')
+      create :hour, hours: 2, volunteer: volunteer, meeting_date: tz_parse('2017-02-02')
     end
 
     volunteers_in_last_semester_assertion.each do |volunteer|
-      create :hour, hours: 3, volunteer: volunteer, meeting_date: Time.zone.parse('2016-09-01')
-      create :hour, hours: 4, volunteer: volunteer, meeting_date: Time.zone.parse('2016-11-11')
+      create :hour, hours: 3, volunteer: volunteer, meeting_date: tz_parse('2016-09-01')
+      create :hour, hours: 4, volunteer: volunteer, meeting_date: tz_parse('2016-11-11')
     end
 
     volunteers_with_billable_hours = Volunteer.with_billable_hours

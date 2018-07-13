@@ -17,20 +17,20 @@ class BillingExpenseTest < ActiveSupport::TestCase
   end
 
   test 'create_for' do # rubocop:disable Metrics/BlockLength
-    travel_to Time.zone.parse('2017-07-12')
+    travel_to tz_parse('2017-07-12')
     volunteer1 = create :volunteer_with_user, bank: 'Bank 1'
     other_creator = volunteer1.registrar
     assignment1 = create :assignment, volunteer: volunteer1, creator: other_creator
-    hour1a = create :hour, volunteer: volunteer1, meeting_date: Time.zone.parse('2017-04-02'), hourable: assignment1
-    hour1b = create :hour, volunteer: volunteer1, meeting_date: Time.zone.parse('2017-05-12'), hourable: assignment1
-    hour1c = create :hour, volunteer: volunteer1, meeting_date: Time.zone.parse('2017-01-18'), hourable: assignment1
+    hour1a = create :hour, volunteer: volunteer1, meeting_date: tz_parse('2017-04-02'), hourable: assignment1
+    hour1b = create :hour, volunteer: volunteer1, meeting_date: tz_parse('2017-05-12'), hourable: assignment1
+    hour1c = create :hour, volunteer: volunteer1, meeting_date: tz_parse('2017-01-18'), hourable: assignment1
     create :billing_expense, volunteer: volunteer1, hours: [hour1c], user: other_creator
 
 
     volunteer2 = create :volunteer, bank: 'Bank 2'
     creator = volunteer2.registrar
     group_assignment1 = create :group_assignment, volunteer: volunteer2, creator: creator
-    hour2 = create :hour, volunteer: volunteer2, hours: 75, meeting_date: Time.zone.parse('2017-03-22'), hourable: group_assignment1
+    hour2 = create :hour, volunteer: volunteer2, hours: 75, meeting_date: tz_parse('2017-03-22'), hourable: group_assignment1
 
     assert_equal 1, BillingExpense.count
     assert_equal 1, volunteer1.billing_expenses.count
@@ -72,10 +72,9 @@ class BillingExpenseTest < ActiveSupport::TestCase
     refute_equal creator, hour1c.reviewer
   end
 
-  test 'generate_semester_filters without hours' do
+  test 'generate_semester_filters_without_hours' do
     semesters = BillingExpense.generate_semester_filters
     now = Time.zone.now
-
     if (6..11).cover? now.month
       value = "#{now.year}-06-01"
       text = "2. Semester #{now.year}"
@@ -88,7 +87,7 @@ class BillingExpenseTest < ActiveSupport::TestCase
     assert_equal [{ q: :semester, value: value, text: text }], semesters
   end
 
-  test 'generate_semester_filters with hours' do
+  test 'generate_semester_filters_with_hours' do
     hour1 = create :hour, meeting_date: '2014-02-03'
     hour2 = create :hour, meeting_date: '2015-06-30'
     create :hour, meeting_date: '2017-06-30'
@@ -104,24 +103,24 @@ class BillingExpenseTest < ActiveSupport::TestCase
     ], semesters
   end
 
-  test 'semester scope' do
+  test 'semester_scope' do
     billing_expense1 = create :billing_expense,
-      hours: [create(:hour, meeting_date: Time.zone.parse('2017-01-12'))]
+      hours: [create(:hour, meeting_date: tz_parse('2017-01-12'))]
 
     billing_expense2 = create :billing_expense,
       hours: [
-        create(:hour, meeting_date: Time.zone.parse('2017-02-01')),
-        create(:hour, meeting_date: Time.zone.parse('2017-05-12'))
+        create(:hour, meeting_date: tz_parse('2017-02-01')),
+        create(:hour, meeting_date: tz_parse('2017-05-12'))
       ]
 
     _billing_expense3 = create :billing_expense,
-      hours: [create(:hour, meeting_date: Time.zone.parse('2016-11-30'))]
+      hours: [create(:hour, meeting_date: tz_parse('2016-11-30'))]
 
     assert_includes BillingExpense.semester('2016-12-01'), billing_expense1
     assert_includes BillingExpense.semester('2016-12-01'), billing_expense2
   end
 
-  test 'amount can be overwriten' do
+  test 'amount_can_be_overwriten' do
     volunteer = create :volunteer
     hour1 = create :hour, volunteer: volunteer, hours: 1
     hour2 = create :hour, volunteer: volunteer, hours: 2
@@ -139,7 +138,7 @@ class BillingExpenseTest < ActiveSupport::TestCase
     assert_equal billing_expense.final_amount, billing_expense.amount
   end
 
-  test 'edited amounts are sortable' do
+  test 'edited_amounts_are_sortable' do
     volunteer1 = create :volunteer
     hour1 = create :hour, volunteer: volunteer1, hours: 1
     hour2 = create :hour, volunteer: volunteer1, hours: 2

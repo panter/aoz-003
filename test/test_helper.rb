@@ -66,7 +66,7 @@ class ActiveSupport::TestCase
     end
   end
 
-  def tz_parse(time_string)
-    Time.zone.parse(time_string)
+  def tz_parse(date_string)
+    Time.zone.parse(date_string)
   end
 end
