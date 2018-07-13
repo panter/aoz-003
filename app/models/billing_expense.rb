@@ -67,6 +67,7 @@ class BillingExpense < ApplicationRecord
           bank: volunteer.bank,
           iban: volunteer.iban
         )
+        volunteer.update(last_billing_expense: billing_expense_semester(date).to_date)
       end
     end
   end
