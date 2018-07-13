@@ -6,6 +6,7 @@ class Volunteer < ApplicationRecord
   include ImportRelation
   include FullBankDetails
   include AcceptanceAttributes
+  include BillingExpenseSemesterUtils
 
   before_validation :handle_user_with_external_change, if: :external_changed?
   before_save :build_user_if_accepted_or_import_invited

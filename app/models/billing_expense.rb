@@ -1,6 +1,7 @@
 class BillingExpense < ApplicationRecord
   include ImportRelation
   include FullBankDetails
+  include BillingExpenseSemesterUtils
 
   SEMESTER_LENGTH = 6.months
 
@@ -96,14 +97,6 @@ class BillingExpense < ApplicationRecord
     end
 
     semesters
-  end
-
-  def self.semester_of_year(date)
-    if (6..11).cover? date.month
-      2
-    else
-      1
-    end
   end
 
   def final_amount
