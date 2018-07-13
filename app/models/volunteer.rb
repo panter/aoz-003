@@ -194,16 +194,43 @@ class Volunteer < ApplicationRecord
 
   scope :need_refunds, (-> { where(waive: false) })
 
-  scope :with_billable_hours, lambda { |date = nil|
-    hours = Hour.billable
-    hours = hours.semester(date) if date.present?
-
+  def self.with_billable_hours(date = nil)
+    date = billable_semester_date(date)
     need_refunds
-      .joins(:contact)
-      .joins(:hours).merge(hours)
-      .select('volunteers.*, SUM(hours.hours) AS total_hours')
+      .left_joins(:contact)
+      .left_joins(:hours)
+      .left_joins(:billing_expenses)
+      .where('hours.id IS NOT NULL AND hours.billing_expense_id IS NULL')
+      .hours_meeting_date_semester(date)
+      .no_billing_expense_in_semester(date)
+      .billable_hours_select
       .group(:id, 'contacts.full_name')
-      .order("(CASE WHEN COALESCE(iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
+      .order("(CASE WHEN COALESCE(volunteers.iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
+  end
+
+  scope :billable_hours_select, lambda {
+    select(
+      'SUM(hours.hours) AS total_hours, ' \
+      'ARRAY_AGG(hours.meeting_date) AS meeting_dates, ' \
+      'ARRAY_AGG(hours.id) AS hour_ids, ' \
+      'contacts.full_name AS full_name, ' \
+      'volunteers.*'
+    )
+  }
+
+  scope :no_billing_expense_in_semester, lambda { |date|
+    if date
+      where(last_billing_expense: nil).or(
+        where.not('last_billing_expense = ?', date.to_date)
+      )
+    end
+  }
+
+  scope :hours_meeting_date_semester, lambda { |date|
+    if date
+      where('hours.meeting_date < ?', date.advance(months: 6))
+        .where('hours.meeting_date >= ?', date)
+    end
   }
 
   scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
