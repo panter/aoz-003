@@ -11,28 +11,32 @@ class HourTest < ActiveSupport::TestCase
   end
 
   test 'semester returns hours for a billing_expense semester' do
-    travel_to Time.zone.parse('2014-05-12')
-    a_semester_ago = BillingExpense::SEMESTER_LENGTH.ago
-    last_semester_ago = a_semester_ago - BillingExpense::SEMESTER_LENGTH
-    format = '%Y-%m-%d'
-
+    travel_to Time.zone.parse('2018-05-25')
     volunteer = create :volunteer
-    hour1 = create :hour, volunteer: volunteer, hours: 1, meeting_date: a_semester_ago - 1.month
-    hour2 = create :hour, volunteer: volunteer, hours: 1, meeting_date: a_semester_ago - 2.months
-    hour3 = create :hour, volunteer: volunteer, hours: 1, meeting_date: a_semester_ago + 1.month
-    hour4 = create :hour, volunteer: volunteer, hours: 1, meeting_date: a_semester_ago + 2.months
+    prev_hour1 = create :hour, volunteer: volunteer, hours: 1, meeting_date: Time.zone.parse('2016-11-15')
+    prev_hour2 = create :hour, volunteer: volunteer, hours: 1, meeting_date: Time.zone.parse('2016-10-01')
+    this_hour1 = create :hour, volunteer: volunteer, hours: 1, meeting_date: Time.zone.parse('2016-12-01')
+    this_hour2 = create :hour, volunteer: volunteer, hours: 1, meeting_date: Time.zone.parse('2017-05-11')
+    other_hour = create :hour, volunteer: volunteer, hours: 1, meeting_date: Time.zone.parse('2013-11-21')
 
-    current_semester_hours = Hour.semester a_semester_ago.strftime(format)
-    last_semester_hours = Hour.semester last_semester_ago.strftime(format)
+    current_semester_hours = Hour.semester '2016-12-01'
+    last_semester_hours = Hour.semester '2016-06-01'
+    all_semester_hours = Hour.semester
 
-    assert_includes current_semester_hours, hour3
-    assert_includes current_semester_hours, hour4
-    assert_not_includes current_semester_hours, hour1
-    assert_not_includes current_semester_hours, hour2
+    assert_includes current_semester_hours, this_hour1
+    assert_includes current_semester_hours, this_hour2
+    assert_not_includes current_semester_hours, prev_hour1
+    assert_not_includes current_semester_hours, prev_hour2
+    assert_not_includes current_semester_hours, other_hour
 
-    assert_includes last_semester_hours, hour1
-    assert_includes last_semester_hours, hour2
-    assert_not_includes last_semester_hours, hour3
-    assert_not_includes last_semester_hours, hour4
+    assert_includes last_semester_hours, prev_hour1
+    assert_includes last_semester_hours, prev_hour2
+    assert_not_includes last_semester_hours, this_hour1
+    assert_not_includes last_semester_hours, this_hour2
+    assert_not_includes last_semester_hours, other_hour
+
+    [prev_hour1, prev_hour2, this_hour1, this_hour2, other_hour].map do |hour|
+      assert_includes all_semester_hours, hour
+    end
   end
 end

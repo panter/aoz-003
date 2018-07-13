@@ -331,25 +331,23 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   test 'with_billable_hours returns volunteers with billable hours for an optional semester' do
-    current_semester_ago = BillingExpense::SEMESTER_LENGTH.ago
-    last_semester_ago = current_semester_ago - BillingExpense::SEMESTER_LENGTH
-    format = '%Y-%m-%d'
+    travel_to Time.zone.parse('2017-07-01')
     volunteers_in_current_semester_assertion = [@group_offer_member, @has_assignments]
     volunteers_in_last_semester_assertion    = [@has_multiple, @has_active_and_inactive]
 
     volunteers_in_current_semester_assertion.each do |volunteer|
-      create :hour, hours: 1, volunteer: volunteer, meeting_date: current_semester_ago + 1.month
-      create :hour, hours: 2, volunteer: volunteer, meeting_date: current_semester_ago + 2.months
+      create :hour, hours: 1, volunteer: volunteer, meeting_date: Time.zone.parse('2017-01-01')
+      create :hour, hours: 2, volunteer: volunteer, meeting_date: Time.zone.parse('2017-02-02')
     end
 
     volunteers_in_last_semester_assertion.each do |volunteer|
-      create :hour, hours: 3, volunteer: volunteer, meeting_date: current_semester_ago - 1.month
-      create :hour, hours: 4, volunteer: volunteer, meeting_date: current_semester_ago - 2.months
+      create :hour, hours: 3, volunteer: volunteer, meeting_date: Time.zone.parse('2016-09-01')
+      create :hour, hours: 4, volunteer: volunteer, meeting_date: Time.zone.parse('2016-11-11')
     end
 
     volunteers_with_billable_hours = Volunteer.with_billable_hours
-    volunteers_in_current_semester = Volunteer.with_billable_hours current_semester_ago.strftime(format)
-    volunteers_in_last_semester = Volunteer.with_billable_hours last_semester_ago.strftime(format)
+    volunteers_in_current_semester = Volunteer.with_billable_hours '2016-12-01'
+    volunteers_in_last_semester = Volunteer.with_billable_hours '2016-06-01'
 
     (volunteers_in_current_semester + volunteers_in_last_semester).each do |volunteer|
       assert_includes volunteers_with_billable_hours, volunteer

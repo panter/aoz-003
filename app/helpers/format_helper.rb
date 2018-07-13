@@ -4,7 +4,7 @@ module FormatHelper
   end
 
   def format_hours(hours)
-    t('activerecord.attributes.billing_expense.hours', count: hours.to_i)
+    t('activerecord.attributes.billing_expense.hours', count: hours)
   end
 
   def format_hours_semester(hours)

@@ -65,4 +65,8 @@ class ActiveSupport::TestCase
       controllers_action_list.values
     end
   end
+
+  def tz_parse(time_string)
+    Time.zone.parse(time_string)
+  end
 end

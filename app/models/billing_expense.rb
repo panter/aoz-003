@@ -3,7 +3,7 @@ class BillingExpense < ApplicationRecord
   include FullBankDetails
   include BillingExpenseSemesterUtils
 
-  SEMESTER_LENGTH = 6.months
+  SEMESTER_LENGTH = 6
 
   attr_accessor :import_mode
 
@@ -84,7 +84,7 @@ class BillingExpense < ApplicationRecord
         text: "#{semester_of_year(last_semester)}. Semester #{semester_display_year(last_semester)}"
       }
 
-      last_semester -= SEMESTER_LENGTH
+      last_semester.advance(months: - SEMESTER_LENGTH)
     end
 
     semesters
