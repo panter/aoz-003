@@ -10,32 +10,28 @@ module FormatHelper
   def format_hours_semester(hours)
     return '' if hours.blank?
     dates = hours.map(&:meeting_date)
-    if dates.size == 1
-      "#{BillingExpense.semester_of_year(dates.first)}. Semester #{semester_display_year(dates.first)}"
-    else
-      format_hours_multiple_dates_semester(dates)
+    if dates.size > 1
+      return format_hours_multiple_dates_semester(dates)
     end
+    '%s. Semester %s' % [
+      BillingExpense.semester_of_year(dates.first),
+      BillingExpense.semester_display_year(dates.first)
+    ]
   end
 
   def format_hours_multiple_dates_semester(dates)
     min_date = dates.min
+    min_year = BillingExpense.semester_display_year(min_date)
+    min_semester = BillingExpense.semester_of_year(min_date)
     max_date = dates.max
-    if semester_display_year(min_date) != semester_display_year(max_date)
-      "#{BillingExpense.semester_of_year(min_date)}. Semester #{semester_display_year(min_date)} - "\
-        "#{BillingExpense.semester_of_year(max_date)}. Semester #{max_date.year}"
-    elsif BillingExpense.semester_of_year(min_date) == BillingExpense.semester_of_year(max_date)
-      "#{BillingExpense.semester_of_year(max_date)}. Semester #{semester_display_year(max_date)}"
+    max_year = BillingExpense.semester_display_year(max_date)
+    max_semester = BillingExpense.semester_of_year(max_date)
+    if max_year != min_year
+      '%i. Semester %i – %i. Semester %i' % [min_semester, min_year, max_semester, max_year]
+    elsif min_semester == max_semester
+      '%i. Semester %i' % [max_semester, max_year]
     else
-      "#{BillingExpense.semester_of_year(min_date)}. - "\
-        "#{BillingExpense.semester_of_year(max_date)}. Semester #{semester_display_year(max_date)}"
-    end
-  end
-
-  def semester_display_year(date)
-    if date.month == 12
-      date.year + 1
-    else
-      date.year
+      '%i. – %i. Semester %i' % [min_semester, max_semester, max_year]
     end
   end
 end
