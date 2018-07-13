@@ -196,13 +196,14 @@ class Volunteer < ApplicationRecord
 
   def self.with_billable_hours(date = nil)
     date = billable_semester_date(date)
+    
     need_refunds
       .left_joins(:contact)
       .left_joins(:hours)
       .left_joins(:billing_expenses)
-      .where('hours.id IS NOT NULL AND hours.billing_expense_id IS NULL')
       .hours_meeting_date_semester(date)
       .no_billing_expense_in_semester(date)
+      .where('hours.billing_expense_id IS NULL')
       .billable_hours_select
       .group(:id, 'contacts.full_name')
       .order("(CASE WHEN COALESCE(volunteers.iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
@@ -211,8 +212,6 @@ class Volunteer < ApplicationRecord
   scope :billable_hours_select, lambda {
     select(
       'SUM(hours.hours) AS total_hours, ' \
-      'ARRAY_AGG(hours.meeting_date) AS meeting_dates, ' \
-      'ARRAY_AGG(hours.id) AS hour_ids, ' \
       'contacts.full_name AS full_name, ' \
       'volunteers.*'
     )

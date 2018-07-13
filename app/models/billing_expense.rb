@@ -54,12 +54,11 @@ class BillingExpense < ApplicationRecord
   end
 
   def self.create_for!(volunteers, creator, date = nil)
+    billing_semester = billable_semester_date(date)
     transaction do
       volunteers.find_each do |volunteer|
-        hours = volunteer.hours.billable.semester(date)
-        hours.find_each do |hour|
-          hour.update!(reviewer: creator)
-        end
+        hours = volunteer.hours.billable.semester(billing_semester)
+        hours.find_each { |hour| hour.update!(reviewer: creator) }
 
         create!(
           volunteer: volunteer,
@@ -68,7 +67,7 @@ class BillingExpense < ApplicationRecord
           bank: volunteer.bank,
           iban: volunteer.iban
         )
-        volunteer.update(last_billing_expense: billing_expense_semester(date).to_date)
+        volunteer.update(last_billing_expense: billing_expense_semester(billing_semester))
       end
     end
   end
