@@ -297,6 +297,10 @@ de:
         assignment: Begleitung
         created_by: Erstellt von
         semester: Semester
+        hours:
+          zero: keine Stunden
+          one: eine Stunde
+          other: '%{count} Stunden'
       certificate:
         <<: *id-generic_keys
         assignment: Einsatz
