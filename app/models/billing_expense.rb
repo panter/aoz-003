@@ -76,24 +76,16 @@ class BillingExpense < ApplicationRecord
   def self.generate_semester_filters
     semesters = []
 
-    hours = Hour.billed
-    oldest_date = hours.minimum(:meeting_date) || Time.zone.now
-    newest_date = hours.maximum(:meeting_date) || Time.zone.now
-
-    start_of_year = newest_date.beginning_of_year - 1.month
-    date = start_of_year
-    date += SEMESTER_LENGTH if newest_date >= start_of_year + SEMESTER_LENGTH
-
-    until date < oldest_date - SEMESTER_LENGTH
-      display_year = date.year
-      display_year += 1 if date.month == 12
+    first_semester = semester_from_hours(scope, date_position: :minimum)
+    last_semester = semester_from_hours(scope)
+    until last_semester < first_semester
       semesters << {
         q: :semester,
-        value: date.strftime('%Y-%m-%d'),
-        text: "#{semester_of_year(date)}. Semester #{display_year}"
+        value: last_semester.strftime('%Y-%m-%d'),
+        text: "#{semester_of_year(last_semester)}. Semester #{semester_display_year(last_semester)}"
       }
 
-      date -= SEMESTER_LENGTH
+      last_semester -= SEMESTER_LENGTH
     end
 
     semesters
