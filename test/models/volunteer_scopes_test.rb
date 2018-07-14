@@ -370,6 +370,29 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     end
   end
 
+  test 'allready_has_billing_expense_for_semester_adds_hours_in_semester_not_in_billing_list' do
+    travel_to tz_parse('2017-07-05-30')
+    volunteer = create :volunteer_with_user
+    assignment = create :assignment, volunteer: volunteer
+    creator = assignment.creator
+    volunteer.reload
+    hours_before = ['2017-01-10', '2017-04-08', '2017-05-20'].map.with_index do |date, index|
+      create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: tz_parse(date),
+        hours: index + 1)
+    end
+    assert_includes Volunteer.with_billable_hours('2016-12-01'), volunteer
+    assert_equal 6.0, Volunteer.with_billable_hours('2016-12-01').to_a.first.total_hours
+    assert_equal 6, hours_before.map(&:hours).sum
+    BillingExpense.create_for!(Volunteer.with_billable_hours('2016-12-01'), creator, '2016-12-01')
+    assert Volunteer.with_billable_hours('2016-12-01').blank?
+    hours_after = ['2017-01-11', '2017-04-09', '2017-05-21'].map.with_index do |date, index|
+      create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: tz_parse(date),
+        hours: index + 1)
+    end
+    assert_not_includes Volunteer.with_billable_hours('2016-12-01'), volunteer
+    assert_includes Volunteer.with_billable_hours, volunteer
+  end
+
   test 'with_registered_user returns volunteers where password is set for user' do
     volunteer_without_user1 = create :volunteer, :external
     volunteer_without_user2 = create :volunteer, :external

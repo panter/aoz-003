@@ -196,40 +196,49 @@ class Volunteer < ApplicationRecord
 
   def self.with_billable_hours(date = nil)
     date = billable_semester_date(date)
-    
-    need_refunds
-      .left_joins(:contact)
-      .left_joins(:hours)
-      .left_joins(:billing_expenses)
-      .hours_meeting_date_semester(date)
-      .no_billing_expense_in_semester(date)
+    need_refunds.left_joins(:contact, :hours, :billing_expenses)
+      .with_billable_hours_meeting_date_semester(date)
+      .with_billable_hours_no_expense_in_semester(date)
       .where('hours.billing_expense_id IS NULL')
-      .billable_hours_select
+      .where.not('hours.id IS NULL')
+      .with_billable_hours_select
       .group(:id, 'contacts.full_name')
-      .order("(CASE WHEN COALESCE(volunteers.iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
+      .with_billable_hours_order
   end
 
-  scope :billable_hours_select, lambda {
-    select(
-      'SUM(hours.hours) AS total_hours, ' \
-      'contacts.full_name AS full_name, ' \
-      'volunteers.*'
-    )
+  scope :with_billable_hours_meeting_date_semester, lambda { |date|
+    if date
+      where('hours.meeting_date < :end_date AND hours.meeting_date >= :start_date',
+        start_date: date,
+        end_date: date.advance(months: BillingExpense::SEMESTER_LENGTH))
+    end
   }
 
-  scope :no_billing_expense_in_semester, lambda { |date|
+  scope :with_billable_hours_no_expense_in_semester, lambda { |date|
     if date
       where(last_billing_expense: nil).or(
-        where.not('last_billing_expense = ?', date.to_date)
+        where.not('volunteers.last_billing_expense = ?', date.to_date)
       )
     end
   }
 
-  scope :hours_meeting_date_semester, lambda { |date|
-    if date
-      where('hours.meeting_date < ?', date.advance(months: 6))
-        .where('hours.meeting_date >= ?', date)
-    end
+  scope :with_billable_hours_select, lambda {
+    select(<<-SQL.squish)
+      SUM(hours.hours) AS total_hours,
+      contacts.full_name AS full_name,
+      volunteers.*
+    SQL
+  }
+
+  scope :with_billable_hours_order, lambda {
+    order(<<-SQL.squish)
+      (CASE
+        WHEN COALESCE(volunteers.iban, '') = ''
+        THEN 2
+        ELSE 1
+      END),
+      contacts.full_name
+    SQL
   }
 
   scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
