@@ -55,8 +55,6 @@ class BillingExpensesController < ApplicationController
     authorize @billing_expense
 
     @selected_billing_semester = selected_billing_semester
-    
-    set_default_filter(semester: @selected_billing_semester)
     @q = Volunteer.with_billable_hours(@selected_billing_semester).ransack(params[:q])
     @volunteers = @q.result
     @selected_volunteers = params[:selected_volunteers].presence || []
@@ -108,9 +106,13 @@ class BillingExpensesController < ApplicationController
 
   def selected_billing_semester
     if params[:q].blank?
+      set_default_filter(semester: default_billing_semester)
       default_billing_semester
     elsif params[:q][:all].present?
       nil
+    elsif !@billing_semester_filters.pluck(:value).include? params[:q][:semester]
+      params.permit![:q][:semester] = default_billing_semester
+      default_billing_semester
     else
       params[:q][:semester]
     end
