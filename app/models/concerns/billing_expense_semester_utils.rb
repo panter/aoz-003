@@ -18,8 +18,11 @@ module BillingExpenseSemesterUtils
       end
     end
 
-    def self.semester_from_hours(scope, date_position: :maximum)
-      hours = Hour.public_send(scope)
+    def self.semester_back_count(first_date, last_date)
+      ((last_date.to_f - first_date.to_f) / BillingExpense::SEMESTER_LENGTH.months.to_f).ceil.to_i
+    end
+
+    def self.semester_from_hours(hours, date_position: :maximum)
       if hours.blank?
         current_semester_start
       elsif hours.count > 1

@@ -73,20 +73,22 @@ class BillingExpense < ApplicationRecord
   end
 
   def self.generate_semester_filters(scope = :billed)
-    semesters = []
+    scoped_hours = Hour.public_send(scope)
+    first_semester = semester_from_hours(scoped_hours, date_position: :minimum)
+    last_semester = semester_from_hours(scoped_hours)
 
-    first_semester = semester_from_hours(scope, date_position: :minimum)
-    last_semester = semester_from_hours(scope)
-    until last_semester < first_semester
-      semesters << {
-        q: :semester,
-        value: last_semester.strftime('%Y-%m-%d'),
-        text: "#{semester_of_year(last_semester)}. Semester #{semester_display_year(last_semester)}"
-      }
+    semesters = [semester_filter_hash(last_semester)]
+    semester_back_count(first_semester, last_semester).times do
       last_semester = last_semester.advance(months: -SEMESTER_LENGTH)
+      next if scoped_hours.semester(last_semester).blank?
+      semesters << semester_filter_hash(last_semester)
     end
-
     semesters
+  end
+
+  def self.semester_filter_hash(date)
+    { q: :semester, value: date.strftime('%Y-%m-%d'),
+      text: "#{semester_of_year(date)}. Semester #{semester_display_year(date)}" }
   end
 
   def final_amount
