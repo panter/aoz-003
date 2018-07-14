@@ -10,7 +10,7 @@ h1
     html: { class: 'form-ignore-changes', target: '_blank' } do |f|
   ul.list-inline
     li= clear_filter_button
-    = custom_filter_dropdown(t_attr(:semester, BillingExpense), *@billing_semesters)
+    = custom_filter_dropdown(t_attr(:semester, BillingExpense), *@billing_semester_filters)
     li=> f.button :submit, 'Auswahl herunterladen', data: { disable_with: false }
     li
       - if @volunteer

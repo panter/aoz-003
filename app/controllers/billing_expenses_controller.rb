@@ -5,7 +5,7 @@ class BillingExpensesController < ApplicationController
 
   def index
     authorize BillingExpense
-    @billing_semesters = BillingExpense.generate_semester_filters
+    @billing_semester_filters = BillingExpense.generate_semester_filters
     set_default_filter(semester: default_billing_semester)
     @q = policy_scope(BillingExpense).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
@@ -95,7 +95,7 @@ class BillingExpensesController < ApplicationController
   end
 
   def set_billing_semesters
-    @billing_semesters = BillingExpense.generate_semester_filters(:billable)
+    @billing_semester_filters = BillingExpense.generate_semester_filters(:billable)
   end
 
   def set_selection
@@ -103,7 +103,7 @@ class BillingExpensesController < ApplicationController
   end
 
   def default_billing_semester
-    @billing_semesters.first[:value]
+    @billing_semester_filters.first[:value]
   end
 
   def selected_billing_semester
