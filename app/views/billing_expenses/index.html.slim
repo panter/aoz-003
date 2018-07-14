@@ -16,7 +16,7 @@ h1
       - if @volunteer
         => button_link navigation_glyph(:back), @volunteer
       - else
-        => button_link 'Spesenformulare erstellen', new_billing_expense_path(q: params[:q].permit!)
+        => button_link 'Spesenformulare erfassen', new_billing_expense_path(q: params[:q].permit!)
 
   .table-responsive
     table.table
@@ -27,7 +27,7 @@ h1
           - unless @volunteer
             th= sort_link @q, :volunteer_contact_last_name, t_model(Volunteer)
           th= t_attr(:bank_details, Volunteer)
-          th= t_attr(:hours)
+          th Stunden
           th= sort_link @q, :final_amount
           th Semester
           - if policy(BillingExpense).superadmin_privileges?
