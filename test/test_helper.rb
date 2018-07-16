@@ -66,7 +66,8 @@ class ActiveSupport::TestCase
     end
   end
 
-  def tz_parse(date_string)
-    Time.zone.parse(date_string)
+  def time_z(year, month = nil, day = nil)
+    year, month, day = year.split('-').map(&:to_i) if month.blank?
+    Time.zone.local(year, month, day)
   end
 end

@@ -330,19 +330,19 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? volunteer_will_inactive
   end
 
-  test 'with_billable_hours returns volunteers with billable hours for an optional semester' do
-    travel_to tz_parse('2017-07-01')
+  test 'with_billable_hours_returns_volunteers_with_billable_hours_for_an_optional_semester' do
+    travel_to time_z(2017, 7, 1)
     volunteers_in_current_semester_assertion = [@group_offer_member, @has_assignments]
     volunteers_in_last_semester_assertion    = [@has_multiple, @has_active_and_inactive]
 
     volunteers_in_current_semester_assertion.each do |volunteer|
-      create :hour, hours: 1, volunteer: volunteer, meeting_date: tz_parse('2017-01-01')
-      create :hour, hours: 2, volunteer: volunteer, meeting_date: tz_parse('2017-02-02')
+      create :hour, hours: 1, volunteer: volunteer, meeting_date: time_z(2017, 1, 1)
+      create :hour, hours: 2, volunteer: volunteer, meeting_date: time_z(2017, 2, 2)
     end
 
     volunteers_in_last_semester_assertion.each do |volunteer|
-      create :hour, hours: 3, volunteer: volunteer, meeting_date: tz_parse('2016-09-01')
-      create :hour, hours: 4, volunteer: volunteer, meeting_date: tz_parse('2016-11-11')
+      create :hour, hours: 3, volunteer: volunteer, meeting_date: time_z(2016, 9, 1)
+      create :hour, hours: 4, volunteer: volunteer, meeting_date: time_z(2016, 11, 11)
     end
 
     volunteers_with_billable_hours = Volunteer.with_billable_hours
@@ -371,13 +371,13 @@ class VolunteerScopesTest < ActiveSupport::TestCase
   end
 
   test 'allready_has_billing_expense_for_semester_adds_hours_in_semester_not_in_billing_list' do
-    travel_to tz_parse('2017-07-05-30')
+    travel_to time_z(2017, 7, 5)
     volunteer = create :volunteer_with_user
     assignment = create :assignment, volunteer: volunteer
     creator = assignment.creator
     volunteer.reload
     hours_before = ['2017-01-10', '2017-04-08', '2017-05-20'].map.with_index do |date, index|
-      create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: tz_parse(date),
+      create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: time_z(date),
         hours: index + 1)
     end
     assert_includes Volunteer.with_billable_hours('2016-12-01'), volunteer
@@ -386,7 +386,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     BillingExpense.create_for!(Volunteer.with_billable_hours('2016-12-01'), creator, '2016-12-01')
     assert Volunteer.with_billable_hours('2016-12-01').blank?
     hours_after = ['2017-01-11', '2017-04-09', '2017-05-21'].map.with_index do |date, index|
-      create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: tz_parse(date),
+      create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: time_z(date),
         hours: index + 1)
     end
     assert_not_includes Volunteer.with_billable_hours('2016-12-01'), volunteer

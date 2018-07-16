@@ -17,20 +17,20 @@ class BillingExpenseTest < ActiveSupport::TestCase
   end
 
   test 'create_for' do # rubocop:disable Metrics/BlockLength
-    travel_to tz_parse('2017-07-12')
+    travel_to time_z(2017, 7, 12)
     volunteer1 = create :volunteer_with_user, bank: 'Bank 1'
     other_creator = volunteer1.registrar
     assignment1 = create :assignment, volunteer: volunteer1, creator: other_creator
-    hour1a = create :hour, volunteer: volunteer1, meeting_date: tz_parse('2017-04-02'), hourable: assignment1
-    hour1b = create :hour, volunteer: volunteer1, meeting_date: tz_parse('2017-05-12'), hourable: assignment1
-    hour1c = create :hour, volunteer: volunteer1, meeting_date: tz_parse('2017-01-18'), hourable: assignment1
+    hour1a = create :hour, volunteer: volunteer1, meeting_date: time_z(2017, 4, 2), hourable: assignment1
+    hour1b = create :hour, volunteer: volunteer1, meeting_date: time_z(2017, 5, 12), hourable: assignment1
+    hour1c = create :hour, volunteer: volunteer1, meeting_date: time_z(2017, 1, 18), hourable: assignment1
     create :billing_expense, volunteer: volunteer1, hours: [hour1c], user: other_creator
 
 
     volunteer2 = create :volunteer, bank: 'Bank 2'
     creator = volunteer2.registrar
     group_assignment1 = create :group_assignment, volunteer: volunteer2, creator: creator
-    hour2 = create :hour, volunteer: volunteer2, hours: 75, meeting_date: tz_parse('2017-03-22'), hourable: group_assignment1
+    hour2 = create :hour, volunteer: volunteer2, hours: 75, meeting_date: time_z(2017, 3, 22), hourable: group_assignment1
 
     assert_equal 1, BillingExpense.count
     assert_equal 1, volunteer1.billing_expenses.count
@@ -88,39 +88,37 @@ class BillingExpenseTest < ActiveSupport::TestCase
   end
 
   test 'generate_semester_filters_with_hours' do
-    travel_to tz_parse('2018-06-30')
-    create :hour, meeting_date: '2017-06-30'
-    create :hour, meeting_date: '2012-06-30'
-    create :billing_expense, hours: [create(:hour, meeting_date: '2014-02-03'),
-                                     create(:hour, meeting_date: '2015-06-30')]
-
-    semesters = BillingExpense.generate_semester_filters(:billed)
+    really_destroy_with_deleted(BillingExpense, Hour)
+    create :billing_expense, hours: [
+      create(:hour, meeting_date: time_z(2014, 2, 3)),
+      create(:hour, meeting_date: time_z(2015, 2, 3))
+    ]
 
     assert_equal [
-      { q: :semester, value: '2015-06-01', text: '2. Semester 2015' },
+      { q: :semester, value: '2014-12-01', text: '1. Semester 2015' },
       { q: :semester, value: '2013-12-01', text: '1. Semester 2014' }
-    ], semesters
+    ], BillingExpense.generate_semester_filters(:billed)
 
-    semesters = BillingExpense.generate_semester_filters(:billable)
-
+    create :hour, meeting_date: '2017-06-30'
+    create :hour, meeting_date: '2012-06-30'
     assert_equal [
       { q: :semester, value: '2017-06-01', text: '2. Semester 2017' },
       { q: :semester, value: '2012-06-01', text: '2. Semester 2012' }
-    ], semesters
+    ], BillingExpense.generate_semester_filters(:billable)
   end
 
   test 'semester_scope' do
     billing_expense1 = create :billing_expense,
-      hours: [create(:hour, meeting_date: tz_parse('2017-01-12'))]
+      hours: [create(:hour, meeting_date: time_z(2017, 1, 12))]
 
     billing_expense2 = create :billing_expense,
       hours: [
-        create(:hour, meeting_date: tz_parse('2017-02-01')),
-        create(:hour, meeting_date: tz_parse('2017-05-12'))
+        create(:hour, meeting_date: time_z(2017, 2, 1)),
+        create(:hour, meeting_date: time_z(2017, 5, 12))
       ]
 
     _billing_expense3 = create :billing_expense,
-      hours: [create(:hour, meeting_date: tz_parse('2016-11-30'))]
+      hours: [create(:hour, meeting_date: time_z(2016, 11, 30))]
 
     assert_includes BillingExpense.semester('2016-12-01'), billing_expense1
     assert_includes BillingExpense.semester('2016-12-01'), billing_expense2

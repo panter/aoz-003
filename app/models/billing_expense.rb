@@ -78,7 +78,7 @@ class BillingExpense < ApplicationRecord
     last_semester = semester_from_hours(scoped_hours)
 
     semesters = [semester_filter_hash(last_semester)]
-    semester_back_count(first_semester, last_semester).times do
+    semester_back_count(first_semester.to_time, last_semester.to_time).times do
       last_semester = last_semester.advance(months: -SEMESTER_LENGTH)
       next if scoped_hours.semester(last_semester).blank?
       semesters << semester_filter_hash(last_semester)

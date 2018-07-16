@@ -11,13 +11,13 @@ class HourTest < ActiveSupport::TestCase
   end
 
   test 'semester returns hours for a billing_expense semester' do
-    travel_to tz_parse('2018-05-25')
+    travel_to time_z(2018, 5, 25)
     volunteer = create :volunteer
-    prev_hour1 = create :hour, volunteer: volunteer, hours: 1, meeting_date: tz_parse('2016-11-15')
-    prev_hour2 = create :hour, volunteer: volunteer, hours: 1, meeting_date: tz_parse('2016-10-01')
-    this_hour1 = create :hour, volunteer: volunteer, hours: 1, meeting_date: tz_parse('2016-12-01')
-    this_hour2 = create :hour, volunteer: volunteer, hours: 1, meeting_date: tz_parse('2017-05-11')
-    other_hour = create :hour, volunteer: volunteer, hours: 1, meeting_date: tz_parse('2013-11-21')
+    prev_hour1 = create :hour, volunteer: volunteer, hours: 1, meeting_date: time_z(2016, 11, 15)
+    prev_hour2 = create :hour, volunteer: volunteer, hours: 1, meeting_date: time_z(2016, 10, 1)
+    this_hour1 = create :hour, volunteer: volunteer, hours: 1, meeting_date: time_z(2016, 12, 1)
+    this_hour2 = create :hour, volunteer: volunteer, hours: 1, meeting_date: time_z(2017, 5, 11)
+    other_hour = create :hour, volunteer: volunteer, hours: 1, meeting_date: time_z(2013, 11, 21)
 
     current_semester_hours = Hour.semester '2016-12-01'
     last_semester_hours = Hour.semester '2016-06-01'
