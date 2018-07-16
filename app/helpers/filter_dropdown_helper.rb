@@ -149,11 +149,6 @@ module FilterDropdownHelper
 
   def translate_value(filter_attribute, q_filter)
     return t('all') if filter_attribute.blank?
-    if [Department, GroupOfferCategory].include?(filter_attribute.class) ||
-        filter_attribute.to_s.to_i != 0
-      binding.pry
-      return filter_attribute.to_s
-    end
     q_filter = q_filter.is_a?(Symbol) ? q_filter.to_s : q_filter.first.to_s
     if q_filter.slice! '_true'
       t_attr(q_filter)
