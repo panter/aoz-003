@@ -88,18 +88,24 @@ class BillingExpenseTest < ActiveSupport::TestCase
   end
 
   test 'generate_semester_filters_with_hours' do
-    hour1 = create :hour, meeting_date: '2014-02-03'
-    hour2 = create :hour, meeting_date: '2015-06-30'
+    travel_to tz_parse('2018-06-30')
     create :hour, meeting_date: '2017-06-30'
-    create :billing_expense, hours: [hour1, hour2]
+    create :hour, meeting_date: '2012-06-30'
+    create :billing_expense, hours: [create(:hour, meeting_date: '2014-02-03'),
+                                     create(:hour, meeting_date: '2015-06-30')]
 
     semesters = BillingExpense.generate_semester_filters
 
     assert_equal [
       { q: :semester, value: '2015-06-01', text: '2. Semester 2015' },
-      { q: :semester, value: '2014-12-01', text: '1. Semester 2015' },
-      { q: :semester, value: '2014-06-01', text: '2. Semester 2014' },
       { q: :semester, value: '2013-12-01', text: '1. Semester 2014' }
+    ], semesters
+
+    semesters = BillingExpense.generate_semester_filters(:billable)
+
+    assert_equal [
+      { q: :semester, value: '2017-06-01', text: '2. Semester 2017' },
+      { q: :semester, value: '2012-06-01', text: '2. Semester 2012' }
     ], semesters
   end
 
