@@ -936,6 +936,9 @@ de:
   remember_me: Angemeldet bleiben
   reserve: Begleitung erstellen
   seeking_clients: Klient/in suchen
+  semester:
+    one_semester: '%{number}. Semester %{year}'
+    two_semesters_same_year: '1. – 2. Semester %{year}'
   show_my_profile: Mein Profil
   simple_form:
     error_notification:

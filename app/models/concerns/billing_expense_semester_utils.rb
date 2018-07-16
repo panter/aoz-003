@@ -41,27 +41,25 @@ module BillingExpenseSemesterUtils
     end
 
     def self.billable_semester_date(date)
-      if date.blank?
-        nil
-      elsif date.is_a?(Time)
-        date.beginning_of_day
-      else
-        Time.zone.parse(date).beginning_of_day
+      return if date.blank?
+      unless date.respond_to?(:beginning_of_time)
+        date = Time.zone.parse(date)
       end
+      date.beginning_of_day
     end
 
     def self.dates_semester_start(date)
+      year = date.year
       if semester_of_year(date) == 2
-        Time.zone.parse("#{date.year}-06-01").beginning_of_day
-      elsif date.month == 12
-        Time.zone.parse("#{date.year}-12-01").beginning_of_day
+        Time.zone.local(year, 6, 1).beginning_of_day
       else
-        Time.zone.parse("#{date.year - 1}-12-01").beginning_of_day
+        year -= 1 if date.month.eql?(12)
+        Time.zone.local(year, 12, 1).beginning_of_day
       end
     end
 
     def self.current_semester_start
-      @current_semester_start ||= dates_semester_start(Time.zone.now)
+      dates_semester_start(Time.zone.now)
     end
   end
 end

@@ -73,7 +73,7 @@ class BillingExpenseTest < ActiveSupport::TestCase
   end
 
   test 'generate_semester_filters_without_hours' do
-    semesters = BillingExpense.generate_semester_filters
+    semesters = BillingExpense.generate_semester_filters(:billed)
     now = Time.zone.now
     if (6..11).cover? now.month
       value = "#{now.year}-06-01"
@@ -94,7 +94,7 @@ class BillingExpenseTest < ActiveSupport::TestCase
     create :billing_expense, hours: [create(:hour, meeting_date: '2014-02-03'),
                                      create(:hour, meeting_date: '2015-06-30')]
 
-    semesters = BillingExpense.generate_semester_filters
+    semesters = BillingExpense.generate_semester_filters(:billed)
 
     assert_equal [
       { q: :semester, value: '2015-06-01', text: '2. Semester 2015' },

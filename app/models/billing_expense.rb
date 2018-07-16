@@ -67,12 +67,12 @@ class BillingExpense < ApplicationRecord
           bank: volunteer.bank,
           iban: volunteer.iban
         )
-        volunteer.update(last_billing_expense: billing_expense_semester(billing_semester))
+        volunteer.update!(last_billing_expense_on: billing_expense_semester(billing_semester))
       end
     end
   end
 
-  def self.generate_semester_filters(scope = :billed)
+  def self.generate_semester_filters(scope)
     scoped_hours = Hour.public_send(scope)
     first_semester = semester_from_hours(scoped_hours, date_position: :minimum)
     last_semester = semester_from_hours(scoped_hours)
@@ -88,7 +88,8 @@ class BillingExpense < ApplicationRecord
 
   def self.semester_filter_hash(date)
     { q: :semester, value: date.strftime('%Y-%m-%d'),
-      text: "#{semester_of_year(date)}. Semester #{semester_display_year(date)}" }
+      text: I18n.t('semester.one_semester', number: semester_of_year(date),
+              year: semester_display_year(date)) }
   end
 
   def final_amount

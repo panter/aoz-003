@@ -11,9 +11,7 @@ module FormatHelper
   def format_hours_semester(hours)
     return '' if hours.blank?
     dates = hours.map(&:meeting_date)
-    if dates.size > 1
-      return format_hours_multiple_dates_semester(dates)
-    end
+    return format_hours_multiple_dates_semester(dates) if dates.size > 1
     '%s. Semester %s' % [
       BillingExpense.semester_of_year(dates.first),
       BillingExpense.semester_display_year(dates.first)
