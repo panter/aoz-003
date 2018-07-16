@@ -62,9 +62,9 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text @volunteer4
   end
 
-  test 'superadmin can create billing expenses for unbilled hours' do
+  test 'superadmin_can_create_billing_expenses_for_unbilled_hours' do
     visit billing_expenses_path
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
 
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 37.5 Stunden Fr. 100.00"
     assert_text "#{@volunteer2} #{@volunteer2.iban} 4.5 Stunden Fr. 50.00"
@@ -77,7 +77,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_unchecked_field 'selected_volunteers[]', count: 1, disabled: true
 
     page.accept_confirm do
-      click_button 'Spesenformulare erstellen'
+      click_button 'Selektierte Spesenformulare erstellen'
     end
 
     assert_text 'Spesenformulare wurden erfolgreich erstellt.'
@@ -86,9 +86,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     refute_text @volunteer3
 
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 1.5, meeting_date: @date
-    click_link 'Spesenformulare erstellen'
-
-    assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 1.5 Stunden Fr. 50.00"
+    click_link 'Spesenformulare erfassen'
+    refute_text @volunteer1
     refute_text @volunteer2
     assert_text "#{@volunteer3} Keine IBAN angegeben 2.5 Stunden Fr. 50.00"
     refute_text @volunteer4
@@ -150,16 +149,15 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert_checked_field 'selected_volunteers[]', count: 1
     page.accept_confirm do
-      click_button 'Spesenformulare erstellen'
+      click_button 'Selektierte Spesenformulare erstellen'
     end
 
     assert_text "#{volunteer} #{volunteer.iban} 16 Stunden Fr. 50.00 1. Semester 2018"
-
     # creating billing_expense for the all remaining hours
     visit billing_expenses_path
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
 
     within "##{dom_id(volunteer)}" do
       check 'selected_volunteers[]'
@@ -167,7 +165,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert_checked_field 'selected_volunteers[]', count: 1
     page.accept_confirm do
-      click_button 'Spesenformulare erstellen'
+      click_button 'Selektierte Spesenformulare erstellen'
     end
 
     click_link 'Semester: 1. Semester 2018'
@@ -182,7 +180,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     visit billing_expenses_path
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
 
     within "##{dom_id(volunteer)}" do
       check 'selected_volunteers[]'
@@ -190,7 +188,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert_checked_field 'selected_volunteers[]', count: 1
     page.accept_confirm do
-      click_button 'Spesenformulare erstellen'
+      click_button 'Selektierte Spesenformulare erstellen'
     end
 
     click_link 'Semester: 1. Semester 2018'
