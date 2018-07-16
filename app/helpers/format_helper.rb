@@ -4,6 +4,7 @@ module FormatHelper
   end
 
   def format_hours(hours)
+    hours = hours.to_i if (hours % 1).zero?
     t('activerecord.attributes.billing_expense.hours', count: hours)
   end
 

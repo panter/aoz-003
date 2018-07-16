@@ -109,7 +109,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     visit billing_expenses_path
 
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer2} #{volunteer2.iban} 26 Stunden Fr. 100.00 1. Semester 2018"
     assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
     refute_text volunteer1
@@ -118,7 +118,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     click_link 'Semester: 1. Semester 2018'
     click_link '2. Semester 2017'
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
     assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 2. Semester 2017"
     refute_text volunteer3
@@ -127,10 +127,10 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
     assert_text "#{volunteer2} #{volunteer2.iban} 41 Stunden Fr. 100.00" \
-      ' 2. Semester 2017 - 1. Semester 2018'
+      ' 2. Semester 2017 – 1. Semester 2018'
     assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
   end
 
@@ -142,7 +142,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     # creating billing_expense for hours in the current semester
     visit billing_expenses_path
 
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
 
     within "##{dom_id(volunteer)}" do
       check 'selected_volunteers[]'
@@ -196,7 +196,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
     assert_text "#{volunteer} #{volunteer.iban} 42 Stunden Fr. 100.00"\
-      ' 2. Semester 2017 - 1. Semester 2018'
+      ' 2. Semester 2017 – 1. Semester 2018'
   end
 
   test 'volunteer profile shows only billing expenses for this volunteer' do
