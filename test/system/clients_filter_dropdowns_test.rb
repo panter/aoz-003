@@ -35,7 +35,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     within '.section-navigation' do
       click_link 'Prozess: Angemeldet'
-      assert page.has_link? text: 'Angemeldet', class: 'bg-accepted'
+      assert page.has_link? exact_text: 'Angemeldet', class: 'bg-success'
       click_link 'Alle'
     end
     visit current_url
