@@ -262,4 +262,16 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     refute_includes mailer.subject, '%{'
     refute_includes mail_body, '%{'
   end
+
+  test 'reminder_mailing_show_with_missing_reminder_mailing_volunteers_does_not_crash' do
+    reminder_mailing = create :reminder_mailing
+    assert_equal 1, reminder_mailing.reminder_mailing_volunteers.count
+    rm_volunteer = reminder_mailing.reminder_mailing_volunteers.first
+    login_as @superadmin
+    visit reminder_mailing_path(reminder_mailing)
+    rm_volunteer.really_destroy!
+    reminder_mailing.reload
+    assert_equal 0, reminder_mailing.reminder_mailing_volunteers.count
+    visit reminder_mailing_path(reminder_mailing)
+  end
 end
