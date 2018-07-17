@@ -20,8 +20,6 @@ class ListResponsesController < ApplicationController
 
   def set_responsibles
     @responsibles = Feedback.joins(responsible: [profile: [:contact]])
-      .author_volunteer(params[:q])
-      .where(reviewer_id: nil)
       .distinct
       .select('users.id, contacts.full_name')
       .map do |responsible|
