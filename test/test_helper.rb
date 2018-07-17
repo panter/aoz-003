@@ -65,4 +65,9 @@ class ActiveSupport::TestCase
       controllers_action_list.values
     end
   end
+
+  def time_z(year, month = nil, day = nil)
+    year, month, day = year.split('-').map(&:to_i) if month.blank?
+    Time.zone.local(year, month, day)
+  end
 end

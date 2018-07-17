@@ -1,11 +1,11 @@
 class BillingExpensesController < ApplicationController
   before_action :set_billing_expense, only: [:show, :update_overwritten_amount, :destroy]
-  before_action :set_billing_semesters, only: [:index, :new, :create]
+  before_action :set_billing_semesters, only: [:new, :create]
   before_action :set_selection, only: [:index, :download]
 
   def index
     authorize BillingExpense
-
+    @billing_semester_filters = BillingExpense.generate_semester_filters(:billed)
     set_default_filter(semester: default_billing_semester)
     @q = policy_scope(BillingExpense).ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
@@ -55,8 +55,6 @@ class BillingExpensesController < ApplicationController
     authorize @billing_expense
 
     @selected_billing_semester = selected_billing_semester
-
-    set_default_filter(semester: @selected_billing_semester)
     @q = Volunteer.with_billable_hours(@selected_billing_semester).ransack(params[:q])
     @volunteers = @q.result
     @selected_volunteers = params[:selected_volunteers].presence || []
@@ -95,7 +93,7 @@ class BillingExpensesController < ApplicationController
   end
 
   def set_billing_semesters
-    @billing_semesters = BillingExpense.generate_semester_filters
+    @billing_semester_filters = BillingExpense.generate_semester_filters(:billable)
   end
 
   def set_selection
@@ -103,14 +101,18 @@ class BillingExpensesController < ApplicationController
   end
 
   def default_billing_semester
-    @billing_semesters.first[:value]
+    @billing_semester_filters.first[:value]
   end
 
   def selected_billing_semester
     if params[:q].blank?
+      set_default_filter(semester: default_billing_semester)
       default_billing_semester
     elsif params[:q][:all].present?
       nil
+    elsif !@billing_semester_filters.pluck(:value).include? params[:q][:semester]
+      params.permit![:q][:semester] = default_billing_semester
+      default_billing_semester
     else
       params[:q][:semester]
     end

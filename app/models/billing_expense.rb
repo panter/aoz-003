@@ -1,8 +1,9 @@
 class BillingExpense < ApplicationRecord
   include ImportRelation
   include FullBankDetails
+  include BillingExpenseSemesterUtils
 
-  SEMESTER_LENGTH = 6.months
+  SEMESTER_LENGTH = 6
 
   attr_accessor :import_mode
 
@@ -53,12 +54,11 @@ class BillingExpense < ApplicationRecord
   end
 
   def self.create_for!(volunteers, creator, date = nil)
+    billing_semester = billable_semester_date(date)
     transaction do
       volunteers.find_each do |volunteer|
-        hours = volunteer.hours.billable.semester(date)
-        hours.find_each do |hour|
-          hour.update!(reviewer: creator)
-        end
+        hours = volunteer.hours.billable.semester(billing_semester)
+        hours.find_each { |hour| hour.update!(reviewer: creator) }
 
         create!(
           volunteer: volunteer,
@@ -67,42 +67,29 @@ class BillingExpense < ApplicationRecord
           bank: volunteer.bank,
           iban: volunteer.iban
         )
+        volunteer.update!(last_billing_expense_on: billing_expense_semester(billing_semester))
       end
     end
   end
 
-  def self.generate_semester_filters
-    semesters = []
+  def self.generate_semester_filters(scope)
+    scoped_hours = Hour.public_send(scope)
+    first_semester = semester_from_hours(scoped_hours, date_position: :minimum)
+    last_semester = semester_from_hours(scoped_hours)
 
-    hours = Hour.billed
-    oldest_date = hours.minimum(:meeting_date) || Time.zone.now
-    newest_date = hours.maximum(:meeting_date) || Time.zone.now
-
-    start_of_year = newest_date.beginning_of_year - 1.month
-    date = start_of_year
-    date += SEMESTER_LENGTH if newest_date >= start_of_year + SEMESTER_LENGTH
-
-    until date < oldest_date - SEMESTER_LENGTH
-      display_year = date.year
-      display_year += 1 if date.month == 12
-      semesters << {
-        q: :semester,
-        value: date.strftime('%Y-%m-%d'),
-        text: "#{semester_of_year(date)}. Semester #{display_year}"
-      }
-
-      date -= SEMESTER_LENGTH
+    semesters = [semester_filter_hash(last_semester)]
+    semester_back_count(first_semester.to_time, last_semester.to_time).times do
+      last_semester = last_semester.advance(months: -SEMESTER_LENGTH)
+      next if scoped_hours.semester(last_semester).blank?
+      semesters << semester_filter_hash(last_semester)
     end
-
     semesters
   end
 
-  def self.semester_of_year(date)
-    if (6..11).cover? date.month
-      2
-    else
-      1
-    end
+  def self.semester_filter_hash(date)
+    { q: :semester, value: date.strftime('%Y-%m-%d'),
+      text: I18n.t('semester.one_semester', number: semester_of_year(date),
+              year: semester_display_year(date)) }
   end
 
   def final_amount
