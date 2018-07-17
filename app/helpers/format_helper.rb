@@ -12,7 +12,7 @@ module FormatHelper
     return '' if hours.blank?
     dates = hours.map(&:meeting_date)
     return format_hours_multiple_dates_semester(dates) if dates.size > 1
-    I18n.t('semester.one_semester', number: BillingExpense.semester_of_year(dates.first),
+    t('semester.one_semester', number: BillingExpense.semester_of_year(dates.first),
       year: BillingExpense.semester_display_year(dates.first))
   end
 
@@ -25,13 +25,13 @@ module FormatHelper
     max_semester = BillingExpense.semester_of_year(max_date)
     if max_year != min_year
       '%s – %s' % [
-        I18n.t('semester.one_semester', number: min_semester, year: min_year),
-        I18n.t('semester.one_semester', number: max_semester, year: max_year)
+        t('semester.one_semester', number: min_semester, year: min_year),
+        t('semester.one_semester', number: max_semester, year: max_year)
       ]
     elsif min_semester == max_semester
-      I18n.t('semester.one_semester', number: max_semester, year: max_year)
+      t('semester.one_semester', number: max_semester, year: max_year)
     else
-      I18n.t('semester.two_semesters_same_year', year: max_year)
+      t('semester.two_semesters_same_year', year: max_year)
     end
   end
 end
