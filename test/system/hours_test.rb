@@ -17,33 +17,33 @@ class HoursTest < ApplicationSystemTestCase
     login_as @user_volunteer1
   end
 
-  test 'volunteer can create hour report for an assignment' do
+  test 'volunteer_can_create_hour_report_for_an_assignment' do
     visit volunteer_path(@volunteer1)
     first(:link, 'Stunden erfassen').click
-    assert page.has_text? 'Stunden Rapporte'
+    assert_text 'Stunden Rapporte'
     first(:link, 'Stunden erfassen').click
     select @assignment1.to_label, from: 'Einsatz'
-    find('#hour_meeting_date').click
-    find('td.today.day').click
+    fill_in 'Datum des Treffens / des Kurses', with: 2.weeks.ago.strftime('%d.%m.%Y')
+    find('#hour_meeting_date').send_keys(:return)
     fill_in 'Stunden', with: 2.0
     click_button 'Stunden erfassen'
-    assert page.has_text? 'Stunden wurden erfolgreich erfasst.'
+    assert_text 'Stunden wurden erfolgreich erfasst.'
   end
 
-  test 'volunteer can create also an hour report for group offer' do
+  test 'volunteer_can_create_also_an_hour_report_for_group_offer' do
     visit volunteer_path(@volunteer1)
     first(:link, 'Stunden erfassen').click
-    assert page.has_text? 'Stunden Rapporte'
+    assert_text 'Stunden Rapporte'
     first(:link, 'Stunden erfassen').click
     select @group_offer1.to_label, from: 'Einsatz'
-    find('#hour_meeting_date').click
-    find('td.today.day').click
+    fill_in 'Datum des Treffens / des Kurses', with: 3.weeks.ago.strftime('%d.%m.%Y')
+    find('#hour_meeting_date').send_keys(:return)
     fill_in 'Stunden', with: 2.0
     click_button 'Stunden erfassen'
-    assert page.has_text? 'Stunden wurden erfolgreich erfasst.'
+    assert_text 'Stunden wurden erfolgreich erfasst.'
   end
 
-  test 'volunteer can see only her assignment' do
+  test 'volunteer_can_see_only_her_assignment' do
     visit volunteer_path(@volunteer1)
     volunteer2 = create :volunteer
     client2 = create :client
@@ -54,11 +54,11 @@ class HoursTest < ApplicationSystemTestCase
     create :hour, hourable: assignment2, volunteer: volunteer2
 
     first(:link, 'Stunden erfassen').click
-    assert page.has_text? @client1.contact.full_name
-    refute page.has_text? client2.contact.full_name
+    assert_text @client1.contact.full_name
+    assert_no_text client2.contact.full_name
     visit volunteer_hours_path(volunteer2)
-    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
-    refute page.has_text? client2.contact.full_name
+    assert_text 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
+    assert_no_text client2.contact.full_name
   end
 
   test 'volunteer_can_see_only_her_group_offers' do
@@ -72,10 +72,10 @@ class HoursTest < ApplicationSystemTestCase
     create :hour, hourable: @group_offer1, volunteer: @volunteer1
     create :hour, hourable: group_offer2, volunteer: volunteer2
     first(:link, 'Stunden erfassen').click
-    assert page.has_text? @group_offer1.to_label
-    refute page.has_text? group_offer2.to_label
+    assert_text @group_offer1.to_label
+    assert_no_text group_offer2.to_label
     visit volunteer_hours_path(volunteer2)
-    assert page.has_text? 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
-    refute page.has_text? group_offer2.to_label
+    assert_text 'Sie sind nicht berechtigt diese Aktion durchzuführen.'
+    assert_no_text group_offer2.to_label
   end
 end
