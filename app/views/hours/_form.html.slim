@@ -8,25 +8,21 @@
   - else
     .row
       .col-xs-12
-        = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection,
-          required: true
-
-  .row
-    .col-xs-12
-      = f.input :meeting_date, as: :date_picker, wrapper: :date_picker
+        - if @volunteer.assignment_group_offer_collection.size == 1
+          = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection,
+              required: true, selected: @volunteer.assignment_group_offer_collection.first.last
+        - else
+          = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection,
+              required: true
 
   .row
     .col-xs-12.col-md-6
+      = f.input :meeting_date, as: :date_picker
+    .col-xs-12.col-md-6
       = f.input :hours
-
-  .row
     .col-xs-12
       = f.input :activity
-
-  .row
     .col-xs-12
       = f.input :comments
-
-  .row
     .col-xs-12
       = f.button :submit

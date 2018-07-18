@@ -9,6 +9,6 @@ class DatePickerInput < SimpleForm::Inputs::Base
   end
 
   def input_html_options
-    super.merge(class: 'input-sm form-control', data: { provide: 'datepicker' })
+    super.merge(class: 'input-sm form-control bs-datepicker-input', data: { provide: 'datepicker' })
   end
 end
