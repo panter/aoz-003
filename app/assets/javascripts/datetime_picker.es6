@@ -1,31 +1,27 @@
-function dateTimePicker() {
-  const datepickers = $('.input-daterange input').datepicker({
+$(() => {
+  const datePickerDefaults = {
     format: 'dd.mm.yyyy',
-    startView: 1,
     todayBtn: true,
     clearBtn: true,
     language: 'de',
     autoclose: true,
     todayHighlight: true,
-    daysOfWeekHighlighted: [0,6],
+    daysOfWeekHighlighted: [0, 6],
     immediateUpdates: true
-  });
+  }
 
-  const datepickersSingle = $('.input-date-picker input').datepicker({
-    format: 'dd.mm.yyyy',
-    todayBtn: true,
-    clearBtn: true,
-    language: 'de',
-    autoclose: true,
-    todayHighlight: true,
-    daysOfWeekHighlighted: [0,6],
-    immediateUpdates: true
-  });
-  $('#performance_report_period_years li a').each((index, element) => {
-    $(element).bind('click', (event) => {
+  $('.input-daterange input').datepicker({
+    ...datePickerDefaults,
+    startView: 1
+  })
+
+  $('.input-date-picker input, .bs-datepicker-input').datepicker(datePickerDefaults)
+
+  $('#performance_report_period_years li a').each((_index, element) => {
+    $(element).click(event => {
       event.preventDefault();
       $('#performance_report_period_start').datepicker('update', `01.01.${$(element).data().year}`);
       $('#performance_report_period_end').datepicker('update', `31.12.${$(element).data().year}`);
     });
   });
-}
+})

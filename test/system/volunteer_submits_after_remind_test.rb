@@ -74,15 +74,8 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
   test 'volunteer_can_add_hours_and_feedback_for_their_assignment' do
     visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
     click_link 'Stunden erfassen'
-    within '#hour_meeting_date_3i' do
-      select Time.zone.today.day
-    end
-    within '#hour_meeting_date_2i' do
-      select I18n.l(Time.zone.today, format: '%B')
-    end
-    within '#hour_meeting_date_1i' do
-      select Time.zone.today.year
-    end
+    fill_in 'Datum des Treffens / des Kurses', with: Time.zone.today.strftime('%d.%m.%Y')
+    find('#hour_meeting_date').send_keys(:return)
     fill_in 'Stunden', with: '2.25'
     click_button 'Stunden erfassen'
 
@@ -104,16 +97,8 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     group_assignment = @group_offer.group_assignments.where(volunteer: @volunteer).last
     visit last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment)
     click_link 'Stunden erfassen'
-    select @group_offer.to_label, from: 'Einsatz'
-    within '#hour_meeting_date_3i' do
-      select Time.zone.today.day
-    end
-    within '#hour_meeting_date_2i' do
-      select I18n.l(Time.zone.today, format: '%B')
-    end
-    within '#hour_meeting_date_1i' do
-      select Time.zone.today.year
-    end
+    fill_in 'Datum des Treffens / des Kurses', with: Time.zone.today.strftime('%d.%m.%Y')
+    find('#hour_meeting_date').send_keys(:return)
     fill_in 'Stunden', with: '2.25'
     click_button 'Stunden erfassen'
 
