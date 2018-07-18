@@ -1,19 +1,15 @@
 = simple_form_for(*@simple_form_for_params) do |f|
   = simple_error_notice f
-  = f.hidden_field :volunteer_id, value: params[:volunteer_id] || @hour.volunteer.id
 
   - if @hour.hourable.present?
     h3 Einsatz
     p.m-b-20= @hour.hourable.to_label
   - else
-    .row
-      .col-xs-12
-        - if @volunteer.assignment_group_offer_collection.size == 1
-          = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection,
-              required: true, selected: @volunteer.assignment_group_offer_collection.first.last
-        - else
-          = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection,
-              required: true
+    .row: .col-xs-12
+      - if @volunteer.assignment_group_offer_collection.size == 1
+        - hourable_selected = @volunteer.assignment_group_offer_collection[0].last
+      = f.input :hourable_id_and_type, as: :select, collection: @volunteer.assignment_group_offer_collection,
+            required: true, selected: hourable_selected
 
   .row
     .col-xs-12.col-md-6
@@ -24,5 +20,6 @@
       = f.input :activity
     .col-xs-12
       = f.input :comments
-    .col-xs-12
-      = f.button :submit
+  ul.list-inline
+    li= button_link navigation_glyph(:back), default_redirect || @volunteer
+    li= f.button :submit

@@ -1,33 +1,29 @@
-.row
-  .col-xs-12
-    .table-responsive
-      table.table.table-no-border-top
-        tbody
-          - if policy(Hour).supervisor?
-            tr
-              td= t_model(Volunteer)
-              td= @hour.volunteer.contact.full_name
-          - if @hour.assignment?
-            tr
-              td= t_model(Client)
-              td= @hour.hourable.client.contact.full_name
-          - else
-            tr
-              td= t_model(GroupOffer)
-              td= @hour.hourable.title
-          tr
-            td= t_attr(:meeting_date)
-            td= l(@hour.meeting_date)
-          tr
-            td= t_attr(:duration)
-            td= @hour.hours
-          tr
-            td= t_attr(:activity)
-            td= @hour.activity
-          tr
-            td= t_attr(:comments)
-            td= @hour.comments
+h1 Stundeneintrag
+.table-responsive.m-t-30
+  table.table.table-no-border-top
+    tbody
+      tr
+        - if policy(Hour).supervisor?
+          td= t_model(Volunteer)
+          td= @hour.volunteer.contact.full_name
+        - if @hour.assignment?
+          td= t_model(Client)
+          td= @hour.hourable.client.contact.full_name
+        - else
+          td= t_model(GroupOffer)
+          td= @hour.hourable.title
+      tr
+        td= t_attr(:meeting_date)
+        td= l(@hour.meeting_date)
+      tr
+        td= t_attr(:duration)
+        td= @hour.hours
+      tr
+        td= t_attr(:activity)
+        td= @hour.activity
+      tr
+        td= t_attr(:comments)
+        td= @hour.comments
 
-.row
-  .col-xs-12
-    = button_link t_title(:edit, Hour), params.to_unsafe_h.merge({action: 'edit'})
+.row: .col-xs-12
+  = button_link t_title(:edit, Hour), params.to_unsafe_h.merge({ action: 'edit' })

@@ -22,7 +22,7 @@ class HoursController < ApplicationController
   end
 
   def create
-    @hour = Hour.new(hour_params)
+    @hour = Hour.new(hour_params.merge(volunteer: @volunteer))
     @hour.hourable ||= find_hourable
     authorize @hour
     simple_form_params
