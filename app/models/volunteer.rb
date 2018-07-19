@@ -209,7 +209,7 @@ class Volunteer < ApplicationRecord
   scope :with_billable_hours_meeting_date_semester, lambda { |date|
     return all if date.blank?
     where('hours.meeting_date BETWEEN :start_date AND :end_date',
-      start_date: date,
+      start_date: date.advance(days: 1),
       end_date: date.advance(months: BillingExpense::SEMESTER_LENGTH))
   }
 
