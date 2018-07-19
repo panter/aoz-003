@@ -19,14 +19,15 @@ class Hour < ApplicationRecord
   scope :billable, (-> { where(billing_expense: nil) })
   scope :billed, (-> { where.not(billing_expense: nil) })
   scope :semester, lambda { |date = nil|
-    if date.present?
-      date = Time.zone.parse(date) unless date.is_a? Time
-      return if date.blank?
-      date_between_inclusion(:meeting_date, date,
-        date.advance(months: BillingExpense::SEMESTER_LENGTH))
-    else
-      all
-    end
+    return all if date.blank?
+    date = Time.zone.parse(date) unless date.is_a? Time
+    return all if date.blank?
+    semester_with_date(date)
+  }
+
+  scope :semester_with_date, lambda { |date|
+    date_between_inclusion(:meeting_date, date.advance(days: 1),
+      date.advance(months: BillingExpense::SEMESTER_LENGTH))
   }
 
   scope :since_last_submitted, lambda { |submitted_at|
