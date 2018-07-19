@@ -22,7 +22,10 @@ class Hour < ApplicationRecord
     if date.present?
       date = Time.zone.parse(date) unless date.is_a? Time
       return if date.blank?
-      date_between(:meeting_date, date, date.advance(months: BillingExpense::SEMESTER_LENGTH))
+      date_between_inclusion(:meeting_date, date,
+        date.advance(months: BillingExpense::SEMESTER_LENGTH))
+    else
+      all
     end
   }
 
