@@ -3,7 +3,7 @@ require 'application_system_test_case'
 class BillingExpensesTest < ApplicationSystemTestCase
   def setup
     superadmin = create :user
-    @date = Time.zone.parse('2018-01-01')
+    @date = time_z(2018, 1, 1)
 
     @volunteer1 = create :volunteer, bank: 'UBS'
     @assignment1 = create :assignment, volunteer: @volunteer1
@@ -30,7 +30,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     group_assignment4 = create :group_assignment, volunteer: @volunteer4
     billed_hour4 = create :hour, volunteer: @volunteer4,
       hourable: group_assignment4.group_offer,
-      hours: 5.5, meeting_date: Time.zone.parse('2017-11-01')
+      hours: 5.5, meeting_date: time_z(2017, 11, 1)
     @billing_expense4 = create :billing_expense, volunteer: @volunteer4, hours: [billed_hour4],
       created_at: 1.hour.ago
 
@@ -62,9 +62,9 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text @volunteer4
   end
 
-  test 'superadmin can create billing expenses for unbilled hours' do
+  test 'superadmin_can_create_billing_expenses_for_unbilled_hours' do
     visit billing_expenses_path
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
 
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 37.5 Stunden Fr. 100.00"
     assert_text "#{@volunteer2} #{@volunteer2.iban} 4.5 Stunden Fr. 50.00"
@@ -77,7 +77,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_unchecked_field 'selected_volunteers[]', count: 1, disabled: true
 
     page.accept_confirm do
-      click_button 'Spesenformulare erstellen'
+      click_button 'Selektierte Spesenformulare erstellen'
     end
 
     assert_text 'Spesenformulare wurden erfolgreich erstellt.'
@@ -86,9 +86,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     refute_text @volunteer3
 
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 1.5, meeting_date: @date
-    click_link 'Spesenformulare erstellen'
-
-    assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 1.5 Stunden Fr. 50.00"
+    click_link 'Spesenformulare erfassen'
+    refute_text @volunteer1
     refute_text @volunteer2
     assert_text "#{@volunteer3} Keine IBAN angegeben 2.5 Stunden Fr. 50.00"
     refute_text @volunteer4
@@ -96,20 +95,20 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
   test 'new_billing_expense_respects_the_semester_filter' do
     volunteer1 = create :volunteer
-    create :hour, volunteer: volunteer1, hours: 10, meeting_date: Time.zone.parse('2017-11-01')
-    create :hour, volunteer: volunteer1, hours: 16, meeting_date: Time.zone.parse('2017-10-01')
+    create :hour, volunteer: volunteer1, hours: 10, meeting_date: time_z(2017, 11, 1)
+    create :hour, volunteer: volunteer1, hours: 16, meeting_date: time_z(2017, 10, 1)
 
     volunteer2 = create :volunteer, iban: 'pick_out_volunteer'
-    create :hour, volunteer: volunteer2, hours: 26, meeting_date: Time.zone.parse('2018-02-01')
-    create :hour, volunteer: volunteer2, hours: 15, meeting_date: Time.zone.parse('2017-11-01')
+    create :hour, volunteer: volunteer2, hours: 26, meeting_date: time_z(2018, 2, 1)
+    create :hour, volunteer: volunteer2, hours: 15, meeting_date: time_z(2017, 11, 1)
 
     volunteer3 = create :volunteer
-    create :hour, volunteer: volunteer3, hours: 1, meeting_date: Time.zone.parse('2018-02-01')
-    create :hour, volunteer: volunteer3, hours: 2, meeting_date: Time.zone.parse('2018-04-01')
+    create :hour, volunteer: volunteer3, hours: 1, meeting_date: time_z(2018, 2, 1)
+    create :hour, volunteer: volunteer3, hours: 2, meeting_date: time_z(2018, 4, 1)
 
     visit billing_expenses_path
 
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer2} #{volunteer2.iban} 26 Stunden Fr. 100.00 1. Semester 2018"
     assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
     refute_text volunteer1
@@ -118,7 +117,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     click_link 'Semester: 1. Semester 2018'
     click_link '2. Semester 2017'
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
     assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 2. Semester 2017"
     refute_text volunteer3
@@ -127,22 +126,22 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
     assert_text "#{volunteer2} #{volunteer2.iban} 41 Stunden Fr. 100.00" \
-      ' 2. Semester 2017 - 1. Semester 2018'
+      ' 2. Semester 2017 – 1. Semester 2018'
     assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
   end
 
   test 'creating_a_billing_expense_should_respect_semester_filter' do
     volunteer = create :volunteer
-    create :hour, volunteer: volunteer, hours: 26, meeting_date: Time.zone.parse('2017-11-01')
-    create :hour, volunteer: volunteer, hours: 16, meeting_date: Time.zone.parse('2018-02-01')
+    create :hour, volunteer: volunteer, hours: 26, meeting_date: time_z(2017, 11, 1)
+    create :hour, volunteer: volunteer, hours: 16, meeting_date: time_z(2018, 2, 1)
 
     # creating billing_expense for hours in the current semester
     visit billing_expenses_path
 
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
 
     within "##{dom_id(volunteer)}" do
       check 'selected_volunteers[]'
@@ -150,16 +149,15 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert_checked_field 'selected_volunteers[]', count: 1
     page.accept_confirm do
-      click_button 'Spesenformulare erstellen'
+      click_button 'Selektierte Spesenformulare erstellen'
     end
 
     assert_text "#{volunteer} #{volunteer.iban} 16 Stunden Fr. 50.00 1. Semester 2018"
-
     # creating billing_expense for the all remaining hours
     visit billing_expenses_path
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
 
     within "##{dom_id(volunteer)}" do
       check 'selected_volunteers[]'
@@ -167,7 +165,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert_checked_field 'selected_volunteers[]', count: 1
     page.accept_confirm do
-      click_button 'Spesenformulare erstellen'
+      click_button 'Selektierte Spesenformulare erstellen'
     end
 
     click_link 'Semester: 1. Semester 2018'
@@ -176,13 +174,13 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     # creating billing_expense for all hours in multiple semesters
     volunteer = create :volunteer
-    create :hour, volunteer: volunteer, hours: 26, meeting_date: Time.zone.parse('2017-11-01')
-    create :hour, volunteer: volunteer, hours: 16, meeting_date: Time.zone.parse('2018-02-01')
+    create :hour, volunteer: volunteer, hours: 26, meeting_date: time_z(2017, 11, 1)
+    create :hour, volunteer: volunteer, hours: 16, meeting_date: time_z(2018, 2, 1)
 
     visit billing_expenses_path
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
-    click_link 'Spesenformulare erstellen'
+    click_link 'Spesenformulare erfassen'
 
     within "##{dom_id(volunteer)}" do
       check 'selected_volunteers[]'
@@ -190,13 +188,13 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert_checked_field 'selected_volunteers[]', count: 1
     page.accept_confirm do
-      click_button 'Spesenformulare erstellen'
+      click_button 'Selektierte Spesenformulare erstellen'
     end
 
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
     assert_text "#{volunteer} #{volunteer.iban} 42 Stunden Fr. 100.00"\
-      ' 2. Semester 2017 - 1. Semester 2018'
+      ' 2. Semester 2017 – 1. Semester 2018'
   end
 
   test 'volunteer profile shows only billing expenses for this volunteer' do

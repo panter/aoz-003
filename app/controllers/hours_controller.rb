@@ -22,7 +22,7 @@ class HoursController < ApplicationController
   end
 
   def create
-    @hour = Hour.new(hour_params)
+    @hour = Hour.new(hour_params.merge(volunteer: @volunteer))
     @hour.hourable ||= find_hourable
     authorize @hour
     simple_form_params
@@ -60,8 +60,13 @@ class HoursController < ApplicationController
   end
 
   def find_hourable
-    Assignment.find_by(id: params[:assignment_id]) ||
+    if params[:assignment_id]
+      Assignment.find_by(id: params[:assignment_id])
+    elsif params[:group_offer_id]
       GroupOffer.find_by(id: params[:group_offer_id])
+    elsif params[:group_assignment_id]
+      GroupAssignment.find_by(id: params[:group_assignment_id])&.group_offer
+    end
   end
 
   def find_hourable_submit_form

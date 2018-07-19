@@ -181,7 +181,11 @@ class ApplicationPolicy
   end
 
   def superadmin_or_volunteers_feedback?
-    superadmin? || volunteer? && of_and_from_volunteer? && in_feedbackable?
+    superadmin? || (volunteer? && of_and_from_volunteer? && in_feedbackable?)
+  end
+
+  def superadmin_or_feedback_about_volunteer?
+    superadmin? || (volunteer? && in_feedbackable?)
   end
 
   def superadmin_or_volunteers_trial_feedback?

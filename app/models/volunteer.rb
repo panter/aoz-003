@@ -6,6 +6,7 @@ class Volunteer < ApplicationRecord
   include ImportRelation
   include FullBankDetails
   include AcceptanceAttributes
+  include BillingExpenseSemesterUtils
 
   before_validation :handle_user_with_external_change, if: :external_changed?
   before_save :build_user_if_accepted_or_import_invited
@@ -193,16 +194,49 @@ class Volunteer < ApplicationRecord
 
   scope :need_refunds, (-> { where(waive: false) })
 
-  scope :with_billable_hours, lambda { |date = nil|
-    hours = Hour.billable
-    hours = hours.semester(date) if date.present?
-
-    need_refunds
-      .joins(:contact)
-      .joins(:hours).merge(hours)
-      .select('volunteers.*, SUM(hours.hours) AS total_hours')
+  def self.with_billable_hours(date = nil)
+    date = billable_semester_date(date)
+    need_refunds.left_joins(:contact, :hours, :billing_expenses)
+      .with_billable_hours_meeting_date_semester(date)
+      .with_billable_hours_no_expense_in_semester(date)
+      .where('hours.billing_expense_id IS NULL')
+      .where.not('hours.id IS NULL')
+      .with_billable_hours_select
       .group(:id, 'contacts.full_name')
-      .order("(CASE WHEN COALESCE(iban, '') = '' THEN 2 ELSE 1 END), contacts.full_name")
+      .with_billable_hours_order
+  end
+
+  scope :with_billable_hours_meeting_date_semester, lambda { |date|
+    return all if date.blank?
+    where('hours.meeting_date BETWEEN :start_date AND :end_date',
+      start_date: date.advance(days: 1),
+      end_date: date.advance(months: BillingExpense::SEMESTER_LENGTH))
+  }
+
+  scope :with_billable_hours_no_expense_in_semester, lambda { |date|
+    return all if date.blank?
+    where(last_billing_expense_on: nil).or(
+      where.not('volunteers.last_billing_expense_on = ?', date)
+    )
+  }
+
+  scope :with_billable_hours_select, lambda {
+    select(<<-SQL.squish)
+      SUM(hours.hours) AS total_hours,
+      contacts.full_name AS full_name,
+      volunteers.*
+    SQL
+  }
+
+  scope :with_billable_hours_order, lambda {
+    order(<<-SQL.squish)
+      (CASE
+        WHEN COALESCE(volunteers.iban, '') = ''
+        THEN 2
+        ELSE 1
+      END),
+      contacts.full_name
+    SQL
   }
 
   scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }

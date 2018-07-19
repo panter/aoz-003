@@ -19,7 +19,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     visit volunteers_path
   end
 
-  test 'filter by acceptance works and disabling works as well' do
+  test 'filter_by_acceptance_works_and_disabling_works_as_well' do
     within '.section-navigation' do
       click_link 'Prozess'
       click_link 'Angemeldet'
@@ -31,7 +31,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     within '.section-navigation' do
       click_link 'Prozess: Angemeldet'
-      assert page.has_link? text: 'Angemeldet', class: 'bg-undecided'
+      assert page.has_link? exact_text: 'Angemeldet', class: 'bg-success'
       click_link 'Alle'
     end
     visit current_url

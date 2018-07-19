@@ -14,7 +14,8 @@ class CertificatesController < ApplicationController
         render pdf: pdf_file_name(@certificate),
           show_as_html: params.key?('debug'),
           layout: 'certificate.pdf',
-          dpi: '400',
+          zoom: 1.5,
+          dpi: 600,
           margin: { top: 0, bottom: 0, left: 0, right: 0 }
       end
     end

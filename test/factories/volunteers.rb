@@ -6,6 +6,7 @@ FactoryBot.define do
     acceptance :accepted
     group_offer_categories { |category| [category.association(:group_offer_category)] }
     iban { generate :iban }
+    association :registrar, factory: :user
 
     trait :with_language_skills do
       language_skills do |language_skill|
