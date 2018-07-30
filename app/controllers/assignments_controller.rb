@@ -99,9 +99,17 @@ class AssignmentsController < ApplicationController
   end
 
   def submit_feedback
-    @assignment.update(assignment_params.slice(:volunteer_attributes)
-      .merge(submit_feedback: current_user))
-    redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
+    @assignment.volunteer.assign_attributes(assignment_feedback_params[:volunteer_attributes]
+      .slice(:waive, :bank, :iban))
+    @assignment.submit_feedback = current_user
+    if @assignment.save
+      redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
+    else
+      redirect_to(
+        last_submitted_hours_and_feedbacks_assignment_path(@assignment),
+        notice: 'Das bestätigen des Feedbacks ist fehlgeschlagen.'
+      )
+    end
   end
 
   def terminate
@@ -170,6 +178,10 @@ class AssignmentsController < ApplicationController
   def set_assignment
     @assignment = Assignment.find(params[:id])
     authorize @assignment
+  end
+
+  def assignment_feedback_params
+    params.require(:assignment).permit(volunteer_attributes: [:waive, :iban, :bank])
   end
 
   def assignment_params
