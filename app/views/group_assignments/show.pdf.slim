@@ -53,29 +53,29 @@ h4.m-b-10= t('assignment_pdf.responsible_title')
   .col-xs-6
     .row
       .col-xs-3= t('assignment_pdf.last_name')
-      .col-xs-9.col-input= @group_assignment.creator.profile.contact.last_name
+      .col-xs-9.col-input= @group_assignment.creator.profile&.contact&.last_name
     .row
       .col-xs-3= t('assignment_pdf.address')
-      .col-xs-9.col-input= @group_assignment.creator.profile.contact.full_street
+      .col-xs-9.col-input= @group_assignment.creator.profile&.contact&.full_street
     .row
       .col-xs-3= t('assignment_pdf.telephone')
-      .col-xs-9.col-input= @group_assignment.creator.profile.contact.primary_phone
+      .col-xs-9.col-input= @group_assignment.creator.profile&.contact&.primary_phone
     .row
       .col-xs-3= t('assignment_pdf.mobile')
-      .col-xs-9.col-input= @group_assignment.creator.profile.contact.secondary_phone
+      .col-xs-9.col-input= @group_assignment.creator.profile&.contact&.secondary_phone
   .col-xs-6
     .row
       .col-xs-3= t('assignment_pdf.first_name')
-      .col-xs-9.col-input= @group_assignment.creator.profile.contact.first_name
+      .col-xs-9.col-input= @group_assignment.creator.profile&.contact&.first_name
     .row
       .col-xs-3 #{t('assignment_pdf.postal_code')} / #{t('assignment_pdf.city')}
-      .col-xs-9.col-input= @group_assignment.creator.profile.contact.full_city
+      .col-xs-9.col-input= @group_assignment.creator.profile&.contact&.full_city
     .row
       .col-xs-3= t('assignment_pdf.email')
-      .col-xs-9.col-input= @group_assignment.creator.profile.contact.primary_email
+      .col-xs-9.col-input= @group_assignment.creator.profile&.contact&.primary_email
     .row
       .col-xs-3= t('assignment_pdf.function')
-      .col-xs-9.col-input= @group_assignment.creator.profile.profession
+      .col-xs-9.col-input= @group_assignment.creator.profile&.profession
 
 .row-box
   .col-xs-12
