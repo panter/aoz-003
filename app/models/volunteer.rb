@@ -375,7 +375,7 @@ class Volunteer < ApplicationRecord
   end
 
   def group_offers_form_collection
-    group_offers.map do |group_offer|
+    group_assignments.map(&:group_offer).map do |group_offer|
       [group_offer.to_label, "#{group_offer.id},#{group_offer.class}"]
     end
   end

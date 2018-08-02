@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class HourTest < ActiveSupport::TestCase
+  include SemesterScopesGenerators
+
   test 'hour can only be valid with hourable relation' do
     assignment = create :assignment, volunteer: create(:volunteer)
     hour = Hour.new(volunteer: assignment.volunteer, hours: 1, meeting_date: 10.days.ago)
@@ -17,9 +19,9 @@ class HourTest < ActiveSupport::TestCase
       this_hour1: hour_for_meeting_date(time_z(2016, 12, 1), assignment),
       this_hour2: hour_for_meeting_date(time_z(2017, 4, 10), assignment),
       this_hour3: hour_for_meeting_date(time_z(2017, 5, 31), assignment),
-      prev_hour1: hour_for_meeting_date(time_z(2016, 11, 15), assignment),
+      prev_hour1: hour_for_meeting_date(time_z(2016, 11, 30), assignment),
       prev_hour2: hour_for_meeting_date(time_z(2016, 10, 1), assignment),
-      prev_hour3: hour_for_meeting_date(time_z(2016, 7, 1), assignment),
+      prev_hour3: hour_for_meeting_date(time_z(2016, 6, 1), assignment),
       two_prev_hour1: hour_for_meeting_date(time_z(2015, 12, 1), assignment),
       two_prev_hour2: hour_for_meeting_date(time_z(2016, 4, 10), assignment),
       two_prev_hour3: hour_for_meeting_date(time_z(2016, 5, 31), assignment),
@@ -67,10 +69,5 @@ class HourTest < ActiveSupport::TestCase
     hours.values.each do |hour|
       assert_includes all_semester_hours, hour
     end
-  end
-
-  def hour_for_meeting_date(meeting_date, assignment)
-    create :hour, volunteer: assignment.volunteer, hours: 1, meeting_date: meeting_date,
-      hourable: assignment
   end
 end

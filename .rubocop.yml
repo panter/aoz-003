@@ -47,6 +47,7 @@ Metrics/LineLength:
   Max: 100
   Exclude:
     - 'db/seeds.rb'
+    - 'app/policies/**/*'
 Metrics/ClassLength:
   Max: 150
   Exclude:

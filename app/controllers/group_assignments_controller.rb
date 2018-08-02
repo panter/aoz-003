@@ -62,9 +62,17 @@ class GroupAssignmentsController < ApplicationController
   end
 
   def submit_feedback
-    @group_assignment.update(group_assignment_params.slice(:volunteer_attributes)
-      .merge(submit_feedback: current_user))
-    redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
+    @group_assignment.volunteer.assign_attributes(group_assignment_params[:volunteer_attributes]
+      .slice(:waive, :bank, :iban))
+    @group_assignment.submit_feedback = current_user
+    if @group_assignment.save
+      redirect_to default_redirect || hours_and_feedbacks_submitted_assignments_path
+    else
+      redirect_to(
+        last_submitted_hours_and_feedbacks_group_assignment_path(@assignment),
+        notice: 'Das bestätigen des Feedbacks ist fehlgeschlagen.'
+      )
+    end
   end
 
   def terminate; end
