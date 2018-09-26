@@ -1,11 +1,11 @@
 tr
   td.index-action-cell.hidden-print
     - if policy(assignment).show?
-      = button_link navigation_glyph(:show), assignment, title: 'Anzeigen'
+      = button_link icon_span(:show), assignment, title: 'Anzeigen'
     - if policy(assignment).edit?
-      = button_link navigation_glyph(:edit), edit_polymorphic_path(assignment), title: 'Bearbeiten'
+      = button_link icon_span(:edit), edit_polymorphic_path(assignment), title: 'Bearbeiten'
     - if policy(assignment).show? && assignment.pdf.exists?
-      = button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
+      = button_link icon_span(:download), assignment_path(assignment, format: :pdf), title: 'Herunterladen'
   td.button-acceptance= assignment_status_badge(assignment)
   - if controller_name != 'volunteers'
     td = link_to_if policy(assignment.volunteer).show?, assignment.volunteer, edit_volunteer_path(assignment.volunteer)

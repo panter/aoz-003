@@ -18,5 +18,5 @@ nav.navbar.section-navigation.hidden-print
       = custom_filter_dropdown('Einsatz',
         { q: :active, text: 'Aktiv', value: 'true' },
         { q: :inactive, text: 'Inaktiv', value: 'true' })
-    li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: :sm
+    li= button_link icon_span(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: :sm
   hr

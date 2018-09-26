@@ -7,7 +7,7 @@ h4.pull-right
   =< @volunteer.hours.total_hours
 
 ul.list-inline
-  li= button_link navigation_glyph(:back), @volunteer
+  li= button_link icon_span(:back), @volunteer
   li= button_link t_title(:new), new_volunteer_hour_path(@volunteer)
 
 .table-responsive
@@ -26,11 +26,11 @@ ul.list-inline
       - @hours.each do |record|
         tr
           td.index-action-cell.hidden-print
-            = button_link navigation_glyph(:show), volunteer_hour_path(@volunteer, record),
+            = button_link icon_span(:show), volunteer_hour_path(@volunteer, record),
                 title: 'Anzeigen'
-            = button_link navigation_glyph(:edit), edit_volunteer_hour_path(@volunteer, record),
+            = button_link icon_span(:edit), edit_volunteer_hour_path(@volunteer, record),
                 title: 'Bearbeiten'
-            = button_link navigation_glyph(:delete), volunteer_hour_path(@volunteer, record),
+            = button_link icon_span(:delete), volunteer_hour_path(@volunteer, record),
                 confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
           - if current_user.superadmin?
             td= link_to @volunteer.contact.full_name, edit_volunteer_path(@volunteer)
@@ -45,5 +45,5 @@ ul.list-inline
           td= record.comments
 
 ul.list-inline
-  li= button_link navigation_glyph(:back), @volunteer
+  li= button_link icon_span(:back), @volunteer
   li= button_link t_title(:new), new_volunteer_hour_path(@volunteer)

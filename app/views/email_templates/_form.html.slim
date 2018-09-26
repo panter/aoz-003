@@ -19,7 +19,7 @@
   nav.navbar
     ul.list-inline
       li= f.button :submit
-      li= button_link navigation_glyph(:back), :back
+      li= button_link icon_span(:back), :back
 
 javascript:
   var templateVarnames = #{EmailTemplate.template_varnames.to_json.html_safe}

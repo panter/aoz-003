@@ -17,7 +17,7 @@ h1 Klienten Wartezeitbenachrichtigung
           td= link_to notification.user.full_name, notification.user.profile
           td.index-action-cell.hidden-print
             span= link_to t_action(:edit), edit_client_notification_path(notification)
-            span= link_to navigation_glyph(:delete), client_notification_path(notification), confirm_deleting(notification)
+            span= link_to icon_span(:delete), client_notification_path(notification), confirm_deleting(notification)
 
 = form_navigation_btn :new
-= button_link navigation_glyph(:back), clients_path
+= button_link icon_span(:back), clients_path

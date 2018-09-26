@@ -43,7 +43,7 @@ table.table.table-condensed
       - current_submission = mailing_volunteer.current_submission
       tr
         td.index-action-cell.hidden-print
-          = button_link navigation_glyph(:edit),
+          = button_link icon_span(:edit),
               mailing_volunteer.feedback_url(host: request.host_with_port, redirect_to: request.fullpath),
               title: 'Bestätigen'
         td
@@ -68,7 +68,7 @@ nav.navbar.hidden-print
           = button_link 'Emails versenden', send_trial_period_reminder_mailing_path(@reminder_mailing)
         - else
           = button_link 'Email versenden', send_termination_assignment_reminder_mailing_path(@reminder_mailing)
-          li= button_link navigation_glyph('back'), terminated_index_assignments_path
+          li= button_link icon_span('back'), terminated_index_assignments_path
       li= button_link 'Email Ändern', edit_reminder_mailing_path(@reminder_mailing)
       li= link_to 'Abbrechen', reminder_mailing_path(@reminder_mailing), confirm_deleting(@reminder_mailing, 'btn btn-default')
     - else

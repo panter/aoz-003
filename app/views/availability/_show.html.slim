@@ -2,11 +2,11 @@ h4.label-list
   - availability_collection.each do |availability|
     - if available.read_attribute(availability)
       span.label.label-success>
-        => navigation_glyph(:yes)
+        => icon_span(:yes)
         = t("availability.#{availability}")
     - else
       span.label.label-danger>
-        => navigation_glyph(:no)
+        => icon_span(:no)
         = t("availability.#{availability}")
 
 .row

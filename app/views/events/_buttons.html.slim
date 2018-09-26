@@ -3,4 +3,4 @@ ul.list-inline
   - if action_show?
     li= button_link 'Veranstaltung bearbeiten', edit_event_path(@event), dimension: 'md'
   - if action_edit? || action_show?
-    li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'md'
+    li= button_link icon_span(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'md'
