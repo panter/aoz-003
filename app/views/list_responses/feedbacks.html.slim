@@ -38,12 +38,10 @@ table.table.table-striped.list-responses-table
     - @feedbacks.each do |record|
       tr*{ data: { feedback_id: record.id } }
         td.index-action-cell
-          = button_link navigation_glyph(:journal), volunteer_journals_path(record.volunteer), title: 'Journal'
-          = button_link navigation_glyph(:hours), volunteer_hours_path(record.volunteer), title: 'Stunden'
-        td.index-action-cell
-          = link_to(edit_volunteer_path(record.volunteer)) do
-            span #{record.volunteer.contact.last_name},
-            span  #{record.volunteer.contact.first_name}
+          = button_link icon_span(:journal), volunteer_journals_path(record.volunteer), title: 'Journal'
+          = button_link icon_span(:journal_new), new_volunteer_journal_path(record.volunteer, feedback_id: record.id),
+              title: 'Neuen Journal eintrag mit Zitat erstellen'
+          = button_link icon_span(:hours), volunteer_hours_path(record.volunteer), title: 'Stunden'
         td.index-action-cell
           a href="#{url_for(record.feedbackable)}" title="#{record.feedbackable.to_label}"
             - record.feedbackable.label_parts.reject(&:blank?).each do |label_part|

@@ -283,11 +283,10 @@ de:
         volunteer: Freiwillige
       feedback:
         <<: *id-generic_keys
-        achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
-        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
-        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
-        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
+        goals: Ziele
+        achievements: Erfolge
+        future: Zukunft
         last: Letzter Halbjahres-Rapport-Eintrag am
         feedback_activity: Aktivität
         feedbackable_id_and_type: Aktivitäten
@@ -946,6 +945,13 @@ de:
     labels:
       assignment:
         <<: *id-termination-feedback-quests
+      feedback:
+        comments: Bemerkungen
+        achievements: Was konnte in den letzten Monaten erreicht werden?
+        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
+        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
+        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
+        last: Letzter Halbjahres-Rapport-Eintrag am
       reminder_mailing:
         kind: Art
       defaults:
