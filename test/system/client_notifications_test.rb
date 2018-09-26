@@ -17,9 +17,9 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     assert page.has_text? @client_notification.body
     within 'tr.bg-success' do
       assert page.has_text? @client_notification.body
-      assert page.has_selector?('table > tbody td:nth-child(2) i.glyphicon-ok')
+      assert page.has_selector?('table > tbody td:nth-child(2) span.glyphicon-ok')
       refute page.has_text? @other_client_notification.body
-      refute page.has_selector?('table > tbody td:nth-child(2) i.glyphicon-remove')
+      refute page.has_selector?('table > tbody td:nth-child(2) span.glyphicon-remove')
     end
   end
 
