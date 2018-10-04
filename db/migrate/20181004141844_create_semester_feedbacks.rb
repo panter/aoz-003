@@ -4,8 +4,9 @@ class CreateSemesterFeedbacks < ActiveRecord::Migration[5.1]
       t.references :author, references: :users, index: true
       t.references :semester_process_volunteer, index: false
       # for relations to either Assignment or GroupAssignment (not GroupOffer!)
-      t.integer :semester_feedbackable_id
-      t.string :semester_feedbackable_type
+      t.references :assignment, foreign_key: true
+      t.references :group_assignment, foreign_key: true
+
       t.text :goals
       t.text :achievements
       t.text :future

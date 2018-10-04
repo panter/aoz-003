@@ -2,11 +2,15 @@ class Assignment < ApplicationRecord
   include AssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
+  has_one :assignment_log
+
   has_many :hours, as: :hourable
   has_many :feedbacks, as: :feedbackable
   has_many :trial_feedbacks, as: :trial_feedbackable
-  has_many :semester_feedbacks, as: :semester_feedbackable
-  has_one :assignment_log
+
+  # Semester process relations
+  #
+  has_many :semester_feedbacks, dependent: :destroy
 
   validates :client_id, uniqueness: {
     scope: :volunteer_id, message: I18n.t('assignment_exists')
