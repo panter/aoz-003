@@ -9,4 +9,5 @@ class SemesterProcessVolunteer < ApplicationRecord
     inverse_of: 'semester_processes', optional: true
 
   has_many :semester_feedbacks, dependent: :destroy
+  has_many :hours, dependent: :nullify
 end
