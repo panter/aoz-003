@@ -97,6 +97,7 @@ class User < ApplicationRecord
   has_many :semester_process_commits, inverse_of: 'commited_by',
     class_name: 'SemesterProcessVolunteer', foreign_key: 'commited_by_id', dependent: :nullify
 
+  has_many :semester_feedbacks, inverse_of: 'author', foreign_key: 'author_id', dependent: :destroy
 
   has_and_belongs_to_many :department
 

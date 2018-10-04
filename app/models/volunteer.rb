@@ -74,6 +74,8 @@ class Volunteer < ApplicationRecord
 
   has_many :semester_process_volunteers, dependent: :destroy
   has_many :semester_processes, through: :semester_process_volunteers
+  has_many :semester_feedbacks, through: :semester_process_volunteers
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   # Validations

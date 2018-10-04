@@ -5,6 +5,7 @@ class Assignment < ApplicationRecord
   has_many :hours, as: :hourable
   has_many :feedbacks, as: :feedbackable
   has_many :trial_feedbacks, as: :trial_feedbackable
+  has_many :semester_feedbacks, as: :semester_feedbackable
   has_one :assignment_log
 
   validates :client_id, uniqueness: {

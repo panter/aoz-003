@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181004134604) do
+ActiveRecord::Schema.define(version: 20181004141844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -622,6 +622,23 @@ ActiveRecord::Schema.define(version: 20181004134604) do
     t.boolean "obsolete", default: false
     t.index ["creator_id"], name: "index_reminder_mailings_on_creator_id"
     t.index ["deleted_at"], name: "index_reminder_mailings_on_deleted_at"
+  end
+
+  create_table "semester_feedbacks", force: :cascade do |t|
+    t.bigint "author_id"
+    t.bigint "semester_process_volunteer_id"
+    t.integer "semester_feedbackable_id"
+    t.string "semester_feedbackable_type"
+    t.text "goals"
+    t.text "achievements"
+    t.text "future"
+    t.text "comments"
+    t.boolean "conversation", default: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_semester_feedbacks_on_author_id"
+    t.index ["deleted_at"], name: "index_semester_feedbacks_on_deleted_at"
   end
 
   create_table "semester_process_volunteers", force: :cascade do |t|

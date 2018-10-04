@@ -7,4 +7,5 @@ class SemesterProcess < ApplicationRecord
 
   has_many :semester_process_volunteers, dependent: :destroy
   has_many :volunteers, through: :semester_process_volunteers
+  has_many :semester_feedbacks, through: :semester_process_volunteers
 end
