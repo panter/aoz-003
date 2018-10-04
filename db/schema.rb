@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181004141844) do
+ActiveRecord::Schema.define(version: 20181004144449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -641,6 +641,21 @@ ActiveRecord::Schema.define(version: 20181004141844) do
     t.index ["deleted_at"], name: "index_semester_feedbacks_on_deleted_at"
   end
 
+  create_table "semester_process_mails", force: :cascade do |t|
+    t.bigint "semester_process_volunteer_id"
+    t.bigint "sent_by_id"
+    t.datetime "sent_at"
+    t.string "subject"
+    t.text "body"
+    t.integer "type"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_semester_process_mails_on_deleted_at"
+    t.index ["semester_process_volunteer_id"], name: "index_semester_process_mails_on_semester_process_volunteer_id"
+    t.index ["sent_by_id"], name: "index_semester_process_mails_on_sent_by_id"
+  end
+
   create_table "semester_process_volunteers", force: :cascade do |t|
     t.bigint "volunteer_id"
     t.bigint "semester_process_id"
@@ -827,6 +842,7 @@ ActiveRecord::Schema.define(version: 20181004141844) do
   add_foreign_key "journals", "users"
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "semester_process_mails", "semester_process_volunteers"
   add_foreign_key "semester_process_volunteers", "semester_processes"
   add_foreign_key "semester_process_volunteers", "volunteers"
   add_foreign_key "trial_feedbacks", "users", column: "author_id"
