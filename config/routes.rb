@@ -68,6 +68,7 @@ Rails.application.routes.draw do
   end
 
   resources :feedbacks, only: [:new, :create]
+
   resources :group_assignments, only: [:show, :create, :edit, :update],
     concerns: [:submit_feedback, :termination_actions] do
     put :set_end_today, on: :member
@@ -94,6 +95,8 @@ Rails.application.routes.draw do
     get :send_trial_period, on: :member
     get :send_half_year, on: :member
   end
+
+  resources :semester_processes
 
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection

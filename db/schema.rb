@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180713084814) do
+ActiveRecord::Schema.define(version: 20181004121332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -284,7 +284,7 @@ ActiveRecord::Schema.define(version: 20180713084814) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind"
+    t.integer "kind", null: false
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -622,6 +622,17 @@ ActiveRecord::Schema.define(version: 20180713084814) do
     t.boolean "obsolete", default: false
     t.index ["creator_id"], name: "index_reminder_mailings_on_creator_id"
     t.index ["deleted_at"], name: "index_reminder_mailings_on_deleted_at"
+  end
+
+  create_table "semester_processes", force: :cascade do |t|
+    t.bigint "creator_id"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_semester_processes_on_creator_id"
+    t.index ["deleted_at"], name: "index_semester_processes_on_deleted_at"
   end
 
   create_table "trial_feedbacks", force: :cascade do |t|

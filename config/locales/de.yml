@@ -440,6 +440,11 @@ de:
         kind: Art
         body: Text
         subject: Betreff
+      semester_process:
+        period: Semester
+        period_start: Semester anfang
+        period_end: Semester ende
+        creator: Ersteller/in
       user:
         <<: *id-generic_keys
         clients: Kunden/innen
@@ -554,6 +559,7 @@ de:
       profile: Profil
       relative: Verwante/r
       reminder_mailing: Erinnerungs-Mailing
+      semester_process: Semester Prozess
       trial_feedback: Probezeit Feedback
       user: Benutzer/in
       volunteer: Freiwillige/n

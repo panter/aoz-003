@@ -79,7 +79,10 @@ class User < ApplicationRecord
   has_many :mailing_processes_submitted, through: :mailing_volunteer_processes_submitted,
     source: :process_submitted_by
 
+  has_many :semester_processes, inverse_of: 'creator', foreign_key: 'creator_id'
+
   has_and_belongs_to_many :department
+
 
   # Roles definition
   SUPERADMIN = 'superadmin'.freeze
