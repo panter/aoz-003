@@ -7,6 +7,14 @@ class SemesterProcessVolunteerMission < ApplicationRecord
 
   validate :validate_group_assignment_or_assignment_present
 
+  def mission=(mission)
+    if mission.class.name == 'Assignment'
+      self.assignment = mission
+    else
+      self.group_assignment = mission
+    end
+  end
+
   def mission
     group_assignment || assignment
   end
