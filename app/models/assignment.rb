@@ -11,6 +11,9 @@ class Assignment < ApplicationRecord
   # Semester process relations
   #
   has_many :semester_feedbacks, dependent: :destroy
+  has_many :semester_process_volunteer_missions, dependent: :destroy
+  has_many :semester_process_volunteers, through: :semester_process_volunteer_missions
+  has_many :semester_processes, through: :semester_process_volunteers
 
   validates :client_id, uniqueness: {
     scope: :volunteer_id, message: I18n.t('assignment_exists')

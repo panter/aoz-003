@@ -284,7 +284,7 @@ ActiveRecord::Schema.define(version: 20181004163636) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind", null: false
+    t.integer "kind"
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -495,6 +495,7 @@ ActiveRecord::Schema.define(version: 20181004163636) do
     t.index ["hourable_type", "hourable_id"], name: "index_hours_on_hourable_type_and_hourable_id"
     t.index ["meeting_date"], name: "index_hours_on_meeting_date"
     t.index ["reviewer_id"], name: "index_hours_on_reviewer_id"
+    t.index ["semester_process_volunteer_id"], name: "index_hours_on_semester_process_volunteer_id"
     t.index ["volunteer_id"], name: "index_hours_on_volunteer_id"
   end
 
@@ -628,8 +629,8 @@ ActiveRecord::Schema.define(version: 20181004163636) do
   create_table "semester_feedbacks", force: :cascade do |t|
     t.bigint "author_id"
     t.bigint "semester_process_volunteer_id"
-    t.integer "semester_feedbackable_id"
-    t.string "semester_feedbackable_type"
+    t.bigint "assignment_id"
+    t.bigint "group_assignment_id"
     t.text "goals"
     t.text "achievements"
     t.text "future"
@@ -638,8 +639,10 @@ ActiveRecord::Schema.define(version: 20181004163636) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_semester_feedbacks_on_assignment_id"
     t.index ["author_id"], name: "index_semester_feedbacks_on_author_id"
     t.index ["deleted_at"], name: "index_semester_feedbacks_on_deleted_at"
+    t.index ["group_assignment_id"], name: "index_semester_feedbacks_on_group_assignment_id"
   end
 
   create_table "semester_process_mails", force: :cascade do |t|
@@ -655,6 +658,19 @@ ActiveRecord::Schema.define(version: 20181004163636) do
     t.index ["deleted_at"], name: "index_semester_process_mails_on_deleted_at"
     t.index ["semester_process_volunteer_id"], name: "index_semester_process_mails_on_semester_process_volunteer_id"
     t.index ["sent_by_id"], name: "index_semester_process_mails_on_sent_by_id"
+  end
+
+  create_table "semester_process_volunteer_missions", force: :cascade do |t|
+    t.bigint "semester_process_volunteer_id"
+    t.bigint "assignment_id"
+    t.bigint "group_assignment_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "semester_proc_volunteer_mission_assignment_index"
+    t.index ["deleted_at"], name: "index_semester_process_volunteer_missions_on_deleted_at"
+    t.index ["group_assignment_id"], name: "semester_proc_volunteer_mission_group_assignment_index"
+    t.index ["semester_process_volunteer_id"], name: "semester_proc_volunteer_mission_index"
   end
 
   create_table "semester_process_volunteers", force: :cascade do |t|
@@ -839,11 +855,17 @@ ActiveRecord::Schema.define(version: 20181004163636) do
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"
   add_foreign_key "hours", "billing_expenses"
+  add_foreign_key "hours", "semester_process_volunteers"
   add_foreign_key "journals", "assignments"
   add_foreign_key "journals", "users"
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "semester_feedbacks", "assignments"
+  add_foreign_key "semester_feedbacks", "group_assignments"
   add_foreign_key "semester_process_mails", "semester_process_volunteers"
+  add_foreign_key "semester_process_volunteer_missions", "assignments"
+  add_foreign_key "semester_process_volunteer_missions", "group_assignments"
+  add_foreign_key "semester_process_volunteer_missions", "semester_process_volunteers"
   add_foreign_key "semester_process_volunteers", "semester_processes"
   add_foreign_key "semester_process_volunteers", "volunteers"
   add_foreign_key "trial_feedbacks", "users", column: "author_id"
