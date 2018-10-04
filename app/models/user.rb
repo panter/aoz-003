@@ -81,13 +81,15 @@ class User < ApplicationRecord
 
   # Semester Process relations
   #
-  has_many :semester_processes, inverse_of: 'creator', foreign_key: 'creator_id', dependent: :destroy
+  has_many :semester_processes, inverse_of: 'creator', foreign_key: 'creator_id',
+    class_name: 'SemesterProcess', dependent: :destroy
   has_many :semester_process_mails_posted, inverse_of: 'mail_posted_by',
-    foreign_key: 'mail_posted_by_id', dependent: :nullify
+    class_name: 'SemesterProcess', foreign_key: 'mail_posted_by_id', dependent: :nullify
   has_many :semester_process_reminder_mail_posted, inverse_of: 'reminder_mail_posted_by',
-    foreign_key: 'reminder_mail_posted_by_id', dependent: :nullify
+    class_name: 'SemesterProcess', foreign_key: 'reminder_mail_posted_by_id', dependent: :nullify
 
-  has_many :semester_process_mails, dependent: :nullify
+  has_many :semester_process_mails, class_name: 'SemesterProcessMail', foreign_key: 'sent_by_id',
+    inverse_of: 'sent_by', dependent: :nullify
   has_many :semester_process_reminders, -> { reminder }, through: :semester_process_mails
 
   has_many :semester_process_responsibilities, inverse_of: 'responsible',
