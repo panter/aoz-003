@@ -577,7 +577,8 @@ de:
         semester_process_volunteer_mission:
           attributes:
             assignment: &id-mission-relation-insuficient
-              insuficient_relation: Es wird mindestens ein Assignment oder GroupAssignment benötigt.
+              insuficient_relation: Es wird mindestens ein Assignment oder GroupAssignment benötigt
+              too_many_relations: Es darf nur ein Assignment oder ein GroupAssignment verbunden werden
             group_assignment: *id-mission-relation-insuficient
     models:
       assignment: Begleitung

@@ -23,7 +23,13 @@ module MissionEitherOneRelation
     private
 
     def validate_group_assignment_or_assignment_present
-      errors.add(:association_insuficient) if assignment.blank? && group_assignment.blank?
+      if assignment.blank? && group_assignment.blank?
+        errors.add(:assignment, :insuficient_relation)
+        errors.add(:group_assignment, :insuficient_relation)
+      elsif assignment.present? && group_assignment.present?
+        errors.add(:assignment, :too_many_relations)
+        errors.add(:group_assignment, :too_many_relations)
+      end
     end
   end
 end
