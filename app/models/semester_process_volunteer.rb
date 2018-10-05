@@ -18,4 +18,9 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :semester_process_mails, dependent: :destroy
   has_many :mails, -> { mail }, through: :semester_process_mails
   has_many :reminders, -> { reminder }, through: :semester_process_mails
+
+  # will only return an array, not a AD-result
+  def missions
+    assignments + group_assignments
+  end
 end
