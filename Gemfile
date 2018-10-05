@@ -8,7 +8,7 @@ end
 gem 'rails', '~> 5.1'
 
 gem 'autocomplete_rails'
-# gem 'autoprefixer-rails'  # Exclude Autoprefixer temporary, because of bug in autoprefixer
+gem 'autoprefixer-rails'
 gem 'axlsx', github: 'randym/axlsx', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
 gem 'axlsx_rails'
 gem 'bootstrap-datepicker-rails'
