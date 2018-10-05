@@ -441,10 +441,46 @@ de:
         body: Text
         subject: Betreff
       semester_process:
-        period: Semester
-        period_start: Semester anfang
-        period_end: Semester ende
-        creator: Ersteller/in
+        <<: *id-generic_keys
+        semester: Semester
+        mail_subject_template: Mail Betreffs Vorlage
+        mail_body_template: Mail Vorlage
+        mail_posted_at: versendet am
+        mail_posted_by: versendet durch
+        reminder_mail_subject_template: Mahnungs Betreffs Vorlage
+        reminder_mail_body_template: Mahnungs Vorlage
+        reminder_mail_posted_at: versendet am
+        reminder_mail_posted_by: versendet durch
+      semester_process_volunteer:
+        <<: *id-generic_keys
+        commit_visited_at: Feedback Seite besucht am
+        commited_at: Bestätigt am
+        commited_by: Bestätigt durch
+        responsible: Übernommen durch
+        responsibility_taken_at: Übernommen am
+        reviewed_by: Quittiert durch
+        reviewed_at: Quittiert am
+        notes: Notizen
+      semester_process_mail:
+        <<: *id-generic_keys
+        sent_by: versendet von
+        sent_at: versendet am
+        subject: Betreff
+        body: Text
+        kind: Email Typ
+        kinds:
+          mail: Semester Email
+          reminder: Mahnungs Email
+      semester_process_volunteer_mission:
+        <<: *id-generic_keys
+      semester_feedback:
+        <<: *id-generic_keys
+        author: Author
+        goals: Ziele
+        achievements: Erfolge
+        future: Zukunft
+        comments: Kommentare
+        conversation: Rückmeldung erwünscht
       user:
         <<: *id-generic_keys
         clients: Kunden/innen
@@ -538,6 +574,11 @@ de:
           attributes:
             volunteer:
               required: muss ausgewählt werden.
+        semester_process_volunteer_mission:
+          attributes:
+            assignment: &id-mission-relation-insuficient
+              insuficient_relation: Es wird mindestens ein Assignment oder GroupAssignment benötigt.
+            group_assignment: *id-mission-relation-insuficient
     models:
       assignment: Begleitung
       feedback: Halbjahres-Rapport
@@ -560,6 +601,10 @@ de:
       relative: Verwante/r
       reminder_mailing: Erinnerungs-Mailing
       semester_process: Semester Prozess
+      semester_process_volunteer: Freiwillige/r
+      semester_process_mail: Semester Email
+      semester_process_volunteer_mission: Einsatz
+      semester_feedback: Semester Feedback
       trial_feedback: Probezeit Feedback
       user: Benutzer/in
       volunteer: Freiwillige/n
@@ -985,6 +1030,11 @@ de:
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
         external: Als externen Freiwilligen registrieren?
+      semester_feedback:
+        achievements: Was konnte in den letzten Monaten erreicht werden?
+        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
+        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
+        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
     "no": 'Nein'
     options:
       certificate:
