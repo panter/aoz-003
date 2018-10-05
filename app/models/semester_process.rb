@@ -13,6 +13,15 @@ class SemesterProcess < ApplicationRecord
   has_many :semester_process_volunteer_missions, through: :semester_process_volunteers
 
   has_many :semester_process_mails, through: :semester_process_volunteers
-  has_many :mails, -> { mail }, through: :semester_process_mails
-  has_many :reminders, -> { reminder }, through: :semester_process_mails
+
+  def mails
+    semester_process_mails.where(kind: 'mail')
+  end
+
+  def reminders
+    semester_process_mails.where(kind: 'reminder')
+  end
+
+  # will only return an array, not a AD-result
+  delegate :missions, to: :semester_process_volunteers
 end
