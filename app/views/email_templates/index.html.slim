@@ -1,7 +1,7 @@
 - content_for :navigation do
   ul.list-inline
     li= form_navigation_btn :new, with_row: false
-    li= button_link navigation_glyph(:back), reminder_mailings_path
+    li= button_link icon_span(:back), reminder_mailings_path
 
 h1 Alle E-Mailvorlagen
 
@@ -19,11 +19,11 @@ h1 Alle E-Mailvorlagen
       - @email_templates.each do |email_template|
         tr class=(email_template.active ? 'bg-success': '')
           td.index-action-cell.hidden-print
-            = button_link navigation_glyph(:show), email_template, title: 'Anzeigen'
+            = button_link icon_span(:show), email_template, title: 'Anzeigen'
             - if policy(email_template).edit?
-              = button_link navigation_glyph(:edit), edit_polymorphic_path(email_template), title: 'Bearbeiten'
+              = button_link icon_span(:edit), edit_polymorphic_path(email_template), title: 'Bearbeiten'
             - if policy(email_template).destroy?
-              = button_link navigation_glyph(:delete), email_template, nil,
+              = button_link icon_span(:delete), email_template, nil,
                   confirm_deleting(email_template, 'btn btn-default').merge(title: 'Löschen')
           td= t(".#{email_template.kind}")
           td= boolean_glyph(email_template.active)

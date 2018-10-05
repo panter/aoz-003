@@ -183,8 +183,8 @@ GEM
       railties (>= 3.0.0)
     ffaker (2.9.0)
     ffi (1.9.25)
-    font-awesome-rails (4.7.0.4)
-      railties (>= 3.2, < 6.0)
+    font-awesome-sass (5.3.1)
+      sassc (>= 1.11)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hashery (2.1.2)
@@ -467,7 +467,7 @@ DEPENDENCIES
   devise_invitable
   factory_bot_rails
   ffaker
-  font-awesome-rails
+  font-awesome-sass
   i18n_data
   i18n_rails_helpers
   i18n_yaml_sorter
@@ -513,4 +513,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.16.2
+   1.16.4

@@ -14,7 +14,7 @@ table.table.table-striped.assignment-logs-table
       tr
         td.index-action-cell.hidden-print
           - if policy(assignment.assignment).show? && assignment.assignment.pdf.exists?
-            = button_link navigation_glyph(:download), assignment_path(assignment.assignment, format: :pdf),
+            = button_link icon_span(:download), assignment_path(assignment.assignment, format: :pdf),
               title: 'Herunterladen'
         td= link_to_if(policy(Client).show?, assignment.client.contact.full_name, assignment.client)
         td= l(assignment.period_start) if assignment.period_start

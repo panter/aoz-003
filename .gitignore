@@ -27,3 +27,4 @@ lib/access_import_test/*.xlsx
 .stylelintrc
 doc
 /.idea
+.vscode/

@@ -1,6 +1,6 @@
 ul.list-inline.pull-right
   - if policy(@volunteer).terminate?
-    li= link_to navigation_glyph(:terminate), terminate_volunteer_path(@volunteer),
+    li= link_to icon_span(:terminate), terminate_volunteer_path(@volunteer),
       class: 'btn btn-default', title: 'Beenden', method: :put,
       data: { confirm: t('messages.confirm_terminate_volunteer') } unless @volunteer.resigned?
 
@@ -10,19 +10,19 @@ ul.list-inline
     li.button-acceptance = link_to t("volunteer_applications.acceptance.#{@volunteer.acceptance}"), '#',
       class: "btn btn-acceptance-#{@volunteer.acceptance}"
   - if policy(Journal).index? || policy(Volunteer).superadmin_privileges?
-    li= button_link navigation_glyph(:journal), polymorphic_path([@volunteer, Journal]), title: 'Journal'
+    li= button_link icon_span(:journal), polymorphic_path([@volunteer, Journal]), title: 'Journal'
   - if action_edit? && policy(@volunteer).show?
-    li= button_link navigation_glyph(:show), polymorphic_path(@volunteer), title: t_action(:show)
+    li= button_link icon_span(:show), polymorphic_path(@volunteer), title: t_action(:show)
   - if action_show? && policy(@volunteer).edit?
-    li= button_link navigation_glyph(:edit), edit_polymorphic_path(@volunteer), title: t_action(:edit)
+    li= button_link icon_span(:edit), edit_polymorphic_path(@volunteer), title: t_action(:edit)
   - if @volunteer.internal_and_started_assignments?
-    li = button_link navigation_glyph(:hours), volunteer_hours_path(@volunteer), title: t('volunteer_applications.show.hour_reports')
+    li = button_link icon_span(:hours), volunteer_hours_path(@volunteer), title: t('volunteer_applications.show.hour_reports')
   - if policy(Volunteer).superadmin_privileges? && @volunteer.seeking_clients?
-    li= button_link navigation_glyph(:assignment), find_client_volunteer_path(id: @volunteer), title: t('seeking_clients')
+    li= button_link icon_span(:assignment), find_client_volunteer_path(id: @volunteer), title: t('seeking_clients')
   - if @volunteer.internal_and_started_assignments?
-    li= button_link navigation_glyph(:billing_expenses), volunteer_billing_expenses_path(@volunteer), title: 'Spesenformulare'
+    li= button_link icon_span(:billing_expenses), volunteer_billing_expenses_path(@volunteer), title: 'Spesenformulare'
   - if policy(Volunteer).superadmin_privileges?
-    li= button_link navigation_glyph(:certificate), volunteer_certificates_path(@volunteer), title: t('volunteer_applications.show.new_certificate')
+    li= button_link icon_span(:certificate), volunteer_certificates_path(@volunteer), title: t('volunteer_applications.show.new_certificate')
   - if policy(@volunteer).show?
-    li= button_link navigation_glyph(:print), volunteer_path(@volunteer, print: :true), { class: 'btn btn-default', target: '_blank', title: 'Ausdrucken' }
+    li= button_link icon_span(:print), volunteer_path(@volunteer, print: :true), { class: 'btn btn-default', target: '_blank', title: 'Ausdrucken' }
 

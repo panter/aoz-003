@@ -1,21 +1,25 @@
 module NavigationAndButtonHelper
   GLYPH_TRANSLATE = {
-    show: { text: 'Anzeigen', glyph: 'eye-open' },
-    edit: { text: 'Bearbeiten', glyph: 'pencil' },
-    delete: { text: 'Löschen', glyph: 'trash' },
-    terminate: { text: 'Beenden', glyph: 'off' },
-    activate: { text: 'Aktivieren', glyph: 'ok' },
-    deactivate: { text: 'Deaktivieren', glyph: 'remove' },
-    back: { text: 'Zurück', glyph: 'arrow-left' },
-    print: { text: 'Ausdrucken', glyph: 'print' },
-    download: { text: 'Herunterladen', glyph: 'download-alt' },
-    yes: { text: 'Ja', glyph: 'ok' },
-    no: { text: 'Nein', glyph: 'remove' },
-    journal: { text: 'Journal', glyph: 'book' },
-    hours: { text: 'Stunden erfassen', glyph: 'time' },
-    billing_expenses: { text: 'Spesen', glyph: 'usd' },
-    assignment: { text: 'Begleitung', glyph: 'user' },
-    certificate: { text: 'Nachweis', glyph: 'education' }
+    show: { text: 'Anzeigen', icon_type: 'eye-open' },
+    edit: { text: 'Bearbeiten', icon_type: 'pencil' },
+    delete: { text: 'Löschen', icon_type: 'trash' },
+    terminate: { text: 'Beenden', icon_type: 'off' },
+    activate: { text: 'Aktivieren', icon_type: 'ok' },
+    deactivate: { text: 'Deaktivieren', icon_type: 'remove' },
+    back: { text: 'Zurück', icon_type: 'arrow-left' },
+    print: { text: 'Ausdrucken', icon_type: 'print' },
+    download: { text: 'Herunterladen', icon_type: 'download-alt' },
+    yes: { text: 'Ja', icon_type: 'ok' },
+    no: { text: 'Nein', icon_type: 'remove' },
+    journal: { text: 'Journal', icon_type: 'book' },
+    journal_new: { text: 'Neuen Journal eintrag erstellen', type: :fa, icon_type: :edit },
+    hours: { text: 'Stunden erfassen', icon_type: 'time' },
+    billing_expenses: { text: 'Spesen', icon_type: 'usd' },
+    assignment: { text: 'Begleitung', icon_type: 'user' },
+    certificate: { text: 'Nachweis', icon_type: 'education' },
+    xlsx: { text: 'Excel herunterladen', type: :fa, icon_type: 'file-excel-o' },
+    truthy: { text: 'true', icon_type: :ok, extra_class: 'text-success' },
+    falsy: { text: 'false', icon_type: :remove, extra_class: 'text-danger' }
   }.freeze
 
   def form_navigation_btn(action, cols: 12, with_row: true, md_cols: nil, with_col: false,
@@ -50,13 +54,13 @@ module NavigationAndButtonHelper
   def glyph_action_button_link(action_type, target, **options)
     options[:title] ||= GLYPH_TRANSLATE[action_type.to_sym][:text]
     yield_button_link(target, **options) do
-      navigation_glyph(action_type)
+      icon_span(action_type)
     end
   end
 
   def make_nav_button(action)
     if action == :back
-      text = navigation_glyph(:back)
+      text = icon_span(:back)
       action = :index
     else
       text = t_title(action)
@@ -67,33 +71,23 @@ module NavigationAndButtonHelper
 
   def boolean_glyph(value)
     if value
-      content_tag(:i, '', class: 'glyphicon glyphicon-ok text-success')
+      icon_span(:truthy)
     else
-      content_tag(:i, '', class: 'glyphicon glyphicon-remove text-danger')
+      icon_span(:falsy)
     end
   end
 
-  def navigation_glyph(icon_type = :back)
-    glyph_span(GLYPH_TRANSLATE[icon_type.to_sym])
-  end
-
-  def glyph_span(text: 'Zurück', glyph: 'arrow-left')
-    tag.span(class: "glyphicon glyphicon-#{glyph}") do
-      tag.span(text, class: 'sr-only')
+  def icon_span(icon = :back)
+    glyph = GLYPH_TRANSLATE[icon]
+    style = icon_class(glyph&.fetch(:icon_type, 'arrow-left'), glyph&.fetch(:type, :glyphicon),
+      glyph&.fetch(:extra_class, nil))
+    tag.span(class: style) do
+      tag.span(glyph&.fetch(:text, 'Zurück'), class: 'sr-only')
     end
   end
 
-  def navigation_fa_icon(icon_type = :xlsx)
-    translate_fa = {
-      xlsx: { text: 'Excel herunterladen', fa_type: 'file-excel-o' }
-    }
-    fa_span(translate_fa[icon_type.to_sym])
-  end
-
-  def fa_span(text: 'xlsx', fa_type: 'file-excel-o')
-    tag.span(class: "fa fa-#{fa_type}") do
-      tag.span(text, class: 'sr-only')
-    end
+  def icon_class(icon_type = 'arrow-left', type = :glyphicon, extra_class = nil)
+    "#{type} #{type}-#{icon_type} #{extra_class}"
   end
 
   def assignment_status_badge(assignment, css = 'btn-xs')

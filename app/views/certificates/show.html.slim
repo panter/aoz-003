@@ -3,10 +3,10 @@
   nav.navbar.section-navigation
     ul.list-inline
       li= button_link t_title(:edit), edit_volunteer_certificate_path(@volunteer, @certificate)
-      li= button_link navigation_glyph(:print), volunteer_certificate_path(@volunteer, @certificate, print: true)
+      li= button_link icon_span(:print), volunteer_certificate_path(@volunteer, @certificate, print: true)
       li= button_link t_action(:download), volunteer_certificate_path(@volunteer, @certificate, format: :pdf)
-      li= link_to navigation_glyph(:delete), volunteer_certificate_path(@volunteer, @certificate), confirm_deleting(@certificate, 'btn btn-default')
-      li= button_link navigation_glyph(:back), :back
+      li= link_to icon_span(:delete), volunteer_certificate_path(@volunteer, @certificate), confirm_deleting(@certificate, 'btn btn-default')
+      li= button_link icon_span(:back), :back
   hr
 
 .certificate

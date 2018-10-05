@@ -116,6 +116,15 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
     assert_equal @superadmin, @group_assignment_fb_pendent.reviewer
   end
 
+  test 'new_feedback_journal_entry_button_has_feedback_prefilled' do
+    visit list_responses_feedbacks_path
+    within 'tbody' do
+      click_link href: new_volunteer_journal_path(@assignment_fb_pendent.volunteer, feedback_id: @assignment_fb_pendent.id)
+    end
+    assert page.has_select? 'Kategorie', with_selected: 'Rückmeldung'
+    assert page.has_field? 'Titel', with: "Feedback vom #{I18n.l(@assignment_fb_pendent.created_at.to_date)}: "
+  end
+
   test 'take_feedback_responsibility_works' do
     visit list_responses_feedbacks_path
     within 'tbody' do

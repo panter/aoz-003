@@ -2,5 +2,5 @@ ul.list-inline
   li = form_navigation_btn :back, with_row: false
   li = assignment_status_badge(assignment, 'btn')
   - if assignment.pdf.exists?
-    li= button_link navigation_glyph(:download), assignment_path(assignment, format: :pdf),
+    li= button_link icon_span(:download), assignment_path(assignment, format: :pdf),
           title: 'Herunterladen', target: '_blank'

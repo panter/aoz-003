@@ -1,6 +1,6 @@
 h1= @volunteer.contact.full_name
 
-= button_link navigation_glyph(:back), volunteers_path
+= button_link icon_span(:back), volunteers_path
 
 = render 'volunteers/show_excerpt', volunteer: @volunteer
 
@@ -52,7 +52,7 @@ nav.navbar.section-navigation
       - @need_accompanying.each do |client|
         tr
           td.index-action-cell.hidden-print
-            = button_link navigation_glyph(:show), client, title: 'Anzeigen'
+            = button_link icon_span(:show), client, title: 'Anzeigen'
             = button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: @volunteer)
           - if policy(Client).superadmin_privileges?
             td.button-acceptance = link_to t("acceptance.#{client.acceptance}"), '#',

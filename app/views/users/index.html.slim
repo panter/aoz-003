@@ -13,7 +13,7 @@ nav.navbar.section-navigation
     li= clear_filter_button
     = list_filter_dropdown(:role, User::ROLES)
     li= button_link t_title(:new), new_user_path, dimension: 'sm'
-    li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+    li= button_link icon_span(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
   hr
 
 table.table.table-striped
