@@ -10,6 +10,13 @@ FactoryBot.define do
       mission_type { :assignment }
       add_feedbacks { false }
       add_hours { false }
+      add_mail { false }
+    end
+
+    trait :with_mail do
+      transient do
+        add_mail { true }
+      end
     end
 
     trait :with_mission do
@@ -48,6 +55,11 @@ FactoryBot.define do
           create(:hour, hourable: sem_proc_vol_mission.mission, volunteer: spv.volunteer,
             semester_process_volunteer: spv)
         end
+      end
+
+      if evaluator.add_mail
+        create(:semester_process_mail, semester_process_volunteer: spv, kind: 'mail',
+          sent_by: spv.semester_process.creator)
       end
     end
   end
