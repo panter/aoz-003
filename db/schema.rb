@@ -651,7 +651,7 @@ ActiveRecord::Schema.define(version: 20181004163636) do
     t.datetime "sent_at"
     t.string "subject"
     t.text "body"
-    t.integer "type"
+    t.integer "kind", default: 0
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

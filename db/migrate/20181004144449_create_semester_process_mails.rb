@@ -6,7 +6,7 @@ class CreateSemesterProcessMails < ActiveRecord::Migration[5.1]
       t.datetime :sent_at
       t.string :subject
       t.text :body
-      t.integer :type
+      t.integer :kind, default: 0
 
       t.datetime :deleted_at, index: true
       t.timestamps
