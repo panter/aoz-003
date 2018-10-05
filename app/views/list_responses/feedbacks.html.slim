@@ -21,7 +21,7 @@ nav.navbar.section-navigation.hidden-print
 table.table.table-striped.list-responses-table
   thead
     tr
-      th.limit-width Journal
+      th.limit-width Journal / Stunden
       th.limit-width= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th.limit-width Einsatz
       th= sort_link @q, :author_profile_contact_full_name, 'Autor/in'
@@ -39,6 +39,7 @@ table.table.table-striped.list-responses-table
       tr*{ data: { feedback_id: record.id } }
         td.index-action-cell
           = button_link navigation_glyph(:journal), volunteer_journals_path(record.volunteer), title: 'Journal'
+          = button_link navigation_glyph(:hours), volunteer_hours_path(record.volunteer), title: 'Stunden'
         td.index-action-cell
           = link_to(edit_volunteer_path(record.volunteer)) do
             span #{record.volunteer.contact.last_name},
