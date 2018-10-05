@@ -6,7 +6,7 @@ FactoryBot.define do
 
     transient do
       add_mission { false }
-      mission_count { 1 }
+      mission_count { 0 }
       mission_type { :assignment }
       add_feedbacks { false }
       add_hours { false }
@@ -22,6 +22,7 @@ FactoryBot.define do
     trait :with_mission do
       transient do
         add_mission { true }
+        mission_count { 1 }
       end
     end
 
@@ -37,27 +38,32 @@ FactoryBot.define do
       end
     end
 
-    after(:create) do |spv, evaluator|
-      (evaluator.mission_count || 1).times do
+    after(:create) do |spv, ev|
+      ev.mission_count.times do
         create(:semester_process_volunteer_mission, semester_process_volunteer: spv,
-          mission: create(evaluator.mission_type || :assignment, volunteer: spv.volunteer))
+          mission: create(ev.mission_type || :assignment, volunteer: spv.volunteer))
       end
 
-      if evaluator.add_feedbacks
+      if (ev.add_feedbacks || ev.add_hours) && spv.semester_process_volunteer_missions.none?
+        create(:semester_process_volunteer_mission, semester_process_volunteer: spv,
+          mission: create(ev.mission_type || :assignment, volunteer: spv.volunteer))
+      end
+
+      if ev.add_feedbacks
         spv.semester_process_volunteer_missions.map do |sem_proc_vol_mission|
           create(:semester_feedback, mission: sem_proc_vol_mission.mission,
             semester_process_volunteer: spv)
         end
       end
 
-      if evaluator.add_hours
+      if ev.add_hours
         spv.semester_process_volunteer_missions.map do |sem_proc_vol_mission|
           create(:hour, hourable: sem_proc_vol_mission.mission, volunteer: spv.volunteer,
             semester_process_volunteer: spv)
         end
       end
 
-      if evaluator.add_mail
+      if ev.add_mail
         create(:semester_process_mail, semester_process_volunteer: spv, kind: 'mail',
           sent_by: spv.semester_process.creator)
       end
