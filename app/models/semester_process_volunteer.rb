@@ -16,8 +16,10 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :hours, dependent: :nullify
 
   has_many :semester_process_mails, dependent: :destroy
-  has_many :mails, -> { mail }, through: :semester_process_mails
-  has_many :reminders, -> { reminder }, through: :semester_process_mails
+  has_many :mails, -> { where(kind: 'mail') }, class_name: 'SemesterProcessMail',
+    foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
+  has_many :reminders, -> { where(kind: 'reminder') }, class_name: 'SemesterProcessMail',
+    foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
 
   # will only return an array, not a AD-result
   def missions
