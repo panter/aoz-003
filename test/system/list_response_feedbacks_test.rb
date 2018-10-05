@@ -95,25 +95,34 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   test 'marking_feedback_done_works' do
     click_link exact_text: 'Halbjahres-Rapport Eingang'
     within 'tbody' do
-      click_link 'Quittieren', match_polymorph_path([
+      page.find("[data-url$=\"#{polymorphic_path([
         @assignment_pendent.volunteer,
         @assignment_pendent,
         @assignment_fb_pendent
-      ])
+      ], action: :mark_as_done)}\"]").click
     end
-    assert page.has_text? 'Halbjahres-Rapport quittiert.'
-    refute page.has_link? @assignment_pendent.volunteer.contact.last_name
-    refute page.has_link? @assignment_fb_pendent.feedbackable.to_label
+    wait_for_ajax
+    assert page.has_link? 'Anzeigen', href: polymorphic_path([
+      @assignment_pendent.volunteer,
+      @assignment_pendent,
+      @assignment_fb_pendent
+    ])
+    assert_equal @superadmin, @assignment_fb_pendent.reload.reviewer
+
     within 'tbody' do
-      click_link 'Quittieren', match_polymorph_path([
+      page.find("[data-url$=\"#{polymorphic_path([
         @group_assignment_fb_pendent.volunteer,
         @group_assignment_fb_pendent.feedbackable,
         @group_assignment_fb_pendent
-      ])
+      ], action: :mark_as_done)}\"]").click
     end
-    assert page.has_text? 'Halbjahres-Rapport quittiert.'
-    @group_assignment_fb_pendent.reload
-    assert_equal @superadmin, @group_assignment_fb_pendent.reviewer
+    wait_for_ajax
+    assert page.has_link? 'Anzeigen', href: polymorphic_path([
+      @group_assignment_fb_pendent.volunteer,
+      @group_assignment_fb_pendent.feedbackable,
+      @group_assignment_fb_pendent
+    ])
+    assert_equal @superadmin, @group_assignment_fb_pendent.reload.reviewer
   end
 
   test 'new_feedback_journal_entry_button_has_feedback_prefilled' do
@@ -128,25 +137,26 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
   test 'take_feedback_responsibility_works' do
     visit list_responses_feedbacks_path
     within 'tbody' do
-      click_link 'Übernehmen', match_polymorph_path(
-        [@assignment_pendent.volunteer, @assignment_pendent, @assignment_fb_pendent]
-      )
+      page.find("[data-url$=\"#{polymorphic_path([
+        @assignment_pendent.volunteer, @assignment_pendent, @assignment_fb_pendent
+      ], action: :take_responsibility)}\"]").click
     end
-    assert page.has_text? 'Halbjahres-Rapport übernommen.'
+    wait_for_ajax
     @assignment_fb_pendent.reload
     assert page.has_text? "Übernommen durch #{@superadmin.email}"\
                           " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
+
     other_superadmin = create :user
     login_as other_superadmin
     visit list_responses_feedbacks_path
     within 'tbody' do
-      click_link 'Übernehmen', match_polymorph_path([
+      page.find("[data-url$=\"#{polymorphic_path([
         @group_assignment_fb_pendent.volunteer,
         @group_assignment_fb_pendent.feedbackable,
         @group_assignment_fb_pendent
-      ])
+      ], action: :take_responsibility)}\"]").click
     end
-    assert page.has_text? 'Halbjahres-Rapport übernommen.'
+    wait_for_ajax
     @group_assignment_fb_pendent.reload
     assert page.has_text? "Übernommen durch #{other_superadmin.email}"\
                           " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
@@ -166,11 +176,11 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
                           " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
     assert page.has_text? "Übernommen durch #{@superadmin.email}"\
                           " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
-    assert page.has_link? 'Übernehmen', match_polymorph_path([
+    assert page.find("[data-url$=\"#{polymorphic_path([
       noone_reponsible_feedback.volunteer,
       noone_reponsible_feedback.feedbackable,
       noone_reponsible_feedback
-    ])
+    ], action: :take_responsibility)}\"]")
 
     within page.find_all('nav.section-navigation').last do
       click_link 'Übernommen'
@@ -181,11 +191,12 @@ class ListResponseFeedbacksTest < ApplicationSystemTestCase
                           " am #{I18n.l(@group_assignment_fb_pendent.responsible_at.to_date)}"
     refute page.has_text? "Übernommen durch #{@superadmin.email}"\
                           " am #{I18n.l(@assignment_fb_pendent.responsible_at.to_date)}"
-    assert page.has_link? 'Übernehmen', match_polymorph_path([
+
+    assert page.find("[data-url$=\"#{polymorphic_path([
       noone_reponsible_feedback.volunteer,
       noone_reponsible_feedback.feedbackable,
       noone_reponsible_feedback
-    ])
+    ], action: :take_responsibility)}\"]")
 
     click_link 'Übernommen: Offen'
     within 'li.dropdown.open' do
