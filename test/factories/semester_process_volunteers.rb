@@ -50,15 +50,15 @@ FactoryBot.define do
       end
 
       if ev.add_feedbacks
-        spv.semester_process_volunteer_missions.map do |sem_proc_vol_mission|
-          create(:semester_feedback, mission: sem_proc_vol_mission.mission,
+        spv.semester_process_volunteer_missions.map do |sem_proc_mission|
+          create(:semester_feedback, mission: sem_proc_mission.mission,
             semester_process_volunteer: spv)
         end
       end
 
       if ev.add_hours
-        spv.semester_process_volunteer_missions.map do |sem_proc_vol_mission|
-          create(:hour, hourable: sem_proc_vol_mission.mission, volunteer: spv.volunteer,
+        spv.semester_process_volunteer_missions.map do |sem_proc_mission|
+          create(:hour, hourable: sem_proc_mission.mission, volunteer: spv.volunteer,
             semester_process_volunteer: spv)
         end
       end
