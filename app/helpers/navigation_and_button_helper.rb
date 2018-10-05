@@ -87,7 +87,7 @@ module NavigationAndButtonHelper
   end
 
   def icon_class(icon_type = 'arrow-left', type = :glyphicon, extra_class = nil)
-    "#{type} #{type}-#{icon_type}#{extra_class && " #{extra_class}"}"
+    "#{type} #{type}-#{icon_type} #{extra_class}"
   end
 
   def assignment_status_badge(assignment, css = 'btn-xs')
