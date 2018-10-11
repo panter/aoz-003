@@ -8,7 +8,11 @@ end
 gem 'rails', '~> 5.1'
 
 gem 'autocomplete_rails'
-gem 'autoprefixer-rails'
+# FIXME:
+#  - autoprefixer doesn't run with rubyracer anymore, it would with miniracer
+#  - installing miniracer ist blocked by panter/panter-rails-deploy rubyracer requirement
+#  - using Node as Execjs Runtime is not possible, because our hosts don't have node
+# gem 'autoprefixer-rails'
 gem 'axlsx', github: 'randym/axlsx', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
 gem 'axlsx_rails'
 gem 'bootstrap-datepicker-rails'

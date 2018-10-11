@@ -444,7 +444,6 @@ PLATFORMS
 
 DEPENDENCIES
   autocomplete_rails
-  autoprefixer-rails
   awesome_print
   axlsx!
   axlsx_rails
@@ -514,4 +513,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.16.4
+   1.16.6
