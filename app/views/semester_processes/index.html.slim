@@ -1,0 +1,29 @@
+h1= t_title(:index)
+
+= render 'index_nav'
+
+= bootstrap_paginate(@semester_processes)
+
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th.hidden-print Aktionen
+        th= t_attr(:creator)
+        th= t_attr(:period)
+        th= t_attr(:created_at)
+
+    tbody
+      - @semester_processes.each do |semester_process|
+        tr
+          td.index-action-cell.hidden-print
+            = link_to t_action(:show), semester_process
+            = link_to t_action(:edit), edit_semester_process_path(semester_process)
+            = link_to navigation_glyph(:delete), semester_process_path(semester_process), confirm_deleting(semester_process)
+          td = semester_process.creator
+          td = semester_process.period_start
+          td = semester_process.period_end
+
+= bootstrap_paginate(@semester_processes)
+
+= render 'index_nav'

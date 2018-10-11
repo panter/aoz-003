@@ -1,0 +1,10 @@
+= simple_form_for(@semester_process) do |f|
+  = simple_error_notice f
+
+  .row
+    .col-xs-12
+      = f.input :period, as: :date_range_picker, label: false
+
+  .row
+    .col-xs-12
+      = f.button :submit
