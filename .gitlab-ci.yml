@@ -1,8 +1,16 @@
+image: git.panter.ch:5001/panter/gitlab-ci-docker-images/ruby-and-rails:ruby-2.4.4-imagemagick-node-8-chrome
+
 stages:
   - test
 
 services:
   - postgres:9.6
+
+cache:
+  key: "$CI_PROJECT_ID"
+  paths:
+    - tmp/cache/ruby
+    - tmp/cache/yarn
 
 variables:
   RAILS_ENV: test
@@ -10,20 +18,19 @@ variables:
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
 
 before_script:
-  - bundle install --without development --path /gems_cache
+  - node --version
+  - ruby --version
+  - yarn --version
+  - bundle install --without development --path tmp/cache
+  - yarn install --cache-folder tmp/cache/yarn
   - bundle exec rails db:schema:load
 
 test:
-  image: git.panter.ch:5001/open-source/aoz-003/unit:2.4.4-0.3
   stage: test
   script:
     - bundle exec rails test
-  cache:
-    paths:
-      - /gems_cache
 
 system:
-  image: git.panter.ch:5001/open-source/aoz-003/system:2.36-0.3
   stage: test
   script:
     - bundle exec rails test:system
@@ -34,5 +41,3 @@ system:
     expire_in: 1 week
   cache:
     policy: pull
-    paths:
-      - /gems_cache
