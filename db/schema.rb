@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181004121332) do
+ActiveRecord::Schema.define(version: 20181004163636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -284,7 +284,7 @@ ActiveRecord::Schema.define(version: 20181004121332) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind", null: false
+    t.integer "kind"
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -489,11 +489,13 @@ ActiveRecord::Schema.define(version: 20181004121332) do
     t.string "hourable_type"
     t.bigint "hourable_id"
     t.bigint "reviewer_id"
+    t.bigint "semester_process_volunteer_id"
     t.index ["billing_expense_id"], name: "index_hours_on_billing_expense_id"
     t.index ["deleted_at"], name: "index_hours_on_deleted_at"
     t.index ["hourable_type", "hourable_id"], name: "index_hours_on_hourable_type_and_hourable_id"
     t.index ["meeting_date"], name: "index_hours_on_meeting_date"
     t.index ["reviewer_id"], name: "index_hours_on_reviewer_id"
+    t.index ["semester_process_volunteer_id"], name: "index_hours_on_semester_process_volunteer_id"
     t.index ["volunteer_id"], name: "index_hours_on_volunteer_id"
   end
 
@@ -624,15 +626,93 @@ ActiveRecord::Schema.define(version: 20181004121332) do
     t.index ["deleted_at"], name: "index_reminder_mailings_on_deleted_at"
   end
 
-  create_table "semester_processes", force: :cascade do |t|
-    t.bigint "creator_id"
-    t.datetime "period_start"
-    t.datetime "period_end"
+  create_table "semester_feedbacks", force: :cascade do |t|
+    t.bigint "author_id"
+    t.bigint "semester_process_volunteer_id"
+    t.bigint "assignment_id"
+    t.bigint "group_assignment_id"
+    t.text "goals"
+    t.text "achievements"
+    t.text "future"
+    t.text "comments"
+    t.boolean "conversation", default: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_semester_feedbacks_on_assignment_id"
+    t.index ["author_id"], name: "index_semester_feedbacks_on_author_id"
+    t.index ["deleted_at"], name: "index_semester_feedbacks_on_deleted_at"
+    t.index ["group_assignment_id"], name: "index_semester_feedbacks_on_group_assignment_id"
+  end
+
+  create_table "semester_process_mails", force: :cascade do |t|
+    t.bigint "semester_process_volunteer_id"
+    t.bigint "sent_by_id"
+    t.datetime "sent_at"
+    t.string "subject"
+    t.text "body"
+    t.integer "kind", default: 0
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_semester_process_mails_on_deleted_at"
+    t.index ["semester_process_volunteer_id"], name: "index_semester_process_mails_on_semester_process_volunteer_id"
+    t.index ["sent_by_id"], name: "index_semester_process_mails_on_sent_by_id"
+  end
+
+  create_table "semester_process_volunteer_missions", force: :cascade do |t|
+    t.bigint "semester_process_volunteer_id"
+    t.bigint "assignment_id"
+    t.bigint "group_assignment_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "semester_proc_volunteer_mission_assignment_index"
+    t.index ["deleted_at"], name: "index_semester_process_volunteer_missions_on_deleted_at"
+    t.index ["group_assignment_id"], name: "semester_proc_volunteer_mission_group_assignment_index"
+    t.index ["semester_process_volunteer_id"], name: "semester_proc_volunteer_mission_index"
+  end
+
+  create_table "semester_process_volunteers", force: :cascade do |t|
+    t.bigint "volunteer_id"
+    t.bigint "semester_process_id"
+    t.datetime "commit_visited_at"
+    t.datetime "commited_at"
+    t.bigint "commited_by_id"
+    t.bigint "responsible_id"
+    t.datetime "responsibility_taken_at"
+    t.bigint "reviewed_by_id"
+    t.datetime "reviewed_at"
+    t.jsonb "notes"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commited_by_id"], name: "index_semester_process_volunteers_on_commited_by_id"
+    t.index ["deleted_at"], name: "index_semester_process_volunteers_on_deleted_at"
+    t.index ["responsible_id"], name: "index_semester_process_volunteers_on_responsible_id"
+    t.index ["reviewed_by_id"], name: "index_semester_process_volunteers_on_reviewed_by_id"
+    t.index ["semester_process_id"], name: "index_semester_process_volunteers_on_semester_process_id"
+    t.index ["volunteer_id"], name: "index_semester_process_volunteers_on_volunteer_id"
+  end
+
+  create_table "semester_processes", force: :cascade do |t|
+    t.bigint "creator_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.daterange "semester"
+    t.string "mail_subject_template"
+    t.text "mail_body_template"
+    t.datetime "mail_posted_at"
+    t.bigint "mail_posted_by_id"
+    t.string "reminder_mail_subject_template"
+    t.text "reminder_mail_body_template"
+    t.datetime "reminder_mail_posted_at"
+    t.bigint "reminder_mail_posted_by_id"
     t.index ["creator_id"], name: "index_semester_processes_on_creator_id"
     t.index ["deleted_at"], name: "index_semester_processes_on_deleted_at"
+    t.index ["mail_posted_by_id"], name: "index_semester_processes_on_mail_posted_by_id"
+    t.index ["reminder_mail_posted_by_id"], name: "index_semester_processes_on_reminder_mail_posted_by_id"
   end
 
   create_table "trial_feedbacks", force: :cascade do |t|
@@ -775,10 +855,19 @@ ActiveRecord::Schema.define(version: 20181004121332) do
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"
   add_foreign_key "hours", "billing_expenses"
+  add_foreign_key "hours", "semester_process_volunteers"
   add_foreign_key "journals", "assignments"
   add_foreign_key "journals", "users"
   add_foreign_key "performance_reports", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "semester_feedbacks", "assignments"
+  add_foreign_key "semester_feedbacks", "group_assignments"
+  add_foreign_key "semester_process_mails", "semester_process_volunteers"
+  add_foreign_key "semester_process_volunteer_missions", "assignments"
+  add_foreign_key "semester_process_volunteer_missions", "group_assignments"
+  add_foreign_key "semester_process_volunteer_missions", "semester_process_volunteers"
+  add_foreign_key "semester_process_volunteers", "semester_processes"
+  add_foreign_key "semester_process_volunteers", "volunteers"
   add_foreign_key "trial_feedbacks", "users", column: "author_id"
   add_foreign_key "volunteers", "departments"
   add_foreign_key "volunteers", "users"

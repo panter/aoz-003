@@ -79,7 +79,27 @@ class User < ApplicationRecord
   has_many :mailing_processes_submitted, through: :mailing_volunteer_processes_submitted,
     source: :process_submitted_by
 
-  has_many :semester_processes, inverse_of: 'creator', foreign_key: 'creator_id'
+  # Semester Process relations
+  #
+  has_many :semester_processes, inverse_of: 'creator', foreign_key: 'creator_id',
+    class_name: 'SemesterProcess', dependent: :destroy
+  has_many :semester_process_mails_posted, inverse_of: 'mail_posted_by',
+    class_name: 'SemesterProcess', foreign_key: 'mail_posted_by_id', dependent: :nullify
+  has_many :semester_process_reminder_mail_posted, inverse_of: 'reminder_mail_posted_by',
+    class_name: 'SemesterProcess', foreign_key: 'reminder_mail_posted_by_id', dependent: :nullify
+
+  has_many :semester_process_mails, class_name: 'SemesterProcessMail', foreign_key: 'sent_by_id',
+    inverse_of: 'sent_by', dependent: :nullify
+  has_many :semester_process_reminders, -> { reminder }, through: :semester_process_mails
+
+  has_many :semester_process_responsibilities, inverse_of: 'responsible',
+    class_name: 'SemesterProcessVolunteer', foreign_key: 'responsible_id', dependent: :nullify
+  has_many :semester_process_reviews, inverse_of: 'reviewed_by',
+  class_name: 'SemesterProcessVolunteer', foreign_key: 'reviewed_by_id', dependent: :nullify
+  has_many :semester_process_commits, inverse_of: 'commited_by',
+    class_name: 'SemesterProcessVolunteer', foreign_key: 'commited_by_id', dependent: :nullify
+
+  has_many :semester_feedbacks, inverse_of: 'author', foreign_key: 'author_id', dependent: :destroy
 
   has_and_belongs_to_many :department
 

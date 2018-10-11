@@ -12,6 +12,8 @@ class Hour < ApplicationRecord
   belongs_to :billing_expense, -> { with_deleted }, optional: true, inverse_of: 'hours'
   belongs_to :certificate, optional: true
 
+  belongs_to :semester_process_volunteer, optional: true
+
   validates :hours, presence: true, numericality: { greater_than: 0 }
   validates :meeting_date, presence: true
   validates :hourable, presence: true
