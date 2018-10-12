@@ -3,6 +3,9 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   belongs_to :volunteer
   belongs_to :semester_process
+  delegate :semester, to: :semester_process
+  delegate :creator, to: :semester_process
+
   belongs_to :responsible, -> { with_deleted }, class_name: 'User',
     inverse_of: 'semester_processes', optional: true
   belongs_to :reviewed_by, -> { with_deleted }, class_name: 'User',
@@ -37,4 +40,11 @@ class SemesterProcessVolunteer < ApplicationRecord
     end
   end
 
+  def build_hours_feedbacks_and_mails
+    missions.each do |mission|
+      hours << mission.hours.date_between_inclusion(:meeting_date, semester.begin, semester.end)
+      semester_feedbacks << SemesterFeedback.new(mission: mission, volunteer: mission.volunteer)
+    end
+    semester_process_mails << SemesterProcessMail.new(kind: :mail, sent_by: creator)
+  end
 end
