@@ -1,4 +1,6 @@
 class SemesterProcessVolunteer < ApplicationRecord
+  attr_accessor :selected
+
   belongs_to :volunteer
   belongs_to :semester_process
   belongs_to :responsible, -> { with_deleted }, class_name: 'User',
