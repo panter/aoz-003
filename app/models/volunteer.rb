@@ -153,6 +153,19 @@ class Volunteer < ApplicationRecord
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
 
+  ## Semester Process Scopes
+  #
+
+  scope :no_semester_process, lambda { |semester|
+    proc_join = left_joins(semester_process_volunteers: [:semester_process])
+    proc_join.where('semester_processes.semester IS NULL').or(
+      proc_join.where.not(
+        'semester_processes.semester && daterange(?,?)',
+        semester.begin, semester.end
+      )
+    )
+  }
+
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
