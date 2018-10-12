@@ -166,6 +166,12 @@ class Volunteer < ApplicationRecord
     )
   }
 
+  scope :have_mission, lambda {
+    left_joins(:assignments).left_joins(:group_assignments)
+      .where('assignments.id IS NOT NULL OR group_assignments.id IS NOT NULL')
+      .where('assignments.period_start IS NOT NULL OR group_assignments.period_start IS NOT NULL')
+  }
+
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
