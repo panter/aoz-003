@@ -1,5 +1,6 @@
 class SemesterProcessesController < ApplicationController
   before_action :set_semester_process, only: [:show, :edit, :update, :destroy]
+  before_action :set_semester, only: [:new, :create]
 
   def index
     authorize SemesterProcess
@@ -16,7 +17,7 @@ class SemesterProcessesController < ApplicationController
   def edit; end
 
   def create
-    @semester_process = SemesterProcess.new(semester_process_params)
+    @semester_process = SemesterProcess.new(semester_process_params.slice(:semester))
     @semester_process.creator = current_user
     authorize @semester_process
     if @semester_process.save
@@ -49,7 +50,19 @@ class SemesterProcessesController < ApplicationController
     authorize @semester_process
   end
 
+  def set_semester
+    @semester = Semester.new
+    params[:semester] = @semester.year_number unless params[:semester]
+    @selected_semester = Semester.new(*params[:semester].split(',').map(&:to_i)).current
+    @volunteers = Volunteer.semester_process_eligible(@selected_semester)
+  end
+
   def semester_process_params
-    params.require(:semester_process).permit(:period_start, :period_end)
+    params.require(:semester_process).permit(
+      :semester,
+      semester_process_volunteers_attributes: [
+        :volunteer_id, :selected
+      ]
+    )
   end
 end

@@ -1,10 +1,9 @@
-= simple_form_for(@semester_process) do |f|
+= simple_form_for(@semester_process, html: { class: 'form-ignore-changes' }) do |f|
   = simple_error_notice f
 
-  .row
-    .col-xs-12
-      = f.input :period, as: :date_range_picker, label: false
+  .row:.col-xs-12.col-md-4
+    = f.input :semester, collection: @semester.collection, selected: params[:semester], input_html: { class: 'semester-selector' }
 
-  .row
-    .col-xs-12
+
+  .row:.col-xs-12
       = f.button :submit
