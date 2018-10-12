@@ -25,6 +25,6 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   # will only return an array, not a AD-result
   def missions
-    assignments + group_assignments
+    semester_process_volunteer_missions.map(&:mission)
   end
 end
