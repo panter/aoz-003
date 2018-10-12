@@ -6,6 +6,8 @@ class SemesterProcess < ApplicationRecord
     inverse_of: 'semester_process_reminder_mail_posted', optional: true
 
   has_many :semester_process_volunteers, dependent: :destroy
+  accepts_nested_attributes_for :semester_process_volunteers, allow_destroy: true
+
   has_many :volunteers, through: :semester_process_volunteers
   has_many :semester_feedbacks, through: :semester_process_volunteers
   has_many :hours, through: :semester_process_volunteers
