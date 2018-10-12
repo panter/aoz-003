@@ -10,7 +10,8 @@ class SemesterProcessesController < ApplicationController
   def show; end
 
   def new
-    @semester_process = SemesterProcess.new
+    @semester_process = SemesterProcess.new(semester: @selected_semester)
+    @semester_process.build_semester_volunteers(@volunteers)
     authorize @semester_process
   end
 
@@ -19,6 +20,8 @@ class SemesterProcessesController < ApplicationController
   def create
     @semester_process = SemesterProcess.new(semester_process_params.slice(:semester))
     @semester_process.creator = current_user
+    @semester_process.build_semester_volunteers(@volunteers, selected_volunteers)
+    @semester_process.build_volunteers_hours_feedbacks_and_mails
     authorize @semester_process
     if @semester_process.save
       redirect_to @semester_process, notice: 'Semester process was successfully created.'
@@ -55,6 +58,12 @@ class SemesterProcessesController < ApplicationController
     params[:semester] = @semester.year_number unless params[:semester]
     @selected_semester = Semester.new(*params[:semester].split(',').map(&:to_i)).current
     @volunteers = Volunteer.semester_process_eligible(@selected_semester)
+  end
+
+  def selected_volunteers
+    semester_process_params[:semester_process_volunteers_attributes]
+      .select { |_key, value| value['selected'] == '1' }
+      .to_h.map { |_key, value| value[:volunteer_id].to_i }
   end
 
   def semester_process_params
