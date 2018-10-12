@@ -1,21 +1,26 @@
 # AOZ Voluntary Platform
 
-[master](https://github.com/panter/aoz-003/tree/master): [![Build Status](https://travis-ci.org/panter/aoz-003.svg?branch=master)](https://travis-ci.org/panter/aoz-003) |
-[develop](https://github.com/panter/aoz-003): [![Build Status](https://travis-ci.org/panter/aoz-003.svg?branch=develop)](https://travis-ci.org/panter/aoz-003)
+## Pipeline Status
+
+- Develop: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/develop/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/develop)
+- Master: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/master/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/master)
 
 Ruby version: 2.4.2
 
 ## Table of content
 
-1. [Dependencies](#dependencies)
-1. [Developer Dependencies](#developer-dependencies)
-1. [User seeds for development](#user-seeds-for-development)
-1. [Create initial superadmin account](#create-initial-superadmin-account)
-1. [Sort locale yaml files](#sort-locale-yaml-files)
-1. [Importing from access db with rake task](#importing-from-access-db-with-rake-task)
-1. [Run model, integration and controller tests](#run-model-integration-and-controller-tests)
-1. [Run system (acceptance) tests](#run-system-acceptance-tests)
-1. [LICENSE](#license)
+- [AOZ Voluntary Platform](#aoz-voluntary-platform)
+  - [Pipeline Status](#pipeline-status)
+  - [Table of content](#table-of-content)
+    - [Dependencies](#dependencies)
+    - [Developer Dependencies](#developer-dependencies)
+    - [User seeds for development](#user-seeds-for-development)
+    - [Create initial superadmin account](#create-initial-superadmin-account)
+    - [Sort locale yaml files](#sort-locale-yaml-files)
+    - [Importing from access db with rake task](#importing-from-access-db-with-rake-task)
+    - [Run model, integration and controller tests](#run-model-integration-and-controller-tests)
+    - [Run system (acceptance) tests](#run-system-acceptance-tests)
+    - [LICENSE](#license)
 
 ### Dependencies
 
