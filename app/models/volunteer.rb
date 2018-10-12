@@ -96,6 +96,7 @@ class Volunteer < ApplicationRecord
     return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
     where(acceptance: process)
   }
+
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
@@ -153,6 +154,40 @@ class Volunteer < ApplicationRecord
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
 
+  ## Semester Process Scopes
+  #
+  scope :have_semester_process, lambda { |semester|
+    joins(semester_process_volunteers: [:semester_process])
+      .where(
+        'semester_processes.semester && daterange(?,?)',
+        semester.begin.advance(days: 1), semester.end.advance(days: -1)
+      )
+  }
+
+  scope :have_mission, lambda {
+    left_joins(:assignments).left_joins(:group_assignments)
+      .where('assignments.period_start IS NOT NULL OR group_assignments.period_start IS NOT NULL')
+  }
+
+  scope :active_semester_mission, lambda { |semester|
+    have_mission.where(
+      'assignments.period_start < :prob OR group_assignments.period_start < :prob',
+      prob: semester.end.advance(weeks: -4)
+    ).where(
+      '(assignments.period_end IS NULL OR group_assignments.period_end IS NULL) OR '\
+      '(assignments.period_end > :begin OR group_assignments.period_end > :begin)',
+      begin: semester.begin
+    )
+  }
+
+  def self.semester_process_eligible(semester)
+    joins(:contact).where.not(id: have_semester_process(semester).ids)
+      .active_semester_mission(semester)
+      .group('volunteers.id')
+  end
+
+  ## Activness Scopes
+  #
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
