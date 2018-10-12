@@ -156,20 +156,16 @@ class Volunteer < ApplicationRecord
 
   ## Semester Process Scopes
   #
-
-  scope :no_semester_process, lambda { |semester|
-    proc_join = left_joins(semester_process_volunteers: [:semester_process])
-    proc_join.where('semester_processes.semester IS NULL').or(
-      proc_join.where.not(
+  scope :have_semester_process, lambda { |semester|
+    joins(semester_process_volunteers: [:semester_process])
+      .where(
         'semester_processes.semester && daterange(?,?)',
-        semester.begin, semester.end
+        semester.begin.advance(days: 1), semester.end.advance(days: -1)
       )
-    )
   }
 
   scope :have_mission, lambda {
     left_joins(:assignments).left_joins(:group_assignments)
-      .where('assignments.id IS NOT NULL OR group_assignments.id IS NOT NULL')
       .where('assignments.period_start IS NOT NULL OR group_assignments.period_start IS NOT NULL')
   }
 
@@ -185,7 +181,7 @@ class Volunteer < ApplicationRecord
   }
 
   def self.semester_process_eligible(semester)
-    joins(:contact).no_semester_process(semester)
+    joins(:contact).where.not(id: have_semester_process(semester).ids)
       .active_semester_mission(semester)
       .group('volunteers.id')
   end
