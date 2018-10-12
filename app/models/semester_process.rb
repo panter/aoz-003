@@ -26,4 +26,14 @@ class SemesterProcess < ApplicationRecord
 
   # will only return an array, not a AD-result
   delegate :missions, to: :semester_process_volunteers
+
+  # creates semester date range from string '[year],[semester_number]' e.g. '2018,2'
+  def semester=(semester)
+    if semester.is_a?(String)
+      super(Semester.new(*semester.split(',').map(&:to_i)).current)
+    else
+      super(semester)
+    end
+  end
+
 end
