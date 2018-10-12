@@ -96,6 +96,7 @@ class Volunteer < ApplicationRecord
     return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
     where(acceptance: process)
   }
+
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
@@ -183,6 +184,14 @@ class Volunteer < ApplicationRecord
     )
   }
 
+  def self.semester_process_eligible(semester)
+    joins(:contact).no_semester_process(semester)
+      .active_semester_mission(semester)
+      .group('volunteers.id')
+  end
+
+  ## Activness Scopes
+  #
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
