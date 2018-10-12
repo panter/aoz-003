@@ -172,6 +172,17 @@ class Volunteer < ApplicationRecord
       .where('assignments.period_start IS NOT NULL OR group_assignments.period_start IS NOT NULL')
   }
 
+  scope :active_semester_mission, lambda { |semester|
+    have_mission.where(
+      'assignments.period_start < :prob OR group_assignments.period_start < :prob',
+      prob: semester.end.advance(weeks: -4)
+    ).where(
+      '(assignments.period_end IS NULL OR group_assignments.period_end IS NULL) OR '\
+      '(assignments.period_end > :begin OR group_assignments.period_end > :begin)',
+      begin: semester.begin
+    )
+  }
+
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
