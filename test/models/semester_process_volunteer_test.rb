@@ -28,4 +28,60 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
     assert_not @subject.reload.reminders.include? mail
     assert @subject.reload.reminders.include? reminder
   end
+
+  test '#build_missions' do
+    travel_to time_z(2018, 7, 15)
+    semester = Semester.new
+    semester_process = SemesterProcess.new(semester: semester.previous, creator: create(:user))
+
+    @assignment.update(period_start: nil, period_end: nil)
+    @group_assignment.update(period_start: nil, period_end: nil)
+
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    assert_equal 0, subject.semester_process_volunteer_missions.size
+
+    @assignment.update(period_start: time_z(2015, 7, 15))
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    assert_equal 1, subject.semester_process_volunteer_missions.size
+
+    @group_assignment.update(period_start: time_z(2018, 7, 1))
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    assert_equal 1, subject.semester_process_volunteer_missions.size
+
+    @group_assignment.update(period_start: time_z(2018, 7, 1).advance(weeks: -2))
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    assert_equal 1, subject.semester_process_volunteer_missions.size
+  end
+
+  test '#build_hours_feedbacks_and_mails' do
+    travel_to time_z(2018, 7, 15)
+    semester = Semester.new
+    semester_process = SemesterProcess.new(semester: semester.previous, creator: create(:user))
+
+    @assignment.update(period_start: time_z(2018, 1, 15), period_end: nil)
+    @group_assignment.update(period_start: time_z(2018, 1, 15), period_end: nil)
+    hour_assignment = create :hour, hourable: @assignment, meeting_date: time_z(2018, 3, 15),
+      volunteer: @volunteer
+
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    subject.build_hours_feedbacks_and_mails
+    assert subject.hours.include? hour_assignment
+    assert_equal @assignment, subject.semester_feedbacks.find { |fb| fb.assignment_id == @assignment.id }.mission
+
+    hour_group_assignment = create :hour, hourable: @group_assignment.group_offer,
+      meeting_date: time_z(2018, 3, 15), volunteer: @volunteer
+
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    subject.build_hours_feedbacks_and_mails
+    assert subject.hours.include? hour_assignment
+    assert subject.hours.include? hour_group_assignment
+    assert_equal @assignment, subject.semester_feedbacks.find { |fb| fb.assignment_id == @assignment.id }.mission
+    assert_equal @group_assignment, subject.semester_feedbacks.find { |fb| fb.group_assignment_id == @group_assignment.id }.mission
+  end
 end
