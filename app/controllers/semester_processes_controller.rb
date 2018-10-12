@@ -1,5 +1,5 @@
 class SemesterProcessesController < ApplicationController
-  before_action :set_semester_process, only: [:show, :edit, :update, :destroy]
+  before_action :set_semester_process, only: [:show, :edit, :update]
   before_action :set_semester, only: [:new, :create]
 
   def index
@@ -26,7 +26,7 @@ class SemesterProcessesController < ApplicationController
     @semester_process.build_volunteers_hours_feedbacks_and_mails
 
     if @semester_process.save
-      redirect_to @semester_process, notice: 'Semester process was successfully created.'
+      redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created.'
     else
       render :new
     end
@@ -40,14 +40,6 @@ class SemesterProcessesController < ApplicationController
     end
   end
 
-  def destroy
-    if @semester_process.destroy
-      redirect_to semester_processes_url, notice: 'Semester process was successfully destroyed.'
-    else
-      redirect_to semester_processes_url, notice: 'Failure notice'
-    end
-  end
-
   private
 
   def set_semester_process
@@ -57,9 +49,15 @@ class SemesterProcessesController < ApplicationController
 
   def set_semester
     @semester = Semester.new
-    params[:semester] = @semester.year_number unless params[:semester]
-    @selected_semester = Semester.new(*params[:semester].split(',').map(&:to_i)).current
-    @volunteers = Volunteer.semester_process_eligible(@selected_semester)
+    if params[:semester]
+      @selected_semester = Semester.parse(params[:semester])
+    else
+      @selected_semester = @semester.previous
+      params[:semester] = Semester.to_s(@selected_semester)
+    end
+
+    semester_form_param = Semester.parse(params[:semester_process]&.fetch(:semester))
+    @volunteers = Volunteer.semester_process_eligible(semester_form_param || @selected_semester)
   end
 
   def selected_volunteers

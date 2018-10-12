@@ -185,6 +185,11 @@ de:
     social_worker: Sozialarbeiter/in
     superadmin: Superadmin
     volunteer: Freiwillige/r
+  semester_long: '%{number}. Semester %{year} (%{begin} - %{end})'
+  semester_short: '%{number}. Semester %{year}'
+  semester_process_volunteers:
+    show:
+      title: 'Semester Prozess %{semester} von %{name}'
   salutation: &id-salutations
     all: Alle
     family: Familie

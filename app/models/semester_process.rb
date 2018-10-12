@@ -28,12 +28,16 @@ class SemesterProcess < ApplicationRecord
   delegate :missions, to: :semester_process_volunteers
 
   # creates semester date range from string '[year],[semester_number]' e.g. '2018,2'
-  def semester=(semester)
-    if semester.is_a?(String)
-      super(Semester.new(*semester.split(',').map(&:to_i)).current)
-    else
-      super(semester)
-    end
+  def semester=(set_semester)
+    set_semester = Semester.parse(set_semester) if set_semester.is_a?(String)
+
+    # for very strange reason the end of the range is shifted one day after save
+    # possibly a bug in Active Directory
+    super(set_semester.begin..set_semester.end.advance(days: -1))
+  end
+
+  def semester_t(short: true)
+    Semester.i18n_t(semester, short: short)
   end
 
   def build_semester_volunteers(volunteers, selected = nil)
@@ -46,6 +50,6 @@ class SemesterProcess < ApplicationRecord
   end
 
   def build_volunteers_hours_feedbacks_and_mails
-    semester_process_volunteers.map(&:build_hours_feedbacks_and_mails)
+    semester_process_volunteers.map(&:build_hours_and_mails)
   end
 end

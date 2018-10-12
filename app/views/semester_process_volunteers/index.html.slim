@@ -1,1 +1,28 @@
 h1= t_title(:index)
+
+= render 'index_nav'
+
+= bootstrap_paginate(@spvs)
+
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th.hidden-print Aktionen
+        th= t_attr(:creator)
+        th= t_attr(:semester)
+        th= t_attr(:created_at)
+
+    tbody
+      - @spvs.each do |spv|
+        tr
+          td.index-action-cell.hidden-print
+            = link_to t_action(:show), spv
+            = link_to t_action(:edit), edit_semester_process_volunteer_path(spv)
+          td= spv.creator
+          td= spv.semester_t
+          td= l(spv.created_at)
+
+= bootstrap_paginate(@spvs)
+
+= render 'index_nav'

@@ -1,10 +1,11 @@
 class SemesterProcessVolunteersController < ApplicationController
   before_action :set_semester_process_volunteer, only: [:show, :edit, :update]
+  before_action :set_semester, only: [:index]
 
   def index
     authorize SemesterProcessVolunteer
-    @semester_process = SemesterProcess.find(params[:semester_process_id])
-    @semester_process_volunteers = @semester_process.semester_process_volunteers
+
+    @spvs = SemesterProcessVolunteer.index(Semester.parse(params[:semester])).page(params[:page])
   end
 
   def show; end
@@ -12,8 +13,8 @@ class SemesterProcessVolunteersController < ApplicationController
   def edit; end
 
   def update
-    if @semester_process_volunteer.update(semester_process_params)
-      redirect_to @semester_process_volunteer, notice: 'Semester process was successfully updated.'
+    if @spv.update(semester_process_params)
+      redirect_to @spv, notice: 'Semester process was successfully updated.'
     else
       render :edit
     end
@@ -22,10 +23,20 @@ class SemesterProcessVolunteersController < ApplicationController
   private
 
   def set_semester_process_volunteer
-    @semester_process_volunteer = SemesterProcess.find(params[:id])
-    authorize @semester_process_volunteer
-    @semester_process = @semester_process_volunteer.semester_process
-    @volunteer = @semester_process_volunteer.volunteer
+    @spv = SemesterProcessVolunteer.find(params[:id])
+    authorize @spv
+    @semester_process = @spv.semester_process
+    @volunteer = @spv.volunteer
+  end
+
+  def set_semester
+    @semester = Semester.new
+    if params[:semester]
+      @selected_semester = Semester.parse(params[:semester])
+    else
+      @selected_semester = @semester.previous
+      params[:semester] = Semester.to_s(@selected_semester)
+    end
   end
 
   def semester_process_volunteer_params

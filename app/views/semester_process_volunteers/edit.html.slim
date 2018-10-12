@@ -1,6 +1,7 @@
 h1= t_title(:edit)
 
-= simple_form_for(@semester_process_volunteer) do |f|
+= simple_form_for(@spv) do |f|
 
-
-= form_navigation_btn :show
+.row
+  .col-xs-12
+    = button_link(t_action(:show), @spv)
