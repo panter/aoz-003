@@ -20,10 +20,11 @@ class SemesterProcessesController < ApplicationController
   def create
     @semester_process = SemesterProcess.new(semester_process_params.slice(:semester))
     @semester_process.creator = current_user
+    authorize @semester_process
+
     @semester_process.build_semester_volunteers(@volunteers, selected_volunteers)
     @semester_process.build_volunteers_hours_feedbacks_and_mails
 
-    authorize @semester_process
     if @semester_process.save
       redirect_to @semester_process, notice: 'Semester process was successfully created.'
     else
