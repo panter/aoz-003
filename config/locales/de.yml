@@ -994,6 +994,7 @@ de:
   simple_form:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
+      head_error: Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.
     labels:
       assignment:
         <<: *id-termination-feedback-quests

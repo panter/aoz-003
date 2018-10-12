@@ -2,6 +2,7 @@ class SemesterProcessPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
+
       none
     end
   end
