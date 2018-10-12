@@ -6,6 +6,8 @@ class SemesterProcess < ApplicationRecord
     inverse_of: 'semester_process_reminder_mail_posted', optional: true
 
   has_many :semester_process_volunteers, dependent: :destroy
+  accepts_nested_attributes_for :semester_process_volunteers, allow_destroy: true
+
   has_many :volunteers, through: :semester_process_volunteers
   has_many :semester_feedbacks, through: :semester_process_volunteers
   has_many :hours, through: :semester_process_volunteers
@@ -24,4 +26,26 @@ class SemesterProcess < ApplicationRecord
 
   # will only return an array, not a AD-result
   delegate :missions, to: :semester_process_volunteers
+
+  # creates semester date range from string '[year],[semester_number]' e.g. '2018,2'
+  def semester=(semester)
+    if semester.is_a?(String)
+      super(Semester.new(*semester.split(',').map(&:to_i)).current)
+    else
+      super(semester)
+    end
+  end
+
+  def build_semester_volunteers(volunteers, selected = nil)
+    volunteers = volunteers.where(id: selected) if selected
+    semester_process_volunteers << volunteers.to_a.map do |volunteer|
+      spv = SemesterProcessVolunteer.new(volunteer: volunteer, selected: true)
+      spv.build_missions(semester)
+      spv
+    end
+  end
+
+  def build_volunteers_hours_feedbacks_and_mails
+    semester_process_volunteers.map(&:build_hours_feedbacks_and_mails)
+  end
 end

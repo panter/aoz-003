@@ -1,6 +1,11 @@
 class SemesterProcessVolunteer < ApplicationRecord
+  attr_accessor :selected
+
   belongs_to :volunteer
   belongs_to :semester_process
+  delegate :semester, to: :semester_process
+  delegate :creator, to: :semester_process
+
   belongs_to :responsible, -> { with_deleted }, class_name: 'User',
     inverse_of: 'semester_processes', optional: true
   belongs_to :reviewed_by, -> { with_deleted }, class_name: 'User',
@@ -23,6 +28,23 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   # will only return an array, not a AD-result
   def missions
-    assignments + group_assignments
+    semester_process_volunteer_missions.map(&:mission)
+  end
+
+  def build_missions(semester)
+    new_missions = volunteer.assignments.active_between(semester.begin, semester.end) +
+      volunteer.group_assignments.active_between(semester.begin, semester.end)
+
+    semester_process_volunteer_missions << new_missions.map do |mission|
+      SemesterProcessVolunteerMission.new(mission: mission)
+    end
+  end
+
+  def build_hours_feedbacks_and_mails
+    missions.each do |mission|
+      hours << mission.hours.date_between_inclusion(:meeting_date, semester.begin, semester.end)
+      semester_feedbacks << SemesterFeedback.new(mission: mission, volunteer: mission.volunteer)
+    end
+    semester_process_mails << SemesterProcessMail.new(kind: :mail, sent_by: creator)
   end
 end
