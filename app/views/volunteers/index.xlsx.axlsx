@@ -27,7 +27,8 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
     t_attr(:acceptance),
     t_attr(:created_at),
     t_attr(:updated_at),
-    t_attr(:assignment_count)
+    t_attr(:assignment_count),
+    t_attr(:waive_alternative)
   ]
 
 
@@ -59,6 +60,7 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
       l(volunteer.created_at.localtime),
       l(volunteer.updated_at.localtime),
       volunteer.assignments.count,
+      volunteer.waive
     ], types: cell_types, style: cell_styles
   end
 end
