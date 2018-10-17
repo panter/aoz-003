@@ -69,6 +69,8 @@ de:
       trial: Probezeit
       half_year: Halbjährlich
       termination: Beendigung
+      half_year_process_email: 'Half year process email'
+      half_year_process_overdue: 'Half year process overdue'
     index:
       <<: *id-kinds-template
     show:

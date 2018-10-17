@@ -13,6 +13,14 @@ class SemesterProcessesController < ApplicationController
     @semester_process = SemesterProcess.new(semester: @selected_semester)
     @semester_process.build_semester_volunteers(@volunteers)
     authorize @semester_process
+    if EmailTemplate.half_year_process_email.active.any?
+      template = EmailTemplate.half_year_process_email.active.first.slice(:subject, :body)
+      @semester_process.assign_attributes(mail_body_template: template[:body], mail_subject_template: template[:subject])
+    else
+      redirect_to new_email_template_path,
+        notice: 'Sie müssen eine aktive E-Mailvorlage haben,
+        bevor Sie eine Halbjahres Erinnerung erstellen können.'
+    end
   end
 
   def edit; end
@@ -21,6 +29,11 @@ class SemesterProcessesController < ApplicationController
     @semester_process = SemesterProcess.new(semester_process_params.slice(:semester))
     @semester_process.creator = current_user
     authorize @semester_process
+
+    @semester_process.assign_attributes(
+      mail_body_template:    semester_process_params[:body],
+      mail_subject_template: semester_process_params[:subject]
+    )
 
     @semester_process.build_semester_volunteers(@volunteers, selected_volunteers)
     @semester_process.build_volunteers_hours_feedbacks_and_mails
@@ -69,6 +82,9 @@ class SemesterProcessesController < ApplicationController
   def semester_process_params
     params.require(:semester_process).permit(
       :semester,
+      :kind,
+      :subject,
+      :body,
       semester_process_volunteers_attributes: [
         :volunteer_id, :selected
       ]

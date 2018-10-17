@@ -24,6 +24,30 @@ class SemesterProcess < ApplicationRecord
     semester_process_mails.where(kind: 'reminder')
   end
 
+  def mail?
+    self.mail_subject_template && self.mail_body_template
+  end
+
+  def reminder?
+    self.reminder_mail_subject_template && self.reminder_mail_body_template
+  end
+
+  def kind
+    if self.mail?
+      return :mail
+    elsif self.reminder?
+      return :reminder
+    end
+  end
+
+  def subject
+    self.mail_subject_template || self.reminder_mail_subject_template
+  end
+
+  def body
+    self.mail_body_template || self.reminder_mail_body_template
+  end
+
   # will only return an array, not a AD-result
   delegate :missions, to: :semester_process_volunteers
 

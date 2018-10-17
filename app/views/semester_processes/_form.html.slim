@@ -1,8 +1,15 @@
 = simple_form_for(@semester_process, html: { class: 'form-ignore-changes' }) do |f|
   = simple_error_notice f
+  = f.input_field :kind, value: @semester_process.kind, as: :hidden
 
   .row:.col-xs-12.col-md-4
     = f.input :semester, collection: @semester.collection, selected: params[:semester], input_html: { class: 'semester-selector' }
+
+  .row
+    .col-xs-12.col-md-4
+      = render 'email_templates/explain_panel', template_varnames: SemesterProcessMail::template_varnames[:mail]
+    .col-xs-12.col-md-8
+      = render 'email_templates/subject_body_inputs', f: f
 
   fieldset
     legend Freiwillige auswählen

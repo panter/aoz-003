@@ -13,6 +13,4 @@ nav.navbar.section-navigation
         - (0..11).to_a.reverse.map { |count| Time.zone.today.months_ago(count).beginning_of_month }.each do |date|
           li class=('bg-success' if pre_selected == date)
             = link_to "#{I18n.t('date.month_names')[date.month]} #{date.year}", new_half_year_reminder_mailings_path(submitted_since: date)
-
-
 = render 'form'

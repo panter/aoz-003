@@ -57,6 +57,8 @@ class SemesterProcessVolunteer < ApplicationRecord
     missions.each do |mission|
       hours << mission.hours.date_between_inclusion(:meeting_date, semester.begin, semester.end)
     end
-    semester_process_mails << SemesterProcessMail.new(kind: :mail, sent_by: creator)
+    semester_process_mails << SemesterProcessMail.new(kind: :mail, sent_by: creator,
+                                subject: semester_process.mail_subject_template,
+                                body:    semester_process.mail_body_template)
   end
 end
