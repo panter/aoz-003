@@ -14,9 +14,9 @@
         .col-xs-12= ff.input field
 
   h3 Stunden
-  = render 'hours/last_submitted_hours', hours: @semester_process_volunteer.hours
+  = render 'hours/last_submitted_hours', hours: @hours
 
-  = f.simple_fields_for :hour, @hour do |hf|
+  = f.simple_fields_for @hour do |hf|
     .row
       .col-xs-2.float-right= hf.input :hours, required: false, input_html: { value: f.object.hours == 0 ? '' : f.object.hours}
 

@@ -1,17 +1,15 @@
 class SemesterProcessVolunteersController < ApplicationController
   before_action :skip_authorization #TODO add auth
-  before_action :set_mission, only: [:show, :edit, :update, :destroy, :review_semester, :submit_review]
+  before_action :prepare_review, only: [:review_semester, :submit_review]
   before_action :initialize_feedback, only: [:review_semester, :submit_review]
 
   include SemesterProcessVolunteerHelper
 
   def review_semester
-    @volunteer = @semester_process_volunteer.volunteer
     @hour = Hour.new
   end
 
   def submit_review
-    @volunteer = @semester_process_volunteer.volunteer
     assign_reviewed_attributes
 
     set_reviewed
@@ -29,15 +27,18 @@ class SemesterProcessVolunteersController < ApplicationController
       )
       rescue ActiveRecord::RecordInvalid => exception
         null_reviewed
+        @hours.reload
         render :review_semester, notice: exception
     end
   end
 
   private
 
-  def set_mission
+  def prepare_review
     # careful cuz mission id can be present in both missions
     @semester_process_volunteer = SemesterProcessVolunteer.find(params[:id])
+    @hours = @semester_process_volunteer.hours
+    @volunteer = @semester_process_volunteer.volunteer
     @mission = @semester_process_volunteer.missions.first
     # TODO auths
   end
