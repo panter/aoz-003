@@ -82,6 +82,7 @@ class Volunteer < ApplicationRecord
   #
 
   validates :contact, presence: true
+  validates_presence_of :iban, :bank, unless: :waive?
   validates :salutation, presence: true
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/

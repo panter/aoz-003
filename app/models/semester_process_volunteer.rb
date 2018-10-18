@@ -26,6 +26,10 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :reminders, -> { where(kind: 'reminder') }, class_name: 'SemesterProcessMail',
     foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
 
+  accepts_nested_attributes_for :hours, :volunteer, :semester_feedbacks
+
+  validates_associated :hours, :semester_feedbacks, :volunteer
+
   # will only return an array, not a AD-result
   def missions
     semester_process_volunteer_missions.map(&:mission)

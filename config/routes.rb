@@ -97,6 +97,10 @@ Rails.application.routes.draw do
   end
 
   resources :semester_processes
+  resources :semester_process_volunteers do
+    get :review_semester, on: :member
+    patch :submit_review, on: :member
+  end
 
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
