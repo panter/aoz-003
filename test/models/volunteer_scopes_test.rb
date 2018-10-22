@@ -421,7 +421,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     Volunteer.destroy_all
 
     # load test data
-    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs, waive: true)
     Volunteer.acceptance_collection.each do |acceptance|
       volunteer = create :volunteer, acceptance: acceptance
       instance_variable_set("@volunteer_#{acceptance}", volunteer)
