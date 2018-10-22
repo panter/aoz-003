@@ -1,5 +1,4 @@
 class SemesterProcessVolunteersController < ApplicationController
-  before_action :skip_authorization #TODO add auth
   before_action :prepare_review, only: [:review_semester, :submit_review]
   before_action :initialize_feedback, only: [:review_semester, :submit_review]
 
@@ -40,7 +39,7 @@ class SemesterProcessVolunteersController < ApplicationController
     @hours = @semester_process_volunteer.hours
     @volunteer = @semester_process_volunteer.volunteer
     @mission = @semester_process_volunteer.missions.first
-    # TODO auths
+    authorize @semester_process_volunteer
   end
 
   def review_params
