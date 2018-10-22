@@ -2,6 +2,7 @@ class SemesterProcessPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
+
       none
     end
   end
@@ -13,5 +14,4 @@ class SemesterProcessPolicy < ApplicationPolicy
   alias_method :edit?,    :superadmin?
   alias_method :create?,  :superadmin?
   alias_method :update?,  :superadmin?
-  alias_method :destroy?, :superadmin?
 end

@@ -69,6 +69,8 @@ de:
       trial: Probezeit
       half_year: Halbjährlich
       termination: Beendigung
+      half_year_process_email: 'Half year process email'
+      half_year_process_overdue: 'Half year process overdue'
     index:
       <<: *id-kinds-template
     show:
@@ -185,6 +187,11 @@ de:
     social_worker: Sozialarbeiter/in
     superadmin: Superadmin
     volunteer: Freiwillige/r
+  semester_long: '%{number}. Semester %{year} (%{begin} - %{end})'
+  semester_short: '%{number}. Semester %{year}'
+  semester_process_volunteers:
+    show:
+      title: 'Semester Prozess %{semester} von %{name}'
   salutation: &id-salutations
     all: Alle
     family: Familie
@@ -995,6 +1002,7 @@ de:
   simple_form:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
+      head_error: Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.
     labels:
       assignment:
         <<: *id-termination-feedback-quests

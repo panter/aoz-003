@@ -10,7 +10,7 @@ h1= t_title(:index)
       tr
         th.hidden-print Aktionen
         th= t_attr(:creator)
-        th= t_attr(:period)
+        th= t_attr(:semester)
         th= t_attr(:created_at)
 
     tbody
@@ -19,10 +19,10 @@ h1= t_title(:index)
           td.index-action-cell.hidden-print
             = link_to t_action(:show), semester_process
             = link_to t_action(:edit), edit_semester_process_path(semester_process)
-            = link_to navigation_glyph(:delete), semester_process_path(semester_process), confirm_deleting(semester_process)
+            = link_to icon_span(:delete), semester_process_path(semester_process), confirm_deleting(semester_process)
           td = semester_process.creator
-          td = semester_process.period_start
-          td = semester_process.period_end
+          td = semester_process.semester
+          td= l(semester_process.created_at)
 
 = bootstrap_paginate(@semester_processes)
 
