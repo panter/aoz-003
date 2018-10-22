@@ -34,7 +34,7 @@
   .submit-box
     .col-xs-12
       p Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte bis zum heutigen Datum erfasst habe.
-      - if @semester_process_volunteer.reviewed_at.present?
-        p.text-danger Bestätigt am #{l(@semester_process_volunteer.reviewed_at.to_date)} durch #{profile_link(@semester_process_volunteer.reviewed_by)}
+      - if @semester_process_volunteer.commited_at.present?
+        p.text-danger Bestätigt am #{l(@semester_process_volunteer.commited_at.to_date)} durch #{profile_link(@semester_process_volunteer.commited_by)}
       - else
         = f.submit 'Bestätigen', class: 'btn btn-lg-accepted'

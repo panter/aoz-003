@@ -5,8 +5,8 @@ module SemesterProcessVolunteerHelper
   end
 
   def set_reviewed
-    @semester_process_volunteer.reviewed_by = current_user
-    @semester_process_volunteer.reviewed_at = Time.zone.now
+    @semester_process_volunteer.commited_by = current_user
+    @semester_process_volunteer.commited_at = Time.zone.now
   end
 
   def assign_reviewed_attributes
@@ -23,8 +23,8 @@ module SemesterProcessVolunteerHelper
   end
 
   def null_reviewed
-    @semester_process_volunteer.reviewed_by = nil
-    @semester_process_volunteer.reviewed_at = nil
+    @semester_process_volunteer.commited_by = nil
+    @semester_process_volunteer.commited_at = nil
   end
 
 end
