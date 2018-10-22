@@ -57,7 +57,7 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
     assert_equal 1, subject.semester_process_volunteer_missions.size
   end
 
-  test '#build_hours_feedbacks_and_mails' do
+  test '#build_hours_and_mails' do
     travel_to time_z(2018, 7, 15)
     semester = Semester.new
     semester_process = SemesterProcess.new(semester: semester.previous, creator: create(:user))
@@ -69,19 +69,16 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
 
     subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
     subject.build_missions(semester.previous)
-    subject.build_hours_feedbacks_and_mails
+    subject.build_hours_and_mails
     assert subject.hours.include? hour_assignment
-    assert_equal @assignment, subject.semester_feedbacks.find { |fb| fb.assignment_id == @assignment.id }.mission
 
     hour_group_assignment = create :hour, hourable: @group_assignment.group_offer,
       meeting_date: time_z(2018, 3, 15), volunteer: @volunteer
 
     subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
     subject.build_missions(semester.previous)
-    subject.build_hours_feedbacks_and_mails
+    subject.build_hours_and_mails
     assert subject.hours.include? hour_assignment
     assert subject.hours.include? hour_group_assignment
-    assert_equal @assignment, subject.semester_feedbacks.find { |fb| fb.assignment_id == @assignment.id }.mission
-    assert_equal @group_assignment, subject.semester_feedbacks.find { |fb| fb.group_assignment_id == @group_assignment.id }.mission
   end
 end

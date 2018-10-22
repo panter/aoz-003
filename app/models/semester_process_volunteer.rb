@@ -4,6 +4,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   belongs_to :volunteer
   belongs_to :semester_process
   delegate :semester, to: :semester_process
+  delegate :semester_t, to: :semester_process
   delegate :creator, to: :semester_process
 
   belongs_to :responsible, -> { with_deleted }, class_name: 'User',
@@ -26,6 +27,18 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :reminders, -> { where(kind: 'reminder') }, class_name: 'SemesterProcessMail',
     foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
 
+  scope :index_joins, lambda {
+    joins(:semester_process).joins(volunteer: [:contact]).joins(:semester_process_volunteer_missions)
+  }
+
+  scope :index, lambda { |semester = nil|
+    if semester
+      index_joins.where('semester_processes.semester && daterange(?,?)', semester.begin, semester.end)
+    else
+      index_joins
+    end
+  }
+
   # will only return an array, not a AD-result
   def missions
     semester_process_volunteer_missions.map(&:mission)
@@ -40,11 +53,12 @@ class SemesterProcessVolunteer < ApplicationRecord
     end
   end
 
-  def build_hours_feedbacks_and_mails
+  def build_hours_and_mails
     missions.each do |mission|
       hours << mission.hours.date_between_inclusion(:meeting_date, semester.begin, semester.end)
-      semester_feedbacks << SemesterFeedback.new(mission: mission, volunteer: mission.volunteer)
     end
-    semester_process_mails << SemesterProcessMail.new(kind: :mail, sent_by: creator)
+    semester_process_mails << SemesterProcessMail.new(kind: :mail, sent_by: creator,
+                                subject: semester_process.mail_subject_template,
+                                body:    semester_process.mail_body_template)
   end
 end

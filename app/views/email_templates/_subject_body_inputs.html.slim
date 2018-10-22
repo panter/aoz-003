@@ -9,4 +9,4 @@ fieldset
     'Text
     abbr title="notwendig"
       ' *
-  = f.input :body, label_html: { class: 'sr-only' }
+  = f.input :body, as: :text, label_html: { class: 'sr-only' }, input_html: { class: 'text-bg-body' }

@@ -96,7 +96,8 @@ Rails.application.routes.draw do
     get :send_half_year, on: :member
   end
 
-  resources :semester_processes
+  resources :semester_process_volunteers
+  resources :semester_processes, except: [:destroy]
 
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection

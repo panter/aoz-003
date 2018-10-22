@@ -1,7 +1,7 @@
 class EmailTemplate < ApplicationRecord
   before_save :ensure_exactly_one_active_per_kind
 
-  enum kind: { signup: 0, trial: 1, half_year: 3, termination: 2 }
+  enum kind: { signup: 0, trial: 1, half_year: 3, termination: 2, half_year_process_email: 4, half_year_process_overdue: 5 }
   validates :kind, presence: true
 
   scope :order_by_active, -> { order(active: :desc) }
@@ -33,7 +33,9 @@ class EmailTemplate < ApplicationRecord
       assignment: [:Anrede, :Name, :EinsatzTitel, :FeedbackLink],
       trial: ReminderMailing::TEMPLATE_VARNAMES,
       half_year: ReminderMailing::TEMPLATE_VARNAMES,
-      termination: ReminderMailing::TEMPLATE_VARNAMES
+      termination: ReminderMailing::TEMPLATE_VARNAMES,
+      half_year_process_email: ReminderMailing::TEMPLATE_VARNAMES + [:Semester],
+      half_year_process_overdue: ReminderMailing::TEMPLATE_VARNAMES + [:Semester]
     }
   end
 
