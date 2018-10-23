@@ -27,6 +27,10 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :reminders, -> { where(kind: 'reminder') }, class_name: 'SemesterProcessMail',
     foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
 
+  accepts_nested_attributes_for :hours, :volunteer, :semester_feedbacks
+
+  validates_associated :hours, :semester_feedbacks, :volunteer
+
   scope :index_joins, lambda {
     joins(:semester_process).joins(volunteer: [:contact]).joins(:semester_process_volunteer_missions)
   }
@@ -38,6 +42,7 @@ class SemesterProcessVolunteer < ApplicationRecord
       index_joins
     end
   }
+
 
   # will only return an array, not a AD-result
   def missions

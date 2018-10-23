@@ -5,7 +5,7 @@ class VolunteersTest < ApplicationSystemTestCase
     @user = create :user, email: 'superadmin@example.com'
     login_as @user
     Volunteer.acceptance_collection.each do |acceptance|
-      create :volunteer, acceptance: acceptance
+      create :volunteer, acceptance: acceptance, waive: false
     end
     ActionMailer::Base.deliveries.clear
   end

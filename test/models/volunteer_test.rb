@@ -157,7 +157,7 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'volunteer_created_as_accepted_gets_invited_for_account' do
-    volunteer = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    volunteer = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs, waive: true)
     refute_nil volunteer.user_id
     assert_equal 'volunteer', volunteer.user.role, 'user role should be volunteer'
     assert_equal volunteer.contact.primary_email, volunteer.user.email
@@ -187,7 +187,7 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'volunteer can be manually reinvited' do
-    volunteer = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    volunteer = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs, waive: true)
     invitation_token = volunteer.user.invitation_token
     refute_nil volunteer.user_id
     refute_nil volunteer.user.invitation_sent_at
