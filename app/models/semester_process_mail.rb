@@ -12,10 +12,20 @@ class SemesterProcessMail < ApplicationRecord
   delegate :volunteer, to: :semester_process_volunteer
   delegate :semester_process, to: :semester_process_volunteer
 
+
+  TEMPLATE_VARNAMES = [
+    :Anrede,
+    :Name,
+    :Einsatz,
+    :FeedbackLink,
+    :EmailAbsender,
+    :Semester
+  ].freeze
+
   def self.template_varnames
     {
-      mail: EmailTemplate::template_varnames[:half_year_process_email],
-      reminder: EmailTemplate::template_varnames[:half_year_process_overdue]
+      mail: TEMPLATE_VARNAMES,
+      reminder: TEMPLATE_VARNAMES
     }
   end
 
@@ -50,11 +60,6 @@ class SemesterProcessMail < ApplicationRecord
     "#{ I18n.l(semester_process.semester.begin)} - #{I18n.l(semester_process.semester.end)}"
   end
 
-  def einsatz_start
-    #I18n.l(reminder_mailable.period_start) if reminder_mailable.period_start
-    ''
-  end
-
   def einsatz
     ''
   end
@@ -74,7 +79,7 @@ class SemesterProcessMail < ApplicationRecord
   end
 
   def feedback_url(options = {})
-    ''
+    review_semester_semester_process_volunteer_path(semester_process_volunteer)
   end
 
   private
