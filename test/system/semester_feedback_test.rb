@@ -19,6 +19,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   end
 
   test 'accepting should remove submit button' do
+    check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
     @subject_volunteer.reload
     assert_text "Bestätigt am #{I18n.l(@subject_volunteer.commited_at.to_date)} durch #{(@subject_volunteer.commited_by.full_name)}"
@@ -27,6 +28,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   test 'you should be able to add hours on run' do
     assert_equal @subject_volunteer.hours.count, 0
     fill_in 'Stunden', with: 10
+    check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
     @subject_volunteer.reload
     assert_equal @subject_volunteer.hours.first.hours, 10
