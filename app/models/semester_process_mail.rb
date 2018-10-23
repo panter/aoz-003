@@ -2,6 +2,8 @@ class SemesterProcessMail < ApplicationRecord
   belongs_to :semester_process_volunteer
   belongs_to :sent_by, class_name: 'User', inverse_of: 'semester_process_mails'
 
+  after_create :send_email
+
   enum kind: { mail: 0, reminder: 1 }
 
   scope :mail, -> { where(kind: 'mail') }
@@ -75,4 +77,10 @@ class SemesterProcessMail < ApplicationRecord
     ''
   end
 
+  private
+
+  def send_email
+    VolunteerMailer.half_year_process_email(self).deliver
+    self.update(sent_at: Time.zone.now)
+  end
 end

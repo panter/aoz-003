@@ -26,5 +26,4 @@ module SemesterProcessVolunteerHelper
     @semester_process_volunteer.commited_by = nil
     @semester_process_volunteer.commited_at = nil
   end
-
 end
