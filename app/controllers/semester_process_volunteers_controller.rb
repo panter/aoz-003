@@ -12,8 +12,8 @@ class SemesterProcessVolunteersController < ApplicationController
 
   def submit_review
     assign_reviewed_attributes
-
     set_reviewed
+    @semester_process_volunteer.volunteer.validate_waive_and_bank = true
     begin
       ActiveRecord::Base.transaction do
         @semester_process_volunteer.semester_feedbacks << @feedback
