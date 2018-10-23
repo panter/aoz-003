@@ -79,7 +79,12 @@ class SemesterProcessMail < ApplicationRecord
   end
 
   def feedback_url(options = {})
-    review_semester_semester_process_volunteer_path(semester_process_volunteer)
+    action = :review_semester
+    path = semester_process_volunteer
+    Rails.application.routes.url_helpers.polymorphic_url(
+      path,
+      ActionMailer::Base.default_url_options.merge(action: action)
+    )
   end
 
   private
