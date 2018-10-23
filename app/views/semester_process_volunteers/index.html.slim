@@ -24,8 +24,9 @@ h1= t_title(:index)
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
           td= spv.creator
           td= spv.semester_t
-          - spv.missions.each do |m|
-            td= link_to m.to_label, m.id.to_s, target: '_blank'
+
+          td= spv.missions.each do |m|
+            = link_to m.to_label, m.id.to_s, target: '_blank'
           td= l(spv.created_at)
 
 = bootstrap_paginate(@spvs)
