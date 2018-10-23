@@ -82,6 +82,7 @@ class Volunteer < ApplicationRecord
   #
 
   validates :contact, presence: true
+  validates_presence_of :iban, :bank, if: -> { validate_waive_and_bank && waive.blank? }
   validates :salutation, presence: true
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/
@@ -90,6 +91,8 @@ class Volunteer < ApplicationRecord
   validates :user, absence: true,
     if: :external?,
     unless: :user_deleted?
+
+  attr_accessor :validate_waive_and_bank
 
   scope :process_eq, lambda { |process|
     return unless process.present?

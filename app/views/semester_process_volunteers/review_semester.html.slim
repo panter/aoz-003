@@ -1,0 +1,40 @@
+= simple_form_for(@semester_process_volunteer, html: { class: 'col-xs-12 '},
+  url: submit_review_semester_process_volunteer_path(@semester_process_volunteer)) do |f|
+  = simple_error_notice f
+  h1 Zuletzt übermittelte Stunden und Halbjahres-Rapporte
+
+  h2.m-b-20.m-t-30
+    'Einsatz
+    = link_to @mission.to_label, polymorphic_path([@mission.volunteer, @mission.polymorph_url_object]), target: '_blank'
+
+  h3 Halbjahres-Rapporte
+  = f.simple_fields_for @feedback do |ff|
+    - [:goals, :achievements, :future, :comments, :conversation].each do |field|
+      .row
+        .col-xs-12= ff.input field
+
+  h3 Stunden
+  = render 'hours/last_submitted_hours', hours: @hours
+
+  = f.simple_fields_for @hour do |hf|
+    .row
+      .col-xs-2.float-right= hf.input :hours, required: false, input_html: { value: f.object.hours == 0 ? '' : f.object.hours}
+
+  h3 Spesen
+  = f.simple_fields_for :volunteer, @volunteer do |vf|
+    .row.text-left#volunteer-update-waive-and-iban
+      .col-xs-12
+        = vf.input_field :id, type: :hidden
+        = checkbox_toggle_collapse(vf, :waive, '#not-waive-expenses', check_shows: false)
+      .col-xs-12#not-waive-expenses
+        .row
+          .col-xs-4= vf.input :iban
+          .col-xs-4= vf.input :bank
+
+  .submit-box
+    .col-xs-12
+      p Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte bis zum heutigen Datum erfasst habe.
+      - if @semester_process_volunteer.commited_at.present?
+        p.text-danger Bestätigt am #{l(@semester_process_volunteer.commited_at.to_date)} durch #{profile_link(@semester_process_volunteer.commited_by)}
+      - else
+        = f.submit 'Bestätigen', class: 'btn btn-lg-accepted'
