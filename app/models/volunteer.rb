@@ -172,21 +172,9 @@ class Volunteer < ApplicationRecord
       .where('assignments.period_start IS NOT NULL OR group_assignments.period_start IS NOT NULL')
   }
 
-  scope :active_semester_mission, lambda { |semester|
-    have_mission.where(
-      'assignments.period_start < :prob OR group_assignments.period_start < :prob',
-      prob: semester.end.advance(weeks: -4)
-    ).where(
-      '(assignments.period_end IS NULL OR group_assignments.period_end IS NULL) OR '\
-      '(assignments.period_end > :begin OR group_assignments.period_end > :begin)',
-      begin: semester.begin
-    )
-  }
-
   def self.semester_process_eligible(semester)
     joins(:contact).where.not(id: have_semester_process(semester).ids)
       .active_semester_mission(semester)
-      .group('volunteers.id')
   end
 
   ## Activness Scopes
@@ -238,6 +226,19 @@ class Volunteer < ApplicationRecord
   }
 
   scope :need_refunds, (-> { where(waive: false) })
+
+  def self.active_semester_mission(semester)
+    Volunteer.have_mission.find_by_sql(["
+      SELECT DISTINCT vol.id, vol.* from volunteers as vol
+      LEFT JOIN assignments on (assignments.volunteer_id = vol.id)
+      LEFT JOIN group_assignments on (group_assignments.volunteer_id = vol.id)
+      WHERE (assignments.period_start < DATE(:prob) OR group_assignments.period_start < DATE(:prob))
+      AND
+      ((assignments.period_end IS NULL OR group_assignments.period_end IS NULL) OR
+      (assignments.period_end > DATE(:begin) OR group_assignments.period_end > DATE(:begin)))
+      GROUP BY vol.id
+      ", prob: semester.end.advance(weeks: -4), begin: semester.begin ])
+  end
 
   def self.with_billable_hours(date = nil)
     date = billable_semester_date(date)
