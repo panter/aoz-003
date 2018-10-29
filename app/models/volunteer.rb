@@ -228,16 +228,18 @@ class Volunteer < ApplicationRecord
   scope :need_refunds, (-> { where(waive: false) })
 
   def self.active_semester_mission(semester)
-    Volunteer.have_mission.find_by_sql(["
-      SELECT DISTINCT vol.id, vol.* from volunteers as vol
-      LEFT JOIN assignments on (assignments.volunteer_id = vol.id)
-      LEFT JOIN group_assignments on (group_assignments.volunteer_id = vol.id)
-      WHERE (assignments.period_start < DATE(:prob) OR group_assignments.period_start < DATE(:prob))
-      AND
-      ((assignments.period_end IS NULL OR group_assignments.period_end IS NULL) OR
-      (assignments.period_end > DATE(:begin) OR group_assignments.period_end > DATE(:begin)))
-      GROUP BY vol.id
-      ", prob: semester.end.advance(weeks: -4), begin: semester.begin ])
+    volunteers = Volunteer.have_mission
+    prob = semester.end.advance(weeks: -4)
+    sem_start = semester.begin
+    vol_with_assignments = volunteers.select do |v|
+      v.assignments
+        .where("period_start < ?", prob).where("period_end > ? OR period_end IS NULL", sem_start).any?
+    end
+    vol_with_group_assignments = volunteers.select do |v|
+      v.group_assignments
+        .where("period_start < ?", prob).where("period_end > ? OR period_end IS NULL", sem_start).any?
+    end
+    (vol_with_assignments + vol_with_group_assignments).uniq
   end
 
   def self.with_billable_hours(date = nil)
