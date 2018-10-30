@@ -175,6 +175,7 @@ class Volunteer < ApplicationRecord
   def self.semester_process_eligible(semester)
     joins(:contact).where.not(id: have_semester_process(semester).ids)
       .active_semester_mission(semester)
+      .group('volunteers.id')
   end
 
   ## Activness Scopes
@@ -231,15 +232,12 @@ class Volunteer < ApplicationRecord
     volunteers = Volunteer.have_mission
     prob = semester.end.advance(weeks: -4)
     sem_start = semester.begin
-    vol_with_assignments = volunteers.select do |v|
-      v.assignments
-        .where("period_start < ?", prob).where("period_end > ? OR period_end IS NULL", sem_start).any?
+    vol_with_missions = volunteers.select do |v|
+      [v.assignments, v.group_assignments].detect do |mission|
+        mission.where("period_start < ?", prob).where("period_end > ? OR period_end IS NULL", sem_start).any?
+      end
     end
-    vol_with_group_assignments = volunteers.select do |v|
-      v.group_assignments
-        .where("period_start < ?", prob).where("period_end > ? OR period_end IS NULL", sem_start).any?
-    end
-    (vol_with_assignments + vol_with_group_assignments).uniq
+    vol_with_missions
   end
 
   def self.with_billable_hours(date = nil)
