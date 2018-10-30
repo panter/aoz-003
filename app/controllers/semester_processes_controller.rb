@@ -87,7 +87,6 @@ class SemesterProcessesController < ApplicationController
       :kind,
       :subject,
       :body,
-      :sort,
       semester_process_volunteers_attributes: [
         :volunteer_id, :selected
       ]
