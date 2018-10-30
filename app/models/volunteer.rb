@@ -175,7 +175,6 @@ class Volunteer < ApplicationRecord
   def self.semester_process_eligible(semester)
     joins(:contact).where.not(id: have_semester_process(semester).ids)
       .active_semester_mission(semester)
-      .group('volunteers.id')
   end
 
   ## Activness Scopes
