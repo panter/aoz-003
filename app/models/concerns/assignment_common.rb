@@ -34,8 +34,7 @@ module AssignmentCommon
     def label_parts
       @label_parts ||= [
         I18n.t('activerecord.models.assignment'),
-        client.contact.full_name,
-        period_start && I18n.l(period_start)
+        client.contact.full_name
       ]
     end
   end
