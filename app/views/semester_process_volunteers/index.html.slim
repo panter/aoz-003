@@ -21,7 +21,7 @@ h1= t_title(:index)
       - @spvs.each do |spv|
         tr
           td.index-action-cell.hidden-print
-            = link_to t_action(:edit), edit_semester_process_volunteer_path(spv)
+            = button_link icon_span(:edit), edit_semester_process_volunteer_path(spv), title: 'Bearbeiten'
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
           td= spv.semester_t
           td= render_missions(spv)
