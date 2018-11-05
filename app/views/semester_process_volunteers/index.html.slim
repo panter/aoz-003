@@ -9,6 +9,7 @@ h1= t_title(:index)
     thead
       tr
         th.hidden-print Aktionen
+        th Status
         th Freiwilige/r
         th Einsätze
         th Missions
@@ -19,7 +20,12 @@ h1= t_title(:index)
       - @spvs.each do |spv|
         tr
           td.index-action-cell.hidden-print
-            = button_link icon_span(:edit), edit_semester_process_volunteer_path(spv), title: 'Bearbeiten'
+            = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
+          td
+            - if spv.commited_at.present?
+              .label.label-success Bestätigt
+            - else
+              .label.label-warning Unbestätigt
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
           td= spv.semester_t
           td= render_missions(spv)
