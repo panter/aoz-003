@@ -43,6 +43,9 @@ class SemesterProcessVolunteer < ApplicationRecord
     end
   }
 
+  def semester_feedback_with_mission(mission)
+    self.semester_feedbacks.select{|sf| sf.mission == mission}.last
+  end
 
   # will only return an array, not a AD-result
   def missions

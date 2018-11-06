@@ -9,7 +9,7 @@ module SemesterProcessVolunteerHelper
     @semester_process_volunteer.commited_at = Time.zone.now
   end
 
-  def assign_reviewed_attributes
+  def assign_volunteer_attributes
     @volunteer.assign_attributes(review_params[:volunteer_attributes]
       .slice(:waive, :bank, :iban))
   end
