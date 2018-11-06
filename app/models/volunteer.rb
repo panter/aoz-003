@@ -172,21 +172,9 @@ class Volunteer < ApplicationRecord
       .where('assignments.period_start IS NOT NULL OR group_assignments.period_start IS NOT NULL')
   }
 
-  scope :active_semester_mission, lambda { |semester|
-    have_mission.where(
-      'assignments.period_start < :prob OR group_assignments.period_start < :prob',
-      prob: semester.end.advance(weeks: -4)
-    ).where(
-      '(assignments.period_end IS NULL OR group_assignments.period_end IS NULL) OR '\
-      '(assignments.period_end > :begin OR group_assignments.period_end > :begin)',
-      begin: semester.begin
-    )
-  }
-
   def self.semester_process_eligible(semester)
     joins(:contact).where.not(id: have_semester_process(semester).ids)
       .active_semester_mission(semester)
-      .group('volunteers.id')
   end
 
   ## Activness Scopes
@@ -238,6 +226,18 @@ class Volunteer < ApplicationRecord
   }
 
   scope :need_refunds, (-> { where(waive: false) })
+
+  def self.active_semester_mission(semester)
+    volunteers = Volunteer.have_mission
+    prob = semester.end.advance(weeks: -4)
+    sem_start = semester.begin
+    vol_with_missions = volunteers.select do |v|
+      [v.assignments, v.group_assignments].detect do |mission|
+        mission.where("period_start < ?", prob).where("period_end > ? OR period_end IS NULL", sem_start).any?
+      end
+    end
+    vol_with_missions
+  end
 
   def self.with_billable_hours(date = nil)
     date = billable_semester_date(date)
