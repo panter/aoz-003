@@ -26,10 +26,10 @@ class SemesterProcessVolunteersController < ApplicationController
         review_semester_semester_process_volunteer_path(@semester_process_volunteer),
         notice: 'Successfully reviewed.'
       )
-      rescue ActiveRecord::RecordInvalid => exception
-        null_reviewed
-        @hours.reload
-        render :review_semester, notice: exception
+    rescue ActiveRecord::RecordInvalid => exception
+      null_reviewed
+      @hours.reload
+      render :review_semester, notice: exception
     end
   end
 
@@ -56,9 +56,10 @@ class SemesterProcessVolunteersController < ApplicationController
   def prepare_review
     # careful cuz mission id can be present in both missions
     @semester_process_volunteer = SemesterProcessVolunteer.find(params[:id])
-    @hours = @semester_process_volunteer.hours
+    @semester = @semester_process_volunteer.semester
     @volunteer = @semester_process_volunteer.volunteer
     @mission = @semester_process_volunteer.missions.first
+    @hours = @semester_process_volunteer.volunteer.hours.semester(@semester.first.to_s)
     authorize @semester_process_volunteer
   end
 
@@ -66,7 +67,8 @@ class SemesterProcessVolunteersController < ApplicationController
     params.require(:semester_process_volunteer).permit(
       volunteer_attributes: [:waive, :iban, :bank],
       semester_feedback: [:goals, :achievements, :future, :comments, :conversation],
-      hour: [:hours])
+      hour: [:hours]
+    )
   end
 
   def set_semester_process_volunteer
