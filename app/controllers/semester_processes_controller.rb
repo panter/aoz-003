@@ -85,6 +85,12 @@ class SemesterProcessesController < ApplicationController
       :kind,
       :subject,
       :body,
+      :semester_feedbacks: [
+        :
+      ]
+      :hours_attributes: [
+        :hours
+      ],
       semester_process_volunteers_attributes: [
         :volunteer_id, :selected
       ]

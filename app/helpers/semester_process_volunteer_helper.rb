@@ -10,16 +10,8 @@ module SemesterProcessVolunteerHelper
   end
 
   def assign_reviewed_attributes
-    @hour = Hour.new(
-      volunteer: @volunteer,
-      hourable: @mission,
-      semester_process_volunteer: @semester_process_volunteer,
-      meeting_date: Time.zone.now,
-    )
-    @hour.assign_attributes(review_params[:hour])
     @volunteer.assign_attributes(review_params[:volunteer_attributes]
       .slice(:waive, :bank, :iban))
-    @feedback.assign_attributes(review_params[:semester_feedback])
   end
 
   def null_reviewed
