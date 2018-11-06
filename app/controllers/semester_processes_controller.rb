@@ -41,7 +41,7 @@ class SemesterProcessesController < ApplicationController
     @semester_process.build_volunteers_hours_feedbacks_and_mails
 
     if @semester_process.save
-      redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created.'
+      redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created and emails delivered.'
     else
       render :new
     end
