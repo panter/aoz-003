@@ -1,11 +1,10 @@
-- semester_filter = params[:semester].presence
 .btn-group
   button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="Semester" aria-haspopup='true' aria-expanded='false' class="btn-md"
     = "Semester: "
-    = semester_filter ? params[:semester] : @semester
+    = params[:semester] || @semester
     = ' '
     span.caret aria-hidden='true'
   ul.dropdown-menu
     li
-    -@semester.collection.each do |(name, code)|
-      li= link_to name[0..15], request_params_filter(semester: code)
+    -@semester.collection.each do |name, semester_code|
+      li= link_to name[0..15], semester_process_volunteers_path(semester: semester_code)
