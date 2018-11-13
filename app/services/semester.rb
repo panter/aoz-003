@@ -60,6 +60,10 @@ class Semester
       end
     end
 
+    def period(semester)
+      I18n.t(:semester_period, begin: I18n.l(semester.begin.to_date), end: I18n.l(semester.end.to_date))
+    end
+
     def semester_start_time(date_time)
       date_time = date_time.to_date
       if (6..11).cover?(date_time.month)
