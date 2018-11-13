@@ -2,7 +2,6 @@ require 'application_system_test_case'
 
 class SemesterFeedbackTest < ApplicationSystemTestCase
   setup do
-    @superadmin = create :user
     @volunteer = create :volunteer_with_user
     @assignment = create :assignment, volunteer: @volunteer
     @group_assignment = create :group_assignment, volunteer: @volunteer
@@ -10,21 +9,25 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     @subject_volunteer = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer,
       semester_process: @subject)
     @mission = @subject_volunteer.semester_process_volunteer_missions.first.assignment
-    login_as @superadmin
+    login_as @volunteer.user
     visit review_semester_semester_process_volunteer_path(@subject_volunteer)
   end
 
   test 'volunteer with unsubmitted feedback should see a warning' do
     second_spv = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer,
       semester_process: @subject)
-    login_as @volunteer.user
     visit volunteer_path(@volunteer)
     assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert page.has_link? 'Bitte klicken Sie hier um diesen zu bestätigen', count: 2
     visit root_path
     assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert page.has_link? 'Bitte klicken Sie hier um diesen zu bestätigen', count: 2
+    click_link 'Bitte klicken Sie hier um diesen zu bestätigen', match: :first
     submit_feedback(@subject_volunteer)
     visit root_path
     assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert page.has_link? 'Bitte klicken Sie hier um diesen zu bestätigen', count: 1
+    click_link 'Bitte klicken Sie hier um diesen zu bestätigen'
     submit_feedback(second_spv)
     visit root_path
     assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
