@@ -14,14 +14,28 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     visit review_semester_semester_process_volunteer_path(@subject_volunteer)
   end
 
+  test 'volunteer with unsubmitted feedback should see a warning' do
+    second_spv = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer,
+      semester_process: @subject)
+    login_as @volunteer.user
+    visit volunteer_path(@volunteer)
+    assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    visit root_path
+    assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    submit_feedback(@subject_volunteer)
+    visit root_path
+    assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    submit_feedback(second_spv)
+    visit root_path
+    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+  end
+
   test 'by default, you should have not accepted the data' do
     assert_text 'Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte bis zum heutigen Datum erfasst habe.'
   end
 
   test 'accepting should remove submit button' do
-    check 'Ich verzichte auf die Auszahlung von Spesen.'
-    click_on 'Bestätigen', match: :first
-    @subject_volunteer.reload
+    submit_feedback(@subject_volunteer)
     assert_text "Bestätigt am #{I18n.l(@subject_volunteer.commited_at.to_date)} durch #{(@subject_volunteer.commited_by.full_name)}"
   end
 
@@ -66,5 +80,12 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert_equal @subject_volunteer.semester_feedbacks.last.slice(:goals, :achievements, :future, :comments, :conversation),
       { goals: 'being on time', achievements: 'everything', future: 'continue', comments: 'nothing', conversation: true }.stringify_keys
     assert_equal @subject_volunteer.hours.last.hours, 33
+  end
+
+  def submit_feedback(semester_process_volunteer)
+    visit review_semester_semester_process_volunteer_path(semester_process_volunteer)
+    check 'Ich verzichte auf die Auszahlung von Spesen.'
+    click_on 'Bestätigen', match: :first
+    semester_process_volunteer.reload
   end
 end

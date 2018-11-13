@@ -177,6 +177,14 @@ class Volunteer < ApplicationRecord
       .active_semester_mission(semester)
   end
 
+  def unsubmitted_semester_feedbacks?
+    false if semester_process_volunteers.blank?
+    semester_process_volunteers.each do |spv|
+      return true unless spv.commited_at?
+    end
+    false
+  end
+
   ## Activness Scopes
   #
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })

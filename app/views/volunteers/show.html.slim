@@ -1,3 +1,5 @@
+= render 'unsubmitted_semester_feedback_notification'
+
 h1.m-b-20= @volunteer.contact.full_name
 - if @volunteer.rejected?
   - if @volunteer.rejection_type.present?

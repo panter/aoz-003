@@ -1,0 +1,3 @@
+- if current_user.volunteer? && current_user.volunteer.unsubmitted_semester_feedbacks?
+  - message = 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+  = notification_warning_bubble(message)

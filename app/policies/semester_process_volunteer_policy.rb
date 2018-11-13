@@ -8,8 +8,8 @@ class SemesterProcessVolunteerPolicy < ApplicationPolicy
 
   # Actions
   alias_method :index?,   :superadmin?
-  alias_method :review_semester?, :superadmin?
-  alias_method :submit_review?, :superadmin?
+  alias_method :review_semester?, :superadmin_or_volunteer_related?
+  alias_method :submit_review?,   :superadmin_or_volunteer_related?
   alias_method :new?,     :superadmin?
   alias_method :show?,    :superadmin?
   alias_method :edit?,    :superadmin?
