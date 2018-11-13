@@ -5,6 +5,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   belongs_to :semester_process
   delegate :semester, to: :semester_process
   delegate :semester_t, to: :semester_process
+  delegate :semester_period, to: :semester_process
   delegate :creator, to: :semester_process
 
   belongs_to :responsible, -> { with_deleted }, class_name: 'User',
@@ -42,7 +43,6 @@ class SemesterProcessVolunteer < ApplicationRecord
       index_joins
     end
   }
-
 
   # will only return an array, not a AD-result
   def missions

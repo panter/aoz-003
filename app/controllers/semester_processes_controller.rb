@@ -14,7 +14,6 @@ class SemesterProcessesController < ApplicationController
     @semester_process.build_semester_volunteers(@volunteers)
     authorize @semester_process
     @spvs_sorted = @semester_process.semester_process_volunteers.sort { |spv1, spv2| spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name}
-    @seme
     if EmailTemplate.half_year_process_email.active.any?
       template = EmailTemplate.half_year_process_email.active.first.slice(:subject, :body)
       @semester_process.assign_attributes(mail_body_template: template[:body], mail_subject_template: template[:subject])

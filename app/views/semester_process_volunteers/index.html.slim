@@ -17,7 +17,7 @@ h1= t_title(:index)
         th Letzte Bestätigung
 
     tbody
-      - @spvs.each do |spv|
+      - @spvs_sorted.each do |spv|
         tr
           td.index-action-cell.hidden-print
             = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
