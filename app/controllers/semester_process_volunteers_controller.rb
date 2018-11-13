@@ -26,10 +26,10 @@ class SemesterProcessVolunteersController < ApplicationController
         review_semester_semester_process_volunteer_path(@semester_process_volunteer),
         notice: 'Successfully reviewed.'
       )
-      rescue ActiveRecord::RecordInvalid => exception
-        null_reviewed
-        @hours.reload
-        render :review_semester, notice: exception
+    rescue ActiveRecord::RecordInvalid => exception
+      null_reviewed
+      @hours.reload
+      render :review_semester, notice: exception
     end
   end
 
@@ -66,7 +66,8 @@ class SemesterProcessVolunteersController < ApplicationController
     params.require(:semester_process_volunteer).permit(
       volunteer_attributes: [:waive, :iban, :bank],
       semester_feedback: [:goals, :achievements, :future, :comments, :conversation],
-      hour: [:hours])
+      hour: [:hours]
+    )
   end
 
   def set_semester_process_volunteer
