@@ -1,6 +1,6 @@
 class SemesterProcessVolunteersController < ApplicationController
   before_action :prepare_review, :initialize_nested_objects, only: [:review_semester, :submit_review]
-  before_action :set_semester_process_volunteer, only: [:show, :edit, :update]
+  before_action :set_semester_process_volunteer, only: [:show, :edit, :update, :take_responsibility]
   before_action :set_semester, only: [:index]
 
   include SemesterProcessVolunteerHelper
@@ -52,6 +52,21 @@ class SemesterProcessVolunteersController < ApplicationController
       redirect_to @spv, notice: 'Semester process was successfully updated.'
     else
       render :edit
+    end
+  end
+
+  def take_responsibility
+    respond_to do |format|
+      if @spv.update(responsible: current_user)
+        format.html { redirect_to(@redirect_back_path, notice: 'Halbjahres-Rapport übernommen.') }
+        format.json do
+          render json: { link: url_for(@spv.responsible), at: I18n.l(@spv.responsibility_taken_at.to_date),
+                         email: @spv.responsible.email }, status: :ok
+        end
+      else
+        format.html { redirect_to(@redirect_back_path, notice: 'Fehler: Übernehmen fehlgeschlagen.') }
+        format.json { render json: { errors: @spv.errors.messages }, status: :unprocessable_entity }
+      end
     end
   end
 

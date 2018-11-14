@@ -75,4 +75,9 @@ class SemesterProcessVolunteer < ApplicationRecord
   def render_feedback(field)
     semester_feedbacks.map(&field).join(', ')
   end
+
+  def responsible=(responsible_user)
+    self.responsibility_taken_at = Time.zone.now
+    super(responsible_user)
+  end
 end
