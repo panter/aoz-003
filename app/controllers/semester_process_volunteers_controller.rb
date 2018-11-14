@@ -22,6 +22,7 @@ class SemesterProcessVolunteersController < ApplicationController
       @volunteer.save!
       @feedbacks.each(&:save!)
       @hours.each(&:save!)
+
     end
 
     redirect_to review_semester_semester_process_volunteer_path(@semester_process_volunteer), notice: t('.success')
