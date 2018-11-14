@@ -1,8 +1,4 @@
 module SemesterProcessVolunteerHelper
-  def initialize_feedback
-    @feedback = SemesterFeedback.new(mission: @mission, semester_process_volunteer: @semester_process_volunteer,
-      author: current_user)
-  end
 
   def set_reviewed
     @semester_process_volunteer.commited_by = current_user

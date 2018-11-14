@@ -192,6 +192,8 @@ de:
   semester_process_volunteers:
     show:
       title: 'Semester Prozess %{semester} von %{name}'
+    submit_review:
+      success: Erfolgreich überprüft
   salutation: &id-salutations
     all: Alle
     family: Familie

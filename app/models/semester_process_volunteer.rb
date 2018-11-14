@@ -44,7 +44,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   }
 
   def semester_feedback_with_mission(mission)
-    self.semester_feedbacks.select{|sf| sf.mission == mission}.last
+    self.semester_feedbacks.order(:created_at).select{|sf| sf.mission == mission}.last
   end
 
   # will only return an array, not a AD-result

@@ -1,6 +1,5 @@
 class SemesterProcessVolunteersController < ApplicationController
   before_action :prepare_review, only: [:review_semester, :submit_review]
-  before_action :initialize_feedback, only: [:review_semester, :submit_review]
   before_action :set_semester_process_volunteer, only: [:show, :edit, :update]
   before_action :set_semester, only: [:index]
 
@@ -21,15 +20,12 @@ class SemesterProcessVolunteersController < ApplicationController
       @feedbacks.each(&:save!)
       @hours.each(&:save!)
     end
-    redirect_to(
-      review_semester_semester_process_volunteer_path(@semester_process_volunteer),
-      notice: 'Successfully reviewed.'
-    )
+
+    redirect_to review_semester_semester_process_volunteer_path(@semester_process_volunteer), notice: t('.success')
+
   rescue ActiveRecord::RecordInvalid => exception
-    puts "ERROR!"
-    puts exception.message
     null_reviewed
-    render :review_semester, notice: exception.message, errors: exception.message
+    render :review_semester
   end
 
   def index
@@ -54,25 +50,31 @@ class SemesterProcessVolunteersController < ApplicationController
 
   def build_nested_objects
     @feedbacks, @hours = [], []
-    review_params[:semester_feedbacks_attributes].each do |_i, hash|
+    review_params[:semester_feedbacks_attributes].each do |_key, hash|
       @feedbacks << SemesterFeedback.new(hash[:semester_feedback]
         .merge({ author: current_user, semester_process_volunteer: @semester_process_volunteer }))
-      @hours << Hour.new(hash[:hour])
+        if hash[:hour][:hours]&.to_i.positive?
+          spv_mission = SemesterProcessVolunteerMission.find(hash[:hour][:spv_mission_id])
+          @hours << Hour.new(hash[:hour].merge({
+            hourable: spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission,
+            volunteer: spv_mission.volunteer,
+            meeting_date: Time.zone.now,
+            semester_process_volunteer: @semester_process_volunteer
+          }))
+        end
     end
   end
 
   def prepare_review
-    # careful cuz mission id can be present in both missions
     @semester_process_volunteer = SemesterProcessVolunteer.find(params[:id])
-    #@hours = @semester_process_volunteer.hours
+    authorize @semester_process_volunteer
     @volunteer = @semester_process_volunteer.volunteer
     @missions = @semester_process_volunteer.missions
-    authorize @semester_process_volunteer
   end
 
   def review_params
     params.require(:semester_process_volunteer).permit(
-      volunteer_attributes: [:waive, :iban, :bank],
+      volunteer_attributes: [:id ,:waive, :iban, :bank],
       semester_feedbacks_attributes: [[semester_feedback: [:mission, :goals, :achievements, :future, :comments, :conversation, :spv_mission_id]],
                                      [hour: [:hours, :spv_mission_id ]]])
   end
