@@ -36,7 +36,7 @@ class SemesterProcessesController < ApplicationController
       mail_subject_template: semester_process_params[:subject]
     )
 
-    @semester_process.build_semester_volunteers(@volunteers, selected_volunteers: selected_volunteers)
+    @semester_process.build_semester_volunteers(@volunteers, selected_volunteers)
     @semester_process.build_volunteers_hours_feedbacks_and_mails
 
     if @semester_process.save
