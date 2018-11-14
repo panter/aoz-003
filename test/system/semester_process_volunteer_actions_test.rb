@@ -24,4 +24,12 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     assert page.has_text? "Übernommen durch #{@superadmin.email}"\
     " am #{I18n.l(@spv1.responsibility_taken_at.to_date)}"
   end
+
+  test 'take_feedback_responsibility_filter_works' do
+    # TODO: add filter test
+    # filter: Alle
+    # filter: Offen
+    # filter: Übernommen
+    # filter: Übernommen von
+  end
 end

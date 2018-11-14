@@ -39,8 +39,10 @@ class SemesterProcessVolunteersController < ApplicationController
   def index
     authorize SemesterProcessVolunteer
 
-    @spvs = SemesterProcessVolunteer.index(Semester.parse(params[:semester])).page(params[:page])
-    @spvs_sorted = @spvs.sort { |spv1, spv2| spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name}
+    @q = SemesterProcessVolunteer.index(Semester.parse(params[:semester])).ransack(params[:q])
+    @q.sorts = ['volunteer_contact_last_name asc'] if @q.sorts.empty?
+    @spvs = @q.result.paginate(page: params[:page])
+    set_responsibles
   end
 
   def show; end
@@ -102,6 +104,19 @@ class SemesterProcessVolunteersController < ApplicationController
       @selected_semester = @semester.previous
       params[:semester] = Semester.to_s(@selected_semester)
     end
+  end
+
+  def set_responsibles
+    @responsibles = SemesterProcessVolunteer.joins(responsible: [profile: [:contact]])
+      .distinct
+      .select('users.id, contacts.full_name')
+      .map do |responsible|
+        {
+          q: :responsible_id_eq,
+          text: "Übernommen von #{responsible.full_name}",
+          value: responsible.id
+        }
+      end
   end
 
   def semester_process_volunteer_params
