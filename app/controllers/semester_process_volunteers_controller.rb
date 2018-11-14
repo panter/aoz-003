@@ -8,6 +8,9 @@ class SemesterProcessVolunteersController < ApplicationController
   def review_semester; end
 
   def submit_review
+    # you shall not pass
+    return if @semester_process_volunteer.commited_at
+
     set_reviewed
     assign_volunteer_attributes
     @semester_process_volunteer.volunteer.validate_waive_and_bank = true
