@@ -43,6 +43,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   end
 
   test 'you should be able to add hours on run' do
+    fill_in_required_feedback_fields
     assert_equal @subject_volunteer.hours.count, 0
     fill_in 'Stunden', with: 10
     check 'Ich verzichte auf die Auszahlung von Spesen.'
@@ -55,6 +56,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   end
 
   test 'iban and bank has to be filled' do
+    fill_in_required_feedback_fields
     uncheck 'Ich verzichte auf die Auszahlung von Spesen.'
     fill_in 'IBAN', with: ''
     fill_in 'Bank', with: ''
@@ -67,9 +69,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   end
 
   test 'it should store the info that user inputs' do
-    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?', with: 'being on time'
-    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: 'everything'
-    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?', with: 'continue'
+    fill_in_required_feedback_fields
     fill_in 'Kommentare', with: 'nothing'
     check 'Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.'
     fill_in 'Stunden', with: 33
@@ -87,8 +87,15 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
 
   def submit_feedback(semester_process_volunteer)
     visit review_semester_semester_process_volunteer_path(semester_process_volunteer)
+    fill_in_required_feedback_fields
     check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
     semester_process_volunteer.reload
+  end
+
+  def fill_in_required_feedback_fields
+    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?', with: 'being on time'
+    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: 'everything'
+    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?', with: 'continue'
   end
 end

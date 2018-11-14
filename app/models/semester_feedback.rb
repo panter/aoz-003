@@ -5,6 +5,7 @@ class SemesterFeedback < ApplicationRecord
   belongs_to :semester_process_volunteer
   has_one :semester_process, through: :semester_process_volunteer
   has_one :volunteer, through: :semester_process_volunteer
+  validates :goals, :achievements, :future, presence: true
 
   attr_reader :spv_mission_id
 
