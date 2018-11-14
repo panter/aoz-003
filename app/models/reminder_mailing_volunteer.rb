@@ -121,4 +121,8 @@ class ReminderMailingVolunteer < ApplicationRecord
   def feedback_link
     "[Halbjahres-Rapport erstellen](#{feedback_url})"
   end
+
+  def online_plattform_url
+    "[Online-Plattform Url](#{Rails.application.routes.url_helpers.root_path})"
+  end
 end

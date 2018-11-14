@@ -19,7 +19,8 @@ class SemesterProcessMail < ApplicationRecord
     :Einsatz,
     :FeedbackLink,
     :EmailAbsender,
-    :Semester
+    :Semester,
+    :OnlinePlattformUrl
   ].freeze
 
   def self.template_varnames
@@ -85,6 +86,10 @@ class SemesterProcessMail < ApplicationRecord
       path,
       ActionMailer::Base.default_url_options.merge(action: action)
     )
+  end
+
+  def online_plattform_url
+    "[Online-Plattform Url](#{Rails.application.routes.url_helpers.root_path})"
   end
 
   private
