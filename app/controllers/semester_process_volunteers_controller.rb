@@ -5,7 +5,8 @@ class SemesterProcessVolunteersController < ApplicationController
 
   include SemesterProcessVolunteerHelper
 
-  def review_semester; end
+  def review_semester
+  end
 
   def submit_review
     # you shall not pass
@@ -32,6 +33,7 @@ class SemesterProcessVolunteersController < ApplicationController
   rescue ActiveRecord::RecordInvalid => exception
     logger.error exception.message
     null_reviewed
+    flash[:alert] = exception.message
     render :review_semester
   end
 
