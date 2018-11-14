@@ -1,19 +1,16 @@
 class SemesterProcessVolunteersController < ApplicationController
-  before_action :prepare_review, only: [:review_semester, :submit_review]
+  before_action :prepare_review, :initialize_nested_objects, only: [:review_semester, :submit_review]
   before_action :set_semester_process_volunteer, only: [:show, :edit, :update]
   before_action :set_semester, only: [:index]
 
   include SemesterProcessVolunteerHelper
 
-  def review_semester
-    initialize_nested_objects
-  end
+  def review_semester; end
 
   def submit_review
     # you shall not pass
     return if @semester_process_volunteer.commited_at
 
-    initialize_nested_objects
     set_reviewed
     assign_volunteer_attributes
     build_nested_objects
