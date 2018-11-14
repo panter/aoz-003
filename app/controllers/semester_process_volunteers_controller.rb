@@ -5,29 +5,35 @@ class SemesterProcessVolunteersController < ApplicationController
 
   include SemesterProcessVolunteerHelper
 
-  def review_semester; end
+  def review_semester
+    initialize_nested_objects
+  end
 
   def submit_review
     # you shall not pass
     return if @semester_process_volunteer.commited_at
 
+    initialize_nested_objects
     set_reviewed
     assign_volunteer_attributes
+    build_nested_objects
+
     @semester_process_volunteer.volunteer.validate_waive_and_bank = true
 
-    build_nested_objects
 
     ActiveRecord::Base.transaction do
       @semester_process_volunteer.save!
       @volunteer.save!
-      @feedbacks.each(&:save!)
-      @hours.each(&:save!)
 
+      @nested_objects.each do |_key, hash|
+        hash.each { |_id, obj| obj.save! }
+      end
     end
 
     redirect_to review_semester_semester_process_volunteer_path(@semester_process_volunteer), notice: t('.success')
 
   rescue ActiveRecord::RecordInvalid => exception
+    logger.error exception.message
     null_reviewed
     render :review_semester
   end
@@ -52,22 +58,6 @@ class SemesterProcessVolunteersController < ApplicationController
   end
 
   private
-
-  def build_nested_objects
-    @feedbacks, @hours = [], []
-    review_params[:semester_feedbacks_attributes].each do |_key, hash|
-      @feedbacks << SemesterFeedback.new(hash[:semester_feedback]
-        .merge({ author: current_user, semester_process_volunteer: @semester_process_volunteer }))
-        if hash[:hour][:hours]&.to_i.positive?
-          spv_mission = SemesterProcessVolunteerMission.find(hash[:hour][:spv_mission_id])
-          @hours << Hour.new(hash[:hour].merge({
-            volunteer: spv_mission.volunteer,
-            meeting_date: Time.zone.now,
-            semester_process_volunteer: @semester_process_volunteer
-          }))
-        end
-    end
-  end
 
   def prepare_review
     @semester_process_volunteer = SemesterProcessVolunteer.find(params[:id])
