@@ -47,10 +47,6 @@ class Hour < ApplicationRecord
 
   attr_reader :spv_mission_id
 
-  def spv_mission_id= id
-    self.hourable = SemesterProcessVolunteerMission.find(id).mission
-  end
-
   def assignment?
     hourable_type == 'Assignment'
   end
