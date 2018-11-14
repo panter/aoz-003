@@ -56,7 +56,6 @@ class SemesterProcessVolunteersController < ApplicationController
         if hash[:hour][:hours]&.to_i.positive?
           spv_mission = SemesterProcessVolunteerMission.find(hash[:hour][:spv_mission_id])
           @hours << Hour.new(hash[:hour].merge({
-            hourable: spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission,
             volunteer: spv_mission.volunteer,
             meeting_date: Time.zone.now,
             semester_process_volunteer: @semester_process_volunteer
