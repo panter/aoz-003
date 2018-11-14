@@ -189,6 +189,7 @@ de:
     volunteer: Freiwillige/r
   semester_long: '%{number}. Semester %{year} (%{begin} - %{end})'
   semester_short: '%{number}. Semester %{year}'
+  semester_period: '%{begin} - %{end}'
   semester_process_volunteers:
     show:
       title: 'Semester Prozess %{semester} von %{name}'

@@ -34,8 +34,8 @@ class EmailTemplate < ApplicationRecord
       trial: ReminderMailing::TEMPLATE_VARNAMES,
       half_year: ReminderMailing::TEMPLATE_VARNAMES,
       termination: ReminderMailing::TEMPLATE_VARNAMES,
-      half_year_process_email: ReminderMailing::TEMPLATE_VARNAMES + [:Semester],
-      half_year_process_overdue: ReminderMailing::TEMPLATE_VARNAMES + [:Semester]
+      half_year_process_email: SemesterProcessMail.template_varnames[:mail],
+      half_year_process_overdue:  SemesterProcessMail.template_varnames[:reminder]
     }
   end
 

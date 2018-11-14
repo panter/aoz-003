@@ -64,10 +64,14 @@ class SemesterProcess < ApplicationRecord
     Semester.i18n_t(semester, short: short)
   end
 
+  def semester_period
+    Semester.period(semester)
+  end
+
   def build_semester_volunteers(volunteers, selected = nil)
     volunteers = volunteers.where(id: selected) if selected
     semester_process_volunteers << volunteers.to_a.map do |volunteer|
-      spv = SemesterProcessVolunteer.new(volunteer: volunteer, selected: true)
+      spv = SemesterProcessVolunteer.new(volunteer: volunteer, selected: false)
       spv.build_missions(semester)
       spv
     end

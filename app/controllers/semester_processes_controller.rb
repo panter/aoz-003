@@ -13,6 +13,7 @@ class SemesterProcessesController < ApplicationController
     @semester_process = SemesterProcess.new(semester: @selected_semester)
     @semester_process.build_semester_volunteers(@volunteers)
     authorize @semester_process
+    @spvs_sorted = @semester_process.semester_process_volunteers.sort { |spv1, spv2| spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name}
     if EmailTemplate.half_year_process_email.active.any?
       template = EmailTemplate.half_year_process_email.active.first.slice(:subject, :body)
       @semester_process.assign_attributes(mail_body_template: template[:body], mail_subject_template: template[:subject])
@@ -35,11 +36,11 @@ class SemesterProcessesController < ApplicationController
       mail_subject_template: semester_process_params[:subject]
     )
 
-    @semester_process.build_semester_volunteers(@volunteers, selected_volunteers)
+    @semester_process.build_semester_volunteers(@volunteers, selected_volunteers: selected_volunteers)
     @semester_process.build_volunteers_hours_feedbacks_and_mails
 
     if @semester_process.save
-      redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created.'
+      redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created and emails delivered.'
     else
       render :new
     end

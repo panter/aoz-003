@@ -7,7 +7,8 @@ class ReminderMailing < ApplicationRecord
     :Einsatz,
     :EinsatzStart,
     :FeedbackLink,
-    :EmailAbsender
+    :EmailAbsender,
+    :OnlinePlattformUrl
   ].freeze
 
   belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'reminder_mailings'

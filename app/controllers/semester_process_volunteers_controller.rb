@@ -32,6 +32,7 @@ class SemesterProcessVolunteersController < ApplicationController
     authorize SemesterProcessVolunteer
 
     @spvs = SemesterProcessVolunteer.index(Semester.parse(params[:semester])).page(params[:page])
+    @spvs_sorted = @spvs.sort { |spv1, spv2| spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name}
   end
 
   def show; end
@@ -76,6 +77,7 @@ class SemesterProcessVolunteersController < ApplicationController
       volunteer_attributes: [:id ,:waive, :iban, :bank],
       semester_feedbacks_attributes: [[semester_feedback: [:mission, :goals, :achievements, :future, :comments, :conversation, :spv_mission_id]],
                                      [hour: [:hours, :spv_mission_id ]]])
+
   end
 
   def set_semester_process_volunteer
