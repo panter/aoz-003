@@ -66,4 +66,8 @@ class SemesterProcessVolunteer < ApplicationRecord
                                 subject: semester_process.mail_subject_template,
                                 body:    semester_process.mail_body_template)
   end
+
+  def render_feedback(field)
+    semester_feedbacks.map(&field).join(', ')
+  end
 end

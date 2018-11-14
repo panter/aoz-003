@@ -13,6 +13,20 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     visit review_semester_semester_process_volunteer_path(@subject_volunteer)
   end
 
+  def submit_feedback(semester_process_volunteer)
+    visit review_semester_semester_process_volunteer_path(semester_process_volunteer)
+    fill_in_required_feedback_fields
+    check 'Ich verzichte auf die Auszahlung von Spesen.'
+    click_on 'Bestätigen', match: :first
+    semester_process_volunteer.reload
+  end
+
+  def fill_in_required_feedback_fields
+    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?', with: 'being on time'
+    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: 'everything'
+    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?', with: 'continue'
+  end
+
   test 'volunteer with unsubmitted feedback should see a warning' do
     second_spv = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer,
       semester_process: @subject)
@@ -85,17 +99,41 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert_equal @subject_volunteer.hours.last.hours, 33
   end
 
-  def submit_feedback(semester_process_volunteer)
-    visit review_semester_semester_process_volunteer_path(semester_process_volunteer)
-    fill_in_required_feedback_fields
+  test 'truncate_modal_shows_all_text' do
+    goals = FFaker::Lorem.paragraph(20)
+    achievements = FFaker::Lorem.paragraph(20)
+    future = FFaker::Lorem.paragraph(20)
+    comments = FFaker::Lorem.paragraph(20)
+
+    @superadmin = create :user
+    login_as @superadmin
+    visit review_semester_semester_process_volunteer_path(@subject_volunteer)
+
+    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?', with: goals
+    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: achievements
+    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?', with: future
+    fill_in 'Kommentare', with: comments
+
+    # submit feedback without revisiting review form
     check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
-    semester_process_volunteer.reload
-  end
+    @subject_volunteer.reload
+    visit semester_process_volunteers_path
 
-  def fill_in_required_feedback_fields
-    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?', with: 'being on time'
-    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: 'everything'
-    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?', with: 'continue'
+    page.find('td', text: goals.truncate(300)).click
+    assert page.has_text? goals
+    click_button 'Schliessen'
+
+    page.find('td', text: achievements.truncate(300)).click
+    assert page.has_text? achievements
+    click_button 'Schliessen'
+
+    page.find('td', text: future.truncate(300)).click
+    assert page.has_text? future
+    click_button 'Schliessen'
+
+    page.find('td', text: comments.truncate(300)).click
+    assert page.has_text? comments
+    click_button 'Schliessen'
   end
 end

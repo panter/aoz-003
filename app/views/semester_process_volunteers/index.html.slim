@@ -13,6 +13,10 @@ h1= t_title(:index)
         th Freiwilige/r
         th Einsätze
         th Missions
+        th Ziele
+        th Erfolge
+        th Zukunft
+        th Bemerkungen
         th= t_attr(:commited_by)
         th Letzte Bestätigung
 
@@ -29,6 +33,10 @@ h1= t_title(:index)
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
           td= spv.semester_t
           td= render_missions(spv)
+          = td_truncate_content_modal(spv.render_feedback(:goals), 'Ziele', shorten_size: 300)
+          = td_truncate_content_modal(spv.render_feedback(:achievements), 'Erfolge', shorten_size: 300)
+          = td_truncate_content_modal(spv.render_feedback(:future), 'Zukunft', shorten_size: 300)
+          = td_truncate_content_modal(spv.render_feedback(:comments), 'Bemerkungen', shorten_size: 300)
           td= spv.commited_by
           td= spv.commited_at && l(spv.commited_at)
 
