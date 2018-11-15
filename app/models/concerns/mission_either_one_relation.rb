@@ -8,6 +8,8 @@ module MissionEitherOneRelation
 
     validate :validate_group_assignment_or_assignment_present
 
+    attr_accessor :mission_id
+
     def mission=(mission)
       if mission.class.name == 'Assignment'
         self.assignment = mission

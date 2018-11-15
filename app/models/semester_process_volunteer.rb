@@ -28,7 +28,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :reminders, -> { where(kind: 'reminder') }, class_name: 'SemesterProcessMail',
     foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
 
-  accepts_nested_attributes_for :hours, :volunteer, :semester_feedbacks
+  accepts_nested_attributes_for :group_assignments, :assignments , :semester_process_volunteer_missions , :hours, :volunteer, :semester_feedbacks
 
   validates_associated :hours, :semester_feedbacks, :volunteer
 
@@ -43,6 +43,11 @@ class SemesterProcessVolunteer < ApplicationRecord
       index_joins
     end
   }
+
+
+  def semester_feedback_with_mission(mission)
+    self.semester_feedbacks.order(:created_at).select{|sf| sf.mission == mission}.last
+  end
 
   # will only return an array, not a AD-result
   def missions
