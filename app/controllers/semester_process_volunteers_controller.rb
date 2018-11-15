@@ -18,7 +18,6 @@ class SemesterProcessVolunteersController < ApplicationController
 
     @semester_process_volunteer.volunteer.validate_waive_and_bank = true
 
-
     ActiveRecord::Base.transaction do
       @semester_process_volunteer.save!
       @volunteer.save!
