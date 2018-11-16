@@ -19,6 +19,7 @@ h1= t_title(:index)
         th Bemerkungen
         th= t_attr(:commited_by)
         th Letzte Bestätigung
+        th Aktionen
 
     tbody
       - @spvs_sorted.each do |spv|
@@ -39,6 +40,15 @@ h1= t_title(:index)
           = td_truncate_content_modal(spv.render_feedback(:comments), 'Bemerkungen', shorten_size: 300)
           td= spv.commited_by
           td= spv.commited_at && l(spv.commited_at)
+          td.index-action-cell.hidden-print
+            - if spv.responsible.present?
+              = 'Übernommen durch '
+              = link_to spv.responsible.email, spv.responsible
+              = " am #{l(spv.responsibility_taken_at.to_date)}"
+            - else
+              = api_button('Übernehmen', subject: [spv],
+                  action: :take_responsibility, extra_class: 'm-t-10',
+                  template: 'Übernommen durch <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
 
 = bootstrap_paginate(@spvs)
 
