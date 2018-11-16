@@ -19,10 +19,10 @@ h1= t_title(:index)
         th Bemerkungen
         th= t_attr(:commited_by)
         th Letzte Bestätigung
-        th Aktionen
+        th= sort_link @q, :responsible_profile_contact_full_name, 'Übernommen'
 
     tbody
-      - @spvs_sorted.each do |spv|
+      - @spvs.each do |spv|
         tr
           td.index-action-cell.hidden-print
             = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
