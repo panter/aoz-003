@@ -24,8 +24,9 @@
     = spvm.simple_fields_for :hour, Hour.new do |hf|
       = hf.input :spv_mission_id, as: :hidden, input_html: { value: spvm.object.id}
       .row
-        .col-xs-2= hf.input :hours, label: "Restliche Stunden in diesem Semester #{@semester_process_volunteer.semester_period}",
-                                    input_html: { value: f.object.hours == 0 ? '' : f.object.hours, min: 0}
+        .col-xs-12= hf.input :hours, label: "Restliche Stunden in diesem Semester #{@semester_process_volunteer.semester_period}",
+                                    input_html: { value: f.object.hours == 0 ? '' : f.object.hours, min: 0},
+                                    required: false
 
 
   h3 Spesen
