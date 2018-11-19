@@ -30,6 +30,7 @@ FactoryBot.define do
       end
       sem_fb.volunteer = sem_fb.semester_process_volunteer.volunteer
       sem_fb.author = sem_fb.volunteer.user
+      sem_fb.goals = sem_fb.semester_process_volunteer.semester_t
     end
 
     after(:create) do |sem_fb, evl|

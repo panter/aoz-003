@@ -12,7 +12,6 @@ h1= t_title(:index)
         th Status
         th Freiwilige/r
         th Einsätze
-        th Missions
         th Ziele
         th Erfolge
         th Zukunft
@@ -32,7 +31,6 @@ h1= t_title(:index)
             - else
               .label.label-warning Unbestätigt
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
-          td= spv.semester_t
           td= render_missions(spv)
           = td_truncate_content_modal(spv.render_feedback(:goals), 'Ziele', shorten_size: 300)
           = td_truncate_content_modal(spv.render_feedback(:achievements), 'Erfolge', shorten_size: 300)
