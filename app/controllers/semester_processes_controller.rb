@@ -11,9 +11,32 @@ class SemesterProcessesController < ApplicationController
 
   def new
     @semester_process = SemesterProcess.new(semester: @selected_semester)
-    @semester_process.build_semester_volunteers(@volunteers)
+    new_or_edit
+  end
+
+  def edit
+    new_or_edit
+  end
+
+  def create
+    @semester_process = SemesterProcess.new(semester_process_params.slice(:semester))
+    update_or_create
+  end
+
+  def update
+    update_or_create
+  end
+
+  private
+
+  def new_or_edit
     authorize @semester_process
-    @spvs_sorted = @semester_process.semester_process_volunteers.sort { |spv1, spv2| spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name}
+
+    @volunteers = Volunteer.semester_process_eligible(@semester_process.semester)
+    @semester_process.build_semester_volunteers(@volunteers, nil, false)
+
+    @spvs_sorted = @semester_process.new_semester_process_volunteers.sort { |spv1, spv2| spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name}
+
     if EmailTemplate.half_year_process_email.active.any?
       template = EmailTemplate.half_year_process_email.active.first.slice(:subject, :body)
       @semester_process.assign_attributes(mail_body_template: template[:body], mail_subject_template: template[:subject])
@@ -24,19 +47,17 @@ class SemesterProcessesController < ApplicationController
     end
   end
 
-  def edit; end
-
-  def create
-    @semester_process = SemesterProcess.new(semester_process_params.slice(:semester))
-    @semester_process.creator = current_user
+  def update_or_create
     authorize @semester_process
 
+    @semester_process.creator = current_user
     @semester_process.assign_attributes(
       mail_body_template:    semester_process_params[:body],
       mail_subject_template: semester_process_params[:subject]
     )
 
-    @semester_process.build_semester_volunteers(@volunteers, selected_volunteers)
+    @volunteers = Volunteer.semester_process_eligible(@semester_process.semester)
+    @semester_process.build_semester_volunteers(@volunteers, selected_volunteers, true)
     @semester_process.build_volunteers_hours_feedbacks_and_mails
 
     if @semester_process.save
@@ -45,16 +66,6 @@ class SemesterProcessesController < ApplicationController
       render :new
     end
   end
-
-  def update
-    if @semester_process.update(semester_process_params)
-      redirect_to @semester_process, notice: 'Semester process was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
-  private
 
   def set_semester_process
     @semester_process = SemesterProcess.find(params[:id])
@@ -69,9 +80,6 @@ class SemesterProcessesController < ApplicationController
       @selected_semester = @semester.previous
       params[:semester] = Semester.to_s(@selected_semester)
     end
-
-    semester_form_param = Semester.parse(params[:semester_process]&.fetch(:semester))
-    @volunteers = Volunteer.semester_process_eligible(semester_form_param || @selected_semester)
   end
 
   def selected_volunteers

@@ -3,7 +3,8 @@
   = f.input_field :kind, value: @semester_process.kind, as: :hidden
 
   .row:.col-xs-12.col-md-4
-    = f.input :semester, collection: @semester.collection, selected: params[:semester], input_html: { class: 'semester-selector' }
+    = f.input :semester, collection: @semester&.collection || [Semester.i18n_t(@semester_process.semester, short: false)],
+                         selected: params[:semester], input_html: { class: 'semester-selector' }, disabled: !@semester
 
   .row
     .col-xs-12.col-md-4
@@ -20,14 +21,14 @@
           th Freiwilliger/r
           th Einsatz
         tbody
-          = f.simple_fields_for :semester_process_volunteers, @spvs_sorted do |fv|
-            tr.table-row-selectable
-              td= fv.input :selected, as: :boolean, label: false
-              td= link_to fv.object.volunteer.contact.full_name, fv.object.volunteer
-              td.index-action-cell
-                = fv.hidden_field :volunteer_id
-                - fv.object.semester_process_volunteer_missions.each do |mission|
-                  = link_to mission.mission.to_label, mission.mission
+            = f.simple_fields_for :semester_process_volunteers, @spvs_sorted do |fv|
+              tr.table-row-selectable
+                td= fv.input :selected, as: :boolean, label: false
+                td= link_to fv.object.volunteer.contact.full_name, fv.object.volunteer
+                td.index-action-cell
+                  = fv.hidden_field :volunteer_id
+                  - fv.object.semester_process_volunteer_missions.each do |mission|
+                    = link_to mission.mission.to_label, mission.mission
 
   .row:.col-xs-12
     = f.button :submit
