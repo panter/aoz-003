@@ -37,7 +37,7 @@ class SemesterProcessVolunteersController < ApplicationController
     authorize SemesterProcessVolunteer
     semester = Semester.parse(params[:semester])
     @spvs = SemesterProcessVolunteer.index(semester).page(params[:page])
-    @semester_process = SemesterProcess.find_by_semester(semester)
+    @semester_process = SemesterProcess.find_by_semester(semester).last
     @spvs_sorted = @spvs.sort { |spv1, spv2| spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name}
   end
 

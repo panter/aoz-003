@@ -19,7 +19,7 @@ class SemesterProcess < ApplicationRecord
   attr_accessor :new_semester_process_volunteers
 
   scope :find_by_semester, lambda { |semester = nil|
-    where('semester && daterange(?,?)', semester.begin, semester.end).last
+    where('semester && daterange(?,?)', semester.begin, semester.end)
   }
 
   def mails
