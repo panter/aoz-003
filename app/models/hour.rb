@@ -45,6 +45,13 @@ class Hour < ApplicationRecord
     group_offer.where(hourable_id: group_offer_ids)
   }
 
+  attr_reader :spv_mission_id
+
+  def spv_mission_id= id
+   spv_mission = SemesterProcessVolunteerMission.find(id)
+   self.hourable = spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
+  end
+
   def assignment?
     hourable_type == 'Assignment'
   end

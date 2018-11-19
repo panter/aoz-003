@@ -100,6 +100,7 @@ Rails.application.routes.draw do
   resources :semester_process_volunteers do
     get :review_semester, on: :member
     patch :submit_review, on: :member
+    put :take_responsibility, on: :member
   end
   resources :semester_processes, except: [:destroy]
 

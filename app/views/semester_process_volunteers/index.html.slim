@@ -12,16 +12,16 @@ h1= t_title(:index)
         th Status
         th Freiwilige/r
         th Einsätze
-        th Missions
         th Ziele
         th Erfolge
         th Zukunft
         th Bemerkungen
         th= t_attr(:commited_by)
         th Letzte Bestätigung
+        th= sort_link @q, :responsible_profile_contact_full_name, 'Übernommen'
 
     tbody
-      - @spvs_sorted.each do |spv|
+      - @spvs.each do |spv|
         tr
           td.index-action-cell.hidden-print
             = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
@@ -31,7 +31,6 @@ h1= t_title(:index)
             - else
               .label.label-warning Unbestätigt
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
-          td= spv.semester_t
           td= render_missions(spv)
           = td_truncate_content_modal(spv.render_feedback(:goals), 'Ziele', shorten_size: 300)
           = td_truncate_content_modal(spv.render_feedback(:achievements), 'Erfolge', shorten_size: 300)
@@ -39,6 +38,15 @@ h1= t_title(:index)
           = td_truncate_content_modal(spv.render_feedback(:comments), 'Bemerkungen', shorten_size: 300)
           td= spv.commited_by
           td= spv.commited_at && l(spv.commited_at)
+          td.index-action-cell.hidden-print
+            - if spv.responsible.present?
+              = 'Übernommen durch '
+              = link_to spv.responsible.email, spv.responsible
+              = " am #{l(spv.responsibility_taken_at.to_date)}"
+            - else
+              = api_button('Übernehmen', subject: [spv],
+                  action: :take_responsibility, extra_class: 'm-t-10',
+                  template: 'Übernommen durch <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
 
 = bootstrap_paginate(@spvs)
 
