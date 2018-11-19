@@ -53,9 +53,10 @@ module ApplicationHelper
     }, class: html_class }
   end
 
-  def checkbox_toggle_collapse(f, field, collapse_selector, check_shows: true, label_html: nil, type: :boolean)
+  def checkbox_toggle_collapse(f, field, collapse_selector, check_shows: true, label_html: nil, type: :boolean, disabled: false)
     input_html = { data: { collapse: collapse_selector, check_shows: check_shows },
-                   class: 'checkbox-toggle-collapse' }
+                   class: 'checkbox-toggle-collapse',
+                  disabled: disabled }
     f.input(field, type: type, input_html: input_html, label_html: label_html)
   end
 
