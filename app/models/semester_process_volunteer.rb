@@ -32,18 +32,10 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   validates_associated :hours, :semester_feedbacks, :volunteer
 
-  scope :index_joins, lambda {
-    joins(:semester_process).joins(:semester_process_volunteer_missions, volunteer: [:contact])
-  }
-
   scope :index, lambda { |semester = nil|
-    if semester
       joins(:semester_process).where(semester_process: semester)
           .joins(:semester_process_volunteer_missions, volunteer: [:contact])
           .group('semester_process_volunteers.id, contacts_volunteers.last_name')
-    else
-      index_joins
-    end
   }
 
 
