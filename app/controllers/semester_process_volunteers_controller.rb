@@ -38,8 +38,9 @@ class SemesterProcessVolunteersController < ApplicationController
 
   def index
     authorize SemesterProcessVolunteer
-
-    @q = SemesterProcessVolunteer.index(Semester.parse(params[:semester])).ransack(params[:q])
+    semester = Semester.parse(params[:semester])
+    @semester_process = SemesterProcess.find_by_semester(semester).last
+    @q = SemesterProcessVolunteer.index(semester).ransack(params[:q])
     @q.sorts = ['volunteer_contact_last_name asc'] if @q.sorts.empty?
     @spvs = @q.result.paginate(page: params[:page])
     set_responsibles

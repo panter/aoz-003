@@ -4,6 +4,9 @@ nav.navbar.section-navigation
     li= clear_filter_button
     li= button_link 'Neuen Semester Prozess erstellen', new_semester_process_path, dimension: 'sm'
     li= render 'semester_filter'
+    - if @semester_process
+      li= button_link 'Semester Prozess bearbeiten', edit_semester_process_path(@semester_process), dimension: 'sm'
+
     = custom_filter_dropdown('Übernommen',
         { q: :responsible_id_null, text: 'Offen', value: 'true' },
         { q: :responsible_id_not_null, text: 'Übernommen', value: 'true' },

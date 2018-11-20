@@ -3,7 +3,8 @@
   = f.input_field :kind, value: @semester_process.kind, as: :hidden
 
   .row:.col-xs-12.col-md-4
-    = f.input :semester, collection: @semester.collection, selected: params[:semester], input_html: { class: 'semester-selector' }
+    = f.input :semester, collection: @semester&.collection || [Semester.i18n_t(@semester_process.semester, short: false)],
+                         selected: params[:semester], input_html: { class: 'semester-selector' }, disabled: !@semester
 
   .row
     .col-xs-12.col-md-4
