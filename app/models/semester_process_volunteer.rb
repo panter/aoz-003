@@ -40,7 +40,7 @@ class SemesterProcessVolunteer < ApplicationRecord
     if semester
       joins(:semester_process).where(semester_process: semester)
           .joins(:semester_process_volunteer_missions, volunteer: [:contact])
-          .group('semester_process_volunteers.id, contacts.last_name')
+          .group('semester_process_volunteers.id, contacts_volunteers.last_name')
     else
       index_joins
     end
