@@ -20,6 +20,7 @@ h1= t_title(:index)
         th= t_attr(:commited_by)
         th Letzte Bestätigung
         th= sort_link @q, :responsible_profile_contact_full_name, 'Übernommen'
+        th= sort_link @q, :reviewed_by_profile_full_name, 'Quittiert'
 
     tbody
       - @spvs.each do |spv|
@@ -53,6 +54,15 @@ h1= t_title(:index)
               = api_button('Übernehmen', subject: [spv],
                   action: :take_responsibility, extra_class: 'm-t-10',
                   template: 'Übernommen durch <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
+          td.index-action-cell.hidden-print
+            - if spv.reviewed_by.present?
+              = 'Quittiert von '
+              = link_to spv.reviewed_by.email, spv.reviewed_by
+              = " am #{l(spv.reviewed_at.to_date)}"
+            - else
+              = api_button('Quittieren', subject: [spv],
+                  action: :mark_as_done, extra_class: 'm-t-10',
+                  template: 'Quittiert von <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
 
 = bootstrap_paginate(@spvs)
 

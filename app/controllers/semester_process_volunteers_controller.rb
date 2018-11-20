@@ -1,6 +1,6 @@
 class SemesterProcessVolunteersController < ApplicationController
   before_action :prepare_review, :initialize_nested_objects, only: [:review_semester, :submit_review]
-  before_action :set_semester_process_volunteer, only: [:show, :edit, :update, :take_responsibility]
+  before_action :set_semester_process_volunteer, only: [:show, :edit, :update, :take_responsibility, :mark_as_done]
   before_action :set_semester, only: [:index]
 
   include SemesterProcessVolunteerHelper
@@ -44,6 +44,7 @@ class SemesterProcessVolunteersController < ApplicationController
     @q.sorts = ['volunteer_contact_last_name asc'] if @q.sorts.empty?
     @spvs = @q.result.paginate(page: params[:page])
     set_responsibles
+    set_reviewers
   end
 
   def show; end
@@ -68,6 +69,21 @@ class SemesterProcessVolunteersController < ApplicationController
         end
       else
         format.html { redirect_to(@redirect_back_path, notice: 'Fehler: Übernehmen fehlgeschlagen.') }
+        format.json { render json: { errors: @spv.errors.messages }, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def mark_as_done
+    respond_to do |format|
+      if @spv.update(reviewed_by: current_user, reviewed_at: Time.zone.now)
+        format.html { redirect_to semester_process_volunteers_path, notice: 'Halbjahres-Rapport quittiert.' }
+        format.json do
+          render json: { link: url_for(@spv.reviewed_by), at: I18n.l(@spv.reviewed_at.to_date),
+                         email: @spv.reviewed_by.email }, status: :ok
+        end
+      else
+        format.html { redirect_to semester_process_volunteers_path, notice: 'Fehler: Quittieren fehlgeschlagen.' }
         format.json { render json: { errors: @spv.errors.messages }, status: :unprocessable_entity }
       end
     end
@@ -116,6 +132,19 @@ class SemesterProcessVolunteersController < ApplicationController
           q: :responsible_id_eq,
           text: "Übernommen von #{responsible.full_name}",
           value: responsible.id
+        }
+      end
+  end
+
+  def set_reviewers
+    @reviewers = SemesterProcessVolunteer.joins(reviewed_by: [profile: [:contact]])
+      .distinct
+      .select('users.id, contacts.full_name')
+      .map do |reviewed_by|
+        {
+          q: :reviewed_by_id_eq,
+          text: "Quittiert von #{reviewed_by.full_name}",
+          value: reviewed_by.id
         }
       end
   end

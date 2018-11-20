@@ -11,4 +11,8 @@ nav.navbar.section-navigation
         { q: :responsible_id_null, text: 'Offen', value: 'true' },
         { q: :responsible_id_not_null, text: 'Übernommen', value: 'true' },
         *@responsibles)
+    = custom_filter_dropdown('Quittiert',
+        { q: :reviewed_by_id_null, text: 'Unquittiert', value: 'true' },
+        { q: :reviewed_by_id_not_null, text: 'Quittiert', value: 'true' },
+        *@reviewers)
   hr

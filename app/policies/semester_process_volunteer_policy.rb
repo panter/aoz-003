@@ -17,4 +17,5 @@ class SemesterProcessVolunteerPolicy < ApplicationPolicy
   alias_method :update?,              :superadmin?
   alias_method :destroy?,             :superadmin?
   alias_method :take_responsibility?, :superadmin?
+  alias_method :mark_as_done?,        :superadmin?
 end
