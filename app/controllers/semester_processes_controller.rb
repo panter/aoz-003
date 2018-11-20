@@ -75,7 +75,6 @@ class SemesterProcessesController < ApplicationController
     @semester_process.kind = semester_process_params[:kind]
     @semester_process.creator = current_user
 
-    byebug
     if @semester_process.kind == "mail"
       @semester_process.assign_attributes(
         mail_body_template:    semester_process_params[:body],
