@@ -102,7 +102,9 @@ Rails.application.routes.draw do
     patch :submit_review, on: :member
     put :take_responsibility, on: :member
   end
-  resources :semester_processes, except: [:destroy]
+  resources :semester_processes, except: [:destroy] do
+    get :overdue, on: :member
+  end
 
   resources :volunteer_applications, only: [:new, :create] do
     get :thanks, on: :collection
