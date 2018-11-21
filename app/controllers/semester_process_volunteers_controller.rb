@@ -5,8 +5,7 @@ class SemesterProcessVolunteersController < ApplicationController
 
   include SemesterProcessVolunteerHelper
 
-  def review_semester
-  end
+  def review_semester; end
 
   def submit_review
     # you shall not pass
@@ -62,14 +61,14 @@ class SemesterProcessVolunteersController < ApplicationController
   def take_responsibility
     respond_to do |format|
       if @spv.update(responsible: current_user)
-        format.html { redirect_to(@redirect_back_path, notice: 'Halbjahres-Rapport übernommen.') }
+        format.html { redirect_to semester_process_volunteers_path, notice: 'Halbjahres-Rapport übernommen.' }
         format.json do
           render json: { link: url_for(@spv.responsible), at: I18n.l(@spv.responsibility_taken_at.to_date),
                          email: @spv.responsible.email }, status: :ok
         end
       else
-        format.html { redirect_to(@redirect_back_path, notice: 'Fehler: Übernehmen fehlgeschlagen.') }
-        format.json { render json: { errors: @spv.errors.messages }, status: :unprocessable_entity }
+        format.html { redirect_to semester_process_volunteers_path, notice: 'Fehler: Quittieren fehlgeschlagen.' }
+          format.json { render json: { errors: @spv.errors.messages }, status: :unprocessable_entity }
       end
     end
   end
@@ -100,10 +99,10 @@ class SemesterProcessVolunteersController < ApplicationController
 
   def review_params
     params.require(:semester_process_volunteer).permit(
-      volunteer_attributes: [:id ,:waive, :iban, :bank],
+      volunteer_attributes: [:id, :waive, :iban, :bank],
       semester_feedbacks_attributes: [[semester_feedback: [:mission, :goals, :achievements, :future, :comments, :conversation, :spv_mission_id]],
-                                     [hour: [:hours, :spv_mission_id ]]])
-
+                                     [hour: [:hours, :spv_mission_id]]]
+    )
   end
 
   def set_semester_process_volunteer
