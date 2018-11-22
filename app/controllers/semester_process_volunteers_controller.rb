@@ -61,13 +61,13 @@ class SemesterProcessVolunteersController < ApplicationController
   def take_responsibility
     respond_to do |format|
       if @spv.update(responsible: current_user)
-        format.html { redirect_to semester_process_volunteers_path, notice: 'Halbjahres-Rapport übernommen.' }
+        format.html { redirect_to semester_process_volunteers_path, notice: 'Semester Prozess übernommen.' }
         format.json do
           render json: { link: url_for(@spv.responsible), at: I18n.l(@spv.responsibility_taken_at.to_date),
                          email: @spv.responsible.email }, status: :ok
         end
       else
-        format.html { redirect_to semester_process_volunteers_path, notice: 'Fehler: Quittieren fehlgeschlagen.' }
+        format.html { redirect_to semester_process_volunteers_path, notice: 'Fehler: Übernehmen fehlgeschlagen.' }
           format.json { render json: { errors: @spv.errors.messages }, status: :unprocessable_entity }
       end
     end
@@ -76,7 +76,7 @@ class SemesterProcessVolunteersController < ApplicationController
   def mark_as_done
     respond_to do |format|
       if @spv.update(reviewed_by: current_user, reviewed_at: Time.zone.now)
-        format.html { redirect_to semester_process_volunteers_path, notice: 'Halbjahres-Rapport quittiert.' }
+        format.html { redirect_to semester_process_volunteers_path, notice: 'Semester Prozess quittiert.' }
         format.json do
           render json: { link: url_for(@spv.reviewed_by), at: I18n.l(@spv.reviewed_at.to_date),
                          email: @spv.reviewed_by.email }, status: :ok
