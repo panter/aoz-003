@@ -32,12 +32,11 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
 
     ## SETUP ##
     # Offen/open -> @spv1
-
     # Übernommen/responsibility taken over from superadmin1
     @volunteer2 = create :volunteer_with_user
     @volunteer2.contact.update(first_name: 'volunteer2', last_name: 'volunteer2')
     @spv2 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer2,
-      semester_process: create(:semester_process))
+      semester_process: @semester_process)
     @superadmin2 = create :user
     @spv2.update(responsible: @superadmin2)
 
@@ -45,7 +44,7 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     @volunteer3 = create :volunteer_with_user
     @volunteer3.contact.update(first_name: 'volunteer3', last_name: 'volunteer3')
     @spv3 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer3,
-      semester_process: create(:semester_process))
+      semester_process: @semester_process)
     @superadmin3 = create :user
     @spv3.update(responsible: @superadmin3)
     ## SETUP END ##
