@@ -16,6 +16,37 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     visit semester_process_volunteers_path
   end
 
+  def action_on_semester_process_volunteer_index(path, text)
+    within 'tbody' do
+      page.find("[data-url$=\"#{path}\"]").click
+    end
+    wait_for_ajax
+    @spv1.reload
+    assert page.has_text? "#{text} #{@superadmin.email}"
+  end
+
+  def filters_setup
+    ## SETUP ##
+    # Offen/open -> @spv1
+
+    # Übernommen/Quittiert from superadmin2
+    @volunteer2 = create :volunteer_with_user
+    @volunteer2.contact.update(first_name: 'volunteer2', last_name: 'volunteer2')
+    @spv2 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer2,
+      semester_process: create(:semester_process))
+    @superadmin2 = create :user
+    @spv2.update(responsible: @superadmin2, reviewed_by: @superadmin2, reviewed_at: Time.zone.now)
+
+    # Übernommen/Quittiert from superadmin3
+    @volunteer3 = create :volunteer_with_user
+    @volunteer3.contact.update(first_name: 'volunteer3', last_name: 'volunteer3')
+    @spv3 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer3,
+      semester_process: create(:semester_process))
+    @superadmin3 = create :user
+    @spv3.update(responsible: @superadmin3, reviewed_by: @superadmin3, reviewed_at: Time.zone.now)
+    ## SETUP END ##
+  end
+
   test 'take responsibility for semester process volunteer works' do
     path = take_responsibility_semester_process_volunteer_path(@spv1)
     text = 'Übernommen durch'
@@ -140,36 +171,5 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
                           " am #{I18n.l(@spv2.reviewed_at.to_date)}"
     assert_not page.has_text? "Quittiert von #{@superadmin3.email}"\
                           " am #{I18n.l(@spv3.reviewed_at.to_date)}"
-  end
-
-  def action_on_semester_process_volunteer_index(path, text)
-    within 'tbody' do
-      page.find("[data-url$=\"#{path}\"]").click
-    end
-    wait_for_ajax
-    @spv1.reload
-    assert page.has_text? "#{text} #{@superadmin.email}"
-  end
-
-  def filters_setup
-    ## SETUP ##
-    # Offen/open -> @spv1
-
-    # Übernommen/Quittiert from superadmin2
-    @volunteer2 = create :volunteer_with_user
-    @volunteer2.contact.update(first_name: 'volunteer2', last_name: 'volunteer2')
-    @spv2 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer2,
-      semester_process: create(:semester_process))
-    @superadmin2 = create :user
-    @spv2.update(responsible: @superadmin2, reviewed_by: @superadmin2, reviewed_at: Time.zone.now)
-
-    # Übernommen/Quittiert from superadmin3
-    @volunteer3 = create :volunteer_with_user
-    @volunteer3.contact.update(first_name: 'volunteer3', last_name: 'volunteer3')
-    @spv3 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer3,
-      semester_process: create(:semester_process))
-    @superadmin3 = create :user
-    @spv3.update(responsible: @superadmin3, reviewed_by: @superadmin3, reviewed_at: Time.zone.now)
-    ## SETUP END ##
   end
 end
