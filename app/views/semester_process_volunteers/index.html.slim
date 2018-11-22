@@ -9,8 +9,9 @@ h1= t_title(:index)
     thead
       tr
         th.hidden-print Aktionen
+        th.limit-width Stunden
         th Status
-        th Freiwilige/r
+        th.limit-width Freiwilige/r
         th Einsätze
         th Ziele
         th Erfolge
@@ -25,6 +26,8 @@ h1= t_title(:index)
         tr
           td.index-action-cell.hidden-print
             = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
+          td.index-action-cell.hidden-print
+            = button_link icon_span(:hours), volunteer_hours_path(spv.volunteer), title: 'Stunden'
           td
             - if spv.commited_at.present?
               .label.label-success Bestätigt
