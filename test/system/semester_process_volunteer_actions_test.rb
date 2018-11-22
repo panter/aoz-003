@@ -33,7 +33,7 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     @volunteer2 = create :volunteer_with_user
     @volunteer2.contact.update(first_name: 'volunteer2', last_name: 'volunteer2')
     @spv2 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer2,
-      semester_process: create(:semester_process))
+      semester_process: @semester_process)
     @superadmin2 = create :user
     @spv2.update(responsible: @superadmin2, reviewed_by: @superadmin2, reviewed_at: Time.zone.now)
 
@@ -41,7 +41,7 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     @volunteer3 = create :volunteer_with_user
     @volunteer3.contact.update(first_name: 'volunteer3', last_name: 'volunteer3')
     @spv3 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer3,
-      semester_process: create(:semester_process))
+      semester_process: @semester_process)
     @superadmin3 = create :user
     @spv3.update(responsible: @superadmin3, reviewed_by: @superadmin3, reviewed_at: Time.zone.now)
     ## SETUP END ##
