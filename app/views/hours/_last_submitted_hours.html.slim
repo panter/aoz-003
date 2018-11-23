@@ -1,10 +1,10 @@
 table.table.table-striped.hours-table
   thead
     tr
-      th= t_attr(:meeting_date, Hour)
-      th= t_attr(:duration, Hour)
-      th= t_attr(:activity, Hour)
-      th= t_attr(:comments, Hour)
+      th.limit-width-10= t_attr(:meeting_date, Hour)
+      th.limit-width-10= t_attr(:duration, Hour)
+      th.limit-width-40= t_attr(:activity, Hour)
+      th.limit-width-40= t_attr(:comments, Hour)
   tbody
     - hours.each do |record|
       tr
