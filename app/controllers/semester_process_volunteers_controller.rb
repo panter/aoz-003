@@ -1,6 +1,6 @@
 class SemesterProcessVolunteersController < ApplicationController
   before_action :prepare_review, :initialize_nested_objects, only: [:review_semester, :submit_review]
-  before_action :set_semester_process_volunteer, only: [:show, :edit, :update, :take_responsibility, :mark_as_done]
+  before_action :set_semester_process_volunteer, only: [:show, :edit, :update, :take_responsibility, :mark_as_done, :update_notes]
   before_action :set_semester, only: [:index]
 
   include SemesterProcessVolunteerHelper
@@ -88,6 +88,11 @@ class SemesterProcessVolunteersController < ApplicationController
     end
   end
 
+  def update_notes
+    updated_notes = semester_process_volunteer_params[:notes]
+    @spv.update_attribute(:notes, updated_notes)
+  end
+
   private
 
   def prepare_review
@@ -149,6 +154,6 @@ class SemesterProcessVolunteersController < ApplicationController
   end
 
   def semester_process_volunteer_params
-    params.require(:semester_process_volunteer).permit(:semester)
+    params.require(:semester_process_volunteer).permit(:semester, :notes)
   end
 end
