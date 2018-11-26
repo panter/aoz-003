@@ -1,8 +1,8 @@
 - if alert.present?
-    = notification_warning_bubble(alert)
+    = notification_bubble(alert, 'alert-warning')
 - elsif notice.present?
   - if notice.is_a? String
-    = notification_warning_bubble(notice)
+    = notification_bubble(notice, 'alert-warning')
   - elsif notice.is_a? Hash
     = render 'notification_alert_with_action', notice: notice
 - elsif @custom_notice.present?
