@@ -19,8 +19,8 @@ h1= t_title(:index)
         th Bemerkungen
         th= t_attr(:commited_by)
         th Letzte Bestätigung
-        th= sort_link @q, :responsible_profile_contact_full_name, 'Übernommen'
-        th= sort_link @q, :reviewed_by_profile_full_name, 'Quittiert'
+        th Übernommen
+        th Quittiert
 
     tbody
       - @spvs.each do |spv|
