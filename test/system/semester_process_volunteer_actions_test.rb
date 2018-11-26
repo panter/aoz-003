@@ -30,14 +30,17 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     # Offen/open -> @spv1
 
     # Übernommen/Quittiert from superadmin2
+    # Bestätigt from volunteer 2
     @volunteer2 = create :volunteer_with_user
     @volunteer2.contact.update(first_name: 'volunteer2', last_name: 'volunteer2')
     @spv2 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer2,
       semester_process: @semester_process)
     @superadmin2 = create :user
-    @spv2.update(responsible: @superadmin2, reviewed_by: @superadmin2, reviewed_at: Time.zone.now)
+    @spv2.update(responsible: @superadmin2, reviewed_by: @superadmin2, reviewed_at: Time.zone.now,
+      commited_by: @volunteer2.user)
 
     # Übernommen/Quittiert from superadmin3
+    # Unbestätigt
     @volunteer3 = create :volunteer_with_user
     @volunteer3.contact.update(first_name: 'volunteer3', last_name: 'volunteer3')
     @spv3 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer3,
@@ -171,5 +174,44 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
                           " am #{I18n.l(@spv2.reviewed_at.to_date)}"
     assert_not page.has_text? "Quittiert von #{@superadmin3.email}"\
                           " am #{I18n.l(@spv3.reviewed_at.to_date)}"
+  end
+
+  test 'bestätigt for semester process volunteer index works' do
+    filters_setup
+    # filter for Alle/all (Bestätigt)
+    within page.find_all('nav.section-navigation').last do
+      click_link 'Bestätigt'
+      click_link 'Alle'
+    end
+    visit current_url
+    within 'tbody' do
+      assert page.has_text? @volunteer.contact.full_name, count: 1
+      assert page.has_text? @volunteer2.contact.full_name, count: 2
+      assert page.has_text? @volunteer3.contact.full_name, count: 1
+    end
+
+    # filter for Unbestätigt
+    within page.find_all('nav.section-navigation').last do
+      click_link 'Bestätigt'
+      click_link 'Unbestätigt'
+    end
+    visit current_url
+    within 'tbody' do
+      assert page.has_text? @volunteer.contact.full_name, count: 1
+      assert_not page.has_text? @volunteer2.contact.full_name
+      assert page.has_text? @volunteer3.contact.full_name, count: 1
+    end
+
+    # filter for Bestätigt
+    click_link 'Bestätigt: Unbestätigt', match: :first
+    within 'li.dropdown.open' do
+      click_link 'Bestätigt'
+    end
+    visit current_url
+    within 'tbody' do
+      assert_not page.has_text? @volunteer.contact.full_name
+      assert page.has_text? @volunteer2.contact.full_name, count: 2
+      assert_not page.has_text? @volunteer3.contact.full_name
+    end
   end
 end

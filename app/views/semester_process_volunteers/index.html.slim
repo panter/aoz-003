@@ -10,7 +10,6 @@ h1= t_title(:index)
       tr
         th.hidden-print Aktionen
         th.limit-width Journal / Stunden
-        th Status
         th.limit-width Freiwilige/r
         th Einsätze
         th Ziele
@@ -32,11 +31,6 @@ h1= t_title(:index)
             = button_link icon_span(:journal_new), new_volunteer_journal_path(spv.volunteer,
               semester_feedback_id: spv.semester_feedbacks.ids), title: 'Neuen Journal eintrag mit Zitat erstellen'
             = button_link icon_span(:hours), volunteer_hours_path(spv.volunteer), title: 'Stunden'
-          td
-            - if spv.commited_at.present?
-              .label.label-success Bestätigt
-            - else
-              .label.label-warning Unbestätigt
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
           td= render_missions(spv)
           = td_truncate_content_modal(spv.render_feedback(:goals), 'Ziele', shorten_size: 300)
