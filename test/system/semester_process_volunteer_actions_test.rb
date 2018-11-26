@@ -214,4 +214,14 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
       assert_not page.has_text? @volunteer3.contact.full_name
     end
   end
+
+  test 'notes are editable' do
+    first('.update_notes .field_label').click
+    first('.update_notes .field_input').fill_in(with: 'notesnotesnotes')
+    first('div.wrapper').click
+    wait_for_ajax
+    @spv1.reload
+    assert page.has_text? 'notesnotesnotes'
+    assert_equal @spv1.notes,'notesnotesnotes'
+  end
 end
