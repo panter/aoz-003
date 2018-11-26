@@ -1,4 +1,4 @@
-- if current_user.volunteer? && current_user.volunteer.unsubmitted_semester_feedbacks?
+- if !current_user.nil? && current_user.volunteer? && current_user.volunteer.unsubmitted_semester_feedbacks?
   - current_user.volunteer.unsubmitted_semester_feedbacks.each do |spv|
     - message = 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester. '
     - message << "<a href='#{review_semester_semester_process_volunteer_path(spv)}'>Bitte klicken Sie hier um diesen zu bestätigen.</a>".html_safe
