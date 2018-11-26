@@ -67,7 +67,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   end
 
   def render_feedback(field)
-    semester_feedbacks.map(&field).join(', ')
+    semester_feedbacks.map(&field).compact.join('<hr>').html_safe
   end
 
   def responsible=(responsible_user)
