@@ -185,9 +185,9 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @volunteer.contact.full_name, count: 1
-      assert page.has_text? @volunteer2.contact.full_name, count: 2
-      assert page.has_text? @volunteer3.contact.full_name, count: 1
+      assert page.has_text? @volunteer.contact.full_name
+      assert page.has_text? @volunteer2.contact.full_name
+      assert page.has_text? @volunteer3.contact.full_name
     end
 
     # filter for Unbestätigt
@@ -197,9 +197,9 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @volunteer.contact.full_name, count: 1
+      assert page.has_text? @volunteer.contact.full_name
       assert_not page.has_text? @volunteer2.contact.full_name
-      assert page.has_text? @volunteer3.contact.full_name, count: 1
+      assert page.has_text? @volunteer3.contact.full_name
     end
 
     # filter for Bestätigt
@@ -210,7 +210,7 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert_not page.has_text? @volunteer.contact.full_name
-      assert page.has_text? @volunteer2.contact.full_name, count: 2
+      assert page.has_text? @volunteer2.contact.full_name
       assert_not page.has_text? @volunteer3.contact.full_name
     end
   end
