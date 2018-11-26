@@ -9,7 +9,6 @@ h1= t_title(:index)
     thead
       tr
         th.hidden-print Aktionen
-        th.limit-width Journal / Stunden
         th.limit-width Freiwilige/r
         th Einsätze
         th Ziele
@@ -24,7 +23,6 @@ h1= t_title(:index)
         tr
           td.index-action-cell.hidden-print
             = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
-          td.index-action-cell.hidden-print
             = button_link icon_span(:journal), volunteer_journals_path(spv.volunteer), title: 'Journal'
             = button_link icon_span(:journal_new), new_volunteer_journal_path(spv.volunteer,
               semester_feedback_id: spv.semester_feedbacks.ids), title: 'Neuen Journal eintrag mit Zitat erstellen'
