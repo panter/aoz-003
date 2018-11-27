@@ -32,6 +32,10 @@ class Hour < ApplicationRecord
       date.advance(months: BillingExpense::SEMESTER_LENGTH))
   }
 
+  scope :within_semester, lambda { |semester | 
+    where(meeting_date: semester.begin...semester.end)
+  }
+
   scope :since_last_submitted, lambda { |submitted_at|
     where('hours.created_at > ?', submitted_at) if submitted_at
   }

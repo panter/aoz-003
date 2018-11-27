@@ -22,9 +22,9 @@
         .row
           .col-xs-12= ff.input field, disabled: disabled
 
-    - if mission.hours.any?
+    - if mission.hours.within_semester(@semester_process_volunteer.semester).any?
         h3 Stunden
-        = render 'hours/last_submitted_hours', hours: mission.hours
+        = render 'hours/last_submitted_hours', hours: mission.hours.within_semester(@semester_process_volunteer.semester)
 
     = spvm.simple_fields_for :hour, Hour.new do |hf|
       = hf.input :spv_mission_id, as: :hidden, input_html: { value: spvm.object.id}

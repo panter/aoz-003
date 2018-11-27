@@ -87,6 +87,6 @@ class SemesterProcess < ApplicationRecord
   end
 
   def build_volunteers_hours_feedbacks_and_mails
-    @new_semester_process_volunteers.map(&:build_hours_and_mails)
+    @new_semester_process_volunteers.map(&:build_mails)
   end
 end

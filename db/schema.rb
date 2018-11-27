@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181004163636) do
+ActiveRecord::Schema.define(version: 20181127125003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -489,13 +489,11 @@ ActiveRecord::Schema.define(version: 20181004163636) do
     t.string "hourable_type"
     t.bigint "hourable_id"
     t.bigint "reviewer_id"
-    t.bigint "semester_process_volunteer_id"
     t.index ["billing_expense_id"], name: "index_hours_on_billing_expense_id"
     t.index ["deleted_at"], name: "index_hours_on_deleted_at"
     t.index ["hourable_type", "hourable_id"], name: "index_hours_on_hourable_type_and_hourable_id"
     t.index ["meeting_date"], name: "index_hours_on_meeting_date"
     t.index ["reviewer_id"], name: "index_hours_on_reviewer_id"
-    t.index ["semester_process_volunteer_id"], name: "index_hours_on_semester_process_volunteer_id"
     t.index ["volunteer_id"], name: "index_hours_on_volunteer_id"
   end
 
@@ -855,7 +853,6 @@ ActiveRecord::Schema.define(version: 20181004163636) do
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"
   add_foreign_key "hours", "billing_expenses"
-  add_foreign_key "hours", "semester_process_volunteers"
   add_foreign_key "journals", "assignments"
   add_foreign_key "journals", "users"
   add_foreign_key "performance_reports", "users"
