@@ -67,7 +67,11 @@ class SemesterProcessVolunteer < ApplicationRecord
   end
 
   def render_feedback(field)
-    semester_feedbacks.map(&field).compact.join('<hr>').html_safe
+    size = 0
+    semester_feedbacks.each do |f|
+      size += f[field].size
+    end
+    semester_feedbacks.map(&field).compact.join('<hr>').html_safe if size != 0
   end
 
   def responsible=(responsible_user)
