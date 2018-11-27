@@ -2,7 +2,7 @@ nav.navbar.section-navigation
   hr
   ul.list-inline
     li= clear_filter_button
-    li= button_link 'Neuen Semester Prozess erstellen', new_semester_process_path, dimension: 'sm'
+    li= button_link 'Neuen Semester Prozess erstellen', new_semester_process_path(semester: params[:semester]), dimension: 'sm'
     li= render 'semester_filter'
     - if @semester_process
       li= button_link 'Semester Prozess bearbeiten', edit_semester_process_path(@semester_process), dimension: 'sm'
