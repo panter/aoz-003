@@ -2,6 +2,8 @@ class SemesterProcessMail < ApplicationRecord
   belongs_to :semester_process_volunteer
   belongs_to :sent_by, class_name: 'User', inverse_of: 'semester_process_mails'
 
+  after_create :send_email
+
   enum kind: { mail: 0, reminder: 1 }
 
   scope :mail, -> { where(kind: 'mail') }
@@ -10,10 +12,21 @@ class SemesterProcessMail < ApplicationRecord
   delegate :volunteer, to: :semester_process_volunteer
   delegate :semester_process, to: :semester_process_volunteer
 
+
+  TEMPLATE_VARNAMES = [
+    :Anrede,
+    :Name,
+    :Einsatz,
+    :FeedbackLink,
+    :EmailAbsender,
+    :Semester,
+    :OnlinePlattformUrl
+  ].freeze
+
   def self.template_varnames
     {
-      mail: EmailTemplate::template_varnames[:half_year_process_email],
-      reminder: EmailTemplate::template_varnames[:half_year_process_overdue]
+      mail: TEMPLATE_VARNAMES,
+      reminder: TEMPLATE_VARNAMES
     }
   end
 
@@ -48,11 +61,6 @@ class SemesterProcessMail < ApplicationRecord
     "#{ I18n.l(semester_process.semester.begin)} - #{I18n.l(semester_process.semester.end)}"
   end
 
-  def einsatz_start
-    #I18n.l(reminder_mailable.period_start) if reminder_mailable.period_start
-    ''
-  end
-
   def einsatz
     ''
   end
@@ -72,7 +80,22 @@ class SemesterProcessMail < ApplicationRecord
   end
 
   def feedback_url(options = {})
-    ''
+    action = :review_semester
+    path = semester_process_volunteer
+    Rails.application.routes.url_helpers.polymorphic_url(
+      path,
+      ActionMailer::Base.default_url_options.merge(action: action)
+    )
   end
 
+  def online_plattform_url
+    "[Online-Plattform Url](#{Rails.application.routes.url_helpers.root_path})"
+  end
+
+  private
+
+  def send_email
+    VolunteerMailer.half_year_process_email(self).deliver
+    self.update(sent_at: Time.zone.now)
+  end
 end

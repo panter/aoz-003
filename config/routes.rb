@@ -96,10 +96,11 @@ Rails.application.routes.draw do
     get :send_half_year, on: :member
   end
 
-
   resources :semester_process_volunteers do
     get :review_semester, on: :member
     patch :submit_review, on: :member
+    put :take_responsibility, on: :member
+    put :mark_as_done, on: :member
   end
   resources :semester_processes, except: [:destroy]
 

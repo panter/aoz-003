@@ -1,5 +1,21 @@
 nav.navbar.section-navigation
   hr
   ul.list-inline
+    li= clear_filter_button
     li= button_link 'Neuen Semester Prozess erstellen', new_semester_process_path, dimension: 'sm'
+    li= render 'semester_filter'
+    - if @semester_process
+      li= button_link 'Semester Prozess bearbeiten', edit_semester_process_path(@semester_process), dimension: 'sm'
+
+    = custom_filter_dropdown('Bestätigt',
+      { q: :commited_by_id_null, text: 'Unbestätigt', value: 'true' },
+      { q: :commited_by_id_not_null, text: 'Bestätigt', value: 'true'})
+    = custom_filter_dropdown('Übernommen',
+      { q: :responsible_id_null, text: 'Offen', value: 'true' },
+      { q: :responsible_id_not_null, text: 'Übernommen', value: 'true' },
+      *@responsibles)
+    = custom_filter_dropdown('Quittiert',
+      { q: :reviewed_by_id_null, text: 'Unquittiert', value: 'true' },
+      { q: :reviewed_by_id_not_null, text: 'Quittiert', value: 'true' },
+      *@reviewers)
   hr

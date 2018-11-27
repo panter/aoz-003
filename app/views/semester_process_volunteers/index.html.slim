@@ -9,27 +9,54 @@ h1= t_title(:index)
     thead
       tr
         th.hidden-print Aktionen
-        th= t_attr(:full_name, Volunteer)
-        th= t_attr(:semester)
-        th Missions
-        th= t_attr(:commited_by)
-        th= t_attr(:commited_at)
-        th= t_attr(:creator)
-        th= t_attr(:created_at)
+        th Status
+        th.limit-width Freiwilige/r
+        th Einsätze
+        th Ziele
+        th Erfolge
+        th Zukunft
+        th Bemerkungen
+        th Übernommen
+        th Quittiert
 
     tbody
       - @spvs.each do |spv|
         tr
           td.index-action-cell.hidden-print
-            = link_to t_action(:show), spv
-            = link_to t_action(:edit), edit_semester_process_volunteer_path(spv)
+            = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
+            = button_link icon_span(:journal), volunteer_journals_path(spv.volunteer), title: 'Journal'
+            = button_link icon_span(:journal_new), new_volunteer_journal_path(spv.volunteer,
+              semester_feedback_id: spv.semester_feedbacks.ids), title: 'Neuen Journal eintrag mit Zitat erstellen'
+            = button_link icon_span(:hours), volunteer_hours_path(spv.volunteer), title: 'Stunden'
+          td
+            - if spv.commited_at.present?
+              .label.label-success Bestätigt
+            - else
+              .label.label-warning Unbestätigt
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
-          td= spv.semester_t
           td= render_missions(spv)
-          td= spv.commited_by
-          td= spv.commited_at && l(spv.commited_at)
-          td= spv.creator
-          td= l(spv.created_at)
+          = td_truncate_content_modal(spv.render_feedback(:goals), 'Ziele', shorten_size: 300)
+          = td_truncate_content_modal(spv.render_feedback(:achievements), 'Erfolge', shorten_size: 300)
+          = td_truncate_content_modal(spv.render_feedback(:future), 'Zukunft', shorten_size: 300)
+          = td_truncate_content_modal(spv.render_feedback(:comments), 'Bemerkungen', shorten_size: 300)
+          td.index-action-cell.hidden-print
+            - if spv.responsible.present?
+              = 'Übernommen durch '
+              = link_to spv.responsible.email, spv.responsible
+              = " am #{l(spv.responsibility_taken_at.to_date)}"
+            - else
+              = api_button('Übernehmen', subject: [spv],
+                  action: :take_responsibility, extra_class: 'm-t-10',
+                  template: 'Übernommen durch <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
+          td.index-action-cell.hidden-print
+            - if spv.reviewed_by.present?
+              = 'Quittiert von '
+              = link_to spv.reviewed_by.email, spv.reviewed_by
+              = " am #{l(spv.reviewed_at.to_date)}"
+            - else
+              = api_button('Quittieren', subject: [spv],
+                  action: :mark_as_done, extra_class: 'm-t-10',
+                  template: 'Quittiert von <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
 
 = bootstrap_paginate(@spvs)
 

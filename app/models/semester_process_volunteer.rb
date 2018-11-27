@@ -5,6 +5,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   belongs_to :semester_process
   delegate :semester, to: :semester_process
   delegate :semester_t, to: :semester_process
+  delegate :semester_period, to: :semester_process
   delegate :creator, to: :semester_process
 
   belongs_to :responsible, -> { with_deleted }, class_name: 'User',
@@ -27,22 +28,20 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :reminders, -> { where(kind: 'reminder') }, class_name: 'SemesterProcessMail',
     foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
 
-  accepts_nested_attributes_for :hours, :volunteer, :semester_feedbacks
+  accepts_nested_attributes_for :group_assignments, :assignments , :semester_process_volunteer_missions , :hours, :volunteer, :semester_feedbacks
 
   validates_associated :hours, :semester_feedbacks, :volunteer
 
-  scope :index_joins, lambda {
-    joins(:semester_process).joins(volunteer: [:contact]).joins(:semester_process_volunteer_missions)
-  }
-
   scope :index, lambda { |semester = nil|
-    if semester
-      index_joins.where('semester_processes.semester && daterange(?,?)', semester.begin, semester.end)
-    else
-      index_joins
-    end
+      joins(:semester_process).where(semester_process: semester)
+          .joins(:semester_process_volunteer_missions, volunteer: [:contact])
+          .group('semester_process_volunteers.id, contacts_volunteers.last_name')
   }
 
+
+  def semester_feedback_with_mission(mission)
+    self.semester_feedbacks.order(:created_at).select{|sf| sf.mission == mission}.last
+  end
 
   # will only return an array, not a AD-result
   def missions
@@ -65,5 +64,14 @@ class SemesterProcessVolunteer < ApplicationRecord
     semester_process_mails << SemesterProcessMail.new(kind: :mail, sent_by: creator,
                                 subject: semester_process.mail_subject_template,
                                 body:    semester_process.mail_body_template)
+  end
+
+  def render_feedback(field)
+    semester_feedbacks.map(&field).join(', ')
+  end
+
+  def responsible=(responsible_user)
+    self.responsibility_taken_at = Time.zone.now
+    super(responsible_user)
   end
 end

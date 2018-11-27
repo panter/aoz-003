@@ -16,6 +16,12 @@ class SemesterProcess < ApplicationRecord
 
   has_many :semester_process_mails, through: :semester_process_volunteers
 
+  attr_accessor :new_semester_process_volunteers
+
+  scope :find_by_semester, lambda { |semester = nil|
+    where('semester && daterange(?,?)', semester.begin, semester.end)
+  }
+
   def mails
     semester_process_mails.where(kind: 'mail')
   end
@@ -64,16 +70,23 @@ class SemesterProcess < ApplicationRecord
     Semester.i18n_t(semester, short: short)
   end
 
-  def build_semester_volunteers(volunteers, selected = nil)
-    volunteers = volunteers.where(id: selected) if selected
-    semester_process_volunteers << volunteers.to_a.map do |volunteer|
-      spv = SemesterProcessVolunteer.new(volunteer: volunteer, selected: true)
+  def semester_period
+    Semester.period(semester)
+  end
+
+  def build_semester_volunteers(volunteers, selected, save_record = true)
+    volunteers = volunteers.select{ |volunteer| selected.include? volunteer.id } if selected && selected.any?
+    @new_semester_process_volunteers = []
+
+    @new_semester_process_volunteers = volunteers.to_a.map do |volunteer|
+      spv = SemesterProcessVolunteer.new(volunteer: volunteer, semester_process: self, selected: false)
       spv.build_missions(semester)
+      spv.save if save_record
       spv
     end
   end
 
   def build_volunteers_hours_feedbacks_and_mails
-    semester_process_volunteers.map(&:build_hours_and_mails)
+    @new_semester_process_volunteers.map(&:build_hours_and_mails)
   end
 end
