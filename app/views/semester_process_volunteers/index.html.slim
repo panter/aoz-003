@@ -17,11 +17,12 @@ h1= t_title(:index)
         th Zukunft
         th Bemerkungen
         th Übernommen
+        th.limit-width-15 Notizen
         th Quittiert
 
     tbody
       - @spvs.each do |spv|
-        tr
+        tr*{ data: { spv_id: spv.id } }
           td.index-action-cell.hidden-print
             = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
             = button_link icon_span(:journal), volunteer_journals_path(spv.volunteer), title: 'Journal'
@@ -48,6 +49,7 @@ h1= t_title(:index)
               = api_button('Übernehmen', subject: [spv],
                   action: :take_responsibility, extra_class: 'm-t-10',
                   template: 'Übernommen durch <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
+          td= render 'update_notes_field', spv: spv
           td.index-action-cell.hidden-print
             - if spv.reviewed_by.present?
               = 'Quittiert von '

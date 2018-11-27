@@ -1,0 +1,3 @@
+$('tr[data-spv-id=<%=@spv.id%>] .update_notes').replaceWith('<%= j render 'semester_process_volunteers/update_notes_field', spv: @spv %>');
+$('tr[data-spv-id=<%=@spv.id%>] .update_notes').parent().effect('highlight', { color: '#feffe6' }, 1000);
+inplaceFields();
