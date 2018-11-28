@@ -1,0 +1,13 @@
+.inplace_field.update_notes
+  span.field_label
+    = spv.notes
+
+    - if(request.format.html? || request.format.js?)
+      - if spv.notes?
+        span.helper_label.hidden-print= " (Notiz manuell überschrieben)"
+      - else
+        span.helper_label.hidden-print= " (Neue Notiz hinzufügen)"
+      span.hidden-print =icon_span :edit
+  span.field_input= text_field_tag 'semester_process_volunteer[notes]',
+    spv.notes,
+    data: { remote: true, url: update_notes_semester_process_volunteer_path(spv), method: :put }

@@ -170,6 +170,7 @@ class Volunteer < ApplicationRecord
   scope :have_mission, lambda {
     left_joins(:assignments).left_joins(:group_assignments)
       .where('assignments.period_start IS NOT NULL OR group_assignments.period_start IS NOT NULL')
+      .group('volunteers.id')
   }
 
   def self.semester_process_eligible(semester)

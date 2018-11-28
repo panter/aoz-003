@@ -10,11 +10,7 @@
 
   = f.simple_fields_for :semester_feedbacks, @semester_process_volunteer.semester_process_volunteer_missions do |spvm|
     - mission = spvm.object.mission
-    h2.m-b-20.m-t-30
-      'Einsatz
-      = link_to mission.to_label,
-        url: polymorphic_path([mission.volunteer, mission.polymorph_url_object]),
-        target: '_blank'
+    h2.m-b-20.m-t-30 Einsatz #{mission.to_label}
 
     = spvm.simple_fields_for :semester_feedback, @nested_objects[spvm.object.id.to_s][:feedback] do |ff|
       = ff.input :spv_mission_id, as: :hidden, input_html: { value: spvm.object.id }
@@ -28,11 +24,13 @@
 
     = spvm.simple_fields_for :hour, Hour.new do |hf|
       = hf.input :spv_mission_id, as: :hidden, input_html: { value: spvm.object.id}
+      h4.m-b-20.m-t-20= "Restliche Stunden in diesem Semester (#{@semester_process_volunteer.semester_period})"
       .row
-        .col-xs-12= hf.input :hours, label: "Restliche Stunden in diesem Semester #{@semester_process_volunteer.semester_period}",
+        .col-xs-2= hf.input :hours, label: 'Stunden',
                                     input_html: { value: f.object.hours == 0 ? '' : f.object.hours, min: 0},
                                     required: false,
                                     disabled: disabled
+        .col-xs-10= hf.input :activity, disabled: disabled
 
   h3 Spesen
   = f.simple_fields_for :volunteer, @volunteer do |vf|

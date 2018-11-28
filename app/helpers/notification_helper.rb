@@ -1,6 +1,6 @@
 module NotificationHelper
-  def notification_warning_bubble(text)
-    tag.div(class: 'alert alert-warning alert-dismissible', role: 'alert') do
+  def notification_bubble(text, type)
+    tag.div(class: "alert #{type} alert-dismissible", role: 'alert') do
       concat notification_close_button
       concat raw(text)
     end

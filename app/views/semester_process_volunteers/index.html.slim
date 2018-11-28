@@ -1,4 +1,4 @@
-h1= t_title(:index)
+h1 Semester Prozess
 
 = render 'index_nav'
 
@@ -10,21 +10,25 @@ h1= t_title(:index)
       tr
         th.hidden-print Aktionen
         th Status
-        th Freiwilige/r
+        th.limit-width Freiwilige/r
         th Einsätze
         th Ziele
         th Erfolge
         th Zukunft
         th Bemerkungen
-        th= t_attr(:commited_by)
-        th Letzte Bestätigung
-        th= sort_link @q, :responsible_profile_contact_full_name, 'Übernommen'
+        th Übernommen
+        th.limit-width-15 Notizen
+        th Quittiert
 
     tbody
       - @spvs.each do |spv|
-        tr
+        tr*{ data: { spv_id: spv.id } }
           td.index-action-cell.hidden-print
             = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
+            = button_link icon_span(:journal), volunteer_journals_path(spv.volunteer), title: 'Journal'
+            = button_link icon_span(:journal_new), new_volunteer_journal_path(spv.volunteer,
+              semester_feedback_id: spv.semester_feedbacks.ids), title: 'Neuen Journal eintrag mit Zitat erstellen'
+            = button_link icon_span(:hours), volunteer_hours_path(spv.volunteer), title: 'Stunden'
           td
             - if spv.commited_at.present?
               .label.label-success Bestätigt
@@ -36,8 +40,6 @@ h1= t_title(:index)
           = td_truncate_content_modal(spv.render_feedback(:achievements), 'Erfolge', shorten_size: 300)
           = td_truncate_content_modal(spv.render_feedback(:future), 'Zukunft', shorten_size: 300)
           = td_truncate_content_modal(spv.render_feedback(:comments), 'Bemerkungen', shorten_size: 300)
-          td= spv.commited_by
-          td= spv.commited_at && l(spv.commited_at)
           td.index-action-cell.hidden-print
             - if spv.responsible.present?
               = 'Übernommen durch '
@@ -47,6 +49,16 @@ h1= t_title(:index)
               = api_button('Übernehmen', subject: [spv],
                   action: :take_responsibility, extra_class: 'm-t-10',
                   template: 'Übernommen durch <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
+          td= render 'update_notes_field', spv: spv
+          td.index-action-cell.hidden-print
+            - if spv.reviewed_by.present?
+              = 'Quittiert von '
+              = link_to spv.reviewed_by.email, spv.reviewed_by
+              = " am #{l(spv.reviewed_at.to_date)}"
+            - else
+              = api_button('Quittieren', subject: [spv],
+                  action: :mark_as_done, extra_class: 'm-t-10',
+                  template: 'Quittiert von <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
 
 = bootstrap_paginate(@spvs)
 

@@ -37,11 +37,9 @@ class SemesterProcessVolunteer < ApplicationRecord
   }
 
   scope :index, lambda { |semester = nil|
-    if semester
-      index_joins.where('semester_processes.semester && daterange(?,?)', semester.begin, semester.end)
-    else
-      index_joins
-    end
+      joins(:semester_process).where(semester_process: semester)
+          .joins(:semester_process_volunteer_missions, volunteer: [:contact])
+          .group('semester_process_volunteers.id, contacts_volunteers.last_name')
   }
 
 
@@ -73,7 +71,11 @@ class SemesterProcessVolunteer < ApplicationRecord
   end
 
   def render_feedback(field)
-    semester_feedbacks.map(&field).join(', ')
+    field_size = 0
+    semester_feedbacks.each do |f|
+      field_size += f[field].size
+    end
+    semester_feedbacks.map(&field).compact.join('<hr>').html_safe if field_size != 0
   end
 
   def responsible=(responsible_user)

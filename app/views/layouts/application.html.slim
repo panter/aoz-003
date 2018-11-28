@@ -25,6 +25,8 @@ html
       = render 'navigation'
       .container-fluid
         = render 'notification'
+        - unless controller_name == 'semester_process_volunteers'
+          = render 'unsubmitted_semester_feedback_notification'
 
         = yield
         = render 'modal_truncate'
