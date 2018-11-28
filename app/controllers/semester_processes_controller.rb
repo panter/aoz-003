@@ -58,7 +58,7 @@ class SemesterProcessesController < ApplicationController
 
     @volunteers = Volunteer.semester_process_eligible(@semester_process.semester)
     @semester_process.build_semester_volunteers(@volunteers, selected_volunteers, true)
-    @semester_process.build_volunteers_hours_feedbacks_and_mails
+    @semester_process.build_volunteers_feedbacks_and_mails
 
     if @semester_process.save
       redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created and emails delivered.'
