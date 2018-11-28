@@ -179,10 +179,9 @@ class Volunteer < ApplicationRecord
   end
 
   def self.feedback_overdue(semester)
-    joins(:contact).where(id: have_semester_process(semester).ids)
+    joins(:contact).where(id: have_semester_process(semester).where("semester_process_volunteers.commited_at is NULL").ids)
       .active_semester_mission(semester)
   end
-
   def unsubmitted_semester_feedbacks
     semester_process_volunteers.where(commited_at: nil)
   end
