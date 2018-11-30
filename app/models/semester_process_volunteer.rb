@@ -32,14 +32,17 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   validates_associated :hours, :semester_feedbacks, :volunteer
 
-  scope :index_joins, lambda {
-    joins(:semester_process).joins(:semester_process_mails).where("semester_process_mails.kind = 0").joins(volunteer: [:contact]).joins(:semester_process_volunteer_missions)
+  scope :without_reminders, lambda { |semester|
+    joins(:semester_process).where(semester_process: semester).joins(:semester_process_mails).where("semester_process_mails.kind = 0")
   }
 
   scope :index, lambda { |semester = nil|
-      joins(:semester_process).where(semester_process: semester)
+    without_reminders(semester)
           .joins(:semester_process_volunteer_missions, volunteer: [:contact])
-          .group('semester_process_volunteers.id, contacts_volunteers.last_name')
+  }
+
+  scope :without_feedback, lambda {
+    left_outer_joins(:semester_feedbacks).where(semester_feedbacks: { id: nil})
   }
 
 
