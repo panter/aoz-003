@@ -38,7 +38,6 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   scope :index, lambda { |semester = nil|
     without_reminders(semester)
-          .joins(:semester_process_volunteer_missions, volunteer: [:contact])
   }
 
   scope :without_feedback, lambda {
@@ -64,11 +63,12 @@ class SemesterProcessVolunteer < ApplicationRecord
     end
   end
 
-  def build_hours_and_mails
+  def build_hours_and_mails(kind = :mail)
     missions.each do |mission|
       hours << mission.hours.date_between_inclusion(:meeting_date, semester.begin, semester.end)
     end
-    semester_process_mails << SemesterProcessMail.new(kind: semester_process.kind, sent_by: creator,
+    semester_process.kind = kind
+    semester_process_mails << SemesterProcessMail.new(kind: kind, sent_by: creator,
                                 subject: semester_process.subject,
                                 body:    semester_process.body)
   end

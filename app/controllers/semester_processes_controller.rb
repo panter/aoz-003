@@ -83,15 +83,15 @@ class SemesterProcessesController < ApplicationController
       )
       @volunteers = Volunteer.semester_process_eligible(@semester_process.semester)
       @semester_process.build_semester_volunteers(@volunteers, selected: selected_volunteers, save_records: true)
-      else
+      @semester_process.build_volunteers_hours_feedbacks_and_mails
+    else
       @semester_process.assign_attributes(
         reminder_mail_body_template:    semester_process_params[:body],
         reminder_mail_subject_template: semester_process_params[:subject]
       )
       @volunteers = Volunteer.feedback_overdue(@semester_process.semester)
-      
+      @semester_process.build_volunteers_hours_feedbacks_and_mails(selected_volunteers)
     end
-    @semester_process.build_volunteers_hours_feedbacks_and_mails
 
     if @semester_process.save
       redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created and emails delivered.'
