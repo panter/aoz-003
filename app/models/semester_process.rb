@@ -5,12 +5,13 @@ class SemesterProcess < ApplicationRecord
   belongs_to :reminder_mail_posted_by, -> { with_deleted }, class_name: 'User',
     inverse_of: 'semester_process_reminder_mail_posted', optional: true
 
+  validates_uniqueness_of :semester
+
   has_many :semester_process_volunteers, dependent: :destroy
   accepts_nested_attributes_for :semester_process_volunteers, allow_destroy: true
 
   has_many :volunteers, through: :semester_process_volunteers
   has_many :semester_feedbacks, through: :semester_process_volunteers
-  has_many :hours, through: :semester_process_volunteers
 
   has_many :semester_process_volunteer_missions, through: :semester_process_volunteers
 
@@ -21,6 +22,10 @@ class SemesterProcess < ApplicationRecord
   scope :find_by_semester, lambda { |semester = nil|
     where('semester && daterange(?,?)', semester.begin, semester.end)
   }
+
+  def hours
+    semester_process_volunteers.map(&:hours).flatten
+  end
 
   def mails
     semester_process_mails.where(kind: 'mail')
@@ -72,7 +77,7 @@ class SemesterProcess < ApplicationRecord
     @new_semester_process_volunteers = volunteers.to_a.map do |volunteer|
       spv = SemesterProcessVolunteer.new(volunteer: volunteer, semester_process: self, selected: preselect)
       spv.build_missions(semester)
-      spv.save if save_records
+      spv.save if save_records && self.valid?
       spv
     end
   end

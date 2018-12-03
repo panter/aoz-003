@@ -20,7 +20,6 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :group_assignments, through: :semester_process_volunteer_missions
 
   has_many :semester_feedbacks, dependent: :destroy
-  has_many :hours, dependent: :nullify
 
   has_many :semester_process_mails, dependent: :destroy
   has_many :mails, -> { where(kind: 'mail') }, class_name: 'SemesterProcessMail',
@@ -28,7 +27,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :reminders, -> { where(kind: 'reminder') }, class_name: 'SemesterProcessMail',
     foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
 
-  accepts_nested_attributes_for :group_assignments, :assignments , :semester_process_volunteer_missions , :hours, :volunteer, :semester_feedbacks
+  accepts_nested_attributes_for :group_assignments, :assignments , :semester_process_volunteer_missions , :volunteer, :semester_feedbacks
 
   validates_associated :hours, :semester_feedbacks, :volunteer
 
@@ -44,6 +43,13 @@ class SemesterProcessVolunteer < ApplicationRecord
     left_outer_joins(:semester_feedbacks).where(semester_feedbacks: { id: nil})
   }
 
+  attr_accessor :hours
+  
+  def hours
+    missions.map do |m|
+      m.hours.within_semester(semester)
+    end.flatten
+  end
 
   def semester_feedback_with_mission(mission)
     self.semester_feedbacks.order(:created_at).select{|sf| sf.mission == mission}.last
@@ -63,10 +69,7 @@ class SemesterProcessVolunteer < ApplicationRecord
     end
   end
 
-  def build_hours_and_mails(kind = :mail)
-    missions.each do |mission|
-      hours << mission.hours.date_between_inclusion(:meeting_date, semester.begin, semester.end)
-    end
+  def build_mails(kind = :mail)
     semester_process.kind = kind
     semester_process_mails << SemesterProcessMail.new(kind: kind, sent_by: creator,
                                 subject: semester_process.subject,

@@ -24,7 +24,7 @@ module SemesterProcessVolunteerHelper
         @nested_objects[spv_mission.id.to_s][:hours] =  Hour.new(hash[:hour].merge({
               volunteer: spv_mission.volunteer,
               meeting_date: Time.zone.now,
-              semester_process_volunteer: @semester_process_volunteer
+              hourable: spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
         }))
       end
     end
