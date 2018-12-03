@@ -19,7 +19,7 @@ FactoryBot.define do
     after(:create) do |sem_proc, evaluator|
       if evaluator.build_volunteers
         evaluator.volunteers_count.times do
-          create :semester_process_volunteer, :with_mission, :with_feedbacks, semester_process: sem_proc
+          create :semester_process_volunteer, :with_mission, :with_feedbacks, :with_mail, semester_process: sem_proc
         end
       end
     end
