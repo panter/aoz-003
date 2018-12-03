@@ -83,7 +83,7 @@ class SemesterProcess < ApplicationRecord
     @new_semester_process_volunteers = volunteers.to_a.map do |volunteer|
       spv = SemesterProcessVolunteer.new(volunteer: volunteer, semester_process: self, selected: false)
       spv.build_missions(semester)
-      spv.save if save_record
+      spv.save if save_record && self.valid?
       spv
     end
   end
