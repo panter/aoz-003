@@ -82,13 +82,13 @@ class SemesterProcess < ApplicationRecord
     end
   end
 
-  def build_volunteers_hours_feedbacks_and_mails(collection)
+  def build_volunteers_feedbacks_and_mails(collection = nil)
     if collection
       SemesterProcessVolunteer.where(volunteer_id: collection).map do |spv|
-        spv.build_hours_and_mails(@kind)
+        spv.build_mails(@kind)
       end
     else
-      @new_semester_process_volunteers.map(&:build_hours_and_mails)
+      @new_semester_process_volunteers.map(&:build_mails)
     end
   end
 end

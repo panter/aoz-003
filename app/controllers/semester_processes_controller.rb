@@ -83,14 +83,14 @@ class SemesterProcessesController < ApplicationController
       )
       @volunteers = Volunteer.semester_process_eligible(@semester_process.semester)
       @semester_process.build_semester_volunteers(@volunteers, selected: selected_volunteers, save_records: true)
-      @semester_process.build_volunteers_hours_feedbacks_and_mails
+      @semester_process.build_volunteers_feedbacks_and_mails
     else
-      @semester_process.assign_attributes(
+      @semester_process.update_attributes(
         reminder_mail_body_template:    semester_process_params[:body],
         reminder_mail_subject_template: semester_process_params[:subject]
       )
       @volunteers = Volunteer.feedback_overdue(@semester_process.semester)
-      @semester_process.build_volunteers_hours_feedbacks_and_mails(selected_volunteers)
+      @semester_process.build_volunteers_feedbacks_and_mails(selected_volunteers)
     end
 
     if @semester_process.save
