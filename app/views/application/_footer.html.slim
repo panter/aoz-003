@@ -1,8 +1,12 @@
 footer.footer.navbar.hidden-print
   .container-fluid
+    p
+      mark.red AOZ
+      '    Fachstelle Freiwilligenarbeit
     hr
-    p.text-muted
-      = 'AOZ Fachstelle Freiwilligenarbeit - Flüelastrasse 32 - 8047 Zürich - '
-      = mail_to 'info@aoz-freiwillige.ch', 'info@aoz-freiwillige.ch'
+    p
+      = 'Flüelastrasse 32 - 8047 Zürich - Telefon 044 415 67 35 - Telefax n.v. - '
+      = mail_to 'freiwillige@aoz.ch', 'freiwillige@aoz.ch'
       = ' – '
-      = link_to 'www.aoz.ch/freiwilligenarbeit', 'http://www.aoz.ch/freiwilligenarbeit'
+    p
+      = link_to ' www.aoz-freiwillige.ch', 'www.aoz-freiwillige.ch'
