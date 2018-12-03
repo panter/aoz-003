@@ -5,7 +5,7 @@ class SemesterProcess < ApplicationRecord
   belongs_to :reminder_mail_posted_by, -> { with_deleted }, class_name: 'User',
     inverse_of: 'semester_process_reminder_mail_posted', optional: true
 
-  validates_uniqueness_of :semester, allow_blank: true
+  validates_uniqueness_of :semester
 
   has_many :semester_process_volunteers, dependent: :destroy
   accepts_nested_attributes_for :semester_process_volunteers, allow_destroy: true
