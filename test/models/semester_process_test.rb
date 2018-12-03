@@ -26,7 +26,7 @@ class SemesterProcessTest < ActiveSupport::TestCase
   end
 
   test 'through hours relation' do
-    semester_hour = create(:hour, hourable: @mission, volunteer: @volunteer)
+    semester_hour = create(:hour, hourable: @mission, volunteer: @volunteer, meeting_date: @subject.semester.begin + 3.days)
     @subject.reload
     assert @subject.hours.include? semester_hour
   end
