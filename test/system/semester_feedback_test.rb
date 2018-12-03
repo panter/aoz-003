@@ -39,6 +39,13 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
   end
 
+  test 'submit form should not display warning' do
+    visit root_path
+    assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    click_link 'Bitte klicken Sie hier um diesen zu bestätigen'
+    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+  end
+
   test 'by default, you should have not accepted the data' do
     assert_text 'Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte bis zum heutigen Datum erfasst habe.'
   end

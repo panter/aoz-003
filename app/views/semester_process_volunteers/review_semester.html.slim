@@ -10,11 +10,7 @@
 
   = f.simple_fields_for :semester_feedbacks, @semester_process_volunteer.semester_process_volunteer_missions do |spvm|
     - mission = spvm.object.mission
-    h2.m-b-20.m-t-30
-      'Einsatz
-      = link_to mission.to_label,
-        url: polymorphic_path([mission.volunteer, mission.polymorph_url_object]),
-        target: '_blank'
+    h2.m-b-20.m-t-30 Einsatz #{mission.to_label}
 
     = spvm.simple_fields_for :semester_feedback, @nested_objects[spvm.object.id.to_s][:feedback] do |ff|
       = ff.input :spv_mission_id, as: :hidden, input_html: { value: spvm.object.id }
