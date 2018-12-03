@@ -49,7 +49,13 @@ FactoryBot.define do
           mission: create(ev.mission_type || :assignment, volunteer: spv.volunteer))
       end
 
+      if ev.add_mail
+        create(:semester_process_mail, semester_process_volunteer: spv, kind: 'mail',
+          sent_by: spv.semester_process.creator)
+      end
+
       if ev.add_feedbacks
+        spv.reload
         spv.semester_process_volunteer_missions.map do |sem_proc_mission|
           create(:semester_feedback, mission: sem_proc_mission.mission,
             semester_process_volunteer: spv)
@@ -60,11 +66,6 @@ FactoryBot.define do
         spv.semester_process_volunteer_missions.map do |sem_proc_mission|
           create(:hour, hourable: sem_proc_mission.mission)
         end
-      end
-
-      if ev.add_mail
-        create(:semester_process_mail, semester_process_volunteer: spv, kind: 'mail',
-          sent_by: spv.semester_process.creator)
       end
     end
   end
