@@ -12,7 +12,6 @@ class SemesterProcess < ApplicationRecord
 
   has_many :volunteers, through: :semester_process_volunteers
   has_many :semester_feedbacks, through: :semester_process_volunteers
-  has_many :hours, through: :semester_process_volunteers
 
   has_many :semester_process_volunteer_missions, through: :semester_process_volunteers
 
@@ -23,6 +22,10 @@ class SemesterProcess < ApplicationRecord
   scope :find_by_semester, lambda { |semester = nil|
     where('semester && daterange(?,?)', semester.begin, semester.end)
   }
+
+  def hours
+    semester_process_volunteers.map(&:hours).flatten
+  end
 
   def mails
     semester_process_mails.where(kind: 'mail')
@@ -88,7 +91,7 @@ class SemesterProcess < ApplicationRecord
     end
   end
 
-  def build_volunteers_hours_feedbacks_and_mails
-    @new_semester_process_volunteers.map(&:build_hours_and_mails)
+  def build_volunteers_feedbacks_and_mails
+    @new_semester_process_volunteers.map(&:build_mails)
   end
 end
