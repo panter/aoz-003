@@ -16,6 +16,7 @@ h1 Semester Prozess
         th Erfolge
         th Zukunft
         th Bemerkungen
+        th Gespräch
         th Übernommen
         th.limit-width-15 Notizen
         th Quittiert
@@ -40,6 +41,9 @@ h1 Semester Prozess
           = td_truncate_content_modal(spv.render_feedback(:achievements), 'Erfolge', shorten_size: 300)
           = td_truncate_content_modal(spv.render_feedback(:future), 'Zukunft', shorten_size: 300)
           = td_truncate_content_modal(spv.render_feedback(:comments), 'Bemerkungen', shorten_size: 300)
+          td
+            - if spv.render_feedback_conversation
+              = icon_span(:yes)
           td.index-action-cell.hidden-print
             - if spv.responsible.present?
               = 'Übernommen durch '

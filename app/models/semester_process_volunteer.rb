@@ -27,7 +27,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   has_many :reminders, -> { where(kind: 'reminder') }, class_name: 'SemesterProcessMail',
     foreign_key: 'semester_process_volunteer_id', inverse_of: 'semester_process_volunteer'
 
-  accepts_nested_attributes_for :group_assignments, :assignments , :semester_process_volunteer_missions , :volunteer, :semester_feedbacks
+  accepts_nested_attributes_for :group_assignments, :assignments, :semester_process_volunteer_missions, :volunteer, :semester_feedbacks
 
   validates_associated :hours, :semester_feedbacks, :volunteer
 
@@ -44,7 +44,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   }
 
   attr_accessor :hours
-  
+
   def hours
     missions.map do |m|
       m.hours.within_semester(semester)
@@ -52,7 +52,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   end
 
   def semester_feedback_with_mission(mission)
-    self.semester_feedbacks.order(:created_at).select{|sf| sf.mission == mission}.last
+    semester_feedbacks.order(:created_at).select { |sf| sf.mission == mission }.last
   end
 
   # will only return an array, not a AD-result
@@ -82,6 +82,10 @@ class SemesterProcessVolunteer < ApplicationRecord
       field_size += f[field].size
     end
     semester_feedbacks.map(&field).compact.join('<hr>').html_safe if field_size != 0
+  end
+
+  def render_feedback_conversation
+    semester_feedbacks.map(&:conversation).any?
   end
 
   def responsible=(responsible_user)
