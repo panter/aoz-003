@@ -19,11 +19,11 @@ body,
   width: 100%;
 
   hr {
-    border-color: $red;
+    border-color: $custom-red;
   }
 
   p .red {
     background: none;
-    color: $red;
+    color: $custom-red;
   }
 }
