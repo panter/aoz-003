@@ -63,6 +63,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     @spv.reload
     assert_equal Hour.last.hours, 10
     assert_equal Hour.last.hourable, @spv.missions.last
+    assert_equal Hour.last.meeting_date, @spv.semester.last.to_date
   end
 
   test 'iban and bank has to be filled' do

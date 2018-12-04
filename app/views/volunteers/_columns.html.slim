@@ -26,6 +26,7 @@
           th= t_attr(:comments)
         th= sort_link @q, :external
         th= t_attr(:created_by, Volunteer)
+        th= t_attr(:accepted_at, Volunteer)
 
     tbody
       = render volunteers

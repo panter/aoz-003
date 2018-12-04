@@ -1,5 +1,4 @@
 module SemesterProcessVolunteerHelper
-
   def set_reviewed
     @semester_process_volunteer.commited_by = current_user
     @semester_process_volunteer.commited_at = Time.zone.now
@@ -17,14 +16,14 @@ module SemesterProcessVolunteerHelper
     review_params[:semester_feedbacks_attributes].each do |_key, hash|
       spv_mission = SemesterProcessVolunteerMission.find(hash[:semester_feedback][:spv_mission_id])
       @nested_objects[spv_mission.id.to_s][:feedback] = SemesterFeedback.new(hash[:semester_feedback].merge({
-          author: current_user, semester_process_volunteer: @semester_process_volunteer
+        author: current_user, semester_process_volunteer: @semester_process_volunteer
       }))
 
       if hash[:hour][:hours].to_i.positive?
-        @nested_objects[spv_mission.id.to_s][:hours] =  Hour.new(hash[:hour].merge({
-              volunteer: spv_mission.volunteer,
-              meeting_date: Time.zone.now,
-              hourable: spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
+        @nested_objects[spv_mission.id.to_s][:hours] = Hour.new(hash[:hour].merge({
+          volunteer: spv_mission.volunteer,
+          meeting_date: spv_mission.semester_process_volunteer.semester.last.to_date,
+          hourable: spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
         }))
       end
     end
