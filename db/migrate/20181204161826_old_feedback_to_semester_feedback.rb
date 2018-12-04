@@ -19,7 +19,7 @@ class OldFeedbackToSemesterFeedback < ActiveRecord::Migration[5.1]
           semester_process_volunteer: spv
         )
 
-        s = SemesterFeedback.create(
+        SemesterFeedback.create(
           f.slice(:goals, :achievements, :future, :comments, :conversation, :author).merge(
             semester_process_volunteer: spv,
             mission: mis
