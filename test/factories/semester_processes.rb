@@ -3,7 +3,7 @@ FactoryBot.define do
     association :creator, factory: :user
     mail_subject_template 'mail subject template'
     mail_body_template 'mail body template'
-    semester { Time.zone.local(2017, 12, 1).beginning_of_day..Time.zone.local(2018, 5, 30).end_of_month }
+    sequence(:semester) {|n| Time.zone.local(2017 + n, 12, 1).beginning_of_day..Time.zone.local(2018 + n, 5, 30).end_of_month }
 
     transient do
       build_volunteers { false }

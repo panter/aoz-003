@@ -31,10 +31,16 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   validates_associated :hours, :semester_feedbacks, :volunteer
 
+  scope :without_reminders, lambda { |semester|
+    joins(:semester_process).where(semester_process: semester).joins(:semester_process_mails).where("semester_process_mails.kind = 0")
+  }
+
   scope :index, lambda { |semester = nil|
-      joins(:semester_process).where(semester_process: semester)
-          .joins(:semester_process_volunteer_missions, volunteer: [:contact])
-          .group('semester_process_volunteers.id, contacts_volunteers.last_name')
+    without_reminders(semester)
+  }
+
+  scope :without_feedback, lambda {
+    left_outer_joins(:semester_feedbacks).where(semester_feedbacks: { id: nil})
   }
 
   attr_accessor :hours
@@ -63,10 +69,11 @@ class SemesterProcessVolunteer < ApplicationRecord
     end
   end
 
-  def build_mails
-    semester_process_mails << SemesterProcessMail.new(kind: :mail, sent_by: creator,
-                                subject: semester_process.mail_subject_template,
-                                body:    semester_process.mail_body_template)
+  def build_mails(kind = :mail)
+    semester_process.kind = kind
+    semester_process_mails << SemesterProcessMail.new(kind: kind, sent_by: creator,
+                                subject: semester_process.subject,
+                                body:    semester_process.body)
   end
 
   def render_feedback(field)

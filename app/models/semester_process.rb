@@ -5,6 +5,8 @@ class SemesterProcess < ApplicationRecord
   belongs_to :reminder_mail_posted_by, -> { with_deleted }, class_name: 'User',
     inverse_of: 'semester_process_reminder_mail_posted', optional: true
 
+  validates_uniqueness_of :semester
+
   has_many :semester_process_volunteers, dependent: :destroy
   accepts_nested_attributes_for :semester_process_volunteers, allow_destroy: true
 
@@ -15,7 +17,7 @@ class SemesterProcess < ApplicationRecord
 
   has_many :semester_process_mails, through: :semester_process_volunteers
 
-  attr_accessor :new_semester_process_volunteers
+  attr_accessor :new_semester_process_volunteers, :kind
 
   scope :find_by_semester, lambda { |semester = nil|
     where('semester && daterange(?,?)', semester.begin, semester.end)
@@ -33,28 +35,20 @@ class SemesterProcess < ApplicationRecord
     semester_process_mails.where(kind: 'reminder')
   end
 
-  def mail?
-    self.mail_subject_template && self.mail_body_template
-  end
-
-  def reminder?
-    self.reminder_mail_subject_template && self.reminder_mail_body_template
-  end
-
-  def kind
-    if self.mail?
-      return :mail
-    elsif self.reminder?
-      return :reminder
+  def subject
+    if self.kind.to_sym == :reminder
+      self.reminder_mail_subject_template
+    else
+      self.mail_subject_template
     end
   end
 
-  def subject
-    self.mail_subject_template || self.reminder_mail_subject_template
-  end
-
   def body
-    self.mail_body_template || self.reminder_mail_body_template
+    if self.kind.to_sym == :reminder
+      self.reminder_mail_body_template
+    else
+      self.mail_body_template
+    end
   end
 
   # will only return an array, not a AD-result
@@ -77,19 +71,24 @@ class SemesterProcess < ApplicationRecord
     Semester.period(semester)
   end
 
-  def build_semester_volunteers(volunteers, selected, save_record = true)
+  def build_semester_volunteers(volunteers, selected: nil, save_records: false, preselect: false)
     volunteers = volunteers.select{ |volunteer| selected.include? volunteer.id } if selected && selected.any?
     @new_semester_process_volunteers = []
-
     @new_semester_process_volunteers = volunteers.to_a.map do |volunteer|
-      spv = SemesterProcessVolunteer.new(volunteer: volunteer, semester_process: self, selected: false)
+      spv = SemesterProcessVolunteer.new(volunteer: volunteer, semester_process: self, selected: preselect)
       spv.build_missions(semester)
-      spv.save if save_record
+      spv.save if save_records && self.valid?
       spv
     end
   end
 
-  def build_volunteers_feedbacks_and_mails
-    @new_semester_process_volunteers.map(&:build_mails)
+  def build_volunteers_feedbacks_and_mails(collection = nil)
+    if collection
+      SemesterProcessVolunteer.where(volunteer_id: collection).map do |spv|
+        spv.build_mails(@kind)
+      end
+    else
+      @new_semester_process_volunteers.map(&:build_mails)
+    end
   end
 end

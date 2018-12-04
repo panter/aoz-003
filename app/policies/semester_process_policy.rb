@@ -14,4 +14,5 @@ class SemesterProcessPolicy < ApplicationPolicy
   alias_method :edit?,    :superadmin?
   alias_method :create?,  :superadmin?
   alias_method :update?,  :superadmin?
+  alias_method :overdue?,  :superadmin?
 end

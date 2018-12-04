@@ -178,6 +178,10 @@ class Volunteer < ApplicationRecord
       .active_semester_mission(semester)
   end
 
+  def self.feedback_overdue(semester)
+    joins(:contact).where(id: have_semester_process(semester).where("semester_process_volunteers.commited_at IS NULL").ids)
+  end
+  
   def unsubmitted_semester_feedbacks
     semester_process_volunteers.where(commited_at: nil)
   end
@@ -370,7 +374,7 @@ class Volunteer < ApplicationRecord
 
   def assignment_logs_started?
     assignment_logs.started.any?
-  end
+  end   
 
   def group_assignment_started?
     group_assignments.started.any?

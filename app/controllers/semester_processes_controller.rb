@@ -1,6 +1,8 @@
 class SemesterProcessesController < ApplicationController
-  before_action :set_semester_process, only: [:show, :edit, :update]
+  before_action :set_semester_process, only: [:show, :edit, :update, :overdue]
   before_action :set_semester, only: [:new, :create]
+
+  include SemesterProcessHelper
 
   def index
     authorize SemesterProcess
@@ -10,21 +12,42 @@ class SemesterProcessesController < ApplicationController
   def show; end
 
   def new
-    @semester_process = SemesterProcess.new(semester: @selected_semester)
+    @semester_process = SemesterProcess.new(semester: @selected_semester, kind: :mail )
     new_or_edit
   end
 
   def edit
+    @semester_process.kind = :mail
     new_or_edit
   end
 
   def create
-    @semester_process = SemesterProcess.new(semester_process_params.slice(:semester))
+    @semester_process = SemesterProcess.new(semester_process_params.slice(:kind, :semester))
     update_or_create
   end
 
   def update
+    @save = params[:save_records]
     update_or_create
+  end
+
+  def overdue
+    @semester_process.kind = :reminder
+    @volunteers = Volunteer.feedback_overdue(@semester_process.semester)
+    @semester_process.build_semester_volunteers(@volunteers, preselect: true)
+
+    @spvs_sorted = sort_volunteers
+
+    params[:semester] = Semester.to_s(@semester_process.semester.begin)
+
+    if EmailTemplate.half_year_process_overdue.active.any?
+      template = EmailTemplate.half_year_process_overdue.active.first.slice(:subject, :body)
+      @semester_process.assign_attributes(reminder_mail_body_template: template[:body], reminder_mail_subject_template: template[:subject])
+    else
+      redirect_to new_email_template_path,
+        notice: 'Sie müssen eine aktive E-Mailvorlage haben,
+        bevor Sie eine Halbjahres Erinnerung erstellen können.'
+    end
   end
 
   private
@@ -33,9 +56,9 @@ class SemesterProcessesController < ApplicationController
     authorize @semester_process
 
     @volunteers = Volunteer.semester_process_eligible(@semester_process.semester)
-    @semester_process.build_semester_volunteers(@volunteers, nil, false)
+    @semester_process.build_semester_volunteers(@volunteers)
 
-    @spvs_sorted = @semester_process.new_semester_process_volunteers.sort { |spv1, spv2| spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name}
+    @spvs_sorted = sort_volunteers
 
     if EmailTemplate.half_year_process_email.active.any?
       template = EmailTemplate.half_year_process_email.active.first.slice(:subject, :body)
@@ -50,15 +73,25 @@ class SemesterProcessesController < ApplicationController
   def update_or_create
     authorize @semester_process
 
+    @semester_process.kind = semester_process_params[:kind]
     @semester_process.creator = current_user
-    @semester_process.assign_attributes(
-      mail_body_template:    semester_process_params[:body],
-      mail_subject_template: semester_process_params[:subject]
-    )
 
-    @volunteers = Volunteer.semester_process_eligible(@semester_process.semester)
-    @semester_process.build_semester_volunteers(@volunteers, selected_volunteers, true)
-    @semester_process.build_volunteers_feedbacks_and_mails
+    if @semester_process.kind == "mail"
+      @semester_process.assign_attributes(
+        mail_body_template:    semester_process_params[:body],
+        mail_subject_template: semester_process_params[:subject]
+      )
+      @volunteers = Volunteer.semester_process_eligible(@semester_process.semester)
+      @semester_process.build_semester_volunteers(@volunteers, selected: selected_volunteers, save_records: true)
+      @semester_process.build_volunteers_feedbacks_and_mails
+    else
+      @semester_process.update_attributes(
+        reminder_mail_body_template:    semester_process_params[:body],
+        reminder_mail_subject_template: semester_process_params[:subject]
+      )
+      @volunteers = Volunteer.feedback_overdue(@semester_process.semester)
+      @semester_process.build_volunteers_feedbacks_and_mails(selected_volunteers)
+    end
 
     if @semester_process.save
       redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created and emails delivered.'
