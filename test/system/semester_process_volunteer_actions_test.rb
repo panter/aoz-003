@@ -9,7 +9,7 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     @group_assignment = create :group_assignment, volunteer: @volunteer
 
     @semester_process = create :semester_process
-    @spv1 = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer,
+    @spv1 = create(:semester_process_volunteer, :with_mission, :with_mail, volunteer: @volunteer,
       semester_process: @semester_process)
 
     login_as @superadmin
