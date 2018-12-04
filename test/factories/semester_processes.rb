@@ -1,5 +1,4 @@
 FactoryBot.define do
-  current_semester = Semester.new
   factory :semester_process do
     association :creator, factory: :user
     mail_subject_template 'mail subject template'
