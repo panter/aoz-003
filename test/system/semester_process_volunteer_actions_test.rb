@@ -62,15 +62,6 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
     action_on_semester_process_volunteer_index(path, text)
   end
 
-  # test 'notes are editable' do
-  #   first('.update_notes .field_label').click
-  #   first('.update_notes .field_input').fill_in(with: 'notesnotesnotes')
-  #   first('div.wrapper').click
-  #   wait_for_ajax
-  #   @spv1.reload
-  #   assert page.has_text? 'notesnotesnotes'
-  #   assert_equal @spv1.notes,'notesnotesnotes'
-  # end
   # test 'take responsibility for semester process volunteer filter works' do
   #   filters_setup
   #   # filter for Alle/all
@@ -224,4 +215,13 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
   #     assert_not page.has_text? @volunteer3.contact.full_name
   #   end
   # end
+  test 'notes are editable' do
+    first('.update_notes .field_label').click
+    first('.update_notes .field_input').fill_in(with: 'notesnotesnotes')
+    first('div.wrapper').click
+    wait_for_ajax
+    @spv1.reload
+    assert page.has_text? 'notesnotesnotes'
+    assert_equal @spv1.notes,'notesnotesnotes'
+  end
 end
