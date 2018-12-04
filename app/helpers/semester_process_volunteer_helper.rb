@@ -20,10 +20,10 @@ module SemesterProcessVolunteerHelper
       }))
 
       if hash[:hour][:hours].to_i.positive?
-        @nested_objects[spv_mission.id.to_s][:hours] =  Hour.new(hash[:hour].merge({
-              volunteer: spv_mission.volunteer,
-              meeting_date: spv_mission.semester_process_volunteer.semester.last.to_date,
-              hourable: spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
+        @nested_objects[spv_mission.id.to_s][:hours] = Hour.new(hash[:hour].merge({
+          volunteer: spv_mission.volunteer,
+          meeting_date: spv_mission.semester_process_volunteer.semester.last.to_date,
+          hourable: spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
         }))
       end
     end
