@@ -4,7 +4,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   setup do
     @volunteer = create :volunteer_with_user
     @subject = create :semester_process
-    @spv = create(:semester_process_volunteer, :with_mission, volunteer: @volunteer,
+    @spv = create(:semester_process_volunteer, :with_mission, :with_mail, volunteer: @volunteer,
       semester_process: @subject)
     login_as @volunteer.user
     visit review_semester_semester_process_volunteer_path(@spv)
@@ -125,12 +125,12 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert page.has_text? achievements
     click_button 'Schliessen'
 
-    page.find('td', text: future.truncate(300)).click
-    assert page.has_text? future
-    click_button 'Schliessen'
-
     page.find('td', text: comments.truncate(300)).click
     assert page.has_text? comments
+    click_button 'Schliessen'
+
+    page.find('td', text: future.truncate(300)).click
+    assert page.has_text? future
     click_button 'Schliessen'
   end
 end
