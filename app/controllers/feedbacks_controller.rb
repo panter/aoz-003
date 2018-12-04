@@ -1,20 +1,26 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback,
     only: [:show, :edit, :update, :destroy, :mark_as_done, :take_responsibility]
-  before_action :set_feedbackable
+  before_action :set_feedbackable, except: [:index]
   before_action :set_volunteer
   before_action :set_list_response_feedback_redirect_back_path,
     only: [:mark_as_done, :take_responsibility]
 
   def index
     authorize Feedback
-    @feedbacks = policy_scope(Feedback).where(feedbackable: @feedbackable)
+    @feedbacks = if params[:assignment_id]
+                   SemesterFeedback.where(assignment_id: params[:assignment_id])
+                 elsif params[:group_offer_id]
+                   SemesterFeedback.where(group_assignment_id: GroupAssignment.where(group_offer_id: params[:group_offer_id]).ids)
+                 else
+                  []
+                 end
   end
 
   def show; end
 
   def new
-    @feedback = Feedback.new(feedbackable: @feedbackable, volunteer: @volunteer,
+    @feedback = SemesterFeedback.new(feedbackable: @feedbackable, volunteer: @volunteer,
       author: current_user)
     authorize @feedback
     simple_form_params
