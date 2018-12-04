@@ -134,4 +134,28 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert page.has_text? future
     click_button 'Schliessen'
   end
+
+  test 'it should create a journal on submit' do
+    volunteer = create :volunteer_with_user
+    spv = create(:semester_process_volunteer, :with_missions, :with_mail, volunteer: volunteer,
+      semester_process: create(:semester_process))
+    login_as volunteer.user
+    visit review_semester_semester_process_volunteer_path(spv)
+
+    assert_difference 'Journal.count', 1 do
+      find('#semester_process_volunteer_semester_feedbacks_attributes_0_semester_feedback_goals').set('being on time')
+      find('#semester_process_volunteer_semester_feedbacks_attributes_0_semester_feedback_achievements').set('achievements')
+      find('#semester_process_volunteer_semester_feedbacks_attributes_0_semester_feedback_future').set('future')
+      find('#semester_process_volunteer_semester_feedbacks_attributes_1_semester_feedback_goals').set('goals')
+      find('#semester_process_volunteer_semester_feedbacks_attributes_1_semester_feedback_achievements').set('achievements')
+      find('#semester_process_volunteer_semester_feedbacks_attributes_1_semester_feedback_future').set('future')
+      check 'Ich verzichte auf die Auszahlung von Spesen.'
+      click_on 'Bestätigen', match: :first
+      spv.reload
+    end
+    assert Journal.last.body.include? volunteer.assignments.first.to_label
+    assert Journal.last.body.include? volunteer.assignments.second.to_label
+    assert Journal.last.body.include? spv.semester_feedbacks.first.goals
+    assert Journal.last.body.include? spv.semester_feedbacks.second.goals
+  end
 end

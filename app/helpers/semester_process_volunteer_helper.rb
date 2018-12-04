@@ -29,6 +29,28 @@ module SemesterProcessVolunteerHelper
     end
   end
 
+  def create_journals
+    return unless SemesterProcessVolunteer.find(params[:id]).commited_at?
+    volunteer = SemesterProcessVolunteer.find(params[:id]).volunteer
+    semester_feedbacks = SemesterProcessVolunteer.find(params[:id]).semester_feedbacks
+    Journal.create(user: volunteer.user, journalable_id: volunteer.id,
+      journalable_type: 'Volunteer', category: :feedback, title: "Semester Prozess Feedback vom #{I18n.l(Time.zone.today)}: ",
+      body: render_semester_feedbacks(semester_feedbacks))
+  end
+
+  def render_semester_feedbacks(semester_feedbacks)
+    text = ''
+    semester_feedbacks.each do |semester_feedback|
+      text += semester_feedback.mission.to_label
+      text += "\n\n"
+      text += semester_feedback.slice(:goals, :achievements, :future, :comments).map do |key, sfb_quote|
+                "#{I18n.t("activerecord.attributes.feedback.#{key}")}:\n«#{sfb_quote}»" if sfb_quote.present?
+              end.compact.join("\n\n")
+      text += "\n\n"
+    end
+    text
+  end
+
   def assign_volunteer_attributes
     @volunteer.assign_attributes(review_params[:volunteer_attributes]
       .slice(:waive, :bank, :iban))
