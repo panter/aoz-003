@@ -60,7 +60,7 @@ gem 'wkhtmltopdf-binary'
 group :development do
   gem 'awesome_print'
   gem 'i18n_yaml_sorter'
-  gem 'letter_opener'
+  gem 'letter_opener_web', '~> 1.0'
   gem 'overcommit', require: false
   gem 'rubocop', require: false
   gem 'scss_lint', require: false
