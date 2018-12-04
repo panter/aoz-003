@@ -2,7 +2,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   attr_accessor :selected
 
   belongs_to :volunteer
-  belongs_to :semester_process
+  belongs_to :semester_process, optional: true
   delegate :semester, to: :semester_process
   delegate :semester_t, to: :semester_process
   delegate :semester_period, to: :semester_process
