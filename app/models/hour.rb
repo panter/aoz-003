@@ -32,8 +32,8 @@ class Hour < ApplicationRecord
       date.advance(months: BillingExpense::SEMESTER_LENGTH))
   }
 
-  scope :within_semester, lambda {|semester | 
-    where(meeting_date: semester.begin...semester.end)
+  scope :within_semester, lambda { |semester|
+    where(meeting_date: semester.begin...semester.end.advance(days: 1))
   }
 
   scope :since_last_submitted, lambda { |submitted_at|
