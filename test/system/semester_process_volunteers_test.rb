@@ -7,7 +7,7 @@ class SemesterProcessVolunteersTest < ApplicationSystemTestCase
     @two_semesters_back = create :semester_process, :with_volunteers, semester: @current_semester.previous_s(2)
     @three_semesters_back = create :semester_process, :with_volunteers, semester: @current_semester.previous_s(3)
     login_as create(:user)
-    visit semester_process_volunteers_path
+    visit semester_process_volunteers_path(semester: Semester.to_s(@one_semester_back.semester))
   end
 
   test 'filter semester process volunteer shows previous semester by default' do

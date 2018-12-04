@@ -57,15 +57,12 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
 
   test 'you should be able to add hours on run' do
     fill_in_required_feedback_fields
-    assert_equal @spv.hours.count, 0
     fill_in 'Stunden', with: 10
     check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
     @spv.reload
-    assert_equal @spv.hours.first.hours, 10
-    within '.table.table-striped.hours-table' do
-      assert_text "#{I18n.l(Time.zone.now.to_date)} 10.0"
-    end
+    assert_equal Hour.last.hours, 10
+    assert_equal Hour.last.hourable, @spv.missions.last
   end
 
   test 'iban and bank has to be filled' do
@@ -95,7 +92,8 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
       { iban: 'CH59 2012 0767 0052 0024 0', bank: 'Bank', waive: false }.stringify_keys
     assert_equal @spv.semester_feedbacks.last.slice(:goals, :achievements, :future, :comments, :conversation),
       { goals: 'being on time', achievements: 'everything', future: 'continue', comments: 'nothing', conversation: true }.stringify_keys
-    assert_equal @spv.hours.last.hours, 33
+    assert_equal Hour.last.hours, 33
+    assert_equal Hour.last.hourable, @spv.missions.first
   end
 
   test 'truncate_modal_shows_all_text' do
@@ -117,7 +115,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
     @spv.reload
-    visit semester_process_volunteers_path
+    visit semester_process_volunteers_path(semester: Semester.to_s(@spv.semester))
 
     page.find('td', text: goals.truncate(300)).click
     assert page.has_text? goals
