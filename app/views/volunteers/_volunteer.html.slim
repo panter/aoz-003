@@ -58,4 +58,3 @@ tr id=(dom_id(volunteer))
       = link_to volunteer.registrar.full_name, profile_url_path(volunteer.registrar)
     br
     = l(volunteer.created_at.to_date) if volunteer.created_at
-  td = l(volunteer.accepted_at.to_date) if volunteer.accepted_at

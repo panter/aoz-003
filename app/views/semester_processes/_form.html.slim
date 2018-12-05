@@ -20,6 +20,7 @@
           th.limit-width= select_all_rows
           th Freiwilliger/r
           th Einsatz
+          th= t_attr(:accepted_at, Volunteer)
         tbody
           = f.simple_fields_for :semester_process_volunteers, @spvs_sorted do |fv|
             tr.table-row-selectable
@@ -29,6 +30,7 @@
                 = fv.hidden_field :volunteer_id
                 - fv.object.semester_process_volunteer_missions.each do |mission|
                   = link_to mission.mission.to_label, mission.mission
+              td= l(fv.object.volunteer.accepted_at.to_date) if fv.object.volunteer.accepted_at
 
   .row:.col-xs-12
     = f.button :submit
