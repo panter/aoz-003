@@ -48,31 +48,31 @@ class SemesterServiceTest < ActionView::TestCase
   test '#current' do
     travel_to time_z(2018, 8, 10)
     subject = Semester.new
-    assert_equal time_z(2018, 6, 1).to_date..time_z(2018, 11, 1).end_of_month.to_date, subject.current
+    assert_equal time_z(2018, 6, 1).to_date...time_z(2018, 11, 1).end_of_month.to_date, subject.current
 
     subject = Semester.new(2017, 2)
-    assert_equal time_z(2017, 6, 1).to_date..time_z(2017, 11, 1).end_of_month.to_date, subject.current
+    assert_equal time_z(2017, 6, 1).to_date...time_z(2017, 11, 1).end_of_month.to_date, subject.current
 
     subject = Semester.new(2017, 1)
-    assert_equal time_z(2016, 12, 1).to_date..time_z(2017, 5, 1).end_of_month.to_date, subject.current
+    assert_equal time_z(2016, 12, 1).to_date...time_z(2017, 5, 1).end_of_month.to_date, subject.current
   end
 
   test '#previous' do
     travel_to time_z(2018, 8, 10)
 
     subject = Semester.new
-    assert_equal time_z(2017, 12, 1).to_date..time_z(2018, 5, 1).end_of_month.to_date, subject.previous
-    assert_equal time_z(2017, 6, 1).to_date..time_z(2017, 11, 1).end_of_month.to_date, subject.previous(2)
-    assert_equal time_z(2016, 12, 1).to_date..time_z(2017, 5, 1).end_of_month.to_date, subject.previous(3)
+    assert_equal time_z(2017, 12, 1).to_date...time_z(2018, 5, 1).end_of_month.to_date, subject.previous
+    assert_equal time_z(2017, 6, 1).to_date...time_z(2017, 11, 1).end_of_month.to_date, subject.previous(2)
+    assert_equal time_z(2016, 12, 1).to_date...time_z(2017, 5, 1).end_of_month.to_date, subject.previous(3)
   end
 
   test '#next_semester' do
     travel_to time_z(2018, 8, 10)
 
     subject = Semester.new
-    assert_equal time_z(2018, 12, 1).to_date..time_z(2019, 5, 1).end_of_month.to_date, subject.next_semester
-    assert_equal time_z(2019, 6, 1).to_date..time_z(2019, 11, 1).end_of_month.to_date, subject.next_semester(2)
-    assert_equal time_z(2019, 12, 1).to_date..time_z(2020, 5, 1).end_of_month.to_date, subject.next_semester(3)
+    assert_equal time_z(2018, 12, 1).to_date...time_z(2019, 5, 1).end_of_month.to_date, subject.next_semester
+    assert_equal time_z(2019, 6, 1).to_date...time_z(2019, 11, 1).end_of_month.to_date, subject.next_semester(2)
+    assert_equal time_z(2019, 12, 1).to_date...time_z(2020, 5, 1).end_of_month.to_date, subject.next_semester(3)
   end
 
   test '#previous_s' do
@@ -98,29 +98,29 @@ class SemesterServiceTest < ActionView::TestCase
 
     subject = Semester.new
     assert_equal [
-      time_z(2018, 6, 1).to_date..time_z(2018, 11, 1).end_of_month.to_date,
-      time_z(2017, 12, 1).to_date..time_z(2018, 5, 1).end_of_month.to_date,
-      time_z(2017, 6, 1).to_date..time_z(2017, 11, 1).end_of_month.to_date,
-      time_z(2016, 12, 1).to_date..time_z(2017, 5, 1).end_of_month.to_date
+      time_z(2018, 6, 1).to_date...time_z(2018, 11, 1).end_of_month.to_date,
+      time_z(2017, 12, 1).to_date...time_z(2018, 5, 1).end_of_month.to_date,
+      time_z(2017, 6, 1).to_date...time_z(2017, 11, 1).end_of_month.to_date,
+      time_z(2016, 12, 1).to_date...time_z(2017, 5, 1).end_of_month.to_date
     ], subject.list
 
     assert_equal [
-      time_z(2018, 6, 1).to_date..time_z(2018, 11, 1).end_of_month.to_date,
-      time_z(2017, 12, 1).to_date..time_z(2018, 5, 1).end_of_month.to_date,
-      time_z(2017, 6, 1).to_date..time_z(2017, 11, 1).end_of_month.to_date
+      time_z(2018, 6, 1).to_date...time_z(2018, 11, 1).end_of_month.to_date,
+      time_z(2017, 12, 1).to_date...time_z(2018, 5, 1).end_of_month.to_date,
+      time_z(2017, 6, 1).to_date...time_z(2017, 11, 1).end_of_month.to_date
     ], subject.list(2)
 
     assert_equal [
-      time_z(2017, 12, 1).to_date..time_z(2018, 5, 1).end_of_month.to_date,
-      time_z(2017, 6, 1).to_date..time_z(2017, 11, 1).end_of_month.to_date,
-      time_z(2016, 12, 1).to_date..time_z(2017, 5, 1).end_of_month.to_date
+      time_z(2017, 12, 1).to_date...time_z(2018, 5, 1).end_of_month.to_date,
+      time_z(2017, 6, 1).to_date...time_z(2017, 11, 1).end_of_month.to_date,
+      time_z(2016, 12, 1).to_date...time_z(2017, 5, 1).end_of_month.to_date
     ], subject.list(with_current: false)
 
     assert_equal [
-      time_z(2018, 6, 1).to_date..time_z(2018, 11, 1).end_of_month.to_date,
-      time_z(2018, 12, 1).to_date..time_z(2019, 5, 1).end_of_month.to_date,
-      time_z(2019, 6, 1).to_date..time_z(2019, 11, 1).end_of_month.to_date,
-      time_z(2019, 12, 1).to_date..time_z(2020, 5, 1).end_of_month.to_date
+      time_z(2018, 6, 1).to_date...time_z(2018, 11, 1).end_of_month.to_date,
+      time_z(2018, 12, 1).to_date...time_z(2019, 5, 1).end_of_month.to_date,
+      time_z(2019, 6, 1).to_date...time_z(2019, 11, 1).end_of_month.to_date,
+      time_z(2019, 12, 1).to_date...time_z(2020, 5, 1).end_of_month.to_date
     ], subject.list(direction: :next_semester)
   end
 
