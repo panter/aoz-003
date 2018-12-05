@@ -36,6 +36,10 @@ class Semester
       MONTH_NUMBER_MAP[date.month]
     end
 
+    def taken_semesters
+      SemesterProcess.all.pluck(:semester)
+    end
+
     def year(date = nil)
       date = to_process_date(date)
       date.month == 12 ? date.year + 1 : date.year
@@ -77,7 +81,7 @@ class Semester
 
     def semester_range_from_start(date_time)
       date_time = date_time.to_date
-      date_time..date_time.advance(months: 5).end_of_month
+      date_time...date_time.advance(months: 5).end_of_month
     end
   end
 
@@ -155,6 +159,17 @@ class Semester
 
   def collection(count = 3, direction: :previous, with_current: true)
     list(count, direction: direction, with_current: with_current).map do |semester|
+      if block_given?
+        yield semester 
+      else
+        [Semester.i18n_t(semester, short: false), to_s(semester)]
+      end
+    end.compact
+  end
+
+  def unique_collection(count = 3)
+    collection(count) do |semester|
+      next if Semester.taken_semesters.include?(semester)
       [Semester.i18n_t(semester, short: false), to_s(semester)]
     end
   end

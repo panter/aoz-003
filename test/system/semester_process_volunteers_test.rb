@@ -28,6 +28,6 @@ class SemesterProcessVolunteersTest < ApplicationSystemTestCase
     click_button "Semester: #{@current_semester.collection.second[1]}", match: :first
     click_link @three_semesters_back.semester_t
     click_on 'Neuen Semester Prozess erstellen', match: :first
-    assert page.has_select? 'Semester', selected: @current_semester.collection.last[0]
+    assert page.has_select? 'Semester', selected: @current_semester.unique_collection.last[0]
   end
 end
