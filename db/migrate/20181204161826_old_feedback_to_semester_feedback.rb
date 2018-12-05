@@ -1,6 +1,7 @@
 class OldFeedbackToSemesterFeedback < ActiveRecord::Migration[5.1]
   def change
     Feedback.find_each do |f|
+      next if f.feedbackable.nil? || f.volunteer.nil? || f.author.nil?
       spv = SemesterProcessVolunteer.create(
         volunteer: f.volunteer,
         commited_at: f.created_at,
@@ -8,10 +9,10 @@ class OldFeedbackToSemesterFeedback < ActiveRecord::Migration[5.1]
       )
 
       missions = if f.feedbackable.is_a? GroupOffer
-              f.feedbackable.group_assignments.where(volunteer: f.volunteer)
-            elsif f.feedbackable.is_a? Assignment
-              [f.feedbackable]
-            end
+                   f.feedbackable.group_assignments.where(volunteer: f.volunteer)
+                 elsif f.feedbackable.is_a? Assignment
+                   [f.feedbackable]
+                 end
       
       missions.each do |mis|
         SemesterProcessVolunteerMission.create(
