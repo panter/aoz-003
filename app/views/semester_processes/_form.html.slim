@@ -33,4 +33,4 @@
               td= l(fv.object.volunteer.accepted_at.to_date) if fv.object.volunteer.accepted_at
 
   .row:.col-xs-12
-    = f.button :submit
+    = f.button :submit, disabled: @semester && @semester.unique_collection.empty?
