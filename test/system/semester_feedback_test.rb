@@ -58,12 +58,17 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   test 'you should be able to add hours on run' do
     fill_in_required_feedback_fields
     fill_in 'Stunden', with: 10
+    fill_in 'Tätigkeit / Was wurde gemacht', with: 'Deutschkurse'
     check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
     @spv.reload
     assert_equal Hour.last.hours, 10
     assert_equal Hour.last.hourable, @spv.missions.last
-    assert_equal Hour.last.meeting_date, @spv.semester.last.to_date
+    assert_equal Hour.last.meeting_date, @spv.semester.last
+    within 'tbody tr:last-child' do
+      assert page.has_text? I18n.l(Hour.last.meeting_date)
+      assert page.has_text? 'Deutschkurse'
+    end
   end
 
   test 'iban and bank has to be filled' do
