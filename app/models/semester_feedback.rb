@@ -5,11 +5,15 @@ class SemesterFeedback < ApplicationRecord
   belongs_to :semester_process_volunteer
   has_one :semester_process, through: :semester_process_volunteer
   has_one :volunteer, through: :semester_process_volunteer
-  validates :goals, :achievements, :future, presence: true
+  validates :goals, :achievements, :future, presence: true, unless: :old_feedback?
 
   attr_reader :spv_mission_id
 
   def spv_mission_id= id
     self.mission = SemesterProcessVolunteerMission.find(id).mission
+  end
+
+  def old_feedback?
+    semester_process == nil
   end
 end

@@ -18,7 +18,7 @@ table.table.table-striped
     - @feedbacks.each do |record|
       tr
         td= link_to record.volunteer.full_name, edit_volunteer_path(record.volunteer)
-        td= link_to record.feedbackable.to_label, url_for(record.feedbackable)
+        td= link_to record.mission.to_label, url_for(record.mission)
         td= record.goals
         td= record.achievements
         td= record.future
@@ -30,9 +30,7 @@ table.table.table-striped
               = t_model(Volunteer)
             - else
               = link_to record.author.full_name, record.author
-        td= link_to t_action(:show), polymorphic_path([@volunteer, record.feedbackable, record])
-        td= link_to t_action(:edit), edit_polymorphic_path([@volunteer, record.feedbackable, record])
-        td= link_to icon_span(:delete), polymorphic_path([@volunteer, record.feedbackable, record]), confirm_deleting(record)
+        - unless record.old_feedback?
+          td= link_to t_action(:show), review_semester_semester_process_volunteer_path(record.semester_process_volunteer)
 
-= bootstrap_row_col { button_link t_title(:new, Feedback), new_polymorphic_path([@volunteer, @feedbackable, Feedback]) }
 = bootstrap_row_col { button_link icon_span(:back), @volunteer }

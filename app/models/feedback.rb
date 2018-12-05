@@ -20,6 +20,9 @@ class Feedback < ApplicationRecord
     group_offer.where(feedbackable_id: group_offer_ids)
   }
 
+  # READ ONLY MODEL
+  before_save { false }
+
   def responsible=(responsible_user)
     self.responsible_at = Time.zone.now
     super(responsible_user)
