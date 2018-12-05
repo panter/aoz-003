@@ -26,6 +26,8 @@ class SemesterProcessVolunteersController < ApplicationController
       end
     end
 
+    create_journals
+
     redirect_to review_semester_semester_process_volunteer_path(@semester_process_volunteer), notice: t('.success')
 
   rescue ActiveRecord::RecordInvalid => exception

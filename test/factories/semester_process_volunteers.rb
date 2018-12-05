@@ -26,6 +26,13 @@ FactoryBot.define do
       end
     end
 
+    trait :with_missions do
+      transient do
+        add_mission { true }
+        mission_count { 2 }
+      end
+    end
+
     trait :with_feedbacks do
       transient do
         add_feedbacks { true }

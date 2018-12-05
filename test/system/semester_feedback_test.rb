@@ -12,16 +12,16 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
 
   def submit_feedback(semester_process_volunteer)
     visit review_semester_semester_process_volunteer_path(semester_process_volunteer)
-    fill_in_required_feedback_fields
+    fill_in_required_feedback_fields(0)
     check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
     semester_process_volunteer.reload
   end
 
-  def fill_in_required_feedback_fields
-    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?', with: 'being on time'
-    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: 'everything'
-    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?', with: 'continue'
+  def fill_in_required_feedback_fields(id)
+    find("#semester_process_volunteer_semester_feedbacks_attributes_#{id}_semester_feedback_goals").set('being on time')
+    find("#semester_process_volunteer_semester_feedbacks_attributes_#{id}_semester_feedback_achievements").set('everything')
+    find("#semester_process_volunteer_semester_feedbacks_attributes_#{id}_semester_feedback_future").set('continue')
   end
 
   test 'volunteer with unsubmitted feedback should see a warning' do
@@ -56,7 +56,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   end
 
   test 'you should be able to add hours on run' do
-    fill_in_required_feedback_fields
+    fill_in_required_feedback_fields(0)
     fill_in 'Stunden', with: 10
     fill_in 'Tätigkeit / Was wurde gemacht', with: 'Deutschkurse'
     check 'Ich verzichte auf die Auszahlung von Spesen.'
@@ -72,7 +72,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   end
 
   test 'iban and bank has to be filled' do
-    fill_in_required_feedback_fields
+    fill_in_required_feedback_fields(0)
     uncheck 'Ich verzichte auf die Auszahlung von Spesen.'
     fill_in 'IBAN', with: ''
     fill_in 'Bank', with: ''
@@ -85,7 +85,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   end
 
   test 'it should store the info that user inputs' do
-    fill_in_required_feedback_fields
+    fill_in_required_feedback_fields(0)
     fill_in 'Kommentare', with: 'nothing'
     check 'Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.'
     fill_in 'Stunden', with: 33
@@ -138,5 +138,23 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     page.find('td', text: future.truncate(300)).click
     assert page.has_text? future
     click_button 'Schliessen'
+  end
+
+  test 'it should create a journal on submit' do
+    volunteer = create :volunteer_with_user
+    spv = create(:semester_process_volunteer, :with_missions, :with_mail, volunteer: volunteer,
+      semester_process: create(:semester_process))
+    login_as volunteer.user
+    visit review_semester_semester_process_volunteer_path(spv)
+
+    assert_difference 'Journal.count', 1 do
+      fill_in_required_feedback_fields(0)
+      fill_in_required_feedback_fields(1)
+      check 'Ich verzichte auf die Auszahlung von Spesen.'
+      click_on 'Bestätigen', match: :first
+      spv.reload
+    end
+    assert Journal.last.body.include? volunteer.assignments.first.to_label
+    assert Journal.last.body.include? volunteer.assignments.second.to_label
   end
 end
