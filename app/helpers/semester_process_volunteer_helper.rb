@@ -30,11 +30,12 @@ module SemesterProcessVolunteerHelper
   end
 
   def create_journals
-    return unless SemesterProcessVolunteer.find(params[:id]).commited_at?
-    volunteer = SemesterProcessVolunteer.find(params[:id]).volunteer
-    semester_feedbacks = SemesterProcessVolunteer.find(params[:id]).semester_feedbacks
-    Journal.create(user: volunteer.user, journalable_id: volunteer.id,
-      journalable_type: 'Volunteer', category: :feedback, title: "Semester Prozess Feedback vom #{I18n.l(Time.zone.today)}: ",
+    spv = SemesterProcessVolunteer.find(params[:id])
+    return unless spv.commited_at?
+    volunteer = spv.volunteer
+    semester_feedbacks = spv.semester_feedbacks
+    Journal.create(user: volunteer.user, journalable: volunteer,
+      category: :feedback, title: "Semester Prozess Feedback vom #{I18n.l(Time.zone.today)}: ",
       body: render_semester_feedbacks(semester_feedbacks))
   end
 
