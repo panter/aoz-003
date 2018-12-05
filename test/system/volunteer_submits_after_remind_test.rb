@@ -71,28 +71,6 @@ class VolunteerSubmitsAfterRemindTest < ApplicationSystemTestCase
     assert_text 'Die Stunden und Halbjahres-Rapporte wurden erfolgreich bestätigt.'
   end
 
-  test 'volunteer_can_add_hours_and_feedback_for_their_assignment' do
-    visit last_submitted_hours_and_feedbacks_assignment_path(@assignment)
-    click_link 'Stunden erfassen'
-    fill_in 'Datum des Treffens / des Kurses', with: Time.zone.today.strftime('%d.%m.%Y')
-    find('#hour_meeting_date').send_keys(:return)
-    fill_in 'Stunden', with: '2.25'
-    click_button 'Stunden erfassen'
-
-    assert_text 'Stunden wurden erfolgreich erfasst.'
-    assert_text @assignment.client
-    assert_text @assignment_feedback.comments
-
-    click_link 'Halbjahres-Rapport erfassen'
-    fill_in 'Bemerkungen', with: 'new feedback from volunteer'
-    click_button 'Halbjahres-Rapport erfassen'
-
-    assert_text 'Halbjahres-Rapport wurde erfolgreich erstellt.'
-    assert_text @assignment.client
-    assert_text @assignment_feedback.comments
-    assert_text 'new feedback from volunteer'
-  end
-
   test 'volunteer_can_add_hours_and_feedback_for_their_group_assignment' do
     group_assignment = @group_offer.group_assignments.where(volunteer: @volunteer).last
     visit last_submitted_hours_and_feedbacks_group_assignment_path(group_assignment)
