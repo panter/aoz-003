@@ -1,0 +1,10 @@
+.btn-group
+  button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="Semester" aria-haspopup='true' aria-expanded='false' class="btn-md"
+    = "Semester: "
+    = params[:semester] || @semester
+    = ' '
+    span.caret aria-hidden='true'
+  ul.dropdown-menu
+    li
+    -@semester.collection.each do |name, semester_code|
+      li= link_to name[0..15], semester_process_volunteers_path(semester: semester_code)

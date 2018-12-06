@@ -1,8 +1,8 @@
 tr
   td.index-action-cell.hidden-print
-    = button_link navigation_glyph(:show), reminder_mailing, title: 'Anzeigen'
+    = button_link icon_span(:show), reminder_mailing, title: 'Anzeigen'
     - unless reminder_mailing.sending_triggered
-      = button_link navigation_glyph(:edit), edit_reminder_mailing_path(reminder_mailing),
+      = button_link icon_span(:edit), edit_reminder_mailing_path(reminder_mailing),
           title: 'Bearbeiten'
   td= reminder_mailing.t_enum(:kind)
   td= link_to reminder_mailing.creator.full_name, profile_url_path(reminder_mailing.creator)

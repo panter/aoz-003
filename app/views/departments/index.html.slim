@@ -15,11 +15,11 @@ h1 Standorte
         - @departments.each do |d|
           tr
             td.index-action-cell.hidden-print
-              = button_link navigation_glyph(:show), d, title: 'Anzeigen'
+              = button_link icon_span(:show), d, title: 'Anzeigen'
               - if policy(d).edit?
-                = button_link navigation_glyph(:edit), edit_polymorphic_path(d), title: 'Bearbeiten'
+                = button_link icon_span(:edit), edit_polymorphic_path(d), title: 'Bearbeiten'
               - if policy(d).destroy?
-                = button_link navigation_glyph(:delete), d, nil,
+                = button_link icon_span(:delete), d, nil,
                     confirm_deleting(d, 'btn btn-default').merge(title: 'Löschen')
             td= d.contact.last_name
             td= d.contact.street

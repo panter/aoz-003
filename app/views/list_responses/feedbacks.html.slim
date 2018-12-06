@@ -21,7 +21,7 @@ nav.navbar.section-navigation.hidden-print
 table.table.table-striped.list-responses-table
   thead
     tr
-      th.limit-width Journal
+      th.limit-width Journal / Stunden
       th.limit-width= sort_link @q, :volunteer_contact_full_name, 'Freiwillige/r'
       th.limit-width Einsatz
       th= sort_link @q, :author_profile_contact_full_name, 'Autor/in'
@@ -38,11 +38,10 @@ table.table.table-striped.list-responses-table
     - @feedbacks.each do |record|
       tr*{ data: { feedback_id: record.id } }
         td.index-action-cell
-          = button_link navigation_glyph(:journal), volunteer_journals_path(record.volunteer), title: 'Journal'
-        td.index-action-cell
-          = link_to(edit_volunteer_path(record.volunteer)) do
-            span #{record.volunteer.contact.last_name},
-            span  #{record.volunteer.contact.first_name}
+          = button_link icon_span(:journal), volunteer_journals_path(record.volunteer), title: 'Journal'
+          = button_link icon_span(:journal_new), new_volunteer_journal_path(record.volunteer, feedback_id: record.id),
+              title: 'Neuen Journal eintrag mit Zitat erstellen'
+          = button_link icon_span(:hours), volunteer_hours_path(record.volunteer), title: 'Stunden'
         td.index-action-cell
           a href="#{url_for(record.feedbackable)}" title="#{record.feedbackable.to_label}"
             - record.feedbackable.label_parts.reject(&:blank?).each do |label_part|
@@ -67,16 +66,15 @@ table.table.table-striped.list-responses-table
             = link_to record.responsible.email, record.responsible
             = " am #{l(record.responsible_at.to_date)}"
           - else
-            = link_to 'Übernehmen', polymorphic_path([record.volunteer, record.feedbackable, record],
-                action: :take_responsibility, q: search_parameters, page: params[:page]),
-                { method: :put, class: 'btn btn-default btn-xs m-t-10' }
+            = api_button('Übernehmen', subject: [record.volunteer, record.feedbackable, record], 
+                action: :take_responsibility, extra_class: 'm-t-10', 
+                template: 'Übernommen durch <a href="<%= data.link %>"><%= data.email %></a> am <%= data.at %>')
         td.index-action-cell.hidden-print
           - if record.reviewer.present?
             = link_to 'Anzeigen', polymorphic_path([record.volunteer, record.feedbackable, record])
           - else
-            = link_to 'Quittieren', polymorphic_path([record.volunteer, record.feedbackable, record],
-                action: :mark_as_done, q: search_parameters),
-                { method: :put, class: 'btn btn-default btn-xs m-t-10' }
+            = api_button 'Quittieren', subject: [record.volunteer, record.feedbackable, record], 
+                action: :mark_as_done, extra_class: 'm-t-10', 
+                template: '<a href="<%= data.link %>">Anzeigen</a>'
 
 = bootstrap_paginate(@feedbacks)
-

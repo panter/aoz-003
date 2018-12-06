@@ -3,7 +3,7 @@ h1= t_title(:index, Journal)
 
 nav.navbar.section-navigation
   ul.list-inline
-    li= button_link navigation_glyph(:back), @journaled
+    li= button_link icon_span(:back), @journaled
     li= button_link t_title(:new, Journal), new_polymorphic_path([@journaled, @journalable, Journal]), dimension: 'sm'
     li= clear_filter_button
     = custom_filter_dropdown('Kategorie', *Journal.categories_filters)
@@ -24,7 +24,7 @@ nav.navbar.section-navigation
           - @journals.each do |record|
             tr
               td.index-action-cell.hidden-print
-                = button_link navigation_glyph(:edit), url_for([@journaled, record]) + '/edit',
+                = button_link icon_span(:edit), url_for([@journaled, record]) + '/edit',
                     title: 'Bearbeiten'
               td= t("category.#{record.category}")
               td= l(record.created_at.to_date)
@@ -39,5 +39,5 @@ nav.navbar.section-navigation
 
 nav.navbar.section-navigation
 ul.list-inline
-  li= button_link navigation_glyph(:back), @journaled
+  li= button_link icon_span(:back), @journaled
   li= button_link t_title(:new, Journal), new_polymorphic_path([@journaled, @journalable, Journal]), dimension: 'sm'

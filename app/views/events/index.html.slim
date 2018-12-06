@@ -17,13 +17,13 @@ h1 Veranstaltungen
       - @events.each do |event|
         tr
           td.index-action-cell.hidden-print
-            = button_link navigation_glyph(:show), event_path(event),
+            = button_link icon_span(:show), event_path(event),
                 title: 'Anzeigen'
-            = button_link navigation_glyph(:edit), edit_event_path(event),
+            = button_link icon_span(:edit), edit_event_path(event),
                 title: 'Bearbeiten'
-            = button_link navigation_glyph(:download), event_path(event, format: :xlsx),
+            = button_link icon_span(:download), event_path(event, format: :xlsx),
                 title: 'Herunterladen'
-            = button_link navigation_glyph(:delete), event_path(event),
+            = button_link icon_span(:delete), event_path(event),
                 confirm_deleting(event, 'btn btn-default').merge(title: 'Anzeigen')
           td= t(".#{event.kind}") if event.kind
           td= l(event.date) if event.date

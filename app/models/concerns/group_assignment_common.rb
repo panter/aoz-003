@@ -7,6 +7,12 @@ module GroupAssignmentCommon
 
     belongs_to :group_offer, -> { with_deleted } # include imported deleted group offers
     has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
+
+    has_many :semester_feedbacks, dependent: :destroy
+    has_many :semester_process_volunteer_missions, dependent: :destroy
+    has_many :semester_process_volunteers, through: :semester_process_volunteer_missions
+    has_many :semester_processes, through: :semester_process_volunteers
+
     has_one :group_offer_category, through: :group_offer
     has_one :creator, -> { with_deleted }, through: :group_offer
 

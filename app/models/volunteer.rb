@@ -69,12 +69,20 @@ class Volunteer < ApplicationRecord
   has_many :event_volunteers, dependent: :delete_all
   has_many :events, through: :event_volunteers
 
+  # Semester Process relations
+  #
+
+  has_many :semester_process_volunteers, dependent: :destroy
+  has_many :semester_processes, through: :semester_process_volunteers
+  has_many :semester_feedbacks, through: :semester_process_volunteers
+
   has_attached_file :avatar, styles: { thumb: '100x100#' }
 
   # Validations
   #
 
   validates :contact, presence: true
+  validates_presence_of :iban, :bank, if: -> { validate_waive_and_bank && waive.blank? }
   validates :salutation, presence: true
   validates_attachment :avatar, content_type: {
     content_type: /\Aimage\/.*\z/
@@ -84,11 +92,14 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: :user_deleted?
 
+  attr_accessor :validate_waive_and_bank
+
   scope :process_eq, lambda { |process|
     return unless process.present?
     return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
     where(acceptance: process)
   }
+
   scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
@@ -146,6 +157,42 @@ class Volunteer < ApplicationRecord
       .where.not(assignments: { volunteer_id: with_active_assignments.ids })
   }
 
+  ## Semester Process Scopes
+  #
+  scope :have_semester_process, lambda { |semester|
+    joins(semester_process_volunteers: [:semester_process])
+      .where(
+        'semester_processes.semester && daterange(?,?)',
+        semester.begin.advance(days: 1), semester.end.advance(days: -1)
+      )
+  }
+
+  scope :have_mission, lambda {
+    left_joins(:assignments).left_joins(:group_assignments)
+      .where('assignments.period_start IS NOT NULL OR group_assignments.period_start IS NOT NULL')
+      .group('volunteers.id')
+  }
+
+  def self.semester_process_eligible(semester)
+    joins(:contact).where.not(id: have_semester_process(semester).ids)
+      .active_semester_mission(semester)
+  end
+
+  def self.feedback_overdue(semester)
+    joins(:contact).where(id: have_semester_process(semester).where("semester_process_volunteers.commited_at IS NULL").ids)
+  end
+  
+  def unsubmitted_semester_feedbacks
+    semester_process_volunteers.where(commited_at: nil)
+  end
+
+  def unsubmitted_semester_feedbacks?
+    return false if unsubmitted_semester_feedbacks.blank?
+    true
+  end
+
+  ## Activness Scopes
+  #
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
@@ -193,6 +240,18 @@ class Volunteer < ApplicationRecord
   }
 
   scope :need_refunds, (-> { where(waive: false) })
+
+  def self.active_semester_mission(semester)
+    volunteers = Volunteer.have_mission
+    prob = semester.end.advance(weeks: -4)
+    sem_start = semester.begin
+    vol_with_missions = volunteers.select do |v|
+      [v.assignments, v.group_assignments].detect do |mission|
+        mission.where("period_start < ?", prob).where("period_end > ? OR period_end IS NULL", sem_start).any?
+      end
+    end
+    vol_with_missions
+  end
 
   def self.with_billable_hours(date = nil)
     date = billable_semester_date(date)
@@ -315,7 +374,7 @@ class Volunteer < ApplicationRecord
 
   def assignment_logs_started?
     assignment_logs.started.any?
-  end
+  end   
 
   def group_assignment_started?
     group_assignments.started.any?

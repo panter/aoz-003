@@ -8,7 +8,11 @@ end
 gem 'rails', '~> 5.1'
 
 gem 'autocomplete_rails'
-# gem 'autoprefixer-rails'  # Exclude Autoprefixer temporary, because of bug in autoprefixer
+# FIXME:
+#  - autoprefixer doesn't run with rubyracer anymore, it would with miniracer
+#  - installing miniracer ist blocked by panter/panter-rails-deploy rubyracer requirement
+#  - using Node as Execjs Runtime is not possible, because our hosts don't have node
+# gem 'autoprefixer-rails'
 gem 'axlsx', github: 'randym/axlsx', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
 gem 'axlsx_rails'
 gem 'bootstrap-datepicker-rails'
@@ -23,7 +27,7 @@ gem 'country_select'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise_invitable'
-gem 'font-awesome-rails'
+gem 'font-awesome-sass'
 gem 'i18n_data'
 gem 'i18n_rails_helpers'
 gem 'jbuilder'
@@ -56,7 +60,7 @@ gem 'wkhtmltopdf-binary'
 group :development do
   gem 'awesome_print'
   gem 'i18n_yaml_sorter'
-  gem 'letter_opener'
+  gem 'letter_opener_web', '~> 1.0'
   gem 'overcommit', require: false
   gem 'rubocop', require: false
   gem 'scss_lint', require: false

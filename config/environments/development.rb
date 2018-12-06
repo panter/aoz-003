@@ -28,7 +28,7 @@ Rails.application.configure do
   config.sass.inline_source_maps = true
 
   ## in order to activate letter_opener uncomment this line
-  # config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.delivery_method = :letter_opener_web
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

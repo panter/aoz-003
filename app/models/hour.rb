@@ -12,6 +12,8 @@ class Hour < ApplicationRecord
   belongs_to :billing_expense, -> { with_deleted }, optional: true, inverse_of: 'hours'
   belongs_to :certificate, optional: true
 
+  belongs_to :semester_process_volunteer, optional: true
+
   validates :hours, presence: true, numericality: { greater_than: 0 }
   validates :meeting_date, presence: true
   validates :hourable, presence: true
@@ -30,6 +32,10 @@ class Hour < ApplicationRecord
       date.advance(months: BillingExpense::SEMESTER_LENGTH))
   }
 
+  scope :within_semester, lambda { |semester|
+    where(meeting_date: semester.begin...semester.end.advance(days: 1))
+  }
+
   scope :since_last_submitted, lambda { |submitted_at|
     where('hours.created_at > ?', submitted_at) if submitted_at
   }
@@ -42,6 +48,13 @@ class Hour < ApplicationRecord
   scope :from_group_offers, lambda { |group_offer_ids|
     group_offer.where(hourable_id: group_offer_ids)
   }
+
+  attr_reader :spv_mission_id
+
+  def spv_mission_id= id
+   spv_mission = SemesterProcessVolunteerMission.find(id)
+   self.hourable = spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
+  end
 
   def assignment?
     hourable_type == 'Assignment'

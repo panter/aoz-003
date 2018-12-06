@@ -1,12 +1,12 @@
 tr id=dom_id(client)
   td.index-action-cell.hidden-print
-    = button_link navigation_glyph(:show), client_path(client), title: 'Anzeigen'
+    = button_link icon_span(:show), client_path(client), title: 'Anzeigen'
     - if policy(client).edit?
-      = button_link navigation_glyph(:edit), edit_client_path(client), title: 'Bearbeiten'
+      = button_link icon_span(:edit), edit_client_path(client), title: 'Bearbeiten'
     - if policy(client).set_terminated?
-      = button_link navigation_glyph(:terminate), set_terminated_client_path(client), method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }, title: 'Beenden'
+      = button_link icon_span(:terminate), set_terminated_client_path(client), method: :patch, data: { confirm: 'Klient/in wirklich beenden?' }, title: 'Beenden'
     - if policy(client).destroy? && client.destroyable?
-      = button_link navigation_glyph(:delete), client,
+      = button_link icon_span(:delete), client,
           method: :delete, title: 'Löschen',
           data: { confirm: 'Möchten Sie diese/n Klient/in wirklich löschen?' }
   - if policy(Client).superadmin_or_department_manager_or_social_worker?

@@ -69,6 +69,8 @@ de:
       trial: Probezeit
       half_year: Halbjährlich
       termination: Beendigung
+      half_year_process_email: 'Half year process email'
+      half_year_process_overdue: 'Half year process overdue'
     index:
       <<: *id-kinds-template
     show:
@@ -185,6 +187,14 @@ de:
     social_worker: Sozialarbeiter/in
     superadmin: Superadmin
     volunteer: Freiwillige/r
+  semester_long: '%{number}. Semester %{year} (%{begin} - %{end})'
+  semester_short: '%{number}. Semester %{year}'
+  semester_period: '%{begin} - %{end}'
+  semester_process_volunteers:
+    show:
+      title: 'Semester Prozess %{semester} von %{name}'
+    submit_review:
+      success: Erfolgreich überprüft
   salutation: &id-salutations
     all: Alle
     family: Familie
@@ -283,11 +293,10 @@ de:
         volunteer: Freiwillige
       feedback:
         <<: *id-generic_keys
-        achievements: Was konnte in den letzten Monaten erreicht werden?
         assignment: Begleitung
-        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
-        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
-        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
+        goals: Ziele
+        achievements: Erfolge
+        future: Zukunft
         last: Letzter Halbjahres-Rapport-Eintrag am
         feedback_activity: Aktivität
         feedbackable_id_and_type: Aktivitäten
@@ -441,6 +450,47 @@ de:
         kind: Art
         body: Text
         subject: Betreff
+      semester_process:
+        <<: *id-generic_keys
+        semester: Semester
+        mail_subject_template: Mail Betreffs Vorlage
+        mail_body_template: Mail Vorlage
+        mail_posted_at: versendet am
+        mail_posted_by: versendet durch
+        reminder_mail_subject_template: Mahnungs Betreffs Vorlage
+        reminder_mail_body_template: Mahnungs Vorlage
+        reminder_mail_posted_at: versendet am
+        reminder_mail_posted_by: versendet durch
+      semester_process_volunteer:
+        <<: *id-generic_keys
+        commit_visited_at: Feedback Seite besucht am
+        commited_at: Bestätigt am
+        commited_by: Bestätigt durch
+        responsible: Übernommen durch
+        responsibility_taken_at: Übernommen am
+        reviewed_by: Quittiert durch
+        reviewed_at: Quittiert am
+        notes: Notizen
+      semester_process_mail:
+        <<: *id-generic_keys
+        sent_by: versendet von
+        sent_at: versendet am
+        subject: Betreff
+        body: Text
+        kind: Email Typ
+        kinds:
+          mail: Semester Email
+          reminder: Mahnungs Email
+      semester_process_volunteer_mission:
+        <<: *id-generic_keys
+      semester_feedback:
+        <<: *id-generic_keys
+        author: Author
+        goals: Ziele
+        achievements: Erfolge
+        future: Zukunft
+        comments: Kommentare
+        conversation: Rückmeldung erwünscht
       user:
         <<: *id-generic_keys
         clients: Kunden/innen
@@ -494,6 +544,7 @@ de:
         volunteer_availability: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
         volunteer_experience_desc: Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.
         waive: Ich verzichte auf die Auszahlung von Spesen.
+        waive_alternative: 'Spesenverzicht'
         woman: Frau
         working_percent: Stellenprozent
     errors:
@@ -534,6 +585,12 @@ de:
           attributes:
             volunteer:
               required: muss ausgewählt werden.
+        semester_process_volunteer_mission:
+          attributes:
+            assignment: &id-mission-relation-insuficient
+              insuficient_relation: Es wird mindestens ein Assignment oder GroupAssignment benötigt
+              too_many_relations: Es darf nur ein Assignment oder ein GroupAssignment verbunden werden
+            group_assignment: *id-mission-relation-insuficient
     models:
       assignment: Begleitung
       feedback: Halbjahres-Rapport
@@ -555,6 +612,10 @@ de:
       profile: Profil
       relative: Verwante/r
       reminder_mailing: Erinnerungs-Mailing
+      semester_process: Semester Prozess
+      semester_process_mail: Semester Email
+      semester_process_volunteer_mission: Einsatz
+      semester_feedback: Semester Feedback
       trial_feedback: Probezeit Feedback
       user: Benutzer/in
       volunteer: Freiwillige/n
@@ -943,9 +1004,17 @@ de:
   simple_form:
     error_notification:
       default_message: 'Bitte überprüfen Sie folgende Probleme:'
+      head_error: Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.
     labels:
       assignment:
         <<: *id-termination-feedback-quests
+      feedback:
+        comments: Bemerkungen
+        achievements: Was konnte in den letzten Monaten erreicht werden?
+        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
+        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
+        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
+        last: Letzter Halbjahres-Rapport-Eintrag am
       reminder_mailing:
         kind: Art
       defaults:
@@ -973,6 +1042,11 @@ de:
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
         external: Als externen Freiwilligen registrieren?
+      semester_feedback:
+        achievements: Was konnte in den letzten Monaten erreicht werden?
+        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
+        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
+        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
     "no": 'Nein'
     options:
       certificate:

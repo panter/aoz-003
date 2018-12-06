@@ -24,7 +24,6 @@
 
   h3 Halbjahres-Rapporte
   = render 'feedbacks/last_submitted_feedbacks', feedbacks: feedbacks, confirmable: confirmable
-  p= button_link t_title(:new, Feedback), new_polymorphic_path([confirmable.volunteer, confirmable.polymorph_url_object, Feedback], redirect_to: request.fullpath)
 
   .submit-box
     .col-xs-12

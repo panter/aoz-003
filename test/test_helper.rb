@@ -25,7 +25,8 @@ class ActiveSupport::TestCase
       Feedback, TrialFeedback, Hour, Journal, BillingExpense, Certificate, Import,
       AssignmentLog, Assignment, GroupAssignmentLog, GroupAssignment, GroupOffer,
       ClientNotification, LanguageSkill, Relative, Event, EventVolunteer,
-      Volunteer, Client, User, Contact, Department
+      Volunteer, Client, User, Contact, Department, SemesterProcess, SemesterFeedback,
+      SemesterProcessVolunteer, SemesterProcessVolunteerMission
     )
 
     super

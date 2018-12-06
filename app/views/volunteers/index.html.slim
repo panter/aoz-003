@@ -12,7 +12,7 @@ nav.navbar.section-navigation
     - if policy(Volunteer).superadmin_privileges?
       li= button_link t('seeking_clients'), seeking_clients_volunteers_url, dimension: 'sm'
     = boolean_toggler_filter_dropdown(:intro_course, 'Einführungskurs', 'Besucht', 'Ausstehend')
-    li= button_link navigation_fa_icon(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+    li= button_link t_attr(:waive_alternative), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
 
   hr
 

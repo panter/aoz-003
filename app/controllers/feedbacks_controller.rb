@@ -1,20 +1,26 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback,
     only: [:show, :edit, :update, :destroy, :mark_as_done, :take_responsibility]
-  before_action :set_feedbackable
+  before_action :set_feedbackable, except: [:index]
   before_action :set_volunteer
   before_action :set_list_response_feedback_redirect_back_path,
     only: [:mark_as_done, :take_responsibility]
 
   def index
     authorize Feedback
-    @feedbacks = policy_scope(Feedback).where(feedbackable: @feedbackable)
+    @feedbacks = if params[:assignment_id]
+                   SemesterFeedback.where(assignment_id: params[:assignment_id])
+                 elsif params[:group_offer_id]
+                   SemesterFeedback.where(group_assignment_id: GroupAssignment.where(group_offer_id: params[:group_offer_id]).ids)
+                 else
+                  []
+                 end
   end
 
   def show; end
 
   def new
-    @feedback = Feedback.new(feedbackable: @feedbackable, volunteer: @volunteer,
+    @feedback = SemesterFeedback.new(feedbackable: @feedbackable, volunteer: @volunteer,
       author: current_user)
     authorize @feedback
     simple_form_params
@@ -51,18 +57,29 @@ class FeedbacksController < ApplicationController
   end
 
   def mark_as_done
-    if @feedback.update(reviewer: current_user)
-      redirect_to(@redirect_back_path, notice: 'Halbjahres-Rapport quittiert.')
-    else
-      redirect_to(@redirect_back_path, notice: 'Fehler: Quittieren fehlgeschlagen.')
+    respond_to do |format|
+      if @feedback.update(reviewer: current_user)
+        format.html { redirect_to(@redirect_back_path, notice: 'Halbjahres-Rapport quittiert.') }
+        format.json { render json: { link: polymorphic_path([@feedback.volunteer, @feedback.feedbackable, @feedback]) }, status: :ok }
+      else
+        format.html { redirect_to(@redirect_back_path, notice: 'Fehler: Quittieren fehlgeschlagen.') }
+        format.json { render json: { errors: @feedback.errors.messages }, status: :unprocessable_entity }
+      end
     end
   end
 
   def take_responsibility
-    if @feedback.update(responsible: current_user)
-      redirect_to(@redirect_back_path, notice: 'Halbjahres-Rapport übernommen.')
-    else
-      redirect_to(@redirect_back_path, notice: 'Fehler: Übernehmen fehlgeschlagen.')
+    respond_to do |format|
+      if @feedback.update(responsible: current_user)
+        format.html { redirect_to(@redirect_back_path, notice: 'Halbjahres-Rapport übernommen.') }
+        format.json do
+          render json: { link: url_for(@feedback.responsible), at: I18n.l(@feedback.responsible_at.to_date),
+                         email: @feedback.responsible.email }, status: :ok
+        end
+      else
+        format.html { redirect_to(@redirect_back_path, notice: 'Fehler: Übernehmen fehlgeschlagen.') }
+        format.json { render json: { errors: @feedback.errors.messages }, status: :unprocessable_entity }
+      end
     end
   end
 

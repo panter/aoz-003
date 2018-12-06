@@ -3,7 +3,7 @@ h1 Beendete Begleitungen
 nav.navbar.section-navigation.hidden-print
   hr
   ul.list-inline
-    li= button_link navigation_glyph(:back), assignments_path, dimension: :sm
+    li= button_link icon_span(:back), assignments_path, dimension: :sm
     li= clear_filter_button
     = custom_filter_dropdown('Ende Bestätigt',
       { q: :termination_submitted_by_id_not_null, text: 'Bestätigt', value: 'true' },
@@ -34,8 +34,8 @@ nav.navbar.section-navigation.hidden-print
       - @assignments.each do |assignment|
         tr
           td.index-action-cell.hidden-print
-            = button_link navigation_glyph(:show), assignment_path(assignment), title: 'Anzeigen'
-            = button_link navigation_glyph(:edit), edit_assignment_path(assignment), title: 'Bearbeiten'
+            = button_link icon_span(:show), assignment_path(assignment), title: 'Anzeigen'
+            = button_link icon_span(:edit), edit_assignment_path(assignment), title: 'Bearbeiten'
           - if policy(Assignment).verify_termination?
             td
               = link_to_if(assignment.termination_verified_by.blank?, 'Beendigung Quittieren',

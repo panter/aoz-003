@@ -16,17 +16,17 @@ table.table.table-striped.group-assignments-table
       tr
         td.index-action-cell.hidden-print
           - if group_assignment.group_offer && policy(group_assignment.group_offer).show?
-            = button_link navigation_glyph(:show), group_offer_path(group_assignment.group_offer),
+            = button_link icon_span(:show), group_offer_path(group_assignment.group_offer),
                 title: 'Anzeigen'
           - if editable
             - if policy(group_assignment).edit?
-              = button_link navigation_glyph(:edit), edit_group_assignment_path(group_assignment),
+              = button_link icon_span(:edit), edit_group_assignment_path(group_assignment),
                   title: 'Bearbeiten'
             - if policy(group_assignment).show? && group_assignment.pdf.exists?
-              = button_link navigation_glyph(:download), group_assignment_path(group_assignment, format: :pdf),
+              = button_link icon_span(:download), group_assignment_path(group_assignment, format: :pdf),
                   title: 'Herunterladen'
             - if policy(group_assignment.group_offer).change_active_state?
-              = button_link navigation_glyph(group_assignment.group_offer.active? ? :deactivate : :activate),
+              = button_link icon_span(group_assignment.group_offer.active? ? :deactivate : :activate),
                   change_active_state_group_offer_path(group_assignment.group_offer), method: :put,
                   title: (group_assignment.group_offer.active? ? 'Deaktivieren' : 'Aktivieren')
         td
@@ -53,5 +53,4 @@ table.table.table-striped.group-assignments-table
               span= link_to t_title(:index, TrialFeedback), polymorphic_path([@volunteer, group_assignment.group_offer, TrialFeedback])
           td.index-action-cell.hidden-print
             - if policy(Feedback).index?
-              span= link_to t_title(:new, Feedback), new_polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])
               span= link_to t_title(:index, Feedback), polymorphic_path([@volunteer, group_assignment.group_offer, Feedback])

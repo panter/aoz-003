@@ -7,7 +7,8 @@ class ReminderMailing < ApplicationRecord
     :Einsatz,
     :EinsatzStart,
     :FeedbackLink,
-    :EmailAbsender
+    :EmailAbsender,
+    :OnlinePlattformUrl
   ].freeze
 
   belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'reminder_mailings'
@@ -25,7 +26,7 @@ class ReminderMailing < ApplicationRecord
     source_type: 'GroupAssignment'
   has_many :process_submitters, through: :reminder_mailing_volunteers, source: :process_submitted_by
 
-  enum kind: { half_year: 0, trial_period: 1, termination: 2 }
+  enum kind: { half_year: 0, trial_period: 1, termination: 2, half_year_process_email: 3, half_year_process_overdue: 4  }
   ransacker :kind, formatter: ->(value) { kinds[value] }
 
   validates :subject, presence: true

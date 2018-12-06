@@ -14,7 +14,7 @@ h1
     li=> f.button :submit, 'Auswahl herunterladen', data: { disable_with: false }
     li
       - if @volunteer
-        => button_link navigation_glyph(:back), @volunteer
+        => button_link icon_span(:back), @volunteer
       - else
         => button_link 'Spesenformulare erfassen', new_billing_expense_path(q: params[:q].permit!)
 
@@ -39,12 +39,12 @@ h1
             td= check_box_tag 'selected_billing_expenses[]', record.id,
                   @selected_billing_expenses.include?(record.id.to_s)
             td.index-action-cell.hidden-print
-              = button_link navigation_glyph(:show), billing_expense_path(record),
+              = button_link icon_span(:show), billing_expense_path(record),
                   title: 'Anzeigen'
-              = button_link navigation_glyph(:download), billing_expense_path(record, format: :pdf),
+              = button_link icon_span(:download), billing_expense_path(record, format: :pdf),
                   title: 'Herunterladen'
               - if policy(BillingExpense).destroy?
-                = button_link navigation_glyph(:delete), billing_expense_path(record),
+                = button_link icon_span(:delete), billing_expense_path(record),
                   confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
             - unless @volunteer
               td= link_to record.volunteer.contact.full_name, edit_volunteer_path(record.volunteer)

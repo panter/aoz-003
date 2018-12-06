@@ -1,14 +1,14 @@
 tr id=(dom_id(volunteer))
   - if action_index?
       td.index-action-cell.hidden-print
-        = button_link navigation_glyph(:show), volunteer, title: 'Anzeigen'
+        = button_link icon_span(:show), volunteer, title: 'Anzeigen'
         - if policy(volunteer).edit?
-          = button_link navigation_glyph(:edit), edit_polymorphic_path(volunteer), title: 'Bearbeiten'
+          = button_link icon_span(:edit), edit_polymorphic_path(volunteer), title: 'Bearbeiten'
         - if policy(volunteer).destroy?
-          = button_link navigation_glyph(:delete), volunteer, nil,
+          = button_link icon_span(:delete), volunteer, nil,
               confirm_deleting(volunteer, 'btn btn-default').merge(title: 'Löschen')
         - if policy(volunteer).show?
-          = button_link navigation_glyph(:journal), volunteer_journals_path(volunteer), title: 'Journal'
+          = button_link icon_span(:journal), volunteer_journals_path(volunteer), title: 'Journal'
   td
     - if controller_in?(:group_offers)
       = link_to 'Freiwillige/n hinzufügen',

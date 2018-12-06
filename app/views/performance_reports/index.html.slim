@@ -18,12 +18,12 @@ nav.navbar.section-navigation
       - @performance_reports.each do |performance_report|
         tr
           td.index-action-cell.hidden-print
-            = button_link navigation_glyph(:show), performance_report, title: 'Anzeigen'
-            = button_link navigation_glyph(:edit), edit_performance_report_path(performance_report),
+            = button_link icon_span(:show), performance_report, title: 'Anzeigen'
+            = button_link icon_span(:edit), edit_performance_report_path(performance_report),
                 title: 'Bearbeiten'
-            = button_link navigation_glyph(:delete), performance_report,
+            = button_link icon_span(:delete), performance_report,
                 confirm_deleting(performance_report, 'btn btn-default').merge(title: 'Löschen')
-            = button_link navigation_fa_icon(:xlsx),
+            = button_link icon_span(:xlsx),
                 performance_report_path(performance_report, format: :xlsx),
                 title: 'Excel herunterladen'
           td
