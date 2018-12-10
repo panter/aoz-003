@@ -12,7 +12,7 @@ module NavigationAndButtonHelper
     yes: { text: 'Ja', icon_type: 'ok' },
     no: { text: 'Nein', icon_type: 'remove' },
     journal: { text: 'Journal', icon_type: 'book' },
-    journal_new: { text: 'Neuen Journal eintrag erstellen', type: :fa, icon_type: :edit },
+    journal_new: { text: 'Neuen Journal eintrag erstellen', icon_type: :edit },
     hours: { text: 'Stunden erfassen', icon_type: 'time' },
     billing_expenses: { text: 'Spesen', icon_type: 'usd' },
     assignment: { text: 'Begleitung', icon_type: 'user' },
