@@ -20,6 +20,7 @@ class Hour < ApplicationRecord
 
   scope :billable, (-> { where(billing_expense: nil) })
   scope :billed, (-> { where.not(billing_expense: nil) })
+  scope :order_by_meeting_date, (-> { order(meeting_date: :asc) })
   scope :semester, lambda { |date = nil|
     return all if date.blank?
     date = Time.zone.parse(date) unless date.is_a? Time
@@ -33,7 +34,7 @@ class Hour < ApplicationRecord
   }
 
   scope :within_semester, lambda { |semester|
-    where(meeting_date: semester.begin...semester.end.advance(days: 1))
+    where(meeting_date: semester.begin...semester.end.advance(days: 1)).order_by_meeting_date
   }
 
   scope :since_last_submitted, lambda { |submitted_at|
@@ -51,9 +52,9 @@ class Hour < ApplicationRecord
 
   attr_reader :spv_mission_id
 
-  def spv_mission_id= id
-   spv_mission = SemesterProcessVolunteerMission.find(id)
-   self.hourable = spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
+  def spv_mission_id=(id)
+    spv_mission = SemesterProcessVolunteerMission.find(id)
+    self.hourable = spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
   end
 
   def assignment?
