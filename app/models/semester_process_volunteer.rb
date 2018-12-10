@@ -15,7 +15,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   belongs_to :commited_by, -> { with_deleted }, class_name: 'User',
     inverse_of: 'semester_processes', optional: true
 
-  has_many :semester_process_volunteer_missions, dependent: :destroy
+  has_many :semester_process_volunteer_missions, -> { active_missions }, dependent: :destroy
   has_many :assignments, through: :semester_process_volunteer_missions
   has_many :group_assignments, through: :semester_process_volunteer_missions
 
