@@ -71,8 +71,10 @@ class SemesterProcessVolunteer < ApplicationRecord
   end
 
   def build_missions(semester)
-    new_missions = volunteer.assignments.no_end.start_before(semester.end) +
-      volunteer.group_assignments.no_end.start_before(semester.end)
+    # if you change this then also change it within active_semester_mission(semester)
+    prob = semester.end.advance(weeks: -4)
+    new_missions = volunteer.assignments.no_end.start_before(prob) +
+      volunteer.group_assignments.no_end.start_before(prob)
 
     semester_process_volunteer_missions << new_missions.map do |mission|
       SemesterProcessVolunteerMission.new(mission: mission)
