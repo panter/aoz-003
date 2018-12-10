@@ -60,7 +60,7 @@ class SemesterProcess < ApplicationRecord
 
     # for very strange reason the end of the range is shifted one day after save
     # possibly a bug in Active Directory
-    super(set_semester.begin..set_semester.end)
+    super(set_semester.begin..set_semester.end.advance(days: -1))
   end
 
   def semester_t(short: true)
