@@ -19,7 +19,6 @@ class SemesterProcessMail < ApplicationRecord
     :Einsatz,
     :FeedbackLink,
     :EmailAbsender,
-    :Semester,
     :OnlinePlattformUrl
   ].freeze
 
@@ -55,10 +54,6 @@ class SemesterProcessMail < ApplicationRecord
 
   def name
     volunteer.contact.natural_name
-  end
-
-  def semester
-    "#{ I18n.l(semester_process.semester.begin)} - #{I18n.l(semester_process.semester.end)}"
   end
 
   def einsatz
