@@ -1,15 +1,8 @@
 class SemesterProcessesController < ApplicationController
-  before_action :set_semester_process, only: [:show, :edit, :update, :overdue]
+  before_action :set_semester_process, only: [:edit, :update, :overdue]
   before_action :set_semester, only: [:new, :create]
 
   include SemesterProcessHelper
-
-  def index
-    authorize SemesterProcess
-    @semester_processes = SemesterProcess.all.paginate(page: params[:page])
-  end
-
-  def show; end
 
   def new
     @semester_process = SemesterProcess.new(semester: @selected_semester, kind: :mail )
