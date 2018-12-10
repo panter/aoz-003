@@ -6,6 +6,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     @subject = create :semester_process
     @spv = create(:semester_process_volunteer, :with_mission, :with_mail, volunteer: @volunteer,
       semester_process: @subject)
+    @spv.reload
     login_as @volunteer.user
     visit review_semester_semester_process_volunteer_path(@spv)
   end
@@ -37,6 +38,15 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
     visit root_path
     assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+  end
+
+  test 'volunteer hours should appear in asc order' do
+    create :hour, volunteer: @volunteer, meeting_date: @spv.semester.begin, hours: 1, hourable: @spv.missions.last
+    create :hour, volunteer: @volunteer, meeting_date: @spv.semester.end, hours: 2, hourable: @spv.missions.last
+    visit review_semester_semester_process_volunteer_path(@spv)
+    within 'tbody tr:last-child' do
+      assert page.has_text? I18n.l(@spv.semester.end)
+    end
   end
 
   test 'submit form should not display warning' do

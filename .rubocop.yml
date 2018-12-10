@@ -44,7 +44,7 @@ Style/GuardClause:
   MinBodyLength: 5
 
 Metrics/LineLength:
-  Max: 100
+  Max: 140
   Exclude:
     - 'db/seeds.rb'
     - 'app/policies/**/*'
