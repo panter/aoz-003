@@ -5,7 +5,7 @@ class SemesterProcess < ApplicationRecord
   belongs_to :reminder_mail_posted_by, -> { with_deleted }, class_name: 'User',
     inverse_of: 'semester_process_reminder_mail_posted', optional: true
 
-  validates_uniqueness_of :semester
+  validates :semester, uniqueness: true
 
   has_many :semester_process_volunteers, dependent: :destroy
   accepts_nested_attributes_for :semester_process_volunteers, allow_destroy: true
@@ -36,18 +36,18 @@ class SemesterProcess < ApplicationRecord
   end
 
   def subject
-    if self.kind.to_sym == :reminder
-      self.reminder_mail_subject_template
+    if kind.to_sym == :reminder
+      reminder_mail_subject_template
     else
-      self.mail_subject_template
+      mail_subject_template
     end
   end
 
   def body
-    if self.kind.to_sym == :reminder
-      self.reminder_mail_body_template
+    if kind.to_sym == :reminder
+      reminder_mail_body_template
     else
-      self.mail_body_template
+      mail_body_template
     end
   end
 
@@ -60,7 +60,7 @@ class SemesterProcess < ApplicationRecord
 
     # for very strange reason the end of the range is shifted one day after save
     # possibly a bug in Active Directory
-    super(set_semester.begin..set_semester.end.advance(days: -1))
+    super(set_semester.begin..set_semester.end)
   end
 
   def semester_t(short: true)
@@ -72,12 +72,12 @@ class SemesterProcess < ApplicationRecord
   end
 
   def build_semester_volunteers(volunteers, selected: nil, save_records: false, preselect: false)
-    volunteers = volunteers.select{ |volunteer| selected.include? volunteer.id } if selected && selected.any?
+    volunteers = volunteers.select { |volunteer| selected.include? volunteer.id } if selected && selected.any?
     @new_semester_process_volunteers = []
     @new_semester_process_volunteers = volunteers.to_a.map do |volunteer|
       spv = SemesterProcessVolunteer.new(volunteer: volunteer, semester_process: self, selected: preselect)
       spv.build_missions(semester)
-      spv.save if save_records && self.valid?
+      spv.save if save_records && valid?
       spv
     end
   end
