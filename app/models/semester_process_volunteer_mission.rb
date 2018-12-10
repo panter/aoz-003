@@ -5,7 +5,7 @@ class SemesterProcessVolunteerMission < ApplicationRecord
   belongs_to :semester_process_volunteer
 
   scope :need_feedback, lambda {
-    joins(semester_process_volunteer: [:semester_process]).includes(:assignment, :group_assignment)
+    includes(:assignment, :group_assignment)
     .where("(semester_process_volunteer_missions.assignment_id IS NOT NULL AND 
            assignments.period_end IS NULL)
             OR 
