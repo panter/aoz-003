@@ -17,7 +17,7 @@ module NavigationAndButtonHelper
     billing_expenses: { text: 'Spesen', icon_type: 'usd' },
     assignment: { text: 'Begleitung', icon_type: 'user' },
     certificate: { text: 'Nachweis', icon_type: 'education' },
-    xlsx: { text: 'Excel herunterladen', type: :fa, icon_type: 'file-excel-o' },
+    xlsx: { text: 'Excel herunterladen', icon_type: 'file' },
     truthy: { text: 'true', icon_type: :ok, extra_class: 'text-success' },
     falsy: { text: 'false', icon_type: :remove, extra_class: 'text-danger' }
   }.freeze
