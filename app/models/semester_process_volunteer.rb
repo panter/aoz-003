@@ -71,8 +71,8 @@ class SemesterProcessVolunteer < ApplicationRecord
   end
 
   def build_missions(semester)
-    new_missions = volunteer.assignments.active_between(semester.begin, semester.end) +
-      volunteer.group_assignments.active_between(semester.begin, semester.end)
+    new_missions = volunteer.assignments.no_end.start_before(semester.begin) +
+      volunteer.group_assignments.no_end.start_before(semester.begin)
 
     semester_process_volunteer_missions << new_missions.map do |mission|
       SemesterProcessVolunteerMission.new(mission: mission)
