@@ -9,7 +9,7 @@ table.table.table-striped
       th= t_attr(:achievements, Feedback)
       th= t_attr(:future, Feedback)
       th= t_attr(:comments, Feedback)
-      th= t_attr(:conversation, Feedback)
+      th Gespräch
       - unless current_user.volunteer?
         th= t_attr(:author, Feedback)
       th colspan='3'
@@ -23,7 +23,9 @@ table.table.table-striped
         td= record.achievements
         td= record.future
         td= record.comments
-        td= t(record.conversation)
+        td
+          - if record.conversation
+            = icon_span(:yes)
         - unless current_user.volunteer?
           td
             - if record.author.id == record.volunteer.user&.id

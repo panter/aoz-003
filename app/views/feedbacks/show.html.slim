@@ -22,8 +22,10 @@ h1= t_title(:show)
           td= t_attr(field)
           td= @feedback[field]
       tr
-        td= t_attr(:conversation)
-        td= t(@feedback.conversation)
+        td Gespräch
+        td
+          - if @feedback.conversation
+            = icon_span(:yes)
 
 = form_navigation_btn :edit
 = bootstrap_row_col { button_link icon_span(:back), @volunteer }
