@@ -23,8 +23,8 @@ module NavigationAndButtonHelper
   }.freeze
 
   def form_navigation_btn(action, cols: 12, with_row: true, md_cols: nil, with_col: false,
-    add_class: nil)
-    button = make_nav_button(action)
+    add_class: nil, custom_controller: nil)
+    button = make_nav_button(action, custom_controller: custom_controller)
     button = bootstrap_col(cols, md_cols) { button } if with_col || with_row
     button = boostrap_row(add_class) { button } if with_row
     button
@@ -58,10 +58,13 @@ module NavigationAndButtonHelper
     end
   end
 
-  def make_nav_button(action)
+  def make_nav_button(action, custom_controller: nil)
     if action == :back
       text = icon_span(:back)
       action = :index
+    elsif custom_controller
+      text = icon_span(:back)
+      return button_link(text, controller: custom_controller, action: :index, id: nil)
     else
       text = t_title(action)
     end
