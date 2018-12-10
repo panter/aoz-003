@@ -21,7 +21,7 @@ nav.navbar.navbar-top.hidden-print
               li= link_to 'Begleitungen', assignments_path
             - if policy(GroupOffer).index?
               li= link_to 'Gruppenangebote', group_offers_path
-            - if policy(SemesterProcess).index?
+            - if policy(SemesterProcessVolunteer).index?
               li= link_to 'Semester Prozesse', semester_process_volunteers_path
             - if policy(ReminderMailing).index?
               li = link_to 'Erinnerungs-Emails', reminder_mailings_path
