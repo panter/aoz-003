@@ -9,16 +9,13 @@ nav.navbar.section-navigation
       li= button_link 'Unbestätigte erneut erinnern', overdue_semester_process_path(@semester_process), dimension: 'sm'
 
     = custom_filter_dropdown('Bestätigt',
-      {semester: params[:semester]},
       { q: :commited_by_id_null, text: 'Unbestätigt', value: 'true' },
       { q: :commited_by_id_not_null, text: 'Bestätigt', value: 'true'})
     = custom_filter_dropdown('Übernommen',
-      {semester: params[:semester]},
       { q: :responsible_id_null, text: 'Offen', value: 'true' },
       { q: :responsible_id_not_null, text: 'Übernommen', value: 'true' },
       *@responsibles)
     = custom_filter_dropdown('Quittiert',
-      {semester: params[:semester]},
       { q: :reviewed_by_id_null, text: 'Unquittiert', value: 'true' },
       { q: :reviewed_by_id_not_null, text: 'Quittiert', value: 'true' },
       *@reviewers)

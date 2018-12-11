@@ -40,6 +40,7 @@ class SemesterProcessVolunteersController < ApplicationController
   def index
     authorize SemesterProcessVolunteer
     semester = Semester.parse(params[:semester])
+    @global_filters = {semester: params[:semester]}
     @semester_process = SemesterProcess.find_by_semester(semester).last
     @q = SemesterProcessVolunteer.index(@semester_process).ransack(params[:q])
     @q.sorts = ['volunteer_contact_last_name asc'] if @q.sorts.empty?
