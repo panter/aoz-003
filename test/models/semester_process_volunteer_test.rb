@@ -98,6 +98,7 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
     semester_process = SemesterProcess.new(semester: semester.previous, creator: create(:user))
 
     @assignment.update(period_start: time_z(2015, 7, 15), period_end: time_z(2016, 7, 15))
+    @group_assignment.update(period_start: time_z(2013, 7, 15), period_end: time_z(2020, 7, 15))
     subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
     subject.build_missions(semester.previous)
     assert_equal 0, subject.semester_process_volunteer_missions.size
