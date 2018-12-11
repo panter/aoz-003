@@ -29,7 +29,7 @@
               td.index-action-cell
                 = fv.hidden_field :volunteer_id
                 - fv.object.semester_process_volunteer_missions.each do |mission|
-                  = link_to mission.mission.to_label, mission.mission
+                  = link_to mission.mission.to_label, mission.mission_url
               td= l(fv.object.volunteer.accepted_at.to_date) if fv.object.volunteer.accepted_at
 
   .row:.col-xs-12
