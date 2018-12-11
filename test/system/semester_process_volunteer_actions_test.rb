@@ -69,7 +69,6 @@ class SemesterProcessVolunteerActionsTest < ApplicationSystemTestCase
       click_link 'Übernommen'
       click_link 'Alle'
     end
-    save_and_open_screenshot
     within 'tbody' do
       assert page.find("[data-url$=\"#{take_responsibility_semester_process_volunteer_path(@spv1)}\"]")
     end
