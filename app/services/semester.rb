@@ -112,7 +112,7 @@ class Semester
   # running semester where in now
   def current
     @current ||= Semester.semester_range_from_start(
-      Semester.semester_start_time(@context)
+      Semester.semester_start_time(@context.advance(months: 4))
     )
   end
 
@@ -170,6 +170,13 @@ class Semester
   def unique_collection(count = 3)
     collection(count) do |semester|
       next if Semester.taken_semesters.include?(semester)
+      [Semester.i18n_t(semester, short: false), to_s(semester)]
+    end
+  end
+
+  def existing_collection(count = 6)
+    collection(count) do |semester|
+      next unless Semester.new.current == semester || Semester.taken_semesters.include?(semester)
       [Semester.i18n_t(semester, short: false), to_s(semester)]
     end
   end
