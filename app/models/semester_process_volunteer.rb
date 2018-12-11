@@ -37,11 +37,11 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   scope :active_missions, lambda {
     joins(:semester_process_volunteer_missions).includes(semester_process_volunteer_missions: [:assignment, :group_assignment])
-    .where("semester_process_volunteer_missions.assignment_id IS NOT NULL AND 
-           (assignments.period_end IS NULL OR assignments.period_end >= lower(semester_processes.semester)) 
+    .where("(semester_process_volunteer_missions.assignment_id IS NOT NULL AND 
+            assignments.period_end IS NULL)
             OR 
-            semester_process_volunteer_missions.group_assignment_id IS NOT NULL AND 
-           (group_assignments.period_end is NULL OR group_assignments.period_end >= lower(semester_processes.semester))")
+           (semester_process_volunteer_missions.group_assignment_id IS NOT NULL AND 
+           group_assignments.period_end is NULL)")
     .references(:assignments, :group_assignments)
   }
 
@@ -71,8 +71,10 @@ class SemesterProcessVolunteer < ApplicationRecord
   end
 
   def build_missions(semester)
-    new_missions = volunteer.assignments.active_between(semester.begin, semester.end) +
-      volunteer.group_assignments.active_between(semester.begin, semester.end)
+    # if you change this then also change it within active_semester_mission(semester)
+    prob = semester.end.advance(weeks: -4)
+    new_missions = volunteer.assignments.no_end.start_before(prob) +
+      volunteer.group_assignments.no_end.start_before(prob)
 
     semester_process_volunteer_missions << new_missions.map do |mission|
       SemesterProcessVolunteerMission.new(mission: mission)
