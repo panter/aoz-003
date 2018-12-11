@@ -2,7 +2,6 @@
 
 h1 Spesenformulare erfassen
 
-
 = simple_form_for @billing_expense do |f|
   = hidden_field_tag 'selected_semester', @selected_billing_semester
   ul.list-inline
@@ -16,6 +15,7 @@ h1 Spesenformulare erfassen
       thead
         tr
           th.limit-width= select_all_rows
+          th Halbjahres-Rapport
           th Freiwillige/r
           th= t_attr(:bank_details, Volunteer)
           th Stunden
@@ -26,7 +26,10 @@ h1 Spesenformulare erfassen
         - @volunteers.each do |volunteer|
           tr.table-row-selectable id=dom_id(volunteer)
             td= check_box_tag 'selected_volunteers[]', volunteer.id,
-                  @selected_volunteers.include?(volunteer.id.to_s), disabled: !volunteer.iban?
+                @selected_volunteers.include?(volunteer.id.to_s), disabled: !volunteer.iban?
+            td
+              - if volunteer.unsubmitted_semester_feedbacks?
+                span.label.label-danger Unbestätigt
             td= link_to volunteer, edit_volunteer_path(volunteer)
             td
               - if volunteer.iban?
