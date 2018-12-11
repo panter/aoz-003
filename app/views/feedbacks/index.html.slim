@@ -9,10 +9,10 @@ table.table.table-striped
       th= t_attr(:achievements, Feedback)
       th= t_attr(:future, Feedback)
       th= t_attr(:comments, Feedback)
-      th= t_attr(:conversation, Feedback)
+      th Gespräch
       - unless current_user.volunteer?
         th= t_attr(:author, Feedback)
-      th colspan='3'
+      th Semester Prozess
 
   tbody
     - @feedbacks.each do |record|
@@ -23,14 +23,18 @@ table.table.table-striped
         td= record.achievements
         td= record.future
         td= record.comments
-        td= t(record.conversation)
+        td
+          - if record.conversation
+            = icon_span(:yes)
         - unless current_user.volunteer?
           td
             - if record.author.id == record.volunteer.user&.id
               = t_model(Volunteer)
             - else
               = link_to record.author.full_name, record.author
-        - unless record.old_feedback?
-          td= link_to t_action(:show), review_semester_semester_process_volunteer_path(record.semester_process_volunteer)
+          td
+            - unless record.old_feedback?
+              = link_to record&.semester_process_volunteer.semester_t,
+                review_semester_semester_process_volunteer_path(record.semester_process_volunteer)
 
 = bootstrap_row_col { button_link icon_span(:back), @volunteer }
