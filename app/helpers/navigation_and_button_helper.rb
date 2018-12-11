@@ -12,19 +12,19 @@ module NavigationAndButtonHelper
     yes: { text: 'Ja', icon_type: 'ok' },
     no: { text: 'Nein', icon_type: 'remove' },
     journal: { text: 'Journal', icon_type: 'book' },
-    journal_new: { text: 'Neuen Journal eintrag erstellen', type: :fa, icon_type: :edit },
+    journal_new: { text: 'Neuen Journal eintrag erstellen', icon_type: :edit },
     hours: { text: 'Stunden erfassen', icon_type: 'time' },
     billing_expenses: { text: 'Spesen', icon_type: 'usd' },
     assignment: { text: 'Begleitung', icon_type: 'user' },
     certificate: { text: 'Nachweis', icon_type: 'education' },
-    xlsx: { text: 'Excel herunterladen', type: :fa, icon_type: 'file-excel-o' },
+    xlsx: { text: 'Excel herunterladen', icon_type: 'file' },
     truthy: { text: 'true', icon_type: :ok, extra_class: 'text-success' },
     falsy: { text: 'false', icon_type: :remove, extra_class: 'text-danger' }
   }.freeze
 
   def form_navigation_btn(action, cols: 12, with_row: true, md_cols: nil, with_col: false,
-    add_class: nil)
-    button = make_nav_button(action)
+    add_class: nil, custom_controller: nil)
+    button = make_nav_button(action, custom_controller: custom_controller)
     button = bootstrap_col(cols, md_cols) { button } if with_col || with_row
     button = boostrap_row(add_class) { button } if with_row
     button
@@ -58,10 +58,13 @@ module NavigationAndButtonHelper
     end
   end
 
-  def make_nav_button(action)
+  def make_nav_button(action, custom_controller: nil)
     if action == :back
       text = icon_span(:back)
       action = :index
+    elsif custom_controller
+      text = icon_span(:back)
+      return button_link(text, controller: custom_controller, action: :index, id: nil)
     else
       text = t_title(action)
     end

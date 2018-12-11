@@ -8,7 +8,7 @@
       .col-xs-12
         p.text-danger Bestätigt am #{l(@semester_process_volunteer.commited_at.to_date)} durch #{profile_link(@semester_process_volunteer.commited_by)}
 
-  = f.simple_fields_for :semester_feedbacks, @semester_process_volunteer.semester_process_volunteer_missions do |spvm|
+  = f.simple_fields_for :semester_feedbacks, @semester_process_volunteer.semester_process_volunteer_missions.need_feedback do |spvm|
     - mission = spvm.object.mission
     h2.m-b-20.m-t-30 Einsatz #{mission.to_label}
 

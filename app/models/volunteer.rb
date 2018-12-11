@@ -244,10 +244,9 @@ class Volunteer < ApplicationRecord
   def self.active_semester_mission(semester)
     volunteers = Volunteer.have_mission
     prob = semester.end.advance(weeks: -4)
-    sem_start = semester.begin
     vol_with_missions = volunteers.select do |v|
       [v.assignments, v.group_assignments].detect do |mission|
-        mission.where("period_start < ?", prob).where("period_end > ? OR period_end IS NULL", sem_start).any?
+        mission.where("period_end IS NULL").where("period_start < ?", prob).any?
       end
     end
     vol_with_missions
