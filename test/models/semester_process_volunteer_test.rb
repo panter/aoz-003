@@ -55,6 +55,16 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
     subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
     subject.build_missions(semester.previous)
     assert_equal 1, subject.semester_process_volunteer_missions.size
+
+    @group_assignment.update(period_start: semester_process.semester.end.advance(days: -2))
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    assert_equal 1, subject.semester_process_volunteer_missions.size
+
+    @group_assignment.update(period_start: semester_process.semester.end.advance(weeks: -4))
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    assert_equal 2, subject.semester_process_volunteer_missions.size
   end
 
   test '#build_mails' do
@@ -80,5 +90,38 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
     subject.build_mails
     assert subject.hours.include? hour_assignment
     assert subject.hours.include? hour_group_assignment
+  end
+
+  test '#build missions with ending date' do
+    travel_to time_z(2018, 7, 15)
+    semester = Semester.new
+    semester_process = SemesterProcess.new(semester: semester.previous, creator: create(:user))
+
+    @assignment.update(period_start: time_z(2015, 7, 15), period_end: time_z(2016, 7, 15))
+    @group_assignment.update(period_start: time_z(2013, 7, 15), period_end: time_z(2020, 7, 15))
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    assert_equal 0, subject.semester_process_volunteer_missions.size
+  end
+
+  test '#active_missions scope' do
+    travel_to time_z(2018, 7, 15)
+    semester = Semester.new
+    semester_process = SemesterProcess.new(semester: semester.previous, creator: create(:user))
+
+    @assignment.update(period_start: time_z(2015, 7, 15))
+    @group_assignment.update(period_start: time_z(2015, 7, 15))
+    subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
+    subject.build_missions(semester.previous)
+    subject.save
+    subject.reload
+    @assignment.update(period_end: time_z(2016, 7, 15))
+    assert_equal 2, subject.semester_process_volunteer_missions.size
+    assert_equal 1, subject.semester_process_volunteer_missions.need_feedback.size
+    assert_equal 1, semester_process.semester_process_volunteers.active_missions.size
+    @group_assignment.update(period_end: time_z(2018, 7, 15))
+    assert_equal 2, subject.semester_process_volunteer_missions.size
+    assert_equal 0, subject.semester_process_volunteer_missions.need_feedback.size
+    assert_equal 0, semester_process.semester_process_volunteers.active_missions.size
   end
 end
