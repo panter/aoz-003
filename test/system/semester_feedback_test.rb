@@ -8,11 +8,11 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
       semester_process: @subject)
     @spv.reload
     login_as @volunteer.user
-    visit review_semester_semester_process_volunteer_path(@spv)
+    visit review_semester_review_semester_url(@spv)
   end
 
   def submit_feedback(semester_process_volunteer)
-    visit review_semester_semester_process_volunteer_path(semester_process_volunteer)
+    visit review_semester_review_semester_url(semester_process_volunteer)
     fill_in_required_feedback_fields(0)
     check 'Ich verzichte auf die Auszahlung von Spesen.'
     click_on 'Bestätigen', match: :first
@@ -43,7 +43,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   test 'volunteer hours should appear in asc order' do
     create :hour, volunteer: @volunteer, meeting_date: @spv.semester.begin, hours: 1, hourable: @spv.missions.last
     create :hour, volunteer: @volunteer, meeting_date: @spv.semester.end, hours: 2, hourable: @spv.missions.last
-    visit review_semester_semester_process_volunteer_path(@spv)
+    visit review_semester_review_semester_url(@spv)
     within 'tbody tr:last-child' do
       assert page.has_text? I18n.l(@spv.semester.end)
     end
@@ -120,7 +120,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
 
     @superadmin = create :user
     login_as @superadmin
-    visit review_semester_semester_process_volunteer_path(@spv)
+    visit review_semester_review_semester_url(@spv)
 
     fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?', with: goals
     fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: achievements
@@ -155,7 +155,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     spv = create(:semester_process_volunteer, :with_missions, :with_mail, volunteer: volunteer,
       semester_process: create(:semester_process))
     login_as volunteer.user
-    visit review_semester_semester_process_volunteer_path(spv)
+    visit review_semester_review_semester_url(spv)
 
     assert_difference 'Journal.count', 1 do
       fill_in_required_feedback_fields(0)

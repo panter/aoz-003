@@ -1,27 +1,8 @@
 class SemesterProcessVolunteersController < ApplicationController
-  before_action :prepare_review, :initialize_nested_objects, only: [:review_semester, :submit_review]
   before_action :set_semester_process_volunteer, only: [:show, :edit, :update, :take_responsibility, :mark_as_done, :update_notes]
   before_action :set_semester, only: [:index]
 
   include SemesterProcessVolunteerHelper
-
-  def review_semester; end
-
-  def submit_review
-    # you shall not pass
-    return if @semester_process_volunteer.commited_at
-
-    set_reviewed
-    assign_volunteer_attributes
-    build_nested_objects
-
-    if save_feedback_data!
-      create_journals
-      redirect_to review_semester_semester_process_volunteer_path(@semester_process_volunteer), notice: t('.success')
-    else
-      render :review_semester
-    end
-  end
 
   def index
     authorize SemesterProcessVolunteer
@@ -83,7 +64,7 @@ class SemesterProcessVolunteersController < ApplicationController
   end
 
   private
-  
+
   def review_params
     params.require(:semester_process_volunteer).permit(
       volunteer_attributes: [:id, :waive, :iban, :bank],

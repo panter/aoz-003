@@ -25,7 +25,7 @@ h1 Semester Prozess
       - @spvs.each do |spv|
         tr*{ data: { spv_id: spv.id } }
           td.index-action-cell.hidden-print
-            = button_link icon_span(:edit), review_semester_semester_process_volunteer_path(spv), title: 'Bearbeiten'
+            = button_link icon_span(:edit), review_semester_review_semester_url(spv), title: 'Bearbeiten'
             = button_link icon_span(:journal), volunteer_journals_path(spv.volunteer), title: 'Journal'
             = button_link icon_span(:journal_new), new_volunteer_journal_path(spv.volunteer,
               semester_feedback_id: spv.semester_feedbacks.ids), title: 'Neuen Journal eintrag mit Zitat erstellen'
