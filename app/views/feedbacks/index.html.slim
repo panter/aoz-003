@@ -35,6 +35,6 @@ table.table.table-striped
           td
             - unless record.old_feedback?
               = link_to record&.semester_process_volunteer.semester_t,
-                review_semester_semester_process_volunteer_path(record.semester_process_volunteer)
+                review_semester_review_semester_url(record.semester_process_volunteer)
 
 = bootstrap_row_col { button_link icon_span(:back), @volunteer }
