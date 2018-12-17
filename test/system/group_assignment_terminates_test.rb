@@ -74,19 +74,4 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
     mail = ActionMailer::Base.deliveries.last
     assert_equal @superadmin.email, mail['to'].to_s
   end
-
-  test 'terminate group assignment without feedback or hours' do
-    Hour.destroy_all
-    Feedback.destroy_all
-
-    login_as @superadmin
-    visit terminate_group_assignment_path(@group_assignment)
-
-    page.accept_confirm do
-      click_on 'Einsatz wird hiermit abgeschlossen'
-    end
-
-    visit terminate_group_assignment_path(@group_assignment)
-    assert_text "Beendigungs Feedback vom #{I18n.l Time.zone.today}"
-  end
 end

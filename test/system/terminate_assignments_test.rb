@@ -91,19 +91,4 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @volunteer.reload
     assert @volunteer.waive
   end
-
-  test 'terminate_assignment_without_feedback_or_hours' do
-    Hour.destroy_all
-    Feedback.destroy_all
-
-    login_as @superadmin
-    visit terminate_assignment_path(@assignment)
-
-    page.accept_confirm do
-      click_on 'Einsatz wird hiermit abgeschlossen'
-    end
-
-    visit terminate_assignment_path(@assignment)
-    assert_text "Beendigungs Feedback vom #{I18n.l Time.zone.today}"
-  end
 end

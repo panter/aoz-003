@@ -22,7 +22,6 @@ class GroupOffer < ApplicationRecord
   has_many :group_assignment_logs
 
   has_many :hours, as: :hourable, dependent: :destroy, inverse_of: :hourable
-  has_many :feedbacks, as: :feedbackable, dependent: :destroy, inverse_of: :feedbackable
   has_many :trial_feedbacks, as: :trial_feedbackable, inverse_of: :trial_feedbackable,
     dependent: :destroy
 

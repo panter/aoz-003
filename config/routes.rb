@@ -67,8 +67,6 @@ Rails.application.routes.draw do
     resources :event_volunteers, only: [:create, :destroy]
   end
 
-  resources :feedbacks, only: [:new, :create]
-
   resources :group_assignments, only: [:show, :create, :edit, :update],
     concerns: [:submit_feedback, :termination_actions] do
     put :set_end_today, on: :member
@@ -84,7 +82,6 @@ Rails.application.routes.draw do
     get :search_volunteer, on: :member
   end
 
-  get 'list_responses/feedbacks', to: 'list_responses#feedbacks'
   get 'list_responses/trial_feedbacks', to: 'list_responses#trial_feedbacks'
 
   resources :profiles, except: [:destroy, :index]
