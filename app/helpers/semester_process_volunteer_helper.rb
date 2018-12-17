@@ -70,4 +70,62 @@ module SemesterProcessVolunteerHelper
     end
     html.html_safe
   end
+
+  def set_responsibles
+    @responsibles = SemesterProcessVolunteer.joins(responsible: [profile: [:contact]])
+      .distinct
+      .select('users.id, contacts.full_name')
+      .map do |responsible|
+        {
+          q: :responsible_id_eq,
+          text: "Übernommen von #{responsible.full_name}",
+          value: responsible.id
+        }
+      end
+  end
+
+  def set_reviewers
+    @reviewers = SemesterProcessVolunteer.joins(reviewed_by: [profile: [:contact]])
+      .distinct
+      .select('users.id, contacts.full_name')
+      .map do |reviewed_by|
+        {
+          q: :reviewed_by_id_eq,
+          text: "Quittiert von #{reviewed_by.full_name}",
+          value: reviewed_by.id
+        }
+      end
+  end
+
+  def prepare_review
+    @semester_process_volunteer = SemesterProcessVolunteer.find(params[:id])
+    authorize @semester_process_volunteer
+    @volunteer = @semester_process_volunteer.volunteer
+    @missions = @semester_process_volunteer.missions
+  end
+
+  def set_semester_process_volunteer
+    @spv = SemesterProcessVolunteer.find(params[:id])
+    authorize @spv
+    @semester_process = @spv.semester_process
+    @volunteer = @spv.volunteer
+  end
+
+  def save_feedback_data!
+    @semester_process_volunteer.volunteer.validate_waive_and_bank = true
+
+    ActiveRecord::Base.transaction do
+      @semester_process_volunteer.save!
+      @volunteer.save!
+
+      @nested_objects.each do |_key, hash|
+        hash.each { |_id, obj| obj.save! }
+      end
+    end
+    true
+  rescue ActiveRecord::RecordInvalid => exception
+    null_reviewed
+    flash[:alert] = exception.message
+    false
+  end
 end
