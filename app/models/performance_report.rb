@@ -136,7 +136,7 @@ class PerformanceReport < ApplicationRecord
     started_ga = group_assignments.start_within(*periods)
     ended_ga = group_assignments.end_within(*periods)
     created_ga = group_assignments.created_between(*periods)
-    feedbacks = SemesterFeedback.created_between(*periods).from_group_offers(group_offers.ids)
+    feedbacks = SemesterFeedback.created_between(*periods).where.not(group_assignment: nil)
     {
       all: group_offers.count,
       created: group_offers.created_after(periods.first).count,
