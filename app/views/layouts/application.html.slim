@@ -25,7 +25,7 @@ html
       = render 'navigation'
       .container-fluid
         = render 'notification'
-        - unless controller_name == 'semester_process_volunteers'
+        - unless controller_name == 'review_semesters'
           = render 'unsubmitted_semester_feedback_notification'
 
         = yield
