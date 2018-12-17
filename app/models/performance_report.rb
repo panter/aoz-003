@@ -66,6 +66,8 @@ class PerformanceReport < ApplicationRecord
       group_offer_hours: hours.group_offer.total_hours,
       total_hours: hours.total_hours,
       total_feedbacks: feedbacks.count,
+      assignment_feedbacks: feedbacks.where(group_assignment: nil).count,
+      group_offer_feedbacks: feedbacks.where(assignment: nil).count,
       assignment_trial_feedbacks: trial_feedbacks.assignment.count,
       group_offer_trial_feedbacks: trial_feedbacks.group_offer.count,
       total_trial_feedbacks: trial_feedbacks.count,
