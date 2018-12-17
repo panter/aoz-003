@@ -2,6 +2,7 @@ nav.navbar.section-navigation
   hr
   ul.list-inline
     li= clear_filter_button
+    li= section_nav_button 'Spesenformulare', billing_expenses_path
     li= button_link 'Neuen Semester Prozess erstellen', new_semester_process_path(semester: params[:semester]), dimension: 'sm'
     li= render 'semester_filter'
     - if @semester_process
