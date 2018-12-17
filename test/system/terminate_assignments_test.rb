@@ -9,8 +9,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment = create :assignment, volunteer: @volunteer, client: @client,
       period_start: 10.weeks.ago, period_end: 2.days.ago, creator: @department_manager
     @hour = create :hour, volunteer: @volunteer, hourable: @assignment
-    @feedback = create :feedback, volunteer: @volunteer, feedbackable: @assignment,
-      author: @volunteer.user
   end
 
   test 'assignment_termination_submit_form_displays_existing_hours_and_feedbacks' do
