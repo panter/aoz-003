@@ -1,6 +1,5 @@
 class FeedbacksController < ApplicationController
   def index
-    authorize Feedback
     @feedbacks = if params[:assignment_id]
                    SemesterFeedback.where(assignment_id: params[:assignment_id])
                  elsif params[:group_offer_id]
@@ -8,5 +7,7 @@ class FeedbacksController < ApplicationController
                  else
                   []
                  end
+    authorize @feedbacks
+    @feedbacks = policy_scope(@feedbacks)
   end
 end
