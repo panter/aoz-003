@@ -145,9 +145,6 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert page.has_text? comments
     click_button 'Schliessen'
 
-    page.find('td', text: future.truncate(300)).click
-    assert page.has_text? future
-    click_button 'Schliessen'
   end
 
   test 'it should create a journal on submit' do
