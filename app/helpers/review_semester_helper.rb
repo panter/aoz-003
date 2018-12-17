@@ -12,6 +12,11 @@ module ReviewSemesterHelper
     @semester_process_volunteer.commited_at = Time.zone.now
   end
 
+  def assign_volunteer_attributes
+    @volunteer.assign_attributes(review_params[:volunteer_attributes]
+      .slice(:waive, :bank, :iban))
+  end
+
   def build_nested_objects
     review_params[:semester_feedbacks_attributes].each do |_key, hash|
       spv_mission = SemesterProcessVolunteerMission.find(hash[:semester_feedback][:spv_mission_id])

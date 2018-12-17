@@ -65,14 +65,6 @@ class SemesterProcessVolunteersController < ApplicationController
 
   private
 
-  def review_params
-    params.require(:semester_process_volunteer).permit(
-      volunteer_attributes: [:id, :waive, :iban, :bank],
-      semester_feedbacks_attributes: [[semester_feedback: [:mission, :goals, :achievements, :future, :comments, :conversation, :spv_mission_id]],
-                                     [hour: [:hours, :spv_mission_id, :activity]]]
-    )
-  end
-
   def set_semester
     @semester = Semester.new
     if params[:semester]

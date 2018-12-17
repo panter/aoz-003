@@ -1,7 +1,7 @@
 class ReviewSemestersController < ApplicationController
   before_action :prepare_review, :initialize_nested_objects, only: [:review_semester, :submit_review]
 
-  include ReviewSemesterHelper
+  include ReviewSemesterHelper, SemesterProcessVolunteerHelper
 
   def review_semester; end
 
@@ -19,5 +19,15 @@ class ReviewSemestersController < ApplicationController
     else
       render :review_semester
     end
+  end
+
+  private
+
+  def review_params
+    params.require(:semester_process_volunteer).permit(
+      volunteer_attributes: [:id, :waive, :iban, :bank],
+      semester_feedbacks_attributes: [[semester_feedback: [:mission, :goals, :achievements, :future, :comments, :conversation, :spv_mission_id]],
+                                     [hour: [:hours, :spv_mission_id, :activity]]]
+    )
   end
 end
