@@ -8,14 +8,9 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
     @group_assignment = create :group_assignment, volunteer: @volunteer, group_offer: @group_offer,
       period_start: 20.days.ago, period_end: 10.days.ago, period_end_set_by: @superadmin
     @hour = create :hour, volunteer: @volunteer, hourable: @group_offer, hours: 2
-    @feedback = create :feedback, volunteer: @volunteer, author: @volunteer.user,
-      feedbackable: @group_offer
-
     @unrelated_group_assignment = create :group_assignment, group_offer: @group_offer
     @unrelated_hour = create :hour, volunteer: @unrelated_group_assignment.volunteer,
       hourable: @group_offer, hours: 5, comments: 'Unrelated Hour'
-    @unrelated_feedback = create :feedback, volunteer: @unrelated_group_assignment.volunteer,
-      author: @unrelated_group_assignment.volunteer.user, feedbackable: @group_offer
   end
 
   test 'volunteer_can_use_group_assignment_terminate_form' do
