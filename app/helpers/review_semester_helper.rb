@@ -50,6 +50,8 @@ module ReviewSemesterHelper
         hash.each { |_id, obj| obj.save! }
       end
     end
+    # reload the variable
+    @semester_process_volunteer.reload
     true
   rescue ActiveRecord::RecordInvalid => exception
     null_reviewed
