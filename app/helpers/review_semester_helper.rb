@@ -58,7 +58,7 @@ module ReviewSemesterHelper
   end
 
   def create_journals
-    spv = SemesterProcessVolunteer.find(params[:id])
+    spv = @semester_process_volunteer
     return unless spv.commited_at?
     volunteer = spv.volunteer
     semester_feedbacks = spv.semester_feedbacks
