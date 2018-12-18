@@ -4,6 +4,11 @@ class SemesterProcessVolunteersController < ApplicationController
 
   include SemesterProcessVolunteerHelper
 
+  def review_semester
+    authorize SemesterProcessVolunteer.find(params[:id])
+    redirect_to review_semester_review_semester_url params[:id]
+  end
+
   def index
     authorize SemesterProcessVolunteer
     semester = Semester.parse(params[:semester])
