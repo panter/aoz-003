@@ -16,8 +16,6 @@ class Semester
     11 => 2
   }.freeze
 
-  SEMESTER_OFFSET = 4.months
-
   class << self
     def parse(string)
       return unless string
@@ -92,10 +90,10 @@ class Semester
   #   semester_number - required if year integer
   def initialize(year = nil, number = 1)
     @context = if year.nil?
-                 Time.zone.now + SEMESTER_OFFSET
+                 Time.zone.now
                else
                  year -= 1 if number == 1
-                 Time.zone.local(year, (18 - number * 6), 1) + SEMESTER_OFFSET
+                 Time.zone.local(year, (18 - number * 6), 1)
                end
   end
 
@@ -115,6 +113,12 @@ class Semester
   def current
     @current ||= Semester.semester_range_from_start(
       Semester.semester_start_time(@context)
+    )
+  end
+
+  def preselect_semester(offset = -4.months)
+    Semester.semester_range_from_start(
+      Semester.semester_start_time(@context + offset)
     )
   end
 
@@ -178,7 +182,8 @@ class Semester
 
   def existing_collection(count = 6)
     collection(count) do |semester|
-      next unless Semester.new.current == semester || Semester.taken_semesters.include?(semester)
+      s = Semester.new
+      next unless s.preselect_semester == semester || s.current == semester || Semester.taken_semesters.include?(semester)
       [Semester.i18n_t(semester, short: false), to_s(semester)]
     end
   end

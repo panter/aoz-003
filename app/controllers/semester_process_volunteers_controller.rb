@@ -75,7 +75,7 @@ class SemesterProcessVolunteersController < ApplicationController
     if params[:semester]
       @selected_semester = Semester.parse(params[:semester])
     else
-      @selected_semester = @semester.current
+      @selected_semester = @semester.preselect_semester
       params[:semester] = Semester.to_s(@selected_semester)
     end
   end
