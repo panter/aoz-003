@@ -25,15 +25,6 @@ FactoryBot.define do
       subject '%{Anrede} %{Name}'
     end
 
-    trait :half_year do
-      kind { EmailTemplate.kinds[:half_year] }
-      body do
-        "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
-          '%{FeedbackLink}'
-      end
-      subject '%{Anrede} %{Name}'
-    end
-
     trait :half_year_process_email do
       kind { EmailTemplate.kinds[:half_year_process_email] }
       body do
@@ -53,7 +44,6 @@ FactoryBot.define do
 
     factory :email_template_signup, traits: [:signup]
     factory :email_template_trial, traits: [:trial]
-    factory :email_template_half_year, traits: [:half_year]
     factory :email_template_half_year_process_email, traits: [:half_year_process_email]
     factory :email_template_termination, traits: [:termination]
   end

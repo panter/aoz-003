@@ -1,6 +1,5 @@
 class ReminderMailingsController < ApplicationController
-  before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :send_trial_period,
-                                              :send_half_year, :send_termination]
+  before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :send_trial_period, :send_termination]
 
   def index
     authorize ReminderMailing
@@ -23,26 +22,6 @@ class ReminderMailingsController < ApplicationController
     else
       redirect_to new_email_template_path, notice: 'Sie müssen eine aktive E-Mailvorlage haben,'\
         "\r\nbevor Sie eine Probezeit Erinnerung erstellen können."
-    end
-    authorize @reminder_mailing
-  end
-
-  def new_half_year
-    @reminder_mailables = Assignment.unterminated
-      .with_actively_registered_volunteer
-      .submitted_since(params[:submitted_since]&.to_date)
-    @reminder_mailables += GroupAssignment.unterminated
-      .with_actively_registered_volunteer
-      .submitted_since(params[:submitted_since]&.to_date)
-    @reminder_mailing = ReminderMailing.new(kind: 'half_year',
-      reminder_mailing_volunteers: @reminder_mailables)
-    if EmailTemplate.half_year.active.any?
-      @reminder_mailing.assign_attributes(EmailTemplate.half_year.active.first
-        .slice(:subject, :body))
-    else
-      redirect_to new_email_template_path,
-        notice: 'Sie müssen eine aktive E-Mailvorlage haben,
-        bevor Sie eine Halbjahres Erinnerung erstellen können.'
     end
     authorize @reminder_mailing
   end
@@ -89,18 +68,6 @@ class ReminderMailingsController < ApplicationController
     end
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Probezeit Erinnerungs-Emails werden versendet.'
-  end
-
-  def send_half_year
-    if @reminder_mailing.sending_triggered?
-      return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits'\
-        ' versandt.'
-    end
-    @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
-      VolunteerMailer.public_send(@reminder_mailing.kind, mailing_volunteer).deliver_later
-    end
-    @reminder_mailing.update(sending_triggered: true)
-    redirect_to reminder_mailings_path, notice: 'Halbjahres Erinnerungs-Emails werden versendet.'
   end
 
   def send_termination

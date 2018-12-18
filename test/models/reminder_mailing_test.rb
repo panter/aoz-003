@@ -94,18 +94,4 @@ class ReminderMailingTest < ActiveSupport::TestCase
     assert(mailing_body.include?(mailing_creator.profile.contact.natural_name),
       "#{mailing_creator.profile.contact.natural_name} not found in #{mailing_body}")
   end
-
-  test 'submission_count' do
-    mailing = create :reminder_mailing, :half_year, reminder_mailing_volunteers:
-      [@assignment_probation, @group_assignment_probation],
-      created_at: 1.month.ago
-
-    assert_equal 0, mailing.submission_count
-
-    @assignment_probation.update(submitted_at: 2.months.ago)
-    assert_equal 0, mailing.submission_count
-
-    @assignment_probation.update(submitted_at: 1.day.ago)
-    assert_equal 1, mailing.submission_count
-  end
 end

@@ -49,10 +49,6 @@ module GroupAssignmentAndAssignmentCommon
       loj_mailings.where('reminder_mailings.kind = ?', kind_number)
     }
 
-    scope :with_half_year_reminder_mailing, lambda {
-      with_reminder_mailing_kind(0)
-    }
-
     scope :with_trial_period_reminder_mailing, lambda {
       with_reminder_mailing_kind(1)
     }
@@ -62,11 +58,6 @@ module GroupAssignmentAndAssignmentCommon
              .or(
                started.where("#{model_name.plural}.submitted_at IS NULL")
              )
-    }
-
-    scope :no_half_year_reminder_mailing, lambda {
-      loj_mailings
-        .where('reminder_mailings.kind != 1 OR reminder_mailing_volunteers.id IS NULL')
     }
 
     def submit_feedback=(submitter)

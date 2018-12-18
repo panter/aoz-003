@@ -12,7 +12,6 @@ class ReminderMailingVolunteer < ApplicationRecord
   scope :picked, (-> { where(picked: true) })
 
   scope :kind, ->(kind) { joins(:reminder_mailing).where('reminder_mailings.kind = ?', kind) }
-  scope :half_year, (-> { kind(ReminderMailing.kinds[:half_year]) })
   scope :trial_period, (-> { kind(ReminderMailing.kinds[:trial_period]) })
   scope :termination, (-> { kind(ReminderMailing.kinds[:termination]) })
   scope :termination_for, ->(mailable) { termination.where(reminder_mailable: mailable) }
@@ -50,10 +49,7 @@ class ReminderMailingVolunteer < ApplicationRecord
   end
 
   def feedback_url(options = {})
-    if reminder_mailing.half_year?
-      path = reminder_mailable
-      action = :last_submitted_hours_and_feedbacks
-    elsif reminder_mailing.trial_period?
+    if reminder_mailing.trial_period?
       path = [volunteer, reminder_mailable.polymorph_url_object, TrialFeedback]
       action = :new
     elsif reminder_mailing.termination?
