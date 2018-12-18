@@ -15,7 +15,8 @@ de:
   reminder_mailings:
     kinds: &id-kinds-enum-values
       trial_period: Probezeit
-      half_year: Halbjährlich
+      half_year_process_email: 'Halbjahres Prozess'
+      half_year_process_overdue: 'Halbjahres Erinnerung'
       termination: Beendigung
   acceptance: &id-client-acceptance
     accepted: Angemeldet
@@ -67,10 +68,9 @@ de:
       assignment: Begleitung
       signup: Anmeldung
       trial: Probezeit
-      half_year: Halbjährlich
       termination: Beendigung
-      half_year_process_email: 'Half year process email'
-      half_year_process_overdue: 'Half year process overdue'
+      half_year_process_email: 'Halbjahres Prozess'
+      half_year_process_overdue: 'Halbjahres Erinnerung'
     index:
       <<: *id-kinds-template
     show:

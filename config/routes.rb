@@ -91,9 +91,7 @@ Rails.application.routes.draw do
 
   resources :reminder_mailings, except: [:new] do
     get :new_trial_period, on: :collection
-    get :new_half_year, on: :collection
     get :send_trial_period, on: :member
-    get :send_half_year, on: :member
   end
 
   resources :semester_process_volunteers do

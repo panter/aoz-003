@@ -124,10 +124,6 @@ def development_seed
     2.times do
       FactoryBot.create :email_template_trial, active: false
     end
-    FactoryBot.create :email_template_half_year, active: true
-    2.times do
-      FactoryBot.create :email_template_half_year, active: false
-    end
     FactoryBot.create :email_template_termination, active: true
     2.times do
       FactoryBot.create :email_template_termination, active: false
@@ -146,14 +142,6 @@ def development_seed
       assignment
     end
     handle_reminder_mailing_seed(:trial_period, trial_assignments)
-    # half_year Assignments
-    half_year_assignments = (1..3).to_a.map do
-      start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
-      assignment = assignment_generator(start_date - 2.days, start_date)
-      generate_feedback_and_hours(assignment, start_date)
-      assignment
-    end
-    handle_reminder_mailing_seed(:half_year, half_year_assignments)
     # ended Assignments
     termination_assignments = (1..3).to_a.map do
       start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
@@ -205,12 +193,6 @@ def development_seed
       period_start: start_date, period_end: nil)
     generate_feedback_and_hours(group_assignment.group_offer, start_date, volunteer: volunteers.first)
     handle_reminder_mailing_seed(:trial_period, [group_assignment])
-
-    start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
-    group_assignment = GroupAssignment.create(volunteer: volunteers.second, group_offer: group_offer,
-      period_start: start_date, period_end: nil)
-    generate_feedback_and_hours(group_assignment.group_offer, start_date, volunteer: volunteers.second)
-    handle_reminder_mailing_seed(:half_year, [group_assignment])
 
     # ended GroupAssignments
     start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
@@ -269,12 +251,6 @@ DEFAULT_TEMPLATES_EMAIL_TEMPLATES = [
     subject: 'Vielen Dank für Ihre Anmeldung',
     body: "Liebe/r Freiwillige/r\r\n\r\nIhre Anmeldung wurde erfolgreich an uns abgeschickt. Wir freuen uns, dass Sie sich für einen freiwilligen Einsatz bei der AOZ interessieren.\r\n\r\n Wir werden uns bald bei Ihnen melden.\r\n\r\nFreundliche Grüsse\r\n\r\nAOZ Fachstelle Freiwilligenarbeit\r\n",
     kind: 'signup',
-    active: true
-  },
-  {
-    subject: 'Halbjährliche Rückmeldung zu %{Einsatz}',
-    body: "Liebe/r %{Anrede} %{Name}\r\n\r\nWir bitten Sie um eine Halbjährliche Rückmeldung bezüglich %{Einsatz}.\r\nBitte tragen Sie Ihre Rückmeldung hier ein:%{FeedbackLink}\r\n\r\nFreundliche Grüsse\r\n\r\nAOZ Fachstelle Freiwilligenarbeit\r\n",
-    kind: 'half_year',
     active: true
   }
 ].freeze
