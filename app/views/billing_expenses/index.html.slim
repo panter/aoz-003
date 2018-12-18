@@ -25,13 +25,13 @@ h1
           th.limit-width= select_all_rows
           th.hidden-print Aktionen
           - unless @volunteer
-            th= sort_link @q, :volunteer_contact_last_name, t_model(Volunteer)
+            th= t_model(Volunteer)
           th= t_attr(:bank_details, Volunteer)
           th Stunden
-          th= sort_link @q, :final_amount
+          th Final amount
           th Semester
           - if policy(BillingExpense).superadmin_privileges?
-            th= sort_link @q, :user_profile_contact_last_name, t_attr(:created_by)
+            th= t_attr(:created_by)
           th= sort_link @q, :created_at
       tbody
         - @billing_expenses.each do |record|
