@@ -11,7 +11,6 @@ class JournalsController < ApplicationController
 
   def new
     @journal = @journaled.journals.new
-    handle_feedback_quote
     handle_semester_feedback_quote
     authorize @journal
   end
@@ -56,17 +55,6 @@ class JournalsController < ApplicationController
   def set_journaled
     return @journaled = Client.find(params[:client_id]) if params[:client_id]
     @journaled = Volunteer.find(params[:volunteer_id])
-  end
-
-  def handle_feedback_quote
-    return unless params[:feedback_id]
-    @feedback = Feedback.find_by(id: params[:feedback_id])
-    return unless @feedback
-    @journal.category = :feedback
-    @journal.title = "Feedback vom #{I18n.l(@feedback.created_at.to_date)}: "
-    @journal.body = @feedback.slice(:goals, :achievements, :future, :comments).map do |key, fb_quote|
-      "#{I18n.t("activerecord.attributes.feedback.#{key}")}:\n«#{fb_quote}»" if fb_quote.present?
-    end.compact.join("\n\n")
   end
 
   def handle_semester_feedback_quote

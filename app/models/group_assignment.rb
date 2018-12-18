@@ -7,7 +7,6 @@ class GroupAssignment < ApplicationRecord
   has_many :group_assignment_logs
 
   has_many :hours, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
-  has_many :feedbacks, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
 
   delegate :title, to: :group_offer
 
@@ -43,10 +42,6 @@ class GroupAssignment < ApplicationRecord
 
   def hours_since_last_submitted
     hours.since_last_submitted(submitted_at)
-  end
-
-  def feedbacks_since_last_submitted
-    feedbacks.since_last_submitted(submitted_at)
   end
 
   def polymorph_url_object

@@ -50,9 +50,6 @@ def generate_feedback_and_hours(hourable, start_date, end_date = nil, volunteer:
   meeting_date = FFaker::Time.between(start_date + 1.day, end_date)
   hour = FactoryBot.create(:hour, volunteer: volunteer, hourable: hourable, meeting_date: meeting_date)
   hour.update(created_at: meeting_date + 1.day)
-  feedback = FactoryBot.create(:feedback, volunteer: volunteer, feedbackable: hourable,
-    author: volunteer.user)
-  feedback.update(created_at: FFaker::Time.between(start_date + 1.day, end_date - 1.day))
   trial_feedback = FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
     trial_feedbackable: hourable)
   trial_feedback.update(created_at: FFaker::Time.between(start_date + 6.weeks, start_date + 8.weeks))
