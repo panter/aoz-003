@@ -97,6 +97,7 @@ Rails.application.routes.draw do
   end
 
   resources :semester_process_volunteers do
+    get :review_semester, on: :member
     put :take_responsibility, on: :member
     put :mark_as_done, on: :member
     put :update_notes, on: :member
