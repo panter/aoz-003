@@ -16,21 +16,6 @@ class Semester
     11 => 2
   }.freeze
 
-  SEMESTER_PRESELECTION_MAP = {
-    1 => 2,
-    2 => 2,
-    3 => 2,
-    4 => 1,
-    5 => 1,
-    6 => 1,
-    7 => 1,
-    8 => 1,
-    9 => 1,
-    10 => 2,
-    11 => 2,
-    12 => 2,
-  }.freeze
-
   class << self
     def parse(string)
       return unless string
@@ -132,11 +117,7 @@ class Semester
   end
 
   def preselect_semester
-    if SEMESTER_PRESELECTION_MAP[@context.month] == Semester.number(current)
-      current
-    else
-      previous
-    end
+    previous
   end
 
   # params:
