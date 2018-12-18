@@ -12,8 +12,6 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     @active_assignment = create :assignment, volunteer: @volunteer_aa, client: @client,
       period_start: 10.weeks.ago, period_end: nil, creator: @superadmin
     @hour = create :hour, volunteer: @volunteer_aa, hourable: @active_assignment
-    @feedback = create :feedback, volunteer: @volunteer_aa, feedbackable: @active_assignment,
-      author: @volunteer_aa.user
 
     # ended/unsubmitted Assignment
     @volunteer_ua = create :volunteer
@@ -33,8 +31,6 @@ class TerminateVolunteersTest < ApplicationSystemTestCase
     @active_group_assignment = create :group_assignment, volunteer: @volunteer_aa, group_offer: @group_offer,
       period_start: 20.days.ago, period_end: nil, period_end_set_by: @superadmin
     @hour = create :hour, volunteer: @volunteer_aa, hourable: @group_offer, hours: 2
-    @feedback = create :feedback, volunteer: @volunteer_aa, author: @volunteer_aa.user,
-      feedbackable: @group_offer
 
     # ended/unsubmitted
     @unsubmitted_group_assignment = create :group_assignment, group_offer: @group_offer, volunteer: @volunteer_ua,
