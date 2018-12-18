@@ -353,7 +353,7 @@ GEM
     ruby-progressbar (1.9.0)
     ruby-rc4 (0.1.5)
     ruby_dep (1.5.0)
-    rubyzip (1.2.1)
+    rubyzip (1.2.2)
     sass (3.5.6)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -498,7 +498,7 @@ DEPENDENCIES
   redcarpet
   roo (~> 2.7.0)
   rubocop
-  rubyzip (>= 1.2.1)
+  rubyzip (>= 1.2.2)
   sassc-rails
   scss_lint
   selectize-rails
