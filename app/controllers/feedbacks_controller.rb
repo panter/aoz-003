@@ -1,3 +1,4 @@
+# this is obsolete, only used for the index action. we should move the action and the view to semester_feedbacks
 class FeedbacksController < ApplicationController
   def index
     @feedbacks = if params[:assignment_id]
