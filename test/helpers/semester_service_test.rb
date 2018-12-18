@@ -12,6 +12,20 @@ class SemesterServiceTest < ActionView::TestCase
     assert_equal time_z(2017, 12, 1), subject.context
   end
 
+  test '#preselect_semester' do 
+    travel_to time_z(2018, 9, 10)
+    subject = Semester.new
+    assert_equal time_z(2017, 12, 1).to_date...time_z(2018, 5, 1).end_of_month.to_date, subject.preselect_semester
+
+    travel_to time_z(2018, 11, 30)
+    subject = Semester.new
+    assert_equal time_z(2017, 12, 1).to_date...time_z(2018, 5, 1).end_of_month.to_date, subject.preselect_semester
+
+    travel_to time_z(2017, 12, 1)
+    subject = Semester.new
+    assert_equal time_z(2017, 6, 1).to_date...time_z(2017, 11, 1).end_of_month.to_date, subject.preselect_semester
+  end
+
   test '#to_s' do
     travel_to time_z(2018, 8, 10)
     subject = Semester.new

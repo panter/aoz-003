@@ -2,7 +2,6 @@ module FilterDropdownHelper
   def custom_filter_dropdown(name, *filters)
     filter_keys = filters.map { |filter| filter[:q] }
     filter_keys += filters.map { |filter| filter[:qs] }
-
     filters = custom_filter_dropdown_filters(filters, filter_keys)
 
     render_filter_dropdown top_text: name + custom_text_end(filters),
@@ -89,6 +88,9 @@ module FilterDropdownHelper
   def all_url_for(q_filters)
     filter = search_parameters.except(*q_filters)
     filter = { all: true } if filter.empty?
+    if @global_filters
+      return url_for({q: filter}.merge @global_filters)
+    end
     url_for(q: filter)
   end
 

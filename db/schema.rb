@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181204161826) do
+ActiveRecord::Schema.define(version: 20181218094649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -299,30 +299,6 @@ ActiveRecord::Schema.define(version: 20181204161826) do
     t.index ["creator_id"], name: "index_events_on_creator_id"
     t.index ["deleted_at"], name: "index_events_on_deleted_at"
     t.index ["department_id"], name: "index_events_on_department_id"
-  end
-
-  create_table "feedbacks", force: :cascade do |t|
-    t.text "goals"
-    t.text "achievements"
-    t.text "future"
-    t.text "comments"
-    t.boolean "conversation"
-    t.datetime "deleted_at"
-    t.bigint "volunteer_id"
-    t.bigint "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "feedbackable_type"
-    t.bigint "feedbackable_id"
-    t.bigint "reviewer_id"
-    t.bigint "responsible_id"
-    t.datetime "responsible_at"
-    t.index ["author_id"], name: "index_feedbacks_on_author_id"
-    t.index ["deleted_at"], name: "index_feedbacks_on_deleted_at"
-    t.index ["feedbackable_type", "feedbackable_id"], name: "index_feedbacks_on_feedbackable_type_and_feedbackable_id"
-    t.index ["responsible_id"], name: "index_feedbacks_on_responsible_id"
-    t.index ["reviewer_id"], name: "index_feedbacks_on_reviewer_id"
-    t.index ["volunteer_id"], name: "index_feedbacks_on_volunteer_id"
   end
 
   create_table "group_assignment_logs", force: :cascade do |t|
@@ -849,7 +825,6 @@ ActiveRecord::Schema.define(version: 20181204161826) do
   add_foreign_key "client_notifications", "users"
   add_foreign_key "clients", "users"
   add_foreign_key "events", "departments"
-  add_foreign_key "feedbacks", "users", column: "author_id"
   add_foreign_key "group_offers", "departments"
   add_foreign_key "group_offers", "group_offer_categories"
   add_foreign_key "hours", "billing_expenses"

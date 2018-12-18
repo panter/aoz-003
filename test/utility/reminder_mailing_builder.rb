@@ -12,10 +12,6 @@ module ReminderMailingBuilder
     create_mailing('trial_period', 'aaa', 'aaa', create(:user), *mailables)
   end
 
-  def create_half_year_mailing(*mailables)
-    create_mailing('half_year', 'aaa', 'aaa', create(:user), *mailables)
-  end
-
   def create_termination_mailing(*mailables)
     create_mailing('termination', 'aaa', 'aaa', create(:user), *mailables)
   end

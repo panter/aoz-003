@@ -22,6 +22,14 @@ module MissionEitherOneRelation
       group_assignment || assignment
     end
 
+    def mission_url
+      if mission.is_a? GroupAssignment
+        Rails.application.routes.url_helpers::edit_group_assignment_url(mission, only_path: true)
+      else
+        mission
+      end
+    end
+
     private
 
     def validate_group_assignment_or_assignment_present

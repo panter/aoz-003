@@ -67,8 +67,6 @@ Rails.application.routes.draw do
     resources :event_volunteers, only: [:create, :destroy]
   end
 
-  resources :feedbacks, only: [:new, :create]
-
   resources :group_assignments, only: [:show, :create, :edit, :update],
     concerns: [:submit_feedback, :termination_actions] do
     put :set_end_today, on: :member
@@ -84,25 +82,27 @@ Rails.application.routes.draw do
     get :search_volunteer, on: :member
   end
 
-  get 'list_responses/feedbacks', to: 'list_responses#feedbacks'
   get 'list_responses/trial_feedbacks', to: 'list_responses#trial_feedbacks'
 
   resources :profiles, except: [:destroy, :index]
 
   resources :reminder_mailings, except: [:new] do
     get :new_trial_period, on: :collection
-    get :new_half_year, on: :collection
     get :send_trial_period, on: :member
-    get :send_half_year, on: :member
   end
 
   resources :semester_process_volunteers do
     get :review_semester, on: :member
-    patch :submit_review, on: :member
     put :take_responsibility, on: :member
     put :mark_as_done, on: :member
     put :update_notes, on: :member
   end
+
+  resources :review_semesters do
+    get :review_semester, on: :member
+    patch :submit_review, on: :member
+  end
+
   resources :semester_processes, except: [:destroy, :index, :show] do
     get :overdue, on: :member
   end

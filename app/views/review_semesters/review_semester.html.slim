@@ -1,6 +1,6 @@
 - disabled = @semester_process_volunteer.commited_at.present?
 = simple_form_for(@semester_process_volunteer, html: { class: 'col-xs-12 '},
-  url: submit_review_semester_process_volunteer_path(@semester_process_volunteer)) do |f|
+  url: submit_review_review_semester_path(@semester_process_volunteer)) do |f|
   = simple_error_notice f
   h1 Halbjahres-Rapporte #{@semester_process_volunteer.semester_t} für #{@semester_process_volunteer.volunteer.contact.full_name}
   - if disabled

@@ -1,4 +1,4 @@
-class FeedbackPolicy < ApplicationPolicy
+class SemesterFeedbackPolicy < ApplicationPolicy
     class Scope < ApplicationScope
         def resolve
           return all if superadmin?
@@ -6,6 +6,9 @@ class FeedbackPolicy < ApplicationPolicy
         end
       end
     
+      # Actions
+      alias_method :review_semester?,        :superadmin_or_volunteer?
+      alias_method :submit_review?,          :superadmin_or_volunteer?
       alias_method :index?,                  :superadmin_or_volunteer?
   end
   

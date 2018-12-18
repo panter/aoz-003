@@ -9,8 +9,6 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     @assignment = create :assignment, volunteer: @volunteer, client: @client,
       period_start: 10.weeks.ago, period_end: 2.days.ago, creator: @department_manager
     @hour = create :hour, volunteer: @volunteer, hourable: @assignment
-    @feedback = create :feedback, volunteer: @volunteer, feedbackable: @assignment,
-      author: @volunteer.user
   end
 
   test 'assignment_termination_submit_form_displays_existing_hours_and_feedbacks' do
@@ -90,20 +88,5 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     end
     @volunteer.reload
     assert @volunteer.waive
-  end
-
-  test 'terminate_assignment_without_feedback_or_hours' do
-    Hour.destroy_all
-    Feedback.destroy_all
-
-    login_as @superadmin
-    visit terminate_assignment_path(@assignment)
-
-    page.accept_confirm do
-      click_on 'Einsatz wird hiermit abgeschlossen'
-    end
-
-    visit terminate_assignment_path(@assignment)
-    assert_text "Beendigungs Feedback vom #{I18n.l Time.zone.today}"
   end
 end

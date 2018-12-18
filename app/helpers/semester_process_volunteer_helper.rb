@@ -1,44 +1,4 @@
 module SemesterProcessVolunteerHelper
-  def set_reviewed
-    @semester_process_volunteer.commited_by = current_user
-    @semester_process_volunteer.commited_at = Time.zone.now
-  end
-
-  def initialize_nested_objects
-    @nested_objects = {}
-    @semester_process_volunteer.semester_process_volunteer_missions.each do |spvm|
-      @nested_objects[spvm.id.to_s] = { feedback: @semester_process_volunteer.semester_feedback_with_mission(spvm.mission) || SemesterFeedback.new }
-    end
-    @nested_objects
-  end
-
-  def build_nested_objects
-    review_params[:semester_feedbacks_attributes].each do |_key, hash|
-      spv_mission = SemesterProcessVolunteerMission.find(hash[:semester_feedback][:spv_mission_id])
-      @nested_objects[spv_mission.id.to_s][:feedback] = SemesterFeedback.new(hash[:semester_feedback].merge({
-        author: current_user, semester_process_volunteer: @semester_process_volunteer
-      }))
-
-      if hash[:hour][:hours].to_i.positive?
-        @nested_objects[spv_mission.id.to_s][:hours] = Hour.new(hash[:hour].merge({
-          volunteer: spv_mission.volunteer,
-          meeting_date: spv_mission.semester_process_volunteer.semester.last.to_date,
-          hourable: spv_mission.mission.group_assignment? ? spv_mission.mission.group_offer : spv_mission.mission
-        }))
-      end
-    end
-  end
-
-  def create_journals
-    spv = SemesterProcessVolunteer.find(params[:id])
-    return unless spv.commited_at?
-    volunteer = spv.volunteer
-    semester_feedbacks = spv.semester_feedbacks
-    Journal.create(user: volunteer.user, journalable: volunteer,
-      category: :feedback, title: "Semester Prozess Feedback vom #{I18n.l(Time.zone.today)}: ",
-      body: render_semester_feedbacks(semester_feedbacks))
-  end
-
   def render_semester_feedbacks(semester_feedbacks)
     text = ''
     semester_feedbacks.each do |semester_feedback|
@@ -57,11 +17,6 @@ module SemesterProcessVolunteerHelper
       .slice(:waive, :bank, :iban))
   end
 
-  def null_reviewed
-    @semester_process_volunteer.commited_by = nil
-    @semester_process_volunteer.commited_at = nil
-  end
-
   def render_missions(spv)
     html = ""
     spv.missions.each do |m|
@@ -69,5 +24,38 @@ module SemesterProcessVolunteerHelper
       html += "<br>"
     end
     html.html_safe
+  end
+
+  def set_responsibles
+    @responsibles = SemesterProcessVolunteer.joins(responsible: [profile: [:contact]])
+      .distinct
+      .select('users.id, contacts.full_name')
+      .map do |responsible|
+        {
+          q: :responsible_id_eq,
+          text: "Übernommen von #{responsible.full_name}",
+          value: responsible.id
+        }
+      end
+  end
+
+  def set_reviewers
+    @reviewers = SemesterProcessVolunteer.joins(reviewed_by: [profile: [:contact]])
+      .distinct
+      .select('users.id, contacts.full_name')
+      .map do |reviewed_by|
+        {
+          q: :reviewed_by_id_eq,
+          text: "Quittiert von #{reviewed_by.full_name}",
+          value: reviewed_by.id
+        }
+      end
+  end
+
+  def set_semester_process_volunteer
+    @spv = SemesterProcessVolunteer.find(params[:id])
+    authorize @spv
+    @semester_process = @spv.semester_process
+    @volunteer = @spv.volunteer
   end
 end

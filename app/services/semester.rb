@@ -116,6 +116,10 @@ class Semester
     )
   end
 
+  def preselect_semester
+    previous
+  end
+
   # params:
   #   count - shift of semesters - only positive integers
   def previous(count = 1)
@@ -170,6 +174,14 @@ class Semester
   def unique_collection(count = 3)
     collection(count) do |semester|
       next if Semester.taken_semesters.include?(semester)
+      [Semester.i18n_t(semester, short: false), to_s(semester)]
+    end
+  end
+
+  def existing_collection(count = 6)
+    collection(count) do |semester|
+      s = Semester.new
+      next unless s.preselect_semester == semester || s.current == semester || Semester.taken_semesters.include?(semester)
       [Semester.i18n_t(semester, short: false), to_s(semester)]
     end
   end
