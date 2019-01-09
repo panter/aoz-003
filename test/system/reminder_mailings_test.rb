@@ -88,9 +88,13 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit edit_assignment_path(@assignment)
 
+    # this test will always need January 1st as date, else the test will fail
+    # because ending an assignment will only redirect to terminated_index if
+    # the date is in the past or current day
+    # and the date selector chooses automatically current year
     page.find('#assignment_period_end').click
     page.find('.month', text: 'Jan').click
-    first('.day', exact_text: '17').click
+    first('.day', exact_text: '1').click
     page.find_all('input[type="submit"]').first.click
 
     assert page.has_current_path? terminated_index_assignments_path
