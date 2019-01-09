@@ -11,13 +11,14 @@ nav.navbar.section-navigation
     thead
       tr
         th.hidden-print Aktionen
+        th= sort_link @q, :title
         th= t_attr(:period)
-        th= t_attr(:created_at)
+        th= sort_link @q, :created_at
 
     tbody
       - @performance_reports.each do |performance_report|
         tr
-          td.index-action-cell.hidden-print
+          td.index-action-cell.hidden-print.fixed-width-md
             = button_link icon_span(:show), performance_report, title: 'Anzeigen'
             = button_link icon_span(:edit), edit_performance_report_path(performance_report),
                 title: 'Bearbeiten'
@@ -26,6 +27,7 @@ nav.navbar.section-navigation
             = button_link icon_span(:xlsx),
                 performance_report_path(performance_report, format: :xlsx),
                 title: 'Excel herunterladen'
+          td= performance_report.title if performance_report.title?
           td
             - if performance_report.year.present?
               = performance_report.year
