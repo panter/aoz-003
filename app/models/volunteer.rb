@@ -180,14 +180,30 @@ class Volunteer < ApplicationRecord
   def self.feedback_overdue(semester)
     joins(:contact).where(id: have_semester_process(semester).where("semester_process_volunteers.commited_at IS NULL").ids)
   end
-  
+
   def unsubmitted_semester_feedbacks
     semester_process_volunteers.where(commited_at: nil)
+  end
+
+  def submitted_semester_feedbacks
+    semester_process_volunteers.where.not(commited_at: nil)
   end
 
   def unsubmitted_semester_feedbacks?
     return false if unsubmitted_semester_feedbacks.blank?
     true
+  end
+
+  def submitted_semester_feedbacks_covers_semester?(selected_billing_semester)
+    submitted_semester_feedbacks.any? do |semester_feedback|
+      semester_feedback.semester.cover?(selected_billing_semester.to_date)
+    end
+  end
+
+  def unsubmitted_semester_feedbacks_covers_semester?(selected_billing_semester)
+    unsubmitted_semester_feedbacks.any? do |semester_feedback|
+      semester_feedback.semester.cover?(selected_billing_semester.to_date)
+    end
   end
 
   ## Activness Scopes
@@ -372,7 +388,7 @@ class Volunteer < ApplicationRecord
 
   def assignment_logs_started?
     assignment_logs.started.any?
-  end   
+  end
 
   def group_assignment_started?
     group_assignments.started.any?

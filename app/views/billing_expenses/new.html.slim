@@ -28,8 +28,11 @@ h1 Spesenformulare erfassen
             td= check_box_tag 'selected_volunteers[]', volunteer.id,
                 @selected_volunteers.include?(volunteer.id.to_s), disabled: !volunteer.iban?
             td
-              - if volunteer.unsubmitted_semester_feedbacks?
-                span.label.label-danger Unbestätigt
+              - if volunteer.submitted_semester_feedbacks_covers_semester?(@selected_billing_semester)
+                span.label.label-success Bestätigt
+              - elsif volunteer.unsubmitted_semester_feedbacks_covers_semester?(@selected_billing_semester)
+                span.label.label-warning Unbestätigt
+              - else
             td= link_to volunteer, edit_volunteer_path(volunteer)
             td
               - if volunteer.iban?
