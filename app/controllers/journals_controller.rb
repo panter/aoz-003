@@ -20,6 +20,7 @@ class JournalsController < ApplicationController
   def create
     @journal = Journal.new(journal_params)
     @journal.user = current_user
+    @journal.journalable = @journaled
     authorize @journal
     if @journal.save
       redirect_to [@journaled, Journal], make_notice

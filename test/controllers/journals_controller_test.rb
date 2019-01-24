@@ -13,7 +13,7 @@ class JournalsControllerTest < ActionDispatch::IntegrationTest
     @spv = create(:semester_process_volunteer, volunteer: @volunteer)
     @semester_feedback = create(:semester_feedback, :no_mission, semester_process_volunteer: @spv, volunteer: @volunteer)
 
-    get new_volunteer_journal_path(@volunteer, semester_feedback_id: @semester_feedback.id)
+    get new_volunteer_journal_path(@volunteer, sp_volunteer_id: @spv.id)
     @journal = @controller.instance_variable_get(:@journal)
     assert_equal @journal.category, 'feedback'
     assert_equal @journal.title, "Semester Prozess Feedback vom #{I18n.l(@semester_feedback.created_at.to_date)}: "
