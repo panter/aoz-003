@@ -10,7 +10,7 @@ class JournalsController < ApplicationController
   end
 
   def new
-    @journal = @journaled.journals.new
+    @journal = Journal.new
     handle_semester_feedback_quote
     authorize @journal
   end
@@ -18,7 +18,7 @@ class JournalsController < ApplicationController
   def edit; end
 
   def create
-    @journal = @journaled.journals.new(journal_params)
+    @journal = Journal.new(journal_params)
     @journal.user = current_user
     authorize @journal
     if @journal.save
