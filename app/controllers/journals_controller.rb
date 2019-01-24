@@ -58,9 +58,11 @@ class JournalsController < ApplicationController
   end
 
   def handle_semester_feedback_quote
-    return unless params[:semester_feedback_id]
+    return unless params[:semester_feedback]
+
     @semester_feedback = SemesterFeedback.find_by(id: params[:semester_feedback_id])
     return unless @semester_feedback
+
     @journal.category = :feedback
     @journal.title = "Semester Prozess Feedback vom #{I18n.l(@semester_feedback.created_at.to_date)}: "
     @journal.body = @semester_feedback.slice(:goals, :achievements, :future, :comments).map do |key, sfb_quote|
