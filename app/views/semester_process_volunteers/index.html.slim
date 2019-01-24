@@ -27,8 +27,8 @@ h1 Semester Prozess
           td.index-action-cell.hidden-print
             = button_link icon_span(:edit), review_semester_review_semester_url(spv), title: 'Bearbeiten'
             = button_link icon_span(:journal), volunteer_journals_path(spv.volunteer), title: 'Journal'
-            = button_link icon_span(:journal_new), new_volunteer_journal_path(spv.volunteer,
-              semester_feedback_id: spv.semester_feedbacks.ids), title: 'Neuen Journal eintrag mit Zitat erstellen'
+            = button_link icon_span(:journal_new), new_volunteer_journal_path(spv.volunteer, sp_volunteer_id: spv.id),
+              title: 'Neuen Journal eintrag mit Zitat erstellen'
             = button_link icon_span(:hours), volunteer_hours_path(spv.volunteer), title: 'Stunden'
           td
             - if spv.commited_at.present?
