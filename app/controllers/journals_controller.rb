@@ -64,6 +64,12 @@ class JournalsController < ApplicationController
     @semester_process_volunteer = SemesterProcessVolunteer.find(params[:sp_volunteer_id])
     @journal.journalable = @semester_process_volunteer.volunteer
     @journal.title = "Semester Prozess Feedback vom #{I18n.l(@semester_process_volunteer.created_at.to_date)}: "
+    @semester_feedback = @semester_process_volunteer.semester_feedbacks&.first
+    return unless @semester_feedback
+
+    @journal.body = @semester_feedback.slice(:goals, :achievements, :future, :comments).map do |key, sfb_quote|
+      "#{I18n.t("activerecord.attributes.feedback.#{key}")}:\n«#{sfb_quote}»" if sfb_quote.present?
+    end.compact.join("\n\n")
   end
 
   def journal_params
