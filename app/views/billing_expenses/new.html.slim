@@ -7,7 +7,7 @@ h1 Spesenformulare erfassen
   ul.list-inline
     = button_link icon_span(:back), billing_expenses_path
     li= clear_filter_button
-    = custom_filter_dropdown(t_attr(:semester, BillingExpense), *@billing_semester_filters)
+    = custom_filter_dropdown_no_all(t_attr(:semester, BillingExpense), *@billing_semester_filters)
     li= f.button :submit, 'Selektierte Spesenformulare erstellen', 'data-confirm' => 'Sind Sie sicher dass Sie die Spesenformulare für die ausgewählten Freiwilligen erstellen möchten?'
 
   .table-responsive

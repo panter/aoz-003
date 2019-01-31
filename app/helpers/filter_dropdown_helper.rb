@@ -1,11 +1,19 @@
 module FilterDropdownHelper
   def custom_filter_dropdown(name, *filters)
+    _custom_filter_dropdown_general(name, true, *filters)
+  end
+
+  def custom_filter_dropdown_no_all(name, *filters)
+    _custom_filter_dropdown_general(name, false, *filters)
+  end
+
+  def _custom_filter_dropdown_general(name, all_link, *filters)
     filter_keys = filters.map { |filter| filter[:q] }
     filter_keys += filters.map { |filter| filter[:qs] }
     filters = custom_filter_dropdown_filters(filters, filter_keys)
 
     render_filter_dropdown top_text: name + custom_text_end(filters),
-      all_url: filter_keys, filters: filters
+      all_url: filter_keys, filters: filters, all_link: all_link
   end
 
   def custom_filter_dropdown_filters(filters, filter_keys)
@@ -19,7 +27,7 @@ module FilterDropdownHelper
       filter.merge(url: url_for(q_args), link_class: list_filter_link_class(filter[:active]))
     end
   end
-  
+
   def custom_filter_q_arg(filter, multi_qs, value, *excludes)
     q_values = search_parameters.merge(multi_qs.map { |q| [q, value.to_s] }.to_h) if multi_qs
     (q_values || search_parameters).except(*excludes).merge("#{filter}": value.to_s)
@@ -36,7 +44,7 @@ module FilterDropdownHelper
       )
     end
     render_filter_dropdown top_text: toggler_text(attribute.to_sym, [attribute_q]),
-      all_url: attribute_q, filters: filters
+      all_url: attribute_q, filters: filters, all_link: true
   end
 
   def boolean_filter_dropdown(attribute, collection = nil)
@@ -50,7 +58,7 @@ module FilterDropdownHelper
       )
     end
     render_filter_dropdown top_text: toggler_text(attribute, filters.pluck(:q)),
-      all_url: filters.pluck(:q), filters: filters
+      all_url: filters.pluck(:q), filters: filters, all_link: true
   end
 
   # Creates a filter dropdown that filters a boolean attribute to either true or false
@@ -72,8 +80,8 @@ module FilterDropdownHelper
   end
 
   def render_filter_dropdown(locals)
-    render template: 'application/filter_dropdown', 
-      locals: locals.merge(all_url: all_url_for(locals[:all_url]))
+    locals.merge!(all_url: all_url_for(locals[:all_url])) if locals[:all_link]
+    render template: 'application/filter_dropdown', locals: locals
   end
 
   def custom_text_end(filters)
