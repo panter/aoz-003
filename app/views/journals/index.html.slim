@@ -12,28 +12,28 @@ nav.navbar.section-navigation
 = bootstrap_paginate(@journals)
 
 .table-responsive
-      table.table
-        thead
-          tr
-            th.hidden-print Aktionen
-            th= sort_link @q, :category
-            th= sort_link @q, :created_at
-            th= t_attr(:text)
-            th= t_attr(:author)
-        tbody
-          - @journals.each do |record|
-            tr
-              td.index-action-cell.hidden-print
-                = button_link icon_span(:edit), url_for([@journaled, record]) + '/edit',
-                    title: 'Bearbeiten'
-              td= t("category.#{record.category}")
-              td= l(record.created_at.to_date)
-              td
-                - if record.title?
-                  strong= record.title
-                  br
-                = word_wrap(record.body) if record.body
-              td= link_to record.user.full_name, record.user.profile
+  table.table
+    thead
+      tr
+        th.hidden-print Aktionen
+        th= sort_link @q, :category
+        th= sort_link @q, :created_at
+        th= t_attr(:text)
+        th= t_attr(:author)
+    tbody
+      - @journals.each do |record|
+        tr
+          td.index-action-cell.hidden-print
+            = button_link icon_span(:edit), url_for([@journaled, record]) + '/edit',
+                title: 'Bearbeiten'
+          td= t("category.#{record.category}")
+          td= l(record.created_at.to_date)
+          td
+            - if record.title?
+              strong= record.title
+              br
+            = word_wrap(record.body) if record.body
+          td= link_to record.user.full_name, record.user.profile
 
 = bootstrap_paginate(@journals)
 
