@@ -201,7 +201,6 @@ class Volunteer < ApplicationRecord
     unsubmitted_semester_feedbacks.in_semester(selected_billing_semester).any?
   end
 
-
   ## Activness Scopes
   #
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
