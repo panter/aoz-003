@@ -182,29 +182,25 @@ class Volunteer < ApplicationRecord
   end
 
   def unsubmitted_semester_feedbacks
-    semester_process_volunteers.where(commited_at: nil)
+    semester_process_volunteers.unsubmitted
   end
 
   def submitted_semester_feedbacks
-    semester_process_volunteers.where.not(commited_at: nil)
+    semester_process_volunteers.submitted
   end
 
   def unsubmitted_semester_feedbacks?
-    return false if unsubmitted_semester_feedbacks.blank?
-    true
+    semester_process_volunteers.unsubmitted.any?
   end
 
   def submitted_semester_feedbacks_covers_semester?(selected_billing_semester)
-    submitted_semester_feedbacks.any? do |semester_feedback|
-      semester_feedback.semester.cover?(selected_billing_semester.to_date)
-    end
+    submitted_semester_feedbacks.in_semester(selected_billing_semester).any?
   end
 
   def unsubmitted_semester_feedbacks_covers_semester?(selected_billing_semester)
-    unsubmitted_semester_feedbacks.any? do |semester_feedback|
-      semester_feedback.semester.cover?(selected_billing_semester.to_date)
-    end
+    unsubmitted_semester_feedbacks.in_semester(selected_billing_semester).any?
   end
+
 
   ## Activness Scopes
   #

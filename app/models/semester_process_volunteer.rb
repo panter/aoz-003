@@ -37,10 +37,10 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   scope :active_missions, lambda {
     joins(:semester_process_volunteer_missions).includes(semester_process_volunteer_missions: [:assignment, :group_assignment])
-    .where("(semester_process_volunteer_missions.assignment_id IS NOT NULL AND 
+    .where("(semester_process_volunteer_missions.assignment_id IS NOT NULL AND
             assignments.period_end IS NULL)
-            OR 
-           (semester_process_volunteer_missions.group_assignment_id IS NOT NULL AND 
+            OR
+           (semester_process_volunteer_missions.group_assignment_id IS NOT NULL AND
            group_assignments.period_end is NULL)")
     .references(:assignments, :group_assignments)
   }
@@ -51,6 +51,14 @@ class SemesterProcessVolunteer < ApplicationRecord
 
   scope :without_feedback, lambda {
     left_outer_joins(:semester_feedbacks).where(semester_feedbacks: { id: nil})
+  }
+
+  scope :unsubmitted, -> { where(commited_at: nil) }
+  scope :submitted, -> { where.not(commited_at: nil) }
+
+  scope :in_semester, lambda { |semester|
+    semester = (Date.parse(semester)..Date.parse(semester).advance(months: 5).end_of_month) if semester.is_a?(String)
+    joins(:semester_process).where('semester_processes.semester && daterange(?,?)', semester.begin, semester.end)
   }
 
   attr_accessor :hours

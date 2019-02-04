@@ -32,7 +32,6 @@ h1 Spesenformulare erfassen
                 span.label.label-success Bestätigt
               - elsif volunteer.unsubmitted_semester_feedbacks_covers_semester?(@selected_billing_semester)
                 span.label.label-warning Unbestätigt
-              - else
             td= link_to volunteer, edit_volunteer_path(volunteer)
             td
               - if volunteer.iban?
