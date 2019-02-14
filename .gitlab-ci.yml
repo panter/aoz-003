@@ -1,4 +1,4 @@
-image: git.panter.ch:5001/panter/gitlab-ci-docker-images/ruby-and-rails:ruby-2.4.5-imagemagick-chrome-node-8
+image: git.panter.ch:5001/panter/gitlab-ci-docker-images/ruby-and-rails:ruby-2.4.5-node-8-imgmgk-chrome
 
 stages:
   - test
@@ -21,6 +21,7 @@ before_script:
   - node --version
   - ruby --version
   - yarn --version
+  - gem install bundler
   - bundle install --without development --path tmp/cache
   - yarn install --cache-folder tmp/cache/yarn
   - bundle exec rails db:schema:load
