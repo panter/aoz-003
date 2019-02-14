@@ -275,6 +275,7 @@ de:
   accompaniment_info: Bei der AOZ gibt es mehrere Möglichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
   clear_filters: Filter aufheben
+
   activerecord:
     attributes:
       assignment:
@@ -397,7 +398,7 @@ de:
         offer_type: Internes oder externes Gruppenangebot
         organization: Organisation
         regular: Regelmässig
-        schedule_details: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum
+        schedule_details: Einzelheiten zu Ort, Tag, Uhrzeit
         short_term: Kurzfristig
         target_group: Zielpublikum
         teenagers: Jugendliche
@@ -622,6 +623,7 @@ de:
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
+
   add_entry: Eintrag Hinzufügen
   add_relative: Verwandte hinzufügen
   all: Alle
@@ -1029,6 +1031,8 @@ de:
         user: Assozierte Benutzer/in
       group_assignment:
         <<: [*id-termination-feedback-quests, *id-generic_keys]
+      group_offer:
+        schedule_details: Präzise Angaben (Ort, Tag und Uhrzeit) und genauen Zeitraum
       q:
         state_cont: Status
       user:
