@@ -12,7 +12,7 @@ class GroupOfferPolicy < ApplicationPolicy
       :title, :offer_type, :offer_state, :necessary_volunteers, :description,
       :women, :men, :children, :teenagers, :unaccompanied, :all, :long_term, :regular,
       :short_term, :workday, :weekend, :morning, :afternoon, :evening, :flexible, :schedule_details,
-      :creator_id, :organization, :location, :period_end, :group_offer_category_id,
+      :creator_id, :organization, :location, :period_end, :group_offer_category_id, :comments,
       group_assignments_attributes
     ]
     attributes << :department_id if edit?
