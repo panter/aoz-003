@@ -506,6 +506,7 @@ de:
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
         availability: Verfügbarkeit
+        created_at: Anmeldedatum
         external: Extern
         internal: Intern
         available: Verfügbar
