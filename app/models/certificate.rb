@@ -45,7 +45,7 @@ class Certificate < ApplicationRecord
       sprechen (Freiwillige). Durch wöchentliche Besuche bei den Begleiteten zuhause während
       mindestens sechs Monaten oder im Gruppenunterricht fördern die Freiwilligen gezielt und konkret die
       soziale und Berufliche Integration der Begleiteten. Dadurch ergänzen sie die Sozialberatung
-      auf sinvolle Weise. Das durcht die Fachstelle Freiwilligenarbeit angebotene Weiterbildungsprogramm (Einführungskurs,
+      auf sinvolle Weise. Das durch die Fachstelle Freiwilligenarbeit angebotene Weiterbildungsprogramm (Einführungskurs,
       Erfahrungsaustausch, Fachveranstaltungen) bietet den Freiwillgen die Gelegenheit sich
       vertiefter mit Fragen zu Asylverfahren und Integration auseinanderzusetzen.
 
