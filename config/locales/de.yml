@@ -10,7 +10,7 @@ de:
     term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
     term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
     term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
-    term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
+    term_feedback_transfair: Wie fanden Sie die von der Fachstelle Freiwilligenarbeit angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
     term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values

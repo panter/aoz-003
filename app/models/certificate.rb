@@ -40,12 +40,12 @@ class Certificate < ApplicationRecord
       Mitarbeitenden seit vielen Jahren im Auftrag des Bundes, des Kantons, der Stadt und weiterer
       Gemeinden im Migrations- und Integrations bereich tätig.
 
-      TransFair vermittelt Kontakte zwischen Asylsuchenden, Flüchtlingen und Migrant/innen
+      Die Fachstelle Freiwilligenarbeit vermittelt Kontakte zwischen Asylsuchenden, Flüchtlingen und Migrant/innen
       (Begleitete) mit Menschen, die schon länger in der Schweiz leben und sehr gut Deutsch
       sprechen (Freiwillige). Durch wöchentliche Besuche bei den Begleiteten zuhause während
       mindestens sechs Monaten oder im Gruppenunterricht fördern die Freiwilligen gezielt und konkret die
       soziale und Berufliche Integration der Begleiteten. Dadurch ergänzen sie die Sozialberatung
-      auf sinvolle Weise. Das von TransFair angebotene Weiterbildungsprogramm (Einführungskurs,
+      auf sinvolle Weise. Das durcht die Fachstelle Freiwilligenarbeit angebotene Weiterbildungsprogramm (Einführungskurs,
       Erfahrungsaustausch, Fachveranstaltungen) bietet den Freiwillgen die Gelegenheit sich
       vertiefter mit Fragen zu Asylverfahren und Integration auseinanderzusetzen.
 
