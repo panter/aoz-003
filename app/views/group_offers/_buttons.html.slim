@@ -13,3 +13,5 @@ ul.list-inline
     li= button_link icon_span(:terminate),
       initiate_termination_group_offer_path(@group_offer), title: 'Beenden',
       data: { confirm: 'Gruppenangebot wirklich beenden?'}
+  - if policy(@group_offer).edit?
+    li= button_link icon_span(:edit), edit_group_offer_path(@group_offer), title: t_action(:edit)

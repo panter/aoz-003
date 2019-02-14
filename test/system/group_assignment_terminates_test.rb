@@ -27,8 +27,8 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
       with: 'rand_success_text'
     fill_in 'Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?',
       with: 'rand_trouble_text'
-    fill_in 'Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und '\
-      'Anlässe?', with: 'rand_transfair_text'
+    fill_in 'Wie fanden Sie die von der Fachstelle Freiwilligenarbeit angebotene Unterstützung ' \
+      'inklusive Weiterbildungen und Anlässe?', with: 'rand_transfair_text'
 
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'

@@ -8,9 +8,9 @@ ul.list-inline
   table.table.table-striped
     thead
       tr
-        th= t_attr(:category_name)
-        th= 'Beschreibung'
-        th= t_attr(:category_state)
+        th= sort_link @q, :category_name, t_attr(:category_name)
+        th= sort_link @q, :description, 'Beschreibung'
+        th= sort_link @q, :category_state, t_attr(:category_state)
         th colspan='1'
 
     tbody
