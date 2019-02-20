@@ -108,8 +108,6 @@ class BillingExpensesController < ApplicationController
     if params[:q].blank?
       set_default_filter(semester: default_billing_semester)
       default_billing_semester
-    elsif params[:q][:all].present?
-      nil
     elsif !@billing_semester_filters.pluck(:value).include? params[:q][:semester]
       params.permit![:q][:semester] = default_billing_semester
       default_billing_semester

@@ -10,7 +10,7 @@ de:
     term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
     term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
     term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
-    term_feedback_transfair: Wie fanden Sie die von TransFair angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
+    term_feedback_transfair: Wie fanden Sie die von der Fachstelle Freiwilligenarbeit angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
     term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values
@@ -275,6 +275,7 @@ de:
   accompaniment_info: Bei der AOZ gibt es mehrere Möglichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
   clear_filters: Filter aufheben
+
   activerecord:
     attributes:
       assignment:
@@ -397,7 +398,7 @@ de:
         offer_type: Internes oder externes Gruppenangebot
         organization: Organisation
         regular: Regelmässig
-        schedule_details: Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum
+        schedule_details: Einzelheiten zu Ort, Tag, Uhrzeit
         short_term: Kurzfristig
         target_group: Zielpublikum
         teenagers: Jugendliche
@@ -506,6 +507,7 @@ de:
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
         availability: Verfügbarkeit
+        created_at: Anmeldedatum
         external: Extern
         internal: Intern
         available: Verfügbar
@@ -621,6 +623,7 @@ de:
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
+
   add_entry: Eintrag Hinzufügen
   add_relative: Verwandte hinzufügen
   all: Alle
@@ -1028,6 +1031,8 @@ de:
         user: Assozierte Benutzer/in
       group_assignment:
         <<: [*id-termination-feedback-quests, *id-generic_keys]
+      group_offer:
+        schedule_details: Präzise Angaben (Ort, Tag und Uhrzeit) und genauen Zeitraum
       q:
         state_cont: Status
       user:

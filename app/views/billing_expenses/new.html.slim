@@ -7,7 +7,7 @@ h1 Spesenformulare erfassen
   ul.list-inline
     = button_link icon_span(:back), billing_expenses_path
     li= clear_filter_button
-    = custom_filter_dropdown(t_attr(:semester, BillingExpense), *@billing_semester_filters)
+    = custom_filter_dropdown_no_all(t_attr(:semester, BillingExpense), *@billing_semester_filters)
     li= f.button :submit, 'Selektierte Spesenformulare erstellen', 'data-confirm' => 'Sind Sie sicher dass Sie die Spesenformulare für die ausgewählten Freiwilligen erstellen möchten?'
 
   .table-responsive
@@ -28,8 +28,10 @@ h1 Spesenformulare erfassen
             td= check_box_tag 'selected_volunteers[]', volunteer.id,
                 @selected_volunteers.include?(volunteer.id.to_s), disabled: !volunteer.iban?
             td
-              - if volunteer.unsubmitted_semester_feedbacks?
-                span.label.label-danger Unbestätigt
+              - if volunteer.submitted_semester_feedbacks_covers_semester?(@selected_billing_semester)
+                span.label.label-success Bestätigt
+              - elsif volunteer.unsubmitted_semester_feedbacks_covers_semester?(@selected_billing_semester)
+                span.label.label-warning Unbestätigt
             td= link_to volunteer, edit_volunteer_path(volunteer)
             td
               - if volunteer.iban?

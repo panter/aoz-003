@@ -3,7 +3,8 @@ class GroupOfferCategoriesController < ApplicationController
 
   def index
     authorize GroupOfferCategory
-    @group_offer_categories = GroupOfferCategory.all
+    @q = GroupOfferCategory.all.ransack(params[:q])
+    @group_offer_categories = @q.result
   end
 
   def show; end

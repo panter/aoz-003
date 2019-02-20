@@ -20,7 +20,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     page.check('group_offer_all')
     page.check('group_offer_regular')
     page.check('group_offer_weekend')
-    fill_in 'Präzise Angaben (Tag und Uhrzeit) und genauen Zeitraum', with: 'asdf'
+    fill_in 'Präzise Angaben (Ort, Tag und Uhrzeit) und genauen Zeitraum', with: 'asdf'
 
     click_button 'Gruppenangebot erfassen'
     assert page.has_text? 'Gruppenangebot wurde erfolgreich erstellt.'
@@ -246,13 +246,13 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     assert_field 'Internes Gruppenangebot', checked: true
-    refute_field 'Organisation'
-    refute_field 'Ort'
+    refute_field 'Organisation', name: 'group_offer[organization]'
+    refute_field 'Ort', name: 'group_offer[location]'
 
     choose 'Externes Gruppenangebot'
 
-    assert_field 'Organisation'
-    assert_field 'Ort'
+    assert_field 'Organisation', name: 'group_offer[organization]'
+    assert_field 'Ort', name: 'group_offer[location]'
   end
 
   test 'department manager can create external group offer' do
@@ -261,14 +261,14 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     assert_field 'Internes Gruppenangebot', checked: true
     assert_field 'Standort'
-    refute_field 'Organisation'
-    refute_field 'Ort'
+    refute_field 'Organisation', name: 'group_offer[organization]'
+    refute_field 'Ort', name: 'group_offer[location]'
 
     choose 'Externes Gruppenangebot'
 
     assert_field 'Organisation'
-    assert_field 'Ort'
-    assert_field 'Standort'
+    assert_field 'Organisation', name: 'group_offer[organization]'
+    assert_field 'Ort', name: 'group_offer[location]'
   end
 
   test 'creates/updates group assignment PDF when requested' do

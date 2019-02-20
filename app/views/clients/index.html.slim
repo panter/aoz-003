@@ -24,7 +24,7 @@ h1 Klient/innen
           span= t_attr(:goals, Client)
         th= t_attr(:interests, Client)
         - if policy(Client).superadmin_privileges?
-          th= t_attr(:involved_authority)
+          th= sort_link @q, :involved_authority_profile_contact_full_name, t_attr(:involved_authority)
         th.truncate-th
           span= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
         th.truncate-th

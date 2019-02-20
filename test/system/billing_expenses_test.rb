@@ -121,16 +121,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
     assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 2. Semester 2017"
     refute_text volunteer3
-
-    visit billing_expenses_path
-
-    click_link 'Semester: 1. Semester 2018'
-    click_link 'Alle'
-    click_link 'Spesenformulare erfassen'
-    assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
-    assert_text "#{volunteer2} #{volunteer2.iban} 41 Stunden Fr. 100.00" \
-      ' 2. Semester 2017 – 1. Semester 2018'
-    assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
   end
 
   test 'creating_a_billing_expense_should_respect_semester_filter' do
@@ -153,10 +143,10 @@ class BillingExpensesTest < ApplicationSystemTestCase
     end
 
     assert_text "#{volunteer} #{volunteer.iban} 16 Stunden Fr. 50.00 1. Semester 2018"
-    # creating billing_expense for the all remaining hours
+    # creating billing_expense for hours in 2. Semester 2017
     visit billing_expenses_path
     click_link 'Semester: 1. Semester 2018'
-    click_link 'Alle'
+    click_link '2. Semester 2017'
     click_link 'Spesenformulare erfassen'
 
     within "##{dom_id(volunteer)}" do
@@ -171,30 +161,6 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Semester: 1. Semester 2018'
     click_link 'Alle'
     assert_text "#{volunteer} #{volunteer.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
-
-    # creating billing_expense for all hours in multiple semesters
-    volunteer = create :volunteer
-    create :hour, volunteer: volunteer, hours: 26, meeting_date: time_z(2017, 11, 1)
-    create :hour, volunteer: volunteer, hours: 16, meeting_date: time_z(2018, 2, 1)
-
-    visit billing_expenses_path
-    click_link 'Semester: 1. Semester 2018'
-    click_link 'Alle'
-    click_link 'Spesenformulare erfassen'
-
-    within "##{dom_id(volunteer)}" do
-      check 'selected_volunteers[]'
-    end
-
-    assert_checked_field 'selected_volunteers[]', count: 1
-    page.accept_confirm do
-      click_button 'Selektierte Spesenformulare erstellen'
-    end
-
-    click_link 'Semester: 1. Semester 2018'
-    click_link 'Alle'
-    assert_text "#{volunteer} #{volunteer.iban} 42 Stunden Fr. 100.00"\
-      ' 2. Semester 2017 – 1. Semester 2018'
   end
 
   test 'volunteer profile shows only billing expenses for this volunteer' do

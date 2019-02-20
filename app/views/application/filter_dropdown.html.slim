@@ -1,10 +1,12 @@
+- all_link ||= false
 li.dropdown
   a*{ class: 'dropdown-toggle btn btn-default btn-sm', role: 'button', href: '#',
       data: { toggle: 'dropdown' }, aria: { expanded: 'false', haspopup: 'true' } }
     => top_text
     span.caret
   ul.dropdown-menu
-    li= link_to t('all'), all_url
-    li.divider[role="separator"]
+    - if all_link
+      li= link_to t('all'), all_url
+      li.divider[role="separator"]
     - filters.each do |filter|
       li= link_to filter[:text], filter[:url], class: filter[:link_class]
