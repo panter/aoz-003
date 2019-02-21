@@ -6,7 +6,8 @@ class GroupAssignmentPolicy < ApplicationPolicy
   end
 
   def reactivate?
-    record.reactivatable? && superadmin_or_departments_offer_or_volunteer_related?
+    record.class.name == 'GroupAssignment' && record.reactivatable? &&
+      superadmin_or_departments_offer_or_volunteer_related?
   end
 
   alias_method :show?,

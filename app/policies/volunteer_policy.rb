@@ -36,7 +36,8 @@ class VolunteerPolicy < ApplicationPolicy
   end
 
   def reactivate?
-    record.resigned? && superadmin_or_departments_record_or_assignable_to_department?
+    record.class.name == 'Volunteer' && record.resigned? &&
+      superadmin_or_departments_record_or_assignable_to_department?
   end
 
   # controller action policies

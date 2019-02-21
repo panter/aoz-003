@@ -19,7 +19,8 @@ class AssignmentPolicy < ApplicationPolicy
   end
 
   def reactivate?
-    record.reactivatable? && superadmin_or_department_manager_creation_or_volunteer_related?
+    record.class.name == 'Assignment' && record.reactivatable? &&
+      superadmin_or_department_manager_creation_or_volunteer_related?
   end
 
   # controller action policies
