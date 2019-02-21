@@ -117,6 +117,7 @@ Rails.application.routes.draw do
     get :find_client, on: :member, to: 'assignments#find_client'
     get :seeking_clients, on: :collection
     patch :update_bank_details, on: :member
+    get :reactivate, on: :member
 
     resources :assignments, except: [:destroy], concerns: [:assignment_feedbacks, :hours_resources]
     resources :billing_expenses, only: [:index]

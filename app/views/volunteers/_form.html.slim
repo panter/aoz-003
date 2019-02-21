@@ -1,5 +1,11 @@
 = simple_error_notice f
 
+- if policy(volunteer).reactivate?
+  h3.m-t-30= t('.reactivate.title')
+  p== t('.reactivate.hint')
+  = link_to t('.reactivate.button'), reactivate_volunteer_path(volunteer), class: 'btn btn-default m-t-10',
+      data: { confirm: t('.reactivate.confirm') }
+  hr.m-y-30
 - if current_user && policy(volunteer).update_acceptance?
   .row
     .col-xs-12.col-md-4

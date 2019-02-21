@@ -239,6 +239,11 @@ de:
       undecided: Angemeldet
       undecided_at: Angemeldet am
       havent_logged_in: Nie eingeloggt
+      reactivate:
+        title: Beendete/n Freiwillige/n wider Akzeptiert setzen
+        button: Freiwillige/n wieder aktivieren
+        hint: Freiwillige/r kann wider Einsätze machen, wie wenn sie/er neu akzeptiert worden wäre.<br>Hatte die/der Freiwillige vor der Beendigung ein Login auf dieser Platform, so wird dieses wider aktiviert.<br>Es kann das selbe Login/Passwort wie vorher verwendet werden.
+        confirm: Soll die/der Freiwillige wirklich reaktiviert werden?
     create: &id-volunteers-create
       <<: *id-availability
       acceptance: *id-volunteer-acceptance
@@ -271,6 +276,10 @@ de:
       <<: *id-volunteers-index
       acceptance: *id-volunteer-acceptance
       state: *id-volunteer-active-states
+    notices:
+      reactivation:
+        success: Freiwillige/r erfolgreich reaktiviert
+        failure: Freiwillige/r reaktivieren schlug fehl
   volunteers: *id-volunteers-by-actions
   accompaniment_info: Bei der AOZ gibt es mehrere Möglichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
