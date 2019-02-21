@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AssignmentPolicyTest < PolicyAssertions::Test
   test 'superadmin_can_use_all_actions' do
-    assert_permit(create(:user), Assignment, *actions_list, 'show_comments?')
+    assert_permit(create(:user), Assignment, *actions_list(except: [:reactivate]), 'show_comments?')
   end
 
   test 'department_manager_has_limited_access' do
