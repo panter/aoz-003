@@ -72,7 +72,7 @@ Rails.application.routes.draw do
   end
 
   resources :group_assignments, only: [:show, :create, :edit, :update],
-    concerns: [:submit_feedback, :termination_actions] do
+    concerns: [:submit_feedback, :termination_actions, :reactivate] do
     put :set_end_today, on: :member
   end
 
@@ -125,7 +125,7 @@ Rails.application.routes.draw do
     resources :assignments, except: [:destroy], concerns: [:assignment_feedbacks, :hours_resources, :reactivate]
     resources :billing_expenses, only: [:index]
     resources :certificates
-    resources :group_assignments, only: [:show, :edit, :update], concerns: :hours_resources
+    resources :group_assignments, only: [:show, :edit, :update], concerns: [:hours_resources, :reactivate]
     resources :group_offers, except: [:destroy], concerns: :assignment_feedbacks
     resources :hours
     resources :journals, except: [:show]

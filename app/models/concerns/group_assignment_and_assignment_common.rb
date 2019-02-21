@@ -83,7 +83,7 @@ module GroupAssignmentAndAssignmentCommon
       if assignment?
         assignment_log.delete
       elsif group_assignment?
-        group_assignment_log.delete
+        group_assignment_logs.last.delete
       end
     end
 

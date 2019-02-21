@@ -2,6 +2,13 @@
   = simple_error_notice f
   = f.button :submit
 
+  - if policy(@group_assignment).reactivate?
+    h3.m-t-30= t('.reactivate.title')
+    p== t('.reactivate.hint')
+    = link_to t('.reactivate.button'), reactivate_group_assignment_path(@group_assignment), class: 'btn btn-default m-t-10',
+        data: { confirm: t('.reactivate.confirm') }
+    hr.m-y-30
+
   dl.dl-horizontal.m-t-30
     dt Freiwillige/r:
     dd= link_to @group_assignment.volunteer.contact.full_name, edit_volunteer_path(@group_assignment.volunteer), target: '_blank'

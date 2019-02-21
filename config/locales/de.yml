@@ -173,9 +173,9 @@ de:
     undecided_at: Angemeldet am
     havent_logged_in: Nie eingeloggt
     reactivate:
-      title: Beendete/n Freiwillige/n wider Akzeptiert setzen
+      title: Beendete/n Freiwillige/n wieder Akzeptiert setzen
       button: Freiwillige/n wieder aktivieren
-      hint: Freiwillige/r kann wider Einsätze machen, wie wenn sie/er neu akzeptiert worden wäre.<br>Hatte die/der Freiwillige vor der Beendigung ein Login auf dieser Platform, so wird dieses wider aktiviert.<br>Es kann das selbe Login/Passwort wie vorher verwendet werden.
+      hint: Freiwillige/r kann wieder Einsätze machen, wie wenn sie/er neu akzeptiert worden wäre.<br>Hatte die/der Freiwillige vor der Beendigung ein Login auf dieser Platform, so wird dieses wieder aktiviert.<br>Es kann das selbe Login/Passwort wie vorher verwendet werden.
       confirm: Soll die/der Freiwillige wirklich reaktiviert werden?
 
   # loose unasorted keys
@@ -673,9 +673,9 @@ de:
   assignments:
     form:
       reactivate:
-        title: Beendetes Tandem wider Aktivieren
-        hint: Das beendete Tandem wird wider aktiviert und das Einsatzende wider zurückgesetzt.
-        button: Tandem wider aktivieren
+        title: Beendetes Tandem wieder Aktivieren
+        hint: Das beendete Tandem wird wieder aktiviert und das Einsatzende wieder zurückgesetzt.
+        button: Tandem wieder aktivieren
         confirm: Soll das Tandem wirklich wieder auf aktiv gesetzt werden?
     notices:
       reactivation:
@@ -728,6 +728,16 @@ de:
     show: *id-kinds-event
     volunteer_events: *id-kinds-event
   group_assignments:
+    form:
+      reactivate:
+        title: Beendeten Gruppeneinsatz wieder Aktivieren
+        hint: Der beendete Gruppeneinsatz wird wieder aktiviert und das Einsatzende wieder zurückgesetzt.
+        button: Gruppeneinsatz wieder aktivieren
+        confirm: Soll der Gruppeneinsatz wirklich wieder auf aktiv gesetzt werden?
+    notices:
+      reactivation:
+        success: Der Gruppeneinsatz wurde erfolgreich reaktiviert
+        failure: Der Gruppeneinsatz konnte nicht reaktiviert werden
     volunteer_group_assignments:
       activate: Aktivieren
       deactivate: Deaktivieren
