@@ -5,6 +5,10 @@ class GroupAssignmentPolicy < ApplicationPolicy
     end
   end
 
+  def reactivate?
+    record.reactivatable? && superadmin_or_departments_offer_or_volunteer_related?
+  end
+
   alias_method :show?,
     :superadmin_or_department_manager_or_volunteer_related?
 

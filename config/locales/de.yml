@@ -1,5 +1,35 @@
 ---
 de:
+  # to be injected into later groups
+  generic_keys: &id-generic_keys
+    salutation: Anrede
+    first_name: Vorname
+    last_name: Nachname
+    full_name: Name
+    address: Adresse
+    street: Strasse
+    zip: Postleitzahl
+    postal_code: PLZ
+    city: Ort
+    email: Email
+    avatar: Foto
+    birth_year: Jahrgang
+    nationality: Nationalität
+    phone: Telefonnummer
+    profession: Beruf
+    title: Titel
+    other: Weiteres
+    additional_comments: Sonstige Bemerkungen
+    comments: Bemerkungen
+    created_at: Erstellt am
+    updated_at: Aktualisiert am
+    created_by: Angemeldet von
+    department: Standort
+    hours: Stunden
+    languages: Sprachen
+    minutes: Minuten
+    remaining_hours: Restliche Stunden in diesem Einsatz
+    state: Status
   termination_attributes: &id-termination-attrs
     term_feedback_activities: 'Endfeedback: Hauptaktivitäten'
     term_feedback_success: 'Endfeedback: Erfolge'
@@ -51,105 +81,6 @@ de:
     telephone: Telefonat
     single_accompaniment: Einzelbegleitung
     group_offer: Gruppenangebot
-  clients:
-    client:
-      acceptance: *id-client-acceptance
-    show:
-      acceptance: *id-client-acceptance
-    show_navigation:
-      acceptance: *id-client-acceptance
-  created_at: Erstellt um
-  cost_unit: &id-client-cost-units
-    city: Stadt
-    canton: Kanton
-    municipality: Gemeinde
-  email_templates:
-    kind: &id-kinds-template
-      assignment: Begleitung
-      signup: Anmeldung
-      trial: Probezeit
-      termination: Beendigung
-      half_year_process_email: 'Halbjahres Prozess'
-      half_year_process_overdue: 'Halbjahres Erinnerung'
-    index:
-      <<: *id-kinds-template
-    show:
-      <<: *id-kinds-template
-  events:
-    kind: &id-kinds-event
-      intro_course: Einführungsveranstaltung
-      professional_training: Weiterbildung
-      professional_event: Fachveranstaltung
-      theme_exchange: Erfahrungsaustausch/Themenabend
-      volunteering: Freiwilligenanlass
-      german_class_managers: Treffen Deutschkursleitende
-    index:
-      <<: *id-kinds-event
-    show:
-      <<: *id-kinds-event
-    volunteer_events:
-      <<: *id-kinds-event
-  gender_request: &id-gender_requests
-    all: Alle
-    man: Mann
-    no_matter: egal
-    woman: Frau
-  generic_keys: &id-generic_keys
-    additional_comments: Sonstige Bemerkungen
-    address: Adresse
-    avatar: Foto
-    birth_year: Jahrgang
-    city: Ort
-    created_at: Erstellt am
-    created_by: Angemeldet von
-    comments: Bemerkungen
-    department: Standort
-    email: Email
-    first_name: Vorname
-    full_name: Name
-    hours: Stunden
-    languages: Sprachen
-    last_name: Nachname
-    minutes: Minuten
-    nationality: Nationalität
-    phone: Telefonnummer
-    postal_code: PLZ
-    profession: Beruf
-    remaining_hours: Restliche Stunden in diesem Einsatz
-    salutation: Anrede
-    state: Status
-    street: Strasse
-    title: Titel
-    updated_at: Aktualisiert am
-    zip: Postleitzahl
-    other: Weiteres
-  group_assignments:
-    volunteer_group_assignments:
-      activate: Aktivieren
-      deactivate: Deaktivieren
-  group_offer_categories:
-    index:
-      category_states: &id-group-offer-category-states
-        active: Aktiv
-        inactive: Inaktiv
-      group_offers: Gruppenangebote
-      group_offer_categories: Gruppenangebot Kategorien
-    show:
-      category_states: *id-group-offer-category-states
-  group_offers:
-    one: Gruppenangebot
-    other: Gruppenangebote
-    change_active_state:
-      activated: Gruppenangebot wurde erfolgreich aktiviert.
-      deactivated: Gruppenangebot wurde erfolgreich deaktiviert.
-      no-change: Gruppenangebot konnte nicht aktualisiert werden.
-    index: &id-help-texts
-      activate: Aktivieren
-      deactivate: Deaktivieren
-      group_offer_categories: Gruppenangebot Kategorien
-      necessary_volunteers: 'Benötigt %{amount} Freiwillige'
-      offer_of: Angebot von
-    show: *id-help-texts
   language_level: &id-lang-levels
     basic: Wenig
     fluent: Mittel
@@ -162,6 +93,15 @@ de:
   offer_type: &id-offer-types
     external_offer: Externes Gruppenangebot
     internal_offer: Internes Gruppenangebot
+  gender_request: &id-gender_requests
+    all: Alle
+    man: Mann
+    no_matter: egal
+    woman: Frau
+  cost_unit: &id-client-cost-units
+    city: Stadt
+    canton: Kanton
+    municipality: Gemeinde
   messages:
     confirm_delete: "Wirklich %{model} %{record} löschen?"
     confirm_record_delete: '%{model} wirklich löschen?'
@@ -187,15 +127,6 @@ de:
     social_worker: Sozialarbeiter/in
     superadmin: Superadmin
     volunteer: Freiwillige/r
-  semester_long: '%{number}. Semester %{year} (%{begin} - %{end})'
-  semester_short: '%{number}. Semester %{year}'
-  semester_period: '%{begin} - %{end}'
-  semester_process_volunteers:
-    show:
-      title: 'Semester Prozess %{semester} von %{name}'
-  review_semesters:
-    submit_review:
-      success: Erfolgreich übermittelt
   salutation: &id-salutations
     all: Alle
     family: Familie
@@ -216,75 +147,130 @@ de:
     reserved: Reserviert
     resigned: Abgemeldet
     undecided: Angemeldet
-  updated_at: Geändert um
-  volunteer_applications: &id-volunteers-by-actions
-    feedback:
-      new: Neuer Halbjahres-Rapport
-      index: Halbjahres-Rapport Liste
-    acceptance: &id-volunteer-acceptance
-      management: Aufnahme Verwaltung
-      accepted: Akzeptiert
-      accept: Akzeptieren
-      accepted_at: Akzeptiert am
-      invited: Eingeladen
-      invited_at: Eingeladen am
-      registered: Registriert
-      registered_at: Registriert am
-      rejected: Abgelehnt
-      reject: Ablehnen
-      rejected_at: Abgelehnt am
-      resigned: Beendet
-      resign: Austreten
-      resigned_at: Beendet am
-      undecided: Angemeldet
-      undecided_at: Angemeldet am
-      havent_logged_in: Nie eingeloggt
-      reactivate:
-        title: Beendete/n Freiwillige/n wider Akzeptiert setzen
-        button: Freiwillige/n wieder aktivieren
-        hint: Freiwillige/r kann wider Einsätze machen, wie wenn sie/er neu akzeptiert worden wäre.<br>Hatte die/der Freiwillige vor der Beendigung ein Login auf dieser Platform, so wird dieses wider aktiviert.<br>Es kann das selbe Login/Passwort wie vorher verwendet werden.
-        confirm: Soll die/der Freiwillige wirklich reaktiviert werden?
-    create: &id-volunteers-create
-      <<: *id-availability
-      acceptance: *id-volunteer-acceptance
-      availability: Verfügbarkeit?
-      availability_question: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
-    edit: *id-volunteers-create
-    form:
-      <<: [*id-volunteers-create, *id-volunteer-acceptance]
-      state: &id-volunteer-active-states
-    index: &id-volunteers-index
-      <<: [*id-volunteers-create, *id-volunteer-acceptance, *id-states]
-      state: &id-volunteer-active-states
-      show_assignments: Begleitete anzeigen
-    new:
-      <<: [*id-volunteers-create, *id-volunteer-acceptance]
-    one: Freiwillige/r
-    other: Freiwillige
-    show:
-      <<: [*id-volunteers-index]
-      acceptance: *id-volunteer-acceptance
-      state: *id-volunteer-active-states
-      group_assignments: Aktuelle Gruppenangebote
-      hour_reports: Stunden Rapporte
-      new_certificate: Nachweis ausstellen
-      old_group_assignments: Archivierte Gruppenangebote
-      report_hours: Stunden erfassen
-      show_certificate: Nachweis anzeigen
-      show_certificates: Nachweise anzeigen
-    volunteer:
-      <<: *id-volunteers-index
-      acceptance: *id-volunteer-acceptance
-      state: *id-volunteer-active-states
-    notices:
-      reactivation:
-        success: Freiwillige/r erfolgreich reaktiviert
-        failure: Freiwillige/r reaktivieren schlug fehl
-  volunteers: *id-volunteers-by-actions
-  accompaniment_info: Bei der AOZ gibt es mehrere Möglichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
-  already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
-  clear_filters: Filter aufheben
+  event_kinds: &id-kinds-event
+    intro_course: Einführungsveranstaltung
+    professional_training: Weiterbildung
+    professional_event: Fachveranstaltung
+    theme_exchange: Erfahrungsaustausch/Themenabend
+    volunteering: Freiwilligenanlass
+    german_class_managers: Treffen Deutschkursleitende
+  volunteer_acceptance_keys: &id-volunteer-acceptance-keys
+    management: Aufnahme Verwaltung
+    accepted: Akzeptiert
+    accept: Akzeptieren
+    accepted_at: Akzeptiert am
+    invited: Eingeladen
+    invited_at: Eingeladen am
+    registered: Registriert
+    registered_at: Registriert am
+    rejected: Abgelehnt
+    reject: Ablehnen
+    rejected_at: Abgelehnt am
+    resigned: Beendet
+    resign: Austreten
+    resigned_at: Beendet am
+    undecided: Angemeldet
+    undecided_at: Angemeldet am
+    havent_logged_in: Nie eingeloggt
+    reactivate:
+      title: Beendete/n Freiwillige/n wider Akzeptiert setzen
+      button: Freiwillige/n wieder aktivieren
+      hint: Freiwillige/r kann wider Einsätze machen, wie wenn sie/er neu akzeptiert worden wäre.<br>Hatte die/der Freiwillige vor der Beendigung ein Login auf dieser Platform, so wird dieses wider aktiviert.<br>Es kann das selbe Login/Passwort wie vorher verwendet werden.
+      confirm: Soll die/der Freiwillige wirklich reaktiviert werden?
 
+  # loose unasorted keys
+  "false": Nein
+  "true": Ja
+  accompaniment_info: Bei der AOZ gibt es mehrere Möglichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
+  add_entry: Eintrag Hinzufügen
+  add_relative: Verwandte hinzufügen
+  all: Alle
+  already_computed: Dieser Freiwillige hat keine verrechenbaren Stunden, darum kann keine neue Spesenabrechnung erzeugt werden.
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
+  are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
+  are_you_sure: Sind Sie sicher?
+  assignment_exists: Die Begleitung existiert bereits.
+  available_volunteers: Verfügbare Freiwillige
+  change_my_password: Ihr Passwort ändern
+  change_password: Ihr Passwort ändern
+  checklist: Checkliste
+  clear_filters: Filter aufheben
+  client_created: Klient/in wurde erfolgreich erstellt.
+  client_destroyed: Klient/in wurde erfolgreich gelöscht.
+  client_updated: Klient/in wurde erfolgreich aktualisiert.
+  clients_need_accompanying: Klient/innen ohne Begleitung
+  clients_xlsx: Klienten
+  contact_info: Kontakt Informationen
+  create_client: Klient/in erfassen
+  create_user: Benutzer/in erfassen
+  created_at: Erstellt um
+  department_confirm_destroy: Sind Sie sicher dass Sie den Standort löschen wollen?
+  download: Herunterladen
+  duration_info: Die meisten unserer Einsätze erfordern ein Engagement von mindestens 6 Monaten.
+  edit_login: Login bearbeiten
+  edit_profile: Profil bearbeiten
+  forgot_password: Passwort vergessen?
+  hours_created: Stunden wurden erfolgreich erfasst.
+  invite_sent: 'Einladung wurde an %{email} verschickt.'
+  language_skills: Sprachkenntnisse
+  login: Anmelden
+  not_assignable: Nicht zuweisbar
+  not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
+  password_reset_instructions: Ich möchte mein Passwort zurücksetzen
+  profile_updated: Profil wurde erfolgreich aktualisiert.
+  relatives: Familienangehörige im Haushalt
+  remember_me: Angemeldet bleiben
+  reserve: Begleitung erstellen
+  seeking_clients: Klient/in suchen
+  semester_long: '%{number}. Semester %{year} (%{begin} - %{end})'
+  semester_period: '%{begin} - %{end}'
+  semester_short: '%{number}. Semester %{year}'
+  show_my_profile: Mein Profil
+  submit_application: Anmeldung abschicken
+  thank_you: "Vielen Dank für Ihre Anmeldung \U0001F389"
+  to: bis
+  total_hours: "Stunden Total:"
+  update_profile: Profil aktualisieren
+  updated_at: Geändert um
+  user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
+  voluntary_platform: Freiwilligen Plattform
+  volunteer_application: Freiwilligen Anmeldung
+  volunteer_created_invite_sent: 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an %{email} verschickt.'
+  volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
+  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
+  volunteer_self_applicant: Selbstanmelder
+  volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
+  wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
+
+  # loose unsorted groups
+  pdf_header:
+    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch/freiwilligenarbeit
+    contact: Telefon %{phone}<br>Telefax n.v.<br>info@aoz-freiwillige.ch
+    title: Fachstelle Freiwilligenarbeit
+  semester:
+    one_semester: '%{number}. Semester %{year}'
+    two_semesters_same_year: '1. – 2. Semester %{year}'
+  will_paginate:
+    next_label: Weiter
+    previous_label: Zurück
+
+  # Date and time
+  date:
+    order:
+      - :day
+      - :month
+      - :year
+  time:
+    formats:
+      default: "%a, %d.%m.%y %H:%M"
+      time: "%H:%M"
+      date_only: "%d.%m.%Y"
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%d. %B %Y %H:%M"
+
+  # Activerecord
   activerecord:
     attributes:
       assignment:
@@ -508,9 +494,9 @@ de:
         profile: Profil
         role: Rolle
       volunteer: &id-volunteer_attributes
-        <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance]
+        <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance-keys]
         acceptance: Prozess
-        acceptances: *id-volunteer-acceptance
+        acceptances: *id-volunteer-acceptance-keys
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
@@ -633,13 +619,7 @@ de:
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
 
-  add_entry: Eintrag Hinzufügen
-  add_relative: Verwandte hinzufügen
-  all: Alle
-  are_you_sure: Sind Sie sicher?
-  are_you_sure_delete_user: 'Sind Sie sicher, dass sie %{email} löschen möchten?'
-  are_you_sure_invitation: Sind Sie sicher, dass Sie eine Einladung verschicken möchten?
-  assignment_exists: Die Begleitung existiert bereits.
+  # model name plural for controller name shortcut => t('.key')
   assignment_pdf:
     <<: *id-generic_keys
     birthdate: Geburtsdatum
@@ -674,7 +654,6 @@ de:
     when: Tag / Zeit
     zurich: Zürich
     agreement_text: Vereinbarungstext
-  available_volunteers: Verfügbare Freiwillige
   billing_expense_pdf:
     <<: *id-generic_keys
     account: Konto
@@ -691,6 +670,17 @@ de:
     visum_k: K-Visum
     visum_kst: KST-Visum
     year: Jahr
+  assignments:
+    form:
+      reactivate:
+        title: Beendetes Tandem wider Aktivieren
+        hint: Das beendete Tandem wird wider aktiviert und das Einsatzende wider zurückgesetzt.
+        button: Tandem wider aktivieren
+        confirm: Soll das Tandem wirklich wieder auf aktiv gesetzt werden?
+    notices:
+      reactivation:
+        success: Das Tandem wurde erfolgreich reaktiviert
+        failure: Das Tandem konnte nicht reaktiviert werden
   certificates:
     certificate: &id-certificates-show
       hours_given: 'Total %{hours} Stunden'
@@ -709,21 +699,216 @@ de:
       pdf:
         slim: *id-certificates-show
     update: *id-certificates-form
-  change_my_password: Ihr Passwort ändern
-  change_password: Ihr Passwort ändern
-  checklist: Checkliste
-  client_created: Klient/in wurde erfolgreich erstellt.
-  client_destroyed: Klient/in wurde erfolgreich gelöscht.
-  client_updated: Klient/in wurde erfolgreich aktualisiert.
-  clients_xlsx: Klienten
-  clients_need_accompanying: Klient/innen ohne Begleitung
-  contact_info: Kontakt Informationen
+  clients:
+    client:
+      acceptance: *id-client-acceptance
+    show:
+      acceptance: *id-client-acceptance
+    show_navigation:
+      acceptance: *id-client-acceptance
   contacts:
     fields:
       <<: *id-generic_keys
       name: Name
-  create_client: Klient/in erfassen
-  create_user: Benutzer/in erfassen
+  email_templates:
+    kind: &id-kinds-template
+      assignment: Begleitung
+      signup: Anmeldung
+      trial: Probezeit
+      termination: Beendigung
+      half_year_process_email: 'Halbjahres Prozess'
+      half_year_process_overdue: 'Halbjahres Erinnerung'
+    index:
+      <<: *id-kinds-template
+    show:
+      <<: *id-kinds-template
+  events:
+    kind: *id-kinds-event
+    index: *id-kinds-event
+    show: *id-kinds-event
+    volunteer_events: *id-kinds-event
+  group_assignments:
+    volunteer_group_assignments:
+      activate: Aktivieren
+      deactivate: Deaktivieren
+  group_offer_categories:
+    index:
+      category_states: &id-group-offer-category-states
+        active: Aktiv
+        inactive: Inaktiv
+      group_offers: Gruppenangebote
+      group_offer_categories: Gruppenangebot Kategorien
+    show:
+      category_states: *id-group-offer-category-states
+  group_offers:
+    one: Gruppenangebot
+    other: Gruppenangebote
+    change_active_state:
+      activated: Gruppenangebot wurde erfolgreich aktiviert.
+      deactivated: Gruppenangebot wurde erfolgreich deaktiviert.
+      no-change: Gruppenangebot konnte nicht aktualisiert werden.
+    index: &id-help-texts
+      activate: Aktivieren
+      deactivate: Deaktivieren
+      group_offer_categories: Gruppenangebot Kategorien
+      necessary_volunteers: 'Benötigt %{amount} Freiwillige'
+      offer_of: Angebot von
+    show: *id-help-texts
+  hours:
+    new:
+      report_hours: "Stunden erfassen"
+  semester_process_volunteers:
+    show:
+      title: 'Semester Prozess %{semester} von %{name}'
+  review_semesters:
+    submit_review:
+      success: Erfolgreich übermittelt
+  volunteer_applications: &id-volunteers-by-actions
+    feedback:
+      new: Neuer Halbjahres-Rapport
+      index: Halbjahres-Rapport Liste
+    acceptance: *id-volunteer-acceptance-keys
+    create: &id-volunteers-create
+      <<: *id-availability
+      acceptance: *id-volunteer-acceptance-keys
+      availability: Verfügbarkeit?
+      availability_question: Wann sind Sie für einen Freiwilligeneinsatz verfügbar?
+    edit: *id-volunteers-create
+    form:
+      <<: [*id-volunteers-create, *id-volunteer-acceptance-keys]
+      state: &id-volunteer-active-states
+    index: &id-volunteers-index
+      <<: [*id-volunteers-create, *id-volunteer-acceptance-keys, *id-states]
+      state: &id-volunteer-active-states
+      show_assignments: Begleitete anzeigen
+    new:
+      <<: [*id-volunteers-create, *id-volunteer-acceptance-keys]
+    one: Freiwillige/r
+    other: Freiwillige
+    show:
+      <<: [*id-volunteers-index]
+      acceptance: *id-volunteer-acceptance-keys
+      state: *id-volunteer-active-states
+      group_assignments: Aktuelle Gruppenangebote
+      hour_reports: Stunden Rapporte
+      new_certificate: Nachweis ausstellen
+      old_group_assignments: Archivierte Gruppenangebote
+      report_hours: Stunden erfassen
+      show_certificate: Nachweis anzeigen
+      show_certificates: Nachweise anzeigen
+    volunteer:
+      <<: *id-volunteers-index
+      acceptance: *id-volunteer-acceptance-keys
+      state: *id-volunteer-active-states
+    notices:
+      reactivation:
+        success: Freiwillige/r erfolgreich reaktiviert
+        failure: Freiwillige/r reaktivieren schlug fehl
+  volunteers: *id-volunteers-by-actions
+  performance_reports: &id-performance-reports-de-keys
+    categories: &id-performance-scope-categories
+      all: Alle Freiwilligen
+      zurich: Wohnort Zürich
+      not_zurich: Wohnort Auserhalb Zürich
+      external: Externe Freiwillige
+      internal: Interne Freiwillige
+    values_volunteers: &id-pr-values-volunteer
+      created: Freiwillige akzeptiert
+      inactive: Freiwillige inaktiv
+      resigned: Einsatz beeendet
+      total: Freiwillige (Anzahl Personen)
+      active_assignment: Freiwillige in Tandem aktiv
+      active_group_assignment: Freiwillige in Gruppenangebot aktiv
+      only_assignment_active: Freiwillige ausschliesslich in Tandem aktiv
+      only_group_active: Freiwillige ausschliesslich in Gruppenangebot aktiv
+      active_both: Freiwillige aktiv in Gruppenangebot und Tandem
+      active_total: Freiwillige total akiv
+      assignment_hour_records: Stundenerfassungen von Tandems
+      assignment_hours: Einsatzstunden von FW in Tandems
+      group_offer_hour_records: Stundenberichte von FW in Gruppenangeboten
+      group_offer_hours: Einsatzstunden von FW in Gruppenangeboten
+      total_hours: Geleistete Einsatzstunden total
+      assignment_feedbacks: Halbjahres-Rapporte von FW in Tandems
+      group_offer_feedbacks: Halbjahres-Rapporte von FW in Gruppenangeboten
+      total_feedbacks: Total Halbjahres-Rapporte von Freiwilligen
+      assignment_trial_feedbacks: Probezeit-Feedbacks von FW in Tandems
+      group_offer_trial_feedbacks: Probezeit-Feedbacks von FW in Gruppenangeboten
+      total_trial_feedbacks: Total Probezeit-Feedbacks
+      intro_course: Teilnehmende Einführungsveranstaltungen
+      professional_training: Teilnehmende Weiterbildungen
+      professional_event: Teilnehmende Fachveranstaltungen
+      theme_exchange: Teilnehmende Erfahrungsaustausch/Themenabende
+      volunteering: Teilnehmende Freiwilligenanlässe
+      german_class_managers: Teilnehmende Treffen Deutschkursleitende
+      total_events:  Total Teilnehmende Veranstaltungen
+    values_clients:
+      created: Klient/innen angemeldet
+      inactive: Klient/innen inaktiv
+      resigned: Klient/innen beendet
+      active_assignment: Klient/innen in aktivem Tandem
+      total: Total Anzahl Klient/innen
+    values_assignments:
+      created:  Tandems neu erstellt
+      started:  Gestartete Tandems
+      active:  Aktive Tandems
+      ended:  Beendete Tandems
+      first_instruction_lessons: Besuchte Einführungskurse
+      all: Alle Tandems
+    values_group_offers:
+      created: Gruppenangebote erstellt
+      ended: Gruppenangebote beendet
+      all: Alle Gruppenangebote
+      created_assignments: Gruppenangebote mit neuen Freiwilligen
+      feedback_count: Anzahl gegebener Gruppenangebots Halbjahres-Rapporte
+      total_created_assignments: Neu erstellte Gruppeneinsätze
+      total_started_assignments: Gestartete Gruppeneinsätze
+      total_active_assignments: Aktive Gruppeneinsätze
+      total_ended_assignments: Beendete Gruppeneinsätze
+      total_assignments: Total aller Gruppeneinsätze (Aktive und Inaktive und Beendete)
+    index:
+      new_report: Neuen Report erstellen
+    one: Kennzahl
+    other: Kennzahlen
+    show:
+      selection_criteria: Auswahl
+      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
+      title_year: 'Kennzahlen des Kalenderjahrs %{year}'
+      clients:
+        categories: *id-performance-scope-categories
+        new: Anzahl neuer Klienten
+        active_total: Total aktive Klienten per Zeitraumende
+        resigned: Anzahl beendete Klienten
+        total: Anzahl Klienten insgesamt
+      assignments: &id-assignment-report
+        categories: *id-performance-scope-categories
+        active_total: Total aktive Begleitungen per Zeitraumende
+        new: Anzahl neue Begleitungen
+        resigned: Anzahl beendete Begleitungen
+        total: Anzahl Begleitungen insgesamt
+      calendar_year: 'Kalenderjahr %{year}'
+      groups:
+        active_total: Total laufende Gruppen per Zeitraumende
+        new: Anzahl neue Gruppen (Kurse, Animationen, Andere)
+        resigned: Anzahl beendete Gruppen (Kurse, Animationen, Andere)
+        total: Anzahl Gruppen insgesamt (Kurse, Animationen, Andere)
+      volunteers:
+        categories: *id-performance-scope-categories
+        active_total: Total aktive Freiwillige per Zeitraumende
+        new: Anzahl neue Freiwillige
+        resigned: Anzahl beendete Freiwillige
+        total: Anzahl Freiwillige insgesamt
+      group_offers:
+        categories: *id-performance-scope-categories
+      zh_assignments:
+        <<: *id-assignment-report
+        total: Anzahl Begleitete
+  volunteer_mailer:
+    welcome_email:
+      <<: *id-volunteer_attributes
+      lead: Dies ist die Bestätigung für das Freiwilligen Email
+      subject: Bestätigung der Anmeldung als Freiwilliger bei der AOZ
+
+  # I18n-rails helpers gem
   crud:
     action:
       destroy: Löschen
@@ -738,12 +923,142 @@ de:
     title:
       add: '%{model} hinzufügen'
     updated: '%{model} wurde erfolgreich geändert.'
-  date:
-    order:
-      - :day
-      - :month
-      - :year
-  department_confirm_destroy: Sind Sie sicher dass Sie den Standort löschen wollen?
+
+  # rails errors
+  errors:
+    messages:
+      already_confirmed: wurde bereits bestätigt
+      blank: darf nicht leer sein
+      confirmation_period_expired: 'muss innerhalb %{period} bestätigt werden, bitte fordern Sie einen neuen Link an'
+      expired: ist abgelaufen, bitte neu anfordern
+      not_found: nicht gefunden
+      not_locked: ist nicht gesperrt
+      not_saved:
+        one: 'Konnte %{resource} nicht speichern: ein Fehler.'
+        other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
+
+  helpers:
+    submit:
+      create: '%{model} erfassen'
+      destroy: '%{model} löschen'
+      read: '%{model} anzeigen'
+      show: '%{model} anzeigen'
+      update: '%{model} aktualisieren'
+      journal:
+        create: Journaleintrag speichern
+        update: Journaleintrag aktualisieren
+      user:
+        create: Benutzer/in erstellen
+        update: Login aktualisieren
+
+  # Simple Form gem
+  simple_form:
+    error_notification:
+      default_message: 'Bitte überprüfen Sie folgende Probleme:'
+      head_error: Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.
+    labels:
+      assignment:
+        <<: *id-termination-feedback-quests
+      feedback:
+        comments: Bemerkungen
+        achievements: Was konnte in den letzten Monaten erreicht werden?
+        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
+        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
+        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
+        last: Letzter Halbjahres-Rapport-Eintrag am
+      reminder_mailing:
+        kind: Art
+      defaults:
+        password: Passwort
+        password_confirmation: Passwort bestätigen
+      department:
+        contact:
+          label: Art
+          name: Standortname
+        user: Assozierte Benutzer/in
+      group_assignment:
+        <<: [*id-termination-feedback-quests, *id-generic_keys]
+      group_offer:
+        schedule_details: Präzise Angaben (Ort, Tag und Uhrzeit) und genauen Zeitraum
+      q:
+        state_cont: Status
+      user:
+        email: Email
+        password: Passwort
+        role: Rolle
+      volunteer:
+        <<: *id-generic_keys
+        expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
+        experience: Bitte ankreuzen falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben.
+        interests: Welche sind Ihre wichtigsten Freizeitinteressen?
+        motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
+        skills: Berufliche Kompetenzen, die Sie einbringen könnten?
+        strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
+        external: Als externen Freiwilligen registrieren?
+      semester_feedback:
+        achievements: Was konnte in den letzten Monaten erreicht werden?
+        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
+        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
+        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
+    options:
+      certificate:
+        assignment_kinds:
+          <<: *id-assignment-kinds
+      client:
+        acceptance: *id-client-acceptance
+        age_request: *id-age_requests
+        cost_unit: *id-client-cost-units
+        gender_request: *id-gender_requests
+        language_skills:
+          level: *id-lang-levels
+        permit:
+          'n': N
+          f: F
+          b: 'B'
+          b-fl: B-FL
+          c: 'C'
+          pf: PF
+          ch: CH
+        relatives:
+          relation: *id-relations
+        salutation: *id-salutations
+        state: *id-states
+      email_template:
+        kind: *id-kinds-template
+      event:
+        kind: *id-kinds-event
+      group_offer:
+        group_offer_categories: Gruppenangebot Kategorien
+        offer_type: *id-offer-types
+        offer_state: *id-offer-states
+      group_offer_category:
+        category_state: *id-group-offer-category-states
+      journal:
+        category: *id-categories
+      user:
+        role: *id-roles
+      volunteer:
+        acceptance: *id-volunteer-acceptance-keys
+        language_skills:
+          level: *id-lang-levels
+        rejection_type: *id-rejection-types
+        salutation: *id-salutations
+        state:
+          <<: *id-states
+          inactive: Sucht neuen Einsatz
+          registered: Interessiert
+          resigned: Beendet
+    placeholders:
+    hints:
+      volunteer:
+        external: Externe Freiwillige stehen nicht in direkter Verbindung mit der AOZ.
+    required:
+      mark: '*'
+      text: notwendig
+    "yes": 'Ja'
+    "no": 'Nein'
+
+  # Divise gem
   devise:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an.
@@ -868,290 +1183,3 @@ de:
       send_instructions: Sie erhalten in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       send_paranoid_instructions: Falls Ihre Mailadresse in unserer Datenbank existiert erhalten Sie in wenigen Minuten eine Email mit der Anleitung, wie Sie Ihren Account entsperren können.
       unlocked: Ihr Account wurde entsperrt. Sie sind jetzt angemeldet.
-  download: Herunterladen
-  duration_info: Die meisten unserer Einsätze erfordern ein Engagement von mindestens 6 Monaten.
-  edit_login: Login bearbeiten
-  edit_profile: Profil bearbeiten
-  errors:
-    messages:
-      already_confirmed: wurde bereits bestätigt
-      blank: darf nicht leer sein
-      confirmation_period_expired: 'muss innerhalb %{period} bestätigt werden, bitte fordern Sie einen neuen Link an'
-      expired: ist abgelaufen, bitte neu anfordern
-      not_found: nicht gefunden
-      not_locked: ist nicht gesperrt
-      not_saved:
-        one: 'Konnte %{resource} nicht speichern: ein Fehler.'
-        other: 'Konnte %{resource} nicht speichern: %{count} Fehler.'
-  "false": Nein
-  forgot_password: Passwort vergessen?
-  helpers:
-    submit:
-      create: '%{model} erfassen'
-      destroy: '%{model} löschen'
-      read: '%{model} anzeigen'
-      show: '%{model} anzeigen'
-      update: '%{model} aktualisieren'
-      journal:
-        create: Journaleintrag speichern
-        update: Journaleintrag aktualisieren
-      user:
-        create: Benutzer/in erstellen
-        update: Login aktualisieren
-  invite_sent: 'Einladung wurde an %{email} verschickt.'
-  language_skills: Sprachkenntnisse
-  login: Anmelden
-  not_assignable: Nicht zuweisbar
-  not_authorized: Sie sind nicht berechtigt diese Aktion durchzuführen.
-  password_reset_instructions: Ich möchte mein Passwort zurücksetzen
-  pdf_header:
-    address: Fluelastrasse 32<br>8047 Zurich<br>www.aoz.ch/freiwilligenarbeit
-    contact: Telefon %{phone}<br>Telefax n.v.<br>info@aoz-freiwillige.ch
-    title: Fachstelle Freiwilligenarbeit
-  performance_reports: &id-performance-reports-de-keys
-    categories: &id-performance-scope-categories
-      all: Alle Freiwilligen
-      zurich: Wohnort Zürich
-      not_zurich: Wohnort Auserhalb Zürich
-      external: Externe Freiwillige
-      internal: Interne Freiwillige
-    values_volunteers: &id-pr-values-volunteer
-      created: Freiwillige akzeptiert
-      inactive: Freiwillige inaktiv
-      resigned: Einsatz beeendet
-      total: Freiwillige (Anzahl Personen)
-      active_assignment: Freiwillige in Tandem aktiv
-      active_group_assignment: Freiwillige in Gruppenangebot aktiv
-      only_assignment_active: Freiwillige ausschliesslich in Tandem aktiv
-      only_group_active: Freiwillige ausschliesslich in Gruppenangebot aktiv
-      active_both: Freiwillige aktiv in Gruppenangebot und Tandem
-      active_total: Freiwillige total akiv
-      assignment_hour_records: Stundenerfassungen von Tandems
-      assignment_hours: Einsatzstunden von FW in Tandems
-      group_offer_hour_records: Stundenberichte von FW in Gruppenangeboten
-      group_offer_hours: Einsatzstunden von FW in Gruppenangeboten
-      total_hours: Geleistete Einsatzstunden total
-      assignment_feedbacks: Halbjahres-Rapporte von FW in Tandems
-      group_offer_feedbacks: Halbjahres-Rapporte von FW in Gruppenangeboten
-      total_feedbacks: Total Halbjahres-Rapporte von Freiwilligen
-      assignment_trial_feedbacks: Probezeit-Feedbacks von FW in Tandems
-      group_offer_trial_feedbacks: Probezeit-Feedbacks von FW in Gruppenangeboten
-      total_trial_feedbacks: Total Probezeit-Feedbacks
-      intro_course: Teilnehmende Einführungsveranstaltungen
-      professional_training: Teilnehmende Weiterbildungen
-      professional_event: Teilnehmende Fachveranstaltungen
-      theme_exchange: Teilnehmende Erfahrungsaustausch/Themenabende
-      volunteering: Teilnehmende Freiwilligenanlässe
-      german_class_managers: Teilnehmende Treffen Deutschkursleitende
-      total_events:  Total Teilnehmende Veranstaltungen
-    values_clients:
-      created: Klient/innen angemeldet
-      inactive: Klient/innen inaktiv
-      resigned: Klient/innen beendet
-      active_assignment: Klient/innen in aktivem Tandem
-      total: Total Anzahl Klient/innen
-    values_assignments:
-      created:  Tandems neu erstellt
-      started:  Gestartete Tandems
-      active:  Aktive Tandems
-      ended:  Beendete Tandems
-      first_instruction_lessons: Besuchte Einführungskurse
-      all: Alle Tandems
-    values_group_offers:
-      created: Gruppenangebote erstellt
-      ended: Gruppenangebote beendet
-      all: Alle Gruppenangebote
-      created_assignments: Gruppenangebote mit neuen Freiwilligen
-      feedback_count: Anzahl gegebener Gruppenangebots Halbjahres-Rapporte
-      total_created_assignments: Neu erstellte Gruppeneinsätze
-      total_started_assignments: Gestartete Gruppeneinsätze
-      total_active_assignments: Aktive Gruppeneinsätze
-      total_ended_assignments: Beendete Gruppeneinsätze
-      total_assignments: Total aller Gruppeneinsätze (Aktive und Inaktive und Beendete)
-    index:
-      new_report: Neuen Report erstellen
-    one: Kennzahl
-    other: Kennzahlen
-    show:
-      selection_criteria: Auswahl
-      title_range: 'Kennzahlen des Zeitraums "%{start} bis %{end}"'
-      title_year: 'Kennzahlen des Kalenderjahrs %{year}'
-      clients:
-        categories: *id-performance-scope-categories
-        new: Anzahl neuer Klienten
-        active_total: Total aktive Klienten per Zeitraumende
-        resigned: Anzahl beendete Klienten
-        total: Anzahl Klienten insgesamt
-      assignments: &id-assignment-report
-        categories: *id-performance-scope-categories
-        active_total: Total aktive Begleitungen per Zeitraumende
-        new: Anzahl neue Begleitungen
-        resigned: Anzahl beendete Begleitungen
-        total: Anzahl Begleitungen insgesamt
-      calendar_year: 'Kalenderjahr %{year}'
-      groups:
-        active_total: Total laufende Gruppen per Zeitraumende
-        new: Anzahl neue Gruppen (Kurse, Animationen, Andere)
-        resigned: Anzahl beendete Gruppen (Kurse, Animationen, Andere)
-        total: Anzahl Gruppen insgesamt (Kurse, Animationen, Andere)
-      volunteers:
-        categories: *id-performance-scope-categories
-        active_total: Total aktive Freiwillige per Zeitraumende
-        new: Anzahl neue Freiwillige
-        resigned: Anzahl beendete Freiwillige
-        total: Anzahl Freiwillige insgesamt
-      group_offers:
-        categories: *id-performance-scope-categories
-      zh_assignments:
-        <<: *id-assignment-report
-        total: Anzahl Begleitete
-  profile_updated: Profil wurde erfolgreich aktualisiert.
-  relatives: Familienangehörige im Haushalt
-  remember_me: Angemeldet bleiben
-  reserve: Begleitung erstellen
-  seeking_clients: Klient/in suchen
-  semester:
-    one_semester: '%{number}. Semester %{year}'
-    two_semesters_same_year: '1. – 2. Semester %{year}'
-  show_my_profile: Mein Profil
-  simple_form:
-    error_notification:
-      default_message: 'Bitte überprüfen Sie folgende Probleme:'
-      head_error: Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.
-    labels:
-      assignment:
-        <<: *id-termination-feedback-quests
-      feedback:
-        comments: Bemerkungen
-        achievements: Was konnte in den letzten Monaten erreicht werden?
-        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
-        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
-        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
-        last: Letzter Halbjahres-Rapport-Eintrag am
-      reminder_mailing:
-        kind: Art
-      defaults:
-        password: Passwort
-        password_confirmation: Passwort bestätigen
-      department:
-        contact:
-          label: Art
-          name: Standortname
-        user: Assozierte Benutzer/in
-      group_assignment:
-        <<: [*id-termination-feedback-quests, *id-generic_keys]
-      group_offer:
-        schedule_details: Präzise Angaben (Ort, Tag und Uhrzeit) und genauen Zeitraum
-      q:
-        state_cont: Status
-      user:
-        email: Email
-        password: Passwort
-        role: Rolle
-      volunteer:
-        <<: *id-generic_keys
-        expectations: Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?
-        experience: Bitte ankreuzen falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben.
-        interests: Welche sind Ihre wichtigsten Freizeitinteressen?
-        motivation: Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?
-        skills: Berufliche Kompetenzen, die Sie einbringen könnten?
-        strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
-        external: Als externen Freiwilligen registrieren?
-      semester_feedback:
-        achievements: Was konnte in den letzten Monaten erreicht werden?
-        conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
-        future: Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?
-        goals: Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?
-    "no": 'Nein'
-    options:
-      certificate:
-        assignment_kinds:
-          <<: *id-assignment-kinds
-      client:
-        acceptance: *id-client-acceptance
-        age_request: *id-age_requests
-        cost_unit: *id-client-cost-units
-        gender_request: *id-gender_requests
-        language_skills:
-          level: *id-lang-levels
-        permit:
-          'n': N
-          f: F
-          b: 'B'
-          b-fl: B-FL
-          c: 'C'
-          pf: PF
-          ch: CH
-        relatives:
-          relation: *id-relations
-        salutation: *id-salutations
-        state: *id-states
-      email_template:
-        kind: *id-kinds-template
-      event:
-        kind: *id-kinds-event
-      group_offer:
-        group_offer_categories: Gruppenangebot Kategorien
-        offer_type: *id-offer-types
-        offer_state: *id-offer-states
-      group_offer_category:
-        category_state: *id-group-offer-category-states
-      journal:
-        category: *id-categories
-      user:
-        role: *id-roles
-      volunteer:
-        acceptance: *id-volunteer-acceptance
-        language_skills:
-          level: *id-lang-levels
-        rejection_type: *id-rejection-types
-        salutation: *id-salutations
-        state:
-          <<: *id-states
-          inactive: Sucht neuen Einsatz
-          registered: Interessiert
-          resigned: Beendet
-    placeholders:
-    hints:
-      volunteer:
-        external: Externe Freiwillige stehen nicht in direkter Verbindung mit der AOZ.
-    required:
-      mark: '*'
-      text: notwendig
-    "yes": 'Ja'
-  submit_application: Anmeldung abschicken
-  thank_you: "Vielen Dank für Ihre Anmeldung \U0001F389"
-  time:
-    formats:
-      default: "%a, %d.%m.%y %H:%M"
-      time: "%H:%M"
-      date_only: "%d.%m.%Y"
-      devise:
-        mailer:
-          invitation_instructions:
-            accept_until_format: "%d. %B %Y %H:%M"
-  to: bis
-  "true": Ja
-  update_profile: Profil aktualisieren
-  user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
-  voluntary_platform: Freiwilligen Plattform
-  volunteer_application: Freiwilligen Anmeldung
-  volunteer_created: Freiwillige/r wurde erfolgreich erstellt.
-  hours_created: Stunden wurden erfolgreich erfasst.
-  volunteer_created_invite_sent: 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an %{email} verschickt.'
-  volunteer_engagement_type_will: Welche Art von Einsatz können Sie sich vorstellen?
-  volunteer_mailer:
-    welcome_email:
-      <<: *id-volunteer_attributes
-      lead: Dies ist die Bestätigung für das Freiwilligen Email
-      subject: Bestätigung der Anmeldung als Freiwilliger bei der AOZ
-  volunteer_self_applicant: Selbstanmelder
-  volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
-  wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
-  will_paginate:
-    next_label: Weiter
-    previous_label: Zurück
-  hours:
-    new:
-      report_hours: "Stunden erfassen"
-  total_hours: "Stunden Total:"
