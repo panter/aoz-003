@@ -26,8 +26,12 @@ module AcceptanceAttributes
   private
 
   def record_acceptance_change
-    return unless new_record? || will_save_change_to_acceptance?
+    return unless new_record? || will_save_change_to_attribute?(:acceptance)
 
+    # reactivated volunteers shouldn't look resigned, because having resigned_at date
+    if will_save_change_to_attribute?(:acceptance, from: 'resigned', to: 'accepted')
+      self.resigned_at = nil
+    end
     self["#{acceptance}_at".to_sym] = Time.zone.now
   end
 end
