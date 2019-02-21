@@ -1,129 +1,71 @@
 @import 'bootstrap_overwrites';
 
 // Margin utility classes
-.m-b-10 {
-  margin-bottom: 10px;
-}
+// Generates utility classes for margin and padding
+//
+// .m-t-10 => margin-top: 10px;
+// .m-r-10 => margin-right: 10px;
+// .m-b-10 => margin-bottom: 10px;
+// .m-l-10 => margin-left: 10px;
+// .p-t-10 => padding-top: 10px;
+//
+// .m-x-20 => margin-left: 20px; margin-right: 20px;
+// .m-y-30 => margin-top: 30px; margin-bottom: 30px;
+//
+// .p-50 => padding: 50px;
 
-.m-b-20 {
-  margin-bottom: 20px;
-}
+// types:
+$utility_types: (
+  m: 'margin',
+  p: 'padding'
+);
 
-.m-b-30 {
-  margin-bottom: 30px;
-}
+// sides:
+$utility_sides: (
+  t: 'top',
+  r: 'right',
+  b: 'bottom',
+  l: 'left'
+);
 
-.m-t-10 {
-  margin-top: 10px;
-}
+// sizes:
+$utility_withs: (
+  0: 0,
+  10: 10px,
+  20: 20px,
+  30: 30px,
+  40: 40px,
+  50: 50px,
+  60: 60px,
+  70: 70px,
+  80: 80px
+);
 
-.m-t-20 {
-  margin-top: 20px;
-}
+@each $type_key, $type_value in $utility_types {
+  @each $width_key, $width_value in $utility_withs {
 
-.m-t-30 {
-  margin-top: 30px;
-}
+    .#{$type_key}-#{$width_key} {
+      #{$type_value}: $width_value;
+    }
 
-.m-t-80 {
-  margin-top: 80px;
-}
+    @each $side_key, $side_value in $utility_sides {
 
-.m-l-10 {
-  margin-left: 10px;
-}
+      @if $side_key == r or $side_key == l {
+        .#{$type_key}-#{$side_key}-#{$width_key},
+        .#{$type_key}-x-#{$width_key} {
+          #{$type_value}-#{$side_value}: $width_value;
+        }
+      }
 
-.m-l-20 {
-  margin-left: 20px;
-}
+      @if $side_key == t or $side_key == b {
+        .#{$type_key}-#{$side_key}-#{$width_key},
+        .#{$type_key}-y-#{$width_key} {
+          #{$type_value}-#{$side_value}: $width_value;
+        }
+      }
 
-.m-l-30 {
-  margin-left: 30px;
-}
-
-.m-r-10 {
-  margin-right: 10px;
-}
-
-.m-r-20 {
-  margin-right: 20px;
-}
-
-// Padding utility classes
-.m-r-30 {
-  margin-right: 30px;
-}
-
-.p-b-10 {
-  padding-bottom: 10px;
-}
-
-.p-b-20 {
-  padding-bottom: 20px;
-}
-
-.p-b-30 {
-  padding-bottom: 30px;
-}
-
-.p-t-10 {
-  padding-top: 10px;
-}
-
-.p-t-20 {
-  padding-top: 20px;
-}
-
-.p-t-30 {
-  padding-top: 30px;
-}
-
-.p-l-10 {
-  padding-left: 10px;
-}
-
-.p-l-20 {
-  padding-left: 20px;
-}
-
-.p-l-30 {
-  padding-left: 30px;
-}
-
-.p-r-10 {
-  padding-right: 10px;
-}
-
-.p-r-20 {
-  padding-right: 20px;
-}
-
-.p-r-30 {
-  padding-right: 30px;
-}
-
-.text-bigger-1 {
-  font-size: 110%;
-}
-
-.text-bigger-2 {
-  font-size: 120%;
-}
-
-.text-bigger-3 {
-  font-size: 130%;
-}
-
-.text-smaller-1 {
-  font-size: 90%;
-}
-
-.text-smaller-2 {
-  font-size: 80%;
-}
-
-.text-smaller-3 {
-  font-size: 70%;
+    }
+  }
 }
 
 h1.small {
