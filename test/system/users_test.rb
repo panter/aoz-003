@@ -115,7 +115,7 @@ class UsersTest < ApplicationSystemTestCase
     assert page.has_link? social_worker.full_name
     assert page.has_link? user_volunteer.full_name
 
-    within '.section-navigation' do
+    within '.section-navigation-top' do
       click_link 'Rolle'
       click_link 'Superadmin'
     end
@@ -127,7 +127,7 @@ class UsersTest < ApplicationSystemTestCase
       refute page.has_link? user_volunteer.full_name
     end
 
-    within '.section-navigation' do
+    within '.section-navigation-top' do
       click_link 'Rolle: Superadmin'
       click_link 'Freiwillige/r'
     end

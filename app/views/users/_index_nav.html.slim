@@ -1,7 +1,7 @@
 - top_nav ||= false
 - unless top_nav
   = bootstrap_paginate(@users)
-nav.navbar.section-navigation
+nav.navbar.section-navigation class=('section-navigation-top' if top_nav)
   hr
   - if top_nav
     ul.list-unstyled
