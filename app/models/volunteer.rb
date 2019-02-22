@@ -526,6 +526,18 @@ class Volunteer < ApplicationRecord
     end
   end
 
+  def reactivate!
+    update!(acceptance: 'accepted')
+    return true if external?
+
+    if user.present? && (user.sign_in_count.zero? || !user.invitation_accepted?)
+      user.invite!
+    else
+      self.user = User.invite!(email: contact.primary_email, role: 'volunteer')
+    end
+    save
+  end
+
   private
 
   def kinds_done_ids

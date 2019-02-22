@@ -70,7 +70,21 @@ module GroupAssignmentAndAssignmentCommon
     end
 
     def terminated?
-      termination_verifiable? && termination_verified_by.present?
+      ended? && termination_verified_by.present?
+    end
+
+    def reactivatable?
+      terminated? && volunteer.accepted?
+    end
+
+    def reactivate!
+      update!(period_end: nil, termination_verified_at: nil, termination_submitted_at: nil, termination_verified_by: nil,
+        termination_submitted_by: nil, period_end_set_by: nil)
+      if assignment?
+        assignment_log.delete
+      elsif group_assignment?
+        group_assignment_logs.last.delete
+      end
     end
 
     private

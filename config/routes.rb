@@ -42,6 +42,10 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :reactivate do
+    get :reactivate, on: :member
+  end
+
   # Resource and other Routes
   #
 
@@ -52,7 +56,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :assignments, except: [:destroy], concerns: [:submit_feedback, :termination_actions] do
+  resources :assignments, except: [:destroy], concerns: [:submit_feedback, :termination_actions, :reactivate] do
     get :volunteer_search, on: :collection
     get :client_search, on: :collection
   end
@@ -68,7 +72,7 @@ Rails.application.routes.draw do
   end
 
   resources :group_assignments, only: [:show, :create, :edit, :update],
-    concerns: [:submit_feedback, :termination_actions] do
+    concerns: [:submit_feedback, :termination_actions, :reactivate] do
     put :set_end_today, on: :member
   end
 
@@ -111,17 +115,17 @@ Rails.application.routes.draw do
     get :thanks, on: :collection
   end
 
-  resources :volunteers, except: [:destroy], concerns: :search do
+  resources :volunteers, except: [:destroy], concerns: [:search, :reactivate] do
     put :terminate, on: :member
     put :account, on: :member
     get :find_client, on: :member, to: 'assignments#find_client'
     get :seeking_clients, on: :collection
     patch :update_bank_details, on: :member
 
-    resources :assignments, except: [:destroy], concerns: [:assignment_feedbacks, :hours_resources]
+    resources :assignments, except: [:destroy], concerns: [:assignment_feedbacks, :hours_resources, :reactivate]
     resources :billing_expenses, only: [:index]
     resources :certificates
-    resources :group_assignments, only: [:show, :edit, :update], concerns: :hours_resources
+    resources :group_assignments, only: [:show, :edit, :update], concerns: [:hours_resources, :reactivate]
     resources :group_offers, except: [:destroy], concerns: :assignment_feedbacks
     resources :hours
     resources :journals, except: [:show]

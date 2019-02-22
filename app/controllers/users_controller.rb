@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     authorize User
     @q = User.distinct.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
-    @users = @q.result
+    @users = @q.result.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.xlsx do

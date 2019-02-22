@@ -1,6 +1,5 @@
 class VolunteersController < ApplicationController
-
-  before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account, :update_bank_details]
+  before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account, :update_bank_details, :reactivate]
 
   def index
     authorize Volunteer
@@ -117,6 +116,11 @@ class VolunteersController < ApplicationController
     else
       redirect_to edit_volunteer_path(@volunteer), notice: 'Account erstellen fehlgeschlagen!'
     end
+  end
+
+  def reactivate
+    state = @volunteer.reactivate! ? 'success' : 'failure'
+    redirect_to edit_volunteer_path(@volunteer), notice: t("volunteers.notices.reactivation.#{state}")
   end
 
   private

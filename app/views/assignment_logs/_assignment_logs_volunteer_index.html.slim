@@ -16,6 +16,8 @@ table.table.table-striped.assignment-logs-table
           - if policy(assignment.assignment).show? && assignment.assignment.pdf.exists?
             = button_link icon_span(:download), assignment_path(assignment.assignment, format: :pdf),
               title: 'Herunterladen'
+          - if policy(assignment.assignment).reactivate?
+            = button_link icon_span(:edit), edit_assignment_path(assignment.assignment)
         td= link_to_if(policy(Client).show?, assignment.client.contact.full_name, assignment.client)
         td= l(assignment.period_start) if assignment.period_start
         td= l(assignment.period_end) if assignment.period_end
