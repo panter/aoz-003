@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GroupAssignmentPolicyTest < PolicyAssertions::Test
   test 'superadmin_can_use_all_actions' do
-    assert_permit(create(:user), GroupAssignment, *actions_list, 'show_comments?')
+    assert_permit(create(:user), GroupAssignment, *actions_list(except: [:reactivate]), 'show_comments?')
   end
 
   test 'department_manager without department has read-only access' do
@@ -59,6 +59,7 @@ class GroupAssignmentPolicyTest < PolicyAssertions::Test
   end
 
   private
+
   def index_actions
     actions_list(:terminated_index, :hours_and_feedbacks_submitted)
   end

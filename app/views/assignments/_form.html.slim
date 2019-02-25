@@ -1,9 +1,18 @@
 = simple_form_for(@assignment) do |f|
   = simple_error_notice f
 
+
   .row
     .col-xs-12
       = f.button :submit
+
+  - if policy(@assignment).reactivate?
+    h3.m-t-30= t('.reactivate.title')
+    p== t('.reactivate.hint')
+    = link_to t('.reactivate.button'), reactivate_assignment_path(@assignment), class: 'btn btn-default m-t-10',
+        data: { confirm: t('.reactivate.confirm') }
+    hr.m-y-30
+
   .row
     .col-xs-12.col-md-6
       - if action_new?

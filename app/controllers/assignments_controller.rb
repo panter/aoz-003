@@ -143,6 +143,12 @@ class AssignmentsController < ApplicationController
     authorize :assignment, :hours_and_feedbacks_submitted?
   end
 
+  def reactivate
+    state = @assignment.reactivate! ? 'success' : 'failure'
+    redirect_back fallback_location: edit_assignment_path(@assignment),
+      notice: t("assignments.notices.reactivation.#{state}")
+  end
+
   private
 
   def create_update_redirect

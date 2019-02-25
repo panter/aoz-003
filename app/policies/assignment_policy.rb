@@ -18,6 +18,11 @@ class AssignmentPolicy < ApplicationPolicy
        user.involved_authorities.include?(record.client))
   end
 
+  def reactivate?
+    record.class.name == 'Assignment' && record.reactivatable? &&
+      superadmin_or_department_manager_creation_or_volunteer_related?
+  end
+
   # controller action policies
   alias_method :index?,            :superadmin_or_department_manager?
   alias_method :terminated_index?, :superadmin_or_department_manager?

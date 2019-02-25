@@ -102,6 +102,12 @@ class GroupAssignmentsController < ApplicationController
     authorize :group_assignment, :hours_and_feedbacks_submitted?
   end
 
+  def reactivate
+    state = @group_assignment.reactivate! ? 'success' : 'failure'
+    redirect_back fallback_location: edit_group_assignment_path(@group_assignment),
+      notice: t("group_assignments.notices.reactivation.#{state}")
+  end
+
   private
 
   def handle_period_end

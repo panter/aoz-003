@@ -1,0 +1,21 @@
+- top_nav ||= false
+- unless top_nav
+  = bootstrap_paginate(@users)
+nav.navbar.section-navigation class=('section-navigation-top' if top_nav)
+  hr
+  - if top_nav
+    ul.list-unstyled
+      li.li-search-form
+        = search_form_for @q do |f|
+          = f.search_field :full_name_cont, class: 'search-field',
+            data: { autocomplete: search_users_path }, autofocus: true,
+            placeholder: 'Nach Benutzer/innen Name oder E-Mail suchen'
+          = f.submit 'Suchen', class: 'search-submit'
+  ul.list-inline
+    li= clear_filter_button
+    = list_filter_dropdown(:role, User::ROLES)
+    li= button_link t_title(:new), new_user_path, dimension: 'sm'
+    li= button_link icon_span(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
+  hr
+- if top_nav
+  = bootstrap_paginate(@users)
