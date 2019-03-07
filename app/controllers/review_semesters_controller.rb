@@ -1,8 +1,6 @@
 class ReviewSemestersController < ApplicationController
   before_action :prepare_review, :initialize_nested_objects, only: [:review_semester, :submit_review]
 
-  include ReviewSemesterHelper, SemesterProcessVolunteerHelper
-
   def review_semester; end
 
   def submit_review
@@ -98,6 +96,19 @@ class ReviewSemestersController < ApplicationController
       @nested_objects[spvm.id.to_s] = { feedback: @semester_process_volunteer.semester_feedback_with_mission(spvm.mission) || SemesterFeedback.new }
     end
     @nested_objects
+  end
+
+  def render_semester_feedbacks(semester_feedbacks)
+    text = ''
+    semester_feedbacks.each do |semester_feedback|
+      text += semester_feedback.mission.to_label
+      text += "\n\n"
+      text += semester_feedback.slice(:goals, :achievements, :future, :comments).map do |key, sfb_quote|
+                "#{I18n.t("activerecord.attributes.feedback.#{key}")}:\n«#{sfb_quote}»" if sfb_quote.present?
+              end.compact.join("\n\n")
+      text += "\n\n"
+    end
+    text
   end
 
   def review_params

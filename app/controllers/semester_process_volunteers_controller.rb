@@ -70,6 +70,19 @@ class SemesterProcessVolunteersController < ApplicationController
 
   private
 
+  def set_responsibles
+    @responsibles = SemesterProcessVolunteer.joins(responsible: [profile: [:contact]])
+      .distinct
+      .select('users.id, contacts.full_name')
+      .map do |responsible|
+        {
+          q: :responsible_id_eq,
+          text: "Übernommen von #{responsible.full_name}",
+          value: responsible.id
+        }
+      end
+  end
+
   def set_semester
     @semester = Semester.new
     if params[:semester]
@@ -78,6 +91,26 @@ class SemesterProcessVolunteersController < ApplicationController
       @selected_semester = @semester.preselect_semester
       params[:semester] = Semester.to_s(@selected_semester)
     end
+  end
+
+  def set_reviewers
+    @reviewers = SemesterProcessVolunteer.joins(reviewed_by: [profile: [:contact]])
+      .distinct
+      .select('users.id, contacts.full_name')
+      .map do |reviewed_by|
+        {
+          q: :reviewed_by_id_eq,
+          text: "Quittiert von #{reviewed_by.full_name}",
+          value: reviewed_by.id
+        }
+      end
+  end
+
+  def set_semester_process_volunteer
+    @spv = SemesterProcessVolunteer.find(params[:id])
+    authorize @spv
+    @semester_process = @spv.semester_process
+    @volunteer = @spv.volunteer
   end
 
   def semester_process_volunteer_params
