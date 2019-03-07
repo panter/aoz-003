@@ -2,8 +2,6 @@ class SemesterProcessVolunteersController < ApplicationController
   before_action :set_semester_process_volunteer, only: [:show, :edit, :update, :take_responsibility, :mark_as_done, :update_notes]
   before_action :set_semester, only: [:index]
 
-  include SemesterProcessVolunteerHelper
-
   def review_semester
     authorize SemesterProcessVolunteer.find(params[:id])
     redirect_to review_semester_review_semester_url params[:id]
