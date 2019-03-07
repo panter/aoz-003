@@ -46,7 +46,7 @@ class ReviewSemestersController < ApplicationController
     return unless spv.commited_at?
     volunteer = spv.volunteer
     semester_feedbacks = spv.semester_feedbacks
-    Journal.create(user: volunteer.user, journalable: volunteer,
+    Journal.create(user: current_user, journalable: volunteer,
       category: :feedback, title: "Semester Prozess Feedback vom #{I18n.l(Time.zone.today)}: ",
       body: render_semester_feedbacks(semester_feedbacks))
   end
