@@ -1,7 +1,7 @@
 module ReviewSemesterHelper
   def initialize_nested_objects
     @nested_objects = {}
-    @semester_process_volunteer.semester_process_volunteer_missions.each do |spvm|
+    @semester_process_volunteer.semester_process_volunteer_missions.need_feedback.each do |spvm|
       @nested_objects[spvm.id.to_s] = { feedback: @semester_process_volunteer.semester_feedback_with_mission(spvm.mission) || SemesterFeedback.new }
     end
     @nested_objects

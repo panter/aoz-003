@@ -12,11 +12,6 @@ module SemesterProcessVolunteerHelper
     text
   end
 
-  def assign_volunteer_attributes
-    @volunteer.assign_attributes(review_params[:volunteer_attributes]
-      .slice(:waive, :bank, :iban))
-  end
-
   def render_missions(spv)
     html = ""
     spv.missions.each do |m|
