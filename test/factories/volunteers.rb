@@ -57,21 +57,21 @@ FactoryBot.define do
     end
 
     trait :fake_single_assignments do
-      man { [true, false].sample }
-      woman { [true, false].sample }
-      family { [true, false].sample }
-      kid { [true, false].sample }
-      teenager { [true, false].sample }
-      unaccompanied { [true, false].sample }
+      man { FFaker::Boolean.maybe }
+      woman { FFaker::Boolean.maybe }
+      family { FFaker::Boolean.maybe }
+      kid { FFaker::Boolean.maybe }
+      teenager { FFaker::Boolean.maybe }
+      unaccompanied { FFaker::Boolean.maybe }
     end
 
     trait :fake_availability do
-      flexible { [true, false].sample }
-      morning { [true, false].sample }
-      afternoon { [true, false].sample }
-      evening { [true, false].sample }
-      workday { [true, false].sample }
-      weekend { [true, false].sample }
+      flexible { FFaker::Boolean.maybe }
+      morning { FFaker::Boolean.maybe }
+      afternoon { FFaker::Boolean.maybe }
+      evening { FFaker::Boolean.maybe }
+      workday { FFaker::Boolean.maybe }
+      weekend { FFaker::Boolean.maybe }
     end
 
     trait :imported do

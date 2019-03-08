@@ -71,7 +71,8 @@ FactoryBot.define do
 
       if ev.add_hours
         spv.semester_process_volunteer_missions.map do |sem_proc_mission|
-          create(:hour, hourable: sem_proc_mission.mission)
+          hourable = sem_proc_mission.mission.assignment? ? sem_proc_mission.mission : sem_proc_mission.mission.group_offer
+          create(:hour, hourable: hourable, volunteer: spv.volunteer)
         end
       end
     end

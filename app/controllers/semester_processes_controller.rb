@@ -2,8 +2,6 @@ class SemesterProcessesController < ApplicationController
   before_action :set_semester_process, only: [:edit, :update, :overdue]
   before_action :set_semester, only: [:new, :create]
 
-  include SemesterProcessHelper
-
   def new
     @semester_process = SemesterProcess.new(semester: @selected_semester, kind: :mail )
     new_or_edit
@@ -60,6 +58,12 @@ class SemesterProcessesController < ApplicationController
       redirect_to new_email_template_path,
         notice: 'Sie müssen eine aktive E-Mailvorlage haben,
         bevor Sie eine Halbjahres Erinnerung erstellen können.'
+    end
+  end
+
+  def sort_volunteers
+    @semester_process.new_semester_process_volunteers.sort do |spv1, spv2|
+      spv1.volunteer.contact.full_name <=> spv2.volunteer.contact.full_name
     end
   end
 
