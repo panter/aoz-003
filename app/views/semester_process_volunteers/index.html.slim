@@ -36,7 +36,10 @@ h1 Semester Prozess
             - else
               .label.label-warning Unbestätigt
           td= link_to_if policy(Volunteer).edit?, spv.volunteer.contact.full_name, edit_volunteer_path(spv.volunteer)
-          td= render_missions(spv)
+          td.index-action-cell.hidden-print
+            - spv.missions.each do |mission|
+              = link_to mission.to_label, edit_polymorphic_path([mission]), target: '_blank'
+              br
           = td_truncate_content_modal(spv.render_feedback(:goals), 'Ziele', shorten_size: 300)
           = td_truncate_content_modal(spv.render_feedback(:achievements), 'Erfolge', shorten_size: 300)
           = td_truncate_content_modal(spv.render_feedback(:future), 'Zukunft', shorten_size: 300)
