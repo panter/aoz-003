@@ -654,6 +654,24 @@ de:
     when: Tag / Zeit
     zurich: Zürich
     agreement_text: Vereinbarungstext
+  assignment_logs:
+    client_index: &assignment_logs_index
+      edit_for_reactivate: Kann reaktiviert werden
+      ractivate_link_title: Freiwillige/n reaktivieren um Einsatz reaktivieren zu können
+    volunteer_index:
+      <<: *assignment_logs_index
+      ractivate_link_title: Klient/in reaktivieren um Einsatz reaktivieren zu können
+  assignments:
+    form:
+      reactivate:
+        title: Beendetes Tandem wieder Aktivieren
+        hint: Das beendete Tandem wird wieder aktiviert und das Einsatzende wieder zurückgesetzt.
+        button: Tandem wieder aktivieren
+        confirm: Soll das Tandem wirklich wieder auf aktiv gesetzt werden?
+    notices:
+      reactivation:
+        success: Das Tandem wurde erfolgreich reaktiviert
+        failure: Das Tandem konnte nicht reaktiviert werden
   billing_expense_pdf:
     <<: *id-generic_keys
     account: Konto
@@ -670,17 +688,6 @@ de:
     visum_k: K-Visum
     visum_kst: KST-Visum
     year: Jahr
-  assignments:
-    form:
-      reactivate:
-        title: Beendetes Tandem wieder Aktivieren
-        hint: Das beendete Tandem wird wieder aktiviert und das Einsatzende wieder zurückgesetzt.
-        button: Tandem wieder aktivieren
-        confirm: Soll das Tandem wirklich wieder auf aktiv gesetzt werden?
-    notices:
-      reactivation:
-        success: Das Tandem wurde erfolgreich reaktiviert
-        failure: Das Tandem konnte nicht reaktiviert werden
   certificates:
     certificate: &id-certificates-show
       hours_given: 'Total %{hours} Stunden'
@@ -737,6 +744,13 @@ de:
     index: *id-kinds-event
     show: *id-kinds-event
     volunteer_events: *id-kinds-event
+  group_assignment_logs:
+    group_offer_index:
+      <<: *assignment_logs_index
+    volunteer_index:
+      <<: *assignment_logs_index
+      ractivate_link_title: Gruppeneinsatz kann reaktiviert werden
+      reactivatable_link: Gruppeneinsatz bearbeiten (reaktivierbar)
   group_assignments:
     form:
       reactivate:
