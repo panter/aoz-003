@@ -700,12 +700,22 @@ de:
         slim: *id-certificates-show
     update: *id-certificates-form
   clients:
+    form:
+      reactivate:
+        title: Klient/in wieder Aktivieren
+        hint: Klient/in wird wieder aktiviert.
+        button: Klient/in wieder aktivieren
+        confirm: Soll der/die Klient/in wirklich wieder auf aktiv gesetzt werden?
     client:
       acceptance: *id-client-acceptance
     show:
       acceptance: *id-client-acceptance
     show_navigation:
       acceptance: *id-client-acceptance
+    notices:
+      reactivation:
+        success: Klient/in erfolgreich reaktiviert
+        failure: Klient/in reaktivieren schlug fehl
   contacts:
     fields:
       <<: *id-generic_keys
