@@ -144,7 +144,7 @@ class AssignmentsController < ApplicationController
   end
 
   def reactivate
-    state = @assignment.reactivate! ? 'success' : 'failure'
+    state = @assignment.reactivate!(current_user) ? 'success' : 'failure'
     redirect_back fallback_location: edit_assignment_path(@assignment),
       notice: t("assignments.notices.reactivation.#{state}")
   end

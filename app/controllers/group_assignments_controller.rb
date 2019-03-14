@@ -103,7 +103,7 @@ class GroupAssignmentsController < ApplicationController
   end
 
   def reactivate
-    state = @group_assignment.reactivate! ? 'success' : 'failure'
+    state = @group_assignment.reactivate!(current_user) ? 'success' : 'failure'
     redirect_back fallback_location: edit_group_assignment_path(@group_assignment),
       notice: t("group_assignments.notices.reactivation.#{state}")
   end

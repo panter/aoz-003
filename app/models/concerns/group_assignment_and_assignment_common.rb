@@ -77,9 +77,9 @@ module GroupAssignmentAndAssignmentCommon
       terminated? && volunteer.accepted?
     end
 
-    def reactivate!
+    def reactivate!(user)
       update!(period_end: nil, termination_verified_at: nil, termination_submitted_at: nil, termination_verified_by: nil,
-        termination_submitted_by: nil, period_end_set_by: nil)
+        termination_submitted_by: nil, period_end_set_by: nil, reactivated_by: user, reactivated_at: Time.zone.now)
       if assignment?
         assignment_log.delete
       elsif group_assignment?

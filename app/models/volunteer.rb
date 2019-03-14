@@ -28,6 +28,8 @@ class Volunteer < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
   belongs_to :registrar, -> { with_deleted }, class_name: 'User', foreign_key: 'registrar_id', optional: true,
     inverse_of: :volunteers
+  belongs_to :reactivated_by, class_name: 'User', inverse_of: 'reactivated_volunteers',
+    optional: true
   belongs_to :department, optional: true
 
   has_one :registrar_department, through: :registrar
@@ -508,7 +510,7 @@ class Volunteer < ApplicationRecord
   end
 
   def user_needed_for_invitation?
-    !user.present? && accepted?
+    user.blank? && accepted?
   end
 
   def invite_email_valid?
@@ -526,8 +528,9 @@ class Volunteer < ApplicationRecord
     end
   end
 
-  def reactivate!
-    update!(acceptance: 'accepted')
+  def reactivate!(user)
+    update!(acceptance: 'accepted', reactivated_by: user, reactivated_at: Time.zone.now, resigned_at: nil,
+      resigned_by_id: nil)
     return true if external?
 
     if user.present? && (user.sign_in_count.zero? || !user.invitation_accepted?)

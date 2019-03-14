@@ -2,11 +2,14 @@ class Assignment < ApplicationRecord
   include AssignmentCommon
   include VolunteersGroupAndTandemStateUpdate
 
-  has_one :assignment_log
+  belongs_to :reactivated_by, class_name: 'User', inverse_of: 'reactivated_assignments',
+    optional: true
 
-  has_many :hours, as: :hourable
-  has_many :feedbacks, as: :feedbackable
-  has_many :trial_feedbacks, as: :trial_feedbackable
+  has_one :assignment_log, dependent: :nullify
+
+  has_many :hours, as: :hourable, dependent: :destroy, inverse_of: :hourable
+  has_many :feedbacks, as: :feedbackable, dependent: :destroy, inverse_of: :feedbackable
+  has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy, inverse_of: :trial_feedbackable
 
   # Semester process relations
   #

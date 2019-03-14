@@ -119,7 +119,7 @@ class VolunteersController < ApplicationController
   end
 
   def reactivate
-    state = @volunteer.reactivate! ? 'success' : 'failure'
+    state = @volunteer.reactivate!(current_user) ? 'success' : 'failure'
     redirect_to edit_volunteer_path(@volunteer), notice: t("volunteers.notices.reactivation.#{state}")
   end
 
