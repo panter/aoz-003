@@ -529,8 +529,7 @@ class Volunteer < ApplicationRecord
   end
 
   def reactivate!(user)
-    update!(acceptance: 'accepted', reactivated_by: user, reactivated_at: Time.zone.now, resigned_at: nil,
-      resigned_by_id: nil)
+    update!(acceptance: 'accepted', reactivated_by: user, reactivated_at: Time.zone.now, resigned_at: nil)
     return true if external?
 
     if user.present? && (user.sign_in_count.zero? || !user.invitation_accepted?)

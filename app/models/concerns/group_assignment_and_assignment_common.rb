@@ -74,7 +74,7 @@ module GroupAssignmentAndAssignmentCommon
     end
 
     def reactivatable?
-      terminated? && volunteer.accepted?
+      terminated? && dependency_allows_reactivation? && volunteer.accepted?
     end
 
     def reactivate!(user)
@@ -88,6 +88,14 @@ module GroupAssignmentAndAssignmentCommon
     end
 
     private
+
+    def dependency_allows_reactivation?
+      if assignment?
+        client.accepted?
+      else
+        !group_offer.terminated?
+      end
+    end
 
     def add_remaining_hours
       return unless remaining_hours?
