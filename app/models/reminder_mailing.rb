@@ -1,15 +1,30 @@
 class ReminderMailing < ApplicationRecord
-  before_update :remove_untoggled_volunteers
+  # Key is method name, value is users variable %{FeedbackLink}
+  TEMPLATE_VARNAMES_GENERAL = {
+    anrede: :Anrede,
+    name: :Name,
+    einsatz: :Einsatz,
+    email_absender: :EmailAbsender,
+    online_plattform_url: :OnlinePlattformUrl
+  }.freeze
 
-  TEMPLATE_VARNAMES = [
-    :Anrede,
-    :Name,
-    :Einsatz,
-    :EinsatzStart,
-    :FeedbackLink,
-    :EmailAbsender,
-    :OnlinePlattformUrl
-  ].freeze
+  # method var_name pairs per reminder_mailing kind
+  TEMPLATE_VARNAMES = {
+    trial_period: {
+      einsatz_start: :EinsatzStart,
+      feedback_link_trial: :FeedbackLink
+    }.merge(TEMPLATE_VARNAMES_GENERAL),
+    termination: {
+      einsatz_start: :EinsatzStart,
+      feedback_link_termination: :FeedbackLink
+    }.merge(TEMPLATE_VARNAMES_GENERAL),
+    half_year_process_email: {
+      feedback_link_semester: :FeedbackLink
+    }.merge(TEMPLATE_VARNAMES_GENERAL),
+    half_year_process_overdue: {
+      feedback_link_semester: :FeedbackLink
+    }.merge(TEMPLATE_VARNAMES_GENERAL)
+  }.freeze
 
   belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'reminder_mailings'
 
@@ -26,7 +41,8 @@ class ReminderMailing < ApplicationRecord
     source_type: 'GroupAssignment'
   has_many :process_submitters, through: :reminder_mailing_volunteers, source: :process_submitted_by
 
-  enum kind: { trial_period: 1, termination: 2, half_year_process_email: 3, half_year_process_overdue: 4  }
+  enum kind: { trial_period: 1, termination: 2, half_year_process_email: 3, half_year_process_overdue: 4 }
+
   ransacker :kind, formatter: ->(value) { kinds[value] }
 
   validates :subject, presence: true
@@ -34,6 +50,16 @@ class ReminderMailing < ApplicationRecord
 
   validate :no_reminder_volunteer_present, unless: :reminder_volunteer_mailings_any?
   validate :mailing_not_to_change_after_sent
+
+  before_update :remove_untoggled_volunteers
+
+  def self.template_varnames(kind_requested)
+    TEMPLATE_VARNAMES[kind_requested.to_sym]
+  end
+
+  def template_varnames
+    TEMPLATE_VARNAMES[kind.to_sym]
+  end
 
   # setter generates relation to assignment/group_assignment and volunteer in one go
   def reminder_mailing_volunteers=(reminder_mailable)
