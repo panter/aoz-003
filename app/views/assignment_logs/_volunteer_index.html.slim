@@ -1,0 +1,69 @@
+table.table.table-striped.assignment-logs-table
+  thead
+    tr
+      th.hidden-print Aktionen
+      th= t_model(Client)
+      th= t_attr(:period_start, Assignment)
+      th= t_attr(:period_end, Assignment)
+      th Fallführende Stelle
+      - if policy(Assignment).show_comments?
+        th= t_attr(:comments)
+      th colspan=2
+  tbody
+    - assignment_logs.each do |assignment_log|
+      - assignment = assignment_log.assignment
+      - client = assignment.client
+      tr
+        td.index-action-cell.hidden-print
+          - if policy(assignment).show? && assignment.pdf.exists?
+            = button_link icon_span(:download), assignment_path(assignment, format: :pdf),
+              title: 'Herunterladen'
+          - if policy(assignment).reactivate?
+            span.single-line
+              = button_link icon_span(:edit), edit_assignment_path(assignment)
+              span.m-l-10
+                em= t('.edit_for_reactivate')
+        td.index-action-cell
+          - if policy(client).reactivate?
+            = link_to edit_client_path(client), target: '_blank', rel: 'noopener',
+                class: 'link-icon-span-text',
+                title: t('.ractivate_link_title') do
+              = icon_span(:edit)
+              span.icon-span-text= client.contact.full_name
+          - elsif policy(client).show?
+            = link_to client_path(client), class: 'link-icon-span-text' do
+              = icon_span(:show)
+              span.icon-span-text= client.contact.full_name
+          - else
+            = client.contact.full_name
+        td= l(assignment.period_start) if assignment.period_start
+        td= l(assignment.period_end) if assignment.period_end
+        td
+          - if client.involved_authority
+            = link_to_if policy(User).show?,
+                client.involved_authority.full_name,
+                profile_url_path(client.involved_authority)
+          - else
+            = link_to_if policy(User).show?,
+                assignment.creator.full_name,
+                profile_url_path(assignment.creator)
+        td= link_to_if(assignment && policy(assignment).show?,
+          t_action(:show), assignment) { '' }
+        - if policy(Assignment).show_comments?
+          = td_truncate_content_modal(assignment.comments, 'Bemerkungen')
+        td.index-action-cell.hidden-print
+          span
+            - unless assignment.volunteer.external?
+              = link_to_if(policy(TrialFeedback).index?, t_title(:index, TrialFeedback),
+                polymorphic_path([assignment.volunteer, assignment, TrialFeedback])) { '' }
+              = link_to_if(policy(Feedback).index?, t_title(:index, Feedback),
+                polymorphic_path([assignment.volunteer, assignment, Feedback])) { '' }
+            = link_to_if(policy(Assignment).verify_termination?, 'Beendigungsformular',
+              polymorphic_path(assignment, action: :terminate)) { '' }
+        td.index-action-cell.hidden-print
+          span
+            = "Quittiert von "
+            = link_to_if(policy(Assignment).verify_termination?, assignment.termination_verified_by.full_name,
+              profile_url_path(assignment.termination_verified_by)) { '' }
+            = " am #{l(assignment.termination_verified_at.to_date)}"
+

@@ -3,9 +3,9 @@ table.table.table-striped.assignments-table
     tr
       th.hidden-print Aktionen
       th Status
-      - if controller_name != 'volunteers'
+      - unless controller_in?(:volunteers)
         th= t_model(Volunteer)
-      - if controller_name != 'clients'
+      - unless controller_in?(:clients)
         th= t_model(Client)
       th= t_attr(:period_start, Assignment)
       th= t_attr(:period_end, Assignment)

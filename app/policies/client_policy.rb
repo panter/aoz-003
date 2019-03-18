@@ -16,15 +16,20 @@ class ClientPolicy < ApplicationPolicy
     social_worker? && (user_owns_record? || user_involved_authority?)
   end
 
+  def reactivate?
+    record.class.name == 'Client' && record.resigned? &&
+      superadmin_or_client_responsible?
+  end
+
   # controller action policies
-  alias_method :index?,        :superadmin_or_department_manager_or_social_worker?
-  alias_method :search?,       :superadmin_or_department_manager_or_social_worker?
-  alias_method :new?,          :superadmin_or_department_manager_or_social_worker?
-  alias_method :create?,       :superadmin_or_department_manager_or_social_worker?
-  alias_method :show?,         :superadmin_or_department_manager_or_social_worker?
-  alias_method :destroy?,      :superadmin_or_client_responsible?
-  alias_method :edit?,         :superadmin_or_client_responsible?
-  alias_method :update?,       :superadmin_or_client_responsible?
+  alias_method :index?,          :superadmin_or_department_manager_or_social_worker?
+  alias_method :search?,         :superadmin_or_department_manager_or_social_worker?
+  alias_method :new?,            :superadmin_or_department_manager_or_social_worker?
+  alias_method :create?,         :superadmin_or_department_manager_or_social_worker?
+  alias_method :show?,           :superadmin_or_department_manager_or_social_worker?
+  alias_method :destroy?,        :superadmin_or_client_responsible?
+  alias_method :edit?,           :superadmin_or_client_responsible?
+  alias_method :update?,         :superadmin_or_client_responsible?
   alias_method :set_terminated?, :superadmin_or_department_managers_record?
 
   # suplementary policies

@@ -16,19 +16,4 @@
           th Begleitung Beendet
           th Archiviert
       tbody
-        - @group_offer.group_assignment_logs.order('created_at asc').each do |ga_log|
-          tr
-            td.index-action-cell.hidden-print
-              - if policy(ga_log.group_assignment).show? && ga_log.group_assignment.pdf.exists?
-                = button_link icon_span(:download), group_assignment_path(ga_log.group_assignment, format: :pdf),
-                  title: 'Herunterladen'
-            td= link_to_if(policy(Volunteer).edit?, ga_log.volunteer.contact.full_name,
-              edit_volunteer_path(ga_log.volunteer)) { ga_log.volunteer.contact.full_name }
-            td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
-            td= l(ga_log.period_start) if ga_log.period_start
-            td= l(ga_log.period_end) if ga_log.period_end
-            td= l(ga_log.created_at)
-            td
-              = "Quittiert von "
-              = link_to_if policy(ga_log.termination_verified_by.profile).edit?, ga_log.termination_verified_by.full_name, profile_url_path(ga_log.termination_verified_by)
-              = " am #{l(ga_log.termination_verified_at.to_date)}"
+        = render 'group_assignment_logs/group_offer_index', ga_logs: @group_offer.group_assignment_logs

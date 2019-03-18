@@ -72,6 +72,16 @@ class User < ApplicationRecord
   has_many :resigned_clients, class_name: 'Client', foreign_key: 'resigned_by_id',
     inverse_of: 'resigned_by'
 
+  # reactivated relations
+  has_many :reactivated_clients, class_name: 'Client', foreign_key: 'reactivated_by_id',
+    inverse_of: 'reactivated_by'
+  has_many :reactivated_volunteers, class_name: 'Volunteer', foreign_key: 'reactivated_by_id',
+    inverse_of: 'reactivated_by'
+  has_many :reactivated_assignments, class_name: 'Assignment', foreign_key: 'reactivated_by_id',
+    inverse_of: 'reactivated_by'
+  has_many :reactivated_group_assignments, class_name: 'GroupAssignment', foreign_key: 'reactivated_by_id',
+    inverse_of: 'reactivated_by'
+
   # Mailing process done relation
   has_many :mailing_volunteer_processes_submitted, class_name: 'ReminderMailingVolunteer',
     inverse_of: 'process_submitted_by', foreign_key: 'process_submitted_by_id'

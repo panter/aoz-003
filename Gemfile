@@ -57,11 +57,18 @@ gem 'will_paginate'
 gem 'wkhtmltopdf-binary'
 
 group :development do
-  gem 'awesome_print'
+  gem 'awesome_print', require: false
+  gem 'debase', require: false
+  gem 'debride', require: false
+  gem 'fasterer', require: false
   gem 'i18n_yaml_sorter'
   gem 'letter_opener_web', '~> 1.0'
   gem 'overcommit', require: false
+  gem 'rcodetools', require: false
+  gem 'reek', require: false
   gem 'rubocop', require: false
+  gem 'ruby-debug-ide', require: false
+  gem 'ruby-lint', require: false
   gem 'scss_lint', require: false
 end
 

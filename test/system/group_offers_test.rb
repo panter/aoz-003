@@ -84,9 +84,9 @@ class GroupOffersTest < ApplicationSystemTestCase
     create :group_assignment, volunteer: volunteer, group_offer: group_offer
 
     visit volunteer_path(volunteer)
-    assert page.has_text? 'Aktuelle Gruppenangebote'
+    assert page.has_text? 'Aktuelle Einsätze'
     assert page.has_link? group_offer.title
-    refute page.has_text? 'Archivierte Gruppenangebote'
+    refute page.has_text? 'Archivierte Einsätze'
   end
 
   test 'deleting_volunteer_does_not_crash_group_offer_show' do

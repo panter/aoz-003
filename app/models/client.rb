@@ -18,6 +18,8 @@ class Client < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: 'clients'
   belongs_to :resigned_by, class_name: 'User', inverse_of: 'resigned_clients',
     optional: true
+  belongs_to :reactivated_by, class_name: 'User', inverse_of: 'reactivated_clients',
+    optional: true
   belongs_to :involved_authority, -> { with_deleted }, class_name: 'User',
     inverse_of: 'involved_authorities', optional: true
   has_many :manager_departments, through: :user, source: :departments
@@ -123,6 +125,10 @@ class Client < ApplicationRecord
 
   def destroyable?
     assignments.with_deleted.blank?
+  end
+
+  def reactivate!(user)
+    update!(acceptance: 'accepted', resigned_at: nil, reactivated_by: user, reactivated_at: Time.zone.now)
   end
 
   private

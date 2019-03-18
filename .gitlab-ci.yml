@@ -1,4 +1,4 @@
-image: git.panter.ch:5001/panter/gitlab-ci-docker-images/ruby-and-rails:ruby-2.4.5-node8-chrome-imagemagick
+image: git.panter.ch:5001/panter/gitlab-ci-docker-images/ruby-and-rails:ruby-2.4.5-node8-chrome-imagemagick-chromedriver
 
 stages:
   - test
