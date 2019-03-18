@@ -1,5 +1,12 @@
 = simple_error_notice f
 
+- if policy(f.object).reactivate?
+  h3.m-t-30= t('.reactivate.title')
+  p== t('.reactivate.hint')
+  = link_to t('.reactivate.button'), reactivate_client_path(f.object), class: 'btn btn-default m-t-10',
+      data: { confirm: t('.reactivate.confirm') }
+  hr.m-y-30
+
 .row
   .col-xs-12.col-md-6
     fieldset

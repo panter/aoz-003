@@ -1,0 +1,32 @@
+- ga_logs.order('created_at asc').each do |ga_log|
+  - group_assignment = ga_log.group_assignment
+  - volunteer = group_assignment.volunteer
+  tr
+    td.index-action-cell.hidden-print
+      - if policy(group_assignment).show? && group_assignment.pdf.exists?
+        = button_link icon_span(:download), group_assignment_path(group_assignment, format: :pdf),
+          title: 'Herunterladen'
+      - if policy(group_assignment).reactivate?
+        span.single-line
+          = button_link icon_span(:edit), edit_group_assignment_path(group_assignment)
+          span.m-l-10
+            em= t('.edit_for_reactivate')
+    td.index-action-cell
+      - if policy(volunteer).reactivate?
+        = link_to edit_volunteer_path(volunteer), target: '_blank', rel: 'noopener',
+            class: 'link-icon-span-text',
+            title: t('.ractivate_link_title') do
+          = icon_span(:edit)
+          span.icon-span-text= volunteer.full_name
+      - else
+        = link_to_if policy(volunteer).edit?, volunteer.contact.full_name, edit_volunteer_path(volunteer)
+    td= ga_log.responsible ? t_attr(:responsible, GroupAssignment) : t_attr(:member, GroupAssignment)
+    td= l(ga_log.period_start) if ga_log.period_start
+    td= l(ga_log.period_end) if ga_log.period_end
+    td= l(ga_log.created_at)
+    td
+      = "Quittiert von "
+      = link_to_if policy(ga_log.termination_verified_by.profile).edit?,
+          ga_log.termination_verified_by.full_name,
+          profile_url_path(ga_log.termination_verified_by)
+      = " am #{l(ga_log.termination_verified_at.to_date)}"

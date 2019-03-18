@@ -2,10 +2,10 @@ class GroupAssignment < ApplicationRecord
   include VolunteersGroupAndTandemStateUpdate
   include GroupAssignmentCommon
 
-  after_save :update_group_offer_search_field
+  belongs_to :reactivated_by, class_name: 'User', inverse_of: 'reactivated_group_assignments',
+    optional: true
 
-  has_many :group_assignment_logs
-
+  has_many :group_assignment_logs, dependent: :nullify
   has_many :hours, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
 
   delegate :title, to: :group_offer
@@ -14,6 +14,8 @@ class GroupAssignment < ApplicationRecord
     scope: :group_offer,
     message: 'Diese/r Freiwillige ist schon im Gruppenangebot'
   }
+
+  after_save :update_group_offer_search_field
 
   scope :running, (-> { no_end.have_start })
 

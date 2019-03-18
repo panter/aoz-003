@@ -62,7 +62,7 @@ Rails.application.routes.draw do
   end
   resources :client_notifications, :departments, :performance_reports, :email_templates, :users
 
-  resources :clients, concerns: :search do
+  resources :clients, concerns: [:search, :reactivate] do
     resources :journals, except: [:show]
     patch :set_terminated, on: :member
   end

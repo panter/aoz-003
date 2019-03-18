@@ -1,5 +1,6 @@
 class VolunteersController < ApplicationController
   before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account, :update_bank_details, :reactivate]
+  before_action :set_active_and_archived_missions, only: [:show, :edit]
 
   def index
     authorize Volunteer
@@ -27,12 +28,6 @@ class VolunteersController < ApplicationController
 
     @group_offer_categories = @volunteer.group_offer_categories.active.without_house_moving
     @group_offer_categories_house_moving = @volunteer.group_offer_categories.active.house_moving
-
-    @current_assignments = @volunteer.assignments.unterminated
-    @archived_assignments = @volunteer.assignment_logs
-
-    @current_group_assignments = @volunteer.group_assignments.unterminated
-    @archived_group_assignments = @volunteer.group_assignment_logs
   end
 
   def new
@@ -119,7 +114,7 @@ class VolunteersController < ApplicationController
   end
 
   def reactivate
-    state = @volunteer.reactivate! ? 'success' : 'failure'
+    state = @volunteer.reactivate!(current_user) ? 'success' : 'failure'
     redirect_to edit_volunteer_path(@volunteer), notice: t("volunteers.notices.reactivation.#{state}")
   end
 
@@ -149,6 +144,14 @@ class VolunteersController < ApplicationController
   def set_volunteer
     @volunteer = Volunteer.find(params[:id])
     authorize @volunteer
+  end
+
+  def set_active_and_archived_missions
+    @current_assignments = @volunteer.assignments.unterminated
+    @archived_assignments = @volunteer.assignment_logs
+
+    @current_group_assignments = @volunteer.group_assignments.unterminated
+    @archived_group_assignments = @volunteer.group_assignment_logs
   end
 
   def volunteer_params

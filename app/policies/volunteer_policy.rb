@@ -52,7 +52,6 @@ class VolunteerPolicy < ApplicationPolicy
   alias_method :update?,              :volunteer_managing_or_volunteers_profile?
   alias_method :update_bank_details?, :volunteer_managing_or_volunteers_profile?
   alias_method :account?,             :superadmin?
-  alias_method :reactivate?,          :reactivate?
 
   # supplementary policies
   alias_method :superadmin_privileges?, :superadmin?

@@ -1,0 +1,42 @@
+table.table.table-striped.assignments-table
+  thead
+    tr
+      th
+      th= t_model(Volunteer)
+      th= t_attr(:period_start, Assignment)
+      th= t_attr(:period_end, Assignment)
+      th= t_attr(:created_by)
+      - if policy(Assignment).show_comments?
+        th Bemerkungen
+
+  tbody
+    - assignments.each do |assignment_log|
+      - assignment = assignment_log.assignment
+      - volunteer = assignment.volunteer
+      tr
+        td.index-action-cell.hidden-print
+          - if policy(assignment).reactivate?
+            span.single-line
+              = button_link icon_span(:edit), edit_assignment_path(assignment)
+              span.m-l-10
+                em= t('.edit_for_reactivate')
+        td.index-action-cell
+          - if policy(volunteer).reactivate?
+            = link_to edit_volunteer_path(volunteer), target: '_blank', rel: 'noopener',
+                class: 'link-icon-span-text',
+                title: t('.ractivate_link_title') do
+              = icon_span(:edit)
+              span.icon-span-text= volunteer.full_name
+          - elsif policy(volunteer).show?
+            = link_to volunteer_path(volunteer), class: 'link-icon-span-text' do
+              = icon_span(:show)
+              span.icon-span-text= volunteer.full_name
+          - else
+            = volunteer.full_name
+        td= l(assignment.period_start) if assignment.period_start
+        td= l(assignment.period_end) if assignment.period_end
+        td= link_to_if policy(User).show?,
+              assignment.client.involved_authority&.full_name || assignment.creator.full_name,
+              profile_url_path(assignment.client.involved_authority || assignment.creator)
+        - if policy(Assignment).show_comments?
+          = td_truncate_content_modal(assignment.comments, 'Bemerkungen')
