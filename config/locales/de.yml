@@ -178,6 +178,9 @@ de:
       hint: Freiwillige/r kann wieder Einsätze machen, wie wenn sie/er neu akzeptiert worden wäre.<br>Hatte die/der Freiwillige vor der Beendigung ein Login auf dieser Platform, so wird dieses wieder aktiviert.<br>Es kann das selbe Login/Passwort wie vorher verwendet werden.
       confirm: Soll die/der Freiwillige wirklich reaktiviert werden?
 
+  language_names_customizations:
+    NL: Niederländisch; Flämisch
+
   # loose unasorted keys
   "false": Nein
   "true": Ja

@@ -1,12 +1,13 @@
+- tabindex_start ||= 0
 fieldset
   legend= t_attr(:address, Contact)
   .row
     .col-xs-6
-      = f.input :street, required: true
+      = f.input :street, required: true, input_html: { tabindex: tabindex_start + 1 }
     .col-xs-6
       = f.input :extended
   .row
     .col-xs-4
-      = f.input :postal_code, required: true
+      = f.input :postal_code, required: true, input_html: { tabindex: tabindex_start + 2 }
     .col-xs-8
-      = f.input :city, required: true
+      = f.input :city, required: true, input_html: { tabindex: tabindex_start + 3 }

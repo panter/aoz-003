@@ -1,4 +1,5 @@
+- tabindex_start ||= 0
 .row
   - if !f.object.client?
-    .col-xs-12.col-md-6= f.input :first_name, required: true
-    .col-xs-12.col-md-6= f.input :last_name, required: true, label: t('generic_keys.last_name')
+    .col-xs-12.col-md-6= f.input :first_name, required: true, input_html: { tabindex: tabindex_start + 1 }
+    .col-xs-12.col-md-6= f.input :last_name, required: true, label: t('generic_keys.last_name'), input_html: { tabindex: tabindex_start + 2 }
