@@ -44,10 +44,10 @@ de:
     term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values
-      trial_period: Probezeit
+      trial_period: Probezeit-Feedback
       half_year_process_email: 'Halbjahres Prozess'
       half_year_process_overdue: 'Halbjahres Erinnerung'
-      termination: Beendigung
+      termination: Abschlussevaluation
   acceptance: &id-client-acceptance
     accepted: Angemeldet
     rejected: Abgelehnt
@@ -735,7 +735,7 @@ de:
       assignment: Begleitung
       signup: Anmeldung
       trial: Probezeit
-      termination: Beendigung
+      termination: Abschlussevaluation
       half_year_process_email: 'Halbjahres Prozess'
       half_year_process_overdue: 'Halbjahres Erinnerung'
     index:

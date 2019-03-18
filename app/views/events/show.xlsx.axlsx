@@ -51,15 +51,38 @@ wb.add_worksheet(name: 'Veranstaltung') do |sheet|
   sheet.add_row(['Teilnehmerliste'], types: :string, style: col_header)
   sheet.add_row(['Teilnehmeranzahl', @event.volunteers.count], types: [:string, :integer], style: [col_header, standard_format])
   2.times { sheet.add_row }
-  sheet.add_row(['Name', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Jahrgang'], types: :string, style: col_header)
+
+  row_options = {
+    types: [
+        :string,          # 00
+        :string,          # 01
+        :string,          # 02
+        :string,          # 03
+        :string,          # 04
+        :string,          # 05
+        :integer,         # 06
+      ],
+    style: [
+        standard_format,  # 00
+        standard_format,  # 01
+        standard_format,  # 02
+        date_format,      # 03
+        standard_format,  # 04
+        standard_format,  # 05
+        standard_format,  # 06
+      ]
+  }
+
+  sheet.add_row(['Vorname', 'Nachname', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Jahrgang'], types: :string, style: col_header)
   @event.volunteers.map do |volunteer|
     [
-      volunteer.contact&.full_name,
+      volunteer.contact&.first_name,
+      volunteer.contact&.last_name,
       volunteer.contact&.primary_email,
       volunteer.accepted_at.present? ? l(volunteer.accepted_at.to_date) : nil,
       volunteer.contact&.full_address,
       volunteer.contact&.primary_phone,
-      volunteer.birth_year&.year,
+      volunteer.birth_year&.year
     ]
   end.each { |row| sheet.add_row row, row_options }
 end
