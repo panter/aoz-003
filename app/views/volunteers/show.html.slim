@@ -16,21 +16,10 @@ h1.m-b-20= @volunteer.contact.full_name
   .table-responsive
     table.table.table-no-border-top
       tbody
-        tr
-          td= t_attr(:trial_period)
-          td= t(@volunteer.trial_period)
-        tr
-          td= t_attr(:intro_course)
-          td= t(@volunteer.intro_course)
-        tr
-          td= t_attr(:bank_account)
-          td= t(@volunteer.bank_account)
-        tr
-          td= t_attr(:doc_sent)
-          td= t(@volunteer.doc_sent)
-        tr
-          td= t_attr(:evaluation)
-          td= t(@volunteer.evaluation)
+        - [:trial_period, :intro_course, :bank_account, :doc_sent, :evaluation].each do |attribute|
+          tr
+            td= t_attr(attribute)
+            td= t(@volunteer[attribute])
 
 h2.small Persönlicher Hintergrund
 .table-responsive
@@ -56,17 +45,14 @@ h2.small Persönlicher Hintergrund
       = render 'language_skills/show', speaker: @volunteer
 
       tr
-        td= t_attr(:profession)
-        td= @volunteer.profession
-      tr
-        td= t_attr(:own_kids)
-        td= @volunteer.own_kids
-      tr
-        td= t_attr(:education)
-        td= @volunteer.education
-      tr
-        td= t_attr(:motivation)
-        td= @volunteer.motivation
+        td= t_attr(:working_percent)
+        td #{@volunteer.working_percent}%
+
+      - [:profession, :own_kids, :education, :motivation].each do |attribute|
+        tr
+          td= t_attr(attribute)
+          td= @volunteer[attribute]
+
       tr
         td= t_attr(:experience)
         td
@@ -74,15 +60,11 @@ h2.small Persönlicher Hintergrund
             dl.dl-horizontal
               dt= t(@volunteer.experience)
               dd= @volunteer.volunteer_experience_desc
-      tr
-        td= t_attr(:expectations)
-        td= @volunteer.expectations
-      tr
-        td= t_attr(:strengths)
-        td= @volunteer.strengths
-      tr
-        td= t_attr(:interests)
-        td= @volunteer.interests
+
+      - [:expectations, :strengths, :interests].each do |attribute|
+        tr
+          td= t_attr(attribute)
+          td= @volunteer[attribute]
       - if @volunteer.internal?
         tr
           td= t_attr(:bank_details)
@@ -102,12 +84,10 @@ h2.small Persönlicher Hintergrund
           - else
             = link_to @volunteer.registrar.full_name, profile_url_path(@volunteer.registrar)
       - if policy(Volunteer).show_comments?
-        tr
-          td= t_attr(:comments)
-          td= @volunteer.comments
-        tr
-          td= t_attr(:additional_comments)
-          td= @volunteer.additional_comments
+        - [:comments, :additional_comments].each do |attribute|
+          tr
+            td= t_attr(attribute)
+            td= @volunteer[attribute]
 
 .row
   .col-xs-6
