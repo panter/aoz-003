@@ -80,7 +80,7 @@ fieldset
       = f.input :competent_authority
     fieldset
       legend= t_attr(:cost_unit)
-      = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true, label: false
+      = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true, label_html: { class: 'sr-only' }
 
       h4 Hinweis
       p
