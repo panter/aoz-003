@@ -129,5 +129,5 @@ fieldset
 
   - if current_user && policy(volunteer).show_comments?
     .col-xs-12.col-md-6
-      = f.input :comments
-      = f.input :additional_comments
+      = f.input :comments, input_html: { class: 'double-height' }
+      = f.input :additional_comments, input_html: { class: 'double-height' }

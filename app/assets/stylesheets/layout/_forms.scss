@@ -69,3 +69,7 @@ fieldset {
 .checkbox + .checkbox-line {
   margin-top: 0;
 }
+
+textarea.double-height {
+  min-height: 100px;
+}
