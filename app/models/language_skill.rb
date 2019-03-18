@@ -16,7 +16,8 @@ class LanguageSkill < ApplicationRecord
   }
 
   def self.languages
-    @languages ||= I18n.t('language_names').map { |key, lang| [lang, key.to_s] }.sort
+    @languages ||= I18n.t('language_names').merge(I18n.t('language_names_customizations'))
+      .map { |key, lang| [lang, key.to_s] }.sort
   end
 
 
