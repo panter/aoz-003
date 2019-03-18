@@ -43,47 +43,47 @@
         = f.input :salutation,
           as: :select,
           collection: Volunteer::SALUTATIONS,
-          include_blank: true
-        = render 'contacts/user_fields', f: c
+          include_blank: true, input_html: { tabindex: 1 }
+        = render 'contacts/user_fields', f: c, tabindex_start: 1
     .col-xs-12.col-md-6
-      = render 'contacts/address_fields', f: c
+      = render 'contacts/address_fields', f: c, tabindex_start: 3
     .col-xs-12.col-md-6
       .row
         .col-xs-12.col-md-6
-          = f.input :nationality, as: :country
+          = f.input :nationality, as: :country, input_html: { tabindex: 9 }
           = f.input :birth_year,
             as: :select,
             collection: Volunteer.year_collection,
-            include_blank: true
+            include_blank: true, input_html: { tabindex: 10 }
         .col-xs-12.col-md-6
           = f.input :additional_nationality, as: :country
           = f.input :avatar, as: :file
       .row
         .col-xs-8
-          = f.input :profession
+          = f.input :profession, input_html: { tabindex: 11 }
         .col-xs-4
-          = f.input :working_percent
+          = f.input :working_percent, input_html: { tabindex: 12 }
         .col-xs-6
-          = f.input :own_kids
+          = f.input :own_kids, input_html: { tabindex: 13 }
         .col-xs-6
-          = f.input :education
+          = f.input :education, input_html: { tabindex: 14 }
         .col-xs-12
-          = f.input :motivation
+          = f.input :motivation, input_html: { tabindex: 15 }
         .col-xs-12
-          = checkbox_toggle_collapse(f, :experience, '#experience-desc')
+          = checkbox_toggle_collapse(f, :experience, '#experience-desc', tabindex: 16)
         .col-xs-12.collapse#experience-desc
-          = f.input :volunteer_experience_desc
+          = f.input :volunteer_experience_desc, input_html: { tabindex: 17 }
     .col-xs-12.col-md-6
-      = render 'contacts/phone_fields', f: c
+      = render 'contacts/phone_fields', f: c, tabindex_start: 6
 
     .col-xs-12.col-md-6
     - if current_user.present?
       .col-xs-12.col-md-6
         fieldset.bank-data
           legend Bankdaten für Spesen
-          = checkbox_toggle_collapse(f, :waive, '.waiver-collapse', check_shows: false)
-          = f.input :bank, wrapper_html: { class: 'waiver-collapse' }
-          = f.input :iban, wrapper_html: { class: 'waiver-collapse' }
+          = checkbox_toggle_collapse(f, :waive, '.waiver-collapse', check_shows: false, tabindex: 18)
+          = f.input :bank, wrapper_html: { class: 'waiver-collapse' }, input_html: { tabindex: 19 }
+          = f.input :iban, wrapper_html: { class: 'waiver-collapse' }, input_html: { tabindex: 20 }
 
 .row
   .col-xs-12.col-md-6
