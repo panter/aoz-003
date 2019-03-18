@@ -112,7 +112,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     first('input[type="submit"]').click
 
     assert page.has_text? 'Erinnerungs-Mailing wurde erfolgreich erstellt.'
-    assert page.has_text? 'Art Beendigung'
+    assert page.has_text? 'Art Abschlussevaluation'
     assert page.has_text? 'Status Nicht versandt'
 
     assert page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.first.process_template[:subject])
