@@ -8,7 +8,7 @@
 
   .row
     .col-xs-12.col-md-4
-      = render 'email_templates/explain_panel', template_varnames: SemesterProcessMail::template_varnames[:mail]
+      = render 'email_templates/explain_panel', template_varnames: SemesterProcessMail.template_varnames.values
     .col-xs-12.col-md-8
       = render 'email_templates/subject_body_inputs', f: f
 

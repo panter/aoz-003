@@ -31,10 +31,10 @@ class EmailTemplate < ApplicationRecord
     {
       signup: [],
       assignment: [:Anrede, :Name, :EinsatzTitel, :FeedbackLink],
-      trial: ReminderMailing::TEMPLATE_VARNAMES,
-      termination: ReminderMailing::TEMPLATE_VARNAMES,
-      half_year_process_email: SemesterProcessMail.template_varnames[:mail],
-      half_year_process_overdue:  SemesterProcessMail.template_varnames[:reminder]
+      trial: ReminderMailing.template_varnames(:trial_period).values,
+      termination: ReminderMailing.template_varnames(:termination).values,
+      half_year_process_email: ReminderMailing.template_varnames(:half_year_process_email).values,
+      half_year_process_overdue: ReminderMailing.template_varnames(:half_year_process_overdue).values
     }
   end
 

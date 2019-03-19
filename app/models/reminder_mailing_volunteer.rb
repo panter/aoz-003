@@ -71,6 +71,20 @@ class ReminderMailingVolunteer < ApplicationRecord
     template % template_variables
   end
 
+  def template_variables
+    template_variables = reminder_mailing.template_varnames.map do |method_name, var_name|
+      [var_name, send(method_name)]
+    end.to_h
+
+    template_variables.default = ''
+    template_variables
+  end
+
+  ## template variable converters
+  #
+  # there needs to be a method with the name matching each value
+  # from ReminderMailing::TEMPLATE_VARNAMES
+  # Otherwise there will be a method missing error if that template variable is used
   def anrede
     I18n.t("salutation.#{volunteer.salutation}")
   end
@@ -95,30 +109,30 @@ class ReminderMailingVolunteer < ApplicationRecord
     end
   end
 
-  def template_variables
-    template_variables = ReminderMailing::TEMPLATE_VARNAMES.map do |varname|
-      [varname, send(varname.to_s.underscore)]
-    end.to_h
-
-    template_variables.default = ''
-    template_variables
-  end
-
   def email_absender
     "[#{reminder_mailing_creator_name}](mailto:"\
       "#{reminder_mailing.creator.email})"
   end
 
-  def reminder_mailing_creator_name
-    reminder_mailing.creator.profile&.contact&.natural_name ||
-      reminder_mailing.creator.email
+  def feedback_link_trial
+    "[Probezeit-Feedback erstellen](#{feedback_url})"
   end
 
-  def feedback_link
-    "[Halbjahres-Rapport erstellen](#{feedback_url})"
+  def feedback_link_termination
+    "[Abschlussevaluations-Feedback erstellen](#{feedback_url})"
+  end
+
+  def feedback_link_semester
+    "[Halbjahres-Feedback erstellen](#{feedback_url})"
   end
 
   def online_plattform_url
     "[Online-Plattform Url](#{Rails.application.routes.url_helpers.root_path})"
+  end
+
+  # template variable assisting methods
+  def reminder_mailing_creator_name
+    reminder_mailing.creator.profile&.contact&.natural_name ||
+      reminder_mailing.creator.email
   end
 end

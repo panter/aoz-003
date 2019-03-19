@@ -35,7 +35,7 @@ class ReminderMailingsController < ApplicationController
     else
       redirect_to new_email_template_path,
         notice: 'Sie müssen eine aktive E-Mailvorlage haben,
-        bevor Sie eine Beendigungs E-Mail erstellen können.'
+        bevor Sie eine Abschlussevaluations E-Mail erstellen können.'
     end
     authorize @reminder_mailing
   end

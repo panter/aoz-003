@@ -44,10 +44,10 @@ de:
     term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values
-      trial_period: Probezeit
+      trial_period: Probezeit-Feedback
       half_year_process_email: 'Halbjahres Prozess'
       half_year_process_overdue: 'Halbjahres Erinnerung'
-      termination: Beendigung
+      termination: Abschlussevaluation
   acceptance: &id-client-acceptance
     accepted: Angemeldet
     rejected: Abgelehnt
@@ -177,6 +177,9 @@ de:
       button: Freiwillige/n wieder aktivieren
       hint: Freiwillige/r kann wieder Einsätze machen, wie wenn sie/er neu akzeptiert worden wäre.<br>Hatte die/der Freiwillige vor der Beendigung ein Login auf dieser Platform, so wird dieses wieder aktiviert.<br>Es kann das selbe Login/Passwort wie vorher verwendet werden.
       confirm: Soll die/der Freiwillige wirklich reaktiviert werden?
+
+  language_names_customizations:
+    NL: Niederländisch; Flämisch
 
   # loose unasorted keys
   "false": Nein
@@ -732,7 +735,7 @@ de:
       assignment: Begleitung
       signup: Anmeldung
       trial: Probezeit
-      termination: Beendigung
+      termination: Abschlussevaluation
       half_year_process_email: 'Halbjahres Prozess'
       half_year_process_overdue: 'Halbjahres Erinnerung'
     index:

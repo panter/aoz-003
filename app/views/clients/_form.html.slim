@@ -11,23 +11,23 @@
   .col-xs-12.col-md-6
     fieldset
       legend= t_attr(:personal_particulars, Contact)
-      = f.input :salutation, as: :select, collection: Client::SALUTATIONS, include_blank: true
+      = f.input :salutation, as: :select, collection: Client::SALUTATIONS, include_blank: true, input_html: { tabindex: 1 }
       = f.simple_fields_for :contact do |c|
         .row
           .col-xs-12.col-md-6
-            = c.input :first_name, required: true
+            = c.input :first_name, required: true, input_html: { tabindex: 2 }
             = f.input :birth_year, as: :select, collection: Client.year_collection,
-              include_blank: true
-            = f.input :entry_date
+              include_blank: true, input_html: { tabindex: 4 }
+            = f.input :entry_date, input_html: { tabindex: 6 }
           .col-xs-12.col-md-6
-            = c.input :last_name, required: true, label: t_attr(:last_name)
-            = f.input :nationality, as: :country
-            = f.input :permit, collection: Client::PERMITS, as: :radio_buttons
+            = c.input :last_name, required: true, label: t_attr(:last_name), input_html: { tabindex: 3 }
+            = f.input :nationality, as: :country, input_html: { tabindex: 5 }
+            = f.input :permit, collection: Client::PERMITS, as: :radio_buttons, input_html: { tabindex: 7 }
 
   = f.simple_fields_for :contact do |c|
     .col-xs-12.col-md-6
-      = render 'contacts/address_fields', f: c
-      = render 'contacts/phone_fields', f: c
+      = render 'contacts/address_fields', f: c, tabindex_start: 7
+      = render 'contacts/phone_fields', f: c, tabindex_start: 10
 
 fieldset
   legend Sprachkenntnisse
@@ -67,9 +67,8 @@ fieldset
       = f.input :other_request
 
     fieldset
-      legend Wann sind Sie verfügbar?
+      legend Verfügbarkeit?
       = render 'availability/form', f: f
-
   .col-xs-12.col-md-6
     fieldset
       legend Interne Kriterien
@@ -79,7 +78,24 @@ fieldset
         = f.association :involved_authority, collection: @social_workers
 
       = f.input :competent_authority
-      = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true
-      - if policy(Client).show_comments?
-        = f.input :comments
-        = f.input :additional_comments
+    fieldset
+      legend= t_attr(:cost_unit)
+      = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true, label_html: { class: 'sr-only' }
+
+      h4 Hinweis
+      p
+        'Kosten in der Stadt Zürich: Vermittlung von Freiwilligen ist kostenlos.
+        br
+        'Kosten in Gemeinden: Die einmalige Vermittlungspauschale nach einer einmonatigen Probezeit beträgt:
+        br
+        'CHF 600 bei TransFair-Unterstützung der Tandems in der AOZ, Stadt Zürich
+        br
+        'CHF 800 bei TransFair-Unterstützung der Tandems vor Ort
+
+  - if policy(Client).show_comments?
+    .col-xs-12
+      hr
+    .col-xs-12.col-md-6
+      = f.input :comments, input_html: { class: 'double-height' }
+    .col-xs-12.col-md-6
+      = f.input :additional_comments, input_html: { class: 'double-height' }

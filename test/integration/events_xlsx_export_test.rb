@@ -27,9 +27,10 @@ class EventsXlsxExportTest < ActionDispatch::IntegrationTest
     assert_xls_cols_equal(wb, 6, 0, 'Datum', I18n.l(@event.date))
     assert_xls_cols_equal(wb, 7, 0, 'Beschreibung', @event.description)
     assert_xls_cols_equal(wb, 12, 0, 'Teilnehmeranzahl', @event.volunteers.count)
-    assert_xls_cols_equal(wb, 15, 0, 'Name', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Jahrgang')
+    assert_xls_cols_equal(wb, 15, 0, 'Vorname', 'Nachname', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Jahrgang')
     assert_xls_cols_equal(wb, 16, 0,
-      @event_volunteer.volunteer.full_name,
+      @event_volunteer.volunteer.contact.first_name,
+      @event_volunteer.volunteer.contact.last_name,
       @event_volunteer.volunteer.contact.primary_email,
       I18n.l(@event_volunteer.volunteer.accepted_at.to_date),
       @event_volunteer.volunteer.contact.full_address,

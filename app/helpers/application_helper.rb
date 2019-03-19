@@ -53,10 +53,10 @@ module ApplicationHelper
     }, class: html_class }
   end
 
-  def checkbox_toggle_collapse(f, field, collapse_selector, check_shows: true, label_html: nil, type: :boolean, disabled: false)
+  def checkbox_toggle_collapse(f, field, collapse_selector, check_shows: true, label_html: nil, type: :boolean, disabled: false, tabindex: nil)
     input_html = { data: { collapse: collapse_selector, check_shows: check_shows },
-                   class: 'checkbox-toggle-collapse',
-                  disabled: disabled }
+                   class: 'checkbox-toggle-collapse', disabled: disabled }
+    input_html.merge(tabindex: tabindex) if tabindex
     f.input(field, type: type, input_html: input_html, label_html: label_html)
   end
 

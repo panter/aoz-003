@@ -52,13 +52,13 @@ hr
         td= @assignment.hours.last&.hours || 0.0
 
 - else
-  h2.m-t-20 Beendigung Abschliessen
+  h2.m-t-20 Abschlussevaluation Abschliessen
 
   = simple_form_for(@assignment, url: update_terminated_at_assignment_path, method: :put) do |f|
     .row
       .col-xs-12.col-md-6
         fieldset
-          legend Rückmeldungen zur Beendigung des Einsatzes
+          legend Rückmeldungen zur Abschlussevaluation des Einsatzes
           = f.input :term_feedback_activities
           = f.input :term_feedback_success
           = f.input :term_feedback_problems

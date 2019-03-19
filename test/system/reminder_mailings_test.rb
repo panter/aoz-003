@@ -112,7 +112,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     first('input[type="submit"]').click
 
     assert page.has_text? 'Erinnerungs-Mailing wurde erfolgreich erstellt.'
-    assert page.has_text? 'Art Beendigung'
+    assert page.has_text? 'Art Abschlussevaluation'
     assert page.has_text? 'Status Nicht versandt'
 
     assert page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.first.process_template[:subject])
@@ -157,7 +157,8 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     assert_equal "Beendigung Gruppenangebot #{group_offer.title} (#{group_offer.department})",
       mailer.subject
-    assert_includes mail_body, "#{group_assignment.volunteer.contact.natural_name} Halbjahres-Rapport erstellen"
+
+    assert_includes mail_body, "#{group_assignment.volunteer.contact.natural_name} Abschlussevaluations-Feedback erstellen"
     assert_includes mail_body, "#{I18n.l group_assignment.period_start} Gruss, AOZ"
     refute_includes mailer.subject, '%{'
     refute_includes mail_body, '%{'
