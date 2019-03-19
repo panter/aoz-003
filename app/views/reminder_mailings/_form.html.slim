@@ -3,7 +3,7 @@
   = f.input_field :kind, value: @reminder_mailing.kind, as: :hidden
   .row
     .col-xs-12.col-md-4
-      = render 'email_templates/explain_panel', template_varnames: ReminderMailing::TEMPLATE_VARNAMES
+      = render 'email_templates/explain_panel', template_varnames: @reminder_mailing.template_varnames.values
     .col-xs-12.col-md-8
       = render 'email_templates/subject_body_inputs', f: f
 
