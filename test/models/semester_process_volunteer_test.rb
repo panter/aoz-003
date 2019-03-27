@@ -119,9 +119,13 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
     assert_equal 2, subject.semester_process_volunteer_missions.size
     assert_equal 1, subject.semester_process_volunteer_missions.need_feedback.size
     assert_equal 1, semester_process.semester_process_volunteers.active_missions.size
-    @group_assignment.update(period_end: time_z(2018, 7, 15))
+    @group_assignment.update(period_end: time_z(2017, 10, 31))
     assert_equal 2, subject.semester_process_volunteer_missions.size
     assert_equal 0, subject.semester_process_volunteer_missions.need_feedback.size
+    assert_equal 0, semester_process.semester_process_volunteers.active_missions.size
+    @group_assignment.update(period_end: time_z(2018, 7, 15))
+    assert_equal 2, subject.semester_process_volunteer_missions.size
+    assert_equal 1, subject.semester_process_volunteer_missions.need_feedback.size
     assert_equal 0, semester_process.semester_process_volunteers.active_missions.size
   end
 end

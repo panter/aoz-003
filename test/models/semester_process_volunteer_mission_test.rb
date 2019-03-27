@@ -10,6 +10,28 @@ class SemesterProcessVolunteerMissionTest < ActiveSupport::TestCase
       semester_process_volunteer: @sem_proc_vol)
   end
 
+  test '#need_feedback' do
+    @sem_proc_vol.semester_process.update!(semester: time_z(2018, 6, 1)..time_z(2018, 10, 31))
+    @assignment.update!(period_end: nil)
+    @group_assignment.update!(period_end: nil)
+    mission1 = create(:semester_process_volunteer_mission, mission: @assignment, semester_process_volunteer: @sem_proc_vol)
+    mission2 = create(:semester_process_volunteer_mission, mission: @group_assignment, semester_process_volunteer: @sem_proc_vol)
+    assert_includes @sem_proc_vol.semester_process_volunteer_missions.need_feedback, mission1
+    assert_includes @sem_proc_vol.semester_process_volunteer_missions.need_feedback, mission2
+    @assignment.update!(period_end: time_z(2018, 5, 1))
+    @group_assignment.update!(period_end: time_z(2017, 5, 1))
+    assert_not_includes @sem_proc_vol.semester_process_volunteer_missions.need_feedback, mission1
+    assert_not_includes @sem_proc_vol.semester_process_volunteer_missions.need_feedback, mission2
+    @assignment.update!(period_end: time_z(2018, 7, 1))
+    @group_assignment.update!(period_end: time_z(2018, 8, 1))
+    assert_includes @sem_proc_vol.semester_process_volunteer_missions.need_feedback, mission1
+    assert_includes @sem_proc_vol.semester_process_volunteer_missions.need_feedback, mission2
+    @assignment.update!(period_end: time_z(2018, 12, 1))
+    @group_assignment.update!(period_end: time_z(2019, 1, 20))
+    assert_includes @sem_proc_vol.semester_process_volunteer_missions.need_feedback, mission1
+    assert_includes @sem_proc_vol.semester_process_volunteer_missions.need_feedback, mission2
+  end
+
   test 'its_invalid_if_no_mission_is_assigned' do
     assert_not @subject.valid?
     assert_equal :insuficient_relation, @subject.errors.details[:assignment].first[:error]
