@@ -10,6 +10,10 @@ FactoryBot.define do
       user.profile&.user = user
     end
 
+    trait :superadmin do
+      role User::SUPERADMIN
+    end
+
     trait :social_worker do
       role User::SOCIAL_WORKER
     end
@@ -38,6 +42,7 @@ FactoryBot.define do
       profile {}
     end
 
+    factory :superadmin, traits: [:superadmin]
     factory :social_worker, traits: [:social_worker]
     factory :department_manager, traits: [:department_manager, :with_department]
     factory :department_manager_without_department, traits: [:department_manager]
