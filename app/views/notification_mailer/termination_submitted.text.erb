@@ -1,8 +1,11 @@
-<%= @subject %>
+<%= t('.title', email: @terminated.termination_submitted_by.email) %>
 
-- if @assignment
-  Zur Übersicht der beendeten Einsätzen:
-  <%= url_for(terminated_index_assignments_url) %>
-- else
-  Zur Übersicht der beendeten Gruppeneinsätzen:
-  <%= url_for(terminated_index_group_assignments_url) %>
+<% if @terminated.assignment? %>
+  <%= t('.link_text.terminated_assignment') %>:
+  <%= url_for(terminated_index_assignments_url(@link_params)) %>
+<% elsif @terminated.group_assignment? %>
+  <%= t('.link_text.terminated_group_assignment') %>:
+  <%= url_for(terminated_index_group_assignments_url(@link_params)) %>
+<% end %>
+
+AOZ Fachstelle Freiwilligenarbeit
