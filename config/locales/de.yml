@@ -623,6 +623,14 @@ de:
       volunteer_application: Freiwilligen Anmeldung
 
   # model name plural for controller name shortcut => t('.key')
+  notification_mailer:
+    termination_submitted:
+      title: 'Beendigung des Einsatzes bestätigt durch %{email}'
+      subject: 'Beendigung des Einsatzes bestätigt durch %{email}'
+      assignment:
+      link_text:
+        terminated_assignment: Zur Übersicht der beendeten Einsätze
+        terminated_group_assignment: Zur Übersicht der beendeten Gruppeninsätze
   assignment_pdf:
     <<: *id-generic_keys
     birthdate: Geburtsdatum
