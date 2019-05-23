@@ -18,6 +18,7 @@ variables:
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
 
 before_script:
+  - google-chrome --version
   - node --version
   - ruby --version
   - yarn --version
