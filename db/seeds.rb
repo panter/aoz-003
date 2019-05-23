@@ -177,8 +177,8 @@ def development_seed
       generate_feedback_and_hours(assignment, start_date, end_date + 3.days)
     end
   end
-  puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client,
-    TrialFeedback)
+  #puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client,
+  #  TrialFeedback)
 
   Array.new(2)
     .map { FactoryBot.create(:group_offer, department: Department.all.sample) }
@@ -204,8 +204,8 @@ def development_seed
       period_end: FFaker::Time.between(1.week.ago, 3.days.ago))
     generate_feedback_and_hours(group_assignment.group_offer, start_date, volunteer: volunteers.fourth)
   end
-  puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
-    GroupAssignment, Department, Assignment, Client)
+#  puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
+#    GroupAssignment, Department, Assignment, Client)
 
   # create ClientNotifications
   if ClientNotification.count < 1
@@ -226,10 +226,10 @@ def development_seed
     volunteer.user.update(last_sign_in_at: 2.weeks.ago, password: 'asdfasdf')
   end
 
-  puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,
-    Assignment, Contact, GroupOffer, PerformanceReport, User, BillingExpense, Department,
-    GroupOfferCategory, Profile, Volunteer, Certificate, EmailTemplate, Hour, Relative, Client,
-    Feedback, Import, ClientNotification, GroupAssignment, Journal, ReminderMailing)
+#  puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,
+#    Assignment, Contact, GroupOffer, PerformanceReport, User, BillingExpense, Department,
+#    GroupOfferCategory, Profile, Volunteer, Certificate, EmailTemplate, Hour, Relative, Client,
+#    Feedback, Import, ClientNotification, GroupAssignment, Journal, ReminderMailing)
 end
 
 DEFAULT_TEMPLATES_EMAIL_TEMPLATES = [
