@@ -32,7 +32,8 @@ class SemesterProcessesController < ApplicationController
 
   def overdue
     @semester_process.kind = :reminder
-    @volunteers = @semester_process.semester_process_volunteers.where(commited_at: nil).map(&:volunteer)
+    @volunteers = Volunteer.joins(:semester_process_volunteers)
+                           .merge(@semester_process.semester_process_volunteers.unsubmitted)
     @semester_process.build_semester_volunteers(@volunteers, preselect: true)
 
     @spvs_sorted = sort_volunteers
@@ -90,7 +91,10 @@ class SemesterProcessesController < ApplicationController
         reminder_mail_body_template:    semester_process_params[:body],
         reminder_mail_subject_template: semester_process_params[:subject]
       )
-      @volunteers = @semester_process.semester_process_volunteers.where(volunteer_id: selected_volunteers).map(&:volunteer)
+
+      @volunteers = Volunteer.joins(:semester_process_volunteers)
+                             .merge(@semester_process.semester_process_volunteers.unsubmitted)
+                             .find(selected_volunteers)
       @semester_process.build_volunteers_feedbacks_and_mails(@volunteers.map(&:id))
     end
 
