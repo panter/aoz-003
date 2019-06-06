@@ -24,7 +24,7 @@ class SemesterProcessesController < ApplicationController
 
   def overdue
     @semester_process.kind = :reminder
-    @volunteers = Volunteer.feedback_overdue(@semester_process.semester)
+    @volunteers = @semester_process.semester_process_volunteers.where(commited_at: nil).map(&:volunteer)
     @semester_process.build_semester_volunteers(@volunteers, preselect: true)
 
     @spvs_sorted = sort_volunteers
@@ -82,12 +82,12 @@ class SemesterProcessesController < ApplicationController
       @semester_process.build_semester_volunteers(@volunteers, selected: selected_volunteers, save_records: true)
       @semester_process.build_volunteers_feedbacks_and_mails
     else
-      @semester_process.update_attributes(
+      @semester_process.assign_attributes(
         reminder_mail_body_template:    semester_process_params[:body],
         reminder_mail_subject_template: semester_process_params[:subject]
       )
-      @volunteers = Volunteer.feedback_overdue(@semester_process.semester)
-      @semester_process.build_volunteers_feedbacks_and_mails(selected_volunteers)
+      @volunteers = @semester_process.semester_process_volunteers.where(volunteer_id: selected_volunteers).map(&:volunteer)
+      @semester_process.build_volunteers_feedbacks_and_mails(@volunteers.map(&:id))
     end
 
     if @semester_process.save
