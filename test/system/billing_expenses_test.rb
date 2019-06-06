@@ -182,8 +182,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Anzeigen'
 
     assert_text "Spesenauszahlung an #{@volunteer1}"
-    assert_text 'Kostenstelle 4182'
-    assert_text 'Konto 4621'
+    assert_text 'Kostenstelle 3120000'
+    assert_text 'Konto 317000153'
     assert_text 'zu überweisender Betrag Fr. 50.00'
     assert_text "Nachname #{@volunteer1.contact.last_name}"
     assert_text "Vorname #{@volunteer1.contact.first_name}"

@@ -18,6 +18,7 @@ variables:
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
 
 before_script:
+  - google-chrome --version
   - node --version
   - ruby --version
   - yarn --version
@@ -34,6 +35,9 @@ test:
 system:
   stage: test
   script:
+    - CHROME_VERSION=$(google-chrome --version | sed -r 's/[^0-9]+([0-9]+\.[0-9]+\.[0-9]+).*/\1/g')
+    - CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+    - bundle exec chromedriver-update $CHROMEDRIVER_VERSION
     - bundle exec rails test:system
   artifacts:
     paths:

@@ -33,13 +33,13 @@ def assignment_generator(create_day, start_date = nil, end_date = nil, terminate
   client.update(created_at: create_day - 5.days)
   start_date ||= FFaker::Time.between(create_day, create_day + 50.days)
   assignment = FactoryBot.create(:assignment, volunteer: volunteer, period_start: start_date,
-    period_end: end_date, creator: creator,
-    client: FactoryBot.create(:client, acceptance: 'accepted', user: creator))
+                                 period_end: end_date, creator: creator,
+                                 client: FactoryBot.create(:client, acceptance: 'accepted', user: creator))
   assignment.update(created_at: create_day)
   if terminated_at.present?
     assignment.update(period_end_set_by: creator, termination_submitted_by: assignment.volunteer.user,
-      termination_submitted_at: FFaker::Time.between(end_date, terminated_at), termination_verified_by: creator,
-      termination_verified_at: terminated_at)
+                      termination_submitted_at: FFaker::Time.between(end_date, terminated_at), termination_verified_by: creator,
+                      termination_verified_at: terminated_at)
   end
   assignment
 end
@@ -51,7 +51,7 @@ def generate_feedback_and_hours(hourable, start_date, end_date = nil, volunteer:
   hour = FactoryBot.create(:hour, volunteer: volunteer, hourable: hourable, meeting_date: meeting_date)
   hour.update(created_at: meeting_date + 1.day)
   trial_feedback = FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
-    trial_feedbackable: hourable)
+                                     trial_feedbackable: hourable)
   trial_feedback.update(created_at: FFaker::Time.between(start_date + 6.weeks, start_date + 8.weeks))
 end
 
@@ -67,17 +67,17 @@ end
 
 def development_seed
   FactoryBot.create(:department_manager, email: "department_manager#{EMAIL_DOMAIN}",
-      password: 'asdfasdf')
+                    password: 'asdfasdf')
   FactoryBot.create(:volunteer).user
     .update(password: 'asdfasdf', email: "volunteer#{EMAIL_DOMAIN}")
   puts_model_counts('First Users created', User, Profile, Contact, Volunteer, Client, Department)
 
   superadmin_and_social_worker = [:superadmin, :social_worker].map do |role|
     FactoryBot.create(:user, role: role, email: "#{role}#{EMAIL_DOMAIN}",
-      password: 'asdfasdf')
+                      password: 'asdfasdf')
   end
   puts_model_counts('Superadmin and SocialWorker created', User, Volunteer, Department, Client,
-    Volunteer)
+                    Volunteer)
 
   superadmin_and_social_worker.each do |user|
     next if user.clients.count > 1
@@ -144,7 +144,7 @@ def development_seed
       start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
       end_date = FFaker::Time.between(start_date + 100.days, 2.days.ago)
       assignment = assignment_generator(start_date - 10.days, start_date, end_date,
-        terminated_at: end_date + 10.days)
+                                        terminated_at: end_date + 10.days)
       generate_feedback_and_hours(assignment, start_date, end_date + 10.days)
       assignment
     end
@@ -156,7 +156,7 @@ def development_seed
       start_date = FFaker::Time.between(create_day, create_day + 50.days)
       end_date = FFaker::Time.between(create_day + 100.days, 1.year.ago.end_of_year - 2.days)
       assignment = assignment_generator(start_date - 10.days, start_date, end_date,
-        terminated_at: end_date + 10.days)
+                                        terminated_at: end_date + 10.days)
       generate_feedback_and_hours(assignment, start_date, end_date + 10.days)
     end
 
@@ -165,7 +165,7 @@ def development_seed
     start_date = FFaker::Time.between(create_day, create_day + 50.days)
     end_date = FFaker::Time.between(Time.zone.now.beginning_of_year + 2.days, 3.days.ago)
     assignment = assignment_generator(create_day, start_date, end_date,
-      terminated_at: end_date + 3.days)
+                                      terminated_at: end_date + 3.days)
     generate_feedback_and_hours(assignment, start_date, end_date + 3.days)
 
     3.times do
@@ -173,12 +173,13 @@ def development_seed
       start_date = FFaker::Time.between(create_day, create_day + 50.days)
       end_date = FFaker::Time.between(create_day + 100.days, 2.years.ago.end_of_year - 2.days)
       assignment = assignment_generator(create_day, start_date, end_date,
-        terminated_at: end_date + 3.days)
+                                        terminated_at: end_date + 3.days)
       generate_feedback_and_hours(assignment, start_date, end_date + 3.days)
     end
   end
-  puts_model_counts('After Assignment created', User, Volunteer, Feedback, Hour, Assignment, Client,
-    TrialFeedback)
+
+  puts_model_counts('After Assignment created', User, Volunteer, Hour, Assignment, Client,
+                    TrialFeedback)
 
   Array.new(2)
     .map { FactoryBot.create(:group_offer, department: Department.all.sample) }
@@ -187,7 +188,7 @@ def development_seed
     volunteers = Array.new(4).map { FactoryBot.create(:volunteer_seed) }
     start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
     group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
-      period_start: start_date, period_end: nil)
+                                              period_start: start_date, period_end: nil)
     generate_feedback_and_hours(group_assignment.group_offer, start_date, volunteer: volunteers.first)
     handle_reminder_mailing_seed(:trial_period, [group_assignment])
 
@@ -195,17 +196,17 @@ def development_seed
     start_date = FFaker::Time.between(6.months.ago, 12.months.ago)
     end_date = FFaker::Time.between(1.week.ago, 3.days.ago)
     group_assignment = GroupAssignment.create(volunteer: volunteers.third, group_offer: group_offer,
-      period_start: start_date, period_end: end_date)
+                                              period_start: start_date, period_end: end_date)
     generate_feedback_and_hours(group_assignment.group_offer, start_date, volunteer: volunteers.third)
     handle_reminder_mailing_seed(:termination, [group_assignment])
 
     group_assignment = GroupAssignment.create(volunteer: volunteers.fourth, group_offer: group_offer,
-      period_start: FFaker::Time.between(6.months.ago, 12.months.ago),
-      period_end: FFaker::Time.between(1.week.ago, 3.days.ago))
+                                              period_start: FFaker::Time.between(6.months.ago, 12.months.ago),
+                                              period_end: FFaker::Time.between(1.week.ago, 3.days.ago))
     generate_feedback_and_hours(group_assignment.group_offer, start_date, volunteer: volunteers.fourth)
   end
-  puts_model_counts('After GroupAssignment created', User, Volunteer, Feedback, Hour, GroupOffer,
-    GroupAssignment, Department, Assignment, Client)
+  puts_model_counts('After GroupAssignment created', User, Volunteer, Hour, GroupOffer,
+                    GroupAssignment, Department, Assignment, Client)
 
   # create ClientNotifications
   if ClientNotification.count < 1
@@ -227,9 +228,9 @@ def development_seed
   end
 
   puts_model_counts('Total Summup', GroupAssignmentLog, LanguageSkill, ReminderMailingVolunteer,
-    Assignment, Contact, GroupOffer, PerformanceReport, User, BillingExpense, Department,
-    GroupOfferCategory, Profile, Volunteer, Certificate, EmailTemplate, Hour, Relative, Client,
-    Feedback, Import, ClientNotification, GroupAssignment, Journal, ReminderMailing)
+                    Assignment, Contact, GroupOffer, PerformanceReport, User, BillingExpense, Department,
+                    GroupOfferCategory, Profile, Volunteer, Certificate, EmailTemplate, Hour, Relative, Client,
+                    Import, ClientNotification, GroupAssignment, Journal, ReminderMailing)
 end
 
 DEFAULT_TEMPLATES_EMAIL_TEMPLATES = [

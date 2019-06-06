@@ -802,6 +802,14 @@ de:
   hours:
     new:
       report_hours: "Stunden erfassen"
+  semester_processes:
+    create:
+      notice: Der Semesterprozess wurde erfolgreich erstellt und die emails wurden versendet.
+    update:
+      notice:
+        mail: Der Semesterprozess wurde erfolgreich aktualisiert.
+        reminder: Die errinnerungs emails wurden erfolgreich erstellt und versendet.
+        missing_template: Sie müssen eine aktive E-Mailvorlage haben, bevor Sie eine Halbjahres Erinnerung erstellen können.
   semester_process_volunteers:
     show:
       title: 'Semester Prozess %{semester} von %{name}'
