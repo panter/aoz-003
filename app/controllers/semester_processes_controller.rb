@@ -14,17 +14,26 @@ class SemesterProcessesController < ApplicationController
 
   def create
     @semester_process = SemesterProcess.new(semester_process_params.slice(:kind, :semester))
-    update_or_create
+    if update_or_create
+      redirect_to semester_process_volunteers_path, notice: I18n.t('semester_processes.create.notice')
+    else
+      render :new
+    end
   end
 
   def update
     @save = params[:save_records]
-    update_or_create
+    if update_or_create
+      redirect_to semester_process_volunteers_path, notice: I18n.t("semester_processes.update.notice.#{semester_process_params[:kind]}")
+    else
+      render :new
+    end
   end
 
   def overdue
     @semester_process.kind = :reminder
-    @volunteers = Volunteer.feedback_overdue(@semester_process.semester)
+    @volunteers = Volunteer.joins(:semester_process_volunteers)
+                           .merge(@semester_process.semester_process_volunteers.unsubmitted)
     @semester_process.build_semester_volunteers(@volunteers, preselect: true)
 
     @spvs_sorted = sort_volunteers
@@ -35,9 +44,7 @@ class SemesterProcessesController < ApplicationController
       template = EmailTemplate.half_year_process_overdue.active.first.slice(:subject, :body)
       @semester_process.assign_attributes(reminder_mail_body_template: template[:body], reminder_mail_subject_template: template[:subject])
     else
-      redirect_to new_email_template_path,
-        notice: 'Sie müssen eine aktive E-Mailvorlage haben,
-        bevor Sie eine Halbjahres Erinnerung erstellen können.'
+      redirect_to new_email_template_path, notice: I18n.t('semester_processes.update.notice.missing_template')
     end
   end
 
@@ -55,9 +62,7 @@ class SemesterProcessesController < ApplicationController
       template = EmailTemplate.half_year_process_email.active.first.slice(:subject, :body)
       @semester_process.assign_attributes(mail_body_template: template[:body], mail_subject_template: template[:subject])
     else
-      redirect_to new_email_template_path,
-        notice: 'Sie müssen eine aktive E-Mailvorlage haben,
-        bevor Sie eine Halbjahres Erinnerung erstellen können.'
+      redirect_to new_email_template_path, notice: I18n.t('semester_processes.update.notice.missing_template')
     end
   end
 
@@ -82,19 +87,18 @@ class SemesterProcessesController < ApplicationController
       @semester_process.build_semester_volunteers(@volunteers, selected: selected_volunteers, save_records: true)
       @semester_process.build_volunteers_feedbacks_and_mails
     else
-      @semester_process.update_attributes(
+      @semester_process.assign_attributes(
         reminder_mail_body_template:    semester_process_params[:body],
         reminder_mail_subject_template: semester_process_params[:subject]
       )
-      @volunteers = Volunteer.feedback_overdue(@semester_process.semester)
-      @semester_process.build_volunteers_feedbacks_and_mails(selected_volunteers)
+
+      @volunteers = Volunteer.joins(:semester_process_volunteers)
+                             .merge(@semester_process.semester_process_volunteers.unsubmitted)
+                             .find(selected_volunteers)
+      @semester_process.build_volunteers_feedbacks_and_mails(@volunteers.map(&:id))
     end
 
-    if @semester_process.save
-      redirect_to semester_process_volunteers_path, notice: 'Semester process was successfully created and emails delivered.'
-    else
-      render :new
-    end
+    @semester_process.save
   end
 
   def set_semester_process
