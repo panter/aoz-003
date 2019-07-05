@@ -33,6 +33,7 @@ class VolunteersXlsxExportTest < ActionDispatch::IntegrationTest
       'Anmeldedatum',
       'Aktualisiert am',
       'Anzahl begleitungen',
+      'Anzahl Gruppenangebote',
       'Spesenverzicht',
       'Einführungskurs besucht'
     )
