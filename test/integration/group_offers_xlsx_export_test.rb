@@ -23,7 +23,9 @@ class GroupOffersXlsxExportTest < ActionDispatch::IntegrationTest
       'Dauer',
       'FW-Nachfrage',
       'Verantwortliche/r',
-      'Freiwillige'
+      'Freiwillige',
+      'Erstellt am',
+      'Angebotsenddatum'
     )
     assert_xls_cols_equal(wb, 2, 1, GroupOffer.first.title)
   end
