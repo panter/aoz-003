@@ -333,6 +333,7 @@ de:
         cost_unit: Kostenträger
         city: Stadt
         competent_authority: Anmeldende Stelle
+        other_authorities: Weitere involvierte Stellen
         date_of_year: Geburtsjahr
         education: Beruf oder Ausbildung im Herkunftsland
         entry_date: Einreisedatum

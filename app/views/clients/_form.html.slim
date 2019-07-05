@@ -66,9 +66,6 @@ fieldset
       = f.input :age_request, collection: Client::AGE_REQUESTS, default: :age_no_matter
       = f.input :other_request
 
-    fieldset
-      legend Verfügbarkeit?
-      = render 'availability/form', f: f
   .col-xs-12.col-md-6
     fieldset
       legend Interne Kriterien
@@ -78,6 +75,16 @@ fieldset
         = f.association :involved_authority, collection: @social_workers
 
       = f.input :competent_authority
+      = f.input :other_authorities
+
+.row
+  .col-xs-12.col-md-6
+    fieldset
+      legend Verfügbarkeit?
+      = render 'availability/form', f: f
+
+.row
+  .col-xs-12.col-md-6
     fieldset
       legend= t_attr(:cost_unit)
       = f.input :cost_unit, collection: Client.cost_unit_collection, include_blank: true, label_html: { class: 'sr-only' }
