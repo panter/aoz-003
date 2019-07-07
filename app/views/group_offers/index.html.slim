@@ -51,7 +51,7 @@ table.table.table-striped
       th= sort_link @q, :group_offer_category_category_name, t_attr(:group_offer_category)
       th= sort_link @q, :offer_type, t_attr(:external, GroupOffer)
       th= sort_link @q, :created_at
-      th= sort_link @q, :period_end, 'Aktualisiert am'
+      th= sort_link @q, :period_end
 
   tbody
     - @group_offers.each do |offer|
