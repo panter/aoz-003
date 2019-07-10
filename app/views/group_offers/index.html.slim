@@ -50,6 +50,8 @@ table.table.table-striped
       th= t_attr(:volunteers)
       th= sort_link @q, :group_offer_category_category_name, t_attr(:group_offer_category)
       th= sort_link @q, :offer_type, t_attr(:external, GroupOffer)
+      th= sort_link @q, :created_at
+      th= sort_link @q, :period_end
 
   tbody
     - @group_offers.each do |offer|
@@ -97,6 +99,8 @@ table.table.table-striped
             br
         td= link_to offer.group_offer_category.category_name, url_for(q: search_parameters.merge(group_offer_category_id_eq: offer.group_offer_category.id))
         td= t_attr(offer.external? ? :external : :internal, GroupOffer)
+        td= offer.created_at
+        td= offer.period_end
 
 = bootstrap_paginate(@group_offers)
 
