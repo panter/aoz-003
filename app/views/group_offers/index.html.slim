@@ -58,6 +58,8 @@ table.table.table-striped
           = button_link icon_span(:show), group_offer_path(offer), title: 'Anzeigen/Freiwillige hinzufügen'
           - if policy(offer).edit?
             = button_link icon_span(:edit), edit_group_offer_path(offer), title: 'Bearbeiten'
+          - if policy(offer).show?
+          = button_link icon_span(:journal), group_offer_journals_path(offer), title: 'Journal'
         td.button-acceptance= assignment_status_badge(offer)
         td= offer.title
         td

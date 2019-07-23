@@ -1,6 +1,6 @@
 = simple_form_for [@journaled, @journal] do |f|
   = simple_error_notice f
-  h1= @journaled.contact.full_name
+  h1= @journaled.try(:contact).try(:full_name)
   .row
     .col-xs-12.col-md-2= f.input :category, collection: Journal::CATEGORIES, include_blank: false
     .col-xs-12.col-md-10= f.input :title
