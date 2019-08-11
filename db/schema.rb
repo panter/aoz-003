@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190703153811) do
+ActiveRecord::Schema.define(version: 20190806075109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -815,6 +815,7 @@ ActiveRecord::Schema.define(version: 20190703153811) do
     t.datetime "last_billing_expense_on"
     t.bigint "reactivated_by_id"
     t.datetime "reactivated_at"
+    t.bigint "secondary_department_id"
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
     t.index ["active"], name: "index_volunteers_on_active"

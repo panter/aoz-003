@@ -19,6 +19,7 @@
 
         = f.input :external, input_html: { data: { hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
         = f.association :department, collection: Department.name_asc
+        = f.association :secondary_department, collection: Department.name_asc
 
     .col-xs-12.col-md-4
       fieldset.checklist

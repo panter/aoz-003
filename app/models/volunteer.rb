@@ -31,6 +31,7 @@ class Volunteer < ApplicationRecord
   belongs_to :reactivated_by, class_name: 'User', inverse_of: 'reactivated_volunteers',
     optional: true
   belongs_to :department, optional: true
+  belongs_to :secondary_department, class_name: 'Department'
 
   has_one :registrar_department, through: :registrar
 
