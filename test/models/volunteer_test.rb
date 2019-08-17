@@ -220,11 +220,10 @@ class VolunteerTest < ActiveSupport::TestCase
   end
   test 'volunteer associates to a secondary department' do
     department = create :department
-    3.times { volunteer = create :volunteer, secondary_department: department }
+    volunteer = create :volunteer, secondary_department: department
+    assert_equal volunteer.reload.secondary_department, department 
 
-    department.reload.volunteers.each do |volunteer|
-      assert_equal volunteer.secondary_department, department
-    end
+ 
   end
 
   test 'volunteer can be assignable to department' do
