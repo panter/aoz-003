@@ -25,6 +25,7 @@ de:
     updated_at: Aktualisiert am
     created_by: Angemeldet von
     department: Standort
+    secondary_department: Zweite Standort
     hours: Stunden
     languages: Sprachen
     minutes: Minuten
