@@ -8,7 +8,7 @@ class VolunteerPolicy < ApplicationPolicy
     def resolve
       return all if superadmin?
       if department_manager?
-        return scope.where(department: user.department).or(scope.assignable_to_department)
+        return scope.in_department_or_secondary_department(user.department).or(scope.assignable_to_department)
       end
       none
     end
