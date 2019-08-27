@@ -1,20 +1,20 @@
-- if @current_assignments.try(:any?) || @current_group_assignments.try(:any?)
+- if @current_assignments.any? || @current_group_assignments.any?
   h2.small Aktuelle Einsätze
   - if @current_assignments.any?
     h3.small#assignments Begleitungen
     = render 'assignments/client_volunteer_index', assignments: @current_assignments
 
-  - if @current_group_assignments.try(:any?)
+  - if @current_group_assignments.any?
     h3.small#assignments Gruppenangebote
     = render 'group_assignments/volunteer_group_assignments', group_assignments: @current_group_assignments, editable: true
 
-- if @archived_assignments.try(:any?) || @archived_group_assignments.try(:any?)
+- if @archived_assignments.any? || @archived_group_assignments.any?
   h2.small Archivierte Einsätze
   - if @archived_assignments.any?
     h3.small Begleitungen
     = render 'assignment_logs/volunteer_index', assignment_logs: @archived_assignments
 
-  - if @archived_group_assignments.try(:any?)
+  - if @archived_group_assignments.any?
     h3.small Gruppenangebote
     = render 'group_assignment_logs/volunteer_index', group_assignment_logs: @archived_group_assignments
 hr
