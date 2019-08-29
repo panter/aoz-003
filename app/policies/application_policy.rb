@@ -84,7 +84,7 @@ class ApplicationPolicy
   end
 
   def departments_record?
-    record_present? && user.department.include?(record.department)
+    record_present? && (user.department.include?(record.department) || user.department.include?(record.secondary_department))
   end
 
   def user_owns_record?
