@@ -7,7 +7,7 @@ table.table.table-striped.assignment-logs-table
       th= t_attr(:period_end, Assignment)
       th Fallführende Stelle
       - if policy(Assignment).show_comments?
-        th= t_attr(:comments)
+        th Rückmeldung
       th colspan=2
   tbody
     - assignment_logs.each do |assignment_log|
@@ -50,7 +50,7 @@ table.table.table-striped.assignment-logs-table
         td= link_to_if(assignment && policy(assignment).show?,
           t_action(:show), assignment) { '' }
         - if policy(Assignment).show_comments?
-          = td_truncate_content_modal(assignment.comments, 'Bemerkungen')
+          = td_truncate_content_modal(assignment.comments, 'Rückmeldung')
         td.index-action-cell.hidden-print
           span
             - unless assignment.volunteer.external?

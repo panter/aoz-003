@@ -12,7 +12,7 @@
         th= sort_link @q, :period_end, t_attr(:period_end, Assignment)
         th= 'Fallführende Stelle'
         - if policy(Assignment).show_comments?
-          th= t_attr(:comments)
+          th Rückmeldung
         th.hidden-print colspan='4'
 
     tbody
