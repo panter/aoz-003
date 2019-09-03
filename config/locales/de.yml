@@ -919,7 +919,7 @@ de:
       total_created_assignments: Neu erstellte Gruppeneinsätze
       total_started_assignments: Gestartete Gruppeneinsätze
       total_active_assignments: Aktive Gruppeneinsätze
-      total_ended_assignments: Beendete Gruppeneinsätze
+      total_ended_assignments: Beendete Freiwillige
       total_assignments: Total aller Gruppeneinsätze (Aktive und Inaktive und Beendete)
     index:
       new_report: Neuen Report erstellen
