@@ -95,7 +95,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     assert page.has_link? 'Beendete Einsätze'
 
     click_link 'Beendete Einsätze'
-    assert page.has_text? 'Beendete Gruppeneinsätze'
+    assert page.has_text? 'Beendete Freiwillige'
 
     click_link 'Filter aufheben'
 
@@ -169,7 +169,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     assert page.has_link? 'Beendete Einsätze'
 
     click_link 'Beendete Einsätze'
-    assert page.has_text? 'Beendete Gruppeneinsätze'
+    assert page.has_text? 'Beendete Freiwillige'
 
     click_link 'Filter aufheben'
 

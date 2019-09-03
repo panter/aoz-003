@@ -65,7 +65,7 @@ h2= @group_offer.title
         td= @group_offer.schedule_details
 
 - if @group_offer.group_assignments.unterminated.any?
-  h2 Aktuelle Gruppeneinsätze
+  h2 Aktuelle Freiwillige
   .table-responsive.assignments-table
     table.table.table-no-border-top
       thead
@@ -85,7 +85,7 @@ h2= @group_offer.title
             td= l(group_assignment.period_end) if group_assignment.period_end
 
 - if @group_offer.group_assignment_logs.any?
-  h2 Archivierte Gruppeneinsätze
+  h2 Archivierte Freiwillige
   .table-responsive.log-table.m-b-20
     table.table.table-no-border-top
       thead
