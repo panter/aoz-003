@@ -84,10 +84,12 @@ h2.small Persönlicher Hintergrund
           - else
             = link_to @volunteer.registrar.full_name, profile_url_path(@volunteer.registrar)
       - if policy(Volunteer).show_comments?
-        - [:comments, :additional_comments].each do |attribute|
           tr
-            td= t_attr(attribute)
-            td= @volunteer[attribute]
+            td= t_attr(:comments_internal)
+            td= @volunteer.comments
+          tr
+            td= t_attr(:additional_comments_internal)
+            td= @volunteer.additional_comments
 
 .row
   .col-xs-6

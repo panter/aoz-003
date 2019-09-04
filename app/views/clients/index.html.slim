@@ -32,7 +32,7 @@ h1 Klient/innen
         th.truncate-th
           span= sort_link @q, :created_at, t_attr(:created_at, Client)
         - if policy(Client).show_comments?
-          th= t_attr(:comments, Client)
+          th= t_attr(:comments_internal, Client)
     tbody
       = render @clients
 

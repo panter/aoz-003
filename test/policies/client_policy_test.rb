@@ -30,11 +30,11 @@ class ClientPolicyTest < PolicyAssertions::Test
 
   test 'social_worker_has_limited_access' do
     assert_permit(@social_worker, Client,
-      *actions_list(:index, :search, :new, :create, :show), 'show_comments?')
-    assert_permit(@social_worker, @social_client, *actions_list(:edit, :update, :destroy), 'show_comments?')
-    assert_permit(@social_worker, @social_involved, *actions_list(:edit, :update, :destroy), 'show_comments?')
-    refute_permit(@social_worker, create(:client), *actions_list(:edit, :update, :set_terminated, :destroy))
-    refute_permit(@social_worker, Client, 'superadmin_privileges?', *actions_list(:set_terminated))
+      *actions_list(:index, :search, :new, :create, :show))
+    assert_permit(@social_worker, @social_client, *actions_list(:edit, :update, :destroy))
+    assert_permit(@social_worker, @social_involved, *actions_list(:edit, :update, :destroy))
+    refute_permit(@social_worker, create(:client), *actions_list(:edit, :update, :set_terminated, :destroy), 'show_comments?')
+    refute_permit(@social_worker, Client, 'superadmin_privileges?', *actions_list(:set_terminated), 'show_comments?')
   end
 
   test 'superadmin_scopes_all_clients' do
