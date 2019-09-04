@@ -21,6 +21,8 @@ de:
     other: Weiteres
     additional_comments: Sonstige Bemerkungen
     comments: Bemerkungen
+    additional_comments_internal: Sonstige Bemerkungen [intern]
+    comments_internal: Bemerkungen [intern]
     created_at: Erstellt am
     updated_at: Aktualisiert am
     created_by: Angemeldet von
