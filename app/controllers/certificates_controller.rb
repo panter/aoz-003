@@ -11,9 +11,10 @@ class CertificatesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: pdf_file_name(@certificate),
+        render pdf: "Nachweis-#{@certificate.id}-#{@certificate&.updated_at.strftime '%F'}",
           show_as_html: params.key?('debug'),
           layout: 'certificate.pdf',
+          template: 'certificates/show.pdf.slim',
           zoom: 1.5,
           dpi: 600,
           margin: { top: 0, bottom: 0, left: 0, right: 0 }
