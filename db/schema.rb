@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190314100216) do
+ActiveRecord::Schema.define(version: 20190806075109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20190314100216) do
     t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.string "pdf_file_name"
     t.string "pdf_content_type"
-    t.integer "pdf_file_size"
+    t.bigint "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.bigint "submitted_by_id"
     t.bigint "reactivated_by_id"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 20190314100216) do
     t.text "additional_comments"
     t.bigint "reactivated_by_id"
     t.datetime "reactivated_at"
+    t.text "other_authorities"
     t.index ["acceptance"], name: "index_clients_on_acceptance"
     t.index ["accepted_at"], name: "index_clients_on_accepted_at"
     t.index ["birth_year"], name: "index_clients_on_birth_year"
@@ -383,7 +384,7 @@ ActiveRecord::Schema.define(version: 20190314100216) do
     t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.string "pdf_file_name"
     t.string "pdf_content_type"
-    t.integer "pdf_file_size"
+    t.bigint "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.bigint "submitted_by_id"
     t.bigint "reactivated_by_id"
@@ -553,7 +554,7 @@ ActiveRecord::Schema.define(version: 20190314100216) do
     t.datetime "updated_at", null: false
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.integer "avatar_file_size"
+    t.bigint "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.datetime "deleted_at"
     t.boolean "flexible", default: false
@@ -771,7 +772,7 @@ ActiveRecord::Schema.define(version: 20190314100216) do
     t.datetime "deleted_at"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.integer "avatar_file_size"
+    t.bigint "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.bigint "user_id"
     t.string "rejection_type"
@@ -814,6 +815,7 @@ ActiveRecord::Schema.define(version: 20190314100216) do
     t.datetime "last_billing_expense_on"
     t.bigint "reactivated_by_id"
     t.datetime "reactivated_at"
+    t.bigint "secondary_department_id"
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
     t.index ["active"], name: "index_volunteers_on_active"

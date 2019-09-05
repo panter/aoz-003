@@ -28,9 +28,11 @@ h1 Klient/innen
         th.truncate-th
           span= sort_link @q, :competent_authority, t_attr(:competent_authority, Client)
         th.truncate-th
+          span= sort_link @q, :other_authorities, t_attr(:other_authorities, Client)
+        th.truncate-th
           span= sort_link @q, :created_at, t_attr(:created_at, Client)
         - if policy(Client).show_comments?
-          th= t_attr(:comments, Client)
+          th= t_attr(:comments_internal, Client)
     tbody
       = render @clients
 

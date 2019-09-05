@@ -17,7 +17,7 @@ tr
         assignment.client.involved_authority&.full_name || assignment.creator.full_name,
         profile_url_path(assignment.client.involved_authority || assignment.creator)
   - if policy(Assignment).show_comments?
-    = td_truncate_content_modal(assignment.comments, 'Bemerkungen')
+    = td_truncate_content_modal(assignment.comments, 'Rückmeldung')
   - if controller_name == 'volunteers' && !assignment.volunteer.external?
     - if policy(TrialFeedback).index?
       td.index-action-cell.hidden-print

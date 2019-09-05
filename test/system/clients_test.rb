@@ -47,8 +47,9 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Aktuelle Tätigkeiten', with: 'asdfasdf'
     fill_in 'Interessen', with: 'asdfasdf'
     select('Angemeldet', from: 'Prozess')
-    fill_in 'Bemerkungen', with: 'asdfasdf'
+    fill_in 'Bemerkungen [intern]', with: 'asdfasdf'
     fill_in 'Anmeldende Stelle', with: 'asdfasdf'
+    fill_in 'Weitere involvierte Stellen', with: 'asdfasdf'
     select @social_worker.full_name, from: 'Fallführende Stelle'
     select('Gemeinde', from: 'Kostenträger')
     page.check('client_evening')

@@ -430,7 +430,7 @@ class VolunteersTest < ApplicationSystemTestCase
     assert_equal volunteer.reload.department, department
   end
 
-  test 'department_manager can edit volunteer of assigned to her department' do
+  test 'department_manager can edit volunteer assigned to her department' do
     volunteer = Volunteer.last
     department = create :department
     department_manager = create :department_manager, department: [department]
@@ -445,6 +445,22 @@ class VolunteersTest < ApplicationSystemTestCase
 
     assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
     assert_equal volunteer.reload.department, department
+  end
+  test 'department_manager can edit volunteer assigned to her department with secondary department' do
+    volunteer = Volunteer.last
+    department = create :department
+    department_manager = create :department_manager, department: [department]
+
+    volunteer.update secondary_department: department
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    select department.contact.last_name, from: 'Zweiter Standort'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert page.has_text? 'Freiwillige/r wurde erfolgreich aktualisiert.'
+    assert_equal volunteer.reload.secondary_department, department
   end
 
   test 'department_manager can not edit volunteer assigned to another department' do

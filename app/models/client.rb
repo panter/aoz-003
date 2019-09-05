@@ -11,7 +11,7 @@ class Client < ApplicationRecord
 
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
-  PERMITS = [:N, :B, :'B-FL', :'VA-FL', :'VA-Ausl', :C, :CH].freeze
+  PERMITS = [:N, :B, :'B-FL', :'F-FL', :'F-A', :C, :CH].freeze
   SALUTATIONS = [:mrs, :mr, :family].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 

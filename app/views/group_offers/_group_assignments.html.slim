@@ -1,9 +1,9 @@
 - if @group_offer.group_assignments.unterminated.any?
-  h2 Aktuelle Gruppeneinsätze
+  h2 Aktuelle Freiwillige
   = render 'group_assignments_index', group_assignments: @group_offer.group_assignments
 
 - if @group_offer.group_assignment_logs.any?
-  h2 Archivierte Gruppeneinsätze
+  h2 Archivierte Freiwillige
   .table-responsive.log-table.m-b-20
     table.table.table-no-border-top
       thead

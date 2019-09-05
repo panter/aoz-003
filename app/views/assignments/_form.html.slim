@@ -28,7 +28,7 @@
       = f.input :period, as: :date_range_picker, label: false
     - if policy(Assignment).show_comments?
       .col-xs-12.col-md-6
-        = f.input :comments
+        = f.input :comments, label: 'Rückmeldung'
       .col-xs-12.col-md-6
         = f.input :additional_comments
 

@@ -31,6 +31,7 @@ class Volunteer < ApplicationRecord
   belongs_to :reactivated_by, class_name: 'User', inverse_of: 'reactivated_volunteers',
     optional: true
   belongs_to :department, optional: true
+  belongs_to :secondary_department, class_name: 'Department', optional: true
 
   has_one :registrar_department, through: :registrar
 
@@ -310,6 +311,14 @@ class Volunteer < ApplicationRecord
   }
 
   scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
+
+  scope :in_department_or_secondary_department, lambda { |department = nil|
+    return all unless department
+
+    where(department: department).or(
+      where(secondary_department: department)
+    )
+  }
 
   def verify_and_update_state
     update(active: active?, activeness_might_end: relevant_period_end_max)

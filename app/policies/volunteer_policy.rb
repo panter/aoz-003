@@ -8,7 +8,7 @@ class VolunteerPolicy < ApplicationPolicy
     def resolve
       return all if superadmin?
       if department_manager?
-        return scope.where(department: user.department).or(scope.assignable_to_department)
+        return scope.in_department_or_secondary_department(user.department).or(scope.assignable_to_department)
       end
       none
     end
@@ -17,7 +17,7 @@ class VolunteerPolicy < ApplicationPolicy
   def permitted_attributes
     attributes = [volunteer_attributes, :bank, :iban, :waive, :acceptance, :take_more_assignments,
                   :external, :comments, :additional_comments, :working_percent]
-    attributes << :department_id if superadmin_or_department_manager?
+    attributes << [:department_id, :secondary_department_id] if superadmin_or_department_manager?
     attributes
   end
 

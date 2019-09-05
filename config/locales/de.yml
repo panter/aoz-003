@@ -21,10 +21,13 @@ de:
     other: Weiteres
     additional_comments: Sonstige Bemerkungen
     comments: Bemerkungen
+    additional_comments_internal: Sonstige Bemerkungen [intern]
+    comments_internal: Bemerkungen [intern]
     created_at: Erstellt am
     updated_at: Aktualisiert am
     created_by: Angemeldet von
     department: Standort
+    secondary_department: Zweiter Standort
     hours: Stunden
     languages: Sprachen
     minutes: Minuten
@@ -333,6 +336,7 @@ de:
         cost_unit: Kostenträger
         city: Stadt
         competent_authority: Anmeldende Stelle
+        other_authorities: Weitere involvierte Stellen
         date_of_year: Geburtsjahr
         education: Beruf oder Ausbildung im Herkunftsland
         entry_date: Einreisedatum
@@ -504,6 +508,7 @@ de:
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
         assignment_count: Anzahl begleitungen
+        group_assignment_count: Anzahl Gruppenangebote
         availability: Verfügbarkeit
         created_at: Anmeldedatum
         external: Extern
@@ -916,7 +921,7 @@ de:
       total_created_assignments: Neu erstellte Gruppeneinsätze
       total_started_assignments: Gestartete Gruppeneinsätze
       total_active_assignments: Aktive Gruppeneinsätze
-      total_ended_assignments: Beendete Gruppeneinsätze
+      total_ended_assignments: Beendete Freiwillige
       total_assignments: Total aller Gruppeneinsätze (Aktive und Inaktive und Beendete)
     index:
       new_report: Neuen Report erstellen

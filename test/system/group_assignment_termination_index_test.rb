@@ -80,7 +80,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     page.find_all('a', text: 'Beendigung Quittieren').first.click
     click_link 'Beendigung Quittieren'
 
-    assert_text 'Beendete Gruppeneinsätze'
+    assert_text 'Beendete Freiwillige'
     refute_text termination_index_table_text(@un_submitted)
     refute_text termination_index_table_text(@submitted)
     refute_text termination_index_table_text(@verified)
