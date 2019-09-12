@@ -38,11 +38,11 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
 
   cell_types = Array.new(header_row.size).map { :string }
   cell_types[0] = :integer
-  cell_types[11] = :integer
   cell_styles = Array.new(header_row.size).map { nil }
   cell_styles[6] = postal_code
   @volunteers.each do |volunteer|
     contact = volunteer.contact
+    birth_year = l(volunteer.birth_year) if volunteer.birth_year.present?
     sheet.add_row [
       volunteer.id,
       t("salutation.#{volunteer.salutation}"),
@@ -55,7 +55,7 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
       contact.primary_phone,
       contact.secondary_phone,
       contact.primary_email,
-      volunteer.birth_year&.year,
+      birth_year,
       nationality_name(volunteer.nationality),
       volunteer.profession,
       t(".acceptance.#{volunteer.acceptance}"),
