@@ -55,7 +55,8 @@ class JournalsController < ApplicationController
 
   def set_journaled
     return @journaled = Client.find(params[:client_id]) if params[:client_id]
-    @journaled = Volunteer.find(params[:volunteer_id])
+    @journaled = GroupOffer.find(params[:group_offer_id]) if params[:group_offer_id]
+    @journaled = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
   end
 
   def handle_semester_feedback_quote

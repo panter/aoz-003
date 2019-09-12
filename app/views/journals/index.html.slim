@@ -1,4 +1,4 @@
-h1= @journaled.contact.full_name
+h1= @journaled.try(:contact).try(:full_name)
 h1= t_title(:index, Journal)
 
 nav.navbar.section-navigation

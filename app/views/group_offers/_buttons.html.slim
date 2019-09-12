@@ -15,3 +15,5 @@ ul.list-inline
       data: { confirm: 'Gruppenangebot wirklich beenden?'}
   - if policy(@group_offer).edit?
     li= button_link icon_span(:edit), edit_group_offer_path(@group_offer), title: t_action(:edit)
+  - if policy(Journal).index? || policy(Volunteer).superadmin_privileges?
+    li= button_link icon_span(:journal), polymorphic_path([@group_offer, Journal]), title: 'Journal'

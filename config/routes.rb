@@ -84,6 +84,7 @@ Rails.application.routes.draw do
     put :submit_initiate_termination, on: :member
     patch :end_all_assignments, on: :member
     get :search_volunteer, on: :member
+    resources :journals, except: [:show]
   end
 
   get 'list_responses/trial_feedbacks', to: 'list_responses#trial_feedbacks'
