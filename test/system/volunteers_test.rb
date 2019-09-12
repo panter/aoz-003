@@ -21,9 +21,10 @@ class VolunteersTest < ApplicationSystemTestCase
     select('Frau', from: 'Anrede')
     fill_in 'Vorname', with: 'Volunteer'
     fill_in 'Nachname', with: 'aoz'
-    within '.volunteer_birth_year' do
-      select('1988', from: 'Jahrgang')
-    end
+    #within '.volunteer_birth_year' do
+    #  select('1988', from: 'Jahrgang')
+    #end
+    page.execute_script("$('#volunteer_birth_year').val('01/01/1988')")
     select('Syrien, Arabische Republik', from: 'Nationalität')
     fill_in 'Strasse', with: 'Sihlstrasse 131'
     fill_in 'PLZ', with: '8002'
@@ -541,9 +542,10 @@ class VolunteersTest < ApplicationSystemTestCase
     select('Frau', from: 'Anrede')
     fill_in 'Vorname', with: 'Volunteer'
     fill_in 'Nachname', with: 'aoz'
-    within '.volunteer_birth_year' do
-      select('1988', from: 'Jahrgang')
-    end
+    #within '.volunteer_birth_year' do
+    #  select('1988', from: 'Jahrgang')
+    #end
+    page.execute_script("$('#volunteer_birth_year').val('01/01/1988')")
     fill_in 'Strasse', with: 'Sihlstrasse 131'
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
@@ -568,9 +570,10 @@ class VolunteersTest < ApplicationSystemTestCase
     select('Frau', from: 'Anrede')
     fill_in 'Vorname', with: 'Volunteer'
     fill_in 'Nachname', with: 'aoz'
-    within '.volunteer_birth_year' do
-      select('1988', from: 'Jahrgang')
-    end
+    #within '.volunteer_birth_year' do
+    #  select('1988', from: 'Jahrgang')
+    #end
+    page.execute_script("$('#volunteer_birth_year').val('01/01/1988')")
     fill_in 'Strasse', with: 'Sihlstrasse 131'
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'

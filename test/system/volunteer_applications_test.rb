@@ -29,9 +29,10 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     assert page.has_text? 'Freiwilligen Anmeldung'
     fill_in 'Vorname', with: 'Vorname'
     fill_in 'Nachname', with: 'Name'
-    within '.volunteer_birth_year' do
-      select('1980', from: 'Jahrgang')
-    end
+    #within '.volunteer_birth_year' do
+    #  select('1980', from: 'Jahrgang')
+    #end
+    page.execute_script("$('#volunteer_birth_year').val('01/01/1988')")
     select('Frau', from: 'Anrede')
     select('Syrien, Arabische Republik', from: 'Nationalität')
     fill_in 'Strasse', with: 'Sihlstrasse 131'

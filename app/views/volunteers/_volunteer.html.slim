@@ -40,7 +40,7 @@ tr id=(dom_id(volunteer))
   td = volunteer.contact.city
   td = volunteer.contact.postal_code
   td = mail_to volunteer.contact.primary_email
-  td = volunteer.birth_year.year if volunteer.birth_year?
+  td = l(volunteer.birth_year) if volunteer.birth_year.present?
   td.language-skill-index
     - [volunteer.native_language, volunteer.foreign_languages].flatten.each do |language|
       span= language.full_language_skills

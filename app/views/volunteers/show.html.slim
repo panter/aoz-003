@@ -31,7 +31,7 @@ h2.small Persönlicher Hintergrund
       = render 'contacts/show', contact: @volunteer.contact
       tr
         td= t_attr(:birth_year)
-        td= @volunteer.birth_year.try(:year)
+        td= l(@volunteer.birth_year) if @volunteer.birth_year.present?
       tr
         td= t_attr(:avatar)
         td= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?

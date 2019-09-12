@@ -22,7 +22,7 @@
         td = volunteer.contact.city
         td = volunteer.contact.postal_code
         td = volunteer.contact.primary_email
-        td = volunteer.birth_year.year if volunteer.birth_year?
+        td = l(volunteer.birth_year) if volunteer.birth_year?
         td = volunteer.native_language&.language_name
         td = render 'language_skills/show_inline',
               language_skills: volunteer.foreign_languages

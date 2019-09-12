@@ -53,9 +53,8 @@
         .col-xs-12.col-md-6
           = f.input :nationality, as: :country, input_html: { tabindex: 9 }
           = f.input :birth_year,
-            as: :select,
-            collection: Volunteer.year_collection,
-            include_blank: true, input_html: { tabindex: 10 }
+            as: :date_picker,
+            collection: Volunteer.year_collection
         .col-xs-12.col-md-6
           = f.input :additional_nationality, as: :country
           = f.input :avatar, as: :file
