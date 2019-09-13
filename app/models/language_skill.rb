@@ -15,19 +15,24 @@ class LanguageSkill < ApplicationRecord
     where.not(id: native_language.id)
   }
 
-  def self.languages
-    @languages ||= I18n.t('language_names').merge(I18n.t('language_names_customizations'))
-      .map { |key, lang| [lang, key.to_s] }.sort
-  end
+  class << self
+    def languages
+      @languages ||= I18n.t('language_names').merge(I18n.t('language_names_customizations'))
+        .map { |key, lang| [lang, key.to_s] }.sort
+    end
 
+    def native_language
+      native_languages.first || LanguageSkill.new
+    end
 
-  def self.native_language
-    native_languages.first || LanguageSkill.new
-  end
+    def language_name(language)
+      return '' if language.blank?
+      I18n.t("language_names.#{language}")
+    end
 
-  def self.language_name(language)
-    return '' if language.blank?
-    I18n.t("language_names.#{language}")
+    def native_and_human_readable
+      german_first.map(&:full_language_skills)
+    end  
   end
 
   def language_name
@@ -37,5 +42,5 @@ class LanguageSkill < ApplicationRecord
   def full_language_skills
     level_human = level? ? I18n.t(level, scope: [:language_level]) : ''
     [language_name, level_human].reject(&:blank?).join(', ') if language?
-  end
+  end                     
 end

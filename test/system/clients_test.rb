@@ -203,7 +203,7 @@ class ClientsTest < ApplicationSystemTestCase
     create :client, language_skills: [
       create(:language_skill, language: 'DE', level: 'good'),
       create(:language_skill, language: 'IT', level: 'native_speaker'),
-      create(:language_skill, language: 'FR', level: 'fluent')
+      create(:language_skill, language: 'FR', level: 'good')
     ]
     login_as @superadmin
     visit clients_path
