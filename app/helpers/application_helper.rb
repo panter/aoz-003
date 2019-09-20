@@ -144,4 +144,12 @@ module ApplicationHelper
   def abbr(abbr, full_term)
     tag.abbr(abbr.to_s, title: full_term)
   end
+
+  def show_status_date(record, *args)
+    tag.ul(class: "list-unstyled") do 
+      record.slice(*args).compact.each do |key, value|
+        concat tag.li(t_attr(key) +' '+ l(value))
+      end
+    end
+  end 
 end

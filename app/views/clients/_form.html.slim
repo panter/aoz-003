@@ -6,7 +6,9 @@
   = link_to t('.reactivate.button'), reactivate_client_path(f.object), class: 'btn btn-default m-t-10',
       data: { confirm: t('.reactivate.confirm') }
   hr.m-y-30
-
+fieldset
+  = show_status_date(@client, :created_at)
+  
 .row
   .col-xs-12.col-md-6
     fieldset
