@@ -35,7 +35,9 @@ class VolunteersXlsxExportTest < ActionDispatch::IntegrationTest
       'Anzahl begleitungen',
       'Anzahl Gruppenangebote',
       'Spesenverzicht',
-      'Einführungskurs besucht'
+      'Einführungskurs besucht',
+      'Akzeptiert am',
+      'Beendet am'
     )
     
   end

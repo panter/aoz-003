@@ -52,3 +52,5 @@ tr id=(dom_id(volunteer))
     = td_truncate_content_modal(volunteer.comments, 'Bemerkungen')
   td = volunteer.external? ? t_attr(:external, Volunteer) : t_attr(:internal, Volunteer)
   td = l(volunteer.created_at.to_date)
+  td = l(volunteer.accepted_at.to_date) if volunteer.accepted_at
+  td = l(volunteer.resigned_at.to_date) if volunteer.resigned_at
