@@ -76,7 +76,7 @@ module ApplicationHelper
   end
 
   def request_params_filter(query)
-    search_parameters.deep_merge(q: query)
+    { q: search_parameters.deep_merge(query) }
   end
 
   def search_parameters

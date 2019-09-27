@@ -99,8 +99,8 @@ table.table.table-striped
             br
         td= link_to offer.group_offer_category.category_name, url_for(q: search_parameters.merge(group_offer_category_id_eq: offer.group_offer_category.id))
         td= t_attr(offer.external? ? :external : :internal, GroupOffer)
-        td= offer.created_at
-        td= offer.period_end
+        td= l(offer.created_at.to_date) if offer.created_at?
+        td= l(offer.period_end.to_date) if offer.period_end?
 
 = bootstrap_paginate(@group_offers)
 
