@@ -8,4 +8,5 @@
     li
       = link_to t('all'), request_params_filter({age_request_cont: ''})
     - Client::AGE_REQUESTS.each do |s|
-      li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :age_request]), request_params_filter({age_request_cont: s})
+    	- next if s == :age_no_matter
+      	li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :age_request]), request_params_filter({age_request_cont: s})

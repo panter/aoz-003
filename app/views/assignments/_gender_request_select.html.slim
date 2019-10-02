@@ -8,4 +8,5 @@
     li
       = link_to t('all'), request_params_filter({gender_request_cont: ''})
     - Client::GENDER_REQUESTS.each do |s|
-      li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :gender_request]), request_params_filter({gender_request_cont: s})
+    	- next if s == :no_matter
+    	li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :gender_request]), request_params_filter({gender_request_cont: s})
