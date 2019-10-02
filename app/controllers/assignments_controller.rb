@@ -135,7 +135,7 @@ class AssignmentsController < ApplicationController
 
   def verify_termination
     @assignment.verify_termination(current_user)
-    redirect_back(fallback_location: terminated_index_assignments_path)
+    redirect_to terminated_index_assignments_path(q: { termination_verified_by_id_not_null: true })
     flash[:notice] = 'Der Einsatz wurde erfolgreich quittiert.'
   end
 

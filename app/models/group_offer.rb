@@ -28,6 +28,9 @@ class GroupOffer < ApplicationRecord
   has_many :volunteers, through: :group_assignments
   has_many :volunteer_contacts, through: :volunteers, source: :contact
 
+  has_many :journals, as: :journalable, dependent: :destroy
+  accepts_nested_attributes_for :journals, allow_destroy: true
+
   validates :title, :offer_type, presence: true
   validates :necessary_volunteers, numericality: { greater_than: 0 }, allow_nil: true
   validates :period_end, absence: {

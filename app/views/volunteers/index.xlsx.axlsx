@@ -30,7 +30,9 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
     t_attr(:assignment_count),
     t_attr(:group_assignment_count),
     t_attr(:waive_alternative),
-    t_attr(:intro_course)
+    t_attr(:intro_course),
+    t_attr(:accepted_at),
+    t_attr(:resigned_at)
   ]
 
 
@@ -38,11 +40,12 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
 
   cell_types = Array.new(header_row.size).map { :string }
   cell_types[0] = :integer
-  cell_types[11] = :integer
   cell_styles = Array.new(header_row.size).map { nil }
   cell_styles[6] = postal_code
   @volunteers.each do |volunteer|
     contact = volunteer.contact
+    resigned_at = volunteer.resigned_at.to_date if volunteer.resigned_at
+    accepted_at = volunteer.accepted_at.to_date if volunteer.accepted_at
     sheet.add_row [
       volunteer.id,
       t("salutation.#{volunteer.salutation}"),
@@ -55,7 +58,7 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
       contact.primary_phone,
       contact.secondary_phone,
       contact.primary_email,
-      volunteer.birth_year&.year,
+      volunteer.birth_year,
       nationality_name(volunteer.nationality),
       volunteer.profession,
       t(".acceptance.#{volunteer.acceptance}"),
@@ -64,7 +67,9 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
       volunteer.assignments.count,
       volunteer.group_assignments.count,
       volunteer.waive,
-      volunteer.intro_course
+      volunteer.intro_course,
+      accepted_at,
+      resigned_at
     ], types: cell_types, style: cell_styles
   end
 end

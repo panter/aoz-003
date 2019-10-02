@@ -24,8 +24,8 @@ tr id=dom_id(client)
       br
   td= nationality_name(client.nationality)
   td.language-skill-index
-    - [client.language_skills.german, client.language_skills.native_languages].flatten.each do |language|
-      span= language.full_language_skills
+    - client.language_skills.native_and_human_readable.each do |language_readable|
+      span= language_readable
   td= client.goals
   td= client.interests
   - if policy(Client).superadmin_privileges?

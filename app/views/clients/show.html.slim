@@ -72,7 +72,9 @@ h1.m-b-20= @client.contact.full_name
       tr
         td= t_attr(:created_by)
         td= link_to @client.user.full_name, profile_url_path(@client.user)
-
+      tr
+        td= t_attr(:created_at)
+        td= l(@client.created_at)
       - if policy(Client).show_comments?
         tr
           td= t_attr(:comments_internal)

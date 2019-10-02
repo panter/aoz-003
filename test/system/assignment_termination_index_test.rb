@@ -69,12 +69,10 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     refute_text termination_index_table_text(@verified)
 
     page.find_all('a', text: 'Beendigung Quittieren').first.click
-    click_link 'Beendigung Quittieren'
 
     assert_text 'Beendete Begleitungen'
-    refute_text termination_index_table_text(@un_submitted)
-    refute_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@verified)
+    click_link 'Quittiert: Quittiert'
+    click_link exact_text: 'Unquittiert'
   end
 
   test 'clear_filter_link_is_working_correctly' do
