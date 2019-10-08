@@ -22,6 +22,10 @@ h1.m-b-20= @volunteer.contact.full_name
             td= t(@volunteer[attribute])
 
 h2.small Persönlicher Hintergrund
+.row
+    .col-xs-12.col-md-4
+      fieldset
+        = show_status_date(@volunteer, :created_at)
 .table-responsive
   table.table.table-no-border-top
     tbody
