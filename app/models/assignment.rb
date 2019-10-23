@@ -83,4 +83,13 @@ class Assignment < ApplicationRecord
       * Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende
     HEREDOC
   end
+
+  
+  def request_params_include_egal(params)
+    parameters = params.deep_dup
+    if parameters.has_key? 'age_request_cont'
+      parameters["age_request_in"] = [parameters["age_request_cont"], "age_no_matter"]
+      parameters.delete("age_request_cont")
+    end
+  end
 end
