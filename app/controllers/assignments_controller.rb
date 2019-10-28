@@ -87,9 +87,23 @@ class AssignmentsController < ApplicationController
 
   def find_client
     set_volunteer
-    @q = policy_scope(Client).inactive.ransack(params[:q])
+    @q = policy_scope(Client).inactive.ransack(include_egal(params[:q]))
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @need_accompanying = @q.result.paginate(page: params[:page])
+  end
+
+  #special method for the Egal use case. Egal should be included and this is a hacking on the ransack search matchers to transform cont and eq to _in that permits the use of OR in the sql statement
+  def include_egal(params)
+    parameters = params.deep_dup
+      if parameters.present? && parameters.key?("age_request_cont") && parameters["age_request_cont"]&.present?
+        parameters["age_request_in"] = [parameters["age_request_cont"], "age_no_matter"]
+        parameters.delete("age_request_cont")
+      end
+      if parameters.present? && parameters.key?("gender_request_eq")&& parameters["gender_request_eq"]&.present?
+        parameters["gender_request_in"] = [parameters["gender_request_eq"], "no_matter"]
+        parameters.delete("gender_request_eq")
+      end
+      return parameters
   end
 
   def last_submitted_hours_and_feedbacks

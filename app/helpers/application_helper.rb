@@ -83,6 +83,14 @@ module ApplicationHelper
     @search_parameters ||= (params[:q]&.to_unsafe_hash || {}).except(:all)
   end
 
+  def request_params_include_egal(params)
+    parameters = params.deep_dup
+    if parameters.has_key? 'age_request_cont'
+      parameters["age_request_in"] = [parameters["age_request_cont"], "age_no_matter"]
+      parameters.delete("age_request_cont")
+    end
+  end
+
   def bootstrap_paginate(paginate_collection)
     will_paginate paginate_collection, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer,
       class: 'pagination-lg text-center hidden-print', 'aria-label': 'Pagination'
