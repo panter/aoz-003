@@ -73,7 +73,7 @@ wb.add_worksheet(name: 'Veranstaltung') do |sheet|
       ]
   }
 
-  sheet.add_row(['Vorname', 'Nachname', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Jahrgang'], types: :string, style: col_header)
+  sheet.add_row(['Vorname', 'Nachname', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Geburtsdatum'], types: :string, style: col_header)
   @event.volunteers.map do |volunteer|
     [
       volunteer.contact&.first_name,

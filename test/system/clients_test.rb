@@ -14,7 +14,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Vorname', with: 'asdf'
     fill_in 'Nachname', with: 'asdf'
     within '.client_birth_year' do
-      select('1995', from: 'Jahrgang')
+      select('1995', from: 'Geburtsdatum')
     end
     select('Frau', from: 'Anrede')
     select('Aruba', from: 'Nationalität')
@@ -36,7 +36,7 @@ class ClientsTest < ApplicationSystemTestCase
     within '#relatives' do
       fill_in 'Vorname', with: 'asdf'
       fill_in 'Nachname', with: 'asdf'
-      select('2001', from: 'Jahrgang')
+      select('2001', from: 'Geburtsdatum')
       select('Onkel', from: 'Verwandtschaftsbeziehung')
     end
     fill_in 'Inhalte der Begleitung', with: 'asdfasdf'
