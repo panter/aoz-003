@@ -1,6 +1,6 @@
 class HourPolicy < ApplicationPolicy
   def index?
-    superadmin? || volunteer? && handle_record_or_class
+    superadmin? || department_manager? ||  volunteer? && handle_record_or_class
   end
 
   def handle_record_or_class
@@ -10,7 +10,7 @@ class HourPolicy < ApplicationPolicy
   alias_method :supervisor?,     :superadmin?
 
   # Actions
-  alias_method :show?,           :superadmin_or_volunteer_related?
+  alias_method :show?,           :superadmin_or_department_manager_or_volunteer_related?
   alias_method :new?,            :superadmin_or_volunteer_related?
   alias_method :edit?,           :superadmin_or_volunteer_related?
   alias_method :create?,         :superadmin_or_volunteer_related?
