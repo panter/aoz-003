@@ -3,7 +3,7 @@ FactoryBot.define do
 
     association :creator, factory: :user
 
-    association :volunteer
+    association :volunteer, active: true
     association :event, factory: :event
   end
 end
