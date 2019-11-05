@@ -28,10 +28,11 @@ ul.list-inline
           td.index-action-cell.hidden-print
             = button_link icon_span(:show), volunteer_hour_path(@volunteer, record),
                 title: 'Anzeigen'
-            = button_link icon_span(:edit), edit_volunteer_hour_path(@volunteer, record),
-                title: 'Bearbeiten'
-            = button_link icon_span(:delete), volunteer_hour_path(@volunteer, record),
-                confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
+            - if policy(record).superadmin_or_volunteer_related?
+              = button_link icon_span(:edit), edit_volunteer_hour_path(@volunteer, record),
+                  title: 'Bearbeiten'
+              = button_link icon_span(:delete), volunteer_hour_path(@volunteer, record),
+                  confirm_deleting(record, 'btn btn-default').merge(title: 'Löschen')
           - if current_user.superadmin?
             td= link_to @volunteer.contact.full_name, edit_volunteer_path(@volunteer)
           td
