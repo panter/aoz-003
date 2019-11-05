@@ -1,7 +1,7 @@
 function volunteerForm() {
   show_rejection();
-
-  $('#volunteer_acceptance').on('change', ({target}) => show_rejection(target));
+  
+  $('#volunteer_acceptance').on('change load', ({target}) => show_rejection(target));
 
   $('.volunteer-active-checkbox-changes').on('change', ({target}) => {
     const data = $(target).data();
@@ -30,7 +30,7 @@ const showFormRegions = (hide) => {
   hide.forEach(cssClass => $('.' + cssClass).show());
 }
 
-const show_rejection = (target) => {
+const show_rejection = (target = '#volunteer_acceptance') => {
   if($(target).val() == 'rejected') {
     return $('.volunteer_rejection_type, .volunteer_rejection_text').show();
   }
