@@ -28,7 +28,12 @@ class GroupOffersController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: pdf_file_name(@group_offer)
+        render pdf: pdf_file_name(@group_offer),
+                layout: 'pdf_layout.pdf.slim',
+                zoom: 1.5,
+                dpi: 600,
+                margin: { top: 10, bottom: 10, left: 0, right: 0 },
+                template: 'group_offers/show.pdf.slim'
       end
     end
   end
