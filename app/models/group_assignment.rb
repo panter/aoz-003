@@ -16,6 +16,9 @@ class GroupAssignment < ApplicationRecord
   }
 
   after_save :update_group_offer_search_field
+  after_create :mail_superadmins
+
+  attr_accessor :created_by
 
   scope :running, (-> { no_end.have_start })
 
@@ -48,6 +51,11 @@ class GroupAssignment < ApplicationRecord
 
   def polymorph_url_object
     group_offer
+  end
+
+  def mail_superadmins
+    return unless created_by
+    NotificationMailer.volunteer_added_to_group_offer(self).deliver_now unless created_by.superadmin?
   end
 
   def assignment?

@@ -636,6 +636,11 @@ de:
       link_text:
         terminated_assignment: Zur Übersicht der beendeten Einsätze
         terminated_group_assignment: Zur Übersicht der beendeten Gruppeninsätze
+    volunteer_added_to_group_offer:
+      title: 'FW zu Gruppenagebot hinzugefügt'
+      subject: 'FW zu Gruppenagebot hinzugefügt'
+      salutation: 'Liebe Admins'
+      body: 'Der/die Freiwillige %{volunteer_name} wurde zum Gruppenangebot %{group_offer} hinzugefügt'
   assignment_pdf:
     <<: *id-generic_keys
     birthdate: Geburtsdatum
