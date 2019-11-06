@@ -20,6 +20,7 @@ class GroupAssignmentsController < ApplicationController
 
   def create
     @group_assignment = GroupAssignment.new(group_assignment_params)
+    @group_assignment.created_by = current_user
     @group_assignment.default_values
     authorize @group_assignment
     if save_with_pdf @group_assignment, 'show.pdf'
@@ -35,6 +36,7 @@ class GroupAssignmentsController < ApplicationController
 
   def update
     @group_assignment.assign_attributes(group_assignment_params)
+    @group_assignment.created_by = current_user
     period_end_set_notice, redirect_path = handle_period_end
     if save_with_pdf @group_assignment, 'show.pdf'
       create_redirect period_end_set_notice, redirect_path
