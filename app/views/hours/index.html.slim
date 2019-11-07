@@ -8,7 +8,8 @@ h4.pull-right
 
 ul.list-inline
   li= button_link icon_span(:back), @volunteer
-  li= button_link t_title(:new), new_volunteer_hour_path(@volunteer)
+  - if policy(Hour).superadmin_or_volunteer?
+    li= button_link t_title(:new), new_volunteer_hour_path(@volunteer)
 
 .table-responsive
   table.table
@@ -47,4 +48,5 @@ ul.list-inline
 
 ul.list-inline
   li= button_link icon_span(:back), @volunteer
-  li= button_link t_title(:new), new_volunteer_hour_path(@volunteer)
+  - if policy(Hour).superadmin_or_volunteer?
+    li= button_link t_title(:new), new_volunteer_hour_path(@volunteer)
