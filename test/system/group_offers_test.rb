@@ -299,7 +299,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_on 'Herunterladen', match: :first
     pdf = load_pdf(page.body)
 
-    assert_equal 2, pdf.page_count
+    assert_equal 1, pdf.page_count
     assert_match(/Ort, Datum: +Zürich, #{I18n.l pdf_date.to_date}/, pdf.pages.first.text)
     assert_match(/Wie oft\? +daily/, pdf.pages.first.text)
 
