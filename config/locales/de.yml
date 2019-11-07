@@ -1,6 +1,9 @@
 ---
 de:
   # to be injected into later groups
+  actions: Aktionen
+  expand_all: Alle anzeigen
+  collapse_all: Alle einklappen
   generic_keys: &id-generic_keys
     salutation: Anrede
     first_name: Vorname
@@ -500,6 +503,9 @@ de:
         clients: Kunden/innen
         profile: Profil
         role: Rolle
+      document:
+        title: Titel
+        file: Datei
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance-keys]
         acceptance: Prozess
@@ -626,6 +632,7 @@ de:
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
+      document: Dokument
 
   # model name plural for controller name shortcut => t('.key')
   notification_mailer:
@@ -809,6 +816,9 @@ de:
       necessary_volunteers: 'Benötigt %{amount} Freiwillige'
       offer_of: Angebot von
     show: *id-help-texts
+  documents:
+    submit:
+      title: 'Dokument erfassen'
   hours:
     new:
       report_hours: "Stunden erfassen"
