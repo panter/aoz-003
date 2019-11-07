@@ -20,7 +20,7 @@ module PdfHelpers
   end
 
   def save_with_pdf(record, action = 'show.html', options = {})
-    { layout: 'pdf_layout.pdf.slim', zoom: 1.5,
+    { layout: 'pdf_layout.pdf.slim', zoom: 1.15,
       dpi: 600, margin: { top: 10, bottom: 10, left: 0, right: 0 }
     }.each do |k,v|
       next if options.key?(k)
