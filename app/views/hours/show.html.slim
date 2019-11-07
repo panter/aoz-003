@@ -26,4 +26,5 @@ h1 Stundeneintrag
         td= @hour.comments
 
 .row: .col-xs-12
-  = button_link t_title(:edit, Hour), params.to_unsafe_h.merge({ action: 'edit' })
+  - if policy(@hour).superadmin_or_volunteer_related?
+    = button_link t_title(:edit, Hour), params.to_unsafe_h.merge({ action: 'edit' })
