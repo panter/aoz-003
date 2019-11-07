@@ -1,0 +1,34 @@
+.documents-page {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+
+  @media (min-width: $container-md) {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex: 1;
+    margin-right: 20px;
+
+    @media (min-width: $container-md) {
+      flex: 0 0 $sidebar-width;
+      width: $sidebar-width;
+    }
+  }
+  .content {
+    flex: 1 1 auto;
+    overflow-x: hidden;
+  }
+
+  .document_category { 
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  
+  .freetext {
+    margin-left: 5px;
+  }
+  
+}
