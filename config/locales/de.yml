@@ -254,7 +254,7 @@ de:
   # loose unsorted groups
   pdf_header:
     address: Flüelastrasse 32<br>8047 Zürich<br>www.aoz.ch/freiwilligenarbeit
-    contact: Telefon %{phone}<br>Telefax n.v.<br>freiwillige@aoz.ch
+    contact: Telefon %{phone}<br>Telefax n.v.<br>%{email}
     title: Fachstelle Freiwilligenarbeit
   semester:
     one_semester: '%{number}. Semester %{year}'
