@@ -12,6 +12,8 @@ class GroupOfferCategory < ApplicationRecord
   scope :house_moving, -> { where('category_name LIKE ?', '%Zürich%') }
   scope :without_house_moving, -> { where.not('category_name LIKE ?', '%Zürich%') }
   scope :in_group_offer, (-> { joins(:group_offers) })
+  scope :without_other, -> { where.not('category_name = ?', 'Andere')}
+  scope :other, -> { where('category_name = ? ', 'Andere')}
 
   def self.available_categories(exclude_ids)
     active.where.not(id: exclude_ids).map { |goc| [goc.category_name, goc.id] }
