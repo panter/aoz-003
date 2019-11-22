@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190806075109) do
+ActiveRecord::Schema.define(version: 20191122122407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -267,6 +267,22 @@ ActiveRecord::Schema.define(version: 20190806075109) do
     t.bigint "user_id", null: false
     t.bigint "department_id", null: false
     t.index ["department_id", "user_id"], name: "index_departments_users_on_department_id_and_user_id"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.bigint "file_file_size"
+    t.datetime "file_updated_at"
+    t.string "title", default: "", null: false
+    t.string "category1"
+    t.string "category2"
+    t.string "category3"
+    t.string "category4"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_documents_on_deleted_at"
   end
 
   create_table "email_templates", force: :cascade do |t|

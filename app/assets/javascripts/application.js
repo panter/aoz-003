@@ -18,7 +18,9 @@
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.de.js
+//= require bootstrap-treeview
 //= require cocoon
 //= require selectize
 //
 //= require_tree .
+//= require global

@@ -41,7 +41,6 @@ class VolunteersTest < ApplicationSystemTestCase
     page.check('Training')
     page.check('German Course')
     page.check('Other Offer')
-    fill_in 'Beschreibung', with: 'Description'
     page.check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
     fill_in 'Bank', with: 'BankName'
     fill_in 'IBAN', with: 'CH01 2345 6789 0123 4567 8'

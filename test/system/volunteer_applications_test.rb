@@ -54,7 +54,6 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     page.check('Training')
     page.check('German Course')
     page.check('Other Offer')
-    fill_in 'Beschreibung', with: 'Description'
     page.check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
     page.check('volunteer_weekend')
     fill_in 'Genauere Angaben', with: 'I am every two weeks available on tuesdays asdfasdf.'
