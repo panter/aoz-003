@@ -1,0 +1,18 @@
+h1.m-b-20 Dokumente
+
+.documents-page
+  .sidebar
+    .panel.panel-default
+      .panel-heading
+        h4= t('actions')
+      .list-group
+        - if policy(Document).new?
+          = link_to t_title(:new, Document), new_document_path, class: 'list-group-item'
+        = link_to t('expand_all'), '#', id: 'tree_expand_all', class: 'list-group-item'
+        = link_to t('collapse_all'), '#', id: 'tree_collapse_all', class: 'list-group-item'
+        - if policy(Document).edit?
+          = link_to t_title(:edit, Document), documents_path, id: 'tree_edit_node', class: 'list-group-item'
+        - if policy(Document).destroy?
+          = link_to t_title(:destroy, Document), documents_path, id: 'tree_delete_node', class: 'list-group-item'
+  .content
+    #tree(data-tree="#{@documents_json.to_json}")

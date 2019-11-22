@@ -1,6 +1,16 @@
 class HourPolicy < ApplicationPolicy
+  class Scope < ApplicationScope
+    def resolve
+      return all if superadmin?
+      if department_manager?
+        return scope.in_department_or_secondary_department(user.department).or(scope.assignable_to_department)
+      end
+      none
+    end
+  end
+
   def index?
-    superadmin? || volunteer? && handle_record_or_class
+    superadmin? || department_manager? || volunteer? && handle_record_or_class
   end
 
   def handle_record_or_class
@@ -10,7 +20,7 @@ class HourPolicy < ApplicationPolicy
   alias_method :supervisor?,     :superadmin?
 
   # Actions
-  alias_method :show?,           :superadmin_or_volunteer_related?
+  alias_method :show?,           :superadmin_or_department_manager_or_volunteer_related?
   alias_method :new?,            :superadmin_or_volunteer_related?
   alias_method :edit?,           :superadmin_or_volunteer_related?
   alias_method :create?,         :superadmin_or_volunteer_related?

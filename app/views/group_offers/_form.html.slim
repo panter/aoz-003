@@ -4,7 +4,7 @@
 
   .row
     .col-xs-12.col-md-6= f.input :title
-    .col-xs-12.col-md-3= f.association :group_offer_category, label_method: :category_name
+    .col-xs-12.col-md-3= f.association :group_offer_category, collection: GroupOfferCategory.active, label_method: :category_name
     .col-xs-12.col-md-3= f.association :creator, label: 'Verantwortliche/r', collection: @department_managers
 
   .row

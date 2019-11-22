@@ -8,30 +8,16 @@
   button.btn.btn-default(data-toggle='collapse' data-target='#additionalEdit' type='button'  aria-expanded='false' aria-controls='additionalEdit')
     = t('.edit_more_fields')
   hr
-  #additionalEdit.collapse
-    fieldset
-      legend Einsatz Arten
-      = f.label :assignment_kinds, class: 'sr-only'
-      = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.assignment_kinds['done'].uniq, include_blank: false, label: false, input_html: { checked: true }
+  h4 Kontaktangaben des Freiwilligen
+  = f.simple_fields_for :volunteer_contact do |fvc|
+    = fvc.input :name, label: t_attr(:name), input_html: { value: @certificate.volunteer_contact['name'] }
+    = fvc.input :street, label: t_attr(:street), input_html: { value: @certificate.volunteer_contact['street'] }
+    = fvc.input :city, label: t_attr(:city), input_html: { value: @certificate.volunteer_contact['city'] }
 
-      button.btn.btn-default(data-toggle='collapse' data-target='#additional-kinds' type='button'  aria-expanded='false' aria-controls='additionalEdit')
-        'Manuell Einsatzkategorien hinzufügen
-      #additional-kinds.collapse
-        h4 Zusätzliche Einsatzarten
-        = f.label :assignment_kinds, class: 'sr-only'
-        = f.input :assignment_kinds, as: :check_boxes, collection: @certificate.collection_for_additional_kinds,
-          include_blank: false, label: false, input_html: { checked: false }
-
-    h4 Kontaktangaben des Freiwilligen
-    = f.simple_fields_for :volunteer_contact do |fvc|
-      = fvc.input :name, label: t_attr(:name), input_html: { value: @certificate.volunteer_contact['name'] }
-      = fvc.input :street, label: t_attr(:street), input_html: { value: @certificate.volunteer_contact['street'] }
-      = fvc.input :city, label: t_attr(:city), input_html: { value: @certificate.volunteer_contact['city'] }
-
-    = f.input :function
-    = f.input :institution
-    = f.input :creator_name
-    = f.input :creator_function
+  = f.input :function
+  = f.input :institution
+  = f.input :creator_name
+  = f.input :creator_function
 
   ul.list-inline
     li= f.button :submit

@@ -26,9 +26,9 @@ class HourPolicyTest < PolicyAssertions::Test
     refute_permit @department_manager, Hour.first, 'update?', 'edit?'
   end
 
-  test 'Show: social worker and department manager cannot show' do
+  test 'Show: social worker cannot show' do
     refute_permit @social_worker, Hour.first, 'show?'
-    refute_permit @department_manager, Hour.first, 'show?'
+    assert_permit @department_manager, Hour.first, 'show?'
   end
 
   test 'Show: superadmin can see all hours' do
@@ -38,9 +38,9 @@ class HourPolicyTest < PolicyAssertions::Test
     end
   end
 
-  test 'Index: Only superadmin can index hours' do
+  test 'Index: Only superadmin and department manager can index hours' do
     assert_permit @superadmin, Hour, 'index?'
     refute_permit @social_worker, Hour, 'index?'
-    refute_permit @department_manager, Hour, 'index?'
+    assert_permit @department_manager, Hour, 'index?'
   end
 end

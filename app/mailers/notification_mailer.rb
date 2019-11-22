@@ -10,4 +10,15 @@ class NotificationMailer < ApplicationMailer
       )
     )
   end
+
+  def volunteer_added_to_group_offer(group_assignment)
+    @group_assignment = group_assignment
+
+    mail(
+      to: User.superadmins.collect(&:email),
+      subject: I18n.t(
+        'notification_mailer.volunteer_added_to_group_offer.subject'
+      )
+    )
+  end
 end

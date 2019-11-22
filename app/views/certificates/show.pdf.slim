@@ -18,13 +18,6 @@
       .col-xs-7= @certificate.function
 
     .row
-      .col-xs-3= t_attr(:assignment)
-      .col-xs-7
-        - @certificate.assignment_kinds['done'].uniq.each do |kind_name, _|
-          span.kind-list
-            == File.read('app/assets/images/pdf_checkbox_checked.svg')
-            = kind_name
-    .row
       .col-xs-3= t_attr(:duration)
       .col-xs-7= "#{l(@certificate.duration_start, default: '')} #{t('to')} #{l(@certificate.duration_end, default: '')}"
       .col-xs-3= t_attr(:time_given)

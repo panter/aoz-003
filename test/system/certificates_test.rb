@@ -24,7 +24,6 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_field? 'Text', text: 'Die **AOZ** ist ein Unternehmen der Stadt Zürich und'
     assert page.has_field? 'Stunden', with: 2.0
     click_button 'Weitere Felder anpassen'
-    assert page.has_field? 'Tandem', checked: true, count: 1
     assert page.has_field? 'Name', with: @volunteer.contact.full_name
     assert page.find_field('Strasse').value.include? @volunteer.contact.street
     assert page.find_field('Ort').value.include? @volunteer.contact.city
@@ -49,7 +48,6 @@ class CertificatesTest < ApplicationSystemTestCase
     fill_in 'Text', with: '**Bold** or not *bold*, that is this tests Question?<br>***both***'
     assert page.has_text? 'Nachweis bearbeiten'
     click_button 'Weitere Felder anpassen'
-    assert page.has_field? 'Tandem', checked: true, count: 1
     fill_in 'Stunden', with: 555
     fill_in 'Name', with: 'This bogus test name'
     fill_in 'Institution', with: 'The Testology Institute'
@@ -65,7 +63,6 @@ class CertificatesTest < ApplicationSystemTestCase
     click_button 'Nachweis erfassen'
 
     visit volunteer_certificate_path(@volunteer, @volunteer.certificates.last)
-    assert page.has_text? 'Tandem', count: 1
   end
 
   test 'volunteer_that_has_only_group_offers_can_have_certificate' do
