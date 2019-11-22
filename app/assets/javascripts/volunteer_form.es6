@@ -1,6 +1,6 @@
 function volunteerForm() {
   show_rejection();
-  toggleOtherInput($('#other-offer label input').length > 0 ? $('#other-offer label input')[0].checked : false)
+  toggleOtherInput($('#other-offer label input').length > 0 ? $('#other-offer label input')[0] : null)
 
   $('#volunteer_acceptance').on('change load', ({target}) => show_rejection(target));
 
@@ -25,8 +25,12 @@ function volunteerForm() {
   $('.checkbox-toggle-collapse').trigger('change');
 }
 
-const toggleOtherInput = (checked) =>
+const toggleOtherInput = (target) => {
+  if (!target) return;
+  
+  const checked = $(target).is(':checked');
   $('#volunteer_other_offer_desc').parent().toggle(checked);
+}
 
 const hideFormRegions = (hide) => {
   hide.forEach(cssClass => $(`.${cssClass}`).hide());

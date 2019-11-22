@@ -19,7 +19,7 @@ nav.navbar.section-navigation#filters
   hr
   ul.list-inline
     li= clear_filter_button
-    = custom_filter_dropdown('Standort', *Department.filterable)
+    = custom_filter_dropdown('Standort', *Department.name_asc.filterable)
     = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
     = custom_filter_dropdown('Kategorie', *GroupOfferCategory.filterable_group_offer)
     = custom_filter_dropdown('Einsatz',
