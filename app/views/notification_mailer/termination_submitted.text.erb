@@ -2,10 +2,10 @@
 
 <% if @terminated.assignment? %>
   <%= t('.link_text.terminated_assignment') %>:
-  <%= url_for(terminated_index_assignments_url(@link_params)) %>
+  <%= url_for(terminated_index_assignments_url) %>
 <% elsif @terminated.group_assignment? %>
   <%= t('.link_text.terminated_group_assignment') %>:
-  <%= url_for(terminated_index_group_assignments_url(@link_params)) %>
+  <%= url_for(terminated_index_group_assignments_url) %>
 <% end %>
 
 AOZ Fachstelle Freiwilligenarbeit
