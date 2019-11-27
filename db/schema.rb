@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191122122407) do
+ActiveRecord::Schema.define(version: 20191122135842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -832,8 +832,14 @@ ActiveRecord::Schema.define(version: 20191122122407) do
     t.bigint "reactivated_by_id"
     t.datetime "reactivated_at"
     t.bigint "secondary_department_id"
+    t.bigint "invited_by_id"
+    t.bigint "accepted_by_id"
+    t.bigint "resigned_by_id"
+    t.bigint "rejected_by_id"
+    t.bigint "undecided_by_id"
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
+    t.index ["accepted_by_id"], name: "index_volunteers_on_accepted_by_id"
     t.index ["active"], name: "index_volunteers_on_active"
     t.index ["activeness_might_end"], name: "index_volunteers_on_activeness_might_end"
     t.index ["birth_year"], name: "index_volunteers_on_birth_year"
@@ -841,12 +847,16 @@ ActiveRecord::Schema.define(version: 20191122122407) do
     t.index ["department_id"], name: "index_volunteers_on_department_id"
     t.index ["external"], name: "index_volunteers_on_external"
     t.index ["invited_at"], name: "index_volunteers_on_invited_at"
+    t.index ["invited_by_id"], name: "index_volunteers_on_invited_by_id"
     t.index ["nationality"], name: "index_volunteers_on_nationality"
     t.index ["reactivated_by_id"], name: "index_volunteers_on_reactivated_by_id"
     t.index ["rejected_at"], name: "index_volunteers_on_rejected_at"
+    t.index ["rejected_by_id"], name: "index_volunteers_on_rejected_by_id"
     t.index ["resigned_at"], name: "index_volunteers_on_resigned_at"
+    t.index ["resigned_by_id"], name: "index_volunteers_on_resigned_by_id"
     t.index ["salutation"], name: "index_volunteers_on_salutation"
     t.index ["undecided_at"], name: "index_volunteers_on_undecided_at"
+    t.index ["undecided_by_id"], name: "index_volunteers_on_undecided_by_id"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 
