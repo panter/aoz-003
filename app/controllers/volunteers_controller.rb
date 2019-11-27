@@ -68,6 +68,7 @@ class VolunteersController < ApplicationController
 
     if @volunteer.will_save_change_to_attribute?(:acceptance, to: 'accepted') &&
         @volunteer.internal? && !@volunteer.user && @volunteer.save
+      auto_assign_department!
       redirect_to(edit_volunteer_path(@volunteer),
         notice: t('invite_sent', email: @volunteer.primary_email))
     elsif @volunteer.save
@@ -123,6 +124,13 @@ class VolunteersController < ApplicationController
   end
 
   private
+
+  def auto_assign_department!
+    return if !current_user.department_manager? || current_user.department.empty? || @volunteer.department.present?
+    
+    # association
+    @volunteer.update(department: current_user.department.first)
+  end
 
   def not_resigned
     return if params[:q]
