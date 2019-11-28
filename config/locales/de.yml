@@ -227,6 +227,7 @@ de:
   relatives: Familienangehörige im Haushalt
   remember_me: Angemeldet bleiben
   reserve: Begleitung erstellen
+  reserve_client: Reservieren
   seeking_clients: Klient/in suchen
   semester_long: '%{number}. Semester %{year} (%{begin} - %{end})'
   semester_period: '%{begin} - %{end}'
@@ -349,6 +350,7 @@ de:
         permit: Bewilligung
         relatives: Verwandte/r
         user: User
+        reserved_by: Reserviert
       contact:
         <<: *id-generic_keys
         extended: Adresszusatz

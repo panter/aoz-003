@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   resources :clients, concerns: [:search, :reactivate] do
     resources :journals, except: [:show]
     patch :set_terminated, on: :member
+    
   end
 
   resources :events do
@@ -117,6 +118,9 @@ Rails.application.routes.draw do
   end
 
   resources :volunteers, except: [:destroy], concerns: [:search, :reactivate] do
+    resources :clients do 
+      get :reserve, on: :member
+    end
     put :terminate, on: :member
     put :account, on: :member
     get :find_client, on: :member, to: 'assignments#find_client'

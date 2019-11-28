@@ -4,7 +4,7 @@ class ClientsController < ApplicationController
   include ContactAttributes
 
   rescue_from Client::NotDestroyableError, with: :user_not_authorized
-  before_action :set_client, only: [:show, :edit, :update, :destroy, :set_terminated, :reactivate]
+  before_action :set_client, only: [:show, :edit, :update, :destroy, :set_terminated, :reactivate, :reserve]
   before_action :set_social_worker_collection, only: [:new, :create, :edit, :update]
   before_action :set_assignments, only: [:show, :edit]
 
@@ -84,6 +84,10 @@ class ClientsController < ApplicationController
     redirect_to edit_client_path(@client), notice: t("clients.notices.reactivation.#{state}")
   end
 
+  def reserve
+    @client.update(reserved_by: current_user)
+  end
+
   private
 
   def create_success_notice
@@ -134,4 +138,5 @@ class ClientsController < ApplicationController
       contact_attributes, availability_attributes
     )
   end
+
 end

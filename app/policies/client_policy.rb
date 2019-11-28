@@ -31,6 +31,7 @@ class ClientPolicy < ApplicationPolicy
   alias_method :edit?,           :superadmin_or_client_responsible?
   alias_method :update?,         :superadmin_or_client_responsible?
   alias_method :set_terminated?, :superadmin_or_department_managers_record?
+  alias_method :reserve?,        :superadmin_or_department_managers_record?
 
   # suplementary policies
   alias_method :superadmin_privileges?, :superadmin?
