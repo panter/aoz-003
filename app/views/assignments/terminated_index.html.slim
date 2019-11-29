@@ -65,5 +65,6 @@ nav.navbar.section-navigation.hidden-print
               - else
                 = link_to 'Dossier Freiwillig Engagiert', volunteer_certificate_path(assignment.volunteer, assignment.volunteer.certificates.last)
             = link_to 'Freiwillige/n beenden', terminate_volunteer_path(assignment.volunteer), method: :put unless assignment.volunteer.resigned?
+            = link_to 'Klient/in beenden', set_terminated_client_path(assignment.client), method: :patch unless assignment.client.resigned?
 
 = bootstrap_paginate(@assignments)

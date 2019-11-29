@@ -17,6 +17,7 @@ module TerminationScopes
       date_between_inclusion(:termination_submitted_at, start_date, end_date)
     }
 
+    scope :no_active_assignments, -> { joins(:clients).where("period_end < ?", Time.zone.now)}
     scope :unterminated, (-> { field_nil(:termination_verified_by_id) })
     scope :terminated, (-> { field_not_nil(:termination_verified_by_id) })
 
