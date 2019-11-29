@@ -114,6 +114,24 @@ class VolunteersTest < ApplicationSystemTestCase
     assert_equal volunteer.reload.department, department
   end
 
+  test 'automatically assigned department if invited by department manager' do
+    volunteer = Volunteer.last
+    department = create :department
+    department_manager = create :department_manager, department: [department]
+
+    volunteer.update department: nil
+    volunteer.undecided!
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    select 'Eingeladen', from: 'Prozess'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert volunteer.reload.invited?
+    assert_equal volunteer.reload.department, department
+  end
+
   test 'department will not be automatically assigned if already selected' do
     volunteer = create :volunteer, acceptance: :undecided, waive: false
     department1 = create :department
