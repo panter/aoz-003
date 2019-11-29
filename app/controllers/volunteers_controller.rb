@@ -72,6 +72,7 @@ class VolunteersController < ApplicationController
       redirect_to(edit_volunteer_path(@volunteer),
         notice: t('invite_sent', email: @volunteer.primary_email))
     elsif @volunteer.save
+      auto_assign_department! if @volunteer.saved_change_to_attribute?(:acceptance) && @volunteer.invited?
       redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_updated')
     else
       render :edit
