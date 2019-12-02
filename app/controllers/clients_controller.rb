@@ -85,7 +85,10 @@ class ClientsController < ApplicationController
   end
 
   def reserve
-    @client.update(reserved_by: current_user)
+    @client.update(reserved_by: current_user.id, reserved_at: Time.now)
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

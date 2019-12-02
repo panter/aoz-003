@@ -4,7 +4,6 @@ $(() => {
   conditionalField();
   tableRowSelectable();
   volunteerForm();
-  clientForm();
   groupOfferForm();
   emailTemplate();
   inplaceFields();
