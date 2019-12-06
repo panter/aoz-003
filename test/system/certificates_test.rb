@@ -35,7 +35,6 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_text? I18n.l(@volunteer.certificates.first.created_at.to_date)
     assert page.has_text? I18n.l(@volunteer.min_assignment_date)
     assert page.has_text? I18n.l(@volunteer.max_assignment_date)
-    assert page.has_link? 'Ausdrucken'
   end
 
   test 'updating_certificate_with_custom_values' do
