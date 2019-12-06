@@ -19,9 +19,10 @@ module PdfHelpers
       filename: pdf_file_name(record)
   end
 
+  # currently only used for assignments
   def save_with_pdf(record, action = 'show.html', options = {})
-    { layout: 'pdf_layout.pdf.slim', zoom: 1.15,
-      dpi: 600, margin: { top: 10, bottom: 10, left: 0, right: 0 }
+    { layout: 'assignments.pdf.slim', zoom: 1.15,
+      dpi: 600, margin: { top: 0, bottom: 10, left: 0, right: 14 },
     }.each do |k,v|
       next if options.key?(k)
       options[k] = v
