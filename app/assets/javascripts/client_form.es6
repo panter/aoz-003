@@ -1,7 +1,6 @@
 function clientForm() {
   $('.reserve-client-action-cell').on('click', ({ target }) => {
     const cell = $(target).closest('td')
-    console.log(cell)
     const { clientId } = cell.data()
     $.ajax({
       url: `/clients/${clientId}/reserve`,

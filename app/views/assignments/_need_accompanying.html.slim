@@ -13,7 +13,6 @@
               button.btn.btn-default= t('unreserve_client')
             - else
               button.btn.btn-default= t('reserve_client')
-          / td= button_link t('reserve_client'),  reserve_client_path(client_id: client, volunteer_id: @volunteer), id: "reserve_client#{client.id}", remote: true, method: :put
           td= t("salutation.#{client.salutation}") if client.salutation?
           td= link_to client.contact.full_name, edit_client_path(client)
           td= client.contact.city
