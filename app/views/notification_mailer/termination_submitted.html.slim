@@ -1,8 +1,8 @@
 h1= t('.title', email: @terminated.termination_submitted_by.email)
 
 - if @terminated.assignment?
-  p= link_to t('.link_text.terminated_assignment'), terminated_index_assignments_url(@link_params)
+  p= link_to t('.link_text.terminated_assignment'), terminated_index_assignments_url
 - elsif @terminated.group_assignment?
-  p= link_to t('.link_text.terminated_group_assignment'), terminated_index_group_assignments_url(@link_params)
+  p= link_to t('.link_text.terminated_group_assignment'), terminated_index_group_assignments_url
 
 p AOZ Fachstelle Freiwilligenarbeit

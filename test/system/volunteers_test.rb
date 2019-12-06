@@ -41,7 +41,6 @@ class VolunteersTest < ApplicationSystemTestCase
     page.check('Training')
     page.check('German Course')
     page.check('Other Offer')
-    fill_in 'Beschreibung', with: 'Description'
     page.check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
     fill_in 'Bank', with: 'BankName'
     fill_in 'IBAN', with: 'CH01 2345 6789 0123 4567 8'
@@ -95,6 +94,78 @@ class VolunteersTest < ApplicationSystemTestCase
     assert page.has_field? 'Dossier Freiwillige engagiert verschickt', checked: true
     assert page.has_field? 'Kontodaten eingetragen', checked: true
     assert page.has_field? 'Abschlussevaluation erhalten', checked: true
+  end
+
+  test 'automatically assigned department if accepted by department manager' do
+    volunteer = Volunteer.last
+    department = create :department
+    department_manager = create :department_manager, department: [department]
+
+    volunteer.update department: nil
+    volunteer.undecided!
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    select 'Akzeptiert', from: 'Prozess'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert volunteer.reload.accepted?
+    assert_equal volunteer.reload.department, department
+  end
+
+  test 'automatically assigned department if invited by department manager' do
+    volunteer = Volunteer.last
+    department = create :department
+    department_manager = create :department_manager, department: [department]
+
+    volunteer.update department: nil
+    volunteer.undecided!
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    select 'Eingeladen', from: 'Prozess'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert volunteer.reload.invited?
+    assert_equal volunteer.reload.department, department
+  end
+
+  test 'department will not be automatically assigned if already selected' do
+    volunteer = create :volunteer, acceptance: :undecided, waive: false
+    department1 = create :department
+    department2 = create :department
+    department_manager = create :department_manager, department: [department1, department2]
+
+    volunteer.update department: department2
+
+    login_as department_manager
+    visit edit_volunteer_path volunteer
+
+    select 'Akzeptiert', from: 'Prozess'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert volunteer.reload.accepted?
+    assert_equal volunteer.reload.department, department2
+  end
+
+  test 'department should not be assigned if accepted by superadmin' do
+    volunteer = create :volunteer, acceptance: :undecided, waive: false
+    department = create :department
+    @user.update(department: [department])
+
+    volunteer.update department: nil
+    volunteer.undecided!
+
+    login_as @user
+    visit edit_volunteer_path volunteer
+
+    select 'Akzeptiert', from: 'Prozess'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+
+    assert volunteer.reload.accepted?
+    assert_nil volunteer.reload.department
   end
 
   test 'volunteer checklist has default values (false)' do

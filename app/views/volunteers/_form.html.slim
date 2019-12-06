@@ -13,7 +13,7 @@
         legend= t('.acceptance.management')
         = acceptance_select(@volunteer, f)
         - unless @volunteer.undecided?
-        = show_status_date(@volunteer, :created_at, :invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at)
+        = show_status_date(@volunteer, true, :created_at, :invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at)
         
 
         = f.input :external, input_html: { data: { hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }
@@ -108,9 +108,11 @@
       legend= t_attr(:group_accompaniment, Volunteer)
       .row
         = f.association :group_offer_categories, as: :check_boxes, label: false,
-          collection: GroupOfferCategory.active.without_house_moving, item_wrapper_class: 'col-xs-4 checkbox-line'
+          collection: GroupOfferCategory.active.without_house_moving.without_other, item_wrapper_class: 'col-xs-4 checkbox-line'
         = f.association :group_offer_categories, as: :check_boxes, label: false,
           collection: GroupOfferCategory.house_moving, item_wrapper_class: 'col-xs-4'
+        #other-offer= f.association :group_offer_categories, as: :check_boxes, label: false,
+          collection: GroupOfferCategory.other, item_wrapper_class: 'col-xs-4'
       = f.input :other_offer_desc
 
   .col-xs-12.col-md-6

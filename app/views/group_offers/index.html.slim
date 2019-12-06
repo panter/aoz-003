@@ -19,7 +19,7 @@ nav.navbar.section-navigation#filters
   hr
   ul.list-inline
     li= clear_filter_button
-    = custom_filter_dropdown('Standort', *Department.filterable)
+    = custom_filter_dropdown('Standort', *Department.name_asc.filterable)
     = list_filter_dropdown(:offer_state, GroupOffer::OFFER_STATES)
     = custom_filter_dropdown('Kategorie', *GroupOfferCategory.filterable_group_offer)
     = custom_filter_dropdown('Einsatz',
@@ -41,7 +41,7 @@ table.table.table-striped
       th.hidden-print Aktionen
       th= sort_link @q, :active, 'Status'
       th= t_attr(:title)
-      th= sort_link @q, :location
+      th= sort_link @q, :department_contact_last_name, t_attr(:department)
       th Verantwortliche/r
       th= t_attr(:availability)
       th= t_attr(:target_group)
@@ -64,13 +64,7 @@ table.table.table-striped
           = button_link icon_span(:journal), group_offer_journals_path(offer), title: 'Journal'
         td.button-acceptance= assignment_status_badge(offer)
         td= offer.title
-        td
-          - if offer.external? && offer.organization?
-            = offer.organization
-            br
-            = offer.location
-          - if !offer.external? && offer.department
-            = offer.department.contact.last_name
+        td= offer.department&.contact.to_s
         td
           - if offer.creator
             =link_to offer.creator.full_name, profile_url_path(offer.creator)
@@ -94,7 +88,8 @@ table.table.table-striped
               br
         td= t("offer_state.#{offer.offer_state}") if offer.offer_state?
         td
-          - offer.volunteers.each do |volunteer|
+          - offer.group_assignments.unterminated.each do |group_assignment|
+            - volunteer = group_assignment.volunteer
             = link_to_if(policy(volunteer).edit?, volunteer.contact.full_name, edit_volunteer_path(volunteer))
             br
             = t_attr(offer.responsible?(volunteer) ? :responsible : :member, GroupAssignment)

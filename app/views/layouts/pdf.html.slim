@@ -13,13 +13,13 @@ html
         = t('pdf_header.address').html_safe
       .col-xs-3
         - if controller_name == 'assignments'
-          == t('pdf_header.contact', phone: @assignment&.creator.profile.contact.primary_phone)
+          == t('pdf_header.contact', phone: @assignment&.creator.profile.contact.primary_phone, email: @assignment&.creator.profile.contact.primary_email)
         - elsif controller_name == 'group_offers'
-          == t('pdf_header.contact', phone: @group_offer&.creator.profile.contact.primary_phone)
+          == t('pdf_header.contact', phone: @group_offer&.creator.profile.contact.primary_phone, email: @group_offer&.creator.profile.contact.primary_email)
         - elsif controller_name == 'billing_expenses'
-          == t('pdf_header.contact', phone: @billing_expense&.user.profile.contact.primary_phone)
+          == t('pdf_header.contact', phone: @billing_expense&.user.profile.contact.primary_phone, email: 'freiwillige@aoz.ch')
         - else
-          == t('pdf_header.contact', phone: '044 415 66 72')
+          == t('pdf_header.contact', phone: '044 415 66 72', email: 'freiwillige@aoz.ch')
 
     .container
       = yield

@@ -44,22 +44,26 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'when an internal volunteer gets terminated will be marked as resigned' do
+    superadmin = create :user, role: 'superadmin'
     volunteer = create :volunteer, external: false
     assert volunteer.valid?
-    volunteer.terminate!
+    volunteer.terminate!(superadmin)
     volunteer.reload
     assert volunteer.resigned?
+    assert_equal volunteer.resigned_by, superadmin
     refute volunteer.active?
     refute volunteer.user.present?
   end
 
   test 'terminate_volunteer_without_user' do
+    superadmin = create :user, role: 'superadmin'
     volunteer = create :volunteer, external: true, acceptance: :accepted
 
     assert_nil volunteer.user
 
-    volunteer.terminate!
-
+    volunteer.terminate!(superadmin)
+    
+    assert_equal volunteer.resigned_by, superadmin
     assert volunteer.resigned?
   end
 

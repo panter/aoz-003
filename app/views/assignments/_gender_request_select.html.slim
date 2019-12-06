@@ -1,4 +1,4 @@
-- gender_request_filter = search_parameters[:gender_request_cont].presence || 'all'
+- gender_request_filter = search_parameters[:gender_request_eq].presence || 'all'
 .btn-group
   button.btn.btn-default.dropdown-toggle type='button' data-toggle='dropdown' aria-label="#{t_attr(:gender_request)}" aria-haspopup='true' aria-expanded='false' class="btn-md"
     = "#{t_attr(:gender_request, Client)}: "
@@ -6,7 +6,7 @@
     span.caret aria-hidden='true'
   ul.dropdown-menu
     li
-      = link_to t('all'), request_params_filter({gender_request_cont: ''})
+      = link_to t('all'), request_params_filter({gender_request_eq: ''})
     - Client::GENDER_REQUESTS.each do |s|
     	- next if s == :no_matter
-    	li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :gender_request]), request_params_filter({gender_request_cont: s})
+    	li= link_to t(s.to_s, scope: [:simple_form, :options, :client, :gender_request]), request_params_filter({gender_request_eq: s})

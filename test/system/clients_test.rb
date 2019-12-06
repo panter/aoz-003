@@ -14,7 +14,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Vorname', with: 'asdf'
     fill_in 'Nachname', with: 'asdf'
     within '.client_birth_year' do
-      select('1995', from: 'Jahrgang')
+      select('1995', from: 'Geburtsdatum')
     end
     select('Frau', from: 'Anrede')
     select('Aruba', from: 'Nationalität')
@@ -36,7 +36,7 @@ class ClientsTest < ApplicationSystemTestCase
     within '#relatives' do
       fill_in 'Vorname', with: 'asdf'
       fill_in 'Nachname', with: 'asdf'
-      select('2001', from: 'Jahrgang')
+      select('2001', from: 'Geburtsdatum')
       select('Onkel', from: 'Verwandtschaftsbeziehung')
     end
     fill_in 'Inhalte der Begleitung', with: 'asdfasdf'
@@ -143,6 +143,27 @@ class ClientsTest < ApplicationSystemTestCase
       I18n.l(without_assignment.created_at.to_date)
     assert_text 'assigned_goals assigned_interests assigned_authority ' +
       I18n.l(with_assignment.created_at.to_date)
+  end
+
+  test 'client cannot be terminated if has active missions' do
+    client = create :client
+    assignment1 = create :assignment, client: client, period_start: 3.weeks.ago, period_end: 2.days.ago, period_end_set_by: @superadmin
+    assignment2 = create :assignment, client: client, period_start: 3.weeks.ago, period_end: nil
+    refute client.resigned?
+
+    login_as @superadmin
+    visit client_path(client)
+    find_all("a[href='#{set_terminated_client_path(client)}']").first.click
+    page.driver.browser.switch_to.alert.accept
+    assert_text 'Klient/in kann nicht beendet werden, solange noch ein laufendes Tandem existiert.'
+
+    assignment2.update(period_end: 1.day.ago)
+
+    find_all("a[href='#{set_terminated_client_path(client)}']").last.click
+
+    page.driver.browser.switch_to.alert.accept
+    assert_text 'Klient/in wurde erfolgreich beendet.'
+    assert client.reload.resigned?
   end
 
   test 'all_needed_actions_are_available_in_the_index' do

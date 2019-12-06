@@ -1,0 +1,8 @@
+<%= t('.title') %>
+
+<%= t('.salutation') %>
+
+<%= t('.body',
+    volunteer_name: @group_assignment.volunteer.to_s, 
+    group_offer: "#{@group_assignment.title} - #{url_for(@group_assignment.group_offer)}"
+  ).html_safe %>

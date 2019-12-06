@@ -16,7 +16,7 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
     wb = get_xls_from_response(clients_url(format: :xlsx))
     assert_xls_cols_equal(wb, 1, 0, 'id', 'Anrede', 'Nachname', 'Vorname', 'Strasse',
       'Adresszusatz', 'PLZ', 'Ort', 'Telefonnummer', 'Telefonnummer 2', 'Mailadresse',
-      'Jahrgang', 'Nationalität', 'Beruf oder Ausbildung im Herkunftsland',
+      'Geburtsdatum', 'Nationalität', 'Beruf oder Ausbildung im Herkunftsland',
       'Einreisedatum', 'Prozess', 'Fallführende Stelle', 'Sprachkenntnisse', 'Inhalte der Begleitung', 'Erstellt am', 'Aktualisiert am')
     
     assert_equal client.id.to_s, wb.cell(2, 1).to_s

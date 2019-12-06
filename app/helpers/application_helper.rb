@@ -83,6 +83,14 @@ module ApplicationHelper
     @search_parameters ||= (params[:q]&.to_unsafe_hash || {}).except(:all)
   end
 
+  def request_params_include_egal(params)
+    parameters = params.deep_dup
+    if parameters.has_key? 'age_request_cont'
+      parameters["age_request_in"] = [parameters["age_request_cont"], "age_no_matter"]
+      parameters.delete("age_request_cont")
+    end
+  end
+
   def bootstrap_paginate(paginate_collection)
     will_paginate paginate_collection, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer,
       class: 'pagination-lg text-center hidden-print', 'aria-label': 'Pagination'
@@ -145,11 +153,18 @@ module ApplicationHelper
     tag.abbr(abbr.to_s, title: full_term)
   end
 
-  def show_status_date(record, *args)
-    tag.ul(class: "list-unstyled") do 
+  def show_status_date(record, include_processing_person, *args)
+    tag.ul(class: "list-unstyled") do
       record.slice(*args).compact.each do |key, value|
-        concat tag.li(t_attr(key) +' '+ l(value))
+        if include_processing_person
+          updated_by_attr = key.include?('_at') ? key.sub('_at', '_by') : nil
+          concat tag.li([
+            t_attr(key) +' '+ l(value), record.send(updated_by_attr).to_s
+          ].reject(&:blank?).join(" #{I18n.t('by')} "))
+        else
+          concat tag.li(t_attr(key) +' '+ l(value))
+        end
       end
     end
-  end 
+  end
 end

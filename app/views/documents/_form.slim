@@ -1,0 +1,27 @@
+h1.m-b-20= t_title(:new)
+.documents-page
+  .sidebar
+    .panel.panel-default
+      .panel-heading
+        h4= t('actions')
+      .list-group
+        = link_to t_title(:submit, Document), '', class: 'list-group-item', id: 'sidebar-submit'
+        = link_to t_title(:index, Document), documents_path, class: 'list-group-item'
+  .content
+    = simple_form_for @document do |form|
+      = form.input :title
+      - (1..4).each do |i|
+        .row.form-group.string.optional.document_category
+          label.string.optional.col-sm-2
+            = Document.human_attribute_name("category#{i}")
+            a(class='freetext glyphicon glyphicon-edit' href="#")
+          .col-sm-10
+            = form.select "category#{i}", Document.categories(i), {}, class: 'select optional form-control', style: 'display: none;'
+            = form.text_field "category#{i}", class: 'string optional form-control'
+      = form.input :file
+
+      .row
+        .col-sm-3
+          = form_navigation_btn :back, with_row: false
+        .col-sm-offset-1.col-sm-3
+          = form.button :submit

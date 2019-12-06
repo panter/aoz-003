@@ -57,22 +57,9 @@ class CertificatesController < ApplicationController
 
   def prepare_params
     certificate_params
-      .except(:assignment_kinds).merge(volunteer: @volunteer, user_id: current_user.id,
-        assignment_kinds: { done: kinds_done_filter, available: kinds_available_filter })
+      .except(:assignment_kinds).merge(volunteer: @volunteer, user_id: current_user.id)
   end
 
-  def kinds_available_filter
-    @kinds_available ||= GroupOfferCategory.where.not(id: kinds_done_filter
-      .map { |done| done[1] }).map { |goc| [goc.category_name, goc.id] }
-  end
-
-  def kinds_done_filter
-    @kinds_done ||= @volunteer.assignment_categories_done.select do |_, id|
-      certificate_params[:assignment_kinds].reject(&:blank?).map(&:to_i).include? id
-    end + @volunteer.assignment_categories_available.select do |_, id|
-      certificate_params[:assignment_kinds].reject(&:blank?).map(&:to_i).include? id
-    end
-  end
 
   def set_certificate
     @certificate = Certificate.find(params[:id])
