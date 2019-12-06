@@ -218,7 +218,7 @@ ActiveRecord::Schema.define(version: 20191024143050) do
     t.bigint "reactivated_by_id"
     t.datetime "reactivated_at"
     t.text "other_authorities"
-    t.bigint "reserved_by"
+    t.bigint "reserved_by_id"
     t.datetime "reserved_at"
     t.index ["acceptance"], name: "index_clients_on_acceptance"
     t.index ["accepted_at"], name: "index_clients_on_accepted_at"

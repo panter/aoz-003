@@ -85,9 +85,12 @@ class ClientsController < ApplicationController
   end
 
   def reserve
-    @client.update(reserved_by: current_user.id, reserved_at: Time.now)
-    respond_to do |format|
-      format.js
+    if @client.reserved_by
+      @client.update(reserved_by: nil, reserved_at: nil)
+      render json: { btn_text: I18n.t('reserve_client'), user_name: nil }
+    else
+      @client.update(reserved_by_id: current_user.id, reserved_at: Time.now)
+      render json: { user_name: current_user.full_name, btn_text: I18n.t('unreserve_client') }
     end
   end
 

@@ -1,6 +1,8 @@
 class AddReservedToClient < ActiveRecord::Migration[5.1]
   def change
-    add_column :clients, :reserved_by, :bigint, index: true
-    add_column :clients, :reserved_at, :datetime
+    change_table :clients do |t|
+      t.bigint :reserved_by_id, index: true
+      t.datetime :reserved_at
+    end
   end
 end

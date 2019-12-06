@@ -228,6 +228,7 @@ de:
   remember_me: Angemeldet bleiben
   reserve: Begleitung erstellen
   reserve_client: Reservieren
+  unreserve_client: Reservation aufheben
   seeking_clients: Klient/in suchen
   semester_long: '%{number}. Semester %{year} (%{begin} - %{end})'
   semester_period: '%{begin} - %{end}'
