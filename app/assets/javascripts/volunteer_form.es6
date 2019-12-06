@@ -1,7 +1,10 @@
 function volunteerForm() {
   show_rejection();
+  toggleOtherInput($('#other-offer label input').length > 0 ? $('#other-offer label input')[0] : null)
 
-  $('#volunteer_acceptance').on('change', ({target}) => show_rejection(target));
+  $('#volunteer_acceptance').on('change load', ({target}) => show_rejection(target));
+
+  $('#other-offer label input').on('change', ({ target }) => { toggleOtherInput(target)});
 
   $('.volunteer-active-checkbox-changes').on('change', ({target}) => {
     const data = $(target).data();
@@ -22,6 +25,13 @@ function volunteerForm() {
   $('.checkbox-toggle-collapse').trigger('change');
 }
 
+const toggleOtherInput = (target) => {
+  if (!target) return;
+  
+  const checked = $(target).is(':checked');
+  $('#volunteer_other_offer_desc').parent().toggle(checked);
+}
+
 const hideFormRegions = (hide) => {
   hide.forEach(cssClass => $(`.${cssClass}`).hide());
 }
@@ -30,7 +40,7 @@ const showFormRegions = (hide) => {
   hide.forEach(cssClass => $('.' + cssClass).show());
 }
 
-const show_rejection = (target) => {
+const show_rejection = (target = '#volunteer_acceptance') => {
   if($(target).val() == 'rejected') {
     return $('.volunteer_rejection_type, .volunteer_rejection_text').show();
   }

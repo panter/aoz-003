@@ -29,13 +29,6 @@
       dd= @certificate.function
 
     dl
-      dt Einsatzkategorien
-      dd
-        - @certificate.assignment_kinds['done'].uniq.each do |kind_name, _|
-          span.kind-list
-            input*{ type: 'checkbox', checked: true } onclick='return false;'
-            = kind_name
-    dl
       dt= t_attr(:duration)
       dd= "#{l(@certificate.duration_start, default: '')} #{t('to')} #{l(@certificate.duration_end, default: '')}"
       dt= t_attr(:time_given)

@@ -156,7 +156,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
     assert_text client_with_language_skills
     assert_text @accepted_woman_age_old
-    refute_text @accepted_no_matter_age_old
+    assert_text @accepted_no_matter_age_old
     refute_text @resigned_woman_age_middle
     refute_text @rejected_no_matter_age_middle
 

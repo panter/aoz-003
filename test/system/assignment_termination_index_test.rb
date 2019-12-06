@@ -33,6 +33,40 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     refute_text termination_index_table_text(@verified)
   end
 
+  test 'client with no active assignments can be terminated' do
+    Assignment.destroy_all
+
+    client = create :client
+    assignment1 = create :assignment, client: client, period_start: 3.weeks.ago, period_end: 2.days.ago, period_end_set_by: @superadmin
+    assignment2 = create :assignment, client: client, period_start: 3.weeks.ago, period_end: nil
+    refute client.resigned?
+
+    visit assignments_path
+    click_link 'Beendete Begleitungen'
+
+    assert_text termination_index_table_text(assignment1)
+    refute_text termination_index_table_text(assignment2)
+
+    click_link 'Klient/in beenden'
+
+    assert_text 'Beenden fehlgeschlagen.'
+    refute client.resigned?
+    assert page.has_link? 'Klient/in beenden'
+
+    assignment2.update(period_end: 4.days.ago, period_end_set_by: @superadmin)
+    
+    visit current_url
+
+    assert_text termination_index_table_text(assignment1)
+    assert_text termination_index_table_text(assignment2)
+
+    click_link 'Klient/in beenden', match: :first
+
+    refute page.has_link? 'Klient/in beenden'
+    assert_text 'Klient/in wurde erfolgreich beendet.'
+    assert client.reload.resigned?
+  end
+
   test 'filtering_submitted_terminations' do
     visit terminated_index_assignments_path
     click_link 'Ende Bestätigt'

@@ -97,6 +97,8 @@ Rails.application.routes.draw do
     get :send_trial_period, on: :member
   end
 
+  resources :documents
+
   resources :semester_process_volunteers do
     get :review_semester, on: :member
     put :take_responsibility, on: :member

@@ -82,7 +82,7 @@ class Client < ApplicationRecord
   }
 
   def terminatable?
-    assignments.unterminated.none?
+    assignments.active_or_not_yet_active.none?
   end
 
   def self.acceptences_restricted

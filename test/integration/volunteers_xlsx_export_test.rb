@@ -26,7 +26,7 @@ class VolunteersXlsxExportTest < ActionDispatch::IntegrationTest
       'Telefonnummer',
       'Telefonnummer 2',
       'Mailadresse',
-      'Jahrgang',
+      'Geburtsdatum',
       'Nationalität',
       'Beruf',
       'Prozess',
