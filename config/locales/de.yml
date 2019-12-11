@@ -4,6 +4,7 @@ de:
   actions: Aktionen
   expand_all: Alle anzeigen
   collapse_all: Alle einklappen
+  by: von
   generic_keys: &id-generic_keys
     salutation: Anrede
     first_name: Vorname

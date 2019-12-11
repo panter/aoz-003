@@ -13,7 +13,7 @@
         legend= t('.acceptance.management')
         = acceptance_select(@volunteer, f)
         - unless @volunteer.undecided?
-        = show_status_date(@volunteer, :created_at, :invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at)
+        = show_status_date(@volunteer, true, :created_at, :invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at)
         
 
         = f.input :external, input_html: { data: { hide: ['bank-data', 'checklist'] }, class: 'volunteer-active-checkbox-changes' }

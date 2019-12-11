@@ -1,4 +1,5 @@
 class VolunteersController < ApplicationController
+  include ProcessedByConcern
   before_action :set_volunteer, only: [:show, :edit, :update, :terminate, :account, :update_bank_details, :reactivate]
   before_action :set_active_and_archived_missions, only: [:show, :edit]
 
@@ -62,11 +63,16 @@ class VolunteersController < ApplicationController
   def update
     @volunteer.attributes = volunteer_params
     return render :edit unless @volunteer.valid?
+    
+    register_acceptance_change(@volunteer)
+
     if @volunteer.will_save_change_to_attribute?(:acceptance, to: 'accepted') &&
         @volunteer.internal? && !@volunteer.user && @volunteer.save
+      auto_assign_department!
       redirect_to(edit_volunteer_path(@volunteer),
         notice: t('invite_sent', email: @volunteer.primary_email))
     elsif @volunteer.save
+      auto_assign_department! if @volunteer.saved_change_to_attribute?(:acceptance) && @volunteer.invited?
       redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_updated')
     else
       render :edit
@@ -81,7 +87,7 @@ class VolunteersController < ApplicationController
 
   def terminate
     if @volunteer.terminatable?
-      @volunteer.terminate!
+      @volunteer.terminate!(current_user)
       redirect_back fallback_location: edit_volunteer_path(@volunteer),
         notice: 'Freiwillige/r wurde erfolgreich beendet.'
     else
@@ -119,6 +125,13 @@ class VolunteersController < ApplicationController
   end
 
   private
+
+  def auto_assign_department!
+    return if !current_user.department_manager? || current_user.department.empty? || @volunteer.department.present?
+    
+    # association
+    @volunteer.update(department: current_user.department.first)
+  end
 
   def not_resigned
     return if params[:q]
