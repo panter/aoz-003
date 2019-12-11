@@ -18,8 +18,8 @@ class NotificationMailerest < ActionMailer::TestCase
     assert_match @other_superadmin.email, text
     assert_match @other_superadmin.email, html
 
-    assert_match '/assignments/terminated_index?q%5Btermination_verified_by_id_not_null%5D=true', text
-    assert_match '/assignments/terminated_index?q%5Btermination_verified_by_id_not_null%5D=true', html
+    assert_match '/assignments/terminated_index', text
+    assert_match '/assignments/terminated_index', html
   end
 
   test 'termination_submitted group_assignment' do
@@ -34,7 +34,7 @@ class NotificationMailerest < ActionMailer::TestCase
     assert_match @other_superadmin.email, text
     assert_match @other_superadmin.email, html
 
-    assert_match '/group_assignments/terminated_index?q%5Btermination_verified_by_id_not_null%5D=true', text
-    assert_match '/group_assignments/terminated_index?q%5Btermination_verified_by_id_not_null%5D=true', html
+    assert_match '/group_assignments/terminated_index', text
+    assert_match '/group_assignments/terminated_index', html
   end
 end

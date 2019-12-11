@@ -6,11 +6,13 @@ html.pdf-export-html
     = wicked_pdf_stylesheet_link_tag 'pdf_styles'
     = wicked_pdf_javascript_include_tag 'application'
   body.pdf
-    .container
-      .row
+    .header
+      .row.row-no-top-padding.row-no-bottom-padding
         .col-xs-3
           .pdf-logo-image
-            = wicked_pdf_image_tag 'AOZ_Logo.svg'
+            .logo-image = wicked_pdf_image_tag 'AOZ_Logo.svg'
+      .row.row-no-top-padding.row-no-bottom-padding
+        .col-xs-3
         .col-xs-3
           b= t('pdf_header.title').html_safe
         .col-xs-3
@@ -29,5 +31,5 @@ html.pdf-export-html
             == t('pdf_header.contact', phone: @billing_expense&.user.profile.contact.primary_phone, email: 'freiwillige@aoz.ch')
           - else
             == t('pdf_header.contact', phone: '044 415 66 72', email: 'freiwillige@aoz.ch')
-
+    .container
       = yield

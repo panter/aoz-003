@@ -18,7 +18,17 @@
 body {
   &.pdf {
     .container {
-      padding-left: $container-sm / 12;
+      padding-left: 3.2cm;
+    }
+
+    .header {
+      padding-top: 1.4cm;
+      padding-left: 1.5cm;
+      padding-bottom: 1.6cm;
+    }
+
+    .col-input, .col-label {
+      font-size: 12px;
     }
 
     .col-xs-6 {
@@ -117,4 +127,14 @@ body {
   line-height: 20px;
   overflow: hidden;
   height: 60px;
+}
+
+.row-no-top-padding {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.row-no-bottom-padding {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }

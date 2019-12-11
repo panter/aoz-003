@@ -5,63 +5,63 @@ h4.m-b-10= t('assignment_pdf.volunteer_title')
 .row.m-b-10
   .col-xs-6
     .row
-      .col-xs-3= t('assignment_pdf.last_name')
+      .col-xs-3.col-label= t('assignment_pdf.last_name')
       .col-xs-7.col-input= @assignment.volunteer.contact.last_name
 
-      .col-xs-3= t('assignment_pdf.street')
+      .col-xs-3.col-label= t('assignment_pdf.street')
       .col-xs-7.col-input= @assignment.volunteer.contact.street
 
-      .col-xs-3= t('assignment_pdf.telephone')
+      .col-xs-3.col-label= t('assignment_pdf.telephone')
       .col-xs-7.col-input= @assignment.volunteer.contact.primary_phone
 
-      .col-xs-3= t('assignment_pdf.email')
+      .col-xs-3.col-label= t('assignment_pdf.email')
       .col-xs-7.col-input= @assignment.volunteer.contact.primary_email
 
   .col-xs-6
     .row
-      .col-xs-5= t('assignment_pdf.first_name')
+      .col-xs-5.col-label= t('assignment_pdf.first_name')
       .col-xs-7.col-input= @assignment.volunteer.contact.first_name
 
-      .col-xs-5 #{t('assignment_pdf.postal_code')} / #{t('assignment_pdf.city')}
+      .col-xs-5.col-label #{t('assignment_pdf.postal_code')} / #{t('assignment_pdf.city')}
       .col-xs-7.col-input= @assignment.volunteer.contact.full_city
 
-      .col-xs-5= t('assignment_pdf.birth_year')
+      .col-xs-5.col-label= t('assignment_pdf.birth_year')
       .col-xs-7.col-input= @assignment.volunteer.birth_year.try(:year)
 
 h4.m-b-10= t('assignment_pdf.client_title')
 .row.m-b-10
   .col-xs-6
     .row
-      .col-xs-3= t('assignment_pdf.last_name')
+      .col-xs-3.col-label= t('assignment_pdf.last_name')
       .col-xs-7.col-input= @assignment.client.contact.last_name
 
-      .col-xs-3= t('assignment_pdf.street')
+      .col-xs-3.col-label= t('assignment_pdf.street')
       .col-xs-7.col-input= @assignment.client.contact.street
 
-      .col-xs-3= t('assignment_pdf.telephone')
+      .col-xs-3.col-label= t('assignment_pdf.telephone')
       .col-xs-7.col-input= @assignment.client.contact.primary_phone
 
-      .col-xs-3= t('assignment_pdf.email')
+      .col-xs-3.col-label= t('assignment_pdf.email')
       .col-xs-7.col-input= @assignment.client.contact.primary_email
 
-      .col-xs-3= t('assignment_pdf.birth_year')
+      .col-xs-3.col-label= t('assignment_pdf.birth_year')
       .col-xs-7.col-input= @assignment.client.birth_year.try(:year)
   .col-xs-6
     .row
-      .col-xs-5= t('assignment_pdf.first_name')
+      .col-xs-5.col-label= t('assignment_pdf.first_name')
       .col-xs-7.col-input= @assignment.client.contact.first_name
 
-      .col-xs-5 #{t('assignment_pdf.postal_code')} / #{t('assignment_pdf.city')}
+      .col-xs-5.col-label #{t('assignment_pdf.postal_code')} / #{t('assignment_pdf.city')}
       .col-xs-7.col-input #{@assignment.client.contact.postal_code} #{@assignment.client.contact.city}
 
-      .col-xs-5= t('assignment_pdf.telephone_2')
+      .col-xs-5.col-label= t('assignment_pdf.telephone_2')
       .col-xs-7.col-input= @assignment.client.contact.secondary_phone
 
-      .col-xs-5 #{t('assignment_pdf.nationality')}, #{t('assignment_pdf.state')}
+      .col-xs-5.col-label #{t('assignment_pdf.nationality')}, #{t('assignment_pdf.state')}
       .col-xs-7.col-input
         = [nationality_name(@assignment.client.nationality), @assignment.client.permit].compact.reject(&:empty?).join(', ')
 
-      .col-xs-5= t('assignment_pdf.languages')
+      .col-xs-5.col-label= t('assignment_pdf.languages')
       .col-xs-7.col-input
         - @assignment.client.language_skills.each do |language|
           = "#{language.language_name} "
@@ -69,17 +69,17 @@ h4.m-b-10= t('assignment_pdf.client_title')
 .row-box
   .col-xs-12
     .row
-      .col-xs-4= t('assignment_pdf.assignment_description')
+      .col-xs-4.col-label= t('assignment_pdf.assignment_description')
       .col-xs-8.col-input = @assignment.assignment_description
-      .col-xs-4= t('assignment_pdf.frequency')
+      .col-xs-4.col-label= t('assignment_pdf.frequency')
       .col-xs-8.col-input= @assignment.frequency
-      .col-xs-4= t('assignment_pdf.first_time')
+      .col-xs-4.col-label= t('assignment_pdf.first_time')
       .col-xs-8.col-input= @assignment.first_meeting
-      .col-xs-4= t('assignment_pdf.trial_time')
+      .col-xs-4.col-label= t('assignment_pdf.trial_time')
       .col-xs-8.col-input= @assignment.trial_period_end
-      .col-xs-4= t('assignment_pdf.duration')
+      .col-xs-4.col-label= t('assignment_pdf.duration')
       .col-xs-8.col-input= @assignment.duration
-      .col-xs-4= t('assignment_pdf.special')
+      .col-xs-4.col-label= t('assignment_pdf.special')
       .col-xs-8.col-input= @assignment.special_agreement
 
 h4.m-b-10.m-t-20= t('assignment_pdf.creator_title')
@@ -87,23 +87,23 @@ h4.m-b-10.m-t-20= t('assignment_pdf.creator_title')
   .row.m-b-10
     .col-xs-6
       .row
-        .col-xs-3= t('assignment_pdf.last_name')
+        .col-xs-3.col-label= t('assignment_pdf.last_name')
         .col-xs-9.col-input= @assignment.involved_authority_contact.last_name
       .row
-        .col-xs-3= t('assignment_pdf.function')
+        .col-xs-3.col-label= t('assignment_pdf.function')
         .col-xs-9.col-input= @assignment.involved_authority.profession
       .row
-        .col-xs-3= t('assignment_pdf.email')
+        .col-xs-3.col-label= t('assignment_pdf.email')
         .col-xs-9.col-input= @assignment.involved_authority_contact.primary_email
     .col-xs-6
       .row
-        .col-xs-3= t('assignment_pdf.first_name')
+        .col-xs-3.col-label= t('assignment_pdf.first_name')
         .col-xs-9.col-input= @assignment.involved_authority_contact.first_name
       .row
-        .col-xs-3= t('assignment_pdf.organization')
+        .col-xs-3.col-label= t('assignment_pdf.organization')
         .col-xs-9.col-input= @assignment.involved_authority_contact.full_address
       .row
-        .col-xs-3= t('assignment_pdf.telephone')
+        .col-xs-3.col-label= t('assignment_pdf.telephone')
         .col-xs-9.col-input= @assignment.involved_authority_contact.primary_phone
 
 .row-box

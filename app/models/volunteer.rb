@@ -28,10 +28,18 @@ class Volunteer < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: 'volunteer', optional: true
   belongs_to :registrar, -> { with_deleted }, class_name: 'User', foreign_key: 'registrar_id', optional: true,
     inverse_of: :volunteers
-  belongs_to :reactivated_by, class_name: 'User', inverse_of: 'reactivated_volunteers',
+  belongs_to :reactivated_by, -> { with_deleted }, class_name: 'User', inverse_of: 'reactivated_volunteers',
     optional: true
   belongs_to :department, optional: true
   belongs_to :secondary_department, class_name: 'Department', optional: true
+
+  # accepance updating person
+  belongs_to :invited_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :accepted_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :resigned_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :rejected_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :undecided_by, -> { with_deleted }, class_name: 'User', optional: true
+  belongs_to :created_by, -> { with_deleted }, class_name: 'User', foreign_key: 'registrar_id', optional: true
 
   has_one :registrar_department, through: :registrar
 
@@ -443,6 +451,10 @@ class Volunteer < ApplicationRecord
     end
   end
 
+  def undecided_by
+    super || registrar
+  end
+
   def assignment_group_offer_collection
     assignments_hour_form_collection + group_offers_form_collection
   end
@@ -491,9 +503,9 @@ class Volunteer < ApplicationRecord
     ['active', 'inactive', 'not_resigned', 'process_eq']
   end
 
-  def terminate!
+  def terminate!(resigned_by)
     self.class.transaction do
-      update(acceptance: :resigned, resigned_at: Time.zone.now)
+      update(acceptance: :resigned, resigned_at: Time.zone.now, resigned_by: resigned_by)
       user&.destroy
     end
   end
@@ -538,7 +550,7 @@ class Volunteer < ApplicationRecord
   end
 
   def reactivate!(user)
-    update!(acceptance: 'accepted', reactivated_by: user, reactivated_at: Time.zone.now, resigned_at: nil)
+    update!(acceptance: 'accepted', accepted_by: user, reactivated_by: user, reactivated_at: Time.zone.now, resigned_at: nil)
     return true if external?
 
     if user.present? && (user.sign_in_count.zero? || !user.invitation_accepted?)
