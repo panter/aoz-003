@@ -22,6 +22,7 @@ class Client < ApplicationRecord
     optional: true
   belongs_to :involved_authority, -> { with_deleted }, class_name: 'User',
     inverse_of: 'involved_authorities', optional: true
+  belongs_to :reserved_by, class_name: 'User', inverse_of: :reserved_clients, optional: true
   has_many :manager_departments, through: :user, source: :departments
 
   has_many :assignments, dependent: :destroy
