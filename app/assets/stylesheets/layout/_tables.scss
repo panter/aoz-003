@@ -31,20 +31,3 @@
 .billing-expenses.new .table-scrollable {
   max-height: 500px;
 }
-
-.table-multicolumn {
-  display: flex;
-  flex-wrap: wrap;
-
-  & > table:first-child {
-    margin-bottom: 0;
-  }
-
-  @media (min-width: $container-md) {
-    flex-wrap: nowrap;
-
-    & > table:not(:first-child) {
-      margin-left: 10px;
-    }
-  }
-}
