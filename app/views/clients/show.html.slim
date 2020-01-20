@@ -2,7 +2,7 @@ h1.m-b-20= @client.contact.full_name
 
 = render 'show_navigation'
 
-.table-responsive.m-t-20
+.table-responsive.table-multicolumn.m-t-20
   table.table.table-no-border-top
     tbody
       tr
@@ -75,7 +75,9 @@ h1.m-b-20= @client.contact.full_name
       tr
         td= t_attr(:created_at)
         td= l(@client.created_at)
-      - if policy(Client).show_comments?
+  - if policy(Client).show_comments?
+    table.table.table-no-border-top.table-right
+      tbody
         tr
           td= t_attr(:comments_internal)
           td= @client.comments
