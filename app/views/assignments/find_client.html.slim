@@ -29,6 +29,7 @@ nav.navbar.section-navigation
         - if policy(Client).superadmin_privileges?
           th= sort_link @q, :acceptance, t_attr(:acceptance, Client)
         th= sort_link @q, :active, 'Status'
+        th= sort_link @q, :reserved_by, t_attr(:reserved_by, Client)
         th= sort_link @q, :salutation, t_attr(:salutation, Client)
         th= sort_link @q, :contact_last_name, t_attr(:full_name, Contact)
         th= sort_link @q, :contact_city, t_attr(:city, Contact)
@@ -52,35 +53,6 @@ nav.navbar.section-navigation
           th= t_attr(:comments, Client)
     tbody
       - @need_accompanying.each do |client|
-        tr
-          td.index-action-cell.hidden-print
-            = button_link icon_span(:show), client, title: 'Anzeigen'
-            = button_link t('reserve'), new_assignment_url(client_id: client, volunteer_id: @volunteer)
-          - if policy(Client).superadmin_privileges?
-            td.button-acceptance = link_to t("acceptance.#{client.acceptance}"), '#',
-              class: "btn btn-xs btn-acceptance-#{client.acceptance} btn-acceptance-client"
-          td.button-acceptance= assignment_status_badge(client)
-          td= t("salutation.#{client.salutation}") if client.salutation?
-          td= link_to client.contact.full_name, edit_client_path(client)
-          td= client.contact.city
-          td= client.contact.postal_code
-          td= client.birth_year&.year
-          td
-            - client.relatives.each do |relative|
-              = relative
-              br
-          td= nationality_name(client.nationality)
-          td.language-skill-index
-            - [client.language_skills.german, client.language_skills.native_languages].flatten.each do |language|
-              span= language.full_language_skills
-          td= client.goals
-          td= client.interests
-          - if policy(Client).superadmin_privileges?
-            td= link_to client.involved_authority.full_name, profile_url_path(client.involved_authority) if client.involved_authority
-          td= client.competent_authority
-          td= client.other_authorities
-          td.no-wrap= l(client.created_at.to_date)
-          - if policy(Client).show_comments?
-            = td_truncate_content_modal(client.comments, 'Bemerkungen')
+        = render 'need_accompanying', client: client
 
 = bootstrap_paginate(@need_accompanying)

@@ -7,4 +7,5 @@ $(() => {
   groupOfferForm();
   emailTemplate();
   inplaceFields();
+  clientForm()
 });

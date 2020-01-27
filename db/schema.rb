@@ -218,6 +218,8 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.bigint "reactivated_by_id"
     t.datetime "reactivated_at"
     t.text "other_authorities"
+    t.bigint "reserved_by_id"
+    t.datetime "reserved_at"
     t.index ["acceptance"], name: "index_clients_on_acceptance"
     t.index ["accepted_at"], name: "index_clients_on_accepted_at"
     t.index ["birth_year"], name: "index_clients_on_birth_year"
@@ -888,5 +890,6 @@ ActiveRecord::Schema.define(version: 20191122135842) do
   add_foreign_key "semester_process_volunteers", "volunteers"
   add_foreign_key "trial_feedbacks", "users", column: "author_id"
   add_foreign_key "volunteers", "departments"
+  add_foreign_key "volunteers", "departments", column: "secondary_department_id"
   add_foreign_key "volunteers", "users"
 end

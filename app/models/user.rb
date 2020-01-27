@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :event_volunteers, inverse_of: 'creator', foreign_key: 'creator_id'
   has_many :certificates
   has_many :clients, inverse_of: 'user', foreign_key: 'user_id'
+  has_many :reserved_clients, inverse_of: :reserved_by, class_name: 'Client', foreign_key: 'reserved_by_id'
   has_many :volunteers, inverse_of: 'registrar', foreign_key: 'registrar_id'
   has_many :involved_authorities, class_name: 'Client', foreign_key: 'involved_authority_id',
     inverse_of: 'involved_authority'

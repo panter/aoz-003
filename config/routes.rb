@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   resources :clients, concerns: [:search, :reactivate] do
     resources :journals, except: [:show]
     patch :set_terminated, on: :member
+    put :reserve, on: :member
   end
 
   resources :events do
