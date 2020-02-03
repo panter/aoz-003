@@ -26,7 +26,7 @@ h2.small Persönlicher Hintergrund
     .col-xs-12.col-md-4
       fieldset
         = show_status_date(@volunteer, true, :created_at, :invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at)
-.table-responsive.table-multicolumn
+.table-responsive
   table.table.table-no-border-top
     tbody
       tr
@@ -87,9 +87,7 @@ h2.small Persönlicher Hintergrund
             = t('volunteer_self_applicant')
           - else
             = link_to @volunteer.registrar.full_name, profile_url_path(@volunteer.registrar)
-  - if policy(Volunteer).show_comments?
-      table.table.table-no-border-top
-        tbody
+        - if policy(Volunteer).show_comments?
           tr
             td= t_attr(:comments_internal)
             td= @volunteer.comments
