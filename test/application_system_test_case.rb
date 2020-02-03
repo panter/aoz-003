@@ -81,6 +81,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
+  def wait_for_ajax_block
+    Timeout.timeout(Capybara.default_max_wait_time) do
+      loop until page.evaluate_script('jQuery.active').zero?
+      yield
+    end
+  end
+
   def fill_field_char_by_char_and_wait_for_ajax(locator, text)
     field = page.find_field(locator)
     text.split('').each do |char|

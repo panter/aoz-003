@@ -45,6 +45,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_text 'Aktiv'
     assert_text @client
   end
+  
 
   test 'assign multiple clients' do
     login_as @user
@@ -89,6 +90,33 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit volunteer_path(@volunteer)
     assert_text @client
     assert_text another_client
+  end
+
+  test 'Reserve and unreserve client' do
+    login_as @user
+    visit volunteers_path
+    click_link 'Klient/in suchen', match: :first
+    click_link 'Klient/in suchen'
+    wait_for_ajax_block do
+      click_button 'Reservieren'
+    end
+    visit root_path
+    visit volunteers_path
+    click_link 'Klient/in suchen', match: :first
+    click_link 'Klient/in suchen'
+    within '.reserve-client-action-cell' do
+      assert_text @user.full_name
+      assert page.has_button?('Reservation aufheben')
+      click_button 'Reservation aufheben'
+    end
+
+    visit root_path
+    visit volunteers_path
+    click_link 'Klient/in suchen', match: :first
+    click_link 'Klient/in suchen'
+    within '.reserve-client-action-cell' do
+      assert page.has_button?('Reservieren')
+    end
   end
 
   test 'volunteer cannot see new/edit assignment buttons' do
