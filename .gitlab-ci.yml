@@ -16,6 +16,7 @@ variables:
   RAILS_ENV: test
   POSTGRES_DB: aoz_test
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
+  POSTGRES_HOST_AUTH_METHOD: trust
 
 before_script:
   - google-chrome --version
