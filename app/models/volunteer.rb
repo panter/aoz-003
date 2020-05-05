@@ -102,6 +102,13 @@ class Volunteer < ApplicationRecord
     if: :external?,
     unless: :user_deleted?
 
+  # allot of old records would cause app to crash if validation would run for them
+  # so we need to omit it for them
+  def requires_birth_year?
+    new_record? || created_at >= Date.new(2020, 5, 5)
+  end
+  validates :birth_year, presence: true, if: :requires_birth_year?
+
   attr_accessor :validate_waive_and_bank
 
   scope :process_eq, lambda { |process|
