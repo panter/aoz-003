@@ -19,7 +19,6 @@ variables:
       - tmp/cache/yarn
     policy: pull-push
 
-
 .pull-cache:
   cache:
     paths:
