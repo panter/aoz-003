@@ -6,35 +6,47 @@ stages:
 services:
   - postgres:9.6
 
-cache:
-  key: "$CI_PROJECT_ID"
-  paths:
-    - tmp/cache/ruby
-    - tmp/cache/yarn
-
 variables:
   RAILS_ENV: test
   POSTGRES_DB: aoz_test
   DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
   POSTGRES_HOST_AUTH_METHOD: trust
 
-before_script:
-  - google-chrome --version
-  - node --version
-  - ruby --version
-  - yarn --version
-  - gem install bundler
-  - bundle install --without development --path tmp/cache
-  - yarn install --cache-folder tmp/cache/yarn
-  - bundle exec rails db:schema:load
+.push-pull-cache:
+  cache:
+    paths:
+      - tmp/cache/ruby
+      - tmp/cache/yarn
+    policy: pull-push
+
+
+.pull-cache:
+  cache:
+    paths:
+      - tmp/cache/ruby
+      - tmp/cache/yarn
+    policy: pull
+
+
+.test-extend:
+  stage: test
+  before_script:
+    - gem install bundler --version 2.0.2
+    - bundle install --without development --path tmp/cache
+    - yarn install --cache-folder tmp/cache/yarn
+    - bundle exec rails db:schema:load
 
 test:
-  stage: test
+  extends:
+    - .push-pull-cache
+    - .test-extend
   script:
     - bundle exec rails test
 
 system:
-  stage: test
+  extends:
+    - .pull-cache
+    - .test-extend
   script:
     - CHROME_VERSION=$(google-chrome --version | sed -r 's/[^0-9]+([0-9]+\.[0-9]+\.[0-9]+).*/\1/g')
     - CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
@@ -45,5 +57,3 @@ system:
       - tmp/screenshots
     when: on_failure
     expire_in: 1 week
-  cache:
-    policy: pull
