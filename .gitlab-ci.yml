@@ -30,7 +30,6 @@ variables:
 .test-extend:
   stage: test
   before_script:
-    - gem install bundler --version 2.0.2
     - bundle install --without development --path tmp/cache
     - yarn install --cache-folder tmp/cache/yarn
     - bundle exec rails db:schema:load
