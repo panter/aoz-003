@@ -1,4 +1,4 @@
-image: git.panter.ch:5001/panter/gitlab-ci-docker-images/ruby-and-rails:ruby-2.4.5-node8-chrome-imagemagick-chromedriver
+image: git.panter.ch:5001/open-source/aoz-003/gitlab_ci:2.4.5
 
 stages:
   - test
@@ -48,9 +48,7 @@ system:
     - .pull-cache
     - .test-extend
   script:
-    - CHROME_VERSION=$(google-chrome --version | sed -r 's/[^0-9]+([0-9]+\.[0-9]+\.[0-9]+).*/\1/g')
-    - CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-    - bundle exec chromedriver-update $CHROMEDRIVER_VERSION
+    - bundle exec chromedriver-update $(cat /chrome_driver_version.txt)
     - bundle exec rails test:system
   artifacts:
     paths:

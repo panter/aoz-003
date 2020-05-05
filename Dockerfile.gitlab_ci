@@ -1,0 +1,37 @@
+FROM ruby:2.4.5
+
+LABEL name=aoz-003-gitlab_ci
+LABEL version=0.0.1
+LABEL build-date=2020-05-05T11:27:33.118Z
+LABEL vendor=Panter maintainer=vok@panter.ch distribution-scope=private URL=https://git.panter.ch/panter/aoz-003
+
+RUN apt update \
+  # install project dependency ghost script
+  && apt install -y --no-install-recommends \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg \
+  imagemagick \
+  fontconfig \
+  # install node
+  && curl -sL "https://deb.nodesource.com/setup_12.x" | bash - \
+  && apt-get install nodejs -yqq  \
+  && npm i -g yarn \
+  # install chrome
+  && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && echo 'deb https://dl.google.com/linux/chrome/deb/ stable main' >/etc/apt/sources.list.d/google-chrome.list \
+  && apt-get update \
+  && apt-get -qqy --no-install-recommends install google-chrome-stable \
+  && CHROME_VERSION=$(/usr/bin/google-chrome --version | /usr/bin/cut -d '.' -f 1-3 | /usr/bin/cut -d ' ' -f 3) \
+  && echo "$CHROME_VERSION" >> /chrome_version.txt \
+  && cat /chrome_version.txt \
+  && curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$(cat /chrome_version.txt) > /chrome_driver_version.txt \
+  && cat /chrome_driver_version.txt \
+  # install correct bundler version
+  && gem uninstall bundler \
+  && gem install bundler --version 2.0.2 \
+  # Cleanup apt and gem cache files and indexes
+  && gem cleanup \
+  && rm -rf /var/lib/apt/lists/* \
+  && apt clean
