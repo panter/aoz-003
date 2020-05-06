@@ -16,6 +16,7 @@ class Volunteer < ApplicationRecord
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
+  HOW_HAVE_YOU_HEARD_OF_AOZS = %i[internet_research friends announcment flyer].freeze
 
   enum acceptance: { undecided: 0, invited: 1, accepted: 2, rejected: 3, resigned: 4 }
 
@@ -460,6 +461,21 @@ class Volunteer < ApplicationRecord
 
   def undecided_by
     super || registrar
+  end
+
+  def how_have_you_heard_of_aoz=(value)
+    return if value.blank?
+    self[:how_have_you_heard_of_aoz] = if value.is_a?(Array)
+                                         value.compact.join(',')
+                                       else
+                                         value
+                                       end
+  end
+
+  def self.how_have_you_heard_of_aoz_collection
+    HOW_HAVE_YOU_HEARD_OF_AOZS.map do |value|
+      [I18n.t("activerecord.attributes.volunteer.how_have_you_heard_of_aozs.#{value}"), value]
+    end
   end
 
   def assignment_group_offer_collection

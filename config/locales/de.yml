@@ -509,10 +509,18 @@ de:
       document:
         title: Titel
         file: Datei
+      volunteer/how_have_you_heard_of_aoz: &volunteer-how-have-you-heard-of-aoz
+        internet_research: Internet-Recherche
+        friends: über Freunde/Bekannte
+        announcment: Inserat
+        flyer: Flyer
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance-keys]
         acceptance: Prozess
         acceptances: *id-volunteer-acceptance-keys
+        how_have_you_heard_of_aoz: Gehört von AOZ-Freiwilligenarbeit von/auf
+        how_have_you_heard_of_aozs: *volunteer-how-have-you-heard-of-aoz
+        how_have_you_heard_of_aoz_other: Gehört von AOZ-Freiwilligenarbeit anderes
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
@@ -1070,6 +1078,8 @@ de:
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
         external: Als externen Freiwilligen registrieren?
+        how_have_you_heard_of_aoz: Wie haben Sie von der Freiwilligenarbeit bei der AOZ erfahren?
+        how_have_you_heard_of_aoz_other: Gehört von der AOZ Freiwilligenarbeit habe ich nicht auf oben genannten, sondern ...
       semester_feedback:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.

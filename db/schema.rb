@@ -836,6 +836,8 @@ ActiveRecord::Schema.define(version: 20200507105635) do
     t.bigint "resigned_by_id"
     t.bigint "rejected_by_id"
     t.bigint "undecided_by_id"
+    t.string "how_have_you_heard_of_aoz"
+    t.text "how_have_you_heard_of_aoz_other"
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
     t.index ["accepted_by_id"], name: "index_volunteers_on_accepted_by_id"
