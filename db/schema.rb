@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191122135842) do
+ActiveRecord::Schema.define(version: 20200505153233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.string "pdf_file_name"
     t.string "pdf_content_type"
-    t.bigint "pdf_file_size"
+    t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.bigint "submitted_by_id"
     t.bigint "reactivated_by_id"
@@ -312,7 +312,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind"
+    t.integer "kind", null: false
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -402,7 +402,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.string "pdf_file_name"
     t.string "pdf_content_type"
-    t.bigint "pdf_file_size"
+    t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.bigint "submitted_by_id"
     t.bigint "reactivated_by_id"
@@ -572,7 +572,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.datetime "updated_at", null: false
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.bigint "avatar_file_size"
+    t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.datetime "deleted_at"
     t.boolean "flexible", default: false
@@ -740,6 +740,20 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.index ["volunteer_id"], name: "index_trial_feedbacks_on_volunteer_id"
   end
 
+  create_table "trial_periods", force: :cascade do |t|
+    t.date "end_date"
+    t.datetime "verified_at"
+    t.bigint "verified_by_id"
+    t.bigint "trial_period_mission_id"
+    t.string "trial_period_mission_type"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_trial_periods_on_deleted_at"
+    t.index ["trial_period_mission_id", "trial_period_mission_type"], name: "trial_periods_mission_index"
+    t.index ["verified_by_id"], name: "index_trial_periods_on_verified_by_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -790,7 +804,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.datetime "deleted_at"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.bigint "avatar_file_size"
+    t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.bigint "user_id"
     t.string "rejection_type"
@@ -890,6 +904,5 @@ ActiveRecord::Schema.define(version: 20191122135842) do
   add_foreign_key "semester_process_volunteers", "volunteers"
   add_foreign_key "trial_feedbacks", "users", column: "author_id"
   add_foreign_key "volunteers", "departments"
-  add_foreign_key "volunteers", "departments", column: "secondary_department_id"
   add_foreign_key "volunteers", "users"
 end

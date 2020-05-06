@@ -563,6 +563,10 @@ de:
         waive_alternative: 'Spesenverzicht'
         woman: Frau
         working_percent: Stellenprozent
+      trial_period:
+        verified_by: Probezeit quittiert von
+        verified_at: Probezeit quittiert am
+        end_date: Probezeit bis
     errors:
       models:
         profile:
@@ -637,6 +641,7 @@ de:
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
       document: Dokument
+      trial_period: Probezeit
 
   # model name plural for controller name shortcut => t('.key')
   notification_mailer:

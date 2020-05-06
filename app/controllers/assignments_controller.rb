@@ -213,7 +213,8 @@ class AssignmentsController < ApplicationController
       :term_feedback_transfair, :comments, :additional_comments,
       :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
       :special_agreement, :first_meeting, :remaining_hours, :generate_pdf,
-      volunteer_attributes: [:waive, :iban, :bank]
+      volunteer_attributes: [:waive, :iban, :bank],
+      trial_period_attributes: [:id, :end_date]
     )
   end
 end

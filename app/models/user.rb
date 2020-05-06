@@ -45,6 +45,11 @@ class User < ApplicationRecord
     inverse_of: 'reviewer'
   has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id', inverse_of: 'reviewer'
 
+  # trial period relations
+  has_many :verified_trial_periods, class_name: 'TrialPeriod',
+                                    inverse_of: :verified_by,
+                                    foreign_key: 'verified_by_id'
+
   # Assignment termination relations
   has_many :assignment_period_ends_set, class_name: 'Assignment',
     foreign_key: 'period_end_set_by_id', inverse_of: 'period_end_set_by'

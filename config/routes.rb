@@ -97,6 +97,8 @@ Rails.application.routes.draw do
     get :send_trial_period, on: :member
   end
 
+  resources :trial_periods, only: %i[index update]
+
   resources :documents
 
   resources :semester_process_volunteers do

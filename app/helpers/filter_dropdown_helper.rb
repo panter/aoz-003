@@ -144,8 +144,8 @@ module FilterDropdownHelper
     end
   end
 
-  def clear_filter_button
-    filter = { all: true, s: params.dig(:q, :s) }.compact
+  def clear_filter_button(all_q: { all: true })
+    filter = { s: params.dig(:q, :s) }.merge(all_q).compact
     button_link t('clear_filters'), url_for(q: filter), dimension: :sm
   end
 

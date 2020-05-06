@@ -11,6 +11,9 @@ module GroupAssignmentAndAssignmentCommon
     has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
     has_many :reminder_mailings, through: :reminder_mailing_volunteers
 
+    has_one :trial_period, as: :trial_period_mission, inverse_of: :trial_period_mission
+    accepts_nested_attributes_for :trial_period
+
     # we have PDFs on Assignment and GroupAssignment, but not on *Log
     if [Assignment, GroupAssignment].include? self
       has_attached_file :pdf
@@ -19,6 +22,7 @@ module GroupAssignmentAndAssignmentCommon
     end
 
     attribute :remaining_hours
+
     after_save :add_remaining_hours
 
     scope :with_hours, (-> { joins(:hours) })
