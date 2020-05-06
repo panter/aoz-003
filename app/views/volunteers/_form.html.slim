@@ -124,7 +124,7 @@ fieldset
     = f.input :expectations
     = f.input :strengths
     = f.input :interests
-  - if !current_user
+  - if !current_user || !(current_user && policy(volunteer).show_comments?)
     .col-xs-12.col-md-6
       = f.input :how_have_you_heard_of_aoz, as: :check_boxes, collection: Volunteer.how_have_you_heard_of_aoz_collection
       = f.input :how_have_you_heard_of_aoz_other
@@ -133,4 +133,9 @@ fieldset
     .col-xs-12.col-md-6
       = f.input :comments, input_html: { class: 'double-height' }, label: t_attr(:comments_internal)
       = f.input :additional_comments, input_html: { class: 'double-height' }, label: t_attr(:additional_comments_internal)
+
+    .col-xs-12
+    .col-xs-12.col-md-6
+      = f.input :how_have_you_heard_of_aoz, as: :check_boxes, collection: Volunteer.how_have_you_heard_of_aoz_collection
+      = f.input :how_have_you_heard_of_aoz_other
 

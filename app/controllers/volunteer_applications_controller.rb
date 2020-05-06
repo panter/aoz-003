@@ -13,7 +13,6 @@ class VolunteerApplicationsController < ApplicationController
 
   def create
     @volunteer = Volunteer.new(volunteer_params)
-    binding.pry
     authorize :volunteer_application, :create?
     if @volunteer.save
       email = EmailTemplate.active.signup.last

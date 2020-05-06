@@ -466,10 +466,14 @@ class Volunteer < ApplicationRecord
   def how_have_you_heard_of_aoz=(value)
     return if value.blank?
     self[:how_have_you_heard_of_aoz] = if value.is_a?(Array)
-                                         value.compact.join(',')
+                                         value.reject(&:blank?).join(',')
                                        else
                                          value
                                        end
+  end
+
+  def how_have_you_heard_of_aoz
+    self[:how_have_you_heard_of_aoz]&.split(',')&.map(&:to_sym) || []
   end
 
   def self.how_have_you_heard_of_aoz_collection

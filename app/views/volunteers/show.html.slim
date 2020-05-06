@@ -95,6 +95,18 @@ h2.small Persönlicher Hintergrund
             td= t_attr(:additional_comments_internal)
             td= @volunteer.additional_comments
 
+      tr
+        td #{t_attr(:how_have_you_heard_of_aoz)}
+        td
+          ul
+          - @volunteer.how_have_you_heard_of_aoz.each do |heard_from|
+            li= t("activerecord.attributes.volunteer.how_have_you_heard_of_aozs.#{heard_from}")
+
+          - if @volunteer.how_have_you_heard_of_aoz_other.present?
+            div
+              strong Anderes:
+              span<>= @volunteer.how_have_you_heard_of_aoz_other
+
 .row
   .col-xs-6
     = render 'volunteers/single_accompaniments', volunteer: @volunteer
