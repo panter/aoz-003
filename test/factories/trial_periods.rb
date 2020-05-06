@@ -8,12 +8,8 @@ FactoryBot.define do
       verified_by { create(:superadmin) }
     end
 
-    after :build do |trial_period, evl|
-      if evl.assignment
-        trial_period.assignment = create(:assignment)
-      elsif evl.group_assignment
-        trial_period.group_assignment = create(:group_assignment)
-      end
+    after :build do |trial_period|
+      trial_period.trial_period_mission = create(:assignment) unless trial_period.trial_period_mission.present?
     end
   end
 end
