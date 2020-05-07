@@ -1,8 +1,9 @@
 require:
   - rubocop-rails
+  - rubocop-performance
+  - rubocop-minitest
 
 AllCops:
-  TargetRubyVersion: 2.4.1
   Exclude:
     - 'db/schema.rb'
     - 'db/migrate/*'
@@ -12,90 +13,109 @@ AllCops:
     - Rakefile
     - config/boot.rb
   DisplayCopNames: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+  TargetRubyVersion: 2.4
 
 Rails:
   Enabled: true
-
-Style/Alias:
+Rails/FilePath:
   Enabled: false
-
-Style/Documentation:
+Rails/HasAndBelongsToMany:
   Enabled: false
-Style/IfUnlessModifier:
-  Enabled: false
-Style/LineEndConcatenation:
-  Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false
-Style/NumericPredicate:
-  Enabled: false
-
-Layout/IndentArray:
-  EnforcedStyle: consistent
-Layout/FirstParameterIndentation:
-  EnforcedStyle: consistent
-Layout/MultilineOperationIndentation:
-  EnforcedStyle: indented
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
-
-Style/AsciiComments:
-  Enabled: false
-Style/FormatString:
-  EnforcedStyle: percent
-Style/GuardClause:
-  MinBodyLength: 5
-
-Metrics/LineLength:
-  Max: 140
-  Exclude:
-    - 'db/seeds.rb'
-    - 'app/policies/**/*'
-Metrics/ClassLength:
-  Max: 150
-  Exclude:
-    - 'test/**/*'
-Metrics/MethodLength:
-  Max: 20
-  Exclude:
-    - 'test/**/*'
-    - 'db/seeds.rb'
 
 Metrics/AbcSize:
-  Max: 25
   Exclude:
-    - 'test/**/*'
-    - 'db/seeds.rb'
-
+    - test/**/*
+    - db/seeds.rb
+  Max: 25
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*
+  Max: 150
+Metrics/MethodLength:
+  Exclude:
+    - test/**/*
+    - db/seeds.rb
+  Max: 20
 Metrics/BlockLength:
   Exclude:
     - 'test/system/*'
     - 'db/seeds.rb'
     - 'config/routes.rb'
+  ExcludedMethods:
+    - included # for concerns
+    - draw # for routes
+    - define # for FactoryBot
+    - factory
 
-Layout/AlignHash:
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
+Layout/HashAlignment:
   EnforcedLastArgumentHashStyle: ignore_implicit
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Layout/LineLength:
+  Max: 100
+  # To make it possible to copy or click on URIs in the code, we allow lines
+  # containing a URI to be longer than Max.
+  AllowHeredoc: true
+  AllowURI: true
+  URISchemes:
+    - http
+    - https
+  # The IgnoreCopDirectives option causes the LineLength rule to ignore cop
+  # directives like '# rubocop: enable ...' when calculating a line's length.
+  IgnoreCopDirectives: false
+  # The IgnoredPatterns option is a list of !ruby/regexp and/or string
+  # elements. Strings will be converted to Regexp objects. A line that matches
+  # any regular expression listed in this option will be ignored by LineLength.
+  IgnoredPatterns: []
 
+Style/Alias:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
-
+Style/Documentation:
+  Enabled: false
+Style/FormatString:
+  EnforcedStyle: percent
 Style/FormatStringToken:
   Enabled: false
-
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/GuardClause:
+  MinBodyLength: 5
+Style/IfUnlessModifier:
+  Enabled: false
+Style/LineEndConcatenation:
+  Enabled: false
+Style/NumericPredicate:
+  Enabled: false
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
+  EnforcedStyle: slashes
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-Layout/AlignParameters:
-  EnforcedStyle: with_fixed_indentation
-
-Style/RegexpLiteral:
-  EnforcedStyle: slashes
-  AllowInnerSlashes: true
-
 Style/WordArray:
   Enabled: false
-
-Rails/FilePath:
-  Enabled: false
-Rails/HasAndBelongsToMany:
-  Enabled: false
+Style/HashTransformValues:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashEachMethods:
+  Enabled: true
+Style/ExponentialNotation:
+  Enabled: true
