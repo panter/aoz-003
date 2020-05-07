@@ -142,9 +142,9 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     click_button 'Schliessen'
 
     page.find('td', text: comments.truncate(300)).click
+    wait_for_ajax
     assert page.has_text? comments
     click_button 'Schliessen'
-
   end
 
   test 'it should create a journal on submit' do
