@@ -50,9 +50,6 @@ def generate_feedback_and_hours(hourable, start_date, end_date = nil, volunteer:
   meeting_date = FFaker::Time.between(start_date + 1.day, end_date)
   hour = FactoryBot.create(:hour, volunteer: volunteer, hourable: hourable, meeting_date: meeting_date)
   hour.update(created_at: meeting_date + 1.day)
-  trial_feedback = FactoryBot.create(:trial_feedback, volunteer: volunteer, author: volunteer.user,
-                                     trial_feedbackable: hourable)
-  trial_feedback.update(created_at: FFaker::Time.between(start_date + 6.weeks, start_date + 8.weeks))
 end
 
 def handle_reminder_mailing_seed(mailer_type, reminder_mailables)
@@ -135,10 +132,10 @@ def development_seed
     trial_assignments = (1..3).to_a.map do
       start_date = FFaker::Time.between(6.weeks.ago, 8.weeks.ago)
       assignment = assignment_generator(start_date - 2.days, start_date)
+      FactoryBot.create(:trial_period, trial_period_mission: assignment, end_date: start_date.advance(days: 7 * 4))
       generate_feedback_and_hours(assignment, start_date)
       assignment
     end
-    handle_reminder_mailing_seed(:trial_period, trial_assignments)
     # ended Assignments
     termination_assignments = (1..3).to_a.map do
       start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
@@ -178,8 +175,7 @@ def development_seed
     end
   end
 
-  puts_model_counts('After Assignment created', User, Volunteer, Hour, Assignment, Client,
-                    TrialFeedback)
+  puts_model_counts('After Assignment created', User, Volunteer, Hour, Assignment, Client)
 
   Array.new(2)
     .map { FactoryBot.create(:group_offer, department: Department.all.sample) }
@@ -190,7 +186,9 @@ def development_seed
     group_assignment = GroupAssignment.create(volunteer: volunteers.first, group_offer: group_offer,
                                               period_start: start_date, period_end: nil)
     generate_feedback_and_hours(group_assignment.group_offer, start_date, volunteer: volunteers.first)
-    handle_reminder_mailing_seed(:trial_period, [group_assignment])
+    FactoryBot.create(:trial_period,
+                      trial_period_mission: group_assignment,
+                      end_date: start_date.advance(days: 7 * 4))
 
     # ended GroupAssignments
     start_date = FFaker::Time.between(6.months.ago, 12.months.ago)

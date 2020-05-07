@@ -18,11 +18,6 @@ tr
         profile_url_path(assignment.client.involved_authority || assignment.creator)
   - if policy(Assignment).show_comments?
     = td_truncate_content_modal(assignment.comments, 'Rückmeldung')
-  - if controller_name == 'volunteers' && !assignment.volunteer.external?
-    - if policy(TrialFeedback).index?
-      td.index-action-cell.hidden-print
-        = link_to t_title(:new, TrialFeedback), new_polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
-        span= link_to t_title(:index, TrialFeedback), polymorphic_path([assignment.volunteer, assignment, TrialFeedback])
-    - if policy(Feedback).index?
-      td.index-action-cell.hidden-print
-        = link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])
+  - if controller_name == 'volunteers' && !assignment.volunteer.external? && policy(Feedback).index?
+    td.index-action-cell.hidden-print
+      = link_to t_title(:index, Feedback), polymorphic_path([assignment.volunteer, assignment, Feedback])

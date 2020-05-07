@@ -24,13 +24,6 @@ class VolunteerMailer < ApplicationMailer
     mail(to: @volunteer.contact.primary_email, subject: @subject)
   end
 
-  def trial_period(reminder_mailing_volunteer)
-    @volunteer = reminder_mailing_volunteer.volunteer
-    @subject, @body = reminder_mailing_volunteer.process_template.values_at(:subject, :body)
-    reminder_mailing_volunteer.update(email_sent: true)
-    mail(to: @volunteer.contact.primary_email, subject: @subject)
-  end
-
   def half_year_process_email(semester_process_mail)
     @volunteer = semester_process_mail.volunteer
     @subject, @body = semester_process_mail.process_template.values_at(:subject, :body)

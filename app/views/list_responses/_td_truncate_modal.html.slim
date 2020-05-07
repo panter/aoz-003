@@ -1,6 +1,0 @@
-- if modal_body&.size >= shorten_size
-  td.index-action-cell data-target="#truncate-modal" data-toggle="modal" type="button" data-full-text="#{modal_body}" data-title="#{modal_title}"
-    span= modal_body.truncate(shorten_size)
-    span.whole-text Ganzer Text
-- else
-  td= modal_body

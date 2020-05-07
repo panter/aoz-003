@@ -10,10 +10,6 @@ class ReminderMailing < ApplicationRecord
 
   # method var_name pairs per reminder_mailing kind
   TEMPLATE_VARNAMES = {
-    trial_period: {
-      einsatz_start: :EinsatzStart,
-      feedback_link_trial: :FeedbackLink
-    }.merge(TEMPLATE_VARNAMES_GENERAL),
     termination: {
       einsatz_start: :EinsatzStart,
       feedback_link_termination: :FeedbackLink
@@ -41,7 +37,12 @@ class ReminderMailing < ApplicationRecord
     source_type: 'GroupAssignment'
   has_many :process_submitters, through: :reminder_mailing_volunteers, source: :process_submitted_by
 
-  enum kind: { trial_period: 1, termination: 2, half_year_process_email: 3, half_year_process_overdue: 4 }
+  enum kind: {
+    # trial_period: 1, # disabled kind. Left to document so 1 is not used for another kind
+    termination: 2,
+    half_year_process_email: 3,
+    half_year_process_overdue: 4
+  }
 
   ransacker :kind, formatter: ->(value) { kinds[value] }
 

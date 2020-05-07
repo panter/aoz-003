@@ -1,5 +1,5 @@
 class ReminderMailingsController < ApplicationController
-  before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :send_trial_period, :send_termination]
+  before_action :set_reminder_mailing, only: [:show, :edit, :update, :destroy, :send_termination]
 
   def index
     authorize ReminderMailing
@@ -11,20 +11,6 @@ class ReminderMailingsController < ApplicationController
   end
 
   def show; end
-
-  def new_trial_period
-    @assignments = Assignment.need_trial_period_reminder_mailing.distinct
-    @group_assignments = GroupAssignment.need_trial_period_reminder_mailing.distinct
-    @reminder_mailing = ReminderMailing.new(kind: 'trial_period', creator: current_user,
-      reminder_mailing_volunteers: @assignments + @group_assignments)
-    if EmailTemplate.trial.active.any?
-      @reminder_mailing.assign_attributes(EmailTemplate.trial.active.first.slice(:subject, :body))
-    else
-      redirect_to new_email_template_path, notice: 'Sie müssen eine aktive E-Mailvorlage haben,'\
-        "\r\nbevor Sie eine Probezeit Erinnerung erstellen können."
-    end
-    authorize @reminder_mailing
-  end
 
   def new_termination
     @reminder_mailing = ReminderMailing.new(kind: 'termination',
@@ -56,18 +42,6 @@ class ReminderMailingsController < ApplicationController
     return unless @reminder_mailing.sending_triggered
     redirect_back(fallback_location: reminder_mailing_path(@reminder_mailing), notice: 'Wenn das'\
       ' Erinnerungs-Mailing bereits versendet wurde, kann es nicht mehr geändert werden.')
-  end
-
-  def send_trial_period
-    if @reminder_mailing.sending_triggered?
-      return redirect_to reminder_mailings_path, notice: 'Dieses Erinnerungs-Mailing wurde bereits'\
-        ' versandt.'
-    end
-    @reminder_mailing.reminder_mailing_volunteers.picked.each do |mailing_volunteer|
-      VolunteerMailer.public_send(@reminder_mailing.kind, mailing_volunteer).deliver_later
-    end
-    @reminder_mailing.update(sending_triggered: true)
-    redirect_to reminder_mailings_path, notice: 'Probezeit Erinnerungs-Emails werden versendet.'
   end
 
   def send_termination

@@ -22,7 +22,7 @@ class ActiveSupport::TestCase
     # FIXME: make sure all users are deleted, sometimes records stick around
     # when tests are aborted
     really_destroy_with_deleted(
-      TrialFeedback, Hour, Journal, BillingExpense, Certificate, Import,
+      Hour, Journal, BillingExpense, Certificate, Import,
       AssignmentLog, Assignment, GroupAssignmentLog, GroupAssignment, GroupOffer,
       ClientNotification, LanguageSkill, Relative, Event, EventVolunteer,
       Volunteer, Client, User, Contact, Department, SemesterProcess, SemesterFeedback,

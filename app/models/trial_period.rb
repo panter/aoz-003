@@ -13,7 +13,6 @@ class TrialPeriod < ApplicationRecord
 
   scope :verified, -> { where.not(verified_at: nil) }
 
-
   scope :trial_period_running, lambda {
     not_verified.where('end_date >= ?', Date.current)
   }
@@ -42,11 +41,11 @@ class TrialPeriod < ApplicationRecord
                           body: "Einsatz: #{mission.to_label}")
     journal.assignment = mission if mission.class.name == 'Assignment'
     journal.save!
-    update_attributes!(verified_at: Time.zone.now, verified_by: user)
+    update!(verified_at: Time.zone.now, verified_by: user)
   end
 
   # allow ransack to use defined scopes
-  def self.ransackable_scopes(auth_object = nil)
+  def self.ransackable_scopes(_auth_object = nil)
     ['not_verified', 'verified', 'trial_period_running', 'trial_period_overdue']
   end
 end

@@ -188,10 +188,6 @@ class ApplicationPolicy
     superadmin? || (volunteer? && in_feedbackable?)
   end
 
-  def superadmin_or_volunteers_trial_feedback?
-    superadmin? || volunteer? && of_and_from_volunteer? && in_trial_feedbackable?
-  end
-
   def of_and_from_volunteer?
     user.volunteer.id == record.volunteer.id && user.id == record.author.id
   end
@@ -201,14 +197,6 @@ class ApplicationPolicy
       record.feedbackable.volunteer.id == user.volunteer.id
     else
       record.feedbackable.volunteers.ids.include? user.volunteer.id
-    end
-  end
-
-  def in_trial_feedbackable?
-    if record.trial_feedbackable.class == Assignment
-      record.trial_feedbackable.volunteer.id == user.volunteer.id
-    else
-      record.trial_feedbackable.volunteers.ids.include? user.volunteer.id
     end
   end
 

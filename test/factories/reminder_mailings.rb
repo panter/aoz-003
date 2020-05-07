@@ -4,12 +4,6 @@ FactoryBot.define do
     body { FFaker::Lorem.paragraph }
     subject { FFaker::Lorem.sentence }
 
-    trait :trial_period do
-      kind { ReminderMailing.kinds[:trial_period] }
-      body { FFaker::Lorem.paragraph }
-      subject { FFaker::Lorem.sentence }
-    end
-
     trait :termination do
       kind { ReminderMailing.kinds[:termination] }
       body { FFaker::Lorem.paragraph }
@@ -35,16 +29,10 @@ FactoryBot.define do
 end
 
 def create_reminder_mailable(reminder_mailing, volunteer)
-  case reminder_mailing.kind
-  when 'trial_period'
-    create(:assignment, volunteer: volunteer, creator: reminder_mailing.creator,
-      period_start: FFaker::Time.between(6.weeks.ago, 8.weeks.ago))
-  when 'termination'
-    start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
-    create(:assignment, volunteer: volunteer, creator: reminder_mailing.creator,
-      period_start: start_date,
-      period_end: FFaker::Time.between(start_date + 100.days, 2.days.ago))
-  end
+  start_date = FFaker::Time.between(1.year.ago, 2.years.ago)
+  create(:assignment, volunteer: volunteer, creator: reminder_mailing.creator,
+    period_start: start_date,
+    period_end: FFaker::Time.between(start_date + 100.days, 2.days.ago))
 end
 
 def trigger_reminder_mailing_send(reminder_mailing)

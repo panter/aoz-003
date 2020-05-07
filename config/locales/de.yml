@@ -51,7 +51,6 @@ de:
     term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values
-      trial_period: Probezeit-Feedback
       half_year_process_email: 'Halbjahres Prozess'
       half_year_process_overdue: 'Halbjahres Erinnerung'
       termination: Abschlussevaluation
@@ -110,10 +109,10 @@ de:
     canton: Kanton
     municipality: Gemeinde
   messages:
-    confirm_delete: "Wirklich %{model} %{record} löschen?"
+    confirm_delete: 'Wirklich %{model} %{record} löschen?'
     confirm_record_delete: '%{model} wirklich löschen?'
-    select_prompt: "%{model} wählen"
-    confirm_terminate_volunteer: "Wollen Sie den Freiwilligen wirklich beenden?"
+    select_prompt: '%{model} wählen'
+    confirm_terminate_volunteer: 'Wollen Sie den Freiwilligen wirklich beenden?'
   rejection_type: &id-rejection-types
     her: von Freiwillige/r vor / nach Erstgespräch
     other: Anderer Grund
@@ -189,8 +188,8 @@ de:
     NL: Niederländisch; Flämisch
 
   # loose unasorted keys
-  "false": Nein
-  "true": Ja
+  'false': Nein
+  'true': Ja
   accompaniment_info: Bei der AOZ gibt es mehrere Möglichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   add_entry: Eintrag Hinzufügen
   add_relative: Verwandte hinzufügen
@@ -241,7 +240,7 @@ de:
   submit_application: Anmeldung abschicken
   thank_you: "Vielen Dank für Ihre Anmeldung \U0001F389"
   to: bis
-  total_hours: "Stunden Total:"
+  total_hours: 'Stunden Total:'
   update_profile: Profil aktualisieren
   updated_at: Geändert um
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
@@ -274,13 +273,13 @@ de:
       - :year
   time:
     formats:
-      default: "%a, %d.%m.%y %H:%M"
-      time: "%H:%M"
-      date_only: "%d.%m.%Y"
+      default: '%a, %d.%m.%y %H:%M'
+      time: '%H:%M'
+      date_only: '%d.%m.%Y'
       devise:
         mailer:
           invitation_instructions:
-            accept_until_format: "%d. %B %Y %H:%M"
+            accept_until_format: '%d. %B %Y %H:%M'
 
   # Activerecord
   activerecord:
@@ -636,7 +635,6 @@ de:
       semester_process_mail: Semester Email
       semester_process_volunteer_mission: Einsatz
       semester_feedback: Semester Feedback
-      trial_feedback: Probezeit Feedback
       user: Benutzer/in
       volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
@@ -669,7 +667,6 @@ de:
     email: E-mail
     first_time: '1.Treffen: Wann, wo?'
     for_aoz: Für die AOZ
-    frequency: Frequenz
     function: Funktion
     frequency: Wie oft?
     last_name: Name
@@ -768,7 +765,6 @@ de:
     kind: &id-kinds-template
       assignment: Begleitung
       signup: Anmeldung
-      trial: Probezeit
       termination: Abschlussevaluation
       half_year_process_email: 'Halbjahres Prozess'
       half_year_process_overdue: 'Halbjahres Erinnerung'
@@ -830,7 +826,7 @@ de:
       title: 'Dokument erfassen'
   hours:
     new:
-      report_hours: "Stunden erfassen"
+      report_hours: 'Stunden erfassen'
   semester_processes:
     create:
       notice: Der Semesterprozess wurde erfolgreich erstellt und die emails wurden versendet.
@@ -913,16 +909,13 @@ de:
       assignment_feedbacks: Halbjahres-Rapporte von FW in Tandems
       group_offer_feedbacks: Halbjahres-Rapporte von FW in Gruppenangeboten
       total_feedbacks: Total Halbjahres-Rapporte von Freiwilligen
-      assignment_trial_feedbacks: Probezeit-Feedbacks von FW in Tandems
-      group_offer_trial_feedbacks: Probezeit-Feedbacks von FW in Gruppenangeboten
-      total_trial_feedbacks: Total Probezeit-Feedbacks
       intro_course: Teilnehmende Einführungsveranstaltungen
       professional_training: Teilnehmende Weiterbildungen
       professional_event: Teilnehmende Fachveranstaltungen
       theme_exchange: Teilnehmende Erfahrungsaustausch/Themenabende
       volunteering: Teilnehmende Freiwilligenanlässe
       german_class_managers: Teilnehmende Treffen Deutschkursleitende
-      total_events:  Total Teilnehmende Veranstaltungen
+      total_events: Total Teilnehmende Veranstaltungen
     values_clients:
       created: Klient/innen angemeldet
       inactive: Klient/innen inaktiv
@@ -930,10 +923,10 @@ de:
       active_assignment: Klient/innen in aktivem Tandem
       total: Total Anzahl Klient/innen
     values_assignments:
-      created:  Tandems neu erstellt
-      started:  Gestartete Tandems
-      active:  Aktive Tandems
-      ended:  Beendete Tandems
+      created: Tandems neu erstellt
+      started: Gestartete Tandems
+      active: Aktive Tandems
+      ended: Beendete Tandems
       first_instruction_lessons: Besuchte Einführungskurse
       all: Alle Tandems
     values_group_offers:
@@ -1137,8 +1130,8 @@ de:
     required:
       mark: '*'
       text: notwendig
-    "yes": 'Ja'
-    "no": 'Nein'
+    'yes': 'Ja'
+    'no': 'Nein'
 
   # Divise gem
   devise:

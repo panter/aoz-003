@@ -3,7 +3,7 @@ require 'test_helper'
 class JournalsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @superadmin = create :user
-    @reminder_mailing = create :reminder_mailing, :trial_period
+    @reminder_mailing = create :reminder_mailing, :termination
     @assignment = @reminder_mailing.reminder_mailing_volunteers.first.reminder_mailable
     @volunteer = @assignment.volunteer
     login_as @superadmin

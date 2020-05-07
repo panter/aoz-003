@@ -8,11 +8,6 @@ Rails.application.routes.draw do
     get :hours_and_feedbacks_submitted, on: :collection
   end
 
-  concern :feedback_submit_and_responsibility do
-    put :mark_as_done, on: :member
-    put :take_responsibility, on: :member
-  end
-
   concern :hours_resources do
     resources :hours
   end
@@ -23,8 +18,10 @@ Rails.application.routes.draw do
 
   concern :assignment_feedbacks do
     resources :hours
-    resources :feedbacks, concerns: :feedback_submit_and_responsibility
-    resources :trial_feedbacks, concerns: :feedback_submit_and_responsibility
+    resources :feedbacks do
+      put :mark_as_done, on: :member
+      put :take_responsibility, on: :member
+    end
   end
 
   concern :termination_actions do
@@ -88,14 +85,9 @@ Rails.application.routes.draw do
     resources :journals, except: [:show]
   end
 
-  get 'list_responses/trial_feedbacks', to: 'list_responses#trial_feedbacks'
-
   resources :profiles, except: [:destroy, :index]
 
-  resources :reminder_mailings, except: [:new] do
-    get :new_trial_period, on: :collection
-    get :send_trial_period, on: :member
-  end
+  resources :reminder_mailings, except: [:new]
 
   resources :trial_periods, only: %i[index update]
 

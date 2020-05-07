@@ -23,8 +23,7 @@ class PerformanceReportsTest < ApplicationSystemTestCase
       :created, :inactive, :resigned, :total,
       :active_assignment, :active_group_assignment, :only_assignment_active, :only_group_active, :active_both, :active_total,
       :assignment_hour_records, :assignment_hours, :group_offer_hour_records, :group_offer_hours, :total_hours,
-      :assignment_feedbacks, :group_offer_feedbacks, :total_feedbacks,
-      :assignment_trial_feedbacks, :group_offer_trial_feedbacks, :total_trial_feedbacks
+      :assignment_feedbacks, :group_offer_feedbacks, :total_feedbacks
     ] + Event.kinds.keys.map(&:to_sym) + [:total_events],
     clients: [:created, :inactive, :resigned, :active_assignment, :total],
     assignments: [:created, :started, :active, :ended, :first_instruction_lessons, :all],

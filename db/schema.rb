@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200505153233) do
+ActiveRecord::Schema.define(version: 20200507105635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -723,23 +723,6 @@ ActiveRecord::Schema.define(version: 20200505153233) do
     t.index ["reminder_mail_posted_by_id"], name: "index_semester_processes_on_reminder_mail_posted_by_id"
   end
 
-  create_table "trial_feedbacks", force: :cascade do |t|
-    t.text "body"
-    t.integer "trial_feedbackable_id"
-    t.string "trial_feedbackable_type"
-    t.bigint "volunteer_id"
-    t.bigint "author_id"
-    t.bigint "reviewer_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_trial_feedbacks_on_author_id"
-    t.index ["deleted_at"], name: "index_trial_feedbacks_on_deleted_at"
-    t.index ["reviewer_id"], name: "index_trial_feedbacks_on_reviewer_id"
-    t.index ["trial_feedbackable_id", "trial_feedbackable_type"], name: "trial_feedback_polymorphic_index"
-    t.index ["volunteer_id"], name: "index_trial_feedbacks_on_volunteer_id"
-  end
-
   create_table "trial_periods", force: :cascade do |t|
     t.date "end_date"
     t.datetime "verified_at"
@@ -902,7 +885,6 @@ ActiveRecord::Schema.define(version: 20200505153233) do
   add_foreign_key "semester_process_volunteer_missions", "semester_process_volunteers"
   add_foreign_key "semester_process_volunteers", "semester_processes"
   add_foreign_key "semester_process_volunteers", "volunteers"
-  add_foreign_key "trial_feedbacks", "users", column: "author_id"
   add_foreign_key "volunteers", "departments"
   add_foreign_key "volunteers", "users"
 end

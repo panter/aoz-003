@@ -45,16 +45,8 @@ module GroupAssignmentAndAssignmentCommon
                   )
     }
 
-    scope :need_trial_period_reminder_mailing, lambda {
-      active.start_before(5.weeks.ago).no_reminder_mailing
-    }
-
     scope :with_reminder_mailing_kind, lambda { |kind_number|
       loj_mailings.where('reminder_mailings.kind = ?', kind_number)
-    }
-
-    scope :with_trial_period_reminder_mailing, lambda {
-      with_reminder_mailing_kind(1)
     }
 
     scope :submitted_since, lambda { |date|

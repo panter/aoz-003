@@ -5,7 +5,6 @@ class AssignmentLog < ApplicationRecord
 
   has_many :hours, as: :hourable, dependent: :destroy
   has_many :feedbacks, as: :feedbackables, dependent: :destroy
-  has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 
   def restore_assignment
     assignment.restore && delete

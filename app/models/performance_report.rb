@@ -42,7 +42,6 @@ class PerformanceReport < ApplicationRecord
     active_total = assignment_active + group_active
     hours = Hour.date_between(:meeting_date, *periods).where(volunteer_id: volunteers.ids)
     feedbacks = SemesterFeedback.created_between(*periods).joins(:semester_process_volunteer, :volunteer).where(volunteers: {id: volunteers.ids})
-    trial_feedbacks = TrialFeedback.created_between(*periods).where(volunteer_id: volunteers.ids)
 
     event_volunteers = EventVolunteer
       .where(volunteer_id: volunteers.ids)
@@ -68,9 +67,6 @@ class PerformanceReport < ApplicationRecord
       total_feedbacks: feedbacks.count,
       assignment_feedbacks: feedbacks.where(group_assignment: nil).count,
       group_offer_feedbacks: feedbacks.where(assignment: nil).count,
-      assignment_trial_feedbacks: trial_feedbacks.assignment.count,
-      group_offer_trial_feedbacks: trial_feedbacks.group_offer.count,
-      total_trial_feedbacks: trial_feedbacks.count,
       total_events: event_volunteers.count,
     }
 

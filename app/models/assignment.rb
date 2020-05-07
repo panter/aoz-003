@@ -9,7 +9,6 @@ class Assignment < ApplicationRecord
 
   has_many :hours, as: :hourable
   has_many :feedbacks, as: :feedbackable
-  has_many :trial_feedbacks, as: :trial_feedbackable
 
   # Semester process relations
   #

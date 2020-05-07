@@ -40,13 +40,4 @@ class EmailTemplatesTest < ApplicationSystemTestCase
     refute_text 'Sie können die folgenden Platzhalter benützen:'
     refute_text 'Zum Beispiel: Guten Tag %{Anrede} %{Name}'
   end
-
-  test 'trial email template shows variables' do
-    visit new_email_template_path
-    select 'Probezeit', from: 'email_template_kind'
-
-    refute_text 'Für  diese E-Mailvorlage gibt es keine Platzhalter.'
-    assert_text 'Sie können die folgenden Platzhalter benützen:'
-    assert_text 'Zum Beispiel: Guten Tag %{Anrede} %{Name}'
-  end
 end

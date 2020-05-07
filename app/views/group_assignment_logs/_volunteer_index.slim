@@ -40,8 +40,6 @@ table.table.table-striped.group-assignments-table
         td.index-action-cell.hidden-print
           span
             - unless @volunteer.external?
-              = link_to_if(policy(TrialFeedback).index?, t_title(:index, TrialFeedback),
-                polymorphic_path([@volunteer, group_offer, TrialFeedback])) { '' }
               = link_to_if(policy(Feedback).index?, t_title(:index, Feedback),
                 polymorphic_path([@volunteer, group_offer, Feedback])) { '' }
             = link_to_if(policy(GroupAssignment).verify_termination?, 'Beendigungsformular',

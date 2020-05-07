@@ -216,19 +216,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_not query.include? with_reminder_mailing
   end
 
-  test 'need_trial_period_reminder_mailing' do
-    exactly_six_weeks = make_assignment(start_date: 6.weeks.ago)
-    exactly_six_weeks_mailed = make_assignment(start_date: 6.weeks.ago)
-    seven_weeks_ago = make_assignment(start_date: 7.weeks.ago)
-    seven_weeks_ago_mailed = make_assignment(start_date: 7.weeks.ago)
-    create_probation_mailing(seven_weeks_ago_mailed, exactly_six_weeks_mailed)
-    query = Assignment.need_trial_period_reminder_mailing
-    assert query.include? exactly_six_weeks
-    assert query.include? seven_weeks_ago
-    assert_not query.include? seven_weeks_ago_mailed
-    assert_not query.include? exactly_six_weeks_mailed
-  end
-
   test 'with_actively_registered_volunteer returns assignments of volunteers with_actively_registered_user' do
     volunteer1 = create :volunteer, :external
     volunteer2 = create :volunteer, :external

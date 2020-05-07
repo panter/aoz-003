@@ -22,9 +22,10 @@ class GroupOffer < ApplicationRecord
   has_many :group_assignment_logs
 
   has_many :hours, as: :hourable, dependent: :destroy
+  # TODO: Verify if both obsolete and then remove accordingly
   # obsolete?
   # has_many :feedbacks, as: :feedbackable, dependent: :destroy
-  has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
+  # has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 
   has_many :volunteers, through: :group_assignments
   has_many :volunteer_contacts, through: :volunteers, source: :contact

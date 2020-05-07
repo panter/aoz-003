@@ -26,7 +26,6 @@ class User < ApplicationRecord
   has_many :assignment_volunteers, through: :assignments, source: :volunteer
 
   has_many :feedbacks, inverse_of: 'author', foreign_key: 'author_id'
-  has_many :trial_feedbacks, inverse_of: 'author', foreign_key: 'author_id'
   has_many :billing_expenses
 
   has_many :group_offers, inverse_of: 'creator', foreign_key: 'creator_id'
@@ -41,8 +40,6 @@ class User < ApplicationRecord
     inverse_of: 'reviewer'
   has_many :responsible_feedbacks, inverse_of: 'responsible', foreign_key: 'responsible_id',
     class_name: 'Feedback'
-  has_many :reviewed_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'reviewer_id',
-    inverse_of: 'reviewer'
   has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id', inverse_of: 'reviewer'
 
   # trial period relations
