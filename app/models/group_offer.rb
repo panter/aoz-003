@@ -121,14 +121,14 @@ class GroupOffer < ApplicationRecord
   end
 
   def to_label
-    label = "#{I18n.t('activerecord.models.group_offer')} - #{title} - #{group_offer_category}"
+    label = "#{model_name.human} - #{title} - #{group_offer_category}"
     label += " - #{department}" if department_id?
     label
   end
 
   def label_parts
     [
-      I18n.t('activerecord.models.group_offer'),
+      model_name.human,
       title,
       group_offer_category.to_s,
       department&.to_s

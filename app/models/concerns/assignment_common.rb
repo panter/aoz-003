@@ -33,7 +33,7 @@ module AssignmentCommon
 
     def label_parts
       @label_parts ||= [
-        I18n.t('activerecord.models.assignment'),
+        assignment? ? model_name.human : group_offer.to_label,
         client.contact.full_name
       ]
     end
