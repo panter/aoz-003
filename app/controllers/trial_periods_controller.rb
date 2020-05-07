@@ -9,7 +9,7 @@ class TrialPeriodsController < ApplicationController
   def update
     @trial_period = TrialPeriod.find(params[:id])
     authorize @trial_period
-    @trial_period.update(verified_at: Time.zone.now, verified_by: current_user)
+    @trial_period.verify!(current_user)
     redirect_to trial_periods_path(q: params.to_unsafe_hash[:q])
   end
 end

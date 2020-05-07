@@ -23,13 +23,13 @@ nav.navbar.section-navigation
       - @trial_periods.each do |trial_period|
         tr
           td
-            span class=(trial_period.overdue? ? 'text-danger' : 'text-primary')
+            span class=(trial_period.overdue? ? 'text-danger' : '')
               = l(trial_period.end_date)
           td= link_to(trial_period.mission.to_label, polymorphic_path(trial_period.mission, action: :edit))
           td= link_to(trial_period.mission.volunteer.full_name, trial_period.mission.volunteer)
           td
             - if trial_period.verified?
-              = l(trial_period.verified_at)
+              span Quittiert von #{trial_period.verified_by.profile.full_name} am #{l(trial_period.verified_at)}
             - else
               = link_to('Quittieren', trial_period_path(trial_period, q: params.to_unsafe_hash[:q]), class: 'btn btn-default', method: :patch)
 
