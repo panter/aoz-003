@@ -207,15 +207,6 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_not query.include? more_than_8_weeks
   end
 
-  test 'no_reminder_mailing' do
-    without_reminder_mailing = make_assignment(start_date: 7.weeks.ago)
-    with_reminder_mailing = make_assignment(start_date: 7.weeks.ago)
-    create_probation_mailing(with_reminder_mailing)
-    query = Assignment.no_reminder_mailing
-    assert query.include? without_reminder_mailing
-    assert_not query.include? with_reminder_mailing
-  end
-
   test 'with_actively_registered_volunteer returns assignments of volunteers with_actively_registered_user' do
     volunteer1 = create :volunteer, :external
     volunteer2 = create :volunteer, :external
