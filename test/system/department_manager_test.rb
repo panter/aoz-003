@@ -152,8 +152,8 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     assert page.has_text? 'Gruppenangebots Einsatz bearbeiten'
 
     fill_in 'Bemerkungen', with: 'Test'
-    click_button 'Begleitung aktualisieren', match: :first
-    assert page.has_text? 'Begleitung wurde erfolgreich geändert.'
+    click_button 'Einsatz aktualisieren', match: :first
+    assert page.has_text? 'Einsatz wurde erfolgreich geändert.'
   end
 
   test 'has read-only access to group_assigments from another department' do
