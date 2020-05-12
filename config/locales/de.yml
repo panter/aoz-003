@@ -298,7 +298,7 @@ de:
         period_end: Einsatzende
         period_start: Einsatzbeginn
         trial_period: Probezeit
-        volunteer: Freiwillige
+        volunteer: Freiwillige/r
       feedback:
         <<: *id-generic_keys
         assignment: Begleitung

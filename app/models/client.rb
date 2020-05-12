@@ -56,6 +56,16 @@ class Client < ApplicationRecord
 
   before_destroy :check_if_destroyable!
 
+  scope :order_lastname, lambda {
+    joins(:contact).order('contacts.last_name ASC')
+  }
+
+  scope :assignable, lambda {
+    with_inactive_assignments.or(
+      accepted.without_assignments
+    )
+  }
+
   scope :with_assignments, (-> { distinct.joins(:assignments) })
   scope :with_active_assignments, (-> { with_assignments.merge(Assignment.active) })
 

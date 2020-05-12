@@ -127,7 +127,7 @@ class ClientsController < ApplicationController
   end
 
   def set_social_worker_collection
-    @social_workers = User.social_workers
+    @social_workers = User.order_lastname.social_workers
   end
 
   def set_assignments
@@ -138,7 +138,7 @@ class ClientsController < ApplicationController
   def client_params
     params.require(:client).permit(
       :gender_request, :age_request, :other_request, :birth_year, :salutation,
-      :nationality, :entry_date, :permit, :goals, :education, :interests, :acceptance,
+      :nationality, :entry_date, :permit, :goals, :education, :interests, :acceptance, :user_id,
       :comments, :additional_comments, :involved_authority_id, :competent_authority, :other_authorities,
       :actual_activities, :cost_unit, language_skills_attributes, relatives_attributes,
       contact_attributes, availability_attributes

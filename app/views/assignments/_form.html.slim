@@ -16,8 +16,8 @@
   .row
     .col-xs-12.col-md-6
       - if action_new?
-        = f.association :volunteer, include_blank: true, label: 'Freiwillige/r'
-        = f.association :client, include_blank: true
+        = f.association :volunteer, collection: Volunteer.accepted.order_lastname, include_blank: true
+        = f.association :client, collection: Client.assignable.order_lastname, include_blank: true
       - else
         h4.m-b-10 Freiwillige/r
         = render 'user_table', user: @assignment.volunteer, client: false

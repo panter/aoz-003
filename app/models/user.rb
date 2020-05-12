@@ -136,6 +136,11 @@ class User < ApplicationRecord
   scope :superadmins, (-> { where(role: SUPERADMIN) })
   scope :department_managers, (-> { where(role: DEPARTMENT_MANAGER) })
   scope :social_workers, (-> { where(role: SOCIAL_WORKER) })
+  scope :superadmins_and_social_workers, -> { superadmins.or(social_workers) }
+
+  scope :order_lastname, lambda {
+    joins(profile: :contact).order('contacts.last_name ASC')
+  }
 
   scope :signed_in_at_least_once, (-> { where.not(last_sign_in_at: nil) })
   scope :with_pending_invitation, lambda {

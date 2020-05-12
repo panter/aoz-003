@@ -112,6 +112,10 @@ class Volunteer < ApplicationRecord
 
   attr_accessor :validate_waive_and_bank
 
+  scope :order_lastname, lambda {
+    joins(:contact).order('contacts.last_name ASC')
+  }
+
   scope :process_eq, lambda { |process|
     return unless process.present?
     return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
