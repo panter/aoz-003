@@ -16,14 +16,19 @@ class Client < ApplicationRecord
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'clients'
-  belongs_to :resigned_by, class_name: 'User', inverse_of: 'resigned_clients',
-    optional: true
-  belongs_to :reactivated_by, class_name: 'User', inverse_of: 'reactivated_clients',
-    optional: true
+  belongs_to :resigned_by, class_name: 'User',
+                           inverse_of: 'resigned_clients',
+                           optional: true
+  belongs_to :reactivated_by, class_name: 'User',
+                              inverse_of: 'reactivated_clients',
+                              optional: true
+  belongs_to :reserved_by, class_name: 'User',
+                           inverse_of: :reserved_clients,
+                           optional: true
+
   belongs_to :involved_authority, -> { with_deleted }, class_name: 'User',
-    inverse_of: 'involved_authorities', optional: true
-  belongs_to :reserved_by, class_name: 'User', inverse_of: :reserved_clients, optional: true
-  has_many :manager_departments, through: :user, source: :departments
+                                                       inverse_of: 'involved_authorities',
+                                                       optional: true
 
   has_many :assignments, dependent: :destroy
   has_many :assignment_logs, dependent: :destroy

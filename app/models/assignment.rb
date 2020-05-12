@@ -54,18 +54,6 @@ class Assignment < ApplicationRecord
     ['active', 'inactive', 'active_or_not_yet_active']
   end
 
-  def involved_authority_contact
-    involved_authority&.contact
-  end
-
-  def involved_authority
-    if client.involved_authority
-      client.involved_authority.profile
-    else
-      creator.profile
-    end
-  end
-
   def default_values
     self.agreement_text ||= default_agreement_text
   end

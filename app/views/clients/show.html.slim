@@ -53,7 +53,9 @@ h1.m-b-20= @client.contact.full_name
       - if policy(Client).superadmin_privileges?
         tr
           td= t_attr(:involved_authority)
-          td= link_to @client.involved_authority.full_name, profile_url_path(@client.involved_authority) if @client.involved_authority
+          td
+            - if @client.involved_authority.present?
+              = link_to @client.involved_authority.full_name, profile_url_path(@client.involved_authority)
 
       tr
         td= t_attr(:competent_authority)

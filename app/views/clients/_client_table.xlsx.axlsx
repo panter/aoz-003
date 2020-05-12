@@ -74,14 +74,14 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
     t_attr(:education),                 # 13
     t_attr(:entry_date),                # 14
     t_attr(:acceptance),                # 15
-    t_attr(:involved_authority),      # 16
+    t_attr(:involved_authority),        # 16
     t_attr(:language_skills),           # 17
     t_attr(:goals),                     # 18
     t_attr(:created_at),                # 19
     t_attr(:updated_at)                 # 20
   ]
   sheet.add_row header_row, type: :string, style: col_header
- 
+
 
   clients.each do |client|
     salutation = t("salutation.#{client.salutation}") if client.salutation?
@@ -104,7 +104,7 @@ wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
       client.entry_date,                    # 14
       t("acceptance.#{client.acceptance}"), # 15
       client.involved_authority,            # 16
-      client.language_skills.native_and_human_readable.join("\r"),                      # 17
+      client.language_skills.native_and_human_readable.join("\r"), # 17
       client.goals,                         # 18
       client.created_at.in_time_zone,       # 19
       client.updated_at.in_time_zone        # 20

@@ -88,29 +88,29 @@ h4.m-b-10= t('assignment_pdf.client_title')
       .col-xs-4.col-label= t('assignment_pdf.special')
       .col-xs-8.col-input= @assignment.special_agreement
 
-- if @assignment.involved_authority_contact
+- if @assignment.involved_authority&.contact
   h4.m-b-10.m-t-20= t('assignment_pdf.creator_title')
   .row.m-b-10
     .col-xs-6
       .row
         .col-xs-3.col-label= t('assignment_pdf.last_name')
-        .col-xs-9.col-input= @assignment.involved_authority_contact.last_name
+        .col-xs-9.col-input= @assignment.involved_authority.contact.last_name
       .row
         .col-xs-3.col-label= t('assignment_pdf.function')
-        .col-xs-9.col-input= @assignment.involved_authority.profession
+        .col-xs-9.col-input= @assignment.involved_authority.profile.profession
       .row
         .col-xs-3.col-label= t('assignment_pdf.email')
-        .col-xs-9.col-input= @assignment.involved_authority_contact.primary_email
+        .col-xs-9.col-input= @assignment.involved_authority.contact.primary_email
     .col-xs-6
       .row
         .col-xs-3.col-label= t('assignment_pdf.first_name')
-        .col-xs-9.col-input= @assignment.involved_authority_contact.first_name
+        .col-xs-9.col-input= @assignment.involved_authority.contact.first_name
       .row
         .col-xs-3.col-label= t('assignment_pdf.organization')
-        .col-xs-9.col-input= @assignment.involved_authority_contact.full_address
+        .col-xs-9.col-input= @assignment.involved_authority.contact.full_address
       .row
         .col-xs-3.col-label= t('assignment_pdf.telephone')
-        .col-xs-9.col-input= @assignment.involved_authority_contact.primary_phone
+        .col-xs-9.col-input= @assignment.involved_authority.contact.primary_phone
 - else
   h4.m-b-10.m-t-20= t_attr(:competent_authority, Client)
   .row.m-b-40

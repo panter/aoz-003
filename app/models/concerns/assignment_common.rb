@@ -7,6 +7,7 @@ module AssignmentCommon
 
     belongs_to :client
     accepts_nested_attributes_for :client
+    has_one :involved_authority, through: :client
 
     belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'assignments'
 

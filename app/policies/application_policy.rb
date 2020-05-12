@@ -95,10 +95,6 @@ class ApplicationPolicy
     record_present? && record.registrar_id == user.id
   end
 
-  def user_involved_authority?
-    record_present? && record.involved_authority_id == user.id
-  end
-
   def volunteers_entry?
     volunteer? && record.author_id == user.id
   end

@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_one :profile, -> { with_deleted }, dependent: :destroy
   accepts_nested_attributes_for :profile
+  has_one :contact, -> { where(contactable_type: 'Profile') }, through: :profile
 
   ransack_alias :full_name, :profile_contact_full_name_or_volunteer_contact_full_name_or_email
 
@@ -17,8 +18,9 @@ class User < ApplicationRecord
   has_many :clients, inverse_of: 'user', foreign_key: 'user_id'
   has_many :reserved_clients, inverse_of: :reserved_by, class_name: 'Client', foreign_key: 'reserved_by_id'
   has_many :volunteers, inverse_of: 'registrar', foreign_key: 'registrar_id'
-  has_many :involved_authorities, class_name: 'Client', foreign_key: 'involved_authority_id',
-    inverse_of: 'involved_authority'
+  has_many :involved_authorities, class_name: 'Client',
+                                  foreign_key: 'involved_authority_id',
+                                  inverse_of: 'involved_authority'
   has_many :journals, inverse_of: 'user'
 
   has_many :assignments, inverse_of: 'creator', foreign_key: 'creator_id'
@@ -192,8 +194,8 @@ class User < ApplicationRecord
   end
 
   def full_name
-    if profile&.contact
-      "#{profile.contact.last_name}, #{profile.contact.first_name}"
+    if contact
+      "#{contact.last_name}, #{contact.first_name}"
     elsif volunteer?
       volunteer.contact.full_name
     else

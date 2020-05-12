@@ -42,7 +42,6 @@ class UserSearchesTest < ApplicationSystemTestCase
     click_button 'Suchen'
 
     within 'tbody' do
-      refute page.has_text? @department_manager.full_name
       assert_equal @department_manager.email, 'better_call_saul@good.man'
       assert page.has_link? @department_manager.email
 
