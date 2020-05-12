@@ -103,6 +103,7 @@ FactoryBot.define do
 
     factory :volunteer_external, traits: [:external]
     factory :volunteer_internal, traits: [:internal]
+    factory :volunteer_common, traits: %i[internal with_language_skills faker_extra zuerich]
     factory :volunteer_z, traits: [:zuerich]
 
     factory(

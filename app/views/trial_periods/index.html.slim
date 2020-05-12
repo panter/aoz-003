@@ -21,7 +21,7 @@ nav.navbar.section-navigation
         th
     tbody
       - @trial_periods.each do |trial_period|
-        tr
+        tr class=("trial-period-id-#{trial_period.id}")
           td
             span class=(trial_period.overdue? ? 'text-danger' : '')
               = l(trial_period.end_date)
