@@ -5,7 +5,8 @@ class AddTrialPeriodReferenceToAssignments < ActiveRecord::Migration[5.1]
     missions.each do |mission|
       parsed_date =  convert_string_date(mission.trial_period_end)
       next unless parsed_date
-      mission.trial_period = TrialPeriod.new(end_date: parsed_date)
+
+      mission.trial_period.end_date = parsed_date
       mission.save!
     end
   end
