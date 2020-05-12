@@ -23,6 +23,7 @@ module GroupAssignmentAndAssignmentCommon
 
     attribute :remaining_hours
 
+    after_initialize :handle_missing_trial_period!
     after_save :add_remaining_hours
 
     scope :with_hours, (-> { joins(:hours) })
@@ -84,6 +85,10 @@ module GroupAssignmentAndAssignmentCommon
     end
 
     private
+
+    def handle_missing_trial_period!
+      self.trial_period = TrialPeriod.new unless trial_period.present?
+    end
 
     def dependency_allows_reactivation?
       if assignment?
