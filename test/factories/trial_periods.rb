@@ -8,6 +8,10 @@ FactoryBot.define do
       verified_by { create(:superadmin) }
     end
 
+    trait :with_note do
+      note { Faker::Lorem.paragraph }
+    end
+
     after :build do |trial_period|
       trial_period.trial_period_mission = create(:assignment) unless trial_period.trial_period_mission.present?
     end

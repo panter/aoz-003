@@ -89,7 +89,9 @@ Rails.application.routes.draw do
 
   resources :reminder_mailings, except: [:new]
 
-  resources :trial_periods, only: %i[index update]
+  resources :trial_periods, only: %i[index update] do
+    get :verify, on: :member
+  end
 
   resources :documents
 

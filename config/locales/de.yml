@@ -1134,6 +1134,8 @@ de:
           registered: Interessiert
           resigned: Beendet
     placeholders:
+      trial_period:
+        notes: Notizen
     hints:
       volunteer:
         external: Externe Freiwillige stehen nicht in direkter Verbindung mit der AOZ.

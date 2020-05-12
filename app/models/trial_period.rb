@@ -41,7 +41,7 @@ class TrialPeriod < ApplicationRecord
                           body: "Einsatz: #{mission.to_label}")
     journal.assignment = mission if mission.class.name == 'Assignment'
     journal.save!
-    update!(verified_at: Time.zone.now, verified_by: user)
+    update!(verified_at: Time.zone.now, verified_by: user, notes: nil)
   end
 
   # allow ransack to use defined scopes

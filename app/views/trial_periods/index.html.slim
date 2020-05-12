@@ -18,6 +18,7 @@ nav.navbar.section-navigation
         th= sort_link @q, :end_date, t_attr(:end_date)
         th Einsatz
         th Freiwillige/r
+        th Notiz
         th
     tbody
       - @trial_periods.each do |trial_period|
@@ -26,11 +27,18 @@ nav.navbar.section-navigation
             span class=(trial_period.overdue? ? 'text-danger' : '')
               = l(trial_period.end_date)
           td= link_to(trial_period.mission.to_label, polymorphic_path(trial_period.mission, action: :edit))
-          td= link_to(trial_period.mission.volunteer.full_name, trial_period.mission.volunteer)
+          td= link_to(trial_period.mission.volunteer.full_name, edit_volunteer_path(trial_period.mission.volunteer))
+          td
+            -# Only allow notes for assignment trial periods
+            - if trial_period.mission.assignment?
+              = simple_form_for trial_period, url: trial_period_path(trial_period, q: params.to_unsafe_hash[:q]) do |f|
+                = f.input :notes, label: false, wrapper: false
+                button.btn.btn-xs.btn-default type="submit"
+                  = 'Notiz speichern'
           td
             - if trial_period.verified?
               span Quittiert von #{trial_period.verified_by.profile.full_name} am #{l(trial_period.verified_at)}
             - else
-              = link_to('Quittieren', trial_period_path(trial_period, q: params.to_unsafe_hash[:q]), class: 'btn btn-default', method: :patch)
+              = link_to('Quittieren', verify_trial_period_path(trial_period, q: params.to_unsafe_hash[:q]), class: 'btn btn-default')
 
 = bootstrap_paginate(@trial_periods)
