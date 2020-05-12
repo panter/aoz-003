@@ -114,10 +114,6 @@ def development_seed
     2.times do
       FactoryBot.create :email_template_signup, active: false
     end
-    FactoryBot.create :email_template_trial, active: true
-    2.times do
-      FactoryBot.create :email_template_trial, active: false
-    end
     FactoryBot.create :email_template_termination, active: true
     2.times do
       FactoryBot.create :email_template_termination, active: false
