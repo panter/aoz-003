@@ -26,8 +26,6 @@ module GroupAssignmentAndAssignmentCommon
     after_initialize :handle_missing_trial_period!
     after_save :add_remaining_hours
 
-    scope :with_hours, (-> { joins(:hours) })
-
     scope :loj_mailings, lambda {
       left_outer_joins(:reminder_mailing_volunteers, :reminder_mailings)
     }

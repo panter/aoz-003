@@ -59,13 +59,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? created200
   end
 
-  test 'with hours only returns volunteers that have hours' do
-    create :hour, hourable: @start_60_days_ago, volunteer: @has_assignment, hours: 4
-    query = Volunteer.with_hours
-    assert query.include? @has_assignment
-    refute query.include? @has_inactive
-  end
-
   test 'has_assignments returns only the ones that have assignments' do
     query = Volunteer.with_assignments.distinct
     assert query.include? @has_assignment
@@ -109,15 +102,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? @has_multiple
     assert query.include? @has_inactive
     assert query.include? @no_assignment
-    refute query.include? @group_offer_member
-  end
-
-  test 'without_active_assignment.not_in_any_group_offer' do
-    query = Volunteer.without_active_assignment.not_in_any_group_offer
-    refute query.include? @has_assignment
-    assert query.include? @has_multiple
-    assert query.include? @has_inactive
-    refute query.include? @no_assignment
     refute query.include? @group_offer_member
   end
 
@@ -227,28 +211,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? started_within_end_within
   end
 
-  test 'without_group_offer' do
-    with_active = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: true))
-      ]
-    with_inactive = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: false))
-      ]
-    with_active_and_inactive = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: true)),
-        GroupAssignment.create(group_offer: create(:group_offer, active: false))
-      ]
-    without_group_offers = create :volunteer
-    query = Volunteer.without_group_offer
-    refute query.include? with_active
-    refute query.include? with_active_and_inactive
-    refute query.include? with_inactive
-    assert query.include? without_group_offers
-  end
-
   test 'external' do
     external = create :volunteer, external: true
     internal = create :volunteer, external: false
@@ -263,54 +225,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     query = Volunteer.internal
     refute query.include? external
     assert query.include? internal
-  end
-
-  test 'with_assignment_6_months_ago' do
-    started_before_no_end = create :volunteer
-    make_assignment(start_date: 10.months.ago, volunteer: started_before_no_end)
-    started_before_end_after = create :volunteer
-    make_assignment(start_date: 10.months.ago, end_date: 2.months.ago,
-      volunteer: started_before_end_after)
-    started_after_no_end = create :volunteer
-    make_assignment(start_date: 2.months.ago, volunteer: started_after_no_end)
-    no_start_end_set = create :volunteer
-    make_assignment(volunteer: no_start_end_set)
-    no_assignment = create :volunteer
-    query = Volunteer.with_assignment_6_months_ago
-    assert query.include? started_before_no_end
-    assert query.include? started_before_end_after
-    refute query.include? started_after_no_end
-    refute query.include? no_start_end_set
-    refute query.include? no_assignment
-  end
-
-  test 'with_assignment_ca_6_weeks_ago' do
-    started_before_no_end = create :volunteer
-    make_assignment(start_date: 9.weeks.ago, volunteer: started_before_no_end)
-    started_before_end_after = create :volunteer
-    make_assignment(start_date: 10.months.ago, end_date: Time.zone.today + 10,
-      volunteer: started_before_end_after)
-    started_five_weeks_ago = create :volunteer
-    make_assignment(start_date: 5.weeks.ago, volunteer: started_five_weeks_ago)
-    started_six_weeks_ago = create :volunteer
-    make_assignment(start_date: 6.weeks.ago, volunteer: started_six_weeks_ago)
-    started_seven_weeks_ago = create :volunteer
-    make_assignment(start_date: 7.weeks.ago, volunteer: started_seven_weeks_ago)
-    started_eight_weeks_ago = create :volunteer
-    make_assignment(start_date: 8.weeks.ago, volunteer: started_eight_weeks_ago)
-    no_start_end_set = create :volunteer
-    make_assignment(volunteer: no_start_end_set)
-    no_assignment = create :volunteer
-
-    query = Volunteer.with_assignment_ca_6_weeks_ago
-    refute query.include? started_before_no_end
-    refute query.include? started_before_end_after
-    refute query.include? started_five_weeks_ago
-    assert query.include? started_six_weeks_ago
-    assert query.include? started_seven_weeks_ago
-    assert query.include? started_eight_weeks_ago
-    refute query.include? no_start_end_set
-    refute query.include? no_assignment
   end
 
   test 'active_only_returns_accepted_volunteers_that_have_an_active_assignment' do

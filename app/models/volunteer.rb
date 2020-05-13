@@ -122,7 +122,6 @@ class Volunteer < ApplicationRecord
     where(acceptance: process)
   }
 
-  scope :with_hours, (-> { joins(:hours) })
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
   scope :without_assignment, (-> { left_outer_joins(:assignments).where(assignments: { id: nil }) })
@@ -133,24 +132,12 @@ class Volunteer < ApplicationRecord
 
   scope :with_active_assignments, (-> { joins(:assignments).merge(Assignment.active) })
 
-  scope :without_group_offer, lambda {
-    left_outer_joins(:group_offers).where(group_offers: { id: nil })
-  }
-
-  scope :without_active_assignment, lambda {
-    joins(:assignments).merge(Assignment.ended)
-  }
-
   scope :not_in_any_group_offer, lambda {
     left_joins(:group_offers).where(group_assignments: { volunteer_id: nil })
   }
 
   scope :with_active_assignments_between, lambda { |start_date, end_date|
     joins(:assignments).merge(Assignment.active_between(start_date, end_date))
-  }
-
-  scope :with_terminated_assignments_between, lambda { |start_date, end_date|
-    joins(:assignments).merge(Assignment.terminated_between(start_date, end_date))
   }
 
   scope :with_active_group_assignments_between, lambda { |start_date, end_date|
@@ -160,20 +147,6 @@ class Volunteer < ApplicationRecord
   scope :external, (-> { where(external: true) })
   scope :internal, (-> { where(external: false) })
   scope :not_resigned, (-> { where.not(acceptance: :resigned) })
-
-  scope :with_assignment_6_months_ago, lambda {
-    joins(:assignments).merge(Assignment.start_before(6.months.ago))
-  }
-
-  scope :with_assignment_ca_6_weeks_ago, lambda {
-    joins(:assignments).merge(Assignment.started_ca_six_weeks_ago)
-  }
-
-  scope :with_only_inactive_assignments, lambda {
-    left_outer_joins(:assignments)
-      .merge(Assignment.inactive)
-      .where.not(assignments: { volunteer_id: with_active_assignments.ids })
-  }
 
   ## Semester Process Scopes
   #
