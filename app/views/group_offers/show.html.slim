@@ -7,8 +7,22 @@ h2= @group_offer.title
   table.table.table-no-border-top
     tbody
       tr
+        td*{style: 'max-width: 200px'}
+          = t_attr(:created_at)
+        td= l(@group_offer.created_at, format: :date_only)
+      - if @group_offer.created_at != @group_offer.updated_at
+        tr
+          td= t_attr(:updated_at)
+          td= l(@group_offer.updated_at, format: :date_only)
+      - if @group_offer.period_end
+        tr
+          td Endete am
+          td= l(@group_offer.period_end)
+
+      tr
         td Status
         td.button-acceptance= assignment_status_badge(@group_offer)
+
       tr
         td= t_attr(:offer_type)
         td
