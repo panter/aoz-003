@@ -268,7 +268,17 @@ de:
   will_paginate:
     next_label: Weiter
     previous_label: Zurück
-
+    page_entries_info:
+      single_page:
+        zero: Keine Einträge
+        one: 'Zeige 1'
+        other: 'Zeige alle %{count}'
+      single_page_html:
+        zero: 'Keine Einträge gefunden'
+        one: 'Zeige <b>1</b>'
+        other: 'Zeige <b>alle&nbsp;%{count}</b>'
+      multi_page: 'Zeige %{from} - %{to} von %{count}'
+      multi_page_html: 'Zeige <b>%{from}&nbsp;-&nbsp;%{to}</b> von <b>%{count}</b>'
   # Date and time
   date:
     order:
