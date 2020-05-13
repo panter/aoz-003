@@ -9,7 +9,9 @@
         th
         - if policy(Volunteer).show_acceptance?
           th= sort_link @q, :acceptance
-        th= sort_link @q, :active, 'Status'
+        th
+          abbr title="Status betreffend Gruppen/Tandem-Einsätzen"
+            'Status
         th= sort_link @q, :salutation
         - if action_in?(:index, :seeking_clients) || controller_in?(:group_offers)
           th= sort_link @q, :contact_last_name, t_attr(:full_name, Volunteer)
@@ -24,7 +26,7 @@
         th= t_attr(:interests, Volunteer)
         - if policy(Volunteer).show_comments?
           th= t_attr(:comments_internal)
-        th= sort_link @q, :external
+        th= t_attr(:external, Volunteer)
         th= sort_link @q, :created_at, t_attr(:created_at)
         th= sort_link @q, :accepted_at, t_attr(:accepted_at)
         th= sort_link @q, :resigned_at, t_attr(:resigned_at)
