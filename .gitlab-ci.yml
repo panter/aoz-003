@@ -9,7 +9,7 @@ services:
 variables:
   RAILS_ENV: test
   POSTGRES_DB: aoz_test
-  DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB"
+  DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB'
   POSTGRES_HOST_AUTH_METHOD: trust
 
 .push-pull-cache:
@@ -26,7 +26,6 @@ variables:
       - tmp/cache/yarn
     policy: pull
 
-
 .test-extend:
   stage: test
   before_script:
@@ -34,10 +33,21 @@ variables:
     - yarn install --cache-folder tmp/cache/yarn
     - bundle exec rails db:schema:load
 
+.retry-dropped-runners:
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
+      - job_execution_timeout
+      - scheduler_failure
+      - stale_schedule
+
 test:
   extends:
     - .push-pull-cache
     - .test-extend
+    - .retry-dropped-runners
   script:
     - bundle exec rails test
 
@@ -45,6 +55,7 @@ system:
   extends:
     - .pull-cache
     - .test-extend
+    - .retry-dropped-runners
   script:
     - bundle exec chromedriver-update $(cat /chrome_driver_version.txt)
     - bundle exec rails test:system
