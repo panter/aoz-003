@@ -370,52 +370,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     end
   end
 
-  # test 'allready_has_billing_expense_for_semester_adds_hours_in_semester_not_in_billing_list' do
-  #   travel_to time_z(2017, 7, 5)
-  #   volunteer = create :volunteer_with_user
-  #   assignment = create :assignment, volunteer: volunteer
-  #   creator = assignment.creator
-  #   volunteer.reload
-  #   hours_before = ['2017-01-10', '2017-04-08', '2017-05-20'].map.with_index do |date, index|
-  #     create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: time_z(date),
-  #       hours: index + 1)
-  #   end
-  #   assert_includes Volunteer.with_billable_hours('2016-12-01'), volunteer
-  #   assert_equal 6.0, Volunteer.with_billable_hours('2016-12-01').to_a.first.total_hours
-  #   assert_equal 6, hours_before.map(&:hours).sum
-  #   BillingExpense.create_for!(Volunteer.with_billable_hours('2016-12-01'), creator, '2016-12-01')
-  #   assert Volunteer.with_billable_hours('2016-12-01').blank?
-  #   hours_after = ['2017-01-11', '2017-04-09', '2017-05-21'].map.with_index do |date, index|
-  #     create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: time_z(date),
-  #       hours: index + 1)
-  #   end
-  #   assert_not_includes Volunteer.with_billable_hours('2016-12-01'), volunteer
-  #   assert_includes Volunteer.with_billable_hours, volunteer
-  # end
-
-  test 'with_registered_user returns volunteers where password is set for user' do
-    volunteer_without_user1 = create :volunteer, :external
-    volunteer_without_user2 = create :volunteer, :external
-    volunteer_with_user1 = create :volunteer_with_user
-    volunteer_with_user2 = create :volunteer_with_user
-
-    # faking user sign in by setting last_sign_in_at an arbitrary date
-    volunteer_with_user1.user.update last_sign_in_at: Time.now
-    volunteer_with_user2.user.update last_sign_in_at: Time.now
-
-    assert_nil volunteer_without_user1.user
-    assert_nil volunteer_without_user2.user
-    assert volunteer_with_user1.user.present?
-    assert volunteer_with_user2.user.present?
-
-    volunteers_with_user = Volunteer.with_actively_registered_user
-
-    assert_includes volunteers_with_user, volunteer_with_user1
-    assert_includes volunteers_with_user, volunteer_with_user2
-    assert_not_includes volunteers_with_user, volunteer_without_user1
-    assert_not_includes volunteers_with_user, volunteer_without_user2
-  end
-
   test 'process returns volunteers filtered by acceptance or account status' do
     # clean existing volunteers first created by setup
     Volunteer.destroy_all
