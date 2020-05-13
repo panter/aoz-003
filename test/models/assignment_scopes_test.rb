@@ -206,25 +206,4 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_not query.include? less_than_six_weeks
     assert_not query.include? more_than_8_weeks
   end
-
-  test 'with_actively_registered_volunteer returns assignments of volunteers with_actively_registered_user' do
-    volunteer1 = create :volunteer, :external
-    volunteer2 = create :volunteer, :external
-    volunteer3 = create :volunteer_with_user
-    volunteer4 = create :volunteer_with_user
-    assignment1 = create :assignment, volunteer: volunteer1
-    assignment2 = create :assignment, volunteer: volunteer2
-    assignment3 = create :assignment, volunteer: volunteer3
-    assignment4 = create :assignment, volunteer: volunteer4
-
-    # faking user sign in by setting last_sign_in_at an arbitrary date
-    [volunteer3, volunteer4].each { |v| v.user.update(last_sign_in_at: Time.now) }
-
-    assignments = Assignment.with_actively_registered_volunteer
-
-    assert_not_includes assignments, assignment1
-    assert_not_includes assignments, assignment2
-    assert_includes assignments, assignment3
-    assert_includes assignments, assignment4
-  end
 end
