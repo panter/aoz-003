@@ -9,7 +9,7 @@ FactoryBot.define do
     end
 
     trait :with_note do
-      note { Faker::Lorem.paragraph }
+      notes { FFaker::Lorem.paragraph }
     end
 
     after :build do |trial_period|
