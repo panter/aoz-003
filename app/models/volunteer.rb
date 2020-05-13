@@ -198,9 +198,7 @@ class Volunteer < ApplicationRecord
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
-    where('volunteers.activeness_might_end IS NULL').or(
-      where('volunteers.activeness_might_end >= ?', Date.current)
-    )
+    where('volunteers.activeness_might_end IS NULL OR volunteers.activeness_might_end >= ?', Date.current)
   }
   scope :activeness_ended, lambda {
     where(active: true)
@@ -211,18 +209,33 @@ class Volunteer < ApplicationRecord
     accepted.activeness_not_ended.where(active: true)
   }
 
-  scope :activeness_not_ended_assignment, lambda {
-    where('volunteers.activeness_might_end_assignments IS NULL').or(
-      where('volunteers.activeness_might_end_assignments >= ?', Date.current)
+  scope :is_active_group_or_assignment, lambda {
+    accepted.activeness_not_ended.where(active: true)
+  }
+  scope :is_active_on_group_and_assignment, lambda {
+    accepted.is_active_assignment.is_active_group
+  }
+  scope :is_inactive_group_and_assignment, lambda {
+    accepted.where(active: false).or(
+      accepted.activeness_ended
     )
+  }
+
+  scope :activeness_not_ended_assignment, lambda {
+    accepted.where('volunteers.activeness_might_end_assignments IS NULL OR volunteers.activeness_might_end_assignments > ?', Date.current)
   }
   scope :activeness_ended_assignment, lambda {
     where(active_on_assignment: true)
       .where('volunteers.activeness_might_end_assignments IS NOT NULL')
       .where('volunteers.activeness_might_end_assignments < ?', Date.current)
   }
-  scope :active_on_assignment, lambda {
+  scope :is_active_assignment, lambda {
     accepted.where(active_on_assignment: true).activeness_not_ended_assignment
+  }
+  scope :is_inactive_assignment, lambda {
+    accepted.where(active_on_assignment: false).or(
+      accepted.activeness_ended_assignment
+    )
   }
 
   scope :activeness_not_ended_group, lambda {
@@ -235,8 +248,13 @@ class Volunteer < ApplicationRecord
       .where('volunteers.activeness_might_end_groups IS NOT NULL')
       .where('volunteers.activeness_might_end_groups < ?', Date.current)
   }
-  scope :active_on_group, lambda {
+  scope :is_active_group, lambda {
     accepted.where(active_on_group: true).activeness_not_ended_assignment
+  }
+  scope :is_inactive_group, lambda {
+    accepted.where(active_on_group: false).or(
+      accepted.activeness_ended_group
+    )
   }
 
   scope :seeking_assignment_client, lambda {
@@ -343,6 +361,21 @@ class Volunteer < ApplicationRecord
       where(secondary_department: department)
     )
   }
+
+  def self.ransackable_scopes(auth_object = nil)
+    %w[
+      active
+      inactive
+      not_resigned
+      is_active_group_or_assignment
+      is_active_on_group_and_assignment
+      is_inactive_group_and_assignment
+      is_active_assignment
+      is_inactive_assignment
+      is_active_group
+      is_inactive_group
+    ]
+  end
 
   def verify_and_update_state
     assignment_max = relevant_period_end_max_assignment
@@ -565,10 +598,6 @@ class Volunteer < ApplicationRecord
 
   def assignment_categories_available
     @available ||= [['Tandem', 0]] + GroupOfferCategory.available_categories(kinds_done_ids)
-  end
-
-  def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive', 'not_resigned', 'process_eq']
   end
 
   def terminate!(resigned_by)

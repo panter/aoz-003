@@ -17,11 +17,20 @@ nav.navbar.section-navigation
   hr
 
   ul.list-inline
-    li= clear_filter_button
+    li= link_to 'Filter aufheben', request.path, class: 'btn btn-default btn-sm'
     = list_filter_dropdown(:salutation, Volunteer::SALUTATIONS)
+
     - if policy(Volunteer).show_acceptance?
-      = custom_filter_dropdown 'Prozess', *Volunteer.process_filters
-      = boolean_toggler_filter_dropdown(:active, 'Einsatz', 'Aktiv', 'Inaktiv')
+
+      = custom_filter_dropdown('Einsatz',
+        { q: :is_active_group_or_assignment, text: 'Aktiv in Begleitung oder Gruppe', value: 'true', disable_others: %w[acceptance_eq] },
+        { q: :is_active_on_group_and_assignment, text: 'Aktiv in Begleitung und Gruppe', value: 'true', disable_others: %w[acceptance_eq] },
+        { q: :is_inactive_group_and_assignment, text: 'Inaktiv in Begleitung und Gruppe', value: 'true', disable_others: %w[acceptance_eq] },
+        { q: :is_active_assignment, text: 'Aktiv in Begleitung', value: 'true', disable_others: %w[acceptance_eq] },
+        { q: :is_inactive_assignment, text: 'Inaktiv in Begleitung', value: 'true', disable_others: %w[acceptance_eq] },
+        { q: :is_active_group, text: 'Aktiv in Gruppenangebot', value: 'true', disable_others: %w[acceptance_eq] },
+        { q: :is_inactive_group, text: 'Inaktiv in Gruppenangebot', value: 'true', disable_others: %w[acceptance_eq] })
+
     = boolean_filter_dropdown(:single_accompaniment_id, Volunteer::SINGLE_ACCOMPANIMENTS)
     = custom_filter_dropdown(t_attr(:group_offer_categories_id, Volunteer), *GroupOfferCategory.filterable_volunteer)
     = boolean_filter_dropdown(:available, Volunteer::AVAILABILITY)

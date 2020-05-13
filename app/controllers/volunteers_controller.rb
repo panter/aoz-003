@@ -8,7 +8,6 @@ class VolunteersController < ApplicationController
     @q = policy_scope(Volunteer).ransack(params[:q])
     @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @volunteers = @q.result
-    @volunteers = activity_filter
     respond_to do |format|
       format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
@@ -147,11 +146,6 @@ class VolunteersController < ApplicationController
       model_message: @volunteer.errors.messages[:acceptance].first,
       action_link: { text: 'Begleitung bearbeiten', path: edit_volunteer_path(@volunteer, anchor: 'assignments') }
     }
-  end
-
-  def activity_filter
-    return @volunteers unless params[:q] && params[:q][:active_eq]
-    params[:q][:active_eq] == 'true' ? @volunteers.active : @volunteers.inactive
   end
 
   def set_volunteer

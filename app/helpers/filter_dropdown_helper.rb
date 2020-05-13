@@ -20,6 +20,7 @@ module FilterDropdownHelper
     filters.map do |filter|
       filter[:active] = filter_active?(filter[:q], filter[:value])
       excludes = filter_keys.reject { |key| key == filter[:q] }
+      excludes += filter[:disable_others].map(&:to_s) if filter[:disable_others]
       excludes = excludes.reject { |key| filter[:qs]&.include? key } if filter[:qs]&.any?
       q_args = params_except('page').merge(
         q: custom_filter_q_arg(*filter.values_at(:q, :qs, :value), *excludes)
