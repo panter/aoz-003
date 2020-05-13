@@ -298,7 +298,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     # test volunteers by acceptance
     Volunteer.acceptance_collection.each do |acceptance|
       volunteer = instance_variable_get("@volunteer_#{acceptance}")
-      volunteers = Volunteer.process_eq(acceptance)
+      volunteers = Volunteer.public_send(acceptance)
       other_acceptances = Volunteer.acceptance_collection - [acceptance]
 
       assert_includes volunteers, volunteer
@@ -311,7 +311,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
 
     # special case for volunteers whose haven't logged in
     @volunteer_not_logged_in.invite_user
-    volunteers = Volunteer.process_eq('havent_logged_in')
+    volunteers = Volunteer.invited_but_never_logged_in
     assert_includes volunteers, @volunteer_not_logged_in
   end
 end

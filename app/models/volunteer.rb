@@ -121,6 +121,9 @@ class Volunteer < ApplicationRecord
     return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
     where(acceptance: process)
   }
+  scope :invited_but_never_logged_in, lambda {
+    joins(:user).merge(User.with_pending_invitation)
+  }
 
   scope :with_assignments, (-> { joins(:assignments) })
   scope :with_group_assignments, (-> { joins(:group_assignments) })
@@ -367,6 +370,7 @@ class Volunteer < ApplicationRecord
       active
       inactive
       not_resigned
+      invited_but_never_logged_in
       is_active_group_or_assignment
       is_active_on_group_and_assignment
       is_inactive_group_and_assignment
@@ -517,19 +521,6 @@ class Volunteer < ApplicationRecord
   def self.first_languages
     ['DE', 'EN', 'FR', 'ES', 'IT', 'AR'].map do |lang|
       [I18n.t("language_names.#{lang}"), lang]
-    end
-  end
-
-  def self.process_filters
-    acceptance_filters.append(
-      {
-        q: :acceptance_eq,
-        value: 'havent_logged_in',
-        text: human_attribute_name(:havent_logged_in)
-      }
-    ).map do |filter|
-      filter[:q] = :process_eq
-      filter
     end
   end
 

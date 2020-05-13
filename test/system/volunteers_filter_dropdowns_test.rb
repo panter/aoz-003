@@ -203,7 +203,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     click_link 'Nie eingeloggt', match: :first
     assert page.has_text? @volunteer_not_logged_in
 
-    Volunteer.process_eq('havent_logged_in').each do |volunteer|
+    Volunteer.invited_but_never_logged_in.each do |volunteer|
       within "tr##{dom_id volunteer}" do
         assert page.has_text? 'Nie eingeloggt'
       end
