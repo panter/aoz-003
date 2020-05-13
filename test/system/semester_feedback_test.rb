@@ -140,6 +140,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     wait_for_ajax
 
     page.find('td', text: achievements.truncate(300)).click
+    wait_for_ajax
     assert page.has_text? achievements
     click_button 'Schliessen'
     wait_for_ajax
