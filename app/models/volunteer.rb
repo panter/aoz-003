@@ -372,14 +372,22 @@ class Volunteer < ApplicationRecord
   }
 
   def verify_and_update_state
-    assignments_max = relevant_period_end_max_assignment
+    assignment_max = relevant_period_end_max_assignment
     groups_max = relevant_period_end_max_group
     update(active: active?,
-           activeness_might_end: [assignments_max, groups_max].compact.max,
+           activeness_might_end: global_active_end(assignment_max, groups_max),
            active_on_assignment: active_assignments?,
-           activeness_might_end_assignments: assignments_max,
+           activeness_might_end_assignments: assignment_max,
            active_on_group: active_groups?,
            activeness_might_end_groups: groups_max)
+  end
+
+  def global_active_end(assignment_max, groups_max)
+    if assignments.active.no_end.any? || group_assignments.active.no_end.any?
+      nil
+    else
+      [assignment_max, groups_max].compact.max
+    end
   end
 
   def relevant_period_end_max_assignment

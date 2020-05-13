@@ -153,6 +153,92 @@ class VolunteerStateTest < ActiveSupport::TestCase
     assert_not Volunteer.active.include? volunteer
   end
 
+  test 'seeking_assignment_client includes volunteers having group assignment' do
+    group_offer = create(:group_offer)
+    has_active_ga = create :volunteer
+    has_active_ga_and_ended_a = create :volunteer
+    has_active_ga_and_a = create :volunteer
+    has_active_ga_and_ending_a = create :volunteer
+    has_ending_ga_and_active_a = create :volunteer
+    has_none = create :volunteer
+
+    GroupAssignment.create(volunteer: has_active_ga, group_offer: group_offer, period_start: 10.days.ago, period_end: nil)
+    GroupAssignment.create(volunteer: has_active_ga_and_ended_a, group_offer: group_offer, period_start: 10.days.ago, period_end: nil)
+    GroupAssignment.create(volunteer: has_active_ga_and_a, group_offer: group_offer, period_start: 10.days.ago, period_end: nil)
+    GroupAssignment.create(volunteer: has_active_ga_and_ending_a, group_offer: group_offer, period_start: 10.days.ago, period_end: nil)
+    GroupAssignment.create(volunteer: has_ending_ga_and_active_a, group_offer: group_offer, period_start: 10.days.ago, period_end: 10.days.from_now)
+
+    create(:assignment, volunteer: has_active_ga_and_ended_a, period_start: 20.days.ago, period_end: 10.days.ago)
+    create(:assignment, volunteer: has_active_ga_and_a, period_start: 10.days.ago, period_end: nil)
+    create(:assignment, volunteer: has_active_ga_and_ending_a, period_start: 10.days.ago, period_end: 10.days.from_now)
+    create(:assignment, volunteer: has_ending_ga_and_active_a, period_start: 10.days.ago, period_end: nil)
+
+    result = Volunteer.seeking_assignment_client
+    assert_includes result, has_active_ga
+    assert has_active_ga.active?
+    refute has_active_ga.active_assignments?
+    assert has_active_ga.active_groups?
+
+    refute_includes result, has_active_ga_and_a
+    assert has_active_ga_and_a.active?
+    assert has_active_ga_and_a.active_assignments?
+    assert has_active_ga_and_a.active_groups?
+
+    assert_includes result, has_active_ga_and_ended_a
+    assert has_active_ga_and_ended_a.active?
+    refute has_active_ga_and_ended_a.active_assignments?
+    assert has_active_ga_and_ended_a.active_groups?
+
+    # assignment is still running, so volunteer is NOT expected in scope
+    refute_includes result, has_active_ga_and_ending_a
+    assert has_active_ga_and_ending_a.active?
+    assert has_active_ga_and_ending_a.active_groups?
+    assert has_active_ga_and_ending_a.active_assignments?
+
+    refute_includes result, has_ending_ga_and_active_a
+    assert has_ending_ga_and_active_a.active?
+    assert has_ending_ga_and_active_a.active_assignments?
+    assert has_ending_ga_and_active_a.active_groups?
+
+    assert_includes result, has_none
+    refute has_none.active?
+    refute has_none.active_assignments?
+    refute has_none.active_groups?
+
+    travel_to 11.days.from_now
+    result = Volunteer.seeking_assignment_client
+    assert_includes result, has_active_ga
+    assert has_active_ga.active?
+    refute has_active_ga.active_assignments?
+    assert has_active_ga.active_groups?
+
+    refute_includes result, has_active_ga_and_a
+    assert has_active_ga_and_a.active?
+    assert has_active_ga_and_a.active_assignments?
+    assert has_active_ga_and_a.active_groups?
+
+    assert_includes result, has_active_ga_and_ended_a
+    assert has_active_ga_and_ended_a.active?
+    refute has_active_ga_and_ended_a.active_assignments?
+    assert has_active_ga_and_ended_a.active_groups?
+
+    # assignment has ended, so volunteer is expected in scope
+    assert result, has_active_ga_and_ending_a
+    assert has_active_ga_and_ending_a.active?
+    refute has_active_ga_and_ending_a.active_assignments?
+    assert has_active_ga_and_ending_a.active_groups?
+
+    refute_includes result, has_ending_ga_and_active_a
+    assert has_ending_ga_and_active_a.active?
+    assert has_ending_ga_and_active_a.active_assignments?
+    refute has_ending_ga_and_active_a.active_groups?
+
+    assert_includes result, has_none
+    refute has_none.active?
+    refute has_none.active_groups?
+    refute has_none.active_assignments?
+  end
+
   test 'state_active_method_for_single_volunteer_instance' do
     volunteer = create :volunteer_with_user, acceptance: :undecided
     assert_not volunteer.accepted?
