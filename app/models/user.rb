@@ -139,10 +139,11 @@ class User < ApplicationRecord
   scope :superadmins_and_social_workers, -> { superadmins.or(social_workers) }
 
   scope :order_lastname, lambda {
-    joins(profile: :contact).order('contacts.last_name ASC')
+    left_joins(profile: :contact).order('contacts.last_name ASC')
   }
 
-  scope :signed_in_at_least_once, (-> { where.not(last_sign_in_at: nil) })
+  scope :signed_in_at_least_once, -> { active }
+  scope :active, -> { where.not(last_sign_in_at: nil).where(active: true) }
   scope :with_pending_invitation, lambda {
     where(invitation_accepted_at: nil).where.not(invitation_sent_at: nil)
   }
@@ -194,8 +195,31 @@ class User < ApplicationRecord
       volunteer: volunteer).save
   end
 
+  ## Collection for input dropdowns
+  #
+  # If you only pass scope it will order by last name by default.
+  # If you don't pass scope, it will return all users
+  #
+  # Example:
+  #   User.input_collection('social_workers.active')
+  def self.input_collection(scope = '')
+    collection = order_lastname
+    scope.split('.').map(&:to_sym).each do |scope_item|
+      collection = collection.public_send(scope_item)
+    end
+    collection.map(&:collection_input_item)
+  end
+
+  def collection_input_item
+    [dropdown_label, id]
+  end
+
   def to_s
     full_name
+  end
+
+  def dropdown_label
+    "#{full_name} - #{t_enum(:role)}"
   end
 
   def full_name

@@ -50,14 +50,14 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Bemerkungen [intern]', with: 'asdfasdf'
     fill_in 'Anmeldende Stelle', with: 'asdfasdf'
     fill_in 'Weitere involvierte Stellen', with: 'asdfasdf'
-    select @social_worker.full_name, from: 'Fallführende Stelle'
+    select @social_worker.dropdown_label, from: 'Fallführende Stelle'
     select('Gemeinde', from: 'Kostenträger')
     page.check('client_evening')
     fill_in 'Genauere Angaben', with: 'After 7'
 
     click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    assert page.has_select? 'Fallführende Stelle', selected: @social_worker.full_name
+    assert page.has_select? 'Fallführende Stelle', selected: @social_worker.dropdown_label
   end
 
   test 'new client form with preselected fields' do

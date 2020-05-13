@@ -3,6 +3,8 @@ FactoryBot.define do
     email { FFaker::Internet.unique.email }
     password 'asdfasdf'
     role User::SUPERADMIN
+    last_sign_in_at { 15.hours.ago }
+    active { true }
 
     association :profile, strategy: :build, user: nil
 

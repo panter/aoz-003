@@ -74,8 +74,9 @@ fieldset
       - if policy(@client).set_terminated?
         = acceptance_select(@client, f)
       - if policy(Client).superadmin_privileges?
-        = f.association :involved_authority, collection: @social_workers, include_blank: true
-        = f.association :user, collection: User.superadmins_and_social_workers.order_lastname,
+        = f.association :involved_authority, collection: User.input_collection('social_workers.active'),
+                                             include_blank: true
+        = f.association :user, collection: User.input_collection('superadmins_and_social_workers.active'),
                                include_blank: false,
                                label: 'Angemelded von'
 
