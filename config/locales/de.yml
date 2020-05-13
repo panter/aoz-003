@@ -252,6 +252,10 @@ de:
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
+  group_offer_not_ended_count:
+    zero: keine unbeendeten Gruppenangebote
+    one: ein unbeendetes Gruppenangebot
+    other: '%{count} unbeendete Gruppenangebote'
 
   # loose unsorted groups
   pdf_header:
@@ -620,20 +624,25 @@ de:
               insuficient_relation: Es wird mindestens ein Assignment oder GroupAssignment benötigt
               too_many_relations: Es darf nur ein Assignment oder ein GroupAssignment verbunden werden
             group_assignment: *id-mission-relation-insuficient
+        department:
+          attributes:
+            group_offers:
+              has_unterminated: Der Standort hat noch %{go_count}.
     models:
       assignment: Begleitung
-      feedback: Halbjahres-Rapport
       billing_expense: Spesenformular
       certificate: Nachweis
-      client: Klient/in
       client_notification: Klienten Wartezeit Benachrichtigung
+      client: Klient/in
       contact: Kontakt
       department: Standort
+      document: Dokument
       email_template: E-Mailvorlage
       event: Veranstaltung
+      feedback: Halbjahres-Rapport
       group_assignment: Einsatz
-      group_offer: Gruppenangebot
       group_offer_category: Gruppenangebot Kategorie
+      group_offer: Gruppenangebot
       hour: Stunden
       journal: Journal
       language_skill: Sprachkompetenz
@@ -641,15 +650,14 @@ de:
       profile: Profil
       relative: Verwante/r
       reminder_mailing: Erinnerungs-Mailing
-      semester_process: Semester Prozess
+      semester_feedback: Semester Feedback
       semester_process_mail: Semester Email
       semester_process_volunteer_mission: Einsatz
-      semester_feedback: Semester Feedback
-      user: Benutzer/in
-      volunteer: Freiwillige/n
-      volunteer_application: Freiwilligen Anmeldung
-      document: Dokument
+      semester_process: Semester Prozess
       trial_period: Probezeit
+      user: Benutzer/in
+      volunteer_application: Freiwilligen Anmeldung
+      volunteer: Freiwillige/n
 
   # model name plural for controller name shortcut => t('.key')
   notification_mailer:

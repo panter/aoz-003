@@ -31,7 +31,14 @@
               - group_offer.volunteers.each do |volunteer|
                 li= link_to_if(policy(volunteer).edit?, volunteer.contact.full_name, edit_volunteer_path(volunteer))
 
-
-= form_navigation_btn :edit
-- if policy(Department).index?
-  = form_navigation_btn :back
+.row
+  .col-xs-12
+    - if policy(Department).index?
+      = form_navigation_btn :back, with_col: false
+    - if policy(@department).edit?
+      = form_navigation_btn :edit, with_col: false
+    - if policy(@department).destroy?
+      = link_to_if(@department.destroyable?, icon_span(:delete), @department, confirm_deleting(@department, 'btn btn-default m-b-10 active').merge(title: 'Löschen')) do
+        = link_to '#', class: 'btn btn-default disabled m-b-10' do
+          =<> icon_span(:delete)
+          'noch #{t('group_offer_not_ended_count', count: @department.group_offers.unterminated.count)}

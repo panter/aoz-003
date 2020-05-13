@@ -76,6 +76,7 @@ class GroupOffer < ApplicationRecord
   }
 
   scope :terminated, (-> { field_not_nil(:period_end_set_by) })
+  scope :unterminated, -> { field_nil(:period_end_set_by) }
 
   def terminatable?
     group_assignments.unterminated.none?

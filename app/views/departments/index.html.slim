@@ -12,17 +12,17 @@ h1 Standorte
           th= sort_link @q, :contact_postal_code, t_attr(:postal_code, Contact)
 
       tbody
-        - @departments.each do |d|
+        - @departments.each do |department|
           tr
             td.index-action-cell.hidden-print
-              = button_link icon_span(:show), d, title: 'Anzeigen'
-              - if policy(d).edit?
-                = button_link icon_span(:edit), edit_polymorphic_path(d), title: 'Bearbeiten'
-              - if policy(d).destroy?
-                = button_link icon_span(:delete), d, nil,
-                    confirm_deleting(d, 'btn btn-default').merge(title: 'Löschen')
-            td= d.contact.last_name
-            td= d.contact.street
-            td= d.contact.postal_code
+              = button_link icon_span(:show), department, title: 'Anzeigen'
+              - if policy(department).edit?
+                = button_link icon_span(:edit), edit_polymorphic_path(department), title: 'Bearbeiten'
+              - if policy(department).destroy?
+                = button_link icon_span(:delete), department, nil,
+                    confirm_deleting(department, 'btn btn-default').merge(title: 'Löschen')
+            td= department.contact.last_name
+            td= department.contact.street
+            td= department.contact.postal_code
 
 = form_navigation_btn :new
