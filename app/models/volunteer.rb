@@ -225,8 +225,9 @@ class Volunteer < ApplicationRecord
   scope :will_take_more_assignments, (-> { where(take_more_assignments: true) })
 
   scope :activeness_not_ended, lambda {
-    where('volunteers.activeness_might_end IS NULL OR volunteers.activeness_might_end > ?',
-      Time.zone.today)
+    where('volunteers.activeness_might_end IS NULL').or(
+      where('volunteers.activeness_might_end >= ?', Date.current)
+    )
   }
   scope :activeness_ended, lambda {
     where(active: true)
@@ -235,6 +236,40 @@ class Volunteer < ApplicationRecord
   }
   scope :active, lambda {
     accepted.activeness_not_ended.where(active: true)
+  }
+
+  scope :activeness_not_ended_assignment, lambda {
+    where('volunteers.activeness_might_end_assignments IS NULL').or(
+      where('volunteers.activeness_might_end_assignments >= ?', Date.current)
+    )
+  }
+  scope :activeness_ended_assignment, lambda {
+    where(active_on_assignment: true)
+      .where('volunteers.activeness_might_end_assignments IS NOT NULL')
+      .where('volunteers.activeness_might_end_assignments < ?', Date.current)
+  }
+  scope :active_on_assignment, lambda {
+    accepted.where(active_on_assignment: true).activeness_not_ended_assignment
+  }
+
+  scope :activeness_not_ended_group, lambda {
+    where('volunteers.activeness_might_end_groups IS NULL').or(
+      where('volunteers.activeness_might_end_groups >= ?', Date.current)
+    )
+  }
+  scope :activeness_ended_group, lambda {
+    where(active_on_group: true)
+      .where('volunteers.activeness_might_end_groups IS NOT NULL')
+      .where('volunteers.activeness_might_end_groups < ?', Date.current)
+  }
+  scope :active_on_group, lambda {
+    accepted.where(active_on_group: true).activeness_not_ended_assignment
+  }
+
+  scope :seeking_assignment_client, lambda {
+    internal.accepted.where(active_on_assignment: false).or(
+      internal.accepted.activeness_ended_assignment
+    )
   }
 
   scope :inactive, lambda {
@@ -337,21 +372,46 @@ class Volunteer < ApplicationRecord
   }
 
   def verify_and_update_state
-    update(active: active?, activeness_might_end: relevant_period_end_max)
+    assignments_max = relevant_period_end_max_assignment
+    groups_max = relevant_period_end_max_group
+    update(active: active?,
+           activeness_might_end: [assignments_max, groups_max].compact.max,
+           active_on_assignment: active_assignments?,
+           activeness_might_end_assignments: assignments_max,
+           active_on_group: active_groups?,
+           activeness_might_end_groups: groups_max)
   end
 
-  def relevant_period_end_max
-    # any assignment with no end means activeness is not going to end
-    return nil if group_assignments.stay_active.any? || assignments.stay_active.any?
-    [active_group_assignment_end_dates.max, active_assignment_end_dates.max].compact.max
+  def relevant_period_end_max_assignment
+    active_assignment_end_dates.max if assignments.end_in_future.any?
+  end
+
+  def relevant_period_end_max_group
+    active_group_assignment_end_dates.max if group_assignments.end_in_future.any?
   end
 
   def active?
-    accepted? && (assignments.active.any? || group_assignments.active.any?)
+    active_assignments? || active_groups?
+  end
+
+  def active_assignments?
+    accepted? && assignments.active.any?
+  end
+
+  def active_groups?
+    accepted? && group_assignments.active.any?
   end
 
   def inactive?
-    accepted? && assignments.active.blank? && group_assignments.active.blank?
+    accepted? && !active?
+  end
+
+  def inactive_assignments?
+    accepted? && !active_assignments?
+  end
+
+  def inactive_groups?
+    accepted? && !active_groups?
   end
 
   def terminatable?
@@ -437,7 +497,7 @@ class Volunteer < ApplicationRecord
   end
 
   def seeking_clients?
-    internal? && (accepted? && inactive? || take_more_assignments? && active?)
+    internal? && accepted? && assignments.active.blank?
   end
 
   def self.first_languages

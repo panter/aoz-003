@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200512155727) do
+ActiveRecord::Schema.define(version: 20200513101341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -839,6 +839,10 @@ ActiveRecord::Schema.define(version: 20200512155727) do
     t.bigint "undecided_by_id"
     t.string "how_have_you_heard_of_aoz"
     t.text "how_have_you_heard_of_aoz_other"
+    t.date "activeness_might_end_assignments"
+    t.date "activeness_might_end_groups"
+    t.boolean "active_on_assignment", default: false
+    t.boolean "active_on_group", default: false
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
     t.index ["accepted_by_id"], name: "index_volunteers_on_accepted_by_id"
