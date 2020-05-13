@@ -1,6 +1,6 @@
 
 h1 Evaluation nach Abschluss einer Begleitung
-p.lead im Rahmen von TransFair Freiwilligenarbeit
+p.lead bei der AOZ Fachstelle Freiwilligenarbeit
 
 p.text-bigger-1
   - if @assignment.period_end > Time.zone.today
@@ -41,14 +41,14 @@ hr
         th= t('termination_feedback_questions.term_feedback_activities')
         th= t('termination_feedback_questions.term_feedback_success')
         th= t('termination_feedback_questions.term_feedback_problems')
-        th= t('termination_feedback_questions.term_feedback_transfair')
+        th= t('termination_feedback_questions.term_feedback_aoz')
         th= t('termination_feedback_questions.term_remaining_hours')
     tbody
       tr
         td= @assignment.term_feedback_activities
         td= @assignment.term_feedback_success
         td= @assignment.term_feedback_problems
-        td= @assignment.term_feedback_transfair
+        td= @assignment.term_feedback_aoz
         td= @assignment.hours.last&.hours || 0.0
 
 - else
@@ -62,7 +62,7 @@ hr
           = f.input :term_feedback_activities
           = f.input :term_feedback_success
           = f.input :term_feedback_problems
-          = f.input :term_feedback_transfair
+          = f.input :term_feedback_aoz
 
       .row
         .col-xs-12.col-md-6
@@ -79,7 +79,7 @@ hr
     .row
       .col-xs-12
         p.text-bigger-2.text-center.m-t-30
-          em Im Namen der AOZ danken wir Ihnen ganz herzlich für Ihr Halbjahres-Rapport und für Ihr Engagement im Rahmen der Freiwilligenarbeit TransFair.
+          em Im Namen der AOZ danken wir Ihnen ganz herzlich für Ihren Halbjahres-Rapport und für Ihr Engagement.
         p.text-bigger-2.text-center.m-t-30
           em Die Fachstelle Freiwilligenarbeit
 

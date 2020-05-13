@@ -41,13 +41,13 @@ de:
     term_feedback_activities: 'Endfeedback: Hauptaktivitäten'
     term_feedback_success: 'Endfeedback: Erfolge'
     term_feedback_problems: 'Endfeedback: Probleme'
-    term_feedback_transfair: 'Endfeedback: TransFair'
+    term_feedback_aoz: 'Endfeedback: Fachstelle Freiwilligenarbeit'
     term_remaining_hours: 'Restliche Stunden'
   termination_feedback_questions: &id-termination-feedback-quests
     term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
     term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
     term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
-    term_feedback_transfair: Wie fanden Sie die von der Fachstelle Freiwilligenarbeit angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
+    term_feedback_aoz: Wie fanden Sie die von der Fachstelle Freiwilligenarbeit angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
     term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values
@@ -1204,7 +1204,6 @@ de:
           <br>
 
           044 415 66 72 Leitung Fachstelle<br>
-          044 415 67 38 Leitung TransFair<br>
           (Montag bis Donnerstag)
         greetings: |
           Freundliche Grüsse<br>

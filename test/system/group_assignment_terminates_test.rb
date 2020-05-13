@@ -28,7 +28,7 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
     fill_in 'Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?',
       with: 'rand_trouble_text'
     fill_in 'Wie fanden Sie die von der Fachstelle Freiwilligenarbeit angebotene Unterstützung ' \
-      'inklusive Weiterbildungen und Anlässe?', with: 'rand_transfair_text'
+      'inklusive Weiterbildungen und Anlässe?', with: 'rand_aoz_feedback_text'
 
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
@@ -42,7 +42,7 @@ class GroupAssignmentTerminatesTest < ApplicationSystemTestCase
     assert_equal 'rand_activities_text', @group_assignment.term_feedback_activities
     assert_equal 'rand_success_text', @group_assignment.term_feedback_success
     assert_equal 'rand_trouble_text', @group_assignment.term_feedback_problems
-    assert_equal 'rand_transfair_text', @group_assignment.term_feedback_transfair
+    assert_equal 'rand_aoz_feedback_text', @group_assignment.term_feedback_aoz
   end
 
   test 'group_assignment_termination_form_adds_remaining_hours' do

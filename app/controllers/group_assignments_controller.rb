@@ -150,7 +150,7 @@ class GroupAssignmentsController < ApplicationController
     params.require(:group_assignment).permit(
       :period_start, :period_end, :termination_submitted_at, :terminated_at, :responsible,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
-      :redirect_to, :term_feedback_transfair, :comments, :additional_comments, :frequency,
+      :redirect_to, :term_feedback_aoz, :comments, :additional_comments, :frequency,
       :description, :place, :happens_at, :agreement_text,
       :group_offer_id, :volunteer_id, :remaining_hours, :generate_pdf,
       volunteer_attributes: [:waive, :iban, :bank],

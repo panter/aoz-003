@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200513101341) do
+ActiveRecord::Schema.define(version: 20200513152455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20200513101341) do
     t.text "term_feedback_activities"
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
-    t.text "term_feedback_transfair"
+    t.text "term_feedback_aoz"
     t.text "comments"
     t.text "additional_comments"
     t.string "assignment_description"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20200513101341) do
     t.text "term_feedback_activities"
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
-    t.text "term_feedback_transfair"
+    t.text "term_feedback_aoz"
     t.text "comments"
     t.text "additional_comments"
     t.string "assignment_description"
@@ -349,7 +349,7 @@ ActiveRecord::Schema.define(version: 20200513101341) do
     t.text "term_feedback_activities"
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
-    t.text "term_feedback_transfair"
+    t.text "term_feedback_aoz"
     t.text "comments"
     t.text "additional_comments"
     t.string "place"
@@ -389,7 +389,7 @@ ActiveRecord::Schema.define(version: 20200513101341) do
     t.text "term_feedback_activities"
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
-    t.text "term_feedback_transfair"
+    t.text "term_feedback_aoz"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "comments"
