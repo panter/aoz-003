@@ -7,7 +7,7 @@ class GroupOffer < ApplicationRecord
   OFFER_TYPES = [:internal_offer, :external_offer].freeze
   OFFER_STATES = [:open, :partially_occupied, :full].freeze
 
-  belongs_to :department, optional: true
+  belongs_to :department, -> { with_deleted }, optional: true
   belongs_to :group_offer_category
   belongs_to :creator, -> { with_deleted }, class_name: 'User',
     inverse_of: 'group_offers'
