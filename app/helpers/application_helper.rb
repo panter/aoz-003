@@ -152,19 +152,4 @@ module ApplicationHelper
   def abbr(abbr, full_term)
     tag.abbr(abbr.to_s, title: full_term)
   end
-
-  def show_status_date(record, include_processing_person, *args)
-    tag.ul(class: "list-unstyled") do
-      record.slice(*args).compact.each do |key, value|
-        if include_processing_person
-          updated_by_attr = key.include?('_at') ? key.sub('_at', '_by') : nil
-          concat tag.li([
-            t_attr(key) +' '+ l(value), record.send(updated_by_attr).to_s
-          ].reject(&:blank?).join(" #{I18n.t('by')} "))
-        else
-          concat tag.li(t_attr(key) +' '+ l(value))
-        end
-      end
-    end
-  end
 end

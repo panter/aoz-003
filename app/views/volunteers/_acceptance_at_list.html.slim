@@ -1,0 +1,6 @@
+ul
+  - volunteer.acceptances_at_list.each do |acceptance_at|
+    li
+      = acceptance_at[:attribute]
+      =<> l(acceptance_at[:datetime])
+      = "von #{acceptance_at[:user].full_name}" if acceptance_at[:user]
