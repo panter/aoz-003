@@ -1,114 +1,127 @@
-col_header = wb.styles.add_style(
+wb.use_shared_strings = true
+
+header_style = wb.styles.add_style(
   bg_color: 'FFDFDEDF',
   b: true,
   alignment: { horizontal: :center, vertical: :center },
-  border: { color: '00', edges: [:bottom], style: :thin}
+  border: { color: '00', edges: [:bottom], style: :thin },
+  width: :auto_fit
 )
-standard_format = wb.styles.add_style alignment: { horizontal: :left }, width: :auto_fit
-date_time_format = wb.styles.add_style format_code: 'dd.mm.yyyy HH:MM'
-date_format = wb.styles.add_style format_code: 'dd.mm.yyyy'
 
-cell_types = [
-  :integer,  # 00
-  :string,   # 01
-  :string,   # 02
-  :string,   # 03
-  :string,   # 04
-  :string,   # 05
-  :string,   # 06
-  :string,   # 07
-  :string,   # 08
-  :string,   # 09
-  :string,   # 10
-  :integer,  # 11
-  :string,   # 12
-  :string,   # 13
-  :string,   # 14
-  :string,   # 15
-  :string,   # 16
-  :string,   # 17
-  :string,   # 18
-  :time,     # 19
-  :time      # 20
-]
-
-cell_styles = [
-  standard_format,  # 00
-  standard_format,  # 01
-  standard_format,  # 02
-  standard_format,  # 03
-  standard_format,  # 04
-  standard_format,  # 05
-  standard_format,  # 06
-  standard_format,  # 07
-  standard_format,  # 08
-  standard_format,  # 09
-  standard_format,  # 10
-  standard_format,  # 11
-  standard_format,  # 12
-  standard_format,  # 13
-  standard_format,  # 14
-  standard_format,  # 15
-  standard_format,  # 16
-  standard_format,  # 17
-  standard_format,  # 18
-  date_time_format, # 19
-  date_time_format  # 20
-]
+std_style = wb.styles.add_style alignment: { horizontal: :left, vertical: :top }, width: :auto_fit
+wrapped_style = wb.styles.add_style alignment: { wrap_text: true, horizontal: :left, vertical: :top }
+date_style = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
 
 wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
-  header_row = [
-    'id',                               # 00
-    t_attr(:salutation),                # 01
-    t_attr(:last_name, Contact),        # 02
-    t_attr(:first_name, Contact),       # 03
-    t_attr(:street, Contact),           # 04
-    t_attr(:extended, Contact),         # 05
-    t_attr(:postal_code, Contact),      # 06
-    t_attr(:city, Contact),             # 07
-    t_attr(:primary_phone, Contact),    # 08
-    t_attr(:secondary_phone, Contact),  # 09
-    t_attr(:primary_email, Contact),    # 10
-    t_attr(:birth_year),                # 11
-    t_attr(:nationality),               # 12
-    t_attr(:education),                 # 13
-    t_attr(:entry_date),                # 14
-    t_attr(:acceptance),                # 15
-    t_attr(:involved_authority),        # 16
-    t_attr(:language_skills),           # 17
-    t_attr(:goals),                     # 18
-    t_attr(:created_at),                # 19
-    t_attr(:updated_at)                 # 20
-  ]
-  sheet.add_row header_row, type: :string, style: col_header
-
+  # Header row frozen (sticky)
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+  sheet.add_row(
+    [
+      'id',                               # 00
+      t_attr(:salutation),                # 01
+      t_attr(:last_name, Contact),        # 02
+      t_attr(:first_name, Contact),       # 03
+      t_attr(:street, Contact),           # 04
+      t_attr(:extended, Contact),         # 05
+      t_attr(:postal_code, Contact),      # 06
+      t_attr(:city, Contact),             # 07
+      t_attr(:primary_phone, Contact),    # 08
+      t_attr(:secondary_phone, Contact),  # 09
+      t_attr(:primary_email, Contact),    # 10
+      t_attr(:birth_year),                # 11
+      t_attr(:nationality),               # 12
+      t_attr(:education),                 # 13
+      t_attr(:entry_date),                # 14
+      t_attr(:acceptance),                # 15
+      t_attr(:involved_authority),        # 16
+      t_attr(:language_skills),           # 17
+      t_attr(:goals),                     # 18
+      t_attr(:created_at),                # 19
+      t_attr(:updated_at)                 # 20
+    ],
+    style: header_style, height: 25
+  )
 
   clients.each do |client|
     salutation = t("salutation.#{client.salutation}") if client.salutation?
     contact = client.contact
-    body_row = [
-      client.id,                            # 00
-      salutation,                           # 01
-      contact.last_name,                    # 02
-      contact.first_name,                   # 03
-      contact.street,                       # 04
-      contact.extended,                     # 05
-      contact.postal_code,                  # 06
-      contact.city,                         # 07
-      contact.primary_phone,                # 08
-      contact.secondary_phone,              # 09
-      contact.primary_email,                # 10
-      client.birth_year&.year,              # 11
-      nationality_name(client.nationality), # 12
-      client.education,                     # 13
-      client.entry_date,                    # 14
-      t("acceptance.#{client.acceptance}"), # 15
-      client.involved_authority,            # 16
-      client.language_skills.native_and_human_readable.join("\r"), # 17
-      client.goals,                         # 18
-      client.created_at.in_time_zone,       # 19
-      client.updated_at.in_time_zone        # 20
-    ]
-    sheet.add_row body_row, types: cell_types, style: cell_styles
+    sheet.add_row(
+      [
+        client.id,                            # 00
+        salutation,                           # 01
+        contact.last_name,                    # 02
+        contact.first_name,                   # 03
+        contact.street,                       # 04
+        contact.extended,                     # 05
+        contact.postal_code,                  # 06
+        contact.city,                         # 07
+        contact.primary_phone,                # 08
+        contact.secondary_phone,              # 09
+        contact.primary_email,                # 10
+        client.birth_year,                    # 11
+        nationality_name(client.nationality), # 12
+        client.education,                     # 13
+        client.entry_date,                    # 14
+        t("acceptance.#{client.acceptance}"), # 15
+        client.involved_authority,            # 16
+        client.language_skills.native_and_human_readable.join("\r"), # 17
+        client.goals,                         # 18
+        client.created_at.to_date,            # 19
+        client.updated_at.to_date             # 20
+      ],
+      types: [
+        :string,    # 00
+        :string,    # 01
+        :string,    # 02
+        :string,    # 03
+        :string,    # 04
+        :string,    # 05
+        :string,    # 06
+        :string,    # 07
+        :string,    # 08
+        :string,    # 09
+        :string,    # 10
+        :date,      # 11
+        :string,    # 12
+        :string,    # 13
+        :string,    # 14
+        :string,    # 15
+        :string,    # 16
+        :string,    # 17
+        :string,    # 18
+        :date,      # 19
+        :date       # 20
+      ],
+      style: [
+        std_style,  # 00
+        std_style,  # 01
+        std_style,  # 02
+        std_style,  # 03
+        wrapped_style,  # 04
+        wrapped_style,  # 05
+        std_style,  # 06
+        std_style,  # 07
+        std_style,  # 08
+        std_style,  # 09
+        std_style,  # 10
+        std_style,  # 11
+        std_style,  # 12
+        std_style,  # 13
+        std_style,  # 14
+        std_style,  # 15
+        std_style,  # 16
+        std_style,  # 17
+        std_style,  # 18
+        date_style, # 19
+        date_style  # 20
+      ]
+    )
   end
+  sheet.auto_filter = 'A1:U1'
 end
