@@ -6,8 +6,12 @@
   = link_to t('.reactivate.button'), reactivate_client_path(f.object), class: 'btn btn-default m-t-10',
       data: { confirm: t('.reactivate.confirm') }
   hr.m-y-30
-fieldset
-  = show_status_date(@client, false, :created_at)
+- unless @client.new_record?
+  fieldset
+    ul.list-unstyled
+      li
+        => t_attr(:created_at)
+        = l(@client.created_at)
 
 .row
   .col-xs-12.col-md-6
