@@ -142,8 +142,8 @@ class User < ApplicationRecord
     left_joins(profile: :contact).order('contacts.last_name ASC')
   }
 
-  scope :signed_in_at_least_once, -> { active }
-  scope :active, -> { where.not(last_sign_in_at: nil).where(active: true) }
+  scope :signed_in_before, -> { where.not(last_sign_in_at: nil) }
+  scope :active, -> { where.not(last_sign_in_at: nil) }
   scope :with_pending_invitation, lambda {
     where(invitation_accepted_at: nil).where.not(invitation_sent_at: nil)
   }
