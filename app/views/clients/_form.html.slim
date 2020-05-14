@@ -82,7 +82,7 @@ fieldset
                                              include_blank: true
         = f.association :user, collection: User.input_collection('superadmins_and_social_workers'),
                                include_blank: false,
-                               label: 'Angemelded von'
+                               label: 'Angemeldet von'
 
       = f.input :competent_authority
       = f.input :other_authorities
