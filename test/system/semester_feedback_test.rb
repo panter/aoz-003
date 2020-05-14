@@ -129,8 +129,11 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
 
     # submit feedback without revisiting review form
     check 'Ich verzichte auf die Auszahlung von Spesen.'
+    wait_for_ajax
     click_on 'Bestätigen', match: :first
+    wait_for_ajax
     @spv.reload
+    wait_for_ajax
     visit semester_process_volunteers_path(semester: Semester.to_s(@spv.semester))
 
     page.find('td', text: goals.truncate(300)).click
