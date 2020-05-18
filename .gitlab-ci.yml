@@ -1,4 +1,4 @@
-image: git.panter.ch:5001/open-source/aoz-003/gitlab_ci:2.5.8
+image: git.panter.ch:5001/open-source/aoz-003/gitlab_ci:2.6.6
 
 stages:
   - test
