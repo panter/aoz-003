@@ -70,8 +70,8 @@ GEM
       io-like (~> 0.3.0)
     arel (8.0.0)
     ast (2.4.0)
-    autocomplete_rails (0.3.1)
-      rails (>= 4.0, < 5.2)
+    autocomplete_rails (0.4.1)
+      rails (>= 4.0, < 5.3)
     autoprefixer-rails (9.7.6)
       execjs
     awesome_print (1.8.0)
