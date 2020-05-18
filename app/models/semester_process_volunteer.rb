@@ -45,7 +45,7 @@ class SemesterProcessVolunteer < ApplicationRecord
     .references(:assignments, :group_assignments)
   }
 
-  scope :index, lambda { |semester = nil|
+  scope :index_scope, lambda { |semester = nil|
     active_missions.without_reminders(semester)
   }
 
@@ -60,8 +60,6 @@ class SemesterProcessVolunteer < ApplicationRecord
     semester = (Date.parse(semester)..Date.parse(semester).advance(months: 5).end_of_month) if semester.is_a?(String)
     joins(:semester_process).where('semester_processes.semester && daterange(?,?)', semester.begin, semester.end)
   }
-
-  attr_accessor :hours
 
   def hours
     missions.map do |m|
