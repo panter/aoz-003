@@ -348,7 +348,7 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rcodetools (0.8.5.0)
-    redcarpet (3.4.0)
+    redcarpet (3.5.0)
     reek (6.0.0)
       kwalify (~> 0.7.0)
       parser (>= 2.5.0.0, < 2.8, != 2.5.1.1)
