@@ -37,6 +37,7 @@ class ActiveSupport::TestCase
 
   def after_teardown
     DatabaseCleaner.clean
+    Warden.test_reset!
     super
   end
 
