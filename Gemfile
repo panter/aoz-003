@@ -58,7 +58,7 @@ group :development do
   gem 'debride', require: false
   gem 'fasterer', require: false
   gem 'i18n_yaml_sorter'
-  gem 'letter_opener_web', '~> 1.0'
+  gem 'letter_opener_web'
   gem 'overcommit', require: false
   gem 'rcodetools', require: false
   gem 'reek', require: false
@@ -88,8 +88,8 @@ group :test do
   gem 'capybara-selenium'
   gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem 'minitest', '~> 5.10.3'
+  gem 'minitest'
   gem 'policy-assertions'
-  gem 'roo', '~> 2.7.0'
+  gem 'roo'
   gem 'selenium-webdriver'
 end
