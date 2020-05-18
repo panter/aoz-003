@@ -10,7 +10,7 @@ FactoryBot.define do
     ]
   end
 
-  sequence :email do |n|
+  sequence :email do |_n|
     'email_%s@example.com' % [SecureRandom.uuid]
   end
 end

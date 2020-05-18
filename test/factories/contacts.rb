@@ -21,7 +21,7 @@ FactoryBot.define do
     end
 
     trait :zuerich do
-      city 'Zürich'
+      city { 'Zürich' }
       postal_code { Client.zuerich_zips.sample }
     end
 

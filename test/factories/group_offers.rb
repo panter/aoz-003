@@ -4,8 +4,8 @@ FactoryBot.define do
     association :department
 
     title { FFaker::Lorem.unique.sentence }
-    necessary_volunteers 5
-    offer_type :internal_offer
+    necessary_volunteers { 5 }
+    offer_type { :internal_offer }
     comments { FFaker::CheesyLingo.paragraph }
 
     after(:build) do |group_offer|
@@ -17,8 +17,8 @@ FactoryBot.define do
     end
 
     trait :external do
-      offer_type :external_offer
-      department nil
+      offer_type { :external_offer }
+      department { nil }
       location { FFaker::Address.city }
       organization { FFaker::Company.name }
     end

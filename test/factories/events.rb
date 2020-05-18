@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :event do
-    kind 0
+    kind { :intro_course }
     title { FFaker::Lorem.sentence }
     description { FFaker::Lorem.paragraph }
     start_time { FFaker::Time.between(20.hours.ago, 4.hours.ago) }

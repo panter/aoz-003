@@ -3,7 +3,7 @@ FactoryBot.define do
     birth_year { FFaker::Time.between(18.years.ago, 85.years.ago) }
     contact
     salutation { ['mr', 'mrs'].sample }
-    acceptance :accepted
+    acceptance { :accepted }
     group_offer_categories { |category| [category.association(:group_offer_category)] }
     iban { generate :iban }
     association :registrar, factory: :user
@@ -75,7 +75,7 @@ FactoryBot.define do
     end
 
     trait :imported do
-      acceptance :invited
+      acceptance { :invited }
       import
     end
 
@@ -103,7 +103,7 @@ FactoryBot.define do
 
     factory :volunteer_external, traits: [:external]
     factory :volunteer_internal, traits: [:internal]
-    factory :volunteer_common, traits: %i[internal with_language_skills faker_extra zuerich]
+    factory :volunteer_common, traits: [:internal, :with_language_skills, :faker_extra, :zuerich]
     factory :volunteer_z, traits: [:zuerich]
 
     factory(

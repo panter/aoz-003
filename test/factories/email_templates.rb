@@ -7,10 +7,10 @@ FactoryBot.define do
     sequence :body do |n|
       "the demonstration rar ra ra body_#{n}"
     end
-    active true
+    active { true }
 
     trait :signup do
-      subject '%{Anrede} %{Name}'
+      subject { '%{Anrede} %{Name}' }
       body do
         "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}"
       end
@@ -22,7 +22,7 @@ FactoryBot.define do
         "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}\r\n\r\n%{Einsatz} %{EinsatzStart} "\
           '%{FeedbackLink}'
       end
-      subject '%{Anrede} %{Name}'
+      subject { '%{Anrede} %{Name}' }
     end
 
     trait :termination do
@@ -30,7 +30,7 @@ FactoryBot.define do
       body do
         "%{Anrede} %{Name}\r\n\r\n#{FFaker::Lorem.paragraph}\r\n\r\n"
       end
-      subject '%{Anrede} %{Name}'
+      subject { '%{Anrede} %{Name}' }
     end
 
     factory :email_template_signup, traits: [:signup]

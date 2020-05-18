@@ -17,7 +17,7 @@ FactoryBot.define do
     after(:build) do |spvm|
       if spvm.assignment.blank?
         spvm.group_assignment ||= FactoryBot.build(:group_assignment,
-          volunteer: spvm.semester_process_volunteer.volunteer)
+                                                   volunteer: spvm.semester_process_volunteer.volunteer)
       end
     end
 

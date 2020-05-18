@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :user do
     email { FFaker::Internet.unique.email }
-    password 'asdfasdf'
-    role User::SUPERADMIN
+    password { 'asdfasdf' }
+    role { User::SUPERADMIN }
     last_sign_in_at { 15.hours.ago }
     active { true }
 
@@ -13,19 +13,19 @@ FactoryBot.define do
     end
 
     trait :superadmin do
-      role User::SUPERADMIN
+      role { User::SUPERADMIN }
     end
 
     trait :social_worker do
-      role User::SOCIAL_WORKER
+      role { User::SOCIAL_WORKER }
     end
 
     trait :volunteer do
-      role User::VOLUNTEER
+      role { User::VOLUNTEER }
     end
 
     trait :department_manager do
-      role User::DEPARTMENT_MANAGER
+      role { User::DEPARTMENT_MANAGER }
     end
 
     trait :with_clients do
