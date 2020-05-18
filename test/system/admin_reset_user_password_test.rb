@@ -8,7 +8,7 @@ class AdminResetUserPasswordTest < ApplicationSystemTestCase
   end
 
   test 'can update other admins password and then log in with other admin' do
-    login_as(@admin, scope: :user)
+    login_as(@admin)
     other_admin = create :superadmin, password: @comon_pw, email: 'admin.to.change@example.com'
     update_users_password(other_admin, @common_changed_pw)
     sign_out_logged_in_user(@admin)
@@ -16,7 +16,7 @@ class AdminResetUserPasswordTest < ApplicationSystemTestCase
   end
 
   test 'can update department_managers password and then log in with department manager' do
-    login_as(@admin, scope: :user)
+    login_as(@admin)
     department_manager = create :department_manager, password: @comon_pw, email: 'dep.manager.to.change@example.com'
     update_users_password(department_manager, @common_changed_pw)
     sign_out_logged_in_user(@admin)
@@ -24,11 +24,21 @@ class AdminResetUserPasswordTest < ApplicationSystemTestCase
   end
 
   test 'can update social workers password and then log in with social worker' do
-    login_as(@admin, scope: :user)
+    login_as(@admin)
     social_worker = create :social_worker, password: @comon_pw, email: 'social.worker.to.change@example.com'
     update_users_password(social_worker, @common_changed_pw)
     sign_out_logged_in_user(@admin)
     form_login_user(social_worker, @common_changed_pw)
+  end
+
+  test 'Admin sets password for invited volunteer and then volunteer can login without accepting invitation' do
+    volunteer = create :volunteer_internal, acceptance: :undecided
+    volunteer.contact.update!(primary_email: 'volunteer@aoz.ch')
+    volunteer.accepted!
+    login_as(@admin)
+    update_users_password(volunteer.user, @common_changed_pw, email: 'volunteer@aoz.ch')
+    sign_out_logged_in_user(@admin)
+    form_login_user(volunteer.user, @common_changed_pw, email: 'volunteer@aoz.ch')
   end
 
   test 'logged in before volunteer can log in with password admin sets' do
