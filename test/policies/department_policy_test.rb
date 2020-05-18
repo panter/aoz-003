@@ -3,8 +3,14 @@ class DepartmentPolicyTest < PolicyAssertions::Test
   def setup
     @superadmin = create :user, :with_clients, :with_department, role: 'superadmin'
     @social_worker = create :user, :with_clients, role: 'social_worker'
-    @department_manager = create :department_manager
     @department = create :department
+
+    @dep_managers_department = create :department
+    @department_manager = create :department_manager_without_department
+    @department_manager.department = [@dep_managers_department]
+    @department_manager.save
+    @department_manager.reload
+    @dep_managers_department.reload
   end
 
   test 'only superadmin can create department' do
@@ -32,7 +38,7 @@ class DepartmentPolicyTest < PolicyAssertions::Test
       'index?', 'show?', 'new?', 'edit?', 'create?', 'update?', 'destroy?'
     )
     assert_permit(
-      @department_manager, @department_manager.department.first,
+      @department_manager, @dep_managers_department,
       'show?', 'edit?', 'update?'
     )
   end
