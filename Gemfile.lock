@@ -72,7 +72,7 @@ GEM
     ast (2.4.0)
     autocomplete_rails (0.3.1)
       rails (>= 4.0, < 5.2)
-    autoprefixer-rails (9.6.0)
+    autoprefixer-rails (9.7.6)
       execjs
     awesome_print (1.8.0)
     axlsx_rails (0.5.1)
