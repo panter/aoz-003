@@ -13,7 +13,7 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   # Enable/disable caching. By default caching is disabled.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
     config.cache_store = :memory_store
@@ -25,7 +25,6 @@ Rails.application.configure do
 
     config.cache_store = :null_store
   end
-  config.sass.inline_source_maps = true
 
   ## in order to activate letter_opener uncomment this line
   config.action_mailer.delivery_method = :letter_opener_web
@@ -52,7 +51,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Raises error for missing translations
-  config.action_view.raise_on_missing_translations = true
+  # config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.

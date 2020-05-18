@@ -1,5 +1,5 @@
 require_relative 'boot'
-require File.expand_path('../boot', __FILE__)
+
 ENV['RANSACK_FORM_BUILDER'] = '::SimpleForm::FormBuilder'
 require 'rails/all'
 
