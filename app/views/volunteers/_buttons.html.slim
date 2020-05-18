@@ -25,4 +25,6 @@ ul.list-inline
     li= button_link icon_span(:certificate), volunteer_certificates_path(@volunteer), title: t('volunteer_applications.show.new_certificate')
   - if policy(@volunteer).show?
     li= button_link icon_span(:print), volunteer_path(@volunteer, print: :true), { class: 'btn btn-default', target: '_blank', title: 'Ausdrucken' }
+  - if policy(Event).index?
+    li= button_link 'Veranstaltungen', events_path(q: { event_volunteers_volunteer_id_eq: @volunteer.id })
 

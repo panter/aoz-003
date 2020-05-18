@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @volunteers = Volunteer.all
+    @volunteers = Volunteer.not_rejected_resigned.order_lastname
     @volunteers -= @event.event_volunteers.map(&:volunteer)
     @event_volunteer = EventVolunteer.new(event: @event)
     respond_to do |format|

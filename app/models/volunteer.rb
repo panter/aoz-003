@@ -116,6 +116,8 @@ class Volunteer < ApplicationRecord
     joins(:contact).order('contacts.last_name ASC')
   }
 
+  scope :not_rejected_resigned, -> { where.not(acceptance: %i[rejected resigned]) }
+
   scope :process_eq, lambda { |process|
     return unless process.present?
     return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
