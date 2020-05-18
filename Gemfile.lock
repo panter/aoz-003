@@ -279,7 +279,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
-    pg (0.21.0)
+    pg (1.2.3)
     policy-assertions (0.2.0)
       activesupport (>= 3.0.0)
       pundit (>= 1.0.0)
@@ -509,7 +509,7 @@ DEPENDENCIES
   paperclip
   paranoia
   pdf-reader
-  pg (~> 0.21)
+  pg
   policy-assertions
   pry-byebug
   pry-rails

@@ -5,7 +5,7 @@ class LanguageSkill < ApplicationRecord
 
   LANGUAGE_LEVELS = [:native_speaker, :basic, :fluent, :good].freeze
 
-  scope :german_first, (-> { order("CASE WHEN language = 'DE' THEN 1 ELSE 2 END") })
+  scope :german_first, (-> { order(Arel.sql("CASE WHEN language = 'DE' THEN 1 ELSE 2 END")) })
 
   scope :german, (-> { where(language: 'DE') })
   scope :native, (-> { where(level: 'native_speaker') })
@@ -32,7 +32,7 @@ class LanguageSkill < ApplicationRecord
 
     def native_and_human_readable
       german_first.map(&:full_language_skills)
-    end  
+    end
   end
 
   def language_name
@@ -42,5 +42,5 @@ class LanguageSkill < ApplicationRecord
   def full_language_skills
     level_human = level? ? I18n.t(level, scope: [:language_level]) : ''
     [language_name, level_human].reject(&:blank?).join(', ') if language?
-  end                     
+  end
 end

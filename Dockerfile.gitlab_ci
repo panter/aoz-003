@@ -1,8 +1,8 @@
 FROM ruby:2.6.6
 
 LABEL name=aoz-003-gitlab_ci
-LABEL version=0.3.1
-LABEL build-date=2020-05-18T19:47:18+02:00
+LABEL version=0.3.2
+LABEL build-date=2020-05-18T21:39:31+02:00
 LABEL vendor=Panter maintainer=vok@panter.ch distribution-scope=private URL=https://git.panter.ch/panter/aoz-003
 
 RUN apt update \
@@ -30,7 +30,7 @@ RUN apt update \
   && cat /chrome_driver_version.txt \
   # install correct bundler version
   && gem uninstall bundler \
-  && gem install bundler --version 2.0.2 \
+  && gem install bundler --version 2.1.4 \
   # Cleanup apt and gem cache files and indexes
   && gem cleanup \
   && rm -rf /var/lib/apt/lists/* \
