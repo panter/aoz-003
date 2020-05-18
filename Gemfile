@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '~> 5.1'
+# gem 'rails', '>= 5.2.0', '< 6.0.0'
 
 gem 'autocomplete_rails'
 # FIXME:
