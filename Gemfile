@@ -7,6 +7,7 @@ end
 
 gem 'rails', '>= 5.2.0', '< 6.0.0'
 
+gem 'bootsnap', require: false
 gem 'autocomplete_rails'
 gem 'caxlsx'
 gem 'caxlsx_rails'
