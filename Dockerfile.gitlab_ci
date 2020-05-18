@@ -1,4 +1,4 @@
-FROM ruby:2.4.5
+FROM ruby:2.5.8
 
 LABEL name=aoz-003-gitlab_ci
 LABEL version=0.0.1
