@@ -155,8 +155,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.6.5)
-      devise (>= 4.4)
+    devise-i18n (1.9.1)
+      devise (>= 4.7.1)
     devise_invitable (2.0.2)
       actionmailer (>= 5.0)
       devise (>= 4.6)
