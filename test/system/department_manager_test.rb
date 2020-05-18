@@ -174,7 +174,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     click_link 'Filter aufheben'
 
     GroupAssignment.ended.each do |assignment|
-      assert page.has_css? "tr##{dom_id assignment}"
+      assert page.has_css? "tr##{dom_id(assignment)}"
     end
 
     assert page.has_link? 'Anzeigen'

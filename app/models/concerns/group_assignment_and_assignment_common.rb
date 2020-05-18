@@ -8,9 +8,6 @@ module GroupAssignmentAndAssignmentCommon
     belongs_to :volunteer
     accepts_nested_attributes_for :volunteer, update_only: true
 
-    has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
-    has_many :reminder_mailings, through: :reminder_mailing_volunteers
-
     has_one :trial_period, as: :trial_period_mission, inverse_of: :trial_period_mission
     accepts_nested_attributes_for :trial_period
 

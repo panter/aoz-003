@@ -17,6 +17,9 @@ class Assignment < ApplicationRecord
   has_many :semester_process_volunteers, through: :semester_process_volunteer_missions
   has_many :semester_processes, through: :semester_process_volunteers
 
+  has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
+  has_many :reminder_mailings, through: :reminder_mailing_volunteers
+
   validates :client_id, uniqueness: {
     scope: :volunteer_id, message: I18n.t('assignment_exists')
   }
