@@ -52,14 +52,14 @@ class GroupOffersTest < ApplicationSystemTestCase
     login_as create(:user)
     visit group_offer_path(@group_offer)
     assert page.has_text? @group_offer.title
-    refute page.has_link? 'Aktivieren'
+    refute page.has_link? 'Aktivieren', wait: 1
     accept_confirm do
       first(:link, 'Deaktivieren').click
     end
 
     assert page.has_text? @group_offer.title
     assert page.has_link? 'Aktivieren'
-    refute page.has_link? 'Deaktivieren'
+    refute page.has_link? 'Deaktivieren', wait: 1
   end
 
   test 'group_offer_can_be_activated' do
@@ -74,7 +74,7 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     assert page.has_text? @group_offer.title
     assert page.has_link? 'Deaktivieren'
-    refute page.has_link? 'Aktivieren'
+    refute page.has_link? 'Aktivieren', wait: 1
   end
 
   test 'modifying volunteer dates does not create a log entry' do
@@ -86,7 +86,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit volunteer_path(volunteer)
     assert page.has_text? 'Aktuelle Einsätze'
     assert page.has_link? group_offer.title
-    refute page.has_text? 'Archivierte Einsätze'
+    refute page.has_text? 'Archivierte Einsätze', wait: 1
   end
 
   test 'deleting_volunteer_does_not_crash_group_offer_show' do
@@ -105,7 +105,7 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     visit group_offer_path(group_offer)
     assert page.has_link? volunteer2
-    refute page.has_link? volunteer1
+    refute page.has_link? volunteer1, wait: 1
   end
 
   test 'department_manager can add any volunteer in her department' do
@@ -136,7 +136,7 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     within '#add-volunteers' do
       assert_text internal_volunteer
-      refute_text external_volunteer
+      refute_text external_volunteer, wait: 1
     end
 
     group_offer.update!(
@@ -148,7 +148,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     click_link 'Freiwillige hinzufügen'
 
     within '#add-volunteers' do
-      refute_text internal_volunteer
+      refute_text internal_volunteer, wait: 1
       assert_text external_volunteer
     end
 
@@ -165,7 +165,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     end
 
     within '#add-volunteers' do
-      refute_text external_volunteer
+      refute_text external_volunteer, wait: 1
     end
   end
 
@@ -201,15 +201,16 @@ class GroupOffersTest < ApplicationSystemTestCase
     within '#add-volunteers' do
       assert page.has_text? volunteer.contact.full_name
       assert page.has_text? volunteer_two.contact.full_name
-      refute page.has_text? group_assignment.volunteer.contact.full_name
+      refute page.has_text? group_assignment.volunteer.contact.full_name, wait: 1
 
       fill_in id: 'q_contact_full_name_cont',	with: volunteer_two.contact.full_name
-      click_button 'Suchen'
+      wait_for_ajax
+      page.find_field(id: 'q_contact_full_name_cont').native.send_keys(:tab, :enter)
     end
 
     within '#add-volunteers' do
       assert page.has_text? volunteer_two.contact.full_name
-      refute page.has_text? volunteer.contact.full_name
+      refute page.has_text? volunteer.contact.full_name, wait: 1
     end
   end
 
@@ -223,7 +224,7 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     within '#add-volunteers' do
       assert page.has_text? volunteer.contact.full_name
-      refute page.has_text? terminated.contact.full_name
+      refute page.has_text? terminated.contact.full_name, wait: 1
     end
   end
 
@@ -246,8 +247,8 @@ class GroupOffersTest < ApplicationSystemTestCase
     visit new_group_offer_path
 
     assert_field 'Internes Gruppenangebot', checked: true
-    refute_field 'Organisation', name: 'group_offer[organization]'
-    refute_field 'Ort', name: 'group_offer[location]'
+    refute_field 'Organisation', name: 'group_offer[organization]', wait: 1
+    refute_field 'Ort', name: 'group_offer[location]', wait: 1
 
     choose 'Externes Gruppenangebot'
 
@@ -261,8 +262,8 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     assert_field 'Internes Gruppenangebot', checked: true
     assert_field 'Standort'
-    refute_field 'Organisation', name: 'group_offer[organization]'
-    refute_field 'Ort', name: 'group_offer[location]'
+    refute_field 'Organisation', name: 'group_offer[organization]', wait: 1
+    refute_field 'Ort', name: 'group_offer[location]', wait: 1
 
     choose 'Externes Gruppenangebot'
 
@@ -363,7 +364,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     switch group_offer, to: other_department
 
     assert page.has_text? group_offer.title
-    refute page.has_button? 'Gruppenangebot aktualisieren'
+    refute page.has_button? 'Gruppenangebot aktualisieren', wait: 1
     assert_equal group_offer.reload.department, other_department
 
     visit edit_group_offer_path(group_offer)
@@ -373,7 +374,7 @@ class GroupOffersTest < ApplicationSystemTestCase
     switch group_offer, to: department
 
     assert page.has_text? group_offer.title
-    refute page.has_button? 'Gruppenangebot aktualisieren'
+    refute page.has_button? 'Gruppenangebot aktualisieren', wait: 1
     assert_equal group_offer.reload.department, department
 
     visit edit_group_offer_path(group_offer)
