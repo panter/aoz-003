@@ -7,13 +7,13 @@ end
 
 gem 'rails', '>= 5.2.0', '< 6.0.0'
 
-gem 'bootsnap', require: false
 gem 'autocomplete_rails'
-gem 'caxlsx'
-gem 'caxlsx_rails'
+gem 'bootsnap', require: false
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
+gem 'caxlsx'
+gem 'caxlsx_rails'
 gem 'cocoon'
 gem 'coffee-rails'
 gem 'combine_pdf'
@@ -86,10 +86,10 @@ end
 group :test do
   gem 'capybara'
   gem 'capybara-selenium'
-  gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'minitest'
   gem 'policy-assertions'
   gem 'roo'
   gem 'selenium-webdriver'
+  gem 'webdrivers', '~> 4.0'
 end

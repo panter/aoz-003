@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'webdrivers/chromedriver'
 require 'selenium/webdriver'
 
 Capybara.register_driver :chrome_headless do |app|
