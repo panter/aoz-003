@@ -161,6 +161,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert_text goals
     click_button 'Schliessen'
     wait_for_ajax
+    assert_text 'Semester Prozess'
 
     page.find('td', text: achievements.truncate(300), visible: false).click
     wait_for_ajax

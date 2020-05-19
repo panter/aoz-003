@@ -20,7 +20,12 @@ class DepartmentsController < ApplicationController
   def create
     @department = Department.new
     authorize @department
-    if @department.update(permitted_attributes(@department))
+    @department.assign_attributes(permitted_attributes(@department).except(:user_ids))
+    if @department.save
+      if permitted_attributes(@department)[:user_ids]&.reject(&:blank?)&.any?
+        @department.reload.user_ids = permitted_attributes(@department)[:user_ids].reject(&:blank?).map(&:to_i)
+        @department.save!
+      end
       redirect_to @department, make_notice
     else
       render :new
