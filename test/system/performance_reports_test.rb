@@ -14,16 +14,17 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     first(:link, 'Neuen Report erstellen').click
     click_link two_years_ago.to_s
     click_button 'Kennzahlen Report erfassen'
-    assert_text 'Kennzahlen Report wurde erfolgreich erstellt.'
-    assert_text "Kennzahlen des Kalenderjahrs #{two_years_ago}"
+    assert page.has_text? 'Kennzahlen Report wurde erfolgreich erstellt.'
+    assert page.has_text? "Kennzahlen des Kalenderjahrs #{two_years_ago}"
   end
 
   VALUE_ORDERS = {
     volunteers: [
       :created, :inactive, :resigned, :total,
       :active_assignment, :active_group_assignment, :only_assignment_active, :only_group_active,
-      :active_both, :active_total, :assignment_hour_records, :assignment_hours,
-      :group_offer_hour_records, :group_offer_hours, :total_hours,
+      :active_both, :active_total,
+      :assignment_hour_records, :assignment_hours, :group_offer_hour_records, :group_offer_hours,
+      :total_hours,
       :assignment_feedbacks, :group_offer_feedbacks, :total_feedbacks
     ] + Event.kinds.keys.map(&:to_sym) + [:total_events],
     clients: [:created, :inactive, :resigned, :active_assignment, :total],
@@ -50,53 +51,49 @@ class PerformanceReportsTest < ApplicationSystemTestCase
     # Volunteers section
     column_order = ['zurich', 'not_zurich', 'internal', 'external', 'all']
     VALUE_ORDERS[:volunteers].each do |value_key|
-      assert_text [
-        I18n.t("performance_reports.values_volunteers.#{value_key}"),
-        row_numbers(volunteers, column_order, value_key.to_s),
-        "volunteers: #{value_key}"
-      ].join(' '), normalize_ws: true
-      # assert_text I18n.t("performance_reports.values_volunteers.#{value_key}") + '  ' + row_numbers(volunteers, column_order, value_key.to_s), "volunteers: #{value_key}"
+      within "tr[data-key=\"#{value_key}\"][data-group=\"volunteers\"]" do
+        assert_css 'td.name', text: I18n.t("performance_reports.values_volunteers.#{value_key}")
+        column_order.each do |category_key|
+          assert_css "td[data-category=\"#{category_key}\"]",
+                     text: volunteers[category_key][value_key.to_s]
+        end
+      end
     end
 
     # Clients section
     column_order = ['zurich', 'not_zurich', 'all']
     VALUE_ORDERS[:clients].each do |value_key|
-      assert_text [
-        I18n.t("performance_reports.values_clients.#{value_key}"),
-        row_numbers(clients, column_order, value_key.to_s),
-        "clients: #{value_key}"
-      ].join(' '), normalize_ws: true
-      # assert_text(I18n.t("performance_reports.values_clients.#{value_key}") + '  ' + row_numbers(clients, column_order, value_key.to_s)), "clients: #{value_key}"
+      within "tr[data-key=\"#{value_key}\"][data-group=\"clients\"]" do
+        assert_css 'td.name', text: I18n.t("performance_reports.values_clients.#{value_key}")
+        column_order.each do |category_key|
+          assert_css "td[data-category=\"#{category_key}\"]",
+                     text: clients[category_key][value_key.to_s]
+        end
+      end
     end
 
     # Assignment section
     column_order = ['zurich', 'not_zurich', 'all']
     VALUE_ORDERS[:assignments].each do |value_key|
-      assert_text [
-        I18n.t("performance_reports.values_assignments.#{value_key}"),
-        row_numbers(assignments, column_order, value_key.to_s),
-        "assignments: #{value_key}"
-      ].join(' '), normalize_ws: true
-      # assert_text(I18n.t("performance_reports.values_assignments.#{value_key}") + '  ' + row_numbers(assignments, column_order, value_key.to_s)), "assignments: #{value_key}"
+      within "tr[data-key=\"#{value_key}\"][data-group=\"assignments\"]" do
+        assert_css 'td.name', text: I18n.t("performance_reports.values_assignments.#{value_key}")
+        column_order.each do |category_key|
+          assert_css "td[data-category=\"#{category_key}\"]",
+                     text: assignments[category_key][value_key.to_s]
+        end
+      end
     end
 
     # Group Offer section
     column_order = ['internal', 'external', 'all']
     (VALUE_ORDERS[:group_offers_first] + VALUE_ORDERS[:group_offers_second]).each do |value_key|
-      assert_text [
-        I18n.t("performance_reports.values_group_offers.#{value_key}"),
-        row_numbers(group_offers, column_order, value_key.to_s),
-        "group_offers: #{value_key}"
-      ].join(' '), normalize_ws: true
-      # assert_text(I18n.t("performance_reports.values_group_offers.#{value_key}") + '  ' + row_numbers(group_offers, column_order, value_key.to_s)), "group_offers: #{value_key}"
-    end
-  end
-
-  def row_numbers(entity, column_order, key)
-    if entity.values_at(*column_order).first[key.to_s].is_a?(Float)
-      entity.values_at(*column_order).map { |val| '%g' % ('%.1f' % val[key.to_s]) }.join(' ')
-    else
-      entity.values_at(*column_order).map { |val| val[key.to_s] }.join(' ')
+      within "tr[data-key=\"#{value_key}\"][data-group=\"group_offers\"]" do
+        assert_css 'td.name', text: I18n.t("performance_reports.values_group_offers.#{value_key}")
+        column_order.each do |category_key|
+          assert_css "td[data-category=\"#{category_key}\"]",
+                     text: group_offers[category_key][value_key.to_s]
+        end
+      end
     end
   end
 end
