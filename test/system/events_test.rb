@@ -97,7 +97,7 @@ class EventsTest < ApplicationSystemTestCase
     @event.update(event_volunteers: [@event_volunteer], date: 7.days.from_now)
 
     visit volunteer_path(@event_volunteer.volunteer)
-    assert_text @event_volunteer.contact.full_name
+    assert_text @event_volunteer.volunteer.contact.full_name
     assert_not page.has_css?('#volunteer-events'), wait: 0
   end
 
@@ -105,9 +105,9 @@ class EventsTest < ApplicationSystemTestCase
     @event_volunteer = create :event_volunteer
     @event.update(event_volunteers: [@event_volunteer])
 
-    login_as @event_volunteer
+    login_as @event_volunteer.volunteer.user
     visit volunteer_path(@event_volunteer.volunteer)
-    assert_text @event_volunteer.contact.full_name
+    assert_text @event_volunteer.volunteer.contact.full_name
     assert_not page.has_css?('#volunteer-events'), wait: 0
   end
 

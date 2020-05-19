@@ -156,19 +156,21 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     wait_for_ajax
     visit semester_process_volunteers_path(semester: Semester.to_s(@spv.semester))
 
-    page.find('td', text: goals.truncate(300)).click
+    page.find('td', text: goals.truncate(300), visible: false).click
     wait_for_ajax
     assert_text goals
     click_button 'Schliessen'
     wait_for_ajax
 
-    page.find('td', text: achievements.truncate(300)).click
+    page.find('td', text: achievements.truncate(300), visible: false).click
     wait_for_ajax
     assert_text achievements
     click_button 'Schliessen'
     wait_for_ajax
-    page.find('td', text: comments.truncate(300)).click
+    assert_text 'Semester Prozess'
+    page.find('td', text: comments.truncate(300), visible: false).click
     wait_for_ajax
+    assert_text 'Semester Prozess'
     assert_text comments
     click_button 'Schliessen'
   end

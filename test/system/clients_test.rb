@@ -241,7 +241,7 @@ class ClientsTest < ApplicationSystemTestCase
   test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
     login_as @superadmin
     visit new_client_path
-    assert_text 'Sprachkenntnisse Deutsch * Niveau'
+    assert_text 'Sprachkenntnisse Deutsch * Niveau', normalize_ws: true
     within '#languages' do
       choose('Wenig')
     end

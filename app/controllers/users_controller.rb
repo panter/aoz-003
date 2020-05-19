@@ -72,8 +72,11 @@ class UsersController < ApplicationController
     if user_params[:password].blank?
       @user.update_without_password(user_params)
     else
-      @user.accept_invitation! if @user.invited_to_sign_up? && !@user.invitation_accepted?
-      @user.update(user_params)
+      @user.assign_attributes(user_params)
+      if @user.invited_to_sign_up? && !@user.invitation_accepted?
+        @user.accept_invitation!
+      end
+      @user.save
     end
   end
 
