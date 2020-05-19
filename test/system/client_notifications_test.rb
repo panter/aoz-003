@@ -18,8 +18,8 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     within 'tr.bg-success' do
       assert page.has_text? @client_notification.body
       assert page.has_selector?('table > tbody td:nth-child(2) span.glyphicon-ok')
-      refute page.has_text? @other_client_notification.body
-      refute page.has_selector?('table > tbody td:nth-child(2) span.glyphicon-remove')
+      refute page.has_text? @other_client_notification.body, wait: 0
+      refute page.has_selector?('table > tbody td:nth-child(2) span.glyphicon-remove'), wait: 0
     end
   end
 
@@ -33,8 +33,8 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     page.check('client_notification_active')
     click_button 'Klienten Wartezeit Benachrichtigung aktualisieren'
     within 'tr.bg-success' do
-      refute page.has_text? @client_notification.body
       assert page.has_text? @other_client_notification.body
+      refute page.has_text? @client_notification.body, wait: 0
     end
   end
 
@@ -83,7 +83,8 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @social_worker
     visit clients_path
 
-    refute page.has_link? 'Wartezeitbenachrichtigung'
+    assert_text 'Klient/innen'  # only to allow refute expectations to wait 0
+    refute page.has_link? 'Wartezeitbenachrichtigung', wait: 0
   end
 
   test 'superadmin does not see this notification' do
@@ -104,6 +105,6 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     end
     click_button 'Klient/in erfassen', match: :first
     assert page.has_text? 'Klient/in wurde erfolgreich erstellt.'
-    refute page.has_text? @client_notification.body
+    refute page.has_text? @client_notification.body, wait: 0
   end
 end

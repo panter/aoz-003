@@ -44,15 +44,15 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_link 'Herunterladen', count: 1
 
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 3.5 Stunden Fr. 50.00"
-    refute_text @volunteer2, wait: 1
-    refute_text @volunteer3, wait: 1
-    refute_text @volunteer4, wait: 1
+    refute_text @volunteer2, wait: 0
+    refute_text @volunteer3, wait: 0
+    refute_text @volunteer4, wait: 0
 
     click_link 'Semester: 1. Semester 2018'
     click_link '2. Semester 2017'
 
     assert_text "#{@volunteer4} #{@volunteer4.iban} 5.5 Stunden Fr. 50.00"
-    refute_text @volunteer1, wait: 1
+    refute_text @volunteer1, wait: 0
 
     click_link 'Semester: 2. Semester 2017'
     click_link 'Alle'
@@ -69,7 +69,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 37.5 Stunden Fr. 100.00"
     assert_text "#{@volunteer2} #{@volunteer2.iban} 4.5 Stunden Fr. 50.00"
     assert_text "#{@volunteer3} Keine IBAN angegeben 2.5 Stunden Fr. 50.00"
-    refute_text @volunteer4, wait: 1
+    refute_text @volunteer4, wait: 0
 
     check 'table-row-select-all'
 
@@ -83,14 +83,14 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text 'Spesenformulare wurden erfolgreich erstellt.'
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 37.5 Stunden Fr. 100.00"
     assert_text "#{@volunteer2} #{@volunteer2.iban} 4.5 Stunden Fr. 50.00"
-    refute_text @volunteer3, wait: 1
+    refute_text @volunteer3, wait: 0
 
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 1.5, meeting_date: @date
     click_link 'Spesenformulare erfassen'
-    refute_text @volunteer1, wait: 1
-    refute_text @volunteer2, wait: 1
+    refute_text @volunteer1, wait: 0
+    refute_text @volunteer2, wait: 0
     assert_text "#{@volunteer3} Keine IBAN angegeben 2.5 Stunden Fr. 50.00"
-    refute_text @volunteer4, wait: 1
+    refute_text @volunteer4, wait: 0
   end
 
   test 'new_billing_expense_respects_the_semester_filter' do
@@ -111,7 +111,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer2} #{volunteer2.iban} 26 Stunden Fr. 100.00 1. Semester 2018"
     assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
-    refute_text volunteer1, wait: 1
+    refute_text volunteer1, wait: 0
 
     visit billing_expenses_path
 
@@ -120,7 +120,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
     assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 2. Semester 2017"
-    refute_text volunteer3, wait: 1
+    refute_text volunteer3, wait: 0
   end
 
   test 'creating_a_billing_expense_should_respect_semester_filter' do
@@ -170,7 +170,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert_text "Spesenformulare für #{@volunteer1}"
     assert_text "UBS, #{@volunteer1.iban} 3.5 Stunden Fr. 50.00"
-    refute_text @volunteer4, wait: 1
+    refute_text @volunteer4, wait: 0
 
     assert_link 'Zurück', href: volunteer_path(@volunteer1)
   end
@@ -205,7 +205,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     end
 
     assert_text 'Spesenformular wurde erfolgreich gelöscht.'
-    refute_text @billing_expense1.volunteer, wait: 1
+    refute_text @billing_expense1.volunteer, wait: 0
   end
 
   test 'download_single_billing_expense' do

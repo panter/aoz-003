@@ -42,7 +42,7 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
     visit current_url
     assert_text @assignment1.volunteer.contact.full_name
     assert_text @assignment3.volunteer.contact.full_name
-    refute_text @assignment2.volunteer.contact.full_name
+    refute_text @assignment2.volunteer.contact.full_name, wait: 0
   end
 
   test 'enter_volunteer_search_text_brings_suggestions' do
@@ -73,7 +73,7 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
     visit current_url
     assert_text @assignment2.client.contact.full_name
     assert_text @assignment3.client.contact.full_name
-    refute_text @assignment1.client.contact.full_name
+    refute_text @assignment1.client.contact.full_name, wait: 0
   end
 
   test 'enter_client_search_text_brings_suggestions' do

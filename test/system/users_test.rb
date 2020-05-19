@@ -69,21 +69,21 @@ class UsersTest < ApplicationSystemTestCase
     create :user, role: 'social_worker'
     visit users_path
 
-    assert page.has_link? 'Löschen'
+    assert_link 'Löschen'
   end
 
   test 'superadmin can destroy other superadmin' do
     create :user, role: 'superadmin'
     visit users_path
 
-    assert page.has_link? 'Löschen'
+    assert_link 'Löschen'
   end
 
   test 'superadmin can not destroy itself' do
     visit users_path
 
     within page.find('tr', text: @user.full_name) do
-      refute page.has_link? 'Löschen'
+      refute_link 'Löschen'
     end
   end
 
@@ -110,10 +110,10 @@ class UsersTest < ApplicationSystemTestCase
 
     visit users_path
 
-    assert page.has_link? @user.full_name
-    assert page.has_link? department_manager.full_name
-    assert page.has_link? social_worker.full_name
-    assert page.has_link? user_volunteer.full_name
+    assert_link @user.full_name
+    assert_link department_manager.full_name
+    assert_link social_worker.full_name
+    assert_link user_volunteer.full_name
 
     within '.section-navigation-top' do
       click_link 'Rolle'
@@ -121,10 +121,10 @@ class UsersTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_link? @user.full_name
-      refute page.has_link? department_manager.full_name
-      refute page.has_link? social_worker.full_name
-      refute page.has_link? user_volunteer.full_name
+      assert_link @user.full_name
+      refute_link department_manager.full_name, wait: 0
+      refute_link social_worker.full_name, wait: 0
+      refute_link user_volunteer.full_name, wait: 0
     end
 
     within '.section-navigation-top' do
@@ -133,10 +133,10 @@ class UsersTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      refute page.has_link? @user.full_name
-      refute page.has_link? department_manager.full_name
-      refute page.has_link? social_worker.full_name
-      assert page.has_link? user_volunteer.full_name
+      assert_link user_volunteer.full_name
+      refute_link @user.full_name, wait: 0
+      refute_link department_manager.full_name, wait: 0
+      refute_link social_worker.full_name, wait: 0
     end
   end
 
@@ -147,17 +147,17 @@ class UsersTest < ApplicationSystemTestCase
     volunteer_no_profile = create(:volunteer).user
 
     visit users_path
-    assert page.has_link? superadmin_no_profile.email
+    assert_link superadmin_no_profile.email
     click_link superadmin_no_profile.email
     assert page.has_text? 'Superadmin'
 
     visit users_path
-    assert page.has_link? department_manager_no_profile.email
+    assert_link department_manager_no_profile.email
     click_link department_manager_no_profile.email
     assert page.has_text? 'Freiwilligenverantwortliche/r'
 
     visit users_path
-    assert page.has_link? social_worker_no_profile.email
+    assert_link social_worker_no_profile.email
     click_link social_worker_no_profile.email
     assert page.has_text? 'Sozialarbeiter/in'
 

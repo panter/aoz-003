@@ -12,7 +12,7 @@ class AssignmentFiltersTest < ApplicationSystemTestCase
   test 'filter by activity' do
     within 'tbody' do
       assert_text 'Aktiv'
-      refute_text 'Inaktiv'
+      refute_text 'Inaktiv', wait: 0
     end
 
     within '.section-navigation' do
@@ -31,8 +31,8 @@ class AssignmentFiltersTest < ApplicationSystemTestCase
     end
 
     within 'tbody' do
-      refute_text 'Aktiv'
       assert_text 'Inaktiv'
+      refute_text 'Aktiv', wait: 0
     end
   end
 end

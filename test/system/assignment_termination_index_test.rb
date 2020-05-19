@@ -29,8 +29,8 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Beendete Begleitungen'
     assert_text termination_index_table_text(@un_submitted)
     assert_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@not_ended)
-    refute_text termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@not_ended), wait: 0
+    refute_text termination_index_table_text(@verified), wait: 0
   end
 
   test 'client with no active assignments can be terminated' do
@@ -45,7 +45,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Beendete Begleitungen'
 
     assert_text termination_index_table_text(assignment1)
-    refute_text termination_index_table_text(assignment2)
+    refute_text termination_index_table_text(assignment2), wait: 0
 
     click_link 'Klient/in beenden'
 
@@ -54,7 +54,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     assert page.has_link? 'Klient/in beenden'
 
     assignment2.update(period_end: 4.days.ago, period_end_set_by: @superadmin)
-    
+
     visit current_url
 
     assert_text termination_index_table_text(assignment1)
@@ -62,8 +62,8 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
     click_link 'Klient/in beenden', match: :first
 
-    refute page.has_link? 'Klient/in beenden'
     assert_text 'Klient/in wurde erfolgreich beendet.'
+    refute page.has_link? 'Klient/in beenden', wait: 0
     assert client.reload.resigned?
   end
 
@@ -72,8 +72,8 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Bestätigt'
     visit current_url
-    refute_text termination_index_table_text(@un_submitted)
     assert_text termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@un_submitted), wait: 0
   end
 
   test 'filtering_not_submitted_terminations' do
@@ -90,9 +90,9 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Quittiert: Unquittiert'
     click_link exact_text: 'Quittiert'
     visit current_url
-    refute_text termination_index_table_text(@un_submitted)
-    refute_text termination_index_table_text(@submitted)
     assert_text termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@un_submitted), wait: 0
+    refute_text termination_index_table_text(@submitted), wait: 0
   end
 
   test 'ended_assignment_can_be_verified' do
@@ -119,16 +119,16 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Bestätigt'
 
-    refute_text termination_index_table_text(@un_submitted)
-    refute_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@not_ended)
     assert_text termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@un_submitted), wait: 0
+    refute_text termination_index_table_text(@submitted), wait: 0
+    refute_text termination_index_table_text(@not_ended), wait: 0
 
     click_link 'Filter aufheben'
 
     assert_text termination_index_table_text(@un_submitted)
     assert_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@not_ended)
+    refute_text termination_index_table_text(@not_ended), wait: 0
     assert_text termination_index_table_text(@verified)
   end
 
@@ -140,10 +140,10 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'there_is_correct_links_to_creating_certificates' do
     visit terminated_index_assignments_path
-    refute page.has_link? 'Dossier Freiwillig Engagiert erstellen',
-      href: /\/volunteers\/#{@un_submitted.volunteer.id}\/certificates\/new/
     assert page.has_link? 'Dossier Freiwillig Engagiert erstellen',
       href: /\/volunteers\/#{@submitted.volunteer.id}\/certificates\/new/
+    refute page.has_link? 'Dossier Freiwillig Engagiert erstellen',
+      href: /\/volunteers\/#{@un_submitted.volunteer.id}\/certificates\/new/, wait: 0
   end
 
   test 'assignment_quittieren_creates_a_assignment_log_record_from_assignment' do

@@ -101,14 +101,15 @@ class ProfilesTest < ApplicationSystemTestCase
     fill_in 'Email', with: @user_without_profile.email
     fill_in 'Passwort', with: 'asdfasdf'
     click_button 'Anmelden'
-
-    refute_text 'Telefonnummer 2'
+    assert_text 'Profil erfassen'
+    refute_text 'Telefonnummer 2', wait: 0
   end
 
   test 'profile has no secondary phone field' do
     login_as @user
     visit profile_path(@user.profile.id)
-    refute_text 'Telefonnummer 2'
+    assert_text @user.full_name
+    refute_text 'Telefonnummer 2', wait: 0
   end
 
   test 'user without profile gets redirected to profile form' do
@@ -117,7 +118,7 @@ class ProfilesTest < ApplicationSystemTestCase
 
     assert_text 'Profil erfassen'
     assert_text 'Bitte füllen Sie Ihr Profil aus um die Applikation zu verwenden.'
-    refute_link 'Freiwillige'
+    refute_link 'Freiwillige', wait: 0
   end
 
   test 'volunteer without profile does not get redirected to profile form' do
@@ -125,15 +126,15 @@ class ProfilesTest < ApplicationSystemTestCase
     login_as user
     visit root_path
 
-    refute_text 'Profil erfassen'
     assert_link 'Freiwillige'
+    refute_text 'Profil erfassen', wait: 0
   end
 
   test 'superadmin with profile does not get redirected to profile form' do
     login_as @user
     visit root_path
 
-    refute_text 'Profil erfassen'
     assert_link 'Freiwillige'
+    refute_text 'Profil erfassen', wait: 0
   end
 end

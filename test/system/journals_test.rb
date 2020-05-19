@@ -89,7 +89,7 @@ class JournalsTest < ApplicationSystemTestCase
 
     assert_text 'Journal wurde erfolgreich gelöscht.'
     assert_text 'Journal Liste'
-    refute_text @journal_volunteer.body
+    refute_text @journal_volunteer.body, wait: 0
   end
 
   test 'can delete journal as superadmin' do

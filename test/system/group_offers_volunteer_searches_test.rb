@@ -25,8 +25,8 @@ class GroupOffersVolunteerSearchesTest < ApplicationSystemTestCase
     assert page.has_text? @volunteer_one.contact.full_name
     assert page.has_text? @volunteer_three.contact.full_name
     assert page.has_text? @group_offer_one.title
-    refute page.has_text? @volunteer_two.contact.full_name, wait: 1
-    refute page.has_text? @group_offer_two.title, wait: 1
+    refute page.has_text? @volunteer_two.contact.full_name, wait: 0
+    refute page.has_text? @group_offer_two.title, wait: 0
   end
 
   test 'enter_search_text_brings_suggestions' do
@@ -42,7 +42,7 @@ class GroupOffersVolunteerSearchesTest < ApplicationSystemTestCase
     within 'tbody' do
       assert page.has_text? @volunteer_one.contact.full_name
       assert page.has_text? @group_offer_one.title
-      refute page.has_text? @volunteer_two.contact.full_name, wait: 1
+      refute page.has_text? @volunteer_two.contact.full_name, wait: 0
       assert_equal 1, find_all('tr').size
     end
   end

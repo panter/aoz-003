@@ -18,13 +18,13 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     accept_confirm do
       first(:link, 'Beenden').click
     end
-    assert page.has_text? 'Noch nicht beendete Gruppeneinsätze'
-    assert page.has_text? "#{@group_assignment1.volunteer.full_name} "\
-      "Mitglied #{I18n.l(@group_assignment1.period_start)}"
-    assert page.has_text? "#{@group_assignment2.volunteer.full_name} "\
-      "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
-    assert page.has_text? 'Um das Gruppenangebot zu beenden, müssen erst alle zugehörigen '\
-      'Gruppeneinsätze beendet sein.'
+    assert_text 'Noch nicht beendete Gruppeneinsätze'
+    assert_text "#{@group_assignment1.volunteer.full_name} "\
+                "Mitglied #{I18n.l(@group_assignment1.period_start)}"
+    assert_text "#{@group_assignment2.volunteer.full_name} "\
+                "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
+    assert_text 'Um das Gruppenangebot zu beenden, müssen erst alle zugehörigen '\
+                'Gruppeneinsätze beendet sein.'
     assert page.has_field? 'Angebotsenddatum', disabled: true
     assert page.has_button? 'Gruppenangebots Ende setzen', disabled: true
   end
@@ -35,33 +35,37 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     assert page.has_field? id: 'group_offer_group_assignments_attributes_0_period_end',
       with: I18n.l(Time.zone.today)
     click_button 'Jetzt alle Einsätze auf Enddatum beenden'
-    assert page.has_text? 'Gruppeneinsätze wurden beendet.'
+    assert_text 'Gruppeneinsätze wurden beendet.'
     assert page.has_field? 'Angebotsenddatum', with: I18n.l(Time.zone.today)
     click_button 'Gruppenangebots Ende setzen'
-    assert page.has_text? 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
+    assert_text 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
   end
 
   test 'setting_period_end_to_group_assignment_single_works' do
     login_as @superadmin
     visit initiate_termination_group_offer_path(@group_offer)
     accept_confirm do
-      click_link 'Heute beenden', href: set_end_today_group_assignment_path(@group_assignment1,
-        redirect_to: initiate_termination_group_offer_path(@group_offer))
+      click_link 'Heute beenden', href: set_end_today_group_assignment_path(
+        @group_assignment1,
+        redirect_to: initiate_termination_group_offer_path(@group_offer)
+      )
     end
-    assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
-    assert page.has_text? 'Noch nicht beendete Gruppeneinsätze'
-    refute page.has_text? "#{@group_assignment1.volunteer.full_name} "\
-      "Member #{I18n.l(@group_assignment1.period_start)}"
-    assert page.has_text? "#{@group_assignment2.volunteer.full_name} "\
-      "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
-    click_link 'Bearbeiten', href: edit_group_assignment_path(@group_assignment2,
-      redirect_to: initiate_termination_group_offer_path(@group_offer))
+    assert_text 'Einsatzende wurde erfolgreich gesetzt.'
+    assert_text 'Noch nicht beendete Gruppeneinsätze'
+    refute_text "#{@group_assignment1.volunteer.full_name} "\
+                "Member #{I18n.l(@group_assignment1.period_start)}", wait: 0
+    assert_text "#{@group_assignment2.volunteer.full_name} "\
+                "Verantwortliche/r #{I18n.l(@group_assignment2.period_start)}"
+    click_link 'Bearbeiten', href: edit_group_assignment_path(
+      @group_assignment2,
+      redirect_to: initiate_termination_group_offer_path(@group_offer)
+    )
     fill_in id: 'group_assignment_period_end', with: I18n.l(Time.zone.today)
     page.find_all('input[type="submit"]').first.click
-    assert page.has_text? 'Einsatzende wurde erfolgreich gesetzt.'
-    refute page.has_text? 'Noch nicht beendete Gruppeneinsätze'
+    assert_text 'Einsatzende wurde erfolgreich gesetzt.'
+    refute_text 'Noch nicht beendete Gruppeneinsätze', wait: 0
     click_button 'Gruppenangebots Ende setzen'
-    assert page.has_text? 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
+    assert_text 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
   end
 
   test 'initiate termination sets group offer to inactive' do
@@ -70,6 +74,6 @@ class GroupOfferTerminationsTest < ApplicationSystemTestCase
     click_button 'Jetzt alle Einsätze auf Enddatum beenden'
     click_button 'Gruppenangebots Ende setzen'
     @group_offer.reload
-    refute @group_offer.active
+    assert_not @group_offer.active
   end
 end

@@ -28,8 +28,8 @@ class EventsTest < ApplicationSystemTestCase
   test 'when creating a new event, it is not possible to add volunteers' do
     visit new_event_path
     assert page.has_text? 'Veranstaltung erfassen'
-    refute page.has_text? 'Neue Teilnehmende hinzufügen'
-    refute page.has_select? 'event_volunteer_volunteer_id'
+    refute page.has_text? 'Neue Teilnehmende hinzufügen', wait: 0
+    refute page.has_select? 'event_volunteer_volunteer_id', wait: 0
   end
 
   test 'add volunteers to an existing event' do
@@ -53,7 +53,7 @@ class EventsTest < ApplicationSystemTestCase
     click_button 'Teilnehmer/in hinzufügen'
     within '.event-volunteers-table' do
       assert page.has_text? @volunteer1.full_name
-      refute page.has_text? @volunteer2.full_name
+      refute page.has_text? @volunteer2.full_name, wait: 0
     end
 
     # adding second volunteer to the event
@@ -69,8 +69,8 @@ class EventsTest < ApplicationSystemTestCase
     visit event_path(@event)
 
     within '.event-volunteers-table' do
-      refute page.has_text? @volunteer1.full_name
       assert page.has_text? @volunteer2.full_name
+      refute page.has_text? @volunteer1.full_name, wait: 0
     end
   end
 
@@ -97,7 +97,8 @@ class EventsTest < ApplicationSystemTestCase
     @event.update(event_volunteers: [@event_volunteer], date: 7.days.from_now)
 
     visit volunteer_path(@event_volunteer.volunteer)
-    refute page.has_button? 'Veranstaltungen'
+    assert_text @event_volunteer.contact.full_name
+    assert_not page.has_css?('#volunteer-events'), wait: 0
   end
 
   test 'volunteer does not see own events on its profile' do
@@ -106,7 +107,8 @@ class EventsTest < ApplicationSystemTestCase
 
     login_as @event_volunteer
     visit volunteer_path(@event_volunteer.volunteer)
-    refute page.has_button? 'Veranstaltungen'
+    assert_text @event_volunteer.contact.full_name
+    assert_not page.has_css?('#volunteer-events'), wait: 0
   end
 
   test 'event pagination' do
@@ -120,12 +122,12 @@ class EventsTest < ApplicationSystemTestCase
     visit events_path
 
     assert page.has_text? 'first_page'
-    refute page.has_text? 'second_page'
+    refute page.has_text? 'second_page', wait: 0
 
     first(:link, '2').click
 
     assert page.has_text? 'second_page'
-    refute page.has_text? 'first_page'
+    refute page.has_text? 'first_page', wait: 0
   end
 
   test 'adding a volunteers twice to an event does not work' do

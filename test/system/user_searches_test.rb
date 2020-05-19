@@ -23,10 +23,10 @@ class UserSearchesTest < ApplicationSystemTestCase
   test 'basic_non_suggests_search_works' do
     fill_in name: 'q[full_name_cont]', with: 'Whi'
     click_button 'Suchen'
-    assert page.has_text? @superadmin.full_name
-    assert page.has_text? @social_worker.full_name
-    refute page.has_text? @volunteer.full_name
-    refute page.has_text? @department_manager.full_name
+    assert_text @superadmin.full_name
+    assert_text @social_worker.full_name
+    refute_text @volunteer.full_name, wait: 0
+    refute_text @department_manager.full_name, wait: 0
   end
 
   # TODO: Flappy test
@@ -45,9 +45,9 @@ class UserSearchesTest < ApplicationSystemTestCase
       assert_equal @department_manager.email, 'better_call_saul@good.man'
       assert page.has_link? @department_manager.email
 
-      refute page.has_text? @superadmin.full_name
-      refute page.has_text? @social_worker.full_name
-      refute page.has_text? @volunteer.full_name
+      refute_text @superadmin.full_name, wait: 0
+      refute_text @social_worker.full_name, wait: 0
+      refute_text @volunteer.full_name, wait: 0
     end
   end
 end

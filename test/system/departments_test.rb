@@ -20,7 +20,8 @@ class DepartmentsTest < ApplicationSystemTestCase
   test 'other users should not see departments link in navigation' do
     login_as @social_worker
     visit root_path
-    refute page.has_link? 'Standorte'
+    assert_text 'Klient/innen'
+    refute page.has_link? 'Standorte', wait: 0
   end
 
   test 'superadmin can see all departments in departments_path' do
@@ -78,7 +79,6 @@ class DepartmentsTest < ApplicationSystemTestCase
   test "Department Managers can update their department's fields" do
     login_as @department_manager
     visit edit_department_path(@department_manager.department.first.id)
-    refute page.has_select? 'User'
     fill_in 'Name', with: 'Name changed'
     fill_in 'Strasse', with: 'Street changed'
     fill_in 'Adresszusatz', with: 'Extended address changed'
@@ -86,6 +86,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Ort', with: 'City changed'
     fill_in 'Mailadresse', with: 'department@aoz.ch'
     fill_in 'Telefonnummer', with: '0441234567'
+    refute page.has_select? 'User', wait: 0
     click_button 'Standort aktualisieren'
     assert page.has_text? 'Name changed'
     assert page.has_text? 'Street changed'
@@ -110,10 +111,12 @@ class DepartmentsTest < ApplicationSystemTestCase
   test 'department has no secondary phone field' do
     login_as @superadmin
     visit new_department_path
-    refute page.has_text? 'Secondary phone'
+    assert_text 'Standort erfassen'
+    refute page.has_text? 'Secondary phone', wait: 0
 
     visit department_path(Department.first)
-    refute page.has_text? 'Secondary phone'
+    assert_text Department.first
+    refute page.has_text? 'Secondary phone', wait: 0
   end
 
   test 'departments group offers with volunteers are displayed' do

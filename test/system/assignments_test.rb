@@ -124,10 +124,11 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as @volunteer.user
     visit volunteer_path(@volunteer)
 
-    refute_link 'Begleitung erfassen'
+    assert page.has_css?('.assignments-table') # only to allow refute expectations to wait 0
+    refute_link 'Begleitung erfassen', wait: 0
 
     within '.assignments-table, .group-assignments-table' do
-      refute_link 'Bearbeiten'
+      refute_link 'Bearbeiten', wait: 0
     end
   end
 
@@ -160,8 +161,9 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as social_worker
 
     visit client_path(another_assignment.client)
-    refute page.has_link? 'Anzeigen'
-    refute page.has_link? 'Herunterladen'
+    assert_text another_assignment.client.contact.full_name # only to allow refute expectations to wait 0
+    refute page.has_link? 'Anzeigen', wait: 0
+    refute page.has_link? 'Herunterladen', wait: 0
 
     visit client_path(client)
     assert page.has_link? 'Anzeigen'
@@ -200,7 +202,8 @@ class AssignmentsTest < ApplicationSystemTestCase
     login_as @user
     visit assignments_path
 
-    refute_link 'Herunterladen'
+    assert_text 'Begleitungen' # only to allow refute expectations to wait 0
+    refute_link 'Herunterladen', wait: 0
 
     # create initial PDF
 

@@ -4,13 +4,21 @@ class VolunteerShowAssignmentsTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :superadmin
     @volunteer = create :volunteer
-    @assignment = create :assignment, client: create(:client), volunteer: @volunteer, period_start: 3.weeks.ago,
-      period_end: nil, creator: @superadmin
+    @assignment = create :assignment, client: create(:client),
+                                      volunteer: @volunteer,
+                                      period_start: 3.weeks.ago,
+                                      period_end: nil,
+                                      creator: @superadmin
     @log_creator = create :superadmin
     @log_client = create :client
-    @assignment_log = create(:assignment, client: @log_client, volunteer: @volunteer, period_start: 2.weeks.ago,
-      period_end: 2.days.ago, creator: @log_creator, termination_submitted_at: 2.days.ago,
-      termination_submitted_by: @volunteer.user, period_end_set_by: @log_creator)
+    @assignment_log = create :assignment, client: @log_client,
+                                          volunteer: @volunteer,
+                                          period_start: 2.weeks.ago,
+                                          period_end: 2.days.ago,
+                                          creator: @log_creator,
+                                          termination_submitted_at: 2.days.ago,
+                                          termination_submitted_by: @volunteer.user,
+                                          period_end_set_by: @log_creator
     @assignment_log.verify_termination(@superadmin)
     @assignment_log.update(termination_verified_at: 2.days.ago)
   end
@@ -19,20 +27,19 @@ class VolunteerShowAssignmentsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit volunteer_path(@volunteer)
     within '.assignments-table' do
-      refute page.has_text? start_end_localized(@assignment_log), wait: 1
+      assert_text start_end_localized(@assignment)
+      refute_text start_end_localized(@assignment_log), wait: 0
 
-      assert page.has_text? start_end_localized(@assignment)
       client_creator_names(@assignment).each do |name|
-        assert page.has_text? name
+        assert_text name
       end
     end
 
     within '.assignment-logs-table' do
-      refute page.has_text? start_end_localized(@assignment), wait: 1
-
-      assert page.has_text? start_end_localized(@assignment_log)
+      assert_text start_end_localized(@assignment_log)
+      refute_text start_end_localized(@assignment), wait: 0
       client_creator_names(@assignment_log).each do |name|
-        assert page.has_text? name
+        assert_text name
       end
     end
   end
@@ -41,20 +48,18 @@ class VolunteerShowAssignmentsTest < ApplicationSystemTestCase
     login_as @volunteer.user
     visit volunteer_path(@volunteer)
     within '.assignments-table' do
-      refute page.has_text? start_end_localized(@assignment_log), wait: 1
-
-      assert page.has_text? start_end_localized(@assignment)
+      assert_text start_end_localized(@assignment)
+      refute_text start_end_localized(@assignment_log), wait: 0
       client_creator_names(@assignment).each do |name|
-        assert page.has_text? name
+        assert_text name
       end
     end
 
     within '.assignment-logs-table' do
-      assert_not page.has_text? start_end_localized(@assignment), wait: 1
-
-      assert page.has_text? start_end_localized(@assignment_log)
+      assert_text start_end_localized(@assignment_log)
+      refute_text start_end_localized(@assignment), wait: 0
       client_creator_names(@assignment_log).each do |name|
-        assert page.has_text? name
+        assert_text name
       end
     end
   end
@@ -64,6 +69,10 @@ class VolunteerShowAssignmentsTest < ApplicationSystemTestCase
   end
 
   def start_end_localized(assignment)
-    assignment.attributes.values_at('period_start', 'period_end').compact.map { |d| I18n.l(d) }.join(' ')
+    assignment.attributes
+              .values_at('period_start', 'period_end')
+              .compact
+              .map { |d| I18n.l(d) }
+              .join(' ')
   end
 end

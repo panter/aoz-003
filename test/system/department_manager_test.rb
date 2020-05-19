@@ -8,12 +8,14 @@ class DepartmentManagerTest < ApplicationSystemTestCase
 
   test 'when updates user login, cannot see role field' do
     visit edit_user_path(@department_manager)
-    assert_not page.has_field? 'Role'
+    assert_text 'Login bearbeiten'  # only to allow refute expectations to wait 0
+    assert_not page.has_field? 'Role', wait: 0
   end
 
   test 'does not have navbar links to users' do
     visit user_path(@department_manager.id)
-    assert_not page.has_link? 'Benutzer/innen'
+    assert_text "Profil von #{@department_manager.full_name}"
+    assert_not page.has_link? 'Benutzer/innen', wait: 0
   end
 
   test 'has a navbar link to clients page' do
@@ -49,7 +51,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     visit group_offers_path
 
     assert page.has_text? group_offer.title
-    refute page.has_field? 'Bezeichnung', with: 'new title'
+    refute page.has_field? 'Bezeichnung', with: 'new title', wait: 0
   end
 
   test 'can edit group_offers in her department' do
@@ -73,11 +75,11 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     visit group_offers_path
 
     assert page.has_text? group_offer.title
-    refute page.has_field? 'Bezeichnung', with: 'new title'
+    refute page.has_field? 'Bezeichnung', with: 'new title', wait: 0
 
     visit group_offer_path group_offer
     assert page.has_text? group_offer.title
-    refute page.has_button? 'Gruppenangebot aktualisieren'
+    refute page.has_button? 'Gruppenangebot aktualisieren', wait: 0
 
     visit edit_group_offer_path group_offer
     assert page.has_text? I18n.t('not_authorized')
@@ -104,9 +106,9 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     end
 
     assert page.has_link? 'Anzeigen'
-    refute page.has_link? 'Bearbeiten'
-    refute page.has_link? 'Beendigungsformular'
-    refute page.has_link? 'Freiwillige/n beenden'
+    refute page.has_link? 'Bearbeiten', wait: 0
+    refute page.has_link? 'Beendigungsformular', wait: 0
+    refute page.has_link? 'Freiwillige/n beenden', wait: 0
 
     visit group_offer_path group_offer
     within '.table-responsive.assignments-table' do
@@ -117,13 +119,13 @@ class DepartmentManagerTest < ApplicationSystemTestCase
 
     assert page.has_text? group_offer.title
     assert page.has_link? 'Anzeigen'
-    refute page.has_link? 'Bearbeiten'
+    refute page.has_link? 'Bearbeiten', wait: 0
 
     visit group_offer_path group_offer
     assert page.has_text? group_offer.title
-    refute page.has_button? 'Gruppenangebot aktualisieren'
+    refute page.has_button? 'Gruppenangebot aktualisieren', wait: 0
     within '.table-responsive.assignments-table' do
-      refute page.has_link? 'Bearbeiten'
+      refute page.has_link? 'Bearbeiten', wait: 0
     end
 
     visit edit_group_offer_path group_offer
@@ -178,13 +180,14 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     end
 
     assert page.has_link? 'Anzeigen'
-    refute page.has_link? 'Bearbeiten'
-    refute page.has_link? 'Beendigungsformular'
-    refute page.has_link? 'Freiwillige/n beenden'
+    refute page.has_link? 'Bearbeiten', wait: 0
+    refute page.has_link? 'Beendigungsformular', wait: 0
+    refute page.has_link? 'Freiwillige/n beenden', wait: 0
 
     visit group_offer_path group_offer
+    assert page.has_css? '.table-responsive.assignments-table' # only here to avoid waiting with refute
     within '.table-responsive.assignments-table' do
-      refute page.has_link? 'Bearbeiten'
+      refute page.has_link? 'Bearbeiten', wait: 0
     end
 
     visit group_offers_path
@@ -195,16 +198,17 @@ class DepartmentManagerTest < ApplicationSystemTestCase
 
     visit group_offer_path group_offer
     assert page.has_text? group_offer.title
-    refute page.has_button? 'Gruppenangebot aktualisieren'
+    refute page.has_button? 'Gruppenangebot aktualisieren', wait: 0
     within '.table-responsive.assignments-table' do
-      refute page.has_link? 'Bearbeiten'
+      refute page.has_link? 'Bearbeiten', wait: 0
     end
 
     visit edit_group_offer_path group_offer
     assert page.has_text? I18n.t('not_authorized')
 
     visit new_group_offer_path
-    refute page.has_text? I18n.t('not_authorized')
+    assert_text 'Gruppenangebot erfassen' # only here to avoid waiting with refute
+    refute page.has_text? I18n.t('not_authorized'), wait: 0
 
     visit edit_group_assignment_path group_assignment
     assert page.has_text? I18n.t('not_authorized')
@@ -220,8 +224,8 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     visit volunteer_path(volunteer)
     assert page.has_link? group_offer.title
     assert page.has_link? assignment.client.contact.full_name
-    refute page.has_link? 'Löschen'
-    refute page.has_link? 'Feedback erfassen'
-    refute page.has_link? 'Feedback Liste'
+    refute page.has_link? 'Löschen', wait: 0
+    refute page.has_link? 'Feedback erfassen', wait: 0
+    refute page.has_link? 'Feedback Liste', wait: 0
   end
 end

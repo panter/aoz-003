@@ -11,16 +11,19 @@ class SemesterProcessVolunteersTest < ApplicationSystemTestCase
   end
 
   test 'filter semester process volunteer shows previous semester by default' do
-    assert page.has_text? @one_semester_back.semester_process_volunteers.first.semester_feedbacks.first.goals
-    assert_not page.has_text? @two_semesters_back.semester_process_volunteers.first.semester_feedbacks.first.goals
+    assert_text @one_semester_back.semester_process_volunteers.first.semester_feedbacks.first.goals
+    refute_text @two_semesters_back.semester_process_volunteers.first.semester_feedbacks.first.goals,
+                wait: 0
   end
 
   test 'filter semester process volunteer on semester' do
     click_button "Semester: #{@current_semester.collection.second[1]}", match: :first
     click_link @two_semesters_back.semester_t
-    assert_not page.has_text? @one_semester_back.semester_process_volunteers.first.semester_feedbacks.first.goals
-    assert page.has_text? @two_semesters_back.semester_process_volunteers.first.semester_feedbacks.first.goals
-    assert_not page.has_text? @three_semesters_back.semester_process_volunteers.first.semester_feedbacks.first.goals
+    assert_text @two_semesters_back.semester_process_volunteers.first.semester_feedbacks.first.goals
+    refute_text @one_semester_back.semester_process_volunteers.first.semester_feedbacks.first.goals,
+                wait: 0
+    refute_text @three_semesters_back.semester_process_volunteers.first.semester_feedbacks.first.goals,
+                wait: 0
   end
 
   test 'New semester process after filtering on index preserves semester selection' do

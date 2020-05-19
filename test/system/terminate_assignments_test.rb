@@ -91,8 +91,8 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
   test 'volunteer_expenses_waive_field_matches_and_updates_volunteer_waive_field' do
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
-
-    refute page.find_field('Ich verzichte auf die Auszahlung von Spesen.').checked?
+    assert_text 'Evaluation nach Abschluss einer Begleitung'
+    refute page.find_field('Ich verzichte auf die Auszahlung von Spesen.', wait: 0).checked?
 
     check 'Ich verzichte auf die Auszahlung von Spesen.'
 

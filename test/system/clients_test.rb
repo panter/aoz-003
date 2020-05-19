@@ -76,7 +76,7 @@ class ClientsTest < ApplicationSystemTestCase
     end
     click_button 'Klient/in erfassen', match: :first
     assert_text 'Klient/in wurde erfolgreich erstellt.'
-    refute_select 'Beendet'
+    refute_select 'Beendet', wait: 0
 
     assert_select 'Geschlecht Freiwillige/r', selected: 'egal'
     assert_select 'Alter Freiwillige/r', selected: 'egal'
@@ -181,19 +181,19 @@ class ClientsTest < ApplicationSystemTestCase
     login_as @department_manager
     visit clients_path
     assert_text client_department_manager
-    refute_text client_social_worker
-    refute_text client
+    refute_text client_social_worker, wait: 0
+    refute_text client, wait: 0
     assert page.has_link? 'Anzeigen'
     assert page.has_link? 'Bearbeiten', href: edit_client_path(client_department_manager)
-    refute page.has_link? 'Bearbeiten', href: edit_client_path(client_social_worker)
+    refute page.has_link? 'Bearbeiten', href: edit_client_path(client_social_worker), wait: 0
 
     login_as social_worker
     visit clients_path
     assert_text client_social_worker
-    refute_text client_department_manager
-    refute_text client
+    refute_text client_department_manager, wait: 0
+    refute_text client, wait: 0
     assert page.has_link? 'Anzeigen'
-    refute page.has_link? 'Bearbeiten', href: edit_client_path(client_department_manager)
+    refute page.has_link? 'Bearbeiten', href: edit_client_path(client_department_manager), wait: 0
     assert page.has_link? 'Bearbeiten', href: edit_client_path(client_social_worker)
   end
 
@@ -217,7 +217,7 @@ class ClientsTest < ApplicationSystemTestCase
     assert_text 'assigned_goals assigned_interests assigned_authority ' +
       I18n.l(with_assignment.created_at.to_date)
 
-    refute_text superadmins_client.contact.full_name
+    refute_text superadmins_client.contact.full_name, wait: 1
   end
 
   test 'client_index_shows_german_and_native_languages_only' do
@@ -230,7 +230,7 @@ class ClientsTest < ApplicationSystemTestCase
     visit clients_path
     assert_text 'Deutsch, Gut'
     assert_text 'Italienisch, Muttersprache'
-    refute_text 'Französisch, Mittel'
+    refute_text 'Französisch, Mittel', wait: 0
   end
 
   test 'new_client_form_has_german_with_its_non_native_speaker_abilities' do
@@ -288,7 +288,7 @@ class ClientsTest < ApplicationSystemTestCase
     fill_in 'Strasse', with: 'Sihlstrasse 131'
     fill_in 'PLZ', with: '8002'
     fill_in 'Ort', with: 'Zürich'
-    refute page.has_select? 'Fallführende Stelle'
+    refute page.has_select? 'Fallführende Stelle', wait: 0
 
     click_button 'Klient/in erfassen', match: :first
 
@@ -335,9 +335,7 @@ class ClientsTest < ApplicationSystemTestCase
       page.accept_confirm do
         click_link 'Löschen'
       end
-      refute page.has_link? 'Löschen'
-      refute page.has_text? client
-      refute page.has_css? client_css
+      assert_text 'Klient/in wurde erfolgreich gelöscht.'
     end
   end
 
@@ -350,8 +348,8 @@ class ClientsTest < ApplicationSystemTestCase
 
       visit clients_path
       within client_css do
-        refute page.has_link? 'Löschen'
         assert page.has_text? client
+        refute page.has_link? 'Löschen', wait: 0
       end
     end
   end
@@ -367,8 +365,8 @@ class ClientsTest < ApplicationSystemTestCase
 
       visit clients_path
       within client_css do
-        refute page.has_link? 'Löschen'
         assert page.has_text? client
+        refute page.has_link? 'Löschen', wait: 0
       end
     end
   end

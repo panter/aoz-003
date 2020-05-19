@@ -13,7 +13,7 @@ class EmailTemplatesTest < ApplicationSystemTestCase
     assert page.has_text? @email_template.subject
     within 'tr.bg-success' do
       assert page.has_text? @email_template.subject
-      refute page.has_text? @other_email_template.subject
+      refute page.has_text? @other_email_template.subject, wait: 0
     end
   end
 
@@ -27,8 +27,8 @@ class EmailTemplatesTest < ApplicationSystemTestCase
     click_button 'E-Mailvorlage aktualisieren'
     click_link 'Zurück'
     within 'tr.bg-success' do
-      refute page.has_text? @email_template.subject
       assert page.has_text? @other_email_template.subject
+      refute page.has_text? @email_template.subject, wait: 0
     end
   end
 
@@ -37,7 +37,7 @@ class EmailTemplatesTest < ApplicationSystemTestCase
     select 'Anmeldung', from: 'email_template_kind'
 
     assert_text 'Für diese E-Mailvorlage gibt es keine Platzhalter.'
-    refute_text 'Sie können die folgenden Platzhalter benützen:'
-    refute_text 'Zum Beispiel: Guten Tag %{Anrede} %{Name}'
+    refute_text 'Sie können die folgenden Platzhalter benützen:', wait: 0
+    refute_text 'Zum Beispiel: Guten Tag %{Anrede} %{Name}', wait: 0
   end
 end

@@ -38,8 +38,8 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Beendete Einsätze'
     assert_text termination_index_table_text(@un_submitted)
     assert_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@not_ended)
-    refute_text termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@not_ended), wait: 0
+    refute_text termination_index_table_text(@verified), wait: 0
   end
 
   test 'filtering_submitted_terminations' do
@@ -47,8 +47,8 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Bestätigt'
     visit current_url
-    refute_text termination_index_table_text(@un_submitted)
     assert_text termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@un_submitted), wait: 0
   end
 
   test 'filtering_not_submitted_terminations' do
@@ -57,7 +57,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link exact_text: 'Unbestätigt'
     visit current_url
     assert_text termination_index_table_text(@un_submitted)
-    refute_text termination_index_table_text(@submitted)
+    refute_text termination_index_table_text(@submitted), wait: 0
   end
 
   test 'filtering_for_only_verified' do
@@ -65,9 +65,9 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Quittiert: Unquittiert'
     click_link exact_text: 'Quittiert'
     visit current_url
-    refute_text termination_index_table_text(@un_submitted)
-    refute_text termination_index_table_text(@submitted)
     assert_text termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@un_submitted), wait: 0
+    refute_text termination_index_table_text(@submitted), wait: 0
   end
 
   test 'ended_assignment_can_be_verified' do
@@ -75,15 +75,15 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Beendete Einsätze'
     assert_text termination_index_table_text(@un_submitted)
     assert_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@verified), wait: 0
 
     page.find_all('a', text: 'Beendigung Quittieren').first.click
     click_link 'Beendigung Quittieren'
 
     assert_text 'Beendete Freiwillige'
-    refute_text termination_index_table_text(@un_submitted)
-    refute_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@un_submitted), wait: 0
+    refute_text termination_index_table_text(@submitted), wait: 0
+    refute_text termination_index_table_text(@verified), wait: 0
   end
 
   test 'clear_filter_link_is_working_correctly' do
@@ -96,16 +96,16 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     click_link 'Ende Bestätigt'
     click_link exact_text: 'Bestätigt'
 
-    refute_text termination_index_table_text(@un_submitted)
-    refute_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@not_ended)
     assert_text termination_index_table_text(@verified)
+    refute_text termination_index_table_text(@un_submitted), wait: 0
+    refute_text termination_index_table_text(@submitted), wait: 0
+    refute_text termination_index_table_text(@not_ended), wait: 0
 
     click_link 'Filter aufheben'
 
     assert_text termination_index_table_text(@un_submitted)
     assert_text termination_index_table_text(@submitted)
-    refute_text termination_index_table_text(@not_ended)
+    refute_text termination_index_table_text(@not_ended), wait: 0
     assert_text termination_index_table_text(@verified)
   end
 
@@ -117,10 +117,10 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
 
   test 'there_is_correct_links_to_creating_certificates' do
     visit terminated_index_group_assignments_path
-    refute page.has_link? 'Dossier Freiwillig Engagiert erstellen',
-      href: new_volunteer_certificate_path(@un_submitted.volunteer.id)
     assert page.has_link? 'Dossier Freiwillig Engagiert erstellen',
       href: new_volunteer_certificate_path(@submitted.volunteer.id)
+    refute page.has_link? 'Dossier Freiwillig Engagiert erstellen',
+      href: new_volunteer_certificate_path(@un_submitted.volunteer.id), wait: 0
   end
 
   test 'group_assignment_quittieren_creates_a_group_assignment_log_record_from_group_assignment' do

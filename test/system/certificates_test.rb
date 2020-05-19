@@ -11,7 +11,8 @@ class CertificatesTest < ApplicationSystemTestCase
   test 'volunteer_user_cannot_see_create_certificate_button' do
     login_as @volunteer.user
     visit volunteer_path(@volunteer)
-    refute page.has_link? 'Nachweis ausstellen'
+    assert_text @volunteer.contact.full_name # only to allow refute expectations to wait 0
+    refute page.has_link? 'Nachweis ausstellen', wait: 0
   end
 
   test 'creating_volunteer_certificate_form_has_right_content_prefilled' do
