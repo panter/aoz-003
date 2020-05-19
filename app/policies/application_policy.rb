@@ -124,10 +124,6 @@ class ApplicationPolicy
     superadmin? || (department_manager? && departments_record?)
   end
 
-  def superadmin_or_user_in_records_related?
-    superadmin? || record.user_ids.include?(user.id)
-  end
-
   def superadmin_or_volunteers_record?
     superadmin? || volunteer? && user_owns_record?
   end
