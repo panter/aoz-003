@@ -39,6 +39,17 @@ FactoryBot.define do
       end
     end
 
+    trait :faker_common do
+      goals { FFaker::Lorem.sentence }
+      education { FFaker::Education.major }
+      interests { FFaker::Lorem.sentence }
+      comments { FFaker::Lorem.sentence }
+      other_request { FFaker::Lorem.sentence }
+      actual_activities { FFaker::Lorem.sentence }
+      detailed_description { FFaker::Lorem.sentence }
+      nationality { ISO3166::Country.codes.sample }
+    end
+
     trait :faker_misc do
       gender_request { Client::GENDER_REQUESTS.sample }
       age_request { Client::AGE_REQUESTS.sample }
@@ -61,6 +72,7 @@ FactoryBot.define do
       end
     end
 
+    factory :client_common, traits: %i[faker_common with_language_skills fake_availability with_relatives zuerich]
     factory :client_z, traits: [:zuerich]
     factory(
       :client_seed,

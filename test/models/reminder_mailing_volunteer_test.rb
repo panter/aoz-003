@@ -8,7 +8,7 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
   end
 
   test 'template variables are substituted' do
-    reminder_mailing = ReminderMailing.new(kind: :trial_period, creator: @superadmin,
+    reminder_mailing = ReminderMailing.new(kind: :termination, creator: @superadmin,
       subject: 'hallo %{Anrede} %{Name}', reminder_mailing_volunteers: [@assignment_probation],
       body: 'hallo %{Anrede} %{Name} %{EinsatzStart} %{Einsatz} %{EmailAbsender}')
     reminder_mailing.save
@@ -31,7 +31,7 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
   end
 
   test 'wrong template variables used in template are dropped - no exeption is thrown' do
-    reminder_mailing = ReminderMailing.new(kind: :trial_period, creator: @superadmin,
+    reminder_mailing = ReminderMailing.new(kind: :termination, creator: @superadmin,
       subject: 'hallo %{Anrede} %{WrongVariableUsed} %{Name}',
       reminder_mailing_volunteers: [@assignment_probation],
       body: 'hallo %{Anrede} %{Name} %{EinsatzStart}  %{AlsoWrong} %{Einsatz}')

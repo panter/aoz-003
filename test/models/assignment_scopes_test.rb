@@ -206,47 +206,4 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     assert_not query.include? less_than_six_weeks
     assert_not query.include? more_than_8_weeks
   end
-
-  test 'no_reminder_mailing' do
-    without_reminder_mailing = make_assignment(start_date: 7.weeks.ago)
-    with_reminder_mailing = make_assignment(start_date: 7.weeks.ago)
-    create_probation_mailing(with_reminder_mailing)
-    query = Assignment.no_reminder_mailing
-    assert query.include? without_reminder_mailing
-    assert_not query.include? with_reminder_mailing
-  end
-
-  test 'need_trial_period_reminder_mailing' do
-    exactly_six_weeks = make_assignment(start_date: 6.weeks.ago)
-    exactly_six_weeks_mailed = make_assignment(start_date: 6.weeks.ago)
-    seven_weeks_ago = make_assignment(start_date: 7.weeks.ago)
-    seven_weeks_ago_mailed = make_assignment(start_date: 7.weeks.ago)
-    create_probation_mailing(seven_weeks_ago_mailed, exactly_six_weeks_mailed)
-    query = Assignment.need_trial_period_reminder_mailing
-    assert query.include? exactly_six_weeks
-    assert query.include? seven_weeks_ago
-    assert_not query.include? seven_weeks_ago_mailed
-    assert_not query.include? exactly_six_weeks_mailed
-  end
-
-  test 'with_actively_registered_volunteer returns assignments of volunteers with_actively_registered_user' do
-    volunteer1 = create :volunteer, :external
-    volunteer2 = create :volunteer, :external
-    volunteer3 = create :volunteer_with_user
-    volunteer4 = create :volunteer_with_user
-    assignment1 = create :assignment, volunteer: volunteer1
-    assignment2 = create :assignment, volunteer: volunteer2
-    assignment3 = create :assignment, volunteer: volunteer3
-    assignment4 = create :assignment, volunteer: volunteer4
-
-    # faking user sign in by setting last_sign_in_at an arbitrary date
-    [volunteer3, volunteer4].each { |v| v.user.update(last_sign_in_at: Time.now) }
-
-    assignments = Assignment.with_actively_registered_volunteer
-
-    assert_not_includes assignments, assignment1
-    assert_not_includes assignments, assignment2
-    assert_includes assignments, assignment3
-    assert_includes assignments, assignment4
-  end
 end

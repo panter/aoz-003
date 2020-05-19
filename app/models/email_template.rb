@@ -1,7 +1,13 @@
 class EmailTemplate < ApplicationRecord
   before_save :ensure_exactly_one_active_per_kind
 
-  enum kind: { signup: 0, trial: 1, termination: 2, half_year_process_email: 4, half_year_process_overdue: 5 }
+  enum kind: {
+    signup: 0,
+    # trial: 1, # comment out to document that this number should not be used for new kind
+    termination: 2,
+    half_year_process_email: 4,
+    half_year_process_overdue: 5
+  }
   validates :kind, presence: true
 
   scope :order_by_active, -> { order(active: :desc) }
@@ -31,7 +37,6 @@ class EmailTemplate < ApplicationRecord
     {
       signup: [],
       assignment: [:Anrede, :Name, :EinsatzTitel, :FeedbackLink],
-      trial: ReminderMailing.template_varnames(:trial_period).values,
       termination: ReminderMailing.template_varnames(:termination).values,
       half_year_process_email: ReminderMailing.template_varnames(:half_year_process_email).values,
       half_year_process_overdue: ReminderMailing.template_varnames(:half_year_process_overdue).values
@@ -40,6 +45,7 @@ class EmailTemplate < ApplicationRecord
 
   def ensure_exactly_one_active_per_kind
     return unless active && changed.include?('active')
+
     EmailTemplate.where(kind: kind).update(active: false)
   end
 end

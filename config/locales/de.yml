@@ -41,17 +41,16 @@ de:
     term_feedback_activities: 'Endfeedback: Hauptaktivitäten'
     term_feedback_success: 'Endfeedback: Erfolge'
     term_feedback_problems: 'Endfeedback: Probleme'
-    term_feedback_transfair: 'Endfeedback: TransFair'
+    term_feedback_aoz: 'Endfeedback: Fachstelle Freiwilligenarbeit'
     term_remaining_hours: 'Restliche Stunden'
   termination_feedback_questions: &id-termination-feedback-quests
     term_feedback_activities: Was waren Ihre Hauptaktivitäten während des Einsatzes?
     term_feedback_success: Welche Erfolge oder Highlights haben Sie während Ihres Einsatzes erlebt?
     term_feedback_problems: Welchen Schwierigkeiten in Bezug auf Ihren Einsatz sind Sie begegnet?
-    term_feedback_transfair: Wie fanden Sie die von der Fachstelle Freiwilligenarbeit angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
+    term_feedback_aoz: Wie fanden Sie die von der Fachstelle Freiwilligenarbeit angebotene Unterstützung inklusive Weiterbildungen und Anlässe?
     term_remaining_hours: Restliche Stunden
   reminder_mailings:
     kinds: &id-kinds-enum-values
-      trial_period: Probezeit-Feedback
       half_year_process_email: 'Halbjahres Prozess'
       half_year_process_overdue: 'Halbjahres Erinnerung'
       termination: Abschlussevaluation
@@ -110,10 +109,10 @@ de:
     canton: Kanton
     municipality: Gemeinde
   messages:
-    confirm_delete: "Wirklich %{model} %{record} löschen?"
+    confirm_delete: 'Wirklich %{model} %{record} löschen?'
     confirm_record_delete: '%{model} wirklich löschen?'
-    select_prompt: "%{model} wählen"
-    confirm_terminate_volunteer: "Wollen Sie den Freiwilligen wirklich beenden?"
+    select_prompt: '%{model} wählen'
+    confirm_terminate_volunteer: 'Wollen Sie den Freiwilligen wirklich beenden?'
   rejection_type: &id-rejection-types
     her: von Freiwillige/r vor / nach Erstgespräch
     other: Anderer Grund
@@ -189,8 +188,8 @@ de:
     NL: Niederländisch; Flämisch
 
   # loose unasorted keys
-  "false": Nein
-  "true": Ja
+  'false': Nein
+  'true': Ja
   accompaniment_info: Bei der AOZ gibt es mehrere Möglichkeiten, sich freiwillig zu engagieren. Erfahren Sie mehr über die verschiedenen Einsatzbereiche für Freiwillige hier.
   add_entry: Eintrag Hinzufügen
   add_relative: Verwandte hinzufügen
@@ -241,7 +240,7 @@ de:
   submit_application: Anmeldung abschicken
   thank_you: "Vielen Dank für Ihre Anmeldung \U0001F389"
   to: bis
-  total_hours: "Stunden Total:"
+  total_hours: 'Stunden Total:'
   update_profile: Profil aktualisieren
   updated_at: Geändert um
   user_destroyed: 'Benutzer %{email} wurde erfolgreich gelöscht.'
@@ -253,6 +252,10 @@ de:
   volunteer_self_applicant: Selbstanmelder
   volunteer_updated: Freiwillige/r wurde erfolgreich aktualisiert.
   wanna_apply: Möchten Sie sich als Freiwillige/r anmelden?
+  group_offer_not_ended_count:
+    zero: keine unbeendeten Gruppenangebote
+    one: ein unbeendetes Gruppenangebot
+    other: '%{count} unbeendete Gruppenangebote'
 
   # loose unsorted groups
   pdf_header:
@@ -265,7 +268,17 @@ de:
   will_paginate:
     next_label: Weiter
     previous_label: Zurück
-
+    page_entries_info:
+      single_page:
+        zero: Keine Einträge
+        one: 'Zeige 1'
+        other: 'Zeige alle %{count}'
+      single_page_html:
+        zero: 'Keine Einträge gefunden'
+        one: 'Zeige <b>1</b>'
+        other: 'Zeige <b>alle&nbsp;%{count}</b>'
+      multi_page: 'Zeige %{from} - %{to} von %{count}'
+      multi_page_html: 'Zeige <b>%{from}&nbsp;-&nbsp;%{to}</b> von <b>%{count}</b>'
   # Date and time
   date:
     order:
@@ -274,13 +287,13 @@ de:
       - :year
   time:
     formats:
-      default: "%a, %d.%m.%y %H:%M"
-      time: "%H:%M"
-      date_only: "%d.%m.%Y"
+      default: '%a, %d.%m.%y %H:%M'
+      time: '%H:%M'
+      date_only: '%d.%m.%Y'
       devise:
         mailer:
           invitation_instructions:
-            accept_until_format: "%d. %B %Y %H:%M"
+            accept_until_format: '%d. %B %Y %H:%M'
 
   # Activerecord
   activerecord:
@@ -299,7 +312,7 @@ de:
         period_end: Einsatzende
         period_start: Einsatzbeginn
         trial_period: Probezeit
-        volunteer: Freiwillige
+        volunteer: Freiwillige/r
       feedback:
         <<: *id-generic_keys
         assignment: Begleitung
@@ -502,18 +515,28 @@ de:
         future: Zukunft
         comments: Kommentare
         conversation: Rückmeldung erwünscht
+      user/role: *id-roles
       user:
         <<: *id-generic_keys
         clients: Kunden/innen
         profile: Profil
         role: Rolle
+        roles: *id-roles
       document:
         title: Titel
         file: Datei
+      volunteer/how_have_you_heard_of_aoz: &volunteer-how-have-you-heard-of-aoz
+        internet_research: Internet-Recherche
+        friends: über Freunde/Bekannte
+        announcment: Inserat
+        flyer: Flyer
       volunteer: &id-volunteer_attributes
         <<: [*id-availability, *id-generic_keys, *id-volunteer-acceptance-keys]
         acceptance: Prozess
         acceptances: *id-volunteer-acceptance-keys
+        how_have_you_heard_of_aoz: Gehört von AOZ-Freiwilligenarbeit von/auf
+        how_have_you_heard_of_aozs: *volunteer-how-have-you-heard-of-aoz
+        how_have_you_heard_of_aoz_other: Gehört von AOZ-Freiwilligenarbeit anderes
         additional_email_addresses: Zusätzliche Mailadressen
         additional_nationality: Zusätzliche Nationalität
         additional_phone_numbers: Zusätzliche Telefonnummern
@@ -563,6 +586,10 @@ de:
         waive_alternative: 'Spesenverzicht'
         woman: Frau
         working_percent: Stellenprozent
+      trial_period:
+        verified_by: Probezeit quittiert von
+        verified_at: Probezeit quittiert am
+        end_date: Probezeit bis
     errors:
       models:
         profile:
@@ -607,20 +634,25 @@ de:
               insuficient_relation: Es wird mindestens ein Assignment oder GroupAssignment benötigt
               too_many_relations: Es darf nur ein Assignment oder ein GroupAssignment verbunden werden
             group_assignment: *id-mission-relation-insuficient
+        department:
+          attributes:
+            group_offers:
+              has_unterminated: Der Standort hat noch %{go_count}.
     models:
       assignment: Begleitung
-      feedback: Halbjahres-Rapport
       billing_expense: Spesenformular
       certificate: Nachweis
-      client: Klient/in
       client_notification: Klienten Wartezeit Benachrichtigung
+      client: Klient/in
       contact: Kontakt
       department: Standort
+      document: Dokument
       email_template: E-Mailvorlage
       event: Veranstaltung
-      group_assignment: Begleitung
-      group_offer: Gruppenangebot
+      feedback: Halbjahres-Rapport
+      group_assignment: Einsatz
       group_offer_category: Gruppenangebot Kategorie
+      group_offer: Gruppenangebot
       hour: Stunden
       journal: Journal
       language_skill: Sprachkompetenz
@@ -628,15 +660,14 @@ de:
       profile: Profil
       relative: Verwante/r
       reminder_mailing: Erinnerungs-Mailing
-      semester_process: Semester Prozess
+      semester_feedback: Semester Feedback
       semester_process_mail: Semester Email
       semester_process_volunteer_mission: Einsatz
-      semester_feedback: Semester Feedback
-      trial_feedback: Probezeit Feedback
+      semester_process: Semester Prozess
+      trial_period: Probezeit
       user: Benutzer/in
-      volunteer: Freiwillige/n
       volunteer_application: Freiwilligen Anmeldung
-      document: Dokument
+      volunteer: Freiwillige/n
 
   # model name plural for controller name shortcut => t('.key')
   notification_mailer:
@@ -664,7 +695,6 @@ de:
     email: E-mail
     first_time: '1.Treffen: Wann, wo?'
     for_aoz: Für die AOZ
-    frequency: Frequenz
     function: Funktion
     frequency: Wie oft?
     last_name: Name
@@ -763,7 +793,6 @@ de:
     kind: &id-kinds-template
       assignment: Begleitung
       signup: Anmeldung
-      trial: Probezeit
       termination: Abschlussevaluation
       half_year_process_email: 'Halbjahres Prozess'
       half_year_process_overdue: 'Halbjahres Erinnerung'
@@ -825,7 +854,7 @@ de:
       title: 'Dokument erfassen'
   hours:
     new:
-      report_hours: "Stunden erfassen"
+      report_hours: 'Stunden erfassen'
   semester_processes:
     create:
       notice: Der Semesterprozess wurde erfolgreich erstellt und die emails wurden versendet.
@@ -908,16 +937,13 @@ de:
       assignment_feedbacks: Halbjahres-Rapporte von FW in Tandems
       group_offer_feedbacks: Halbjahres-Rapporte von FW in Gruppenangeboten
       total_feedbacks: Total Halbjahres-Rapporte von Freiwilligen
-      assignment_trial_feedbacks: Probezeit-Feedbacks von FW in Tandems
-      group_offer_trial_feedbacks: Probezeit-Feedbacks von FW in Gruppenangeboten
-      total_trial_feedbacks: Total Probezeit-Feedbacks
       intro_course: Teilnehmende Einführungsveranstaltungen
       professional_training: Teilnehmende Weiterbildungen
       professional_event: Teilnehmende Fachveranstaltungen
       theme_exchange: Teilnehmende Erfahrungsaustausch/Themenabende
       volunteering: Teilnehmende Freiwilligenanlässe
       german_class_managers: Teilnehmende Treffen Deutschkursleitende
-      total_events:  Total Teilnehmende Veranstaltungen
+      total_events: Total Teilnehmende Veranstaltungen
     values_clients:
       created: Klient/innen angemeldet
       inactive: Klient/innen inaktiv
@@ -925,10 +951,10 @@ de:
       active_assignment: Klient/innen in aktivem Tandem
       total: Total Anzahl Klient/innen
     values_assignments:
-      created:  Tandems neu erstellt
-      started:  Gestartete Tandems
-      active:  Aktive Tandems
-      ended:  Beendete Tandems
+      created: Tandems neu erstellt
+      started: Gestartete Tandems
+      active: Aktive Tandems
+      ended: Beendete Tandems
       first_instruction_lessons: Besuchte Einführungskurse
       all: Alle Tandems
     values_group_offers:
@@ -1072,6 +1098,8 @@ de:
         skills: Berufliche Kompetenzen, die Sie einbringen könnten?
         strengths: Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?
         external: Als externen Freiwilligen registrieren?
+        how_have_you_heard_of_aoz: Wie haben Sie von der Freiwilligenarbeit bei der AOZ erfahren?
+        how_have_you_heard_of_aoz_other: Gehört von der AOZ Freiwilligenarbeit habe ich nicht auf oben genannten, sondern ...
       semester_feedback:
         achievements: Was konnte in den letzten Monaten erreicht werden?
         conversation: Ich wünsche ein Gespräch mit meiner/meinem Freiwilligenverantwortlichen.
@@ -1126,14 +1154,16 @@ de:
           registered: Interessiert
           resigned: Beendet
     placeholders:
+      trial_period:
+        notes: Notizen
     hints:
       volunteer:
         external: Externe Freiwillige stehen nicht in direkter Verbindung mit der AOZ.
     required:
       mark: '*'
       text: notwendig
-    "yes": 'Ja'
-    "no": 'Nein'
+    'yes': 'Ja'
+    'no': 'Nein'
 
   # Divise gem
   devise:
@@ -1184,7 +1214,6 @@ de:
           <br>
 
           044 415 66 72 Leitung Fachstelle<br>
-          044 415 67 38 Leitung TransFair<br>
           (Montag bis Donnerstag)
         greetings: |
           Freundliche Grüsse<br>

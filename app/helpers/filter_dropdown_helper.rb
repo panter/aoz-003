@@ -20,6 +20,7 @@ module FilterDropdownHelper
     filters.map do |filter|
       filter[:active] = filter_active?(filter[:q], filter[:value])
       excludes = filter_keys.reject { |key| key == filter[:q] }
+      excludes += filter[:disable_others].map(&:to_s) if filter[:disable_others]
       excludes = excludes.reject { |key| filter[:qs]&.include? key } if filter[:qs]&.any?
       q_args = params_except('page').merge(
         q: custom_filter_q_arg(*filter.values_at(:q, :qs, :value), *excludes)
@@ -114,7 +115,7 @@ module FilterDropdownHelper
 
   def list_filter_link_class(active, value = nil, filter = nil)
     return '' unless active
-    if [:process_eq, :acceptance_eq].include? filter
+    if filter == :acceptance_eq
       "bg-#{value}"
     else
       'bg-success'
@@ -144,8 +145,8 @@ module FilterDropdownHelper
     end
   end
 
-  def clear_filter_button
-    filter = { all: true, s: params.dig(:q, :s) }.compact
+  def clear_filter_button(all_q: { all: true })
+    filter = { s: params.dig(:q, :s) }.merge(all_q).compact
     button_link t('clear_filters'), url_for(q: filter), dimension: :sm
   end
 

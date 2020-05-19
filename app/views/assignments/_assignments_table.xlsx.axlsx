@@ -1,65 +1,73 @@
-col_header = wb.styles.add_style(
+wb.use_shared_strings = true
+
+header_style = wb.styles.add_style(
   bg_color: 'FFDFDEDF',
   b: true,
   alignment: { horizontal: :center, vertical: :center },
   border: { color: '00', edges: [:bottom], style: :thin },
   width: :auto_fit
 )
-standard_format = wb.styles.add_style alignment: { horizontal: :left }, width: :auto_fit
-date_format = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
 
-cell_types = [
-  :string, # 0
-  :string, # 1
-  :string, # 2
-  :string, # 3
-  :date,   # 4
-  :date,   # 5
-  :date,   # 6
-  :date    # 7
-]
-
-cell_styles = [
-  standard_format,  # 0
-  standard_format,  # 1
-  standard_format,  # 2
-  standard_format,  # 3
-  date_format,      # 4
-  date_format,      # 5
-  date_format,      # 6
-  date_format       # 7
-]
+std_style = wb.styles.add_style alignment: { horizontal: :left, vertical: :top }, width: :auto_fit
+wrapped_style = wb.styles.add_style alignment: { wrap_text: true, horizontal: :left, vertical: :top }
+date_style = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
 
 wb.add_worksheet(name: t('clients_xlsx')) do |sheet|
-  # add header row
+  # Header row frozen (sticky)
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
   sheet.add_row(
     [
-      'Status',                     # 0
-      'Freiwillige/r',              # 1
-      'Freiwillige/r Mailadresse',  # 2
-      'Klient/in',                  # 3
-      t_attr(:period_start),        # 4
-      t_attr(:period_end),          # 5
-      t_attr(:created_at),          # 6
-      t_attr(:updated_at)           # 7
+      'Status',                    # 00
+      'Freiwillige/r',             # 01
+      'Freiwillige/r Mailadresse', # 02
+      'Klient/in',                 # 03
+      t_attr(:period_start),       # 04
+      t_attr(:period_end),         # 05
+      t_attr(:created_at),         # 06
+      t_attr(:updated_at)          # 07
     ],
-    type: :string, style: col_header
+    style: header_style, height: 25
   )
 
-  # add body rows
   assignments.each do |assignment|
     sheet.add_row(
       [
-        assignment.active? ? 'Aktiv' : 'Inaktiv',                      # 0
-        assignment.volunteer.contact.full_name,                        # 1
-        assignment.volunteer.contact.primary_email,                    # 2
-        assignment.client.contact.full_name,                           # 3
-        assignment.period_start,                                       # 4
-        assignment.period_end,                                         # 5
-        assignment.created_at.to_date,                                 # 6
-        assignment.updated_at.to_date                                  # 7
+        assignment.active? ? 'Aktiv' : 'Inaktiv',   # 00
+        assignment.volunteer.contact.full_name,     # 01
+        assignment.volunteer.contact.primary_email, # 02
+        assignment.client.contact.full_name,        # 03
+        assignment.period_start,                    # 04
+        assignment.period_end,                      # 05
+        assignment.created_at.to_date,              # 06
+        assignment.updated_at.to_date               # 07
       ],
-      types: cell_types, style: cell_styles
+      types: [
+        :string,    # 00
+        :string,    # 01
+        :string,    # 02
+        :string,    # 03
+        :date,      # 04
+        :date,      # 05
+        :date,      # 06
+        :date       # 07
+      ],
+      style: [
+        std_style,  # 00
+        std_style,  # 01
+        std_style,  # 02
+        std_style,  # 03
+        date_style, # 04
+        date_style, # 05
+        date_style, # 06
+        date_style  # 07
+      ]
     )
   end
+  sheet.auto_filter = 'A1:H1'
 end

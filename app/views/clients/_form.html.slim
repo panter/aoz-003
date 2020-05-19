@@ -6,9 +6,13 @@
   = link_to t('.reactivate.button'), reactivate_client_path(f.object), class: 'btn btn-default m-t-10',
       data: { confirm: t('.reactivate.confirm') }
   hr.m-y-30
-fieldset
-  = show_status_date(@client, false, :created_at)
-  
+- unless @client.new_record?
+  fieldset
+    ul.list-unstyled
+      li
+        => t_attr(:created_at)
+        = l(@client.created_at)
+
 .row
   .col-xs-12.col-md-6
     fieldset
@@ -74,7 +78,11 @@ fieldset
       - if policy(@client).set_terminated?
         = acceptance_select(@client, f)
       - if policy(Client).superadmin_privileges?
-        = f.association :involved_authority, collection: @social_workers
+        = f.association :involved_authority, collection: User.input_collection('social_workers'),
+                                             include_blank: true
+        = f.association :user, collection: User.input_collection('superadmins_and_social_workers'),
+                               include_blank: false,
+                               label: 'Angemeldet von'
 
       = f.input :competent_authority
       = f.input :other_authorities
@@ -97,9 +105,7 @@ fieldset
         br
         'Kosten in Gemeinden: Die einmalige Vermittlungspauschale nach einer einmonatigen Probezeit beträgt:
         br
-        'CHF 600 bei TransFair-Unterstützung der Tandems in der AOZ, Stadt Zürich
-        br
-        'CHF 800 bei TransFair-Unterstützung der Tandems vor Ort
+        'CHF 600 bei Unterstützung der Tandems durch die Fachstelle Freiwilligenarbeit in der AOZ, Stadt Zürich
 
   - if policy(Client).show_comments?
     .col-xs-12

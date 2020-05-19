@@ -129,22 +129,28 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
 
     # submit feedback without revisiting review form
     check 'Ich verzichte auf die Auszahlung von Spesen.'
+    wait_for_ajax
     click_on 'Bestätigen', match: :first
+    wait_for_ajax
     @spv.reload
+    wait_for_ajax
     visit semester_process_volunteers_path(semester: Semester.to_s(@spv.semester))
 
     page.find('td', text: goals.truncate(300)).click
+    wait_for_ajax
     assert page.has_text? goals
     click_button 'Schliessen'
+    wait_for_ajax
 
     page.find('td', text: achievements.truncate(300)).click
+    wait_for_ajax
     assert page.has_text? achievements
     click_button 'Schliessen'
-
+    wait_for_ajax
     page.find('td', text: comments.truncate(300)).click
+    wait_for_ajax
     assert page.has_text? comments
     click_button 'Schliessen'
-
   end
 
   test 'it should create a journal on submit' do

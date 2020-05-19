@@ -1,6 +1,0 @@
-h1= t_title
-
-= render 'columns', trial_feedbacks: @trial_feedbacks
-
-= bootstrap_row_col { button_link t_title(:new, TrialFeedback), new_polymorphic_path([@volunteer, @trial_feedbackable, TrialFeedback]) }
-= bootstrap_row_col { button_link icon_span(:back), @volunteer }

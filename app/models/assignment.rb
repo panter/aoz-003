@@ -9,7 +9,6 @@ class Assignment < ApplicationRecord
 
   has_many :hours, as: :hourable
   has_many :feedbacks, as: :feedbackable
-  has_many :trial_feedbacks, as: :trial_feedbackable
 
   # Semester process relations
   #
@@ -53,18 +52,6 @@ class Assignment < ApplicationRecord
   # allow ransack to use defined scopes
   def self.ransackable_scopes(auth_object = nil)
     ['active', 'inactive', 'active_or_not_yet_active']
-  end
-
-  def involved_authority_contact
-    involved_authority&.contact
-  end
-
-  def involved_authority
-    if client.involved_authority
-      client.involved_authority.profile
-    else
-      creator.profile
-    end
   end
 
   def default_values

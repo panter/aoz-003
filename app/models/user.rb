@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_one :profile, -> { with_deleted }, dependent: :destroy
   accepts_nested_attributes_for :profile
+  has_one :contact, -> { where(contactable_type: 'Profile') }, through: :profile
 
   ransack_alias :full_name, :profile_contact_full_name_or_volunteer_contact_full_name_or_email
 
@@ -17,8 +18,9 @@ class User < ApplicationRecord
   has_many :clients, inverse_of: 'user', foreign_key: 'user_id'
   has_many :reserved_clients, inverse_of: :reserved_by, class_name: 'Client', foreign_key: 'reserved_by_id'
   has_many :volunteers, inverse_of: 'registrar', foreign_key: 'registrar_id'
-  has_many :involved_authorities, class_name: 'Client', foreign_key: 'involved_authority_id',
-    inverse_of: 'involved_authority'
+  has_many :involved_authorities, class_name: 'Client',
+                                  foreign_key: 'involved_authority_id',
+                                  inverse_of: 'involved_authority'
   has_many :journals, inverse_of: 'user'
 
   has_many :assignments, inverse_of: 'creator', foreign_key: 'creator_id'
@@ -26,7 +28,6 @@ class User < ApplicationRecord
   has_many :assignment_volunteers, through: :assignments, source: :volunteer
 
   has_many :feedbacks, inverse_of: 'author', foreign_key: 'author_id'
-  has_many :trial_feedbacks, inverse_of: 'author', foreign_key: 'author_id'
   has_many :billing_expenses
 
   has_many :group_offers, inverse_of: 'creator', foreign_key: 'creator_id'
@@ -41,9 +42,12 @@ class User < ApplicationRecord
     inverse_of: 'reviewer'
   has_many :responsible_feedbacks, inverse_of: 'responsible', foreign_key: 'responsible_id',
     class_name: 'Feedback'
-  has_many :reviewed_trial_feedbacks, class_name: 'TrialFeedback', foreign_key: 'reviewer_id',
-    inverse_of: 'reviewer'
   has_many :reviewed_hours, class_name: 'Hour', foreign_key: 'reviewer_id', inverse_of: 'reviewer'
+
+  # trial period relations
+  has_many :verified_trial_periods, class_name: 'TrialPeriod',
+                                    inverse_of: :verified_by,
+                                    foreign_key: 'verified_by_id'
 
   # Assignment termination relations
   has_many :assignment_period_ends_set, class_name: 'Assignment',
@@ -132,8 +136,14 @@ class User < ApplicationRecord
   scope :superadmins, (-> { where(role: SUPERADMIN) })
   scope :department_managers, (-> { where(role: DEPARTMENT_MANAGER) })
   scope :social_workers, (-> { where(role: SOCIAL_WORKER) })
+  scope :superadmins_and_social_workers, -> { superadmins.or(social_workers) }
 
-  scope :signed_in_at_least_once, (-> { where.not(last_sign_in_at: nil) })
+  scope :order_lastname, lambda {
+    left_joins(profile: :contact).order('contacts.last_name ASC')
+  }
+
+  scope :signed_in_before, -> { where.not(last_sign_in_at: nil) }
+  scope :active, -> { where.not(last_sign_in_at: nil) }
   scope :with_pending_invitation, lambda {
     where(invitation_accepted_at: nil).where.not(invitation_sent_at: nil)
   }
@@ -185,13 +195,36 @@ class User < ApplicationRecord
       volunteer: volunteer).save
   end
 
+  ## Collection for input dropdowns
+  #
+  # If you only pass scope it will order by last name by default.
+  # If you don't pass scope, it will return all users
+  #
+  # Example:
+  #   User.input_collection('social_workers.active')
+  def self.input_collection(scope = '')
+    collection = order_lastname
+    scope.split('.').map(&:to_sym).each do |scope_item|
+      collection = collection.public_send(scope_item)
+    end
+    collection.map(&:collection_input_item)
+  end
+
+  def collection_input_item
+    [dropdown_label, id]
+  end
+
   def to_s
     full_name
   end
 
+  def dropdown_label
+    "#{full_name} - #{t_enum(:role)}"
+  end
+
   def full_name
-    if profile&.contact
-      "#{profile.contact.last_name}, #{profile.contact.first_name}"
+    if contact
+      "#{contact.last_name}, #{contact.first_name}"
     elsif volunteer?
       volunteer.contact.full_name
     else

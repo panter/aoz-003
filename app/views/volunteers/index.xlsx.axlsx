@@ -1,75 +1,137 @@
 wb = xlsx_package.workbook
+wb.use_shared_strings = true
 
-col_header = col_header = wb.styles.add_style(
+header_style = wb.styles.add_style(
   bg_color: 'FFDFDEDF',
   b: true,
   alignment: { horizontal: :center, vertical: :center },
-  border: { color: '00', edges: [:bottom], style: :thin})
+  border: { color: '00', edges: [:bottom], style: :thin },
+  width: :auto_fit
+)
 
-postal_code = wb.styles.add_style(alignment: { horizontal: :right }, width: :auto_fit)
+std_style = wb.styles.add_style alignment: { horizontal: :left, vertical: :top }, width: :auto_fit
+wrapped_style = wb.styles.add_style alignment: { wrap_text: true, horizontal: :left, vertical: :top }
+date_style = wb.styles.add_style format_code: 'dd.mm.yyyy', width: :auto_fit
 
 wb.add_worksheet(name: 'Freiwillige') do |sheet|
-  header_row = [
-    'id',
-    t_attr(:salutation),
-    t_attr(:last_name, Contact),
-    t_attr(:first_name, Contact),
-    t_attr(:street, Contact),
-    t_attr(:extended, Contact),
-    t_attr(:postal_code, Contact),
-    t_attr(:city, Contact),
-    t_attr(:primary_phone, Contact),
-    t_attr(:secondary_phone, Contact),
-    t_attr(:primary_email, Contact),
-    t_attr(:birth_year),
-    t_attr(:nationality),
-    t_attr(:profession),
-    t_attr(:acceptance),
-    t_attr(:created_at),
-    t_attr(:updated_at),
-    t_attr(:assignment_count),
-    t_attr(:group_assignment_count),
-    t_attr(:waive_alternative),
-    t_attr(:intro_course),
-    t_attr(:accepted_at),
-    t_attr(:resigned_at)
-  ]
-
-
-  sheet.add_row header_row, style: col_header
-
-  cell_types = Array.new(header_row.size).map { :string }
-  cell_types[0] = :integer
-  cell_styles = Array.new(header_row.size).map { nil }
-  cell_styles[6] = postal_code
-  @volunteers.each do |volunteer|
-    contact = volunteer.contact
-    resigned_at = volunteer.resigned_at.to_date if volunteer.resigned_at
-    accepted_at = volunteer.accepted_at.to_date if volunteer.accepted_at
-    sheet.add_row [
-      volunteer.id,
-      t("salutation.#{volunteer.salutation}"),
-      contact.last_name,
-      contact.first_name,
-      contact.street,
-      contact.extended,
-      contact.postal_code,
-      contact.city,
-      contact.primary_phone,
-      contact.secondary_phone,
-      contact.primary_email,
-      volunteer.birth_year,
-      nationality_name(volunteer.nationality),
-      volunteer.profession,
-      t(".acceptance.#{volunteer.acceptance}"),
-      l(volunteer.created_at.localtime),
-      l(volunteer.updated_at.localtime),
-      volunteer.assignments.count,
-      volunteer.group_assignments.count,
-      volunteer.waive,
-      volunteer.intro_course,
-      accepted_at,
-      resigned_at
-    ], types: cell_types, style: cell_styles
+  # Header row frozen (sticky)
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
   end
+  sheet.add_row(
+    [
+      'id',                                       # 00
+      t_attr(:salutation),                        # 01
+      t_attr(:last_name, Contact),                # 02
+      t_attr(:first_name, Contact),               # 03
+      t_attr(:street, Contact),                   # 04
+      t_attr(:extended, Contact),                 # 05
+      t_attr(:postal_code, Contact),              # 06
+      t_attr(:city, Contact),                     # 07
+      t_attr(:primary_phone, Contact),            # 08
+      t_attr(:secondary_phone, Contact),          # 09
+      t_attr(:primary_email, Contact),            # 10
+      t_attr(:birth_year),                        # 11
+      t_attr(:nationality),                       # 12
+      t_attr(:profession),                        # 13
+      t_attr(:acceptance),                        # 14
+      t_attr(:created_at),                        # 15
+      t_attr(:updated_at),                        # 16
+      t_attr(:assignment_count),                  # 17
+      t_attr(:group_assignment_count),            # 18
+      t_attr(:waive_alternative),                 # 19
+      t_attr(:intro_course),                      # 20
+      t_attr(:accepted_at),                       # 21
+      t_attr(:resigned_at)                        # 22
+    ],
+    style: header_style,
+    height: 25
+  )
+
+  @volunteers.each do |volunteer|
+
+    sheet.add_row(
+      [
+        volunteer.id,                             # 00
+        t("salutation.#{volunteer.salutation}"),  # 01
+        volunteer.contact.last_name,              # 02
+        volunteer.contact.first_name,             # 03
+        volunteer.contact.street,                 # 04
+        volunteer.contact.extended,               # 05
+        volunteer.contact.postal_code,            # 06
+        volunteer.contact.city,                   # 07
+        volunteer.contact.primary_phone,          # 08
+        volunteer.contact.secondary_phone,        # 09
+        volunteer.contact.primary_email,          # 10
+        volunteer.birth_year,                     # 11
+        nationality_name(volunteer.nationality),  # 12
+        volunteer.profession,                     # 13
+        t(".acceptance.#{volunteer.acceptance}"), # 14
+        volunteer.created_at.to_date,             # 15
+        volunteer.updated_at.to_date,             # 16
+        volunteer.assignments.count,              # 17
+        volunteer.group_assignments.count,        # 18
+        volunteer.waive,                          # 19
+        volunteer.intro_course,                   # 20
+        volunteer.accepted_at&.to_date,           # 21
+        volunteer.resigned_at&.to_date            # 22
+      ],
+      types: [
+        :string,       # 00
+        :string,       # 01
+        :string,       # 02
+        :string,       # 03
+        :string,       # 04
+        :string,       # 05
+        :string,       # 06
+        :string,       # 07
+        :string,       # 08
+        :string,       # 09
+        :string,       # 10
+        :date,         # 11
+        :string,       # 12
+        :string,       # 13
+        :string,       # 14
+        :date,         # 15
+        :date,         # 16
+        :integer,      # 17
+        :integer,      # 18
+        :boolean,      # 19
+        :boolean,      # 20
+        :date,         # 21
+        :date          # 22
+      ],
+      styles: [
+        std_style,     # 00
+        std_style,     # 01
+        std_style,     # 02
+        std_style,     # 03
+        wrapped_style, # 04
+        wrapped_style, # 05
+        wrapped_style, # 06
+        wrapped_style, # 07
+        wrapped_style, # 08
+        wrapped_style, # 09
+        wrapped_style, # 10
+        date_style,    # 11
+        std_style,     # 12
+        wrapped_style, # 13
+        std_style,     # 14
+        date_style,    # 15
+        date_style,    # 16
+        std_style,     # 17
+        std_style,     # 18
+        std_style,     # 19
+        std_style,     # 20
+        date_style,    # 21
+        date_style     # 22
+      ]
+    )
+  end
+
+  sheet.auto_filter = 'A1:W1'
 end

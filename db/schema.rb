@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191122135842) do
+ActiveRecord::Schema.define(version: 20200513152455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.text "term_feedback_activities"
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
-    t.text "term_feedback_transfair"
+    t.text "term_feedback_aoz"
     t.text "comments"
     t.text "additional_comments"
     t.string "assignment_description"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.text "term_feedback_activities"
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
-    t.text "term_feedback_transfair"
+    t.text "term_feedback_aoz"
     t.text "comments"
     t.text "additional_comments"
     t.string "assignment_description"
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.string "pdf_file_name"
     t.string "pdf_content_type"
-    t.bigint "pdf_file_size"
+    t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.bigint "submitted_by_id"
     t.bigint "reactivated_by_id"
@@ -312,7 +312,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind"
+    t.integer "kind", null: false
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -349,7 +349,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.text "term_feedback_activities"
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
-    t.text "term_feedback_transfair"
+    t.text "term_feedback_aoz"
     t.text "comments"
     t.text "additional_comments"
     t.string "place"
@@ -389,7 +389,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.text "term_feedback_activities"
     t.text "term_feedback_success"
     t.text "term_feedback_problems"
-    t.text "term_feedback_transfair"
+    t.text "term_feedback_aoz"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "comments"
@@ -402,7 +402,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.string "pdf_file_name"
     t.string "pdf_content_type"
-    t.bigint "pdf_file_size"
+    t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.bigint "submitted_by_id"
     t.bigint "reactivated_by_id"
@@ -572,7 +572,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.datetime "updated_at", null: false
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.bigint "avatar_file_size"
+    t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.datetime "deleted_at"
     t.boolean "flexible", default: false
@@ -723,21 +723,19 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.index ["reminder_mail_posted_by_id"], name: "index_semester_processes_on_reminder_mail_posted_by_id"
   end
 
-  create_table "trial_feedbacks", force: :cascade do |t|
-    t.text "body"
-    t.integer "trial_feedbackable_id"
-    t.string "trial_feedbackable_type"
-    t.bigint "volunteer_id"
-    t.bigint "author_id"
-    t.bigint "reviewer_id"
+  create_table "trial_periods", force: :cascade do |t|
+    t.date "end_date"
+    t.datetime "verified_at"
+    t.bigint "verified_by_id"
+    t.bigint "trial_period_mission_id"
+    t.string "trial_period_mission_type"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_trial_feedbacks_on_author_id"
-    t.index ["deleted_at"], name: "index_trial_feedbacks_on_deleted_at"
-    t.index ["reviewer_id"], name: "index_trial_feedbacks_on_reviewer_id"
-    t.index ["trial_feedbackable_id", "trial_feedbackable_type"], name: "trial_feedback_polymorphic_index"
-    t.index ["volunteer_id"], name: "index_trial_feedbacks_on_volunteer_id"
+    t.text "notes"
+    t.index ["deleted_at"], name: "index_trial_periods_on_deleted_at"
+    t.index ["trial_period_mission_id", "trial_period_mission_type"], name: "trial_periods_mission_index"
+    t.index ["verified_by_id"], name: "index_trial_periods_on_verified_by_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -790,7 +788,7 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.datetime "deleted_at"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.bigint "avatar_file_size"
+    t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.bigint "user_id"
     t.string "rejection_type"
@@ -839,6 +837,12 @@ ActiveRecord::Schema.define(version: 20191122135842) do
     t.bigint "resigned_by_id"
     t.bigint "rejected_by_id"
     t.bigint "undecided_by_id"
+    t.string "how_have_you_heard_of_aoz"
+    t.text "how_have_you_heard_of_aoz_other"
+    t.date "activeness_might_end_assignments"
+    t.date "activeness_might_end_groups"
+    t.boolean "active_on_assignment", default: false
+    t.boolean "active_on_group", default: false
     t.index ["acceptance"], name: "index_volunteers_on_acceptance"
     t.index ["accepted_at"], name: "index_volunteers_on_accepted_at"
     t.index ["accepted_by_id"], name: "index_volunteers_on_accepted_by_id"
@@ -888,8 +892,6 @@ ActiveRecord::Schema.define(version: 20191122135842) do
   add_foreign_key "semester_process_volunteer_missions", "semester_process_volunteers"
   add_foreign_key "semester_process_volunteers", "semester_processes"
   add_foreign_key "semester_process_volunteers", "volunteers"
-  add_foreign_key "trial_feedbacks", "users", column: "author_id"
   add_foreign_key "volunteers", "departments"
-  add_foreign_key "volunteers", "departments", column: "secondary_department_id"
   add_foreign_key "volunteers", "users"
 end

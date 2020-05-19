@@ -33,7 +33,20 @@ tr id=(dom_id(volunteer))
         - if volunteer.import
           br
           'Importiert
-  td.button-acceptance= assignment_status_badge(volunteer)
+  td.button-acceptance
+    - if volunteer.active_assignments? && volunteer.active_groups?
+      abbr title="Aktiv in einem oder mehreren Gruppenangeboten und Begleitungen gleichzeitig"
+       = link_to 'Gruppe & Tandem', '#', class: 'btn btn-acceptance-undecided btn-xs'
+    - elsif volunteer.active_assignments?
+      abbr title="Aktiv in einer oder mehreren Begleitungen"
+        = link_to 'Tandem', '#', class: 'btn btn-acceptance-undecided btn-xs'
+    - elsif volunteer.active_groups?
+      abbr title="Aktiv in einem oder mehreren Gruppeneinsätzen"
+        = link_to 'Gruppe', '#', class: 'btn btn-acceptance-undecided btn-xs'
+    - else
+      abbr title="Inaktiv"
+        = link_to 'Inaktiv', '#', class: 'btn btn-acceptance-resigned btn-xs'
+
   td = t("salutation.#{volunteer.salutation}") if volunteer.salutation?
   - if action_in?(:index, :seeking_clients) || controller_in?(:group_offers)
     td = link_to_if policy(Volunteer).edit?, volunteer.contact.full_name, edit_volunteer_path(volunteer)

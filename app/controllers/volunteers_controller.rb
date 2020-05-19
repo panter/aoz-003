@@ -8,7 +8,6 @@ class VolunteersController < ApplicationController
     @q = policy_scope(Volunteer).ransack(params[:q])
     @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @volunteers = @q.result
-    @volunteers = activity_filter
     respond_to do |format|
       format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
@@ -63,7 +62,7 @@ class VolunteersController < ApplicationController
   def update
     @volunteer.attributes = volunteer_params
     return render :edit unless @volunteer.valid?
-    
+
     register_acceptance_change(@volunteer)
 
     if @volunteer.will_save_change_to_attribute?(:acceptance, to: 'accepted') &&
@@ -97,7 +96,7 @@ class VolunteersController < ApplicationController
 
   def seeking_clients
     authorize Volunteer
-    @q = policy_scope(Volunteer).seeking_clients.ransack(params[:q])
+    @q = policy_scope(Volunteer).seeking_assignment_client.ransack(params[:q])
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @seeking_clients = @q.result.paginate(page: params[:page])
   end
@@ -128,7 +127,7 @@ class VolunteersController < ApplicationController
 
   def auto_assign_department!
     return if !current_user.department_manager? || current_user.department.empty? || @volunteer.department.present?
-    
+
     # association
     @volunteer.update(department: current_user.department.first)
   end
@@ -147,11 +146,6 @@ class VolunteersController < ApplicationController
       model_message: @volunteer.errors.messages[:acceptance].first,
       action_link: { text: 'Begleitung bearbeiten', path: edit_volunteer_path(@volunteer, anchor: 'assignments') }
     }
-  end
-
-  def activity_filter
-    return @volunteers unless params[:q] && params[:q][:active_eq]
-    params[:q][:active_eq] == 'true' ? @volunteers.active : @volunteers.inactive
   end
 
   def set_volunteer

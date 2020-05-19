@@ -12,6 +12,10 @@ class ClientPolicy < ApplicationPolicy
     superadmin? || department_managers_record? || social_worker_owns_or_authority?
   end
 
+  def user_involved_authority?
+    record_present? && record.involved_authority_id == user.id
+  end
+
   def social_worker_owns_or_authority?
     social_worker? && (user_owns_record? || user_involved_authority?)
   end

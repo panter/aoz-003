@@ -303,6 +303,7 @@ class VolunteersTest < ApplicationSystemTestCase
     fill_in 'Ort', with: 'Zürich'
     fill_in 'Mailadresse', with: 'volunteer@aoz.ch'
     fill_in 'Telefonnummer', with: '0123456789'
+    fill_in 'Geburtsdatum', with: '21.10.1985'
     first(:button, 'Freiwillige/n erfassen').click
 
     assert page.has_text? 'Freiwillige/r wurde erfolgreich erstellt. Einladung wurde an volunteer@aoz.ch verschickt.'

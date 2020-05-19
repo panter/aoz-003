@@ -46,6 +46,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_text @client
   end
 
+
   test 'assign multiple clients' do
     login_as @user
     visit volunteers_path
@@ -91,6 +92,33 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_text another_client
   end
 
+  test 'Reserve and unreserve client' do
+    login_as @user
+    visit volunteers_path
+    click_link 'Klient/in suchen', match: :first
+    click_link 'Klient/in suchen'
+    wait_for_ajax_block do
+      click_button 'Reservieren'
+    end
+    visit root_path
+    visit volunteers_path
+    click_link 'Klient/in suchen', match: :first
+    click_link 'Klient/in suchen'
+    within '.reserve-client-action-cell' do
+      assert_text @user.full_name
+      assert page.has_button?('Reservation aufheben')
+      click_button 'Reservation aufheben'
+    end
+
+    visit root_path
+    visit volunteers_path
+    click_link 'Klient/in suchen', match: :first
+    click_link 'Klient/in suchen'
+    within '.reserve-client-action-cell' do
+      assert page.has_button?('Reservieren')
+    end
+  end
+
   test 'volunteer cannot see new/edit assignment buttons' do
     create :assignment, volunteer: @volunteer
     login_as @volunteer.user
@@ -101,57 +129,6 @@ class AssignmentsTest < ApplicationSystemTestCase
     within '.assignments-table, .group-assignments-table' do
       refute_link 'Bearbeiten'
     end
-  end
-
-  test 'social_worker can show and download assigment pdf when she is owns a client' do
-    use_rack_driver
-
-    social_worker = create :social_worker
-    client = create :client, user: social_worker
-    assignment = create :assignment, client: client
-    another_assignment = create :assignment
-
-    # use short email addresses to avoid linebreak issues in PDFs
-    assignment.client.contact.update(primary_email: 'c@site.com')
-    assignment.volunteer.contact.update(primary_email: 'v@site.com')
-    assignment.involved_authority_contact.update(primary_email: 'sw@site.com')
-
-    # generate PDFs first via superadmin
-    login_as @user
-
-    visit edit_assignment_path(assignment)
-    click_button 'Begleitung aktualisieren', match: :first
-    visit edit_assignment_path(another_assignment)
-    click_button 'Begleitung aktualisieren', match: :first
-    visit client_path(client)
-    assert page.has_link? 'Herunterladen'
-    visit client_path(another_assignment.client)
-    assert page.has_link? 'Herunterladen'
-
-    # check show page and pdf download via social worker
-    login_as social_worker
-
-    visit client_path(another_assignment.client)
-    refute page.has_link? 'Anzeigen'
-    refute page.has_link? 'Herunterladen'
-
-    visit client_path(client)
-    assert page.has_link? 'Anzeigen'
-    assert page.has_link? 'Herunterladen'
-
-    click_link 'Anzeigen'
-    assert page.has_text? 'Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten'
-    assert page.has_text? "#{assignment.client.contact.primary_email}"
-    assert page.has_text? "#{assignment.volunteer.contact.primary_email}"
-    assert page.has_text? "#{assignment.involved_authority_contact.primary_email}"
-
-    visit client_path(client)
-    click_link 'Herunterladen'
-    pdf = load_pdf(page.body)
-    assert_equal 2, pdf.page_count
-    assert_match /#{assignment.client.contact.primary_email}/, pdf.pages.first.text
-    assert_match /#{assignment.volunteer.contact.primary_email}/, pdf.pages.first.text
-    assert_match /#{assignment.involved_authority_contact.primary_email}/, pdf.pages.first.text
   end
 
   test 'social_worker can show and download assigment pdf when she is involved_authority of a client' do
@@ -165,7 +142,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     # use short email addresses to avoid linebreak issues in PDFs
     assignment.client.contact.update(primary_email: 'c@site.com')
     assignment.volunteer.contact.update(primary_email: 'v@site.com')
-    assignment.involved_authority_contact.update(primary_email: 'sw@site.com')
+    assignment.involved_authority.contact.update(primary_email: 'sw@site.com')
 
     # generate PDFs first via superadmin
     login_as @user
@@ -194,7 +171,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert page.has_text? 'Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten'
     assert page.has_text? "#{assignment.client.contact.primary_email}"
     assert page.has_text? "#{assignment.volunteer.contact.primary_email}"
-    assert page.has_text? "#{assignment.involved_authority_contact.primary_email}"
+    assert page.has_text? "#{assignment.involved_authority.contact.primary_email}"
 
     visit client_path(client)
     click_link 'Herunterladen'
@@ -202,7 +179,7 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_equal 2, pdf.page_count
     assert_match /#{assignment.client.contact.primary_email}/, pdf.pages.first.text
     assert_match /#{assignment.volunteer.contact.primary_email}/, pdf.pages.first.text
-    assert_match /#{assignment.involved_authority_contact.primary_email}/, pdf.pages.first.text
+    assert_match /#{assignment.involved_authority.contact.primary_email}/, pdf.pages.first.text
   end
 
   test 'assignments_print_view_is_not_paginated' do

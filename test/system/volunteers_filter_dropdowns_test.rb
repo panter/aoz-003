@@ -190,7 +190,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     Volunteer.destroy_all
 
     # load test data
-    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs)
+    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs, birth_year: '1995-10-11')
     Volunteer.acceptance_collection.each do |acceptance|
       volunteer = create :volunteer, acceptance: acceptance, salutation: 'mrs'
       instance_variable_set("@volunteer_#{acceptance}", volunteer)
@@ -203,7 +203,7 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     click_link 'Nie eingeloggt', match: :first
     assert page.has_text? @volunteer_not_logged_in
 
-    Volunteer.process_eq('havent_logged_in').each do |volunteer|
+    Volunteer.invited_but_never_logged_in.each do |volunteer|
       within "tr##{dom_id volunteer}" do
         assert page.has_text? 'Nie eingeloggt'
       end

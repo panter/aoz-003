@@ -7,6 +7,7 @@ module AssignmentCommon
 
     belongs_to :client
     accepts_nested_attributes_for :client
+    has_one :involved_authority, through: :client
 
     belongs_to :creator, -> { with_deleted }, class_name: 'User', inverse_of: 'assignments'
 
@@ -33,7 +34,7 @@ module AssignmentCommon
 
     def label_parts
       @label_parts ||= [
-        I18n.t('activerecord.models.assignment'),
+        assignment? ? model_name.human : group_offer.to_label,
         client.contact.full_name
       ]
     end

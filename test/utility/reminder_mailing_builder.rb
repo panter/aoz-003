@@ -8,10 +8,6 @@ module ReminderMailingBuilder
     mailing
   end
 
-  def create_probation_mailing(*mailables)
-    create_mailing('trial_period', 'aaa', 'aaa', create(:user), *mailables)
-  end
-
   def create_termination_mailing(*mailables)
     create_mailing('termination', 'aaa', 'aaa', create(:user), *mailables)
   end

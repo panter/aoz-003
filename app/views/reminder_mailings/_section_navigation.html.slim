@@ -1,7 +1,6 @@
 nav.navbar.section-navigation.hidden-print
   ul.section-nav-ul.list-unstyled
-    li= section_nav_button 'Probezeit Feedback Eingang', list_responses_trial_feedbacks_path
+    li= section_nav_button 'Probezeit', trial_periods_path(q: { not_verified: 'true' })
     li= section_nav_button 'Halbjahres-Rapport Eingang', semester_process_volunteers_path
-    li= section_nav_button 'Probezeit Erinnerung erstellen', new_trial_period_reminder_mailings_path
     li= section_nav_button 'Versandte Erinnerungen', reminder_mailings_path
     li= section_nav_button 'E-Mailvorlagen', email_templates_path

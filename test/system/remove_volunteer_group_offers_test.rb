@@ -64,7 +64,7 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     end
     uncheck 'Verantwortliche/r'
     page.find_all('input[type="submit"]').first.click
-    assert page.has_text? 'Begleitung wurde erfolgreich geändert.'
+    assert page.has_text? 'Einsatz wurde erfolgreich geändert.'
     within '.assignments-table' do
       refute page.has_text? 'Verantwortliche/r'
     end

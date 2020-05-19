@@ -1,6 +1,11 @@
 h1 Veranstaltungen
 
-= form_navigation_btn :new
+- if search_parameters[:event_volunteers_volunteer_id_eq]
+  .row
+    .col-xs-12
+      = button_link icon_span(:back), edit_volunteer_path(search_parameters[:event_volunteers_volunteer_id_eq]), 'default'
+- else
+  = form_navigation_btn :new
 
 = bootstrap_paginate(@events)
 
@@ -33,7 +38,11 @@ h1 Veranstaltungen
           td= event.title if event.title
           td= event.department&.contact&.last_name
 
-= form_navigation_btn :new
-= form_navigation_btn :back
-
 = bootstrap_paginate(@events)
+
+- if search_parameters[:event_volunteers_volunteer_id_eq]
+  .row
+    .col-xs-12
+      = button_link icon_span(:back), edit_volunteer_path(search_parameters[:event_volunteers_volunteer_id_eq]), 'default'
+- else
+  = form_navigation_btn :new

@@ -36,7 +36,9 @@
         = f.input :description, label: t('assignment_pdf.description')
         = f.input :happens_at, label: t('assignment_pdf.when')
         = f.input :frequency, label: t('assignment_pdf.frequency')
-        = f.input :trial_period_end, label: t('assignment_pdf.trial_time')
+      = f.simple_fields_for :trial_period do |tp_f|
+        = tp_f.input :id, as: :hidden
+        = tp_f.input :end_date, as: :date_picker
 
   hr
   = f.button :submit

@@ -1,4 +1,4 @@
-@import 'bootstrap_overwrites';
+@import "bootstrap_overwrites";
 
 // Margin utility classes
 // Generates utility classes for margin and padding
@@ -16,16 +16,16 @@
 
 // types:
 $utility_types: (
-  m: 'margin',
-  p: 'padding'
+  m: "margin",
+  p: "padding",
 );
 
 // sides:
 $utility_sides: (
-  t: 'top',
-  r: 'right',
-  b: 'bottom',
-  l: 'left'
+  t: "top",
+  r: "right",
+  b: "bottom",
+  l: "left",
 );
 
 // sizes:
@@ -38,54 +38,50 @@ $utility_withs: (
   50: 50px,
   60: 60px,
   70: 70px,
-  80: 80px
+  80: 80px,
 );
 
 @each $type_key, $type_value in $utility_types {
   @each $width_key, $width_value in $utility_withs {
-
     .#{$type_key}-#{$width_key} {
-      #{$type_value}: $width_value;
+      #{$type_value}: $width_value !important;
     }
 
     @each $side_key, $side_value in $utility_sides {
-
       @if $side_key == r or $side_key == l {
         .#{$type_key}-#{$side_key}-#{$width_key},
         .#{$type_key}-x-#{$width_key} {
-          #{$type_value}-#{$side_value}: $width_value;
+          #{$type_value}-#{$side_value}: $width_value !important;
         }
       }
-
       @if $side_key == t or $side_key == b {
         .#{$type_key}-#{$side_key}-#{$width_key},
         .#{$type_key}-y-#{$width_key} {
-          #{$type_value}-#{$side_value}: $width_value;
+          #{$type_value}-#{$side_value}: $width_value !important;
         }
       }
-
     }
   }
 }
 
 h1.small {
-  font-size: floor(($font-size-base * 2.1))
+  font-size: floor(($font-size-base * 2.1));
 }
 
 h2.small {
-  font-size: floor(($font-size-base * 1.8))
+  font-size: floor(($font-size-base * 1.8));
 }
 
 h3.small {
-  font-size: floor(($font-size-base * 1.5))
+  font-size: floor(($font-size-base * 1.5));
 }
 
 h4.small {
-  font-size: floor(($font-size-base * 1.4))
+  font-size: floor(($font-size-base * 1.4));
 }
 
 h5.small {
-  font-size: floor(($font-size-base * 1.3))
+  font-size: floor(($font-size-base * 1.3));
 }
 
 @mixin a4 {

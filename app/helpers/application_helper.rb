@@ -91,9 +91,14 @@ module ApplicationHelper
     end
   end
 
-  def bootstrap_paginate(paginate_collection)
-    will_paginate paginate_collection, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer,
-      class: 'pagination-lg text-center hidden-print', 'aria-label': 'Pagination'
+  def bootstrap_paginate(paginate_collection, show_info: nil)
+    content_tag(:div, class: 'text-center') do |element|
+      concat page_entries_info(paginate_collection) if show_info == :above
+      concat will_paginate(paginate_collection, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer,
+                                                class: 'pagination-lg text-center hidden-print',
+                                                'aria-label': 'Pagination')
+      concat page_entries_info(paginate_collection) if show_info == :below
+    end
   end
 
   def profile_url_path(user)
@@ -151,20 +156,5 @@ module ApplicationHelper
 
   def abbr(abbr, full_term)
     tag.abbr(abbr.to_s, title: full_term)
-  end
-
-  def show_status_date(record, include_processing_person, *args)
-    tag.ul(class: "list-unstyled") do
-      record.slice(*args).compact.each do |key, value|
-        if include_processing_person
-          updated_by_attr = key.include?('_at') ? key.sub('_at', '_by') : nil
-          concat tag.li([
-            t_attr(key) +' '+ l(value), record.send(updated_by_attr).to_s
-          ].reject(&:blank?).join(" #{I18n.t('by')} "))
-        else
-          concat tag.li(t_attr(key) +' '+ l(value))
-        end
-      end
-    end
   end
 end

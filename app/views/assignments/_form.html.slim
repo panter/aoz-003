@@ -16,8 +16,8 @@
   .row
     .col-xs-12.col-md-6
       - if action_new?
-        = f.association :volunteer, include_blank: true, label: 'Freiwillige/r'
-        = f.association :client, include_blank: true
+        = f.association :volunteer, collection: Volunteer.accepted.order_lastname, include_blank: true
+        = f.association :client, collection: Client.assignable.order_lastname, include_blank: true
       - else
         h4.m-b-10 Freiwillige/r
         = render 'user_table', user: @assignment.volunteer, client: false
@@ -39,7 +39,9 @@
       = f.input :duration, label: t('assignment_pdf.duration')
     .col-xs-12.col-md-6
       = f.input :frequency, label: t('assignment_pdf.frequency')
-      = f.input :trial_period_end, label: t('assignment_pdf.trial_time')
+      = f.simple_fields_for :trial_period do |tp_f|
+        = tp_f.input :id, as: :hidden
+        = tp_f.input :end_date, as: :date_picker
       = f.input :special_agreement, label: t('assignment_pdf.special')
       = f.input :agreement_text, label: t('assignment_pdf.agreement_text'), input_html: { class: 'text-body' }
       - if @assignment.pdf.exists?
@@ -47,7 +49,7 @@
       - else
         = f.input :generate_pdf, label: 'Vereinbarung erzeugen', input_html: { checked: true }
 
-  - if !action_new? && @assignment.involved_authority_contact
+  - if !action_new? && @assignment.involved_authority&.contact
     .row
       .col-xs-12
         h4.m-b-10= t('assignment_pdf.creator_title')
@@ -62,9 +64,9 @@
               tr
                 td
                   = link_to_if policy(User).show?,
-                    @assignment.involved_authority_contact.full_name, @assignment.involved_authority
-                td= @assignment.involved_authority_contact.primary_email
-                td= @assignment.involved_authority_contact.primary_phone
+                    @assignment.involved_authority.contact.full_name, @assignment.involved_authority
+                td= @assignment.involved_authority.contact.primary_email
+                td= @assignment.involved_authority.contact.primary_phone
 
   .row
     .col-xs-12

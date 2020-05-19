@@ -291,9 +291,9 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     assert_field 'Vereinbarung erzeugen', checked: true
 
-    click_on 'Begleitung aktualisieren', match: :first
+    click_on 'Einsatz aktualisieren', match: :first
 
-    assert_text 'Begleitung wurde erfolgreich geändert.'
+    assert_text 'Einsatz wurde erfolgreich geändert.'
 
     within('.assignments-table') { click_on 'Bearbeiten' }
     click_on 'Herunterladen', match: :first
@@ -310,9 +310,9 @@ class GroupOffersTest < ApplicationSystemTestCase
     assert_field 'Vereinbarung überschreiben', checked: false
 
     fill_in 'Wie oft?', with: 'weekly'
-    click_on 'Begleitung aktualisieren', match: :first
+    click_on 'Einsatz aktualisieren', match: :first
 
-    assert_text 'Begleitung wurde erfolgreich geändert.'
+    assert_text 'Einsatz wurde erfolgreich geändert.'
 
     within('.assignments-table') { click_on 'Bearbeiten' }
     click_on 'Herunterladen', match: :first
@@ -327,9 +327,9 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     visit edit_group_assignment_path(group_assignment)
     check 'Vereinbarung überschreiben'
-    click_on 'Begleitung aktualisieren', match: :first
+    click_on 'Einsatz aktualisieren', match: :first
 
-    assert_text 'Begleitung wurde erfolgreich geändert.'
+    assert_text 'Einsatz wurde erfolgreich geändert.'
 
     within('.assignments-table') { click_on 'Bearbeiten' }
     click_on 'Herunterladen', match: :first

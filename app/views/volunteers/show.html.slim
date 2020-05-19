@@ -25,7 +25,7 @@ h2.small Persönlicher Hintergrund
 .row
     .col-xs-12.col-md-4
       fieldset
-        = show_status_date(@volunteer, true, :created_at, :invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at)
+        = render 'acceptance_at_list', volunteer: @volunteer
 .table-responsive
   table.table.table-no-border-top
     tbody
@@ -94,6 +94,18 @@ h2.small Persönlicher Hintergrund
           tr
             td= t_attr(:additional_comments_internal)
             td= @volunteer.additional_comments
+
+      tr
+        td #{t_attr(:how_have_you_heard_of_aoz)}
+        td
+          ul
+          - @volunteer.how_have_you_heard_of_aoz.each do |heard_from|
+            li= t("activerecord.attributes.volunteer.how_have_you_heard_of_aozs.#{heard_from}")
+
+          - if @volunteer.how_have_you_heard_of_aoz_other.present?
+            div
+              strong Anderes:
+              span<>= @volunteer.how_have_you_heard_of_aoz_other
 
 .row
   .col-xs-6

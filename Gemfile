@@ -67,6 +67,8 @@ group :development do
   gem 'rcodetools', require: false
   gem 'reek', require: false
   gem 'rubocop', require: false
+  gem 'rubocop-minitest', require: false
+  gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'ruby-debug-ide', require: false
   gem 'ruby-lint', require: false

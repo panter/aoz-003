@@ -7,7 +7,7 @@ class GroupOffer < ApplicationRecord
   OFFER_TYPES = [:internal_offer, :external_offer].freeze
   OFFER_STATES = [:open, :partially_occupied, :full].freeze
 
-  belongs_to :department, optional: true
+  belongs_to :department, -> { with_deleted }, optional: true
   belongs_to :group_offer_category
   belongs_to :creator, -> { with_deleted }, class_name: 'User',
     inverse_of: 'group_offers'
@@ -22,9 +22,10 @@ class GroupOffer < ApplicationRecord
   has_many :group_assignment_logs
 
   has_many :hours, as: :hourable, dependent: :destroy
+  # TODO: Verify if both obsolete and then remove accordingly
   # obsolete?
   # has_many :feedbacks, as: :feedbackable, dependent: :destroy
-  has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
+  # has_many :trial_feedbacks, as: :trial_feedbackable, dependent: :destroy
 
   has_many :volunteers, through: :group_assignments
   has_many :volunteer_contacts, through: :volunteers, source: :contact
@@ -75,6 +76,7 @@ class GroupOffer < ApplicationRecord
   }
 
   scope :terminated, (-> { field_not_nil(:period_end_set_by) })
+  scope :unterminated, -> { field_nil(:period_end_set_by) }
 
   def terminatable?
     group_assignments.unterminated.none?
@@ -120,14 +122,14 @@ class GroupOffer < ApplicationRecord
   end
 
   def to_label
-    label = "#{I18n.t('activerecord.models.group_offer')} - #{title} - #{group_offer_category}"
+    label = "#{model_name.human} - #{title} - #{group_offer_category}"
     label += " - #{department}" if department_id?
     label
   end
 
   def label_parts
     [
-      I18n.t('activerecord.models.group_offer'),
+      model_name.human,
       title,
       group_offer_category.to_s,
       department&.to_s

@@ -5,6 +5,18 @@ module AcceptanceAttributes
     before_save :record_acceptance_change
 
     ransacker :acceptance, formatter: ->(value) { acceptances[value] }
+
+    def acceptances_at_list(with_submittor: false)
+      slice_keys = %i[invited_at accepted_at undecided_at rejected_at resigned_at]
+      slice_keys += %i[created_at] if undecided_at.blank?
+      slice(*slice_keys).compact.to_a.sort_by(&:last).map do |key, datetime|
+        {
+          attribute: self.class.human_attribute_name(key),
+          datetime: datetime,
+          user: public_send("#{key.remove('_at')}_by".to_sym)
+        }
+      end
+    end
   end
 
   class_methods do

@@ -88,6 +88,7 @@ FactoryBot.define do
       elsif volunteer.salutation == 'mr'
         volunteer.contact.first_name = I18n.t('faker.name.male_first_name').sample
       end
+      volunteer.birth_year = Faker::Date.birthday(min_age: 18, max_age: 99) unless volunteer.birth_year
     end
 
     factory :volunteer_with_user do
@@ -102,6 +103,7 @@ FactoryBot.define do
 
     factory :volunteer_external, traits: [:external]
     factory :volunteer_internal, traits: [:internal]
+    factory :volunteer_common, traits: %i[internal with_language_skills faker_extra zuerich]
     factory :volunteer_z, traits: [:zuerich]
 
     factory(

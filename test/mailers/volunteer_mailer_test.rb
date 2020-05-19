@@ -6,20 +6,6 @@ class VolunteerMailerTest < ActionMailer::TestCase
     @email_template = create :email_template
   end
 
-  test 'trial_period_mailer' do
-    _, _, group_assignments = create_group_offer_entity(
-      nil, 7.weeks.ago, nil, create(:volunteer), create(:volunteer)
-    )
-    assignment = make_assignment(start_date: 7.weeks.ago)
-    mailing = create_probation_mailing(*group_assignments, assignment)
-    mailing.reminder_mailing_volunteers.each do |rmv|
-      mailer = VolunteerMailer.public_send(mailing.kind, rmv).deliver
-      assert_equal rmv.process_template[:subject], mailer.subject
-      assert mailer.to.include? rmv.volunteer.contact.primary_email
-      assert_match rmv.process_template[:body], mailer.body.encoded
-    end
-  end
-
   test 'volunteer termination with confirmation data is sent correctly' do
     assignment = make_assignment(start_date: 8.months.ago, end_date: 2.days.ago)
     mailing = create_termination_mailing(assignment)

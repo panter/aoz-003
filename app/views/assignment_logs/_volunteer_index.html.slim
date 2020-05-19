@@ -54,8 +54,6 @@ table.table.table-striped.assignment-logs-table
         td.index-action-cell.hidden-print
           span
             - unless assignment.volunteer.external?
-              = link_to_if(policy(TrialFeedback).index?, t_title(:index, TrialFeedback),
-                polymorphic_path([assignment.volunteer, assignment, TrialFeedback])) { '' }
               = link_to_if(policy(Feedback).index?, t_title(:index, Feedback),
                 polymorphic_path([assignment.volunteer, assignment, Feedback])) { '' }
             = link_to_if(policy(Assignment).verify_termination?, 'Beendigungsformular',

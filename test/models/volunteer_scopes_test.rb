@@ -59,13 +59,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     refute query.include? created200
   end
 
-  test 'with hours only returns volunteers that have hours' do
-    create :hour, hourable: @start_60_days_ago, volunteer: @has_assignment, hours: 4
-    query = Volunteer.with_hours
-    assert query.include? @has_assignment
-    refute query.include? @has_inactive
-  end
-
   test 'has_assignments returns only the ones that have assignments' do
     query = Volunteer.with_assignments.distinct
     assert query.include? @has_assignment
@@ -109,15 +102,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? @has_multiple
     assert query.include? @has_inactive
     assert query.include? @no_assignment
-    refute query.include? @group_offer_member
-  end
-
-  test 'without_active_assignment.not_in_any_group_offer' do
-    query = Volunteer.without_active_assignment.not_in_any_group_offer
-    refute query.include? @has_assignment
-    assert query.include? @has_multiple
-    assert query.include? @has_inactive
-    refute query.include? @no_assignment
     refute query.include? @group_offer_member
   end
 
@@ -227,28 +211,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     assert query.include? started_within_end_within
   end
 
-  test 'without_group_offer' do
-    with_active = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: true))
-      ]
-    with_inactive = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: false))
-      ]
-    with_active_and_inactive = create :volunteer,
-      group_assignments: [
-        GroupAssignment.create(group_offer: create(:group_offer, active: true)),
-        GroupAssignment.create(group_offer: create(:group_offer, active: false))
-      ]
-    without_group_offers = create :volunteer
-    query = Volunteer.without_group_offer
-    refute query.include? with_active
-    refute query.include? with_active_and_inactive
-    refute query.include? with_inactive
-    assert query.include? without_group_offers
-  end
-
   test 'external' do
     external = create :volunteer, external: true
     internal = create :volunteer, external: false
@@ -263,54 +225,6 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     query = Volunteer.internal
     refute query.include? external
     assert query.include? internal
-  end
-
-  test 'with_assignment_6_months_ago' do
-    started_before_no_end = create :volunteer
-    make_assignment(start_date: 10.months.ago, volunteer: started_before_no_end)
-    started_before_end_after = create :volunteer
-    make_assignment(start_date: 10.months.ago, end_date: 2.months.ago,
-      volunteer: started_before_end_after)
-    started_after_no_end = create :volunteer
-    make_assignment(start_date: 2.months.ago, volunteer: started_after_no_end)
-    no_start_end_set = create :volunteer
-    make_assignment(volunteer: no_start_end_set)
-    no_assignment = create :volunteer
-    query = Volunteer.with_assignment_6_months_ago
-    assert query.include? started_before_no_end
-    assert query.include? started_before_end_after
-    refute query.include? started_after_no_end
-    refute query.include? no_start_end_set
-    refute query.include? no_assignment
-  end
-
-  test 'with_assignment_ca_6_weeks_ago' do
-    started_before_no_end = create :volunteer
-    make_assignment(start_date: 9.weeks.ago, volunteer: started_before_no_end)
-    started_before_end_after = create :volunteer
-    make_assignment(start_date: 10.months.ago, end_date: Time.zone.today + 10,
-      volunteer: started_before_end_after)
-    started_five_weeks_ago = create :volunteer
-    make_assignment(start_date: 5.weeks.ago, volunteer: started_five_weeks_ago)
-    started_six_weeks_ago = create :volunteer
-    make_assignment(start_date: 6.weeks.ago, volunteer: started_six_weeks_ago)
-    started_seven_weeks_ago = create :volunteer
-    make_assignment(start_date: 7.weeks.ago, volunteer: started_seven_weeks_ago)
-    started_eight_weeks_ago = create :volunteer
-    make_assignment(start_date: 8.weeks.ago, volunteer: started_eight_weeks_ago)
-    no_start_end_set = create :volunteer
-    make_assignment(volunteer: no_start_end_set)
-    no_assignment = create :volunteer
-
-    query = Volunteer.with_assignment_ca_6_weeks_ago
-    refute query.include? started_before_no_end
-    refute query.include? started_before_end_after
-    refute query.include? started_five_weeks_ago
-    assert query.include? started_six_weeks_ago
-    assert query.include? started_seven_weeks_ago
-    assert query.include? started_eight_weeks_ago
-    refute query.include? no_start_end_set
-    refute query.include? no_assignment
   end
 
   test 'active_only_returns_accepted_volunteers_that_have_an_active_assignment' do
@@ -370,58 +284,12 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     end
   end
 
-  # test 'allready_has_billing_expense_for_semester_adds_hours_in_semester_not_in_billing_list' do
-  #   travel_to time_z(2017, 7, 5)
-  #   volunteer = create :volunteer_with_user
-  #   assignment = create :assignment, volunteer: volunteer
-  #   creator = assignment.creator
-  #   volunteer.reload
-  #   hours_before = ['2017-01-10', '2017-04-08', '2017-05-20'].map.with_index do |date, index|
-  #     create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: time_z(date),
-  #       hours: index + 1)
-  #   end
-  #   assert_includes Volunteer.with_billable_hours('2016-12-01'), volunteer
-  #   assert_equal 6.0, Volunteer.with_billable_hours('2016-12-01').to_a.first.total_hours
-  #   assert_equal 6, hours_before.map(&:hours).sum
-  #   BillingExpense.create_for!(Volunteer.with_billable_hours('2016-12-01'), creator, '2016-12-01')
-  #   assert Volunteer.with_billable_hours('2016-12-01').blank?
-  #   hours_after = ['2017-01-11', '2017-04-09', '2017-05-21'].map.with_index do |date, index|
-  #     create(:hour, volunteer: volunteer, hourable: assignment, meeting_date: time_z(date),
-  #       hours: index + 1)
-  #   end
-  #   assert_not_includes Volunteer.with_billable_hours('2016-12-01'), volunteer
-  #   assert_includes Volunteer.with_billable_hours, volunteer
-  # end
-
-  test 'with_registered_user returns volunteers where password is set for user' do
-    volunteer_without_user1 = create :volunteer, :external
-    volunteer_without_user2 = create :volunteer, :external
-    volunteer_with_user1 = create :volunteer_with_user
-    volunteer_with_user2 = create :volunteer_with_user
-
-    # faking user sign in by setting last_sign_in_at an arbitrary date
-    volunteer_with_user1.user.update last_sign_in_at: Time.now
-    volunteer_with_user2.user.update last_sign_in_at: Time.now
-
-    assert_nil volunteer_without_user1.user
-    assert_nil volunteer_without_user2.user
-    assert volunteer_with_user1.user.present?
-    assert volunteer_with_user2.user.present?
-
-    volunteers_with_user = Volunteer.with_actively_registered_user
-
-    assert_includes volunteers_with_user, volunteer_with_user1
-    assert_includes volunteers_with_user, volunteer_with_user2
-    assert_not_includes volunteers_with_user, volunteer_without_user1
-    assert_not_includes volunteers_with_user, volunteer_without_user2
-  end
-
   test 'process returns volunteers filtered by acceptance or account status' do
     # clean existing volunteers first created by setup
     Volunteer.destroy_all
 
     # load test data
-    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs, waive: true)
+    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs, waive: true, birth_year: '1975-05-05')
     Volunteer.acceptance_collection.each do |acceptance|
       volunteer = create :volunteer, acceptance: acceptance
       instance_variable_set("@volunteer_#{acceptance}", volunteer)
@@ -430,7 +298,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     # test volunteers by acceptance
     Volunteer.acceptance_collection.each do |acceptance|
       volunteer = instance_variable_get("@volunteer_#{acceptance}")
-      volunteers = Volunteer.process_eq(acceptance)
+      volunteers = Volunteer.public_send(acceptance)
       other_acceptances = Volunteer.acceptance_collection - [acceptance]
 
       assert_includes volunteers, volunteer
@@ -443,7 +311,7 @@ class VolunteerScopesTest < ActiveSupport::TestCase
 
     # special case for volunteers whose haven't logged in
     @volunteer_not_logged_in.invite_user
-    volunteers = Volunteer.process_eq('havent_logged_in')
+    volunteers = Volunteer.invited_but_never_logged_in
     assert_includes volunteers, @volunteer_not_logged_in
   end
 end

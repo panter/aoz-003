@@ -36,8 +36,14 @@ class DepartmentsController < ApplicationController
   end
 
   def destroy
-    @department.destroy
-    redirect_to departments_url, make_notice
+    if @department.destroy
+      redirect_to departments_url, make_notice
+    else
+      redirect_to department_path(@department), notice: {
+        message: 'Standort kann noch nicht gelöscht werden.',
+        model_message: @department.errors.messages.values.flatten.join('; ')
+      }.stringify_keys
+    end
   end
 
   private

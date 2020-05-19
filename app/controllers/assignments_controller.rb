@@ -210,10 +210,11 @@ class AssignmentsController < ApplicationController
       :performance_appraisal_review, :probation_period, :home_visit,
       :first_instruction_lesson, :termination_submitted_at, :terminated_at,
       :term_feedback_activities, :term_feedback_problems, :term_feedback_success,
-      :term_feedback_transfair, :comments, :additional_comments,
+      :term_feedback_aoz, :comments, :additional_comments,
       :agreement_text, :assignment_description, :frequency, :trial_period_end, :duration,
       :special_agreement, :first_meeting, :remaining_hours, :generate_pdf,
-      volunteer_attributes: [:waive, :iban, :bank]
+      volunteer_attributes: [:waive, :iban, :bank],
+      trial_period_attributes: [:id, :end_date]
     )
   end
 end
