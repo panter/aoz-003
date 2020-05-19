@@ -155,7 +155,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert_text @inactive.title
-      assert_text find('tr', text: 'active_group_offer', visible: false)
+      assert page.has_css?('tr', text: 'active_group_offer', visible: false)
     end
   end
 

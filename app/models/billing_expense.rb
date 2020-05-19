@@ -19,10 +19,10 @@ class BillingExpense < ApplicationRecord
 
   FINAL_AMOUNT_SQL = "CASE WHEN overwritten_amount IS NULL THEN amount ELSE overwritten_amount END".freeze
   scope :sort_by_final_amount_asc, lambda {
-    order("#{FINAL_AMOUNT_SQL} asc")
+    order(Arel.sql("#{FINAL_AMOUNT_SQL} asc"))
   }
   scope :sort_by_final_amount_desc, lambda {
-    order("#{FINAL_AMOUNT_SQL} desc")
+    order(Arel.sql("#{FINAL_AMOUNT_SQL} desc"))
   }
 
   AMOUNT = [50, 100, 150].freeze

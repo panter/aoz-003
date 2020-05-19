@@ -54,7 +54,7 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_text? '555'
     assert page.has_text? 'This bogus test name'
     assert page.has_text? 'The Testology Institute'
-    assert page.has_text? 'Bold or not bold, that is this tests Question? both'
+    assert page.has_text? 'Bold or not bold, that is this tests Question?'
   end
 
   test 'show_certificate_has_tandem_only_once' do

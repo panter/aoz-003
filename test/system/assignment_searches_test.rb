@@ -37,7 +37,9 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
   # VOLUNTEER SEARCH
   test 'basic_non_suggests_volunteer_search_works' do
     fill_in name: 'q[volunteer_contact_full_name_cont]', with: 'Whi'
-    click_button 'Freiwillige Suchen'
+    wait_for_ajax
+    page.find_field(name: 'q[volunteer_contact_full_name_cont]').native.send_keys(:tab, :enter)
+    visit current_url
     assert_text @assignment1.volunteer.contact.full_name
     assert_text @assignment3.volunteer.contact.full_name
     refute_text @assignment2.volunteer.contact.full_name
@@ -66,7 +68,9 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
   # ClIENT SEARCH
   test 'basic_non_suggests_client_search_works' do
     fill_in name: 'q[client_contact_full_name_cont]', with: 'R'
-    click_button 'Klient/innen Suchen'
+    wait_for_ajax
+    page.find_field(name: 'q[client_contact_full_name_cont]').native.send_keys(:tab, :enter)
+    visit current_url
     assert_text @assignment2.client.contact.full_name
     assert_text @assignment3.client.contact.full_name
     refute_text @assignment1.client.contact.full_name

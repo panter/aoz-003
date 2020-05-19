@@ -32,7 +32,7 @@ fieldset {
     padding: 6px 12px;
 
     &:focus {
-      @extend .form-control:focus;
+      @extend .form-control, :focus;
     }
   }
 

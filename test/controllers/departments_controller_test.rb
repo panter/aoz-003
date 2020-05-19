@@ -2,29 +2,12 @@ require 'test_helper'
 
 class DepartmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    Department.destroy_all
     @superadmin = create :user, :with_clients,
       :with_department, role: 'superadmin'
     @social_worker = create :user, :with_clients,
       :with_department, role: 'social_worker'
     @department_manager = create :department_manager
-  end
-
-  test 'superadmin can submit user associations' do
-    login_as @superadmin
-    params = {
-      department: {
-        user_ids: [
-          User.where(role: 'superadmin').last.id,
-          User.where(role: 'department_manager').last.id,
-          ''
-        ],
-        contact_attributes: { last_name: 'asdf' }
-      },
-      commit: 'Create Department'
-    }
-    assert_difference 'Department.count', 1 do
-      post departments_path, params: params
-    end
   end
 
   test 'superadmin can update user_ids' do

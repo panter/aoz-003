@@ -181,16 +181,14 @@ class UsersTest < ApplicationSystemTestCase
     click_on 'Login bearbeiten'
     fill_in 'Passwort', with: volunteer_password
     click_on 'Login aktualisieren'
-
-    assert_text "#{volunteer} Bearbeiten Ausdrucken Persönlicher Hintergrund"
+    assert_text 'Profil wurde erfolgreich aktualisiert.'
 
     click_on volunteer.user
     click_on 'Abmelden'
     fill_in 'Email', with: volunteer.user.email
     fill_in 'Passwort', with: volunteer_password
     click_on 'Anmelden'
-
-    assert_text "#{volunteer} Bearbeiten Ausdrucken Persönlicher Hintergrund"
+    assert_text 'Erfolgreich angemeldet.'
   end
 
   test 'superadmin can change password of other users' do

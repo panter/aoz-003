@@ -35,9 +35,9 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     click_link 'Bitte klicken Sie hier um diesen zu bestätigen'
     submit_feedback(@spv)
     visit volunteer_path(@volunteer)
-    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.', wait: 1
     visit root_path
-    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.', wait: 1
   end
 
   test 'volunteer hours should appear in asc order' do
@@ -53,7 +53,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     visit root_path
     assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
     click_link 'Bitte klicken Sie hier um diesen zu bestätigen'
-    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.', wait: 1
   end
 
   test 'by default, you should have not accepted the data' do
@@ -88,9 +88,11 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     fill_in 'Bank', with: ''
     click_on 'Bestätigen', match: :first
     assert_text 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
-    within '#volunteer-update-waive-and-iban' do
-      assert_text 'Name der Bank darf nicht leer sein'
-      assert_text 'IBAN darf nicht leer sein'
+    within '.form-group.semester_process_volunteer_volunteer_iban' do
+      assert_text 'darf nicht leer sein'
+    end
+    within '.form-group.semester_process_volunteer_volunteer_bank' do
+      assert_text 'darf nicht leer sein'
     end
   end
 

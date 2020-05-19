@@ -4,9 +4,11 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :user
     @group_offer = create :group_offer
-    @ga1 = create :group_assignment, group_offer: @group_offer, period_start: 3.months.ago,
+    @volunteer1 = create :volunteer
+    @ga1 = create :group_assignment, group_offer: @group_offer, volunteer: @volunteer1, period_start: 3.months.ago,
       responsible: true
-    @ga2 = create :group_assignment, group_offer: @group_offer, period_start: 5.months.ago,
+    @volunteer2 = create :volunteer
+    @ga2 = create :group_assignment, group_offer: @group_offer, volunteer: @volunteer2, period_start: 5.months.ago,
       responsible: false
   end
 
@@ -44,11 +46,10 @@ class RemoveVolunteerGroupOffersTest < ApplicationSystemTestCase
     @ga1.reload
     visit group_offer_path(@group_offer)
     within '.assignments-table' do
-      assert page.has_text? "#{@ga1.volunteer.contact.full_name} "\
-        "#{@ga1.responsible ? 'Verantwortliche/r' : 'Mitglied'} #{I18n.l(@ga1.period_start)}"\
-        " #{I18n.l(@ga1.period_end)} "
+      assert_text @volunteer1.contact.full_name
+      assert_text "Verantwortliche/r #{I18n.l(@ga1.period_start)} #{I18n.l(@ga1.period_end)}"
       refute page.has_link? 'Heute beenden',
-        href: set_end_today_group_assignment_path(@ga1, redirect_to: group_offer_path(@group_offer))
+        href: set_end_today_group_assignment_path(@ga1, redirect_to: group_offer_path(@group_offer)), wait: 1
       assert page.has_link? 'Beendigungsformular an Freiwillige/n',
         href: polymorphic_path([@ga1, ReminderMailing], action: :new_termination)
     end
