@@ -35,7 +35,7 @@ class AdminResetUserPasswordTest < ApplicationSystemTestCase
     volunteer = create :volunteer_internal, acceptance: :undecided
     volunteer.contact.update!(primary_email: 'volunteer@aoz.ch')
     volunteer.accepted!
-    login_as(@admin)
+    form_login_user(@admin, @comon_pw)
     update_users_password(volunteer.user, @common_changed_pw, email: 'volunteer@aoz.ch')
     sign_out_logged_in_user(@admin)
     form_login_user(volunteer.user, @common_changed_pw, email: 'volunteer@aoz.ch')

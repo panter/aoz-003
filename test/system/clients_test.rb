@@ -40,8 +40,8 @@ class ClientsTest < ApplicationSystemTestCase
       select('Onkel', from: 'Verwandtschaftsbeziehung')
     end
     fill_in 'Inhalte der Begleitung', with: 'asdfasdf'
-    select("egal", from: "Geschlecht Freiwillige/r")
-    select('36 - 50', from: "Alter Freiwillige/r")
+    select('egal', from: 'Geschlecht Freiwillige/r')
+    select('36 - 50', from: 'Alter Freiwillige/r')
     fill_in 'Andere Anforderungen', with: 'asdfasdf'
     fill_in 'Beruf oder Ausbildung im Herkunftsland', with: 'asdfasdf'
     fill_in 'Aktuelle Tätigkeiten', with: 'asdfasdf'
@@ -147,8 +147,13 @@ class ClientsTest < ApplicationSystemTestCase
 
   test 'client cannot be terminated if has active missions' do
     client = create :client
-    assignment1 = create :assignment, client: client, period_start: 3.weeks.ago, period_end: 2.days.ago, period_end_set_by: @superadmin
-    assignment2 = create :assignment, client: client, period_start: 3.weeks.ago, period_end: nil
+    create :assignment, client: client,
+                        period_start: 3.weeks.ago,
+                        period_end: 2.days.ago,
+                        period_end_set_by: @superadmin
+    assignment2 = create :assignment, client: client,
+                                      period_start: 3.weeks.ago,
+                                      period_end: nil
     refute client.resigned?
 
     login_as @superadmin
@@ -262,13 +267,14 @@ class ClientsTest < ApplicationSystemTestCase
 
   def create_clients_for_index_text_check
     with_assignment = create :client, comments: 'with_assignment',
-                              competent_authority: 'assigned_authority',
-                              goals: 'assigned_goals', interests: 'assigned_interests'
+                                      competent_authority: 'assigned_authority',
+                                      goals: 'assigned_goals', interests: 'assigned_interests'
     create :assignment, volunteer: create(:volunteer), client: with_assignment
     with_assignment.update(created_at: 2.days.ago)
     without_assignment = create :client, comments: 'without_assignment',
-                                competent_authority: 'unassigned_authority',
-                                goals: 'unassigned_goals', interests: 'unassigned_interests'
+                                         competent_authority: 'unassigned_authority',
+                                         goals: 'unassigned_goals',
+                                         interests: 'unassigned_interests'
     without_assignment.update(created_at: 4.days.ago)
     [with_assignment, without_assignment]
   end
@@ -342,7 +348,7 @@ class ClientsTest < ApplicationSystemTestCase
   test 'no user can destroy client with assignment associated' do
     [@superadmin, @department_manager, @social_worker].each do |user|
       client = create :client, user: user
-      assignment = create :assignment, client: client
+      create :assignment, client: client
       client_css = "##{dom_id client}"
       login_as user
 

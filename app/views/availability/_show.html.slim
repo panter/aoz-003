@@ -1,13 +1,15 @@
 h4.label-list
-  - availability_collection.each do |availability|
-    - if available.read_attribute(availability)
-      span.label.label-success>
-        => icon_span(:yes)
-        = t("availability.#{availability}")
-    - else
-      span.label.label-danger>
-        => icon_span(:no)
-        = t("availability.#{availability}")
+.row
+  .col-xs-12.availability-label-list
+    - availability_collection.each do |availability|
+      - if available.read_attribute(availability)
+        span.label.label-success>
+          => icon_span(:yes)
+          = t("availability.#{availability}")
+      - else
+        span.label.label-danger>
+          => icon_span(:no)
+          = t("availability.#{availability}")
 
 .row
   .col-xs-12

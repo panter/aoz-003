@@ -273,7 +273,7 @@ class GroupOffersTest < ApplicationSystemTestCase
   end
 
   test 'creates/updates group assignment PDF when requested' do
-    # use_rack_driver
+    use_rack_driver
 
     pdf_date = 1.week.ago
     travel_to pdf_date
@@ -285,7 +285,7 @@ class GroupOffersTest < ApplicationSystemTestCase
 
     assert_text 'Gruppenangebot' # only here to avoid waiting with refute
     within '.assignments-table' do
-       refute_link 'Herunterladen', wait: 0
+      refute_link 'Herunterladen', wait: 0
     end
 
     # create initial PDF

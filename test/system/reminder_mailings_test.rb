@@ -7,13 +7,13 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     @volunteer_assignment = create :volunteer_with_user
     @group_offer = create :group_offer
     @volunteer_group_offer = create :volunteer_with_user
-    @volunteer_assignment.user.update(last_sign_in_at: Time.now)
-    @volunteer_group_offer.user.update(last_sign_in_at: Time.now)
+    @volunteer_assignment.user.update(last_sign_in_at: Time.zone.now)
+    @volunteer_group_offer.user.update(last_sign_in_at: Time.zone.now)
   end
 
   test 'assignment_elegible_for_termination_reminder_mailing_are_includable' do
     @assignment = create :assignment, period_start: 7.weeks.ago, period_end: nil,
-      volunteer: @volunteer_assignment
+                                      volunteer: @volunteer_assignment
     create :email_template_termination
     login_as @superadmin
     visit edit_assignment_path(@assignment)
@@ -30,45 +30,53 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     assert page.has_current_path? terminated_index_assignments_path
 
     within '.table-responsive' do
-      click_link 'Beendigungs Email erstellen', href: new_termination_assignment_reminder_mailings_path(@assignment)
+      click_link 'Beendigungs Email erstellen',
+                 href: new_termination_assignment_reminder_mailings_path(@assignment)
     end
 
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
-    assert page.has_link? @volunteer_assignment.contact.full_name, href: edit_volunteer_path(@volunteer_assignment)
+    assert page.has_link? @volunteer_assignment.contact.full_name,
+                          href: edit_volunteer_path(@volunteer_assignment)
 
     fill_in 'Betreff', with: 'Erinnerung fuer Beendigung des Einsatzes: %{Einsatz}'
     fill_in 'Text', with: 'Hallo %{Anrede} %{Name} %{EinsatzStart}'
 
     first('input[type="submit"]').click
 
-    assert page.has_text? 'Erinnerungs-Mailing wurde erfolgreich erstellt.'
-    assert page.has_text? 'Art Abschlussevaluation'
-    assert page.has_text? 'Status Nicht versandt'
+    assert_text 'Erinnerungs-Mailing wurde erfolgreich erstellt.'
+    assert_text 'Art Abschlussevaluation', normalize_ws: true
+    assert_text 'Status Nicht versandt', normalize_ws: true
 
-    assert page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.first.process_template[:subject])
-    assert page.has_text?(@volunteer_assignment.reminder_mailing_volunteers.last.process_template[:body])
+    assert_text @volunteer_assignment.reminder_mailing_volunteers.first.process_template[:subject]
+    assert_text @volunteer_assignment.reminder_mailing_volunteers.last.process_template[:body]
 
     assert page.has_link? @volunteer_assignment.contact.full_name,
-      href: volunteer_path(@volunteer_assignment)
+                          href: volunteer_path(@volunteer_assignment)
     assert page.has_link? @assignment.to_label, href: assignment_path(@assignment)
     click_link 'Email versenden'
     creator = ReminderMailing.order('created_at asc').last.creator
     assert page.has_link? creator.full_name
 
     first_mailing = ReminderMailing.created_desc.first
-    assert page.has_text? "#{I18n.l(first_mailing.updated_at.to_date)} #{I18n.l(first_mailing.created_at.to_date)}"
+    assert_text [I18n.l(first_mailing.updated_at.to_date),
+                 I18n.l(first_mailing.created_at.to_date)].join(' ')
   end
 
   test 'termination_mailing_for_group_assignment_termination_is_sent' do
-    group_assignment = create :group_assignment, period_start: 2.months.ago, period_end: 2.days.ago,
-      period_end_set_by: @superadmin, volunteer: create(:volunteer)
+    group_assignment = create :group_assignment, period_start: 2.months.ago,
+                                                 period_end: 2.days.ago,
+                                                 period_end_set_by: @superadmin,
+                                                 volunteer: create(:volunteer)
     group_offer = group_assignment.group_offer
 
-    termination_reminder = create :reminder_mailing, kind: :termination,
+    termination_reminder = create(
+      :reminder_mailing,
+      kind: :termination,
       reminder_mailing_volunteers: [group_assignment],
       subject: 'Beendigung %{Einsatz}',
       body: '%{Anrede} %{Name} %{FeedbackLink} %{Einsatz} %{EmailAbsender} '\
             '%{EinsatzStart} %{InvalidKey}Gruss, AOZ'
+    )
     login_as @superadmin
 
     # ignore invitation mails from factories
@@ -76,7 +84,7 @@ class ReminderMailingsTest < ApplicationSystemTestCase
 
     visit polymorphic_path([group_assignment, termination_reminder], action: :send_termination)
 
-    assert page.has_text? 'Beendigungs-Email wird versendet.'
+    assert_text 'Beendigungs-Email wird versendet.'
 
     termination_reminder.reload
     assert termination_reminder.sending_triggered, 'Sending on the mailer was not triggered'
@@ -86,9 +94,10 @@ class ReminderMailingsTest < ApplicationSystemTestCase
     mail_body = mailer.text_part.body.encoded
 
     assert_equal "Beendigung Gruppenangebot #{group_offer.title} (#{group_offer.department})",
-      mailer.subject
+                 mailer.subject
 
-    assert_includes mail_body, "#{group_assignment.volunteer.contact.natural_name} Abschlussevaluations-Feedback erstellen"
+    assert_includes mail_body, [group_assignment.volunteer.contact.natural_name,
+                                'Abschlussevaluations-Feedback erstellen'].join(' ')
     assert_includes mail_body, "#{I18n.l group_assignment.period_start} Gruss, AOZ"
     refute_includes mailer.subject, '%{'
     refute_includes mail_body, '%{'

@@ -47,12 +47,14 @@ class ProfilesTest < ApplicationSystemTestCase
     assert_text 'Hans'
     assert_text 'Muster'
 
-    assert_text 'Nein Flexibel'
-    assert_text 'Ja Morgens'
-    assert_text 'Nein Nachmittags'
-    assert_text 'Nein Abends'
-    assert_text 'Nein Werktags'
-    assert_text 'Nein Wochenende'
+    within '.availability-label-list' do
+      assert_css 'span.label.label-danger', text: 'Flexibel'
+      assert_css 'span.label.label-success', text: 'Morgens'
+      assert_css 'span.label.label-danger', text: 'Nachmittags'
+      assert_css 'span.label.label-danger', text: 'Abends'
+      assert_css 'span.label.label-danger', text: 'Werktags'
+      assert_css 'span.label.label-danger', text: 'Wochenende'
+    end
   end
 
   test 'when_profile_created_it_can_be_displayed' do

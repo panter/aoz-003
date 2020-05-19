@@ -17,9 +17,9 @@ class AssignmentsTest < ApplicationSystemTestCase
     page.find('.month', text: 'Jan').click
     page.find_all('.day', exact_text: '1').first.click
     page.find_all('input[type="submit"]').first.click
-    assert page.has_text? 'Begleitung wurde erfolgreich erstellt.'
-    assert page.has_link? @volunteer.contact.full_name
-    assert page.has_link? @client.contact.full_name
+    assert_text 'Begleitung wurde erfolgreich erstellt.'
+    assert_link @volunteer.contact.full_name
+    assert_link @client.contact.full_name
   end
 
   test 'assign unassigned client' do
@@ -45,7 +45,6 @@ class AssignmentsTest < ApplicationSystemTestCase
     assert_text 'Aktiv'
     assert_text @client
   end
-
 
   test 'assign multiple clients' do
     login_as @user
@@ -132,7 +131,8 @@ class AssignmentsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'social_worker can show and download assigment pdf when she is involved_authority of a client' do
+  test 'social_worker can show and download assigment pdf when '\
+       'she is involved_authority of a client' do
     use_rack_driver
 
     social_worker = create :social_worker
@@ -153,35 +153,36 @@ class AssignmentsTest < ApplicationSystemTestCase
     visit edit_assignment_path(another_assignment)
     click_button 'Begleitung aktualisieren', match: :first
     visit client_path(client)
-    assert page.has_link? 'Herunterladen'
+    assert_link 'Herunterladen'
     visit client_path(another_assignment.client)
-    assert page.has_link? 'Herunterladen'
+    assert_link 'Herunterladen'
 
     # check show page and pdf download via social worker
     login_as social_worker
 
     visit client_path(another_assignment.client)
-    assert_text another_assignment.client.contact.full_name # only to allow refute expectations to wait 0
+    # only to allow refute expectations to wait 0
+    assert_text another_assignment.client.contact.full_name
     refute page.has_link? 'Anzeigen', wait: 0
     refute page.has_link? 'Herunterladen', wait: 0
 
     visit client_path(client)
-    assert page.has_link? 'Anzeigen'
-    assert page.has_link? 'Herunterladen'
+    assert_link 'Anzeigen'
+    assert_link 'Herunterladen'
 
     click_link 'Anzeigen'
-    assert page.has_text? 'Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten'
-    assert page.has_text? "#{assignment.client.contact.primary_email}"
-    assert page.has_text? "#{assignment.volunteer.contact.primary_email}"
-    assert page.has_text? "#{assignment.involved_authority.contact.primary_email}"
+    assert_text 'Vereinbarung zwischen AOZ, Freiwilligen und Begleiteten'
+    assert_text assignment.client.contact.primary_email.to_s
+    assert_text assignment.volunteer.contact.primary_email.to_s
+    assert_text assignment.involved_authority.contact.primary_email.to_s
 
     visit client_path(client)
     click_link 'Herunterladen'
     pdf = load_pdf(page.body)
     assert_equal 2, pdf.page_count
-    assert_match /#{assignment.client.contact.primary_email}/, pdf.pages.first.text
-    assert_match /#{assignment.volunteer.contact.primary_email}/, pdf.pages.first.text
-    assert_match /#{assignment.involved_authority.contact.primary_email}/, pdf.pages.first.text
+    assert_match(/#{assignment.client.contact.primary_email}/, pdf.pages.first.text)
+    assert_match(/#{assignment.volunteer.contact.primary_email}/, pdf.pages.first.text)
+    assert_match(/#{assignment.involved_authority.contact.primary_email}/, pdf.pages.first.text)
   end
 
   test 'assignments_print_view_is_not_paginated' do
