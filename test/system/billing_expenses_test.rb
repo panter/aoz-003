@@ -44,15 +44,15 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_link 'Herunterladen', count: 1
 
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 3.5 Stunden Fr. 50.00"
-    refute_text @volunteer2
-    refute_text @volunteer3
-    refute_text @volunteer4
+    refute_text @volunteer2, wait: 1
+    refute_text @volunteer3, wait: 1
+    refute_text @volunteer4, wait: 1
 
     click_link 'Semester: 1. Semester 2018'
     click_link '2. Semester 2017'
 
     assert_text "#{@volunteer4} #{@volunteer4.iban} 5.5 Stunden Fr. 50.00"
-    refute_text @volunteer1
+    refute_text @volunteer1, wait: 1
 
     click_link 'Semester: 2. Semester 2017'
     click_link 'Alle'
@@ -69,7 +69,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 37.5 Stunden Fr. 100.00"
     assert_text "#{@volunteer2} #{@volunteer2.iban} 4.5 Stunden Fr. 50.00"
     assert_text "#{@volunteer3} Keine IBAN angegeben 2.5 Stunden Fr. 50.00"
-    refute_text @volunteer4
+    refute_text @volunteer4, wait: 1
 
     check 'table-row-select-all'
 
@@ -83,14 +83,14 @@ class BillingExpensesTest < ApplicationSystemTestCase
     assert_text 'Spesenformulare wurden erfolgreich erstellt.'
     assert_text "#{@volunteer1} UBS, #{@volunteer1.iban} 37.5 Stunden Fr. 100.00"
     assert_text "#{@volunteer2} #{@volunteer2.iban} 4.5 Stunden Fr. 50.00"
-    refute_text @volunteer3
+    refute_text @volunteer3, wait: 1
 
     create :hour, volunteer: @volunteer1, hourable: @assignment1, hours: 1.5, meeting_date: @date
     click_link 'Spesenformulare erfassen'
-    refute_text @volunteer1
-    refute_text @volunteer2
+    refute_text @volunteer1, wait: 1
+    refute_text @volunteer2, wait: 1
     assert_text "#{@volunteer3} Keine IBAN angegeben 2.5 Stunden Fr. 50.00"
-    refute_text @volunteer4
+    refute_text @volunteer4, wait: 1
   end
 
   test 'new_billing_expense_respects_the_semester_filter' do
@@ -111,7 +111,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer2} #{volunteer2.iban} 26 Stunden Fr. 100.00 1. Semester 2018"
     assert_text "#{volunteer3} #{volunteer3.iban} 3 Stunden Fr. 50.00 1. Semester 2018"
-    refute_text volunteer1
+    refute_text volunteer1, wait: 1
 
     visit billing_expenses_path
 
@@ -120,7 +120,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Spesenformulare erfassen'
     assert_text "#{volunteer1} #{volunteer1.iban} 26 Stunden Fr. 100.00 2. Semester 2017"
     assert_text "#{volunteer2} #{volunteer2.iban} 15 Stunden Fr. 50.00 2. Semester 2017"
-    refute_text volunteer3
+    refute_text volunteer3, wait: 1
   end
 
   test 'creating_a_billing_expense_should_respect_semester_filter' do
@@ -170,7 +170,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
 
     assert_text "Spesenformulare für #{@volunteer1}"
     assert_text "UBS, #{@volunteer1.iban} 3.5 Stunden Fr. 50.00"
-    refute_text @volunteer4
+    refute_text @volunteer4, wait: 1
 
     assert_link 'Zurück', href: volunteer_path(@volunteer1)
   end
@@ -182,15 +182,15 @@ class BillingExpensesTest < ApplicationSystemTestCase
     click_link 'Anzeigen'
 
     assert_text "Spesenauszahlung an #{@volunteer1}"
-    assert_text 'Kostenstelle 3120000'
-    assert_text 'Konto 317000153'
-    assert_text 'zu überweisender Betrag Fr. 50.00'
-    assert_text "Nachname #{@volunteer1.contact.last_name}"
-    assert_text "Vorname #{@volunteer1.contact.first_name}"
-    assert_text "Strasse #{@volunteer1.contact.street}"
-    assert_text "PLZ / Ort #{@volunteer1.contact.postal_code}, #{@volunteer1.contact.city}"
-    assert_text "Name der Bank / IBAN UBS, #{@volunteer1.iban}"
-    assert_text "Zürich, #{I18n.l @billing_expense1.created_at.to_date, format: :long}"
+    assert_text 'Kostenstelle 3120000', normalize_ws: true
+    assert_text 'Konto 317000153', normalize_ws: true
+    assert_text 'zu überweisender Betrag Fr. 50.00', normalize_ws: true
+    assert_text "Nachname #{@volunteer1.contact.last_name}", normalize_ws: true
+    assert_text "Vorname #{@volunteer1.contact.first_name}", normalize_ws: true
+    assert_text "Strasse #{@volunteer1.contact.street}", normalize_ws: true
+    assert_text "PLZ / Ort #{@volunteer1.contact.postal_code}, #{@volunteer1.contact.city}", normalize_ws: true
+    assert_text "Name der Bank / IBAN UBS, #{@volunteer1.iban}", normalize_ws: true
+    assert_text "Zürich, #{I18n.l @billing_expense1.created_at.to_date, format: :long}", normalize_ws: true
   end
 
   test 'delete billing expenses' do
@@ -205,7 +205,7 @@ class BillingExpensesTest < ApplicationSystemTestCase
     end
 
     assert_text 'Spesenformular wurde erfolgreich gelöscht.'
-    refute_text @billing_expense1.volunteer
+    refute_text @billing_expense1.volunteer, wait: 1
   end
 
   test 'download_single_billing_expense' do
@@ -216,7 +216,8 @@ class BillingExpensesTest < ApplicationSystemTestCase
     pdf = load_pdf(page.body)
 
     assert_equal 1, pdf.page_count
-    assert_includes pdf.pages.first.text, "Spesenauszahlung an #{@volunteer1}"
+    assert_includes pdf.pages.first.text, @volunteer1.contact.last_name
+    assert_includes pdf.pages.first.text, @volunteer1.contact.first_name
   end
 
   # buggy test, commented out for now as it is not possible to test it locally
