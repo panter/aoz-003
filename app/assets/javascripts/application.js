@@ -21,6 +21,7 @@
 //= require bootstrap-treeview
 //= require cocoon
 //= require selectize
+//= require devbridge-autocomplete
 //
 //= require_tree .
 //= require global

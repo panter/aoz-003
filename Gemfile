@@ -7,7 +7,6 @@ end
 
 gem 'rails', '>= 5.2.0', '< 6.0.0'
 
-gem 'autocomplete_rails'
 gem 'bootsnap', require: false
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
