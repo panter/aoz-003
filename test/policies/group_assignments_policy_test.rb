@@ -43,19 +43,19 @@ class GroupAssignmentPolicyTest < PolicyAssertions::Test
     volunteer = create :volunteer
     volunteer_group_assignment =  create :group_assignment, volunteer: volunteer
     refute_permit(volunteer.user, GroupAssignment,
-      'show_comments?', *actions_list(
-        :verify_termination, :terminated_index, :edit, :set_end_today, :update
-      ))
+                  'show_comments?', *actions_list(
+                    :verify_termination, :terminated_index, :edit, :set_end_today, :update
+                  ))
     assert_permit(volunteer.user, volunteer_group_assignment,
-      *actions_list(
-        :terminate, :submit_feedback, :show, :update_terminated_at,
-        :last_submitted_hours_and_feedbacks, :hours_and_feedbacks_submitted
-      ))
+                  *actions_list(
+                    :terminate, :submit_feedback, :show, :update_terminated_at,
+                    :last_submitted_hours_and_feedbacks, :hours_and_feedbacks_submitted
+                  ))
     refute_permit(volunteer.user, create(:group_assignment),
-      'show_comments?', *actions_list(
-        :terminate, :submit_feedback, :show, :update_terminated_at,
-        :last_submitted_hours_and_feedbacks
-      ))
+                  'show_comments?', *actions_list(
+                    :terminate, :submit_feedback, :show, :update_terminated_at,
+                    :last_submitted_hours_and_feedbacks
+                  ))
   end
 
   private

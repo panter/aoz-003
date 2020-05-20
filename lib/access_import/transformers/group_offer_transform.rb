@@ -28,6 +28,7 @@ class GroupOfferTransform < Transformer
       location = group_assignments.first.import.store['freiwilligen_einsatz']['t_EinsatzOrt']
       offers_assignments = group_assignments.find_all { |ga| ga.group_offer_id.blank? }
       next if offers_assignments.blank? || offers_assignments.map(&:period_end).count(&:nil?).zero?
+
       title = offers_assignments.first.import.store['freiwilligen_einsatz']['t_Kurzbezeichnung']
       get_or_create_by_import(
         offers_assignments, location: location, title: title,
@@ -64,6 +65,7 @@ class GroupOfferTransform < Transformer
 
   def filter_non_unique_volunteer(group_assignments)
     return group_assignments if group_assignments.size < 2
+
     group_assignments.group_by(&:volunteer).flat_map do |_, g_assignments|
       not_terminated = g_assignments.find_all { |ga| !ga.terminated? }.sort_by(&:updated_at)
       [not_terminated.pop] + g_assignments.find_all(&:terminated?) +
@@ -82,6 +84,7 @@ class GroupOfferTransform < Transformer
 
   def find_group_offer_department(group_assignments)
     return if einsatz_ort_ids(group_assignments).compact.blank?
+
     @ac_import.department_transform.get_or_create_by_import(
       einsatz_ort_ids(group_assignments).compact.uniq.first
     )

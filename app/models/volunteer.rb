@@ -16,7 +16,7 @@ class Volunteer < ApplicationRecord
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
-  HOW_HAVE_YOU_HEARD_OF_AOZS = %i[internet_research friends announcment flyer].freeze
+  HOW_HAVE_YOU_HEARD_OF_AOZS = [:internet_research, :friends, :announcment, :flyer].freeze
 
   enum acceptance: { undecided: 0, invited: 1, accepted: 2, rejected: 3, resigned: 4 }
 
@@ -116,11 +116,12 @@ class Volunteer < ApplicationRecord
     joins(:contact).order('contacts.last_name ASC')
   }
 
-  scope :not_rejected_resigned, -> { where.not(acceptance: %i[rejected resigned]) }
+  scope :not_rejected_resigned, -> { where.not(acceptance: [:rejected, :resigned]) }
 
   scope :process_eq, lambda { |process|
     return unless process.present?
     return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
+
     where(acceptance: process)
   }
   scope :invited_but_never_logged_in, lambda {
@@ -175,7 +176,7 @@ class Volunteer < ApplicationRecord
   end
 
   def self.feedback_overdue(semester)
-    joins(:contact).where(id: have_semester_process(semester).where("semester_process_volunteers.commited_at IS NULL").ids)
+    joins(:contact).where(id: have_semester_process(semester).where('semester_process_volunteers.commited_at IS NULL').ids)
   end
 
   def unsubmitted_semester_feedbacks
@@ -208,7 +209,7 @@ class Volunteer < ApplicationRecord
   scope :activeness_ended, lambda {
     where(active: true)
       .where('volunteers.activeness_might_end IS NOT NULL AND volunteers.activeness_might_end < ?',
-        Time.zone.today)
+             Time.zone.today)
   }
   scope :active, lambda {
     accepted.activeness_not_ended.where(active: true)
@@ -306,7 +307,7 @@ class Volunteer < ApplicationRecord
     prob = semester.end.advance(weeks: -4)
     vol_with_missions = volunteers.select do |v|
       [v.assignments, v.group_assignments].detect do |mission|
-        mission.where("period_end IS NULL").where("period_start < ?", prob).any?
+        mission.where('period_end IS NULL').where('period_start < ?', prob).any?
       end
     end
     vol_with_missions
@@ -410,6 +411,7 @@ class Volunteer < ApplicationRecord
   def state
     return acceptance unless accepted?
     return :active if active?
+
     :inactive if inactive?
   end
 
@@ -501,6 +503,7 @@ class Volunteer < ApplicationRecord
 
   def how_have_you_heard_of_aoz=(value)
     return if value.blank?
+
     self[:how_have_you_heard_of_aoz] = if value.is_a?(Array)
                                          value.reject(&:blank?).join(',')
                                        else
@@ -641,11 +644,13 @@ class Volunteer < ApplicationRecord
     if User.exists?(email: contact.primary_email)
       return errors.add(:user, "Es existiert bereits ein User mit der Email #{contact.primary_email}!")
     end
+
     self.user = User.new(email: contact.primary_email, password: Devise.friendly_token, role: 'volunteer')
   end
 
   def user_invitation_needed?
     return if external? || user.present?
+
     will_save_change_to_attribute?(:acceptance, to: 'accepted') ||
       (import.present? && contact.will_save_change_to_attribute?(:primary_email))
   end

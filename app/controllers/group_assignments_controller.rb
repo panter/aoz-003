@@ -25,10 +25,10 @@ class GroupAssignmentsController < ApplicationController
     authorize @group_assignment
     if save_with_pdf @group_assignment, 'show.pdf'
       redirect_to request.referer || @group_assignment.group_offer,
-        notice: 'Freiwillige/r erfolgreich hinzugefügt.'
+                  notice: 'Freiwillige/r erfolgreich hinzugefügt.'
     else
       redirect_to request.referer || @group_assignment.group_offer,
-        notice: @group_assignment.errors.full_messages.first
+                  notice: @group_assignment.errors.full_messages.first
     end
   end
 
@@ -58,8 +58,10 @@ class GroupAssignmentsController < ApplicationController
     @last_submitted_feedbacks = @group_assignment.feedbacks_since_last_submitted
     @volunteer = @group_assignment.volunteer
     return if params[:rmv_id].blank?
+
     rmv = ReminderMailingVolunteer.find(params[:rmv_id].to_i)
     return if rmv.reminder_mailable != @group_assignment || rmv.volunteer.user != current_user
+
     rmv.update(link_visits: rmv.link_visits + 1)
   end
 
@@ -81,14 +83,14 @@ class GroupAssignmentsController < ApplicationController
 
   def update_terminated_at
     @group_assignment.assign_attributes(group_assignment_params.merge(
-      termination_submitted_at: Time.zone.now,
-      termination_submitted_by: current_user
-    ))
+                                          termination_submitted_at: Time.zone.now,
+                                          termination_submitted_by: current_user
+                                        ))
 
     if @group_assignment.save && terminate_reminder_mailing
       NotificationMailer.termination_submitted(@group_assignment).deliver_now
       redirect_to @group_assignment.volunteer,
-        notice: 'Der Gruppeneinsatz ist hiermit abgeschlossen.'
+                  notice: 'Der Gruppeneinsatz ist hiermit abgeschlossen.'
     else
       redirect_back(fallback_location: terminate_group_assignment_path(@group_assignment))
     end
@@ -114,6 +116,7 @@ class GroupAssignmentsController < ApplicationController
 
   def handle_period_end
     return unless @group_assignment.will_save_change_to_period_end?(from: nil)
+
     @group_assignment.period_end_set_by = current_user
     [
       'Einsatzende wurde erfolgreich gesetzt.',
@@ -123,7 +126,7 @@ class GroupAssignmentsController < ApplicationController
 
   def create_redirect(notice_text = nil, default_path = nil)
     redirect_to default_redirect || default_path || polymorphic_path(@group_assignment.group_offer),
-      notice: notice_text || make_notice[:notice]
+                notice: notice_text || make_notice[:notice]
   end
 
   def terminate_reminder_mailing
@@ -140,7 +143,7 @@ class GroupAssignmentsController < ApplicationController
   def create_update_redirect
     if @group_assignment.saved_change_to_period_end?(from: nil)
       redirect_to terminated_index_group_assignments_path,
-        notice: 'Die Einsatzbeendung wurde initiiert.'
+                  notice: 'Die Einsatzbeendung wurde initiiert.'
     else
       redirect_to @group_assignment.group_offer, make_notice
     end

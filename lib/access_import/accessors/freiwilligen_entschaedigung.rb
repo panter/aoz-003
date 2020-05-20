@@ -5,7 +5,7 @@ class FreiwilligenEntschaedigung < Accessor
 
   def sanitize_record(rec)
     rec = parse_int_fields(rec, :pk_FreiwilligenEntschädigung, :fk_PersonenRolle, :fk_Semester,
-      :z_Semesterjahr, :z_Jahr, :z_Einsätze, :z_Stunden, :z_Betrag, :z_Spesen, :z_KST, :z_AOZKonto)
+                           :z_Semesterjahr, :z_Jahr, :z_Einsätze, :z_Stunden, :z_Betrag, :z_Spesen, :z_KST, :z_AOZKonto)
     rec = parse_float_fields(rec, :z_Total)
     rec[:semester] = rec[:fk_Semester]
     parse_datetime_fields(rec, :d_MutDatum, :d_Datum).except(:fk_Semester)

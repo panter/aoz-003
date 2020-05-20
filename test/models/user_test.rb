@@ -31,7 +31,6 @@ class UserTest < ActiveSupport::TestCase
 
   test '#create_user_and_send_password_reset \
     with new email creates new superadmin' do
-
     assert_difference 'User.count', 1 do
       User.create_user_and_send_password_reset email: 'superadmin@example.com',
         role: 'superadmin'

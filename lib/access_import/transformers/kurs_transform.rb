@@ -16,11 +16,13 @@ class KursTransform < Transformer
   def get_or_create_by_import(kurs_id, kurs = nil)
     group_offer = get_import_entity(:group_offer, kurs_id)
     return group_offer if group_offer.present?
+
     kurs ||= @kurse.find(kurs_id)
     group_offer_category = @ac_import.kursart_transform.get_or_create_by_import(kurs[:fk_Kursart])
     group_offer = GroupOffer.new(prepare_attributes(kurs, group_offer_category))
     group_offer.group_assignments = fetch_group_assignments(kurs_id)
     return if group_offer.group_assignments.blank?
+
     group_offer.department = find_group_offer_department(group_offer.group_assignments)
     group_offer.save!
     group_offer
@@ -28,6 +30,7 @@ class KursTransform < Transformer
 
   def find_group_offer_department(group_assignments)
     return if einsatz_ort_ids(group_assignments).compact.blank?
+
     @ac_import.department_transform.get_or_create_by_import(
       einsatz_ort_ids(group_assignments).compact.uniq.first
     )
@@ -44,8 +47,10 @@ class KursTransform < Transformer
       einsaetze: @freiwilligen_einsaetze.where_kurs(kurs_id)
     ).compact
     return [] if group_assignments.blank?
+
     volunteer_ids = group_assignments.map(&:volunteer_id).uniq
     return group_assignments if volunteer_ids.size == group_assignments.size
+
     volunteer_ids.map do |volunteer_id|
       group_assignments.find { |group_assignment| group_assignment.volunteer_id == volunteer_id }
     end

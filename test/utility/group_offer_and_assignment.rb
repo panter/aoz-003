@@ -7,12 +7,14 @@ module GroupOfferAndAssignment
     )
     assignment.update(created_at: start_date) if start_date
     return assignment unless title
+
     instance_variable_set("@#{title}", assignment)
   end
 
   def make_volunteer(title, attributes = {})
     volunteer = create :volunteer, attributes
     return volunteer if title.nil?
+
     instance_variable_set("@#{title}", volunteer)
   end
 
@@ -26,6 +28,7 @@ module GroupOfferAndAssignment
     group_assignments = create_group_assignments(group_offer, start_date, end_date, *volunteers)
 
     return [group_offer, category, group_assignments] unless title
+
     instance_variable_set("@category_#{title}", category)
     instance_variable_set("@group_ass_#{title}", group_assignments)
     [group_offer, category, group_assignments]
@@ -43,6 +46,7 @@ module GroupOfferAndAssignment
     assignment = create_assignment(title && "a_#{title}", volunteer, client, start_date, end_date)
     assignment.update(created_at: start_date)
     return [volunteer, client, assignment] unless title
+
     instance_variable_set("@c_#{title}", client)
     instance_variable_set("@v_#{title}", volunteer)
   end
@@ -70,6 +74,7 @@ module GroupOfferAndAssignment
       necessary_volunteers: volunteer_count
     group_offer.update(created_at: start_date)
     return group_offer unless title
+
     instance_variable_set("@group_offer_#{title}", group_offer)
     group_offer
   end

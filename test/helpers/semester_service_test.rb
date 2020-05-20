@@ -12,7 +12,7 @@ class SemesterServiceTest < ActionView::TestCase
     assert_equal time_z(2017, 12, 1), subject.context
   end
 
-  test '#preselect_semester' do 
+  test '#preselect_semester' do
     travel_to time_z(2018, 9, 10)
     subject = Semester.new
     assert_equal time_z(2017, 12, 1).to_date...time_z(2018, 5, 1).end_of_month.to_date, subject.preselect_semester
@@ -146,12 +146,11 @@ class SemesterServiceTest < ActionView::TestCase
       collection_entry(2, 2018, time_z(2018, 6, 1).to_date, time_z(2018, 11, 1).end_of_month.to_date),
       collection_entry(1, 2018, time_z(2017, 12, 1).to_date, time_z(2018, 5, 1).end_of_month.to_date),
       collection_entry(2, 2017, time_z(2017, 6, 1).to_date, time_z(2017, 11, 1).end_of_month.to_date),
-      collection_entry(1, 2017, time_z(2016, 12, 1).to_date, time_z(2017, 5, 1).end_of_month.to_date),
+      collection_entry(1, 2017, time_z(2016, 12, 1).to_date, time_z(2017, 5, 1).end_of_month.to_date)
     ], subject.collection
   end
 
   def collection_entry(number, year, start, end_d)
     ["#{number}. Semester #{year} (#{I18n.l(start.to_date)} - #{I18n.l(end_d.to_date)})", "#{year},#{number}"]
   end
-
 end

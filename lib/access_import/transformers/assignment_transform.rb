@@ -17,11 +17,12 @@ class AssignmentTransform < Transformer
       starting_topic: fw_einsatz[:m_Einstiegsthematik]
     }.merge(handle_terminated(fw_einsatz))
       .merge(import_attributes(:tbl_FreiwilligenEinsätze, fw_einsatz[:pk_FreiwilligenEinsatz],
-        fw_einsatz: fw_einsatz, begleitet: begleitet))
+                               fw_einsatz: fw_einsatz, begleitet: begleitet))
   end
 
   def handle_terminated(fw_einsatz)
     return {} if fw_einsatz[:d_EinsatzBis].blank?
+
     {
       period_end_set_by: @ac_import.import_user,
       termination_submitted_by: @ac_import.import_user,
@@ -34,13 +35,17 @@ class AssignmentTransform < Transformer
   def get_or_create_by_import(einsatz_id, fw_einsatz = nil)
     assignment = get_import_entity(:assignment, einsatz_id)
     return assignment if assignment.present?
+
     fw_einsatz ||= @freiwilligen_einsaetze.find(einsatz_id)
     return if fw_einsatz.blank?
+
     volunteer ||= @ac_import.volunteer_transform.get_or_create_by_import(fw_einsatz[:fk_PersonenRolle])
     return if volunteer.blank?
+
     begleitet = @begleitete.find(fw_einsatz[:fk_Begleitete])
     client = @ac_import.client_transform.get_or_create_by_import(begleitet[:fk_PersonenRolle])
     return if client.blank?
+
     client.update(cost_unit: fw_einsatz[:cost_unit]) if fw_einsatz[:cost_unit]
     assignment = Assignment.new(prepare_attributes(fw_einsatz, client, volunteer, begleitet))
     assignment.save!(validate: false)

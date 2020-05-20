@@ -2,6 +2,7 @@ class DepartmentPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
       return all if superadmin?
+
       resolve_owner if department_manager?
     end
   end
@@ -30,6 +31,7 @@ class DepartmentPolicy < ApplicationPolicy
   def permitted_attributes
     return department_attributes.push(user_ids: []) if superadmin?
     return department_attributes if department_manager?
+
     []
   end
 

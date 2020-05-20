@@ -9,42 +9,41 @@ col_header = wb.styles.add_style(
   width: :auto_fit
 )
 
-
-standard_format = wb.styles.add_style alignment: { wrap_text: true, horizontal: :left, vertical: :top}, width: :auto_fit
-date_format = wb.styles.add_style alignment: { horizontal: :left, vertical: :top}, format_code: 'dd.mm.yyyy', width: :auto_fit
-time_format = wb.styles.add_style alignment: { horizontal: :left, vertical: :top}, format_code: 'hh:mm', width: :auto_fit
+standard_format = wb.styles.add_style alignment: { wrap_text: true, horizontal: :left, vertical: :top }, width: :auto_fit
+date_format = wb.styles.add_style alignment: { horizontal: :left, vertical: :top }, format_code: 'dd.mm.yyyy', width: :auto_fit
+time_format = wb.styles.add_style alignment: { horizontal: :left, vertical: :top }, format_code: 'hh:mm', width: :auto_fit
 
 row_options = {
   types: [
-      :string,          # 00
-      :string,          # 01
-      :string,          # 02
-      :string,          # 03
-      :string,          # 04
-      :integer,         # 05
-    ],
+    :string, # 00
+    :string,          # 01
+    :string,          # 02
+    :string,          # 03
+    :string,          # 04
+    :integer # 05
+  ],
   style: [
-      standard_format,  # 00
-      standard_format,  # 01
-      date_format,      # 02
-      standard_format,  # 03
-      standard_format,  # 04
-      standard_format,  # 05
-    ]
+    standard_format, # 00
+    standard_format,  # 01
+    date_format,      # 02
+    standard_format,  # 03
+    standard_format,  # 04
+    standard_format # 05
+  ]
 }
 
 wb.add_worksheet(name: 'Veranstaltung') do |sheet|
-  sheet.add_row(['Titel', @event.title],types: :string, style: [col_header, standard_format])
+  sheet.add_row(['Titel', @event.title], types: :string, style: [col_header, standard_format])
   sheet.add_row(['Art', @event.t_enum(:kind)], types: :string, style: [col_header, standard_format])
   sheet.add_row(['Ort', @event.department&.contact&.last_name], types: :string, style: [col_header, standard_format])
   sheet.add_row(['Startzeit',
-                @event.start_time.present? ? l(@event.start_time, format: :time) : nil],
+                 @event.start_time.present? ? l(@event.start_time, format: :time) : nil],
                 types: :string, style: [col_header, time_format])
   sheet.add_row(['Endzeit',
-                @event.end_time.present? ? l(@event.end_time, format: :time) : nil],
+                 @event.end_time.present? ? l(@event.end_time, format: :time) : nil],
                 types: :string, style: [col_header, time_format])
   sheet.add_row(['Datum',
-                @event.date.present? ? l(@event.date) : nil],
+                 @event.date.present? ? l(@event.date) : nil],
                 types: :string, style: [col_header, date_format])
   sheet.add_row(['Beschreibung', @event.description], types: :string, style: [col_header, standard_format], height: 200)
   3.times { sheet.add_row }
@@ -54,23 +53,23 @@ wb.add_worksheet(name: 'Veranstaltung') do |sheet|
 
   row_options = {
     types: [
-        :string,          # 00
-        :string,          # 01
-        :string,          # 02
-        :string,          # 03
-        :string,          # 04
-        :string,          # 05
-        :integer,         # 06
-      ],
+      :string, # 00
+      :string,          # 01
+      :string,          # 02
+      :string,          # 03
+      :string,          # 04
+      :string,          # 05
+      :integer # 06
+    ],
     style: [
-        standard_format,  # 00
-        standard_format,  # 01
-        standard_format,  # 02
-        date_format,      # 03
-        standard_format,  # 04
-        standard_format,  # 05
-        standard_format,  # 06
-      ]
+      standard_format, # 00
+      standard_format,  # 01
+      standard_format,  # 02
+      date_format,      # 03
+      standard_format,  # 04
+      standard_format,  # 05
+      standard_format # 06
+    ]
   }
 
   sheet.add_row(['Vorname', 'Nachname', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Geburtsdatum'], types: :string, style: col_header)

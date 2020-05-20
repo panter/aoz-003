@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
-    :trackable, :validatable
+         :trackable, :validatable
 
   before_validation :assign_primary_email, if: :profile
 

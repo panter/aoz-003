@@ -10,7 +10,7 @@ class SemesterProcessVolunteersController < ApplicationController
   def index
     authorize SemesterProcessVolunteer
     semester = Semester.parse(params[:semester])
-    @global_filters = {semester: params[:semester]}
+    @global_filters = { semester: params[:semester] }
     @semester_process = SemesterProcess.find_by_semester(semester).last
     @q = SemesterProcessVolunteer.index_scope(@semester_process).ransack(params[:q])
     @q.sorts = ['volunteer_contact_last_name asc'] if @q.sorts.empty?
@@ -41,7 +41,7 @@ class SemesterProcessVolunteersController < ApplicationController
         end
       else
         format.html { redirect_to semester_process_volunteers_path, notice: 'Fehler: Übernehmen fehlgeschlagen.' }
-          format.json { render json: { errors: @spv.errors.messages }, status: :unprocessable_entity }
+        format.json { render json: { errors: @spv.errors.messages }, status: :unprocessable_entity }
       end
     end
   end

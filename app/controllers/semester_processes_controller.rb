@@ -3,7 +3,7 @@ class SemesterProcessesController < ApplicationController
   before_action :set_semester, only: [:new, :create]
 
   def new
-    @semester_process = SemesterProcess.new(semester: @selected_semester, kind: :mail )
+    @semester_process = SemesterProcess.new(semester: @selected_semester, kind: :mail)
     new_or_edit
   end
 
@@ -33,7 +33,7 @@ class SemesterProcessesController < ApplicationController
   def overdue
     @semester_process.kind = :reminder
     @volunteers = Volunteer.joins(:semester_process_volunteers)
-                           .merge(@semester_process.semester_process_volunteers.unsubmitted)
+      .merge(@semester_process.semester_process_volunteers.unsubmitted)
     @semester_process.build_semester_volunteers(@volunteers, preselect: true)
 
     @spvs_sorted = sort_volunteers
@@ -78,7 +78,7 @@ class SemesterProcessesController < ApplicationController
     @semester_process.kind = semester_process_params[:kind]
     @semester_process.creator = current_user
 
-    if @semester_process.kind == "mail"
+    if @semester_process.kind == 'mail'
       @semester_process.assign_attributes(
         mail_body_template:    semester_process_params[:body],
         mail_subject_template: semester_process_params[:subject]
@@ -93,8 +93,8 @@ class SemesterProcessesController < ApplicationController
       )
 
       @volunteers = Volunteer.joins(:semester_process_volunteers)
-                             .merge(@semester_process.semester_process_volunteers.unsubmitted)
-                             .find(selected_volunteers)
+        .merge(@semester_process.semester_process_volunteers.unsubmitted)
+        .find(selected_volunteers)
       @semester_process.build_volunteers_feedbacks_and_mails(@volunteers.map(&:id))
     end
 

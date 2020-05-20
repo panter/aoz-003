@@ -17,9 +17,9 @@ class JournalsControllerTest < ActionDispatch::IntegrationTest
     @journal = @controller.instance_variable_get(:@journal)
     assert_equal @journal.category, 'feedback'
     assert_equal @journal.title, "Semester Prozess Feedback vom #{I18n.l(@semester_feedback.created_at.to_date)}: "
-    assert @journal.body.include? @semester_feedback.goals
-    assert @journal.body.include? @semester_feedback.achievements
-    assert @journal.body.include? @semester_feedback.future
-    assert @journal.body.include? @semester_feedback.comments
+    assert_includes @journal.body, @semester_feedback.goals
+    assert_includes @journal.body, @semester_feedback.achievements
+    assert_includes @journal.body, @semester_feedback.future
+    assert_includes @journal.body, @semester_feedback.comments
   end
 end

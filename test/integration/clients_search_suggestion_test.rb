@@ -15,8 +15,8 @@ class ClientsSearchSuggestionTest < ActionDispatch::IntegrationTest
     results = JSON.parse response.body
     assert_equal 2, results.size
     results.map { |result| result['value'] }.each do |result|
-      assert clients.first.map { |client| client.contact.full_name }.include? result
-      refute clients.last.map { |client| client.contact.full_name }.include? result
+      assert_includes clients.first.map { |client| client.contact.full_name }, result
+      refute_includes clients.last.map { |client| client.contact.full_name }, result
     end
   end
 end

@@ -50,7 +50,7 @@ class VolunteersController < ApplicationController
     if @volunteer.save
       if @volunteer.accepted? && @volunteer.internal? && @volunteer.user
         redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created_invite_sent',
-          email: @volunteer.primary_email)
+                                                               email: @volunteer.primary_email)
       else
         redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created')
       end
@@ -69,7 +69,7 @@ class VolunteersController < ApplicationController
         @volunteer.internal? && !@volunteer.user && @volunteer.save
       auto_assign_department!
       redirect_to(edit_volunteer_path(@volunteer),
-        notice: t('invite_sent', email: @volunteer.primary_email))
+                  notice: t('invite_sent', email: @volunteer.primary_email))
     elsif @volunteer.save
       auto_assign_department! if @volunteer.saved_change_to_attribute?(:acceptance) && @volunteer.invited?
       redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_updated')
@@ -134,6 +134,7 @@ class VolunteersController < ApplicationController
 
   def not_resigned
     return if params[:q]
+
     @volunteers = @volunteers.not_resigned
   end
 

@@ -8,11 +8,11 @@ class EventsXlsxExportTest < ActionDispatch::IntegrationTest
     @event_volunteer = create :event_volunteer
 
     @event = create :event,
-      creator: @superadmin,
-      title: 'Juch Besuchstag',
-      kind: :intro_course,
-      department: create(:department),
-      event_volunteers: [@event_volunteer]
+                    creator: @superadmin,
+                    title: 'Juch Besuchstag',
+                    kind: :intro_course,
+                    department: create(:department),
+                    event_volunteers: [@event_volunteer]
 
     get event_url(@event, format: :xlsx)
   end
@@ -29,12 +29,12 @@ class EventsXlsxExportTest < ActionDispatch::IntegrationTest
     assert_xls_cols_equal(wb, 12, 0, 'Teilnehmeranzahl', @event.volunteers.count)
     assert_xls_cols_equal(wb, 15, 0, 'Vorname', 'Nachname', 'Mailadresse', 'Beginn als FW', 'Adresse', 'Telefon', 'Geburtsdatum')
     assert_xls_cols_equal(wb, 16, 0,
-      @event_volunteer.volunteer.contact.first_name,
-      @event_volunteer.volunteer.contact.last_name,
-      @event_volunteer.volunteer.contact.primary_email,
-      I18n.l(@event_volunteer.volunteer.accepted_at.to_date),
-      @event_volunteer.volunteer.contact.full_address,
-      @event_volunteer.volunteer.contact.primary_phone,
-      @event_volunteer.volunteer.birth_year.year)
+                          @event_volunteer.volunteer.contact.first_name,
+                          @event_volunteer.volunteer.contact.last_name,
+                          @event_volunteer.volunteer.contact.primary_email,
+                          I18n.l(@event_volunteer.volunteer.accepted_at.to_date),
+                          @event_volunteer.volunteer.contact.full_address,
+                          @event_volunteer.volunteer.contact.primary_phone,
+                          @event_volunteer.volunteer.birth_year.year)
   end
 end

@@ -2,7 +2,7 @@ class DateRangePickerInput < SimpleForm::Inputs::Base
   def input(wrapper_options)
     template.content_tag(:fieldset) do
       template.concat content_tag(:legend,
-        I18n.t("activerecord.attributes.#{object_name}.#{attribute_name}"))
+                                  I18n.t("activerecord.attributes.#{object_name}.#{attribute_name}"))
       template.concat range_fields(template)
     end
   end
@@ -22,13 +22,15 @@ class DateRangePickerInput < SimpleForm::Inputs::Base
       id: "#{object_name}_#{attribute}",
       name: "#{object_name}[#{attribute}]"
     )
-    html_opts = html_opts.merge(
-      value: localize(attribute_value)
-    ) unless attribute_value.nil?
+    unless attribute_value.nil?
+      html_opts = html_opts.merge(
+        value: localize(attribute_value)
+      )
+    end
 
     template.content_tag(:div, class: 'form-group col-xs-6') do
       template.concat content_tag(:label,
-        I18n.t("activerecord.attributes.#{object_name}.#{attribute}"), for: html_opts[:id])
+                                  I18n.t("activerecord.attributes.#{object_name}.#{attribute}"), for: html_opts[:id])
       template.concat @builder.text_field(attribute.to_sym, html_opts)
     end
   end

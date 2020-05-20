@@ -6,8 +6,8 @@ class PersonenRolle < Accessor
   def sanitize_record(rec)
     rec = parse_datetime_fields(rec, :d_MutDatum, :d_Rollenbeginn, :d_Rollenende)
     rec = parse_int_fields(rec, :b_EinführungsKurs, :b_Interesse, :b_SpesenVerzicht,
-      :fk_Hauptperson, :fk_Kostenträger, :pk_PersonenRolle, :z_AnzErw, :z_AnzKind,
-      :z_Familienverband, :z_Rolle)
+                           :fk_Hauptperson, :fk_Kostenträger, :pk_PersonenRolle, :z_AnzErw, :z_AnzKind,
+                           :z_Familienverband, :z_Rolle)
     rec[:rolle] = ACCESS_TO_OWN_ROLES_MAP[rec[:z_Rolle]]
     rec[:cost_unit] = cost_unit(rec[:fk_Kostenträger])
     rec

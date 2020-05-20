@@ -4,7 +4,8 @@ col_header = col_header = wb.styles.add_style(
   bg_color: 'FFDFDEDF',
   b: true,
   alignment: { horizontal: :center, vertical: :center },
-  border: { color: '00', edges: [:bottom], style: :thin})
+  border: { color: '00', edges: [:bottom], style: :thin }
+)
 
 number_cell_style = wb.styles.add_style(alignment: { horizontal: :center }, width: :auto_fit)
 

@@ -5,7 +5,7 @@ class Stundenerfassung < Accessor
 
   def sanitize_record(rec)
     rec = parse_int_fields(rec, :pk_Stundenerfassung, :fk_PersonenRolle, :fk_FreiwilligenEinsatz,
-      :fk_Semester, :z_Quartal, :z_Jahr, :z_Einsatzzahl)
+                           :fk_Semester, :z_Quartal, :z_Jahr, :z_Einsatzzahl)
     rec = parse_float_fields(rec, :z_Stundenzahl, :z_Spesen)
     parse_datetime_fields(rec, :d_MutDatum)
   end

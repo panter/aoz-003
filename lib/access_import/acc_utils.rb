@@ -44,20 +44,22 @@ module AccUtils
     return 'mr' if anrede == 'Herr'
     return 'mrs' if gender == 'female'
     return 'mr' if gender == 'male'
+
     nil
   end
 
   def email(h_email)
     return generate_bogus_email if h_email.nil?
+
     email = h_email.sub(/^\#mailto:/, '').sub(/\#$/, '')
     return generate_bogus_email unless email.match?(Devise.email_regexp)
+
     email
   end
 
   def generate_bogus_email
     "unknown_email_#{Time.zone.now.to_f}@example.com"
   end
-
 
   def map_gender(value)
     return nil unless value
@@ -101,6 +103,7 @@ module AccUtils
 
   def map_sprachen_to_language_skills(sprachen)
     return {} if sprachen.blank?
+
     sprachen.map do |sprache|
       [(Time.now.to_f * 1000).to_i,
        {
@@ -116,6 +119,7 @@ module AccUtils
 
   def birth_year(geburtsdatum, jahrgang)
     return geburtsdatum if geburtsdatum
+
     Date.parse(jahrgang + '-06-01') if jahrgang
   end
 end

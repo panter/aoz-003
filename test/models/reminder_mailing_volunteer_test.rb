@@ -13,21 +13,13 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
       body: 'hallo %{Anrede} %{Name} %{EinsatzStart} %{Einsatz} %{EmailAbsender}')
     reminder_mailing.save
     mailing_volunteer = reminder_mailing.reminder_mailing_volunteers.first
-    assert mailing_volunteer.process_template[:body].include? @volunteer.contact.natural_name
-    assert mailing_volunteer.process_template[:subject].include?(
-      I18n.t("salutation.#{@volunteer.salutation}")
-    )
-    assert mailing_volunteer.process_template[:body].include?(
-      I18n.l(@assignment_probation.period_start)
-    )
-    assert mailing_volunteer.process_template[:body].include?(
-      'Tandem mit ' +
+    assert_includes mailing_volunteer.process_template[:body], @volunteer.contact.natural_name
+    assert_includes mailing_volunteer.process_template[:subject], I18n.t("salutation.#{@volunteer.salutation}")
+    assert_includes mailing_volunteer.process_template[:body], I18n.l(@assignment_probation.period_start)
+    assert_includes mailing_volunteer.process_template[:body], 'Tandem mit ' +
       reminder_mailing.reminder_mailing_volunteers.first.reminder_mailable.client.contact
-        .natural_name
-    )
-    assert mailing_volunteer.process_template[:body].include?(
-      "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:#{reminder_mailing.creator.email})"
-    )
+      .natural_name
+    assert_includes mailing_volunteer.process_template[:body], "[#{reminder_mailing.creator.profile.contact.natural_name}](mailto:#{reminder_mailing.creator.email})"
   end
 
   test 'wrong template variables used in template are dropped - no exeption is thrown' do
@@ -37,8 +29,8 @@ class ReminderMailingVolunteerTest < ActiveSupport::TestCase
       body: 'hallo %{Anrede} %{Name} %{EinsatzStart}  %{AlsoWrong} %{Einsatz}')
     reminder_mailing.save
     mailing_volunteer = reminder_mailing.reminder_mailing_volunteers.first
-    assert mailing_volunteer.process_template[:body].include? @volunteer.contact.natural_name
-    assert mailing_volunteer.process_template[:subject].include? @volunteer.contact.natural_name
+    assert_includes mailing_volunteer.process_template[:body], @volunteer.contact.natural_name
+    assert_includes mailing_volunteer.process_template[:subject], @volunteer.contact.natural_name
   end
 
   test 'current_submission' do

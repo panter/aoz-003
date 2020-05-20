@@ -9,7 +9,7 @@ class VerfahrensHistory < Accessor
 
   def sanitize_record(rec)
     rec = parse_int_fields(rec, :pk_VerfahrensHistory, :fk_Hauptperson, :fk_VerfahrensStatus,
-      :fk_FamilienRolle)
+                           :fk_FamilienRolle)
     rec[:permit] = MAP_PERMIT[rec[:fk_VerfahrensStatus]] if rec[:fk_VerfahrensStatus]&.positive?
     parse_datetime_fields(rec, :d_MutDatum, :d_PerDatum)
   end

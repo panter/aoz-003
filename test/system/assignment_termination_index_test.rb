@@ -141,9 +141,9 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
   test 'there_is_correct_links_to_creating_certificates' do
     visit terminated_index_assignments_path
     assert page.has_link? 'Dossier Freiwillig Engagiert erstellen',
-      href: /\/volunteers\/#{@submitted.volunteer.id}\/certificates\/new/
+                          href: /\/volunteers\/#{@submitted.volunteer.id}\/certificates\/new/
     refute page.has_link? 'Dossier Freiwillig Engagiert erstellen',
-      href: /\/volunteers\/#{@un_submitted.volunteer.id}\/certificates\/new/, wait: 0
+                          href: /\/volunteers\/#{@un_submitted.volunteer.id}\/certificates\/new/, wait: 0
   end
 
   test 'assignment_quittieren_creates_a_assignment_log_record_from_assignment' do
@@ -159,7 +159,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
 
     # Assignment has an end-date, but no reminder mailing was created
     click_link 'Beendigungs Email erstellen',
-      href: new_termination_assignment_reminder_mailings_path(@un_submitted)
+               href: new_termination_assignment_reminder_mailings_path(@un_submitted)
     click_button 'Erstellen und Vorschau anzeigen'
     click_link 'Zurück'
 
@@ -177,7 +177,7 @@ class AssignmentTerminationIndexTest < ApplicationSystemTestCase
     @un_submitted.reload
 
     assert page.has_link? 'Übermittelt am ',
-      href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
+                          href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
 
     click_link 'Beendigung Quittieren', href: /#{@un_submitted.id}\/verify_termination/
     assert_text 'Der Einsatz wurde erfolgreich quittiert.'

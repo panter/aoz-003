@@ -36,8 +36,8 @@ class BillingExpensesController < ApplicationController
     end
 
     send_data merged_expenses.to_pdf,
-      disposition: 'inline',
-      filename: "Spesenauszahlungen-#{Time.zone.now.strftime '%F'}.pdf"
+              disposition: 'inline',
+              filename: "Spesenauszahlungen-#{Time.zone.now.strftime '%F'}.pdf"
   end
 
   def show
@@ -67,10 +67,10 @@ class BillingExpensesController < ApplicationController
     BillingExpense.create_for!(volunteers, current_user, selected_semester)
 
     redirect_to billing_expenses_url,
-      notice: 'Spesenformulare wurden erfolgreich erstellt.'
+                notice: 'Spesenformulare wurden erfolgreich erstellt.'
   rescue ActiveRecord::RecordInvalid => error
     redirect_to new_billing_expense_url(selected_volunteers: selected_volunteers),
-      notice: error.message
+                notice: error.message
   end
 
   def update_overwritten_amount

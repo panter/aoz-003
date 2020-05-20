@@ -144,5 +144,4 @@ class ClientsController < ApplicationController
       contact_attributes, availability_attributes
     )
   end
-
 end

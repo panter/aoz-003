@@ -41,7 +41,7 @@ class PerformanceReport < ApplicationRecord
     only_assignment_active = assignment_active - active_both
     active_total = assignment_active + group_active
     hours = Hour.date_between(:meeting_date, *periods).where(volunteer_id: volunteers.ids)
-    feedbacks = SemesterFeedback.created_between(*periods).joins(:semester_process_volunteer, :volunteer).where(volunteers: {id: volunteers.ids})
+    feedbacks = SemesterFeedback.created_between(*periods).joins(:semester_process_volunteer, :volunteer).where(volunteers: { id: volunteers.ids })
 
     event_volunteers = EventVolunteer
       .where(volunteer_id: volunteers.ids)
@@ -67,7 +67,7 @@ class PerformanceReport < ApplicationRecord
       total_feedbacks: feedbacks.count,
       assignment_feedbacks: feedbacks.where(group_assignment: nil).count,
       group_offer_feedbacks: feedbacks.where(assignment: nil).count,
-      total_events: event_volunteers.count,
+      total_events: event_volunteers.count
     }
 
     Event.kinds.each_key do |kind|
@@ -127,7 +127,7 @@ class PerformanceReport < ApplicationRecord
 
   def group_offer_stats(group_offers)
     group_assignments = GroupAssignment.created_before(periods.last)
-                                       .where(group_offer_id: group_offers.ids)
+      .where(group_offer_id: group_offers.ids)
     active_ga = group_assignments.active_between(*periods)
     started_ga = group_assignments.start_within(*periods)
     ended_ga = group_assignments.end_within(*periods)

@@ -13,7 +13,7 @@ module AccessImportSetup
     @sprache_pro_hauptperson.add_other_accessors(@sprachen, @sprach_kenntnisse)
     @einsatz_orte.add_other_accessors(@plz)
     @haupt_person.add_other_accessors(@plz, @laender, @sprache_pro_hauptperson, @sprachen,
-      @sprach_kenntnisse)
+                                      @sprach_kenntnisse)
     @kontoangaben.add_other_accessors(@plz)
 
     # don't overwrite imported accepted_at values
@@ -43,6 +43,7 @@ module AccessImportSetup
     if User.with_deleted.exists?(email: IMPORT_USER_EMAIL)
       return User.with_deleted.find_by(email: IMPORT_USER_EMAIL).restore
     end
+
     user = User.create!(email: IMPORT_USER_EMAIL, password: SecureRandom.hex(60), role: 'superadmin')
     user.build_profile
     user.profile.build_contact(first_name: IMPORT_USER_NAME, last_name: IMPORT_USER_NAME,

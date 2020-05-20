@@ -78,6 +78,7 @@ def development_seed
 
   superadmin_and_social_worker.each do |user|
     next if user.clients.count > 1
+
     journals = [
       Journal.new(
         body: FFaker::Lorem.sentence(rand(2..5)),

@@ -97,7 +97,7 @@ class GroupOffersController < ApplicationController
       period_end: group_offer_params[:period_end],
       period_end_set_by: current_user,
       active: false
-      )
+    )
       redirect_to group_offers_path, notice: 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
     else
       render :initiate_termination
@@ -112,7 +112,7 @@ class GroupOffersController < ApplicationController
       )
     end
     redirect_to initiate_termination_group_offer_path(@group_offer),
-      notice: 'Gruppeneinsätze wurden beendet.'
+                notice: 'Gruppeneinsätze wurden beendet.'
   end
 
   private

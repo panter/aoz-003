@@ -10,7 +10,7 @@ class DocumentPolicyTest < PolicyAssertions::Test
 
   test 'only superadmin can create document' do
     document_params = {
-     title: 't', category1: 'c', file: @file
+      title: 't', category1: 'c', file: @file
     }
     assert_permit @superadmin, Document.new(document_params), 'create?', 'new?', 'destroy?', 'edit?'
   end

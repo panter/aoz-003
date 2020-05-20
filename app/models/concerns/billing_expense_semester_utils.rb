@@ -42,6 +42,7 @@ module BillingExpenseSemesterUtils
 
     def self.billable_semester_date(date)
       return if date.blank?
+
       date = Time.zone.parse(date) if date.is_a? String
       date.beginning_of_day
     end

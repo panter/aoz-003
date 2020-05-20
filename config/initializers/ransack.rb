@@ -1,5 +1,5 @@
-require "ransack/visitor"
-require "ransack/adapters/active_record/context"
+require 'ransack/visitor'
+require 'ransack/adapters/active_record/context'
 
 module Ransack
   Visitor.class_eval do

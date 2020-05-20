@@ -15,16 +15,18 @@ class ClientTransform < Transformer
       permit: verfahrens_histories.any? ? verfahrens_histories.first[:permit] : nil
     }.merge(contact_attributes(haupt_person))
       .merge(import_attributes(:tbl_PersonenRollen, personen_rolle[:pk_PersonenRolle],
-        personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,
-        begleitet: begleitet, verfahrens_history: verfahrens_histories && verfahrens_histories,
-        relatives: relatives && relatives))
+                               personen_rolle: personen_rolle, haupt_person: haupt_person, familien_rolle: familien_rolle,
+                               begleitet: begleitet, verfahrens_history: verfahrens_histories && verfahrens_histories,
+                               relatives: relatives && relatives))
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
     client = get_import_entity(:client, personen_rollen_id)
     return client if client.present?
+
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
+
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     begleitet, relatives = handle_begleitete(personen_rolle, haupt_person)
     client = Client.new(prepare_attributes(personen_rolle, haupt_person, begleitet, relatives))
@@ -64,6 +66,7 @@ class ClientTransform < Transformer
 
   def handle_missing_email(client, personen_rolle)
     return unless client.errors.messages[:'contact.primary_email']&.include?('ist bereits vergeben')
+
     client.contact.primary_email = nil
     client.save!
   end
@@ -71,14 +74,17 @@ class ClientTransform < Transformer
   def handle_begleitete(personen_rolle, haupt_person)
     begleitete = @begleitete.where_personen_rolle(personen_rolle[:pk_PersonenRolle])
     return [begleitete.first[1], []] if begleitete.size == 1
+
     begleitet = begleitete.select do |_key, beg|
       beg[:fk_FamilienRolle] == 2 # Hauptperson
     end
     return [begleitet.first[1], begleitete.except(begleitet.first[0])] if begleitet.size == 1
+
     begleitet = begleitete.select do |_key, beg|
       beg[:t_Vorname] == haupt_person[:t_Vorname]
     end
     return [begleitet.first[1], begleitete.except(begleitet.first[0])] if begleitet.size == 1
+
     begleitet = begleitete.select do |_key, beg|
       haupt_person[:t_Vorname].include? beg[:t_Vorname]
     end

@@ -7,8 +7,8 @@ module AcceptanceAttributes
     ransacker :acceptance, formatter: ->(value) { acceptances[value] }
 
     def acceptances_at_list(with_submittor: false)
-      slice_keys = %i[invited_at accepted_at undecided_at rejected_at resigned_at]
-      slice_keys += %i[created_at] if undecided_at.blank?
+      slice_keys = [:invited_at, :accepted_at, :undecided_at, :rejected_at, :resigned_at]
+      slice_keys += [:created_at] if undecided_at.blank?
       slice(*slice_keys).compact.to_a.sort_by(&:last).map do |key, datetime|
         {
           attribute: self.class.human_attribute_name(key),

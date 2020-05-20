@@ -11,11 +11,11 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
     wb = get_xls_from_response(assignments_url(format: :xlsx))
 
     assert_xls_cols_equal(wb, 1, 0, 'Status', 'Freiwillige/r', 'Freiwillige/r Mailadresse',
-      'Klient/in', 'Einsatzbeginn', 'Einsatzende', 'Erstellt am', 'Aktualisiert am')
+                          'Klient/in', 'Einsatzbeginn', 'Einsatzende', 'Erstellt am', 'Aktualisiert am')
 
     assert_xls_cols_equal(wb, 2, 0, 'Aktiv',
-      assignment.volunteer.contact.full_name, assignment.volunteer.contact.primary_email,
-      assignment.client.contact.full_name, assignment.period_start, assignment.period_end)
+                          assignment.volunteer.contact.full_name, assignment.volunteer.contact.primary_email,
+                          assignment.client.contact.full_name, assignment.period_start, assignment.period_end)
     assert_equal assignment.created_at.to_date, wb.cell(2, 7)
     assert_equal assignment.updated_at.to_date, wb.cell(2, 8)
 

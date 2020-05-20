@@ -30,8 +30,8 @@ class ClientTest < ActiveSupport::TestCase
     client = create :client
     create :assignment_inactive, client: client
     result = Client.inactive
-    assert result.include? @client
-    assert result.include? client
+    assert_includes result, @client
+    assert_includes result, client
   end
 
   test 'contact relation is build automatically' do

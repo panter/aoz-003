@@ -7,7 +7,7 @@ class SemesterProcessVolunteerMissionTest < ActiveSupport::TestCase
     @group_assignment = create(:group_assignment, volunteer: @volunteer)
     @sem_proc_vol = create(:semester_process_volunteer, volunteer: @volunteer)
     @subject = create(:semester_process_volunteer_mission, :no_mission,
-      semester_process_volunteer: @sem_proc_vol)
+                      semester_process_volunteer: @sem_proc_vol)
   end
 
   test '#need_feedback' do

@@ -5,9 +5,9 @@ class Laender < Accessor
 
   def laender_map
     @laender_map ||= CSV.read('lib/access_import/accessors/laender_map_alpha2.csv',
-      headers: true, converters: :numeric, header_converters: :symbol).map do |row|
-        [row[:pk_land], row[:alpha2]]
-      end.to_h
+                              headers: true, converters: :numeric, header_converters: :symbol).map do |row|
+      [row[:pk_land], row[:alpha2]]
+    end.to_h
   end
 
   def sanitize_record(rec)

@@ -15,31 +15,31 @@ class SemesterProcessTest < ActiveSupport::TestCase
   end
 
   test 'through volunteers relation' do
-    assert @subject.volunteers.include? @volunteer
+    assert_includes @subject.volunteers, @volunteer
   end
 
   test 'through semester_feedbacks relation' do
     semester_fb = create(:semester_feedback, semester_process_volunteer: @subject_volunteer,
       volunteer: @volunteer)
     @subject.reload
-    assert @subject.semester_feedbacks.include? semester_fb
+    assert_includes @subject.semester_feedbacks, semester_fb
   end
 
   test 'through hours relation' do
     semester_hour = create(:hour, hourable: @mission, volunteer: @volunteer, meeting_date: @subject.semester.begin + 3.days)
     @subject.reload
-    assert @subject.hours.include? semester_hour
+    assert_includes @subject.hours, semester_hour
   end
 
   test '#mails and #reminders methods' do
     semester_process_mail = create(:semester_process_mail,
-      semester_process_volunteer: @subject_volunteer)
+                                   semester_process_volunteer: @subject_volunteer)
     semester_process_reminder = create(:semester_process_mail, :as_reminder,
-      semester_process_volunteer: @subject_volunteer)
+                                       semester_process_volunteer: @subject_volunteer)
     @subject.reload
-    assert @subject.mails.include? semester_process_mail
+    assert_includes @subject.mails, semester_process_mail
     assert_not @subject.mails.include? semester_process_reminder
-    assert @subject.reminders.include? semester_process_reminder
+    assert_includes @subject.reminders, semester_process_reminder
     assert_not @subject.reminders.include? semester_process_mail
   end
 end

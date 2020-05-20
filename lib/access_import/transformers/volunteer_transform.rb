@@ -16,14 +16,16 @@ class VolunteerTransform < Transformer
     }.merge(prepare_kontoangaben(personen_rolle[:fk_Hauptperson]))
       .merge(contact_attributes(haupt_person.merge(email: import_time_email)))
       .merge(import_attributes(:tbl_Personenrollen, personen_rolle[:pk_PersonenRolle],
-        personen_rolle: personen_rolle, haupt_person: haupt_person.merge(email: original_email)))
+                               personen_rolle: personen_rolle, haupt_person: haupt_person.merge(email: original_email)))
   end
 
   def get_or_create_by_import(personen_rollen_id, personen_rolle = nil)
     volunteer = get_import_entity(:volunteer, personen_rollen_id)
     return volunteer if volunteer.present?
+
     personen_rolle ||= @personen_rolle.find(personen_rollen_id)
     return if personen_rolle[:d_Rollenende].present? && personen_rolle[:d_Rollenende] < Time.zone.now
+
     haupt_person = @haupt_person.find(personen_rolle[:fk_Hauptperson]) || {}
     volunteer = Volunteer.new(prepare_attributes(personen_rolle, haupt_person))
     if haupt_person[:sprachen]&.any?
@@ -55,6 +57,7 @@ class VolunteerTransform < Transformer
 
   def prepare_kontoangaben(haupt_person_id)
     return {} if konto_angaben(haupt_person_id).blank?
+
     { iban: extract_numbers,
       bank: konto_angaben.values_at(:t_BankenName, :city, :m_Bemerkung).compact.join(', ') }
   end

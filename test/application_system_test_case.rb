@@ -106,7 +106,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
     if options[:check_items].present?
       items.each do |item|
-        assert options[:check_items].include? item.text
+        assert_includes options[:check_items], item.text
       end
     end
     find("[name=\"#{name}\"]").native.send_keys :down, :enter

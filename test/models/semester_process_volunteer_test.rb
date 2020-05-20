@@ -14,19 +14,19 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
       build(:semester_process_volunteer_mission, mission: @group_assignment)
     ])
     result = @subject.missions
-    assert result.include? @assignment
-    assert result.include? @group_assignment
+    assert_includes result, @assignment
+    assert_includes result, @group_assignment
   end
 
   test 'has_many mails and reminders relations work' do
     mail = create(:semester_process_mail, semester_process_volunteer: @subject)
     reminder = create(:semester_process_mail, :as_reminder, semester_process_volunteer: @subject)
 
-    assert @subject.reload.mails.include? mail
+    assert_includes @subject.reload.mails, mail
     assert_not @subject.reload.mails.include? reminder
 
     assert_not @subject.reload.reminders.include? mail
-    assert @subject.reload.reminders.include? reminder
+    assert_includes @subject.reload.reminders, reminder
   end
 
   test '#build_missions' do
@@ -80,7 +80,7 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
     subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
     subject.build_missions(semester.previous)
     subject.build_mails
-    assert subject.hours.include? hour_assignment
+    assert_includes subject.hours, hour_assignment
 
     hour_group_assignment = create :hour, hourable: @group_assignment.group_offer,
       meeting_date: time_z(2018, 3, 15), volunteer: @volunteer
@@ -88,8 +88,8 @@ class SemesterProcessVolunteerTest < ActiveSupport::TestCase
     subject = SemesterProcessVolunteer.new(semester_process: semester_process, volunteer: @volunteer)
     subject.build_missions(semester.previous)
     subject.build_mails
-    assert subject.hours.include? hour_assignment
-    assert subject.hours.include? hour_group_assignment
+    assert_includes subject.hours, hour_assignment
+    assert_includes subject.hours, hour_group_assignment
   end
 
   test '#build missions with ending date' do

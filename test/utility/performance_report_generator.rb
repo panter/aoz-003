@@ -33,6 +33,7 @@ module PerformanceReportGenerator
     assignment = create_assignment(title && "a_#{title}", volunteer, client, start_date, end_date)
     assignment.update(created_at: start_date)
     return [volunteer, client, assignment] unless title
+
     instance_variable_set("@c_#{title}", client)
     instance_variable_set("@v_#{title}", volunteer)
   end
@@ -48,6 +49,7 @@ module PerformanceReportGenerator
       g_assignment
     end
     return [group_offer, category, group_assignments] unless title
+
     instance_variable_set("@category_#{title}", category)
     instance_variable_set("@group_ass_#{title}", group_assignments)
     [group_offer, category, group_assignments]
@@ -59,6 +61,7 @@ module PerformanceReportGenerator
       period_start: period_start, period_end: period_end, created_at: period_start
     assignment.update(created_at: period_start)
     return assignment unless title
+
     instance_variable_set("@#{title}", assignment)
   end
 
@@ -67,6 +70,7 @@ module PerformanceReportGenerator
       necessary_volunteers: volunteer_count
     group_offer.update(created_at: start_date)
     return group_offer unless title
+
     instance_variable_set("@group_offer_#{title}", group_offer)
     group_offer
   end

@@ -32,6 +32,7 @@ class ReminderMailingVolunteer < ApplicationRecord
 
   def base_entity
     return reminder_mailable if assignment?
+
     reminder_mailable.group_offer
   end
 

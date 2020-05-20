@@ -10,7 +10,7 @@ class GroupOffersControllerTest < ActionDispatch::IntegrationTest
     @group_offer = create :group_offer, department: @department
   end
 
-  test "superadmin can change the department of a group_offer" do
+  test 'superadmin can change the department of a group_offer' do
     params = { group_offer: { department_id: @other_department.id } }
 
     login_as @superadmin
@@ -20,7 +20,7 @@ class GroupOffersControllerTest < ActionDispatch::IntegrationTest
     assert_equal @group_offer.reload.department, @other_department
   end
 
-  test "department_manager can change the department of a group_offer in her department" do
+  test 'department_manager can change the department of a group_offer in her department' do
     params = { group_offer: { department_id: @other_department.id } }
 
     login_as @department_manager

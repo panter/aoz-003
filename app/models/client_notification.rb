@@ -11,6 +11,7 @@ class ClientNotification < ApplicationRecord
 
   def ensure_exactly_one_active
     return unless active && changed.include?('active')
+
     ClientNotification.update(active: false)
   end
 end

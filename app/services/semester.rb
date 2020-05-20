@@ -164,7 +164,7 @@ class Semester
   def collection(count = 3, direction: :previous, with_current: true)
     list(count, direction: direction, with_current: with_current).map do |semester|
       if block_given?
-        yield semester 
+        yield semester
       else
         [Semester.i18n_t(semester, short: false), to_s(semester)]
       end
@@ -174,6 +174,7 @@ class Semester
   def unique_collection(count = 3)
     collection(count) do |semester|
       next if Semester.taken_semesters.include?(semester)
+
       [Semester.i18n_t(semester, short: false), to_s(semester)]
     end
   end
@@ -182,6 +183,7 @@ class Semester
     collection(count) do |semester|
       s = Semester.new
       next unless s.preselect_semester == semester || s.current == semester || Semester.taken_semesters.include?(semester)
+
       [Semester.i18n_t(semester, short: false), to_s(semester)]
     end
   end

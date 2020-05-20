@@ -4,9 +4,9 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     Department.destroy_all
     @superadmin = create :user, :with_clients,
-      :with_department, role: 'superadmin'
+                         :with_department, role: 'superadmin'
     @social_worker = create :user, :with_clients,
-      :with_department, role: 'social_worker'
+                            :with_department, role: 'social_worker'
     @department_manager = create :department_manager
   end
 
@@ -26,8 +26,8 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
     }
     put department_path(department.id), params: params
     department_updated = Department.find department.id
-    assert department_updated.contact.last_name == 'Another name'
-    assert department_updated.user_ids.include? @department_manager.id
+    assert_equal department_updated.contact.last_name, 'Another name'
+    assert_includes department_updated.user_ids, @department_manager.id
   end
 
   test 'department_manager can not submit user associations' do
@@ -46,7 +46,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
     }
     put department_path(department.id), params: params
     department_updated = Department.find department.id
-    assert department_updated.contact.last_name == 'new name'
-    refute department_updated.user_ids.include? @superadmin.id
+    assert_equal department_updated.contact.last_name, 'new name'
+    refute_includes department_updated.user_ids, @superadmin.id
   end
 end

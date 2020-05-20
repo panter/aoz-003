@@ -5,7 +5,7 @@ class Journale < Accessor
 
   def sanitize_record(rec)
     rec = parse_int_fields(rec, :pk_Journal, :fk_Hauptperson, :fk_JournalKategorie,
-      :fk_FreiwilligenEinsatz)
+                           :fk_FreiwilligenEinsatz)
     rec[:kategorie] = JOURNAL_KATEGORIEN[rec[:fk_JournalKategorie]]
     parse_datetime_fields(rec, :d_MutDatum, :d_ErfDatum)
   end

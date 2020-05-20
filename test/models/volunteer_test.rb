@@ -15,7 +15,7 @@ class VolunteerTest < ActiveSupport::TestCase
   end
 
   test 'external field is default false' do
-    assert_equal false, @volunteer.external
+    refute @volunteer.external
   end
 
   test 'external volunteer can have no user' do
@@ -227,8 +227,6 @@ class VolunteerTest < ActiveSupport::TestCase
     department = create :department
     volunteer = create :volunteer, secondary_department: department
     assert_equal volunteer.reload.secondary_department, department
-
-
   end
 
   test 'volunteer can be assignable to department' do

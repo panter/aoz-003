@@ -3,7 +3,7 @@ require 'test_helper'
 class GroupOfferCategoryPolicyTest < PolicyAssertions::Test
   test 'superadmin can use all category actions' do
     assert_permit(create(:user), GroupOfferCategory, 'new?', 'create?', 'index?', 'show?', 'edit?',
-      'update?')
+                  'update?')
   end
 
   test 'department managaer can show and index' do
@@ -15,6 +15,6 @@ class GroupOfferCategoryPolicyTest < PolicyAssertions::Test
   test 'social_worker cant use categories' do
     social_worker = create(:social_worker)
     refute_permit(social_worker, GroupOfferCategory, 'index?', 'show?', 'new?', 'create?', 'edit?',
-      'update?')
+                  'update?')
   end
 end

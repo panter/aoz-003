@@ -118,9 +118,9 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
   test 'there_is_correct_links_to_creating_certificates' do
     visit terminated_index_group_assignments_path
     assert page.has_link? 'Dossier Freiwillig Engagiert erstellen',
-      href: new_volunteer_certificate_path(@submitted.volunteer.id)
+                          href: new_volunteer_certificate_path(@submitted.volunteer.id)
     refute page.has_link? 'Dossier Freiwillig Engagiert erstellen',
-      href: new_volunteer_certificate_path(@un_submitted.volunteer.id), wait: 0
+                          href: new_volunteer_certificate_path(@un_submitted.volunteer.id), wait: 0
   end
 
   test 'group_assignment_quittieren_creates_a_group_assignment_log_record_from_group_assignment' do
@@ -136,7 +136,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
 
     # GroupAssignment has an end-date, but no reminder mailing was created
     click_link 'Beendigungs Email erstellen',
-      href: new_termination_group_assignment_reminder_mailings_path(@un_submitted)
+               href: new_termination_group_assignment_reminder_mailings_path(@un_submitted)
     click_button 'Erstellen und Vorschau anzeigen'
 
     # GroupAssignment has an end-date, reminder mailing was created, but not sent
@@ -150,7 +150,7 @@ class GroupAssignmentTerminationIndexTest < ApplicationSystemTestCase
     visit terminated_index_group_assignments_path
     @un_submitted.reload
     assert page.has_link? 'Übermittelt am ',
-      href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
+                          href: reminder_mailing_path(@un_submitted.reminder_mailings.termination.last)
 
     click_link 'Beendigung Quittieren', href: /group_assignments\/#{@un_submitted.id}\/verify_termination/
     assert_text 'Der Gruppeneinsatz wurde erfolgreich quittiert.'

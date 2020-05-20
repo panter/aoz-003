@@ -10,13 +10,13 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     started_within_ended_within = create_group_assignments 40.days.ago, 35.days.ago
     started_within_ended_after = create_group_assignments 40.days.ago, 20.days.ago
     query = GroupAssignment.start_within(45.days.ago, 30.days.ago)
-    assert query.include? started_within_no_end
-    assert query.include? started_within_ended_within
-    assert query.include? started_within_ended_after
-    refute query.include? started_before
-    refute query.include? started_before_ended_within
-    refute query.include? started_after
-    refute query.include? started_after_ended
+    assert_includes query, started_within_no_end
+    assert_includes query, started_within_ended_within
+    assert_includes query, started_within_ended_after
+    refute_includes query, started_before
+    refute_includes query, started_before_ended_within
+    refute_includes query, started_after
+    refute_includes query, started_after_ended
   end
 
   test 'end_within' do
@@ -28,13 +28,13 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     started_within_ended_within = create_group_assignments 40.days.ago, 35.days.ago
     started_within_ended_after = create_group_assignments 40.days.ago, 20.days.ago
     query = GroupAssignment.end_within(45.days.ago, 30.days.ago)
-    refute query.include? started_within_no_end
-    assert query.include? started_within_ended_within
-    refute query.include? started_within_ended_after
-    refute query.include? started_before
-    assert query.include? started_before_ended_within
-    refute query.include? started_after
-    refute query.include? started_after_ended
+    refute_includes query, started_within_no_end
+    assert_includes query, started_within_ended_within
+    refute_includes query, started_within_ended_after
+    refute_includes query, started_before
+    assert_includes query, started_before_ended_within
+    refute_includes query, started_after
+    refute_includes query, started_after_ended
   end
 
   test 'end_after' do
@@ -46,13 +46,13 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     started_within_ended_within = create_group_assignments 40.days.ago, 35.days.ago
     started_within_ended_after = create_group_assignments 40.days.ago, 20.days.ago
     query = GroupAssignment.end_after(30.days.ago)
-    refute query.include? started_within_no_end
-    refute query.include? started_within_ended_within
-    assert query.include? started_within_ended_after
-    refute query.include? started_before
-    refute query.include? started_before_ended_within
-    refute query.include? started_after
-    assert query.include? started_after_ended
+    refute_includes query, started_within_no_end
+    refute_includes query, started_within_ended_within
+    assert_includes query, started_within_ended_after
+    refute_includes query, started_before
+    refute_includes query, started_before_ended_within
+    refute_includes query, started_after
+    assert_includes query, started_after_ended
   end
 
   test 'end_before' do
@@ -64,13 +64,13 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     started_within_ended_within = create_group_assignments 40.days.ago, 35.days.ago
     started_within_ended_after = create_group_assignments 40.days.ago, 20.days.ago
     query = GroupAssignment.end_before(30.days.ago)
-    refute query.include? started_within_no_end
-    assert query.include? started_within_ended_within
-    refute query.include? started_within_ended_after
-    refute query.include? started_before
-    assert query.include? started_before_ended_within
-    refute query.include? started_after
-    refute query.include? started_after_ended
+    refute_includes query, started_within_no_end
+    assert_includes query, started_within_ended_within
+    refute_includes query, started_within_ended_after
+    refute_includes query, started_before
+    assert_includes query, started_before_ended_within
+    refute_includes query, started_after
+    refute_includes query, started_after_ended
   end
 
   test 'start_before' do
@@ -82,13 +82,13 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     started_within_ended_within = create_group_assignments 40.days.ago, 35.days.ago
     started_within_ended_after = create_group_assignments 40.days.ago, 20.days.ago
     query = GroupAssignment.start_before(45.days.ago)
-    refute query.include? started_within_no_end
-    refute query.include? started_within_ended_within
-    refute query.include? started_within_ended_after
-    assert query.include? started_before
-    assert query.include? started_before_ended_within
-    refute query.include? started_after
-    refute query.include? started_after_ended
+    refute_includes query, started_within_no_end
+    refute_includes query, started_within_ended_within
+    refute_includes query, started_within_ended_after
+    assert_includes query, started_before
+    assert_includes query, started_before_ended_within
+    refute_includes query, started_after
+    refute_includes query, started_after_ended
   end
 
   test 'active_between' do
@@ -101,14 +101,14 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
     started_within_ended_within = create_group_assignments 40.days.ago, 35.days.ago
     started_within_ended_after = create_group_assignments 40.days.ago, 20.days.ago
     query = GroupAssignment.active_between(45.days.ago, 30.days.ago)
-    assert query.include? started_within_no_end
-    assert query.include? started_within_ended_within
-    assert query.include? started_within_ended_after
-    assert query.include? started_before
-    assert query.include? started_before_ended_within
-    refute query.include? started_after
-    refute query.include? started_after_ended
-    refute query.include? started_before_ended_before
+    assert_includes query, started_within_no_end
+    assert_includes query, started_within_ended_within
+    assert_includes query, started_within_ended_after
+    assert_includes query, started_before
+    assert_includes query, started_before_ended_within
+    refute_includes query, started_after
+    refute_includes query, started_after_ended
+    refute_includes query, started_before_ended_before
   end
 
   test 'termination_submitted_scope_test' do
@@ -124,10 +124,10 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
       termination_submitted_by: superadmin, termination_verified_at: 2.days.ago,
       termination_verified_by: superadmin)
     query = GroupAssignment.termination_submitted
-    refute query.include? started_no_end
-    refute query.include? started_with_end
-    assert query.include? submitted
-    assert query.include? verified
+    refute_includes query, started_no_end
+    refute_includes query, started_with_end
+    assert_includes query, submitted
+    assert_includes query, verified
   end
 
   test 'termination_not_submitted scope test' do
@@ -143,10 +143,10 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
       termination_submitted_by: superadmin, termination_verified_at: 2.days.ago,
       termination_verified_by: superadmin)
     query = GroupAssignment.termination_not_submitted
-    assert query.include? started_no_end
-    assert query.include? started_with_end
-    refute query.include? submitted
-    refute query.include? verified
+    assert_includes query, started_no_end
+    assert_includes query, started_with_end
+    refute_includes query, submitted
+    refute_includes query, verified
   end
 
   test 'unterminated scope test' do
@@ -162,15 +162,15 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
       termination_submitted_by: superadmin, termination_verified_at: 2.days.ago,
       termination_verified_by: superadmin)
     query = GroupAssignment.unterminated
-    assert query.include? started_no_end
-    assert query.include? started_with_end
-    assert query.include? submitted
-    refute query.include? verified
+    assert_includes query, started_no_end
+    assert_includes query, started_with_end
+    assert_includes query, submitted
+    refute_includes query, verified
     query_deleted = GroupAssignment.with_deleted.unterminated
-    assert query_deleted.include? started_no_end
-    assert query_deleted.include? started_with_end
-    assert query_deleted.include? submitted
-    refute query_deleted.include? verified
+    assert_includes query_deleted, started_no_end
+    assert_includes query_deleted, started_with_end
+    assert_includes query_deleted, submitted
+    refute_includes query_deleted, verified
   end
 
   test 'terminated scope test' do
@@ -186,15 +186,15 @@ class GroupAssignmentScopesTest < ActiveSupport::TestCase
       termination_submitted_by: superadmin, termination_verified_at: 2.days.ago,
       termination_verified_by: superadmin)
     query = GroupAssignment.terminated
-    refute query.include? started_no_end
-    refute query.include? started_with_end
-    refute query.include? submitted
-    assert query.include? verified
+    refute_includes query, started_no_end
+    refute_includes query, started_with_end
+    refute_includes query, submitted
+    assert_includes query, verified
     query_deleted = GroupAssignment.with_deleted.terminated
-    refute query_deleted.include? started_no_end
-    refute query_deleted.include? started_with_end
-    refute query_deleted.include? submitted
-    assert query_deleted.include? verified
+    refute_includes query_deleted, started_no_end
+    refute_includes query_deleted, started_with_end
+    refute_includes query_deleted, submitted
+    assert_includes query_deleted, verified
   end
 
   def create_group_assignments(start_date = nil, end_date = nil)

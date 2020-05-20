@@ -29,6 +29,7 @@ class Begleitete < Accessor
   def map_familien_rolle(record)
     return nil if [nil, 1, 2].include? record[:fk_FamilienRolle]
     return handle_female(record) if record[:gender] == 'female'
+
     handle_male(record) if record[:gender] == 'male'
   end
 
@@ -36,6 +37,7 @@ class Begleitete < Accessor
     return 'mother' if record[:fk_FamilienRolle] == 6
     return 'sister' if record[:fk_FamilienRolle] == 5
     return 'wife' if record[:fk_FamilienRolle] == 3
+
     'daughter' if record[:fk_FamilienRolle] == 4
   end
 
@@ -43,6 +45,7 @@ class Begleitete < Accessor
     return 'father' if record[:fk_FamilienRolle] == 6
     return 'brother' if record[:fk_FamilienRolle] == 5
     return 'husband' if record[:fk_FamilienRolle] == 3
+
     'son' if record[:fk_FamilienRolle] == 4
   end
 end

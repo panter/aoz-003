@@ -24,7 +24,6 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
     @client3 = create :client, user: @superadmin
     @client3.contact.update(first_name: 'River', last_name: 'Song')
 
-
     # ASSIGNMENTS
     @assignment1 = create :assignment, volunteer: @volunteer1, client: @client1
     @assignment2 = create :assignment, volunteer: @volunteer2, client: @client2

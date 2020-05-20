@@ -98,8 +98,9 @@ module FilterDropdownHelper
     filter = search_parameters.except(*q_filters)
     filter = { all: true } if filter.empty?
     if @global_filters
-      return url_for({q: filter}.merge @global_filters)
+      return url_for({ q: filter }.merge @global_filters)
     end
+
     url_for(q: filter)
   end
 
@@ -115,6 +116,7 @@ module FilterDropdownHelper
 
   def list_filter_link_class(active, value = nil, filter = nil)
     return '' unless active
+
     if filter == :acceptance_eq
       "bg-#{value}"
     else
@@ -160,6 +162,7 @@ module FilterDropdownHelper
 
   def translate_value(filter_attribute, q_filter)
     return t('all') if filter_attribute.blank?
+
     q_filter = q_filter.is_a?(Symbol) ? q_filter.to_s : q_filter.first.to_s
     if q_filter.slice! '_true'
       t_attr(q_filter)

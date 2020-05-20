@@ -2,7 +2,8 @@ module ReminderMailingBuilder
   def create_mailing(kind, body, subject, creator, *mailables)
     mailing = ReminderMailing.new(
       creator: creator, kind: kind, body: body, subject: subject,
-      reminder_mailing_volunteers: mailing_volunteers(mailables))
+      reminder_mailing_volunteers: mailing_volunteers(mailables)
+    )
     mailing.reminder_mailing_volunteers.map { |rmv| rmv.picked = true }
     mailing.save
     mailing

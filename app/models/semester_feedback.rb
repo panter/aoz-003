@@ -9,7 +9,7 @@ class SemesterFeedback < ApplicationRecord
 
   attr_reader :spv_mission_id
 
-  def spv_mission_id= id
+  def spv_mission_id=(id)
     self.mission = SemesterProcessVolunteerMission.find(id).mission
   end
 

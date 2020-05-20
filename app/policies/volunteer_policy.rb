@@ -10,6 +10,7 @@ class VolunteerPolicy < ApplicationPolicy
       if department_manager?
         return scope.in_department_or_secondary_department(user.department).or(scope.assignable_to_department)
       end
+
       none
     end
   end

@@ -91,6 +91,7 @@ class ReminderMailing < ApplicationRecord
 
   def remove_untoggled_volunteers
     return unless will_save_change_to_sending_triggered?
+
     reminder_mailing_volunteers.reject(&:picked?).map(&:delete)
   end
 

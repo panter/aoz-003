@@ -4,6 +4,7 @@ class ClientPolicy < ApplicationPolicy
       return all if superadmin?
       return resolve_owner if department_manager?
       return resolve_owner.or(scope.where(involved_authority: user)) if social_worker?
+
       none
     end
   end

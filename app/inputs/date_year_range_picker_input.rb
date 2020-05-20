@@ -2,7 +2,7 @@ class DateYearRangePickerInput < SimpleForm::Inputs::Base
   def input(wrapper_options)
     template.content_tag(:fieldset) do
       template.concat content_tag(:legend,
-        I18n.t("activerecord.attributes.#{object_name}.#{attribute_name}"))
+                                  I18n.t("activerecord.attributes.#{object_name}.#{attribute_name}"))
       template.concat range_fields(template)
       template.concat year_buttons(template)
     end
@@ -11,7 +11,7 @@ class DateYearRangePickerInput < SimpleForm::Inputs::Base
   def year_buttons(template)
     template.content_tag(:ul, id: "#{object_name}_#{attribute_name}_years",
       class: 'list-inline year-togglers') do
-      (0..9).to_a.reverse.each do |index|
+      (0..9).to_a.reverse_each do |index|
         template.concat year_link(template, Time.zone.now.year - index)
       end
     end
@@ -36,13 +36,15 @@ class DateYearRangePickerInput < SimpleForm::Inputs::Base
     attribute_value = @builder.object.send(attribute.to_sym)
     name = { name: "#{object_name}[#{attribute}]" }
     html_opts = input_html_options.merge(name)
-    html_opts = html_opts.merge(
-      value: localize(attribute_value)
-    ) unless attribute_value.nil?
+    unless attribute_value.nil?
+      html_opts = html_opts.merge(
+        value: localize(attribute_value)
+      )
+    end
 
     template.content_tag(:div, class: 'form-group col-xs-6') do
       template.concat content_tag(:label,
-        I18n.t("activerecord.attributes.#{object_name}.#{attribute}"), for: html_opts[:id])
+                                  I18n.t("activerecord.attributes.#{object_name}.#{attribute}"), for: html_opts[:id])
       template.concat @builder.text_field(attribute.to_sym, html_opts)
     end
   end

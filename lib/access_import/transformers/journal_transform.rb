@@ -14,9 +14,11 @@ class JournalTransform < Transformer
   def get_or_create_by_import(access_journal_id, access_journal = nil)
     local_journal = get_import_entity(:fk_JournalKategorie, access_journal_id)
     return local_journal if local_journal.present?
+
     access_journal ||= @journale.find(access_journal_id)
     person = fetch_or_import_person(access_journal)
     return if person.blank?
+
     assignment = fetch_or_import_assignment(access_journal)
     local_journal = Journal.create!(prepare_attributes(access_journal, person, assignment))
     update_timestamps(local_journal, access_journal[:d_ErfDatum], access_journal[:d_MutDatum])
@@ -24,8 +26,10 @@ class JournalTransform < Transformer
 
   def fetch_or_import_assignment(access_journal)
     return unless access_journal[:fk_FreiwilligenEinsatz]&.positive?
+
     fw_einsatz = @freiwilligen_einsaetze.find(access_journal[:fk_FreiwilligenEinsatz])
     return if fw_einsatz.blank? || fw_einsatz[:fk_FreiwilligenFunktion] != 1
+
     @ac_import.assignment_transform.get_or_create_by_import(
       access_journal[:fk_FreiwilligenEinsatz], fw_einsatz
     )
@@ -35,14 +39,16 @@ class JournalTransform < Transformer
     # person could be either Volunteer or Client
     person = Import.find_by_hauptperson(access_journal[:fk_Hauptperson])&.importable
     return person if person.present?
+
     personen_rolle = @personen_rolle.find(access_journal[:fk_Hauptperson])
     return if personen_rolle.blank?
+
     if personen_rolle[:z_Rolle] == EINSATZ_ROLLEN.freiwillige
       @ac_import.volunteer_transform.get_or_create_by_import(access_journal[:fk_Hauptperson],
-        personen_rolle)
+                                                             personen_rolle)
     elsif personen_rolle[:z_Rolle] == EINSATZ_ROLLEN.begleitete
       @ac_import.client_transform.get_or_create_by_import(access_journal[:fk_Hauptperson],
-        personen_rolle)
+                                                          personen_rolle)
     end
   end
 

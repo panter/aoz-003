@@ -3,7 +3,7 @@ require 'test_helper'
 class VolunteerPolicyTest < PolicyAssertions::Test
   test 'superadmin_can_use_all_actions' do
     assert_permit(create(:user), Volunteer,
-      'superadmin_privileges?', 'show_comments?', *actions_list(except: [:reactivate]))
+                  'superadmin_privileges?', 'show_comments?', *actions_list(except: [:reactivate]))
   end
 
   test 'department_manager has full access to volunteers in their departments' do
@@ -12,9 +12,9 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     volunteer = create :volunteer, department: department
 
     assert_permit(department_manager, Volunteer, 'show_acceptance?', 'show_comments?',
-      *actions_list(:index, :search, :new, :create, :seeking_clients))
+                  *actions_list(:index, :search, :new, :create, :seeking_clients))
     assert_permit(department_manager, volunteer, 'update_acceptance?',
-      *actions_list(:terminate, :show, :edit, :update))
+                  *actions_list(:terminate, :show, :edit, :update))
 
     refute_permit(department_manager, Volunteer, 'superadmin_privileges?')
     refute_permit(department_manager, volunteer, *actions_list(:account))
@@ -25,12 +25,12 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     volunteer = create :volunteer
 
     assert_permit(department_manager, Volunteer, 'show_acceptance?', 'show_comments?',
-      *actions_list(:index, :search, :new, :create, :seeking_clients))
+                  *actions_list(:index, :search, :new, :create, :seeking_clients))
     assert_permit(department_manager, volunteer, 'show_comments?')
 
     refute_permit(department_manager, Volunteer, 'superadmin_privileges?')
     refute_permit(department_manager, volunteer,
-      *actions_list(:terminate, :show, :edit, :update, :account), 'update_acceptance?')
+                  *actions_list(:terminate, :show, :edit, :update, :account), 'update_acceptance?')
   end
 
   test 'department_manager has access to volunteer with acceptence undecided' do
@@ -38,7 +38,7 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     volunteer = create :volunteer, acceptance: :undecided
 
     assert_permit(department_manager, volunteer, 'update_acceptance?',
-      *actions_list(:show, :edit, :update))
+                  *actions_list(:show, :edit, :update))
     refute_permit(department_manager, volunteer, *actions_list(:account, :terminate))
   end
 
@@ -48,7 +48,7 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     volunteer = create :volunteer, acceptance: :undecided, department: department
 
     refute_permit(department_manager, volunteer,
-      *actions_list(:terminate, :show, :edit, :update, :account), 'update_acceptance?')
+                  *actions_list(:terminate, :show, :edit, :update, :account), 'update_acceptance?')
   end
 
   test 'social_worker_has_no_access' do
@@ -61,10 +61,10 @@ class VolunteerPolicyTest < PolicyAssertions::Test
     assert_permit(volunteer_one.user, volunteer_one, *actions_list(:show, :edit, :update))
     refute_permit(volunteer_one.user, volunteer_two, *actions_list(:show, :edit, :update))
     refute_permit(volunteer_one.user, Volunteer,
-      'superadmin_privileges?', 'show_acceptance?', 'show_comments?',
-      *actions_list(:index, :search, :new, :create, :seeking_clients, :terminate))
+                  'superadmin_privileges?', 'show_acceptance?', 'show_comments?',
+                  *actions_list(:index, :search, :new, :create, :seeking_clients, :terminate))
     refute_permit(volunteer_two.user, Volunteer,
-      'superadmin_privileges?', 'show_acceptance?', 'show_comments?',
-      *actions_list(:index, :search, :new, :create, :seeking_clients, :terminate))
+                  'superadmin_privileges?', 'show_acceptance?', 'show_comments?',
+                  *actions_list(:index, :search, :new, :create, :seeking_clients, :terminate))
   end
 end

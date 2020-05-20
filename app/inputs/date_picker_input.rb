@@ -2,9 +2,11 @@ class DatePickerInput < SimpleForm::Inputs::Base
   def input(wrapper_options)
     attribute_value = @builder.object.send(attribute_name.to_sym)
     html_opts = input_html_options
-    html_opts = html_opts.merge(
-      value: localize(attribute_value)
-    ) unless attribute_value.nil?
+    unless attribute_value.nil?
+      html_opts = html_opts.merge(
+        value: localize(attribute_value)
+      )
+    end
     @builder.text_field(attribute_name, html_opts)
   end
 

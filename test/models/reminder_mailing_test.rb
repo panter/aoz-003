@@ -20,10 +20,10 @@ class ReminderMailingTest < ActiveSupport::TestCase
       rmv.picked = true
     end
     reminder_mailing.save
-    assert reminder_mailing.users.include? @volunteer.user
-    assert reminder_mailing.volunteers.include? @volunteer
-    assert reminder_mailing.assignments.include? @assignment_probation
-    assert reminder_mailing.group_assignments.include? @group_assignment_probation
+    assert_includes reminder_mailing.users, @volunteer.user
+    assert_includes reminder_mailing.volunteers, @volunteer
+    assert_includes reminder_mailing.assignments, @assignment_probation
+    assert_includes reminder_mailing.group_assignments, @group_assignment_probation
   end
 
   test 'with_no_reminder_mailing_volunteer_picked_it_is_invalid' do
@@ -33,8 +33,8 @@ class ReminderMailingTest < ActiveSupport::TestCase
       ])
 
     refute reminder_mailing.valid?
-    assert reminder_mailing.errors.messages[:volunteers].include?('Es muss mindestens '\
-      'ein/e Freiwillige/r ausgewählt sein.')
+    assert_includes reminder_mailing.errors.messages[:volunteers], 'Es muss mindestens '\
+      'ein/e Freiwillige/r ausgewählt sein.'
   end
 
   test 'with_no_reminder_mailing_with_one_volunteer_picked_is_valid' do
@@ -77,10 +77,10 @@ class ReminderMailingTest < ActiveSupport::TestCase
       reminder_mailing_volunteers: [group_assignment], body: '%{EmailAbsender}'
     mailing_volunteer = reminder_mailing.reminder_mailing_volunteers.first
     mailing_body = mailing_volunteer.process_template[:body]
-    assert(mailing_body.include?(mailing_creator.email),
-      "#{mailing_creator.email} not found in #{mailing_body}")
-    assert(mailing_body.include?(mailing_creator.profile.contact.natural_name),
-      "#{mailing_creator.profile.contact.natural_name} not found in #{mailing_body}")
+    assert_includes(mailing_body, mailing_creator.email,
+                    "#{mailing_creator.email} not found in #{mailing_body}")
+    assert_includes(mailing_body, mailing_creator.profile.contact.natural_name,
+                    "#{mailing_creator.profile.contact.natural_name} not found in #{mailing_body}")
     mailing_creator.destroy
     reminder_mailing.reload
     mailing_volunteer.reload
@@ -89,9 +89,9 @@ class ReminderMailingTest < ActiveSupport::TestCase
     assert reminder_mailing.creator.profile.deleted?, 'creator profile should be deleted?'
     assert reminder_mailing.creator.profile.contact.deleted?, 'creator contact should be deleted?'
     mailing_body = mailing_volunteer.process_template[:body]
-    assert(mailing_body.include?(mailing_creator.email),
-      "#{mailing_creator.email} not found in #{mailing_body}")
-    assert(mailing_body.include?(mailing_creator.profile.contact.natural_name),
-      "#{mailing_creator.profile.contact.natural_name} not found in #{mailing_body}")
+    assert_includes(mailing_body, mailing_creator.email,
+                    "#{mailing_creator.email} not found in #{mailing_body}")
+    assert_includes(mailing_body, mailing_creator.profile.contact.natural_name,
+                    "#{mailing_creator.profile.contact.natural_name} not found in #{mailing_body}")
   end
 end

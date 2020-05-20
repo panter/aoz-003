@@ -10,11 +10,12 @@ class GroupAssignmentTransform < Transformer
       volunteer: volunteer
     }.merge(termination_attributes(einsatz))
       .merge(import_attributes(:tbl_FreiwilligenEinsätze, einsatz[:pk_FreiwilligenEinsatz],
-        freiwilligen_einsatz: einsatz))
+                               freiwilligen_einsatz: einsatz))
   end
 
   def termination_attributes(einsatz)
     return {} if einsatz[:d_EinsatzBis].blank?
+
     {
       period_end_set_by: @ac_import.import_user,
       termination_submitted_by: @ac_import.import_user,
@@ -27,11 +28,14 @@ class GroupAssignmentTransform < Transformer
   def get_or_create_by_import(einsatz_id, einsatz: nil, group_offer: nil, volunteer: nil)
     group_assignment = get_import_entity(:group_assignment, einsatz_id)
     return group_assignment if group_assignment.present?
+
     einsatz ||= @freiwilligen_einsaetze.find(einsatz_id)
     volunteer ||= @ac_import.volunteer_transform.get_or_create_by_import(einsatz[:fk_PersonenRolle])
     return if volunteer.blank?
+
     group_assignment = GroupAssignment.new(prepare_attributes(einsatz, volunteer))
     return group_assignment if group_offer.blank?
+
     group_assignment.group_offer = group_offer
     group_assignment.save!
     update_timestamps(group_assignment, einsatz[:d_EinsatzVon], einsatz[:d_MutDatum])

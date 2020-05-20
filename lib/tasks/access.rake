@@ -34,7 +34,6 @@ namespace :access do
     Rails::TestUnit::Runner.rake_run(['lib/access_import_test'])
   end
 
-
   desc 'Set all Volunteers that where imported and created before May 2018 to intro_course = true'
   task cleanup_afterwards: :environment do
     # Make sure terminated assignments have log entry

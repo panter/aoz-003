@@ -39,6 +39,5 @@ class VolunteersXlsxExportTest < ActionDispatch::IntegrationTest
       'Akzeptiert am',
       'Beendet am'
     )
-    
   end
 end

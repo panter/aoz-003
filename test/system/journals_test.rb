@@ -9,7 +9,7 @@ class JournalsTest < ApplicationSystemTestCase
     @journal_volunteer = @volunteer.journals.reload.first
   end
 
-  def volunteer_has_link_to_their_journal_entry_as user
+  def volunteer_has_link_to_their_journal_entry_as(user)
     login_as user
     visit volunteer_path(@volunteer)
     first(:link, 'Journal').click
@@ -26,7 +26,7 @@ class JournalsTest < ApplicationSystemTestCase
     volunteer_has_link_to_their_journal_entry_as @superadmin
   end
 
-  def can_create_journal_as user
+  def can_create_journal_as(user)
     login_as user
     visit client_journals_path(create(:client))
     click_link 'Journal erfassen', match: :first
@@ -51,7 +51,7 @@ class JournalsTest < ApplicationSystemTestCase
     can_create_journal_as @department_manager
   end
 
-  def can_edit_journal_as user
+  def can_edit_journal_as(user)
     login_as user
     visit volunteer_journals_path(@volunteer)
     click_link 'Bearbeiten'
@@ -73,7 +73,7 @@ class JournalsTest < ApplicationSystemTestCase
     can_edit_journal_as @department_manager
   end
 
-  def can_delete_journal_as user
+  def can_delete_journal_as(user)
     login_as user
     visit volunteer_journals_path(@volunteer)
 

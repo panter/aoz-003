@@ -28,7 +28,6 @@ class BillingExpenseTest < ActiveSupport::TestCase
   #   hour1c = create :hour, volunteer: volunteer1, meeting_date: time_z(2017, 1, 18), hourable: assignment1
   #   create :billing_expense, volunteer: volunteer1, hours: [hour1c], user: other_creator
 
-
   #   volunteer2 = create :volunteer, bank: 'Bank 2'
   #   creator = volunteer2.registrar
   #   group_assignment1 = create :group_assignment, volunteer: volunteer2, creator: creator

@@ -6,18 +6,22 @@ class HourTransform < Transformer
       hours: erfassung[:z_Stundenzahl],
       meeting_date: erfassung[:d_MutDatum]
     }.merge(import_attributes(:tbl_Stundenerfassung, erfassung[:pk_Stundenerfassung],
-      erfassung: erfassung))
+                              erfassung: erfassung))
   end
 
   def get_or_create_by_import(erfassung_id, erfassung = nil)
     hour = get_import_entity(:hour, erfassung_id)
     return hour if hour.present?
+
     erfassung ||= @stundenerfassung.find(erfassung_id)
     return if erfassung[:z_Stundenzahl] <= 0
+
     hourable = get_hourable(erfassung)
     return if hourable.blank? || hourable.deleted?
+
     volunteer = get_volunteer(erfassung)
     return if volunteer.blank? || volunteer.deleted?
+
     hour = Hour.create!(prepare_attributes(erfassung, hourable, volunteer))
     update_timestamps(hour, hour.meeting_date)
   end
@@ -39,8 +43,8 @@ class HourTransform < Transformer
 
   def bind_imported_hours_to_dummy_billing_expense
     Volunteer.joins(hours: :import)
-             .where('hours.billing_expense_id IS NULL')
-             .map { |volunteer| mark_hours_unbillable(volunteer) }
+      .where('hours.billing_expense_id IS NULL')
+      .map { |volunteer| mark_hours_unbillable(volunteer) }
   end
 
   def mark_hours_unbillable(volunteer)
@@ -64,6 +68,7 @@ class HourTransform < Transformer
     if einsatz[:fk_FreiwilligenFunktion] == 1
       return get_assignment(erfassung[:fk_FreiwilligenEinsatz], einsatz)
     end
+
     get_group_assignment(erfassung[:fk_FreiwilligenEinsatz]).group_offer
   end
 
@@ -78,6 +83,7 @@ class HourTransform < Transformer
   def get_volunteer(erfassung)
     pers_rolle = @personen_rolle.find(erfassung[:fk_PersonenRolle])
     return if pers_rolle.blank?
+
     @ac_import.volunteer_transform.get_or_create_by_import(erfassung[:fk_PersonenRolle], pers_rolle)
   end
 end

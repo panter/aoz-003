@@ -23,6 +23,7 @@ class Transformer
 
   def update_timestamps(record, date, updated_date = nil)
     return record if date.blank?
+
     record.update_columns(created_at: date, updated_at: updated_date || date)
     record
   end
