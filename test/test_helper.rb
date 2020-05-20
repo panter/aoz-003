@@ -4,6 +4,8 @@ require 'database_cleaner'
 require 'policy_assertions'
 require 'webdrivers/chromedriver'
 
+Webdrivers.install_dir = 'tmp/cache/webdrivers'
+
 Dir[Rails.root.join 'test/utility/**/*.rb'].each { |path| require path }
 
 class ActionMailer::TestCase

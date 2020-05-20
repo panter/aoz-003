@@ -2,6 +2,8 @@ require 'test_helper'
 require 'webdrivers/chromedriver'
 require 'selenium/webdriver'
 
+Webdrivers.install_dir = 'tmp/cache/webdrivers'
+
 Capybara.register_driver :chrome_headless do |app|
   chrome_options = {
     chromeOptions: { args: %w[headless disable-gpu no-sandbox window-size=1600x2000], w3c: false }

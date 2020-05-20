@@ -18,6 +18,7 @@ variables:
     paths:
       - tmp/cache/ruby
       - tmp/cache/yarn
+      - tmp/cache/webdrivers
     policy: pull-push
 
 .pull-cache:
@@ -26,6 +27,7 @@ variables:
     paths:
       - tmp/cache/ruby
       - tmp/cache/yarn
+      - tmp/cache/webdrivers
     policy: pull
 
 .test-extend:
@@ -35,6 +37,14 @@ variables:
     - bundle config set path 'tmp/cache'
     - bundle install
     - bundle exec rails db:schema:load
+
+.update_webdrivers: &update_webdrivers |
+  function update_webdrivers_task() {
+    if ! [ -f "tmp/cache/webdrivers/chromedriver" ]; then
+      echo "webdrivers are not cached and thus need to be updated/fetched"
+      bundle exec rake webdrivers:chromedriver:update
+    fi
+  }
 
 .retry-dropped-runners:
   retry:
@@ -51,6 +61,9 @@ lint:
     - .pull-push-cash
     - .test-extend
   script:
+    # only for having crhomedriver in the cache (this job is the only one pushing the cache)
+    - *update_webdrivers
+    - update_webdrivers_task
     - yarn lint:js
     - bundle exec rubocop
     - yarn lint:css
@@ -69,6 +82,8 @@ system:
     - .test-extend
     - .retry-dropped-runners
   script:
+    - *update_webdrivers
+    - update_webdrivers_task
     - bundle exec rails test:system
   artifacts:
     paths:

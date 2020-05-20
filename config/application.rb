@@ -7,6 +7,9 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require 'webdrivers/chromedriver'
+Webdrivers.install_dir = 'tmp/cache/webdrivers'
+
 module Aoz
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
