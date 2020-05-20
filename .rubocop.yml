@@ -31,9 +31,44 @@ Rails/RefuteMethods:
 
 Metrics/AbcSize:
   Exclude:
-    - test/**/*
+    - app/controllers/application_controller.rb
+    - app/controllers/assignments_controller.rb
+    - app/controllers/billing_expenses_controller.rb
+    - app/controllers/clients_controller.rb
+    - app/controllers/departments_controller.rb
+    - app/controllers/feedbacks_controller.rb
+    - app/controllers/group_assignments_controller.rb
+    - app/controllers/group_offers_controller.rb
+    - app/controllers/hours_controller.rb
+    - app/controllers/semester_process_volunteers_controller.rb
+    - app/controllers/semester_processes_controller.rb
+    - app/controllers/users_controller.rb
+    - app/controllers/volunteers_controller.rb
+    - app/inputs/date_range_picker_input.rb
+    - app/inputs/date_year_range_picker_input.rb
+    - app/models/certificate.rb
+    - app/models/performance_report.rb
+    - app/models/reminder_mailing_volunteer.rb
+    - app/models/semester_process_volunteer.rb
+    - config/**/*
     - db/seeds.rb
-  Max: 25
+    - lib/access_import/**/*
+    - test/**/*
+  IgnoredMethods:
+    - dates_semester_start
+    - boolean_toggler_filter_dropdown
+    - custom_filter_dropdown_filters
+    - td_truncate_content_modal
+    - validate_group_assignment_or_assignment_present
+    - document_js_nodes
+    - take_responsibility
+    - build_nested_objects
+    - handle_semester_feedback_quote
+    - set_journaled
+    - last_submitted_hours_and_feedbacks
+    - selected_billing_semester
+    - in_feedbackable?
+
 Metrics/ClassLength:
   Exclude:
     - test/**/*
@@ -53,6 +88,7 @@ Metrics/BlockLength:
     - draw # for routes
     - define # for FactoryBot
     - factory
+    - test
 
 Lint/RaiseException:
   Enabled: true
