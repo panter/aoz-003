@@ -307,24 +307,6 @@ Lint/Void:
     - 'config/initializers/countries.rb'
 
 
-# Offense count: 14
-# Configuration parameters: CountComments, Max, ExcludedMethods.
-# ExcludedMethods: refine
-Metrics/BlockLength:
-  Exclude:
-    - 'test/system/*'
-    - 'db/seeds.rb'
-    - 'config/routes.rb'
-    - 'app/views/assignments/_assignments_table.xlsx.axlsx'
-    - 'app/views/clients/_client_table.xlsx.axlsx'
-    - 'app/views/events/show.xlsx.axlsx'
-    - 'app/views/group_offers/index.xlsx.axlsx'
-    - 'app/views/users/index.xlsx.axlsx'
-    - 'app/views/volunteers/index.xlsx.axlsx'
-    - 'config/initializers/simple_form_bootstrap.rb'
-    - 'lib/tasks/access.rake'
-    - 'lib/tasks/setup.rake'
-
 # Offense count: 4
 # Configuration parameters: CountComments, Max.
 Metrics/ClassLength:
@@ -348,13 +330,13 @@ Metrics/CyclomaticComplexity:
 
 # Offense count: 3
 # Configuration parameters: CountComments, Max, ExcludedMethods.
-Metrics/MethodLength:
-  Exclude:
-    - 'test/**/*'
-    - 'db/seeds.rb'
-    - 'app/controllers/semester_processes_controller.rb'
-    - 'app/models/document_treeview.rb'
-    - 'app/models/performance_report.rb'
+# Metrics/MethodLength:
+#   Exclude:
+#     - 'test/**/*'
+#     - 'db/seeds.rb'
+#     - 'app/controllers/semester_processes_controller.rb'
+#     - 'app/models/document_treeview.rb'
+#     - 'app/models/performance_report.rb'
 
 # Offense count: 2
 # Configuration parameters: CountComments, Max.
