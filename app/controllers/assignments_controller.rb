@@ -29,7 +29,7 @@ class AssignmentsController < ApplicationController
 
   def volunteer_search
     authorize Assignment
-    @q = policy_scope(Assignment).ransack volunteer_contact_full_name_cont: params[:term]
+    @q = policy_scope(Assignment).ransack params[:q]
     @q.sorts = ['period_end desc', 'period_start desc']
     @assignments = @q.result distinct: true
     respond_to do |format|
@@ -39,7 +39,7 @@ class AssignmentsController < ApplicationController
 
   def client_search
     authorize Assignment
-    @q = policy_scope(Assignment).ransack client_contact_full_name_cont: params[:term]
+    @q = policy_scope(Assignment).ransack params[:q]
     @q.sorts = ['period_end desc', 'period_start desc']
     @assignments = @q.result distinct: true
     respond_to do |format|

@@ -99,21 +99,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
-  def fill_autocomplete(name, options = {})
-    find("[name=\"#{name}\"]").native.send_keys options[:with], :down
-    wait_for_ajax
-    items = page.find_all('li.ui-menu-item')
-    if options[:items_expected]
-      assert_equal options[:items_expected], items.size
-    end
-    if options[:check_items].present?
-      items.each do |item|
-        assert_includes options[:check_items], item.text
-      end
-    end
-    find("[name=\"#{name}\"]").native.send_keys :down, :enter
-  end
-
   def any_checked?(selector)
     page.find_all(selector).any?(&:checked?)
   end

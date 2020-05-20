@@ -30,15 +30,18 @@ class GroupOffersVolunteerSearchesTest < ApplicationSystemTestCase
   end
 
   test 'enter_search_text_brings_suggestions' do
-    fill_autocomplete 'q[search_volunteer_cont]', with: 'Whi', items_expected: 1,
-      check_item: @group_offer_one.title
+    fill_in name: 'q[search_volunteer_cont]', with: 'Whi'
+    wait_for_ajax
+    within '.autocomplete-suggestions' do
+      assert_text @group_offer_one.title, normalize_ws: true
+      refute_text @group_offer_two.title, normalize_ws: true
+    end
   end
 
   test 'suggestions search triggers the search correctly' do
-    fill_autocomplete 'q[search_volunteer_cont]', with: 'Wal'
+    fill_in name: 'q[search_volunteer_cont]', with: 'Wal'
     wait_for_ajax
     page.find_field(name: 'q[search_volunteer_cont]').native.send_keys(:tab, :enter)
-    visit current_url
     within 'tbody' do
       assert page.has_text? @volunteer_one.contact.full_name
       assert page.has_text? @group_offer_one.title

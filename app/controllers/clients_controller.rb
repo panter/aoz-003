@@ -23,7 +23,7 @@ class ClientsController < ApplicationController
 
   def search
     authorize Client
-    @q = policy_scope(Client).ransack contact_full_name_cont: params[:term]
+    @q = policy_scope(Client).ransack params[:q]
     @q.sorts = ['acceptance asc']
     @clients = @q.result distinct: true
     respond_to do |format|

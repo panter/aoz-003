@@ -5,12 +5,26 @@
  */
 
 $(() => {
+  const findSearchParam = (param) => {
+    const qParam = window.location.search
+      .slice(1)
+      .split('&')
+      .map((part) => part.split('='))
+      .find((parts) => decodeURIComponent(parts[0]) === param)
+    if (qParam && qParam.length === 2) {
+      return decodeURIComponent(qParam[1]).split('+').join(' ')
+    }
+    return null
+  }
+
   $('.search-field-autocomplete').each((_index, field) => {
     const searchField = $(field)
+    const fieldName = searchField.attr('name')
 
-    const { autocomplete } = searchField.data()
+    const { autocomplete, param } = searchField.data()
     const delimitor = autocomplete.includes('?') ? '&' : '?'
-    const baseUrl = `${autocomplete}${delimitor}term=`
+    const searchParam = param || fieldName
+    const baseUrl = `${autocomplete}${delimitor}${searchParam}=`
 
     searchField.devbridgeAutocomplete({
       minChars: 2,
@@ -18,7 +32,13 @@ $(() => {
       lookup: (query, done) => {
         $.get(baseUrl + query, (suggestions) => done({ suggestions }), 'json')
       },
-      onSelect: () => searchField.closest('form').trigger('submit'),
+      onSelect: ({ data, value }) => {
+        const searchValue = findSearchParam(fieldName)
+        if (searchValue !== value) {
+          searchField.val(data.search)
+          searchField.closest('form').trigger('submit')
+        }
+      },
     })
   })
 })

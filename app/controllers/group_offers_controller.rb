@@ -17,9 +17,9 @@ class GroupOffersController < ApplicationController
 
   def search
     authorize GroupOffer
-    @q = policy_scope(GroupOffer).ransack search_volunteer_cont: params[:term]
+    @q = policy_scope(GroupOffer).ransack params[:q]
     @q.sorts = ['active desc', 'created_at desc']
-    @group_offers = @q.result distinct: true
+    @group_offers = @q.result
     respond_to do |format|
       format.json
     end
@@ -42,7 +42,7 @@ class GroupOffersController < ApplicationController
   def search_volunteer
     @q = policy_scope(
       Volunteer.candidates_for_group_offer(@group_offer)
-    ).ransack(contact_full_name_cont: params[:term])
+    ).ransack(params[:q])
     @volunteers = @q.result distinct: true
     respond_to do |format|
       format.json

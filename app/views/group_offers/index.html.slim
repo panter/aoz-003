@@ -8,7 +8,7 @@ nav.navbar.section-navigation#filters
         = f.search_field :search_volunteer_cont,
           class: 'search-field-autocomplete',
           data: { autocomplete: search_group_offers_path },
-          autofocus: true,
+          autofocus: !params[:q]&.fetch(:search_volunteer_cont, nil),
           placeholder: 'Nach Freiwillige suchen'
         = f.submit 'Suchen'
 

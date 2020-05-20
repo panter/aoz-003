@@ -16,7 +16,7 @@ class VolunteersController < ApplicationController
 
   def search
     authorize Volunteer
-    @q = policy_scope(Volunteer).ransack contact_full_name_cont: params[:term]
+    @q = policy_scope(Volunteer).ransack params[:q]
     @q.sorts = ['acceptance asc']
     @volunteers = @q.result distinct: true
     respond_to do |format|
