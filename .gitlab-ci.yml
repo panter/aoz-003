@@ -51,7 +51,9 @@ lint:
     - .pull-push-cash
     - .test-extend
   script:
+    - yarn lint:js
     - bundle exec rubocop
+    - yarn lint:css
 
 test:
   extends:

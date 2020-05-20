@@ -67,7 +67,6 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'ruby-debug-ide', require: false
   gem 'ruby-lint', require: false
-  gem 'scss_lint', require: false
 end
 
 group :development, :test do

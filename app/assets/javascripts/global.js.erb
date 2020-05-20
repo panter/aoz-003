@@ -1,83 +1,88 @@
-"use strict";
+'use strict'
 
 $(function () {
-  register_freetext_toggler();
-  register_treeview();
-  register_sidebar_submit();
-});
+  register_freetext_toggler()
+  register_treeview()
+  register_sidebar_submit()
+})
 
 function register_sidebar_submit() {
-  $('#sidebar-submit').on('click', function(e) {
-    e.preventDefault();
-    $('input[type=submit]').each(function() {
-      $(this).click();
-    });
-  });
+  $('#sidebar-submit').on('click', function (e) {
+    e.preventDefault()
+    $('input[type=submit]').each(function () {
+      $(this).click()
+    })
+  })
 }
 
 // document view allows users to change input from select field to freetext input
 // markup is prepared by rendering both field types, this listener toggles between
 // both
 function register_freetext_toggler() {
-  $('a.freetext').click(function() {
-    $(this).parents('.form-group').find(':input').each(function() {
-      var $input = $(this);
-      $input.toggle();
-      // assure that only the visible field has the name attribute
-      // set to avoid double submits
-      if ($input.is(':visible')) {
-        $input.attr('name', $input.data('name'));
-      } else {
-        $input.data('name', $input.attr('name'));
-        $input.removeAttr('name');
-      };
-    });
-  });
-  $('a.freetext').click();
+  $('a.freetext').click(function () {
+    $(this)
+      .parents('.form-group')
+      .find(':input')
+      .each(function () {
+        var $input = $(this)
+        $input.toggle()
+        // assure that only the visible field has the name attribute
+        // set to avoid double submits
+        if ($input.is(':visible')) {
+          $input.attr('name', $input.data('name'))
+        } else {
+          $input.data('name', $input.attr('name'))
+          $input.removeAttr('name')
+        }
+      })
+  })
+  $('a.freetext').click()
 }
 
 /* controls the treeview plugin to display the documents tree */
 function register_treeview() {
-    $('#tree').treeview({
-        data: $('#tree').data('tree'),
-        enableLinks: true,
-        levels: 1
-    });
-    $('#tree_expand_all').click(function() {
-        $('#tree').treeview('expandAll');
-    });
-    $('#tree_collapse_all').click(function() {
-        $('#tree').treeview('collapseAll');
-    });
-    $('#tree_delete_node').click(function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        var nodes = $('#tree').treeview('getSelected');
-        if (1 > nodes.length) {
-            alert('Bitte wählen Sie ein Dokument zum löschen.')
-            return;
-        }
-        if (!window.confirm("Wirklich löschen?")) {
-            return;
-        }
-        var href = $(this).attr("href") + '/' + nodes[0].documentId;
-        $.ajax(href, {method: "DELETE", async: false})
-        location.reload();
-    });
-    $('#tree_edit_node').click(function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        var nodes = $('#tree').treeview('getSelected');
-        if (1 > nodes.length) {
-            alert('Bitte wählen Sie ein Dokument zum bearbeiten.')
-            return;
-        }
-        var href = $(this).attr("href") + '/' + nodes[0].documentId+ '/edit';
-        window.location = href;
-    });
-    $( "#tree" ).on( "click", "a", function(event) {
-        event.preventDefault();
-        var href = $(this).attr("href");
-        if ('#' != href) { window.open(href); }
-    });
+  $('#tree').treeview({
+    data: $('#tree').data('tree'),
+    enableLinks: true,
+    levels: 1,
+  })
+  $('#tree_expand_all').click(function () {
+    $('#tree').treeview('expandAll')
+  })
+  $('#tree_collapse_all').click(function () {
+    $('#tree').treeview('collapseAll')
+  })
+  $('#tree_delete_node').click(function (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    var nodes = $('#tree').treeview('getSelected')
+    if (nodes.length < 1) {
+      alert('Bitte wählen Sie ein Dokument zum löschen.')
+      return
+    }
+    if (!window.confirm('Wirklich löschen?')) {
+      return
+    }
+    var href = $(this).attr('href') + '/' + nodes[0].documentId
+    $.ajax(href, { method: 'DELETE', async: false })
+    location.reload()
+  })
+  $('#tree_edit_node').click(function (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    var nodes = $('#tree').treeview('getSelected')
+    if (nodes.length < 1) {
+      alert('Bitte wählen Sie ein Dokument zum bearbeiten.')
+      return
+    }
+    var href = $(this).attr('href') + '/' + nodes[0].documentId + '/edit'
+    window.location = href
+  })
+  $('#tree').on('click', 'a', function (event) {
+    event.preventDefault()
+    var href = $(this).attr('href')
+    if (href !== '#') {
+      window.open(href)
+    }
+  })
 }
