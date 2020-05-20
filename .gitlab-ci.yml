@@ -12,7 +12,7 @@ variables:
   DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB'
   POSTGRES_HOST_AUTH_METHOD: trust
 
-.push-pull-cache:
+.pull-push-cash:
   cache:
     key: aoz-003-ruby-2-6-6
     paths:
@@ -31,8 +31,9 @@ variables:
 .test-extend:
   stage: test
   before_script:
-    - bundle install --without development --path tmp/cache
     - yarn install --cache-folder tmp/cache/yarn
+    - bundle config set path 'tmp/cache'
+    - bundle install
     - bundle exec rails db:schema:load
 
 .retry-dropped-runners:
@@ -45,9 +46,16 @@ variables:
       - scheduler_failure
       - stale_schedule
 
+lint:
+  extends:
+    - .pull-push-cash
+    - .test-extend
+  script:
+    - bundle exec rubocop
+
 test:
   extends:
-    - .push-pull-cache
+    - .pull-cache
     - .test-extend
     - .retry-dropped-runners
   script:

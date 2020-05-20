@@ -15,6 +15,7 @@ AllCops:
     - config/boot.rb
     - Rakefile
     - vendor/**/*
+    - lib/access_import/**/*
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
@@ -52,7 +53,6 @@ Metrics/AbcSize:
     - app/models/semester_process_volunteer.rb
     - config/**/*
     - db/seeds.rb
-    - lib/access_import/**/*
     - test/**/*
   IgnoredMethods:
     - boolean_toggler_filter_dropdown
@@ -71,6 +71,10 @@ Metrics/AbcSize:
 
 Metrics/ClassLength:
   Exclude:
+    - app/controllers/assignments_controller.rb
+    - app/models/user.rb
+    - app/models/volunteer.rb
+    - app/policies/application_policy.rb
     - test/**/*
   Max: 150
 Metrics/MethodLength:
@@ -102,6 +106,11 @@ Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
   Enabled: true
+
+Naming/MethodName:
+  EnforcedStyle: snake_case
+  Exclude:
+    - config/initializers/ransack.rb
 
 Layout/FirstArrayElementIndentation:
   Enabled: true
