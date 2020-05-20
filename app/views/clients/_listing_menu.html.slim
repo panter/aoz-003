@@ -2,10 +2,14 @@ nav.navbar.section-navigation.hidden-print
   hr
 
   ul.list-unstyled
-    li.li-search-form
+    li.search-form
       = search_form_for @q do |f|
-        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_clients_path }, autofocus: true
-        = f.submit 'Suchen', class: 'search-submit'
+        = f.search_field :contact_full_name_cont,
+              class: 'search-field-autocomplete',
+              data: { autocomplete: search_clients_path },
+              autofocus: true
+        = f.submit 'Suchen'
+
   ul.list-inline
     li= button_link 'Klient/in erfassen', new_client_path, dimension: :sm
     - if policy(ClientNotification).index?

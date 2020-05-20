@@ -1,5 +1,6 @@
 json.array!(@users) do |user|
-  json.id user.id
-  json.label "#{user.full_name}; #{user.email} - #{t("role.#{user.role}")}"
-  json.value user.full_name
+  json.data do
+    json.category t("role.#{user.role}")
+  end
+  json.value "#{user.full_name}; #{user.email} - #{t("role.#{user.role}")}"
 end

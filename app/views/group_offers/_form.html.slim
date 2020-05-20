@@ -70,10 +70,10 @@
     h2 Freiwillige hinzufügen
 
     ul.list-unstyled.m-t-20
-      li.li-search-form
+      li.search-form
         = search_form_for @q, url: edit_group_offer_path(@group_offer) do |f|
           = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_volunteer_group_offer_path(@group_offer) }, autofocus: true
-          = f.submit 'Suchen', class: 'search-submit'
+          = f.submit 'Suchen'
 
     = render 'volunteers/columns', volunteers: @volunteers, group_offer_redirect: :edit
     br

@@ -350,6 +350,7 @@ de:
       client:
         <<: [*id-generic_keys, *id-client-acceptance]
         acceptance: Prozess
+        acceptances: *id-client-acceptance
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
         cost_unit: Kostenträger

@@ -3,10 +3,14 @@ nav.navbar.section-navigation
   hr
 
   ul.list-unstyled
-    li.li-search-form
+    li.search-form
       = search_form_for @q do |f|
-        = f.search_field :contact_full_name_cont, class: 'search-field', data: { autocomplete: search_volunteers_path }, autofocus: true
-        = f.submit 'Suchen', class: 'search-submit'
+        = f.search_field :contact_full_name_cont,
+          class: 'search-field-autocomplete',
+          data: { autocomplete: search_volunteers_path },
+          autofocus: true
+        = f.submit 'Suchen'
+
   ul.list-inline
     li= button_link t_title(:new), new_volunteer_path, dimension: 'sm'
     - if policy(Volunteer).superadmin_privileges?

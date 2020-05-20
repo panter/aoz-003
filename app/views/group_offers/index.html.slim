@@ -3,12 +3,15 @@ h1= t_title
 nav.navbar.section-navigation#filters
   hr
   ul.list-unstyled
-    li.li-search-form
+    li.search-form
       = search_form_for @q do |f|
-        = f.search_field :search_volunteer_cont, class: 'search-field',
-          data: { autocomplete: search_group_offers_path }, autofocus: true,
+        = f.search_field :search_volunteer_cont,
+          class: 'search-field-autocomplete',
+          data: { autocomplete: search_group_offers_path },
+          autofocus: true,
           placeholder: 'Nach Freiwillige suchen'
-        = f.submit 'Suchen', class: 'search-submit'
+        = f.submit 'Suchen'
+
   ul.list-inline
     - if policy(GroupOffer).new?
       li= button_link t_title(:new), new_group_offer_path, dimension: 'sm'
@@ -16,7 +19,9 @@ nav.navbar.section-navigation#filters
       li= button_link t('.group_offer_categories'), group_offer_categories_path, dimension: 'sm'
     li= button_link icon_span(:xlsx), url_for(format: :xlsx, q: search_parameters), dimension: 'sm'
     li= link_to icon_span(:print), url_for(print: :true, q: search_parameters), { class: 'btn btn-default btn-sm', target: '_blank' }
+
   hr
+
   ul.list-inline
     li= clear_filter_button
     = custom_filter_dropdown('Standort', *Department.name_asc.filterable)
@@ -31,6 +36,7 @@ nav.navbar.section-navigation#filters
       { q: :offer_type_eq, text: 'Intern', value: 'internal_offer'})
     = button_link 'Beendete Einsätze',
       terminated_index_group_assignments_path, dimension: :sm
+
   hr
 
 = bootstrap_paginate(@group_offers)
