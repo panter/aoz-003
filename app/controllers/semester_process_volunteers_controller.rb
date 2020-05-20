@@ -12,7 +12,7 @@ class SemesterProcessVolunteersController < ApplicationController
     semester = Semester.parse(params[:semester])
     @global_filters = {semester: params[:semester]}
     @semester_process = SemesterProcess.find_by_semester(semester).last
-    @q = SemesterProcessVolunteer.index(@semester_process).ransack(params[:q])
+    @q = SemesterProcessVolunteer.index_scope(@semester_process).ransack(params[:q])
     @q.sorts = ['volunteer_contact_last_name asc'] if @q.sorts.empty?
     @spvs = @q.result.paginate(page: params[:page])
     set_responsibles

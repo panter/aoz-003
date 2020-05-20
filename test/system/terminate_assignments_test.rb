@@ -26,6 +26,9 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     page.accept_confirm do
       click_on 'Einsatz wird hiermit abgeschlossen'
     end
+    within '.alert.alert-warning.alert-dismissible' do
+      assert_text 'Der Einsatz ist hiermit abgeschlossen.'
+    end
 
     visit volunteer_hours_path(@volunteer)
     assert_text '12.35'
@@ -36,6 +39,9 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     visit terminate_assignment_path(@assignment)
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
+    end
+    within '.alert.alert-warning.alert-dismissible' do
+      assert_text 'Der Einsatz ist hiermit abgeschlossen.'
     end
     @assignment.reload
     assert @assignment.termination_submitted_at.present?
@@ -48,6 +54,9 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
+    within '.alert.alert-warning.alert-dismissible' do
+      assert_text 'Der Einsatz ist hiermit abgeschlossen.'
+    end
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal @department_manager.email, mail['to'].to_s
@@ -59,9 +68,10 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
     end
-    @assignment.reload
-    assert @assignment.termination_submitted_at.present?
-    assert_equal @superadmin, @assignment.termination_submitted_by
+    within '.alert.alert-warning.alert-dismissible' do
+      assert_text 'Der Einsatz ist hiermit abgeschlossen.'
+    end
+    assert_equal @superadmin, @assignment.reload.termination_submitted_by
   end
 
   test 'department_manager_submitting_termination_sets_termination_submitted' do
@@ -69,6 +79,9 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
     visit terminate_assignment_path(@assignment)
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
+    end
+    within '.alert.alert-warning.alert-dismissible' do
+      assert_text 'Der Einsatz ist hiermit abgeschlossen.'
     end
     @assignment.reload
     assert @assignment.termination_submitted_at.present?
@@ -78,13 +91,16 @@ class TerminateAssignmentsTest < ApplicationSystemTestCase
   test 'volunteer_expenses_waive_field_matches_and_updates_volunteer_waive_field' do
     login_as @superadmin
     visit terminate_assignment_path(@assignment)
-
-    refute page.find_field('Ich verzichte auf die Auszahlung von Spesen.').checked?
+    assert_text 'Evaluation nach Abschluss einer Begleitung'
+    refute page.find_field('Ich verzichte auf die Auszahlung von Spesen.', wait: 0).checked?
 
     check 'Ich verzichte auf die Auszahlung von Spesen.'
 
     page.accept_confirm do
       click_button 'Einsatz wird hiermit abgeschlossen'
+    end
+    within '.alert.alert-warning.alert-dismissible' do
+      assert_text 'Der Einsatz ist hiermit abgeschlossen.'
     end
     @volunteer.reload
     assert @volunteer.waive

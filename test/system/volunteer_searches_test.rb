@@ -16,7 +16,9 @@ class VolunteerSearchesTest < ApplicationSystemTestCase
 
   test 'basic_non_suggests_search_works' do
     fill_in name: 'q[contact_full_name_cont]', with: 'zzzz'
-    click_button 'Suchen'
+    wait_for_ajax
+    page.find_field(name: 'q[contact_full_name_cont]').native.send_keys(:tab, :enter)
+    visit current_url
     assert page.has_text? @volunteers.last.first.contact.full_name
     assert page.has_text? @volunteers.last.last.contact.full_name
   end
@@ -28,7 +30,8 @@ class VolunteerSearchesTest < ApplicationSystemTestCase
 
   test 'suggestions search triggers the search correctly' do
     fill_autocomplete 'q[contact_full_name_cont]', with: 'aaa'
-    click_button 'Suchen'
+    wait_for_ajax
+    page.find_field(name: 'q[contact_full_name_cont]').native.send_keys(:tab, :enter)
     visit current_url
     within 'tbody' do
       assert page.has_text?(@volunteers.first[0].contact.full_name) || page.has_text?(@volunteers.first[1].contact.full_name)

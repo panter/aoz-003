@@ -47,12 +47,14 @@ class ProfilesTest < ApplicationSystemTestCase
     assert_text 'Hans'
     assert_text 'Muster'
 
-    assert_text 'Nein Flexibel'
-    assert_text 'Ja Morgens'
-    assert_text 'Nein Nachmittags'
-    assert_text 'Nein Abends'
-    assert_text 'Nein Werktags'
-    assert_text 'Nein Wochenende'
+    within '.availability-label-list' do
+      assert_css 'span.label.label-danger', text: 'Flexibel'
+      assert_css 'span.label.label-success', text: 'Morgens'
+      assert_css 'span.label.label-danger', text: 'Nachmittags'
+      assert_css 'span.label.label-danger', text: 'Abends'
+      assert_css 'span.label.label-danger', text: 'Werktags'
+      assert_css 'span.label.label-danger', text: 'Wochenende'
+    end
   end
 
   test 'when_profile_created_it_can_be_displayed' do
@@ -101,14 +103,15 @@ class ProfilesTest < ApplicationSystemTestCase
     fill_in 'Email', with: @user_without_profile.email
     fill_in 'Passwort', with: 'asdfasdf'
     click_button 'Anmelden'
-
-    refute_text 'Telefonnummer 2'
+    assert_text 'Profil erfassen'
+    refute_text 'Telefonnummer 2', wait: 0
   end
 
   test 'profile has no secondary phone field' do
     login_as @user
     visit profile_path(@user.profile.id)
-    refute_text 'Telefonnummer 2'
+    assert_text @user.full_name
+    refute_text 'Telefonnummer 2', wait: 0
   end
 
   test 'user without profile gets redirected to profile form' do
@@ -117,7 +120,7 @@ class ProfilesTest < ApplicationSystemTestCase
 
     assert_text 'Profil erfassen'
     assert_text 'Bitte füllen Sie Ihr Profil aus um die Applikation zu verwenden.'
-    refute_link 'Freiwillige'
+    refute_link 'Freiwillige', wait: 0
   end
 
   test 'volunteer without profile does not get redirected to profile form' do
@@ -125,15 +128,15 @@ class ProfilesTest < ApplicationSystemTestCase
     login_as user
     visit root_path
 
-    refute_text 'Profil erfassen'
     assert_link 'Freiwillige'
+    refute_text 'Profil erfassen', wait: 0
   end
 
   test 'superadmin with profile does not get redirected to profile form' do
     login_as @user
     visit root_path
 
-    refute_text 'Profil erfassen'
     assert_link 'Freiwillige'
+    refute_text 'Profil erfassen', wait: 0
   end
 end

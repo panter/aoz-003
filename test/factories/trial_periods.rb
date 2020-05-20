@@ -13,7 +13,7 @@ FactoryBot.define do
     end
 
     after :build do |trial_period|
-      trial_period.trial_period_mission = create(:assignment) unless trial_period.trial_period_mission.present?
+      trial_period.trial_period_mission = create(:assignment) if trial_period.trial_period_mission.blank?
     end
   end
 end

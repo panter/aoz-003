@@ -15,13 +15,15 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6
 
 Rails:
   Enabled: true
 Rails/FilePath:
   Enabled: false
 Rails/HasAndBelongsToMany:
+  Enabled: false
+Rails/RefuteMethods:
   Enabled: false
 
 Metrics/AbcSize:
@@ -49,21 +51,37 @@ Metrics/BlockLength:
     - define # for FactoryBot
     - factory
 
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+
 Layout/FirstArrayElementIndentation:
+  Enabled: true
   EnforcedStyle: consistent
 Layout/FirstHashElementIndentation:
+  Enabled: true
   EnforcedStyle: consistent
 Layout/FirstParameterIndentation:
+  Enabled: true
   EnforcedStyle: consistent
 Layout/HashAlignment:
-  EnforcedLastArgumentHashStyle: ignore_implicit
+  EnforcedLastArgumentHashStyle: always_inspect
 Layout/MultilineMethodCallIndentation:
+  Enabled: true
   EnforcedStyle: indented
 Layout/MultilineOperationIndentation:
+  Enabled: true
   EnforcedStyle: indented
 Layout/ParameterAlignment:
-  EnforcedStyle: with_fixed_indentation
+  Enabled: true
+  EnforcedStyle: with_first_parameter
+Layout/ArgumentAlignment:
+  Enabled: true
+  EnforcedStyle: with_first_argument
 Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 Layout/LineLength:
   Max: 100
@@ -118,4 +136,6 @@ Style/HashTransformKeys:
 Style/HashEachMethods:
   Enabled: true
 Style/ExponentialNotation:
+  Enabled: true
+Style/SlicingWithRange:
   Enabled: true

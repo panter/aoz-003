@@ -2,6 +2,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'database_cleaner'
 require 'policy_assertions'
+require 'webdrivers/chromedriver'
 
 Dir[Rails.root.join 'test/utility/**/*.rb'].each { |path| require path }
 

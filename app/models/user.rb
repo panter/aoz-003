@@ -116,7 +116,7 @@ class User < ApplicationRecord
 
   has_many :semester_feedbacks, inverse_of: 'author', foreign_key: 'author_id', dependent: :destroy
 
-  has_and_belongs_to_many :department
+  has_and_belongs_to_many :department, -> { order(created_at: :desc) }
 
   # Roles definition
   SUPERADMIN = 'superadmin'.freeze

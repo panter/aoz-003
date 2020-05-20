@@ -11,8 +11,15 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     @volunteer3 = create :volunteer
     Volunteer.acceptance_collection.map do |acceptance|
       [
-        create(:volunteer, acceptance: acceptance, man: true, morning: true, salutation: 'mrs'),
-        create(:volunteer, acceptance: acceptance, man: true, woman: true, workday: true, salutation: 'mr')
+        create(:volunteer, acceptance: acceptance,
+                           man: true,
+                           morning: true,
+                           salutation: 'mrs'),
+        create(:volunteer, acceptance: acceptance,
+                           man: true,
+                           woman: true,
+                           workday: true,
+                           salutation: 'mr')
       ]
     end
     login_as @user
@@ -26,8 +33,8 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Angemeldet'
-      refute page.has_text? 'Akzeptiert'
+      assert_text 'Angemeldet'
+      refute_text 'Akzeptiert', wait: 0
     end
     within '.section-navigation' do
       click_link 'Prozess: Angemeldet'
@@ -36,8 +43,8 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Akzeptiert'
-      assert page.has_text? 'Angemeldet'
+      assert_text 'Akzeptiert'
+      assert_text 'Angemeldet'
     end
   end
 
@@ -53,10 +60,10 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Herr'
-      refute page.has_text? 'Frau'
-      assert page.has_text? 'Akzeptiert'
-      refute page.has_text? 'Abgelehnt'
+      assert_text 'Herr'
+      refute_text 'Frau', wait: 0
+      assert_text 'Akzeptiert'
+      refute_text 'Abgelehnt', wait: 0
     end
     within '.section-navigation' do
       click_link 'Anrede: Herr'
@@ -65,18 +72,18 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Frau'
-      assert page.has_text? 'Herr'
-      assert page.has_text? 'Akzeptiert'
-      refute page.has_text? 'Abgelehnt'
+      assert_text 'Frau'
+      assert_text 'Herr'
+      assert_text 'Akzeptiert'
+      refute_text 'Abgelehnt', wait: 0
     end
     click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
-      assert page.has_text? 'Frau'
-      assert page.has_text? 'Herr'
-      assert page.has_text? 'Akzeptiert'
-      assert page.has_text? 'Abgelehnt'
+      assert_text 'Frau'
+      assert_text 'Herr'
+      assert_text 'Akzeptiert'
+      assert_text 'Abgelehnt'
     end
   end
 
@@ -88,8 +95,8 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? Volunteer.where(man: true).first.to_s
-      refute page.has_text? false_volunteer.to_s
+      assert_text Volunteer.where(man: true).first.to_s
+      refute_text false_volunteer.to_s, wait: 0
     end
     within '.section-navigation' do
       click_link 'Interessiert an Einzelbegleitung'
@@ -98,8 +105,8 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? Volunteer.where(woman: true).first.to_s
-      refute page.has_text? false_volunteer.to_s
+      assert_text Volunteer.where(woman: true).first.to_s
+      refute_text false_volunteer.to_s, wait: 0
     end
     within '.section-navigation' do
       click_link 'Interessiert an Einzelbegleitung'
@@ -109,12 +116,12 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? Volunteer.where(man: true, woman: false).first.to_s
+      assert_text Volunteer.where(man: true, woman: false).first.to_s
     end
     click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
-      assert page.has_text? false_volunteer.to_s
+      assert_text false_volunteer.to_s
     end
   end
 
@@ -125,9 +132,9 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @volunteer1
-      refute page.has_text? @volunteer2
-      refute page.has_text? @volunteer3
+      assert_text @volunteer1
+      refute_text @volunteer2, wait: 0
+      refute_text @volunteer3, wait: 0
     end
     within '.section-navigation' do
       click_link 'Interessiert an Gruppenangebot Kategorie'
@@ -135,9 +142,9 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @volunteer2
-      refute page.has_text? @volunteer1
-      refute page.has_text? @volunteer3
+      assert_text @volunteer2
+      refute_text @volunteer1, wait: 0
+      refute_text @volunteer3, wait: 0
     end
     within '.section-navigation' do
       click_link 'Interessiert an Gruppenangebot Kategorie'
@@ -145,27 +152,27 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      assert page.has_text? @volunteer1
-      assert page.has_text? @volunteer2
-      refute page.has_text? @volunteer3
+      assert_text @volunteer1
+      assert_text @volunteer2
+      refute_text @volunteer3, wait: 0
     end
     click_link 'Filter aufheben'
     visit current_url
     within 'tbody' do
-      assert page.has_text? @volunteer1
-      assert page.has_text? @volunteer2
-      assert page.has_text? @volunteer1
+      assert_text @volunteer1
+      assert_text @volunteer2
+      assert_text @volunteer1
     end
   end
 
   test 'thead_acceptance_filter_dropdown_by_default_shows_all' do
     visit volunteers_path
     within 'tbody' do
-      assert page.has_text? 'Akzeptiert'
-      assert page.has_text? 'Angemeldet'
-      assert page.has_text? 'Eingeladen'
-      assert page.has_text? 'Abgelehnt'
-      assert page.has_text? 'Beendet'
+      assert_text 'Akzeptiert'
+      assert_text 'Angemeldet'
+      assert_text 'Eingeladen'
+      assert_text 'Abgelehnt'
+      assert_text 'Beendet'
     end
   end
 
@@ -177,11 +184,11 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      refute page.has_text? 'Akzeptiert'
-      refute page.has_text? 'Angemeldet'
-      refute page.has_text? 'Eingeladen'
-      refute page.has_text? 'Abgelehnt'
-      assert page.has_text? 'Beendet'
+      assert_text 'Beendet'
+      refute_text 'Akzeptiert', wait: 0
+      refute_text 'Angemeldet', wait: 0
+      refute_text 'Eingeladen', wait: 0
+      refute_text 'Abgelehnt', wait: 0
     end
   end
 
@@ -190,7 +197,10 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
     Volunteer.destroy_all
 
     # load test data
-    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact), acceptance: :accepted, salutation: :mrs, birth_year: '1995-10-11')
+    @volunteer_not_logged_in = Volunteer.create!(contact: create(:contact),
+                                                 acceptance: :accepted,
+                                                 salutation: :mrs,
+                                                 birth_year: '1995-10-11')
     Volunteer.acceptance_collection.each do |acceptance|
       volunteer = create :volunteer, acceptance: acceptance, salutation: 'mrs'
       instance_variable_set("@volunteer_#{acceptance}", volunteer)
@@ -201,11 +211,11 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
 
     click_link 'Prozess'
     click_link 'Nie eingeloggt', match: :first
-    assert page.has_text? @volunteer_not_logged_in
+    assert_text @volunteer_not_logged_in
 
     Volunteer.invited_but_never_logged_in.each do |volunteer|
       within "tr##{dom_id volunteer}" do
-        assert page.has_text? 'Nie eingeloggt'
+        assert_text 'Nie eingeloggt'
       end
     end
 
@@ -217,13 +227,12 @@ class VolunteersFilterDropdownsTest < ApplicationSystemTestCase
       click_link 'Prozess'
       click_link Volunteer.human_attribute_name(acceptance), match: :first
 
-      assert page.has_text? volunteer
+      assert_text volunteer
 
-      other_acceptances.each do |acceptance|
-        other_volunteer = instance_variable_get("@volunteer_#{acceptance}")
-        refute page.has_text? other_volunteer
+      other_acceptances.each do |other_acceptance|
+        other_volunteer = instance_variable_get("@volunteer_#{other_acceptance}")
+        refute_text other_volunteer, wait: 0
       end
     end
-
   end
 end

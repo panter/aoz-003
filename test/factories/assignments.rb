@@ -8,7 +8,7 @@ FactoryBot.define do
 
     trait :active_this_year do
       period_start { Time.zone.today.beginning_of_year + 1 }
-      period_end nil
+      period_end { nil }
     end
 
     trait :active_last_year do
@@ -18,7 +18,7 @@ FactoryBot.define do
 
     trait :active do
       period_start { 10.days.ago }
-      period_end nil
+      period_end { nil }
     end
 
     trait :inactive do
@@ -40,6 +40,7 @@ FactoryBot.define do
       termination_submitted_at { 3.days.ago }
       termination_verified_at { 2.days.ago }
       association :period_end_set_by, factory: :user
+
       after(:build) do |assignment|
         assignment.volunteer ||= create(:volunteer)
         assignment.termination_submitted_by = assignment.volunteer.user

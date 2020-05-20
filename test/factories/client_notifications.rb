@@ -4,7 +4,7 @@ FactoryBot.define do
       "the demonstration rar ra ra body_#{n}"
     end
     user
-    active true
+    active { true }
 
     trait :faker_text do
       body { FFaker::Lorem.paragraph }

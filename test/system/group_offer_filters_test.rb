@@ -47,9 +47,9 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @open_d1.title
       assert page.has_text? @full_d1.title
       assert page.has_text? @part_d1.title
-      refute page.has_text? @open_d2.title
-      refute page.has_text? @full_d2.title
-      refute page.has_text? @part_d2.title
+      refute page.has_text? @open_d2.title, wait: 0
+      refute page.has_text? @full_d2.title, wait: 0
+      refute page.has_text? @part_d2.title, wait: 0
     end
   end
 
@@ -61,11 +61,11 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert page.has_text? @open_d1.title
-      refute page.has_text? @full_d1.title
-      refute page.has_text? @part_d1.title
+      refute page.has_text? @full_d1.title, wait: 0
+      refute page.has_text? @part_d1.title, wait: 0
       assert page.has_text? @open_d2.title
-      refute page.has_text? @full_d2.title
-      refute page.has_text? @part_d2.title
+      refute page.has_text? @full_d2.title, wait: 0
+      refute page.has_text? @part_d2.title, wait: 0
     end
   end
 
@@ -80,11 +80,11 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
     within 'tbody' do
       assert page.has_text? @open_d1.title
-      refute page.has_text? @full_d1.title
+      refute page.has_text? @full_d1.title, wait: 0
       assert page.has_text? @part_d1.title
-      refute page.has_text? @open_d2.title
+      refute page.has_text? @open_d2.title, wait: 0
       assert page.has_text? @full_d2.title
-      refute page.has_text? @part_d2.title
+      refute page.has_text? @part_d2.title, wait: 0
     end
   end
 
@@ -101,11 +101,11 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert page.has_text? @open_d1.title
-      refute page.has_text? @full_d1.title
-      refute page.has_text? @part_d1.title
-      refute page.has_text? @open_d2.title
-      refute page.has_text? @full_d2.title
-      refute page.has_text? @part_d2.title
+      refute page.has_text? @full_d1.title, wait: 0
+      refute page.has_text? @part_d1.title, wait: 0
+      refute page.has_text? @open_d2.title, wait: 0
+      refute page.has_text? @full_d2.title, wait: 0
+      refute page.has_text? @part_d2.title, wait: 0
     end
     within '.section-navigation#filters' do
       click_link 'FW-Nachfrage: Offen'
@@ -116,9 +116,9 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
       assert page.has_text? @open_d1.title
       assert page.has_text? @full_d1.title
       assert page.has_text? @part_d1.title
-      refute page.has_text? @open_d2.title
-      refute page.has_text? @full_d2.title
-      refute page.has_text? @part_d2.title
+      refute page.has_text? @open_d2.title, wait: 0
+      refute page.has_text? @full_d2.title, wait: 0
+      refute page.has_text? @part_d2.title, wait: 0
     end
     within '.section-navigation#filters' do
       click_link 'Kategorie'
@@ -126,12 +126,12 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      refute page.has_text? @open_d1.title
       assert page.has_text? @full_d1.title
-      refute page.has_text? @part_d1.title
-      refute page.has_text? @open_d2.title
-      refute page.has_text? @full_d2.title
-      refute page.has_text? @part_d2.title
+      refute page.has_text? @open_d1.title, wait: 0
+      refute page.has_text? @part_d1.title, wait: 0
+      refute page.has_text? @open_d2.title, wait: 0
+      refute page.has_text? @full_d2.title, wait: 0
+      refute page.has_text? @part_d2.title, wait: 0
     end
   end
 
@@ -143,7 +143,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert_text @active.title
-      refute_text @inactive.title
+      refute_text @inactive.title, wait: 0
     end
   end
 
@@ -155,7 +155,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert_text @inactive.title
-      assert_text find('tr', text: 'active_group_offer', visible: false)
+      assert page.has_css?('tr', text: 'active_group_offer', visible: false)
     end
   end
 
@@ -171,7 +171,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert_text @internal.title
-      refute_text @external.title
+      refute_text @external.title, wait: 0
     end
 
     # filter for extern
@@ -182,7 +182,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert_text @external.title
-      refute_text @internal.title
+      refute_text @internal.title, wait: 0
     end
   end
 end

@@ -1,7 +1,7 @@
 class ActiveSupport::TestCase
   def get_xls_from_response(url)
     get url
-    assert response.success?
+    assert response.successful?
     assert_equal Mime[:xlsx], response.content_type
     excel_file = Tempfile.new
     excel_file.write(response.body)

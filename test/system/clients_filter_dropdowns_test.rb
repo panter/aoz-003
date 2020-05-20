@@ -30,8 +30,8 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     within 'tbody' do
       assert_text @accepted_woman_age_old
       assert_text @accepted_no_matter_age_old
-      refute_text @resigned_woman_age_middle
-      refute_text @rejected_no_matter_age_middle
+      refute_text @resigned_woman_age_middle, wait: 0
+      refute_text @rejected_no_matter_age_middle, wait: 0
     end
     within '.section-navigation' do
       click_link 'Prozess: Angemeldet'
@@ -59,10 +59,10 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     end
     visit current_url
     within 'tbody' do
-      refute_text @accepted_woman_age_old
       assert_text @accepted_no_matter_age_old
-      refute_text @resigned_woman_age_middle
-      refute_text @rejected_no_matter_age_middle
+      refute_text @accepted_woman_age_old, wait: 0
+      refute_text @resigned_woman_age_middle, wait: 0
+      refute_text @rejected_no_matter_age_middle, wait: 0
     end
     within '.section-navigation' do
       click_link 'Anrede: Herr'
@@ -73,8 +73,8 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     within 'tbody' do
       assert_text @accepted_woman_age_old
       assert_text @accepted_no_matter_age_old
-      refute_text @resigned_woman_age_middle
-      refute_text @rejected_no_matter_age_middle
+      refute_text @resigned_woman_age_middle, wait: 0
+      refute_text @rejected_no_matter_age_middle, wait: 0
     end
     click_link 'Filter aufheben'
     visit current_url
@@ -104,9 +104,9 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     visit current_url
     within 'tbody' do
       assert_text @accepted_woman_age_old
-      refute_text @accepted_no_matter_age_old
-      refute_text @resigned_woman_age_middle
-      refute_text @rejected_no_matter_age_middle
+      refute_text @accepted_no_matter_age_old, wait: 0
+      refute_text @resigned_woman_age_middle, wait: 0
+      refute_text @rejected_no_matter_age_middle, wait: 0
     end
     within '.section-navigation' do
       click_link 'Anrede: Frau'
@@ -117,8 +117,8 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     within 'tbody' do
       assert_text @accepted_woman_age_old
       assert_text @accepted_no_matter_age_old
-      refute_text @resigned_woman_age_middle
-      refute_text @rejected_no_matter_age_middle
+      refute_text @resigned_woman_age_middle, wait: 0
+      refute_text @rejected_no_matter_age_middle, wait: 0
     end
     click_link 'Filter aufheben'
     visit current_url
@@ -148,8 +148,8 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     assert_text client_with_language_skills
     assert_text @accepted_woman_age_old
     assert_text @accepted_no_matter_age_old
-    refute_text @resigned_woman_age_middle
-    refute_text @rejected_no_matter_age_middle
+    refute_text @resigned_woman_age_middle, wait: 0
+    refute_text @rejected_no_matter_age_middle, wait: 0
 
     click_on 'Geschlecht Freiwillige/r: Alle'
     click_on 'Frau'
@@ -157,26 +157,26 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     assert_text client_with_language_skills
     assert_text @accepted_woman_age_old
     assert_text @accepted_no_matter_age_old
-    refute_text @resigned_woman_age_middle
-    refute_text @rejected_no_matter_age_middle
+    refute_text @resigned_woman_age_middle, wait: 0
+    refute_text @rejected_no_matter_age_middle, wait: 0
 
     click_on 'Alter Freiwillige/r: Alle'
     click_on '20 - 35'
 
     assert_text client_with_language_skills
-    refute_text @accepted_woman_age_old
-    refute_text @accepted_no_matter_age_old
-    refute_text @resigned_woman_age_middle
-    refute_text @rejected_no_matter_age_middle
+    refute_text @accepted_woman_age_old, wait: 0
+    refute_text @accepted_no_matter_age_old, wait: 0
+    refute_text @resigned_woman_age_middle, wait: 0
+    refute_text @rejected_no_matter_age_middle, wait: 0
 
     click_on 'Sprachkenntnisse: Alle'
     click_on client_with_language_skills.language_skills.first.language_name, match: :first
     wait_for_ajax
     assert_text client_with_language_skills
-    refute_text @accepted_woman_age_old
-    refute_text @accepted_no_matter_age_old
-    refute_text @resigned_woman_age_middle
-    refute_text @rejected_no_matter_age_middle
+    refute_text @accepted_woman_age_old, wait: 0
+    refute_text @accepted_no_matter_age_old, wait: 0
+    refute_text @resigned_woman_age_middle, wait: 0
+    refute_text @rejected_no_matter_age_middle, wait: 0
   end
 
   test 'filter find client availability' do
@@ -202,15 +202,15 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
     assert_text client_flexible
     assert_text client_flexible_morning
-    refute_text client_morning
+    refute_text client_morning, wait: 0
 
     # boolean_filter_dropdown chooses two values -> flexible & mornings
     click_on 'Verfügbarkeit'
     click_on 'Morgens'
 
     assert_text client_flexible_morning
-    refute_text client_flexible
-    refute_text client_morning
+    refute_text client_flexible, wait: 0
+    refute_text client_morning, wait: 0
 
     # deselect flexible
     click_on 'Verfügbarkeit'
@@ -218,6 +218,6 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
 
     assert_text client_morning
     assert_text client_flexible_morning
-    refute_text client_flexible
+    refute_text client_flexible, wait: 0
   end
 end

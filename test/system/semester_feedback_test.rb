@@ -20,49 +20,61 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
   end
 
   def fill_in_required_feedback_fields(id)
-    find("#semester_process_volunteer_semester_feedbacks_attributes_#{id}_semester_feedback_goals").set('being on time')
-    find("#semester_process_volunteer_semester_feedbacks_attributes_#{id}_semester_feedback_achievements").set('everything')
-    find("#semester_process_volunteer_semester_feedbacks_attributes_#{id}_semester_feedback_future").set('continue')
+    selector_start = '#semester_process_volunteer_semester_feedbacks_attributes_'
+    find("#{selector_start}#{id}_semester_feedback_goals").set('being on time')
+    find("#{selector_start}#{id}_semester_feedback_achievements").set('everything')
+    find("#{selector_start}#{id}_semester_feedback_future").set('continue')
   end
 
   test 'volunteer with unsubmitted feedback should see a warning' do
     visit volunteer_path(@volunteer)
-    assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
-    assert page.has_link? 'Bitte klicken Sie hier um diesen zu bestätigen'
+    assert_text 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_link 'Bitte klicken Sie hier um diesen zu bestätigen'
     visit root_path
-    assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
-    assert page.has_link? 'Bitte klicken Sie hier um diesen zu bestätigen'
+    assert_text 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_link 'Bitte klicken Sie hier um diesen zu bestätigen'
     click_link 'Bitte klicken Sie hier um diesen zu bestätigen'
     submit_feedback(@spv)
     visit volunteer_path(@volunteer)
-    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_text @volunteer.contact.full_name
+    refute_text 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.', wait: 0
     visit root_path
-    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_text 'Fachstelle Freiwilligenarbeit' # only here to avoid waiting with refute
+    refute_text 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.', wait: 0
   end
 
   test 'volunteer hours should appear in asc order' do
-    create :hour, volunteer: @volunteer, meeting_date: @spv.semester.begin, hours: 1, hourable: @spv.missions.last
-    create :hour, volunteer: @volunteer, meeting_date: @spv.semester.end, hours: 2, hourable: @spv.missions.last
+    create :hour, volunteer: @volunteer,
+                  meeting_date: @spv.semester.begin,
+                  hours: 1,
+                  hourable: @spv.missions.last
+    create :hour, volunteer: @volunteer,
+                  meeting_date: @spv.semester.end,
+                  hours: 2,
+                  hourable: @spv.missions.last
     visit review_semester_review_semester_url(@spv)
     within 'tbody tr:last-child' do
-      assert page.has_text? I18n.l(@spv.semester.end)
+      assert_text I18n.l(@spv.semester.end)
     end
   end
 
   test 'submit form should not display warning' do
     visit root_path
-    assert page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_text 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
     click_link 'Bitte klicken Sie hier um diesen zu bestätigen'
-    assert_not page.has_text? 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.'
+    assert_text 'Halbjahres-Rapporte'
+    refute_text 'Sie haben einen ausstehenden Halbjahres-Rapport für dieses Semester.', wait: 0
   end
 
   test 'by default, you should have not accepted the data' do
-    assert_text 'Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte bis zum heutigen Datum erfasst habe.'
+    assert_text 'Ich bestätige, dass ich alle meine Stunden und Halbjahres-Rapporte'\
+                ' bis zum heutigen Datum erfasst habe.'
   end
 
   test 'accepting should remove submit button' do
     submit_feedback(@spv)
-    assert_text "Bestätigt am #{I18n.l(@spv.commited_at.to_date)} durch #{@spv.commited_by.full_name}"
+    assert_text "Bestätigt am #{I18n.l(@spv.commited_at.to_date)} "\
+                "durch #{@spv.commited_by.full_name}"
   end
 
   test 'you should be able to add hours on run' do
@@ -76,8 +88,8 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert_equal Hour.last.hourable, @spv.missions.last
     assert_equal Hour.last.meeting_date, @spv.semester.last
     within 'tbody tr:last-child' do
-      assert page.has_text? I18n.l(Hour.last.meeting_date)
-      assert page.has_text? 'Deutschkurse'
+      assert_text I18n.l(Hour.last.meeting_date)
+      assert_text 'Deutschkurse'
     end
   end
 
@@ -88,9 +100,11 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     fill_in 'Bank', with: ''
     click_on 'Bestätigen', match: :first
     assert_text 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
-    within '#volunteer-update-waive-and-iban' do
-      assert_text 'Name der Bank darf nicht leer sein'
-      assert_text 'IBAN darf nicht leer sein'
+    within '.form-group.semester_process_volunteer_volunteer_iban' do
+      assert_text 'darf nicht leer sein'
+    end
+    within '.form-group.semester_process_volunteer_volunteer_bank' do
+      assert_text 'darf nicht leer sein'
     end
   end
 
@@ -105,9 +119,12 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     click_on 'Bestätigen'
     @spv.reload
     assert_equal @spv.volunteer.slice(:iban, :bank, :waive),
-      { iban: 'CH59 2012 0767 0052 0024 0', bank: 'Bank', waive: false }.stringify_keys
-    assert_equal @spv.semester_feedbacks.last.slice(:goals, :achievements, :future, :comments, :conversation),
-      { goals: 'being on time', achievements: 'everything', future: 'continue', comments: 'nothing', conversation: true }.stringify_keys
+                 { iban: 'CH59 2012 0767 0052 0024 0', bank: 'Bank', waive: false }.stringify_keys
+    assert_equal(
+      @spv.semester_feedbacks.last.slice(:goals, :achievements, :future, :comments, :conversation),
+      { goals: 'being on time', achievements: 'everything', future: 'continue',
+        comments: 'nothing', conversation: true }.stringify_keys
+    )
     assert_equal Hour.last.hours, 33
     assert_equal Hour.last.hourable, @spv.missions.first
   end
@@ -122,9 +139,12 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     login_as @superadmin
     visit review_semester_review_semester_url(@spv)
 
-    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) Ihres Einsatzes in den letzten Monaten?', with: goals
+    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) '\
+            'Ihres Einsatzes in den letzten Monaten?',
+            with: goals
     fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: achievements
-    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?', with: future
+    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?',
+            with: future
     fill_in 'Kommentare', with: comments
 
     # submit feedback without revisiting review form
@@ -136,20 +156,23 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     wait_for_ajax
     visit semester_process_volunteers_path(semester: Semester.to_s(@spv.semester))
 
-    page.find('td', text: goals.truncate(300)).click
+    page.find('td', text: goals.truncate(300), visible: false).click
     wait_for_ajax
-    assert page.has_text? goals
+    assert_text goals
     click_button 'Schliessen'
     wait_for_ajax
+    assert_text 'Semester Prozess'
 
-    page.find('td', text: achievements.truncate(300)).click
+    page.find('td', text: achievements.truncate(300), visible: false).click
     wait_for_ajax
-    assert page.has_text? achievements
+    assert_text achievements
     click_button 'Schliessen'
     wait_for_ajax
-    page.find('td', text: comments.truncate(300)).click
+    assert_text 'Semester Prozess'
+    page.find('td', text: comments.truncate(300), visible: false).click
     wait_for_ajax
-    assert page.has_text? comments
+    assert_text 'Semester Prozess'
+    assert_text comments
     click_button 'Schliessen'
   end
 
@@ -167,7 +190,7 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
       click_on 'Bestätigen', match: :first
       spv.reload
     end
-    assert Journal.last.body.include? volunteer.assignments.first.to_label
-    assert Journal.last.body.include? volunteer.assignments.second.to_label
+    assert_includes Journal.last.body, volunteer.assignments.first.to_label
+    assert_includes Journal.last.body, volunteer.assignments.second.to_label
   end
 end

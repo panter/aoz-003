@@ -25,12 +25,12 @@ FactoryBot.define do
     end
 
     trait :fake_availability do
-      flexible [true, false].sample
-      morning [true, false].sample
-      afternoon [true, false].sample
-      evening [true, false].sample
-      workday [true, false].sample
-      weekend [true, false].sample
+      flexible { [true, false].sample }
+      morning { [true, false].sample }
+      afternoon { [true, false].sample }
+      evening { [true, false].sample }
+      workday { [true, false].sample }
+      weekend { [true, false].sample }
     end
 
     trait :with_language_skills do
@@ -72,7 +72,7 @@ FactoryBot.define do
       end
     end
 
-    factory :client_common, traits: %i[faker_common with_language_skills fake_availability with_relatives zuerich]
+    factory :client_common, traits: [:faker_common, :with_language_skills, :fake_availability, :with_relatives, :zuerich]
     factory :client_z, traits: [:zuerich]
     factory(
       :client_seed,

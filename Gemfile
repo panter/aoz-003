@@ -5,19 +5,15 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1'
+gem 'rails', '>= 5.2.0', '< 6.0.0'
 
 gem 'autocomplete_rails'
-# FIXME:
-#  - autoprefixer doesn't run with rubyracer anymore, it would with miniracer
-#  - installing miniracer ist blocked by panter/panter-rails-deploy rubyracer requirement
-#  - using Node as Execjs Runtime is not possible, because our hosts don't have node
-# gem 'autoprefixer-rails'
-gem 'axlsx', github: 'randym/axlsx', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
-gem 'axlsx_rails'
+gem 'bootsnap', require: false
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
+gem 'caxlsx'
+gem 'caxlsx_rails'
 gem 'cocoon'
 gem 'coffee-rails'
 gem 'combine_pdf'
@@ -38,11 +34,11 @@ gem 'mdb'
 gem 'panter-rails-deploy'
 gem 'paperclip'
 gem 'paranoia'
-gem 'pg', '~> 0.21'
+gem 'pg'
 gem 'puma'
 gem 'pundit'
 gem 'rails-i18n'
-gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'ransack'
 gem 'redcarpet'
 gem 'rubyzip', '>= 1.2.2'
 gem 'sassc-rails'
@@ -62,7 +58,7 @@ group :development do
   gem 'debride', require: false
   gem 'fasterer', require: false
   gem 'i18n_yaml_sorter'
-  gem 'letter_opener_web', '~> 1.0'
+  gem 'letter_opener_web'
   gem 'overcommit', require: false
   gem 'rcodetools', require: false
   gem 'reek', require: false
@@ -90,10 +86,10 @@ end
 group :test do
   gem 'capybara'
   gem 'capybara-selenium'
-  gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem 'minitest', '~> 5.10.3'
+  gem 'minitest'
   gem 'policy-assertions'
-  gem 'roo', '~> 2.7.0'
+  gem 'roo'
   gem 'selenium-webdriver'
+  gem 'webdrivers', '~> 4.0'
 end

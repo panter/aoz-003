@@ -4,7 +4,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
   setup do
     @user = create :user
     create :email_template,
-      body: 'Liebe/r %{Anrede} %{Name} %{InvalidKey}Gruss, AOZ', subject: '%{Anrede} %{Name}'
+           body: 'Liebe/r %{Anrede} %{Name} %{InvalidKey}Gruss, AOZ', subject: '%{Anrede} %{Name}'
   end
 
   test 'login page show link for volunteer application' do
@@ -26,12 +26,9 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     click_link 'Möchten Sie sich als Freiwillige/r anmelden?'
 
     assert page.has_current_path? new_volunteer_application_path
-    assert page.has_text? 'Freiwilligen Anmeldung'
+    assert_text 'Freiwilligen Anmeldung'
     fill_in 'Vorname', with: 'Vorname'
     fill_in 'Nachname', with: 'Name'
-    #within '.volunteer_birth_year' do
-    #  select('1980', from: 'Jahrgang')
-    #end
     page.execute_script("$('#volunteer_birth_year').val('01/01/1988')")
     select('Frau', from: 'Anrede')
     select('Syrien, Arabische Republik', from: 'Nationalität')
@@ -43,19 +40,19 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     fill_in 'Beruf', with: 'Developer'
     fill_in 'Ausbildung', with: 'Gurke'
     fill_in 'Was ist Ihre Motivation, Freiwilligenarbeit mit Migrant/innen zu leisten?', with: 'asfd'
-    page.check('volunteer_experience')
+    check('volunteer_experience')
     fill_in 'Falls Sie bereits Erfahrungen mit Freiwilligenarbeit haben, bitte diese genauer erläutern.',
-      with: 'sdfsdfsdf'
+            with: 'sdfsdfsdf'
     fill_in 'Was erwarten Sie von einer Person, die Sie begleiten würden / Ihrem Freiwilligeneinsatz?',
-      with: 'asdf'
+            with: 'asdf'
     fill_in 'Welche Stärken oder Kompetenzen (sozial, beruflich) könnten Sie in Ihre Freiwilligenarbeit einbringen?', with: 'asdf'
     fill_in 'Welche sind Ihre wichtigsten Freizeitinteressen?', with: 'asdf'
-    page.check('Culture')
-    page.check('Training')
-    page.check('German Course')
-    page.check('Other Offer')
-    page.check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
-    page.check('volunteer_weekend')
+    check('Culture')
+    check('Training')
+    check('German Course')
+    check('Other Offer')
+    check('Kurzbegleitungen bei Wohnungsbezug in Zürich-Stadt')
+    check('volunteer_weekend')
     fill_in 'Genauere Angaben', with: 'I am every two weeks available on tuesdays asdfasdf.'
 
     click_button 'Anmeldung abschicken'
@@ -66,8 +63,8 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
 
     assert_equal 'Frau Vorname Name', mailer.subject
     assert_includes mail_body, 'Liebe/r Frau Vorname Name Gruss, AOZ'
-    refute_includes mailer.subject, '%{'
-    refute_includes mail_body, '%{'
+    assert_not_includes mailer.subject, '%{'
+    assert_not_includes mail_body, '%{'
 
     assert page.has_current_path? thanks_volunteer_applications_path
   end
@@ -78,24 +75,25 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     visit thanks_volunteer_applications_path
 
     # thanks page takes body text from active template
-    assert page.has_text? @email_template1.subject
-    assert page.has_text? @email_template1.body
+    assert_text @email_template1.subject
+    assert_text @email_template1.body
 
-    refute page.has_text? 'Howdy'
-    refute page.has_text? 'Wadap?'
+    refute_text 'Howdy', wait: 0
+    refute_text 'Wadap?', wait: 0
 
     # ensure text is updated when another template is set to active
     @email_template2.update(active: true)
     visit thanks_volunteer_applications_path
-    assert page.has_text? 'Hoi'
-    assert page.has_text? 'Wadap?'
+    assert_text 'Hoi'
+    assert_text 'Wadap?'
 
-    refute page.has_text? @email_template1.subject
-    refute page.has_text? @email_template1.body
+    refute_text @email_template1.subject, wait: 0
+    refute_text @email_template1.body, wait: 0
   end
 
   test 'secondary phone not visible in the application form' do
     visit new_volunteer_application_path
-    refute page.has_text? 'Telefonnummer 2'
+    assert_text 'Freiwilligen Anmeldung'
+    refute_field 'Telefonnummer 2', wait: 0
   end
 end

@@ -1,8 +1,8 @@
 - tr ||= nil
-tr class=(tr)
-  td= t("performance_reports.values_#{group}.#{value_key}")
+tr*{ data: { group: group, key: value_key } } class=(tr)
+  td.name= t("performance_reports.values_#{group}.#{value_key}")
   - columns.each do |category_key|
-    td
+    td*{ data: { category: category_key } }
       - if @report_content[group.to_s][category_key][value_key.to_s].is_a? Float
         = '%g' % ('%.1f' % @report_content[group.to_s][category_key][value_key.to_s])
       - else

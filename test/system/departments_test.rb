@@ -3,9 +3,9 @@ require 'application_system_test_case'
 class DepartmentsTest < ApplicationSystemTestCase
   def setup
     @superadmin = create :user, :with_clients,
-      :with_department, role: 'superadmin'
+                         :with_department, role: 'superadmin'
     @social_worker = create :user, :with_clients,
-      :with_department, role: 'social_worker'
+                            :with_department, role: 'social_worker'
     @department_manager = create :department_manager
     # dirty fix for not properly working factorys or DatabaseCleaner
     User.where.not(id: [@superadmin.id, @social_worker.id, @department_manager.id]).destroy_all
@@ -14,23 +14,24 @@ class DepartmentsTest < ApplicationSystemTestCase
   test 'superadmin should see departments link in navigation' do
     login_as @superadmin
     visit root_path
-    assert page.has_link? 'Standorte'
+    assert_link 'Standorte'
   end
 
   test 'other users should not see departments link in navigation' do
     login_as @social_worker
     visit root_path
-    refute page.has_link? 'Standorte'
+    assert_text 'Klient/innen'
+    refute_link 'Standorte', wait: 0
   end
 
   test 'superadmin can see all departments in departments_path' do
     login_as @superadmin
     visit departments_path
-    Department.all.sample do |d|
-      assert page.has_text? d.contact.last_name
-      assert page.has_link? 'Anzeigen', href: department_path(d.id)
-      assert page.has_link? 'Bearbeiten', href: edit_department_path(d.id)
-      assert page.has_link? 'Löschen', href: department_path(d.id)
+    Department.all.sample do |department|
+      assert_text d.contact.last_name
+      assert_link 'Anzeigen', href: department_path(department.id)
+      assert_link 'Bearbeiten', href: edit_department_path(department.id)
+      assert_link 'Löschen', href: department_path(department.id)
     end
   end
 
@@ -39,8 +40,8 @@ class DepartmentsTest < ApplicationSystemTestCase
     login_as @superadmin
     visit departments_path
     first(:link, 'Standort erfassen').click
-    assocable_users.each do |u|
-      check u.to_s
+    assocable_users.each do |user|
+      check user.to_s
     end
     fill_in 'Name', with: 'Bogus Hog Department'
     fill_in 'Strasse', with: 'bogus street 999'
@@ -50,35 +51,34 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Mailadresse', with: 'department@aoz.ch'
     fill_in 'Telefonnummer', with: '0441234567'
     click_button 'Standort erfassen'
-    assert page.has_text? 'Standort wurde erfolgreich erstellt.'
-    assert page.has_text? 'Bogus Hog Department'
-    assert page.has_text? 'Strasse'
-    assert page.has_text? 'Adresszusatz'
-    assert page.has_text? 'Ort'
-    assert page.has_text? 'bogus street 999'
-    assert page.has_text? 'bogus ext. addr.'
-    assert page.has_text? '9999'
-    assert page.has_text? 'bogus town'
-    assert page.has_text? 'department@aoz.ch'
-    assert page.has_text? '0441234567'
+    assert_text 'Standort wurde erfolgreich erstellt.'
+    assert_text 'Bogus Hog Department'
+    assert_text 'Strasse'
+    assert_text 'Adresszusatz'
+    assert_text 'Ort'
+    assert_text 'bogus street 999'
+    assert_text 'bogus ext. addr.'
+    assert_text '9999'
+    assert_text 'bogus town'
+    assert_text 'department@aoz.ch'
+    assert_text '0441234567'
     assocable_users.each do |user|
-      assert page.has_link? user.full_name, href: /profiles\/#{user.profile.id}/
+      assert_link user.full_name, href: /profiles\/#{user.profile.id}/
     end
-    assert page.has_link? 'Standort bearbeiten'
-    assert page.has_link? 'Zurück'
+    assert_link 'Standort bearbeiten'
+    assert_link 'Zurück'
   end
 
   test 'As Department Manager there is a link in the Navbar to his department' do
     login_as @department_manager
     visit profile_path(@department_manager.profile.id)
-    assert page.has_link? 'Standort',
-      href: department_path(@department_manager.department.first.id)
+    assert_link 'Standort',
+                href: department_path(@department_manager.department.first.id)
   end
 
   test "Department Managers can update their department's fields" do
     login_as @department_manager
     visit edit_department_path(@department_manager.department.first.id)
-    refute page.has_select? 'User'
     fill_in 'Name', with: 'Name changed'
     fill_in 'Strasse', with: 'Street changed'
     fill_in 'Adresszusatz', with: 'Extended address changed'
@@ -86,14 +86,15 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Ort', with: 'City changed'
     fill_in 'Mailadresse', with: 'department@aoz.ch'
     fill_in 'Telefonnummer', with: '0441234567'
+    refute page.has_select? 'User', wait: 0
     click_button 'Standort aktualisieren'
-    assert page.has_text? 'Name changed'
-    assert page.has_text? 'Street changed'
-    assert page.has_text? 'Extended address changed'
-    assert page.has_text? 'Zip changed'
-    assert page.has_text? 'City changed'
-    assert page.has_text? 'department@aoz.ch'
-    assert page.has_text? '0441234567'
+    assert_text 'Name changed'
+    assert_text 'Street changed'
+    assert_text 'Extended address changed'
+    assert_text 'Zip changed'
+    assert_text 'City changed'
+    assert_text 'department@aoz.ch'
+    assert_text '0441234567'
   end
 
   test 'After logging in as Department Manager he should see his department' do
@@ -101,19 +102,21 @@ class DepartmentsTest < ApplicationSystemTestCase
     fill_in 'Email', with: @department_manager.email
     fill_in 'Passwort', with: 'asdfasdf'
     click_button 'Anmelden'
-    assert page.has_text? @department_manager.department.first.contact.last_name
+    assert_text @department_manager.department.first.contact.last_name
     if @department_manager.department.first.contact.street.present?
-      assert page.has_text? @department_manager.department.first.contact.street
+      assert_text @department_manager.department.first.contact.street
     end
   end
 
   test 'department has no secondary phone field' do
     login_as @superadmin
     visit new_department_path
-    refute page.has_text? 'Secondary phone'
+    assert_text 'Standort erfassen'
+    refute_text 'Secondary phone', wait: 0
 
     visit department_path(Department.first)
-    refute page.has_text? 'Secondary phone'
+    assert_text Department.first
+    refute_text 'Secondary phone', wait: 0
   end
 
   test 'departments group offers with volunteers are displayed' do
@@ -126,9 +129,9 @@ class DepartmentsTest < ApplicationSystemTestCase
 
     login_as @department_manager
     visit department_path(department)
-    assert page.has_link? group_offer.title
-    assert page.has_text? volunteer_one.full_name
-    assert page.has_text? volunteer_two.full_name
+    assert_link group_offer.title
+    assert_text volunteer_one.full_name
+    assert_text volunteer_two.full_name
   end
 
   test 'department with department manager without profile has valid link on show' do
@@ -140,7 +143,7 @@ class DepartmentsTest < ApplicationSystemTestCase
     click_button 'Standort aktualisieren'
 
     visit department_path(department)
-    assert page.has_link? department_manager_no_profile.email
+    assert_link department_manager_no_profile.email
     click_link department_manager_no_profile.email
     assert_field 'Email', with: department_manager_no_profile.email
   end

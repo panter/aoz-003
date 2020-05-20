@@ -12,6 +12,10 @@ class DepartmentPolicy < ApplicationPolicy
   alias_method :create?,  :superadmin?
   alias_method :destroy?, :superadmin?
 
+  def superadmin_or_user_in_records_related?
+    superadmin? || record.user_ids.include?(user.id)
+  end
+
   alias_method :show?,   :superadmin_or_user_in_records_related?
   alias_method :edit?,   :superadmin_or_user_in_records_related?
   alias_method :update?, :superadmin_or_user_in_records_related?

@@ -8,6 +8,9 @@ class GroupAssignment < ApplicationRecord
   has_many :group_assignment_logs, dependent: :nullify
   has_many :hours, ->(object) { where(volunteer: object.volunteer) }, through: :group_offer
 
+  has_many :reminder_mailing_volunteers, as: :reminder_mailable, dependent: :destroy
+  has_many :reminder_mailings, through: :reminder_mailing_volunteers
+
   delegate :title, to: :group_offer
 
   validates :volunteer, uniqueness: {

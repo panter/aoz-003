@@ -20,12 +20,13 @@ class GroupOffersVolunteerSearchesTest < ApplicationSystemTestCase
 
   test 'basic_non_suggests_search_works' do
     fill_in name: 'q[search_volunteer_cont]', with: 'Whi'
-    click_button 'Suchen'
+    wait_for_ajax
+    page.find_field(name: 'q[search_volunteer_cont]').native.send_keys(:tab, :enter)
     assert page.has_text? @volunteer_one.contact.full_name
     assert page.has_text? @volunteer_three.contact.full_name
     assert page.has_text? @group_offer_one.title
-    refute page.has_text? @volunteer_two.contact.full_name
-    refute page.has_text? @group_offer_two.title
+    refute page.has_text? @volunteer_two.contact.full_name, wait: 0
+    refute page.has_text? @group_offer_two.title, wait: 0
   end
 
   test 'enter_search_text_brings_suggestions' do
@@ -35,12 +36,13 @@ class GroupOffersVolunteerSearchesTest < ApplicationSystemTestCase
 
   test 'suggestions search triggers the search correctly' do
     fill_autocomplete 'q[search_volunteer_cont]', with: 'Wal'
-    click_button 'Suchen'
+    wait_for_ajax
+    page.find_field(name: 'q[search_volunteer_cont]').native.send_keys(:tab, :enter)
     visit current_url
     within 'tbody' do
       assert page.has_text? @volunteer_one.contact.full_name
       assert page.has_text? @group_offer_one.title
-      refute page.has_text? @volunteer_two.contact.full_name
+      refute page.has_text? @volunteer_two.contact.full_name, wait: 0
       assert_equal 1, find_all('tr').size
     end
   end

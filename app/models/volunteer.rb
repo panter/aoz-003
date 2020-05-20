@@ -339,15 +339,16 @@ class Volunteer < ApplicationRecord
   }
 
   scope :with_billable_hours_select, lambda {
-    select(<<-SQL.squish)
+    select_sql = <<-SQL.squish
       SUM(hours.hours) AS total_hours,
       contacts.full_name AS full_name,
       volunteers.*
     SQL
+    select(Arel.sql(select_sql))
   }
 
   scope :with_billable_hours_order, lambda {
-    order(<<-SQL.squish)
+    sort_sql = <<-SQL.squish
       (CASE
         WHEN COALESCE(volunteers.iban, '') = ''
         THEN 2
@@ -355,6 +356,7 @@ class Volunteer < ApplicationRecord
       END),
       contacts.full_name
     SQL
+    order(Arel.sql(sort_sql))
   }
 
   scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }

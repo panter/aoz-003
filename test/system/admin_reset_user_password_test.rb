@@ -33,12 +33,16 @@ class AdminResetUserPasswordTest < ApplicationSystemTestCase
 
   test 'Admin sets password for invited volunteer and then volunteer can login without accepting invitation' do
     volunteer = create :volunteer_internal, acceptance: :undecided
-    volunteer.contact.update!(primary_email: 'volunteer@aoz.ch')
-    volunteer.accepted!
     login_as(@admin)
-    update_users_password(volunteer.user, @common_changed_pw, email: 'volunteer@aoz.ch')
+    visit edit_volunteer_path(volunteer)
+    select 'Akzeptiert', from: 'Prozess'
+    click_button 'Freiwillige/n aktualisieren', match: :first
+    assert_text "Einladung wurde an #{volunteer.contact.primary_email} verschickt"
+    volunteer.reload
+    assert_text volunteer.contact.full_name
+    update_users_password(volunteer.user, @common_changed_pw, email: volunteer.contact.primary_email)
     sign_out_logged_in_user(@admin)
-    form_login_user(volunteer.user, @common_changed_pw, email: 'volunteer@aoz.ch')
+    form_login_user(volunteer.user, @common_changed_pw, email: volunteer.contact.primary_email)
   end
 
   test 'logged in before volunteer can log in with password admin sets' do

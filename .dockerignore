@@ -1,0 +1,17 @@
+
+app
+test
+bin
+config
+node_modules
+.bundle
+public
+.github
+lib
+db
+log
+doc
+.git
+.vscode
+tmp
+vendor
