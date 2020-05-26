@@ -26,7 +26,7 @@
 //= require_tree .
 //= require global
 
-$(() => {
+$(function () {
   jQuery.extend(window, Routes)
   truncateModal()
   conditionalField()
