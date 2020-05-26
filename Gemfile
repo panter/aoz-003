@@ -46,6 +46,7 @@ gem 'simple_form'
 gem 'slim-rails'
 gem 'sprockets-es6'
 gem 'uglifier'
+gem 'webdrivers', '~> 4.0'
 gem 'wicked_pdf'
 gem 'will-paginate-i18n'
 gem 'will_paginate'
@@ -89,5 +90,4 @@ group :test do
   gem 'policy-assertions'
   gem 'roo'
   gem 'selenium-webdriver'
-  gem 'webdrivers', '~> 4.0'
 end
