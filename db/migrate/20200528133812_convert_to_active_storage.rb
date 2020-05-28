@@ -43,7 +43,7 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
           attachments.each do |attachment|
             filename = instance.send("#{attachment}_file_name")
             folder = ("%09d" % instance.id).scan(/\d{3}/).join("/")
-            full_path = "#{Rails.root}/public/system/#{instance.class.tableize}/#{ActiveSupport::Inflector.pluralize(attachment)}/#{folder}/original/#{filename.to_s}"
+            full_path = "#{Rails.root}/public/system/#{instance.class.table_name}/#{ActiveSupport::Inflector.pluralize(attachment)}/#{folder}/original/#{filename.to_s}"
             if filename.blank? || !File.file?(full_path)
               next
             end
@@ -70,9 +70,9 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
     end
   end
 
-  # def down
-  #   raise ActiveRecord::IrreversibleMigration
-  # end
+  def down
+    raise ActiveRecord::IrreversibleMigration
+  end
 
   private
 
