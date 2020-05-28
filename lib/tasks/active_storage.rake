@@ -4,17 +4,15 @@ namespace :active_storage do
     ActiveStorage::Attachment.find_each do |attachment|
       name = attachment.name
       filename = attachment.blob.filename
-
-      source = "#{Rails.root}/public/system/#{ActiveSupport::Inflector.pluralize(name)}/#{attachment.record_id}/original/#{filename}"
+      record_type = attachment.record_type.tableize
+      folder = ("%09d" % attachment.record_id).scan(/\d{3}/).join("/")
+      source = "#{Rails.root}/public/system/#{record_type}/#{ActiveSupport::Inflector.pluralize(name)}/#{folder}/original/#{filename}"
       dest_dir = File.join(
         'storage',
         attachment.blob.key.first(2),
         attachment.blob.key.first(4).last(2)
       )
       dest = File.join(dest_dir, attachment.blob.key)
-
-      # file no longer exists
-      next unless File.exist? source
 
       FileUtils.mkdir_p(dest_dir)
       puts "Moving #{source} to #{dest}"
