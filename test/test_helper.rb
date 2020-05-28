@@ -13,6 +13,10 @@ class ActionMailer::TestCase
   include GroupOfferAndAssignment
 end
 
+FactoryBot::SyntaxRunner.class_eval do
+  include ActionDispatch::TestProcess
+end
+
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
   include Warden::Test::Helpers

@@ -8,6 +8,7 @@ end
 
 gem 'rails', '>= 6.0.0', '< 6.1.0'
 
+gem 'active_storage_validations'
 gem 'bootsnap', require: false
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
@@ -25,8 +26,10 @@ gem 'devise-i18n'
 gem 'devise_invitable'
 gem 'factory_bot_rails'
 gem 'ffaker'
+gem 'google-cloud-storage', '~> 1.11', require: false
 gem 'i18n_data'
 gem 'i18n_rails_helpers'
+gem 'image_processing'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -74,7 +77,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'awesome_rails_console'
   gem 'better_errors'
   gem 'binding_of_callers'
   gem 'hirb'

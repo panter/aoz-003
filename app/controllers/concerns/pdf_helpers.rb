@@ -1,7 +1,8 @@
 module PdfHelpers
   def pdf_file_name(record)
     date = record.try(:pdf_updated_at) || record.updated_at
-    "#{record.model_name.human}-#{record.id}-#{date.strftime '%F'}.pdf"
+    filename = "#{record.model_name.human}-#{record.id}"
+    date ? "#{filename}-#{date.strftime '%F'}.pdf" : "#{filename}.pdf"
   end
 
   def render_to_pdf(action = "#{action_name}.html", options = {})
@@ -10,11 +11,11 @@ module PdfHelpers
   end
 
   def render_pdf_attachment(record)
-    unless record.pdf.exists?
+    unless record.pdf.attached?
       raise ActiveRecord::RecordNotFound, 'PDF attachment does not exist'
     end
 
-    send_file record.pdf.path,
+    send_data record.pdf.download,
               disposition: 'inline',
               filename: pdf_file_name(record)
   end
@@ -28,7 +29,13 @@ module PdfHelpers
       options[k] = v
     end
 
-    record.pdf = StringIO.new(render_to_pdf(action, options)) if record.generate_pdf
+    if record.generate_pdf
+      record.pdf.attach(
+        io: StringIO.new(render_to_pdf(action, options)),
+        filename: pdf_file_name(record),
+        content_type: 'application/pdf'
+      )
+    end
     record.save
   end
 end

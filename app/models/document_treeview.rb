@@ -43,7 +43,7 @@ class DocumentTreeview
       end
       nodes << {
         text: d.title,
-        href: d.file.url,
+        href: Rails.application.routes.url_helpers.rails_blob_path(d.file.blob, only_path: true),
         documentId: d.id,
         icon: 'glyphicon glyphicon-book'
       }

@@ -8,6 +8,7 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 require 'webdrivers/chromedriver'
+require 'active_storage/engine'
 Webdrivers.install_dir = '.ci-cache/webdrivers'
 
 module Aoz

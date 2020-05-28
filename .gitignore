@@ -28,6 +28,7 @@ lib/access_import_test/*.xlsx
 doc
 /.idea
 .vscode/
+storage/
 
 /public/packs
 /public/packs-test

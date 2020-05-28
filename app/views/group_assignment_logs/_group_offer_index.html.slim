@@ -3,7 +3,7 @@
   - volunteer = group_assignment.volunteer
   tr
     td.index-action-cell.hidden-print
-      - if policy(group_assignment).show? && group_assignment.pdf.exists?
+      - if policy(group_assignment).show? && group_assignment.pdf.attached?
         = button_link icon_span(:download), group_assignment_path(group_assignment, format: :pdf),
           title: 'Herunterladen'
       - if policy(group_assignment).reactivate?

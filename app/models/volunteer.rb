@@ -87,21 +87,22 @@ class Volunteer < ApplicationRecord
   has_many :semester_processes, through: :semester_process_volunteers
   has_many :semester_feedbacks, through: :semester_process_volunteers
 
-  has_attached_file :avatar, styles: { thumb: '100x100#' }
+  has_one_attached :avatar
 
   # Validations
   #
-
+  validates :avatar, content_type: ext_mimes(:jpg, :gif, :png, :tif, :webp)
   validates :contact, presence: true
   validates_presence_of :iban, :bank, if: -> { validate_waive_and_bank && waive.blank? }
   validates :salutation, presence: true
-  validates_attachment :avatar, content_type: {
-    content_type: /\Aimage\/.*\z/
-  }
 
   validates :user, absence: true,
     if: :external?,
     unless: :user_deleted?
+
+  def avatar_thumb
+    avatar.variant(resize: '100x100>').processed
+  end
 
   # allot of old records would cause app to crash if validation would run for them
   # so we need to omit it for them

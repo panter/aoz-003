@@ -8,9 +8,11 @@ class Profile < ApplicationRecord
 
   belongs_to :user, -> { with_deleted }
 
-  has_attached_file :avatar, styles: { thumb: '100x100#' }
+  has_one_attached :avatar
 
-  validates_attachment :avatar, content_type: {
-    content_type: /\Aimage\/.*\z/
-  }
+  validates :avatar, content_type: ext_mimes(:jpg, :gif, :png, :tif, :webp)
+
+  def avatar_thumb
+    avatar.variant(resize: '100x100>').processed
+  end
 end

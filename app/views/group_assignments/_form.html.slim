@@ -21,7 +21,7 @@
         = f.input :comments, label: 'Rückmeldung'
         = f.input :additional_comments
       = f.input :agreement_text, input_html: { class: 'text-body' }, label: t('assignment_pdf.agreement_text')
-      - if @group_assignment.pdf.exists?
+      - if @group_assignment.pdf.attached?
         = f.input :generate_pdf, label: 'Vereinbarung überschreiben'
       - else
         = f.input :generate_pdf, label: 'Vereinbarung erzeugen', input_html: { checked: true }

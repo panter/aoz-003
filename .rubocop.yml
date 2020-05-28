@@ -17,6 +17,7 @@ AllCops:
     - vendor/**/*
     - lib/access_import/**/*
     - 'node_modules/**/*'
+    - 'lib/tasks/active_storage.rake'
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
