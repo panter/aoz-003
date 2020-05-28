@@ -102,6 +102,7 @@ Metrics/BlockLength:
     - factory
     - included # for concerns
     - test
+    - configure
 
 Lint/RaiseException:
   Enabled: true
@@ -119,9 +120,12 @@ Layout/FirstArrayElementIndentation:
 Layout/FirstHashElementIndentation:
   Enabled: true
   EnforcedStyle: consistent
-Layout/FirstParameterIndentation:
+Layout/FirstArgumentIndentation:
   Enabled: true
   EnforcedStyle: consistent
+  Exclude:
+    - app/controllers/assignments_controller.rb
+    - app/controllers/group_assignments_controller.rb
 Layout/HashAlignment:
   EnforcedLastArgumentHashStyle: always_inspect
 Layout/MultilineMethodCallIndentation:

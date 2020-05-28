@@ -276,5 +276,5 @@ def production_seed
   end
 end
 
-production_seed if Rails.env.production?
-development_seed if Rails.env.development?
+production_seed if Rails.env.production? && ENV['RUN_DEV_SEED_IN_PRODUCTION_ENV'] != '1'
+development_seed if Rails.env.development? || ENV['RUN_DEV_SEED_IN_PRODUCTION_ENV'] == '1'

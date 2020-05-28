@@ -66,6 +66,10 @@ GEM
     autoprefixer-rails (9.7.6)
       execjs
     awesome_print (1.8.0)
+    awesome_rails_console (0.4.4)
+      awesome_print
+      pry-rails
+      railties
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -191,6 +195,10 @@ GEM
       activesupport (>= 4.2.0)
     hashery (2.1.2)
     highline (2.0.3)
+    hirb (0.7.3)
+    hirb-unicode-steakknife (0.0.9)
+      hirb (~> 0.5)
+      unicode-display_width (~> 1.1)
     htmlentities (4.3.4)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
@@ -297,6 +305,9 @@ GEM
       pry (~> 0.13.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
+    pry-stack_explorer (0.5.1)
+      binding_of_caller (~> 0.7)
+      pry (~> 0.13)
     psych (3.1.0)
     public_suffix (4.0.5)
     puma (4.3.5)
@@ -480,7 +491,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  awesome_print
+  awesome_rails_console
   better_errors
   binding_of_callers
   bootsnap
@@ -506,6 +517,8 @@ DEPENDENCIES
   factory_bot_rails
   fasterer
   ffaker
+  hirb
+  hirb-unicode-steakknife
   i18n_data
   i18n_rails_helpers
   i18n_yaml_sorter
@@ -526,7 +539,7 @@ DEPENDENCIES
   pg
   policy-assertions
   pry-byebug
-  pry-rails
+  pry-stack_explorer
   puma
   pundit
   rails (>= 6.0.0, < 6.1.0)
@@ -557,6 +570,9 @@ DEPENDENCIES
   will-paginate-i18n
   will_paginate
   wkhtmltopdf-binary
+
+RUBY VERSION
+   ruby 2.6.6p146
 
 BUNDLED WITH
    2.1.4

@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.6.6'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -22,6 +23,8 @@ gem 'country_select'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise_invitable'
+gem 'factory_bot_rails'
+gem 'ffaker'
 gem 'i18n_data'
 gem 'i18n_rails_helpers'
 gem 'jbuilder'
@@ -54,7 +57,6 @@ gem 'will_paginate'
 gem 'wkhtmltopdf-binary'
 
 group :development do
-  gem 'awesome_print', require: false
   gem 'debase', require: false
   gem 'debride', require: false
   gem 'fasterer', require: false
@@ -72,14 +74,15 @@ group :development do
 end
 
 group :development, :test do
+  gem 'awesome_rails_console'
   gem 'better_errors'
   gem 'binding_of_callers'
-  gem 'factory_bot_rails'
-  gem 'ffaker'
+  gem 'hirb'
+  gem 'hirb-unicode-steakknife', require: 'hirb-unicode'
   gem 'listen'
   gem 'pdf-reader'
   gem 'pry-byebug'
-  gem 'pry-rails'
+  gem 'pry-stack_explorer'
   gem 'spring'
 end
 
