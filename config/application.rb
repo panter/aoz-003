@@ -8,14 +8,14 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 require 'webdrivers/chromedriver'
-Webdrivers.install_dir = 'tmp/cache/webdrivers'
+Webdrivers.install_dir = '.ci-cache/webdrivers'
 
 module Aoz
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
-    config.time_zone = 'Zurich'
+    config.load_defaults 6.0
 
+    config.time_zone = 'Zurich'
     config.autoload_paths += Dir[config.root.join('lib/access_import/**/')]
     config.autoload_paths += Dir[config.root.join('lib/access_import/accessors/**/')]
     WillPaginate.per_page = 20

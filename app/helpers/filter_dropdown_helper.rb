@@ -30,7 +30,7 @@ module FilterDropdownHelper
   end
 
   def custom_filter_q_arg(filter, multi_qs, value, *excludes)
-    q_values = search_parameters.merge(multi_qs.map { |q| [q, value.to_s] }.to_h) if multi_qs
+    q_values = search_parameters.merge(multi_qs.index_with { |_q| value.to_s }) if multi_qs
     (q_values || search_parameters).except(*excludes).merge("#{filter}": value.to_s)
   end
 

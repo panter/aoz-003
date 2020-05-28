@@ -3,8 +3,6 @@ require 'application_system_test_case'
 class VolunteerApplicationsTest < ApplicationSystemTestCase
   setup do
     @user = create :user
-    create :email_template,
-           body: 'Liebe/r %{Anrede} %{Name} %{InvalidKey}Gruss, AOZ', subject: '%{Anrede} %{Name}'
   end
 
   test 'login page show link for volunteer application' do
@@ -15,6 +13,7 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
   end
 
   test 'new volunteer application' do
+    create :email_template, :signup
     create(:group_offer_category, category_name: 'Culture')
     create(:group_offer_category, category_name: 'Training')
     create(:group_offer_category, category_name: 'German Course')
@@ -55,21 +54,21 @@ class VolunteerApplicationsTest < ApplicationSystemTestCase
     check('volunteer_weekend')
     fill_in 'Genauere Angaben', with: 'I am every two weeks available on tuesdays asdfasdf.'
 
+    # ensure the assertation for count doesn't fail further down
+    ActionMailer::Base.deliveries.clear
+
     click_button 'Anmeldung abschicken'
+    assert_text 'Vielen Dank für Ihre Anmeldung'
 
     assert_equal 1, ActionMailer::Base.deliveries.size
     mailer = ActionMailer::Base.deliveries.last
-    mail_body = mailer.text_part.body.encoded
-
-    assert_equal 'Frau Vorname Name', mailer.subject
-    assert_includes mail_body, 'Liebe/r Frau Vorname Name Gruss, AOZ'
-    assert_not_includes mailer.subject, '%{'
-    assert_not_includes mail_body, '%{'
+    assert_equal 'Vielen Dank für Ihre Anmeldung', mailer.subject
 
     assert page.has_current_path? thanks_volunteer_applications_path
   end
 
   test "volunteer see's thankyou page with content from signup email template" do
+    create :email_template, :signup
     @email_template1 = create :email_template, kind: :signup, active: true
     @email_template2 = create :email_template, kind: :signup, active: false, subject: 'Hoi', body: 'Wadap?'
     visit thanks_volunteer_applications_path

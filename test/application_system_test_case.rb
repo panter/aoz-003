@@ -2,7 +2,7 @@ require 'test_helper'
 require 'webdrivers/chromedriver'
 require 'selenium/webdriver'
 
-Webdrivers.install_dir = 'tmp/cache/webdrivers'
+Webdrivers.install_dir = '.ci-cache/webdrivers'
 
 Capybara.register_driver :chrome_headless do |app|
   chrome_options = {

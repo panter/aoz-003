@@ -16,6 +16,7 @@ AllCops:
     - Rakefile
     - vendor/**/*
     - lib/access_import/**/*
+    - 'node_modules/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
@@ -154,7 +155,8 @@ Layout/LineLength:
   # The IgnoredPatterns option is a list of !ruby/regexp and/or string
   # elements. Strings will be converted to Regexp objects. A line that matches
   # any regular expression listed in this option will be ignored by LineLength.
-  IgnoredPatterns: []
+  IgnoredPatterns:
+    - !ruby/regexp /^\s*\# .*/
 
 Style/Alias:
   Enabled: false

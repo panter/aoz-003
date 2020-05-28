@@ -28,3 +28,10 @@ lib/access_import_test/*.xlsx
 doc
 /.idea
 .vscode/
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

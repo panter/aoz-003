@@ -4,7 +4,7 @@ require 'database_cleaner'
 require 'policy_assertions'
 require 'webdrivers/chromedriver'
 
-Webdrivers.install_dir = 'tmp/cache/webdrivers'
+Webdrivers.install_dir = '.ci-cache/webdrivers'
 
 Dir[Rails.root.join 'test/utility/**/*.rb'].each { |path| require path }
 

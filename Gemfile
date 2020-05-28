@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '>= 5.2.0', '< 6.0.0'
+gem 'rails', '>= 6.0.0', '< 6.1.0'
 
 gem 'bootsnap', require: false
 gem 'bootstrap-datepicker-rails'
@@ -47,6 +47,7 @@ gem 'slim-rails'
 gem 'sprockets-es6'
 gem 'uglifier'
 gem 'webdrivers', '~> 4.0'
+gem 'webpacker'
 gem 'wicked_pdf'
 gem 'will-paginate-i18n'
 gem 'will_paginate'
