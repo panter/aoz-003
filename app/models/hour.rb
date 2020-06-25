@@ -34,7 +34,9 @@ class Hour < ApplicationRecord
   }
 
   scope :volunteer_not_billed_in_semester, lambda { |date|
-    where.not(volunteers: { last_billing_expense_on: date })
+    where('volunteers.last_billing_expense_on IS NULL').or(
+      where.not('volunteers.last_billing_expense_on::date = ?', date)
+    )
   }
 
   scope :order_volunteer_iban_name, lambda {
