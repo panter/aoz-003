@@ -47,7 +47,7 @@ module BillingExpenseSemesterUtils
     end
 
     def self.billable_semester_range(date)
-      date.advance(days: 1)..date.advance(months: BillingExpense::SEMESTER_LENGTH)
+      date..date.advance(months: BillingExpense::SEMESTER_LENGTH)
     end
 
     def self.dates_semester_start(date)
