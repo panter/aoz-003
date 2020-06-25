@@ -314,50 +314,17 @@ class Volunteer < ApplicationRecord
 
   def self.with_billable_hours(date = nil)
     date = billable_semester_date(date)
-    need_refunds.left_joins(:contact, :hours, :billing_expenses)
-      .with_billable_hours_meeting_date_semester(date)
-      .with_billable_hours_no_expense_in_semester(date)
-      .where('hours.billing_expense_id IS NULL')
-      .where.not('hours.id IS NULL')
-      .with_billable_hours_select
-      .group(:id, 'contacts.full_name')
-      .with_billable_hours_order
+    semester_range = billable_semester_range(date)
+    Hour.joins(volunteer: :contact)
+        .volunteer_not_waive
+        .billable
+        .meeting_date_between(semester_range)
+        .volunteer_not_billed_in_semester(date)
+        .order_volunteer_iban_name
+        .group_by(&:volunteer).map do |volunteer, hours|
+          [volunteer, hours, hours.sum(&:hours)]
+        end
   end
-
-  scope :with_billable_hours_meeting_date_semester, lambda { |date|
-    return all if date.blank?
-    where('hours.meeting_date BETWEEN :start_date AND :end_date',
-      start_date: date.advance(days: 1),
-      end_date: date.advance(months: BillingExpense::SEMESTER_LENGTH))
-  }
-
-  scope :with_billable_hours_no_expense_in_semester, lambda { |date|
-    return all if date.blank?
-    where(last_billing_expense_on: nil).or(
-      where.not('volunteers.last_billing_expense_on = ?', date)
-    )
-  }
-
-  scope :with_billable_hours_select, lambda {
-    select_sql = <<-SQL.squish
-      SUM(hours.hours) AS total_hours,
-      contacts.full_name AS full_name,
-      volunteers.*
-    SQL
-    select(Arel.sql(select_sql))
-  }
-
-  scope :with_billable_hours_order, lambda {
-    sort_sql = <<-SQL.squish
-      (CASE
-        WHEN COALESCE(volunteers.iban, '') = ''
-        THEN 2
-        ELSE 1
-      END),
-      contacts.full_name
-    SQL
-    order(Arel.sql(sort_sql))
-  }
 
   scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
 

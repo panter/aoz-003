@@ -23,7 +23,7 @@ h1 Spesenformulare erfassen
           th Periode
 
       tbody
-        - @volunteers.each do |volunteer|
+        - @volunteers_with_hours.each do |volunteer, hours, total_hours|
           tr.table-row-selectable id=dom_id(volunteer)
             td= check_box_tag 'selected_volunteers[]', volunteer.id,
                 @selected_volunteers.include?(volunteer.id.to_s), disabled: !volunteer.iban?
@@ -38,6 +38,6 @@ h1 Spesenformulare erfassen
                 = volunteer.full_bank_details
               - else
                 span.label.label-danger Keine IBAN angegeben
-            td= link_to format_hours(volunteer.total_hours), volunteer_hours_path(volunteer)
-            td= format_currency BillingExpense.amount_for(volunteer.total_hours)
+            td= link_to format_hours(total_hours), volunteer_hours_path(volunteer)
+            td= format_currency BillingExpense.amount_for(total_hours)
             td= format_hours_semester volunteer.hours.semester(@selected_billing_semester).billable

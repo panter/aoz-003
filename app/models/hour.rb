@@ -18,9 +18,40 @@ class Hour < ApplicationRecord
   validates :meeting_date, presence: true
   validates :hourable, presence: true
 
-  scope :billable, (-> { where(billing_expense: nil) })
+  scope :billable, (-> { where('hours.billing_expense_id IS NULL') })
   scope :billed, (-> { where.not(billing_expense: nil) })
   scope :order_by_meeting_date, (-> { order(meeting_date: :asc) })
+
+  scope :meeting_date_between, lambda { |date_range|
+    where(
+      'hours.meeting_date >= :start_date AND hours.meeting_date <= :end_date',
+      start_date: date_range.first, end_date: date_range.last
+    )
+  }
+
+  scope :volunteer_not_waive, lambda {
+    where(volunteers: { waive: false })
+  }
+
+  scope :volunteer_not_billed_in_semester, lambda { |date|
+    where('volunteers.last_billing_expense_on IS NULL').or(
+      where.not('volunteers.last_billing_expense_on::date = ?', date)
+    )
+  }
+
+  scope :order_volunteer_iban_name, lambda {
+    sort_sql = <<-SQL.squish
+      (CASE
+        WHEN COALESCE(volunteers.iban, '') = ''
+        THEN 2
+        ELSE 1
+      END),
+      contacts.full_name ASC,
+      hours.meeting_date ASC
+    SQL
+    order(Arel.sql(sort_sql))
+  }
+
   scope :semester, lambda { |date = nil|
     return all if date.blank?
     date = Time.zone.parse(date) unless date.is_a? Time

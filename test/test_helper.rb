@@ -69,8 +69,8 @@ class ActiveSupport::TestCase
     end
   end
 
-  def time_z(year, month = nil, day = nil)
+  def time_z(year, month = nil, day = nil, hour = 0, minute = 0, second = 0)
     year, month, day = year.split('-').map(&:to_i) if month.blank?
-    Time.zone.local(year, month, day)
+    Time.zone.local(year, month, day, hour, minute, second)
   end
 end

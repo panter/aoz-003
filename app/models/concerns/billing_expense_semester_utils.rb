@@ -46,6 +46,10 @@ module BillingExpenseSemesterUtils
       date.beginning_of_day
     end
 
+    def self.billable_semester_range(date)
+      date..date.advance(months: BillingExpense::SEMESTER_LENGTH)
+    end
+
     def self.dates_semester_start(date)
       date = date.to_time unless date.respond_to?(:to_f)
       if semester_of_year(date) == 2
