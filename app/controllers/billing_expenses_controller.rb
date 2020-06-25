@@ -104,14 +104,14 @@ class BillingExpensesController < ApplicationController
 
   def selected_billing_semester
     @selected_billing_semester = if params[:q].blank?
-      set_default_filter(semester: default_billing_semester)
-      default_billing_semester
-    elsif !@billing_semester_filters.pluck(:value).include? params[:q][:semester]
-      params.permit![:q][:semester] = default_billing_semester
-      default_billing_semester
-    else
-      params[:q][:semester]
-    end
+                                   set_default_filter(semester: default_billing_semester)
+                                   default_billing_semester
+                                 elsif !@billing_semester_filters.pluck(:value).include? params[:q][:semester]
+                                   params.permit![:q][:semester] = default_billing_semester
+                                   default_billing_semester
+                                 else
+                                   params[:q][:semester]
+                                 end
   end
 
   def pdf_file_name(record)

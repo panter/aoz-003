@@ -318,14 +318,14 @@ class Volunteer < ApplicationRecord
     date = billable_semester_date(date)
     semester_range = billable_semester_range(date)
     Hour.joins(volunteer: :contact)
-        .volunteer_not_waive
-        .billable
-        .meeting_date_between(semester_range)
-        .volunteer_not_billed_in_semester(date)
-        .order_volunteer_iban_name
-        .group_by(&:volunteer).map do |volunteer, hours|
-          [volunteer, hours, hours.sum(&:hours)]
-        end
+      .volunteer_not_waive
+      .billable
+      .meeting_date_between(semester_range)
+      .volunteer_not_billed_in_semester(date)
+      .order_volunteer_iban_name
+      .group_by(&:volunteer).map do |volunteer, hours|
+      [volunteer, hours, hours.sum(&:hours)]
+    end
   end
 
   scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
