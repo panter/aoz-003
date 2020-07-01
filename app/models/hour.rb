@@ -17,6 +17,7 @@ class Hour < ApplicationRecord
   validates :hours, presence: true, numericality: { greater_than: 0 }
   validates :meeting_date, presence: true
   validates :hourable, presence: true
+  validate :meeting_date_impossibly_old, on: :create
 
   scope :billable, (-> { where('hours.billing_expense_id IS NULL') })
   scope :billed, (-> { where.not(billing_expense: nil) })
@@ -109,5 +110,11 @@ class Hour < ApplicationRecord
 
   def hourable_id_and_type
     "#{hourable_id},#{hourable_type}"
+  end
+
+  private
+
+  def meeting_date_impossibly_old
+    errors.add(:meeting_date, :too_long_ago) if meeting_date < 1.year.ago.to_date
   end
 end
