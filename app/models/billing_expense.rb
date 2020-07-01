@@ -58,6 +58,8 @@ class BillingExpense < ApplicationRecord
     transaction do
       volunteers.find_each do |volunteer|
         hours = volunteer.hours.billable.semester(billing_semester)
+        next unless hours.any?
+
         hours.find_each { |hour| hour.update!(reviewer: creator) }
 
         create!(

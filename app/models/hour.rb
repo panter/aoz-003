@@ -60,8 +60,11 @@ class Hour < ApplicationRecord
   }
 
   scope :semester_with_date, lambda { |date|
-    date_between_inclusion(:meeting_date, date.advance(days: 1),
-      date.advance(months: BillingExpense::SEMESTER_LENGTH))
+    date_between_inclusion(
+      :meeting_date,
+      date,
+      date.advance(months: BillingExpense::SEMESTER_LENGTH)
+    )
   }
 
   scope :within_semester, lambda { |semester|
