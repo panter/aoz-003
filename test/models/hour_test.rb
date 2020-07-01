@@ -13,20 +13,20 @@ class HourTest < ActiveSupport::TestCase
   end
 
   test 'semester returns hours for a billing_expense semester' do
-    travel_to time_z(2018, 5, 25)
     assignment = create :assignment
     hours = {
       this_hour1: hour_for_meeting_date(time_z(2016, 12, 1), assignment),
       this_hour2: hour_for_meeting_date(time_z(2017, 4, 10), assignment),
-      this_hour3: hour_for_meeting_date(time_z(2017, 5, 31), assignment),
-      prev_hour1: hour_for_meeting_date(time_z(2016, 11, 30), assignment),
+      this_hour3: hour_for_meeting_date(time_z(2017, 5, 30), assignment),
+      prev_hour1: hour_for_meeting_date(time_z(2016, 11, 29), assignment),
       prev_hour2: hour_for_meeting_date(time_z(2016, 10, 1), assignment),
       prev_hour3: hour_for_meeting_date(time_z(2016, 6, 1), assignment),
       two_prev_hour1: hour_for_meeting_date(time_z(2015, 12, 1), assignment),
       two_prev_hour2: hour_for_meeting_date(time_z(2016, 4, 10), assignment),
-      two_prev_hour3: hour_for_meeting_date(time_z(2016, 5, 31), assignment),
+      two_prev_hour3: hour_for_meeting_date(time_z(2016, 5, 30), assignment),
       other_hour: hour_for_meeting_date(time_z(2013, 11, 21), assignment)
     }
+    travel_to time_z(2018, 5, 25)
 
     current_semester_hours = Hour.semester '2016-12-01'
     last_semester_hours = Hour.semester '2016-06-01'

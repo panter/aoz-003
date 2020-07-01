@@ -638,6 +638,10 @@ de:
           attributes:
             group_offers:
               has_unterminated: Der Standort hat noch %{go_count}.
+        hour:
+          attributes:
+            meeting_date:
+              too_long_ago: Datum liegt zu weit zurück
     models:
       assignment: Begleitung
       billing_expense: Spesenformular
