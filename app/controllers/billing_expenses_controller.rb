@@ -91,7 +91,7 @@ class BillingExpensesController < ApplicationController
   end
 
   def set_billing_semesters
-    @billing_semester_filters = BillingExpense.generate_semester_filters(:billable)
+    @billing_semester_filters = BillingExpense.semester_back_filters
   end
 
   def set_selection

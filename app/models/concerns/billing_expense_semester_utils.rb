@@ -50,6 +50,41 @@ module BillingExpenseSemesterUtils
       date..date.advance(months: BillingExpense::SEMESTER_LENGTH)
     end
 
+    def self.generate_semester_filters(scope)
+      scoped_hours = Hour.public_send(scope)
+      first_semester = semester_from_hours(scoped_hours, date_position: :minimum)
+      last_semester = semester_from_hours(scoped_hours)
+
+      semesters = [semester_filter_hash(last_semester)]
+      semester_back_count(first_semester.to_time, last_semester.to_time).times do
+        last_semester = last_semester.advance(months: -BillingExpense::SEMESTER_LENGTH)
+        next if scoped_hours.semester(last_semester).blank?
+
+        semesters << semester_filter_hash(last_semester)
+      end
+      semesters
+    end
+
+    def self.semester_back_filters
+      min_meeting_date = Hour.billable.minimum(:meeting_date)
+      return [semester_filter_hash(current_semester_start)] unless min_meeting_date
+
+      first_semester = dates_semester_start(min_meeting_date < 2.years.ago ? 2.years.ago : min_meeting_date)
+      last_semester = dates_semester_start(Hour.billable.maximum(:meeting_date))
+      semester_filters = [semester_filter_hash(last_semester)]
+      semester_back_count(first_semester.to_time, last_semester.to_time).times do
+        last_semester = last_semester.advance(months: -BillingExpense::SEMESTER_LENGTH)
+        semester_filters << semester_filter_hash(last_semester)
+      end
+      semester_filters
+    end
+
+    def self.semester_filter_hash(date)
+      { q: :semester, value: date.strftime('%Y-%m-%d'),
+        text: I18n.t('semester.one_semester', number: semester_of_year(date),
+                                              year: semester_display_year(date)) }
+    end
+
     def self.dates_semester_start(date)
       date = date.to_time unless date.respond_to?(:to_f)
       if semester_of_year(date) == 2
