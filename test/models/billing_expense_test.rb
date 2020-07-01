@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class BillingExpenseTest < ActiveSupport::TestCase
+  include SemesterScopesGenerators
+
   test 'amount_for' do
     assert_equal 150, BillingExpense.amount_for(999)
     assert_equal 150, BillingExpense.amount_for(51)
@@ -89,9 +91,10 @@ class BillingExpenseTest < ActiveSupport::TestCase
 
   test 'generate_semester_filters_with_hours' do
     really_destroy_with_deleted(BillingExpense, Hour)
+    hourable = create(:assignment)
     create :billing_expense, hours: [
-      create(:hour, meeting_date: time_z(2014, 2, 3)),
-      create(:hour, meeting_date: time_z(2015, 2, 3))
+        hour_for_meeting_date(time_z(2014, 2, 3), hourable),
+        hour_for_meeting_date(time_z(2015, 2, 3), hourable)
     ]
 
     assert_equal [
@@ -99,26 +102,26 @@ class BillingExpenseTest < ActiveSupport::TestCase
       { q: :semester, value: '2013-12-01', text: '1. Semester 2014' }
     ], BillingExpense.generate_semester_filters(:billed)
 
-    create :hour, meeting_date: '2017-06-30'
-    create :hour, meeting_date: '2012-06-30'
+    hour_for_meeting_date(time_z(2017, 6, 30), hourable)
+    hour_for_meeting_date(time_z(2017, 6, 30), hourable)
     assert_equal [
-      { q: :semester, value: '2017-06-01', text: '2. Semester 2017' },
-      { q: :semester, value: '2012-06-01', text: '2. Semester 2012' }
+      { q: :semester, value: '2017-06-01', text: '2. Semester 2017' }
     ], BillingExpense.generate_semester_filters(:billable)
   end
 
   test 'semester_scope' do
+    hourable = create(:assignment)
     billing_expense1 = create :billing_expense,
-      hours: [create(:hour, meeting_date: time_z(2017, 1, 12))]
+      hours: [hour_for_meeting_date(time_z(2017, 1, 12), hourable)]
 
     billing_expense2 = create :billing_expense,
       hours: [
-        create(:hour, meeting_date: time_z(2017, 2, 1)),
-        create(:hour, meeting_date: time_z(2017, 5, 12))
+        hour_for_meeting_date(time_z(2017, 2, 1), hourable),
+        hour_for_meeting_date(time_z(2017, 5, 12), hourable)
       ]
 
-    _billing_expense3 = create :billing_expense,
-      hours: [create(:hour, meeting_date: time_z(2016, 11, 30))]
+    create :billing_expense,
+      hours: [hour_for_meeting_date(time_z(2016, 11, 30), hourable)]
 
     assert_includes BillingExpense.semester('2016-12-01'), billing_expense1
     assert_includes BillingExpense.semester('2016-12-01'), billing_expense2
