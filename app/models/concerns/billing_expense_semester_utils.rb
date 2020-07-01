@@ -66,11 +66,13 @@ module BillingExpenseSemesterUtils
       semesters
     end
 
+    # rubocop:disable Metrics/AbcSize
     def self.semester_back_filters
       min_meeting_date = Hour.billable.minimum(:meeting_date)
       return [semester_filter_hash(current_semester_start)] unless min_meeting_date
 
-      first_semester = dates_semester_start(min_meeting_date < 2.years.ago ? 2.years.ago : min_meeting_date)
+      min_date = min_meeting_date < 2.years.ago ? 2.years.ago : min_meeting_date
+      first_semester = dates_semester_start(min_date)
       last_semester = dates_semester_start(Hour.billable.maximum(:meeting_date))
       semester_filters = [semester_filter_hash(last_semester)]
       semester_back_count(first_semester.to_time, last_semester.to_time).times do
@@ -79,6 +81,7 @@ module BillingExpenseSemesterUtils
       end
       semester_filters
     end
+    # rubocop:enable Metrics/AbcSize
 
     def self.semester_filter_hash(date)
       { q: :semester, value: date.strftime('%Y-%m-%d'),

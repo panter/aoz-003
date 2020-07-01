@@ -7,7 +7,8 @@ class HoursController < ApplicationController
     q_params = params.to_unsafe_hash[:q] || {}
     if params[:semester]
       q_params[:meeting_date_gteq] = params[:semester]
-      q_params[:meeting_date_lteq] = Date.parse(params[:semester]).advance(months: BillingExpense::SEMESTER_LENGTH)
+      q_params[:meeting_date_lteq] = Date.parse(params[:semester])
+        .advance(months: BillingExpense::SEMESTER_LENGTH)
     end
     @q = @volunteer.hours.ransack(q_params)
     @q.sorts = ['meeting_date desc'] if @q.sorts.empty?
