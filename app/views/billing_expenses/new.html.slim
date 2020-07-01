@@ -38,6 +38,6 @@ h1 Spesenformulare erfassen
                 = volunteer.full_bank_details
               - else
                 span.label.label-danger Keine IBAN angegeben
-            td= link_to format_hours(total_hours), volunteer_hours_path(volunteer)
+            td= link_to format_hours(total_hours), volunteer_hours_path(volunteer, semester: params[:q][:semester])
             td= format_currency BillingExpense.amount_for(total_hours)
             td= format_hours_semester volunteer.hours.semester(@selected_billing_semester).billable
