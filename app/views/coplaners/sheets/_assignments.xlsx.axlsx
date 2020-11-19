@@ -1,0 +1,80 @@
+wb.add_worksheet(name: 'Begleitungen') do |sheet|
+  columns = [
+    'ID',
+    'Status',
+    'ID Freiwillige/r',
+    'Freiwillige/r',
+    'ID Klient/in',
+    'Klient/in',
+    'Region',
+    'Einsatzbeginn',
+    'Einsatzende',
+    'Einsatzbeginn (in Monaten)',
+    'Einsatzende (in Monaten)',
+    'Laufzeit (in Mte.)',
+    'Probezeit (nach 1 Mt.)',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  assignments.each do |assignment|
+    data = [
+      assignment.id,                              # 'ID'
+      assignment.active? ? 'Aktiv' : 'Inaktiv',   # 'Status'
+      assignment.volunteer_id,                    # 'ID Freiwillige/r'
+      assignment.volunteer.full_name,             # 'Freiwillige/r'
+      assignment.client_id,                       # 'ID Klient/in'
+      assignment.client.contact.full_name,        # 'Klient/in'
+      'abklaeren. Was?',                          # 'Region'
+      assignment.period_start,                    # 'Einsatzbeginn'
+      assignment.period_end,                      # 'Einsatzende'
+      '',                                         # 'Einsatzbeginn (in Monaten)'
+      '',                                         # 'Einsatzende (in Monaten)'
+      '',                                         # 'Laufzeit (in Mte.)'
+      assignment.probation_period&.to_date || '', # 'Probezeit (nach 1 Mt.)'
+      'was fuer eine zeit ist verlangt?'          # 'Zeit'
+    ]
+    types = [
+      :integer, # 'ID'
+      nil,      # 'Status'
+      :integer, # 'ID Freiwillige/r'
+      nil,      # 'Freiwillige/r'
+      :integer, # 'ID Klient/in'
+      nil,      # 'Klient/in'
+      nil,      # 'Region'
+      nil,      # 'Einsatzbeginn'
+      nil,      # 'Einsatzende'
+      nil,      # 'Einsatzbeginn (in Monaten)'
+      nil,      # 'Einsatzende (in Monaten)'
+      nil,      # 'Laufzeit (in Mte.)'
+      nil,      # 'Probezeit (nach 1 Mt.)'
+      nil       # 'Zeit'
+    ]
+
+    style = [
+      standard_format,  # 'ID'
+      standard_format,  # 'Status'
+      standard_format,  # 'ID Freiwillige/r'
+      standard_format,  # 'Freiwillige/r'
+      standard_format,  # 'ID'
+      standard_format,  # 'Klient/in'
+      standard_format,  # 'Region'
+      date_format,      # 'Einsatzbeginn'
+      date_format,      # 'Einsatzende'
+      standard_format,  # 'Einsatzbeginn (in Monaten)'
+      standard_format,  # 'Einsatzende (in Monaten)'
+      standard_format,  # 'Laufzeit (in Mte.)'
+      date_format,      # 'Probezeit (nach 1 Mt.)'
+      standard_format   # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{assignments.count + 1}"
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end

@@ -1,0 +1,39 @@
+wb.add_worksheet(name: 'Standorte') do |sheet|
+  columns = [
+    'ID',
+    'Name',
+    'Strasse',
+    'PLZ'
+
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  departments.each do |department|
+    data = [
+      department.id,                 # ID'
+      department.contact.last_name,  # 'Name'
+      department.contact.street,     # 'Strasse'
+      department.contact.postal_code # 'PLZ'
+    ]
+    types = [
+      :integer, # ID'
+      nil,      # 'Name'
+      nil,      # 'Strasse'
+      nil       # 'PLZ'
+    ]
+    style = [
+      standard_format, # ID'
+      standard_format, # 'Name'
+      standard_format, # 'Strasse'
+      standard_format  # 'PLZ'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{departments.count + 1}"
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end

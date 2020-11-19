@@ -1,0 +1,55 @@
+wb.add_worksheet(name: 'Matching GA und FW') do |sheet|
+  columns = [
+    'ID',
+    'ID Gruppenangebot',
+    'ID Freiwillige/r',
+    'Erstellt am',
+    'Startdatum',
+    'Enddatum',
+    'Status',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  group_assignments.each do |group_assignment|
+    data = [
+      group_assignment.id,                                # ID
+      group_assignment.group_offer.id,                    # 'ID Gruppenangebot'
+      group_assignment.volunteer.id,                      # 'ID Freiwillige/r'
+      group_assignment.created_at.to_date,                # 'Erstellt am'
+      group_assignment.period_start,                      # 'Startdatum'
+      group_assignment.period_end,                        # 'Enddatum'
+      group_assignment.terminated? ? 'Beendet' : 'Aktiv', # 'Status'
+      '?'                                                 # 'Zeit'
+    ]
+    types = [
+      :integer,        # ID
+      :integer,        # 'ID Gruppenangebot'
+      :integer,        # 'ID Freiwillige/r'
+      nil,             # 'Erstellt am'
+      nil,             # 'Startdatum'
+      nil,             # 'Enddatum'
+      nil,             # 'Status'
+      nil              # 'Zeit'
+    ]
+    style = [
+      standard_format, # ID
+      standard_format, # 'ID Gruppenangebot'
+      standard_format, # 'ID Freiwillige/r'
+      date_format,     # 'Erstellt am'
+      date_format,     # 'Startdatum'
+      date_format,     # 'Enddatum'
+      standard_format, # 'Status'
+      standard_format  # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{group_assignments.count + 1}"
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end

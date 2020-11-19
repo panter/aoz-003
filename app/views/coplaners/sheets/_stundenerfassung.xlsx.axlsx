@@ -1,0 +1,62 @@
+wb.add_worksheet(name: 'Stundenerfassung') do |sheet|
+  columns = [
+    'ID',
+    'Freiwillige ID',
+    'Anzahl Stunden',
+    'Stunden Für (Polymorph)',
+    'Gruppenangebot ID',
+    'Begleitung ID',
+    'Spesenabrechnung ID',
+    'Datum Treffen',
+    'Datum Eingetragen',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  hours.each do |hour|
+    data = [
+      hour.id,                                   # ID'
+      hour.volunteer_id,                         # 'Freiwillige ID'
+      hour.hours,                                # 'Anzahl Stunden''
+      t_model(hour.hourable),                    # Stunden Für (Polymorph)'
+      hour.group_offer? ? hour.hourable_id : '', # 'Gruppenangebot ID'
+      hour.assignment? ? hour.hourable_id : '',  # 'Begleitung ID'
+      hour.billing_expense_id,                   # 'Spesenabrechnung ID'
+      hour.meeting_date,                         # 'Datum Treffen'
+      hour.created_at.to_date,                   # 'Datum Eingetragen'
+      ''                                         # 'Zeit'
+    ]
+    types = [
+      :integer,         # ID'
+      :integer,         # 'Freiwillige ID'
+      nil,              # 'Anzahl Stunden'
+      nil,              # Stunden Für (Polymorph)'
+      nil,              # 'Gruppenangebot ID'
+      nil,              # 'Begleitung ID'
+      :integer,         # 'Spesenabrechnung ID'
+      nil,              # 'Datum Treffen'
+      nil,              # 'Datum Eingetragen'
+      nil               # 'Zeit'
+    ]
+    style = [
+      standard_format,  # ID'
+      standard_format,  # 'Freiwillige ID'
+      standard_format,  # 'Anzahl Stunden'
+      standard_format,  # Stunden Für (Polymorph)'
+      standard_format,  # 'Gruppenangebot ID'
+      standard_format,  # 'Begleitung ID'
+      standard_format,  # 'Spesenabrechnung ID'
+      date_format,      # 'Datum Treffen'
+      date_format,      # 'Datum Eingetragen'
+      standard_format   # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{hours.count + 1}"
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end

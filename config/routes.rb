@@ -85,6 +85,8 @@ Rails.application.routes.draw do
     resources :journals, except: [:show]
   end
 
+  resources :coplaners, only: [:index]
+
   resources :profiles, except: [:destroy, :index]
 
   resources :reminder_mailings, except: [:new]

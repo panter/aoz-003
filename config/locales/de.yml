@@ -354,6 +354,7 @@ de:
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
         cost_unit: Kostenträger
+        cost_units: *id-client-cost-units
         city: Stadt
         competent_authority: Anmeldende Stelle
         other_authorities: Weitere involvierte Stellen

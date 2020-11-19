@@ -1,0 +1,116 @@
+wb.add_worksheet(name: 'Klienten') do |sheet|
+  columns = [
+    'AOZ Klienten ID',
+    'id',
+    'ID Anrede',
+    'Anrede',
+    'Nachname',
+    'Vorname',
+    'PLZ',
+    'Ort',
+    'Geschlecht',
+    'Geburtsdatum',
+    'Alter',
+    'Nationalität ISO Alpha2',
+    'Nationalität',
+    'ID Prozess',
+    'Prozess',
+    'Erstellt am',
+    'Fallführend',
+    'ID Kostenträger',
+    'Kostenträger',
+    'Einsatz',
+    'Zeit (von Anmeldung bis Vermittlung in Tagen)',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  clients.each do |client|
+    alter = client.birth_year.present? ? ((Date.current - client.birth_year) / 365).floor : ''
+    zeit_anmeldung_vermittlung = if client.accepted_at.present?
+                                   (client.accepted_at.to_date - client.created_at.to_date)
+                                 end
+    data = [
+      'Was ist hier gemeint?',               # 'AOZ Klienten ID',
+      client.id,                             # 'id',
+      client.salutation,                     # 'ID Anrede',
+      t("salutation.#{client.salutation}"),  # 'Anrede',
+      client.contact.last_name,              # 'Nachname',
+      client.contact.first_name,             # 'Vorname',
+      client.contact.postal_code,            # 'PLZ',
+      client.contact.city,                   # 'Ort',
+      '',                                    # 'Geschlecht',
+      client.birth_year,                     # 'Geburtsdatum',
+      alter,                                 # 'Alter',
+      client.nationality,                    # 'Nationalität ISO Alpha2',
+      nationality_name(client.nationality),  # 'Nationalität',
+      Client.acceptances[client.acceptance], # 'ID Prozess'
+      client.acceptance_t,                   # 'Prozess',
+      client.created_at.to_date,             # 'Erstellt am',
+      '',                                    # 'Fallführend',
+      Client.cost_units[client.cost_unit],   # 'ID Kostenträger',
+      client.cost_unit_t,                    # 'Kostenträger',
+      'Was ist hier gemeint?',               # 'Einsatz',
+      zeit_anmeldung_vermittlung,            # 'Zeit (von Anmeldung bis Vermittlung)',
+      'was für eine Zeit?'                   # 'Zeit'
+    ]
+    types = [
+      nil,             # 'AOZ Klienten ID',
+      :integer,        # 'id',
+      nil,             # 'ID Anrede',
+      nil,             # 'Anrede',
+      nil,             # 'Nachname',
+      nil,             # 'Vorname',
+      nil,             # 'PLZ',
+      nil,             # 'Ort',
+      nil,             # 'Geschlecht',
+      nil,             # 'Geburtsdatum',
+      :integer,        # 'Alter',
+      nil,             # 'Nationalität ISO Alpha2',
+      nil,             # 'Nationalität',
+      :integer,        # 'ID Prozess'
+      nil,             # 'Prozess',
+      nil,             # 'Erstellt am',
+      nil,             # 'Fallführend',
+      :integer,        # 'ID Kostenträger',
+      nil,             # 'Kostenträger',
+      nil,             # 'Einsatz',
+      :integer,        # 'Zeit (von Anmeldung bis Vermittlung)',
+      nil              # 'Zeit'
+    ]
+
+    style = [
+      standard_format, # 'AOZ Klienten ID',
+      standard_format, # 'id',
+      standard_format, # 'ID Anrede',
+      standard_format, # 'Anrede',
+      standard_format, # 'Nachname',
+      standard_format, # 'Vorname',
+      standard_format, # 'PLZ',
+      standard_format, # 'Ort',
+      standard_format, # 'Geschlecht',
+      date_format,     # 'Geburtsdatum',
+      standard_format, # 'Alter',
+      standard_format, # 'Nationalität ISO Alpha2',
+      standard_format, # 'Nationalität',
+      standard_format, # 'ID Prozess'
+      standard_format, # 'Prozess',
+      date_format,     # 'Erstellt am',
+      standard_format, # 'Fallführend',
+      standard_format, # 'ID Kostenträger',
+      standard_format, # 'Kostenträger',
+      standard_format, # 'Einsatz',
+      standard_format, # 'Zeit (von Anmeldung bis Vermittlung)',
+      standard_format  # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{clients.count + 1}"
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end

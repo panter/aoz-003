@@ -1,0 +1,119 @@
+wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
+  columns = [
+    'ID',
+    'Status',
+    'Bezeichnung',
+    'ID Kategorie',
+    'Kategorie',
+    'ID Internes oder externes Gruppenangebot',
+    'Internes oder externes Gruppenangebot',
+    'ID Standort',
+    'Standort',
+    'Erstellt am',
+    'Startdatum',
+    'Angebotsenddatum',
+    'Beendet',
+    'Dauer in Monaten',
+    'Einsatz',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  group_offers.each do |group_offer|
+    data = [
+      group_offer.id,                                  # 'ID'
+      group_offer.terminated? ? 'Beendet' : 'Aktiv',   # 'Status'
+      group_offer.title,                               # 'Bezeichnung'
+      group_offer.group_offer_category&.id,            # 'ID Kategorie'
+      group_offer.group_offer_category&.category_name, # 'Kategorie'
+      group_offer.offer_type,                          # 'ID Internes oder externes Gruppenangebot'
+      t("offer_type.#{group_offer.offer_type}"),       # 'Internes oder externes Gruppenangebot'
+      group_offer.department.id,                       # 'ID Standort'
+      group_offer.department&.contact&.last_name,      # 'Standort'
+      group_offer.created_at.to_date,                  # 'Erstellt am'
+      group_offer.period_start,                        # 'Startdatum'
+      group_offer.period_end,                          # 'Angebotsenddatum'
+      group_offer.terminated?,                         # 'Beendet'
+      '',                                              # 'Dauer in Monaten'
+      '',                                              # 'Einsatz'
+      ''                                               # 'Zeit'
+    ]
+    types = [
+      :integer,  # 'ID'
+      nil,       # 'Status'
+      nil,       # 'Bezeichnung'
+      :integer,  # 'ID Kategorie'
+      nil,       # 'Kategorie'
+      nil,       # 'ID Internes oder externes Gruppenangebot'
+      nil,       # 'Internes oder externes Gruppenangebot'
+      :integer,  # 'ID Standort'
+      nil,       # 'Standort'
+      nil,       # 'Erstellt am'
+      nil,       # 'Startdatum'
+      nil,       # 'Angebotsenddatum'
+      nil,       # 'Dauer in Monaten'
+      nil,       # 'Einsatz'
+      nil        # 'Zeit'
+    ]
+
+    style = [
+      standard_format,  # 'ID'
+      standard_format,  # 'Status'
+      standard_format,  # 'Bezeichnung'
+      standard_format,  # 'ID Kategorie'
+      standard_format,  # 'Kategorie'
+      standard_format,  # 'ID Internes oder externes Gruppenangebot'
+      standard_format,  # 'Internes oder externes Gruppenangebot'
+      standard_format,  # 'ID Standort'
+      standard_format,  # 'Standort'
+      date_format,      # 'Erstellt am'
+      date_format,      # 'Startdatum'
+      date_format,      # 'Angebotsenddatum'
+      standard_format,  # 'Dauer in Monaten'
+      standard_format,  # 'Einsatz'
+      standard_format   # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{group_offers.count + 1}"
+
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end
+
+wb.add_worksheet(name: 'GA-Kategorien') do |sheet|
+  columns = [
+    'ID',
+    'Name',
+    'ID Status',
+    'Status'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  GroupOfferCategory.all.order(:id).each do |group_offer_category|
+    data = [
+      group_offer_category.id, # 'ID'
+      group_offer_category.category_name, # 'Name'
+      group_offer_category.category_state, # 'ID Status'
+      # 'Status'
+      t("group_offer_categories.index.category_states.#{group_offer_category.category_state}")
+    ]
+    types = [
+      nil, # 'ID'
+      nil, # 'Name'
+      nil, # 'ID Status'
+      nil # 'Status'
+    ]
+    style = [
+      standard_format, # 'ID'
+      standard_format, # 'Name'
+      standard_format, # 'ID Status'
+      standard_format # 'Status'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+end

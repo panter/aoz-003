@@ -1,0 +1,95 @@
+wb.add_worksheet(name: 'Stammdaten') do |sheet|
+  columns = [
+    'Key',
+    'Key Type',
+    'Bezeichnung',
+    'Dimension',
+    'Entität'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+
+  ## Volunteer
+  #
+  rows = []
+  Volunteer::SALUTATIONS.each do |salutation|
+    rows << {
+      data: [salutation, salutation.class.to_s, t("salutation.#{salutation}"),
+             'Anrede', 'Freiwillige'],
+      types: [:string, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+  Volunteer.acceptances.each do |name_key, key|
+    rows << {
+      data: [key, key.class.to_s, t("volunteer_acceptance_keys.#{name_key}"),
+             'Prozess', 'Freiwillige'],
+      types: [:integer, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+  %w[active inactive].each do |state|
+    rows << {
+      data: [state, state.class.to_s, t("state.#{state}"), 'Status', 'Freiwillige'],
+      types: [:string, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+  Client::SALUTATIONS.each do |salutation|
+    rows << {
+      data: [salutation, salutation.class.to_s, t("salutation.#{salutation}"),
+             'Anrede', 'Klienten'],
+      types: [:string, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+  Client.acceptances.each do |name_key, key|
+    rows << {
+      data: [key, key.class.to_s, t("acceptance.#{name_key}"), 'Prozess', 'Klienten'],
+      types: [:integer, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+  Client.cost_units.each do |name_key, key|
+    rows << {
+      data: [key, key.class.to_s, t("cost_unit.#{name_key}"), 'Kostenträger', 'Klienten'],
+      types: [:integer, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+  Event.kinds.each do |name_key, key|
+    rows << {
+      data: [key, key.class.to_s, t("event_kinds.#{name_key}"), 'Art', 'Veranstaltungen'],
+      types: [:integer, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+  GroupOffer::OFFER_TYPES.each do |offer_type|
+    rows << {
+      data: [offer_type, offer_type.class.to_s, t("offer_type.#{offer_type}"),
+             'Internes oder externes Gruppenangebot', 'Gruppenangebote'],
+      types: [:string, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+  GroupOfferCategory::CATEGORY_STATES.each do |state|
+    rows << {
+      data: [state, state.class.to_s, t("group_offer_categories.index.category_states.#{state}"),
+             'Status', 'GA-Kategorien'],
+      types: [:string, :string, :string, :string, :string],
+      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+    }
+  end
+
+  rows.each do |row|
+    sheet.add_row(row[:data], row.slice(:types, :style))
+  end
+
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{rows.size + 1}"
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end

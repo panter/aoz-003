@@ -1,0 +1,95 @@
+wb.add_worksheet(name: 'Veranstaltungen') do |sheet|
+  columns = [
+    'ID',
+    'ID Art',
+    'Art',
+    'Weiterbildung',
+    'Datum',
+    'Start Zeit',
+    'End Zeit',
+    'ID Standort',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  events.each do |event|
+    data = [
+      event.id,                 # 'ID'
+      Event.kinds[event.kind],  # 'ID Art'
+      event.kind_t,             # 'Art'
+      '',                       # 'Weiterbildung'
+      event.date,               # 'Datum'
+      event.start_time,         # 'Start Zeit'
+      event.end_time,           # 'End Zeit'
+      event.department_id,      # 'ID Standort'
+      ''                        # 'Zeit'
+    ]
+    types = [
+      :integer, # 'ID'
+      nil,      # 'ID Art'
+      nil,      # 'Art'
+      nil,      # 'Weiterbildung'
+      nil,      # 'Datum'
+      nil,      # 'Start Zeit'
+      nil,      # 'End Zeit'
+      :integer, # 'ID Standort'
+      nil       # 'Zeit'
+    ]
+    style = [
+      standard_format,  # 'ID'
+      standard_format,  # 'ID Art'
+      standard_format,  # 'Art'
+      standard_format,  # 'Weiterbildung'
+      date_format,      # 'Datum'
+      time_format,      # 'Start Zeit'
+      time_format,      # 'End Zeit'
+      standard_format,  # 'ID Standort'
+      standard_format   # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{events.count + 1}"
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end
+
+wb.add_worksheet(name: 'Join Veranstaltung FW') do |sheet|
+  columns = [
+    'ID',
+    'Veranstaltung ID',
+    'Freiwillige/r ID'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  event_volunteers.each do |event_volunteer|
+    data = [
+      event_volunteer.id,           # 'ID'
+      event_volunteer.event_id,     # 'Veranstaltung ID'
+      event_volunteer.volunteer_id  # 'Freiwillige/r ID'
+    ]
+    types = [
+      :integer,                     # 'ID'
+      :integer,                     # 'Veranstaltung ID'
+      :integer                      # 'Freiwillige/r ID'
+    ]
+    style = [
+      standard_format,              # 'ID'
+      standard_format,              # 'Veranstaltung ID'
+      standard_format               # 'Freiwillige/r ID'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{event_volunteers.count + 1}"
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end

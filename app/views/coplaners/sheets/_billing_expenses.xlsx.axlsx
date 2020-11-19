@@ -1,0 +1,40 @@
+wb.add_worksheet(name: 'Spesenabrechnungen') do |sheet|
+  columns = [
+    'ID',
+    'Betrag',
+    'Datum',
+    'ID Freiwillige/r'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  billing_expenses.each do |billing_expense|
+    data = [
+      billing_expense.id,                  # 'ID'
+      billing_expense.amount,              # 'Betrag'
+      billing_expense.created_at.to_date,  # 'Datum'
+      billing_expense.volunteer_id         # 'ID Freiwillige/r'
+    ]
+    types = [
+      :integer, # 'ID'
+      nil,      # 'Betrag'
+      nil,      # 'Datum'
+      :integer  # 'ID Freiwillige/r'
+    ]
+    style = [
+      standard_format,  # 'ID'
+      standard_format,  # 'Betrag'
+      standard_format,  # 'Datum'
+      standard_format   # 'ID Freiwillige/r'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{billing_expenses.count + 1}"
+
+  sheet.sheet_view.pane do |pane|
+    pane.top_left_cell = 'A2'
+    pane.state = :frozen_split
+    pane.y_split = 1
+    pane.x_split = 0
+    pane.active_pane = :bottom_right
+  end
+end
