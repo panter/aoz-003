@@ -4,9 +4,15 @@ wb.add_worksheet(name: 'Stammdaten') do |sheet|
     'Key Type',
     'Bezeichnung',
     'Dimension',
-    'Entität'
+    'Entität',
+    'Kommentar', # optional comment column
+    'Zeit'
   ]
   sheet.add_row(columns, style: header_style, height: 25)
+
+  types_str = Array.new(6).fill(:string) + [:time]
+  types_int = [:integer] + Array.new(5).fill(:string) + [:time]
+  style = Array.new(6).fill(standard_format) + [date_time_format]
 
   ## Volunteer
   #
@@ -14,69 +20,110 @@ wb.add_worksheet(name: 'Stammdaten') do |sheet|
   Volunteer::SALUTATIONS.each do |salutation|
     rows << {
       data: [salutation, salutation.class.to_s, t("salutation.#{salutation}"),
-             'Anrede', 'Freiwillige'],
-      types: [:string, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+             'Anrede', 'Freiwillige', '', zeit],
+      types: types_str,
+      style: style
+    }
+  end
+  Volunteer::SALUTATION_GENDER_MAP.each_value do |gender|
+    rows << {
+      data: [gender, gender.class.to_s, t("activerecord.attributes.volunteer.genders.#{gender}"),
+             'Geschlecht', 'Klienten', 'Abgeleitet aus Anrede', zeit],
+      types: types_str,
+      style: style
     }
   end
   Volunteer.acceptances.each do |name_key, key|
     rows << {
       data: [key, key.class.to_s, t("volunteer_acceptance_keys.#{name_key}"),
-             'Prozess', 'Freiwillige'],
-      types: [:integer, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+             'Prozess', 'Freiwillige', '', zeit],
+      types: types_int,
+      style: style
     }
   end
-  %w[active inactive].each do |state|
+  [:active, :inactive].each do |state|
     rows << {
-      data: [state, state.class.to_s, t("state.#{state}"), 'Status', 'Freiwillige'],
-      types: [:string, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+      data: [state, state.class.to_s, t("state.#{state}"), 'Status', 'Freiwillige',
+             'Dynamisch aus aktuell laufenden Begleitungen und/oder Gruppenangeboten', zeit],
+      types: types_str,
+      style: style
     }
   end
   Client::SALUTATIONS.each do |salutation|
     rows << {
       data: [salutation, salutation.class.to_s, t("salutation.#{salutation}"),
-             'Anrede', 'Klienten'],
-      types: [:string, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+             'Anrede', 'Klienten', '', zeit],
+      types: types_str,
+      style: style
+    }
+  end
+  Client::SALUTATION_GENDER_MAP.each_value do |gender|
+    rows << {
+      data: [gender, gender.class.to_s, t("activerecord.attributes.client.genders.#{gender}"),
+             'Geschlecht', 'Klienten', 'Abgeleitet aus Anrede', zeit],
+      types: types_str,
+      style: style
     }
   end
   Client.acceptances.each do |name_key, key|
     rows << {
-      data: [key, key.class.to_s, t("acceptance.#{name_key}"), 'Prozess', 'Klienten'],
-      types: [:integer, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+      data: [key, key.class.to_s, t("acceptance.#{name_key}"), 'Prozess', 'Klienten', '', zeit],
+      types: types_int,
+      style: style
+    }
+  end
+  [:active, :inactive].each do |state|
+    rows << {
+      data: [state, state.class.to_s, t("state.#{state}"), 'Status', 'Klienten',
+             'Dynamisch aus akzeptiert und ob laufende Begleitung existiert', zeit],
+      types: types_str,
+      style: style
     }
   end
   Client.cost_units.each do |name_key, key|
     rows << {
-      data: [key, key.class.to_s, t("cost_unit.#{name_key}"), 'Kostenträger', 'Klienten'],
-      types: [:integer, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+      data: [key, key.class.to_s, t("cost_unit.#{name_key}"), 'Kostenträger', 'Klienten', '', zeit],
+      types: types_int,
+      style: style
+    }
+  end
+  [:active, :inactive].each do |state|
+    rows << {
+      data: [state, state.class.to_s, t("state.#{state}"), 'Status', 'Begleitungen',
+             'Dynamisch aus aktuell Start datum und end datum', zeit],
+      types: types_str,
+      style: style
+    }
+  end
+  [:active, :inactive].each do |state|
+    rows << {
+      data: [state, state.class.to_s, t("state.#{state}"), 'Status', 'Gruppeneinsatz',
+             'Dynamisch aus aktuell Start datum und end datum', zeit],
+      types: types_str,
+      style: style
     }
   end
   Event.kinds.each do |name_key, key|
     rows << {
-      data: [key, key.class.to_s, t("event_kinds.#{name_key}"), 'Art', 'Veranstaltungen'],
-      types: [:integer, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+      data: [key, key.class.to_s, t("event_kinds.#{name_key}"), 'Art', 'Veranstaltungen', '', zeit],
+      types: types_int,
+      style: style
     }
   end
   GroupOffer::OFFER_TYPES.each do |offer_type|
     rows << {
       data: [offer_type, offer_type.class.to_s, t("offer_type.#{offer_type}"),
-             'Internes oder externes Gruppenangebot', 'Gruppenangebote'],
-      types: [:string, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+             'Internes oder externes Gruppenangebot', 'Gruppenangebote', '', zeit],
+      types: types_str,
+      style: style
     }
   end
   GroupOfferCategory::CATEGORY_STATES.each do |state|
     rows << {
       data: [state, state.class.to_s, t("group_offer_categories.index.category_states.#{state}"),
-             'Status', 'GA-Kategorien'],
-      types: [:string, :string, :string, :string, :string],
-      style: [standard_format, standard_format, standard_format, standard_format, standard_format]
+             'Status', 'GA-Kategorien', '', zeit],
+      types: types_str,
+      style: style
     }
   end
 

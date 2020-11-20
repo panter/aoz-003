@@ -1,12 +1,12 @@
 wb.add_worksheet(name: 'Begleitungen') do |sheet|
   columns = [
     'ID',
+    'ID Status',
     'Status',
     'ID Freiwillige/r',
     'Freiwillige/r',
     'ID Klient/in',
     'Klient/in',
-    'Region',
     'Einsatzbeginn',
     'Einsatzende',
     'Einsatzbeginn (in Monaten)',
@@ -18,53 +18,53 @@ wb.add_worksheet(name: 'Begleitungen') do |sheet|
   sheet.add_row(columns, style: header_style, height: 25)
   assignments.each do |assignment|
     data = [
-      assignment.id,                              # 'ID'
-      assignment.active? ? 'Aktiv' : 'Inaktiv',   # 'Status'
-      assignment.volunteer_id,                    # 'ID Freiwillige/r'
-      assignment.volunteer.full_name,             # 'Freiwillige/r'
-      assignment.client_id,                       # 'ID Klient/in'
-      assignment.client.contact.full_name,        # 'Klient/in'
-      'abklaeren. Was?',                          # 'Region'
-      assignment.period_start,                    # 'Einsatzbeginn'
-      assignment.period_end,                      # 'Einsatzende'
-      '',                                         # 'Einsatzbeginn (in Monaten)'
-      '',                                         # 'Einsatzende (in Monaten)'
-      '',                                         # 'Laufzeit (in Mte.)'
-      assignment.probation_period&.to_date || '', # 'Probezeit (nach 1 Mt.)'
-      'was fuer eine zeit ist verlangt?'          # 'Zeit'
+      assignment.id,                                # 'ID'
+      assignment.active_inactive_key,               # 'ID Status'
+      t("state.#{assignment.active_inactive_key}"), # 'Status'
+      assignment.volunteer_id,                      # 'ID Freiwillige/r'
+      assignment.volunteer.full_name,               # 'Freiwillige/r'
+      assignment.client_id,                         # 'ID Klient/in'
+      assignment.client.contact.full_name,          # 'Klient/in'
+      assignment.period_start,                      # 'Einsatzbeginn'
+      assignment.period_end,                        # 'Einsatzende'
+      '',                                           # 'Einsatzbeginn (in Monaten)'
+      '',                                           # 'Einsatzende (in Monaten)'
+      '',                                           # 'Laufzeit (in Mte.)'
+      assignment.probation_period,                  # 'Probezeit (nach 1 Mt.)'
+      zeit                                          # 'Zeit'
     ]
     types = [
       :integer, # 'ID'
+      nil,      # 'ID Status'
       nil,      # 'Status'
       :integer, # 'ID Freiwillige/r'
       nil,      # 'Freiwillige/r'
       :integer, # 'ID Klient/in'
       nil,      # 'Klient/in'
-      nil,      # 'Region'
       nil,      # 'Einsatzbeginn'
       nil,      # 'Einsatzende'
       nil,      # 'Einsatzbeginn (in Monaten)'
       nil,      # 'Einsatzende (in Monaten)'
       nil,      # 'Laufzeit (in Mte.)'
-      nil,      # 'Probezeit (nach 1 Mt.)'
-      nil       # 'Zeit'
+      :time, # 'Probezeit (nach 1 Mt.)'
+      :time # 'Zeit'
     ]
 
     style = [
       standard_format,  # 'ID'
+      standard_format,  # 'ID Status'
       standard_format,  # 'Status'
       standard_format,  # 'ID Freiwillige/r'
       standard_format,  # 'Freiwillige/r'
       standard_format,  # 'ID'
       standard_format,  # 'Klient/in'
-      standard_format,  # 'Region'
       date_format,      # 'Einsatzbeginn'
       date_format,      # 'Einsatzende'
       standard_format,  # 'Einsatzbeginn (in Monaten)'
       standard_format,  # 'Einsatzende (in Monaten)'
       standard_format,  # 'Laufzeit (in Mte.)'
-      date_format,      # 'Probezeit (nach 1 Mt.)'
-      standard_format   # 'Zeit'
+      date_time_format, # 'Probezeit (nach 1 Mt.)'
+      date_time_format  # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end

@@ -39,22 +39,26 @@
 wb.add_worksheet(name: 'Nationalität ISO-Alpha2') do |sheet|
   columns = [
     'ISO Alpha2',
-    'Name (Deutsch)'
+    'Name (Deutsch)',
+    'Zeit'
   ]
-
   sheet.add_row(columns, style: header_style, height: 25)
+
   ISO3166::Country.countries.each do |country|
     data = [
-      country.alpha2,                  # 'ID FW',
-      nationality_name(country.alpha2) # 'Nationalität'
+      country.alpha2,                   # 'ID FW',
+      nationality_name(country.alpha2), # 'Nationalität'
+      zeit                              # 'Zeit'
     ]
     types = [
-      nil,                             # 'ISO Alpha2',
-      nil                              # 'Name (Deutsch)'
+      nil,             # 'ISO Alpha2',
+      nil,             # 'Name (Deutsch)'
+      :time            # 'Zeit'
     ]
     style = [
-      standard_format,                 # 'ID FW',
-      standard_format                  # 'Name (Deutsch)'
+      standard_format, # 'ID FW',
+      standard_format, # 'Name (Deutsch)'
+      date_time_format # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end

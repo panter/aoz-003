@@ -2,28 +2,32 @@ wb.add_worksheet(name: 'Spesenabrechnungen') do |sheet|
   columns = [
     'ID',
     'Betrag',
-    'Datum',
-    'ID Freiwillige/r'
+    'Erstellt am',
+    'ID Freiwillige/r',
+    'Zeit' # report creation time
   ]
   sheet.add_row(columns, style: header_style, height: 25)
   billing_expenses.each do |billing_expense|
     data = [
-      billing_expense.id,                  # 'ID'
-      billing_expense.amount,              # 'Betrag'
-      billing_expense.created_at.to_date,  # 'Datum'
-      billing_expense.volunteer_id         # 'ID Freiwillige/r'
+      billing_expense.id,           # 'ID'
+      billing_expense.amount,       # 'Betrag'
+      billing_expense.created_at,   # 'Erstellt am'
+      billing_expense.volunteer_id, # 'ID Freiwillige/r'
+      zeit                          # 'Zeit'
     ]
     types = [
       :integer, # 'ID'
       nil,      # 'Betrag'
-      nil,      # 'Datum'
-      :integer  # 'ID Freiwillige/r'
+      :time,    # 'Erstellt am'
+      :integer, # 'ID Freiwillige/r'
+      :time     # 'Zeit'
     ]
     style = [
       standard_format,  # 'ID'
       standard_format,  # 'Betrag'
-      standard_format,  # 'Datum'
-      standard_format   # 'ID Freiwillige/r'
+      date_time_format, # 'Erstellt am'
+      standard_format,  # 'ID Freiwillige/r'
+      date_time_format  # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end

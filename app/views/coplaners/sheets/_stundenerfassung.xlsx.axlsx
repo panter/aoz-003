@@ -1,53 +1,57 @@
 wb.add_worksheet(name: 'Stundenerfassung') do |sheet|
   columns = [
     'ID',
-    'Freiwillige ID',
+    'ID Freiwillige/r',
     'Anzahl Stunden',
     'Stunden Für (Polymorph)',
-    'Gruppenangebot ID',
-    'Begleitung ID',
-    'Spesenabrechnung ID',
+    'ID Einsatz (Polymorph)',
+    'ID Gruppenangebot',
+    'ID Begleitung',
+    'ID Spesenabrechnung',
     'Datum Treffen',
-    'Datum Eingetragen',
+    'Eingetragen am',
     'Zeit'
   ]
   sheet.add_row(columns, style: header_style, height: 25)
   hours.each do |hour|
     data = [
-      hour.id,                                   # ID'
-      hour.volunteer_id,                         # 'Freiwillige ID'
+      hour.id,                                   # 'ID'
+      hour.volunteer_id,                         # 'ID Freiwillige/r'
       hour.hours,                                # 'Anzahl Stunden''
-      t_model(hour.hourable),                    # Stunden Für (Polymorph)'
-      hour.group_offer? ? hour.hourable_id : '', # 'Gruppenangebot ID'
-      hour.assignment? ? hour.hourable_id : '',  # 'Begleitung ID'
-      hour.billing_expense_id,                   # 'Spesenabrechnung ID'
+      t_model(hour.hourable),                    # 'Stunden Für (Polymorph)'
+      hour.hourable_id,                          # 'ID Einsatz (Polymorph)'
+      hour.group_offer? ? hour.hourable_id : '', # 'ID Gruppenangebot'
+      hour.assignment? ? hour.hourable_id : '',  # 'ID Begleitung'
+      hour.billing_expense_id,                   # 'ID Spesenabrechnung'
       hour.meeting_date,                         # 'Datum Treffen'
-      hour.created_at.to_date,                   # 'Datum Eingetragen'
-      ''                                         # 'Zeit'
+      hour.created_at.to_date,                   # 'Eingetragen am'
+      zeit                                       # 'Zeit'
     ]
     types = [
-      :integer,         # ID'
-      :integer,         # 'Freiwillige ID'
-      nil,              # 'Anzahl Stunden'
-      nil,              # Stunden Für (Polymorph)'
-      nil,              # 'Gruppenangebot ID'
-      nil,              # 'Begleitung ID'
-      :integer,         # 'Spesenabrechnung ID'
-      nil,              # 'Datum Treffen'
-      nil,              # 'Datum Eingetragen'
-      nil               # 'Zeit'
+      :integer, # 'ID'
+      :integer, # 'ID Freiwillige/r'
+      nil,      # 'Anzahl Stunden'
+      nil,      # 'Stunden Für (Polymorph)'
+      nil,      # 'ID Einsatz (Polymorph)'
+      nil,      # 'ID Gruppenangebot'
+      nil,      # 'ID Begleitung'
+      :integer, # 'ID Spesenabrechnung'
+      nil,      # 'Datum Treffen'
+      :time,    # 'Eingetragen am'
+      :time     # 'Zeit'
     ]
     style = [
-      standard_format,  # ID'
-      standard_format,  # 'Freiwillige ID'
+      standard_format,  # 'ID'
+      standard_format,  # 'ID Freiwillige/r'
       standard_format,  # 'Anzahl Stunden'
-      standard_format,  # Stunden Für (Polymorph)'
-      standard_format,  # 'Gruppenangebot ID'
-      standard_format,  # 'Begleitung ID'
-      standard_format,  # 'Spesenabrechnung ID'
+      standard_format,  # 'Stunden Für (Polymorph)'
+      standard_format,  # 'ID Einsatz (Polymorph)'
+      standard_format,  # 'ID Gruppenangebot'
+      standard_format,  # 'ID Begleitung'
+      standard_format,  # 'ID Spesenabrechnung'
       date_format,      # 'Datum Treffen'
-      date_format,      # 'Datum Eingetragen'
-      standard_format   # 'Zeit'
+      date_time_format, # 'Eingetragen am'
+      date_time_format  # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end

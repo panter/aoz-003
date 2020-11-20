@@ -16,6 +16,7 @@ class Volunteer < ApplicationRecord
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
+  SALUTATION_GENDER_MAP = { mrs: :female, mr: :male }.freeze
   HOW_HAVE_YOU_HEARD_OF_AOZS = [:internet_research, :friends, :announcment, :flyer].freeze
 
   enum acceptance: { undecided: 0, invited: 1, accepted: 2, rejected: 3, resigned: 4 }
@@ -385,6 +386,10 @@ class Volunteer < ApplicationRecord
     active_assignments? || active_groups?
   end
 
+  def active_inactive_key
+    active? ? :active : :inactive
+  end
+
   def active_assignments?
     accepted? && assignments.active.any?
   end
@@ -542,6 +547,14 @@ class Volunteer < ApplicationRecord
     GroupOfferCategory.active.map do |group|
       { title: group.category_name, value: group_offer_categories.include?(group) }
     end
+  end
+
+  def gender
+    SALUTATION_GENDER_MAP[salutation.to_sym]
+  end
+
+  def gender_t
+    I18n.t("activerecord.attributes.volunteer.genders.#{gender}")
   end
 
   def to_s

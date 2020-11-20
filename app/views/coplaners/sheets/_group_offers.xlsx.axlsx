@@ -29,13 +29,13 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
       t("offer_type.#{group_offer.offer_type}"),       # 'Internes oder externes Gruppenangebot'
       group_offer.department.id,                       # 'ID Standort'
       group_offer.department&.contact&.last_name,      # 'Standort'
-      group_offer.created_at.to_date,                  # 'Erstellt am'
+      group_offer.created_at,                          # 'Erstellt am'
       group_offer.period_start,                        # 'Startdatum'
       group_offer.period_end,                          # 'Angebotsenddatum'
       group_offer.terminated?,                         # 'Beendet'
       '',                                              # 'Dauer in Monaten'
       '',                                              # 'Einsatz'
-      ''                                               # 'Zeit'
+      zeit # 'Zeit'
     ]
     types = [
       :integer,  # 'ID'
@@ -47,12 +47,12 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
       nil,       # 'Internes oder externes Gruppenangebot'
       :integer,  # 'ID Standort'
       nil,       # 'Standort'
-      nil,       # 'Erstellt am'
+      :time, # 'Erstellt am'
       nil,       # 'Startdatum'
       nil,       # 'Angebotsenddatum'
       nil,       # 'Dauer in Monaten'
       nil,       # 'Einsatz'
-      nil        # 'Zeit'
+      :time      # 'Zeit'
     ]
 
     style = [
@@ -65,12 +65,12 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
       standard_format,  # 'Internes oder externes Gruppenangebot'
       standard_format,  # 'ID Standort'
       standard_format,  # 'Standort'
-      date_format,      # 'Erstellt am'
+      date_time_format, # 'Erstellt am'
       date_format,      # 'Startdatum'
       date_format,      # 'Angebotsenddatum'
       standard_format,  # 'Dauer in Monaten'
       standard_format,  # 'Einsatz'
-      standard_format   # 'Zeit'
+      date_time_format # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end

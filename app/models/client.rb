@@ -12,7 +12,8 @@ class Client < ApplicationRecord
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
   PERMITS = [:N, :B, :'B-FL', :'F-FL', :'F-A', :C, :CH].freeze
-  SALUTATIONS = [:mrs, :mr, :family].freeze
+  SALUTATIONS = (Volunteer::SALUTATIONS + [:family]).freeze
+  SALUTATION_GENDER_MAP = Volunteer::SALUTATION_GENDER_MAP.merge(family: :family).freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'clients'
@@ -112,6 +113,14 @@ class Client < ApplicationRecord
     cost_units.keys.map(&:to_sym)
   end
 
+  def gender
+    SALUTATION_GENDER_MAP[salutation.to_sym]
+  end
+
+  def gender_t
+    I18n.t("activerecord.attributes.client.genders.#{gender}")
+  end
+
   def to_s
     contact.full_name
   end
@@ -133,6 +142,10 @@ class Client < ApplicationRecord
 
   def active?
     accepted? && assignments.active.any?
+  end
+
+  def active_inactive_key
+    active? ? :active : :inactive
   end
 
   def inactive?

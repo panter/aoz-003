@@ -1,4 +1,4 @@
-wb.add_worksheet(name: 'Matching GA und FW') do |sheet|
+wb.add_worksheet(name: 'Gruppeneinsatz') do |sheet|
   columns = [
     'ID',
     'ID Gruppenangebot',
@@ -6,6 +6,7 @@ wb.add_worksheet(name: 'Matching GA und FW') do |sheet|
     'Erstellt am',
     'Startdatum',
     'Enddatum',
+    'ID Status',
     'Status',
     'Zeit'
   ]
@@ -15,31 +16,34 @@ wb.add_worksheet(name: 'Matching GA und FW') do |sheet|
       group_assignment.id,                                # ID
       group_assignment.group_offer.id,                    # 'ID Gruppenangebot'
       group_assignment.volunteer.id,                      # 'ID Freiwillige/r'
-      group_assignment.created_at.to_date,                # 'Erstellt am'
+      group_assignment.created_at,                        # 'Erstellt am'
       group_assignment.period_start,                      # 'Startdatum'
       group_assignment.period_end,                        # 'Enddatum'
-      group_assignment.terminated? ? 'Beendet' : 'Aktiv', # 'Status'
-      '?'                                                 # 'Zeit'
+      group_assignment.active_inactive_key,               # 'ID Status'
+      t("state.#{group_assignment.active_inactive_key}"), # 'Status'
+      zeit                                                # 'Zeit'
     ]
     types = [
-      :integer,        # ID
-      :integer,        # 'ID Gruppenangebot'
-      :integer,        # 'ID Freiwillige/r'
-      nil,             # 'Erstellt am'
-      nil,             # 'Startdatum'
-      nil,             # 'Enddatum'
-      nil,             # 'Status'
-      nil              # 'Zeit'
+      :integer, # ID
+      :integer, # 'ID Gruppenangebot'
+      :integer, # 'ID Freiwillige/r'
+      :time,    # 'Erstellt am'
+      nil,      # 'Startdatum'
+      nil,      # 'Enddatum'
+      nil,      # 'ID Status'
+      nil,      # 'Status'
+      :time     # 'Zeit'
     ]
     style = [
-      standard_format, # ID
-      standard_format, # 'ID Gruppenangebot'
-      standard_format, # 'ID Freiwillige/r'
-      date_format,     # 'Erstellt am'
-      date_format,     # 'Startdatum'
-      date_format,     # 'Enddatum'
-      standard_format, # 'Status'
-      standard_format  # 'Zeit'
+      standard_format,  # ID
+      standard_format,  # 'ID Gruppenangebot'
+      standard_format,  # 'ID Freiwillige/r'
+      date_time_format, # 'Erstellt am'
+      date_format,      # 'Startdatum'
+      date_format,      # 'Enddatum'
+      standard_format,  # 'ID Status'
+      standard_format,  # 'Status'
+      date_time_format  # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end

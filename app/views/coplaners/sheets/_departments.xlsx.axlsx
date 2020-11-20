@@ -3,28 +3,31 @@ wb.add_worksheet(name: 'Standorte') do |sheet|
     'ID',
     'Name',
     'Strasse',
-    'PLZ'
-
+    'PLZ',
+    'Zeit'
   ]
   sheet.add_row(columns, style: header_style, height: 25)
   departments.each do |department|
     data = [
-      department.id,                 # ID'
-      department.contact.last_name,  # 'Name'
-      department.contact.street,     # 'Strasse'
-      department.contact.postal_code # 'PLZ'
+      department.id,                  # ID'
+      department.contact.last_name,   # 'Name'
+      department.contact.street,      # 'Strasse'
+      department.contact.postal_code, # 'PLZ'
+      zeit                            # 'Zeit'
     ]
     types = [
       :integer, # ID'
       nil,      # 'Name'
       nil,      # 'Strasse'
-      nil       # 'PLZ'
+      nil,      # 'PLZ'
+      :time     # 'Zeit'
     ]
     style = [
       standard_format, # ID'
       standard_format, # 'Name'
       standard_format, # 'Strasse'
-      standard_format  # 'PLZ'
+      standard_format, # 'PLZ'
+      date_time_format # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end

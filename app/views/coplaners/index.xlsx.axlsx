@@ -19,6 +19,11 @@ default_locals = {
     format_code: 'hh:mm',
     width: :auto_fit
   ),
+  date_time_format: wb.styles.add_style(
+    alignment: { horizontal: :left, vertical: :top },
+    format_code: 'dd.mm.yyyy hh:mm',
+    width: :auto_fit
+  ),
   header_style: wb.styles.add_style(
     bg_color: 'FFDFDEDF',
     b: true,
@@ -29,7 +34,7 @@ default_locals = {
   wrapped_style: wb.styles.add_style(
     alignment: { wrap_text: true, horizontal: :left, vertical: :top }
   ),
-  render_time: Time.zone.now,
+  zeit: Time.zone.now,
   col_alpha_indexes: ('A'..'Z').to_a + ('A'..'Z').to_a.map { |letter| "A#{letter}" }
 }
 
@@ -47,8 +52,6 @@ render partial: 'coplaners/sheets/assignments',
        locals: default_locals.merge(assignments: @assignments)
 render partial: 'coplaners/sheets/group_offers',
        locals: default_locals.merge(group_offers: @group_offers)
-# render partial: 'coplaners/sheets/group_assignments',
-#        locals: default_locals.merge(group_assignments: @group_assignments)
 render partial: 'coplaners/sheets/matching_ga_fw',
        locals: default_locals.merge(group_assignments: @group_assignments)
 render partial: 'coplaners/sheets/stundenerfassung',
@@ -59,3 +62,6 @@ render partial: 'coplaners/sheets/weiterbildung',
        locals: default_locals.merge(events: @events, event_volunteers: @event_volunteers)
 render partial: 'coplaners/sheets/departments',
        locals: default_locals.merge(departments: @departments)
+
+# render partial: 'coplaners/sheets/group_assignments',
+#        locals: default_locals.merge(group_assignments: @group_assignments)
