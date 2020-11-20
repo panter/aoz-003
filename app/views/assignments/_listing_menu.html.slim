@@ -1,19 +1,24 @@
 nav.navbar.section-navigation.hidden-print
   hr
   ul.list-unstyled
-    li.li-search-form
+    li.search-form
       = search_form_for @q do |f|
-        = f.search_field :volunteer_contact_full_name_cont, class: 'search-field',
-          data: { autocomplete: volunteer_search_assignments_path }, autofocus: true,
+        = f.search_field :volunteer_contact_full_name_cont,
+          class: 'search-field-autocomplete',
+          data: { autocomplete: volunteer_search_assignments_path },
+          autofocus: true,
           placeholder: 'Freiwillige Suchen'
-        = f.submit 'Freiwillige Suchen', class: 'search-submit'
+        = f.submit 'Freiwillige Suchen', class: 'btn btn-default'
+
   ul.list-unstyled
-    li.li-search-form
+    li.search-form
       = search_form_for @q do |f|
-        = f.search_field :client_contact_full_name_cont, class: 'search-field',
-          data: { autocomplete: client_search_assignments_path }, autofocus: true,
+        = f.search_field :client_contact_full_name_cont,
+          class: 'search-field-autocomplete',
+          data: { autocomplete: client_search_assignments_path },
           placeholder: 'Klient/innen Suchen'
-        = f.submit 'Klient/innen Suchen', class: 'search-submit'
+        = f.submit 'Klient/innen Suchen'
+
   ul.list-inline
     li= clear_filter_button
     = custom_filter_dropdown('Status',

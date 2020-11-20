@@ -32,17 +32,17 @@ class SemesterProcessVolunteer < ApplicationRecord
   validates_associated :hours, :semester_feedbacks, :volunteer
 
   scope :without_reminders, lambda { |semester|
-    joins(:semester_process).where(semester_process: semester).joins(:semester_process_mails).where("semester_process_mails.kind = 0")
+    joins(:semester_process).where(semester_process: semester).joins(:semester_process_mails).where('semester_process_mails.kind = 0')
   }
 
   scope :active_missions, lambda {
     joins(:semester_process_volunteer_missions).includes(semester_process_volunteer_missions: [:assignment, :group_assignment])
-    .where("(semester_process_volunteer_missions.assignment_id IS NOT NULL AND
+      .where("(semester_process_volunteer_missions.assignment_id IS NOT NULL AND
             assignments.period_end IS NULL)
             OR
            (semester_process_volunteer_missions.group_assignment_id IS NOT NULL AND
            group_assignments.period_end is NULL)")
-    .references(:assignments, :group_assignments)
+      .references(:assignments, :group_assignments)
   }
 
   scope :index_scope, lambda { |semester = nil|
@@ -50,7 +50,7 @@ class SemesterProcessVolunteer < ApplicationRecord
   }
 
   scope :without_feedback, lambda {
-    left_outer_joins(:semester_feedbacks).where(semester_feedbacks: { id: nil})
+    left_outer_joins(:semester_feedbacks).where(semester_feedbacks: { id: nil })
   }
 
   scope :unsubmitted, -> { where(commited_at: nil) }

@@ -14,7 +14,9 @@ class ClientsController < ApplicationController
     @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @clients = @q.result
     respond_to do |format|
-      format.xlsx
+      format.xlsx do
+        render xlsx: 'index', filename: "KlientInnen_#{Time.zone.now.strftime('%Y-%m-%dT%H%M%S')}"
+      end
       format.html do
         @clients = @clients.paginate(page: params[:page], per_page: params[:print] && @clients.size)
       end
@@ -23,7 +25,8 @@ class ClientsController < ApplicationController
 
   def search
     authorize Client
-    @q = policy_scope(Client).ransack contact_full_name_cont: params[:term]
+    @q = policy_scope(Client).ransack params[:q]
+    @q.sorts = ['acceptance asc']
     @clients = @q.result distinct: true
     respond_to do |format|
       format.json
@@ -144,5 +147,4 @@ class ClientsController < ApplicationController
       contact_attributes, availability_attributes
     )
   end
-
 end

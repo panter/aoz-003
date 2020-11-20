@@ -123,7 +123,6 @@ SimpleForm.setup do |config|
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
-
   config.wrappers :date_picker_inline, tag: 'div', class: 'date form_datetime input-date-picker field-wrapper-inline', error_class: 'has-error' do |b|
     b.use :html5
     b.optional :readonly

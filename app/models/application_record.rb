@@ -59,4 +59,10 @@ class ApplicationRecord < ActiveRecord::Base
   def self.enum_collection(enum_field)
     public_send(enum_field.to_s.pluralize).keys.map(&:to_sym)
   end
+
+  def self.ext_mimes(*extensions)
+    extensions.flat_map do |ext|
+      MIME::Types.select { |type| type.extensions.include?(ext.to_s) }
+    end.map(&:to_s)
+  end
 end

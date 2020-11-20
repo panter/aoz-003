@@ -102,6 +102,7 @@ class GroupOffer < ApplicationRecord
     started_before = group_assignments.start_before(start_date)
     return true if started_within.size == group_assignments.size
     return true unless started_before.any?
+
     false
   end
 

@@ -1,13 +1,14 @@
 source 'https://rubygems.org'
+ruby '2.6.6'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '>= 5.2.0', '< 6.0.0'
+gem 'rails', '>= 6.0.0', '< 6.1.0'
 
-gem 'autocomplete_rails'
+gem 'active_storage_validations'
 gem 'bootsnap', require: false
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
@@ -23,14 +24,17 @@ gem 'country_select'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise_invitable'
+gem 'factory_bot_rails'
+gem 'ffaker'
+gem 'google-cloud-storage', '~> 1.11', require: false
 gem 'i18n_data'
 gem 'i18n_rails_helpers'
+gem 'image_processing'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'js-routes'
 gem 'lodash-rails'
-gem 'mdb'
 gem 'panter-rails-deploy'
 gem 'paperclip'
 gem 'paranoia'
@@ -47,13 +51,14 @@ gem 'simple_form'
 gem 'slim-rails'
 gem 'sprockets-es6'
 gem 'uglifier'
+gem 'webdrivers', '~> 4.0'
+gem 'webpacker'
 gem 'wicked_pdf'
 gem 'will-paginate-i18n'
 gem 'will_paginate'
 gem 'wkhtmltopdf-binary'
 
 group :development do
-  gem 'awesome_print', require: false
   gem 'debase', require: false
   gem 'debride', require: false
   gem 'fasterer', require: false
@@ -68,18 +73,17 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'ruby-debug-ide', require: false
   gem 'ruby-lint', require: false
-  gem 'scss_lint', require: false
 end
 
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_callers'
-  gem 'factory_bot_rails'
-  gem 'ffaker'
+  gem 'hirb'
+  gem 'hirb-unicode-steakknife', require: 'hirb-unicode'
   gem 'listen'
   gem 'pdf-reader'
   gem 'pry-byebug'
-  gem 'pry-rails'
+  gem 'pry-stack_explorer'
   gem 'spring'
 end
 
@@ -91,5 +95,4 @@ group :test do
   gem 'policy-assertions'
   gem 'roo'
   gem 'selenium-webdriver'
-  gem 'webdrivers', '~> 4.0'
 end

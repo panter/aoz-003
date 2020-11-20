@@ -35,10 +35,19 @@ class UserSearchesTest < ApplicationSystemTestCase
   # with this test we check if the suggestions are correct, we don't check
   # what happens in the body section,
   # because travis selects somehow the first  suggestion and then we run into errors.
-  # test 'enter_search_text_brings_suggestions' do
-  #   fill_autocomplete 'q[full_name_cont]', with: 'Whi', items_expected: 2,
-  #     check_item: [@superadmin.full_name, @social_worker.full_name]
-  # end
+  test 'enter_search_text_brings_suggestions' do
+    fill_in name: 'q[full_name_cont]', with: 'Whi'
+    wait_for_ajax
+    within '.autocomplete-suggestions' do
+      assert_text "#{@superadmin.full_name}; #{@superadmin.email}"\
+                  " - #{I18n.t("role.#{@superadmin.role}")}",
+                  normalize_ws: true
+      refute_text "#{@volunteer.full_name}; #{@volunteer.email}"\
+                  " - #{I18n.t("role.#{@volunteer.role}")}",
+                  normalize_ws: true,
+                  wait: 0
+    end
+  end
 
   test 'user with no profile is searchable with email' do
     fill_in name: 'q[full_name_cont]', with: 'saul'
@@ -46,9 +55,7 @@ class UserSearchesTest < ApplicationSystemTestCase
     find_field(name: 'q[full_name_cont]').native.send_keys(:tab, :enter)
 
     within 'tbody' do
-      assert_equal @department_manager.email, 'better_call_saul@good.man'
-      assert page.has_link? @department_manager.email
-
+      assert_link @department_manager.email
       refute_text @superadmin.full_name, wait: 0
       refute_text @social_worker.full_name, wait: 0
       refute_text @volunteer.full_name, wait: 0

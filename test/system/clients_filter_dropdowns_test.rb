@@ -134,7 +134,7 @@ class ClientsFilterDropdownsTest < ApplicationSystemTestCase
     Assignment.destroy_all
     create :volunteer
     client_with_language_skills = create :client, :with_language_skills,
-      age_request: 'age_young', gender_request: 'woman'
+                                         age_request: 'age_young', gender_request: 'woman'
 
     login_as @user
     visit volunteers_path

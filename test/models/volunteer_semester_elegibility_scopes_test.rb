@@ -40,7 +40,7 @@ class VolunteerSemesterElegibilityScopesTest < ActiveSupport::TestCase
   test 'volunteer with started assignment is in have_mission' do
     @assignment.update(period_start: 6.months.ago)
     query = Volunteer.have_mission
-    assert query.include? @volunteer
+    assert_includes query, @volunteer
     assert_not query.include? @volunteer2
     assert_not query.include? @volunteer3
   end
@@ -48,7 +48,7 @@ class VolunteerSemesterElegibilityScopesTest < ActiveSupport::TestCase
   test 'volunteer with started group_assignment is in have_mission' do
     @group_assignment.update(period_start: 6.months.ago)
     query = Volunteer.have_mission
-    assert query.include? @volunteer
+    assert_includes query, @volunteer
     assert_not query.include? @volunteer2
     assert_not query.include? @volunteer3
   end
@@ -58,8 +58,8 @@ class VolunteerSemesterElegibilityScopesTest < ActiveSupport::TestCase
     @group_assignment2.update(period_start: 6.months.ago)
     @assignment2.update(period_start: 6.months.ago)
     query = Volunteer.have_mission
-    assert query.include? @volunteer
-    assert query.include? @volunteer2
+    assert_includes query, @volunteer
+    assert_includes query, @volunteer2
     assert_not query.include? @volunteer3
   end
 
@@ -73,8 +73,8 @@ class VolunteerSemesterElegibilityScopesTest < ActiveSupport::TestCase
     @assignment3.update(period_start: @semester.previous.end.advance(weeks: -2))
 
     query = Volunteer.active_semester_mission(@semester.previous)
-    assert query.include? @volunteer
-    assert query.include? @volunteer2
+    assert_includes query, @volunteer
+    assert_includes query, @volunteer2
     assert_not query.include? @volunteer3
     assert_not query.include? @volunteer4
   end
@@ -85,8 +85,8 @@ class VolunteerSemesterElegibilityScopesTest < ActiveSupport::TestCase
     @group_assignment3.update(period_start: @semester.previous.end.advance(weeks: -2))
 
     query = Volunteer.active_semester_mission(@semester.previous)
-    assert query.include? @volunteer
-    assert query.include? @volunteer2
+    assert_includes query, @volunteer
+    assert_includes query, @volunteer2
     assert_not query.include? @volunteer3
     assert_not query.include? @volunteer4
   end
@@ -101,8 +101,8 @@ class VolunteerSemesterElegibilityScopesTest < ActiveSupport::TestCase
     @group_assignment3.update(period_start: @semester.previous.end.advance(weeks: -2))
 
     query = Volunteer.active_semester_mission(@semester.previous)
-    assert query.include? @volunteer
-    assert query.include? @volunteer2
+    assert_includes query, @volunteer
+    assert_includes query, @volunteer2
     assert_not query.include? @volunteer3
     assert_not query.include? @volunteer4
   end
@@ -113,15 +113,15 @@ class VolunteerSemesterElegibilityScopesTest < ActiveSupport::TestCase
     create_semester_processes
 
     query = Volunteer.have_semester_process(@semester.previous)
-    assert query.include? @volunteer
+    assert_includes query, @volunteer
     assert_not query.include? @volunteer2
-    assert query.include? @volunteer3
+    assert_includes query, @volunteer3
     assert_not query.include? @volunteer4
 
     query = Volunteer.have_semester_process(@semester.previous(2))
     assert_not query.include? @volunteer
-    assert query.include? @volunteer2
-    assert query.include? @volunteer3
+    assert_includes query, @volunteer2
+    assert_includes query, @volunteer3
     assert_not query.include? @volunteer4
   end
 
@@ -132,15 +132,15 @@ class VolunteerSemesterElegibilityScopesTest < ActiveSupport::TestCase
 
     query = Volunteer.semester_process_eligible(@semester.previous)
     assert_not query.include? @volunteer
-    assert query.include? @volunteer2
+    assert_includes query, @volunteer2
     assert_not query.include? @volunteer3
-    assert query.include? @volunteer4
+    assert_includes query, @volunteer4
 
     query = Volunteer.semester_process_eligible(@semester.previous(2))
-    assert query.include? @volunteer
+    assert_includes query, @volunteer
     assert_not query.include? @volunteer2
     assert_not query.include? @volunteer3
-    assert query.include? @volunteer4
+    assert_includes query, @volunteer4
   end
 
   def create_semester_processes

@@ -26,10 +26,10 @@ class CertificatesTest < ApplicationSystemTestCase
     assert page.has_field? 'Stunden', with: 2.0
     click_button 'Weitere Felder anpassen'
     assert page.has_field? 'Name', with: @volunteer.contact.full_name
-    assert page.find_field('Strasse').value.include? @volunteer.contact.street
-    assert page.find_field('Ort').value.include? @volunteer.contact.city
-    assert page.find_field('Funktion').value.include? 'Förderung der sozialen und beruflichen Integ'
-    assert page.find_field('Institution').value.include? '**AOZ** Zürich, Flüelastrasse 32, 8047'
+    assert_includes page.find_field('Strasse').value, @volunteer.contact.street
+    assert_includes page.find_field('Ort').value, @volunteer.contact.city
+    assert_includes page.find_field('Funktion').value, 'Förderung der sozialen und beruflichen Integ'
+    assert_includes page.find_field('Institution').value, '**AOZ** Zürich, Flüelastrasse 32, 8047'
     page.find_button('Nachweis erfassen').click
     assert page.has_text? 'AOZ Zürich, Flüelastrasse 32, 8047'
     assert page.has_text? @volunteer.contact.full_name

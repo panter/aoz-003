@@ -49,95 +49,95 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     created200 = make_volunteer nil, created_at: @today - 200
     created100 = make_volunteer nil, created_at: @today - 100
     query = Volunteer.created_between(@today - 201, @today - 199)
-    refute query.include? created100
-    assert query.include? created200
+    refute_includes query, created100
+    assert_includes query, created200
     query = Volunteer.created_between(@today - 201, @today - 99)
-    assert query.include? created100
-    assert query.include? created200
+    assert_includes query, created100
+    assert_includes query, created200
     query = Volunteer.created_between(@today - 10, @today - 1)
-    refute query.include? created100
-    refute query.include? created200
+    refute_includes query, created100
+    refute_includes query, created200
   end
 
   test 'has_assignments returns only the ones that have assignments' do
     query = Volunteer.with_assignments.distinct
-    assert query.include? @has_assignment
-    assert query.include? @has_multiple
-    assert query.include? @has_inactive
-    refute query.include? @no_assignment
-    refute query.include? @group_offer_member
+    assert_includes query, @has_assignment
+    assert_includes query, @has_multiple
+    assert_includes query, @has_inactive
+    refute_includes query, @no_assignment
+    refute_includes query, @group_offer_member
   end
 
   test 'with_active_assignments returns only volunteers that have active assignments' do
     query = Volunteer.with_active_assignments.distinct
-    assert query.include? @has_assignment
-    assert query.include? @has_multiple
-    assert query.include? @has_active_and_inactive
-    refute query.include? @has_inactive
-    refute query.include? @no_assignment
-    refute query.include? @group_offer_member
+    assert_includes query, @has_assignment
+    assert_includes query, @has_multiple
+    assert_includes query, @has_active_and_inactive
+    refute_includes query, @has_inactive
+    refute_includes query, @no_assignment
+    refute_includes query, @group_offer_member
   end
 
   test 'with_active_assignments_between returns volunteers with active assignments in date range' do
     query = Volunteer.with_active_assignments_between(@today - 16, @today - 8)
-    assert query.include? @has_assignment
-    assert query.include? @has_multiple
-    refute query.include? @has_inactive
-    refute query.include? @no_assignment
-    refute query.include? @group_offer_member
+    assert_includes query, @has_assignment
+    assert_includes query, @has_multiple
+    refute_includes query, @has_inactive
+    refute_includes query, @no_assignment
+    refute_includes query, @group_offer_member
   end
 
   test 'without_assignment returns volunteers with no assignments' do
     query = Volunteer.without_assignment
-    refute query.include? @has_assignment
-    refute query.include? @has_multiple
-    refute query.include? @has_inactive
-    assert query.include? @no_assignment
-    assert query.include? @group_offer_member
+    refute_includes query, @has_assignment
+    refute_includes query, @has_multiple
+    refute_includes query, @has_inactive
+    assert_includes query, @no_assignment
+    assert_includes query, @group_offer_member
   end
 
   test 'not_in_any_group_offer returns volunteers not in group offer (as members)' do
     query = Volunteer.not_in_any_group_offer
-    assert query.include? @has_assignment
-    assert query.include? @has_multiple
-    assert query.include? @has_inactive
-    assert query.include? @no_assignment
-    refute query.include? @group_offer_member
+    assert_includes query, @has_assignment
+    assert_includes query, @has_multiple
+    assert_includes query, @has_inactive
+    assert_includes query, @no_assignment
+    refute_includes query, @group_offer_member
   end
 
   test 'will_take_more_assignments selects only active volunteers that take more' do
     query = Volunteer.will_take_more_assignments
-    assert query.include? @active_will_take_more
-    assert query.include? @inactive_will_take_more
-    refute query.include? @has_assignment
+    assert_includes query, @active_will_take_more
+    assert_includes query, @inactive_will_take_more
+    refute_includes query, @has_assignment
   end
 
   test 'seeking clients shows only volunteers with no active assignments' do
     undecided_no_assignment = make_volunteer nil, acceptance: :undecided
     query = Volunteer.seeking_clients
-    refute query.include? @has_active_and_inactive
-    assert query.include? @has_inactive
-    refute query.include? @resigned_inactive
-    refute query.include? @resigned_active
-    refute query.include? @has_multiple
-    assert query.include? @inactive_will_take_more
-    refute query.include? @active_will_take_more
-    assert query.include? @no_assignment
-    refute query.include? undecided_no_assignment
+    refute_includes query, @has_active_and_inactive
+    assert_includes query, @has_inactive
+    refute_includes query, @resigned_inactive
+    refute_includes query, @resigned_active
+    refute_includes query, @has_multiple
+    assert_includes query, @inactive_will_take_more
+    refute_includes query, @active_will_take_more
+    assert_includes query, @no_assignment
+    refute_includes query, undecided_no_assignment
   end
 
   test 'seeking_clients_will_take_more only returns accepted volunteers that fullfill all criteria' do
     undecided_no_assignment = make_volunteer nil, acceptance: :undecided
     query = Volunteer.seeking_clients_will_take_more
-    refute query.include? @has_active_and_inactive
-    assert query.include? @has_inactive
-    refute query.include? @resigned_inactive
-    refute query.include? @resigned_active
-    refute query.include? @has_multiple
-    assert query.include? @inactive_will_take_more
-    assert query.include? @active_will_take_more
-    assert query.include? @no_assignment
-    refute query.include? undecided_no_assignment
+    refute_includes query, @has_active_and_inactive
+    assert_includes query, @has_inactive
+    refute_includes query, @resigned_inactive
+    refute_includes query, @resigned_active
+    refute_includes query, @has_multiple
+    assert_includes query, @inactive_will_take_more
+    assert_includes query, @active_will_take_more
+    assert_includes query, @no_assignment
+    refute_includes query, undecided_no_assignment
   end
 
   test 'created_before' do
@@ -146,8 +146,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     created_after = create :volunteer
     created_after.update(created_at: 10.days.ago)
     query = Volunteer.created_before(50.days.ago)
-    assert query.include? created_before
-    refute query.include? created_after
+    assert_includes query, created_before
+    refute_includes query, created_after
   end
 
   test 'created_after' do
@@ -157,8 +157,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     created_after = create :volunteer
     created_after.update(created_at: 10.days.ago)
     query = Volunteer.created_after(50.days.ago)
-    refute query.include? created_before
-    assert query.include? created_after
+    refute_includes query, created_before
+    assert_includes query, created_after
   end
 
   test 'with_group_assignments' do
@@ -167,8 +167,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     create_group_assignments(create(:group_offer), 100.days.ago, nil, volunteer_with_ga)
     volunteer_without_ga = create :volunteer
     query = Volunteer.with_group_assignments
-    assert query.include? volunteer_with_ga
-    refute query.include? volunteer_without_ga
+    assert_includes query, volunteer_with_ga
+    refute_includes query, volunteer_without_ga
   end
 
   test 'without_group_assignments' do
@@ -177,8 +177,8 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     create_group_assignments(create(:group_offer), 100.days.ago, nil, volunteer_with_ga)
     volunteer_without_ga = create :volunteer
     query = Volunteer.without_group_assignments
-    refute query.include? volunteer_with_ga
-    assert query.include? volunteer_without_ga
+    refute_includes query, volunteer_with_ga
+    assert_includes query, volunteer_without_ga
   end
 
   test 'with_active_group_assignments_between' do
@@ -201,30 +201,30 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     create_group_assignments(create(:group_offer), 39.days.ago, 31.days.ago, started_within_end_within)
 
     query = Volunteer.with_active_group_assignments_between(40.days.ago, 30.days.ago)
-    assert query.include? started_before_end_after
-    assert query.include? started_before_no_end
-    assert query.include? started_within_end_after
-    refute query.include? started_after_no_end
-    refute query.include? started_before_ended_before
-    assert query.include? started_before_end_within
-    refute query.include? started_after_end_after
-    assert query.include? started_within_end_within
+    assert_includes query, started_before_end_after
+    assert_includes query, started_before_no_end
+    assert_includes query, started_within_end_after
+    refute_includes query, started_after_no_end
+    refute_includes query, started_before_ended_before
+    assert_includes query, started_before_end_within
+    refute_includes query, started_after_end_after
+    assert_includes query, started_within_end_within
   end
 
   test 'external' do
     external = create :volunteer, external: true
     internal = create :volunteer, external: false
     query = Volunteer.external
-    assert query.include? external
-    refute query.include? internal
+    assert_includes query, external
+    refute_includes query, internal
   end
 
   test 'internal' do
     external = create :volunteer, external: true
     internal = create :volunteer, external: false
     query = Volunteer.internal
-    refute query.include? external
-    assert query.include? internal
+    refute_includes query, external
+    assert_includes query, internal
   end
 
   test 'active_only_returns_accepted_volunteers_that_have_an_active_assignment' do
@@ -232,16 +232,16 @@ class VolunteerScopesTest < ActiveSupport::TestCase
     make_assignment(volunteer: volunteer_will_inactive, start_date: 10.days.ago,
       end_date: @today + 1)
     query = Volunteer.active
-    assert query.include? volunteer_will_inactive
-    assert query.include? @has_assignment
-    assert query.include? @has_multiple
-    assert query.include? @has_active_and_inactive
-    refute query.include? @has_inactive
-    refute query.include? @resigned_inactive
-    refute query.include? @resigned_active
+    assert_includes query, volunteer_will_inactive
+    assert_includes query, @has_assignment
+    assert_includes query, @has_multiple
+    assert_includes query, @has_active_and_inactive
+    refute_includes query, @has_inactive
+    refute_includes query, @resigned_inactive
+    refute_includes query, @resigned_active
     travel_to(@today + 2)
     query = Volunteer.active
-    refute query.include? volunteer_will_inactive
+    refute_includes query, volunteer_will_inactive
   end
 
   test 'with_billable_hours_returns_volunteers_with_billable_hours_for_an_optional_semester' do

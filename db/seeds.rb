@@ -78,6 +78,7 @@ def development_seed
 
   superadmin_and_social_worker.each do |user|
     next if user.clients.count > 1
+
     journals = [
       Journal.new(
         body: FFaker::Lorem.sentence(rand(2..5)),
@@ -275,5 +276,5 @@ def production_seed
   end
 end
 
-production_seed if Rails.env.production?
-development_seed if Rails.env.development?
+production_seed if Rails.env.production? && ENV['RUN_DEV_SEED_IN_PRODUCTION_ENV'] != '1'
+development_seed if Rails.env.development? || ENV['RUN_DEV_SEED_IN_PRODUCTION_ENV'] == '1'

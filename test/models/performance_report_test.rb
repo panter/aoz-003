@@ -279,7 +279,6 @@ class PerformanceReportTest < ActiveSupport::TestCase
     expected_this_year_not_zurich.merge!(inactive: 1, active_assignment: 1).stringify_keys!
     assert_equal(expected_this_year_not_zurich, @this_year.report_content['clients']['not_zurich'])
 
-
     assignment_zurich_last_year = create(:assignment, client: client_zurich_last_year,
       period_start: @last_dates.first + 4, period_end: nil)
     assignment_zurich_last_year.update(created_at: @last_dates.first + 4)

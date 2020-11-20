@@ -13,8 +13,8 @@ module GroupAssignmentAndAssignmentCommon
 
     # we have PDFs on Assignment and GroupAssignment, but not on *Log
     if [Assignment, GroupAssignment].include? self
-      has_attached_file :pdf
-      validates_attachment_content_type :pdf, content_type: Mime[:pdf]
+      has_one_attached :pdf
+      validates :pdf, content_type: ext_mimes(:pdf)
       attribute :generate_pdf, :boolean
     end
 

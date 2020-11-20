@@ -1,0 +1,51 @@
+wb.add_worksheet(name: 'Gruppeneinsatz') do |sheet|
+  columns = [
+    'ID',
+    'ID Gruppenangebot',
+    'ID Freiwillige/r',
+    'Erstellt am',
+    'Startdatum',
+    'Enddatum',
+    'ID Status',
+    'Status',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  group_assignments.each do |group_assignment|
+    data = [
+      group_assignment.id,                                # ID
+      group_assignment.group_offer.id,                    # 'ID Gruppenangebot'
+      group_assignment.volunteer.id,                      # 'ID Freiwillige/r'
+      group_assignment.created_at,                        # 'Erstellt am'
+      group_assignment.period_start,                      # 'Startdatum'
+      group_assignment.period_end,                        # 'Enddatum'
+      group_assignment.active_inactive_key,               # 'ID Status'
+      t("state.#{group_assignment.active_inactive_key}"), # 'Status'
+      zeit                                                # 'Zeit'
+    ]
+    types = [
+      :integer, # ID
+      :integer, # 'ID Gruppenangebot'
+      :integer, # 'ID Freiwillige/r'
+      :time,    # 'Erstellt am'
+      nil,      # 'Startdatum'
+      nil,      # 'Enddatum'
+      nil,      # 'ID Status'
+      nil,      # 'Status'
+      :time     # 'Zeit'
+    ]
+    style = [
+      std_style,  # ID
+      std_style,  # 'ID Gruppenangebot'
+      std_style,  # 'ID Freiwillige/r'
+      date_time_style, # 'Erstellt am'
+      date_style,      # 'Startdatum'
+      date_style,      # 'Enddatum'
+      std_style,  # 'ID Status'
+      std_style,  # 'Status'
+      date_time_style # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+  axlsx_autofilter(sheet, columns, group_assignments)
+end

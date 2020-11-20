@@ -14,23 +14,23 @@ class ClientPolicyTest < PolicyAssertions::Test
 
   test 'superadmin_can_use_all_actions' do
     assert_permit(@superadmin, Client,
-      'superadmin_privileges?', 'show_comments?', *actions_list(except: [:reactivate]))
+                  'superadmin_privileges?', 'show_comments?', *actions_list(except: [:reactivate]))
   end
 
   test 'department_manager_has_limited_access' do
     assert_permit(@department_manager, @manager_client,
-      *actions_list(:edit, :update, :set_terminated, :destroy), 'show_comments?')
+                  *actions_list(:edit, :update, :set_terminated, :destroy), 'show_comments?')
     assert_permit(@department_manager, Client,
-      *actions_list(:index, :search, :new, :create, :show), 'show_comments?')
+                  *actions_list(:index, :search, :new, :create, :show), 'show_comments?')
     refute_permit(@department_manager, create(:client),
-      *actions_list(:edit, :update, :set_terminated, :destroy))
+                  *actions_list(:edit, :update, :set_terminated, :destroy))
     refute_permit(@department_manager, Client, 'superadmin_privileges?',
-      *actions_list(:set_terminated))
+                  *actions_list(:set_terminated))
   end
 
   test 'social_worker_has_limited_access' do
     assert_permit(@social_worker, Client,
-      *actions_list(:index, :search, :new, :create, :show))
+                  *actions_list(:index, :search, :new, :create, :show))
     assert_permit(@social_worker, @social_client, *actions_list(:edit, :update, :destroy))
     assert_permit(@social_worker, @social_involved, *actions_list(:edit, :update, :destroy))
     refute_permit(@social_worker, create(:client), *actions_list(:edit, :update, :set_terminated, :destroy), 'show_comments?')

@@ -5,7 +5,6 @@ class GroupOfferCategoriesTest < ApplicationSystemTestCase
     @user = create :user
   end
 
-
   test 'superadmin can create new group offer' do
     login_as @user
     visit group_offers_path

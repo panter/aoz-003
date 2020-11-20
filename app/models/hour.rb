@@ -55,8 +55,10 @@ class Hour < ApplicationRecord
 
   scope :semester, lambda { |date = nil|
     return all if date.blank?
+
     date = Time.zone.parse(date) unless date.is_a? Time
     return all if date.blank?
+
     semester_with_date(date)
   }
 

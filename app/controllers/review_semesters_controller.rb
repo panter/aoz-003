@@ -44,6 +44,7 @@ class ReviewSemestersController < ApplicationController
   def create_journals
     spv = @semester_process_volunteer
     return unless spv.commited_at?
+
     volunteer = spv.volunteer
     semester_feedbacks = spv.semester_feedbacks
     author = current_user.volunteer? ? @semester_process_volunteer.semester_process.creator : current_user
@@ -105,8 +106,8 @@ class ReviewSemestersController < ApplicationController
       text += semester_feedback.mission.to_label
       text += "\n\n"
       text += semester_feedback.slice(:goals, :achievements, :future, :comments).map do |key, sfb_quote|
-                "#{I18n.t("activerecord.attributes.feedback.#{key}")}:\n«#{sfb_quote}»" if sfb_quote.present?
-              end.compact.join("\n\n")
+        "#{I18n.t("activerecord.attributes.feedback.#{key}")}:\n«#{sfb_quote}»" if sfb_quote.present?
+      end.compact.join("\n\n")
       text += "\n\n"
     end
     text
@@ -116,7 +117,7 @@ class ReviewSemestersController < ApplicationController
     params.require(:semester_process_volunteer).permit(
       volunteer_attributes: [:id, :waive, :iban, :bank],
       semester_feedbacks_attributes: [[semester_feedback: [:mission, :goals, :achievements, :future, :comments, :conversation, :spv_mission_id]],
-                                     [hour: [:hours, :spv_mission_id, :activity]]]
+                                      [hour: [:hours, :spv_mission_id, :activity]]]
     )
   end
 end

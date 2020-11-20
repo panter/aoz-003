@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def simple_error_notice(f)
-    error_message = "Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder."
+    error_message = 'Es sind Fehler aufgetreten. Bitte überprüfen Sie die rot markierten Felder.'
     boostrap_row { f.error_notification message: error_message } if f.error_notification.present?
   end
 
@@ -49,7 +49,7 @@ module ApplicationHelper
   def confirm_deleting(record, html_class = nil)
     { method: :delete, data: {
       confirm: t('messages.confirm_record_delete',
-        model: locale == :en ? t_model(record).downcase : t_model(record))
+                 model: locale == :en ? t_model(record).downcase : t_model(record))
     }, class: html_class }
   end
 
@@ -70,13 +70,15 @@ module ApplicationHelper
 
   def nationality_name(nationality)
     return '' if nationality.blank?
+
     country = ISO3166::Country[nationality]
     return '' unless country
+
     country.translations[I18n.locale.to_s] || country.name
   end
 
   def request_params_filter(query)
-    {q: search_parameters.deep_merge(query) }
+    { q: search_parameters.deep_merge(query) }
   end
 
   def search_parameters
@@ -86,8 +88,8 @@ module ApplicationHelper
   def request_params_include_egal(params)
     parameters = params.deep_dup
     if parameters.has_key? 'age_request_cont'
-      parameters["age_request_in"] = [parameters["age_request_cont"], "age_no_matter"]
-      parameters.delete("age_request_cont")
+      parameters['age_request_in'] = [parameters['age_request_cont'], 'age_no_matter']
+      parameters.delete('age_request_cont')
     end
   end
 
@@ -121,6 +123,7 @@ module ApplicationHelper
 
   def td_truncate_content_modal(body, title, shorten_size: 40)
     return tag.td(body) if body.to_s.size < shorten_size
+
     tag.td(class: 'truncate-td', data: truncate_modal_data(body, title), role: 'button') do
       concat tag.span body.truncate(shorten_size).html_safe
       concat tag.span('Ganzer Text', class: 'whole-text')

@@ -1,2 +1,2 @@
 wb = xlsx_package.workbook
-render partial: 'assignments_table', locals: { wb: wb, assignments: @assignments }
+render partial: 'assignments_table', locals: axlsx_locals(wb, assignments: @assignments)

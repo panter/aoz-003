@@ -44,7 +44,7 @@
         = tp_f.input :end_date, as: :date_picker
       = f.input :special_agreement, label: t('assignment_pdf.special')
       = f.input :agreement_text, label: t('assignment_pdf.agreement_text'), input_html: { class: 'text-body' }
-      - if @assignment.pdf.exists?
+      - if @assignment.pdf.attached?
         = f.input :generate_pdf, label: 'Vereinbarung überschreiben'
       - else
         = f.input :generate_pdf, label: 'Vereinbarung erzeugen', input_html: { checked: true }

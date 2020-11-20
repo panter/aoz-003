@@ -1,0 +1,133 @@
+wb.add_worksheet(name: 'Klienten') do |sheet|
+  columns = [
+    'AOZ Klienten ID', # field to be left empty, according to Sven Marti (AOZ)
+    'ID',
+    'ID Anrede',
+    'Anrede',
+    'ID Geschlecht',
+    'Geschlecht', # will add transformed salutation here, because gender isn't in the model
+    'Nachname',
+    'Vorname',
+    'PLZ',
+    'Ort',
+    'Geburtsdatum',
+    'Alter',
+    'Nationalität ISO Alpha2',
+    'Nationalität',
+    'ID Prozess',
+    'Prozess',
+    'Erstellt am',
+    'Akzeptiert am',
+    'Beendet am',
+    'Abgelehnt am',
+    'Fallführend',
+    'ID Kostenträger',
+    'Kostenträger',
+    'Einsatz',    # field to be left empty, according to Sven Marti (AOZ)
+    'ID Status',
+    'Status',
+    'Zeit (von Anmeldung bis Vermittlung in Tagen)',
+    'Zeit'        # report creation time
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  clients.each do |client|
+    alter = client.birth_year.present? ? ((Date.current - client.birth_year) / 365).floor : ''
+    zeit_anmeldung_vermittlung = if client.accepted_at.present?
+                                   (client.accepted_at.to_date - client.created_at.to_date)
+                                 end
+    data = [
+      '',                                       # 'AOZ Klienten ID',
+      client.id,                                # 'ID',
+      client.salutation,                        # 'ID Anrede',
+      t("salutation.#{client.salutation}"),     # 'Anrede',
+      client.gender,                            # 'ID Geschlecht',
+      client.gender_t,                          # 'Geschlecht',
+      client.contact.last_name,                 # 'Nachname',
+      client.contact.first_name,                # 'Vorname',
+      client.contact.postal_code,               # 'PLZ',
+      client.contact.city,                      # 'Ort',
+      client.birth_year,                        # 'Geburtsdatum',
+      alter,                                    # 'Alter',
+      client.nationality,                       # 'Nationalität ISO Alpha2',
+      nationality_name(client.nationality),     # 'Nationalität',
+      Client.acceptances[client.acceptance],    # 'ID Prozess'
+      client.acceptance_t,                      # 'Prozess',
+      client.created_at,                        # 'Erstellt am',
+      client.accepted_at,                       # 'Akzeptiert am',
+      client.resigned_at,                       # 'Beendet am',
+      client.rejected_at,                       # 'Abgelehnt am',
+      client.competent_authority,               # 'Fallführend',
+      Client.cost_units[client.cost_unit],      # 'ID Kostenträger',
+      client.cost_unit.present? ? client.cost_unit_t : '', # 'Kostenträger',
+      '',                                       # 'Einsatz'
+      client.active_inactive_key,               # 'ID Status'
+      t("state.#{client.active_inactive_key}"), # 'Status',
+      zeit_anmeldung_vermittlung,               # 'Zeit (von Anmeldung bis Vermittlung)',
+      zeit                                      # 'Zeit'
+    ]
+    types = [
+      nil,      # 'AOZ Klienten ID',
+      :integer, # 'id',
+      nil,      # 'ID Anrede',
+      nil,      # 'Anrede',
+      nil,      # 'ID Geschlecht',
+      nil,      # 'Geschlecht',
+      nil,      # 'Nachname',
+      nil,      # 'Vorname',
+      nil,      # 'PLZ',
+      nil,      # 'Ort',
+      nil,      # 'Geburtsdatum',
+      :integer, # 'Alter',
+      nil,      # 'Nationalität ISO Alpha2',
+      nil,      # 'Nationalität',
+      :integer, # 'ID Prozess'
+      nil,      # 'Prozess',
+      :time,    # 'Erstellt am',
+      :time,    # 'Akzeptiert am',
+      :time,    # 'Beendet am',
+      :time,    # 'Abgelehnt am',
+      nil,      # 'Fallführend',
+      :integer, # 'ID Kostenträger',
+      nil,      # 'Kostenträger',
+      nil,      # 'Einsatz',
+      nil,      # 'ID Status'
+      nil,      # 'Status',
+      :integer, # 'Zeit (von Anmeldung bis Vermittlung)',
+      :time     # 'Zeit'
+    ]
+
+    style = [
+      std_style,  # 'AOZ Klienten ID',
+      std_style,  # 'id',
+      std_style,  # 'ID Anrede',
+      std_style,  # 'Anrede',
+      std_style,  # 'ID Geschlecht',
+      std_style,  # 'Geschlecht',
+      std_style,  # 'Nachname',
+      std_style,  # 'Vorname',
+      std_style,  # 'PLZ',
+      std_style,  # 'Ort',
+      date_style, # 'Geburtsdatum',
+      std_style,  # 'Alter',
+      std_style,  # 'Nationalität ISO Alpha2',
+      std_style,  # 'Nationalität',
+      std_style,  # 'ID Prozess'
+      std_style,  # 'Prozess',
+      date_time_style, # 'Erstellt am',
+      date_time_style, # 'Akzeptiert am',
+      date_time_style, # 'Beendet am',
+      date_time_style, # 'Abgelehnt am',
+      std_style,  # 'Fallführend',
+      std_style,  # 'ID Kostenträger',
+      std_style,  # 'Kostenträger',
+      std_style,  # 'Einsatz',
+      std_style,  # 'ID Status'
+      std_style,  # 'Status',
+      std_style,  # 'Zeit (von Anmeldung bis Vermittlung)',
+      date_time_style # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  axlsx_autofilter(sheet, columns, clients)
+end

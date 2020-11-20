@@ -1,0 +1,59 @@
+wb.add_worksheet(name: 'Stundenerfassung') do |sheet|
+  columns = [
+    'ID',
+    'ID Freiwillige/r',
+    'Anzahl Stunden',
+    'Stunden Für (Polymorph)',
+    'ID Einsatz (Polymorph)',
+    'ID Gruppenangebot',
+    'ID Begleitung',
+    'ID Spesenabrechnung',
+    'Datum Treffen',
+    'Eingetragen am',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  hours.each do |hour|
+    data = [
+      hour.id,                                   # 'ID'
+      hour.volunteer_id,                         # 'ID Freiwillige/r'
+      hour.hours,                                # 'Anzahl Stunden''
+      t_model(hour.hourable),                    # 'Stunden Für (Polymorph)'
+      hour.hourable_id,                          # 'ID Einsatz (Polymorph)'
+      hour.group_offer? ? hour.hourable_id : '', # 'ID Gruppenangebot'
+      hour.assignment? ? hour.hourable_id : '',  # 'ID Begleitung'
+      hour.billing_expense_id,                   # 'ID Spesenabrechnung'
+      hour.meeting_date,                         # 'Datum Treffen'
+      hour.created_at.to_date,                   # 'Eingetragen am'
+      zeit                                       # 'Zeit'
+    ]
+    types = [
+      :integer, # 'ID'
+      :integer, # 'ID Freiwillige/r'
+      nil,      # 'Anzahl Stunden'
+      nil,      # 'Stunden Für (Polymorph)'
+      nil,      # 'ID Einsatz (Polymorph)'
+      nil,      # 'ID Gruppenangebot'
+      nil,      # 'ID Begleitung'
+      :integer, # 'ID Spesenabrechnung'
+      nil,      # 'Datum Treffen'
+      :time,    # 'Eingetragen am'
+      :time     # 'Zeit'
+    ]
+    style = [
+      std_style,  # 'ID'
+      std_style,  # 'ID Freiwillige/r'
+      std_style,  # 'Anzahl Stunden'
+      std_style,  # 'Stunden Für (Polymorph)'
+      std_style,  # 'ID Einsatz (Polymorph)'
+      std_style,  # 'ID Gruppenangebot'
+      std_style,  # 'ID Begleitung'
+      std_style,  # 'ID Spesenabrechnung'
+      date_style,      # 'Datum Treffen'
+      date_time_style, # 'Eingetragen am'
+      date_time_style  # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+  axlsx_autofilter(sheet, columns, hours)
+end

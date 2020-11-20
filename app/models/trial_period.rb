@@ -33,19 +33,25 @@ class TrialPeriod < ApplicationRecord
     unverified? && end_date < Date.current
   end
 
-  def verify!(user)
-    journal = Journal.new(user: user,
-                          journalable: mission.volunteer,
-                          category: :feedback,
-                          title: "Probezeit Quittiert von #{user.profile.full_name} <#{user.email}>",
-                          body: "Einsatz: #{mission.to_label}")
+  def verify!(verifier)
+    journal = journal_for_verify(verifier)
     journal.assignment = mission if mission.class.name == 'Assignment'
     journal.save!
-    update!(verified_at: Time.zone.now, verified_by: user, notes: nil)
+    update!(verified_at: Time.zone.now, verified_by: verifier, notes: nil)
   end
 
   # allow ransack to use defined scopes
   def self.ransackable_scopes(_auth_object = nil)
     ['not_verified', 'verified', 'trial_period_running', 'trial_period_overdue']
+  end
+
+  private
+
+  def journal_for_verify(verifier)
+    Journal.new(user: verifier,
+                journalable: mission.volunteer,
+                category: :feedback,
+                title: "Probezeit Quittiert von #{verifier.profile.full_name} <#{verifier.email}>",
+                body: "Einsatz: #{mission.to_label}")
   end
 end

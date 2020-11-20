@@ -27,7 +27,7 @@ class ContactTest < ActiveSupport::TestCase
 
     refute @contact.valid?
     assert_equal [:primary_email, :primary_phone],
-      @contact.errors.keys
+                 @contact.errors.keys
   end
 
   test 'required fields for clients' do

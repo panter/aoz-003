@@ -101,6 +101,7 @@ class ApplicationPolicy
 
   def volunteer_related?
     return false if record.is_a? Class
+
     volunteer? && record.volunteer.user_id == user.id
   end
 

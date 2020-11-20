@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-  before_action :find_document, only: %i[update edit destroy]
+  before_action :find_document, only: [:update, :edit, :destroy]
 
   def new
     @document = Document.new

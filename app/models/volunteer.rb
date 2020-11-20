@@ -16,7 +16,8 @@ class Volunteer < ApplicationRecord
   REJECTIONS = [:us, :her, :other].freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
   SALUTATIONS = [:mrs, :mr].freeze
-  HOW_HAVE_YOU_HEARD_OF_AOZS = %i[internet_research friends announcment flyer].freeze
+  SALUTATION_GENDER_MAP = { mrs: :female, mr: :male }.freeze
+  HOW_HAVE_YOU_HEARD_OF_AOZS = [:internet_research, :friends, :announcment, :flyer].freeze
 
   enum acceptance: { undecided: 0, invited: 1, accepted: 2, rejected: 3, resigned: 4 }
 
@@ -87,21 +88,22 @@ class Volunteer < ApplicationRecord
   has_many :semester_processes, through: :semester_process_volunteers
   has_many :semester_feedbacks, through: :semester_process_volunteers
 
-  has_attached_file :avatar, styles: { thumb: '100x100#' }
+  has_one_attached :avatar
 
   # Validations
   #
-
+  validates :avatar, content_type: ext_mimes(:jpg, :gif, :png, :tif, :webp)
   validates :contact, presence: true
   validates_presence_of :iban, :bank, if: -> { validate_waive_and_bank && waive.blank? }
   validates :salutation, presence: true
-  validates_attachment :avatar, content_type: {
-    content_type: /\Aimage\/.*\z/
-  }
 
   validates :user, absence: true,
     if: :external?,
     unless: :user_deleted?
+
+  def avatar_thumb
+    avatar.variant(resize: '100x100>').processed
+  end
 
   # allot of old records would cause app to crash if validation would run for them
   # so we need to omit it for them
@@ -116,11 +118,12 @@ class Volunteer < ApplicationRecord
     joins(:contact).order('contacts.last_name ASC')
   }
 
-  scope :not_rejected_resigned, -> { where.not(acceptance: %i[rejected resigned]) }
+  scope :not_rejected_resigned, -> { where.not(acceptance: [:rejected, :resigned]) }
 
   scope :process_eq, lambda { |process|
     return unless process.present?
     return joins(:user).merge(User.with_pending_invitation) if process == 'havent_logged_in'
+
     where(acceptance: process)
   }
   scope :invited_but_never_logged_in, lambda {
@@ -175,7 +178,7 @@ class Volunteer < ApplicationRecord
   end
 
   def self.feedback_overdue(semester)
-    joins(:contact).where(id: have_semester_process(semester).where("semester_process_volunteers.commited_at IS NULL").ids)
+    joins(:contact).where(id: have_semester_process(semester).where('semester_process_volunteers.commited_at IS NULL').ids)
   end
 
   def unsubmitted_semester_feedbacks
@@ -208,7 +211,7 @@ class Volunteer < ApplicationRecord
   scope :activeness_ended, lambda {
     where(active: true)
       .where('volunteers.activeness_might_end IS NOT NULL AND volunteers.activeness_might_end < ?',
-        Time.zone.today)
+             Time.zone.today)
   }
   scope :active, lambda {
     accepted.activeness_not_ended.where(active: true)
@@ -306,7 +309,7 @@ class Volunteer < ApplicationRecord
     prob = semester.end.advance(weeks: -4)
     vol_with_missions = volunteers.select do |v|
       [v.assignments, v.group_assignments].detect do |mission|
-        mission.where("period_end IS NULL").where("period_start < ?", prob).any?
+        mission.where('period_end IS NULL').where('period_start < ?', prob).any?
       end
     end
     vol_with_missions
@@ -316,14 +319,14 @@ class Volunteer < ApplicationRecord
     date = billable_semester_date(date)
     semester_range = billable_semester_range(date)
     Hour.joins(volunteer: :contact)
-        .volunteer_not_waive
-        .billable
-        .meeting_date_between(semester_range)
-        .volunteer_not_billed_in_semester(date)
-        .order_volunteer_iban_name
-        .group_by(&:volunteer).map do |volunteer, hours|
-          [volunteer, hours, hours.sum(&:hours)]
-        end
+      .volunteer_not_waive
+      .billable
+      .meeting_date_between(semester_range)
+      .volunteer_not_billed_in_semester(date)
+      .order_volunteer_iban_name
+      .group_by(&:volunteer).map do |volunteer, hours|
+      [volunteer, hours, hours.sum(&:hours)]
+    end
   end
 
   scope :assignable_to_department, -> { undecided.where(department_id: [nil, '']) }
@@ -383,6 +386,10 @@ class Volunteer < ApplicationRecord
     active_assignments? || active_groups?
   end
 
+  def active_inactive_key
+    active? ? :active : :inactive
+  end
+
   def active_assignments?
     accepted? && assignments.active.any?
   end
@@ -410,6 +417,7 @@ class Volunteer < ApplicationRecord
   def state
     return acceptance unless accepted?
     return :active if active?
+
     :inactive if inactive?
   end
 
@@ -501,6 +509,7 @@ class Volunteer < ApplicationRecord
 
   def how_have_you_heard_of_aoz=(value)
     return if value.blank?
+
     self[:how_have_you_heard_of_aoz] = if value.is_a?(Array)
                                          value.reject(&:blank?).join(',')
                                        else
@@ -538,6 +547,14 @@ class Volunteer < ApplicationRecord
     GroupOfferCategory.active.map do |group|
       { title: group.category_name, value: group_offer_categories.include?(group) }
     end
+  end
+
+  def gender
+    SALUTATION_GENDER_MAP[salutation.to_sym]
+  end
+
+  def gender_t
+    I18n.t("activerecord.attributes.volunteer.genders.#{gender}")
   end
 
   def to_s
@@ -641,11 +658,13 @@ class Volunteer < ApplicationRecord
     if User.exists?(email: contact.primary_email)
       return errors.add(:user, "Es existiert bereits ein User mit der Email #{contact.primary_email}!")
     end
+
     self.user = User.new(email: contact.primary_email, password: Devise.friendly_token, role: 'volunteer')
   end
 
   def user_invitation_needed?
     return if external? || user.present?
+
     will_save_change_to_attribute?(:acceptance, to: 'accepted') ||
       (import.present? && contact.will_save_change_to_attribute?(:primary_email))
   end

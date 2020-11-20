@@ -1,0 +1,30 @@
+wb = xlsx_package.workbook
+
+locals = axlsx_locals(wb, volunteers: @volunteers,
+                          clients: @clients,
+                          assignments: @assignments,
+                          group_offers: @group_offers,
+                          group_assignments: @group_assignments,
+                          hours: @hours,
+                          billing_expenses: @billing_expenses,
+                          events: @events,
+                          event_volunteers: @event_volunteers,
+                          departments: @departments,
+                          group_offer_categories: GroupOfferCategory.all.order(:id))
+
+## Sheets
+#
+render partial: 'coplaners/sheets/stammdaten', locals: locals
+render partial: 'coplaners/sheets/volunteers', locals: locals
+render partial: 'coplaners/sheets/nationalitaet_fw', locals: locals
+render partial: 'coplaners/sheets/clients', locals: locals
+render partial: 'coplaners/sheets/assignments', locals: locals
+render partial: 'coplaners/sheets/group_offers', locals: locals
+render partial: 'coplaners/sheets/matching_ga_fw', locals: locals
+render partial: 'coplaners/sheets/stundenerfassung', locals: locals
+render partial: 'coplaners/sheets/billing_expenses', locals: locals
+render partial: 'coplaners/sheets/weiterbildung', locals: locals
+render partial: 'coplaners/sheets/departments', locals: locals
+
+# render partial: 'coplaners/sheets/group_assignments',
+#        locals: default_locals.merge(group_assignments: @group_assignments)

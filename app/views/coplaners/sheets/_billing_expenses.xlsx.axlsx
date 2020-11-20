@@ -1,0 +1,36 @@
+wb.add_worksheet(name: 'Spesenabrechnungen') do |sheet|
+  columns = [
+    'ID',
+    'Betrag',
+    'Erstellt am',
+    'ID Freiwillige/r',
+    'Zeit' # report creation time
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  billing_expenses.each do |billing_expense|
+    data = [
+      billing_expense.id,           # 'ID'
+      billing_expense.amount,       # 'Betrag'
+      billing_expense.created_at,   # 'Erstellt am'
+      billing_expense.volunteer_id, # 'ID Freiwillige/r'
+      zeit                          # 'Zeit'
+    ]
+    types = [
+      :integer, # 'ID'
+      nil,      # 'Betrag'
+      :time,    # 'Erstellt am'
+      :integer, # 'ID Freiwillige/r'
+      :time     # 'Zeit'
+    ]
+    style = [
+      std_style,  # 'ID'
+      std_style,  # 'Betrag'
+      date_time_style, # 'Erstellt am'
+      std_style, # 'ID Freiwillige/r'
+      date_time_style # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  axlsx_autofilter(sheet, columns, billing_expenses)
+end

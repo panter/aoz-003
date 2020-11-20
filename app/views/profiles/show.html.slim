@@ -10,7 +10,7 @@
           = render 'contacts/show', contact: @profile.contact
           tr
             td= t_attr(:avatar)
-            td= image_tag @profile.avatar.url(:thumb) if @profile.avatar.present?
+            td= image_tag rails_representation_url(@profile.avatar_thumb) if @profile.avatar.present?
           tr
             td= t_attr(:profession)
             td= @profile.profession

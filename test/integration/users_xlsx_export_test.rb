@@ -10,15 +10,15 @@ class UsersXlsxExportTest < ActionDispatch::IntegrationTest
     @department_manager = create :department_manager
     @volunteer = create :volunteer
     User.with_deleted
-        .where.not(id: [@volunteer.user.id, @department_manager.id, @social_worker.id, @superadmin.id])
-        .map(&:really_destroy!)
+      .where.not(id: [@volunteer.user.id, @department_manager.id, @social_worker.id, @superadmin.id])
+      .map(&:really_destroy!)
   end
 
   def assert_user_xls_row(wb, subject_user, row)
     contact = subject_user.profile&.contact || subject_user.volunteer.contact
     assert_equal subject_user.id.to_s, wb.cell(row, 1).to_s
     assert_xls_cols_equal(wb, row, 1, contact.full_name, contact.street, contact.extended,
-      contact.postal_code,contact.city, contact.primary_phone)
+                          contact.postal_code, contact.city, contact.primary_phone)
     assert_xls_cols_equal(wb, row, 7, subject_user.email)
   end
 

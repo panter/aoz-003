@@ -23,7 +23,7 @@ module NavigationAndButtonHelper
   }.freeze
 
   def form_navigation_btn(action, cols: 12, with_row: true, md_cols: nil, with_col: false,
-    add_class: nil, custom_controller: nil)
+                          add_class: nil, custom_controller: nil)
     button = make_nav_button(action, custom_controller: custom_controller)
     button = bootstrap_col(cols, md_cols) { button } if with_col || with_row
     button = boostrap_row(add_class) { button } if with_row
@@ -69,7 +69,7 @@ module NavigationAndButtonHelper
       text = t_title(action)
     end
     button_link(text,
-      controller: controller_name, action: action, id: action == :index ? nil : params[:id])
+                controller: controller_name, action: action, id: action == :index ? nil : params[:id])
   end
 
   def boolean_glyph(value)
@@ -83,7 +83,7 @@ module NavigationAndButtonHelper
   def icon_span(icon = :back)
     glyph = GLYPH_TRANSLATE[icon]
     style = icon_class(glyph&.fetch(:icon_type, 'arrow-left'), glyph&.fetch(:type, :glyphicon),
-      glyph&.fetch(:extra_class, nil))
+                       glyph&.fetch(:extra_class, nil))
     tag.span(class: style) do
       tag.span(glyph&.fetch(:text, 'Zurück'), class: 'sr-only')
     end

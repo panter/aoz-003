@@ -76,7 +76,7 @@ class GroupOfferFiltersTest < ApplicationSystemTestCase
     end
     visit current_url
     within '.section-navigation#filters' do
-      assert page.has_link? "Kategorie: #{@c1.to_s}"
+      assert page.has_link? "Kategorie: #{@c1}"
     end
     within 'tbody' do
       assert page.has_text? @open_d1.title

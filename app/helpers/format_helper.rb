@@ -10,8 +10,10 @@ module FormatHelper
 
   def format_hours_semester(hours)
     return '' if hours.blank?
+
     dates = hours.map(&:meeting_date)
     return format_hours_multiple_dates_semester(dates) if dates.size > 1
+
     t('semester.one_semester', number: BillingExpense.semester_of_year(dates.first),
       year: BillingExpense.semester_display_year(dates.first))
   end

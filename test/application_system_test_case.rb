@@ -2,6 +2,8 @@ require 'test_helper'
 require 'webdrivers/chromedriver'
 require 'selenium/webdriver'
 
+Webdrivers.install_dir = '.ci-cache/webdrivers'
+
 Capybara.register_driver :chrome_headless do |app|
   chrome_options = {
     chromeOptions: { args: %w[headless disable-gpu no-sandbox window-size=1600x2000], w3c: false }
@@ -95,21 +97,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       field.native.send_keys(char)
       wait_for_ajax
     end
-  end
-
-  def fill_autocomplete(name, options = {})
-    find("[name=\"#{name}\"]").native.send_keys options[:with], :down
-    wait_for_ajax
-    items = page.find_all('li.ui-menu-item')
-    if options[:items_expected]
-      assert_equal options[:items_expected], items.size
-    end
-    if options[:check_items].present?
-      items.each do |item|
-        assert options[:check_items].include? item.text
-      end
-    end
-    find("[name=\"#{name}\"]").native.send_keys :down, :enter
   end
 
   def any_checked?(selector)

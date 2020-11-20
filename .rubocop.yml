@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require:
   - rubocop-rails
   - rubocop-performance
@@ -5,13 +7,17 @@ require:
 
 AllCops:
   Exclude:
-    - 'db/schema.rb'
-    - 'db/migrate/*'
     - 'bin/*'
+    - 'db/migrate/*'
+    - 'db/schema.rb'
+    - 'doc/**/*'
     - 'tmp/**/*'
-    - vendor/**/*
-    - Rakefile
     - config/boot.rb
+    - Rakefile
+    - vendor/**/*
+    - lib/access_import/**/*
+    - 'node_modules/**/*'
+    - 'lib/tasks/active_storage.rake'
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
@@ -28,33 +34,86 @@ Rails/RefuteMethods:
 
 Metrics/AbcSize:
   Exclude:
-    - test/**/*
+    - app/controllers/application_controller.rb
+    - app/controllers/assignments_controller.rb
+    - app/controllers/billing_expenses_controller.rb
+    - app/controllers/clients_controller.rb
+    - app/controllers/departments_controller.rb
+    - app/controllers/feedbacks_controller.rb
+    - app/controllers/group_assignments_controller.rb
+    - app/controllers/group_offers_controller.rb
+    - app/controllers/hours_controller.rb
+    - app/controllers/semester_process_volunteers_controller.rb
+    - app/controllers/semester_processes_controller.rb
+    - app/controllers/users_controller.rb
+    - app/controllers/volunteers_controller.rb
+    - app/inputs/date_range_picker_input.rb
+    - app/inputs/date_year_range_picker_input.rb
+    - app/models/certificate.rb
+    - app/models/performance_report.rb
+    - app/models/reminder_mailing_volunteer.rb
+    - app/models/semester_process_volunteer.rb
+    - config/**/*
     - db/seeds.rb
-  Max: 25
+    - test/**/*
+  IgnoredMethods:
+    - boolean_toggler_filter_dropdown
+    - build_nested_objects
+    - custom_filter_dropdown_filters
+    - dates_semester_start
+    - document_js_nodes
+    - handle_semester_feedback_quote
+    - in_feedbackable?
+    - last_submitted_hours_and_feedbacks
+    - selected_billing_semester
+    - set_journaled
+    - take_responsibility
+    - td_truncate_content_modal
+    - validate_group_assignment_or_assignment_present
+
 Metrics/ClassLength:
   Exclude:
+    - app/controllers/assignments_controller.rb
+    - app/models/user.rb
+    - app/models/volunteer.rb
+    - app/policies/application_policy.rb
     - test/**/*
   Max: 150
 Metrics/MethodLength:
   Exclude:
-    - test/**/*
     - db/seeds.rb
   Max: 20
+  ExcludedMethods:
+    - update_or_create
+    - document_js_nodes
+    - volunteers_stats
+    - create_all_assignments
+    - create_semester_processes
+    - setup
 Metrics/BlockLength:
   Exclude:
-    - 'test/system/*'
-    - 'db/seeds.rb'
-    - 'config/routes.rb'
+    - '**/*.xlsx.axlsx'
+    - config/initializers/**/*
+    - db/seeds.rb
+    - lib/tasks/**/*
+    - test/system/terminate_volunteers_test.rb
   ExcludedMethods:
-    - included # for concerns
-    - draw # for routes
     - define # for FactoryBot
+    - draw # for routes
     - factory
+    - included # for concerns
+    - test
+    - configure
 
 Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
   Enabled: true
+
+Naming/MethodName:
+  EnforcedStyle: snake_case
+  Exclude:
+    - config/initializers/ransack.rb
 
 Layout/FirstArrayElementIndentation:
   Enabled: true
@@ -62,9 +121,12 @@ Layout/FirstArrayElementIndentation:
 Layout/FirstHashElementIndentation:
   Enabled: true
   EnforcedStyle: consistent
-Layout/FirstParameterIndentation:
+Layout/FirstArgumentIndentation:
   Enabled: true
   EnforcedStyle: consistent
+  Exclude:
+    - app/controllers/assignments_controller.rb
+    - app/controllers/group_assignments_controller.rb
 Layout/HashAlignment:
   EnforcedLastArgumentHashStyle: always_inspect
 Layout/MultilineMethodCallIndentation:
@@ -98,7 +160,8 @@ Layout/LineLength:
   # The IgnoredPatterns option is a list of !ruby/regexp and/or string
   # elements. Strings will be converted to Regexp objects. A line that matches
   # any regular expression listed in this option will be ignored by LineLength.
-  IgnoredPatterns: []
+  IgnoredPatterns:
+    - !ruby/regexp /^\s*\# .*/
 
 Style/Alias:
   Enabled: false

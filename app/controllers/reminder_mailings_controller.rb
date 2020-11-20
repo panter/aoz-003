@@ -20,7 +20,7 @@ class ReminderMailingsController < ApplicationController
         .slice(:subject, :body))
     else
       redirect_to new_email_template_path,
-        notice: 'Sie müssen eine aktive E-Mailvorlage haben,
+                  notice: 'Sie müssen eine aktive E-Mailvorlage haben,
         bevor Sie eine Abschlussevaluations E-Mail erstellen können.'
     end
     authorize @reminder_mailing
@@ -40,6 +40,7 @@ class ReminderMailingsController < ApplicationController
 
   def edit
     return unless @reminder_mailing.sending_triggered
+
     redirect_back(fallback_location: reminder_mailing_path(@reminder_mailing), notice: 'Wenn das'\
       ' Erinnerungs-Mailing bereits versendet wurde, kann es nicht mehr geändert werden.')
   end
@@ -50,7 +51,7 @@ class ReminderMailingsController < ApplicationController
         ' versandt.'
     end
     VolunteerMailer.public_send(@reminder_mailing.kind,
-      @reminder_mailing.reminder_mailing_volunteers.first).deliver_later
+                                @reminder_mailing.reminder_mailing_volunteers.first).deliver_later
     @reminder_mailing.update(sending_triggered: true)
     redirect_to reminder_mailings_path, notice: 'Beendigungs-Email wird versendet.'
   end
@@ -82,8 +83,8 @@ class ReminderMailingsController < ApplicationController
 
   def reminder_mailing_params
     params.require(:reminder_mailing).permit(:body, :kind, :subject, :volunteers,
-      reminder_mailing_volunteers_attributes: [
-        :id, :volunteer_id, :reminder_mailable_id, :reminder_mailable_type, :picked
-      ])
+                                             reminder_mailing_volunteers_attributes: [
+                                               :id, :volunteer_id, :reminder_mailable_id, :reminder_mailable_type, :picked
+                                             ])
   end
 end

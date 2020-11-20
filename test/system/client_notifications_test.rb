@@ -83,7 +83,7 @@ class ClientNotificationsTest < ApplicationSystemTestCase
     login_as @social_worker
     visit clients_path
 
-    assert_text 'Klient/innen'  # only to allow refute expectations to wait 0
+    assert_text 'Klient/innen' # only to allow refute expectations to wait 0
     refute page.has_link? 'Wartezeitbenachrichtigung', wait: 0
   end
 

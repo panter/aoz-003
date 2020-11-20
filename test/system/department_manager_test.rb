@@ -8,7 +8,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
 
   test 'when updates user login, cannot see role field' do
     visit edit_user_path(@department_manager)
-    assert_text 'Login bearbeiten'  # only to allow refute expectations to wait 0
+    assert_text 'Login bearbeiten' # only to allow refute expectations to wait 0
     assert_not page.has_field? 'Role', wait: 0
   end
 
@@ -70,7 +70,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
   test 'has read-only access to group_offers from another department' do
     group_offer = create :group_offer
 
-    refute @department_manager.department.include?(group_offer.department)
+    refute_includes @department_manager.department, group_offer.department
 
     visit group_offers_path
 
@@ -163,7 +163,7 @@ class DepartmentManagerTest < ApplicationSystemTestCase
     group_assignment = create :group_assignment, group_offer: group_offer
     3.times { create :terminated_group_assignment, group_offer: create(:group_offer) }
 
-    refute @department_manager.department.include?(group_offer.department)
+    refute_includes @department_manager.department, group_offer.department
 
     login_as @department_manager
 

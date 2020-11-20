@@ -1,0 +1,35 @@
+wb.add_worksheet(name: 'Standorte') do |sheet|
+  columns = [
+    'ID',
+    'Name',
+    'Strasse',
+    'PLZ',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  departments.each do |department|
+    data = [
+      department.id,                  # ID'
+      department.contact.last_name,   # 'Name'
+      department.contact.street,      # 'Strasse'
+      department.contact.postal_code, # 'PLZ'
+      zeit                            # 'Zeit'
+    ]
+    types = [
+      :integer, # ID'
+      nil,      # 'Name'
+      nil,      # 'Strasse'
+      nil,      # 'PLZ'
+      :time     # 'Zeit'
+    ]
+    style = [
+      std_style, # ID'
+      std_style, # 'Name'
+      std_style, # 'Strasse'
+      std_style, # 'PLZ'
+      date_time_style # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+  axlsx_autofilter(sheet, columns, departments)
+end

@@ -5,12 +5,13 @@ nav.navbar.section-navigation class=('section-navigation-top' if top_nav)
   hr
   - if top_nav
     ul.list-unstyled
-      li.li-search-form
+      li.search-form
         = search_form_for @q do |f|
-          = f.search_field :full_name_cont, class: 'search-field',
-            data: { autocomplete: search_users_path }, autofocus: true,
+          = f.search_field :full_name_cont, class: 'search-field-autocomplete',
+            data: { autocomplete: search_users_path },
+            autofocus: true,
             placeholder: 'Nach Benutzer/innen Name oder E-Mail suchen'
-          = f.submit 'Suchen', class: 'search-submit'
+          = f.submit 'Suchen'
   ul.list-inline
     li= clear_filter_button
     = list_filter_dropdown(:role, User::ROLES)

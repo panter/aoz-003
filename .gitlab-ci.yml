@@ -1,3 +1,8 @@
+include:
+  - project: gitlab-ci/rails-testing
+    ref: v1
+    file: rails-testing.yml
+
 image: git.panter.ch:5001/open-source/aoz-003/gitlab_ci:2.6.6
 
 stages:
@@ -12,56 +17,35 @@ variables:
   DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB'
   POSTGRES_HOST_AUTH_METHOD: trust
 
-.push-pull-cache:
-  cache:
-    key: aoz-003-ruby-2-6-6
-    paths:
-      - tmp/cache/ruby
-      - tmp/cache/yarn
-    policy: pull-push
-
-.pull-cache:
-  cache:
-    key: aoz-003-ruby-2-6-6
-    paths:
-      - tmp/cache/ruby
-      - tmp/cache/yarn
-    policy: pull
-
-.test-extend:
+lint:
   stage: test
-  before_script:
-    - bundle install --without development --path tmp/cache
-    - yarn install --cache-folder tmp/cache/yarn
-    - bundle exec rails db:schema:load
-
-.retry-dropped-runners:
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
-      - job_execution_timeout
-      - scheduler_failure
-      - stale_schedule
+  extends:
+    - .cache-pull-push
+    - .retry-dropped-runners
+    - .bundle-yarn-install-webdrivers-chrome
+  script:
+    - bundle exec rails db:schema:load # some RuboCop cops require it
+    - yarn lint:js
+    - yarn lint:css
+    - bundle exec rubocop
 
 test:
+  stage: test
   extends:
-    - .push-pull-cache
-    - .test-extend
+    - .cache-pull
     - .retry-dropped-runners
+    - .bundle-yarn-install
   script:
+    - bundle exec rails db:schema:load
     - bundle exec rails test
 
 system:
+  stage: test
   extends:
-    - .pull-cache
-    - .test-extend
+    - .cache-pull
     - .retry-dropped-runners
+    - .bundle-yarn-install-webdrivers-chrome
+    - .capybara-screenshot-artifacts
   script:
+    - bundle exec rails db:schema:load
     - bundle exec rails test:system
-  artifacts:
-    paths:
-      - tmp/screenshots
-    when: on_failure
-    expire_in: 1 week

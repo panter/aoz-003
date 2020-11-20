@@ -70,9 +70,9 @@ class VolunteerShowAssignmentsTest < ApplicationSystemTestCase
 
   def start_end_localized(assignment)
     assignment.attributes
-              .values_at('period_start', 'period_end')
-              .compact
-              .map { |d| I18n.l(d) }
-              .join(' ')
+      .values_at('period_start', 'period_end')
+      .compact
+      .map { |d| I18n.l(d) }
+      .join(' ')
   end
 end

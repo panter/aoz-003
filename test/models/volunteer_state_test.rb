@@ -105,7 +105,7 @@ class VolunteerStateTest < ActiveSupport::TestCase
     Assignment.all.map { |tandem| assert tandem.active? }
     assert volunteer.active?
     assert volunteer.active # active field is true
-    assert Volunteer.active.include? volunteer
+    assert_includes Volunteer.active, volunteer
     travel_to Time.zone.today + 30
     Assignment.all.map { |tandem| assert tandem.inactive? }
     assert_not volunteer.active?
@@ -120,12 +120,12 @@ class VolunteerStateTest < ActiveSupport::TestCase
     assignment_doesnt_end = create :assignment, volunteer: volunteer, period_start: 10.days.ago,
       period_end: nil
     Assignment.all.map { |tandem| assert tandem.active? }
-    assert Volunteer.active.include? volunteer
+    assert_includes Volunteer.active, volunteer
     travel_to Time.zone.today + 30
     assert assignment_ends.inactive?
     assert volunteer.active?
     assert volunteer.active
-    assert Volunteer.active.include? volunteer
+    assert_includes Volunteer.active, volunteer
     assignment_doesnt_end.update(period_end: assignment_ends.period_end)
     assert assignment_doesnt_end.inactive?
     assert_not volunteer.active?
@@ -141,12 +141,12 @@ class VolunteerStateTest < ActiveSupport::TestCase
       group_offer: create(:group_offer), period_start: 10.days.ago, period_end: nil)
     Assignment.all.map { |tandem| assert tandem.active? }
     GroupOffer.all.map { |g_assignment| assert g_assignment.active? }
-    assert Volunteer.active.include? volunteer
+    assert_includes Volunteer.active, volunteer
     travel_to Time.zone.today + 30
     assert assignment.inactive?
     assert volunteer.active?
     assert volunteer.active
-    assert Volunteer.active.include? volunteer
+    assert_includes Volunteer.active, volunteer
     group_assignment.update(period_end: assignment.period_end)
     assert_not volunteer.active?
     assert_not volunteer.active # update on group assignment triggered update, so false

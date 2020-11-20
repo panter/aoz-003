@@ -12,6 +12,7 @@ class LanguageSkill < ApplicationRecord
   scope :native_languages, (-> { native.german_first })
   scope :foreign_languages, lambda {
     return none unless native_language.id
+
     where.not(id: native_language.id)
   }
 
@@ -27,6 +28,7 @@ class LanguageSkill < ApplicationRecord
 
     def language_name(language)
       return '' if language.blank?
+
       I18n.t("language_names.#{language}")
     end
 

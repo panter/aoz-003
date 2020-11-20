@@ -75,6 +75,7 @@ $cert-font-size: 13px;
       margin-bottom: 5.1cm;
 
       img {
+        // stylelint-disable-next-line
         height: .8cm;
       }
     }
@@ -91,6 +92,7 @@ $cert-font-size: 13px;
       padding-top: 2.6cm;
 
       @media screen {
+        // stylelint-disable-next-line function-url-quotes
         background-image: url(image_path('certificates/vorlage.jpg'));
         background-repeat: no-repeat;
         background-size: 100% 100%;

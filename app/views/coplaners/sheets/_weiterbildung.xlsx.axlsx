@@ -1,0 +1,85 @@
+wb.add_worksheet(name: 'Veranstaltungen') do |sheet|
+  columns = [
+    'ID',
+    'ID Art',
+    'Art',
+    'Weiterbildung',
+    'Datum',
+    'Start Zeit',
+    'End Zeit',
+    'ID Standort',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  events.each do |event|
+    data = [
+      event.id,                # 'ID'
+      Event.kinds[event.kind], # 'ID Art'
+      event.kind_t,            # 'Art'
+      '',                      # 'Weiterbildung'
+      event.date,              # 'Datum'
+      event.start_time,        # 'Start Zeit'
+      event.end_time,          # 'End Zeit'
+      event.department_id,     # 'ID Standort'
+      zeit                     # 'Zeit'
+    ]
+    types = [
+      :integer, # 'ID'
+      :integer, # 'ID Art'
+      nil,      # 'Art'
+      nil,      # 'Weiterbildung'
+      nil,      # 'Datum'
+      nil,      # 'Start Zeit'
+      nil,      # 'End Zeit'
+      :integer, # 'ID Standort'
+      :time     # 'Zeit'
+    ]
+    style = [
+      std_style,  # 'ID'
+      std_style,  # 'ID Art'
+      std_style,  # 'Art'
+      std_style,  # 'Weiterbildung'
+      date_style,      # 'Datum'
+      time_style,      # 'Start Zeit'
+      time_style,      # 'End Zeit'
+      std_style, # 'ID Standort'
+      date_time_style # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  axlsx_autofilter(sheet, columns, events)
+end
+
+wb.add_worksheet(name: 'Join Veranstaltung FW') do |sheet|
+  columns = [
+    'ID',
+    'Veranstaltung ID',
+    'Freiwillige/r ID',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  event_volunteers.each do |event_volunteer|
+    data = [
+      event_volunteer.id,           # 'ID'
+      event_volunteer.event_id,     # 'Veranstaltung ID'
+      event_volunteer.volunteer_id, # 'Freiwillige/r ID'
+      zeit
+    ]
+    types = [
+      nil, # 'ID'
+      nil, # 'Veranstaltung ID'
+      nil, # 'Freiwillige/r ID'
+      :time
+    ]
+    style = [
+      std_style, # 'ID'
+      std_style, # 'Veranstaltung ID'
+      std_style, # 'Freiwillige/r ID'
+      date_time_style
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  axlsx_autofilter(sheet, columns, event_volunteers)
+end

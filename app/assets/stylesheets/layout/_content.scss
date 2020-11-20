@@ -75,6 +75,7 @@
   span,
   a {
     display: block;
+
     &.whole-text {
       color: $link-color;
       text-decoration: underline;
@@ -217,9 +218,9 @@ li.button-acceptance a {
 
 .btn-lg-accepted {
   @extend .btn-success;
-  padding: 16px 32px 16px 32px;
-  margin: 16px;
   font-size: 16px;
+  margin: 16px;
+  padding: 16px 32px 16px 32px;
 }
 
 .link-icon-span-text {

@@ -28,7 +28,6 @@ class BillingExpenseTest < ActiveSupport::TestCase
   #   hour1c = create :hour, volunteer: volunteer1, meeting_date: time_z(2017, 1, 18), hourable: assignment1
   #   create :billing_expense, volunteer: volunteer1, hours: [hour1c], user: other_creator
 
-
   #   volunteer2 = create :volunteer, bank: 'Bank 2'
   #   creator = volunteer2.registrar
   #   group_assignment1 = create :group_assignment, volunteer: volunteer2, creator: creator
@@ -93,8 +92,8 @@ class BillingExpenseTest < ActiveSupport::TestCase
     really_destroy_with_deleted(BillingExpense, Hour)
     hourable = create(:assignment)
     create :billing_expense, hours: [
-        hour_for_meeting_date(time_z(2014, 2, 3), hourable),
-        hour_for_meeting_date(time_z(2015, 2, 3), hourable)
+      hour_for_meeting_date(time_z(2014, 2, 3), hourable),
+      hour_for_meeting_date(time_z(2015, 2, 3), hourable)
     ]
 
     assert_equal [
@@ -112,16 +111,16 @@ class BillingExpenseTest < ActiveSupport::TestCase
   test 'semester_scope' do
     hourable = create(:assignment)
     billing_expense1 = create :billing_expense,
-      hours: [hour_for_meeting_date(time_z(2017, 1, 12), hourable)]
+                              hours: [hour_for_meeting_date(time_z(2017, 1, 12), hourable)]
 
     billing_expense2 = create :billing_expense,
-      hours: [
-        hour_for_meeting_date(time_z(2017, 2, 1), hourable),
-        hour_for_meeting_date(time_z(2017, 5, 12), hourable)
-      ]
+                              hours: [
+                                hour_for_meeting_date(time_z(2017, 2, 1), hourable),
+                                hour_for_meeting_date(time_z(2017, 5, 12), hourable)
+                              ]
 
     create :billing_expense,
-      hours: [hour_for_meeting_date(time_z(2016, 11, 30), hourable)]
+           hours: [hour_for_meeting_date(time_z(2016, 11, 30), hourable)]
 
     assert_includes BillingExpense.semester('2016-12-01'), billing_expense1
     assert_includes BillingExpense.semester('2016-12-01'), billing_expense2

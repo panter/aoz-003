@@ -1,5 +1,5 @@
 class TrialPeriodsController < ApplicationController
-  before_action :set_trial_period, only: %i[update verify]
+  before_action :set_trial_period, only: [:update, :verify]
 
   def index
     authorize TrialPeriod

@@ -22,4 +22,3 @@ class VolunteerEventsFilterTest < ActionDispatch::IntegrationTest
   #   refute response.body.include? @volunteer_intro_visited.full_name
   # end
 end
-

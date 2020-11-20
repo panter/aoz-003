@@ -23,130 +23,130 @@ class AssignmentScopesTest < ActiveSupport::TestCase
 
   test 'no_end returns only with no end date set' do
     query = Assignment.no_end
-    assert query.include? @starts_today_no_end
-    assert query.include? @started_60_days_ago_no_end
-    assert query.include? @starts_in_one_month_no_end
-    assert query.include? @no_start_no_end
+    assert_includes query, @starts_today_no_end
+    assert_includes query, @started_60_days_ago_no_end
+    assert_includes query, @starts_in_one_month_no_end
+    assert_includes query, @no_start_no_end
   end
 
   test 'has_end returns only with end date set' do
     query = Assignment.has_end
-    assert query.include? @started_7_days_ago_ends_in_2_months
-    assert query.include? @started_60_days_ago_ended_30_days_ago
-    assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert query.include? @starts_tomorrow_ends_next_month
-    assert query.include? @started_yesterday_ends_tomorrow
-    assert query.include? @no_start_ends_today
-    assert query.include? @no_start_ends_tomorrow
+    assert_includes query, @started_7_days_ago_ends_in_2_months
+    assert_includes query, @started_60_days_ago_ended_30_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @starts_tomorrow_ends_next_month
+    assert_includes query, @started_yesterday_ends_tomorrow
+    assert_includes query, @no_start_ends_today
+    assert_includes query, @no_start_ends_tomorrow
   end
 
   test 'ended returns only with end_date in past or today' do
     query = Assignment.ended
-    assert query.include? @started_60_days_ago_ended_30_days_ago
-    assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert query.include? @no_start_ends_today
+    assert_includes query, @started_60_days_ago_ended_30_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @no_start_ends_today
   end
 
   test 'end_before returns only ended before parameter' do
     query = Assignment.end_before(@now)
-    assert query.include? @started_60_days_ago_ended_30_days_ago
-    assert query.include? @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @started_60_days_ago_ended_30_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
   end
 
   test 'end_after returns only ended after parameter' do
     query = Assignment.end_after(@now)
-    assert query.include? @started_7_days_ago_ends_in_2_months
-    assert query.include? @starts_tomorrow_ends_next_month
-    assert query.include? @started_yesterday_ends_tomorrow
-    assert query.include? @no_start_ends_tomorrow
+    assert_includes query, @started_7_days_ago_ends_in_2_months
+    assert_includes query, @starts_tomorrow_ends_next_month
+    assert_includes query, @started_yesterday_ends_tomorrow
+    assert_includes query, @no_start_ends_tomorrow
   end
 
   test 'end_within_returns_only_ended_between_range' do
     query = Assignment.end_within(@now.days_ago(10), @now.days_ago(20))
-    assert query.include? @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
   end
 
   test 'end_in_future returns only ending in the future' do
     query = Assignment.end_in_future
-    assert query.include? @started_7_days_ago_ends_in_2_months
-    assert query.include? @starts_tomorrow_ends_next_month
-    assert query.include? @started_yesterday_ends_tomorrow
-    assert query.include? @no_start_ends_tomorrow
+    assert_includes query, @started_7_days_ago_ends_in_2_months
+    assert_includes query, @starts_tomorrow_ends_next_month
+    assert_includes query, @started_yesterday_ends_tomorrow
+    assert_includes query, @no_start_ends_tomorrow
   end
 
   test 'not_ended returns only with no ending or ending in future' do
     query = Assignment.not_ended
-    assert query.include? @starts_today_no_end
-    assert query.include? @started_60_days_ago_no_end
-    assert query.include? @starts_in_one_month_no_end
-    assert query.include? @started_7_days_ago_ends_in_2_months
-    assert query.include? @starts_tomorrow_ends_next_month
-    assert query.include? @started_yesterday_ends_tomorrow
-    assert query.include? @no_start_ends_tomorrow
-    assert query.include? @no_start_no_end
+    assert_includes query, @starts_today_no_end
+    assert_includes query, @started_60_days_ago_no_end
+    assert_includes query, @starts_in_one_month_no_end
+    assert_includes query, @started_7_days_ago_ends_in_2_months
+    assert_includes query, @starts_tomorrow_ends_next_month
+    assert_includes query, @started_yesterday_ends_tomorrow
+    assert_includes query, @no_start_ends_tomorrow
+    assert_includes query, @no_start_no_end
   end
 
   test 'started returns only with start date in past or today' do
     query = Assignment.started
-    assert query.include? @starts_today_no_end
-    assert query.include? @started_60_days_ago_no_end
-    assert query.include? @started_7_days_ago_ends_in_2_months
-    assert query.include? @started_60_days_ago_ended_30_days_ago
-    assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert query.include? @started_yesterday_ends_tomorrow
+    assert_includes query, @starts_today_no_end
+    assert_includes query, @started_60_days_ago_no_end
+    assert_includes query, @started_7_days_ago_ends_in_2_months
+    assert_includes query, @started_60_days_ago_ended_30_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @started_yesterday_ends_tomorrow
   end
 
   test 'start_before returns only with start date before given date' do
     query = Assignment.start_before(@now)
-    assert query.include? @started_60_days_ago_no_end
-    assert query.include? @started_7_days_ago_ends_in_2_months
-    assert query.include? @started_60_days_ago_ended_30_days_ago
-    assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert query.include? @started_yesterday_ends_tomorrow
+    assert_includes query, @started_60_days_ago_no_end
+    assert_includes query, @started_7_days_ago_ends_in_2_months
+    assert_includes query, @started_60_days_ago_ended_30_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @started_yesterday_ends_tomorrow
   end
 
   test 'start_after returns only with start date after given date' do
     query = Assignment.start_after(@now)
-    assert query.include? @starts_in_one_month_no_end
-    assert query.include? @starts_tomorrow_ends_next_month
+    assert_includes query, @starts_in_one_month_no_end
+    assert_includes query, @starts_tomorrow_ends_next_month
   end
 
   test 'start_within returns only with start date after given date' do
     query = Assignment.start_within(@now.days_ago(12), @now.days_ago(32))
-    assert query.include? @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
   end
 
   test 'active returns only started and not ended or not ended with no start date' do
     query = Assignment.active
-    assert query.include? @starts_today_no_end
-    assert query.include? @started_60_days_ago_no_end
-    assert query.include? @started_7_days_ago_ends_in_2_months
-    assert query.include? @started_yesterday_ends_tomorrow
-    assert query.include? @no_start_ends_tomorrow
+    assert_includes query, @starts_today_no_end
+    assert_includes query, @started_60_days_ago_no_end
+    assert_includes query, @started_7_days_ago_ends_in_2_months
+    assert_includes query, @started_yesterday_ends_tomorrow
+    assert_includes query, @no_start_ends_tomorrow
   end
 
   test 'inactive returns not started, will start, ended, end today, without dates' do
     query = Assignment.inactive
-    assert query.include? @starts_in_one_month_no_end
-    assert query.include? @started_60_days_ago_ended_30_days_ago
-    assert query.include? @started_30_days_ago_ended_15_days_ago
-    assert query.include? @starts_tomorrow_ends_next_month
-    assert query.include? @no_start_ends_today
-    assert query.include? @no_start_no_end
+    assert_includes query, @starts_in_one_month_no_end
+    assert_includes query, @started_60_days_ago_ended_30_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @starts_tomorrow_ends_next_month
+    assert_includes query, @no_start_ends_today
+    assert_includes query, @no_start_no_end
   end
 
   test 'active_between returns only started and not ended between start and end date' do
     query = Assignment.active_between(70.days.ago, 5.days.ago)
-    assert query.include? @started_60_days_ago_no_end
-    assert query.include? @started_7_days_ago_ends_in_2_months
-    assert query.include? @started_60_days_ago_ended_30_days_ago
-    assert query.include? @started_30_days_ago_ended_15_days_ago
+    assert_includes query, @started_60_days_ago_no_end
+    assert_includes query, @started_7_days_ago_ends_in_2_months
+    assert_includes query, @started_60_days_ago_ended_30_days_ago
+    assert_includes query, @started_30_days_ago_ended_15_days_ago
   end
 
   test 'will_start returns only assignments that will start in future' do
     query = Assignment.will_start
-    assert query.include? @starts_in_one_month_no_end
-    assert query.include? @starts_tomorrow_ends_next_month
+    assert_includes query, @starts_in_one_month_no_end
+    assert_includes query, @starts_tomorrow_ends_next_month
   end
 
   test 'created_between' do
@@ -154,25 +154,25 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     created_after = make_assignment(start_date: 40.days.ago)
     created_within = make_assignment(start_date: 70.days.ago)
     query = Assignment.created_between(100.days.ago, 50.days.ago)
-    assert query.include? created_within
-    refute query.include? created_before
-    refute query.include? created_after
+    assert_includes query, created_within
+    refute_includes query, created_before
+    refute_includes query, created_after
   end
 
   test 'created_before' do
     created_before = make_assignment(start_date: 120.days.ago)
     created_after = make_assignment(start_date: 40.days.ago)
     query = Assignment.created_before(50.days.ago)
-    assert query.include? created_before
-    refute query.include? created_after
+    assert_includes query, created_before
+    refute_includes query, created_after
   end
 
   test 'created_after' do
     created_before = make_assignment(start_date: 120.days.ago)
     created_after = make_assignment(start_date: 40.days.ago)
     query = Assignment.created_after(50.days.ago)
-    refute query.include? created_before
-    assert query.include? created_after
+    refute_includes query, created_before
+    assert_includes query, created_after
   end
 
   test 'zurich_not_zurich' do
@@ -180,7 +180,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     zurich = Assignment.zurich
     not_zurich = Assignment.not_zurich
     assert_equal 1, zurich.count
-    assert zurich.include? assignment_zurich
+    assert_includes zurich, assignment_zurich
     assert_equal 11, not_zurich.count
   end
 
@@ -189,7 +189,7 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     internal = Assignment.internal
     external = Assignment.external
     assert_equal 11, internal.count
-    assert external.include? assignment_external
+    assert_includes external, assignment_external
     assert_equal 1, external.count
   end
 
@@ -200,9 +200,9 @@ class AssignmentScopesTest < ActiveSupport::TestCase
     less_than_six_weeks = make_assignment(start_date: 2.weeks.ago)
     more_than_8_weeks = make_assignment(start_date: 2.years.ago)
     query = Assignment.started_ca_six_weeks_ago
-    assert query.include? exactly_six_weeks
-    assert query.include? seven_weeks_ago
-    assert query.include? exactly_eight_weeks
+    assert_includes query, exactly_six_weeks
+    assert_includes query, seven_weeks_ago
+    assert_includes query, exactly_eight_weeks
     assert_not query.include? less_than_six_weeks
     assert_not query.include? more_than_8_weeks
   end

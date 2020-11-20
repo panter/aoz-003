@@ -1,0 +1,66 @@
+## This probably does not make any sense
+#
+# They may have requested this thinking we had a countries table.
+# So I add the Iso Alpha2 code lookup table below
+#
+# wb.add_worksheet(name: 'Nationalität FW') do |sheet|
+#   columns = [
+#     'ID FW',
+#     'Nationalität'
+#   ]
+
+#   sheet.add_row(columns, style: header_style, height: 25)
+#   volunteers.each do |volunteer|
+#     data = [
+#       volunteer.id, # 'ID FW',
+#       volunteer.nationality # 'Nationalität'
+#     ]
+#     types = [
+#       nil, # 'ID FW',
+#       nil # 'Nationalität'
+#     ]
+#     style = [
+#       std_style, # 'ID FW',
+#       std_style # 'Nationalität'
+#     ]
+#     sheet.add_row(data, types: types, style: style)
+#   end
+
+#   sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{volunteers.count + 1}"
+#   sheet.sheet_view.pane do |pane|
+#     pane.top_left_cell = 'A2'
+#     pane.state = :frozen_split
+#     pane.y_split = 1
+#     pane.x_split = 0
+#     pane.active_pane = :bottom_right
+#   end
+# end
+
+wb.add_worksheet(name: 'Nationalität ISO-Alpha2') do |sheet|
+  columns = [
+    'ISO Alpha2',
+    'Name (Deutsch)',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+
+  ISO3166::Country.countries.each do |country|
+    data = [
+      country.alpha2,                   # 'ID FW',
+      nationality_name(country.alpha2), # 'Nationalität'
+      zeit                              # 'Zeit'
+    ]
+    types = [
+      nil,             # 'ISO Alpha2',
+      nil,             # 'Name (Deutsch)'
+      :time            # 'Zeit'
+    ]
+    style = [
+      std_style, # 'ID FW',
+      std_style, # 'Name (Deutsch)'
+      date_time_style # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+  axlsx_autofilter(sheet, columns, ISO3166::Country.countries.count)
+end

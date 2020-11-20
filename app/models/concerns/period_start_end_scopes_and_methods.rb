@@ -40,7 +40,7 @@ module PeriodStartEndScopesAndMethods
 
     scope :active_between, lambda { |start_date, end_date|
       no_end.start_before(end_date)
-            .or(start_before(end_date).end_after(start_date))
+        .or(start_before(end_date).end_after(start_date))
     }
 
     def started_ca_six_weeks_ago?

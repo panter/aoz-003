@@ -12,7 +12,8 @@ class Client < ApplicationRecord
   GENDER_REQUESTS = [:no_matter, :man, :woman].freeze
   AGE_REQUESTS = [:age_no_matter, :age_young, :age_middle, :age_old].freeze
   PERMITS = [:N, :B, :'B-FL', :'F-FL', :'F-A', :C, :CH].freeze
-  SALUTATIONS = [:mrs, :mr, :family].freeze
+  SALUTATIONS = (Volunteer::SALUTATIONS + [:family]).freeze
+  SALUTATION_GENDER_MAP = Volunteer::SALUTATION_GENDER_MAP.merge(family: :family).freeze
   AVAILABILITY = [:flexible, :morning, :afternoon, :evening, :workday, :weekend].freeze
 
   belongs_to :user, -> { with_deleted }, inverse_of: 'clients'
@@ -96,10 +97,6 @@ class Client < ApplicationRecord
     date_between(:resigned_at, start_date, end_date)
   }
 
-  def terminatable?
-    assignments.active_or_not_yet_active.none?
-  end
-
   def self.acceptences_restricted
     acceptances.except('resigned')
   end
@@ -112,8 +109,9 @@ class Client < ApplicationRecord
     cost_units.keys.map(&:to_sym)
   end
 
-  def to_s
-    contact.full_name
+  # allow ransack to use defined scopes
+  def self.ransackable_scopes(auth_object = nil)
+    ['active', 'inactive']
   end
 
   def self.first_languages
@@ -122,17 +120,40 @@ class Client < ApplicationRecord
     end
   end
 
+  def other_authorities=(value)
+    super(value&.squish&.presence)
+  end
+
+  def competent_authority=(value)
+    super(value&.squish&.presence)
+  end
+
+  def gender
+    SALUTATION_GENDER_MAP[salutation.to_sym]
+  end
+
+  def gender_t
+    I18n.t("activerecord.attributes.client.genders.#{gender}")
+  end
+
   def german_missing?
     language_skills.german.blank?
   end
 
-  # allow ransack to use defined scopes
-  def self.ransackable_scopes(auth_object = nil)
-    ['active', 'inactive']
+  def terminatable?
+    assignments.active_or_not_yet_active.none?
+  end
+
+  def to_s
+    contact.full_name
   end
 
   def active?
     accepted? && assignments.active.any?
+  end
+
+  def active_inactive_key
+    active? ? :active : :inactive
   end
 
   def inactive?

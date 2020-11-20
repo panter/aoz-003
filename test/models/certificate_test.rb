@@ -18,11 +18,11 @@ class CertificateTest < ActiveSupport::TestCase
     certificate = Certificate.new(user: user, volunteer: volunteer)
     certificate.build_values
 
-    tandem = ["Tandem", 0]
+    tandem = ['Tandem', 0]
 
-    assert certificate.assignment_kinds['done'].include?(tandem)
-    assert certificate.assignment_kinds['available'].include?(tandem)
+    assert_includes certificate.assignment_kinds['done'], tandem
+    assert_includes certificate.assignment_kinds['available'], tandem
 
-    refute certificate.collection_for_additional_kinds.include?(tandem)
+    refute_includes certificate.collection_for_additional_kinds, tandem
   end
 end

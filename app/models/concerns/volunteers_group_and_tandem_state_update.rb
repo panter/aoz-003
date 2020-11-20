@@ -28,6 +28,10 @@ module VolunteersGroupAndTandemStateUpdate
       !ended? && started? || period_start.blank? && will_end?
     end
 
+    def active_inactive_key
+      inactive? ? :inactive : :active
+    end
+
     def inactive?
       ended? || period_start.blank? && period_end.blank? || will_start?
     end

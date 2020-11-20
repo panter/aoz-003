@@ -15,7 +15,7 @@ table.table.table-striped.assignment-logs-table
       - client = assignment.client
       tr
         td.index-action-cell.hidden-print
-          - if policy(assignment).show? && assignment.pdf.exists?
+          - if policy(assignment).show? && assignment.pdf.attached?
             = button_link icon_span(:download), assignment_path(assignment, format: :pdf),
               title: 'Herunterladen'
           - if policy(assignment).reactivate?

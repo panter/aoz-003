@@ -191,6 +191,6 @@ class VolunteerWithBillableHoursTest < ActiveSupport::TestCase
   end
 
   def find_volunteer_in_collection(result, searched_volunteer)
-    result.find { |volunteer, hours, total_hours| volunteer == searched_volunteer }
+    result.find { |volunteer, _hours, _total_hours| volunteer == searched_volunteer }
   end
 end

@@ -53,7 +53,6 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
   )
 
   @volunteers.each do |volunteer|
-
     sheet.add_row(
       [
         volunteer.id,                             # 00

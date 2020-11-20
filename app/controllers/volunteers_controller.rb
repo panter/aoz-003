@@ -9,14 +9,15 @@ class VolunteersController < ApplicationController
     @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @volunteers = @q.result
     respond_to do |format|
-      format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
+      format.xlsx { render xlsx: 'index', filename: "Freiwilligen_Liste_#{Time.zone.now.strftime('%Y-%m-%dT%H%M%S')}" }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
     end
   end
 
   def search
     authorize Volunteer
-    @q = policy_scope(Volunteer).ransack contact_full_name_cont: params[:term]
+    @q = policy_scope(Volunteer).ransack params[:q]
+    @q.sorts = ['acceptance asc']
     @volunteers = @q.result distinct: true
     respond_to do |format|
       format.json
@@ -50,7 +51,7 @@ class VolunteersController < ApplicationController
     if @volunteer.save
       if @volunteer.accepted? && @volunteer.internal? && @volunteer.user
         redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created_invite_sent',
-          email: @volunteer.primary_email)
+                                                               email: @volunteer.primary_email)
       else
         redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_created')
       end
@@ -69,7 +70,7 @@ class VolunteersController < ApplicationController
         @volunteer.internal? && !@volunteer.user && @volunteer.save
       auto_assign_department!
       redirect_to(edit_volunteer_path(@volunteer),
-        notice: t('invite_sent', email: @volunteer.primary_email))
+                  notice: t('invite_sent', email: @volunteer.primary_email))
     elsif @volunteer.save
       auto_assign_department! if @volunteer.saved_change_to_attribute?(:acceptance) && @volunteer.invited?
       redirect_to edit_volunteer_path(@volunteer), notice: t('volunteer_updated')
@@ -134,6 +135,7 @@ class VolunteersController < ApplicationController
 
   def not_resigned
     return if params[:q]
+
     @volunteers = @volunteers.not_resigned
   end
 

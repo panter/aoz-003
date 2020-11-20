@@ -11,14 +11,17 @@ class GroupOffersController < ApplicationController
     @group_offers = @q.result
     respond_to do |format|
       format.html { @group_offers = @group_offers.paginate(page: params[:page]) }
-      format.xlsx
+      format.xlsx do
+        render xlsx: 'index', filename: "Gruppenangebote_#{Time.zone.now.strftime('%Y-%m-%dT%H%M%S')}"
+      end
     end
   end
 
   def search
     authorize GroupOffer
-    @q = policy_scope(GroupOffer).ransack search_volunteer_cont: params[:term]
-    @group_offers = @q.result distinct: true
+    @q = policy_scope(GroupOffer).ransack params[:q]
+    @q.sorts = ['active desc', 'created_at desc']
+    @group_offers = @q.result
     respond_to do |format|
       format.json
     end
@@ -39,8 +42,9 @@ class GroupOffersController < ApplicationController
   end
 
   def search_volunteer
-    @q = policy_scope(Volunteer.candidates_for_group_offer(@group_offer))
-      .ransack(contact_full_name_cont: params[:term])
+    @q = policy_scope(
+      Volunteer.candidates_for_group_offer(@group_offer)
+    ).ransack(params[:q])
     @volunteers = @q.result distinct: true
     respond_to do |format|
       format.json
@@ -97,7 +101,7 @@ class GroupOffersController < ApplicationController
       period_end: group_offer_params[:period_end],
       period_end_set_by: current_user,
       active: false
-      )
+    )
       redirect_to group_offers_path, notice: 'Gruppenangebots Beendigung erfolgreich eingeleitet.'
     else
       render :initiate_termination
@@ -112,7 +116,7 @@ class GroupOffersController < ApplicationController
       )
     end
     redirect_to initiate_termination_group_offer_path(@group_offer),
-      notice: 'Gruppeneinsätze wurden beendet.'
+                notice: 'Gruppeneinsätze wurden beendet.'
   end
 
   private

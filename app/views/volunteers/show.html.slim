@@ -38,7 +38,7 @@ h2.small Persönlicher Hintergrund
         td= l(@volunteer.birth_year) if @volunteer.birth_year.present?
       tr
         td= t_attr(:avatar)
-        td= image_tag @volunteer.avatar.url(:thumb) if @volunteer.avatar.present?
+        td= image_tag rails_representation_url(@volunteer.avatar_thumb) if @volunteer.avatar.present?
       tr
         td= t_attr(:nationality)
         td= nationality_name(@volunteer.nationality)

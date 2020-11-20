@@ -1,3 +1,7 @@
+# rubocop:disable Style/MixinUsage
+include ActionDispatch::TestProcess
+# rubocop:enable Style/MixinUsage
+
 FactoryBot.define do
   factory :document do
     title { FFaker::Name }
@@ -5,6 +9,10 @@ FactoryBot.define do
     category2 { FFaker::Name }
     category3 { FFaker::Name }
     category4 { FFaker::Name }
-    file { File.new(File.join(Rails.root, 'test/fixtures/sample.pdf')) }
+    file do
+      fixture_file_upload(
+        File.join(Rails.root, 'test/fixtures/sample.pdf'), 'application/pdf'
+      )
+    end
   end
 end

@@ -36,8 +36,8 @@ class BillingExpensesController < ApplicationController
     end
 
     send_data merged_expenses.to_pdf,
-      disposition: 'inline',
-      filename: "Spesenauszahlungen-#{Time.zone.now.strftime '%F'}.pdf"
+              disposition: 'inline',
+              filename: "Spesenauszahlungen-#{Time.zone.now.strftime '%F'}.pdf"
   end
 
   def show
@@ -67,10 +67,10 @@ class BillingExpensesController < ApplicationController
     BillingExpense.create_for!(volunteers, current_user, selected_semester)
 
     redirect_to billing_expenses_url,
-      notice: 'Spesenformulare wurden erfolgreich erstellt.'
+                notice: 'Spesenformulare wurden erfolgreich erstellt.'
   rescue ActiveRecord::RecordInvalid => error
     redirect_to new_billing_expense_url(selected_volunteers: selected_volunteers),
-      notice: error.message
+                notice: error.message
   end
 
   def update_overwritten_amount
@@ -104,14 +104,14 @@ class BillingExpensesController < ApplicationController
 
   def selected_billing_semester
     @selected_billing_semester = if params[:q].blank?
-      set_default_filter(semester: default_billing_semester)
-      default_billing_semester
-    elsif !@billing_semester_filters.pluck(:value).include? params[:q][:semester]
-      params.permit![:q][:semester] = default_billing_semester
-      default_billing_semester
-    else
-      params[:q][:semester]
-    end
+                                   set_default_filter(semester: default_billing_semester)
+                                   default_billing_semester
+                                 elsif !@billing_semester_filters.pluck(:value).include? params[:q][:semester]
+                                   params.permit![:q][:semester] = default_billing_semester
+                                   default_billing_semester
+                                 else
+                                   params[:q][:semester]
+                                 end
   end
 
   def pdf_file_name(record)

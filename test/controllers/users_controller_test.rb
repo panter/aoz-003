@@ -5,7 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @superadmin = create :user, role: 'superadmin'
   end
 
-  test "non superadmins should not be allowed to update others" do
+  test 'non superadmins should not be allowed to update others' do
     roles = User::ROLES.dup
     (roles - ['superadmin']).each_with_index do |role, i|
       params = {
@@ -22,7 +22,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "non superadmins should not be allowed to edit their own rule" do
+  test 'non superadmins should not be allowed to edit their own rule' do
     roles = User::ROLES.dup
     (roles - ['superadmin']).each_with_index do |role, i|
       params = {
@@ -39,7 +39,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "superadmin should be allowed to update other users" do
+  test 'superadmin should be allowed to update other users' do
     roles = User::ROLES.dup
     (roles - ['superadmin']).each_with_index do |role, i|
       params = {

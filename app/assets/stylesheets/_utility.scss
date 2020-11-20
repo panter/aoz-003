@@ -1,4 +1,4 @@
-@import "bootstrap_overwrites";
+@import 'bootstrap_overwrites';
 
 // Margin utility classes
 // Generates utility classes for margin and padding
@@ -16,16 +16,16 @@
 
 // types:
 $utility_types: (
-  m: "margin",
-  p: "padding",
+  m: 'margin',
+  p: 'padding',
 );
 
 // sides:
 $utility_sides: (
-  t: "top",
-  r: "right",
-  b: "bottom",
-  l: "left",
+  t: 'top',
+  r: 'right',
+  b: 'bottom',
+  l: 'left',
 );
 
 // sizes:

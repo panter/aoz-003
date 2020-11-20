@@ -1,0 +1,73 @@
+wb.add_worksheet(name: 'Begleitungen') do |sheet|
+  columns = [
+    'ID',
+    'ID Status',
+    'Status',
+    'ID Freiwillige/r',
+    'Freiwillige/r',
+    'ID Klient/in',
+    'Klient/in',
+    'Einsatzbeginn',
+    'Einsatzende',
+    'Einsatzbeginn (in Monaten)',
+    'Einsatzende (in Monaten)',
+    'Laufzeit (in Mte.)',
+    'Probezeit (nach 1 Mt.)',
+    'Zeit'
+  ]
+  sheet.add_row(columns, style: header_style, height: 25)
+  assignments.each do |assignment|
+    data = [
+      assignment.id,                                # 'ID'
+      assignment.active_inactive_key,               # 'ID Status'
+      t("state.#{assignment.active_inactive_key}"), # 'Status'
+      assignment.volunteer_id,                      # 'ID Freiwillige/r'
+      assignment.volunteer.full_name,               # 'Freiwillige/r'
+      assignment.client_id,                         # 'ID Klient/in'
+      assignment.client.contact.full_name,          # 'Klient/in'
+      assignment.period_start,                      # 'Einsatzbeginn'
+      assignment.period_end,                        # 'Einsatzende'
+      '',                                           # 'Einsatzbeginn (in Monaten)'
+      '',                                           # 'Einsatzende (in Monaten)'
+      '',                                           # 'Laufzeit (in Mte.)'
+      assignment.probation_period,                  # 'Probezeit (nach 1 Mt.)'
+      zeit                                          # 'Zeit'
+    ]
+    types = [
+      :integer, # 'ID'
+      nil,      # 'ID Status'
+      nil,      # 'Status'
+      :integer, # 'ID Freiwillige/r'
+      nil,      # 'Freiwillige/r'
+      :integer, # 'ID Klient/in'
+      nil,      # 'Klient/in'
+      nil,      # 'Einsatzbeginn'
+      nil,      # 'Einsatzende'
+      nil,      # 'Einsatzbeginn (in Monaten)'
+      nil,      # 'Einsatzende (in Monaten)'
+      nil,      # 'Laufzeit (in Mte.)'
+      :time,    # 'Probezeit (nach 1 Mt.)'
+      :time     # 'Zeit'
+    ]
+
+    style = [
+      std_style,       # 'ID'
+      std_style,       # 'ID Status'
+      std_style,       # 'Status'
+      std_style,       # 'ID Freiwillige/r'
+      std_style,       # 'Freiwillige/r'
+      std_style,       # 'ID'
+      std_style,       # 'Klient/in'
+      date_style,      # 'Einsatzbeginn'
+      date_style,      # 'Einsatzende'
+      std_style,       # 'Einsatzbeginn (in Monaten)'
+      std_style,       # 'Einsatzende (in Monaten)'
+      std_style,       # 'Laufzeit (in Mte.)'
+      date_time_style, # 'Probezeit (nach 1 Mt.)'
+      date_time_style  # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  axlsx_autofilter(sheet, columns, assignments)
+end

@@ -60,7 +60,6 @@ class CertificatesController < ApplicationController
       .except(:assignment_kinds).merge(volunteer: @volunteer, user_id: current_user.id)
   end
 
-
   def set_certificate
     @certificate = Certificate.find(params[:id])
     @volunteer = @certificate.volunteer

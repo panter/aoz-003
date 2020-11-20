@@ -24,7 +24,6 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
     @client3 = create :client, user: @superadmin
     @client3.contact.update(first_name: 'River', last_name: 'Song')
 
-
     # ASSIGNMENTS
     @assignment1 = create :assignment, volunteer: @volunteer1, client: @client1
     @assignment2 = create :assignment, volunteer: @volunteer2, client: @client2
@@ -46,23 +45,23 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
   end
 
   test 'enter_volunteer_search_text_brings_suggestions' do
-    fill_autocomplete 'q[volunteer_contact_full_name_cont]', with: 'Whi', items_expected: 2,
-      check_items: [@assignment1.volunteer.contact.full_name, @assignment3.volunteer.contact.full_name]
+    fill_in name: 'q[volunteer_contact_full_name_cont]', with: 'Whi'
+    wait_for_ajax
+    within '.autocomplete-suggestions' do
+      assert_text @assignment1.volunteer.contact.full_name, normalize_ws: true
+      assert_text @assignment3.volunteer.contact.full_name, normalize_ws: true
+    end
   end
 
   test 'suggestions volunteer search triggers the search correctly' do
-    fill_autocomplete 'q[volunteer_contact_full_name_cont]', with: 'Wal'
+    fill_in name: 'q[volunteer_contact_full_name_cont]', with: 'Wal'
+    wait_for_ajax
     click_button 'Freiwillige Suchen'
     visit current_url
     within 'tbody' do
       assert_text @assignment1.volunteer.contact.full_name
       assert_equal 1, find_all('tr').size
     end
-  end
-
-  test 'searching for a volunteer, does not mix up with clients name' do
-    fill_autocomplete 'q[volunteer_contact_full_name_cont]', with: 'er', items_expected: 2,
-      check_items: [@assignment1.volunteer.contact.full_name, @assignment3.volunteer.contact.full_name]
   end
 
   # ClIENT SEARCH
@@ -76,23 +75,15 @@ class AssignmentSearchesTest < ApplicationSystemTestCase
     refute_text @assignment1.client.contact.full_name, wait: 0
   end
 
-  test 'enter_client_search_text_brings_suggestions' do
-    fill_autocomplete 'q[client_contact_full_name_cont]', with: 'R', items_expected: 2,
-      check_items: [@assignment2.client.contact.full_name, @assignment3.client.contact.full_name]
-  end
-
   test 'suggestions client search triggers the search correctly' do
-    fill_autocomplete 'q[client_contact_full_name_cont]', with: 'Pon'
+    fill_in name: 'q[client_contact_full_name_cont]', with: 'Pon'
+    wait_for_ajax
+
     click_button 'Klient/innen Suchen'
     visit current_url
     within 'tbody' do
       assert_text @assignment1.client.contact.full_name
       assert_equal 1, find_all('tr').size
     end
-  end
-
-  test 'searching for a client, does not mix up with volunteers name' do
-    fill_autocomplete 'q[client_contact_full_name_cont]', with: 'er', items_expected: 1,
-      check_items: [@assignment3.client.contact.full_name]
   end
 end

@@ -1,0 +1,125 @@
+wb.add_worksheet(name: 'Freiwillige') do |sheet|
+  columns = [
+    'id',
+    'ID Anrede',
+    'Anrede',
+    'ID Geschlecht',
+    'Geschlecht', # will add transformed salutation here, because gender isn't in the model
+    'Nachname',
+    'Vorname',
+    'PLZ',
+    'Ort',
+    'Geburtsdatum',
+    'ID Prozess',
+    'Prozess',
+    'Anzahl begleitungen',
+    'Anzahl Gruppenangebote',
+    'Spesenverzicht',
+    'Einführungskurs besucht',
+    'Erstellt am',
+    'Anmeldedatum',
+    'Eingeladen am',
+    'Akzeptiert am',
+    'Abgelehnt am',
+    'Beendet am',
+    'Einsatz',
+    'ID Status',
+    'Status',
+    'Intern/Extern',
+    'Zeit'
+  ]
+
+  sheet.add_row(columns, style: header_style, height: 25)
+  volunteers.each do |volunteer|
+    data = [
+      volunteer.id,                                 # 'id',
+      volunteer.salutation,                         # 'ID Anrede',
+      t("salutation.#{volunteer.salutation}"),      # 'Anrede',
+      volunteer.gender,                             # 'ID Geschlecht',
+      volunteer.gender_t,                           # 'Geschlecht',
+      volunteer.contact.last_name,                  # 'Nachname',
+      volunteer.contact.first_name,                 # 'Vorname',
+      volunteer.contact.postal_code,                # 'PLZ',
+      volunteer.contact.city,                       # 'Ort',
+      volunteer.birth_year,                         # 'Geburtsdatum',
+      Volunteer.acceptances[volunteer.acceptance],  # 'ID Prozess',
+      volunteer.acceptance_t,                       # 'Prozess',
+      volunteer.assignments.count,                  # 'Anzahl begleitungen',
+      volunteer.group_assignments.count,            # 'Anzahl Gruppenangebote',
+      volunteer.waive,                              # 'Spesenverzicht',
+      volunteer.intro_course,                       # 'Einführungskurs besucht',
+      volunteer.created_at,                         # 'Erstellt am'
+      volunteer.undecided_at,                       # 'Anmeldedatum',
+      volunteer.invited_at,                         # 'Eingeladen am',
+      volunteer.accepted_at,                        # 'Akzeptiert am',
+      volunteer.rejected_at,                        # 'Abgelehnt am',
+      volunteer.resigned_at,                        # 'Beendet am',
+      '',                                           # 'Einsatz',
+      volunteer.active_inactive_key,                # 'ID Status'
+      t("state.#{volunteer.active_inactive_key}"),  # 'Status',
+      volunteer.external,                           # 'Intern/Extern',
+      zeit                                          # 'Zeit'
+    ]
+    types = [
+      :integer,  # 'id',
+      nil,       # 'ID Anrede',
+      nil,       # 'Anrede',
+      nil,       # 'ID Geschlecht',
+      nil,       # 'Geschlecht',
+      nil,       # 'Nachname',
+      nil,       # 'Vorname',
+      nil,       # 'PLZ',
+      nil,       # 'Ort',
+      nil,       # 'Geburtsdatum',
+      :integer,  # 'ID Prozess',
+      nil,       # 'Prozess',
+      :integer,  # 'Anzahl begleitungen',
+      :integer,  # 'Anzahl Gruppenangebote',
+      nil,       # 'Spesenverzicht',
+      nil,       # 'Einführungskurs besucht',
+      :time,     # 'Erstellt am'
+      :time,     # 'Anmeldedatum',
+      :time,     # 'Eingeladen am',
+      :time,     # 'Akzeptiert am',
+      :time,     # 'Abgelehnt am',
+      :time,     # 'Beendet am',
+      nil,       # 'Einsatz',
+      nil,       # 'ID Status'
+      nil,       # 'Status',
+      nil,       # 'Intern/Extern',
+      :time      # 'Zeit'
+    ]
+    style = [
+      std_style,  # 'id',
+      std_style,  # 'ID Anrede',
+      std_style,  # 'Anrede',
+      std_style,  # 'ID Geschlecht',
+      std_style,  # 'Geschlecht',
+      std_style,  # 'Nachname',
+      std_style,  # 'Vorname',
+      std_style,  # 'PLZ',
+      std_style,  # 'Ort',
+      date_style, # 'Geburtsdatum',
+      std_style,  # 'ID Prozess',
+      std_style,  # 'Prozess',
+      std_style,  # 'Anzahl begleitungen',
+      std_style,  # 'Anzahl Gruppenangebote',
+      std_style,  # 'Spesenverzicht',
+      std_style,  # 'Einführungskurs besucht',
+      date_time_style, # 'Erstellt am'
+      date_time_style, # 'Anmeldedatum',
+      date_time_style, # 'Eingeladen am',
+      date_time_style, # 'Akzeptiert am',
+      date_time_style, # 'Abgelehnt am',
+      date_time_style, # 'Beendet am',
+      std_style,  # 'Einsatz',
+      std_style,  # 'ID Status'
+      std_style,  # 'Status',
+      std_style,  # 'Intern/Extern',
+      date_time_style # 'Zeit'
+    ]
+    sheet.add_row(data, types: types, style: style)
+  end
+
+  axlsx_autofilter(sheet, columns, volunteers)
+end

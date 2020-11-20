@@ -17,7 +17,7 @@ class BillingExpense < ApplicationRecord
 
   scope :semester, ->(date) { joins(:hours).merge(Hour.semester(date)) }
 
-  FINAL_AMOUNT_SQL = "CASE WHEN overwritten_amount IS NULL THEN amount ELSE overwritten_amount END".freeze
+  FINAL_AMOUNT_SQL = 'CASE WHEN overwritten_amount IS NULL THEN amount ELSE overwritten_amount END'.freeze
   scope :sort_by_final_amount_asc, lambda {
     order(Arel.sql("#{FINAL_AMOUNT_SQL} asc"))
   }
@@ -37,7 +37,7 @@ class BillingExpense < ApplicationRecord
   def ransortable_attributes(auth_object = nil)
     super(auth_object) + [
       :sort_by_final_amount_asc,
-      :sort_by_final_amount_desc,
+      :sort_by_final_amount_desc
     ]
   end
 

@@ -53,7 +53,7 @@ class PerformanceReportsController < ApplicationController
 
   def report_params
     params.require(:performance_report).permit(:period_start, :period_end, :users_id,
-      :report_content, :comment, :title, :scope, :extern)
+                                               :report_content, :comment, :title, :scope, :extern)
   end
 
   def value_display_orders
@@ -62,7 +62,7 @@ class PerformanceReportsController < ApplicationController
         :created, :inactive, :resigned, [:total, :active],
         :active_assignment, :active_group_assignment, :only_assignment_active, :only_group_active, :active_both, [:active_total, :active],
         :assignment_hour_records, :assignment_hours, :group_offer_hour_records, :group_offer_hours, [:total_hours, :active],
-        :assignment_feedbacks, :group_offer_feedbacks, [:total_feedbacks, :active],
+        :assignment_feedbacks, :group_offer_feedbacks, [:total_feedbacks, :active]
         # :assignment_trial_feedbacks, :group_offer_trial_feedbacks, [:total_trial_feedbacks, :active]
       ] + Event.kinds.keys.map(&:to_sym) + [[:total_events, :active]],
       clients: [:created, :inactive, :resigned, :active_assignment, [:total, :active]],

@@ -1,0 +1,42 @@
+---
+plugins:
+  - prettier
+extends:
+  - prettier
+  - standard
+env:
+  browser: true
+  commonjs: false
+  es6: true
+  node: false
+  jquery: true
+parserOptions:
+  sourceType: script
+  ecmaVersion: 2018
+globals:
+  Routes: readonly
+rules:
+  prettier/prettier:
+    - error
+    - singleQuote: true
+      parser: flow
+  no-const-assign: error
+  no-this-before-super: 'off'
+  no-undef: 'off'
+  no-unreachable: warn
+  no-unused-vars:
+    - error
+    - vars: local
+      args: after-used
+      ignoreRestSiblings: true
+  constructor-super: warn
+  valid-typeof: 'off'
+  camelcase: 'off'
+  comma-dangle:
+    - error
+    - arrays: always-multiline
+      objects: always-multiline
+      imports: always-multiline
+      exports: never
+      functions: never
+  space-before-function-paren: 'off'

@@ -45,9 +45,11 @@ $navbar-default-border: $white;
 $navbar-default-bg: $white;
 
 // Print preview
+// stylelint-disable-next-line
 $print-preview-shadow: 0 0 .5cm rgba(0, 0, 0, .5);
 
-// fix problem that bootstraps _utilities.scss#L30 adds .show { display: block !important }
+// fix problem that bootstraps _utilities.scss#L30
+// adds .show { display: block !important }
 // so on pages with action show the flex based sticky footer was not working
 body.show {
   display: flex !important;

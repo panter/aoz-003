@@ -1,7 +1,9 @@
 json.array!(@group_offers) do |group_offer|
-  json.id group_offer.id
-  json.volunteers group_offer.volunteer_contacts.pluck(:full_name).select { |name| name.match(/#{params[:term]}/i) }
-  json.label group_offer.volunteer_contacts.pluck(:full_name).select { |name| name.match(/#{params[:term]}/i) }.join('; ') + \
-    " – #{group_offer.title}"
-  json.value group_offer.volunteer_contacts.pluck(:full_name).select { |name| name.match(/#{params[:term]}/i) }
+  volunteers = group_offer.volunteer_contacts.pluck(:full_name).select do |name|
+    name.match(/#{params[:q][:search_volunteer_cont]}/i)
+  end.join('; ')
+  json.data do
+    json.search volunteers
+  end
+  json.value "#{volunteers} – #{group_offer.title}"
 end

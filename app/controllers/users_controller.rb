@@ -16,7 +16,8 @@ class UsersController < ApplicationController
 
   def search
     authorize User
-    @q = User.ransack full_name_cont: params[:term]
+    @q = User.ransack params[:q]
+    @q.sorts = ['role asc']
     @users = @q.result distinct: true
     respond_to do |format|
       format.json

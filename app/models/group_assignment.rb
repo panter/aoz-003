@@ -58,6 +58,7 @@ class GroupAssignment < ApplicationRecord
 
   def mail_superadmins
     return unless created_by
+
     NotificationMailer.volunteer_added_to_group_offer(self).deliver_now unless created_by.superadmin?
   end
 

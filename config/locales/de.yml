@@ -350,9 +350,11 @@ de:
       client:
         <<: [*id-generic_keys, *id-client-acceptance]
         acceptance: Prozess
+        acceptances: *id-client-acceptance
         actual_activities: Aktuelle Tätigkeiten
         age_request: Alter Freiwillige/r
         cost_unit: Kostenträger
+        cost_units: *id-client-cost-units
         city: Stadt
         competent_authority: Anmeldende Stelle
         other_authorities: Weitere involvierte Stellen
@@ -369,6 +371,11 @@ de:
         relatives: Verwandte/r
         user: User
         reserved_by: Reserviert
+        gender: Geschlecht
+        genders:
+          female: Frau / Mädchen
+          male: Mann / Junge
+          family: Familie
       contact:
         <<: *id-generic_keys
         extended: Adresszusatz
@@ -586,6 +593,10 @@ de:
         waive_alternative: 'Spesenverzicht'
         woman: Frau
         working_percent: Stellenprozent
+        gender: Geschlecht
+        genders:
+          female: Frau
+          male: Mann
       trial_period:
         verified_by: Probezeit quittiert von
         verified_at: Probezeit quittiert am

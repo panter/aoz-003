@@ -1,5 +1,5 @@
 ul.list-inline
   li= button_link icon_span(:back), group_offer_path(@group_assignment.group_offer)
-  - if @group_assignment.pdf.exists?
+  - if @group_assignment.pdf.attached?
     li= button_link icon_span(:download), group_assignment_path(@group_assignment, format: :pdf),
           title: 'Herunterladen', target: '_blank'

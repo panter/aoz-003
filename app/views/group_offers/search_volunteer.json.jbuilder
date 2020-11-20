@@ -1,5 +1,6 @@
 json.array!(@volunteers) do |volunteer|
-  json.id volunteer.id
-  json.label volunteer.contact.full_name
+  json.data do
+    json.search volunteer.contact.full_name
+  end
   json.value volunteer.contact.full_name
 end

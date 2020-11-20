@@ -1,2 +1,2 @@
 wb = xlsx_package.workbook
-render partial: 'client_table', locals: { wb: wb, clients: @clients }
+render partial: 'client_table', locals: axlsx_locals(wb, clients: @clients)

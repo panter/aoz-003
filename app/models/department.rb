@@ -44,7 +44,7 @@ class Department < ApplicationRecord
   def validate_destroyable
     unless destroyable?
       errors.add(:group_offers, :has_unterminated,
-        go_count: I18n.t('group_offer_not_ended_count', count: group_offers.unterminated.count))
+                 go_count: I18n.t('group_offer_not_ended_count', count: group_offers.unterminated.count))
       throw :abort
     end
   end

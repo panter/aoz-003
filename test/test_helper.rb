@@ -4,11 +4,17 @@ require 'database_cleaner'
 require 'policy_assertions'
 require 'webdrivers/chromedriver'
 
+Webdrivers.install_dir = '.ci-cache/webdrivers'
+
 Dir[Rails.root.join 'test/utility/**/*.rb'].each { |path| require path }
 
 class ActionMailer::TestCase
   include ReminderMailingBuilder
   include GroupOfferAndAssignment
+end
+
+FactoryBot::SyntaxRunner.class_eval do
+  include ActionDispatch::TestProcess
 end
 
 class ActiveSupport::TestCase
@@ -69,8 +75,8 @@ class ActiveSupport::TestCase
     end
   end
 
-  def time_z(year, month = nil, day = nil, hour = 0, minute = 0, second = 0)
+  def time_z(year, month = nil, day = nil, hour = 0, minute = 0)
     year, month, day = year.split('-').map(&:to_i) if month.blank?
-    Time.zone.local(year, month, day, hour, minute, second)
+    Time.zone.local(year, month, day, hour, minute)
   end
 end
