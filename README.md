@@ -9,18 +9,17 @@ Ruby version: 2.4.2
 
 ## Table of content
 
-- [AOZ Voluntary Platform](#aoz-voluntary-platform)
-  - [Pipeline Status](#pipeline-status)
-  - [Table of content](#table-of-content)
-    - [Dependencies](#dependencies)
-    - [Developer Dependencies](#developer-dependencies)
-    - [User seeds for development](#user-seeds-for-development)
-    - [Create initial superadmin account](#create-initial-superadmin-account)
-    - [Sort locale yaml files](#sort-locale-yaml-files)
-    - [Importing from access db with rake task](#importing-from-access-db-with-rake-task)
-    - [Run model, integration and controller tests](#run-model-integration-and-controller-tests)
-    - [Run system (acceptance) tests](#run-system-acceptance-tests)
-    - [LICENSE](#license)
+* [AOZ Voluntary Platform](#aoz-voluntary-platform)
+  * [Pipeline Status](#pipeline-status)
+  * [Table of content](#table-of-content)
+    * [Dependencies](#dependencies)
+    * [Developer Dependencies](#developer-dependencies)
+    * [User seeds for development](#user-seeds-for-development)
+    * [Create initial superadmin account](#create-initial-superadmin-account)
+    * [Sort locale yaml files](#sort-locale-yaml-files)
+    * [Run model, integration and controller tests](#run-model-integration-and-controller-tests)
+    * [Run system (acceptance) tests](#run-system-acceptance-tests)
+    * [LICENSE](#license)
 
 ### Dependencies
 
@@ -71,14 +70,6 @@ Run this task, in order to sort the locale files alphabetically.
 
 ```bash
 $  rails i18n:sort
-```
-
-### Importing from access db with rake task
-
-Run in the command line:
-
-```bash
-$  rails access:import file=path/to/access_file.accdb
 ```
 
 ### Run model, integration and controller tests

@@ -276,7 +276,6 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
-    mdb (0.4.1)
     memoist (0.16.2)
     method_source (1.0.0)
     mime-types (3.3.1)
@@ -582,7 +581,6 @@ DEPENDENCIES
   letter_opener_web
   listen
   lodash-rails
-  mdb
   minitest
   overcommit
   panter-rails-deploy
