@@ -10,7 +10,7 @@
         th= sort_link @q, :client_contact_last_name, 'Klient/in'
         th= sort_link @q, :period_start, t_attr(:period_start, Assignment)
         th= sort_link @q, :period_end, t_attr(:period_end, Assignment)
-        th= sort_link @q, :client_involved_authority_profile_contact_full_name, t_attr(:involved_authority)
+        th= sort_link @q, :client_involved_authority_profile_contact_full_name, t_attr(:involved_authority, Client)
         th= sort_link @q, :client_competent_authority, t_attr(:competent_authority, Client)
         th= sort_link @q, :client_other_authorities, t_attr(:other_authorities, Client)
         - if policy(Assignment).show_comments?
