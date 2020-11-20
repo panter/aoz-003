@@ -11,7 +11,7 @@ class AssignmentsController < ApplicationController
     @assignments = @q.result
     respond_to do |format|
       format.xlsx do
-        render xlsx: 'index', filename: 'Begleitungen'
+        render xlsx: 'index', filename: "Begleitungen_#{Time.zone.now.strftime('%Y-%m-%dT%H%M%S')}"
       end
       format.html do
         @assignments = @assignments.paginate(page: params[:page],

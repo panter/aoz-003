@@ -11,7 +11,9 @@ class GroupOffersController < ApplicationController
     @group_offers = @q.result
     respond_to do |format|
       format.html { @group_offers = @group_offers.paginate(page: params[:page]) }
-      format.xlsx
+      format.xlsx do
+        render xlsx: 'index', filename: "Gruppenangebote_#{Time.zone.now.strftime('%Y-%m-%dT%H%M%S')}"
+      end
     end
   end
 

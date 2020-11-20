@@ -20,8 +20,8 @@
 #       nil # 'Nationalität'
 #     ]
 #     style = [
-#       standard_format, # 'ID FW',
-#       standard_format # 'Nationalität'
+#       std_style, # 'ID FW',
+#       std_style # 'Nationalität'
 #     ]
 #     sheet.add_row(data, types: types, style: style)
 #   end
@@ -56,20 +56,11 @@ wb.add_worksheet(name: 'Nationalität ISO-Alpha2') do |sheet|
       :time            # 'Zeit'
     ]
     style = [
-      standard_format, # 'ID FW',
-      standard_format, # 'Name (Deutsch)'
-      date_time_format # 'Zeit'
+      std_style, # 'ID FW',
+      std_style, # 'Name (Deutsch)'
+      date_time_style # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end
-
-  last_row_no = ISO3166::Country.countries.count + 1
-  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{last_row_no}"
-  sheet.sheet_view.pane do |pane|
-    pane.top_left_cell = 'A2'
-    pane.state = :frozen_split
-    pane.y_split = 1
-    pane.x_split = 0
-    pane.active_pane = :bottom_right
-  end
+  axlsx_autofilter(sheet, columns, ISO3166::Country.countries.count)
 end

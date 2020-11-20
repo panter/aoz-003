@@ -32,8 +32,8 @@ tr id=dom_id(client)
     td
       - if client.involved_authority.present?
         = link_to client.involved_authority.full_name, profile_url_path(client.involved_authority)
-  td= client.competent_authority
-  td= client.other_authorities
+  = td_truncate_content_modal(client.competent_authority, t_attr(:competent_authority, Client), shorten_size: 60)
+  = td_truncate_content_modal(client.other_authorities, t_attr(:other_authorities, Client), shorten_size: 60)
   td.no-wrap= l(client.created_at.to_date)
   - if policy(Client).show_comments?
-    = td_truncate_content_modal(client.comments, 'Bemerkungen')
+    = td_truncate_content_modal(client.comments, 'Bemerkungen', shorten_size: 60)

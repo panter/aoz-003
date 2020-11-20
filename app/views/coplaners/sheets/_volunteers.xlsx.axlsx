@@ -90,43 +90,36 @@ wb.add_worksheet(name: 'Freiwillige') do |sheet|
       :time      # 'Zeit'
     ]
     style = [
-      standard_format,  # 'id',
-      standard_format,  # 'ID Anrede',
-      standard_format,  # 'Anrede',
-      standard_format,  # 'ID Geschlecht',
-      standard_format,  # 'Geschlecht',
-      standard_format,  # 'Nachname',
-      standard_format,  # 'Vorname',
-      standard_format,  # 'PLZ',
-      standard_format,  # 'Ort',
-      date_format,      # 'Geburtsdatum',
-      standard_format,  # 'ID Prozess',
-      standard_format,  # 'Prozess',
-      standard_format,  # 'Anzahl begleitungen',
-      standard_format,  # 'Anzahl Gruppenangebote',
-      standard_format,  # 'Spesenverzicht',
-      standard_format,  # 'Einführungskurs besucht',
-      date_time_format, # 'Erstellt am'
-      date_time_format, # 'Anmeldedatum',
-      date_time_format, # 'Eingeladen am',
-      date_time_format, # 'Akzeptiert am',
-      date_time_format, # 'Abgelehnt am',
-      date_time_format, # 'Beendet am',
-      standard_format,  # 'Einsatz',
-      standard_format,  # 'ID Status'
-      standard_format,  # 'Status',
-      standard_format,  # 'Intern/Extern',
-      date_time_format  # 'Zeit'
+      std_style,  # 'id',
+      std_style,  # 'ID Anrede',
+      std_style,  # 'Anrede',
+      std_style,  # 'ID Geschlecht',
+      std_style,  # 'Geschlecht',
+      std_style,  # 'Nachname',
+      std_style,  # 'Vorname',
+      std_style,  # 'PLZ',
+      std_style,  # 'Ort',
+      date_style, # 'Geburtsdatum',
+      std_style,  # 'ID Prozess',
+      std_style,  # 'Prozess',
+      std_style,  # 'Anzahl begleitungen',
+      std_style,  # 'Anzahl Gruppenangebote',
+      std_style,  # 'Spesenverzicht',
+      std_style,  # 'Einführungskurs besucht',
+      date_time_style, # 'Erstellt am'
+      date_time_style, # 'Anmeldedatum',
+      date_time_style, # 'Eingeladen am',
+      date_time_style, # 'Akzeptiert am',
+      date_time_style, # 'Abgelehnt am',
+      date_time_style, # 'Beendet am',
+      std_style,  # 'Einsatz',
+      std_style,  # 'ID Status'
+      std_style,  # 'Status',
+      std_style,  # 'Intern/Extern',
+      date_time_style # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end
 
-  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{volunteers.count + 1}"
-  sheet.sheet_view.pane do |pane|
-    pane.top_left_cell = 'A2'
-    pane.state = :frozen_split
-    pane.y_split = 1
-    pane.x_split = 0
-    pane.active_pane = :bottom_right
-  end
+  axlsx_autofilter(sheet, columns, volunteers)
 end

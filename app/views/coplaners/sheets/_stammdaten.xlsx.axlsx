@@ -12,7 +12,7 @@ wb.add_worksheet(name: 'Stammdaten') do |sheet|
 
   types_str = Array.new(6).fill(:string) + [:time]
   types_int = [:integer] + Array.new(5).fill(:string) + [:time]
-  style = Array.new(6).fill(standard_format) + [date_time_format]
+  style = Array.new(6).fill(std_style) + [date_time_style]
 
   ## Volunteer
   #
@@ -131,12 +131,5 @@ wb.add_worksheet(name: 'Stammdaten') do |sheet|
     sheet.add_row(row[:data], row.slice(:types, :style))
   end
 
-  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{rows.size + 1}"
-  sheet.sheet_view.pane do |pane|
-    pane.top_left_cell = 'A2'
-    pane.state = :frozen_split
-    pane.y_split = 1
-    pane.x_split = 0
-    pane.active_pane = :bottom_right
-  end
+  axlsx_autofilter(sheet, columns, rows)
 end

@@ -46,35 +46,28 @@ wb.add_worksheet(name: 'Begleitungen') do |sheet|
       nil,      # 'Einsatzbeginn (in Monaten)'
       nil,      # 'Einsatzende (in Monaten)'
       nil,      # 'Laufzeit (in Mte.)'
-      :time, # 'Probezeit (nach 1 Mt.)'
-      :time # 'Zeit'
+      :time,    # 'Probezeit (nach 1 Mt.)'
+      :time     # 'Zeit'
     ]
 
     style = [
-      standard_format,  # 'ID'
-      standard_format,  # 'ID Status'
-      standard_format,  # 'Status'
-      standard_format,  # 'ID Freiwillige/r'
-      standard_format,  # 'Freiwillige/r'
-      standard_format,  # 'ID'
-      standard_format,  # 'Klient/in'
-      date_format,      # 'Einsatzbeginn'
-      date_format,      # 'Einsatzende'
-      standard_format,  # 'Einsatzbeginn (in Monaten)'
-      standard_format,  # 'Einsatzende (in Monaten)'
-      standard_format,  # 'Laufzeit (in Mte.)'
-      date_time_format, # 'Probezeit (nach 1 Mt.)'
-      date_time_format  # 'Zeit'
+      std_style,       # 'ID'
+      std_style,       # 'ID Status'
+      std_style,       # 'Status'
+      std_style,       # 'ID Freiwillige/r'
+      std_style,       # 'Freiwillige/r'
+      std_style,       # 'ID'
+      std_style,       # 'Klient/in'
+      date_style,      # 'Einsatzbeginn'
+      date_style,      # 'Einsatzende'
+      std_style,       # 'Einsatzbeginn (in Monaten)'
+      std_style,       # 'Einsatzende (in Monaten)'
+      std_style,       # 'Laufzeit (in Mte.)'
+      date_time_style, # 'Probezeit (nach 1 Mt.)'
+      date_time_style  # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end
 
-  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{assignments.count + 1}"
-  sheet.sheet_view.pane do |pane|
-    pane.top_left_cell = 'A2'
-    pane.state = :frozen_split
-    pane.y_split = 1
-    pane.x_split = 0
-    pane.active_pane = :bottom_right
-  end
+  axlsx_autofilter(sheet, columns, assignments)
 end

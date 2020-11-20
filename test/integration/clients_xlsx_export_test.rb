@@ -17,7 +17,9 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
     assert_xls_cols_equal(wb, 1, 0, 'id', 'Anrede', 'Nachname', 'Vorname', 'Strasse',
                           'Adresszusatz', 'PLZ', 'Ort', 'Telefonnummer', 'Telefonnummer 2', 'Mailadresse',
                           'Geburtsdatum', 'Nationalität', 'Beruf oder Ausbildung im Herkunftsland',
-                          'Einreisedatum', 'Prozess', 'Fallführende Stelle', 'Sprachkenntnisse', 'Inhalte der Begleitung', 'Erstellt am', 'Aktualisiert am')
+                          'Einreisedatum', 'Prozess', 'Fallführende Stelle', 'Anmeldende Stelle',
+                          'Weitere involvierte Stellen', 'Sprachkenntnisse', 'Inhalte der Begleitung',
+                          'Erstellt am', 'Aktualisiert am')
 
     assert_equal client.id.to_s, wb.cell(2, 1).to_s
     assert_xls_cols_equal(wb, 2, 1,
@@ -36,11 +38,13 @@ class ClientsXlsxExportTest < ActionDispatch::IntegrationTest
                           client.education,
                           client.entry_date,
                           I18n.t(".acceptance.#{client.acceptance}"),
-                          client.involved_authority,
+                          client.involved_authority&.full_name,
+                          client.competent_authority,
+                          client.other_authorities,
                           '',
                           client.goals)
-    assert_equal 2.days.ago.to_date, wb.cell(2, 20).to_date
-    assert_equal 2.days.ago.to_date, wb.cell(2, 21).to_date
+    assert_equal 2.days.ago.to_date, wb.cell(2, 22).to_date
+    assert_equal 2.days.ago.to_date, wb.cell(2, 23).to_date
   end
 
   test 'clients xls export is not paginated' do

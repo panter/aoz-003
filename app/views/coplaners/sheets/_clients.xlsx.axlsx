@@ -97,44 +97,37 @@ wb.add_worksheet(name: 'Klienten') do |sheet|
     ]
 
     style = [
-      standard_format,  # 'AOZ Klienten ID',
-      standard_format,  # 'id',
-      standard_format,  # 'ID Anrede',
-      standard_format,  # 'Anrede',
-      standard_format,  # 'ID Geschlecht',
-      standard_format,  # 'Geschlecht',
-      standard_format,  # 'Nachname',
-      standard_format,  # 'Vorname',
-      standard_format,  # 'PLZ',
-      standard_format,  # 'Ort',
-      date_format,      # 'Geburtsdatum',
-      standard_format,  # 'Alter',
-      standard_format,  # 'Nationalität ISO Alpha2',
-      standard_format,  # 'Nationalität',
-      standard_format,  # 'ID Prozess'
-      standard_format,  # 'Prozess',
-      date_time_format, # 'Erstellt am',
-      date_time_format, # 'Akzeptiert am',
-      date_time_format, # 'Beendet am',
-      date_time_format, # 'Abgelehnt am',
-      standard_format,  # 'Fallführend',
-      standard_format,  # 'ID Kostenträger',
-      standard_format,  # 'Kostenträger',
-      standard_format,  # 'Einsatz',
-      standard_format,  # 'ID Status'
-      standard_format,  # 'Status',
-      standard_format,  # 'Zeit (von Anmeldung bis Vermittlung)',
-      date_time_format  # 'Zeit'
+      std_style,  # 'AOZ Klienten ID',
+      std_style,  # 'id',
+      std_style,  # 'ID Anrede',
+      std_style,  # 'Anrede',
+      std_style,  # 'ID Geschlecht',
+      std_style,  # 'Geschlecht',
+      std_style,  # 'Nachname',
+      std_style,  # 'Vorname',
+      std_style,  # 'PLZ',
+      std_style,  # 'Ort',
+      date_style, # 'Geburtsdatum',
+      std_style,  # 'Alter',
+      std_style,  # 'Nationalität ISO Alpha2',
+      std_style,  # 'Nationalität',
+      std_style,  # 'ID Prozess'
+      std_style,  # 'Prozess',
+      date_time_style, # 'Erstellt am',
+      date_time_style, # 'Akzeptiert am',
+      date_time_style, # 'Beendet am',
+      date_time_style, # 'Abgelehnt am',
+      std_style,  # 'Fallführend',
+      std_style,  # 'ID Kostenträger',
+      std_style,  # 'Kostenträger',
+      std_style,  # 'Einsatz',
+      std_style,  # 'ID Status'
+      std_style,  # 'Status',
+      std_style,  # 'Zeit (von Anmeldung bis Vermittlung)',
+      date_time_style # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end
 
-  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{clients.count + 1}"
-  sheet.sheet_view.pane do |pane|
-    pane.top_left_cell = 'A2'
-    pane.state = :frozen_split
-    pane.y_split = 1
-    pane.x_split = 0
-    pane.active_pane = :bottom_right
-  end
+  axlsx_autofilter(sheet, columns, clients)
 end

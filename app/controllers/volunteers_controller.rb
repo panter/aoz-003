@@ -9,7 +9,7 @@ class VolunteersController < ApplicationController
     @q.sorts = ['acceptance asc'] if @q.sorts.empty?
     @volunteers = @q.result
     respond_to do |format|
-      format.xlsx { render xlsx: 'index', filename: 'Freiwilligen_Liste' }
+      format.xlsx { render xlsx: 'index', filename: "Freiwilligen_Liste_#{Time.zone.now.strftime('%Y-%m-%dT%H%M%S')}" }
       format.html { @volunteers = @volunteers.paginate(page: params[:page]) }
     end
   end

@@ -11,21 +11,30 @@ class AssignmentsXlsxExportTest < ActionDispatch::IntegrationTest
     wb = get_xls_from_response(assignments_url(format: :xlsx))
 
     assert_xls_cols_equal(wb, 1, 0, 'Status', 'Freiwillige/r', 'Freiwillige/r Mailadresse',
-                          'Klient/in', 'Einsatzbeginn', 'Einsatzende', 'Erstellt am', 'Aktualisiert am')
+                          'Klient/in', 'Einsatzbeginn', 'Einsatzende', 'Fallführende Stelle',
+                          'Anmeldende Stelle', 'Weitere involvierte Stellen',
+                          'Erstellt am', 'Aktualisiert am')
 
-    assert_xls_cols_equal(wb, 2, 0, 'Aktiv',
-                          assignment.volunteer.contact.full_name, assignment.volunteer.contact.primary_email,
-                          assignment.client.contact.full_name, assignment.period_start, assignment.period_end)
-    assert_equal assignment.created_at.to_date, wb.cell(2, 7)
-    assert_equal assignment.updated_at.to_date, wb.cell(2, 8)
+    assert_xls_cols_equal(wb, 2, 0,
+                          'Aktiv',
+                          assignment.volunteer.contact.full_name,
+                          assignment.volunteer.contact.primary_email,
+                          assignment.client.contact.full_name,
+                          assignment.period_start,
+                          assignment.period_end,
+                          assignment.client&.involved_authority&.full_name,
+                          assignment.client&.competent_authority,
+                          assignment.client&.other_authorities)
+    assert_equal assignment.created_at.to_date, wb.cell(2, 10)
+    assert_equal assignment.updated_at.to_date, wb.cell(2, 11)
 
     assert_equal(
       assignment.updated_at.to_date.to_s.slice(0..-8),
-      wb.cell(2, 8).to_s.slice(0..-8)
+      wb.cell(2, 10).to_s.slice(0..-8)
     )
     assert_equal(
       assignment.created_at.to_date.to_s.slice(0..-8),
-      wb.cell(2, 7).to_s.slice(0..-8)
+      wb.cell(2, 11).to_s.slice(0..-8)
     )
   end
 

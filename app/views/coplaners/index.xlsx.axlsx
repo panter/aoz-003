@@ -1,67 +1,30 @@
 wb = xlsx_package.workbook
-# wb.use_shared_strings = true
 
-## Format and style definitions
-#
-default_locals = {
-  wb: wb,
-  standard_format: wb.styles.add_style(
-    alignment: { wrap_text: true, horizontal: :left, vertical: :top },
-    width: :auto_fit
-  ),
-  date_format: wb.styles.add_style(
-    alignment: { horizontal: :left, vertical: :top },
-    format_code: 'dd.mm.yyyy',
-    width: :auto_fit
-  ),
-  time_format: wb.styles.add_style(
-    alignment: { horizontal: :left, vertical: :top },
-    format_code: 'hh:mm',
-    width: :auto_fit
-  ),
-  date_time_format: wb.styles.add_style(
-    alignment: { horizontal: :left, vertical: :top },
-    format_code: 'dd.mm.yyyy hh:mm',
-    width: :auto_fit
-  ),
-  header_style: wb.styles.add_style(
-    bg_color: 'FFDFDEDF',
-    b: true,
-    alignment: { horizontal: :center, vertical: :center },
-    border: { color: '00', edges: [:bottom], style: :thin },
-    width: :auto_fit
-  ),
-  wrapped_style: wb.styles.add_style(
-    alignment: { wrap_text: true, horizontal: :left, vertical: :top }
-  ),
-  zeit: Time.zone.now,
-  col_alpha_indexes: ('A'..'Z').to_a + ('A'..'Z').to_a.map { |letter| "A#{letter}" }
-}
+locals = axlsx_locals(wb, volunteers: @volunteers,
+                          clients: @clients,
+                          assignments: @assignments,
+                          group_offers: @group_offers,
+                          group_assignments: @group_assignments,
+                          hours: @hours,
+                          billing_expenses: @billing_expenses,
+                          events: @events,
+                          event_volunteers: @event_volunteers,
+                          departments: @departments,
+                          group_offer_categories: GroupOfferCategory.all.order(:id))
 
 ## Sheets
 #
-render partial: 'coplaners/sheets/stammdaten',
-       locals: default_locals
-render partial: 'coplaners/sheets/volunteers',
-       locals: default_locals.merge(volunteers: @volunteers)
-render partial: 'coplaners/sheets/nationalitaet_fw',
-       locals: default_locals.merge(volunteers: @volunteers)
-render partial: 'coplaners/sheets/clients',
-       locals: default_locals.merge(clients: @clients)
-render partial: 'coplaners/sheets/assignments',
-       locals: default_locals.merge(assignments: @assignments)
-render partial: 'coplaners/sheets/group_offers',
-       locals: default_locals.merge(group_offers: @group_offers)
-render partial: 'coplaners/sheets/matching_ga_fw',
-       locals: default_locals.merge(group_assignments: @group_assignments)
-render partial: 'coplaners/sheets/stundenerfassung',
-       locals: default_locals.merge(hours: @hours)
-render partial: 'coplaners/sheets/billing_expenses',
-       locals: default_locals.merge(billing_expenses: @billing_expenses)
-render partial: 'coplaners/sheets/weiterbildung',
-       locals: default_locals.merge(events: @events, event_volunteers: @event_volunteers)
-render partial: 'coplaners/sheets/departments',
-       locals: default_locals.merge(departments: @departments)
+render partial: 'coplaners/sheets/stammdaten', locals: locals
+render partial: 'coplaners/sheets/volunteers', locals: locals
+render partial: 'coplaners/sheets/nationalitaet_fw', locals: locals
+render partial: 'coplaners/sheets/clients', locals: locals
+render partial: 'coplaners/sheets/assignments', locals: locals
+render partial: 'coplaners/sheets/group_offers', locals: locals
+render partial: 'coplaners/sheets/matching_ga_fw', locals: locals
+render partial: 'coplaners/sheets/stundenerfassung', locals: locals
+render partial: 'coplaners/sheets/billing_expenses', locals: locals
+render partial: 'coplaners/sheets/weiterbildung', locals: locals
+render partial: 'coplaners/sheets/departments', locals: locals
 
 # render partial: 'coplaners/sheets/group_assignments',
 #        locals: default_locals.merge(group_assignments: @group_assignments)

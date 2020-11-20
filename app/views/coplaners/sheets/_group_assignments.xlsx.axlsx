@@ -45,29 +45,21 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
     ]
 
     style = [
-      standard_format,  # 'ID'
-      standard_format,  # 'Status'
-      standard_format,  # 'Bezeichnung'
-      standard_format,  # 'Kategorie'
-      standard_format,  # 'Internes oder externes Gruppenangebot'
-      standard_format,  # 'Standort'
-      date_time_format, # 'Erstellt am'
-      date_format,      # 'Startdatum'
-      date_format,      # 'Angebotsenddatum'
-      standard_format,  # 'Dauer in Monaten'
-      standard_format,  # 'Einsatz'
-      date_time_format  # 'Zeit'
+      std_style,  # 'ID'
+      std_style,  # 'Status'
+      std_style,  # 'Bezeichnung'
+      std_style,  # 'Kategorie'
+      std_style,  # 'Internes oder externes Gruppenangebot'
+      std_style,  # 'Standort'
+      date_time_style, # 'Erstellt am'
+      date_style,      # 'Startdatum'
+      date_style,      # 'Angebotsenddatum'
+      std_style,  # 'Dauer in Monaten'
+      std_style,  # 'Einsatz'
+      date_time_style # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end
 
-  sheet.auto_filter = "A1:#{col_alpha_indexes[columns.size - 1]}#{group_assignments.count + 1}"
-
-  sheet.sheet_view.pane do |pane|
-    pane.top_left_cell = 'A2'
-    pane.state = :frozen_split
-    pane.y_split = 1
-    pane.x_split = 0
-    pane.active_pane = :bottom_right
-  end
+  axlsx_autofilter(sheet, columns, group_assignments)
 end
