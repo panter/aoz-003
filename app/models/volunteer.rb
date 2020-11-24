@@ -102,7 +102,7 @@ class Volunteer < ApplicationRecord
     unless: :user_deleted?
 
   def avatar_thumb
-    avatar.variant(resize: '100x100>').processed
+    avatar&.variant(resize: '100x100>')&.processed
   end
 
   # allot of old records would cause app to crash if validation would run for them
