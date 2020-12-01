@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_20_142631) do
+ActiveRecord::Schema.define(version: 2020_12_01_092316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -869,6 +869,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_142631) do
     t.index ["accepted_by_id"], name: "index_volunteers_on_accepted_by_id"
     t.index ["active"], name: "index_volunteers_on_active"
     t.index ["activeness_might_end"], name: "index_volunteers_on_activeness_might_end"
+    t.index ["additional_nationality"], name: "index_volunteers_on_additional_nationality"
     t.index ["birth_year"], name: "index_volunteers_on_birth_year"
     t.index ["deleted_at"], name: "index_volunteers_on_deleted_at"
     t.index ["department_id"], name: "index_volunteers_on_department_id"
