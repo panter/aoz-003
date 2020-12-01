@@ -54,8 +54,8 @@ gem 'uglifier'
 gem 'webdrivers', '~> 4.0'
 gem 'webpacker'
 gem 'wicked_pdf'
-gem 'will-paginate-i18n'
 gem 'will_paginate'
+gem 'will-paginate-i18n'
 gem 'wkhtmltopdf-binary'
 
 group :development do
@@ -95,4 +95,6 @@ group :test do
   gem 'policy-assertions'
   gem 'roo'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
+  gem 'simplecov-cobertura'
 end

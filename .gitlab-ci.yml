@@ -19,6 +19,7 @@ variables:
 
 lint:
   stage: test
+  retry: 0
   extends:
     - .cache-pull-push
     - .retry-dropped-runners
@@ -31,6 +32,7 @@ lint:
 
 test:
   stage: test
+  retry: 0
   extends:
     - .cache-pull
     - .retry-dropped-runners
@@ -38,9 +40,15 @@ test:
   script:
     - bundle exec rails db:schema:load
     - bundle exec rails test
+  artifacts:
+    reports:
+      cobertura: coverage/coverage.xml
 
 system:
   stage: test
+  retry: 1
+  variables:
+    TEST_TYPE: ':system'
   extends:
     - .cache-pull
     - .retry-dropped-runners
@@ -49,3 +57,6 @@ system:
   script:
     - bundle exec rails db:schema:load
     - bundle exec rails test:system
+  artifacts:
+    reports:
+      cobertura: coverage/coverage.xml

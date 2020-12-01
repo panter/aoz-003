@@ -4,6 +4,14 @@ require 'database_cleaner'
 require 'policy_assertions'
 require 'webdrivers/chromedriver'
 
+require 'simplecov-cobertura'
+require 'simplecov'
+Rails.application.eager_load!
+SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
+SimpleCov.command_name "test#{ENV['TEST_TYPE'] || ''}"
+SimpleCov.start 'rails'
+Rails.application.eager_load!
+
 Webdrivers.install_dir = '.ci-cache/webdrivers'
 
 Dir[Rails.root.join 'test/utility/**/*.rb'].each { |path| require path }

@@ -171,7 +171,9 @@ class Client < ApplicationRecord
   private
 
   def check_if_destroyable!
+    # rubocop:disable Style/RaiseArgs
     raise NotDestroyableError.new(self) unless destroyable?
+    # rubocop:enable Style/RaiseArgs
   end
 
   class NotDestroyableError < StandardError

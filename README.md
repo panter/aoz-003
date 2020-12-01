@@ -2,8 +2,9 @@
 
 ## Pipeline Status
 
-- Develop: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/develop/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/develop)
-- Main: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/main/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/main)
+- Develop: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/develop/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/develop) | [![coverage report](https://git.panter.ch/open-source/aoz-003/badges/develop/coverage.svg)](https://git.panter.ch/open-source/aoz-003/-/commits/develop)
+- Main: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/main/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/main) | [![coverage report](https://git.panter.ch/open-source/aoz-003/badges/main/coverage.svg)](https://git.panter.ch/open-source/aoz-003/-/commits/main)
+
 
 Ruby version: 2.4.2
 
