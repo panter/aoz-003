@@ -129,53 +129,6 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     assert_equal Hour.last.hourable, @spv.missions.first
   end
 
-  test 'truncate_modal_shows_all_text' do
-    goals = FFaker::Lorem.paragraph(20)
-    achievements = FFaker::Lorem.paragraph(20)
-    future = FFaker::Lorem.paragraph(20)
-    comments = FFaker::Lorem.paragraph(20)
-
-    @superadmin = create :user
-    login_as @superadmin
-    visit review_semester_review_semester_url(@spv)
-
-    fill_in 'Was waren die wichtigsten Inhalte (oder Ziele) '\
-            'Ihres Einsatzes in den letzten Monaten?',
-            with: goals
-    fill_in 'Was konnte in den letzten Monaten erreicht werden?', with: achievements
-    fill_in 'Soll der Einsatz weiterlaufen und wenn ja, mit welchen Inhalten (Zielen)?',
-            with: future
-    fill_in 'Kommentare', with: comments
-
-    # submit feedback without revisiting review form
-    check 'Ich verzichte auf die Auszahlung von Spesen.'
-    wait_for_ajax
-    click_on 'Bestätigen', match: :first
-    wait_for_ajax
-    @spv.reload
-    wait_for_ajax
-    visit semester_process_volunteers_path(semester: Semester.to_s(@spv.semester))
-
-    page.find('td', text: goals.truncate(300), visible: false).click
-    wait_for_ajax
-    assert_text goals
-    click_button 'Schliessen'
-    wait_for_ajax
-    assert_text 'Semester Prozess'
-
-    page.find('td', text: achievements.truncate(300), visible: false).click
-    wait_for_ajax
-    assert_text achievements
-    click_button 'Schliessen'
-    wait_for_ajax
-    assert_text 'Semester Prozess'
-    page.find('td', text: comments.truncate(300), visible: false).click
-    wait_for_ajax
-    assert_text 'Semester Prozess'
-    assert_text comments
-    click_button 'Schliessen'
-  end
-
   test 'it should create a journal on submit' do
     volunteer = create :volunteer_with_user
     spv = create(:semester_process_volunteer, :with_missions, :with_mail, volunteer: volunteer,
@@ -192,5 +145,54 @@ class SemesterFeedbackTest < ApplicationSystemTestCase
     end
     assert_includes Journal.last.body, volunteer.assignments.first.to_label
     assert_includes Journal.last.body, volunteer.assignments.second.to_label
+  end
+
+  class TruncateModalTest < ApplicationSystemTestCase
+    setup do
+      @superadmin = create :user
+      @volunteer = create :volunteer_with_user
+      @subject = create :semester_process
+      @spv = create(:semester_process_volunteer, :with_mission, :with_mail, volunteer: @volunteer,
+        semester_process: @subject)
+      @spv.reload
+      @goals = FFaker::Lorem.paragraph(20)
+      @achievements = FFaker::Lorem.paragraph(20)
+      @future = FFaker::Lorem.paragraph(20)
+      @comments = FFaker::Lorem.paragraph(20)
+      @feedback = @spv.semester_feedbacks.create(
+        author: @volunteer.user,
+        volunteer: @volunteer,
+        goals: @goals,
+        achievements: @achievements,
+        future: @future,
+        comments: @comments,
+        mission: @spv.assignments.first
+      )
+      @spv.save!
+      login_as @superadmin
+    end
+
+    test 'truncate_modal_shows_all_text' do
+      visit semester_process_volunteers_path(semester: Semester.to_s(@spv.semester))
+      wait_for_ajax
+      page.find('td', text: @goals.truncate(300), visible: false).click
+      wait_for_ajax
+      assert_text @goals
+      click_button 'Schliessen'
+      wait_for_ajax
+      assert_text 'Semester Prozess'
+
+      page.find('td', text: @achievements.truncate(300), visible: false).click
+      wait_for_ajax
+      assert_text @achievements
+      click_button 'Schliessen'
+      wait_for_ajax
+      assert_text 'Semester Prozess'
+      page.find('td', text: @comments.truncate(300), visible: false).click
+      wait_for_ajax
+      assert_text 'Semester Prozess'
+      assert_text @comments
+      click_button 'Schliessen'
+    end
   end
 end
