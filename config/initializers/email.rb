@@ -1,6 +1,4 @@
 if Rails.env.production?
-  ActionMailer::Base.delivery_method = :sendmail
-
   ActionMailer::Base.default_url_options = {
     host: ENV['DEVISE_EMAIL_DOMAIN'] || 'staging.aoz-freiwillige.ch',
     protocol: 'https'
