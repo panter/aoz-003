@@ -3,7 +3,7 @@
 ## Pipeline Status
 
 - Develop: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/develop/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/develop)
-- Master: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/master/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/master)
+- Main: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/main/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/main)
 
 Ruby version: 2.4.2
 
