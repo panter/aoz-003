@@ -12,6 +12,14 @@ class CoplanersController < ApplicationController
     @event_volunteers = EventVolunteer.all.order(:id)
     @billing_expenses = BillingExpense.all.order(:id)
     @departments = Department.all.order(:id)
+    @group_offer_categories = GroupOfferCategory.all.order(:id)
+    respond_to do |format|
+      format.xlsx do
+        render xlsx: 'index',
+               filename: "aoz_freiwillige_#{Time.zone.now.strftime('%Y-%m-%dT%H%M%S')}"
+      end
+      format.html
+    end
   end
   # rubocop:enable Metrics/AbcSize
 end

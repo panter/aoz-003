@@ -1,16 +1,16 @@
 wb = xlsx_package.workbook
 
-locals = axlsx_locals(wb, volunteers: @volunteers,
-                          clients: @clients,
-                          assignments: @assignments,
-                          group_offers: @group_offers,
-                          group_assignments: @group_assignments,
-                          hours: @hours,
-                          billing_expenses: @billing_expenses,
-                          events: @events,
-                          event_volunteers: @event_volunteers,
-                          departments: @departments,
-                          group_offer_categories: GroupOfferCategory.all.order(:id))
+locals = axlsx_locals(wb, volunteers: @volunteers || volunteers,
+                          clients: @clients || clients,
+                          assignments: @assignments || assignments,
+                          group_offers: @group_offers || group_offers,
+                          group_assignments: @group_assignments || group_assignments,
+                          hours: @hours || hours,
+                          billing_expenses: @billing_expenses || billing_expenses,
+                          events: @events || events,
+                          event_volunteers: @event_volunteers || event_volunteers,
+                          departments: @departments || departments,
+                          group_offer_categories: @group_offer_categories || group_offer_categories)
 
 ## Sheets
 #
