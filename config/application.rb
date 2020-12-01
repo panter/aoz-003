@@ -17,8 +17,6 @@ module Aoz
     config.load_defaults 6.0
 
     config.time_zone = 'Zurich'
-    config.autoload_paths += Dir[config.root.join('lib/access_import/**/')]
-    config.autoload_paths += Dir[config.root.join('lib/access_import/accessors/**/')]
     WillPaginate.per_page = 20
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
