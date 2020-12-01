@@ -11,6 +11,7 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
     'Standort',
     'Erstellt am',
     'Startdatum',
+    'Erster Einsatz Begonnen am',
     'Angebotsenddatum',
     'Beendet',
     'Dauer in Monaten',
@@ -20,22 +21,23 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
   sheet.add_row(columns, style: header_style, height: 25)
   group_offers.each do |group_offer|
     data = [
-      group_offer.id,                                  # 'ID'
-      group_offer.terminated? ? 'Beendet' : 'Aktiv',   # 'Status'
-      group_offer.title,                               # 'Bezeichnung'
-      group_offer.group_offer_category&.id,            # 'ID Kategorie'
-      group_offer.group_offer_category&.category_name, # 'Kategorie'
-      group_offer.offer_type,                          # 'ID Internes oder externes Gruppenangebot'
-      t("offer_type.#{group_offer.offer_type}"),       # 'Internes oder externes Gruppenangebot'
-      group_offer.department.id,                       # 'ID Standort'
-      group_offer.department&.contact&.last_name,      # 'Standort'
-      group_offer.created_at,                          # 'Erstellt am'
-      group_offer.period_start,                        # 'Startdatum'
-      group_offer.period_end,                          # 'Angebotsenddatum'
-      group_offer.terminated?,                         # 'Beendet'
-      '',                                              # 'Dauer in Monaten'
-      '',                                              # 'Einsatz'
-      zeit # 'Zeit'
+      group_offer.id,                                       # 'ID'
+      group_offer.terminated? ? 'Beendet' : 'Aktiv',        # 'Status'
+      group_offer.title,                                    # 'Bezeichnung'
+      group_offer.group_offer_category&.id,                 # 'ID Kategorie'
+      group_offer.group_offer_category&.category_name,      # 'Kategorie'
+      group_offer.offer_type,                               # 'ID Internes oder externes Gruppenangebot'
+      t("offer_type.#{group_offer.offer_type}"),            # 'Internes oder externes Gruppenangebot'
+      group_offer.department.id,                            # 'ID Standort'
+      group_offer.department&.contact&.last_name,           # 'Standort'
+      group_offer.created_at,                               # 'Erstellt am'
+      group_offer.period_start,                             # 'Startdatum'
+      group_offer.group_assignments.minimum(:period_start), # 'Erster Einsatz Begonnen am'
+      group_offer.period_end,                               # 'Angebotsenddatum'
+      group_offer.terminated?,                              # 'Beendet'
+      '',                                                   # 'Dauer in Monaten'
+      '',                                                   # 'Einsatz'
+      zeit                                                  # 'Zeit'
     ]
     types = [
       :integer,  # 'ID'
@@ -47,8 +49,9 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
       nil,       # 'Internes oder externes Gruppenangebot'
       :integer,  # 'ID Standort'
       nil,       # 'Standort'
-      :time, # 'Erstellt am'
+      :time,     # 'Erstellt am'
       nil,       # 'Startdatum'
+      nil,       # 'Erster Einsatz Begonnen am'
       nil,       # 'Angebotsenddatum'
       nil,       # 'Dauer in Monaten'
       nil,       # 'Einsatz'
@@ -56,21 +59,22 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
     ]
 
     style = [
-      std_style,  # 'ID'
-      std_style,  # 'Status'
-      std_style,  # 'Bezeichnung'
-      std_style,  # 'ID Kategorie'
-      std_style,  # 'Kategorie'
-      std_style,  # 'ID Internes oder externes Gruppenangebot'
-      std_style,  # 'Internes oder externes Gruppenangebot'
-      std_style,  # 'ID Standort'
-      std_style,  # 'Standort'
+      std_style,       # 'ID'
+      std_style,       # 'Status'
+      std_style,       # 'Bezeichnung'
+      std_style,       # 'ID Kategorie'
+      std_style,       # 'Kategorie'
+      std_style,       # 'ID Internes oder externes Gruppenangebot'
+      std_style,       # 'Internes oder externes Gruppenangebot'
+      std_style,       # 'ID Standort'
+      std_style,       # 'Standort'
       date_time_style, # 'Erstellt am'
       date_style,      # 'Startdatum'
+      date_style,      # 'Erster Einsatz Begonnen am'
       date_style,      # 'Angebotsenddatum'
-      std_style,  # 'Dauer in Monaten'
-      std_style,  # 'Einsatz'
-      date_time_style # 'Zeit'
+      std_style,       # 'Dauer in Monaten'
+      std_style,       # 'Einsatz'
+      date_time_style  # 'Zeit'
     ]
     sheet.add_row(data, types: types, style: style)
   end
@@ -87,8 +91,8 @@ wb.add_worksheet(name: 'GA-Kategorien') do |sheet|
   sheet.add_row(columns, style: header_style, height: 25)
   group_offer_categories.each do |group_offer_category|
     data = [
-      group_offer_category.id, # 'ID'
-      group_offer_category.category_name, # 'Name'
+      group_offer_category.id,             # 'ID'
+      group_offer_category.category_name,  # 'Name'
       group_offer_category.category_state, # 'ID Status'
       # 'Status'
       t("group_offer_categories.index.category_states.#{group_offer_category.category_state}")
@@ -97,13 +101,13 @@ wb.add_worksheet(name: 'GA-Kategorien') do |sheet|
       nil, # 'ID'
       nil, # 'Name'
       nil, # 'ID Status'
-      nil # 'Status'
+      nil  # 'Status'
     ]
     style = [
       std_style, # 'ID'
       std_style, # 'Name'
       std_style, # 'ID Status'
-      std_style # 'Status'
+      std_style  # 'Status'
     ]
     sheet.add_row(data, types: types, style: style)
   end
