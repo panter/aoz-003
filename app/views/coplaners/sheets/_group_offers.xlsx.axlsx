@@ -11,7 +11,7 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
     'Standort',
     'Erstellt am',
     'Startdatum',
-    'Erster Einsatz Begonnen am',
+    'Erster Einsatz begonnen am',
     'Angebotsenddatum',
     'Beendet',
     'Dauer in Monaten',
@@ -32,7 +32,7 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
       group_offer.department&.contact&.last_name,           # 'Standort'
       group_offer.created_at,                               # 'Erstellt am'
       group_offer.period_start,                             # 'Startdatum'
-      group_offer.group_assignments.minimum(:period_start), # 'Erster Einsatz Begonnen am'
+      group_offer.group_assignments.minimum(:period_start), # 'Erster Einsatz begonnen am'
       group_offer.period_end,                               # 'Angebotsenddatum'
       group_offer.terminated?,                              # 'Beendet'
       '',                                                   # 'Dauer in Monaten'
@@ -51,7 +51,7 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
       nil,       # 'Standort'
       :time,     # 'Erstellt am'
       nil,       # 'Startdatum'
-      nil,       # 'Erster Einsatz Begonnen am'
+      nil,       # 'Erster Einsatz begonnen am'
       nil,       # 'Angebotsenddatum'
       nil,       # 'Dauer in Monaten'
       nil,       # 'Einsatz'
@@ -70,7 +70,7 @@ wb.add_worksheet(name: 'Gruppenangebote') do |sheet|
       std_style,       # 'Standort'
       date_time_style, # 'Erstellt am'
       date_style,      # 'Startdatum'
-      date_style,      # 'Erster Einsatz Begonnen am'
+      date_style,      # 'Erster Einsatz begonnen am'
       date_style,      # 'Angebotsenddatum'
       std_style,       # 'Dauer in Monaten'
       std_style,       # 'Einsatz'

@@ -371,6 +371,7 @@ Layout/HashAlignment:
 # URISchemes: http, https
 Layout/LineLength:
   Exclude:
+    - 'app/views/coplaners/sheets/_group_offers.xlsx.axlsx'
     - 'app/controllers/assignments_controller.rb'
     - 'app/controllers/billing_expenses_controller.rb'
     - 'app/controllers/clients_controller.rb'
