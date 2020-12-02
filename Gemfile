@@ -57,7 +57,7 @@ gem 'webpacker'
 gem 'wicked_pdf'
 gem 'will_paginate'
 gem 'will-paginate-i18n'
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-heroku'
 
 group :development do
   gem 'debase', require: false
@@ -74,6 +74,7 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'ruby-debug-ide', require: false
   gem 'ruby-lint', require: false
+  gem 'wkhtmltopdf-binary'
 end
 
 group :development, :test do
