@@ -7,7 +7,6 @@ class CreateCertificateModel < ActiveRecord::Migration[5.1]
       t.date :duration_end
       t.text :institution
       t.text :text_body
-      t.text :institution
       t.string :function
       t.jsonb :volunteer_contact
       t.jsonb :assignment_kinds

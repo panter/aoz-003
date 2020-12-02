@@ -54,7 +54,7 @@ class AdminResetUserPasswordTest < ApplicationSystemTestCase
     fill_in 'Passwort', with: @comon_pw
     fill_in 'Passwort bestätigen', with: @comon_pw
     click_button 'Passwort setzen'
-    assert_text 'Ihr Passwort wurde erfolgreich gesetzt und Sie sind jetzt angemeldet.'
+    assert_text 'Dein Passwort wurde gesetzt. Du bist nun angemeldet.'
     sign_out_logged_in_user(volunteer.user)
     form_login_user(@admin, @comon_pw, email: 'admin_changing@example.com')
     update_users_password(volunteer.user, @common_changed_pw, email: 'volunteer@aoz.ch')

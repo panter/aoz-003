@@ -22,6 +22,7 @@ AllCops:
   DisplayStyleGuide: true
   ExtraDetails: true
   TargetRubyVersion: 2.6
+  NewCops: enable
 
 Rails:
   Enabled: true
@@ -30,6 +31,8 @@ Rails/FilePath:
 Rails/HasAndBelongsToMany:
   Enabled: false
 Rails/RefuteMethods:
+  Enabled: false
+Rails/UniqueValidationWithoutIndex:
   Enabled: false
 
 Metrics/AbcSize:
@@ -202,3 +205,9 @@ Style/ExponentialNotation:
   Enabled: true
 Style/SlicingWithRange:
   Enabled: true
+
+
+# The following cops are added between 0.84.0 and 1.4.2.
+# The configurations are default.
+# If you want to use a cop by default, remove a configuration for the cop from here.
+# If you want to disable a cop, change `Enabled` to false.

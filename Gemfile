@@ -35,6 +35,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'js-routes'
 gem 'lodash-rails'
+gem 'net-sftp'
 gem 'panter-rails-deploy'
 gem 'paperclip'
 gem 'paranoia'
@@ -54,9 +55,12 @@ gem 'uglifier'
 gem 'webdrivers', '~> 4.0'
 gem 'webpacker'
 gem 'wicked_pdf'
-gem 'will-paginate-i18n'
 gem 'will_paginate'
-gem 'wkhtmltopdf-binary'
+gem 'will-paginate-i18n'
+
+group :production do
+  gem 'wkhtmltopdf-heroku'
+end
 
 group :development do
   gem 'debase', require: false
@@ -85,6 +89,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
   gem 'spring'
+  gem 'wkhtmltopdf-binary'
 end
 
 group :test do
@@ -95,4 +100,6 @@ group :test do
   gem 'policy-assertions'
   gem 'roo'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
+  gem 'simplecov-cobertura'
 end

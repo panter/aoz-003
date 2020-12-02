@@ -7,22 +7,29 @@ image: git.panter.ch:5001/open-source/aoz-003/gitlab_ci:2.6.6
 
 stages:
   - test
+  - deploy
 
-services:
-  - postgres:9.6
-
-variables:
-  RAILS_ENV: test
-  POSTGRES_DB: aoz_test
-  DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB'
-  POSTGRES_HOST_AUTH_METHOD: trust
+.test-job-extends:
+  services:
+    - postgres:9.6
+  variables:
+    RAILS_ENV: test
+    POSTGRES_DB: aoz_test
+    DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/$POSTGRES_DB'
+    POSTGRES_HOST_AUTH_METHOD: trust
+  artifacts:
+    paths:
+      - 'coverage/'
+    expire_in: 30 days
+    reports:
+      junit: coverage/coverage.xml
 
 lint:
   stage: test
   extends:
     - .cache-pull-push
-    - .retry-dropped-runners
     - .bundle-yarn-install-webdrivers-chrome
+    - .test-job-extends
   script:
     - bundle exec rails db:schema:load # some RuboCop cops require it
     - yarn lint:js
@@ -35,17 +42,40 @@ test:
     - .cache-pull
     - .retry-dropped-runners
     - .bundle-yarn-install
+    - .test-job-extends
   script:
     - bundle exec rails db:schema:load
     - bundle exec rails test
 
 system:
   stage: test
+  retry: 1
+  variables:
+    TEST_TYPE: ':system'
   extends:
     - .cache-pull
     - .retry-dropped-runners
     - .bundle-yarn-install-webdrivers-chrome
     - .capybara-screenshot-artifacts
+    - .test-job-extends
   script:
     - bundle exec rails db:schema:load
     - bundle exec rails test:system
+
+deploy-staging:
+  stage: deploy
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=staging-aoz-freiwillige --api-key=$HEROKU_STAGING_API_KEY
+  only:
+    - develop
+  when: manual
+
+deploy-production:
+  stage: deploy
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=production-aoz-freiwillige --api-key=$HEROKU_STAGING_API_KEY
+  only:
+    - main
+  when: manual

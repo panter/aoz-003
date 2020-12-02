@@ -7,11 +7,11 @@
 # To learn more, check out the README:
 #
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
-
-WickedPdf.config = {
+WickedPdf.config ||= {}
+WickedPdf.config.merge!({
   layout: 'pdf.html',
   encoding: 'UTF-8',
   page_size: 'A4',
   print_media_type: true,
   no_background: true
-}
+})

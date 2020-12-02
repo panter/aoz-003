@@ -2,8 +2,9 @@
 
 ## Pipeline Status
 
-- Develop: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/develop/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/develop)
-- Master: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/master/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/master)
+- Develop: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/develop/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/develop) | [![coverage report](https://git.panter.ch/open-source/aoz-003/badges/develop/coverage.svg)](https://git.panter.ch/open-source/aoz-003/-/commits/develop)
+- Main: [![pipeline status](https://git.panter.ch/open-source/aoz-003/badges/main/pipeline.svg)](https://git.panter.ch/open-source/aoz-003/commits/main) | [![coverage report](https://git.panter.ch/open-source/aoz-003/badges/main/coverage.svg)](https://git.panter.ch/open-source/aoz-003/-/commits/main)
+
 
 Ruby version: 2.4.2
 
@@ -19,6 +20,13 @@ Ruby version: 2.4.2
     * [Sort locale yaml files](#sort-locale-yaml-files)
     * [Run model, integration and controller tests](#run-model-integration-and-controller-tests)
     * [Run system (acceptance) tests](#run-system-acceptance-tests)
+    * [Configuration Env variables](#configuration-env-variables)
+      * [Production relevant](#production-relevant)
+        * [Mailgun Configuration](#mailgun-configuration)
+        * [Email address config](#email-address-config)
+        * [Google S3 storage bucket config for active storage](#google-s3-storage-bucket-config-for-active-storage)
+        * [Sftp configuration for coplaner excel upload job](#sftp-configuration-for-coplaner-excel-upload-job)
+      * [Auxiliary and less important](#auxiliary-and-less-important)
     * [LICENSE](#license)
 
 ### Dependencies
@@ -91,6 +99,48 @@ For having chrome open and visible when running system tests locally:
 ```bash
 $ rails test:system driver=visible
 ```
+
+### Configuration Env variables
+
+#### Production relevant
+
+##### Mailgun Configuration
+
+- MAILGUN_SMTP_PORT
+- MAILGUN_SMTP_SERVER
+- MAILGUN_SMTP_LOGIN
+- MAILGUN_SMTP_PASSWORD
+- MAILGUN_DOMAIN
+
+##### Email address config
+
+The Mail links domain base created for invite or password reset links in emails sent out.
+
+- DEVISE_EMAIL_DOMAIN
+- DEVISE_EMAIL_PROTOCOL
+
+##### Google S3 storage bucket config for active storage
+
+- GOOGLE_PROJECT_ID
+- GOOGLE_PRIVATE_KEY_ID
+- GOOGLE_PRIVATE_KEY
+- GOOGLE_CLIENT_EMAIL
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_X509_CERT_URL
+- GOOGLE_PROJECT_ID
+- GOOGLE_BUCKET
+
+##### Sftp configuration for coplaner excel upload job
+
+- SFTP_HOST
+- SFTP_USER
+- SFTP_PASS
+
+#### Auxiliary and less important
+
+- TEST_TYPE - For CI pipeline writing different coverage reports for minitest and capybara tests
+- driver - if set and its value is "visible" chrome will not run headless for system tests
+- RUN_DEV_SEED_IN_PRODUCTION_ENV - if "1" it still runs the development seed, even if the Rails env is production
 
 ### LICENSE
 
