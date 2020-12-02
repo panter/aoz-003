@@ -82,7 +82,13 @@ Rails.application.configure do
       authentication: :plain
     }
     config.action_mailer.delivery_method = :smtp
+  else
+    config.action_mailer.delivery_method = :sendmail
   end
+  config.action_mailer.default_url_options = {
+    host: ENV['DEVISE_EMAIL_DOMAIN'] || 'staging.aoz-freiwillige.ch',
+    protocol: 'https'
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
