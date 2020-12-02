@@ -135,7 +135,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_092316) do
     t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.string "pdf_file_name"
     t.string "pdf_content_type"
-    t.bigint "pdf_file_size"
+    t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.bigint "submitted_by_id"
     t.bigint "reactivated_by_id"
@@ -334,7 +334,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_092316) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "kind"
+    t.integer "kind", null: false
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -424,7 +424,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_092316) do
     t.text "agreement_text", default: "Freiwillige beachten folgende Grundsätze während ihres Einsatzes in der AOZ:\n* Verhaltenskodex für Freiwillige\n* Rechte und Pflichten für Freiwillige\n* AOZ Leitlinien Praktische Integrationsarbeit\n\nAllenfalls auch\n* Verpflichtungserklärung zum Schutz der unbegleiteten minderjährigen Asylsuchenden (MNA)\n* Niederschwellige Gratis-Deutschkurse: Informationen für freiwillige Kursleitende\n"
     t.string "pdf_file_name"
     t.string "pdf_content_type"
-    t.bigint "pdf_file_size"
+    t.integer "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.bigint "submitted_by_id"
     t.bigint "reactivated_by_id"
@@ -596,7 +596,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_092316) do
     t.datetime "updated_at", null: false
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.bigint "avatar_file_size"
+    t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.datetime "deleted_at"
     t.boolean "flexible", default: false
@@ -812,7 +812,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_092316) do
     t.datetime "deleted_at"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.bigint "avatar_file_size"
+    t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.bigint "user_id"
     t.string "rejection_type"
