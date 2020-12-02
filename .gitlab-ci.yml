@@ -70,3 +70,12 @@ deploy-staging:
   only:
     - develop
   when: manual
+
+deploy-production:
+  stage: deploy
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=production-aoz-freiwillige --api-key=$HEROKU_STAGING_API_KEY
+  only:
+    - main
+  when: manual
