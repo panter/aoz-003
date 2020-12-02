@@ -58,6 +58,10 @@ gem 'wicked_pdf'
 gem 'will_paginate'
 gem 'will-paginate-i18n'
 
+group :production do
+  gem 'wkhtmltopdf-heroku'
+end
+
 group :development do
   gem 'debase', require: false
   gem 'debride', require: false
