@@ -87,7 +87,7 @@ Rails.application.configure do
   end
   config.action_mailer.default_url_options = {
     host: ENV['DEVISE_EMAIL_DOMAIN'] || 'staging.aoz-freiwillige.ch',
-    protocol: 'https'
+    protocol: ENV['DEVISE_EMAIL_PROTOCOL'] || 'https'
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
