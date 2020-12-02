@@ -1,3 +1,5 @@
+require 'yaml'
+
 namespace :active_storage do
   desc 'ActiveStorage actions'
   task move_paperclip_files: :environment do
@@ -31,6 +33,8 @@ namespace :active_storage do
 
     puts "#{ActiveStorage::Blob.count} Blobs to go..."
 
+    @failed_files = { failed: [] }
+
     ActiveStorage::Blob.find_each do |blob|
       print '.'
       file = Tempfile.new("file#{Time.now.to_f}")
@@ -41,13 +45,33 @@ namespace :active_storage do
       to_service.upload(blob.key, file, checksum: checksum)
       file.close
       file.unlink
+    rescue ActiveStorage::IntegrityError
+      puts "Rescued by ActiveStorage::IntegrityError statement. ID: #{blob.id} / Key: #{blob.key}"
+      @failed_files[:failed] << { id: blob.id, key: blob.key, checksum: blob.checksum, error: 'ActiveStorage::IntegrityError'  }
+      File.open('failed_files.yml', 'w') {|f| f.write(@failed_files.to_yaml ) } #Store
+      next
+    rescue Google::Cloud::InvalidArgumentError
+      puts "Rescued by Google::Cloud::InvalidArgumentError statement. ID: #{blob.id} / Key: #{blob.key}"
+      @failed_files[:failed] << { id: blob.id, key: blob.key, checksum: blob.checksum, error: 'Google::Cloud::InvalidArgumentError'  }
+      File.open('failed_files.yml', 'w') {|f| f.write(@failed_files.to_yaml ) } #Store
+      next
+    rescue Google::Apis::ClientError
+      puts "Rescued by Google::Apis::ClientError statement. ID: #{blob.id} / Key: #{blob.key}"
+      @failed_files[:failed] << { id: blob.id, key: blob.key, checksum: blob.checksum, error: 'Google::Apis::ClientError'  }
+      File.open('failed_files.yml', 'w') {|f| f.write(@failed_files.to_yaml ) } #Store
+      next
     rescue Errno::ENOENT
       puts "Rescued by Errno::ENOENT statement. ID: #{blob.id} / Key: #{blob.key}"
+      @failed_files[:failed] << { id: blob.id, key: blob.key, checksum: blob.checksum, error: 'Errno::ENOENT'  }
+      File.open('failed_files.yml', 'w') {|f| f.write(@failed_files.to_yaml ) } #Store
       next
     rescue ActiveStorage::FileNotFoundError
       puts "Rescued by FileNotFoundError. ID: #{blob.id} / Key: #{blob.key}"
+      @failed_files[:failed] << { id: blob.id, key: blob.key, checksum: blob.checksum, error: 'ActiveStorage::FileNotFoundError'  }
+      File.open('failed_files.yml', 'w') {|f| f.write(@failed_files.to_yaml ) } #Store
       next
     end
+    File.open('failed_files.yml', 'w') {|f| f.write(@failed_files.to_yaml ) } #Store
   end
 
   task migrate_to_s3: :environment do
